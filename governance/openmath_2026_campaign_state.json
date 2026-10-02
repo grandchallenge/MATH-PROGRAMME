@@ -72,15 +72,15 @@
     },
     "solve": {
       "repository": "grandchallenge/MATHSOLVE",
-      "observed_main": "a45d3aea2780836182e81a6e2827cbcc6e5c8d9e",
+      "observed_main": "16094c45799313363036f487f830c7d2ff0a98a9",
       "artifacts": [
         {
           "path": "work_packages/OPENMATH_2026/HILL_LANES.json",
-          "git_blob_sha1": "a175e30fa375bbedeca14736422f5028de6855f4"
+          "git_blob_sha1": "a042381d9ece20bbf5d300485e67a34f51cdb749"
         },
         {
           "path": ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json",
-          "git_blob_sha1": "d04c35298e870d4f3d16916b1ec63861a8a2b1f0"
+          "git_blob_sha1": "57ccddbc3260906d4c09e2964804ac8f1a8bc91d"
         },
         {
           "path": ".gcl/completions/OM26-CORE-CLARITY-RECONCILE-001/COMPLETION_RECEIPT.json",
@@ -577,6 +577,14 @@
         {
           "path": "contributions/OPENMATH-2026/OM26-H1/WP32/lifecycle/OM26-H1-WP32-IA-001/PROGRAMME_PROJECTION.json",
           "git_blob_sha1": "322639c21c2c4302e9480fdd1fc0e4b237512d36"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP62/lifecycle/OM26-H1-WP62-IA-001/MANIFEST.json",
+          "git_blob_sha1": "89b3519d9f5423ad674b60b30f15c97bff0f03dc"
+        },
+        {
+          "path": "contributions/OPENMATH-2026/OM26-H1/WP62/lifecycle/OM26-H1-WP62-IA-001/PROGRAMME_PROJECTION.json",
+          "git_blob_sha1": "5bafa94294de34e13c0817e81ff8e0671541bdc5"
         }
       ]
     },
@@ -619,7 +627,7 @@
       "captured_pending_adjudication": 0,
       "leased_not_launched": 9,
       "launched_without_return": 0,
-      "accepted": 30
+      "accepted": 31
     },
     "certification": {
       "h1": "PENDING_INDEPENDENT_CERT_EXECUTOR",
@@ -915,29 +923,37 @@
           }
         },
         "H1-ADVERSARY": {
-          "assignment_id": "OM26-H1-WP62",
-          "dispatch_id": "OM26-H1-WP62-IA-001",
-          "agent_ref": "INDEPENDENT-AGENT-162",
-          "issue_number": 632,
+          "assignment_id": "OM26-H1-WP63",
+          "dispatch_id": "OM26-H1-WP63-IA-001",
+          "agent_ref": "INDEPENDENT-AGENT-163",
+          "issue_number": 662,
           "lifecycle": "LEASED_NOT_LAUNCHED",
           "launch_evidence": null,
           "return_evidence": null,
           "adjudication": "NOT_STARTED",
           "predecessor": {
-            "assignment_id": "OM26-H1-WP61",
-            "agent_ref": "INDEPENDENT-AGENT-161",
-            "issue_number": 620,
+            "assignment_id": "OM26-H1-WP62",
+            "agent_ref": "INDEPENDENT-AGENT-162",
+            "issue_number": 632,
             "lifecycle": "ACCEPTED",
             "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
             "accepted_claims": [],
             "predecessor": {
-              "assignment_id": "OM26-H1-WP60",
-              "agent_ref": "INDEPENDENT-AGENT-160",
-              "issue_number": 599,
+              "assignment_id": "OM26-H1-WP61",
+              "agent_ref": "INDEPENDENT-AGENT-161",
+              "issue_number": 620,
               "lifecycle": "ACCEPTED",
               "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
               "accepted_claims": [],
-              "predecessor": null
+              "predecessor": {
+                "assignment_id": "OM26-H1-WP60",
+                "agent_ref": "INDEPENDENT-AGENT-160",
+                "issue_number": 599,
+                "lifecycle": "ACCEPTED",
+                "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+                "accepted_claims": [],
+                "predecessor": null
+              }
             }
           }
         }
@@ -1499,7 +1515,7 @@
   "automation": {
     "openmath_lifecycle": {
       "contract": "READY\u2192LAUNCHED\u2192RETURNED\u2192CAPTURED\u2192REPLAYED\u2192ADJUDICATED\u2192ADVANCED",
-      "last_transition_dispatch": "OM26-H1-WP32-IA-001",
+      "last_transition_dispatch": "OM26-H1-WP62-IA-001",
       "last_transition_hill": "OM26-H1",
       "last_transition_result": "ADVANCED",
       "manual_transport_required": false,

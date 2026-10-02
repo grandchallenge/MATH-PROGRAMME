@@ -11,7 +11,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 ## Campaign summary
 
 - Hills: **7**
-- Independent-agent state: **30 ACCEPTED; 9 LEASED_NOT_LAUNCHED**
+- Independent-agent state: **31 ACCEPTED; 9 LEASED_NOT_LAUNCHED**
 - Official competition submissions: **0**
 
 ## Seven-hill control board
@@ -31,7 +31,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 | Hill | Packet | Agent and return |
 |---|---|---|
 | OM26-H1 | H1-Q6 | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-133 / #659 |
-| OM26-H1 | H1-ADVERSARY | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-162 / #632 |
+| OM26-H1 | H1-ADVERSARY | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-163 / #662 |
 
 ## Current next action
 
