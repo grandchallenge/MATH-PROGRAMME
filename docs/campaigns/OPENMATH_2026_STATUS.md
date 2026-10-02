@@ -11,7 +11,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 ## Campaign summary
 
 - Hills: **7**
-- Independent-agent state: **25 ACCEPTED; 9 LEASED_NOT_LAUNCHED**
+- Independent-agent state: **26 ACCEPTED; 9 LEASED_NOT_LAUNCHED**
 - Official competition submissions: **0**
 
 ## Seven-hill control board
@@ -19,7 +19,7 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 | Hill | Problem | Independent agent | Competition |
 |---|---|---|---|
 | H1 | Kobon triangles | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-105 / #641 | NOT_SUBMITTED |
-| H2 | Busy Beaver 6 certificates | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-206 / #614 | NOT_SUBMITTED |
+| H2 | Busy Beaver 6 certificates | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-207 / #630 | NOT_SUBMITTED |
 | H3 | Clique-cluster Ramsey multiplicity | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-305 / #613 | NOT_SUBMITTED |
 | H4 | Collatz modular descent | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-404 / #615 | NOT_SUBMITTED |
 | H5 | Grothendieck constant witnesses | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-504 / #616 | NOT_SUBMITTED |
