@@ -690,6 +690,34 @@ def _existing_successor_issue(gh: Github, title: str) -> dict[str, Any] | None:
     return matches[0] if matches else None
 
 
+def synchronize_successor_issue(
+    gh: Github,
+    issue: dict[str, Any],
+    expected_body: str,
+    dispatch: str,
+) -> dict[str, Any]:
+    number=issue.get("number")
+    if not isinstance(number,int):
+        raise ControllerError(f"{dispatch}: existing successor issue lacks numeric identity")
+    current_body=issue.get("body")
+    if current_body==expected_body and issue.get("state")=="open":
+        return issue
+    comments=gh.request("GET",f"/repos/{OWNER}/{SOLVE}/issues/{number}/comments?per_page=100")
+    if not isinstance(comments,list):
+        raise ControllerError(f"{dispatch}: successor issue comments response malformed")
+    if comments:
+        raise ControllerError(
+            f"{dispatch}: successor issue contract drift after participation; refuse to rewrite return surface"
+        )
+    payload={"body":expected_body}
+    if issue.get("state")!="open":
+        payload["state"]="open"
+    updated=gh.request("PATCH",f"/repos/{OWNER}/{SOLVE}/issues/{number}",payload)
+    if not isinstance(updated,dict) or updated.get("body")!=expected_body or updated.get("state")!="open":
+        raise ControllerError(f"{dispatch}: successor issue contract synchronization failed")
+    return updated
+
+
 def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = False) -> dict[str, Any]:
     """Promote locked old-format evidence into a new, protected lifecycle candidate."""
     src=legacy_source(gh,branch)
@@ -732,6 +760,8 @@ def recover_legacy(gh: Github, branch: str, checkout: Path, refresh: bool = Fals
             issue=gh.request("POST",f"/repos/{OWNER}/{SOLVE}/issues",{
                 "title":title,"body":p["issue_body"]
             })
+        else:
+            issue=synchronize_successor_issue(gh,issue,p["issue_body"],dispatch)
         issue_number=issue.get("number")
         issue_url=issue.get("html_url")
         if not isinstance(issue_number,int) or not isinstance(issue_url,str):
