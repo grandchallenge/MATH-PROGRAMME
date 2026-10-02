@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge, candidate_sources, ControllerError, live_solve_projection
+from ci.openmath_lifecycle_controller import apply_projection_to_state, dispatch_parts, ensure_solve_merge, candidate_sources, ControllerError, live_solve_projection, verify_locked_source_comment
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -71,6 +71,35 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"untrusted"}}]}
         with patch("ci.openmath_lifecycle_controller.fetch_content",return_value=(json.dumps(registry),"a"*40)), self.assertRaises(ControllerError):
             candidate_sources(unittest.mock.Mock())
+
+    def test_relay_framed_legacy_source_verifies_inner_and_envelope(self):
+        import hashlib
+        inner="GCL-CONTRIBUTION-RESULT/1\ndispatch_id: OM26-H2-WP06-IA-001\n"
+        envelope=(
+            "GCL-RETURN-RELAY/1\n"
+            "DISPATCH_ID: OM26-H2-WP06-IA-001\n"
+            "AGENT_REF: INDEPENDENT-AGENT-206\n"
+            "INTENDED_RETURN: https://github.com/grandchallenge/MATHSOLVE/issues/614\n\n"
+            "BEGIN_RESULT\n"+inner+"\nEND_RESULT"
+        )
+        receipt={
+            "return_transport":"GCL-RETURN-RELAY/1",
+            "relay_provenance":{
+                "envelope_utf8":envelope,
+                "envelope_sha256":hashlib.sha256(envelope.encode("utf-8")).hexdigest(),
+                "inner_result_sha256":hashlib.sha256(inner.encode("utf-8")).hexdigest(),
+            },
+        }
+        verify_locked_source_comment(receipt,inner,envelope,"OM26-H2-WP06-IA-001")
+        with self.assertRaises(ControllerError):
+            verify_locked_source_comment(receipt,inner+"changed",envelope,"OM26-H2-WP06-IA-001")
+        with self.assertRaises(ControllerError):
+            verify_locked_source_comment(receipt,inner,envelope+"changed","OM26-H2-WP06-IA-001")
+
+    def test_direct_legacy_source_still_requires_raw_comment_equality(self):
+        verify_locked_source_comment({},"RESULT\n","RESULT","OM26-H1-WP01-IA-001")
+        with self.assertRaises(ControllerError):
+            verify_locked_source_comment({},"RESULT","OTHER","OM26-H1-WP01-IA-001")
 
     def test_pending_merge_is_bounded_and_does_not_wait(self):
         gh=unittest.mock.Mock()

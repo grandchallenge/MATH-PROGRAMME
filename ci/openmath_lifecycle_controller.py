@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import importlib.util
 import shutil
 import subprocess
@@ -564,6 +565,40 @@ def verify_advanced(programme_gh: Github, projection: dict[str,Any]) -> None:
 
 
 
+def verify_locked_source_comment(
+    receipt: dict[str, Any],
+    raw_text: str,
+    comment_body: str,
+    dispatch: str,
+) -> None:
+    normalize=lambda value: value[:-1] if value.endswith("\n") else value
+    transport=receipt.get("return_transport")
+    if transport=="GCL-RETURN-RELAY/1":
+        relay=receipt.get("relay_provenance")
+        if not isinstance(relay,dict):
+            raise ControllerError(f"{dispatch}: relay provenance missing from locked receipt")
+        envelope=relay.get("envelope_utf8")
+        if not isinstance(envelope,str):
+            raise ControllerError(f"{dispatch}: locked relay envelope missing")
+        if normalize(comment_body)!=normalize(envelope):
+            raise ControllerError(f"{dispatch}: source relay envelope differs from locked receipt")
+        prefix="GCL-RETURN-RELAY/1\n"
+        begin="\nBEGIN_RESULT\n"
+        end="\nEND_RESULT"
+        if not envelope.startswith(prefix) or envelope.count(begin)!=1 or envelope.count(end)!=1:
+            raise ControllerError(f"{dispatch}: locked relay envelope framing invalid")
+        inner=envelope.split(begin,1)[1].rsplit(end,1)[0]
+        if normalize(raw_text)!=normalize(inner):
+            raise ControllerError(f"{dispatch}: protected raw differs from locked relay inner result")
+        if relay.get("envelope_sha256")!=hashlib.sha256(envelope.encode("utf-8")).hexdigest():
+            raise ControllerError(f"{dispatch}: locked relay envelope digest mismatch")
+        if relay.get("inner_result_sha256")!=hashlib.sha256(inner.encode("utf-8")).hexdigest():
+            raise ControllerError(f"{dispatch}: locked relay inner-result digest mismatch")
+        return
+    if normalize(comment_body)!=normalize(raw_text):
+        raise ControllerError(f"{dispatch}: protected raw differs from source comment")
+
+
 def legacy_source(gh: Github, branch: str) -> dict[str, Any] | None:
     """Read an already-locked legacy return without altering its original branch."""
     if not branch.startswith((BRANCH_PREFIX, RECOVERY_PREFIX)):
@@ -606,9 +641,7 @@ def legacy_source(gh: Github, branch: str) -> dict[str, Any] | None:
     comment = gh.request("GET",f"/repos/{OWNER}/{SOLVE}/issues/comments/{cid}")
     if not isinstance(comment,dict) or comment.get("id") != cid or not isinstance(comment.get("body"),str):
         raise ControllerError(f"{dispatch}: source GitHub comment unavailable")
-    # Issue transport may add one terminal LF. All other returned bytes remain locked.
-    if comment["body"].removesuffix("\n") != raw_text.removesuffix("\n"):
-        raise ControllerError(f"{dispatch}: protected raw differs from source comment")
+    verify_locked_source_comment(receipt,raw_text,comment["body"],dispatch)
     if comment.get("issue_url","").rsplit("/",1)[-1] != str(receipt.get("github_issue_number")):
         raise ControllerError(f"{dispatch}: source issue identity mismatch")
     branch_ref = gh.request(
