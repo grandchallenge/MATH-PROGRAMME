@@ -359,14 +359,12 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
         return errors
     workflow = legacy.load_yaml_text(text)
     trigger = _trigger(workflow)
-    if set(trigger) != {"push", "schedule", "workflow_dispatch", "workflow_run", "repository_dispatch"}:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, workflow_dispatch, workflow_run, and repository_dispatch")
-    if trigger.get("workflow_run") != {"workflows": ["Administrative maintenance dispatcher"], "types": ["completed"]}:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: event wake must bind only maintenance dispatcher completion")
+    if set(trigger) != {"push", "schedule", "workflow_dispatch", "repository_dispatch"}:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: triggers must be exactly push, schedule, workflow_dispatch, and repository_dispatch")
     if trigger.get("repository_dispatch") != {"types": ["openmath-return-ready"]}:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: repository dispatch must bind only openmath-return-ready")
-    if trigger.get("schedule") != [{"cron": "*/5 * * * *"}]:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: schedule must remain every five minutes")
+    if trigger.get("schedule") != [{"cron": "17,47 * * * *"}]:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: recovery schedule must remain twice hourly at minutes 17 and 47")
     expected_push = {
         "branches": ["main"],
         "paths": [
@@ -374,15 +372,17 @@ def openmath_lifecycle_controller_errors(texts: dict[str, str]) -> list[str]:
             "ci/openmath_lifecycle_controller.py",
             "governance/openmath_unattended_lifecycle_controller.json",
             "tests/test_openmath_lifecycle_controller.py",
+            "governance/openmath_2026_campaign_state.json",
+            "governance/openmath_2026_lifecycle_reconciliations/**",
         ],
     }
     if trigger.get("push") != expected_push:
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: push wake must remain scoped to controller self-test surfaces on main")
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: push wake must cover controller self-tests and protected lifecycle reconciliation surfaces on main")
     if workflow.get("permissions") != {"contents": "read"}:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: top-level permissions must remain contents-read only")
     job = _job(workflow, "reconcile")
-    if job.get("if") != "github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'":
-        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: event wake must require successful completion")
+    if job.get("if") is not None:
+        errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: reconcile job may not depend on the removed maintenance workflow_run wake")
     if job.get("environment") != PROTECTED_ENVIRONMENT:
         errors.append(f"{OPENMATH_LIFECYCLE_WORKFLOW}: reconcile job must bind release-trust")
     if job.get("permissions") != {"contents": "read"}:
