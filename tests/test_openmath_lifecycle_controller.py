@@ -246,7 +246,8 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertFalse(control["acceptance_test"]["manual_controller_wake_allowed"])
         self.assertTrue(control["acceptance_test"]["live_controller_smoke_required"])
         self.assertFalse(control["wake"]["manual_controller_wake_required"])
-        self.assertEqual(control["wake"]["primary_operational_wake"], "scheduled poll every five minutes")
+        self.assertEqual(control["wake"]["primary_operational_wake"], "repository_dispatch/openmath-return-ready plus protected lifecycle reconciliation pushes")
+        self.assertEqual(control["wake"]["recovery_poll"], "scheduled recovery poll at minutes 17 and 47 of each hour")
         binding = control["paired_solve_implementation"]
         self.assertEqual(binding["repository"], "grandchallenge/MATHSOLVE")
         self.assertEqual(binding["base_pull_request"], 542)
