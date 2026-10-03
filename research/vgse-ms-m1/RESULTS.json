@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "VGSE-MS-M1",
+  "disposition": "KINEMATIC_SEMANTICS_BRANCH_DEPENDENT",
+  "model": "GCL-defined flat-state rigid-panel/body-hinge infinitesimal semantics",
+  "atlas_summary": {
+    "evaluated_valid_m0_realizations": 40,
+    "rank": [
+      38
+    ],
+    "mobility": [
+      4
+    ],
+    "constraint_dependency_dimension": [
+      12
+    ],
+    "hinge_rate_mechanism_dimension": [
+      4
+    ],
+    "minimum_smallest_nonzero_singular_value": 0.00984545380887658,
+    "maximum_largest_null_singular_value": 7.24881135915608e-16
+  },
+  "baseline_branch_summary": {
+    "valid_branch_count": 5,
+    "all_mobility_four": true,
+    "minimum_pairwise_hinge_rate_projector_difference": 0.0244639674281666,
+    "maximum_pairwise_hinge_rate_projector_difference": 0.40661541130503,
+    "fixed_quotient_unique_kinematic_state": false
+  },
+  "established_numerically": [
+    "all 40 retained valid M0 realizations have flat-state body-hinge rank 38, mobility 4, and constraint-dependency dimension 12 under the declared M1 semantics",
+    "baseline mobility and labeled hinge-rate mechanism subspace are invariant to which panel is fixed, within the declared numerical tolerance",
+    "five valid geometric representatives at the same protected quotient have distinct four-dimensional labeled hinge-rate mechanism subspaces"
+  ],
+  "structural_interpretation": "The observed four-dimensional mobility is consistent with ten labeled hinge-rate variables subject to six independent planar rotation-closure conditions at the three interior dual vertices A, C, and D. M1 does not promote that counting interpretation to a universal theorem.",
+  "not_established": [
+    "universal mobility classification outside the retained M0 atlas",
+    "finite rigid foldability",
+    "mountain/valley assignment",
+    "collision-free continuation",
+    "finite thickness",
+    "stiffness, force, energy, constitutive, material, or actuation behaviour",
+    "VGSE-C06/source correspondence",
+    "unique kinematic state from quotient coordinates alone"
+  ],
+  "next_boundary": "M1 may terminate at KINEMATIC_SEMANTICS_BRANCH_DEPENDENT. Any M2 inverse-design activation must treat geometric branch/representative choice as latent structure and apply GCL-ID-00 before substantial inverse optimization.",
+  "claim_boundary": {
+    "mathematical_certification": false,
+    "finite_rigid_foldability": false,
+    "collision_freedom": false,
+    "finite_thickness": false,
+    "stiffness_force_energy": false,
+    "constitutive_material_model": false,
+    "actuation": false,
+    "manufacturing": false,
+    "product": false,
+    "source_correspondence_c06": false,
+    "novelty_patent_commercial": false
+  }
+}
