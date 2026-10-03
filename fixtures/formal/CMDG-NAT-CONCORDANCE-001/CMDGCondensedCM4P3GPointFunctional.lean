@@ -54,6 +54,171 @@ noncomputable def measurePointProjection
       (Under.forget (op Point) ⋙ coefficientPresheaf)
       pointIdentity)) μ
 
+noncomputable def measurePointProjectionAt
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (k : Under (op Point)) :
+    (Under.forget (op Point) ⋙ sourcePresheaf X).obj k ⟶
+      (Under.forget (op Point) ⋙ coefficientPresheaf).obj k := by
+  exact (ConcreteCategory.hom
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op Point) ⋙ sourcePresheaf X)
+      (Under.forget (op Point) ⋙ coefficientPresheaf)
+      k)) μ
+
+lemma measurePointProjectionAt_identity
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjectionAt X μ pointIdentity = measurePointProjection X μ := by
+  rfl
+
+lemma measurePointProjection_condition
+    (X : Profinite.{u}) {i j : Under (op Point)} (f : i ⟶ j) :
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          i ≫
+        (ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).map f) =
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          j ≫
+        (MonoidalClosed.pre
+          ((Under.forget (op Point) ⋙ sourcePresheaf X).map f)).app
+            ((Under.forget (op Point) ⋙ coefficientPresheaf).obj j) := by
+  simpa only [
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op Point) ⋙ sourcePresheaf X)
+      (Under.forget (op Point) ⋙ coefficientPresheaf)
+      f)
+
+lemma measurePointProjectionAt_naturality
+    (X : Profinite.{u}) {i j : Under (op Point)} (f : i ⟶ j)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjectionAt X μ i ≫
+        (Under.forget (op Point) ⋙ coefficientPresheaf).map f =
+      (Under.forget (op Point) ⋙ sourcePresheaf X).map f ≫
+        measurePointProjectionAt X μ j := by
+  have hcond := congrArg (fun q => q μ) (measurePointProjection_condition X f)
+  change
+    ((ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
+      ((Under.forget (op Point) ⋙ coefficientPresheaf).map f))
+        (measurePointProjectionAt X μ i) =
+      ((MonoidalClosed.pre
+        ((Under.forget (op Point) ⋙ sourcePresheaf X).map f)).app
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).obj j))
+        (measurePointProjectionAt X μ j) at hcond
+  rw [ModuleCat.ihom_map_apply,
+    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at hcond
+  exact hcond
+
+noncomputable def pointProbeToIdentity
+    (k : Under (op Point)) (y : k.right.unop) :
+    k ⟶ pointIdentity := by
+  let p : Point ⟶ k.right.unop :=
+    ConcreteCategory.ofHom
+      { toFun := fun _ => y
+        continuous_toFun := continuous_const }
+  refine Under.homMk p.op ?_
+  apply Quiver.Hom.unop_inj
+  ext z
+
+lemma coefficientPullback_pointProbeToIdentity
+    (k : Under (op Point)) (y : k.right.unop)
+    (h : coefficientPresheaf.obj k.right) :
+    coefficientPresheaf.map (pointProbeToIdentity k y).right h =
+      (show coefficientPresheaf.obj (op Point) from
+        LocallyConstant.const Point
+          ((show LocallyConstant k.right.unop R from h) y)) := by
+  apply CMDG.CondensedCM4P2E.InternalHom.coefficientPullback_const_op
+  intro z
+  rfl
+
+/-- The one-point enriched-Hom projection reflects zero: no nonzero one-point measure section is
+lost by evaluation at the identity object of the under-category. -/
+theorem measurePointProjection_zero_reflects
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (hμ : measurePointProjection X μ = 0) :
+    μ = 0 := by
+  let E := CategoryTheory.Enriched.FunctorCategory.enrichedHom
+    (ModuleCat.{u + 1} R)
+    (Under.forget (op Point) ⋙ sourcePresheaf X)
+    (Under.forget (op Point) ⋙ coefficientPresheaf)
+  have hproj :
+      ∀ k : Under (op Point), measurePointProjectionAt X μ k = 0 := by
+    intro k
+    apply ModuleCat.hom_injective
+    ext h
+    change
+      (show LocallyConstant k.right.unop R from
+        measurePointProjectionAt X μ k h) = 0
+    ext y
+    let f : k ⟶ pointIdentity := pointProbeToIdentity k y
+    have hnat := ConcreteCategory.congr_hom
+      (measurePointProjectionAt_naturality X f μ) h
+    change
+      coefficientPresheaf.map f.right
+          (measurePointProjectionAt X μ k h) =
+        measurePointProjectionAt X μ pointIdentity
+          (sourcePresheaf X |>.map f.right h) at hnat
+    rw [measurePointProjectionAt_identity, hμ] at hnat
+    have hnat0 :
+        coefficientPresheaf.map f.right
+            (measurePointProjectionAt X μ k h) = 0 := by
+      exact hnat.trans (by rfl)
+    have hnat0' :
+        coefficientPresheaf.map (pointProbeToIdentity k y).right
+            (measurePointProjectionAt X μ k h) = 0 := by
+      simpa only [f] using hnat0
+    have hp := coefficientPullback_pointProbeToIdentity k y
+      (measurePointProjectionAt X μ k h)
+    have hconst :
+        (show coefficientPresheaf.obj (op Point) from
+          LocallyConstant.const Point
+            ((show LocallyConstant k.right.unop R from
+              measurePointProjectionAt X μ k h) y)) = 0 :=
+      hp.symm.trans hnat0'
+    have hv := congrArg
+      (fun q : LocallyConstant Point R => q PUnit.unit) hconst
+    exact congrArg ULift.down hv
+  let pack : ModuleCat.of R R ⟶ E :=
+    ModuleCat.ofHom
+      (LinearMap.toSpanSingleton R E
+        (show E from μ))
+  have hpack : pack = 0 := by
+    apply CategoryTheory.Limits.end_.hom_ext
+    intro k
+    rw [zero_comp]
+    apply ModuleCat.hom_injective
+    let q :=
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        k
+    change
+      (ConcreteCategory.hom q).comp
+          (LinearMap.toSpanSingleton R E (show E from μ)) = 0
+    rw [LinearMap.comp_toSpanSingleton]
+    change
+      LinearMap.toSpanSingleton R
+        ((Under.forget (op Point) ⋙ sourcePresheaf X).obj k ⟶
+          (Under.forget (op Point) ⋙ coefficientPresheaf).obj k)
+        (measurePointProjectionAt X μ k) = 0
+    rw [hproj, LinearMap.toSpanSingleton_zero]
+  have h1 := congrArg
+    (fun q : ModuleCat.of R R ⟶ E => q.hom) hpack
+  change LinearMap.toSpanSingleton R E (show E from μ) = 0 at h1
+  exact (LinearMap.toSpanSingleton_eq_zero_iff).mp h1
+
 /-- The projected one-point measure section, definitionally viewed as a linear map between
 locally constant one-point families. -/
 noncomputable def measurePointProjectionLinear
@@ -83,11 +248,23 @@ noncomputable def measurePointIntegralFunctional
     (measurePointFunctional X μ)
 
 #check measurePointProjection
+#check measurePointProjectionAt
+#check measurePointProjectionAt_identity
+#check measurePointProjection_condition
+#check measurePointProjectionAt_naturality
+#check pointProbeToIdentity
+#check coefficientPullback_pointProbeToIdentity
+#check measurePointProjection_zero_reflects
 #check measurePointProjectionLinear
 #check measurePointFunctional
 #check measurePointIntegralFunctional
 
 #print axioms measurePointProjection
+#print axioms measurePointProjection_condition
+#print axioms measurePointProjectionAt_naturality
+#print axioms pointProbeToIdentity
+#print axioms coefficientPullback_pointProbeToIdentity
+#print axioms measurePointProjection_zero_reflects
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
 #print axioms measurePointIntegralFunctional
