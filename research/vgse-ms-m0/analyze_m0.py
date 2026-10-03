@@ -514,7 +514,11 @@ def validate_retained(generated:dict[str,Any]) -> None:
 
     actual_atlas=json.loads((HERE/"REALIZATION_ATLAS.json").read_text(encoding="utf-8"))
     if actual_atlas.get("aggregate")!=generated["REALIZATION_ATLAS.json"]["aggregate"]:
-        raise AssertionError("REALIZATION_ATLAS aggregate drift")
+        raise AssertionError(
+            "REALIZATION_ATLAS aggregate drift: "
+            f"retained={actual_atlas.get('aggregate')!r} "
+            f"generated={generated['REALIZATION_ATLAS.json']['aggregate']!r}"
+        )
     expected_status={
         row["id"]:row["result"]["selector_status"]
         for row in generated["REALIZATION_ATLAS.json"]["samples"]
