@@ -18,7 +18,7 @@
   "phase": "M0 exact-head replay and logical review complete; continuity rebound to PR #1152 pending native protected integration.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "9cde7b1c346d22c871ff072e42fa8eefc4028188",
+    "protected_base_sha": "4df278986e0f193aacce96b0ac1096c867d73f85",
     "candidate_head_sha": "24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
     "issue_number": 1085,
     "pr_number": 1152,
@@ -63,21 +63,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "rebind continuity to final replayed M0 candidate",
-    "result": "The final M0 candidate at 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c passed the path-scoped numerical replay and GH-OS pre-queue routing. Exact-head Adversary and Referee logical passes found no blocking defect. Continuity is rebound to PR #1152 for native protected integration. Candidate disposition remains TE3_REALIZATION_ATLAS_PARTIAL and M1 remains unauthorized.",
+    "action": "correct PR-base identity after protected continuity readback",
+    "result": "Protected readback showed that PR #1152 baseRefOid remains 4df278986e0f193aacce96b0ac1096c867d73f85. The prior continuity record incorrectly used the then-current main tip 9cde7b1c346d22c871ff072e42fa8eefc4028188. Candidate head, replay evidence, review identities, disposition, and claim boundaries are unchanged.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1152",
+      "grandchallenge/MATH-PROGRAMME#1152 base 4df278986e0f193aacce96b0ac1096c867d73f85",
       "grandchallenge/MATH-PROGRAMME@24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
-      "VGSE MS M0 replay run 37082963762 job 111087273005",
-      "Adversary logical pass review 5398167219",
-      "Referee logical pass review 5398167346"
+      "VGSE MS M0 replay run 37082963762 job 111087273005"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-TE3-REALIZATION-ATLAS-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-02T17:23:00-07:00"
+    "observed_at": "2026-10-02T17:47:00-07:00"
   },
   "resume": {
     "fresh_session_safe": true,
