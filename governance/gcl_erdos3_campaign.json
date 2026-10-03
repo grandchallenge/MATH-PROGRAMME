@@ -3,18 +3,18 @@
   "record_type": "GCL_PROGRAMME_CAMPAIGN_REGISTRATION",
   "campaign_id": "GCL-ERDOS3",
   "title": "Erdős Problem 3",
-  "status": "ACTIVE__E3_B_AP",
+  "status": "ACTIVE__E3_TRANCHE_02",
   "origin": {
     "campaign": "OPENMATH-2026",
     "hill": "OM26-H7",
-    "solve_commit": "20fc4eb4cda683bc07992bd27903e926b190b8b4"
+    "solve_commit": "a8abc98d7bd7017202fcb40ee3d5c04ad20769d6"
   },
   "solve": {
     "repository": "grandchallenge/MATHSOLVE",
     "campaign_path": "work_packages/GCL_ERDOS3/CAMPAIGN.json",
-    "campaign_blob": "7367a87f17159fd890bdb7fa2a92b8b83065471c",
+    "campaign_blob": "f3d2f119b98e30e2349dbbc34c1bd3ec2353ec6c",
     "frontier_path": "work_packages/GCL_ERDOS3/FRONTIER.json",
-    "frontier_blob": "12bee650ee20a0d239acf666a555de365f529ac5",
+    "frontier_blob": "56d6a4f4c7ed97784efcab4b689b9769192ce763",
     "gate_path": ".gcl/campaigns/GCL-ERDOS3/FRONTIER_GATE.json",
     "gate_blob": "1c2f35fec367c4560161fe08c21e2c2e8a8b37f3"
   },
@@ -51,27 +51,60 @@
       "frontier_effect": "E3-V-B01 CLOSED; B01 verification budget exhausted",
       "result_blob": "c528f550710b5dbe17ff72604c5daf57f5df2409",
       "adjudication_blob": "7f012fe86cce90e3b3092c8ee181c200f86e5018"
+    },
+    "E3-B02": {
+      "disposition": "PROVED_NATIVE_SOURCE_CONFIRMED",
+      "frontier_effect": "E3-B-AP exact extremal-series equivalence proved"
     }
   },
   "current_frontier": [
-    "E3-B-AP"
+    "E3-V-B02",
+    "E3-Q4-SERIES"
   ],
   "verification": {
-    "work_package": "E3-V01",
-    "dispatch_id": "GCL-ERDOS3-E3-V01-IA-001",
-    "issue_number": 762,
-    "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/762",
-    "task_commit": "6c39975864788f27aea1f0da50fa409625bd5bd6",
-    "result_comment_id": 5969123988,
-    "state": "CLOSED_VERIFIED",
-    "adjudication_commit": "20fc4eb4cda683bc07992bd27903e926b190b8b4",
-    "provenance_note": "GitHub transport actor was fyremael; independence is procedural from the ZERO_CONTEXT / PROTECTED_PACKET_ONLY execution contract, not a distinct-identity claim."
+    "work_package": "E3-V02",
+    "dispatch_id": "GCL-ERDOS3-E3-V02-IA-001",
+    "issue_number": 776,
+    "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/776",
+    "task_commit": "bf9bc7f448f92d71afeae937fda133b0e1d4de80",
+    "state": "DISPATCHED__AWAITING_RETURN",
+    "reason": "Single independent verification of the reverse scale-separated block construction."
   },
   "mathematical_direction": {
-    "proved_reduction": "Dyadic reciprocal mass converts the parent question into summability of normalized AP-free extremal densities.",
-    "smallest_missing_k_ge_4": "For fixed k≥4, prove a summable dyadic envelope for r_k(2^j)/2^j or supply a genuinely stronger cross-scale bridge.",
-    "four_term_calibration": "Current cited r_4(N) << N(log N)^(-c) with small c does not cross the dyadic summability barrier.",
-    "verification_status": "B01 bridge and AP-threshold reduction independently verified once; no further equivalent replay authorized.",
-    "current_frontier": "E3-B-AP only"
+    "exact_reformulation": "For fixed k≥3, the reciprocal-divergence conjecture is equivalent to convergence of Σ r_k(2^n)/2^n.",
+    "minimal_unresolved_case": "E3-Q4-SERIES: prove Σ r_4(2^n)/2^n < ∞.",
+    "current_best_pointwise": "r_4(N) ≪ N(log N)^(-c) for some absolute c>0; the stated bound alone does not give series convergence."
+  },
+  "active_dispatches": {
+    "E3-Q01": {
+      "dispatch_id": "GCL-ERDOS3-E3-Q01-IA-001",
+      "issue_number": 772,
+      "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/772",
+      "state": "DISPATCHED__AWAITING_RETURN"
+    },
+    "E3-X01": {
+      "dispatch_id": "GCL-ERDOS3-E3-X01-IA-001",
+      "issue_number": 773,
+      "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/773",
+      "state": "DISPATCHED__AWAITING_RETURN"
+    },
+    "E3-A02": {
+      "dispatch_id": "GCL-ERDOS3-E3-A02-IA-001",
+      "issue_number": 774,
+      "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/774",
+      "state": "DISPATCHED__AWAITING_RETURN"
+    },
+    "E3-S03": {
+      "dispatch_id": "GCL-ERDOS3-E3-S03-IA-001",
+      "issue_number": 775,
+      "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/775",
+      "state": "DISPATCHED__AWAITING_RETURN"
+    },
+    "E3-V02": {
+      "dispatch_id": "GCL-ERDOS3-E3-V02-IA-001",
+      "issue_number": 776,
+      "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/776",
+      "state": "DISPATCHED__AWAITING_RETURN"
+    }
   }
 }

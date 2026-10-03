@@ -1,40 +1,46 @@
 # GCL-ERDOS3
 
-GCL-ERDOS3 is the standalone successor research campaign promoted from the OPENMATH-2026 H7 corpus.
+GCL-ERDOS3 has advanced from the dyadic sufficiency bridge to an exact quantitative reformulation.
 
-## Current protected result
+Protected Solve state: `a8abc98d7bd7017202fcb40ee3d5c04ad20769d6`.
 
-Protected Solve adjudication: `20fc4eb4cda683bc07992bd27903e926b190b8b4`.
+## Exact reformulation
 
-The first tranche and its single authorized independent replay are complete:
+For each fixed (kge3),
 
-- **E3-F01 — FORMALIZED.** The current `H7_D5.lean` blob is the exact artifact compiled successfully in the pinned Lean 4.33.1 environment. `E3-F-D5` is closed with no replay successor.
-- **E3-B01 — PROVED AND INDEPENDENTLY VERIFIED.** Reciprocal divergence is equivalent, up to the factor-two dyadic sandwich, to divergence of the normalized dyadic block-density sum. The AP-free extremal reduction is also verified:
-  [
-  sum_j r_k(2^j)/2^j<infty
-  Longrightarrow
-  	ext{every reciprocally divergent set contains a non-trivial }k	ext{-AP}.
-  ]
-- **E3-A01 — BOUNDARY_SHARPENED.** The nonsummable-threshold construction verifies that summability is qualitatively sharp for arguments using only dyadic density threshold exceedance.
-- **E3-S01 — SOURCE_INTERFACE_FOUND.** Exact Lean/Mathlib/AP interfaces and the quantitative extremal-source boundary are bound.
-- **E3-V01 — VERIFIED, CLOSED.** The one independent replay authorized by the frontier gate found no defect in the five requested claims.
+[
+	ext{every reciprocally divergent set contains a non-trivial }k	ext{-AP}
+]
 
-The authenticated GitHub actor for the E3-V01 return was `fyremael`. GCL records this as transport provenance. The independence claim is limited to the declared zero-context, protected-packet-only execution contract; no distinct-human or distinct-account identity claim is made.
+is equivalent to
+
+[
+sum_{nge1}rac{r_k(2^n)}{2^n}<infty.
+]
+
+The reverse implication is proved natively in E3-B02 by placing extremal (k)-AP-free sets in scale-separated blocks
+([4^d,	frac32 4^d)). Those blocks admit no mixed three-term arithmetic progression, so their union is globally (k)-AP-free, while the reciprocal contribution is a constant fraction of the odd-index extremal series.
+
+This equivalence is also explicitly stated by Green–Tao (2017), citing Tao–Vu, Exercise 10.0.6.
 
 ## Active frontier
 
-Only `E3-B-AP` remains active.
-
-For each fixed (kge4), the current route needs either:
+The minimal unresolved case is now:
 
 [
-rac{r_k(2^j)}{2^j}le eta_k(j)
-quad	ext{with}quad
-sum_jeta_k(j)<infty,
+oxed{	ext{E3-Q4-SERIES: }sum_{nge1}r_4(2^n)/2^n<infty.}
 ]
 
-or a genuinely stronger cross-scale mechanism not reducible to independent dyadic block densities.
+Current pointwise theory gives (r_4(N)ll N(log N)^{-c}) for some absolute (c>0), which alone does not cross the required summability threshold.
 
-No further equivalent replay of B01 is authorized; its default independent verification budget has been exhausted.
+## Live tranche-02 lanes
+
+- Q01 — quantitative four-term extremal-series attack: issue #772.
+- X01 — cross-scale / renormalization inequality search: issue #773.
+- A02 — adversarial attack on false cross-scale upgrades: issue #774.
+- S03 — primary-source audit for sequence-level (r_4) information: issue #775.
+- V02 — one independent verification of the B02 reverse construction: issue #776.
+
+Q01 and X01 are the primary mathematical lanes. A02 is falsification pressure; S03 supplies exact interfaces. V02 is the only verification lane and closes after one valid replay.
 
 No result here proves Erdős Problem 3.
