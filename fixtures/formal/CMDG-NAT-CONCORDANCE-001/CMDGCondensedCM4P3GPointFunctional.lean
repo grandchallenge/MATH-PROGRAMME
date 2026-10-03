@@ -129,7 +129,6 @@ noncomputable def pointProbeToIdentity
   refine Under.homMk p.op ?_
   apply Quiver.Hom.unop_inj
   ext z
-  rfl
 
 lemma coefficientPullback_pointProbeToIdentity
     (k : Under (op Point)) (y : k.right.unop)
@@ -171,12 +170,24 @@ theorem measurePointProjection_zero_reflects
         measurePointProjectionAt X μ pointIdentity
           (sourcePresheaf X |>.map f.right h) at hnat
     rw [measurePointProjectionAt_identity, hμ] at hnat
-    simp at hnat
+    have hnat0 :
+        coefficientPresheaf.map f.right
+            (measurePointProjectionAt X μ k h) = 0 := by
+      simpa using hnat
+    have hnat0' :
+        coefficientPresheaf.map (pointProbeToIdentity k y).right
+            (measurePointProjectionAt X μ k h) = 0 := by
+      simpa only [f] using hnat0
     have hp := coefficientPullback_pointProbeToIdentity k y
       (measurePointProjectionAt X μ k h)
-    rw [hp] at hnat
+    have hconst :
+        (show coefficientPresheaf.obj (op Point) from
+          LocallyConstant.const Point
+            ((show LocallyConstant k.right.unop R from
+              measurePointProjectionAt X μ k h) y)) = 0 :=
+      hp.symm.trans hnat0'
     have hv := congrArg
-      (fun q : LocallyConstant Point R => q PUnit.unit) hnat
+      (fun q : LocallyConstant Point R => q PUnit.unit) hconst
     exact congrArg ULift.down hv
   let pack : ModuleCat.of R R ⟶ E :=
     ModuleCat.ofHom
@@ -186,12 +197,15 @@ theorem measurePointProjection_zero_reflects
     apply CategoryTheory.Limits.end_.hom_ext
     intro k
     apply ModuleCat.hom_injective
-    ext r
+    apply LinearMap.ext
+    intro r
     change r • measurePointProjectionAt X μ k = 0
     rw [hproj]
     simp
   have h1 := ConcreteCategory.congr_hom hpack (1 : R)
-  simpa [pack] using h1
+  change
+    (LinearMap.toSpanSingleton R E (show E from μ)) 1 = 0 at h1
+  simpa only [LinearMap.toSpanSingleton_apply_one] using h1
 
 /-- The projected one-point measure section, definitionally viewed as a linear map between
 locally constant one-point families. -/
