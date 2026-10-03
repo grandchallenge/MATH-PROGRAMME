@@ -1,11 +1,27 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "control_id": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
   "status": "ACTIVE",
-  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated NS-CI intake evidence branches. OPENMATH ownership moved to MP-OPENMATH-UNATTENDED-LIFECYCLE-001.",
+  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated controlled-epistemic-interface intake evidence branches. Registered profiles are NS-CI-001 and UC-001/WP08-D004. OPENMATH ownership remains with MP-OPENMATH-UNATTENDED-LIFECYCLE-001.",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
   "environment": "release-trust",
   "target_repository": "grandchallenge/MATHSOLVE",
+  "registered_profiles": [
+    {
+      "campaign": "NS-CI-001",
+      "branch_prefix": "intake/nsci-",
+      "dispatch_pattern": "^NSCI-C2-[A-E]-(?:BLIND|COOP|ADV)-[0-9]{3}$",
+      "evidence_root": "contributions/NS-CI-001/C2_MIX_DIRECTION_COMPRESSION_LEDGER_CHARGE",
+      "receipt_schema_version": "0.2-pilot"
+    },
+    {
+      "campaign": "UC-001",
+      "branch_prefix": "intake/uc-",
+      "dispatch_pattern": "^UC-WP08-D004-WP0[1-5]-IA-001$",
+      "evidence_root": "contributions/UC-001/WP08_D004_INCIDENCE_INTERFACE",
+      "receipt_schema_version": "1.0.0"
+    }
+  ],
   "token_scope": {
     "repositories": [
       "MATHSOLVE"
@@ -16,8 +32,8 @@
     }
   },
   "allowed_actions": [
-    "read protected MATHSOLVE dispatch records",
-    "read already-created NS-CI intake evidence branches",
+    "read protected MATHSOLVE dispatch records for explicitly registered CEI profiles",
+    "read already-created registered intake evidence branches",
     "validate each branch against its campaign-specific dispatch and receipt schema",
     "compare intake branch to protected main",
     "open a pull request from an existing validated intake branch to main"
@@ -33,11 +49,11 @@
     "use administration, actions-write, checks-write, or workflow-write authority"
   ],
   "validation_requirements": [
-    "branch maps exactly to a protected NS-CI dispatch identifier",
+    "branch maps exactly to an explicitly registered campaign dispatch identifier",
     "dispatch is READY_FOR_GITHUB_COMMENT",
     "branch diff is exactly one raw result and one receipt for the same comment id",
-    "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw artifact identity required by that campaign schema",
-    "receipt is schema-valid, current-for-dispatch, received_unadjudicated, and canonical_claim_effect=false",
+    "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw artifact identity required by that campaign profile",
+    "receipt is schema-valid for the registered profile, current-for-dispatch, received_unadjudicated, and canonical_claim_effect=false",
     "no raw result for the dispatch is already present on protected main",
     "no open intake PR already exists for the branch"
   ],
@@ -63,7 +79,8 @@
   },
   "first_valid_result_lock": "dispatch_level_protected_raw_existence",
   "branch_prefixes": [
-    "intake/nsci-"
+    "intake/nsci-",
+    "intake/uc-"
   ],
   "superseded_openmath_owner": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001"
 }
