@@ -18,15 +18,41 @@ from typing import Any
 OWNER = "grandchallenge"
 REPO = "MATHSOLVE"
 API = "https://api.github.com"
-BRANCH_PREFIX = "intake/nsci-"
-DISPATCH_RE = re.compile(r"^NSCI-C2-[A-E]-(?:BLIND|COOP|ADV)-[0-9]{3}$")
-BASE = "contributions/NS-CI-001/C2_MIX_DIRECTION_COMPRESSION_LEDGER_CHARGE"
-DISPATCH_DIR = f"{BASE}/dispatches"
-RAW_DIR = f"{BASE}/raw"
-RECEIPT_DIR = f"{BASE}/receipts"
+
 
 class ControllerError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True)
+class IntakeProfile:
+    campaign: str
+    branch_prefix: str
+    dispatch_re: re.Pattern[str]
+    base: str
+    receipt_schema_version: str
+    pr_title_prefix: str
+
+
+PROFILES = (
+    IntakeProfile(
+        campaign="NS-CI-001",
+        branch_prefix="intake/nsci-",
+        dispatch_re=re.compile(r"^NSCI-C2-[A-E]-(?:BLIND|COOP|ADV)-[0-9]{3}$"),
+        base="contributions/NS-CI-001/C2_MIX_DIRECTION_COMPRESSION_LEDGER_CHARGE",
+        receipt_schema_version="0.2-pilot",
+        pr_title_prefix="NS-CI intake",
+    ),
+    IntakeProfile(
+        campaign="UC-001",
+        branch_prefix="intake/uc-",
+        dispatch_re=re.compile(r"^UC-WP08-D004-WP0[1-5]-IA-001$"),
+        base="contributions/UC-001/WP08_D004_INCIDENCE_INTERFACE",
+        receipt_schema_version="1.0.0",
+        pr_title_prefix="UC-001 intake",
+    ),
+)
+
 
 @dataclass
 class Github:
@@ -39,7 +65,7 @@ class Github:
             "Accept": "application/vnd.github+json",
             "Authorization": f"Bearer {self.token}",
             "X-GitHub-Api-Version": "2022-11-28",
-            "User-Agent": "gcl-ns-ci-intake-pr-controller",
+            "User-Agent": "gcl-external-intake-pr-controller",
         }
         if payload is not None:
             data = json.dumps(payload).encode("utf-8")
@@ -78,18 +104,33 @@ def content_text(item: dict[str, Any]) -> str:
     return base64.b64decode(encoded).decode("utf-8")
 
 
+def profile_for_branch(branch_name: str) -> tuple[IntakeProfile, str]:
+    for profile in PROFILES:
+        if branch_name.startswith(profile.branch_prefix):
+            slug = branch_name[len("intake/"):].upper()
+            if not profile.dispatch_re.fullmatch(slug):
+                raise ControllerError(
+                    f"branch does not map to registered {profile.campaign} dispatch syntax: {branch_name}"
+                )
+            return profile, slug
+    raise ControllerError("branch does not use a registered external-intake prefix")
+
+
+def profile_for_dispatch(dispatch_id: str) -> IntakeProfile:
+    for profile in PROFILES:
+        if profile.dispatch_re.fullmatch(dispatch_id):
+            return profile
+    raise ControllerError(f"dispatch is not registered with the external intake controller: {dispatch_id}")
+
+
 def derive_dispatch_id(branch_name: str) -> str:
-    if not branch_name.startswith(BRANCH_PREFIX):
-        raise ControllerError("branch does not use NS-CI intake prefix")
-    slug = branch_name[len("intake/"):].upper()
-    if not DISPATCH_RE.fullmatch(slug):
-        raise ControllerError(f"branch does not map to registered dispatch syntax: {branch_name}")
-    return slug
+    return profile_for_branch(branch_name)[1]
 
 
 def expected_paths(dispatch_id: str, comment_id: int) -> tuple[str, str]:
-    raw = f"{RAW_DIR}/{dispatch_id}/github-comment-{comment_id}.md"
-    receipt = f"{RECEIPT_DIR}/{dispatch_id}/github-comment-{comment_id}.json"
+    profile = profile_for_dispatch(dispatch_id)
+    raw = f"{profile.base}/raw/{dispatch_id}/github-comment-{comment_id}.md"
+    receipt = f"{profile.base}/receipts/{dispatch_id}/github-comment-{comment_id}.json"
     return raw, receipt
 
 
@@ -106,22 +147,24 @@ def fetch_text(gh: Github, path: str, ref: str) -> tuple[str, str]:
 
 
 def list_intake_branches(gh: Github) -> list[str]:
-    prefix = urllib.parse.quote(f"heads/{BRANCH_PREFIX}", safe="/")
-    refs = gh.get_optional(f"/repos/{OWNER}/{REPO}/git/matching-refs/{prefix}")
-    if refs is None:
-        return []
-    if not isinstance(refs, list):
-        raise ControllerError("matching-refs response is not a list")
-    names = []
-    for item in refs:
-        ref = item.get("ref") if isinstance(item, dict) else None
-        if isinstance(ref, str) and ref.startswith("refs/heads/"):
-            names.append(ref[len("refs/heads/"):])
+    names: list[str] = []
+    for profile in PROFILES:
+        prefix = urllib.parse.quote(f"heads/{profile.branch_prefix}", safe="/")
+        refs = gh.get_optional(f"/repos/{OWNER}/{REPO}/git/matching-refs/{prefix}")
+        if refs is None:
+            continue
+        if not isinstance(refs, list):
+            raise ControllerError("matching-refs response is not a list")
+        for item in refs:
+            ref = item.get("ref") if isinstance(item, dict) else None
+            if isinstance(ref, str) and ref.startswith("refs/heads/"):
+                names.append(ref[len("refs/heads/"):])
     return sorted(set(names))
 
 
 def main_has_any_raw(gh: Github, dispatch_id: str) -> bool:
-    raw_dir = f"{RAW_DIR}/{dispatch_id}"
+    profile = profile_for_dispatch(dispatch_id)
+    raw_dir = f"{profile.base}/raw/{dispatch_id}"
     encoded_dir = urllib.parse.quote(raw_dir, safe="/")
     items = gh.get_optional(f"/repos/{OWNER}/{REPO}/contents/{encoded_dir}?ref=main")
     if items is None:
@@ -160,10 +203,10 @@ def compare_files(gh: Github, branch: str) -> list[str]:
 
 
 def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
-    dispatch_id = derive_dispatch_id(branch)
-
+    profile, dispatch_id = profile_for_branch(branch)
+    dispatch_dir = f"{profile.base}/dispatches"
     dispatch_text, dispatch_blob = fetch_text(
-        gh, f"{DISPATCH_DIR}/{dispatch_id}.json", "main"
+        gh, f"{dispatch_dir}/{dispatch_id}.json", "main"
     )
     try:
         dispatch = json.loads(dispatch_text)
@@ -172,6 +215,8 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
 
     if dispatch.get("dispatch_id") != dispatch_id:
         raise ControllerError(f"{dispatch_id}: protected dispatch identity mismatch")
+    if dispatch.get("campaign") != profile.campaign:
+        raise ControllerError(f"{dispatch_id}: protected campaign identity mismatch")
     if dispatch.get("dispatch_status") != "READY_FOR_GITHUB_COMMENT":
         raise ControllerError(f"{dispatch_id}: dispatch is not ready for intake")
     if dispatch.get("return_protocol") != "GCL-CONTRIBUTION-RESULT/1":
@@ -180,7 +225,8 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
         raise ControllerError(f"{dispatch_id}: canonical mutation unexpectedly authorized")
 
     changed = compare_files(gh, branch)
-    receipt_prefix = f"{RECEIPT_DIR}/{dispatch_id}/github-comment-"
+    receipt_dir = f"{profile.base}/receipts"
+    receipt_prefix = f"{receipt_dir}/{dispatch_id}/github-comment-"
     receipts = [p for p in changed if p.startswith(receipt_prefix) and p.endswith(".json")]
     if len(receipts) != 1:
         raise ControllerError(f"{dispatch_id}: branch must contain exactly one changed receipt")
@@ -206,8 +252,9 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
 
     expected_issue = dispatch.get("github_issue_number")
     checks = {
-        "schema_version": receipt.get("schema_version") == "0.2-pilot",
+        "schema_version": receipt.get("schema_version") == profile.receipt_schema_version,
         "dispatch_id": receipt.get("dispatch_id") == dispatch_id,
+        "assignment_id": receipt.get("assignment_id") == dispatch.get("assignment_id"),
         "result_protocol": receipt.get("result_protocol") == "GCL-CONTRIBUTION-RESULT/1",
         "github_issue_number": receipt.get("github_issue_number") == expected_issue,
         "github_comment_id": receipt.get("github_comment_id") == comment_id,
@@ -235,6 +282,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
         state = "OPEN_PR_EXISTS" if existing else "PR_REQUIRED"
 
     return {
+        "campaign": profile.campaign,
         "dispatch_id": dispatch_id,
         "branch": branch,
         "dispatch_blob_sha": dispatch_blob,
@@ -252,9 +300,10 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
 def open_pr(gh: Github, item: dict[str, Any]) -> dict[str, Any]:
     dispatch_id = item["dispatch_id"]
     comment_id = item["github_comment_id"]
-    title = f"NS-CI intake: {dispatch_id}"
+    profile = profile_for_dispatch(dispatch_id)
+    title = f"{profile.pr_title_prefix}: {dispatch_id}"
     body = (
-        f"Trusted intake snapshot for dispatch {dispatch_id}, GitHub comment {comment_id}. "
+        f"Trusted intake snapshot for {profile.campaign} dispatch {dispatch_id}, GitHub comment {comment_id}. "
         "This PR preserves raw contributor evidence and a machine receipt only. "
         "It does not adjudicate mathematics, infer independence, certify a claim, "
         "or alter campaign state."
@@ -276,9 +325,10 @@ def run(apply: bool) -> dict[str, Any]:
     gh = Github(token)
 
     report: dict[str, Any] = {
-        "schema_version": "1.0.0",
-        "controller": "GCL_RELEASE_TRUST_BOUNDED_NS_CI_INTAKE_PR_CONTROLLER",
+        "schema_version": "1.1.0",
+        "controller": "GCL_RELEASE_TRUST_BOUNDED_EXTERNAL_INTAKE_PR_CONTROLLER",
         "target_repository": f"{OWNER}/{REPO}",
+        "registered_campaigns": [p.campaign for p in PROFILES],
         "apply": apply,
         "authority": {
             "contents": "read",
@@ -300,13 +350,12 @@ def run(apply: bool) -> dict[str, Any]:
             if item["state"] != "PR_REQUIRED" or not apply:
                 continue
             pr = open_pr(gh, item)
-            url = pr.get("html_url")
-            number = pr["number"]
             report["opened_prs"].append({
+                "campaign": item["campaign"],
                 "dispatch_id": item["dispatch_id"],
                 "branch": branch,
-                "pr_number": number,
-                "pr_url": url,
+                "pr_number": pr["number"],
+                "pr_url": pr.get("html_url"),
             })
         except ControllerError as exc:
             report["errors"].append({"branch": branch, "error": str(exc)})
@@ -324,8 +373,8 @@ def main() -> int:
         report = run(args.apply)
     except ControllerError as exc:
         report = {
-            "schema_version": "1.0.0",
-            "controller": "GCL_RELEASE_TRUST_BOUNDED_NS_CI_INTAKE_PR_CONTROLLER",
+            "schema_version": "1.1.0",
+            "controller": "GCL_RELEASE_TRUST_BOUNDED_EXTERNAL_INTAKE_PR_CONTROLLER",
             "apply": args.apply,
             "fatal_error": str(exc),
             "authority_created": False,
@@ -337,6 +386,7 @@ def main() -> int:
     args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

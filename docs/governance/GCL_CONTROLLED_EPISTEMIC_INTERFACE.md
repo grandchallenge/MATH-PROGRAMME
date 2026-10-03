@@ -17,7 +17,7 @@
 **Documentary lifecycle:** `active`  
 **Documentary role:** governed human-readable operational description of the protected independent-intelligence intake path  
 **Initial protected admission:** MATH-PROGRAMME PR #1041, merge `598a13d8a390fcab722b84b4a494921fc50d0e56`  
-**Controller:** `MP-NSCI-INTAKE-PR-CONTROLLER-001`, machine status `ACTIVE`
+**Controller:** `MP-EXTERNAL-INTAKE-PR-CONTROLLER-001`, machine status `ACTIVE`
 
 ## 1. Plain object
 
@@ -114,7 +114,7 @@ ambiguous provenance
 unclear claim effect
 ```
 
-The protected NS-CI pilot instantiated the first model. A zero-context bootstrap defined the entire work-set, a contributor returned one `GCL-CONTRIBUTION-RESULT/1`, intake preserved the raw result and receipt, and GCL adjudicated the mathematics separately.
+The protected NS-CI pilot instantiated the first model. The UC-001/WP08-D004 tranche is the first reuse of the same controlled interface outside that pilot, with no expansion of token scope or claim authority. A zero-context bootstrap defined the entire work-set, a contributor returned one `GCL-CONTRIBUTION-RESULT/1`, intake preserved the raw result and receipt, and GCL adjudicated the mathematics separately.
 
 ## 4. Restricted claim
 
@@ -286,10 +286,12 @@ with control ID:
 
 `MP-NSCI-INTAKE-PR-CONTROLLER-001`.
 
+Its protected authority is intentionally small. The controller now uses an explicit finite profile registry: the original `NS-CI-001` pilot profile and the `UC-001/WP08-D004` incidence-interface profile. A campaign not named in that registry is rejected rather than inferred.
+
 Its protected authority is intentionally small:
 
-- read protected MATHSOLVE dispatch records;
-- read an already-created intake branch;
+- read protected MATHSOLVE dispatch records for an explicitly registered CEI profile;
+- read an already-created registered intake branch;
 - compare raw result and receipt against protected requirements;
 - open an ordinary pull request from that existing validated branch.
 
@@ -461,7 +463,7 @@ Do not merge these stages for convenience.
 | Function | Protected surface |
 |---|---|
 | Controller machine contract | `governance/ns_ci_intake_pr_controller.json` |
-| Controller implementation | `ci/ns_ci_intake_pr_controller.py` |
+| Controller implementation | `ci/ns_ci_intake_pr_controller.py` (historical filename; active controller is profile-registered and covers NS-CI plus UC-WP08-D004) |
 | Persistent controller workflow | `.github/workflows/ns-ci-intake-pr-controller.yml` |
 | GH-OS workflow registry | `.ghos-routing/workflows.json` |
 | Execution/recovery doctrine | `docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md` |

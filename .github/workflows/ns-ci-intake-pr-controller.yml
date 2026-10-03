@@ -1,4 +1,4 @@
-name: NS-CI intake PR controller
+name: External intake PR controller
 
 on:
   schedule:
@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ns-ci-intake-pr-controller
+  group: external-intake-pr-controller
   cancel-in-progress: false
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
           permission-contents: read
           permission-pull-requests: write
 
-      - name: Reconcile validated NS-CI intake branches to PRs
+      - name: Reconcile validated registered CEI intake branches to PRs
         env:
           MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
         run: |
@@ -58,7 +58,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: ns-ci-intake-pr-controller-report
+          name: external-intake-pr-controller-report
           path: |
             ns-ci-intake-pr-controller-report.json
           if-no-files-found: warn
