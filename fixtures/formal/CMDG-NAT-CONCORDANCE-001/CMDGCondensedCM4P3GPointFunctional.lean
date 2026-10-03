@@ -82,15 +82,134 @@ noncomputable def measurePointIntegralFunctional
   CMDG.CondensedCM4P3G.liftedIntFunctionalDown X
     (measurePointFunctional X μ)
 
+/-- Evaluate a one-point measure section at an arbitrary object of the under-category. -/
+noncomputable def measurePointProjectionAt
+    (X : Profinite.{u})
+    (k : Under (op Point))
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    (Under.forget (op Point) ⋙ sourcePresheaf X).obj k ⟶
+      (Under.forget (op Point) ⋙ coefficientPresheaf).obj k := by
+  exact
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op Point) ⋙ sourcePresheaf X)
+      (Under.forget (op Point) ⋙ coefficientPresheaf)
+      k) μ
+
+@[simp]
+lemma measurePointProjectionAt_identity
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjectionAt X pointIdentity μ = measurePointProjection X μ := by
+  rfl
+
+lemma measurePointProjectionAt_naturality
+    (X : Profinite.{u})
+    {i j : Under (op Point)}
+    (f : i ⟶ j)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjectionAt X i μ ≫
+        (Under.forget (op Point) ⋙ coefficientPresheaf).map f =
+      (Under.forget (op Point) ⋙ sourcePresheaf X).map f ≫
+        measurePointProjectionAt X j μ := by
+  have hcond := congrArg (fun q => q μ)
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op Point) ⋙ sourcePresheaf X)
+      (Under.forget (op Point) ⋙ coefficientPresheaf)
+      f)
+  change
+    ((ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
+      ((Under.forget (op Point) ⋙ coefficientPresheaf).map f))
+        (measurePointProjectionAt X i μ) =
+      ((MonoidalClosed.pre
+        ((Under.forget (op Point) ⋙ sourcePresheaf X).map f)).app
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).obj j))
+        (measurePointProjectionAt X j μ) at hcond
+  rw [ModuleCat.ihom_map_apply,
+    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at hcond
+  exact hcond
+
+/-- A point of an under-category target gives a morphism back to the identity object. -/
+noncomputable def measurePointProbeToIdentity
+    (k : Under (op Point))
+    (y : k.right.unop) :
+    k ⟶ pointIdentity := by
+  refine Under.homMk
+    (CMDG.CondensedCM4P3G.coefficientPointProbeMap k.right.unop y).op ?_
+  apply Quiver.Hom.unop_inj
+  exact Subsingleton.elim _ _
+
+lemma measurePointProjectionAt_eq_zero_of_identity
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (hμ : measurePointProjection X μ = 0)
+    (k : Under (op Point)) :
+    measurePointProjectionAt X k μ = 0 := by
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro a
+  apply LocallyConstant.ext
+  intro y
+  let f : k ⟶ pointIdentity := measurePointProbeToIdentity k y
+  have hn := measurePointProjectionAt_naturality X f μ
+  rw [measurePointProjectionAt_identity, hμ, Category.comp_zero] at hn
+  have ha := ConcreteCategory.congr_hom hn a
+  change
+    LocallyConstant.comap
+      (CMDG.CondensedCM4P3G.coefficientPointProbeMap k.right.unop y).hom.hom
+      (show LocallyConstant k.right.unop R from
+        measurePointProjectionAt X k μ a) = 0 at ha
+  have hy :=
+    congrArg
+      (fun q : LocallyConstant Point R => q PUnit.unit)
+      ha
+  change measurePointProjectionAt X k μ a y = 0 at hy
+  exact hy
+
+/-- The identity-object projection on one-point measure sections reflects zero. -/
+theorem measurePointProjection_zero_reflects
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (hμ : measurePointProjection X μ = 0) :
+    μ = 0 := by
+  let F := Under.forget (op Point) ⋙ sourcePresheaf X
+  let G := Under.forget (op Point) ⋙ coefficientPresheaf
+  let sμ :
+      ModuleCat.of R R ⟶
+        CategoryTheory.Enriched.FunctorCategory.enrichedHom
+          (ModuleCat.{u + 1} R) F G :=
+    ModuleCat.ofHom (LinearMap.toSpanSingleton R _ μ)
+  have hs : sμ = 0 := by
+    apply Limits.end_.hom_ext
+    intro k
+    apply ModuleCat.hom_ext
+    apply LinearMap.ext
+    intro r
+    simp [sμ, F, G, measurePointProjectionAt,
+      measurePointProjectionAt_eq_zero_of_identity X μ hμ k]
+  have h1 := ConcreteCategory.congr_hom hs (1 : R)
+  simpa [sμ] using h1
+
 #check measurePointProjection
 #check measurePointProjectionLinear
 #check measurePointFunctional
 #check measurePointIntegralFunctional
+#check measurePointProjectionAt
+#check measurePointProjectionAt_identity
+#check measurePointProjectionAt_naturality
+#check measurePointProbeToIdentity
+#check measurePointProjectionAt_eq_zero_of_identity
+#check measurePointProjection_zero_reflects
 
 #print axioms measurePointProjection
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
 #print axioms measurePointIntegralFunctional
+#print axioms measurePointProjectionAt
+#print axioms measurePointProjectionAt_naturality
+#print axioms measurePointProjectionAt_eq_zero_of_identity
+#print axioms measurePointProjection_zero_reflects
 
 end CMDG.CondensedCM4P3G.PointFunctional
 
