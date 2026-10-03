@@ -150,7 +150,7 @@ A successful TE3 realization is geometry satisfying the declared mathematical co
 
 ## 5. M1 — kinematic semantics
 
-M1 is blocked until M0 reaches a protected terminal state and a separate activation is admitted.
+M0 reached protected terminal disposition `TE3_REALIZATION_ATLAS_PARTIAL`. M1 K0/K1 is activated by the separately governed M1 admission tracked at `grandchallenge/MATH-PROGRAMME#1163`; no K2 or M2 authority follows.
 
 Its object will be an explicit constraint/crease kinematics model attached to the admitted TE3 realization family.
 
