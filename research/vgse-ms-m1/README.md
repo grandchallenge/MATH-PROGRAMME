@@ -4,7 +4,9 @@
 **Parent phase:** `VGSE-MECHANICAL-SEMANTICS-001`  
 **Tracker:** `grandchallenge/MATH-PROGRAMME#1163`  
 **Protected predecessor:** M0 terminal merge/readback `c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20`  
-**State at activation admission:** `AUTHORIZED_READY`
+**State at activation admission:** `AUTHORIZED_READY`  
+**Current state:** `TERMINAL — KINEMATIC_SEMANTICS_BRANCH_DEPENDENT`  
+**Protected substantive merge:** `8705515e48c35256f3be5d0b639ef2cbc96ef07b`
 
 ## Objective
 
@@ -82,3 +84,26 @@ M2 remains blocked.
 ## Claim boundary
 
 M1 does not establish source correspondence or `VGSE-C06`, finite rigid foldability, mountain/valley assignment, collision-free motion, finite thickness, stiffness, force, energy, constitutive response, materials, actuation, manufacturing, product performance, novelty, patentability, or commercial value.
+
+
+## Terminal M1 result
+
+K0/K1 is complete and protected.
+
+- All 40 retained valid M0 realizations replay at Jacobian rank `38`.
+- Flat-state infinitesimal mobility is `4` for all 40.
+- Constraint-dependency dimension is `12` for all 40.
+- Fixed-panel choice is a gauge choice: baseline rank, mobility, and labeled hinge-rate projector are invariant within numerical tolerance.
+- The stronger fixed-quotient uniqueness hypothesis is false under the declared semantics. Five valid geometric representatives at the same protected quotient all have mobility `4`, but their labeled four-dimensional hinge-rate mechanism subspaces are distinct.
+
+The retained terminal disposition is:
+
+`KINEMATIC_SEMANTICS_BRANCH_DEPENDENT`
+
+This is an infinitesimal flat-state statement under a GCL-defined rigid-panel/body-hinge interpretation. It is not finite rigid foldability.
+
+## Successor boundary
+
+K2 finite continuation remains unauthorized.
+
+M2 inverse design may be proposed separately. Any such tranche must treat geometric branch/representative choice as latent structure and apply the adopted GCL-ID-00 preflight before substantial inverse optimization.
