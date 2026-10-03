@@ -103,6 +103,34 @@ lemma measurePointProjectionAt_identity
     measurePointProjectionAt X pointIdentity μ = measurePointProjection X μ := by
   rfl
 
+lemma measurePointProjection_condition
+    (X : Profinite.{u})
+    {i j : Under (op Point)}
+    (f : i ⟶ j) :
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          i ≫
+        (ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).map f) =
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          j ≫
+        (MonoidalClosed.pre
+          ((Under.forget (op Point) ⋙ sourcePresheaf X).map f)).app
+            ((Under.forget (op Point) ⋙ coefficientPresheaf).obj j) := by
+  simpa only [
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op Point) ⋙ sourcePresheaf X)
+      (Under.forget (op Point) ⋙ coefficientPresheaf)
+      f)
+
 lemma measurePointProjectionAt_naturality
     (X : Profinite.{u})
     {i j : Under (op Point)}
@@ -112,12 +140,7 @@ lemma measurePointProjectionAt_naturality
         (Under.forget (op Point) ⋙ coefficientPresheaf).map f =
       (Under.forget (op Point) ⋙ sourcePresheaf X).map f ≫
         measurePointProjectionAt X j μ := by
-  have hcond := congrArg (fun q => q μ)
-    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
-      (ModuleCat.{u + 1} R)
-      (Under.forget (op Point) ⋙ sourcePresheaf X)
-      (Under.forget (op Point) ⋙ coefficientPresheaf)
-      f)
+  have hcond := congrArg (fun q => q μ) (measurePointProjection_condition X f)
   change
     ((ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
       ((Under.forget (op Point) ⋙ coefficientPresheaf).map f))
@@ -138,6 +161,7 @@ noncomputable def measurePointProbeToIdentity
   refine Under.homMk
     (CMDG.CondensedCM4P3G.coefficientPointProbeMap k.right.unop y).op ?_
   apply Quiver.Hom.unop_inj
+  ext z
   exact Subsingleton.elim _ _
 
 lemma measurePointProjectionAt_eq_zero_of_identity
@@ -153,8 +177,11 @@ lemma measurePointProjectionAt_eq_zero_of_identity
   intro y
   let f : k ⟶ pointIdentity := measurePointProbeToIdentity k y
   have hn := measurePointProjectionAt_naturality X f μ
-  rw [measurePointProjectionAt_identity, hμ, Category.comp_zero] at hn
-  have ha := ConcreteCategory.congr_hom hn a
+  have hn0 :
+      measurePointProjectionAt X k μ ≫
+          (Under.forget (op Point) ⋙ coefficientPresheaf).map f = 0 := by
+    simpa [measurePointProjectionAt_identity, hμ] using hn
+  have ha := ConcreteCategory.congr_hom hn0 a
   change
     LocallyConstant.comap
       (CMDG.CondensedCM4P3G.coefficientPointProbeMap k.right.unop y).hom.hom
@@ -165,7 +192,7 @@ lemma measurePointProjectionAt_eq_zero_of_identity
       (fun q : LocallyConstant Point R => q PUnit.unit)
       ha
   change measurePointProjectionAt X k μ a y = 0 at hy
-  exact hy
+  simpa using hy
 
 /-- The identity-object projection on one-point measure sections reflects zero. -/
 theorem measurePointProjection_zero_reflects
@@ -183,13 +210,20 @@ theorem measurePointProjection_zero_reflects
   have hs : sμ = 0 := by
     apply Limits.end_.hom_ext
     intro k
-    apply ModuleCat.hom_ext
-    apply LinearMap.ext
-    intro r
-    simp [sμ, F, G, measurePointProjectionAt,
-      measurePointProjectionAt_eq_zero_of_identity X μ hμ k]
+    have hk :
+        (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R) F G k) μ = 0 := by
+      simpa [F, G, measurePointProjectionAt] using
+        (measurePointProjectionAt_eq_zero_of_identity X μ hμ k)
+    apply ModuleCat.hom_injective
+    ext r
+    change
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R) F G k) (r • μ) = 0
+    rw [map_smul, hk, smul_zero]
   have h1 := ConcreteCategory.congr_hom hs (1 : R)
-  simpa [sμ] using h1
+  change (1 : R) • μ = 0 at h1
+  simpa using h1
 
 #check measurePointProjection
 #check measurePointProjectionLinear
@@ -197,6 +231,7 @@ theorem measurePointProjection_zero_reflects
 #check measurePointIntegralFunctional
 #check measurePointProjectionAt
 #check measurePointProjectionAt_identity
+#check measurePointProjection_condition
 #check measurePointProjectionAt_naturality
 #check measurePointProbeToIdentity
 #check measurePointProjectionAt_eq_zero_of_identity
@@ -207,6 +242,7 @@ theorem measurePointProjection_zero_reflects
 #print axioms measurePointFunctional
 #print axioms measurePointIntegralFunctional
 #print axioms measurePointProjectionAt
+#print axioms measurePointProjection_condition
 #print axioms measurePointProjectionAt_naturality
 #print axioms measurePointProjectionAt_eq_zero_of_identity
 #print axioms measurePointProjection_zero_reflects
