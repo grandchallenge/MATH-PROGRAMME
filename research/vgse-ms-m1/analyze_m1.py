@@ -293,8 +293,6 @@ def build() -> dict[str, Any]:
                 "mobility": metrics["mobility"],
                 "constraint_dependency_dimension": metrics["constraint_dependency_dimension"],
                 "hinge_rate_subspace_rank": metrics["hinge_rate_subspace_rank"],
-                "smallest_nonzero_singular_value": metrics["smallest_nonzero_singular_value"],
-                "largest_null_singular_value": metrics["largest_null_singular_value"],
             }
         )
 
