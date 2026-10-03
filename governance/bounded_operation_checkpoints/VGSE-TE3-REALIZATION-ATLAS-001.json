@@ -15,33 +15,40 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1085"
   },
-  "phase": "M0 candidate assembled: deterministic TE3-native realization atlas awaits exact-head replay and protected review.",
+  "phase": "M0 exact-head replay and logical review complete; continuity rebound to PR #1152 pending native protected integration.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "51355bda7d61d8a840e01cc1b06276c0cb768b94",
-    "candidate_head_sha": "e7c76a8b10eccca1087f157783585687e0a499db",
+    "protected_base_sha": "9cde7b1c346d22c871ff072e42fa8eefc4028188",
+    "candidate_head_sha": "24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
     "issue_number": 1085,
-    "pr_number": null,
+    "pr_number": 1152,
     "branch": "research/vgse-ms-m0-r2",
-    "workflow_runs": []
+    "workflow_runs": [
+      {
+        "run_id": 37082963762,
+        "name": "VGSE MS M0 replay",
+        "status": "completed",
+        "conclusion": "success",
+        "job_id": 111087273005
+      }
+    ]
   },
   "terminal_condition": "Terminate M0 only at TE3_REALIZATION_ATLAS_ESTABLISHED, TE3_REALIZATION_ATLAS_PARTIAL, TE3_REALIZATION_COMPONENT_RESTRICTED, TE3_REALIZATION_CONSTRUCTION_OBSTRUCTED, or TE3_REALIZATION_UNRESOLVED, with independent realization points, TE3 replay, claim-boundary preservation, exact-head review, native protected integration, and no automatic M1 authorization.",
   "permitted_next_actions": [
     {
-      "id": "submit_m0_candidate_for_replay",
-      "description": "Open the substantive M0 pull request from exact head e7c76a8b10eccca1087f157783585687e0a499db and require the path-scoped deterministic replay plus normal Programme gates."
+      "id": "integrate_m0_candidate",
+      "description": "Carry exact head 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c through the native protected merge queue after all required candidate gates are green."
     }
   ],
   "next_action": {
-    "id": "submit_m0_candidate_for_replay",
-    "description": "Submit exact M0 candidate e7c76a8b10eccca1087f157783585687e0a499db for deterministic replay, distinct Adversary/Referee review, and protected integration if green.",
+    "id": "integrate_m0_candidate",
+    "description": "Integrate exact M0 candidate 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c through the native protected merge queue without changing the substantive head.",
     "evidence_targets": [
-      "research/vgse-ms-m0/RESULTS.json",
-      "research/vgse-ms-m0/REALIZATION_ATLAS.json",
-      "research/vgse-ms-m0/BRANCH_LEDGER.json",
-      "research/vgse-ms-m0/TE3_REPLAY.json",
-      "research/vgse-ms-m0/analyze_m0.py",
-      ".github/workflows/vgse-ms-m0-replay.yml"
+      "grandchallenge/MATH-PROGRAMME#1152",
+      "VGSE MS M0 replay run 37082963762 job 111087273005",
+      "Adversary logical pass review 5398167219",
+      "Referee logical pass review 5398167346",
+      "research/vgse-ms-m0/RESULTS.json"
     ]
   },
   "external_evidence": {
@@ -56,21 +63,21 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "rebind M0 continuity to rebased exact research candidate",
-    "result": "M0 substantive evidence was restaged without stale-history merge onto research/vgse-ms-m0-r2 from protected main 51355bda7d61d8a840e01cc1b06276c0cb768b94. The exact candidate head is e7c76a8b10eccca1087f157783585687e0a499db. Candidate disposition is TE3_REALIZATION_ATLAS_PARTIAL pending replay and review.",
+    "action": "rebind continuity to final replayed M0 candidate",
+    "result": "The final M0 candidate at 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c passed the path-scoped numerical replay and GH-OS pre-queue routing. Exact-head Adversary and Referee logical passes found no blocking defect. Continuity is rebound to PR #1152 for native protected integration. Candidate disposition remains TE3_REALIZATION_ATLAS_PARTIAL and M1 remains unauthorized.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1085",
-      "grandchallenge/MATH-PROGRAMME@51355bda7d61d8a840e01cc1b06276c0cb768b94",
-      "research/vgse-ms-m0/RESULTS.json",
-      "research/vgse-ms-m0/BRANCH_LEDGER.json",
-      "research/vgse-ms-m0/TE3_REPLAY.json"
+      "grandchallenge/MATH-PROGRAMME#1152",
+      "grandchallenge/MATH-PROGRAMME@24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
+      "VGSE MS M0 replay run 37082963762 job 111087273005",
+      "Adversary logical pass review 5398167219",
+      "Referee logical pass review 5398167346"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-TE3-REALIZATION-ATLAS-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-02T13:51:00-07:00"
+    "observed_at": "2026-10-02T17:23:00-07:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -87,7 +94,7 @@
       "governance/GCL-ID-00-ADOPTION.json",
       "grandchallenge/MATHCERT@15b68c196d020045bea42fc34236e0647b87cbb9"
     ],
-    "instructions": "Verify live identity first. Then submit or review only the exact M0 candidate head e7c76a8b10eccca1087f157783585687e0a499db. Require the path-scoped deterministic replay and normal Programme checks. Preserve TE3_REALIZATION_ATLAS_PARTIAL unless the exact replay or review changes it. Do not authorize M1 within the M0 substantive PR."
+    "instructions": "Verify live identity first. Then integrate only PR #1152 exact head 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c through the native protected merge queue if required checks remain green. Preserve TE3_REALIZATION_ATLAS_PARTIAL and all claim boundaries. Do not authorize M1 within the M0 substantive integration."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
