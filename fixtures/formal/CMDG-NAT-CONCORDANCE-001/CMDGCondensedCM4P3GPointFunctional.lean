@@ -217,7 +217,7 @@ theorem measurePointProjection_zero_reflects
   have h1 := congrArg
     (fun q : ModuleCat.of R R ⟶ E => q.hom) hpack
   change LinearMap.toSpanSingleton R E (show E from μ) = 0 at h1
-  exact (LinearMap.toSpanSingleton_eq_zero_iff).mp h1
+  exact (LinearMap.toSpanSingleton_eq_zero_iff R E).mp h1
 
 /-- The projected one-point measure section, definitionally viewed as a linear map between
 locally constant one-point families. -/
