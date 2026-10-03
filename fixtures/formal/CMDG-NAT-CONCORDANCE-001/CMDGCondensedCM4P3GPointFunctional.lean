@@ -108,6 +108,7 @@ universe u
 open CategoryTheory Limits Opposite
 open CMDG.CondensedCM4P3G
 open CMDG.CondensedCM4P3G.FreeSections
+open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 open CMDG.CondensedCM4P3L.KernelFunctional
 open CMDG.CondensedCM4P2E.RightKanReconstruction
@@ -1023,11 +1024,56 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
   rw [kernelProductFunctional_apply]
   simpa using congrArg ULift.down hsection
 
+/-- The #664 finite-coordinate witness and the solidification-kernel hypothesis force the
+finite Nöbeling coefficient combination to vanish pointwise. -/
+theorem basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hd :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ d = 0)
+    (I : Finset (IntegralBasisIndex X))
+    (hI :
+      ∀ a : IntegralBasisIndex X → ℤ,
+        (∀ i ∈ I, a i = 0) →
+        kernelProductFunctional X d a = 0) :
+    ∀ x : X,
+      basisCombination X
+        (finiteFunctionalCoefficients X (kernelProductFunctional X d) I) x = 0 := by
+  intro x
+  rw [basisCombination_kernelProductFunctional_finiteCoefficients_apply X d I hI x]
+  exact
+    kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel
+      X d hd x
+
+/-- Immediate #664 endpoint: a solidification-kernel morphism has zero P3-L product
+functional.  This uses only the protected finite-coordinate dependence theorem, the pointwise
+Nöbeling separation theorem, and the kernel/evaluation bridge above. -/
+theorem kernelProductFunctional_eq_zero_of_solidification_kernel
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hd :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ d = 0) :
+    kernelProductFunctional X d = 0 := by
+  obtain ⟨I, hI⟩ :=
+    kernelProductFunctional_finite_coordinate_kernel X d
+  apply
+    additiveFunctional_eq_zero_of_finiteDependence_and_basisCombination
+      X (kernelProductFunctional X d) I hI
+  exact
+    basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
+      X d hd I hI
+
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
 #print axioms kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel
+#print axioms basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
+#print axioms kernelProductFunctional_eq_zero_of_solidification_kernel
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
