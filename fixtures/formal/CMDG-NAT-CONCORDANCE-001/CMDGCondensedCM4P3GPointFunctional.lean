@@ -198,9 +198,6 @@ theorem measurePointProjection_zero_reflects
     intro k
     rw [zero_comp]
     apply ModuleCat.hom_injective
-    apply LinearMap.ext
-    intro r
-    simp only [ModuleCat.comp_apply]
     let q :=
       CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
         (ModuleCat.{u + 1} R)
@@ -208,17 +205,19 @@ theorem measurePointProjection_zero_reflects
         (Under.forget (op Point) ⋙ coefficientPresheaf)
         k
     change
-      (ConcreteCategory.hom q)
-          ((LinearMap.toSpanSingleton R E (show E from μ)) r) = 0
-    rw [LinearMap.toSpanSingleton_apply, map_smul]
-    change r • measurePointProjectionAt X μ k = 0
-    rw [hproj]
-    simp
-  have h1 := ConcreteCategory.congr_hom hpack (1 : R)
-  change
-    (LinearMap.toSpanSingleton R E (show E from μ)) 1 = 0 at h1
-  have hone := LinearMap.toSpanSingleton_apply_one R E (show E from μ)
-  exact hone.symm.trans h1
+      (ConcreteCategory.hom q).comp
+          (LinearMap.toSpanSingleton R E (show E from μ)) = 0
+    rw [LinearMap.comp_toSpanSingleton]
+    change
+      LinearMap.toSpanSingleton R
+        ((Under.forget (op Point) ⋙ sourcePresheaf X).obj k ⟶
+          (Under.forget (op Point) ⋙ coefficientPresheaf).obj k)
+        (measurePointProjectionAt X μ k) = 0
+    rw [hproj, LinearMap.toSpanSingleton_zero]
+  have h1 := congrArg
+    (fun q : ModuleCat.of R R ⟶ E => q.hom) hpack
+  change LinearMap.toSpanSingleton R E (show E from μ) = 0 at h1
+  exact (LinearMap.toSpanSingleton_eq_zero_iff).mp h1
 
 /-- The projected one-point measure section, definitionally viewed as a linear map between
 locally constant one-point families. -/
