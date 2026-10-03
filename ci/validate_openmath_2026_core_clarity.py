@@ -59,8 +59,20 @@ def require(condition: bool, message: str) -> None:
 
 
 def validate_submission_route(state: dict[str, Any]) -> None:
+    terminal = state.get("event_window", {}).get("state") == "TERMINAL"
     native = state.get("summary", {}).get("competition", {}).get("native_registration", {})
     reconciliation = native.get("route_reconciliation")
+    if terminal:
+        require(state["event_window"].get("official_submissions") == 0,
+                "terminal event window submission count drift")
+        require(state["event_window"].get("official_acceptances") == 0,
+                "terminal event window acceptance count drift")
+        require(native.get("blocking_boundary") == "EVENT_WINDOW_TERMINAL__DEADLINE_PASSED",
+                "terminal submission boundary drift")
+        if reconciliation is not None:
+            require(reconciliation.get("official_submission") is False,
+                    "route diagnostic cannot create official submission evidence")
+        return
     if reconciliation is None:
         return
     require(native.get("blocking_boundary") == "ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED",
@@ -105,6 +117,7 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
 
     rows = {x["hill_slot"]: x for x in state.get("hills", [])}
     require(set(rows) == set(HILLS), "canonical hill rows drift")
+    terminal = state.get("event_window", {}).get("state") == "TERMINAL"
     leased = 0
     for hill,(title,external_id) in EXPECTED.items():
         row = rows[hill]
@@ -116,12 +129,16 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
         require(competition.get("official_acceptance") == "NONE", f"{hill} official acceptance drift")
         agent = row.get("external_agent", {})
         lifecycle_state = agent.get("lifecycle")
-        require(lifecycle_state in {"LEASED_NOT_LAUNCHED","ACCEPTED"}, f"{hill} unsupported current agent lifecycle")
+        allowed = {"LEASED_NOT_LAUNCHED","ACCEPTED"} if not terminal else {"SUPERSEDED","ACCEPTED"}
+        require(lifecycle_state in allowed, f"{hill} unsupported current agent lifecycle")
         if lifecycle_state == "LEASED_NOT_LAUNCHED":
             leased += 1
             require(agent.get("launch_evidence") is None, f"{hill} unexpected launch evidence")
             require(agent.get("return_evidence") is None, f"{hill} unexpected return evidence")
             require(agent.get("adjudication") == "NOT_STARTED", f"{hill} unexpected current adjudication")
+        if terminal and lifecycle_state == "SUPERSEDED":
+            require(agent.get("launch_evidence") is None and agent.get("return_evidence") is None,
+                    f"{hill} retired current assignment has execution evidence")
         pred = agent.get("predecessor")
         if pred:
             if pred.get("lifecycle") == "SUPERSEDED":
@@ -135,10 +152,15 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     for hill,row in rows.items():
         for slot,agent in row.get("supporting_agents",{}).items():
             require(hill == "OM26-H1", "supporting assignment outside H1")
-            require(agent.get("lifecycle") == "LEASED_NOT_LAUNCHED", f"{slot} supporting lifecycle drift")
-            require(agent.get("launch_evidence") is None and agent.get("return_evidence") is None, f"{slot} unexpected execution evidence")
-            require(agent.get("adjudication") == "NOT_STARTED", f"{slot} supporting adjudication drift")
-            leased += 1
+            if terminal:
+                require(agent.get("lifecycle") == "SUPERSEDED", f"{slot} terminal supporting lifecycle drift")
+                require(agent.get("launch_evidence") is None and agent.get("return_evidence") is None,
+                        f"{slot} retired support has execution evidence")
+            else:
+                require(agent.get("lifecycle") == "LEASED_NOT_LAUNCHED", f"{slot} supporting lifecycle drift")
+                require(agent.get("launch_evidence") is None and agent.get("return_evidence") is None, f"{slot} unexpected execution evidence")
+                require(agent.get("adjudication") == "NOT_STARTED", f"{slot} supporting adjudication drift")
+                leased += 1
 
     h1 = rows["OM26-H1"]
     require(h1.get("solve", {}).get("campaign_best_observed") == 93, "H1 campaign best drift")
@@ -162,6 +184,10 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
 
     selected = [hill for hill,row in rows.items() if row.get("external_agent",{}).get("lifecycle") == "LEASED_NOT_LAUNCHED"]
     require(state.get("next_action", {}).get("currently_selected") == selected, "next-action selection differs from current leases")
+    if terminal:
+        require(selected == [], "terminal event window retains selected leases")
+        require(state["summary"]["competition"].get("submitted_hills") == 0, "terminal submitted hill count drift")
+        require(state["summary"]["competition"].get("accepted_hills") == 0, "terminal accepted hill count drift")
 
     automation = state.get("automation", {}).get("openmath_lifecycle")
     if automation is not None:

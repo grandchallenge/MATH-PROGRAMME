@@ -4,66 +4,48 @@
 >
 > This page is a human projection of that record. It is not a second source of truth.
 
-## Current topology
+## Event-window disposition
 
-OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4, H5, H6, H7**.
+OPENMATH-2026 event-window execution is **TERMINAL**.
 
-## Campaign summary
+- Submission cutoff: **9 p.m. America/Vancouver on 2 October 2026** (04:00 UTC on 3 October).
+- Official competition submissions: **0**.
+- Official competition acceptances: **0**.
+- Mathematical outputs, failed routes, exact blockers, formal artifacts, agent returns and provenance remain retained.
+- Historical native jobs and local evaluator results are not official submissions.
 
-- Hills: **7**
-- Independent-agent state: **42 ACCEPTED; 9 LEASED_NOT_LAUNCHED**
-- Official competition submissions: **0**
+OPENMATH-2026 retains seven historical first-class hill lanes: **H1, H2, H3, H4, H5, H6, H7**. There are no executable OPENMATH replay leases.
 
-## Seven-hill control board
+## Post-event mathematical frontiers
 
-| Hill | Problem | Independent agent | Competition |
-|---|---|---|---|
-| H1 | Kobon triangles | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-108 / #688 | NOT_SUBMITTED |
-| H2 | Busy Beaver 6 certificates | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-209 / #675 | NOT_SUBMITTED |
-| H3 | Clique-cluster Ramsey multiplicity | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-307 / #654 | NOT_SUBMITTED |
-| H4 | Collatz modular descent | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-406 / #652 | NOT_SUBMITTED |
-| H5 | Grothendieck constant witnesses | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-506 / #653 | NOT_SUBMITTED |
-| H6 | 3x3 matrix multiplication tensor | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-607 / #656 | NOT_SUBMITTED |
-| H7 | Erdős Problem 3 | **LEASED_NOT_LAUNCHED** — INDEPENDENT-AGENT-706 / #660 | NOT_SUBMITTED |
+| Hill | Surviving frontier |
+|---|---|
+| H1 | Remaining q≥6 / premise closure |
+| H2 | Expand the machine-search neighbourhood substantially or stop |
+| H3 | Move to m≥4 constructions/obstructions |
+| H4 | SOURCE_BLOCKED pending canonical serialization and contraction-margin/tie semantics |
+| H5 | Repair exact small-size classification; then genuinely non-circulant 5×5–8×8 if useful |
+| H6 | Broader rank-23 transformations or rank-22 obstruction |
+| H7 | **Promoted to GCL-ERDOS3**: formalize D5 and attack the reciprocal-mass → AP bridge |
 
-## Supporting assignments
+## Mechanism disposition
 
-| Hill | Packet | Agent and return |
-|---|---|---|
-| OM26-H1 | H1-Q6 | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-135 / #687 |
-| OM26-H1 | H1-ADVERSARY | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-164 / #682 |
-
-## Official submission route
-
-**Blocker:** ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED
-
-Obtain the organizer-published OpenMath submission workflow or announced fallback. Preserve existing project/job identities. Do not raise model budgets or rent compute merely to transmit fixed artifacts. Continue H1/H7 mathematical work and assemble handbook packets; queued jobs and local reports are not official submissions.
-
-**Submission cutoff:** 9 p.m. America/Vancouver on 2 October 2026 (04:00 UTC on 3 October).
-The ordinary Climb budget message does not establish a competition submission fee.
-
-## Current next action
-
-**Maximize defensible event-window contributions. Execute H1 premise closure and the remaining q>=6 attack, with H7 as the parallel formal lane; use bounded delta gates for lower-priority hills.**
-
-Research agenda: [seven-hill objectives and immediate priorities](OPENMATH_2026_RESEARCH_AGENDA.md).
-
-**Immediate internal target:** H1: independently discharge or replace remaining source-scoped geometric premises, then attack q>=6; first finite stratum is 333335 at D2=7. H7 runs as the parallel formal lane.
-
-**Parallel Cert lane:** MATHCERT #345: fresh non-authoring exact replay of OM26-H1-CON-002 (93-triangle construction). This does not certify the six-core upper-bound premises.
-
-Participation uses ordinary authenticated GitHub issue-comment capability. Pseudonymous accounts are sufficient; no GCL organization membership, collaborator invitation, repository write access, or GCL-specific credentials are required. Zero-credential intake is postponed.
-
-Before substantive work, verify that the participant or an explicitly authorized relay in their environment can post one complete `GCL-RETURN-RELAY/1` envelope to the immutable task’s exact `INTENDED_RETURN` issue. Otherwise stop with `RETURN_TRANSPORT_UNAVAILABLE`. A private conversation alone is not a durable return route.
-
-Read the [participant entrypoint](https://github.com/grandchallenge/MATHSOLVE/blob/main/handoffs/OPENMATH-2026/CEX_AGENT_ENTRYPOINT.md) and verify the exact current protected lease before launch. A public task link does not allocate a second lease; the first-valid-result lock remains in force.
-
-The protected OPENMATH lifecycle controller carries valid returns through capture, replay, bounded adjudication, Programme reconciliation, and successor generation without manual evidence transport or controller wake-up. Receipt, acceptance, adjudication, and mathematical certification remain separate.
-
-See the [outside-participant trial procedure](OPENMATH_2026_PARTICIPANT_TRIAL.md). The trial is optional operational assurance when a genuine outside participant contributes; it is not a prerequisite for internal research or seven-hill participation.
-
-## CORE CLARITY rule
-
-Operational state and declared campaign state are one protected system. The frozen lifecycle is:
+The controlled outside-intelligence interface is retained. The operational lifecycle remains:
 
 `READY → LAUNCHED → RETURNED → CAPTURED → REPLAYED → ADJUDICATED → ADVANCED`
+
+It no longer selects the next mathematical task. A protected frontier-advancement gate owns successor selection. `Next residual` in `GCL-CONTRIBUTION-RESULT/1` is evidence, not scheduling authority.
+
+Participation transport remains `GCL-RETURN-RELAY/1` through authenticated durable GitHub intake when a current frontier task is explicitly instantiated.
+
+## Successor campaign
+
+The H7 corpus is promoted into **GCL-ERDOS3**, a standalone research campaign and reference implementation of frontier-governed research execution. OPENMATH H7 remains immutable provenance.
+
+The initial active GCL-ERDOS3 frontier is:
+- D5 formal closure;
+- the weakest useful scale-local reciprocal-mass bridge;
+- adversarial attack on that bridge;
+- source/library interface reconnaissance.
+
+No claim here proves Erdős Problem 3, certifies a theorem, or creates retroactive competition submission authority.

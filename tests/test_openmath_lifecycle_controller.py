@@ -11,70 +11,34 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class OpenMathLifecycleControllerTest(unittest.TestCase):
-    def test_reconciled_route_rejects_stale_budget_blocker_after_projection(self):
-        from ci.validate_openmath_2026_core_clarity import validate_submission_route, CoreClarityError
-        state = json.loads((ROOT / "governance/openmath_2026_campaign_state.json").read_text())
+    def test_terminal_submission_route_is_closed(self):
+        from ci.validate_openmath_2026_core_clarity import validate_submission_route
+        state=json.loads((ROOT/"governance/openmath_2026_campaign_state.json").read_text())
         validate_submission_route(state)
-        native = state["summary"]["competition"]["native_registration"]
-        self.assertIn("route_reconciliation", native)
-        native["blocking_boundary"] = "FINANCIAL_AUTHORIZATION_REQUIRED__STRICT_ZERO_DOLLAR_LLM_CAP_REACHED"
-        with self.assertRaises(CoreClarityError):
-            validate_submission_route(state)
-
-    def test_projection_advances_without_manual_bridge(self):
-        state = json.loads(
-            (ROOT / "governance/openmath_2026_campaign_state.json").read_text(encoding="utf-8")
-        )
-        projection = {
-            "source_dispatch": "OM26-H3-WP01-IA-001",
-            "hill": "OM26-H3",
-            "predecessor": {
-                "assignment_id": "OM26-H3-WP01",
-                "agent_ref": "INDEPENDENT-AGENT-003",
-                "adjudication": "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
-                "accepted_claims": [],
-            },
-            "successor": {
-                "assignment_id": "OM26-H3-WP02",
-                "dispatch_id": "OM26-H3-WP02-IA-001",
-                "agent_ref": "INDEPENDENT-AGENT-302",
-                "issue_number": 999,
-                "lifecycle": "LEASED_NOT_LAUNCHED",
-            },
-            "external_agent_summary": {
-                "accepted_agents": 4,
-                "leased_not_launched_agents": 6,
-                "launched_agents": 0,
-                "returned_unadjudicated_agents": 0,
-            },
-        }
-        candidate = apply_projection_to_state(
-            copy.deepcopy(state),
-            projection,
-            "a" * 40,
-            {
-                ".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json": "b" * 40,
-                "work_packages/OPENMATH_2026/HILL_LANES.json": "c" * 40,
-            },
-        )
-        h3 = next(x for x in candidate["hills"] if x["hill_slot"] == "OM26-H3")
-        self.assertEqual(h3["external_agent"]["assignment_id"], "OM26-H3-WP02")
-        self.assertEqual(h3["external_agent"]["lifecycle"], "LEASED_NOT_LAUNCHED")
+        self.assertEqual(state["event_window"]["official_submissions"],0)
+        self.assertEqual(state["event_window"]["official_acceptances"],0)
         self.assertEqual(
-            h3["external_agent"]["predecessor"]["adjudication"],
-            "ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION",
+            state["summary"]["competition"]["native_registration"]["blocking_boundary"],
+            "EVENT_WINDOW_TERMINAL__DEADLINE_PASSED",
         )
-        automation = candidate["automation"]["openmath_lifecycle"]
-        self.assertEqual(automation["last_transition_result"], "ADVANCED")
-        self.assertFalse(automation["manual_transport_required"])
-        self.assertFalse(automation["manual_controller_wake_required"])
-        self.assertIn("OM26-H3", candidate["next_action"]["currently_selected"])
-        self.assertEqual(candidate["next_action"]["research_direction"], state["next_action"]["research_direction"])
-        self.assertEqual(candidate["next_action"]["id"], state["next_action"]["id"])
-        self.assertEqual(candidate["next_action"]["description"], state["next_action"]["description"])
-        self.assertEqual(candidate["summary"]["competition"], state["summary"]["competition"])
-        from ci.openmath_lifecycle_controller import render_status
-        self.assertIn("ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED", render_status(candidate))
+
+
+    def test_terminal_state_rejects_automatic_programme_projection(self):
+        state=json.loads((ROOT/"governance/openmath_2026_campaign_state.json").read_text())
+        projection={
+            "source_dispatch":"OM26-H3-WP01-IA-001",
+            "hill":"OM26-H3",
+            "predecessor":{"assignment_id":"OM26-H3-WP01","agent_ref":"INDEPENDENT-AGENT-003","adjudication":"ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION","accepted_claims":[]},
+            "successor":{"assignment_id":"OM26-H3-WP02","dispatch_id":"OM26-H3-WP02-IA-001","agent_ref":"INDEPENDENT-AGENT-302","issue_number":999,"lifecycle":"LEASED_NOT_LAUNCHED"},
+            "external_agent_summary":{"accepted_agents":4,"leased_not_launched_agents":6,"launched_agents":0,"returned_unadjudicated_agents":0},
+        }
+        with self.assertRaisesRegex(ControllerError,"event window terminal"):
+            apply_projection_to_state(
+                copy.deepcopy(state),projection,"a"*40,
+                {".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json":"b"*40,
+                 "work_packages/OPENMATH_2026/HILL_LANES.json":"c"*40},
+            )
+
 
     def test_protected_advance_survives_deleted_candidate_branch(self):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}
@@ -207,6 +171,7 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
 
     def test_h1_successors_retain_source_conditional_claim_history(self):
         state=json.loads((ROOT/"governance/openmath_2026_campaign_state.json").read_text())
+        state.pop("event_window", None)
         h1=next(x for x in state["hills"] if x["hill_slot"]=="OM26-H1")
         current=h1["external_agent"]
         projection={"source_dispatch":"OM26-H1-WP02-IA-001","hill":"OM26-H1","predecessor":{"assignment_id":current["assignment_id"],"agent_ref":current["agent_ref"],"adjudication":"ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION","accepted_claims":[]},"successor":{"assignment_id":"OM26-H1-WP03","dispatch_id":"OM26-H1-WP03-IA-001","agent_ref":"INDEPENDENT-AGENT-103","issue_number":999,"lifecycle":"LEASED_NOT_LAUNCHED"},"external_agent_summary":{"accepted_agents":9,"leased_not_launched_agents":7}}
@@ -290,6 +255,7 @@ if __name__ == "__main__":
 class SupportingH1ProjectionTest(unittest.TestCase):
     def test_support_return_preserves_primary_and_claims(self):
         state=json.loads((ROOT/'governance/openmath_2026_campaign_state.json').read_text())
+        state.pop("event_window", None)
         h1=next(x for x in state['hills'] if x['hill_slot']=='OM26-H1')
         primary=copy.deepcopy(h1['external_agent']); solve=copy.deepcopy(h1['solve'])
         h1['supporting_agents']={'H1-Q6':{'assignment_id':'OM26-H1-WP30','agent_ref':'INDEPENDENT-AGENT-130','issue_number':598}}
