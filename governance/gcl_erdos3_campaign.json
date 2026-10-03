@@ -3,18 +3,18 @@
   "record_type": "GCL_PROGRAMME_CAMPAIGN_REGISTRATION",
   "campaign_id": "GCL-ERDOS3",
   "title": "Erdős Problem 3",
-  "status": "ACTIVE__E3_TRANCHE_01",
+  "status": "ACTIVE__E3_B_AP",
   "origin": {
     "campaign": "OPENMATH-2026",
     "hill": "OM26-H7",
-    "solve_commit": "6c39975864788f27aea1f0da50fa409625bd5bd6"
+    "solve_commit": "20fc4eb4cda683bc07992bd27903e926b190b8b4"
   },
   "solve": {
     "repository": "grandchallenge/MATHSOLVE",
     "campaign_path": "work_packages/GCL_ERDOS3/CAMPAIGN.json",
-    "campaign_blob": "b32479ec68454dd35f7709134d5225e34b48a6f3",
+    "campaign_blob": "7367a87f17159fd890bdb7fa2a92b8b83065471c",
     "frontier_path": "work_packages/GCL_ERDOS3/FRONTIER.json",
-    "frontier_blob": "d4cace7bd94dfa0ccc35005c1c63c497d5f72a49",
+    "frontier_blob": "12bee650ee20a0d239acf666a555de365f529ac5",
     "gate_path": ".gcl/campaigns/GCL-ERDOS3/FRONTIER_GATE.json",
     "gate_blob": "1c2f35fec367c4560161fe08c21e2c2e8a8b37f3"
   },
@@ -32,8 +32,8 @@
       "evidence_blob": "f8d3f4a8ac9b26fa8e1f45c829c31c96c144aea2"
     },
     "E3-B01": {
-      "disposition": "PROVED_NATIVE_PENDING_INDEPENDENT_VERIFY",
-      "frontier_effect": "E3-B-SCALE-LOCAL and E3-B-AP-THRESHOLD PROVED",
+      "disposition": "PROVED__INDEPENDENTLY_VERIFIED",
+      "frontier_effect": "E3-B-SCALE-LOCAL and E3-B-AP-THRESHOLD PROVED and independently verified by E3-V01",
       "evidence_blob": "c0ecd3e02df8c9704cc879b7667278557a495a7e"
     },
     "E3-A01": {
@@ -45,10 +45,15 @@
       "disposition": "SOURCE_INTERFACE_FOUND",
       "frontier_effect": "exact formal and quantitative source interfaces bound",
       "evidence_blob": "fffd11df139d72235fb945144bb9c38d1e66f1d4"
+    },
+    "E3-V01": {
+      "disposition": "VERIFIED__CLOSED",
+      "frontier_effect": "E3-V-B01 CLOSED; B01 verification budget exhausted",
+      "result_blob": "c528f550710b5dbe17ff72604c5daf57f5df2409",
+      "adjudication_blob": "7f012fe86cce90e3b3092c8ee181c200f86e5018"
     }
   },
   "current_frontier": [
-    "E3-V-B01",
     "E3-B-AP"
   ],
   "verification": {
@@ -57,12 +62,16 @@
     "issue_number": 762,
     "issue_url": "https://github.com/grandchallenge/MATHSOLVE/issues/762",
     "task_commit": "6c39975864788f27aea1f0da50fa409625bd5bd6",
-    "state": "DISPATCHED__AWAITING_RETURN",
-    "reason": "Single independent verification of the first new theorem-grade bridge; within default replay budget."
+    "result_comment_id": 5969123988,
+    "state": "CLOSED_VERIFIED",
+    "adjudication_commit": "20fc4eb4cda683bc07992bd27903e926b190b8b4",
+    "provenance_note": "GitHub transport actor was fyremael; independence is procedural from the ZERO_CONTEXT / PROTECTED_PACKET_ONLY execution contract, not a distinct-identity claim."
   },
   "mathematical_direction": {
     "proved_reduction": "Dyadic reciprocal mass converts the parent question into summability of normalized AP-free extremal densities.",
     "smallest_missing_k_ge_4": "For fixed k≥4, prove a summable dyadic envelope for r_k(2^j)/2^j or supply a genuinely stronger cross-scale bridge.",
-    "four_term_calibration": "Current cited r_4(N) << N(log N)^(-c) with small c does not cross the dyadic summability barrier."
+    "four_term_calibration": "Current cited r_4(N) << N(log N)^(-c) with small c does not cross the dyadic summability barrier.",
+    "verification_status": "B01 bridge and AP-threshold reduction independently verified once; no further equivalent replay authorized.",
+    "current_frontier": "E3-B-AP only"
   }
 }
