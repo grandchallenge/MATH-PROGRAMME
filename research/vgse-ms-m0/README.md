@@ -4,7 +4,9 @@
 **Parent phase:** `VGSE-MECHANICAL-SEMANTICS-001`  
 **Tracker:** `grandchallenge/MATH-PROGRAMME#1085`  
 **Admission base:** `f32a1e0cf2b90cb0fda8552effe8de4e713712d2`  
-**State at campaign admission:** `AUTHORIZED_READY`
+**State at campaign admission:** `AUTHORIZED_READY`  
+**Current state:** `TERMINAL — TE3_REALIZATION_ATLAS_PARTIAL`  
+**Protected substantive merge:** `c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20`
 
 ## Objective
 

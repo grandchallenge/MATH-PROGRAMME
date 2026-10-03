@@ -15,42 +15,19 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1085"
   },
-  "phase": "M0 exact-head replay and logical review complete; continuity rebound to PR #1152 pending native protected integration.",
-  "state": "IN_PROGRESS",
+  "phase": "M0 terminal: TE3_REALIZATION_ATLAS_PARTIAL admitted through protected integration and read back from main; M1 remains separately gated.",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "4df278986e0f193aacce96b0ac1096c867d73f85",
-    "candidate_head_sha": "24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
+    "protected_base_sha": "c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20",
+    "candidate_head_sha": "c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20",
     "issue_number": 1085,
-    "pr_number": 1152,
-    "branch": "research/vgse-ms-m0-r2",
-    "workflow_runs": [
-      {
-        "run_id": 37082963762,
-        "name": "VGSE MS M0 replay",
-        "status": "completed",
-        "conclusion": "success",
-        "job_id": 111087273005
-      }
-    ]
+    "pr_number": null,
+    "branch": null,
+    "workflow_runs": []
   },
   "terminal_condition": "Terminate M0 only at TE3_REALIZATION_ATLAS_ESTABLISHED, TE3_REALIZATION_ATLAS_PARTIAL, TE3_REALIZATION_COMPONENT_RESTRICTED, TE3_REALIZATION_CONSTRUCTION_OBSTRUCTED, or TE3_REALIZATION_UNRESOLVED, with independent realization points, TE3 replay, claim-boundary preservation, exact-head review, native protected integration, and no automatic M1 authorization.",
-  "permitted_next_actions": [
-    {
-      "id": "integrate_m0_candidate",
-      "description": "Carry exact head 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c through the native protected merge queue after all required candidate gates are green."
-    }
-  ],
-  "next_action": {
-    "id": "integrate_m0_candidate",
-    "description": "Integrate exact M0 candidate 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c through the native protected merge queue without changing the substantive head.",
-    "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#1152",
-      "VGSE MS M0 replay run 37082963762 job 111087273005",
-      "Adversary logical pass review 5398167219",
-      "Referee logical pass review 5398167346",
-      "research/vgse-ms-m0/RESULTS.json"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": [
@@ -63,19 +40,26 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "correct PR-base identity after protected continuity readback",
-    "result": "Protected readback showed that PR #1152 baseRefOid remains 4df278986e0f193aacce96b0ac1096c867d73f85. The prior continuity record incorrectly used the then-current main tip 9cde7b1c346d22c871ff072e42fa8eefc4028188. Candidate head, replay evidence, review identities, disposition, and claim boundaries are unchanged.",
+    "action": "admit M0 partial TE3 realization atlas and terminate bounded tranche",
+    "result": "M0 final substantive head 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c passed the exact-subject VGSE MS M0 replay, Programme policy, formal validation, security/action-policy, validate-json, CodeQL, and repository policy shards. Final exact-head Adversary and Referee logical passes retained disposition TE3_REALIZATION_ATLAS_PARTIAL and explicitly withheld M1 authority. PR #1152 merged through protected integration at c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20. The retained atlas attempts 41 independent quotient points, records 40 valid numerical source-contract t-embeddings, one SELECTOR_COVERAGE_LIMIT with no nonexistence inference, and multiple valid representatives at one fixed quotient point. M0 is therefore terminal at the declared partial-atlas boundary.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1152 base 4df278986e0f193aacce96b0ac1096c867d73f85",
-      "grandchallenge/MATH-PROGRAMME@24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
-      "VGSE MS M0 replay run 37082963762 job 111087273005"
+      "grandchallenge/MATH-PROGRAMME#1152",
+      "reviewed final candidate 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
+      "VGSE MS M0 replay run 37082963762 job 111087273005",
+      "Adversary final logical pass review 5398167219",
+      "Referee final logical pass review 5398167346",
+      "protected substantive merge c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20",
+      "research/vgse-ms-m0/RESULTS.json",
+      "research/vgse-ms-m0/REALIZATION_ATLAS.json",
+      "research/vgse-ms-m0/TE3_REPLAY.json",
+      "research/vgse-ms-m0/BRANCH_LEDGER.json"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-TE3-REALIZATION-ATLAS-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-02T17:47:00-07:00"
+    "observed_at": "2026-10-03T00:59:07Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -92,9 +76,26 @@
       "governance/GCL-ID-00-ADOPTION.json",
       "grandchallenge/MATHCERT@15b68c196d020045bea42fc34236e0647b87cbb9"
     ],
-    "instructions": "Verify live identity first. Then integrate only PR #1152 exact head 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c through the native protected merge queue if required checks remain green. Preserve TE3_REALIZATION_ATLAS_PARTIAL and all claim boundaries. Do not authorize M1 within the M0 substantive integration."
+    "instructions": "M0 is terminal with disposition TE3_REALIZATION_ATLAS_PARTIAL. The retained atlas contains 40 valid numerical TE1-TE5/injective/noncrossing realizations across 41 independently generated quotient samples; the one wide-box miss is SELECTOR_COVERAGE_LIMIT, not nonexistence. Fixed-quotient uniqueness is numerically falsified by multiple valid representatives. Global positive-orthant existence remains source-theorem conditional and is not M0-certified. Do not reopen M0 absent a separately governed new question. M1 kinematic semantics may begin only through a separate protected activation; no mechanical, rigid-foldability, collision, finite-thickness, stiffness, manufacturing, product, patent, or commercial claim follows from M0."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "campaign admission protected at fee2dfed5876ea91543ceae1400b5e355a6583e5",
+    "M0 final reviewed substantive head 24c7e03f7d359cbee804085f9ee6cd830fe3ea4c",
+    "exact-subject VGSE MS M0 replay run 37082963762 job 111087273005: PASS",
+    "final exact-head Adversary review 5398167219: CLEAR_NO_BLOCKING_DEFECT",
+    "final exact-head Referee review 5398167346: ADMISSIBLE_FOR_PROTECTED_INTEGRATION",
+    "all required candidate machine gates green, including validate-json, Programme policy shards, formal validation, security/action-policy, and CodeQL",
+    "protected substantive merge/readback c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20",
+    "41 independently generated quotient samples attempted",
+    "40 selector successes and 40 valid numerical TE1-TE5 plus injective/noncrossing replays within declared tolerances",
+    "one random log-radius-3 sample classified SELECTOR_COVERAGE_LIMIT with no nonexistence inference",
+    "five distinct valid baseline representatives numerically falsify unique geometric realization at a fixed quotient point",
+    "exact finite graph audit reports 31 almost-perfect matchings, kmin=2, and 2-boundary-nondegeneracy",
+    "source-global existence remains conditional on Galashin Corollary 1.13 and is not certified by M0",
+    "terminal disposition TE3_REALIZATION_ATLAS_PARTIAL",
+    "M1 not automatically authorized",
+    "VGSE-C06 and all mechanical/physical/manufacturing/product/patent/commercial exclusions retained"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
