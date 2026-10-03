@@ -172,6 +172,9 @@ lemma measurePointProjectionAt_eq_zero_of_identity
   apply ModuleCat.hom_ext
   apply LinearMap.ext
   intro a
+  change
+    (show LocallyConstant k.right.unop R from
+      ConcreteCategory.hom (measurePointProjectionAt X k μ) a) = 0
   apply LocallyConstant.ext
   intro y
   let f : k ⟶ pointIdentity := measurePointProbeToIdentity k y
@@ -185,15 +188,15 @@ lemma measurePointProjectionAt_eq_zero_of_identity
     LocallyConstant.comap
       (CMDG.CondensedCM4P3G.coefficientPointProbeMap k.right.unop y).hom.hom
       (show LocallyConstant k.right.unop R from
-        measurePointProjectionAt X k μ a) = 0 at ha
+        ConcreteCategory.hom (measurePointProjectionAt X k μ) a) = 0 at ha
   have hy :=
     congrArg
       (fun q : LocallyConstant Point R => q PUnit.unit)
       ha
   change
     (show LocallyConstant k.right.unop R from
-      measurePointProjectionAt X k μ a) y = 0 at hy
-  simpa using hy
+      ConcreteCategory.hom (measurePointProjectionAt X k μ) a) y = 0 at hy
+  exact hy
 
 /-- The identity-object projection on one-point measure sections reflects zero. -/
 theorem measurePointProjection_zero_reflects
@@ -219,13 +222,12 @@ theorem measurePointProjection_zero_reflects
     apply ModuleCat.hom_ext
     apply LinearMap.ext
     intro r
-    change
-      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
-        (ModuleCat.{u + 1} R) F G k) (r • μ) = 0
+    simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero,
+      LinearMap.zero_apply]
+    dsimp [sμ]
     rw [map_smul, hk, smul_zero]
-  have h1 := ConcreteCategory.congr_hom hs (1 : R)
+  have h1 := congrArg (fun q => q.hom (1 : R)) hs
   dsimp [sμ] at h1
-  change (LinearMap.toSpanSingleton R _ μ) 1 = 0 at h1
   simpa using h1
 
 #check measurePointProjection
