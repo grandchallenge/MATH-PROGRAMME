@@ -981,8 +981,8 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
   have hz :
       freeHomSectionsEquiv P coefficientObject
           (0 : FreeHom P coefficientObject) =
-        (0 : coefficientObject.obj.obj U) := by
-    let z : coefficientObject.obj.obj U :=
+        (0 : ↑(coefficientObject.obj.obj U)) := by
+    let z : ↑(coefficientObject.obj.obj U) :=
       freeHomSectionsEquiv P coefficientObject
         (0 : FreeHom P coefficientObject)
     have hzz : z = z + z := by
@@ -995,7 +995,7 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
           ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
             (weightedFiniteBooleanMeasureLimitLift X
                 (integralBasisEvaluationWeight X x) ≫ e ≫ d)) =
-        (0 : coefficientObject.obj.obj U) := by
+        (0 : ↑(coefficientObject.obj.obj U)) := by
     rw [hmor]
     exact hz
   rw [freeHomSectionsEquiv_precomp] at hs0
