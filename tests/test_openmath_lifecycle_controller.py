@@ -11,6 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class OpenMathLifecycleControllerTest(unittest.TestCase):
+    def test_reconciled_route_rejects_stale_budget_blocker_after_projection(self):
+        from ci.validate_openmath_2026_core_clarity import validate_submission_route, CoreClarityError
+        state = json.loads((ROOT / "governance/openmath_2026_campaign_state.json").read_text())
+        validate_submission_route(state)
+        native = state["summary"]["competition"]["native_registration"]
+        self.assertIn("route_reconciliation", native)
+        native["blocking_boundary"] = "FINANCIAL_AUTHORIZATION_REQUIRED__STRICT_ZERO_DOLLAR_LLM_CAP_REACHED"
+        with self.assertRaises(CoreClarityError):
+            validate_submission_route(state)
+
     def test_projection_advances_without_manual_bridge(self):
         state = json.loads(
             (ROOT / "governance/openmath_2026_campaign_state.json").read_text(encoding="utf-8")
@@ -62,6 +72,9 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertEqual(candidate["next_action"]["research_direction"], state["next_action"]["research_direction"])
         self.assertEqual(candidate["next_action"]["id"], state["next_action"]["id"])
         self.assertEqual(candidate["next_action"]["description"], state["next_action"]["description"])
+        self.assertEqual(candidate["summary"]["competition"], state["summary"]["competition"])
+        from ci.openmath_lifecycle_controller import render_status
+        self.assertIn("ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED", render_status(candidate))
 
     def test_protected_advance_survives_deleted_candidate_branch(self):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}

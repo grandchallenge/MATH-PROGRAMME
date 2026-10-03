@@ -328,6 +328,15 @@ def render_status(state: dict[str,Any]) -> str:
         lines += ["", "## Supporting assignments", "", "| Hill | Packet | Agent and return |", "|---|---|---|"]
         for hill,slot,a in support_rows:
             lines.append(f"| {hill} | {slot} | {a.get('lifecycle')} — {a.get('agent_ref')} / #{a.get('issue_number')} |")
+    native = state.get("summary", {}).get("competition", {}).get("native_registration", {})
+    if native.get("route_reconciliation"):
+        lines += [
+            "", "## Official submission route", "",
+            f"**Blocker:** {native['blocking_boundary']}", "",
+            native["next_action"], "",
+            "**Submission cutoff:** 9 p.m. America/Vancouver on 2 October 2026 (04:00 UTC on 3 October).",
+            "The ordinary Climb budget message does not establish a competition submission fee.",
+        ]
     lines += [
         "",
         "## Current next action",
