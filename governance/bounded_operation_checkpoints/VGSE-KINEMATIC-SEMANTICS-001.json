@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "VGSE-KINEMATIC-SEMANTICS-001.CP001",
+  "governed_work_id": "VGSE-KINEMATIC-SEMANTICS-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#1163",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1163"
+  },
+  "phase": "M1 activation: GCL-defined rigid-panel kinematic semantics over the protected M0 TE3 realization family; K0/K1 only.",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "999b2a99ae9fdc3cb369300168155e6c77b33be5",
+    "candidate_head_sha": "3c8f732a265dca195bffdae6e87ae69ed8799d31",
+    "issue_number": 1163,
+    "pr_number": null,
+    "branch": "research/vgse-ms-m1",
+    "workflow_runs": []
+  },
+  "terminal_condition": "Terminate M1 at one declared kinematic-semantics disposition after deterministic K0/K1 replay across the retained valid M0 realizations, exact-head review, protected integration, and no automatic M2 activation.",
+  "permitted_next_actions": [
+    {
+      "id": "execute_vgse_ms_m1_k0_k1",
+      "description": "Audit the GCL-defined body-hinge model and compute the flat-state infinitesimal mobility atlas across the retained M0 realization family."
+    }
+  ],
+  "next_action": {
+    "id": "execute_vgse_ms_m1_k0_k1",
+    "description": "Construct and replay the 50x42 body-hinge Jacobian for every retained valid M0 realization, compute rank/mobility/constraint dependencies, check fixed-panel invariance, compare branches, and preserve any rank changes or counterexamples.",
+    "evidence_targets": [
+      "research/vgse-ms-m1/MODEL_AUDIT.json",
+      "research/vgse-ms-m1/MOBILITY_ATLAS.json",
+      "research/vgse-ms-m1/BRANCH_COMPARISON.json",
+      "research/vgse-ms-m1/FALSIFICATION_LEDGER.json",
+      "research/vgse-ms-m1/RESULTS.json"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": [
+      {
+        "kind": "protected_predecessor",
+        "identity": "grandchallenge/MATH-PROGRAMME@c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20",
+        "status": "M0 terminal TE3_REALIZATION_ATLAS_PARTIAL"
+      }
+    ]
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "prepare separately governed M1 activation after terminal M0",
+    "result": "M0 is terminal with a protected partial TE3 realization atlas. M1 is prepared as a GCL-defined flat-state rigid-panel/body-hinge analysis. Only K0 model audit and K1 infinitesimal mobility atlas are authorized by this activation. K2 finite continuation and M2 inverse design remain separately gated.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#1163",
+      "M0 terminal merge/readback c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20",
+      "research/vgse-ms-m0/RESULTS.json",
+      "research/vgse-ms-m1/KINEMATIC_MODEL_CONTRACT.json"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-KINEMATIC-SEMANTICS-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-10-03T04:26:00Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#1084",
+      "grandchallenge/MATH-PROGRAMME#1163",
+      "research/vgse-ms-m0/RESULTS.json",
+      "research/vgse-ms-m0/REALIZATION_ATLAS.json",
+      "research/vgse-ms-m0/BRANCH_LEDGER.json",
+      "research/vgse-ms-m1/README.md",
+      "research/vgse-ms-m1/KINEMATIC_MODEL_CONTRACT.json",
+      "docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md"
+    ],
+    "instructions": "Execute only M1 K0/K1. Treat the eight bounded M0 t-embedding cells as GCL-defined rigid panels and the ten internal dual segments as ideal revolute hinges under KINEMATIC_MODEL_CONTRACT.json. Compute flat-state infinitesimal mobility and constraint dependencies across all retained valid M0 realizations, with root-choice and branch comparison. Do not infer finite rigid foldability, collision freedom, thickness, stiffness, force, material, actuation, manufacturing, product, patent, or commercial claims. K2 and M2 require separate protected activation."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
