@@ -487,9 +487,9 @@ def artifacts(data:dict[str,Any]) -> dict[str,Any]:
         "VGSE-C06/source correspondence"
       ],
       "next_boundary":"M0 is sufficient to supply a genuine TE3-native design family for a separately governed M1 kinematic-semantics activation; no M1 authority is created by this result.",
-      "claim_boundary":{"mathematical_certification":false,"source_correspondence_c06":false,"mechanics":false,
-        "rigid_foldability":false,"collision_freedom":false,"finite_thickness":false,"stiffness":false,
-        "manufacturing":false,"product":false,"novelty_patent_commercial":false}}
+      "claim_boundary":{"mathematical_certification":False,"source_correspondence_c06":False,"mechanics":False,
+        "rigid_foldability":False,"collision_freedom":False,"finite_thickness":False,"stiffness":False,
+        "manufacturing":False,"product":False,"novelty_patent_commercial":False}}
     claims={"schema_version":"1.0.0","work_package":"VGSE-MS-M0","claims":[
       {"id":"VGSE-MS-M0-C01","statement":"The fixed VGSE graph has exact finite surplus kmin=2 and is 2-boundary-nondegenerate by APM enumeration.","status":"COMPUTED_EXACT_FINITE"},
       {"id":"VGSE-MS-M0-C02","statement":"The protected baseline quotient point admits a numerical source-contract t-embedding with TE1-TE5 and noncrossing/injectivity replay within declared tolerances.","status":"NUMERICALLY_REPLAYED"},
