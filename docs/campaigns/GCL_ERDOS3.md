@@ -4,27 +4,37 @@ GCL-ERDOS3 is the standalone successor research campaign promoted from the OPENM
 
 ## Current protected result
 
-Protected Solve evidence: `6c39975864788f27aea1f0da50fa409625bd5bd6`.
+Protected Solve adjudication: `20fc4eb4cda683bc07992bd27903e926b190b8b4`.
 
-The first research tranche has completed:
+The first tranche and its single authorized independent replay are complete:
 
-- **E3-F01 — FORMALIZED.** The exact current `H7_D5.lean` blob is byte-identical to the artifact successfully compiled in the organizer-pinned Lean 4.33.1 image. Finite deletion, tail preservation and divergent residue-fibre lemmas are now proof-receipted. `E3-F-D5` is closed and has no replay successor.
-- **E3-B01 — PROVED, pending one independent verification.** For normalized dyadic block densities (delta_j), reciprocal divergence is equivalent up to a factor-two blockwise comparison to divergence of (sum_jdelta_j). Every summable threshold is therefore exceeded infinitely often.
-- **E3-B01 extremal reduction.** If (sum_j r_k(2^j)/2^j<infty), then every reciprocally divergent set contains a non-trivial (k)-term arithmetic progression.
-- **E3-A01 — BOUNDARY_SHARPENED.** For every nonsummable threshold sequence (	heta_jin[0,1]), an explicit reciprocally divergent set can be built with dyadic density never exceeding (	heta_j). Thus summability is qualitatively sharp for density-only threshold forcing.
-- **E3-S01 — SOURCE_INTERFACE_FOUND.** Exact Mathlib residue/summability interfaces, Formal Conjectures AP-free extremal interfaces, and the quantitative three-term source are bound.
+- **E3-F01 — FORMALIZED.** The current `H7_D5.lean` blob is the exact artifact compiled successfully in the pinned Lean 4.33.1 environment. `E3-F-D5` is closed with no replay successor.
+- **E3-B01 — PROVED AND INDEPENDENTLY VERIFIED.** Reciprocal divergence is equivalent, up to the factor-two dyadic sandwich, to divergence of the normalized dyadic block-density sum. The AP-free extremal reduction is also verified:
+  [
+  sum_j r_k(2^j)/2^j<infty
+  Longrightarrow
+  	ext{every reciprocally divergent set contains a non-trivial }k	ext{-AP}.
+  ]
+- **E3-A01 — BOUNDARY_SHARPENED.** The nonsummable-threshold construction verifies that summability is qualitatively sharp for arguments using only dyadic density threshold exceedance.
+- **E3-S01 — SOURCE_INTERFACE_FOUND.** Exact Lean/Mathlib/AP interfaces and the quantitative extremal-source boundary are bound.
+- **E3-V01 — VERIFIED, CLOSED.** The one independent replay authorized by the frontier gate found no defect in the five requested claims.
 
-## Quantitative calibration
-
-Bloom–Sisask's three-term estimate (r_3(N)ll N/(log N)^{1+c}) crosses the dyadic summability barrier and reproduces the known three-term case.
-
-For four-term progressions, the current cited Green–Tao bound (r_4(N)ll N(log N)^{-c}) for a small (c>0) does not cross that barrier. The maintained Erdős Problems record gives (N/[(log N)(loglog N)^2]) as an example of a sufficient scale.
-
-This does not show the dyadic route is necessary. It identifies exactly what is missing from that route.
+The authenticated GitHub actor for the E3-V01 return was `fyremael`. GCL records this as transport provenance. The independence claim is limited to the declared zero-context, protected-packet-only execution contract; no distinct-human or distinct-account identity claim is made.
 
 ## Active frontier
 
-1. `E3-V-B01`: one independent, protected-packet-only verification of the new bridge. Issue #762.
-2. `E3-B-AP`: for fixed (kge4), obtain a summable dyadic AP-free density envelope or find a stronger cross-scale mechanism.
+Only `E3-B-AP` remains active.
 
-The operational contribution lifecycle remains separate from the mathematical frontier. `Next residual` is evidence, not scheduling authority. No result here proves Erdős Problem 3.
+For each fixed (kge4), the current route needs either:
+
+[
+rac{r_k(2^j)}{2^j}le eta_k(j)
+quad	ext{with}quad
+sum_jeta_k(j)<infty,
+]
+
+or a genuinely stronger cross-scale mechanism not reducible to independent dyadic block densities.
+
+No further equivalent replay of B01 is authorized; its default independent verification budget has been exhausted.
+
+No result here proves Erdős Problem 3.

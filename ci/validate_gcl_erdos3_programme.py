@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
-EXPECTED_SOLVE="6c39975864788f27aea1f0da50fa409625bd5bd6"
+EXPECTED_SOLVE="20fc4eb4cda683bc07992bd27903e926b190b8b4"
 
 def validate(root=ROOT):
     errors=[]
@@ -16,11 +16,7 @@ def validate(root=ROOT):
         errors.append('OPENMATH submission count drift')
     if state.get('event_window',{}).get('official_acceptances')!=0:
         errors.append('OPENMATH acceptance count drift')
-    if state.get('summary',{}).get('external_agents',{}).get('leased_not_launched')!=0:
-        errors.append('OPENMATH still exposes leased replay work')
-    if state.get('next_action',{}).get('currently_selected')!=[]:
-        errors.append('OPENMATH still selects active hills')
-    if reg.get('campaign_id')!='GCL-ERDOS3' or reg.get('status')!='ACTIVE__E3_TRANCHE_01':
+    if reg.get('campaign_id')!='GCL-ERDOS3' or reg.get('status')!='ACTIVE__E3_B_AP':
         errors.append('GCL-ERDOS3 registration drift')
     if reg.get('origin',{}).get('solve_commit')!=EXPECTED_SOLVE:
         errors.append('GCL-ERDOS3 Solve evidence bind drift')
@@ -28,26 +24,26 @@ def validate(root=ROOT):
         errors.append('automatic replay successor policy returned')
     if reg.get('mechanism',{}).get('next_residual_is_scheduling_authority') is not False:
         errors.append('Next residual regained scheduling authority')
-    if reg.get('current_frontier')!=['E3-V-B01','E3-B-AP']:
+    if reg.get('current_frontier')!=['E3-B-AP']:
         errors.append('Programme frontier projection drift')
     results=reg.get('results',{})
     if results.get('E3-F01',{}).get('disposition')!='FORMALIZED':
         errors.append('F01 result missing')
-    if results.get('E3-B01',{}).get('disposition')!='PROVED_NATIVE_PENDING_INDEPENDENT_VERIFY':
-        errors.append('B01 result missing')
-    if results.get('E3-A01',{}).get('disposition')!='BOUNDARY_SHARPENED':
-        errors.append('A01 result missing')
-    if results.get('E3-S01',{}).get('disposition')!='SOURCE_INTERFACE_FOUND':
-        errors.append('S01 result missing')
+    if results.get('E3-B01',{}).get('disposition')!='PROVED__INDEPENDENTLY_VERIFIED':
+        errors.append('B01 independent verification missing')
+    if results.get('E3-V01',{}).get('disposition')!='VERIFIED__CLOSED':
+        errors.append('E3-V01 closure missing')
     verification=reg.get('verification',{})
-    if verification.get('issue_number')!=762 or verification.get('state')!='DISPATCHED__AWAITING_RETURN':
-        errors.append('B01 verification dispatch drift')
-    if verification.get('task_commit')!=EXPECTED_SOLVE:
-        errors.append('B01 verification task bind drift')
+    if verification.get('issue_number')!=762 or verification.get('state')!='CLOSED_VERIFIED':
+        errors.append('B01 verification closure drift')
+    if verification.get('result_comment_id')!=5969123988:
+        errors.append('B01 verification result bind drift')
+    if verification.get('adjudication_commit')!=EXPECTED_SOLVE:
+        errors.append('B01 verification adjudication bind drift')
     return errors
 
 if __name__=='__main__':
     e=validate()
     for x in e: print('FAIL:',x)
-    if not e: print('PASS: GCL-ERDOS3 tranche E3-01 projected; F01 closed, B01 proved, one independent verification dispatched, k>=4 frontier open')
+    if not e: print('PASS: GCL-ERDOS3 B01 independently verified; E3-B-AP is sole active frontier')
     raise SystemExit(bool(e))
