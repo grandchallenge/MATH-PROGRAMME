@@ -73,6 +73,32 @@ lemma measurePointProjectionAt_identity
     measurePointProjectionAt X μ pointIdentity = measurePointProjection X μ := by
   rfl
 
+lemma measurePointProjection_condition
+    (X : Profinite.{u}) {i j : Under (op Point)} (f : i ⟶ j) :
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          i ≫
+        (ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).map f) =
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          j ≫
+        (MonoidalClosed.pre
+          ((Under.forget (op Point) ⋙ sourcePresheaf X).map f)).app
+            ((Under.forget (op Point) ⋙ coefficientPresheaf).obj j) := by
+  simpa only [
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerLeft,
+      MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight] using
+    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
+      (ModuleCat.{u + 1} R)
+      (Under.forget (op Point) ⋙ sourcePresheaf X)
+      (Under.forget (op Point) ⋙ coefficientPresheaf)
+      f)
+
 lemma measurePointProjectionAt_naturality
     (X : Profinite.{u}) {i j : Under (op Point)} (f : i ⟶ j)
     (μ : (measurePresheafObj X).obj (op Point)) :
@@ -80,12 +106,7 @@ lemma measurePointProjectionAt_naturality
         (Under.forget (op Point) ⋙ coefficientPresheaf).map f =
       (Under.forget (op Point) ⋙ sourcePresheaf X).map f ≫
         measurePointProjectionAt X μ j := by
-  have hcond := congrArg (fun q => q μ)
-    (CategoryTheory.Enriched.FunctorCategory.enrichedHom_condition
-      (ModuleCat.{u + 1} R)
-      (Under.forget (op Point) ⋙ sourcePresheaf X)
-      (Under.forget (op Point) ⋙ coefficientPresheaf)
-      f)
+  have hcond := congrArg (fun q => q μ) (measurePointProjection_condition X f)
   change
     ((ihom ((Under.forget (op Point) ⋙ sourcePresheaf X).obj i)).map
       ((Under.forget (op Point) ⋙ coefficientPresheaf).map f))
@@ -106,6 +127,7 @@ noncomputable def pointProbeToIdentity
       { toFun := fun _ => y
         continuous_toFun := continuous_const }
   refine Under.homMk p.op ?_
+  apply Quiver.Hom.unop_inj
   ext z
   rfl
 
@@ -116,15 +138,7 @@ lemma coefficientPullback_pointProbeToIdentity
       (show coefficientPresheaf.obj (op Point) from
         LocallyConstant.const Point
           ((show LocallyConstant k.right.unop R from h) y)) := by
-  change
-    LocallyConstant.comap
-        (pointProbeToIdentity k y).right.unop.hom.hom
-        (show LocallyConstant k.right.unop R from h) =
-      LocallyConstant.const Point
-        ((show LocallyConstant k.right.unop R from h) y)
-  apply congrArg
-    (fun q => q (show LocallyConstant k.right.unop R from h))
-  apply LocallyConstant.comap_const
+  apply CMDG.CondensedCM4P2E.InternalHom.coefficientPullback_const_op
   intro z
   rfl
 
@@ -157,7 +171,7 @@ theorem measurePointProjection_zero_reflects
         measurePointProjectionAt X μ pointIdentity
           (sourcePresheaf X |>.map f.right h) at hnat
     rw [measurePointProjectionAt_identity, hμ] at hnat
-    simp only [ModuleCat.zero_apply] at hnat
+    simp at hnat
     have hp := coefficientPullback_pointProbeToIdentity k y
       (measurePointProjectionAt X μ k h)
     rw [hp] at hnat
@@ -172,14 +186,12 @@ theorem measurePointProjection_zero_reflects
     apply CategoryTheory.Limits.end_.hom_ext
     intro k
     apply ModuleCat.hom_injective
-    ext r h
-    change
-      measurePointProjectionAt X μ k (r • h) = 0
-    rw [map_smul, hproj]
+    ext r
+    change r • measurePointProjectionAt X μ k = 0
+    rw [hproj]
     simp
   have h1 := ConcreteCategory.congr_hom hpack (1 : R)
-  change μ = 0 at h1
-  simpa using h1
+  simpa [pack] using h1
 
 /-- The projected one-point measure section, definitionally viewed as a linear map between
 locally constant one-point families. -/
@@ -212,6 +224,7 @@ noncomputable def measurePointIntegralFunctional
 #check measurePointProjection
 #check measurePointProjectionAt
 #check measurePointProjectionAt_identity
+#check measurePointProjection_condition
 #check measurePointProjectionAt_naturality
 #check pointProbeToIdentity
 #check coefficientPullback_pointProbeToIdentity
@@ -221,6 +234,7 @@ noncomputable def measurePointIntegralFunctional
 #check measurePointIntegralFunctional
 
 #print axioms measurePointProjection
+#print axioms measurePointProjection_condition
 #print axioms measurePointProjectionAt_naturality
 #print axioms pointProbeToIdentity
 #print axioms coefficientPullback_pointProbeToIdentity
