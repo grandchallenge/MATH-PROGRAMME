@@ -370,6 +370,9 @@ def render_status(state: dict[str,Any]) -> str:
 
 
 def apply_projection_to_state(state: dict[str,Any], projection: dict[str,Any], solve_sha: str, blobs: dict[str,str]) -> dict[str,Any]:
+    if state.get("event_window", {}).get("state") == "TERMINAL":
+        raise ControllerError("OPENMATH event window terminal; Programme projection cannot create a successor")
+
     hill=projection["hill"]
     row=next(x for x in state["hills"] if x["hill_slot"]==hill)
     is_support = projection.get("lane_role") == "SUPPORT"
@@ -873,6 +876,13 @@ def candidate_sources(
     and manifest inspection. This keeps the Release Trust installation budget
     proportional to live work instead of historical campaign size.
     """
+    if solve_checkout is not None:
+        terminal_contract = solve_checkout / ".gcl/campaigns/OPENMATH-2026/LIFECYCLE_CONTRACT.json"
+        if terminal_contract.is_file():
+            value = json.loads(terminal_contract.read_text(encoding="utf-8"))
+            if value.get("event_window", {}).get("state") == "TERMINAL":
+                return []
+
     registry_path=(solve_checkout/".gcl/campaigns/OPENMATH-2026/CEX_ASSIGNMENTS.json"
                    if solve_checkout is not None else None)
     if registry_path is not None and registry_path.is_file():
