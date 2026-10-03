@@ -155,7 +155,7 @@ K2 finite continuation is not pre-authorized. M2 inverse design remains blocked 
 
 M1 does not establish source correspondence, finite rigid foldability, collision-free deployment, finite thickness, stiffness, force, energy, constitutive behaviour, material performance, actuation, manufacturing, product performance, novelty, patentability, or commercial value.
 
-[Read the M1 work contract](../research/vgse-ms-m1/README.md)
+[Read the M1 work contract on GitHub](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/vgse-ms-m1/README.md)
 
 ## Additional active development
 
