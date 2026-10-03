@@ -102,39 +102,51 @@ A constructive completion must produce an explicit degree-reduced section. A pos
 
 <a id="vgse-001--mechanical-semantics"></a>
 
-## VGSE-001 · inverse-design preflight after branch-dependent kinematics
+## VGSE-001 · identifiability-aware infinitesimal inverse design
 
 **Live campaign tracker:** [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)  
-**M1 tracker:** [MATH-PROGRAMME #1163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1163)  
-**Status:** M0 and M1 are terminal. M1 disposition: `KINEMATIC_SEMANTICS_BRANCH_DEPENDENT`.
+**Live M2 tracker:** [MATH-PROGRAMME #1179](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1179)  
+**Status:** M0 and M1 are terminal. M2 D0/D1 is the next separately governed tranche.
 
-### Supported state
+### Object
 
-M0 supplied a genuine TE3-native GCL design family.
+M2 works with the four-dimensional labeled hinge-rate mechanism subspace from M1.
 
-M1 then attached the declared flat-state rigid-panel/body-hinge semantics. Across all 40 retained valid M0 realizations, the 50x42 Jacobian has rank `38`, mobility `4`, and constraint-dependency dimension `12`.
+For an admissible TE3 realization `g`, let `P_H(g)` be the M1 orthogonal projector onto that subspace. The first inverse-design observable is the basis-invariant hinge-participation profile
 
-The mobility dimension is stable on the retained atlas. The kinematic state is not unique at fixed quotient: five valid geometric representatives at the same protected quotient have distinct labeled four-dimensional hinge-rate mechanism subspaces.
+`d(g) = diag(P_H(g)) in [0,1]^10`.
 
-### Consequence
+On the retained mobility-four class, the entries sum to `4`.
 
-The planned inverse-design phase cannot treat the eight quotient coordinates as a complete mechanical state descriptor.
+### Identifiability boundary
 
-Geometric branch/representative choice is latent structure for M2. Any target-to-design map must therefore state what is observed, what representative information is supplied, and what equivalence class is actually recoverable.
+The required GCL-ID-00 preflight is `governance/identifiability_preflights/VGSE-MS-M2-ID-001.json`.
+
+Its representative-level disposition is `UNRESOLVED`.
+
+M1 already shows that one quotient point can have several geometric representatives with distinct mechanism subspaces. M2 additionally compresses the full projector to its diagonal. Therefore the current inverse target is deliberately set-valued:
+
+> construct one or more admissible design witnesses matching a target participation profile.
+
+M2 does not claim recovery of a unique quotient or geometry.
 
 ### Next bounded move
 
-Prepare a separately governed M2 activation around one modest mechanical target and apply GCL-ID-00 before substantial inverse optimization.
+Execute D0/D1 only:
 
-The preflight must explicitly include the M1 branch-dependence evidence. It must not assume that a quotient point uniquely selects a mechanism subspace.
+1. generate the positive-control profile from the protected `BASELINE-B1` branch using the exact M1 projector code;
+2. replay profile invariants and side-information boundaries;
+3. build a deterministic witness-synthesis baseline;
+4. attempt a local branch-conditioned synthesis while preserving multiplicity;
+5. distinguish search/selector failure from structural non-identifiability.
 
-K2 finite continuation is not authorized by M1 terminalization.
+D2 off-grid/interpolated targets are not pre-authorized by activation.
 
 ### Claim boundary
 
-The protected result is flat-state infinitesimal kinematics only. It does not establish finite rigid foldability, mountain/valley assignment, collision-free deployment, finite thickness, stiffness, force, energy, constitutive/material behaviour, actuation, manufacturing, product performance, novelty, patentability, or commercial value.
+M2 remains flat-state infinitesimal kinematic design under the GCL-defined model. It does not establish unique design recovery, finite rigid foldability, collision-free deployment, finite thickness, stiffness, force, energy, material/constitutive behaviour, actuation, manufacturing, product performance, source correspondence, novelty, patentability, or commercial value.
 
-[Read the M1 work contract and terminal result](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/vgse-ms-m1/README.md)
+[Read the M2 work contract](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/vgse-ms-m2/README.md)
 
 ## Additional active development
 

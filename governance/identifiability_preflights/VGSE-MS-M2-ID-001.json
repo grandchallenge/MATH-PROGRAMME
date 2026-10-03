@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schemas/identifiability_preflight.schema.json",
+  "schema_version": "1.0.0",
+  "record_type": "GCL_IDENTIFIABILITY_PREFLIGHT",
+  "identifier": "VGSE-MS-M2-ID-001",
+  "work_package": "VGSE-MS-M2",
+  "status": "COMPLETE",
+  "standard": "GCL-ID-00",
+  "standard_version": "0.1.0",
+  "programme_adoption": "governance/GCL-ID-00-ADOPTION.json",
+  "level": "ID-PREFLIGHT-LITE",
+  "recovery_target": {
+    "description": "Construct one or more admissible TE3-native designs (quotient coordinates plus geometric branch/representative) whose M1 flat-state hinge-participation profile d(g)=diag(P_H(g)) matches a declared target. Unique representative recovery is not claimed.",
+    "representative_level_claim": false
+  },
+  "observation_contract": {
+    "solver_observations": [
+      "target 10-entry labeled hinge-participation profile d*=diag(P_H)",
+      "declared target-matching tolerance"
+    ],
+    "side_information": [
+      "fixed VGSE graph and hinge labels",
+      "protected M0 TE3 realization contract",
+      "protected M1 flat-state body-hinge and projector contract",
+      "TE3 and M1 validity tests used to accept a synthesized witness"
+    ],
+    "training_or_fixture_information_not_available_to_solver": [
+      "the hidden quotient and branch identity used to generate a held-out target unless explicitly declared as positive-control side information",
+      "unreported alternative valid geometric representatives for the same quotient",
+      "any future fabrication or physical-response information outside the M1 flat-state model"
+    ]
+  },
+  "observational_equivalence": {
+    "known_transformations": [
+      "change of basis within the four-dimensional hinge-rate mechanism subspace leaves P_H and d unchanged",
+      "M1 fixed-panel gauge choice leaves the labeled hinge-rate projector and d unchanged within the protected replay tolerance",
+      "by definition, any two admissible designs with the same declared d profile are observationally equivalent for the M2 target map even if their quotient or geometry differs"
+    ],
+    "status": "UNRESOLVED"
+  },
+  "recoverable_object": {
+    "strongest_justified_object": "A set of admissible design witnesses whose hinge-participation profile matches the target within the declared observational tolerance. Injectivity of the map from quotient/branch to d is not established.",
+    "classification": "UNRESOLVED"
+  },
+  "symmetry_breaking": {
+    "extra_information_or_normalization_for_stronger_recovery": [
+      "explicit branch/selector identity if branch-conditioned recovery is desired",
+      "explicit quotient coordinates if quotient recovery is supplied rather than inferred",
+      "a canonical representative rule if one geometric representative must be selected",
+      "richer kinematic observations such as the full labeled projector P_H if the diagonal profile is insufficient"
+    ]
+  },
+  "solver_gate": {
+    "target_after_preflight": "Synthesize and report one or more admissible witnesses matching d*. Preserve multiplicity. Do not report a unique quotient or geometry unless a later identifiability analysis establishes that stronger claim.",
+    "full_representative_recovery_claim_permitted": false,
+    "reason": "M1 establishes same-quotient geometric branch multiplicity and branch-dependent mechanism subspaces; M2 further compresses the full mechanism projector to its diagonal, so representative-level injectivity is presently unresolved."
+  },
+  "failure_classification": [
+    "UNRESOLVED"
+  ],
+  "evidence_refs": [
+    "grandchallenge/MATH-PROGRAMME@8b9e442220b7cd3d3dd4e926f10d10847e4349e2",
+    "research/vgse-ms-m1/RESULTS.json",
+    "research/vgse-ms-m1/BRANCH_COMPARISON.json",
+    "research/vgse-ms-m0/BRANCH_LEDGER.json",
+    "governance/GCL-ID-00-ADOPTION.json"
+  ],
+  "unresolved_assumptions": [
+    "injectivity or non-injectivity of the admissible design-to-participation-profile map is not established",
+    "feasibility of arbitrary target participation profiles is not established",
+    "continuity of a chosen branch-conditioned realization map over the intended optimization neighbourhood must be tested rather than assumed",
+    "the diagonal participation profile can discard distinctions present in the full mechanism projector"
+  ],
+  "claim_boundaries": {
+    "mathematical_certification": false,
+    "scientific_claim_promotion": false,
+    "publication": false,
+    "production_activation": false,
+    "commercial_claim": false
+  }
+}
