@@ -72,6 +72,9 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
         self.assertEqual(candidate["next_action"]["research_direction"], state["next_action"]["research_direction"])
         self.assertEqual(candidate["next_action"]["id"], state["next_action"]["id"])
         self.assertEqual(candidate["next_action"]["description"], state["next_action"]["description"])
+        self.assertEqual(candidate["summary"]["competition"], state["summary"]["competition"])
+        from ci.openmath_lifecycle_controller import render_status
+        self.assertIn("ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED", render_status(candidate))
 
     def test_protected_advance_survives_deleted_candidate_branch(self):
         registry={"assignments":[{"lifecycle":{"pipeline_state":"ADVANCED"},"lease":{"dispatch_id":"OM26-H1-WP01-IA-001"}}]}
