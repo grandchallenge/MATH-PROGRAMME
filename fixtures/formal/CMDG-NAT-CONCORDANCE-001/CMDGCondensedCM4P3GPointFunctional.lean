@@ -162,7 +162,6 @@ noncomputable def measurePointProbeToIdentity
     (CMDG.CondensedCM4P3G.coefficientPointProbeMap k.right.unop y).op ?_
   apply Quiver.Hom.unop_inj
   ext z
-  exact Subsingleton.elim _ _
 
 lemma measurePointProjectionAt_eq_zero_of_identity
     (X : Profinite.{u})
@@ -177,10 +176,10 @@ lemma measurePointProjectionAt_eq_zero_of_identity
   intro y
   let f : k ⟶ pointIdentity := measurePointProbeToIdentity k y
   have hn := measurePointProjectionAt_naturality X f μ
+  rw [measurePointProjectionAt_identity, hμ, comp_zero] at hn
   have hn0 :
       measurePointProjectionAt X k μ ≫
-          (Under.forget (op Point) ⋙ coefficientPresheaf).map f = 0 := by
-    simpa [measurePointProjectionAt_identity, hμ] using hn
+          (Under.forget (op Point) ⋙ coefficientPresheaf).map f = 0 := hn
   have ha := ConcreteCategory.congr_hom hn0 a
   change
     LocallyConstant.comap
@@ -191,7 +190,9 @@ lemma measurePointProjectionAt_eq_zero_of_identity
     congrArg
       (fun q : LocallyConstant Point R => q PUnit.unit)
       ha
-  change measurePointProjectionAt X k μ a y = 0 at hy
+  change
+    (show LocallyConstant k.right.unop R from
+      measurePointProjectionAt X k μ a) y = 0 at hy
   simpa using hy
 
 /-- The identity-object projection on one-point measure sections reflects zero. -/
@@ -213,16 +214,18 @@ theorem measurePointProjection_zero_reflects
     have hk :
         (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
           (ModuleCat.{u + 1} R) F G k) μ = 0 := by
-      simpa [F, G, measurePointProjectionAt] using
-        (measurePointProjectionAt_eq_zero_of_identity X μ hμ k)
-    apply ModuleCat.hom_injective
-    ext r
+      change measurePointProjectionAt X k μ = 0
+      exact measurePointProjectionAt_eq_zero_of_identity X μ hμ k
+    apply ModuleCat.hom_ext
+    apply LinearMap.ext
+    intro r
     change
       (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
         (ModuleCat.{u + 1} R) F G k) (r • μ) = 0
     rw [map_smul, hk, smul_zero]
   have h1 := ConcreteCategory.congr_hom hs (1 : R)
-  change (1 : R) • μ = 0 at h1
+  dsimp [sμ] at h1
+  change (LinearMap.toSpanSingleton R _ μ) 1 = 0 at h1
   simpa using h1
 
 #check measurePointProjection
