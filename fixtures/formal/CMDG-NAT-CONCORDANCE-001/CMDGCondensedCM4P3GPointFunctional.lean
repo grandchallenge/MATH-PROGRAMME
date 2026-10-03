@@ -982,19 +982,17 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
       freeHomSectionsEquiv P coefficientObject
           (0 : FreeHom P coefficientObject) =
         (0 : ↑(coefficientObject.obj.obj U)) := by
-    change
-      (show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
-        freeHomSectionsEquiv P coefficientObject
-          (0 : FreeHom P coefficientObject)) = 0
-    let z : LocallyConstant P CMDG.CondensedCM4P3G.R.{u} :=
+    let z : ↑(coefficientObject.obj.obj U) :=
       freeHomSectionsEquiv P coefficientObject
         (0 : FreeHom P coefficientObject)
     change z = 0
     have hzz : z = z + z := by
       simpa [z] using hzadd
-    have hcancel : z + 0 = z + z :=
-      (add_zero z).trans hzz
-    exact (add_left_cancel hcancel).symm
+    have hsub := congrArg
+      (fun w : ↑(coefficientObject.obj.obj U) => w - z) hzz
+    have hz0 : (0 : ↑(coefficientObject.obj.obj U)) = z := by
+      simpa using hsub
+    exact hz0.symm
   have hs0 :
       freeHomSectionsEquiv P coefficientObject
           ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
@@ -1012,10 +1010,15 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
       change
-        (freeHomSectionsEquiv (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X) coefficientObject
-          (weightedFiniteBooleanMeasureLimitLift X
-              (integralBasisEvaluationWeight X x) ≫ e ≫ d))
-            (fun _ => true) = 0 at hsPoint
+        (show LocallyConstant
+            (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)
+            CMDG.CondensedCM4P3G.R.{u} from
+          freeHomSectionsEquiv
+            (CMDG.CondensedCM4P3G.BooleanCube.basisBooleanCube X)
+            coefficientObject
+            (weightedFiniteBooleanMeasureLimitLift X
+                (integralBasisEvaluationWeight X x) ≫ e ≫ d))
+              (fun _ => true) = 0 at hsPoint
     exact hsPoint
   rw [kernelProductFunctional_apply]
   simpa using congrArg ULift.down hsection
