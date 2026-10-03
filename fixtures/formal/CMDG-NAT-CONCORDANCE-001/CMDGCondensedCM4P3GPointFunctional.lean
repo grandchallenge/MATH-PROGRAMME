@@ -173,7 +173,7 @@ theorem measurePointProjection_zero_reflects
     have hnat0 :
         coefficientPresheaf.map f.right
             (measurePointProjectionAt X μ k h) = 0 := by
-      simpa using hnat
+      exact hnat.trans (by rfl)
     have hnat0' :
         coefficientPresheaf.map (pointProbeToIdentity k y).right
             (measurePointProjectionAt X μ k h) = 0 := by
@@ -196,16 +196,29 @@ theorem measurePointProjection_zero_reflects
   have hpack : pack = 0 := by
     apply CategoryTheory.Limits.end_.hom_ext
     intro k
+    rw [zero_comp]
     apply ModuleCat.hom_injective
     apply LinearMap.ext
     intro r
+    simp only [ModuleCat.comp_apply]
+    let q :=
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        k
+    change
+      (ConcreteCategory.hom q)
+          ((LinearMap.toSpanSingleton R E (show E from μ)) r) = 0
+    rw [LinearMap.toSpanSingleton_apply, map_smul]
     change r • measurePointProjectionAt X μ k = 0
     rw [hproj]
     simp
   have h1 := ConcreteCategory.congr_hom hpack (1 : R)
   change
     (LinearMap.toSpanSingleton R E (show E from μ)) 1 = 0 at h1
-  simpa only [LinearMap.toSpanSingleton_apply_one] using h1
+  have hone := LinearMap.toSpanSingleton_apply_one R E (show E from μ)
+  exact hone.symm.trans h1
 
 /-- The projected one-point measure section, definitionally viewed as a linear map between
 locally constant one-point families. -/
