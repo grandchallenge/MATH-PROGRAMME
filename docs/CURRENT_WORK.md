@@ -102,60 +102,39 @@ A constructive completion must produce an explicit degree-reduced section. A pos
 
 <a id="vgse-001--mechanical-semantics"></a>
 
-## VGSE-001 · rigid-panel kinematic semantics
+## VGSE-001 · inverse-design preflight after branch-dependent kinematics
 
 **Live campaign tracker:** [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)  
-**Live M1 tracker:** [MATH-PROGRAMME #1163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1163)  
-**Status:** M0 is terminal at `TE3_REALIZATION_ATLAS_PARTIAL`; M1 K0/K1 is the next governed tranche.
-
-### Object
-
-The campaign now studies the second map in
-
-```text
-quotient coordinates x
-  -> TE3-consistent geometry g
-  -> kinematic behaviour m_kin
-```
-
-M0 produced a genuine TE3-native GCL design family: 41 independent quotient samples attempted, 40 valid numerical t-embeddings retained, one selector-coverage limit, and multiple valid geometric representatives at one fixed quotient point.
-
-M1 attaches a deliberately minimal GCL-defined rigid-panel interpretation to those geometries.
-
-### Kinematic semantics
-
-- the eight bounded t-embedding cells corresponding to internal primal vertices are rigid panels;
-- the ten internal primal edges are ideal revolute hinges about their embedded dual segments;
-- boundary edges are free;
-- one panel is fixed to remove global Euclidean rigid motion;
-- no stiffness, material, thickness, contact, friction, gravity, actuation, or mountain/valley assignment is assumed.
-
-The flat-state body-hinge Jacobian has 50 scalar hinge constraints on 42 relative body-twist variables.
+**M1 tracker:** [MATH-PROGRAMME #1163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1163)  
+**Status:** M0 and M1 are terminal. M1 disposition: `KINEMATIC_SEMANTICS_BRANCH_DEPENDENT`.
 
 ### Supported state
 
-M0 establishes geometry only. It does not establish mechanics or finite folding.
+M0 supplied a genuine TE3-native GCL design family.
 
-The protected M0 terminal readback is `c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20`.
+M1 then attached the declared flat-state rigid-panel/body-hinge semantics. Across all 40 retained valid M0 realizations, the 50x42 Jacobian has rank `38`, mobility `4`, and constraint-dependency dimension `12`.
+
+The mobility dimension is stable on the retained atlas. The kinematic state is not unique at fixed quotient: five valid geometric representatives at the same protected quotient have distinct labeled four-dimensional hinge-rate mechanism subspaces.
+
+### Consequence
+
+The planned inverse-design phase cannot treat the eight quotient coordinates as a complete mechanical state descriptor.
+
+Geometric branch/representative choice is latent structure for M2. Any target-to-design map must therefore state what is observed, what representative information is supplied, and what equivalence class is actually recoverable.
 
 ### Next bounded move
 
-Execute M1 K0/K1:
+Prepare a separately governed M2 activation around one modest mechanical target and apply GCL-ID-00 before substantial inverse optimization.
 
-1. audit the panel/hinge incidence and Jacobian convention;
-2. replay fixed-panel invariance;
-3. compute flat-state Jacobian rank, infinitesimal mobility, and constraint-dependency dimension for every retained valid M0 realization;
-4. compare across quotient samples and the multiple baseline geometric branches;
-5. test whether mobility is stable and whether quotient equality determines the kinematic state;
-6. preserve rank changes and counterexamples.
+The preflight must explicitly include the M1 branch-dependence evidence. It must not assume that a quotient point uniquely selects a mechanism subspace.
 
-K2 finite continuation is not pre-authorized. M2 inverse design remains blocked and will require GCL-ID-00 preflight.
+K2 finite continuation is not authorized by M1 terminalization.
 
 ### Claim boundary
 
-M1 does not establish source correspondence, finite rigid foldability, collision-free deployment, finite thickness, stiffness, force, energy, constitutive behaviour, material performance, actuation, manufacturing, product performance, novelty, patentability, or commercial value.
+The protected result is flat-state infinitesimal kinematics only. It does not establish finite rigid foldability, mountain/valley assignment, collision-free deployment, finite thickness, stiffness, force, energy, constitutive/material behaviour, actuation, manufacturing, product performance, novelty, patentability, or commercial value.
 
-[Read the M1 work contract on GitHub](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/vgse-ms-m1/README.md)
+[Read the M1 work contract and terminal result](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/vgse-ms-m1/README.md)
 
 ## Additional active development
 
