@@ -1004,7 +1004,14 @@ theorem kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kerne
   have hsection :
       kernelProductSection X d (integralBasisEvaluationWeight X x)
           (fun _ => true) = 0 := by
-    simpa [P, qtrue, kernelProductSection, basisBooleanPointProbe] using hsPoint
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      change
+        (freeHomSectionsEquiv (basisBooleanCube X) coefficientObject
+          (weightedFiniteBooleanMeasureLimitLift X
+              (integralBasisEvaluationWeight X x) ≫ e ≫ d))
+            (fun _ => true) = 0 at hsPoint
+    exact hsPoint
   rw [kernelProductFunctional_apply]
   simpa using congrArg ULift.down hsection
 
