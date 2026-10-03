@@ -171,6 +171,7 @@ class OpenMathLifecycleControllerTest(unittest.TestCase):
 
     def test_h1_successors_retain_source_conditional_claim_history(self):
         state=json.loads((ROOT/"governance/openmath_2026_campaign_state.json").read_text())
+        state.pop("event_window", None)
         h1=next(x for x in state["hills"] if x["hill_slot"]=="OM26-H1")
         current=h1["external_agent"]
         projection={"source_dispatch":"OM26-H1-WP02-IA-001","hill":"OM26-H1","predecessor":{"assignment_id":current["assignment_id"],"agent_ref":current["agent_ref"],"adjudication":"ACCEPTED_EVIDENCE_WITHOUT_CLAIM_PROMOTION","accepted_claims":[]},"successor":{"assignment_id":"OM26-H1-WP03","dispatch_id":"OM26-H1-WP03-IA-001","agent_ref":"INDEPENDENT-AGENT-103","issue_number":999,"lifecycle":"LEASED_NOT_LAUNCHED"},"external_agent_summary":{"accepted_agents":9,"leased_not_launched_agents":7}}
@@ -254,6 +255,7 @@ if __name__ == "__main__":
 class SupportingH1ProjectionTest(unittest.TestCase):
     def test_support_return_preserves_primary_and_claims(self):
         state=json.loads((ROOT/'governance/openmath_2026_campaign_state.json').read_text())
+        state.pop("event_window", None)
         h1=next(x for x in state['hills'] if x['hill_slot']=='OM26-H1')
         primary=copy.deepcopy(h1['external_agent']); solve=copy.deepcopy(h1['solve'])
         h1['supporting_agents']={'H1-Q6':{'assignment_id':'OM26-H1-WP30','agent_ref':'INDEPENDENT-AGENT-130','issue_number':598}}
