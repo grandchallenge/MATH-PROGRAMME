@@ -502,6 +502,26 @@ def artifacts(data:dict[str,Any]) -> dict[str,Any]:
       "BRANCH_LEDGER.json":branch,"SENSITIVITY.json":{"schema_version":"1.0.0","work_package":"VGSE-MS-M0",**data["sensitivity"]},
       "FALSIFICATION_LEDGER.json":falsification,"RESULTS.json":results,"CLAIM_LEDGER.json":claims}
 
+SUMMARY_ATOL = 1e-11
+SUMMARY_RTOL = 1e-9
+
+def summary_equal(actual:Any, expected:Any) -> bool:
+    if isinstance(actual, bool) or isinstance(expected, bool):
+        return actual is expected
+    if isinstance(actual, (int, float)) and isinstance(expected, (int, float)):
+        if isinstance(actual, int) and isinstance(expected, int):
+            return actual == expected
+        return math.isclose(float(actual), float(expected), rel_tol=SUMMARY_RTOL, abs_tol=SUMMARY_ATOL)
+    if isinstance(actual, dict) and isinstance(expected, dict):
+        return actual.keys() == expected.keys() and all(
+            summary_equal(actual[key], expected[key]) for key in actual
+        )
+    if isinstance(actual, list) and isinstance(expected, list):
+        return len(actual) == len(expected) and all(
+            summary_equal(left, right) for left, right in zip(actual, expected)
+        )
+    return actual == expected
+
 def validate_retained(generated:dict[str,Any]) -> None:
     for name in generated:
         path=HERE/name
@@ -513,9 +533,9 @@ def validate_retained(generated:dict[str,Any]) -> None:
         raise AssertionError("QUOTIENT_SAMPLE plan drift")
 
     actual_atlas=json.loads((HERE/"REALIZATION_ATLAS.json").read_text(encoding="utf-8"))
-    if actual_atlas.get("aggregate")!=generated["REALIZATION_ATLAS.json"]["aggregate"]:
+    if not summary_equal(actual_atlas.get("aggregate"), generated["REALIZATION_ATLAS.json"]["aggregate"]):
         raise AssertionError(
-            "REALIZATION_ATLAS aggregate drift: "
+            "REALIZATION_ATLAS aggregate drift exceeds numerical replay tolerance: "
             f"retained={actual_atlas.get('aggregate')!r} "
             f"generated={generated['REALIZATION_ATLAS.json']['aggregate']!r}"
         )
@@ -527,8 +547,8 @@ def validate_retained(generated:dict[str,Any]) -> None:
         raise AssertionError("REALIZATION_ATLAS selector-status drift")
 
     actual_te3=json.loads((HERE/"TE3_REPLAY.json").read_text(encoding="utf-8"))
-    if actual_te3.get("aggregate")!=generated["TE3_REPLAY.json"]["aggregate"]:
-        raise AssertionError("TE3_REPLAY aggregate drift")
+    if not summary_equal(actual_te3.get("aggregate"), generated["TE3_REPLAY.json"]["aggregate"]):
+        raise AssertionError("TE3_REPLAY aggregate drift exceeds numerical replay tolerance")
 
     actual_branch=json.loads((HERE/"BRANCH_LEDGER.json").read_text(encoding="utf-8"))
     if actual_branch.get("conclusion")!="UNIQUE_REALIZATION_HYPOTHESIS_FALSIFIED_NUMERICALLY":
@@ -547,8 +567,8 @@ def validate_retained(generated:dict[str,Any]) -> None:
     actual_results=json.loads((HERE/"RESULTS.json").read_text(encoding="utf-8"))
     if actual_results.get("disposition")!=generated["RESULTS.json"]["disposition"]:
         raise AssertionError("RESULTS disposition drift")
-    if actual_results.get("atlas_summary")!=generated["RESULTS.json"]["atlas_summary"]:
-        raise AssertionError("RESULTS atlas aggregate drift")
+    if not summary_equal(actual_results.get("atlas_summary"), generated["RESULTS.json"]["atlas_summary"]):
+        raise AssertionError("RESULTS atlas aggregate drift exceeds numerical replay tolerance")
 
     actual_claims=json.loads((HERE/"CLAIM_LEDGER.json").read_text(encoding="utf-8"))
     expected_ids={item["id"] for item in generated["CLAIM_LEDGER.json"]["claims"]}
