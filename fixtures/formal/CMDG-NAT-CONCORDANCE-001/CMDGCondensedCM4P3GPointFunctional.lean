@@ -204,19 +204,25 @@ theorem measurePointProjection_zero_reflects
     (μ : (measurePresheafObj X).obj (op Point))
     (hμ : measurePointProjection X μ = 0) :
     μ = 0 := by
-  let F := Under.forget (op Point) ⋙ sourcePresheaf X
-  let G := Under.forget (op Point) ⋙ coefficientPresheaf
   let sμ :
-      ModuleCat.of R R ⟶
-        CategoryTheory.Enriched.FunctorCategory.enrichedHom
-          (ModuleCat.{u + 1} R) F G :=
+      ModuleCat.of R R ⟶ (measurePresheafObj X).obj (op Point) :=
     ModuleCat.ofHom (LinearMap.toSpanSingleton R _ μ)
   have hs : sμ = 0 := by
+    change
+      sμ =
+        (0 : ModuleCat.of R R ⟶
+          CategoryTheory.Enriched.FunctorCategory.enrichedHom
+            (ModuleCat.{u + 1} R)
+            (Under.forget (op Point) ⋙ sourcePresheaf X)
+            (Under.forget (op Point) ⋙ coefficientPresheaf))
     apply Limits.end_.hom_ext
     intro k
     have hk :
         (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
-          (ModuleCat.{u + 1} R) F G k) μ = 0 := by
+          (ModuleCat.{u + 1} R)
+          (Under.forget (op Point) ⋙ sourcePresheaf X)
+          (Under.forget (op Point) ⋙ coefficientPresheaf)
+          k) μ = 0 := by
       change measurePointProjectionAt X k μ = 0
       exact measurePointProjectionAt_eq_zero_of_identity X μ hμ k
     apply ModuleCat.hom_ext
@@ -224,7 +230,12 @@ theorem measurePointProjection_zero_reflects
     intro r
     simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_zero,
       LinearMap.zero_apply]
-    dsimp [sμ]
+    change
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        k) (r • μ) = 0
     rw [map_smul, hk, smul_zero]
   have h1 := congrArg (fun q => q.hom (1 : R)) hs
   dsimp [sμ] at h1
