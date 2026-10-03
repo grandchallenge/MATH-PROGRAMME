@@ -102,63 +102,60 @@ A constructive completion must produce an explicit degree-reduced section. A pos
 
 <a id="vgse-001--mechanical-semantics"></a>
 
-## VGSE-001 · TE3-native design to mechanical semantics
+## VGSE-001 · rigid-panel kinematic semantics
 
 **Live campaign tracker:** [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)  
-**Live M0 tracker:** [MATH-PROGRAMME #1085](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1085)  
-**Status:** fresh governed phase; M0 TE3 realization atlas is the only currently authorized substantive tranche.
+**Live M1 tracker:** [MATH-PROGRAMME #1163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1163)  
+**Status:** M0 is terminal at `TE3_REALIZATION_ATLAS_PARTIAL`; M1 K0/K1 is the next governed tranche.
 
 ### Object
 
-VGSE now separates three maps that predecessor work showed must not be conflated:
+The campaign now studies the second map in
 
 ```text
 quotient coordinates x
   -> TE3-consistent geometry g
-  -> explicitly defined mechanical behaviour m
+  -> kinematic behaviour m_kin
 ```
 
-WP01-WP06 established a mathematical control space and then resolved the geometry-identifiability boundary. They did not establish mechanical semantics.
+M0 produced a genuine TE3-native GCL design family: 41 independent quotient samples attempted, 40 valid numerical t-embeddings retained, one selector-coverage limit, and multiple valid geometric representatives at one fixed quotient point.
 
-### Obstruction
+M1 attaches a deliberately minimal GCL-defined rigid-panel interpretation to those geometries.
 
-The next missing object is not another reconstruction of the five retained C05 branches.
+### Kinematic semantics
 
-The programme needs genuinely independent GCL-designed TE3-conformant realizations across quotient space. Until those exist, there is no justified design family on which to ask which quotient directions control kinematics or other mechanical observables.
+- the eight bounded t-embedding cells corresponding to internal primal vertices are rigid panels;
+- the ten internal primal edges are ideal revolute hinges about their embedded dual segments;
+- boundary edges are free;
+- one panel is fixed to remove global Euclidean rigid motion;
+- no stiffness, material, thickness, contact, friction, gravity, actuation, or mountain/valley assignment is assumed.
+
+The flat-state body-hinge Jacobian has 50 scalar hinge constraints on 42 relative body-twist variables.
 
 ### Supported state
 
-Protected predecessor work establishes:
+M0 establishes geometry only. It does not establish mechanics or finite folding.
 
-- an eight-dimensional positive quotient and exact mathematical response inverse;
-- exact feasibility relations for the protected response manifold;
-- failure of the retained five-branch catalogue to identify a general empirical geometry-to-quotient law;
-- an exact `3 closed cycles + 5 boundary paths` invariant decomposition;
-- 8/8 geometry identifiability for genuine source-defined TE3 t-embeddings;
-- a five-dimensional boundary ambiguity for the broader algebraic-realization class without TE3;
-- certified TE3 failure of the retained five C05 branches relative to protected C04.
-
-`VGSE-C06` remains fail-closed and is not on the critical path of the new phase.
-
-### Claim boundary
-
-M0 establishes no mechanics. The campaign currently has no authority for rigid foldability, collision freedom, finite thickness, stiffness, constitutive behaviour, material performance, manufacturability, product performance, novelty, patentability, or commercial value.
+The protected M0 terminal readback is `c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20`.
 
 ### Next bounded move
 
-Execute **M0 — TE3 realization atlas**:
+Execute M1 K0/K1:
 
-1. pin the exact forward TE3 realization contract;
-2. sample genuinely independent quotient points;
-3. construct or reject TE3-consistent geometries;
-4. replay TE3 independently on every retained success;
-5. characterize multiplicity, components, singularities, and conditioning;
-6. falsify at least one overbroad realization hypothesis;
-7. terminate at one declared M0 disposition.
+1. audit the panel/hinge incidence and Jacobian convention;
+2. replay fixed-panel invariance;
+3. compute flat-state Jacobian rank, infinitesimal mobility, and constraint-dependency dimension for every retained valid M0 realization;
+4. compare across quotient samples and the multiple baseline geometric branches;
+5. test whether mobility is stable and whether quotient equality determines the kinematic state;
+6. preserve rank changes and counterexamples.
 
-M1 kinematic semantics and M2 identifiability-aware inverse design remain blocked pending separate protected activation.
+K2 finite continuation is not pre-authorized. M2 inverse design remains blocked and will require GCL-ID-00 preflight.
 
-[Read the campaign mandate](VGSE_MECHANICAL_SEMANTICS_MANDATE.md)
+### Claim boundary
+
+M1 does not establish source correspondence, finite rigid foldability, collision-free deployment, finite thickness, stiffness, force, energy, constitutive behaviour, material performance, actuation, manufacturing, product performance, novelty, patentability, or commercial value.
+
+[Read the M1 work contract](../research/vgse-ms-m1/README.md)
 
 ## Additional active development
 
