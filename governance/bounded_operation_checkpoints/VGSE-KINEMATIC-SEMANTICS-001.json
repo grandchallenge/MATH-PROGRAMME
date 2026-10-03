@@ -15,34 +15,19 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#1163"
   },
-  "phase": "M1 authorized ready against protected activation; K0/K1 only.",
-  "state": "AUTHORIZED_READY",
+  "phase": "M1 terminal: KINEMATIC_SEMANTICS_BRANCH_DEPENDENT admitted through protected integration and read back from main; K2 and M2 remain separately gated.",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "73b697479bda0b68af51ced86be5ef83950a511c",
-    "candidate_head_sha": "73b697479bda0b68af51ced86be5ef83950a511c",
+    "protected_base_sha": "8705515e48c35256f3be5d0b639ef2cbc96ef07b",
+    "candidate_head_sha": "8705515e48c35256f3be5d0b639ef2cbc96ef07b",
     "issue_number": 1163,
     "pr_number": null,
-    "branch": "research/vgse-ms-m1",
+    "branch": null,
     "workflow_runs": []
   },
   "terminal_condition": "Terminate M1 at one declared kinematic-semantics disposition after deterministic K0/K1 replay across the retained valid M0 realizations, exact-head review, protected integration, and no automatic M2 activation.",
-  "permitted_next_actions": [
-    {
-      "id": "execute_vgse_ms_m1_k0_k1",
-      "description": "Audit the GCL-defined body-hinge model and compute the flat-state infinitesimal mobility atlas across the retained M0 realization family."
-    }
-  ],
-  "next_action": {
-    "id": "execute_vgse_ms_m1_k0_k1",
-    "description": "Construct and replay the 50x42 body-hinge Jacobian for every retained valid M0 realization, compute rank/mobility/constraint dependencies, check fixed-panel invariance, compare branches, and preserve any rank changes or counterexamples.",
-    "evidence_targets": [
-      "research/vgse-ms-m1/MODEL_AUDIT.json",
-      "research/vgse-ms-m1/MOBILITY_ATLAS.json",
-      "research/vgse-ms-m1/BRANCH_COMPARISON.json",
-      "research/vgse-ms-m1/FALSIFICATION_LEDGER.json",
-      "research/vgse-ms-m1/RESULTS.json"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": [
@@ -55,21 +40,26 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "rebind M1 execution branch and checkpoint to protected activation",
-    "result": "M1 activation PR #1167 merged through the native queue at 73b697479bda0b68af51ced86be5ef83950a511c. Protected main read back at that SHA. Execution branch research/vgse-ms-m1 was fast-forwarded without force to the same protected activation commit. K0/K1 may now begin; K2 and M2 remain unauthorized.",
+    "action": "admit M1 K0/K1 branch-dependent kinematic result and terminate bounded tranche",
+    "result": "M1 substantive head 1958e5fa2ee8ed905b8e9e06012c0dc3359463ac passed exact-subject replay and the required Programme, formal-validation, security/action-policy, validate-json, CodeQL, and repository policy gates. Adversary and Referee logical passes retained disposition KINEMATIC_SEMANTICS_BRANCH_DEPENDENT and explicitly withheld K2/M2 authority. PR #1169 merged through protected integration at 8705515e48c35256f3be5d0b639ef2cbc96ef07b. Across all 40 retained valid M0 realizations, the declared 50x42 body-hinge Jacobian has rank 38, mobility 4, and constraint-dependency dimension 12. Five valid geometric representatives at the same protected quotient retain mobility 4 but have distinct labeled four-dimensional hinge-rate mechanism subspaces. M1 is therefore terminal at the declared branch-dependent flat-state kinematic boundary.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#1167",
-      "protected M1 activation 73b697479bda0b68af51ced86be5ef83950a511c",
-      "grandchallenge/MATH-PROGRAMME#1163",
-      "research/vgse-ms-m1@73b697479bda0b68af51ced86be5ef83950a511c",
-      "M0 terminal c09d652f7a85b5b7277ce3c89a50d3bfc84d7d20"
+      "grandchallenge/MATH-PROGRAMME#1169",
+      "reviewed final candidate 1958e5fa2ee8ed905b8e9e06012c0dc3359463ac",
+      "exact-subject M1 replay https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/37120711741/job/111196103475",
+      "Adversary logical pass review 5400598295",
+      "Referee logical pass review 5400598525",
+      "protected substantive merge 8705515e48c35256f3be5d0b639ef2cbc96ef07b",
+      "research/vgse-ms-m1/RESULTS.json",
+      "research/vgse-ms-m1/MOBILITY_ATLAS.json",
+      "research/vgse-ms-m1/BRANCH_COMPARISON.json",
+      "research/vgse-ms-m1/FALSIFICATION_LEDGER.json"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/VGSE-KINEMATIC-SEMANTICS-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-03T04:40:00Z"
+    "observed_at": "2026-10-03T12:05:00Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -85,9 +75,23 @@
       "research/vgse-ms-m1/KINEMATIC_MODEL_CONTRACT.json",
       "docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md"
     ],
-    "instructions": "Checkpoint and execution branch are bound to protected M1 activation 73b697479bda0b68af51ced86be5ef83950a511c. Execute only K0/K1. Build the flat-state 50x42 body-hinge Jacobian for every retained valid M0 realization; compute rank, mobility, constraint dependencies, root-choice invariance, and branch-sensitive hinge-rate subspaces. Preserve all finite-folding and physical claim boundaries. K2 and M2 require separate protected activation."
+    "instructions": "M1 is terminal with disposition KINEMATIC_SEMANTICS_BRANCH_DEPENDENT. Under the declared GCL-defined flat-state rigid-panel/body-hinge semantics, all 40 retained valid M0 realizations have rank 38 and mobility 4, but same-quotient geometric branches have distinct labeled four-dimensional hinge-rate mechanism subspaces. Do not reopen M1 absent a separately governed new question. K2 finite continuation remains unauthorized. M2 inverse design may begin only through separate protected activation and must apply GCL-ID-00 with branch/representative choice treated as latent structure. Preserve all finite-folding, collision, thickness, stiffness, force, material, manufacturing, product, patent, and commercial exclusions."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "M1 activation protected at 73b697479bda0b68af51ced86be5ef83950a511c",
+    "M1 final reviewed substantive head 1958e5fa2ee8ed905b8e9e06012c0dc3359463ac",
+    "exact-subject M1 replay run 37120711741 job 111196103475: PASS",
+    "exact-head Adversary logical pass review 5400598295: CLEAR_NO_BLOCKING_DEFECT",
+    "exact-head Referee logical pass review 5400598525: ADMISSIBLE_FOR_PROTECTED_INTEGRATION",
+    "candidate validate-json, formal validation, policy shards, security/action-policy, and CodeQL: PASS",
+    "protected substantive merge/readback 8705515e48c35256f3be5d0b639ef2cbc96ef07b",
+    "40/40 retained valid M0 realizations replay at rank 38, mobility 4, constraint-dependency dimension 12",
+    "fixed-panel gauge invariance replayed at baseline",
+    "five same-quotient geometric representatives have distinct labeled hinge-rate mechanism subspaces",
+    "terminal disposition KINEMATIC_SEMANTICS_BRANCH_DEPENDENT",
+    "K2 and M2 not automatically authorized",
+    "all finite-folding/physical/manufacturing/product/patent/commercial exclusions retained"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
