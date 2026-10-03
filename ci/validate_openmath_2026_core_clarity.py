@@ -58,6 +58,19 @@ def require(condition: bool, message: str) -> None:
         raise CoreClarityError(message)
 
 
+def validate_submission_route(state: dict[str, Any]) -> None:
+    native = state.get("summary", {}).get("competition", {}).get("native_registration", {})
+    reconciliation = native.get("route_reconciliation")
+    if reconciliation is None:
+        return
+    require(native.get("blocking_boundary") == "ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED",
+            "reconciled submission route reverted to an unsupported blocker")
+    require("Obtain the organizer-published" in native.get("next_action", ""),
+            "reconciled submission route lacks organizer workflow action")
+    require(reconciliation.get("official_submission") is False,
+            "route diagnostic cannot create official submission evidence")
+
+
 def validate_local(root: Path = ROOT) -> dict[str, Any]:
     state = load(root / "governance/openmath_2026_campaign_state.json")
     schema = load(root / "schemas/openmath_2026_campaign_state.schema.json")
@@ -87,6 +100,8 @@ def validate_local(root: Path = ROOT) -> dict[str, Any]:
     require(state.get("summary", {}).get("hill_count") == 7, "hill count drift")
     require(state["summary"].get("source_locked_hills") == 7, "source lock count drift")
     require(state["summary"].get("solve_released_hills") == 7, "Solve release count drift")
+
+    validate_submission_route(state)
 
     rows = {x["hill_slot"]: x for x in state.get("hills", [])}
     require(set(rows) == set(HILLS), "canonical hill rows drift")

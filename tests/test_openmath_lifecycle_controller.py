@@ -11,6 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class OpenMathLifecycleControllerTest(unittest.TestCase):
+    def test_reconciled_route_rejects_stale_budget_blocker_after_projection(self):
+        from ci.validate_openmath_2026_core_clarity import validate_submission_route, CoreClarityError
+        state = json.loads((ROOT / "governance/openmath_2026_campaign_state.json").read_text())
+        validate_submission_route(state)
+        native = state["summary"]["competition"]["native_registration"]
+        self.assertIn("route_reconciliation", native)
+        native["blocking_boundary"] = "FINANCIAL_AUTHORIZATION_REQUIRED__STRICT_ZERO_DOLLAR_LLM_CAP_REACHED"
+        with self.assertRaises(CoreClarityError):
+            validate_submission_route(state)
+
     def test_projection_advances_without_manual_bridge(self):
         state = json.loads(
             (ROOT / "governance/openmath_2026_campaign_state.json").read_text(encoding="utf-8")

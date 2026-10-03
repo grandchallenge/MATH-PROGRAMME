@@ -33,6 +33,15 @@ OPENMATH-2026 has exactly seven first-class current hill lanes: **H1, H2, H3, H4
 | OM26-H1 | H1-Q6 | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-133 / #659 |
 | OM26-H1 | H1-ADVERSARY | LEASED_NOT_LAUNCHED — INDEPENDENT-AGENT-163 / #662 |
 
+## Official submission route
+
+**Blocker:** ORGANIZER_SUBMISSION_WORKSPACE_AND_CHECKER_ROUTE_NOT_LINKED
+
+Obtain the organizer-published OpenMath submission workflow or announced fallback. Preserve existing project/job identities. Do not raise model budgets or rent compute merely to transmit fixed artifacts. Continue H1/H7 mathematical work and assemble handbook packets; queued jobs and local reports are not official submissions.
+
+**Submission cutoff:** 9 p.m. America/Vancouver on 2 October 2026 (04:00 UTC on 3 October).
+The ordinary Climb budget message does not establish a competition submission fee.
+
 ## Current next action
 
 **Maximize defensible event-window contributions. Execute H1 premise closure and the remaining q>=6 attack, with H7 as the parallel formal lane; use bounded delta gates for lower-priority hills.**
