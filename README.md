@@ -50,7 +50,7 @@ This table shows selected material programme work that is active now. It is deli
 | Frontier | Current obligation | Programme significance |
 |---|---|---|
 | **BSD-001 — rank-one leading term at literal `p=2`** | [MATHSOLVE #243](https://github.com/grandchallenge/MATHSOLVE/issues/243) replays the Burns–Sakamoto–Sano theorem chain at literal `p=2`. If the replay fails, the campaign must identify the first unrepaired theorem-level dependency. | The work targets one named theorem-level obstruction. It does not generalize the result beyond the retained claim boundary. |
-| **VGSE-001 — TE3-native design to mechanical semantics** | [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084) opens the post-WP06 phase. [M0 #1085](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1085) constructs genuinely independent TE3-consistent realizations across the protected quotient space before any mechanical interpretation is attempted. | The programme now separates mathematical design coordinates, TE3 geometry, and mechanical behaviour. The immediate objective is a realizable design family, not further reconstruction of the historical specimen. |
+| **VGSE-001 — rigid-panel kinematic semantics** | M0 is terminal with a protected partial TE3 realization atlas. [M1 #1163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1163) now tests a GCL-defined rigid-panel/body-hinge interpretation across the retained TE3-native family. | The immediate question is whether flat-state infinitesimal mobility is stable across quotient samples and geometric branches. Finite folding and physical response remain outside the current claim boundary. |
 | **OZ-001 — order-7 Brown–Zudilin certificate route** | [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) reduces the 576-dimensional discrete-curl kernel through a degree-minimising Popov or approximant-basis section. The resulting order-7 certificate then requires independent replay. | The work attempts to construct an exact characteristic-zero certificate inside a defined admissible class. Construction and certification remain separate steps. |
 
 Other active development includes [CMDG CM4 P3-M finite-stage recovery](https://github.com/grandchallenge/MATH-PROGRAMME/issues/662) and the [NS-CI-001 critical-integrability lane](https://github.com/grandchallenge/MATH-PROGRAMME/issues/55). The public table is a compact orientation surface, not the programme's full active-work registry.
@@ -59,13 +59,15 @@ Rows appear here only while the work remains materially active. Issue trackers p
 
 [Programme Atlas →](docs/PROGRAMME_ATLAS.md) · [MATHFORGE](https://github.com/grandchallenge/MATHFORGE) · [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE) · [MATHCERT](https://github.com/grandchallenge/MATHCERT)
 
-### VGSE-001: from mathematical control space to mechanical semantics
+### VGSE-001: from TE3 geometry to kinematic semantics
 
-WP01-WP06 established the mathematical design coordinates and, just as importantly, the boundary of what the retained geometry can identify. The five retained C05 branches are not a mechanically validated design family, and they fail source-definition TE3 relative to the protected C04 weight class.
+M0 is terminal at `TE3_REALIZATION_ATLAS_PARTIAL`. The retained atlas contains 40 valid numerical source-contract t-embeddings from 41 independently generated quotient samples, plus multiple valid geometric representatives at one fixed quotient point.
 
-The active phase therefore changes the object. M0 constructs new GCL-designed TE3-conformant realizations from genuinely independent quotient points and maps existence, multiplicity, components, singularities, and conditioning. Only after that protected boundary may a separately admitted M1 attach explicit kinematic semantics. M2 is reserved for a bounded inverse-design problem and must apply the adopted GCL-ID-00 identifiability preflight before substantial inverse optimization.
+The active frontier is M1. GCL now treats the eight bounded t-embedding cells as rigid panels and the ten internal shared dual segments as ideal revolute hinges, with one panel fixed to remove global rigid motion. K0/K1 computes the flat-state body-hinge Jacobian, infinitesimal mobility, and constraint dependencies across the retained atlas and compares the multiple baseline branches.
 
-The durable mandate is [`docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md`](docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md). Historical source correspondence `VGSE-C06` remains fail-closed and is not on the critical path.
+This is intentionally kinematic only. It does not infer finite rigid foldability, stiffness, materials, collision freedom, thickness, or product behaviour. M2 inverse design remains blocked and will use GCL-ID-00 when activated.
+
+The phase mandate remains [`docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md`](docs/VGSE_MECHANICAL_SEMANTICS_MANDATE.md), with the active M1 contract under [`research/vgse-ms-m1/`](research/vgse-ms-m1/).
 
 ### BSD-001: the current replay problem
 
