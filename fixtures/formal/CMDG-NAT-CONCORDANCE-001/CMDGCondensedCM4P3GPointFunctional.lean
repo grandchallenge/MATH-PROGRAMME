@@ -257,7 +257,10 @@ theorem measurePointFunctional_map
     measurePointFunctional Y
         (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
       measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
-  rfl
+  simp [measurePointFunctional, measurePointProjectionLinear, measurePointProjection,
+    CMDG.CondensedCM4P2D.measureFunctor, CMDG.CondensedCM4P2D.measurePresheafFunctor,
+    CMDG.CondensedCM4P2D.discreteContinuousPresheaf,
+    CMDG.CondensedCM4P2D.continuousFunctions]
 
 #check measurePointProjection
 #check measurePointProjectionAt
