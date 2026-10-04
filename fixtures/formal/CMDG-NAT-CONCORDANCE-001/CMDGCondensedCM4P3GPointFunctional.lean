@@ -247,6 +247,18 @@ noncomputable def measurePointIntegralFunctional
   CMDG.CondensedCM4P3G.liftedIntFunctionalDown X
     (measurePointFunctional X μ)
 
+/-- Pushing a one-point measure section forward along a profinite map and then evaluating
+the induced scalar functional is the same as evaluating the original measure on the pulled-back
+locally constant function. -/
+theorem measurePointFunctional_map
+    {X Y : Profinite.{u}} (f : X ⟶ Y)
+    (μ : (measurePresheafObj X).obj (op Point))
+    (v : LocallyConstant Y R) :
+    measurePointFunctional Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
+      measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
+  rfl
+
 #check measurePointProjection
 #check measurePointProjectionAt
 #check measurePointProjectionAt_identity
@@ -257,6 +269,7 @@ noncomputable def measurePointIntegralFunctional
 #check measurePointProjection_zero_reflects
 #check measurePointProjectionLinear
 #check measurePointFunctional
+#check measurePointFunctional_map
 #check measurePointIntegralFunctional
 
 #print axioms measurePointProjection
@@ -267,6 +280,7 @@ noncomputable def measurePointIntegralFunctional
 #print axioms measurePointProjection_zero_reflects
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
+#print axioms measurePointFunctional_map
 #print axioms measurePointIntegralFunctional
 
 end CMDG.CondensedCM4P3G.PointFunctional
