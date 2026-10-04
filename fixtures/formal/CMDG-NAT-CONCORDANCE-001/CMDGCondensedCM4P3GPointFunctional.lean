@@ -260,7 +260,10 @@ theorem measurePointFunctional_map
   simp [measurePointFunctional, measurePointProjectionLinear, measurePointProjection,
     CMDG.CondensedCM4P2D.measureFunctor, CMDG.CondensedCM4P2D.measurePresheafFunctor,
     CMDG.CondensedCM4P2D.discreteContinuousPresheaf,
-    CMDG.CondensedCM4P2D.continuousFunctions]
+    CMDG.CondensedCM4P2D.continuousFunctions,
+    MonoidalClosed.pre, MonoidalClosed.FunctorCategory.closed,
+    MonoidalClosed.FunctorCategory.adj, MonoidalClosed.FunctorCategory.homEquiv,
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ]
 
 #check measurePointProjection
 #check measurePointProjectionAt
