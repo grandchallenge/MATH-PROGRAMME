@@ -288,6 +288,7 @@ open CMDG.CondensedCM4P3G.FreeSections
 open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairing
 open CMDG.CondensedCM4P3G.BasisBooleanPairingR
+open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
 open CMDG.CondensedCM4P3G.PointFunctional
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 open CMDG.CondensedCM4P3L.KernelFunctional
