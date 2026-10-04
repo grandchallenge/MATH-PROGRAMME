@@ -77,13 +77,42 @@ theorem weightedBasisBooleanPairing_apply (X : Profinite.{u})
       weightedBasisBooleanCombination X a ((integralBasis X).repr v) := by
   rfl
 
+/-- All-true evaluation of the weighted Boolean pairing reconstructs an arbitrary integral
+linear functional from its values on the chosen Nöbeling basis. -/
+theorem weightedBasisBooleanPairing_functionalWeight_allTrue
+    (X : Profinite.{u})
+    (L : LocallyConstant X ℤ →ₗ[ℤ] ℤ)
+    (v : LocallyConstant X ℤ) :
+    weightedBasisBooleanPairing X
+        (fun i => L (integralBasis X i)) v
+        (fun _ => true) =
+      L v := by
+  let lhs : LocallyConstant X ℤ →ₗ[ℤ] ℤ :=
+    (LocallyConstant.evalₗ ℤ (fun _ => true)).comp
+      (weightedBasisBooleanPairing X (fun i => L (integralBasis X i)))
+  have hlhs : lhs = L := by
+    apply (integralBasis X).ext
+    intro i
+    change
+      weightedBasisBooleanPairing X (fun j => L (integralBasis X j))
+          (integralBasis X i) (fun _ => true) =
+        L (integralBasis X i)
+    rw [weightedBasisBooleanPairing_apply, Module.Basis.repr_self]
+    simp [weightedBasisBooleanCombination, weightedBasisBooleanCoordinate,
+      basisBooleanCoordinate]
+    rfl
+  have hv := congrArg (fun f : LocallyConstant X ℤ →ₗ[ℤ] ℤ => f v) hlhs
+  simpa [lhs] using hv
+
 #print basisBooleanCoordinate
 #print basisBooleanCombination
 #print basisBooleanPairing
 #print weightedBasisBooleanCoordinate
 #print weightedBasisBooleanCombination
 #print weightedBasisBooleanPairing
+#check weightedBasisBooleanPairing_functionalWeight_allTrue
 #print axioms basisBooleanPairing
 #print axioms weightedBasisBooleanPairing
+#print axioms weightedBasisBooleanPairing_functionalWeight_allTrue
 
 end CMDG.CondensedCM4P3G.BasisBooleanPairing
