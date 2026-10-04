@@ -286,9 +286,36 @@ open CategoryTheory Limits Opposite
 open CMDG.CondensedCM4P3G
 open CMDG.CondensedCM4P3G.FreeSections
 open CMDG.CondensedCM4P3G.BasisSeparation
+open CMDG.CondensedCM4P3G.BasisBooleanPairing
+open CMDG.CondensedCM4P3G.BasisBooleanPairingR
+open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
+open CMDG.CondensedCM4P3G.PointFunctional
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 open CMDG.CondensedCM4P3L.KernelFunctional
 open CMDG.CondensedCM4P2E.RightKanReconstruction
+
+/-- The all-true weighted finite coefficient attached to an arbitrary Point measure
+section recovers the corresponding scalar point functional on each finite delta pullback. -/
+theorem weightedFiniteBooleanCoefficient_measurePoint_allTrue
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (j : DiscreteQuotient X)
+    (q : (FiniteQuotientObject X j).obj) :
+    weightedFiniteBooleanCoefficient X
+        (fun i => measurePointIntegralFunctional X μ (integralBasis X i))
+        j q (fun _ => true) =
+      measurePointFunctional X μ (finiteDeltaPullbackR X j q) := by
+  change
+    ULift.up
+      (weightedBasisBooleanPairing X
+        (fun i => measurePointIntegralFunctional X μ (integralBasis X i))
+        (locallyConstantIntegralDownEquiv X (finiteDeltaPullbackR X j q))
+        (fun _ => true)) =
+      measurePointFunctional X μ (finiteDeltaPullbackR X j q)
+  rw [weightedBasisBooleanPairing_functionalWeight_allTrue]
+  simpa [measurePointIntegralFunctional, locallyConstantIntegralDownEquiv] using
+    liftedIntFunctionalDown_apply_inverse X
+      (measurePointFunctional X μ) (finiteDeltaPullbackR X j q)
 
 /-- The one-point profinite probe selecting `x`. -/
 noncomputable def profinitePointProbe
@@ -1244,9 +1271,11 @@ theorem kernelProductFunctional_eq_zero_of_solidification_kernel
     basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
       X d hd I hI
 
+#check weightedFiniteBooleanCoefficient_measurePoint_allTrue
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
 #check weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
+#print axioms weightedFiniteBooleanCoefficient_measurePoint_allTrue
 #print axioms weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
 #print axioms weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue
 #print axioms kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel
