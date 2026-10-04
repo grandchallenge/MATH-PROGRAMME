@@ -200,6 +200,18 @@ noncomputable def liftedIntFunctionalDown (X : Profinite.{u})
     rw [h, μ.map_smul]
     rfl
 
+/-- Descending an `R`-linear functional to integral coefficients and then evaluating
+on the inverse integral lift loses no information. -/
+theorem liftedIntFunctionalDown_apply_inverse
+    (X : Profinite.{u})
+    (F : LocallyConstant X R →ₗ[R] R)
+    (v : LocallyConstant X R) :
+    ULift.up
+        (liftedIntFunctionalDown X F
+          ((locallyConstantIntegralLiftEquiv X).symm v)) =
+      F v := by
+  simpa [liftedIntFunctionalDown]
+
 /-- A locally constant map on a Boolean product is determined at the all-true point by its
 finite-coordinate truncations. -/
 theorem locallyConstant_boolPi_allTrue_of_finsetPiecewise
@@ -352,6 +364,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #check coefficient_homPrecomp_surjective
 #check locallyConstantIntegralLiftEquiv
 #check liftedIntFunctionalDown
+#check liftedIntFunctionalDown_apply_inverse
 #check locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #check coefficientPointProbeMap
 #check coefficient_hom_ext_point
@@ -371,6 +384,7 @@ theorem coefficientFiniteStageMappingOut_iff_isSolid :
 #print axioms coefficient_homPrecomp_surjective
 #print axioms locallyConstantIntegralLiftEquiv
 #print axioms liftedIntFunctionalDown
+#print axioms liftedIntFunctionalDown_apply_inverse
 #print axioms locallyConstant_boolPi_allTrue_of_finsetPiecewise
 #print axioms coefficient_hom_ext_point
 #print axioms coefficientFiniteStageMappingOut_iff_injectivity
