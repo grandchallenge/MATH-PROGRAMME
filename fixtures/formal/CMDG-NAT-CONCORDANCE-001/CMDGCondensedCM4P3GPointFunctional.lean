@@ -247,6 +247,21 @@ noncomputable def measurePointIntegralFunctional
   CMDG.CondensedCM4P3G.liftedIntFunctionalDown X
     (measurePointFunctional X μ)
 
+/-- Projection of a pushed measure section is precomposition by pullback of source
+functions. -/
+theorem measurePointProjection_map
+    {X Y : Profinite.{u}} (f : X ⟶ Y)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjection Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) =
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
+        measurePointProjection X μ := by
+  simp [measurePointProjection, CMDG.CondensedCM4P2D.measureFunctor,
+    CMDG.CondensedCM4P2D.measurePresheafFunctor, MonoidalClosed.pre,
+    MonoidalClosed.FunctorCategory.closed, MonoidalClosed.FunctorCategory.adj,
+    MonoidalClosed.FunctorCategory.homEquiv,
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ]
+
 /-- Pushing a one-point measure section forward along a profinite map and then evaluating
 the induced scalar functional is the same as evaluating the original measure on the pulled-back
 locally constant function. -/
@@ -257,13 +272,15 @@ theorem measurePointFunctional_map
     measurePointFunctional Y
         (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
       measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
-  simp [measurePointFunctional, measurePointProjectionLinear, measurePointProjection,
-    CMDG.CondensedCM4P2D.measureFunctor, CMDG.CondensedCM4P2D.measurePresheafFunctor,
-    CMDG.CondensedCM4P2D.discreteContinuousPresheaf,
-    CMDG.CondensedCM4P2D.continuousFunctions,
-    MonoidalClosed.pre, MonoidalClosed.FunctorCategory.closed,
-    MonoidalClosed.FunctorCategory.adj, MonoidalClosed.FunctorCategory.homEquiv,
-    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ]
+  rw [measurePointFunctional, measurePointFunctional]
+  change
+    ((measurePointProjection Y
+      (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ)).hom
+        (LocallyConstant.const Point v)) PUnit.unit =
+      ((measurePointProjection X μ).hom
+        (LocallyConstant.const Point (LocallyConstant.comap f.hom.hom v))) PUnit.unit
+  rw [measurePointProjection_map]
+  rfl
 
 #check measurePointProjection
 #check measurePointProjectionAt
@@ -275,6 +292,7 @@ theorem measurePointFunctional_map
 #check measurePointProjection_zero_reflects
 #check measurePointProjectionLinear
 #check measurePointFunctional
+#check measurePointProjection_map
 #check measurePointFunctional_map
 #check measurePointIntegralFunctional
 
@@ -286,6 +304,7 @@ theorem measurePointFunctional_map
 #print axioms measurePointProjection_zero_reflects
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
+#print axioms measurePointProjection_map
 #print axioms measurePointFunctional_map
 #print axioms measurePointIntegralFunctional
 
