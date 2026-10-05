@@ -275,12 +275,45 @@ lemma measurePointProjection_pre_naturality
       (MonoidalClosed.pre
         ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point))).app
           ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity) := by
-  rw [← MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight]
-  simp [CategoryTheory.eHomWhiskerRight,
-    MonoidalClosed.enrichedOrdinaryCategorySelf_homEquiv,
-    CategoryTheory.Enriched.FunctorCategory.homEquiv_apply_π,
-    CategoryTheory.Enriched.FunctorCategory.enrichedComp_π,
-    MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight]
+  let A := sourcePresheaf Y
+  let B := sourcePresheaf X
+  let T := coefficientPresheaf
+  let η : A ⟶ B := CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op
+  let U : CompHaus.{u}ᵒᵖ := op Point
+  let πA :
+      ((MonoidalClosed.internalHom.obj (op A)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (A.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget U ⋙ A) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  let πB :
+      ((MonoidalClosed.internalHom.obj (op B)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (B.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget U ⋙ B) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  change (((MonoidalClosed.pre η).app T).app U) ≫ πA =
+    πB ≫ (MonoidalClosed.pre (η.app U)).app (T.obj U)
+  apply MonoidalClosed.uncurry_injective
+  rw [MonoidalClosed.uncurry_natural_left, MonoidalClosed.uncurry_pre_app]
+  have h := congrArg (fun α => α.app U)
+    (MonoidalClosed.id_tensor_pre_app_comp_ev η T)
+  change
+      MonoidalCategory.whiskerLeft (A.obj U)
+          (((MonoidalClosed.pre η).app T).app U) ≫ ((ihom.ev A).app T).app U =
+        MonoidalCategory.whiskerRight (η.app U)
+          (((ihom B).obj T).obj U) ≫
+          ((ihom.ev B).app T).app U at h
+  have hA :
+      ((ihom.ev A).app T).app U = MonoidalClosed.uncurry πA := by
+    rfl
+  have hB :
+      ((ihom.ev B).app T).app U = MonoidalClosed.uncurry πB := by
+    rfl
+  change _ ≫ MonoidalClosed.uncurry πA =
+    _ ≫ MonoidalClosed.uncurry πB
+  rw [← hA, ← hB]
+  simpa only [Functor.id_obj] using h
 
 /-- Projection of a pushed measure section is precomposition by pullback of source
 functions. -/
