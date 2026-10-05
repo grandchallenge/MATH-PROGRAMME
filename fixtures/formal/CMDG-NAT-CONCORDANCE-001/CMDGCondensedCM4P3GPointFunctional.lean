@@ -255,9 +255,9 @@ lemma measureFunctor_map_hom
       CMDG.CondensedCM4P2D.measurePresheafFunctor.map f := by
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The functor-category internal-Hom projection intertwines outer precomposition with
 ordinary precomposition at the Point component. -/
-set_option backward.isDefEq.respectTransparency false in
 lemma measurePointProjection_pre_naturality
     {X Y : Profinite.{u}} (f : X ⟶ Y) :
     (((MonoidalClosed.pre
@@ -316,9 +316,9 @@ lemma measurePointProjection_pre_naturality
   rw [← hA, ← hB]
   simpa only [Functor.id_obj] using h
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Projection of a pushed measure section is precomposition by pullback of source
 functions. -/
-set_option backward.isDefEq.respectTransparency false in
 theorem measurePointProjection_map
     {X Y : Profinite.{u}} (f : X ⟶ Y)
     (μ : (measurePresheafObj X).obj (op Point)) :
@@ -332,10 +332,10 @@ theorem measurePointProjection_map
     CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using
       (ConcreteCategory.congr_hom (measurePointProjection_pre_naturality f) μ)
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Pushing a one-point measure section forward along a profinite map and then evaluating
 the induced scalar functional is the same as evaluating the original measure on the pulled-back
 locally constant function. -/
-set_option backward.isDefEq.respectTransparency false in
 theorem measurePointFunctional_map
     {X Y : Profinite.{u}} (f : X ⟶ Y)
     (μ : (measurePresheafObj X).obj (op Point))
