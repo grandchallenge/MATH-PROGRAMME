@@ -255,6 +255,33 @@ lemma measureFunctor_map_hom
       CMDG.CondensedCM4P2D.measurePresheafFunctor.map f := by
   rfl
 
+/-- The functor-category internal-Hom projection intertwines outer precomposition with
+ordinary precomposition at the Point component. -/
+lemma measurePointProjection_pre_naturality
+    {X Y : Profinite.{u}} (f : X ⟶ Y) :
+    (((MonoidalClosed.pre
+        (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point)) ≫
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity =
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity ≫
+      (MonoidalClosed.pre
+        ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point))).app
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity) := by
+  rw [← MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight]
+  simp [CategoryTheory.eHomWhiskerRight,
+    MonoidalClosed.enrichedOrdinaryCategorySelf_homEquiv,
+    CategoryTheory.Enriched.FunctorCategory.homEquiv_apply_π,
+    CategoryTheory.Enriched.FunctorCategory.enrichedComp_π,
+    MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight]
+
 /-- Projection of a pushed measure section is precomposition by pullback of source
 functions. -/
 theorem measurePointProjection_map
@@ -265,6 +292,9 @@ theorem measurePointProjection_map
       (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
         measurePointProjection X μ := by
   rw [measureFunctor_map_hom f]
+  unfold measurePointProjection
+  have hnat := measurePointProjection_pre_naturality f
+  have happ := ConcreteCategory.congr_hom hnat μ
   change
     (ConcreteCategory.hom
       (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
@@ -277,16 +307,14 @@ theorem measurePointProjection_map
           (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
             CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
       (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
-        measurePointProjection X μ
-  rw [← MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight]
-  simp [CategoryTheory.eHomWhiskerRight,
-    MonoidalClosed.enrichedOrdinaryCategorySelf_homEquiv,
-    CategoryTheory.Enriched.FunctorCategory.functorHomEquiv,
-    CategoryTheory.Enriched.FunctorCategory.functorEnrichedComp,
-    CategoryTheory.Enriched.FunctorCategory.homEquiv_apply_π,
-    CategoryTheory.Enriched.FunctorCategory.enrichedComp_π,
-    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply,
-    measurePointProjection]
+        (ConcreteCategory.hom
+          (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+            (ModuleCat.{u + 1} R)
+            (Under.forget (op Point) ⋙ sourcePresheaf X)
+            (Under.forget (op Point) ⋙ coefficientPresheaf)
+            pointIdentity)) μ
+  rw [← happ]
+  rw [CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply]
 
 /-- Pushing a one-point measure section forward along a profinite map and then evaluating
 the induced scalar functional is the same as evaluating the original measure on the pulled-back
@@ -298,7 +326,6 @@ theorem measurePointFunctional_map
     measurePointFunctional Y
         (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
       measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
-  rw [measurePointFunctional, measurePointFunctional]
   change
     ((measurePointProjection Y
       (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ)).hom
@@ -309,6 +336,7 @@ theorem measurePointFunctional_map
   rfl
 
 #check measurePointProjection
+#check measurePointProjection_pre_naturality
 #check measurePointProjectionAt
 #check measurePointProjectionAt_identity
 #check measurePointProjection_condition
@@ -324,6 +352,7 @@ theorem measurePointFunctional_map
 #check measurePointIntegralFunctional
 
 #print axioms measurePointProjection
+#print axioms measurePointProjection_pre_naturality
 #print axioms measurePointProjection_condition
 #print axioms measurePointProjectionAt_naturality
 #print axioms pointProbeToIdentity
