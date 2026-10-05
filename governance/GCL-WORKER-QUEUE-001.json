@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "policy_id": "GCL-WORKER-QUEUE-001",
+  "version": "1.0.0",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "ACTIVE_ON_PROTECTED_ADMISSION",
+  "policy_path": "docs/governance/GCL_WORKER_QUEUE_COLLABORATION_OPERATING_DESIGN.md",
+  "controlling_doctrine": [
+    "docs/MATH_PROGRAMME_AGENT_COUNCIL.md",
+    "docs/AGENT_COUNCIL_GOVERNANCE.md",
+    "docs/AGENT_COUNCIL_WORK_PACKAGE_CHECKLIST.md",
+    "docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md",
+    "GCL-AGENT-STAFFING-001@1.0.0",
+    "GCL-AGENT-CONTINUITY-001@1.0.0"
+  ],
+  "invariants": {
+    "reservation_is_execution_authority": false,
+    "project_or_issue_fields_are_authority": false,
+    "protected_dispatch_controls_execution": true,
+    "blind_dispatch_reclassification_in_place": false,
+    "result_grammar_changed": false,
+    "queue_operation_mathematical_effect": false,
+    "queue_operation_certification_effect": false
+  },
+  "dispatch_modes": [
+    "independent_blind",
+    "cooperative_claimed",
+    "adversarial_replay"
+  ],
+  "cohort_modes": [
+    "INDEPENDENT_BLIND",
+    "COOPERATIVE",
+    "STAGED_DISCLOSURE",
+    "LEAD_SUPPORT"
+  ],
+  "implementation": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "persistent_controller_required": true,
+    "initial_pilot": "ERDOS-OPEN-RECON first reconnaissance tranche",
+    "openmath_semantics_changed": false
+  },
+  "authority_effect": {
+    "mathematical": false,
+    "certification": false,
+    "publication": false,
+    "protected_bypass": false,
+    "constitutional": false
+  }
+}
