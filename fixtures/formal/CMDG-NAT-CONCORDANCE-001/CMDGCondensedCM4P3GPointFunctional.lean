@@ -264,12 +264,12 @@ lemma measurePointProjection_pre_naturality
           CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point)) ≫
       CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
         (ModuleCat.{u + 1} R)
-        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
         (Under.forget (op Point) ⋙ coefficientPresheaf)
         pointIdentity =
     CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
         (ModuleCat.{u + 1} R)
-        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
         (Under.forget (op Point) ⋙ coefficientPresheaf)
         pointIdentity ≫
       (MonoidalClosed.pre
