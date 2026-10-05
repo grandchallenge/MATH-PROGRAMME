@@ -331,6 +331,27 @@ theorem measurePointProjection_map
   have happ := ConcreteCategory.congr_hom
     (measurePointProjection_pre_naturality f) μ
   rw [ConcreteCategory.comp_apply, ConcreteCategory.comp_apply] at happ
+  change
+    (ConcreteCategory.hom
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity))
+      ((ConcreteCategory.hom
+        (((MonoidalClosed.pre
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
+      ((MonoidalClosed.pre
+        ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app
+          (op Point))).app
+        ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity))
+          ((ConcreteCategory.hom
+            (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+              (ModuleCat.{u + 1} R)
+              (Under.forget (op Point) ⋙ sourcePresheaf X)
+              (Under.forget (op Point) ⋙ coefficientPresheaf)
+              pointIdentity)) μ) at happ
   rw [CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at happ
   change
     (ConcreteCategory.hom
