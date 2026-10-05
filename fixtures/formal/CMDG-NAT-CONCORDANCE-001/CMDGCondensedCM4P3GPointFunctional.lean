@@ -384,12 +384,16 @@ theorem measurePointFunctional_map
     measurePointFunctional Y
         (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
       measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
+  unfold measurePointFunctional
   change
-    ((measurePointProjection Y
-      (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ)).hom
-        (LocallyConstant.const Point v)) PUnit.unit =
-      ((measurePointProjection X μ).hom
-        (LocallyConstant.const Point (LocallyConstant.comap f.hom.hom v))) PUnit.unit
+    (LocallyConstant.evalₗ R PUnit.unit)
+      (measurePointProjectionLinear Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ)
+        ((LocallyConstant.constₗ R) v)) =
+      (LocallyConstant.evalₗ R PUnit.unit)
+        (measurePointProjectionLinear X μ
+          ((LocallyConstant.constₗ R) (LocallyConstant.comap f.hom.hom v)))
+  unfold measurePointProjectionLinear
   rw [measurePointProjection_map]
   rfl
 
