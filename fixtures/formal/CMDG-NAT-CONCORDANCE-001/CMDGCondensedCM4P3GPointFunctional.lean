@@ -328,9 +328,29 @@ theorem measurePointProjection_map
         measurePointProjection X μ := by
   rw [measureFunctor_map_hom f]
   unfold measurePointProjection
-  simpa only [ConcreteCategory.comp_apply,
-    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] using
-      (ConcreteCategory.congr_hom (measurePointProjection_pre_naturality f) μ)
+  have happ := ConcreteCategory.congr_hom
+    (measurePointProjection_pre_naturality f) μ
+  rw [ConcreteCategory.comp_apply, ConcreteCategory.comp_apply] at happ
+  rw [CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at happ
+  change
+    (ConcreteCategory.hom
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity))
+      ((ConcreteCategory.hom
+        (((MonoidalClosed.pre
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
+        (ConcreteCategory.hom
+          (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+            (ModuleCat.{u + 1} R)
+            (Under.forget (op Point) ⋙ sourcePresheaf X)
+            (Under.forget (op Point) ⋙ coefficientPresheaf)
+            pointIdentity)) μ
+  exact happ
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Pushing a one-point measure section forward along a profinite map and then evaluating
