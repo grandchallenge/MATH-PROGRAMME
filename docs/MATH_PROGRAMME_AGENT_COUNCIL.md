@@ -102,6 +102,8 @@ Routine governance and engineering transactions use the shorter protected sequen
 Classify material closure -> Run affected checks -> Delegated disposition -> Protected merge -> Readback
 ```
 
+Worker discovery and collaboration for bounded external or zero-context work are governed by [GCL-WORKER-QUEUE-001](governance/GCL_WORKER_QUEUE_COLLABORATION_OPERATING_DESIGN.md). The queue is an operational discovery/reservation layer above protected dispatch and lease authority. Blind evidence may transition to teamwork only through an explicit protected disclosure/successor-cohort transition; a blind dispatch is never reclassified in place.
+
 ## Binding maxim
 
 > Define the object. Map the dependency. Discover the possibility. Test the evidence. Prove the claim. Attack the failure. Explain the mathematics. Formalize the boundary. Build the consequence. Preserve the record. Integrate the artifact.
