@@ -256,11 +256,15 @@ theorem measurePointProjection_map
         (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) =
       (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
         measurePointProjection X μ := by
-  simp [measurePointProjection, CMDG.CondensedCM4P2D.measureFunctor,
-    CMDG.CondensedCM4P2D.measurePresheafFunctor, MonoidalClosed.pre,
-    MonoidalClosed.FunctorCategory.closed, MonoidalClosed.FunctorCategory.adj,
-    MonoidalClosed.FunctorCategory.homEquiv,
-    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ]
+  simp only [measurePointProjection, CMDG.CondensedCM4P2D.measureFunctor,
+    CMDG.CondensedCM4P2D.measurePresheafFunctor]
+  rw [← MonoidalClosed.enrichedOrdinaryCategorySelf_eHomWhiskerRight]
+  simp [CategoryTheory.eHomWhiskerRight,
+    MonoidalClosed.enrichedOrdinaryCategorySelf_homEquiv,
+    CategoryTheory.Enriched.FunctorCategory.functorHomEquiv,
+    CategoryTheory.Enriched.FunctorCategory.functorEnrichedComp,
+    CategoryTheory.Enriched.FunctorCategory.homEquiv_apply_π,
+    CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply]
 
 /-- Pushing a one-point measure section forward along a profinite map and then evaluating
 the induced scalar functional is the same as evaluating the original measure on the pulled-back
