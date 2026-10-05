@@ -316,7 +316,11 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
         "--report ns-ci-intake-pr-controller-report.json",
+        "python ci/gcl_erdos3_lease_expiry_pr_controller.py",
+        "MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "--report gcl-erdos3-lease-expiry-pr-controller-report.json",
         "name: ns-ci-intake-pr-controller-report",
+        "gcl-erdos3-lease-expiry-pr-controller-report.json",
         "retention-days: 30",
     )
     for marker in required:
