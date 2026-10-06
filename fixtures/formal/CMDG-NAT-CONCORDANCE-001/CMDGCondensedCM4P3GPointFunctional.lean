@@ -254,23 +254,26 @@ theorem measurePointFunctional_zero_reflects
     (μ : (measurePresheafObj X).obj (op Point))
     (hμ : measurePointFunctional X μ = 0) :
     μ = 0 := by
+  have hlin : measurePointProjectionLinear X μ = 0 := by
+    apply LinearMap.ext
+    intro f
+    apply LocallyConstant.ext
+    intro z
+    have hf :
+        f = LocallyConstant.const Point (f PUnit.unit) := by
+      apply LocallyConstant.ext
+      intro y
+      cases y
+      rfl
+    have hfun := congrArg
+      (fun F : LocallyConstant X R →ₗ[R] R => F (f PUnit.unit)) hμ
+    rw [hf]
+    cases z
+    simpa [measurePointFunctional, measurePointProjectionLinear] using hfun
   apply measurePointProjection_zero_reflects X μ
   apply ModuleCat.hom_injective
-  ext f
-  apply LocallyConstant.ext
-  intro z
-  have hf :
-      f = LocallyConstant.const Point (f PUnit.unit) := by
-    ext y
-    cases y
-    rfl
-  have hfun := congrArg
-    (fun F : LocallyConstant X R →ₗ[R] R => F (f PUnit.unit)) hμ
-  change
-    (measurePointProjection X μ).hom f z = 0
-  rw [hf]
-  cases z
-  simpa [measurePointFunctional, measurePointProjectionLinear] using hfun
+  change measurePointProjectionLinear X μ = 0
+  exact hlin
 
 /-- The integral scalar functional also reflects zero.  The lifted/integral equivalence is
 lossless, so vanishing after descent forces the full Point functional, hence the Point measure,
@@ -291,7 +294,8 @@ theorem measurePointIntegralFunctional_zero_reflects
       (measurePointFunctional X μ) v
   rw [measurePointIntegralFunctional] at hdown
   rw [hdown] at hinv
-  simpa using hinv.symm
+  apply ULift.ext
+  simpa using congrArg ULift.down hinv.symm
 
 #check measurePointProjection
 #check measurePointProjectionAt
