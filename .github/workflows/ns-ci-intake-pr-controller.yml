@@ -46,6 +46,17 @@ jobs:
           permission-contents: read
           permission-pull-requests: write
 
+      - name: Mint bounded MATHSOLVE evidence-admission token
+        id: admission-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATHSOLVE
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Reconcile validated registered CEI intake branches to PRs
         env:
           MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
@@ -56,7 +67,7 @@ jobs:
 
       - name: Admit validated evidence PRs through protected merge
         env:
-          MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
+          MATHSOLVE_INTAKE_ADMISSION_TOKEN: ${{ steps.admission-token.outputs.token }}
         run: |
           set -euo pipefail
           # GH-OS capability marker: protected merge PUT is performed only inside the bounded admission script.
