@@ -219,6 +219,15 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   let U := op ((profiniteToCompHaus).obj P)
   let e :=
     CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.app X
+  let eU :
+      (CMDG.CondensedCM4P2D.measureFunctor.obj X).obj.obj U ≅
+        ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X).obj.obj U where
+    hom := e.hom.hom.app U
+    inv := e.inv.hom.app U
+    hom_inv_id := by
+      exact congrArg (fun k => k.hom.app U) e.hom_inv_id
+    inv_hom_id := by
+      exact congrArg (fun k => k.hom.app U) e.inv_hom_id
   let dU :
       ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X).obj.obj U ⟶
         ModuleCat.of CMDG.CondensedCM4P3G.R.{u}
@@ -244,11 +253,13 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
     exact Subsingleton.elim _ _
   rw [hz]
   let μ : (measurePresheafObj X).obj U :=
-    (ConcreteCategory.hom (e.inv.hom.app U)) s
+    (ConcreteCategory.hom eU.inv) s
   let aμ : IntegralBasisIndex X → ℤ :=
     fun i => measurePointIntegralFunctional X μ (integralBasis X i)
-  have heq := congrArg (fun k => k.hom.app U) e.inv_hom_id
-  have heval := ConcreteCategory.congr_hom heq s
+  have heval' :
+      (ConcreteCategory.hom eU.hom) μ = s := by
+    have h := ConcreteCategory.congr_hom eU.inv_hom_id s
+    simpa [μ, ConcreteCategory.comp_apply] using h
   have hcompat := applied_d_point_kernelProductFunctional X d μ
   have hk0raw := congrArg
     (fun F : (IntegralBasisIndex X → ℤ) →+ ℤ => F aμ) hk
@@ -257,20 +268,15 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   apply ULift.ext
   change
     ((dU s) z0).down = 0
-  have heval' :
-      (ConcreteCategory.hom (e.hom.hom.app U)) μ = s := by
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      simpa [μ] using heval
   have hcompatU :
-      ((dU ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) z0).down =
+      ((dU ((ConcreteCategory.hom eU.hom) μ)) z0).down =
         kernelProductFunctional X d aμ := by
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
-      simpa [P, U, e, dU, z0, μ, aμ] using hcompat
+      simpa [P, U, e, eU, dU, z0, μ, aμ] using hcompat
   have hrecover :
       ((dU s) z0).down =
-        ((dU ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) z0).down := by
+        ((dU ((ConcreteCategory.hom eU.hom) μ)) z0).down := by
     exact congrArg (fun t => ((dU t) z0).down) heval'.symm
   exact (hrecover.trans hcompatU).trans hk0
 
