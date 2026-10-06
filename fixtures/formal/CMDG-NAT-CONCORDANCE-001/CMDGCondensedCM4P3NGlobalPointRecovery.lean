@@ -249,8 +249,6 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
     fun i => measurePointIntegralFunctional X μ (integralBasis X i)
   have heq := congrArg (fun k => k.hom.app U) e.inv_hom_id
   have heval := ConcreteCategory.congr_hom heq s
-  simp only [NatTrans.comp_app, ConcreteCategory.comp_apply, NatTrans.id_app,
-    ConcreteCategory.id_apply] at heval
   have hcompat := applied_d_point_kernelProductFunctional X d μ
   have hk0raw := congrArg
     (fun F : (IntegralBasisIndex X → ℤ) →+ ℤ => F aμ) hk
