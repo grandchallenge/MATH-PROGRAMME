@@ -114,7 +114,7 @@ ambiguous provenance
 unclear claim effect
 ```
 
-The protected NS-CI pilot instantiated the first model. The UC-001/WP08-D004 tranche is the first reuse of the same controlled interface outside that pilot, with no expansion of token scope or claim authority. A zero-context bootstrap defined the entire work-set, a contributor returned one `GCL-CONTRIBUTION-RESULT/1`, intake preserved the raw result and receipt, and GCL adjudicated the mathematics separately.
+The protected NS-CI pilot instantiated the first model. The UC-001/WP08-D004 tranche was the first reuse of the same controlled interface outside that pilot. `ERDOS-OPEN-RECON` now reuses the same bounded preservation controller for its explicitly registered R1/S1/A1 reconnaissance dispatches, without expanding token scope or claim authority. A zero-context bootstrap defines the entire work-set, a contributor returns one `GCL-CONTRIBUTION-RESULT/1`, and intake preserves the raw result and receipt before separate mathematical adjudication.
 
 ## 4. Restricted claim
 
@@ -286,7 +286,7 @@ with control ID:
 
 `MP-NSCI-INTAKE-PR-CONTROLLER-001`.
 
-Its protected authority is intentionally small. The controller now uses an explicit finite profile registry: the original `NS-CI-001` pilot profile and the `UC-001/WP08-D004` incidence-interface profile. A campaign not named in that registry is rejected rather than inferred.
+Its protected authority is intentionally small. The controller uses an explicit finite profile registry: the original `NS-CI-001` pilot profile, the `UC-001/WP08-D004` incidence-interface profile, and the `ERDOS-OPEN-RECON` first-tranche R1/S1/A1 profile. A campaign not named in that registry is rejected rather than inferred.
 
 Its protected authority is intentionally small:
 
@@ -463,7 +463,7 @@ Do not merge these stages for convenience.
 | Function | Protected surface |
 |---|---|
 | Controller machine contract | `governance/ns_ci_intake_pr_controller.json` |
-| Controller implementation | `ci/ns_ci_intake_pr_controller.py` (historical filename; active controller is profile-registered and covers NS-CI plus UC-WP08-D004) |
+| Controller implementation | `ci/ns_ci_intake_pr_controller.py` (historical filename; active controller is profile-registered and covers NS-CI, UC-WP08-D004, and ERDOS-OPEN-RECON) |
 | Persistent controller workflow | `.github/workflows/ns-ci-intake-pr-controller.yml` |
 | GH-OS workflow registry | `.ghos-routing/workflows.json` |
 | Execution/recovery doctrine | `docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md` |

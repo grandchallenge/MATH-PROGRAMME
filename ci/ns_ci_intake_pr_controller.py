@@ -51,6 +51,16 @@ PROFILES = (
         receipt_schema_version="1.0.0",
         pr_title_prefix="UC-001 intake",
     ),
+    IntakeProfile(
+        campaign="ERDOS-OPEN-RECON",
+        branch_prefix="intake/erdos-",
+        dispatch_re=re.compile(
+            r"^ERDOS-(?:593|595|241|470|1052|99|101|138)-(?:R1|S1|A1)-IA-001$"
+        ),
+        base="contributions/ERDOS-OPEN-001/RECON_TRANCHE_001",
+        receipt_schema_version="1.0.0",
+        pr_title_prefix="ERDOS-OPEN intake",
+    ),
 )
 
 

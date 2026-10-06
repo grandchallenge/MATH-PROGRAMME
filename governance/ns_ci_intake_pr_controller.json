@@ -2,7 +2,7 @@
   "schema_version": "1.1.0",
   "control_id": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
   "status": "ACTIVE",
-  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated controlled-epistemic-interface intake evidence branches. Registered profiles are NS-CI-001 and UC-001/WP08-D004. OPENMATH ownership remains with MP-OPENMATH-UNATTENDED-LIFECYCLE-001.",
+  "purpose": "Open raw-evidence pull requests in grandchallenge/MATHSOLVE for already-created and validated controlled-epistemic-interface intake evidence branches. Registered profiles are NS-CI-001, UC-001/WP08-D004, and ERDOS-OPEN-RECON. OPENMATH ownership remains with MP-OPENMATH-UNATTENDED-LIFECYCLE-001.",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
   "environment": "release-trust",
   "target_repository": "grandchallenge/MATHSOLVE",
@@ -19,6 +19,13 @@
       "branch_prefix": "intake/uc-",
       "dispatch_pattern": "^UC-WP08-D004-WP0[1-5]-IA-001$",
       "evidence_root": "contributions/UC-001/WP08_D004_INCIDENCE_INTERFACE",
+      "receipt_schema_version": "1.0.0"
+    },
+    {
+      "campaign": "ERDOS-OPEN-RECON",
+      "branch_prefix": "intake/erdos-",
+      "dispatch_pattern": "^ERDOS-(?:593|595|241|470|1052|99|101|138)-(?:R1|S1|A1)-IA-001$",
+      "evidence_root": "contributions/ERDOS-OPEN-001/RECON_TRANCHE_001",
       "receipt_schema_version": "1.0.0"
     }
   ],
@@ -80,7 +87,8 @@
   "first_valid_result_lock": "dispatch_level_protected_raw_existence",
   "branch_prefixes": [
     "intake/nsci-",
-    "intake/uc-"
+    "intake/uc-",
+    "intake/erdos-"
   ],
   "superseded_openmath_owner": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001"
 }
