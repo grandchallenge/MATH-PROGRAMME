@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001",
+  "status": "ACTIVE_ON_PROTECTED_ADMISSION",
+  "purpose": "Admit already-created, Release-Trust-validated CEI evidence pull requests to GitHub's protected auto-merge / native merge-queue path without direct merge, branch-protection bypass, campaign mutation, or mathematical adjudication.",
+  "upstream_controller": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
+  "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
+  "environment": "release-trust",
+  "target_repository": "grandchallenge/MATHSOLVE",
+  "registered_profiles": [
+    "NS-CI-001",
+    "UC-001/WP08-D004",
+    "ERDOS-OPEN-RECON"
+  ],
+  "token_scope": {
+    "repositories": [
+      "MATHSOLVE"
+    ],
+    "permissions": {
+      "contents": "read",
+      "pull-requests": "write"
+    }
+  },
+  "required_preconditions": [
+    "the branch is a registered CEI intake branch recognized by the upstream bounded controller",
+    "the branch revalidates against its protected dispatch and exact raw-plus-receipt evidence shape",
+    "an open ordinary pull request exists from that exact branch to main",
+    "the pull request author is gcl-release-trust[bot]",
+    "the pull request title exactly matches the registered profile and dispatch",
+    "the pull request head SHA equals the live intake branch SHA",
+    "the pull request is not draft and is not known unmergeable"
+  ],
+  "allowed_actions": [
+    "read registered intake branches and their protected dispatch bindings",
+    "read the existing ordinary evidence pull request",
+    "revalidate the exact raw-plus-receipt evidence branch using the upstream controller validation logic",
+    "enable GitHub protected auto-merge with expectedHeadOid bound to the validated pull-request head and mergeMethod SQUASH",
+    "retry idempotently when protected auto-merge is already enabled"
+  ],
+  "prohibited_actions": [
+    "direct merge of any pull request",
+    "administrator or branch-protection bypass",
+    "write repository contents or alter evidence branches",
+    "create evidence pull requests",
+    "approve or dismiss pull-request reviews",
+    "modify campaign state",
+    "perform mathematical replay or adjudication",
+    "claim certification or canonical mathematical effect",
+    "use administration, actions-write, checks-write, issues-write, workflow-write, or contents-write authority"
+  ],
+  "native_protection_rule": "Enabling auto-merge is an admission request only. Required checks, merge-queue policy, merge-group checks, and repository rules remain authoritative and may refuse or delay the merge.",
+  "wake": {
+    "kind": "GitHub Actions",
+    "workflow": ".github/workflows/ns-ci-intake-pr-controller.yml",
+    "stage": "after bounded evidence-PR reconciliation",
+    "cadence": "every 10 minutes plus the existing success-gated Administrative maintenance dispatcher wake and manual replay"
+  },
+  "live_acceptance_target": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "pull_request": 919,
+    "dispatch_id": "ERDOS-593-R1-IA-001",
+    "expected_head_sha": "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
+    "required_result": "protected merge through native repository controls followed by exact protected-main raw-and-receipt readback"
+  },
+  "claim_boundaries": {
+    "constitutional": false,
+    "direct_merge": false,
+    "certification": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "campaign_mutation": false
+  }
+}
