@@ -301,16 +301,29 @@ def main() -> int:
         registry=registry,
     )
 
-    nsci_contents_write = dict(texts)
-    nsci_contents_write[nsci_controller] = nsci_contents_write[nsci_controller].replace(
+    nsci_intake_contents_write = dict(texts)
+    nsci_intake_contents_write[nsci_controller] = nsci_intake_contents_write[nsci_controller].replace(
         "          permission-contents: read",
         "          permission-contents: write",
         1,
     )
     require_error(
-        nsci_contents_write,
+        nsci_intake_contents_write,
         evidence,
-        "forbidden controller capability permission-contents: write",
+        "exactly one contents-write merge grant is required",
+        registry=registry,
+    )
+
+    nsci_merge_contents_write_removed = dict(texts)
+    nsci_merge_contents_write_removed[nsci_controller] = nsci_merge_contents_write_removed[nsci_controller].replace(
+        "          permission-contents: write",
+        "          permission-contents: read",
+        1,
+    )
+    require_error(
+        nsci_merge_contents_write_removed,
+        evidence,
+        "exactly one contents-write merge grant is required",
         registry=registry,
     )
 
@@ -336,7 +349,7 @@ def main() -> int:
     require_error(
         nsci_repo_scope_drift,
         evidence,
-        "missing bounded controller marker repositories: MATHSOLVE",
+        "exactly two MATHSOLVE-scoped App grants are required",
         registry=registry,
     )
 
