@@ -77,30 +77,33 @@ theorem weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
           ((measurePresheafObj (X.diagram.obj j)).map ftrue))
           (weightedFiniteBooleanMeasureSection X a j)
     symm
-    simpa [qj, qtrue, a, ftrue] using
-      weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward X μ j
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      simpa [qj, qtrue, a, ftrue] using
+        weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward X μ j
   have hfac :=
     weightedFiniteBooleanMeasureLimitLift_fac X a j
   have hfac' := congrArg
     (fun g =>
-      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫ g)
+      (Condensed.profiniteFree CMDG.CondensedCM4P2D.R.{u}).map qtrue ≫ g)
     hfac
-  change
-    μHom ≫ (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
-      ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
-        weightedFiniteBooleanMeasureLimitLift X a) ≫
-          (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j
+  have hfinite' :
+      μHom ≫ (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
+        (Condensed.profiniteFree CMDG.CondensedCM4P2D.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureHom X a j := by
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      simpa [qj] using hfinite
   calc
     μHom ≫ (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
-        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
-          weightedFiniteBooleanMeasureHom X a j := by
-            simpa [qj] using hfinite
+        (Condensed.profiniteFree CMDG.CondensedCM4P2D.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureHom X a j := hfinite'
     _ =
-        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+        (Condensed.profiniteFree CMDG.CondensedCM4P2D.R.{u}).map qtrue ≫
           (weightedFiniteBooleanMeasureLimitLift X a ≫
             (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j) := hfac'.symm
     _ =
-        ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+        ((Condensed.profiniteFree CMDG.CondensedCM4P2D.R.{u}).map qtrue ≫
           weightedFiniteBooleanMeasureLimitLift X a) ≫
             (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j := by
               simp only [Category.assoc]
