@@ -97,34 +97,33 @@ def validate_pr_binding(
     }
 
 
-def enable_protected_auto_merge(
+def merge_protected(
     gh: Github,
-    pr_node_id: str,
+    pr_number: int,
     expected_head_sha: str,
-) -> None:
-    if not pr_node_id:
-        raise ControllerError("evidence PR node_id unavailable for auto-merge")
-    query = """mutation($id:ID!,$oid:GitObjectID!){
-      enablePullRequestAutoMerge(input:{
-        pullRequestId:$id,
-        expectedHeadOid:$oid,
-        mergeMethod:SQUASH
-      }){
-        pullRequest{number}
-      }
-    }"""
-    try:
-        gh.request(
-            "POST",
-            "/graphql",
-            {
-                "query": query,
-                "variables": {"id": pr_node_id, "oid": expected_head_sha},
-            },
+    dispatch_id: str,
+) -> dict[str, Any]:
+    if not isinstance(pr_number, int):
+        raise ControllerError(f"{dispatch_id}: evidence PR number unavailable")
+    result = gh.request(
+        "PUT",
+        f"/repos/{OWNER}/{REPO}/pulls/{pr_number}/merge",
+        {
+            "sha": expected_head_sha,
+            "merge_method": "squash",
+            "commit_title": f"Protect intake evidence: {dispatch_id} (#{pr_number})",
+            "commit_message": (
+                "Mechanical preservation of one validated RESULT/1 raw snapshot "
+                "and receipt. No mathematical adjudication, certification, "
+                "claim promotion, or campaign advancement."
+            ),
+        },
+    )
+    if not isinstance(result, dict) or result.get("merged") is not True:
+        raise ControllerError(
+            f"{dispatch_id}: protected merge did not complete: {result!r}"
         )
-    except ControllerError as exc:
-        if "already enabled" not in str(exc).lower():
-            raise
+    return result
 
 
 def run(apply: bool) -> dict[str, Any]:
@@ -141,13 +140,13 @@ def run(apply: bool) -> dict[str, Any]:
         "authority": {
             "contents": "read",
             "pull_requests": "write",
-            "direct_merge": False,
+            "protected_merge": True,
             "admin_bypass": False,
             "campaign_mutation": False,
             "mathematical_adjudication": False,
         },
         "candidates": [],
-        "admitted_to_protected_auto_merge": [],
+        "protected_merges": [],
         "errors": [],
     }
 
@@ -175,20 +174,22 @@ def run(apply: bool) -> dict[str, Any]:
                 "dispatch_id": item["dispatch_id"],
                 "branch": branch,
                 **binding,
-                "state": "VALIDATED_FOR_PROTECTED_AUTO_MERGE",
+                "state": "VALIDATED_FOR_PROTECTED_MERGE",
             }
             report["candidates"].append(candidate)
             if apply:
-                enable_protected_auto_merge(
+                merged = merge_protected(
                     gh,
-                    str(binding["pr_node_id"] or ""),
+                    int(binding["pr_number"]),
                     str(binding["head_sha"] or ""),
+                    item["dispatch_id"],
                 )
-                report["admitted_to_protected_auto_merge"].append(
+                report["protected_merges"].append(
                     {
                         "dispatch_id": item["dispatch_id"],
                         "pr_number": binding["pr_number"],
                         "head_sha": binding["head_sha"],
+                        "merge_commit_sha": merged.get("sha"),
                     }
                 )
         except ControllerError as exc:
