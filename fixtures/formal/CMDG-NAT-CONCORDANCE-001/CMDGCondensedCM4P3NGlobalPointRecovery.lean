@@ -254,6 +254,7 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
     (fun F : (IntegralBasisIndex X → ℤ) →+ ℤ => F aμ) hk
   have hk0 : kernelProductFunctional X d aμ = 0 := by
     simpa using hk0raw
+  apply ULift.ext
   change
     ((dU s) z0).down = 0
   have hcompat' :
