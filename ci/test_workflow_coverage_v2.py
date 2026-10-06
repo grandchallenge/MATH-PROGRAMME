@@ -336,7 +336,7 @@ def main() -> int:
     require_error(
         nsci_repo_scope_drift,
         evidence,
-        "missing bounded controller marker repositories: MATHSOLVE",
+        "both bounded App tokens must remain restricted to MATHSOLVE",
         registry=registry,
     )
 
