@@ -247,7 +247,158 @@ noncomputable def measurePointIntegralFunctional
   CMDG.CondensedCM4P3G.liftedIntFunctionalDown X
     (measurePointFunctional X μ)
 
+/-- The lifted condensed measure functor has the P2-D presheaf map as its underlying
+natural transformation. -/
+lemma measureFunctor_map_hom
+    {X Y : Profinite.{u}} (f : X ⟶ Y) :
+    (CMDG.CondensedCM4P2D.measureFunctor.map f).hom =
+      CMDG.CondensedCM4P2D.measurePresheafFunctor.map f := by
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The functor-category internal-Hom projection intertwines outer precomposition with
+ordinary precomposition at the Point component. -/
+lemma measurePointProjection_pre_naturality
+    {X Y : Profinite.{u}} (f : X ⟶ Y) :
+    (((MonoidalClosed.pre
+        (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point)) ≫
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity =
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity ≫
+      (MonoidalClosed.pre
+        ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point))).app
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity) := by
+  let A := sourcePresheaf Y
+  let B := sourcePresheaf X
+  let T := coefficientPresheaf
+  let η : A ⟶ B := CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op
+  let U : CompHaus.{u}ᵒᵖ := op Point
+  let πA :
+      ((MonoidalClosed.internalHom.obj (op A)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (A.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget U ⋙ A) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  let πB :
+      ((MonoidalClosed.internalHom.obj (op B)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (B.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget U ⋙ B) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  change (((MonoidalClosed.pre η).app T).app U) ≫ πA =
+    πB ≫ (MonoidalClosed.pre (η.app U)).app (T.obj U)
+  apply MonoidalClosed.uncurry_injective
+  rw [MonoidalClosed.uncurry_natural_left, MonoidalClosed.uncurry_pre_app]
+  have h := congrArg (fun α => α.app U)
+    (MonoidalClosed.id_tensor_pre_app_comp_ev η T)
+  change
+      MonoidalCategory.whiskerLeft (A.obj U)
+          (((MonoidalClosed.pre η).app T).app U) ≫ ((ihom.ev A).app T).app U =
+        MonoidalCategory.whiskerRight (η.app U)
+          (((ihom B).obj T).obj U) ≫
+          ((ihom.ev B).app T).app U at h
+  have hA :
+      ((ihom.ev A).app T).app U = MonoidalClosed.uncurry πA := by
+    rfl
+  have hB :
+      ((ihom.ev B).app T).app U = MonoidalClosed.uncurry πB := by
+    rfl
+  change _ ≫ MonoidalClosed.uncurry πA =
+    _ ≫ MonoidalClosed.uncurry πB
+  rw [← hA, ← hB]
+  simpa only [Functor.id_obj] using h
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Projection of a pushed measure section is precomposition by pullback of source
+functions. -/
+theorem measurePointProjection_map
+    {X Y : Profinite.{u}} (f : X ⟶ Y)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjection Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) =
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
+        measurePointProjection X μ := by
+  rw [measureFunctor_map_hom f]
+  unfold measurePointProjection
+  have happ := ConcreteCategory.congr_hom
+    (measurePointProjection_pre_naturality f) μ
+  rw [ConcreteCategory.comp_apply, ConcreteCategory.comp_apply] at happ
+  change
+    (ConcreteCategory.hom
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity))
+      ((ConcreteCategory.hom
+        (((MonoidalClosed.pre
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
+      ((MonoidalClosed.pre
+        ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app
+          (op Point))).app
+        ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity))
+          ((ConcreteCategory.hom
+            (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+              (ModuleCat.{u + 1} R)
+              (Under.forget (op Point) ⋙ sourcePresheaf X)
+              (Under.forget (op Point) ⋙ coefficientPresheaf)
+              pointIdentity)) μ) at happ
+  rw [CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at happ
+  change
+    (ConcreteCategory.hom
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity))
+      ((ConcreteCategory.hom
+        (((MonoidalClosed.pre
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
+        (ConcreteCategory.hom
+          (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+            (ModuleCat.{u + 1} R)
+            (Under.forget (op Point) ⋙ sourcePresheaf X)
+            (Under.forget (op Point) ⋙ coefficientPresheaf)
+            pointIdentity)) μ
+  exact happ
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Pushing a one-point measure section forward along a profinite map and then evaluating
+the induced scalar functional is the same as evaluating the original measure on the pulled-back
+locally constant function. -/
+theorem measurePointFunctional_map
+    {X Y : Profinite.{u}} (f : X ⟶ Y)
+    (μ : (measurePresheafObj X).obj (op Point))
+    (v : LocallyConstant Y R) :
+    measurePointFunctional Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
+      measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
+  unfold measurePointFunctional
+  change
+    (LocallyConstant.evalₗ R PUnit.unit)
+      (measurePointProjectionLinear Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ)
+        (LocallyConstant.const Point v)) =
+      (LocallyConstant.evalₗ R PUnit.unit)
+        (measurePointProjectionLinear X μ
+          (LocallyConstant.const Point (LocallyConstant.comap f.hom.hom v)))
+  unfold measurePointProjectionLinear
+  rw [measurePointProjection_map]
+  rfl
+
 #check measurePointProjection
+#check measurePointProjection_pre_naturality
 #check measurePointProjectionAt
 #check measurePointProjectionAt_identity
 #check measurePointProjection_condition
@@ -257,9 +408,13 @@ noncomputable def measurePointIntegralFunctional
 #check measurePointProjection_zero_reflects
 #check measurePointProjectionLinear
 #check measurePointFunctional
+#check measureFunctor_map_hom
+#check measurePointProjection_map
+#check measurePointFunctional_map
 #check measurePointIntegralFunctional
 
 #print axioms measurePointProjection
+#print axioms measurePointProjection_pre_naturality
 #print axioms measurePointProjection_condition
 #print axioms measurePointProjectionAt_naturality
 #print axioms pointProbeToIdentity
@@ -267,6 +422,9 @@ noncomputable def measurePointIntegralFunctional
 #print axioms measurePointProjection_zero_reflects
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
+#print axioms measureFunctor_map_hom
+#print axioms measurePointProjection_map
+#print axioms measurePointFunctional_map
 #print axioms measurePointIntegralFunctional
 
 end CMDG.CondensedCM4P3G.PointFunctional
