@@ -237,7 +237,11 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
       exact PUnit.unit
-  have hz : z = z0 := Subsingleton.elim _ _
+  have hz : z = z0 := by
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      change (show PUnit.{u + 1} from z) = (show PUnit.{u + 1} from z0)
+    exact Subsingleton.elim _ _
   rw [hz]
   let μ : (measurePresheafObj X).obj U :=
     (ConcreteCategory.hom (e.inv.hom.app U)) s
