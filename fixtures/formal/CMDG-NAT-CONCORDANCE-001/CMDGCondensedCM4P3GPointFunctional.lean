@@ -1002,23 +1002,10 @@ theorem weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
         ((CMDG.CondensedCM4P2D.measureFunctor.map q).hom.app (op Point))) μ
     simpa [qtrue, a, q] using
       weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward X μ j
-  change
-    ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
-      weightedFiniteBooleanMeasureLimitLift X a) ≫
-        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
-      μHom ≫
-        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j
-  calc
-    ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
-      weightedFiniteBooleanMeasureLimitLift X a) ≫
-        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
-      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
-        weightedFiniteBooleanMeasureHom X a j := by
-          rw [Category.assoc, weightedFiniteBooleanMeasureLimitLift_fac X a j]
-    _ = μHom ≫ CMDG.CondensedCM4P2D.measureFunctor.map q := hfinite
-    _ = μHom ≫
-        (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j := by
-          rfl
+  have h := hleft.trans hfinite
+  set_option backward.defeqAttrib.useBackward true in
+  set_option backward.isDefEq.respectTransparency false in
+    simpa only [Category.assoc] using h
 
 #check weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
 #print axioms weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
