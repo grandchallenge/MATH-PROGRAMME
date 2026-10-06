@@ -357,6 +357,9 @@ theorem eq_zero_of_solidification_kernel
 theorem coefficientMappingOutInjectivity_of_pointSeparation :
     CMDG.CondensedCM4P3G.CoefficientMappingOutInjectivity.{u} := by
   intro X h₁ h₂ hh
+  change
+    (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ h₁ =
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ h₂ at hh
   have hprezero :
       (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫
           (h₁ - h₂) = 0 := by
