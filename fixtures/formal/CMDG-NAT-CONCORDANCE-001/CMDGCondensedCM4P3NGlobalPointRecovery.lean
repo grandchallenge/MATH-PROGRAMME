@@ -219,15 +219,18 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   let U := op ((profiniteToCompHaus).obj P)
   let e :=
     CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.app X
+  let dU :
+      ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X).obj.obj U ⟶
+        ModuleCat.of CMDG.CondensedCM4P3G.R.{u}
+          (LocallyConstant U.unop CMDG.CondensedCM4P3G.R.{u}) := by
+    exact d.hom.app U
   apply ModuleCat.hom_injective
   apply LinearMap.ext
   intro s
   set_option backward.defeqAttrib.useBackward true in
   set_option backward.isDefEq.respectTransparency false in
     change
-      (show LocallyConstant U.unop CMDG.CondensedCM4P3G.R.{u} from
-        d.hom.app U s) =
-        (0 : LocallyConstant U.unop CMDG.CondensedCM4P3G.R.{u})
+      dU s = (0 : LocallyConstant U.unop CMDG.CondensedCM4P3G.R.{u})
   apply LocallyConstant.ext
   intro z
   cases z
@@ -246,10 +249,10 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
     simpa using hk0raw
   change
     ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
-      (ConcreteCategory.hom (d.hom.app U)) s) PUnit.unit).down = 0
+      dU s) PUnit.unit).down = 0
   have hcompat' :
       ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
-        (ConcreteCategory.hom (d.hom.app U)) s) PUnit.unit).down =
+        dU s) PUnit.unit).down =
         kernelProductFunctional X d aμ := by
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
