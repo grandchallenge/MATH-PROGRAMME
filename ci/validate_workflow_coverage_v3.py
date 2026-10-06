@@ -316,6 +316,9 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
         "--report ns-ci-intake-pr-controller-report.json",
+        "python ci/external_intake_evidence_admission.py",
+        "--report external-intake-evidence-admission-report.json",
+        "external-intake-evidence-admission-report.json",
         "name: ns-ci-intake-pr-controller-report",
         "retention-days: 30",
     )
