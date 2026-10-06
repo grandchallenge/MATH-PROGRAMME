@@ -1964,6 +1964,164 @@ theorem kernelProductFunctional_eq_zero_of_solidification_kernel
     basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
       X d hd I hI
 
+/-- Evaluating an arbitrary solid-side coefficient morphism on a transported Point measure is
+exactly the P3-L product functional applied to the measure's Nöbeling coefficient vector. -/
+theorem applied_d_point_kernelProductFunctional
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    ((show LocallyConstant Point CMDG.CondensedCM4P3G.R.{u} from
+      (d.hom.app (op Point))
+        ((CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X).hom.app
+          (op Point) μ)) PUnit.unit).down =
+      kernelProductFunctional X d
+        (fun i => measurePointIntegralFunctional X μ (integralBasis X i)) := by
+  let P := Profinite.of PUnit.{u + 1}
+  let T := basisBooleanCube X
+  let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let a : IntegralBasisIndex X → ℤ :=
+    fun i => measurePointIntegralFunctional X μ (integralBasis X i)
+  let e :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X
+  let μHom :
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).obj P ⟶
+        CMDG.CondensedCM4P2D.measureFunctor.obj X :=
+    (freeHomSectionsEquiv P
+      (CMDG.CondensedCM4P2D.measureFunctor.obj X)).symm μ
+  have hrec := weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue X μ
+  have hcomp := congrArg (fun g => g ≫ e ≫ d) hrec
+  have hcomp' :
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureLimitLift X a ≫ e ≫ d =
+        μHom ≫ e ≫ d := by
+    simpa [P, qtrue, a, e, μHom, Category.assoc] using hcomp
+  have hs := congrArg (freeHomSectionsEquiv P coefficientObject) hcomp'
+  rw [freeHomSectionsEquiv_precomp] at hs
+  let U := op ((profiniteToCompHaus).obj P)
+  have hpost :
+      ∀ {A B : CondensedMod.{u} CMDG.CondensedCM4P3G.R.{u}}
+        (g : (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).obj P ⟶ A)
+        (h : A ⟶ B),
+        freeHomSectionsEquiv P B (g ≫ h) =
+          (ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map h).hom.app U))
+            (freeHomSectionsEquiv P A g) := by
+    intro A B g h
+    change
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+          ((profiniteToCondensed).obj P) B (g ≫ h)) = _
+    rw [Adjunction.homEquiv_naturality_right]
+    rfl
+  have hμ :
+      freeHomSectionsEquiv P
+          (CMDG.CondensedCM4P2D.measureFunctor.obj X) μHom = μ := by
+    exact Equiv.apply_symm_apply _ _
+  have hright := hpost (g := μHom) (h := e ≫ d)
+  rw [hμ] at hright
+  rw [hright] at hs
+  have hsPoint := congrArg
+    (fun f : LocallyConstant P CMDG.CondensedCM4P3G.R.{u} => f PUnit.unit) hs
+  have hsPoint' := hsPoint
+  change kernelProductSection X d a (fun _ => true) = _ at hsPoint'
+  set_option backward.defeqAttrib.useBackward true in
+  set_option backward.isDefEq.respectTransparency false in
+    change kernelProductSection X d a (fun _ => true) =
+      (show LocallyConstant Point CMDG.CondensedCM4P3G.R.{u} from
+        (d.hom.app (op Point)) ((e.hom.app (op Point)) μ)) PUnit.unit at hsPoint'
+  rw [kernelProductFunctional_apply]
+  change
+    ((show LocallyConstant Point CMDG.CondensedCM4P3G.R.{u} from
+      (d.hom.app (op Point)) ((e.hom.app (op Point)) μ)) PUnit.unit).down =
+      (kernelProductSection X d a (fun _ => true)).down
+  exact congrArg ULift.down hsPoint'.symm
+
+/-- The product-functional zero theorem is faithful enough at Point to kill the original
+solid-side coefficient morphism. -/
+theorem coefficient_eq_zero_of_solidification_kernel
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hd :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ d = 0) :
+    d = 0 := by
+  have hk :=
+    kernelProductFunctional_eq_zero_of_solidification_kernel X d hd
+  apply coefficient_hom_ext_point
+  change d.hom.app (op Point) = 0
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro s
+  let E :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.app X
+  let μ : (measurePresheafObj X).obj (op Point) :=
+    (E.inv.hom.app (op Point)) s
+  have hE : (E.hom.hom.app (op Point)) μ = s := by
+    dsimp [μ]
+    change
+      (ConcreteCategory.hom (E.hom.hom.app (op Point)))
+        ((ConcreteCategory.hom (E.inv.hom.app (op Point))) s) = s
+    rw [← ConcreteCategory.comp_apply]
+    change
+      (ConcreteCategory.hom ((E.inv ≫ E.hom).hom.app (op Point))) s = s
+    rw [E.inv_hom_id]
+    rfl
+  have hc := applied_d_point_kernelProductFunctional X d μ
+  let aμ : IntegralBasisIndex X → ℤ :=
+    fun i => measurePointIntegralFunctional X μ (integralBasis X i)
+  have hkμ := congrArg
+    (fun F : (IntegralBasisIndex X → ℤ) →+ ℤ => F aμ) hk
+  have hzero : kernelProductFunctional X d aμ = 0 := by
+    simpa using hkμ
+  have hdown :
+      ((show LocallyConstant Point CMDG.CondensedCM4P3G.R.{u} from
+        (d.hom.app (op Point)) ((E.hom.hom.app (op Point)) μ))
+          PUnit.unit).down = 0 := by
+    exact hc.trans hzero
+  rw [← hE]
+  apply LocallyConstant.ext
+  intro z
+  cases z
+  apply ULift.ext
+  exact hdown
+
+/-- Point-functional faithfulness closes the remaining coefficient mapping-out injectivity
+boundary directly, without first constructing a finite-stage factorization. -/
+theorem coefficientMappingOutInjectivity_of_pointFunctional :
+    CoefficientMappingOutInjectivity.{u} := by
+  intro X h₁ h₂ hh
+  change
+    (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ h₁ =
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ h₂ at hh
+  have hd :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫
+        (h₁ - h₂) = 0 := by
+    rw [Preadditive.comp_sub, hh, sub_self]
+  have hzero :=
+    coefficient_eq_zero_of_solidification_kernel X (h₁ - h₂) hd
+  exact sub_eq_zero.mp hzero
+
+/-- Terminal coefficient-solidity theorem obtained from the Point-functional route. -/
+theorem coefficientObject_isSolid_via_pointFunctional :
+    CondensedMod.IsSolid.{u} CMDG.CondensedCM4P3G.R.{u} coefficientObject := by
+  have hinj : CoefficientMappingOutInjectivity.{u} :=
+    coefficientMappingOutInjectivity_of_pointFunctional
+  have hstage : CoefficientFiniteStageMappingOut.{u} :=
+    coefficientFiniteStageMappingOut_of_injectivity hinj
+  exact coefficientFiniteStageMappingOut_iff_isSolid.mp hstage
+
+#check applied_d_point_kernelProductFunctional
+#check coefficient_eq_zero_of_solidification_kernel
+#check coefficientMappingOutInjectivity_of_pointFunctional
+#check coefficientObject_isSolid_via_pointFunctional
+#print axioms applied_d_point_kernelProductFunctional
+#print axioms coefficient_eq_zero_of_solidification_kernel
+#print axioms coefficientMappingOutInjectivity_of_pointFunctional
+#print axioms coefficientObject_isSolid_via_pointFunctional
+
 #check weightedFiniteBooleanCoefficient_measurePoint_allTrue
 #check profinitePointProbe
 #check weightedFiniteBooleanMeasureHom_measureSolidification_evaluationWeight_allTrue
