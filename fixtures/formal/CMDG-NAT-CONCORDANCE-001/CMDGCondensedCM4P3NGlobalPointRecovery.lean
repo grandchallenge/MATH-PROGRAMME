@@ -106,4 +106,77 @@ theorem weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
               set_option backward.isDefEq.respectTransparency false in
                 simpa only [Category.assoc] using hleft.symm
 
+/-- Evaluating an arbitrary Point measure section through the solid comparison and a coefficient
+morphism is exactly the product functional of its Nöbeling coordinate vector. -/
+theorem applied_d_point_kernelProductFunctional
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    ((((d.hom.app (op Point))
+        (((CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X).hom.app
+          (op Point)) μ)) PUnit.unit).down) =
+      kernelProductFunctional X d
+        (fun i => measurePointIntegralFunctional X μ (integralBasis X i)) := by
+  let P := Profinite.of PUnit.{u + 1}
+  let T := basisBooleanCube X
+  let U := op ((profiniteToCompHaus).obj P)
+  let A := CMDG.CondensedCM4P2D.measureFunctor.obj X
+  let E :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X
+  let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let a : IntegralBasisIndex X → ℤ :=
+    fun i => measurePointIntegralFunctional X μ (integralBasis X i)
+  let μHom := (freeHomSectionsEquiv P A).symm μ
+  have hglobal :=
+    weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point X μ
+  have hmor := congrArg
+    (fun g => g ≫ E ≫ d) hglobal
+  have hmor' :
+      μHom ≫ E ≫ d =
+        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          (weightedFiniteBooleanMeasureLimitLift X a ≫ E ≫ d) := by
+    simpa [P, A, E, qtrue, a, μHom, Category.assoc] using hmor
+  have hs := congrArg
+    (fun g => freeHomSectionsEquiv P coefficientObject g) hmor'
+  have hleft :
+      freeHomSectionsEquiv P coefficientObject (μHom ≫ E ≫ d) =
+        (d.hom.app U) ((E.hom.app U) μ) := by
+    change
+      freeHomSectionsEquiv P coefficientObject (μHom ≫ (E ≫ d)) =
+        (d.hom.app U) ((E.hom.app U) μ)
+    have hpost :
+        freeHomSectionsEquiv P coefficientObject (μHom ≫ (E ≫ d)) =
+          (ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map (E ≫ d)).hom.app U))
+            (freeHomSectionsEquiv P A μHom) := by
+      change
+        (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+          ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+            ((profiniteToCondensed).obj P) coefficientObject (μHom ≫ (E ≫ d))) = _
+      rw [Adjunction.homEquiv_naturality_right]
+      rfl
+    rw [hpost]
+    rw [Equiv.apply_symm_apply]
+    rfl
+  rw [hleft] at hs
+  have hpre :=
+    freeHomSectionsEquiv_precomp qtrue coefficientObject
+      (weightedFiniteBooleanMeasureLimitLift X a ≫ E ≫ d)
+  rw [hpre] at hs
+  have hkernel :
+      freeHomSectionsEquiv T coefficientObject
+          (weightedFiniteBooleanMeasureLimitLift X a ≫ E ≫ d) =
+        kernelProductSection X d a := by
+    rfl
+  rw [hkernel] at hs
+  have hsPoint := congrArg
+    (fun f : LocallyConstant P CMDG.CondensedCM4P3G.R.{u} => f PUnit.unit) hs
+  rw [kernelProductFunctional_apply]
+  change
+    (((d.hom.app U) ((E.hom.app U) μ)) PUnit.unit).down =
+      (kernelProductSection X d a (fun _ => true)).down
+  exact congrArg ULift.down hsPoint
+
 end CMDG.CondensedCM4P3M.KernelPointBridge
