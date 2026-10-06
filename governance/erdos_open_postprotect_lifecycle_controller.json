@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-ERDOS-OPEN-POSTPROTECT-LIFECYCLE-001",
+  "status": "ACTIVE_CANDIDATE",
+  "purpose": "Carry ERDOS-OPEN protected R1+A1 evidence through the mechanical blind-cohort closure gate and recognize only registered deterministic advancement bundles. Mathematical synthesis is never inferred from RESULT/1 validity.",
+  "target_repository": "grandchallenge/MATHSOLVE",
+  "controller_repository": "grandchallenge/MATH-PROGRAMME",
+  "protected_problems": [
+    "593",
+    "595",
+    "241",
+    "470",
+    "1052",
+    "99",
+    "101",
+    "138"
+  ],
+  "branch_pattern": "lifecycle/erdos-<problem>-cohort-closure-001",
+  "authority_source": "GCL Release Trust GitHub App; short-lived MATHSOLVE-only token",
+  "token_scope": {
+    "repositories": [
+      "MATHSOLVE"
+    ],
+    "permissions": {
+      "contents": "write",
+      "pull-requests": "write"
+    }
+  },
+  "allowed_actions": [
+    "read protected ERDOS receipts, raw evidence bindings, cohort activation records, and existing closure/adjudication artifacts",
+    "run the protected MATHSOLVE cohort-closure builder and validators from an exact main checkout",
+    "create or update exactly one registered cohort-closure candidate branch containing exactly one closure JSON artifact",
+    "open exactly one ordinary closure PR from that branch to main",
+    "after exact-head documentary approval by gcl-council-clerk[bot], request one exact-head protected squash merge",
+    "run an explicitly registered deterministic advancement validator on already-protected synthesis/adjudication bundles",
+    "report SYNTHESIS_READY_NEEDS_REGISTERED_PLUGIN when closure is protected but no registered mathematical plugin exists"
+  ],
+  "prohibited_actions": [
+    "execute R1, A1, or S1 sibling work",
+    "inspect sibling returns before the protected R1+A1 closure threshold is satisfied",
+    "infer mathematical correctness from schema validity",
+    "generate mathematical synthesis or adjudication without a registered deterministic plugin",
+    "promote literature-dependent claims when S1 is absent",
+    "bypass branch protection, rulesets, or documentary review",
+    "use administrator merge",
+    "certify mathematics or create MATHCERT effect",
+    "claim parent Erdős problem resolution, novelty, publication, or prize effect"
+  ],
+  "registered_advancement_plugins": {
+    "241": {
+      "validator": "ci/validate_erdos_241_synthesis.py",
+      "protected_successor": "work_packages/ERDOS_OPEN/ERDOS_241_N1_LOCAL_DIFFERENCE_POWER.md",
+      "historical_acceptance_pr": 936,
+      "historical_merge_commit": "91c4a7879ad5b51077fdba9cb1f5e9367bc4a7e0"
+    }
+  },
+  "state_semantics": {
+    "WAITING_FOR_PROTECTED_R1_A1": "blind cohort remains closed to sibling comparison",
+    "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW": "mechanical closure candidate exists but protected merge is blocked by the non-author review rule",
+    "PROTECTED_CLOSURE_MERGED": "blind evidence barrier is mechanically closed; no mathematics adjudicated",
+    "SYNTHESIS_READY_NEEDS_REGISTERED_PLUGIN": "closure is protected but mathematical synthesis requires a separate registered reasoning result/plugin",
+    "ADVANCED": "a registered deterministic validator confirms a protected replay/adjudication/successor bundle"
+  },
+  "idempotency_rule": "A protected valid closure is never rewritten. An already-ADVANCED registered bundle is validated and reported only; no duplicate branch, PR, adjudication, or successor is created.",
+  "wake": {
+    "kind": "GitHub Actions",
+    "cadence": "every 20 minutes plus workflow_dispatch",
+    "environment": "release-trust"
+  },
+  "claim_boundaries": {
+    "constitutional": false,
+    "certification": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "literature_promotion": false,
+    "parent_problem_effect": false
+  }
+}
