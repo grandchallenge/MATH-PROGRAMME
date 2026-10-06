@@ -23,6 +23,12 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             "UC-WP08-D004-WP01-IA-001",
         )
 
+    def test_erdos_branch_maps_to_exact_dispatch(self) -> None:
+        self.assertEqual(
+            derive_dispatch_id("intake/erdos-593-r1-ia-001"),
+            "ERDOS-593-R1-IA-001",
+        )
+
     def test_non_dispatch_branch_is_rejected(self) -> None:
         with self.assertRaises(ControllerError):
             derive_dispatch_id("intake/not-a-dispatch")
@@ -53,6 +59,19 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             "receipts/UC-WP08-D004-WP03-IA-001/github-comment-24680.json",
         )
 
+    def test_erdos_comment_paths_are_dispatch_bound(self) -> None:
+        raw, receipt = expected_paths("ERDOS-593-R1-IA-001", 6005661923)
+        self.assertEqual(
+            raw,
+            "contributions/ERDOS-OPEN-001/RECON_TRANCHE_001/"
+            "raw/ERDOS-593-R1-IA-001/github-comment-6005661923.md",
+        )
+        self.assertEqual(
+            receipt,
+            "contributions/ERDOS-OPEN-001/RECON_TRANCHE_001/"
+            "receipts/ERDOS-593-R1-IA-001/github-comment-6005661923.json",
+        )
+
     def test_registered_profile_schema_versions_are_explicit(self) -> None:
         self.assertEqual(
             profile_for_dispatch("NSCI-C2-B-COOP-001").receipt_schema_version,
@@ -60,6 +79,10 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
         )
         self.assertEqual(
             profile_for_dispatch("UC-WP08-D004-WP05-IA-001").receipt_schema_version,
+            "1.0.0",
+        )
+        self.assertEqual(
+            profile_for_dispatch("ERDOS-1052-S1-IA-001").receipt_schema_version,
             "1.0.0",
         )
 
@@ -87,6 +110,20 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
         self.assertIn(
             "contributions/UC-001/WP08_D004_INCIDENCE_INTERFACE/raw/"
             "UC-WP08-D004-WP02-IA-001",
+            gh.last_path,
+        )
+
+    def test_erdos_dispatch_level_first_result_lock_uses_erdos_root(self) -> None:
+        class FakeGithub:
+            def get_optional(self, path):
+                self.last_path = path
+                return [{"name": "github-comment-6005661923.md"}]
+
+        gh = FakeGithub()
+        self.assertTrue(main_has_any_raw(gh, "ERDOS-593-R1-IA-001"))
+        self.assertIn(
+            "contributions/ERDOS-OPEN-001/RECON_TRANCHE_001/raw/"
+            "ERDOS-593-R1-IA-001",
             gh.last_path,
         )
 
