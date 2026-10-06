@@ -270,7 +270,7 @@ theorem measurePointFunctional_zero_reflects
     rw [hf]
     cases z
     change
-      ((measurePointProjection X μ).hom
+      (measurePointProjectionLinear X μ
         (LocallyConstant.const Point (f PUnit.unit))) PUnit.unit = 0 at hfun
     exact hfun
   apply measurePointProjection_zero_reflects X μ
