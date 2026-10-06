@@ -310,7 +310,7 @@ def main() -> int:
     require_error(
         nsci_contents_write,
         evidence,
-        "forbidden controller capability permission-contents: write",
+        "intake token must retain contents-read scope",
         registry=registry,
     )
 
