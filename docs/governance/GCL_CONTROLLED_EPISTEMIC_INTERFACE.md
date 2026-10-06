@@ -318,7 +318,7 @@ with control ID:
 
 `MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001`.
 
-It revalidates the exact registered evidence branch and ordinary PR, requires the PR to be authored by `gcl-release-trust[bot]`, binds the live head SHA, and may then request one ordinary `SQUASH` merge with that exact head supplied as GitHub's expected `sha`. MATHSOLVE's required status checks, unattributed-change approval rule, review-thread policy, and other repository protections remain authoritative; the controller has no bypass actor.
+It revalidates the exact registered evidence branch and ordinary PR, requires the PR to be authored by `gcl-release-trust[bot]`, binds the live head SHA, and may then request one ordinary `SQUASH` merge with that exact head supplied as GitHub's expected `sha`. MATHSOLVE's required status checks, unattributed-change approval rule, review-thread policy, and other repository protections remain authoritative; the controller has no bypass actor. The protected workflow mints this stage a separate short-lived Release Trust token scoped to MATHSOLVE with `contents:write` and `pull_requests:write`, because GitHub's merge endpoint requires contents-write. The upstream intake/PR-creation token remains `contents:read` + `pull_requests:write`; the admission script is prohibited from using its contents-write token for direct contents/ref/commit/tree/blob mutation.
 
 This second stage may not write repository contents directly, alter evidence branches, bypass branch protection or rulesets, use administrator merge, approve reviews, mutate campaign state, adjudicate mathematics, certify a claim, or promote a mathematical statement. The evidence bytes remain mechanically preserved evidence after protected merge; adjudication remains a separate action.
 
