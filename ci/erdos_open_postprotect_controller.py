@@ -13,7 +13,10 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from ci.ns_ci_intake_pr_controller import ControllerError, Github
+    if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from ci.ns_ci_intake_pr_controller import ControllerError, Github
 except ModuleNotFoundError:
     from ns_ci_intake_pr_controller import ControllerError, Github
 
