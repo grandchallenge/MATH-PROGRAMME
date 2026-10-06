@@ -353,4 +353,29 @@ theorem eq_zero_of_solidification_kernel
   apply eq_zero_of_kernelProductFunctional_eq_zero X d
   exact kernelProductFunctional_eq_zero_of_solidification_kernel X d hd
 
+/-- Point separation proves the remaining coefficient mapping-out injectivity theorem. -/
+theorem coefficientMappingOutInjectivity_of_pointSeparation :
+    CMDG.CondensedCM4P3G.CoefficientMappingOutInjectivity.{u} := by
+  intro X h₁ h₂ hh
+  have hprezero :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫
+          (h₁ - h₂) = 0 := by
+    rw [Preadditive.comp_sub, hh, sub_self]
+  have hzero :
+      h₁ - h₂ = 0 :=
+    eq_zero_of_solidification_kernel X (h₁ - h₂) hprezero
+  exact sub_eq_zero.mp hzero
+
+/-- The discrete lifted-integer coefficient object is solid. -/
+theorem coefficientObject_isSolid :
+    CondensedMod.IsSolid.{u} CMDG.CondensedCM4P3G.R.{u} coefficientObject := by
+  have hinj :
+      CMDG.CondensedCM4P3G.CoefficientMappingOutInjectivity.{u} :=
+    coefficientMappingOutInjectivity_of_pointSeparation
+  have hres :
+      CMDG.CondensedCM4P3D.CoefficientResidualHomTheorem.{u} :=
+    (CMDG.CondensedCM4P3G.coefficientResidualHomTheorem_iff_injectivity.{u}).2 hinj
+  exact
+    (CMDG.CondensedCM4P3D.coefficientResidualHomTheorem_iff_isSolid.{u}).1 hres
+
 end CMDG.CondensedCM4P3M.KernelPointBridge
