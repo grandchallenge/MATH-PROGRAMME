@@ -127,9 +127,9 @@ def merge_protected(
 
 
 def run(apply: bool) -> dict[str, Any]:
-    token = os.environ.get("MATHSOLVE_INTAKE_PR_TOKEN", "")
+    token = os.environ.get("MATHSOLVE_INTAKE_ADMISSION_TOKEN", "")
     if not token:
-        raise ControllerError("MATHSOLVE_INTAKE_PR_TOKEN is empty")
+        raise ControllerError("MATHSOLVE_INTAKE_ADMISSION_TOKEN is empty")
     gh = Github(token)
 
     report: dict[str, Any] = {
@@ -138,7 +138,8 @@ def run(apply: bool) -> dict[str, Any]:
         "target_repository": f"{OWNER}/{REPO}",
         "apply": apply,
         "authority": {
-            "contents": "read",
+            "contents": "write",
+            "direct_content_api_write": False,
             "pull_requests": "write",
             "protected_merge": True,
             "admin_bypass": False,
