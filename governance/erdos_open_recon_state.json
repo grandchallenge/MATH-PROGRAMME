@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "ERDOS_OPEN_RECON_PROGRAMME_STATE",
+  "campaign": "ERDOS-OPEN-RECON",
+  "authoritative_scope": "Programme projection of protected Solve lifecycle transactions; individual mathematical artifacts remain authoritative in MATHSOLVE.",
+  "last_reconciliation": "ERDOS-241-RA-ADJUDICATION-001",
+  "reconciled_advancements": {
+    "241": {
+      "status": "ADVANCED_NATIVE_SUCCESSOR_READY",
+      "solve_merge": "91c4a7879ad5b51077fdba9cb1f5e9367bc4a7e0",
+      "adjudication": "contributions/ERDOS-OPEN-001/RECON_TRANCHE_001/adjudications/ERDOS-241-RA-ADJUDICATION-001.json",
+      "successor": "ERDOS-241-N1-LOCAL-DIFFERENCE-POWER",
+      "source_gate": "OPEN__S1_NOT_PROTECTED",
+      "parent_problem_effect": "NONE"
+    }
+  },
+  "automation": {
+    "intake_preservation": "QUALIFIED_UNATTENDED",
+    "post_intake_cohort_lifecycle": "NOT_YET_UNATTENDED",
+    "note": "ERDOS-241 proves the lifecycle semantics through protected successor generation, but closure/replay/adjudication/successor generation was initiated as a bounded native transaction rather than by a persistent ERDOS lifecycle controller."
+  },
+  "next_action": "Generalize the proven ERDOS-241 lifecycle transaction into an idempotent persistent controller; replay it against protected 241 state as ALREADY_ADVANCED and against synthetic closure-ready fixtures before enabling unattended backend worker pickup.",
+  "authority_boundaries": {
+    "certification": false,
+    "publication": false,
+    "parent_problem": false,
+    "literature_currentness": false
+  }
+}
