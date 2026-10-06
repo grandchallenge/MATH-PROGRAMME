@@ -1,3 +1,4 @@
+from pathlib import Path
 import unittest
 
 from ci.external_intake_evidence_admission import (
@@ -95,6 +96,24 @@ class ExternalIntakeEvidenceAdmissionTests(unittest.TestCase):
                 candidate(),
                 pull_request(base={"ref": "other"}),
             )
+
+
+    def test_admission_script_write_surface_is_merge_only(self):
+        text = Path("ci/external_intake_evidence_admission.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(text.count('"PUT"'), 1)
+        self.assertIn(
+            'f"/repos/{OWNER}/{REPO}/pulls/{pr_number}/merge"',
+            text,
+        )
+        self.assertNotIn('"PATCH"', text)
+        self.assertNotIn('"DELETE"', text)
+        self.assertNotIn('"/contents/', text)
+        self.assertNotIn('"/git/refs/', text)
+        self.assertNotIn('"/git/commits', text)
+        self.assertNotIn('"/git/trees', text)
+        self.assertNotIn('"/git/blobs', text)
 
     def test_protected_merge_is_expected_head_locked_and_squash_only(self):
         gh = FakeGithub()
