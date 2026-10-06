@@ -258,19 +258,19 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   change
     ((dU s) z0).down = 0
   have heval' :
-      (ConcreteCategory.hom (e.hom.app U)) μ = s := by
+      (ConcreteCategory.hom (e.hom.hom.app U)) μ = s := by
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
       simpa [μ] using heval
   have hcompatU :
-      ((dU ((ConcreteCategory.hom (e.hom.app U)) μ)) z0).down =
+      ((dU ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) z0).down =
         kernelProductFunctional X d aμ := by
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
       simpa [P, U, e, dU, z0, μ, aμ] using hcompat
   have hrecover :
       ((dU s) z0).down =
-        ((dU ((ConcreteCategory.hom (e.hom.app U)) μ)) z0).down := by
+        ((dU ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) z0).down := by
     exact congrArg (fun t => ((dU t) z0).down) heval'.symm
   exact (hrecover.trans hcompatU).trans hk0
 
