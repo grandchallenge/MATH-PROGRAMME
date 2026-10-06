@@ -277,6 +277,57 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
           ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) PUnit.unit).down = 0
   exact hcompat.trans hk0
 
+/-- A coefficient morphism is determined by its component on the canonical one-point
+profinite compact Hausdorff object. -/
+theorem coefficient_hom_ext_canonicalPoint
+    {A : CondensedMod.{u} CMDG.CondensedCM4P3G.R.{u}}
+    {f g : A ⟶ coefficientObject}
+    (hpoint :
+      f.hom.app
+          (op ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1}))) =
+        g.hom.app
+          (op ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))) :
+    f = g := by
+  let P := Profinite.of PUnit.{u + 1}
+  let C := (profiniteToCompHaus).obj P
+  let U := op C
+  let z0 : C := by
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      exact PUnit.unit
+  apply ObjectProperty.hom_ext
+  apply NatTrans.ext'
+  funext T
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro a
+  change
+    (show LocallyConstant T.unop CMDG.CondensedCM4P3G.R.{u} from f.hom.app T a) =
+      (show LocallyConstant T.unop CMDG.CondensedCM4P3G.R.{u} from g.hom.app T a)
+  ext t
+  let p : C ⟶ T.unop :=
+    ConcreteCategory.ofHom
+      { toFun := fun _ => t
+        continuous_toFun := continuous_const }
+  have hf := ConcreteCategory.congr_hom (f.hom.naturality p.op) a
+  have hg := ConcreteCategory.congr_hom (g.hom.naturality p.op) a
+  have hp := ConcreteCategory.congr_hom hpoint (A.obj.map p.op a)
+  change
+    f.hom.app U (A.obj.map p.op a) =
+      LocallyConstant.comap p.hom.hom
+        (show LocallyConstant T.unop CMDG.CondensedCM4P3G.R.{u} from f.hom.app T a) at hf
+  change
+    g.hom.app U (A.obj.map p.op a) =
+      LocallyConstant.comap p.hom.hom
+        (show LocallyConstant T.unop CMDG.CondensedCM4P3G.R.{u} from g.hom.app T a) at hg
+  have hf' := congrArg
+    (fun q : LocallyConstant C CMDG.CondensedCM4P3G.R.{u} => q z0) hf
+  have hg' := congrArg
+    (fun q : LocallyConstant C CMDG.CondensedCM4P3G.R.{u} => q z0) hg
+  have hp' := congrArg
+    (fun q : LocallyConstant C CMDG.CondensedCM4P3G.R.{u} => q z0) hp
+  exact congrArg ULift.down (hf'.symm.trans (hp'.trans hg'))
+
 /-- The product-functional representation reflects zero on solid-side coefficient morphisms. -/
 theorem eq_zero_of_kernelProductFunctional_eq_zero
     (X : Profinite.{u})
@@ -285,12 +336,10 @@ theorem eq_zero_of_kernelProductFunctional_eq_zero
         coefficientObject)
     (hk : kernelProductFunctional X d = 0) :
     d = 0 := by
-  apply CMDG.CondensedCM4P3G.coefficient_hom_ext_point
+  apply coefficient_hom_ext_canonicalPoint
   have hc :=
     canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero X d hk
-  set_option backward.defeqAttrib.useBackward true in
-  set_option backward.isDefEq.respectTransparency false in
-    simpa [CMDG.CondensedCM4P3G.Point] using hc
+  simpa using hc
 
 /-- A coefficient morphism in the kernel of profinite solidification is zero. -/
 theorem eq_zero_of_solidification_kernel
