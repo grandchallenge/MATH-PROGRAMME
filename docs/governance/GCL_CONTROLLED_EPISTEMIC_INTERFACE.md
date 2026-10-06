@@ -320,7 +320,7 @@ with control ID:
 
 It revalidates the exact registered evidence branch and ordinary PR, requires the PR to be authored by `gcl-release-trust[bot]`, binds the live head SHA, and may then request one ordinary `SQUASH` merge with that exact head supplied as GitHub's expected `sha`. MATHSOLVE's required status checks, unattributed-change approval rule, review-thread policy, and other repository protections remain authoritative; the controller has no bypass actor.
 
-This second stage may not write repository contents directly, alter evidence branches, bypass branch protection or rulesets, use administrator merge, approve reviews, mutate campaign state, adjudicate mathematics, certify a claim, or promote a mathematical statement. The evidence bytes remain mechanically preserved evidence after protected merge; adjudication remains a separate action.
+The stage uses two short-lived Release Trust tokens. Validation and PR reconciliation retain `contents:read` plus `pull_requests:write`. A separate merge-only token is repository-scoped to MATHSOLVE with `contents:write` plus `pull_requests:write`, because GitHub's ordinary merge endpoint requires contents write. The controller code uses that broader token only for the exact-head PR merge request; it may not call repository-content, ref, commit, tree, blob, or branch-mutation endpoints. It may not alter evidence branches, bypass branch protection or rulesets, use administrator merge, approve reviews, mutate campaign state, adjudicate mathematics, certify a claim, or promote a mathematical statement. The evidence bytes remain mechanically preserved evidence after protected merge; adjudication remains a separate action.
 
 ### Wake and persistence
 
