@@ -44,7 +44,7 @@ def _content(gh: Github, path: str, ref: str) -> tuple[str,str] | None:
 def _main_sha(gh: Github) -> str:
     ref=gh.request("GET",f"/repos/{OWNER}/{SOLVE}/git/ref/heads/main")
     sha=ref.get("object",{}).get("sha") if isinstance(ref,dict) else None
-    if not isinstance(sha,str) or not re.fullmatch(r"[0-9a-f]{{40}}",sha):
+    if not isinstance(sha,str) or not re.fullmatch(r"[0-9a-f]{40}",sha):
         raise ControllerError("MATHSOLVE main SHA unavailable")
     return sha
 
