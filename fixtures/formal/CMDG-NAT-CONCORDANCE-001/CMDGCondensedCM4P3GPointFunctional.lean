@@ -922,10 +922,94 @@ theorem weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward
 #check finiteDeltaAt_pullback
 #check finiteCoordinateEvaluation_measureFamily
 #check weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward
+#check weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
 
 #print axioms finiteDeltaAt_pullback
 #print axioms finiteCoordinateEvaluation_measureFamily
 #print axioms weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward
+#print axioms weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
+
+/-- The arbitrary Point measure section is recovered globally by evaluating the
+weighted Boolean limit at the all-true selector. -/
+theorem weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map
+        (basisBooleanPointProbe X (fun _ => true)) ≫
+      weightedFiniteBooleanMeasureLimitLift X
+        (fun i => measurePointIntegralFunctional X μ (integralBasis X i)) =
+    (freeHomSectionsEquiv (Profinite.of PUnit.{u + 1})
+      (CMDG.CondensedCM4P2D.measureFunctor.obj X)).symm μ := by
+  let P := Profinite.of PUnit.{u + 1}
+  let T := basisBooleanCube X
+  let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let a : IntegralBasisIndex X → ℤ :=
+    fun i => measurePointIntegralFunctional X μ (integralBasis X i)
+  let μHom :
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).obj P ⟶
+        CMDG.CondensedCM4P2D.measureFunctor.obj X :=
+    (freeHomSectionsEquiv P
+      (CMDG.CondensedCM4P2D.measureFunctor.obj X)).symm μ
+  let S := op ((profiniteToCompHaus).obj P)
+  have hpost :
+      ∀ {A B : CondensedMod.{u} CMDG.CondensedCM4P3G.R.{u}}
+        (g : (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).obj P ⟶ A)
+        (h : A ⟶ B),
+        freeHomSectionsEquiv P B (g ≫ h) =
+          (ConcreteCategory.hom
+            (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).map h).hom.app S))
+            (freeHomSectionsEquiv P A g) := by
+    intro A B g h
+    change
+      (coherentTopology CompHaus.{u}).uliftYonedaEquiv
+        ((Condensed.freeForgetAdjunction CMDG.CondensedCM4P3G.R.{u}).homEquiv
+          ((profiniteToCondensed).obj P) B (g ≫ h)) = _
+    rw [Adjunction.homEquiv_naturality_right]
+    rfl
+  apply (measureFunctorMapConeIsLimit X).hom_ext
+  intro j
+  let q := finiteQuotientMap X j
+  have hleft := congrArg
+    (fun g =>
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫ g)
+    (weightedFiniteBooleanMeasureLimitLift_fac X a j)
+  have hfinite :
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureHom X a j =
+        μHom ≫ CMDG.CondensedCM4P2D.measureFunctor.map q := by
+    apply
+      (freeHomSectionsEquiv P
+        (CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j))).injective
+    rw [freeHomSectionsEquiv_precomp]
+    rw [hpost
+      (g := μHom)
+      (h := CMDG.CondensedCM4P2D.measureFunctor.map q)]
+    have hsec :
+        freeHomSectionsEquiv T
+            (CMDG.CondensedCM4P2D.measureFunctor.obj (X.diagram.obj j))
+            (weightedFiniteBooleanMeasureHom X a j) =
+          weightedFiniteBooleanMeasureSection X a j := by
+      exact Equiv.apply_symm_apply _ _
+    have hμ :
+        freeHomSectionsEquiv P
+            (CMDG.CondensedCM4P2D.measureFunctor.obj X) μHom = μ := by
+      exact Equiv.apply_symm_apply _ _
+    rw [hsec, hμ]
+    simpa [P, T, qtrue, a, q, S] using
+      weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward X μ j
+  change
+    ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+      weightedFiniteBooleanMeasureLimitLift X a) ≫
+        CMDG.CondensedCM4P2D.measureFunctor.map q =
+      μHom ≫ CMDG.CondensedCM4P2D.measureFunctor.map q
+  calc
+    ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+      weightedFiniteBooleanMeasureLimitLift X a) ≫
+        CMDG.CondensedCM4P2D.measureFunctor.map q =
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+        weightedFiniteBooleanMeasureHom X a j := by
+          simpa only [Category.assoc] using hleft
+    _ = μHom ≫ CMDG.CondensedCM4P2D.measureFunctor.map q := hfinite
 
 /-- The one-point profinite probe selecting `x`. -/
 noncomputable def profinitePointProbe
