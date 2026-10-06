@@ -1,0 +1,232 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import urllib.parse
+from pathlib import Path
+from typing import Any
+
+try:
+    from ci.ns_ci_intake_pr_controller import (
+        ControllerError,
+        Github,
+        find_open_pr,
+        list_intake_branches,
+        profile_for_dispatch,
+        validate_candidate,
+    )
+except ModuleNotFoundError:
+    from ns_ci_intake_pr_controller import (
+        ControllerError,
+        Github,
+        find_open_pr,
+        list_intake_branches,
+        profile_for_dispatch,
+        validate_candidate,
+    )
+
+OWNER = "grandchallenge"
+REPO = "MATHSOLVE"
+EXPECTED_AUTHOR = "gcl-release-trust[bot]"
+
+
+def branch_head_sha(gh: Github, branch: str) -> str:
+    encoded = urllib.parse.quote(branch, safe="/")
+    ref = gh.request("GET", f"/repos/{OWNER}/{REPO}/git/ref/heads/{encoded}")
+    sha = ref.get("object", {}).get("sha") if isinstance(ref, dict) else None
+    if not isinstance(sha, str):
+        raise ControllerError(f"{branch}: branch head SHA unavailable")
+    return sha
+
+
+def validate_pr_binding(
+    gh: Github,
+    item: dict[str, Any],
+    pr: dict[str, Any],
+) -> dict[str, Any]:
+    dispatch_id = item["dispatch_id"]
+    branch = item["branch"]
+    profile = profile_for_dispatch(dispatch_id)
+
+    if pr.get("state") != "open":
+        raise ControllerError(f"{dispatch_id}: evidence PR is not open")
+    if pr.get("draft") is True:
+        raise ControllerError(f"{dispatch_id}: evidence PR is draft")
+
+    user = pr.get("user")
+    author = user.get("login") if isinstance(user, dict) else None
+    if author != EXPECTED_AUTHOR:
+        raise ControllerError(
+            f"{dispatch_id}: evidence PR author mismatch: {author!r}"
+        )
+
+    base = pr.get("base")
+    head = pr.get("head")
+    base_ref = base.get("ref") if isinstance(base, dict) else None
+    head_ref = head.get("ref") if isinstance(head, dict) else None
+    head_sha = head.get("sha") if isinstance(head, dict) else None
+
+    if base_ref != "main":
+        raise ControllerError(f"{dispatch_id}: evidence PR base is not main")
+    if head_ref != branch:
+        raise ControllerError(
+            f"{dispatch_id}: evidence PR head branch mismatch: {head_ref!r}"
+        )
+    live_branch_sha = branch_head_sha(gh, branch)
+    if head_sha != live_branch_sha:
+        raise ControllerError(
+            f"{dispatch_id}: evidence PR head moved relative to branch ref"
+        )
+
+    expected_title = f"{profile.pr_title_prefix}: {dispatch_id}"
+    if pr.get("title") != expected_title:
+        raise ControllerError(f"{dispatch_id}: evidence PR title mismatch")
+
+    if pr.get("mergeable") is False:
+        raise ControllerError(f"{dispatch_id}: evidence PR is not mergeable")
+
+    return {
+        "pr_number": pr.get("number"),
+        "pr_node_id": pr.get("node_id"),
+        "head_sha": head_sha,
+        "base_ref": base_ref,
+        "author": author,
+    }
+
+
+def enable_protected_auto_merge(
+    gh: Github,
+    pr_node_id: str,
+    expected_head_sha: str,
+) -> None:
+    if not pr_node_id:
+        raise ControllerError("evidence PR node_id unavailable for auto-merge")
+    query = """mutation($id:ID!,$oid:GitObjectID!){
+      enablePullRequestAutoMerge(input:{
+        pullRequestId:$id,
+        expectedHeadOid:$oid,
+        mergeMethod:SQUASH
+      }){
+        pullRequest{number}
+      }
+    }"""
+    try:
+        gh.request(
+            "POST",
+            "/graphql",
+            {
+                "query": query,
+                "variables": {"id": pr_node_id, "oid": expected_head_sha},
+            },
+        )
+    except ControllerError as exc:
+        if "already enabled" not in str(exc).lower():
+            raise
+
+
+def run(apply: bool) -> dict[str, Any]:
+    token = os.environ.get("MATHSOLVE_INTAKE_PR_TOKEN", "")
+    if not token:
+        raise ControllerError("MATHSOLVE_INTAKE_PR_TOKEN is empty")
+    gh = Github(token)
+
+    report: dict[str, Any] = {
+        "schema_version": "1.0.0",
+        "controller": "GCL_RELEASE_TRUST_EXTERNAL_INTAKE_EVIDENCE_ADMISSION",
+        "target_repository": f"{OWNER}/{REPO}",
+        "apply": apply,
+        "authority": {
+            "contents": "read",
+            "pull_requests": "write",
+            "direct_merge": False,
+            "admin_bypass": False,
+            "campaign_mutation": False,
+            "mathematical_adjudication": False,
+        },
+        "candidates": [],
+        "admitted_to_protected_auto_merge": [],
+        "errors": [],
+    }
+
+    for branch in list_intake_branches(gh):
+        pr = find_open_pr(gh, branch)
+        if pr is None:
+            continue
+        try:
+            item = validate_candidate(gh, branch)
+            if item.get("state") != "OPEN_PR_EXISTS":
+                raise ControllerError(
+                    f"{item['dispatch_id']}: unexpected intake state "
+                    f"{item.get('state')}"
+                )
+            live = gh.request(
+                "GET", f"/repos/{OWNER}/{REPO}/pulls/{pr['number']}"
+            )
+            if not isinstance(live, dict):
+                raise ControllerError(
+                    f"{item['dispatch_id']}: evidence PR response malformed"
+                )
+            binding = validate_pr_binding(gh, item, live)
+            candidate = {
+                "campaign": item["campaign"],
+                "dispatch_id": item["dispatch_id"],
+                "branch": branch,
+                **binding,
+                "state": "VALIDATED_FOR_PROTECTED_AUTO_MERGE",
+            }
+            report["candidates"].append(candidate)
+            if apply:
+                enable_protected_auto_merge(
+                    gh,
+                    str(binding["pr_node_id"] or ""),
+                    str(binding["head_sha"] or ""),
+                )
+                report["admitted_to_protected_auto_merge"].append(
+                    {
+                        "dispatch_id": item["dispatch_id"],
+                        "pr_number": binding["pr_number"],
+                        "head_sha": binding["head_sha"],
+                    }
+                )
+        except ControllerError as exc:
+            report["errors"].append({"branch": branch, "error": str(exc)})
+
+    report["authority_created"] = False
+    return report
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--report", type=Path, required=True)
+    args = parser.parse_args()
+    try:
+        report = run(args.apply)
+    except ControllerError as exc:
+        report = {
+            "schema_version": "1.0.0",
+            "controller": "GCL_RELEASE_TRUST_EXTERNAL_INTAKE_EVIDENCE_ADMISSION",
+            "apply": args.apply,
+            "fatal_error": str(exc),
+            "authority_created": False,
+        }
+        args.report.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        print(str(exc), file=sys.stderr)
+        return 2
+
+    args.report.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(report, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
