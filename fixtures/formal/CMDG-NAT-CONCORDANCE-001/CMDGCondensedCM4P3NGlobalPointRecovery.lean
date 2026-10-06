@@ -381,4 +381,22 @@ theorem coefficientObject_isSolid :
   exact
     (CMDG.CondensedCM4P3D.coefficientResidualHomTheorem_iff_isSolid.{u}).1 hres
 
+#check weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
+#check applied_d_point_kernelProductFunctional
+#check canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
+#check coefficient_hom_ext_canonicalPoint
+#check eq_zero_of_kernelProductFunctional_eq_zero
+#check eq_zero_of_solidification_kernel
+#check coefficientMappingOutInjectivity_of_pointSeparation
+#check coefficientObject_isSolid
+
+#print axioms weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
+#print axioms applied_d_point_kernelProductFunctional
+#print axioms canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
+#print axioms coefficient_hom_ext_canonicalPoint
+#print axioms eq_zero_of_kernelProductFunctional_eq_zero
+#print axioms eq_zero_of_solidification_kernel
+#print axioms coefficientMappingOutInjectivity_of_pointSeparation
+#print axioms coefficientObject_isSolid
+
 end CMDG.CondensedCM4P3M.KernelPointBridge
