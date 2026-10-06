@@ -248,6 +248,157 @@ noncomputable def measurePointIntegralFunctional
     (measurePointFunctional X μ)
 
 
+/-- The lifted condensed measure functor has the P2-D presheaf map as its underlying
+natural transformation. -/
+lemma measureFunctor_map_hom
+    {X Y : Profinite.{u}} (f : X ⟶ Y) :
+    (CMDG.CondensedCM4P2D.measureFunctor.map f).hom =
+      CMDG.CondensedCM4P2D.measurePresheafFunctor.map f := by
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The functor-category internal-Hom projection intertwines outer precomposition with
+ordinary precomposition at the Point component. -/
+lemma measurePointProjection_pre_naturality
+    {X Y : Profinite.{u}} (f : X ⟶ Y) :
+    (((MonoidalClosed.pre
+        (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point)) ≫
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity =
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf X)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity ≫
+      (MonoidalClosed.pre
+        ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point))).app
+          ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity) := by
+  let A := sourcePresheaf Y
+  let B := sourcePresheaf X
+  let T := coefficientPresheaf
+  let η : A ⟶ B := CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op
+  let U : CompHaus.{u}ᵒᵖ := op Point
+  let πA :
+      ((MonoidalClosed.internalHom.obj (op A)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (A.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget U ⋙ A) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  let πB :
+      ((MonoidalClosed.internalHom.obj (op B)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (B.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} R)
+      (Under.forget U ⋙ B) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  change (((MonoidalClosed.pre η).app T).app U) ≫ πA =
+    πB ≫ (MonoidalClosed.pre (η.app U)).app (T.obj U)
+  apply MonoidalClosed.uncurry_injective
+  rw [MonoidalClosed.uncurry_natural_left, MonoidalClosed.uncurry_pre_app]
+  have h := congrArg (fun α => α.app U)
+    (MonoidalClosed.id_tensor_pre_app_comp_ev η T)
+  change
+      MonoidalCategory.whiskerLeft (A.obj U)
+          (((MonoidalClosed.pre η).app T).app U) ≫ ((ihom.ev A).app T).app U =
+        MonoidalCategory.whiskerRight (η.app U)
+          (((ihom B).obj T).obj U) ≫
+          ((ihom.ev B).app T).app U at h
+  have hA :
+      ((ihom.ev A).app T).app U = MonoidalClosed.uncurry πA := by
+    rfl
+  have hB :
+      ((ihom.ev B).app T).app U = MonoidalClosed.uncurry πB := by
+    rfl
+  change _ ≫ MonoidalClosed.uncurry πA =
+    _ ≫ MonoidalClosed.uncurry πB
+  rw [← hA, ← hB]
+  simpa only [Functor.id_obj] using h
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Projection of a pushed measure section is precomposition by pullback of source
+functions. -/
+theorem measurePointProjection_map
+    {X Y : Profinite.{u}} (f : X ⟶ Y)
+    (μ : (measurePresheafObj X).obj (op Point)) :
+    measurePointProjection Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) =
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
+        measurePointProjection X μ := by
+  rw [measureFunctor_map_hom f]
+  unfold measurePointProjection
+  have happ := ConcreteCategory.congr_hom
+    (measurePointProjection_pre_naturality f) μ
+  rw [ConcreteCategory.comp_apply, ConcreteCategory.comp_apply] at happ
+  change
+    (ConcreteCategory.hom
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity))
+      ((ConcreteCategory.hom
+        (((MonoidalClosed.pre
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
+      ((MonoidalClosed.pre
+        ((CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app
+          (op Point))).app
+        ((Under.forget (op Point) ⋙ coefficientPresheaf).obj pointIdentity))
+          ((ConcreteCategory.hom
+            (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+              (ModuleCat.{u + 1} R)
+              (Under.forget (op Point) ⋙ sourcePresheaf X)
+              (Under.forget (op Point) ⋙ coefficientPresheaf)
+              pointIdentity)) μ) at happ
+  rw [CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at happ
+  change
+    (ConcreteCategory.hom
+      (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} R)
+        (Under.forget (op Point) ⋙ sourcePresheaf Y)
+        (Under.forget (op Point) ⋙ coefficientPresheaf)
+        pointIdentity))
+      ((ConcreteCategory.hom
+        (((MonoidalClosed.pre
+          (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op)).app
+            CMDG.CondensedCM4P2D.coefficientPresheaf).app (op Point))) μ) =
+      (CMDG.CondensedCM4P2D.discreteContinuousPresheaf.map f.op).app (op Point) ≫
+        (ConcreteCategory.hom
+          (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+            (ModuleCat.{u + 1} R)
+            (Under.forget (op Point) ⋙ sourcePresheaf X)
+            (Under.forget (op Point) ⋙ coefficientPresheaf)
+            pointIdentity)) μ
+  exact happ
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Pushing a one-point measure section forward along a profinite map and then evaluating
+the induced scalar functional is the same as evaluating the original measure on the pulled-back
+locally constant function. -/
+theorem measurePointFunctional_map
+    {X Y : Profinite.{u}} (f : X ⟶ Y)
+    (μ : (measurePresheafObj X).obj (op Point))
+    (v : LocallyConstant Y R) :
+    measurePointFunctional Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ) v =
+      measurePointFunctional X μ (LocallyConstant.comap f.hom.hom v) := by
+  unfold measurePointFunctional
+  change
+    (LocallyConstant.evalₗ R PUnit.unit)
+      (measurePointProjectionLinear Y
+        (((CMDG.CondensedCM4P2D.measureFunctor.map f).hom.app (op Point)) μ)
+        (LocallyConstant.const Point v)) =
+      (LocallyConstant.evalₗ R PUnit.unit)
+        (measurePointProjectionLinear X μ
+          (LocallyConstant.const Point (LocallyConstant.comap f.hom.hom v)))
+  unfold measurePointProjectionLinear
+  rw [measurePointProjection_map]
+  rfl
+
+
 /-- The ordinary scalar Point functional loses no information about a one-point measure section. -/
 theorem measurePointFunctional_zero_reflects
     (X : Profinite.{u})
@@ -315,6 +466,10 @@ theorem measurePointIntegralFunctional_zero_reflects
 #check measurePointProjection_zero_reflects
 #check measurePointProjectionLinear
 #check measurePointFunctional
+#check measureFunctor_map_hom
+#check measurePointProjection_pre_naturality
+#check measurePointProjection_map
+#check measurePointFunctional_map
 #check measurePointIntegralFunctional
 #check measurePointFunctional_zero_reflects
 #check measurePointIntegralFunctional_zero_reflects
@@ -327,6 +482,10 @@ theorem measurePointIntegralFunctional_zero_reflects
 #print axioms measurePointProjection_zero_reflects
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
+#print axioms measureFunctor_map_hom
+#print axioms measurePointProjection_pre_naturality
+#print axioms measurePointProjection_map
+#print axioms measurePointFunctional_map
 #print axioms measurePointIntegralFunctional
 #print axioms measurePointFunctional_zero_reflects
 #print axioms measurePointIntegralFunctional_zero_reflects
@@ -346,6 +505,7 @@ universe u
 
 open CategoryTheory Limits Opposite
 open CMDG.CondensedCM4P3G
+open CMDG.CondensedCM4P3G.BooleanCube
 open CMDG.CondensedCM4P3G.FreeSections
 open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.BasisBooleanPairing
@@ -355,6 +515,14 @@ open CMDG.CondensedCM4P3G.PointFunctional
 open CMDG.CondensedCM4P3J.WeightedBooleanMeasure
 open CMDG.CondensedCM4P3L.KernelFunctional
 open CMDG.CondensedCM4P2E.RightKanReconstruction
+open CMDG.CondensedCM4P2E.FiniteDualTransport
+open scoped CategoryTheory.MonoidalClosed BigOperators
+attribute [local instance] FintypeCat.fintype
+
+abbrev N4PM := CMDG.CondensedCM4P2D.PresheafModule.{u}
+abbrev N4RR := CMDG.CondensedCM4P2D.R.{u}
+noncomputable local instance : MonoidalClosed N4PM :=
+  MonoidalClosed.FunctorCategory.monoidalClosed
 
 /-- The all-true weighted finite coefficient attached to an arbitrary Point measure
 section recovers the corresponding scalar point functional on each finite delta pullback. -/
@@ -378,6 +546,386 @@ theorem weightedFiniteBooleanCoefficient_measurePoint_allTrue
   simpa [measurePointIntegralFunctional, locallyConstantIntegralDownEquiv] using
     liftedIntFunctionalDown_apply_inverse X
       (measurePointFunctional X μ) (finiteDeltaPullbackR X j q)
+
+noncomputable def finiteDeltaFamilyAt
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    Q.obj → CMDG.CondensedCM4P3G.R.{u} := by
+  classical
+  exact fun y => if y = q then 1 else 0
+
+noncomputable def finiteDeltaAt
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    LocallyConstant (FintypeCat.toProfinite.obj Q) CMDG.CondensedCM4P3G.R.{u} :=
+  (ConcreteCategory.hom
+    (CMDG.CondensedCM4P2E.finiteContinuousFunctionsIso Q).inv)
+      (finiteDeltaFamilyAt Q q)
+
+set_option backward.isDefEq.respectTransparency false in
+lemma family_inv_coordinate_one
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    (ConcreteCategory.hom
+      (((CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyNatIso.app
+        (op Q)).inv).app (op Point)))
+      ((ConcreteCategory.hom
+        ((finiteCoordinateInclusion Q q).app (op Point)))
+        (1 : LocallyConstant Point CMDG.CondensedCM4P3G.R.{u})) =
+      LocallyConstant.const Point (finiteDeltaFamilyAt Q q) := by
+  classical
+  change
+    LocallyConstant.unflip
+      (fun y : Q.obj =>
+        if y = q then (1 : LocallyConstant Point CMDG.CondensedCM4P3G.R.{u}) else 0) =
+      LocallyConstant.const Point (finiteDeltaFamilyAt Q q)
+  apply LocallyConstant.ext
+  intro z
+  funext y
+  by_cases h : y = q <;> simp [LocallyConstant.unflip, finiteDeltaFamilyAt, h]
+
+set_option backward.isDefEq.respectTransparency false in
+lemma continuous_inv_delta_family
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    (ConcreteCategory.hom
+      (((CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafNatIso.app
+        (op Q)).inv).app (op Point)))
+      (LocallyConstant.const Point (finiteDeltaFamilyAt Q q)) =
+      LocallyConstant.const Point (finiteDeltaAt Q q) := by
+  apply LocallyConstant.ext
+  intro z
+  change
+    (ConcreteCategory.hom (CMDG.CondensedCM4P2E.finiteContinuousFunctionsIso Q).inv)
+      (finiteDeltaFamilyAt Q q) =
+      finiteDeltaAt Q q
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+lemma sourceFamily_inv_coordinate_one
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    (ConcreteCategory.hom
+      ((finiteMeasureSourceFamilyIso Q).inv.app (op Point)))
+      ((ConcreteCategory.hom
+        ((finiteCoordinateInclusion Q q).app (op Point)))
+        (1 : LocallyConstant Point CMDG.CondensedCM4P3G.R.{u})) =
+      LocallyConstant.const Point (finiteDeltaAt Q q) := by
+  change
+    (ConcreteCategory.hom
+      (((CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafNatIso.app
+        (op Q)).inv).app (op Point)))
+      ((ConcreteCategory.hom
+        (((CMDG.CondensedCM4P2E.FiniteTransport.finiteFunctionPresheafFamilyNatIso.app
+          (op Q)).inv).app (op Point)))
+        ((ConcreteCategory.hom
+          ((finiteCoordinateInclusion Q q).app (op Point)))
+          (1 : LocallyConstant Point CMDG.CondensedCM4P3G.R.{u}))) =
+      LocallyConstant.const Point (finiteDeltaAt Q q)
+  rw [family_inv_coordinate_one, continuous_inv_delta_family]
+
+set_option backward.isDefEq.respectTransparency false in
+lemma finiteDeltaAt_pullback
+    (X : Profinite.{u}) (j : DiscreteQuotient X)
+    (q : (FiniteQuotientObject X j).obj) :
+    LocallyConstant.comap (finiteQuotientMap X j).hom.hom
+        (finiteDeltaAt (FiniteQuotientObject X j) q) =
+      finiteDeltaPullbackR X j q := by
+  classical
+  apply LocallyConstant.ext
+  intro x
+  have hleft :
+      (LocallyConstant.comap (finiteQuotientMap X j).hom.hom
+        (finiteDeltaAt (FiniteQuotientObject X j) q)) x =
+      finiteDeltaAt (FiniteQuotientObject X j) q
+        ((finiteQuotientMap X j).hom.hom x) := by
+    rfl
+  rw [hleft]
+  have hmap : (finiteQuotientMap X j).hom.hom x = j.proj x := by
+    rfl
+  rw [hmap]
+  have h := ConcreteCategory.congr_hom
+    (CMDG.CondensedCM4P2E.finiteContinuousFunctionsIso
+      (FiniteQuotientObject X j)).inv_hom_id
+    (finiteDeltaFamilyAt (FiniteQuotientObject X j) q)
+  have hx := congrArg (fun g => g (j.proj x)) h
+  change
+    finiteDeltaAt (FiniteQuotientObject X j) q (j.proj x) =
+      finiteDeltaFamilyAt (FiniteQuotientObject X j) q (j.proj x)
+    at hx
+  unfold finiteDeltaPullbackR
+  by_cases hp : j.proj x = q
+  · simp [finiteDeltaFamilyAt, hp] at hx ⊢
+    exact hx
+  · simp [finiteDeltaFamilyAt, hp] at hx ⊢
+    exact hx
+
+set_option backward.isDefEq.respectTransparency false in
+lemma enrichedHomProjection_pre_naturality
+    {A B T : N4PM} (eta : A ⟶ B) :
+    (((MonoidalClosed.pre eta).app T).app (op Point)) ≫
+      CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} N4RR)
+        (Under.forget (op Point) ⋙ A)
+        (Under.forget (op Point) ⋙ T)
+        pointIdentity =
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+        (ModuleCat.{u + 1} N4RR)
+        (Under.forget (op Point) ⋙ B)
+        (Under.forget (op Point) ⋙ T)
+        pointIdentity ≫
+      (MonoidalClosed.pre (eta.app (op Point))).app
+        ((Under.forget (op Point) ⋙ T).obj pointIdentity) := by
+  let U : CompHaus.{u}ᵒᵖ := op Point
+  let piA :
+      ((MonoidalClosed.internalHom.obj (op A)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (A.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} N4RR)
+      (Under.forget U ⋙ A) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  let piB :
+      ((MonoidalClosed.internalHom.obj (op B)).obj T).obj U ⟶
+      (MonoidalClosed.internalHom.obj (op (B.obj U))).obj (T.obj U) :=
+    CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+      (ModuleCat.{u + 1} N4RR)
+      (Under.forget U ⋙ B) (Under.forget U ⋙ T) (Under.mk (𝟙 U))
+  change (((MonoidalClosed.pre eta).app T).app U) ≫ piA =
+    piB ≫ (MonoidalClosed.pre (eta.app U)).app (T.obj U)
+  apply MonoidalClosed.uncurry_injective
+  rw [MonoidalClosed.uncurry_natural_left, MonoidalClosed.uncurry_pre_app]
+  have h := congrArg (fun alpha => alpha.app U)
+    (MonoidalClosed.id_tensor_pre_app_comp_ev eta T)
+  change
+      MonoidalCategory.whiskerLeft (A.obj U)
+          (((MonoidalClosed.pre eta).app T).app U) ≫ ((ihom.ev A).app T).app U =
+        MonoidalCategory.whiskerRight (eta.app U)
+          (((ihom B).obj T).obj U) ≫
+          ((ihom.ev B).app T).app U at h
+  have hA : ((ihom.ev A).app T).app U = MonoidalClosed.uncurry piA := by rfl
+  have hB : ((ihom.ev B).app T).app U = MonoidalClosed.uncurry piB := by rfl
+  change _ ≫ MonoidalClosed.uncurry piA = _ ≫ MonoidalClosed.uncurry piB
+  rw [← hA, ← hB]
+  simpa only [Functor.id_obj] using h
+
+set_option backward.isDefEq.respectTransparency false in
+lemma finiteMeasureFamily_coordinate_pre
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    (finiteMeasurePresheafFamilyIso Q).hom ≫
+        (MonoidalClosed.pre (finiteCoordinateInclusion Q q)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf =
+      (MonoidalClosed.pre
+        (finiteCoordinateInclusion Q q ≫ (finiteMeasureSourceFamilyIso Q).inv)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf := by
+  rw [finiteMeasurePresheafFamilyIso_hom]
+  change
+    (MonoidalClosed.pre (finiteMeasureSourceFamilyIso Q).inv).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf ≫
+        (MonoidalClosed.pre (finiteCoordinateInclusion Q q)).app
+          CMDG.CondensedCM4P2D.coefficientPresheaf =
+      _
+  have hp := congrArg
+    (fun eta => eta.app CMDG.CondensedCM4P2D.coefficientPresheaf)
+    (MonoidalClosed.pre_map
+      (finiteCoordinateInclusion Q q) (finiteMeasureSourceFamilyIso Q).inv)
+  simpa only [NatTrans.comp_app] using hp.symm
+
+set_option maxHeartbeats 3000000 in
+set_option backward.isDefEq.respectTransparency false in
+lemma finiteCoordinateEvaluation_measureFamily
+    (Q : FintypeCat.{u})
+    (mu : (CMDG.CondensedCM4P2E.FiniteDualTransport.finiteMeasurePresheafFunctor.obj Q).obj
+      (op Point))
+    (q : Q.obj) :
+    (ConcreteCategory.hom
+      ((finiteCoordinateEvaluation Q q).app (op Point)))
+      ((ConcreteCategory.hom
+        ((finiteMeasurePresheafFamilyIso Q).hom.app (op Point))) mu) =
+      LocallyConstant.const Point
+        (measurePointFunctional (FintypeCat.toProfinite.obj Q)
+          (show (measurePresheafObj (FintypeCat.toProfinite.obj Q)).obj (op Point) from mu)
+          (finiteDeltaAt Q q)) := by
+  let T := CMDG.CondensedCM4P2D.coefficientPresheaf
+  let i := finiteMeasureSourceFamilyIso Q
+  let inc := finiteCoordinateInclusion Q q
+  let eta := inc ≫ i.inv
+  let phi : CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom.obj (op Point) :=
+    (ConcreteCategory.hom (((MonoidalClosed.pre eta).app T).app (op Point))) mu
+  let one : CMDG.CondensedCM4P2E.InternalHom.coefficientAt Point :=
+    LocallyConstant.const Point (1 : CMDG.CondensedCM4P2E.InternalHom.R)
+  have hcomp := finiteMeasureFamily_coordinate_pre Q q
+  have hfull := congrArg
+    (fun k => k ≫ CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.hom) hcomp
+  change
+    (finiteMeasurePresheafFamilyIso Q).hom ≫ finiteCoordinateEvaluation Q q =
+      (MonoidalClosed.pre eta).app T ≫
+        CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso.hom at hfull
+  have happ := congrArg (fun k => k.app (op Point)) hfull
+  have hval := ConcreteCategory.congr_hom happ mu
+  simp only [NatTrans.comp_app, ConcreteCategory.comp_apply] at hval
+  change
+    (ConcreteCategory.hom ((finiteCoordinateEvaluation Q q).app (op Point)))
+      ((ConcreteCategory.hom ((finiteMeasurePresheafFamilyIso Q).hom.app (op Point))) mu) =
+      CMDG.CondensedCM4P2E.InternalHom.rankOneEvaluationApp Point phi at hval
+  have hproj := enrichedHomProjection_pre_naturality (T := T) eta
+  have hprojVal := ConcreteCategory.congr_hom hproj mu
+  simp only [ConcreteCategory.comp_apply] at hprojVal
+  have hprojExact :
+      CMDG.CondensedCM4P2E.InternalHom.rankOneProjectionEndomorphism
+          Point pointIdentity phi =
+        (ConcreteCategory.hom
+          ((MonoidalClosed.pre (eta.app (op Point))).app
+            ((Under.forget (op Point) ⋙ T).obj pointIdentity)))
+          ((ConcreteCategory.hom
+            (CategoryTheory.Enriched.FunctorCategory.enrichedHomπ
+              (ModuleCat.{u + 1} N4RR)
+              (Under.forget (op Point) ⋙
+                CMDG.CondensedCM4P2E.FiniteTransport.finiteDiscreteContinuousPresheafFunctor.obj
+                  (op Q))
+              (Under.forget (op Point) ⋙ T)
+              pointIdentity)) mu) := by
+    unfold CMDG.CondensedCM4P2E.InternalHom.rankOneProjectionEndomorphism
+    exact hprojVal
+  rw [CMDG.CondensedCM4P2E.InternalHom.monoidalClosed_pre_apply] at hprojExact
+  have hprojOne := congrArg
+    (fun k : CMDG.CondensedCM4P2E.InternalHom.coefficientAt Point ⟶
+        CMDG.CondensedCM4P2E.InternalHom.coefficientAt Point =>
+      (ConcreteCategory.hom k) one) hprojExact
+  refine hval.trans ?_
+  rw [CMDG.CondensedCM4P2E.InternalHom.rankOneEvaluationApp_apply]
+  change (ConcreteCategory.hom
+    (CMDG.CondensedCM4P2E.InternalHom.rankOneProjectionEndomorphism
+      Point pointIdentity phi)) one = _
+  refine hprojOne.trans ?_
+  change
+    (ConcreteCategory.hom
+      (measurePointProjection (FintypeCat.toProfinite.obj Q)
+        (show (measurePresheafObj (FintypeCat.toProfinite.obj Q)).obj (op Point) from mu)))
+      ((ConcreteCategory.hom (i.inv.app (op Point)))
+        ((ConcreteCategory.hom (inc.app (op Point)))
+          (1 : LocallyConstant Point N4RR))) =
+      LocallyConstant.const Point
+        (measurePointFunctional (FintypeCat.toProfinite.obj Q)
+          (show (measurePresheafObj (FintypeCat.toProfinite.obj Q)).obj (op Point) from mu)
+          (finiteDeltaAt Q q))
+  rw [sourceFamily_inv_coordinate_one Q q]
+  change
+    measurePointProjectionLinear (FintypeCat.toProfinite.obj Q)
+        (show (measurePresheafObj (FintypeCat.toProfinite.obj Q)).obj (op Point) from mu)
+        (LocallyConstant.const Point (finiteDeltaAt Q q)) =
+      LocallyConstant.const Point
+        (measurePointFunctional (FintypeCat.toProfinite.obj Q)
+          (show (measurePresheafObj (FintypeCat.toProfinite.obj Q)).obj (op Point) from mu)
+          (finiteDeltaAt Q q))
+  apply LocallyConstant.ext
+  intro z
+  cases z
+  rfl
+
+lemma finiteFamilyEvaluation_coordinate
+    (Q : FintypeCat.{u}) (q : Q.obj) :
+    finiteFamilyEvaluation Q ≫ finiteCoordinateProjection Q q =
+      finiteCoordinateEvaluation Q q := by
+  classical
+  unfold finiteFamilyEvaluation
+  rw [Preadditive.sum_comp Finset.univ]
+  rw [Finset.sum_eq_single q]
+  · rw [Category.assoc, finiteCoordinateInclusion_projection_self]
+    simp
+  · intro b _ hb
+    rw [Category.assoc, finiteCoordinateInclusion_projection_ne Q hb]
+    simp
+  · simp
+
+theorem weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (j : DiscreteQuotient X) :
+    (ConcreteCategory.hom
+      ((measurePresheafObj (X.diagram.obj j)).map
+        ((profiniteToCompHaus).map
+          (basisBooleanPointProbe X (fun _ => true))).op))
+      (weightedFiniteBooleanMeasureSection X
+        (fun i => measurePointIntegralFunctional X μ (integralBasis X i)) j) =
+    ((CMDG.CondensedCM4P2D.measureFunctor.map
+      (finiteQuotientMap X j)).hom.app (op Point)) μ := by
+  classical
+  let Q := FiniteQuotientObject X j
+  let S := op ((profiniteToCompHaus).obj (basisBooleanCube X))
+  let U : CompHaus.{u}ᵒᵖ := op Point
+  let ftrue := ((profiniteToCompHaus).map
+    (basisBooleanPointProbe X (fun _ => true))).op
+  let a : IntegralBasisIndex X → ℤ :=
+    fun i => measurePointIntegralFunctional X μ (integralBasis X i)
+  let sec :
+      (finiteMeasurePresheafFunctor.obj Q).obj S :=
+    weightedFiniteBooleanMeasureSection X a j
+  let μj :
+      (finiteMeasurePresheafFunctor.obj Q).obj U :=
+    ((CMDG.CondensedCM4P2D.measureFunctor.map
+      (finiteQuotientMap X j)).hom.app (op Point)) μ
+  let e := finiteMeasurePresheafFamilyIso Q ≪≫ finiteFamilyInternalHomIso Q
+  apply_fun (ConcreteCategory.hom (e.hom.app U))
+  · have hnat := ConcreteCategory.congr_hom (e.hom.naturality ftrue) sec
+    simp only [NatTrans.comp_app, ConcreteCategory.comp_apply] at hnat
+    have hsec := weightedFiniteBooleanMeasureSection_coefficientFamily_transport X a j
+    have hsec' :
+        (ConcreteCategory.hom (e.hom.app S)) sec =
+          weightedFiniteBooleanCoefficientFamily X a j := by
+      change
+        (ConcreteCategory.hom ((finiteFamilyInternalHomIso Q).hom.app S))
+          ((ConcreteCategory.hom ((finiteMeasurePresheafFamilyIso Q).hom.app S)) sec) =
+        weightedFiniteBooleanCoefficientFamily X a j
+      simpa [Q, S, sec] using hsec
+    have hlhs :
+        (ConcreteCategory.hom (e.hom.app U))
+          ((ConcreteCategory.hom ((measurePresheafObj (X.diagram.obj j)).map ftrue)) sec) =
+        (ConcreteCategory.hom
+          ((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf Q).map ftrue))
+          (weightedFiniteBooleanCoefficientFamily X a j) := by
+      exact hnat.trans (congrArg
+        (fun t => (ConcreteCategory.hom
+          ((CMDG.CondensedCM4P2E.FiniteTransport.finiteCoefficientFamilyPresheaf Q).map ftrue)) t)
+        hsec')
+    rw [hlhs]
+    change _ = (ConcreteCategory.hom (e.hom.app U)) μj
+    funext q
+    let iM := finiteMeasurePresheafFamilyIso Q
+    have hcoord := finiteFamilyEvaluation_coordinate Q q
+    have hcoordApp := congrArg (fun η => η.app U) hcoord
+    have hcoordVal := ConcreteCategory.congr_hom hcoordApp
+      ((ConcreteCategory.hom (iM.hom.app U)) μj)
+    simp only [NatTrans.comp_app, ConcreteCategory.comp_apply] at hcoordVal
+    have hrhs :
+        ((ConcreteCategory.hom (e.hom.app U)) μj) q =
+          (ConcreteCategory.hom ((finiteCoordinateEvaluation Q q).app U))
+            ((ConcreteCategory.hom (iM.hom.app U)) μj) := by
+      change
+        (ConcreteCategory.hom ((finiteCoordinateProjection Q q).app U))
+          ((ConcreteCategory.hom ((finiteFamilyEvaluation Q).app U))
+            ((ConcreteCategory.hom (iM.hom.app U)) μj)) =
+        (ConcreteCategory.hom ((finiteCoordinateEvaluation Q q).app U))
+          ((ConcreteCategory.hom (iM.hom.app U)) μj)
+      exact hcoordVal
+    rw [hrhs]
+    have hmeasure :=
+      finiteCoordinateEvaluation_measureFamily Q μj q
+    rw [hmeasure]
+    apply LocallyConstant.ext
+    intro z
+    change weightedFiniteBooleanCoefficient X a j q (fun _ => true) =
+      measurePointFunctional (X.diagram.obj j)
+        (((CMDG.CondensedCM4P2D.measureFunctor.map
+          (finiteQuotientMap X j)).hom.app (op Point)) μ)
+        (finiteDeltaAt (FiniteQuotientObject X j) q)
+    rw [weightedFiniteBooleanCoefficient_measurePoint_allTrue]
+    rw [measurePointFunctional_map (finiteQuotientMap X j) μ]
+    rw [finiteDeltaAt_pullback X j q]
+  · intro x y h
+    have h' := congrArg (ConcreteCategory.hom (e.inv.app U)) h
+    simpa [ConcreteCategory.comp_apply] using h'
+
+#check finiteDeltaAt_pullback
+#check finiteCoordinateEvaluation_measureFamily
+#check weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward
+
+#print axioms finiteDeltaAt_pullback
+#print axioms finiteCoordinateEvaluation_measureFamily
+#print axioms weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward
 
 /-- The one-point profinite probe selecting `x`. -/
 noncomputable def profinitePointProbe
