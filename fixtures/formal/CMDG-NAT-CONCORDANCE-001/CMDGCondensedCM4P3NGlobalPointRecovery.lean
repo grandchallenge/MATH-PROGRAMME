@@ -233,7 +233,12 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
       dU s = (0 : LocallyConstant U.unop CMDG.CondensedCM4P3G.R.{u})
   apply LocallyConstant.ext
   intro z
-  cases z
+  let z0 : U.unop := by
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      exact PUnit.unit
+  have hz : z = z0 := Subsingleton.elim _ _
+  rw [hz]
   let μ : (measurePresheafObj X).obj U :=
     (ConcreteCategory.hom (e.inv.hom.app U)) s
   let aμ : IntegralBasisIndex X → ℤ :=
@@ -248,15 +253,13 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   have hk0 : kernelProductFunctional X d aμ = 0 := by
     simpa using hk0raw
   change
-    ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
-      dU s) PUnit.unit).down = 0
+    ((dU s) z0).down = 0
   have hcompat' :
-      ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
-        dU s) PUnit.unit).down =
+      ((dU s) z0).down =
         kernelProductFunctional X d aμ := by
     set_option backward.defeqAttrib.useBackward true in
     set_option backward.isDefEq.respectTransparency false in
-      simpa [P, U, e, μ, aμ] using hcompat.trans (congrArg
+      simpa [P, U, e, dU, z0, μ, aμ] using hcompat.trans (congrArg
         (fun t =>
           ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
             (ConcreteCategory.hom (d.hom.app U)) t) PUnit.unit).down)
