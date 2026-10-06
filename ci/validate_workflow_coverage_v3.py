@@ -77,7 +77,6 @@ def candidate_workflow_errors(texts: dict[str, str]) -> list[str]:
         APP_KEY,
         "id: write-token",
         "repositories: MATH-PROGRAMME",
-        "permission-contents: write",
         "permission-issues: write",
         "permission-pull-requests: write",
         "id: evidence-token",
@@ -309,10 +308,13 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         APP_ID,
         APP_KEY,
         "id: intake-token",
+        "id: merge-token",
         "repositories: MATHSOLVE",
         "permission-contents: read",
+        "permission-contents: write",
         "permission-pull-requests: write",
         "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "MATHSOLVE_EVIDENCE_MERGE_TOKEN: ${{ steps.merge-token.outputs.token }}",
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
         "--report ns-ci-intake-pr-controller-report.json",
@@ -327,13 +329,17 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
             errors.append(
                 f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: missing bounded controller marker {marker}"
             )
-    if text.count(APP_ACTION) != 1:
+    if text.count(APP_ACTION) != 2:
         errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one bounded App token is required"
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two bounded App tokens are required"
         )
-    if text.count("permission-pull-requests: write") != 1:
+    if text.count("permission-pull-requests: write") != 2:
         errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one PR-write App grant is required"
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two PR-write App grants are required"
+        )
+    if text.count("permission-contents: write") != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one contents-write merge grant is required"
         )
     forbidden = (
         "permission-contents: write",
