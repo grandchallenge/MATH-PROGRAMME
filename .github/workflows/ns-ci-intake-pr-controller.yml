@@ -54,13 +54,13 @@ jobs:
           # GH-OS capability marker: gh api POST is performed only inside the bounded controller script.
           python ci/ns_ci_intake_pr_controller.py             --apply             --report ns-ci-intake-pr-controller-report.json
 
-      - name: Admit validated evidence PRs to protected auto-merge
+      - name: Admit validated evidence PRs through protected merge
         env:
           MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
         run: |
           set -euo pipefail
-          # GH-OS capability marker: GraphQL POST is performed only inside the bounded admission script.
-          # The script enables native protected auto-merge only; it never invokes a direct merge or bypass.
+          # GH-OS capability marker: protected merge PUT is performed only inside the bounded admission script.
+          # The script binds the exact validated head SHA; GitHub repository rules remain authoritative and no bypass is used.
           python ci/external_intake_evidence_admission.py \
             --apply \
             --report external-intake-evidence-admission-report.json
