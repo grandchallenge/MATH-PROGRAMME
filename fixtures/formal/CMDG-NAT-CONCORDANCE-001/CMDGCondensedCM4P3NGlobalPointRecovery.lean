@@ -222,6 +222,11 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   apply ModuleCat.hom_injective
   apply LinearMap.ext
   intro s
+  set_option backward.defeqAttrib.useBackward true in
+  set_option backward.isDefEq.respectTransparency false in
+    change
+      (show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
+        (ConcreteCategory.hom (d.hom.app U)) s) = 0
   apply LocallyConstant.ext
   intro z
   cases z
