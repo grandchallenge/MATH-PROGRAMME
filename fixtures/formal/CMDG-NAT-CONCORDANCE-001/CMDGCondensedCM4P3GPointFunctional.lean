@@ -257,22 +257,27 @@ theorem measurePointFunctional_zero_reflects
   have hlin : measurePointProjectionLinear X μ = 0 := by
     apply LinearMap.ext
     intro f
+    let f' : LocallyConstant Point (LocallyConstant X R) := f
+    change measurePointProjectionLinear X μ f' = 0
     apply LocallyConstant.ext
     intro z
     have hf :
-        f = LocallyConstant.const Point (f PUnit.unit) := by
+        f' = LocallyConstant.const Point (f' PUnit.unit) := by
       apply LocallyConstant.ext
       intro y
       cases y
       rfl
     have hfun := congrArg
-      (fun F : LocallyConstant X R →ₗ[R] R => F (f PUnit.unit)) hμ
-    rw [hf]
-    cases z
+      (fun F : LocallyConstant X R →ₗ[R] R => F (f' PUnit.unit)) hμ
+    have hfun0 : measurePointFunctional X μ (f' PUnit.unit) = 0 := by
+      simpa using hfun
+    rw [measurePointFunctional] at hfun0
     change
       (measurePointProjectionLinear X μ
-        (LocallyConstant.const Point (f PUnit.unit))) PUnit.unit = 0 at hfun
-    exact hfun
+        (LocallyConstant.const Point (f' PUnit.unit))) PUnit.unit = 0 at hfun0
+    rw [hf]
+    cases z
+    exact hfun0
   apply measurePointProjection_zero_reflects X μ
   apply ModuleCat.hom_injective
   change measurePointProjectionLinear X μ = 0
@@ -297,8 +302,8 @@ theorem measurePointIntegralFunctional_zero_reflects
       (measurePointFunctional X μ) v
   rw [measurePointIntegralFunctional] at hdown
   rw [hdown] at hinv
-  apply ULift.ext
-  simpa using congrArg ULift.down hinv.symm
+  change (measurePointFunctional X μ) v = ULift.up (0 : ℤ)
+  exact hinv.symm
 
 #check measurePointProjection
 #check measurePointProjectionAt
