@@ -81,12 +81,28 @@ theorem weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
       weightedFiniteBooleanMeasureSection_allTrue_realizes_pushforward X μ j
   have hfac :=
     weightedFiniteBooleanMeasureLimitLift_fac X a j
+  have hfac' := congrArg
+    (fun g =>
+      (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫ g)
+    hfac
   change
-    μHom ≫ CMDG.CondensedCM4P2D.measureFunctor.map qj =
+    μHom ≫ (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
       ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
         weightedFiniteBooleanMeasureLimitLift X a) ≫
-          CMDG.CondensedCM4P2D.measureFunctor.map qj
-  rw [Category.assoc, hfac]
-  exact hfinite
+          (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j
+  calc
+    μHom ≫ (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j =
+        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureHom X a j := by
+            simpa [qj] using hfinite
+    _ =
+        (Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          (weightedFiniteBooleanMeasureLimitLift X a ≫
+            (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j) := hfac'.symm
+    _ =
+        ((Condensed.profiniteFree CMDG.CondensedCM4P3G.R.{u}).map qtrue ≫
+          weightedFiniteBooleanMeasureLimitLift X a) ≫
+            (CMDG.CondensedCM4P2D.measureFunctor.mapCone X.asLimitCone).π.app j := by
+              simp only [Category.assoc]
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
