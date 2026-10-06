@@ -114,9 +114,11 @@ theorem applied_d_point_kernelProductFunctional
       (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
         coefficientObject)
     (μ : (measurePresheafObj X).obj (op Point)) :
-    ((((d.hom.app (op Point))
-        (((CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X).hom.app
-          (op Point)) μ)) PUnit.unit).down) =
+    ((show LocallyConstant Point CMDG.CondensedCM4P3G.R.{u} from
+        (ConcreteCategory.hom (d.hom.app (op Point)))
+          ((ConcreteCategory.hom
+            ((CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X).hom.app
+              (op Point))) μ)) PUnit.unit).down =
       kernelProductFunctional X d
         (fun i => measurePointIntegralFunctional X μ (integralBasis X i)) := by
   let P := Profinite.of PUnit.{u + 1}
@@ -158,8 +160,17 @@ theorem applied_d_point_kernelProductFunctional
       rw [Adjunction.homEquiv_naturality_right]
       rfl
     rw [hpost]
-    rw [Equiv.apply_symm_apply]
-    rfl
+    have hmu :
+        freeHomSectionsEquiv P A μHom =
+          (show A.obj.obj U from μ) := by
+      dsimp [μHom]
+      set_option backward.defeqAttrib.useBackward true in
+      set_option backward.isDefEq.respectTransparency false in
+        simpa [P, A, U] using (Equiv.apply_symm_apply (freeHomSectionsEquiv P A) μ)
+    rw [hmu]
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      rfl
   rw [hleft] at hs
   have hpre :=
     freeHomSectionsEquiv_precomp qtrue coefficientObject
@@ -174,9 +185,9 @@ theorem applied_d_point_kernelProductFunctional
   have hsPoint := congrArg
     (fun f : LocallyConstant P CMDG.CondensedCM4P3G.R.{u} => f PUnit.unit) hs
   rw [kernelProductFunctional_apply]
-  change
-    (((d.hom.app U) ((E.hom.app U) μ)) PUnit.unit).down =
-      (kernelProductSection X d a (fun _ => true)).down
-  exact congrArg ULift.down hsPoint
+  have hsDown := congrArg ULift.down hsPoint
+  set_option backward.defeqAttrib.useBackward true in
+  set_option backward.isDefEq.respectTransparency false in
+    simpa [P, U, E, qtrue, a] using hsDown
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
