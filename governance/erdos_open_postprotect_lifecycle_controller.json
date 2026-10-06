@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "control_id": "MP-ERDOS-OPEN-POSTPROTECT-LIFECYCLE-001",
   "status": "ACTIVE_CANDIDATE",
-  "purpose": "Carry ERDOS-OPEN protected R1+A1 evidence through the mechanical blind-cohort closure gate and recognize only registered deterministic advancement bundles. Mathematical synthesis is never inferred from RESULT/1 validity.",
+  "purpose": "Carry ERDOS-OPEN protected R1+A1 evidence through the mechanical blind-cohort closure gate and recognize only registered deterministic advancement bundles. Mathematical synthesis is never inferred from RESULT/1 validity. The same bounded controller carries the uniquely registered GCL-E2E-CANARY-001 through one-member closure and deterministic fixed-answer advancement.",
   "target_repository": "grandchallenge/MATHSOLVE",
   "controller_repository": "grandchallenge/MATH-PROGRAMME",
   "protected_problems": [
@@ -74,5 +74,14 @@
     "mathematical_claim": false,
     "literature_promotion": false,
     "parent_problem_effect": false
+  },
+  "registered_canary": {
+    "id": "GCL-E2E-CANARY-001",
+    "closure_branch": "lifecycle/gcl-e2e-canary-001-cohort-closure",
+    "advancement_branch": "lifecycle/gcl-e2e-canary-001-advance",
+    "fixed_expression": "2 + 2",
+    "fixed_expected_answer": 4,
+    "precommitted_successor": "GCL-E2E-CANARY-002",
+    "authority_effect": false
   }
 }
