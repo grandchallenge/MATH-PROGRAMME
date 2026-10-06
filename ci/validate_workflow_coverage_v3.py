@@ -334,6 +334,10 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two separately scoped App tokens are required"
         )
+    if text.count("repositories: MATHSOLVE") != 2:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: both bounded App tokens must remain restricted to MATHSOLVE"
+        )
     if text.count("permission-pull-requests: write") != 2:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two PR-write App grants are required"
