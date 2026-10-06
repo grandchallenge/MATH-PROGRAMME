@@ -127,10 +127,14 @@ def merge_protected(
 
 
 def run(apply: bool) -> dict[str, Any]:
-    token = os.environ.get("MATHSOLVE_INTAKE_PR_TOKEN", "")
-    if not token:
+    read_token = os.environ.get("MATHSOLVE_INTAKE_PR_TOKEN", "")
+    merge_token = os.environ.get("MATHSOLVE_EVIDENCE_MERGE_TOKEN", "")
+    if not read_token:
         raise ControllerError("MATHSOLVE_INTAKE_PR_TOKEN is empty")
-    gh = Github(token)
+    if not merge_token:
+        raise ControllerError("MATHSOLVE_EVIDENCE_MERGE_TOKEN is empty")
+    gh = Github(read_token)
+    merge_gh = Github(merge_token)
 
     report: dict[str, Any] = {
         "schema_version": "1.0.0",
@@ -138,8 +142,8 @@ def run(apply: bool) -> dict[str, Any]:
         "target_repository": f"{OWNER}/{REPO}",
         "apply": apply,
         "authority": {
-            "contents": "read",
-            "pull_requests": "write",
+            "validation_token": {"contents": "read", "pull_requests": "write"},
+            "merge_token": {"contents": "write", "pull_requests": "write"},
             "protected_merge": True,
             "admin_bypass": False,
             "campaign_mutation": False,
@@ -179,7 +183,7 @@ def run(apply: bool) -> dict[str, Any]:
             report["candidates"].append(candidate)
             if apply:
                 merged = merge_protected(
-                    gh,
+                    merge_gh,
                     int(binding["pr_number"]),
                     str(binding["head_sha"] or ""),
                     item["dispatch_id"],
