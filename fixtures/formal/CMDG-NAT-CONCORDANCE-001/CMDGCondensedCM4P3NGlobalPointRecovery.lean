@@ -277,4 +277,31 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
           ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) PUnit.unit).down = 0
   exact hcompat.trans hk0
 
+/-- The product-functional representation reflects zero on solid-side coefficient morphisms. -/
+theorem eq_zero_of_kernelProductFunctional_eq_zero
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hk : kernelProductFunctional X d = 0) :
+    d = 0 := by
+  apply CMDG.CondensedCM4P3G.coefficient_hom_ext_point
+  have hc :=
+    canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero X d hk
+  set_option backward.defeqAttrib.useBackward true in
+  set_option backward.isDefEq.respectTransparency false in
+    simpa [CMDG.CondensedCM4P3G.Point] using hc
+
+/-- A coefficient morphism in the kernel of profinite solidification is zero. -/
+theorem eq_zero_of_solidification_kernel
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hd :
+      (Condensed.profiniteSolidification CMDG.CondensedCM4P3G.R.{u}).app X ≫ d = 0) :
+    d = 0 := by
+  apply eq_zero_of_kernelProductFunctional_eq_zero X d
+  exact kernelProductFunctional_eq_zero_of_solidification_kernel X d hd
+
 end CMDG.CondensedCM4P3M.KernelPointBridge
