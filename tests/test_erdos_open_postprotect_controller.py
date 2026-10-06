@@ -28,6 +28,18 @@ class FakeGithub:
 
 
 class ErdosPostprotectControllerTests(unittest.TestCase):
+    def test_controller_cli_imports_in_production_shape(self):
+        root = Path(__file__).resolve().parents[1]
+        proc = subprocess.run(
+            [sys.executable, str(root / "ci" / "erdos_open_postprotect_controller.py"), "--help"],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("--solve-root", proc.stdout)
+
     def test_direct_cli_help_smoke(self):
         proc = subprocess.run(
             [sys.executable, "ci/erdos_open_postprotect_controller.py", "--help"],
