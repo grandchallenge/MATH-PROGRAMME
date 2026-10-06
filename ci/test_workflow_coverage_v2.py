@@ -349,7 +349,7 @@ def main() -> int:
     require_error(
         nsci_repo_scope_drift,
         evidence,
-        "missing bounded controller marker repositories: MATHSOLVE",
+        "exactly two MATHSOLVE-scoped App grants are required",
         registry=registry,
     )
 
