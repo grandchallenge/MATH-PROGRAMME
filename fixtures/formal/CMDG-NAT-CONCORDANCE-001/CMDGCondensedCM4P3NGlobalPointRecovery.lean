@@ -115,11 +115,14 @@ theorem applied_d_point_kernelProductFunctional
       (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
         coefficientObject)
     (μ : (measurePresheafObj X).obj (op Point)) :
-    ((show LocallyConstant Point CMDG.CondensedCM4P3G.R.{u} from
-        (ConcreteCategory.hom (d.hom.app (op Point)))
+    ((show LocallyConstant (Profinite.of PUnit.{u + 1}) CMDG.CondensedCM4P3G.R.{u} from
+        (ConcreteCategory.hom
+          (d.hom.app
+            (op ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1})))))
           ((ConcreteCategory.hom
             ((CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X).hom.app
-              (op Point))) μ)) PUnit.unit).down =
+              (op ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1}))))) μ))
+        PUnit.unit).down =
       kernelProductFunctional X d
         (fun i => measurePointIntegralFunctional X μ (integralBasis X i)) := by
   let P := Profinite.of PUnit.{u + 1}
