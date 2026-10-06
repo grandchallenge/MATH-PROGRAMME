@@ -2,7 +2,7 @@ import unittest
 
 from ci.external_intake_evidence_admission import (
     ControllerError,
-    enable_protected_auto_merge,
+    merge_protected,
     validate_pr_binding,
 )
 
@@ -21,14 +21,8 @@ class FakeGithub:
                     "sha": "d041809826dfb92a4baf15607e62d6b7b65d9ee3"
                 }
             }
-        if method == "POST" and path == "/graphql":
-            return {
-                "data": {
-                    "enablePullRequestAutoMerge": {
-                        "pullRequest": {"number": 919}
-                    }
-                }
-            }
+        if method == "PUT" and path == "/repos/grandchallenge/MATHSOLVE/pulls/919/merge":
+            return {"merged": True, "sha": "a" * 40, "message": "Pull Request successfully merged"}
         raise AssertionError((method, path, payload))
 
 
@@ -102,22 +96,26 @@ class ExternalIntakeEvidenceAdmissionTests(unittest.TestCase):
                 pull_request(base={"ref": "other"}),
             )
 
-    def test_auto_merge_is_expected_head_locked_and_squash_only(self):
+    def test_protected_merge_is_expected_head_locked_and_squash_only(self):
         gh = FakeGithub()
-        enable_protected_auto_merge(
+        result = merge_protected(
             gh,
-            "PR_node_919",
+            919,
             "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
+            "ERDOS-593-R1-IA-001",
         )
+        self.assertTrue(result["merged"])
         method, path, payload = gh.calls[-1]
-        self.assertEqual((method, path), ("POST", "/graphql"))
         self.assertEqual(
-            payload["variables"]["oid"],
+            (method, path),
+            ("PUT", "/repos/grandchallenge/MATHSOLVE/pulls/919/merge"),
+        )
+        self.assertEqual(
+            payload["sha"],
             "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
         )
-        self.assertIn("expectedHeadOid:$oid", payload["query"])
-        self.assertIn("mergeMethod:SQUASH", payload["query"])
-        self.assertNotIn("ADMIN", payload["query"].upper())
+        self.assertEqual(payload["merge_method"], "squash")
+        self.assertNotIn("admin", str(payload).lower())
 
 
 if __name__ == "__main__":
