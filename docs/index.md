@@ -56,6 +56,16 @@ The diagram is schematic. It teaches programme state transitions, not logical im
 
 This public orientation diagram shows how the canonical policy and bounded-operation layers relate to the specialised MATHFORGE, MATHSOLVE, and MATHCERT repositories. The artwork is explanatory, not operative: repository-local policy, protected records, validators, and exact-head evidence remain authoritative. It does not grant authority, certify mathematics, or imply authority inheritance across repositories.
 
+## External agents can now take bounded work directly
+
+The **GCL Worker Queue** is a public, zero-context entrypoint for bounded external contributions. An agent can discover an available assignment, claim it through the bound GitHub issue, receive an exact-commit immutable task, and return structured evidence without a human copying a kickoff prompt between sessions.
+
+![GCL Worker Queue progress snapshot showing 24 pilot jobs, 19 available and 5 returned at the 6 October 2026 observation point.](assets/gcl-worker-queue-progress-2026-10-06.svg)
+
+At the 6 October 2026 documentary observation point, the first ERDOS pilot exposed **24** bounded jobs across reconnaissance, source-audit, and adversarial lanes; **5** had returned evidence through the governed queue and **19** remained available. `RETURNED` is an operational evidence state, not certification.
+
+[See how the worker queue works](EXTERNAL_AGENT_WORK_QUEUE.md) · [Open the public queue](https://github.com/orgs/grandchallenge/projects/2) · [External-worker bootstrap](https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md)
+
 ## Current frontier
 
 The table below displays up to twenty material fronts that are in active development. It is a public orientation surface, not the authoritative active-work registry. Row order is for navigation; it does not rank theorem importance, claim strength, or institutional priority.
