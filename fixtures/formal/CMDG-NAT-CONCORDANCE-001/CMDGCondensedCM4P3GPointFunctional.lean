@@ -247,6 +247,52 @@ noncomputable def measurePointIntegralFunctional
   CMDG.CondensedCM4P3G.liftedIntFunctionalDown X
     (measurePointFunctional X μ)
 
+
+/-- The ordinary scalar Point functional loses no information about a one-point measure section. -/
+theorem measurePointFunctional_zero_reflects
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (hμ : measurePointFunctional X μ = 0) :
+    μ = 0 := by
+  apply measurePointProjection_zero_reflects X μ
+  apply ModuleCat.hom_injective
+  ext f
+  apply LocallyConstant.ext
+  intro z
+  have hf :
+      f = LocallyConstant.const Point (f PUnit.unit) := by
+    ext y
+    cases y
+    rfl
+  have hfun := congrArg
+    (fun F : LocallyConstant X R →ₗ[R] R => F (f PUnit.unit)) hμ
+  change
+    (measurePointProjection X μ).hom f z = 0
+  rw [hf]
+  cases z
+  simpa [measurePointFunctional, measurePointProjectionLinear] using hfun
+
+/-- The integral scalar functional also reflects zero.  The lifted/integral equivalence is
+lossless, so vanishing after descent forces the full Point functional, hence the Point measure,
+to vanish. -/
+theorem measurePointIntegralFunctional_zero_reflects
+    (X : Profinite.{u})
+    (μ : (measurePresheafObj X).obj (op Point))
+    (hμ : measurePointIntegralFunctional X μ = 0) :
+    μ = 0 := by
+  apply measurePointFunctional_zero_reflects X μ
+  apply LinearMap.ext
+  intro v
+  have hdown := congrArg
+    (fun F : LocallyConstant X ℤ →ₗ[ℤ] ℤ =>
+      F ((CMDG.CondensedCM4P3G.locallyConstantIntegralLiftEquiv X).symm v)) hμ
+  have hinv :=
+    CMDG.CondensedCM4P3G.liftedIntFunctionalDown_apply_inverse X
+      (measurePointFunctional X μ) v
+  rw [measurePointIntegralFunctional] at hdown
+  rw [hdown] at hinv
+  simpa using hinv.symm
+
 #check measurePointProjection
 #check measurePointProjectionAt
 #check measurePointProjectionAt_identity
@@ -258,6 +304,8 @@ noncomputable def measurePointIntegralFunctional
 #check measurePointProjectionLinear
 #check measurePointFunctional
 #check measurePointIntegralFunctional
+#check measurePointFunctional_zero_reflects
+#check measurePointIntegralFunctional_zero_reflects
 
 #print axioms measurePointProjection
 #print axioms measurePointProjection_condition
@@ -268,6 +316,8 @@ noncomputable def measurePointIntegralFunctional
 #print axioms measurePointProjectionLinear
 #print axioms measurePointFunctional
 #print axioms measurePointIntegralFunctional
+#print axioms measurePointFunctional_zero_reflects
+#print axioms measurePointIntegralFunctional_zero_reflects
 
 end CMDG.CondensedCM4P3G.PointFunctional
 
