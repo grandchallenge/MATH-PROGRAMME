@@ -221,13 +221,13 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
     CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.app X
   let eU :
       (CMDG.CondensedCM4P2D.measureFunctor.obj X).obj.obj U ≅
-        ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X).obj.obj U where
+        ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X).obj.obj U := {
     hom := e.hom.hom.app U
     inv := e.inv.hom.app U
     hom_inv_id := by
       exact congrArg (fun k => k.hom.app U) e.hom_inv_id
     inv_hom_id := by
-      exact congrArg (fun k => k.hom.app U) e.inv_hom_id
+      exact congrArg (fun k => k.hom.app U) e.inv_hom_id }
   let dU :
       ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X).obj.obj U ⟶
         ModuleCat.of CMDG.CondensedCM4P3G.R.{u}
