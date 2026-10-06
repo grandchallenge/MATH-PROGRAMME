@@ -28,6 +28,7 @@ theorem weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
   let T := basisBooleanCube X
   let A := CMDG.CondensedCM4P2D.measureFunctor.obj X
   let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let ftrue := ((profiniteToCompHaus).map qtrue).op
   let a : IntegralBasisIndex X → ℤ :=
     fun i => measurePointIntegralFunctional X μ (integralBasis X i)
   let μHom := (freeHomSectionsEquiv P A).symm μ
@@ -184,10 +185,20 @@ theorem applied_d_point_kernelProductFunctional
   rw [hkernel] at hs
   have hsPoint := congrArg
     (fun f : LocallyConstant P CMDG.CondensedCM4P3G.R.{u} => f PUnit.unit) hs
+  have hpull :
+      ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
+        (ConcreteCategory.hom
+          (((Condensed.forget CMDG.CondensedCM4P3G.R.{u}).obj coefficientObject).obj.map ftrue))
+          (kernelProductSection X d a)) PUnit.unit) =
+        kernelProductSection X d a (fun _ => true) := by
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      rfl
   rw [kernelProductFunctional_apply]
   have hsDown := congrArg ULift.down hsPoint
+  rw [hpull] at hsDown
   set_option backward.defeqAttrib.useBackward true in
   set_option backward.isDefEq.respectTransparency false in
-    simpa [P, U, E, qtrue, a] using hsDown
+    simpa [P, U, E, qtrue, ftrue, a] using hsDown
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
