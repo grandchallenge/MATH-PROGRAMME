@@ -1,3 +1,5 @@
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -26,6 +28,15 @@ class FakeGithub:
 
 
 class ErdosPostprotectControllerTests(unittest.TestCase):
+    def test_direct_cli_help_smoke(self):
+        proc = subprocess.run(
+            [sys.executable, "ci/erdos_open_postprotect_controller.py", "--help"],
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+
     def test_registered_branch_and_closure_paths_are_exact(self):
         self.assertEqual(
             branch_name("241"),
