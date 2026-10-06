@@ -7,6 +7,7 @@ universe u
 open CategoryTheory Limits Opposite
 open CMDG.CondensedCM4P3G
 open CMDG.CondensedCM4P3G.BooleanCube
+open CMDG.CondensedCM4P3G.BasisSeparation
 open CMDG.CondensedCM4P3G.FreeSections
 open CMDG.CondensedCM4P3G.PointFunctional
 open CMDG.CondensedCM4P3G.FiniteBooleanMeasure
