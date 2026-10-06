@@ -318,9 +318,9 @@ with control ID:
 
 `MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001`.
 
-It revalidates the exact registered evidence branch and ordinary PR, requires the PR to be authored by `gcl-release-trust[bot]`, binds the live head SHA, and may then enable GitHub protected auto-merge with `expectedHeadOid` and `SQUASH`. This is an admission request to the repository's native protection path, not a direct merge. Required PR checks, merge-queue policy, merge-group checks, and repository rules remain authoritative.
+It revalidates the exact registered evidence branch and ordinary PR, requires the PR to be authored by `gcl-release-trust[bot]`, binds the live head SHA, and may then request one ordinary `SQUASH` merge with that exact head supplied as GitHub's expected `sha`. MATHSOLVE's required status checks, unattributed-change approval rule, review-thread policy, and other repository protections remain authoritative; the controller has no bypass actor.
 
-This second stage may not write repository contents, alter evidence branches, bypass branch protection, use administrator merge, approve reviews, mutate campaign state, adjudicate mathematics, certify a claim, or promote a mathematical statement. The evidence bytes remain mechanically preserved evidence after protected merge; adjudication remains a separate action.
+This second stage may not write repository contents directly, alter evidence branches, bypass branch protection or rulesets, use administrator merge, approve reviews, mutate campaign state, adjudicate mathematics, certify a claim, or promote a mathematical statement. The evidence bytes remain mechanically preserved evidence after protected merge; adjudication remains a separate action.
 
 ### Wake and persistence
 
@@ -455,7 +455,7 @@ For a new controlled independent contribution:
 6. require one RESULT/1 through the declared GitHub comment surface;
 7. let intake authenticate, validate, hash, and preserve the result;
 8. let the bounded Release Trust intake controller open the ordinary evidence PR when the intake branch is valid;
-9. let the separate evidence-admission controller revalidate that PR and enable the native protected auto-merge / merge-queue route;
+9. let the separate evidence-admission controller revalidate that PR and request an exact-head ordinary protected squash merge after repository rules are satisfied;
 10. verify the raw result and receipt on protected MATHSOLVE main;
 11. adjudicate the mathematics separately;
 12. admit, narrow, reject, or retain negative knowledge according to evidence;
