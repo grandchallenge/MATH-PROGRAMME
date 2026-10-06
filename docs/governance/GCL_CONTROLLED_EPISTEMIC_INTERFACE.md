@@ -284,7 +284,7 @@ The active machine contract is:
 
 with control ID:
 
-`MP-NSCI-INTAKE-PR-CONTROLLER-001`.
+`MP-EXTERNAL-INTAKE-PR-CONTROLLER-001`.
 
 Its protected authority is intentionally small. The controller uses an explicit finite profile registry: the original `NS-CI-001` pilot profile, the `UC-001/WP08-D004` incidence-interface profile, and the `ERDOS-OPEN-RECON` first-tranche R1/S1/A1 profile. A campaign not named in that registry is rejected rather than inferred.
 
@@ -306,7 +306,21 @@ It may not:
 - certify or promote claims;
 - acquire Actions-write, workflow-write, checks-write, or administration authority.
 
-The controller closes an automation gap without collapsing intake, adjudication, and acceptance into one actor.
+The controller closes the branch-to-PR automation gap without collapsing intake, adjudication, and acceptance into one actor.
+
+### Protected evidence admission stage
+
+A second bounded controller owns only the next mechanical transition:
+
+`governance/external_intake_evidence_admission_controller.json`
+
+with control ID:
+
+`MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001`.
+
+It revalidates the exact registered evidence branch and ordinary PR, requires the PR to be authored by `gcl-release-trust[bot]`, binds the live head SHA, and may then enable GitHub protected auto-merge with `expectedHeadOid` and `SQUASH`. This is an admission request to the repository's native protection path, not a direct merge. Required PR checks, merge-queue policy, merge-group checks, and repository rules remain authoritative.
+
+This second stage may not write repository contents, alter evidence branches, bypass branch protection, use administrator merge, approve reviews, mutate campaign state, adjudicate mathematics, certify a claim, or promote a mathematical statement. The evidence bytes remain mechanically preserved evidence after protected merge; adjudication remains a separate action.
 
 ### Wake and persistence
 
@@ -440,11 +454,12 @@ For a new controlled independent contribution:
 5. provide the bootstrap to the independent reasoner;
 6. require one RESULT/1 through the declared GitHub comment surface;
 7. let intake authenticate, validate, hash, and preserve the result;
-8. let the bounded Release Trust controller open the ordinary evidence PR when the intake branch is valid;
-9. protect the raw evidence through ordinary repository controls;
-10. adjudicate the mathematics separately;
-11. admit, narrow, reject, or retain negative knowledge according to evidence;
-12. use MATHCERT only through its existing independent route where certification is required.
+8. let the bounded Release Trust intake controller open the ordinary evidence PR when the intake branch is valid;
+9. let the separate evidence-admission controller revalidate that PR and enable the native protected auto-merge / merge-queue route;
+10. verify the raw result and receipt on protected MATHSOLVE main;
+11. adjudicate the mathematics separately;
+12. admit, narrow, reject, or retain negative knowledge according to evidence;
+13. use MATHCERT only through its existing independent route where certification is required.
 
 Do not merge these stages for convenience.
 
@@ -463,7 +478,9 @@ Do not merge these stages for convenience.
 | Function | Protected surface |
 |---|---|
 | Controller machine contract | `governance/ns_ci_intake_pr_controller.json` |
-| Controller implementation | `ci/ns_ci_intake_pr_controller.py` (historical filename; active controller is profile-registered and covers NS-CI, UC-WP08-D004, and ERDOS-OPEN-RECON) |
+| Intake PR controller implementation | `ci/ns_ci_intake_pr_controller.py` (historical filename; active controller is profile-registered and covers NS-CI, UC-WP08-D004, and ERDOS-OPEN-RECON) |
+| Protected evidence admission contract | `governance/external_intake_evidence_admission_controller.json` |
+| Protected evidence admission implementation | `ci/external_intake_evidence_admission.py` |
 | Persistent controller workflow | `.github/workflows/ns-ci-intake-pr-controller.yml` |
 | GH-OS workflow registry | `.ghos-routing/workflows.json` |
 | Execution/recovery doctrine | `docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md` |
