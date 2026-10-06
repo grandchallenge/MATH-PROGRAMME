@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "control_id": "MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001",
-  "status": "ACTIVE_ON_PROTECTED_ADMISSION",
-  "purpose": "Admit already-created, Release-Trust-validated CEI evidence pull requests to GitHub's protected auto-merge / native merge-queue path without direct merge, branch-protection bypass, campaign mutation, or mathematical adjudication.",
+  "status": "ACTIVE_CORRECTION_CANDIDATE",
+  "purpose": "Admit already-created, Release-Trust-validated CEI evidence pull requests through ordinary exact-head protected MATHSOLVE merge after repository rules are satisfied, without branch-protection bypass, campaign mutation, or mathematical adjudication.",
   "upstream_controller": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
   "environment": "release-trust",
@@ -28,17 +28,18 @@
     "the pull request author is gcl-release-trust[bot]",
     "the pull request title exactly matches the registered profile and dispatch",
     "the pull request head SHA equals the live intake branch SHA",
-    "the pull request is not draft and is not known unmergeable"
+    "the pull request is not draft and is not known unmergeable",
+    "repository protection requirements, including the unattributed-change documentary approval and required status checks, remain authoritative"
   ],
   "allowed_actions": [
     "read registered intake branches and their protected dispatch bindings",
     "read the existing ordinary evidence pull request",
     "revalidate the exact raw-plus-receipt evidence branch using the upstream controller validation logic",
-    "enable GitHub protected auto-merge with expectedHeadOid bound to the validated pull-request head and mergeMethod SQUASH",
-    "retry idempotently when protected auto-merge is already enabled"
+    "request one ordinary protected squash merge with the validated pull-request head SHA supplied as the expected sha",
+    "retry on later wakes when GitHub repository protection has not yet admitted the merge"
   ],
   "prohibited_actions": [
-    "direct merge of any pull request",
+    "administrator, branch-protection, or ruleset bypass",
     "administrator or branch-protection bypass",
     "write repository contents or alter evidence branches",
     "create evidence pull requests",
@@ -48,7 +49,7 @@
     "claim certification or canonical mathematical effect",
     "use administration, actions-write, checks-write, issues-write, workflow-write, or contents-write authority"
   ],
-  "native_protection_rule": "Enabling auto-merge is an admission request only. Required checks, merge-queue policy, merge-group checks, and repository rules remain authoritative and may refuse or delay the merge.",
+  "native_protection_rule": "The controller may request an ordinary exact-head squash merge only after revalidation. GitHub required checks, required documentary approval, review-thread policy, and repository rules remain authoritative; no bypass actor exists.",
   "wake": {
     "kind": "GitHub Actions",
     "workflow": ".github/workflows/ns-ci-intake-pr-controller.yml",
@@ -57,18 +58,34 @@
   },
   "live_acceptance_target": {
     "repository": "grandchallenge/MATHSOLVE",
-    "pull_request": 919,
-    "dispatch_id": "ERDOS-593-R1-IA-001",
-    "expected_head_sha": "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
-    "required_result": "protected merge through native repository controls followed by exact protected-main raw-and-receipt readback"
+    "pull_requests": [
+      917,
+      918,
+      919,
+      920
+    ],
+    "dispatch_ids": [
+      "ERDOS-138-R1-IA-001",
+      "ERDOS-241-A1-IA-001",
+      "ERDOS-593-R1-IA-001",
+      "ERDOS-595-R1-IA-001"
+    ],
+    "protected_merges": [
+      "121e558bdbaa649d228d90375f16ace10b0ad9f7",
+      "ff73c7b35e470f8fb16e8aa6c60239c91831d74a",
+      "8e1d31ad90f30e97f7483cea406003b5ba8378a8",
+      "9a663535a86ec82521b69a8ef96d444e7e2b9c4c"
+    ],
+    "result": "LIVE_PROTECTED_MERGE_PRIMITIVE_VERIFIED_MANUALLY_PENDING_CONTROLLER_CORRECTION"
   },
   "claim_boundaries": {
     "constitutional": false,
-    "direct_merge": false,
+    "direct_merge": true,
     "certification": false,
     "publication": false,
     "mathematical_claim": false,
     "claim_promotion": false,
-    "campaign_mutation": false
+    "campaign_mutation": false,
+    "protected_merge_only": true
   }
 }
