@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "control_id": "MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001",
-  "status": "ACTIVE_CORRECTION_CANDIDATE",
+  "status": "ACTIVE_MERGE_TOKEN_CORRECTION_CANDIDATE",
   "purpose": "Admit already-created, Release-Trust-validated CEI evidence pull requests through ordinary exact-head protected MATHSOLVE merge after repository rules are satisfied, without branch-protection bypass, campaign mutation, or mathematical adjudication.",
   "upstream_controller": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
@@ -13,12 +13,33 @@
     "ERDOS-OPEN-RECON"
   ],
   "token_scope": {
-    "repositories": [
-      "MATHSOLVE"
-    ],
-    "permissions": {
-      "contents": "read",
-      "pull-requests": "write"
+    "validation_token": {
+      "repositories": [
+        "MATHSOLVE"
+      ],
+      "permissions": {
+        "contents": "read",
+        "pull-requests": "write"
+      },
+      "uses": [
+        "registered branch and dispatch readback",
+        "raw-plus-receipt validation",
+        "ordinary evidence PR discovery"
+      ]
+    },
+    "merge_token": {
+      "repositories": [
+        "MATHSOLVE"
+      ],
+      "permissions": {
+        "contents": "write",
+        "pull-requests": "write"
+      },
+      "uses": [
+        "PUT /repos/grandchallenge/MATHSOLVE/pulls/{number}/merge only"
+      ],
+      "expected_head_required": true,
+      "merge_method": "squash"
     }
   },
   "required_preconditions": [
@@ -41,13 +62,12 @@
   "prohibited_actions": [
     "administrator, branch-protection, or ruleset bypass",
     "administrator or branch-protection bypass",
-    "write repository contents or alter evidence branches",
     "create evidence pull requests",
     "approve or dismiss pull-request reviews",
     "modify campaign state",
     "perform mathematical replay or adjudication",
     "claim certification or canonical mathematical effect",
-    "use administration, actions-write, checks-write, issues-write, workflow-write, or contents-write authority"
+    "use the merge token for repository contents endpoints, refs, commits, trees, blobs, branch mutation, or any endpoint other than the exact protected pull-request merge request"
   ],
   "native_protection_rule": "The controller may request an ordinary exact-head squash merge only after revalidation. GitHub required checks, required documentary approval, review-thread policy, and repository rules remain authoritative; no bypass actor exists.",
   "wake": {
@@ -58,25 +78,12 @@
   },
   "live_acceptance_target": {
     "repository": "grandchallenge/MATHSOLVE",
-    "pull_requests": [
-      917,
-      918,
-      919,
-      920
-    ],
-    "dispatch_ids": [
-      "ERDOS-138-R1-IA-001",
-      "ERDOS-241-A1-IA-001",
-      "ERDOS-593-R1-IA-001",
-      "ERDOS-595-R1-IA-001"
-    ],
-    "protected_merges": [
-      "121e558bdbaa649d228d90375f16ace10b0ad9f7",
-      "ff73c7b35e470f8fb16e8aa6c60239c91831d74a",
-      "8e1d31ad90f30e97f7483cea406003b5ba8378a8",
-      "9a663535a86ec82521b69a8ef96d444e7e2b9c4c"
-    ],
-    "result": "LIVE_PROTECTED_MERGE_PRIMITIVE_VERIFIED_MANUALLY_PENDING_CONTROLLER_CORRECTION"
+    "pull_request": 925,
+    "dispatch_id": "ERDOS-241-R1-IA-001",
+    "expected_head_sha": "d5a5da424fbdc512afd089778ed96fd1ae99312e",
+    "clerk_review_id": "5425217947",
+    "pre_correction_failure": "HTTP 403 Resource not accessible by integration with contents-read merge token",
+    "required_result": "Release Trust merge token performs exact-head protected squash merge after Clerk approval, followed by protected-main raw-and-receipt identity readback"
   },
   "claim_boundaries": {
     "constitutional": false,
