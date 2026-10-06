@@ -342,7 +342,6 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one contents-write merge grant is required"
         )
     forbidden = (
-        "permission-contents: write",
         "permission-administration:",
         "permission-actions: write",
         "permission-checks: write",
