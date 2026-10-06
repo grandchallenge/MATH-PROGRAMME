@@ -205,4 +205,53 @@ theorem applied_d_point_kernelProductFunctional
   set_option backward.isDefEq.respectTransparency false in
     simpa [P, U, E, qtrue, ftrue, a] using hsDown
 
+/-- Zero product-functional data forces the coefficient morphism to vanish at the canonical
+one-point profinite test object. -/
+theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
+    (X : Profinite.{u})
+    (d :
+      (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
+        coefficientObject)
+    (hk : kernelProductFunctional X d = 0) :
+    d.hom.app
+      (op ((profiniteToCompHaus).obj (Profinite.of PUnit.{u + 1}))) = 0 := by
+  let P := Profinite.of PUnit.{u + 1}
+  let U := op ((profiniteToCompHaus).obj P)
+  let e :=
+    CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.app X
+  apply ModuleCat.hom_injective
+  apply LinearMap.ext
+  intro s
+  apply LocallyConstant.ext
+  intro z
+  cases z
+  let μ : (measurePresheafObj X).obj U :=
+    (ConcreteCategory.hom (e.inv.hom.app U)) s
+  let aμ : IntegralBasisIndex X → ℤ :=
+    fun i => measurePointIntegralFunctional X μ (integralBasis X i)
+  have heq := congrArg (fun k => k.hom.app U) e.inv_hom_id
+  have heval := ConcreteCategory.congr_hom heq s
+  simp only [NatTrans.comp_app, ConcreteCategory.comp_apply, NatTrans.id_app,
+    ConcreteCategory.id_apply] at heval
+  have hcompat := applied_d_point_kernelProductFunctional X d μ
+  have hk0raw := congrArg
+    (fun F : (IntegralBasisIndex X → ℤ) →+ ℤ => F aμ) hk
+  have hk0 : kernelProductFunctional X d aμ = 0 := by
+    simpa using hk0raw
+  change
+    ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
+      (ConcreteCategory.hom (d.hom.app U)) s) PUnit.unit).down = 0
+  have hcompat' :
+      ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
+        (ConcreteCategory.hom (d.hom.app U)) s) PUnit.unit).down =
+        kernelProductFunctional X d aμ := by
+    set_option backward.defeqAttrib.useBackward true in
+    set_option backward.isDefEq.respectTransparency false in
+      simpa [P, U, e, μ, aμ] using hcompat.trans (congrArg
+        (fun t =>
+          ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
+            (ConcreteCategory.hom (d.hom.app U)) t) PUnit.unit).down)
+        heval)
+  exact hcompat'.trans hk0
+
 end CMDG.CondensedCM4P3M.KernelPointBridge
