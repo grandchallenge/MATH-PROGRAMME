@@ -268,18 +268,13 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
   apply ULift.ext
   change
     ((dU s) z0).down = 0
-  have hrecover :
-      ((dU s) z0).down =
-        ((dU ((ConcreteCategory.hom eU.hom) μ)) z0).down := by
-    exact congrArg (fun t => ((dU t) z0).down) heval'.symm
-  have hrecover' :
-      ((dU s) z0).down =
-        ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
-          (ConcreteCategory.hom (d.hom.app U))
-            ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) PUnit.unit).down := by
-    set_option backward.defeqAttrib.useBackward true in
-    set_option backward.isDefEq.respectTransparency false in
-      simpa [P, U, eU, dU, z0] using hrecover
-  exact (hrecover'.trans hcompat).trans hk0
+  rw [← heval']
+  set_option backward.defeqAttrib.useBackward true in
+  set_option backward.isDefEq.respectTransparency false in
+    change
+      ((show LocallyConstant P CMDG.CondensedCM4P3G.R.{u} from
+        (ConcreteCategory.hom (d.hom.app U))
+          ((ConcreteCategory.hom (e.hom.hom.app U)) μ)) PUnit.unit).down = 0
+  exact hcompat.trans hk0
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
