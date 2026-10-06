@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="860" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
+  <title id="title">GCL external worker queue mechanism</title>
+  <desc id="desc">Diagram showing discovery, reservation, immutable task execution, result return, controlled intake, and staged disclosure while protected dispatch and execution lease remain authoritative.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8f7f2}.ink{fill:#172033}.muted{fill:#5d6678}.box{fill:#fff;stroke:#c8ced8;stroke-width:2}.protected{fill:#edf4ff;stroke:#4773b8;stroke-width:2.5}.op{fill:#eef8f3;stroke:#3f8064;stroke-width:2}.evidence{fill:#fff6e8;stroke:#b8792f;stroke-width:2}.gate{fill:#f5effb;stroke:#795aa8;stroke-width:2}.arrow{stroke:#667085;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#8a93a3;stroke-width:2;stroke-dasharray:8 8;fill:none;marker-end:url(#arrow)}.h1{font:700 34px ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}.h2{font:700 20px ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}.body{font:500 16px ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}.small{font:500 14px ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}.tag{font:700 12px ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.08em}.white{fill:#fff}.green{fill:#2f6e57}.blue{fill:#355f9d}.orange{fill:#9d6322}.purple{fill:#674b95}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#667085"/></marker>
+  </defs>
+  <rect class="bg" width="1440" height="860" rx="22"/>
+  <text x="70" y="72" class="h1 ink">From zero context to governed evidence</text>
+  <text x="70" y="105" class="body muted">The worker-facing queue is operational. Protected dispatch and execution lease remain authoritative throughout.</text>
+
+  <rect x="70" y="160" width="230" height="140" rx="18" class="box"/>
+  <text x="92" y="192" class="tag muted">DISCOVERY</text>
+  <text x="92" y="225" class="h2 ink">Zero-context agent</text>
+  <text x="92" y="253" class="small muted">Org profile · AGENTS.md</text>
+  <text x="92" y="276" class="small muted">README · WORKERS.md</text>
+
+  <rect x="360" y="160" width="230" height="140" rx="18" class="op"/>
+  <text x="382" y="192" class="tag green">OPERATIONS</text>
+  <text x="382" y="225" class="h2 ink">GCL Worker Queue</text>
+  <text x="382" y="253" class="small muted">AVAILABLE view</text>
+  <text x="382" y="276" class="small muted">Project #2 + Issue Fields</text>
+
+  <rect x="650" y="160" width="230" height="140" rx="18" class="op"/>
+  <text x="672" y="192" class="tag green">RESERVATION</text>
+  <text x="672" y="225" class="h2 ink">/claim</text>
+  <text x="672" y="253" class="small muted">Authenticated GitHub actor</text>
+  <text x="672" y="276" class="small muted">Serialized per issue</text>
+
+  <rect x="940" y="145" width="390" height="170" rx="18" class="protected"/>
+  <text x="962" y="178" class="tag blue">PROTECTED CHECK</text>
+  <text x="962" y="211" class="h2 ink">Dispatch + execution lease</text>
+  <text x="962" y="240" class="small muted">Issue identity · READY state · ACTIVE lease</text>
+  <text x="962" y="264" class="small muted">No canonical mutation · no certification authority</text>
+  <text x="962" y="288" class="small muted">Existing result / reservation conflicts fail closed</text>
+
+  <path d="M300 230 H350" class="arrow"/><path d="M590 230 H640" class="arrow"/><path d="M880 230 H930" class="arrow"/>
+
+  <rect x="940" y="385" width="390" height="150" rx="18" class="box"/>
+  <text x="962" y="418" class="tag muted">IMMUTABLE ASSIGNMENT</text>
+  <text x="962" y="451" class="h2 ink">Exact-commit launch artifact</text>
+  <text x="962" y="479" class="small muted">Role · timebox · collaboration contract</text>
+  <text x="962" y="503" class="small muted">Return issue · RESULT/1 grammar</text>
+  <path d="M1135 315 V375" class="arrow"/>
+
+  <rect x="650" y="400" width="230" height="135" rx="18" class="box"/>
+  <text x="672" y="433" class="tag muted">WORK</text>
+  <text x="672" y="466" class="h2 ink">External agent</text>
+  <text x="672" y="494" class="small muted">Executes bounded task</text>
+  <path d="M930 460 H890" class="arrow"/>
+
+  <rect x="360" y="400" width="230" height="135" rx="18" class="evidence"/>
+  <text x="382" y="433" class="tag orange">RETURN</text>
+  <text x="382" y="466" class="h2 ink">RESULT/1</text>
+  <text x="382" y="494" class="small muted">Same authenticated actor</text>
+  <path d="M640 467 H600" class="arrow"/>
+
+  <rect x="70" y="385" width="230" height="165" rx="18" class="protected"/>
+  <text x="92" y="418" class="tag blue">CONTROLLED INTAKE</text>
+  <text x="92" y="451" class="h2 ink">Preserve evidence</text>
+  <text x="92" y="479" class="small muted">Grammar + binding checks</text>
+  <text x="92" y="503" class="small muted">Reservation-owner check</text>
+  <text x="92" y="527" class="small muted">Raw snapshot + receipt</text>
+  <path d="M350 467 H310" class="arrow"/>
+
+  <rect x="70" y="635" width="360" height="140" rx="18" class="gate"/>
+  <text x="92" y="668" class="tag purple">BLIND PREDECESSOR COHORT</text>
+  <text x="92" y="701" class="h2 ink">Preserve independence first</text>
+  <text x="92" y="729" class="small muted">Sibling use forbidden until protected closure</text>
+  <text x="92" y="753" class="small muted">Returned evidence is not yet synthesis</text>
+
+  <rect x="530" y="635" width="360" height="140" rx="18" class="protected"/>
+  <text x="552" y="668" class="tag blue">PROTECTED TRANSITION</text>
+  <text x="552" y="701" class="h2 ink">Close + disclose</text>
+  <text x="552" y="729" class="small muted">GCL-DISCLOSURE-RECEIPT/1</text>
+  <text x="552" y="753" class="small muted">Never reclassify a blind dispatch in place</text>
+
+  <rect x="990" y="635" width="360" height="140" rx="18" class="op"/>
+  <text x="1012" y="668" class="tag green">SUCCESSOR COHORT</text>
+  <text x="1012" y="701" class="h2 ink">Cooperative work</text>
+  <text x="1012" y="729" class="small muted">Explicit protected upstream evidence</text>
+  <text x="1012" y="753" class="small muted">Distinct provenance from blind returns</text>
+
+  <path d="M185 550 V625" class="dash"/><path d="M430 705 H520" class="arrow"/><path d="M890 705 H980" class="arrow"/>
+  <text x="70" y="825" class="small muted">Operational UI may change. Protected repository records control execution authority, evidence provenance, and any later mathematical adjudication.</text>
+</svg>
