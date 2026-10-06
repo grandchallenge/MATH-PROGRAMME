@@ -1005,7 +1005,7 @@ theorem weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
   have h := hleft.trans hfinite
   set_option backward.defeqAttrib.useBackward true in
   set_option backward.isDefEq.respectTransparency false in
-    simpa [qtrue, a, μHom, Category.assoc] using h
+    simpa [P, qtrue, a, μHom, Category.assoc] using h
 
 #check weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
 #print axioms weightedFiniteBooleanMeasureLimitLift_measurePoint_allTrue
