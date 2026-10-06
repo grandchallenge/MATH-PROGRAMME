@@ -64,7 +64,7 @@ The **GCL Worker Queue** is a public, zero-context entrypoint for bounded extern
 
 At the 6 October 2026 documentary observation point, the first ERDOS pilot exposed **24** bounded jobs across reconnaissance, source-audit, and adversarial lanes; **5** had returned evidence through the governed queue and **19** remained available. `RETURNED` is an operational evidence state, not certification.
 
-[See how the worker queue works](GCL_WORKER_QUEUE_DOCUMENTARY.md) · [Open the public queue](https://github.com/orgs/grandchallenge/projects/2) · [External-worker bootstrap](https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md)
+[See how the worker queue works](EXTERNAL_AGENT_WORK_QUEUE.md) · [Open the public queue](https://github.com/orgs/grandchallenge/projects/2) · [External-worker bootstrap](https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md)
 
 ## Current frontier
 
