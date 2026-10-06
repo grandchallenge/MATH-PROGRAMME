@@ -313,6 +313,9 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "permission-contents: read",
         "permission-pull-requests: write",
         "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "id: admission-token",
+        "permission-contents: write",
+        "MATHSOLVE_INTAKE_ADMISSION_TOKEN: ${{ steps.admission-token.outputs.token }}",
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
         "--report ns-ci-intake-pr-controller-report.json",
@@ -327,16 +330,23 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
             errors.append(
                 f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: missing bounded controller marker {marker}"
             )
-    if text.count(APP_ACTION) != 1:
+    if text.count(APP_ACTION) != 2:
         errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one bounded App token is required"
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two separately scoped App tokens are required"
         )
-    if text.count("permission-pull-requests: write") != 1:
+    if text.count("permission-pull-requests: write") != 2:
         errors.append(
-            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one PR-write App grant is required"
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two PR-write App grants are required"
+        )
+    if text.count("permission-contents: write") != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one isolated contents-write admission token is required"
+        )
+    if text.count("permission-contents: read") < 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: intake token must retain contents-read scope"
         )
     forbidden = (
-        "permission-contents: write",
         "permission-administration:",
         "permission-actions: write",
         "permission-checks: write",
