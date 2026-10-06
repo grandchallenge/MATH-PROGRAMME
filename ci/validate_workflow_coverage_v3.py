@@ -333,6 +333,18 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two bounded App tokens are required"
         )
+    if text.count(APP_ID) != 2 or text.count(APP_KEY) != 2:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: both bounded tokens must use the Release Trust App credential"
+        )
+    if text.count("repositories: MATHSOLVE") != 2:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two MATHSOLVE-scoped App grants are required"
+        )
+    if text.count("permission-contents: read") != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one contents-read validation grant is required"
+        )
     if text.count("permission-pull-requests: write") != 2:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly two PR-write App grants are required"
