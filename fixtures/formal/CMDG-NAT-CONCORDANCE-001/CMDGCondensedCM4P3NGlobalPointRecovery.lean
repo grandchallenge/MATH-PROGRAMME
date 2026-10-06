@@ -129,6 +129,7 @@ theorem applied_d_point_kernelProductFunctional
   let E :=
     CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.hom.app X
   let qtrue := basisBooleanPointProbe X (fun _ => true)
+  let ftrue := ((profiniteToCompHaus).map qtrue).op
   let a : IntegralBasisIndex X → ℤ :=
     fun i => measurePointIntegralFunctional X μ (integralBasis X i)
   let μHom := (freeHomSectionsEquiv P A).symm μ
