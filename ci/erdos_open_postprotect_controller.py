@@ -12,11 +12,11 @@ import urllib.parse
 from pathlib import Path
 from typing import Any
 
-try:
-    if __package__ in (None, ""):
+if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from ci.ns_ci_intake_pr_controller import ControllerError, Github
+try:
+    from ci.ns_ci_intake_pr_controller import ControllerError, Github
 except ModuleNotFoundError:
     from ns_ci_intake_pr_controller import ControllerError, Github
 
