@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "CMDG_CM4_EXTERNAL_REVIEW_AND_UPSTREAM_ASSESSMENT",
+  "operation_id": "CMDG-CM4-EXTERNAL-REVIEW-UPSTREAM-001",
+  "protected_result_merge": "28aa80edc08833b9945380a848552cd5fb1da363",
+  "current_mathlib_target": {
+    "repository": "leanprover-community/mathlib4",
+    "path": "Mathlib/Condensed/Solid.lean",
+    "observed_blob_sha1": "7700f3cba847c9a0030f5bc37bbe1dc2b6497955",
+    "todo": "prove that ((profiniteSolid ℤ).obj S).IsSolid for S : Profinite",
+    "status": "STILL_PRESENT_AT_AUDIT"
+  },
+  "external_review": {
+    "packet": "docs/CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md",
+    "status": "READY_TO_SOLICIT",
+    "required_independence": "NON_AUTHOR_CONDENSED_OR_SOLID_MATHEMATICS_SPECIALIST"
+  },
+  "upstream": {
+    "assessment": "docs/CMDG-CM4-MATHLIB-UPSTREAM-ASSESSMENT.md",
+    "disposition": "GO_STAGED_PORT__NO_GO_MONOLITHIC_CURRENT_STACK",
+    "recommended_pr_series": [
+      "A_NOBELING_FUNCTIONAL_INFRASTRUCTURE",
+      "B_POINT_MEASURE_API",
+      "C_FINITE_BOOLEAN_RECONSTRUCTION",
+      "D_COEFFICIENT_FAITHFULNESS",
+      "E_PROFINITE_SOLID_IS_SOLID"
+    ]
+  },
+  "claim_boundary": {
+    "mathematical_theorem_novel": false,
+    "lean_formalization_first_claimed": false,
+    "exact_mathlib_todo_matches": true,
+    "upstream_acceptance_claimed": false,
+    "external_specialist_review_complete": false
+  }
+}
