@@ -13,6 +13,7 @@ SCHEMA = ROOT / "schemas/cmdg_condensed_cm4.schema.json"
 LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean"
 REPORT = ROOT / "governance/CMDG-CONDENSED-CM4-001.md"
 SUCCESSOR = ROOT / "governance/cmdg_condensed_cm4_underived_reconciliation_001.json"
+TERMINAL_RECEIPT = ROOT / "governance/cmdg_condensed_cm4_terminal_readback_001.json"
 
 EXPECTED_BASE = "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071"
 EXPECTED_BASE_TREE = "2a7bd5d53af76b6705ebd526dae667a381860374"
@@ -187,12 +188,28 @@ def validate(data=None):
         assert forbidden not in lowered, forbidden
     if SUCCESSOR.exists():
         successor = load(SUCCESSOR)
-        assert successor["state"] == "CANDIDATE_PENDING_P3_AUTHORITY_RECONCILIATION"
-        assert successor["claim_boundary"]["cm4_theorem_protected_closed"] is False
+        assert successor["state"] in {
+            "CANDIDATE_PENDING_P3_AUTHORITY_RECONCILIATION",
+            "PROTECTED_FORMAL_MODULE_LEVEL_CLOSED",
+        }
         assert successor["predecessor"]["protected_merge"] == "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6"
-        assert successor["effective_condition"].startswith("Fresh non-author APPROVED review")
         assert successor["formal_target"]["candidate_theorem"] == "CMDG.CondensedCM4.cm4Target_via_pointFunctional"
         assert "theorem cm4target_via_pointfunctional" in lowered
+        if successor["state"] == "PROTECTED_FORMAL_MODULE_LEVEL_CLOSED":
+            assert successor["claim_boundary"]["cm4_theorem_protected_closed"] is True
+            assert successor["claim_boundary"]["p3_closed"] is True
+            assert successor["predecessor"]["authority_repair_review_id"] == 5441283873
+            assert successor["predecessor"]["authority_repair_reviewed_head"] == "e388349e2c60386bbab782b01ec57dcabdb19485"
+            assert successor["predecessor"]["authority_repair_merge"] == "03cc8ce5ab230f62889e666ec3ffb28b55f60fff"
+            terminal = load(TERMINAL_RECEIPT)
+            assert terminal["terminal_state"]["p3"] == "PROTECTED_CLOSED_BY_UNDERIVED_BYPASS"
+            assert terminal["terminal_state"]["cm4"] == "CMDG_CONDENSED_CM4_MODULE_LEVEL_PROTECTED_CLOSED"
+            assert terminal["protected_authority"]["review_id"] == 5441283873
+            assert terminal["protected_authority"]["reconciliation_merge"] == "03cc8ce5ab230f62889e666ec3ffb28b55f60fff"
+            assert terminal["theorem"]["sorry_ax"] is False
+        else:
+            assert successor["claim_boundary"]["cm4_theorem_protected_closed"] is False
+            assert successor["effective_condition"].startswith("Fresh non-author APPROVED review")
     else:
         assert "theorem cm4target" not in lowered
 

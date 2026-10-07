@@ -1,22 +1,24 @@
 # CMDG-CONDENSED-CM4-P3-UNDERIVED-CLOSURE-001
 
-State: `PROTECTED_CONTENT_PENDING_INDEPENDENT_AUTHORITY_REVIEW`
+State: `PROTECTED_CLOSED_BY_UNDERIVED_BYPASS`
 
-The underived theorem is now present on protected `main`, but the original admission chain is defective.
+The authority-repair condition has been satisfied.
 
-- original PR: #1215
-- reviewed candidate head: `e530cc05ccb97e3bf83de38ed4c36e9f96781c73`
-- protected merge: `442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6`
-- protected theorem file blob: `d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7`
-- submitted reviews on #1215: **none**
-- root cause: the `Programme profile - main` ruleset required zero approving reviews, so the review request was advisory rather than blocking.
+- original theorem PR: #1215
+- theorem protected merge: `442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6`
+- exact theorem-file blob: `d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7`
+- authority-reconciliation PR: #1216
+- exact reviewed reconciliation head: `e388349e2c60386bbab782b01ec57dcabdb19485`
+- independent reviewer: `jimsteeg`
+- review ID: `5441283873`
+- disposition: `APPROVED`
+- protected authority-repair merge: `03cc8ce5ab230f62889e666ec3ffb28b55f60fff`
+- merge tree: `2a185b3f08923035738637db302d5f35c3243019`
 
-The mathematics is not invalidated: the theorem was formally validated and is on protected main. The defect is the missing independent authority step.
+The reviewed head is an exact parent of the protected merge, with no intervening mutation. The original missing-review defect is therefore cured by a separately protected successor authority reconciliation.
 
-This successor repairs that defect by binding a fresh non-author review to the exact protected theorem state above. P3 remains authority-blocked until this reconciliation exact head is independently **APPROVED** and then protected-merged without intervening mutation.
+Operative P3 disposition:
 
-After that protected successor admission, the operative P3 disposition becomes:
+`PROTECTED_CLOSED_BY_UNDERIVED_BYPASS`
 
-`PROTECTED_CLOSED_BY_UNDERIVED_BYPASS`.
-
-The historical Ext/cohomology source-path theorem remains unproved and preserved for source-concordance accounting. No P4/P5/P6 source theorem, derived/complex proposition, arbitrary-ring theorem, C06 discharge, or global CMDG completeness claim is created.
+The historical Ext/cohomology source-path theorem remains unproved and preserved as source-concordance material. No P4/P5/P6 source theorem, derived/complex Proposition 0.5.7, arbitrary-ring theorem, C06 discharge, or global CMDG completeness claim is created.
