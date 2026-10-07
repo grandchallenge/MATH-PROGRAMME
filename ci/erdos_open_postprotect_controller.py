@@ -718,6 +718,10 @@ def _run_canary3(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> di
         return {**candidate,"pr_number":pr["number"],"state":"PROTECTED_ADVANCEMENT_MERGED","merge_commit_sha":out.get("sha")}
     return {**candidate,"pr_number":pr["number"],"state":"READY_FOR_PROTECTED_ADVANCEMENT_MERGE"}
 
+def _report_exit_code(report: dict[str,Any]) -> int:
+    return 1 if report.get("errors") else 0
+
+
 def main() -> int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--solve-root",type=Path,required=True)
@@ -726,7 +730,7 @@ def main() -> int:
     args=ap.parse_args()
     try:
         report=run(args.solve_root.resolve(),args.apply)
-        rc=1 if report.get("errors") else 0
+        rc=_report_exit_code(report)
     except Exception as exc:
         report={"schema_version":"1.0.0","controller":"GCL_ERDOS_OPEN_POSTPROTECT_LIFECYCLE","fatal_error":str(exc),"authority_created":False}
         rc=2
