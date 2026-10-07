@@ -187,8 +187,10 @@ def validate(data=None):
         assert forbidden not in lowered, forbidden
     if SUCCESSOR.exists():
         successor = load(SUCCESSOR)
-        assert successor["state"] == "CANDIDATE_PENDING_P3_PROTECTED_PREDECESSOR"
+        assert successor["state"] == "CANDIDATE_PENDING_P3_AUTHORITY_RECONCILIATION"
         assert successor["claim_boundary"]["cm4_theorem_protected_closed"] is False
+        assert successor["predecessor"]["protected_merge"] == "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6"
+        assert successor["effective_condition"].startswith("Fresh non-author APPROVED review")
         assert successor["formal_target"]["candidate_theorem"] == "CMDG.CondensedCM4.cm4Target_via_pointFunctional"
         assert "theorem cm4target_via_pointfunctional" in lowered
     else:
