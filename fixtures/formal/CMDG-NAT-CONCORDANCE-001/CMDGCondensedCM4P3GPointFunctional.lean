@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3MFiniteQuotientBridge
+import CMDGCondensedCM4P3E
 import Mathlib.Condensed.Discrete.Characterization
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
@@ -2132,5 +2133,15 @@ theorem coefficientObject_isSolid_via_pointFunctional :
 #print axioms kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel
 #print axioms basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
 #print axioms kernelProductFunctional_eq_zero_of_solidification_kernel
+
+/-- Point-functional coefficient solidity discharges the exact underived P3-C residual Hom theorem for every profinite target. -/
+theorem residualHomTheorem_via_pointFunctional
+    (S : Profinite.{u}) :
+    CMDG.CondensedCM4P3C.ResidualHomTheorem S := by
+  exact CMDG.CondensedCM4P3E.residualHomTheorem_of_coefficientSolid S
+    coefficientObject_isSolid_via_pointFunctional
+
+#check residualHomTheorem_via_pointFunctional
+#print axioms residualHomTheorem_via_pointFunctional
 
 end CMDG.CondensedCM4P3M.KernelPointBridge
