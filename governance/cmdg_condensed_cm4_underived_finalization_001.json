@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "CMDG_CM4_UNDERIVED_FINALIZATION",
+  "operation_id": "CMDG-CONDENSED-CM4-UNDERIVED-FINALIZATION-001",
+  "parent_operation_id": "CMDG-CONDENSED-CM4-001",
+  "issue": 355,
+  "predecessor": {
+    "p3_finalization": "governance/cmdg_condensed_cm4_p3_underived_finalization_001.json",
+    "authority_repair_pr": 1216,
+    "authority_repair_protected_merge": "03cc8ce5ab230f62889e666ec3ffb28b55f60fff"
+  },
+  "formal_target": {
+    "definition": "CMDG.CondensedCM4.CM4Target",
+    "theorem": "CMDG.CondensedCM4.cm4Target_via_pointFunctional",
+    "fixture": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean",
+    "protected_fixture_blob_sha1": "8ab0051746507099f7321460fe091e56a84b57bb",
+    "scope": "MODULE_LEVEL_ONLY_Z_BOUNDARY",
+    "local_replay_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx": false
+  },
+  "prerequisite_reconciliation": [
+    {
+      "id": "CM4-P1",
+      "status_on_protected_merge": "AVAILABLE",
+      "route_role": "PROTECTED_AVAILABLE"
+    },
+    {
+      "id": "CM4-P2",
+      "status_on_protected_merge": "PROTECTED_CLOSED",
+      "route_role": "PROTECTED_AVAILABLE"
+    },
+    {
+      "id": "CM4-P3",
+      "status_on_protected_merge": "PROTECTED_CLOSED_BY_UNDERIVED_BYPASS",
+      "route_role": "SELECTED_UNDERIVED_ROUTE"
+    },
+    {
+      "id": "CM4-P4",
+      "status_on_protected_merge": "NONBLOCKING_SOURCE_AUXILIARY",
+      "route_role": "SOURCE_DERIVED_ROUTE_ONLY",
+      "proved": false
+    },
+    {
+      "id": "CM4-P5",
+      "status_on_protected_merge": "NONBLOCKING_SOURCE_AUXILIARY",
+      "route_role": "SOURCE_DERIVED_ROUTE_ONLY",
+      "proved": false
+    },
+    {
+      "id": "CM4-P6",
+      "status_on_protected_merge": "NONBLOCKING_SOURCE_AUXILIARY",
+      "route_role": "SOURCE_ROUTE_FINAL_WITNESS_DISPLACED_BY_UNDERIVED_TARGET",
+      "proved": false
+    }
+  ],
+  "source_concordance": {
+    "source_derived_chain_reproduced": false,
+    "p4_p5_p6_proved": false,
+    "preservation_rule": "P4-P6 remain registered as unproved source-proof auxiliaries and are not deleted or silently marked proved.",
+    "changed_proof_architecture": "Module-level CM4 is proved by Point-functional reconstruction and coefficient solidity, not by reconstructing the source-derived RHom/Ext chain."
+  },
+  "effective_condition": "PROTECTED_MERGE_OF_THIS_EXACT_RECORD",
+  "claim_boundary": {
+    "cm4_module_level_z_target_certified_on_protected_merge": true,
+    "cm4_protected_closed_on_protected_merge": true,
+    "derived_complex_form_certified": false,
+    "arbitrary_finite_type_z_algebra_free_solid_certified": false,
+    "arbitrary_commutative_ring_certified": false,
+    "noncommutative_ring_certified": false,
+    "c04_broadened": false,
+    "c06_discharged": false,
+    "graph_certified": false,
+    "cm5_authorized": false,
+    "global_cmdg_completeness_claim": false
+  },
+  "terminal_disposition_on_protected_merge": "CMDG_CONDENSED_CM4_MODULE_LEVEL_Z_PROTECTED_CLOSED"
+}
