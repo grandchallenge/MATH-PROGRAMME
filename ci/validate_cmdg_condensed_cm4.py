@@ -12,6 +12,7 @@ RECORD = ROOT / "governance/cmdg_condensed_cm4_001.json"
 SCHEMA = ROOT / "schemas/cmdg_condensed_cm4.schema.json"
 LEAN = ROOT / "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean"
 REPORT = ROOT / "governance/CMDG-CONDENSED-CM4-001.md"
+SUCCESSOR = ROOT / "governance/cmdg_condensed_cm4_underived_reconciliation_001.json"
 
 EXPECTED_BASE = "d9b9ed1a3a4c7ab56d25091e724fa585fbcea071"
 EXPECTED_BASE_TREE = "2a7bd5d53af76b6705ebd526dae667a381860374"
@@ -184,7 +185,14 @@ def validate(data=None):
     lowered = lean.lower()
     for forbidden in ("sorry", "axiom ", "unsafe ", "implemented_by"):
         assert forbidden not in lowered, forbidden
-    assert "theorem cm4target" not in lowered
+    if SUCCESSOR.exists():
+        successor = load(SUCCESSOR)
+        assert successor["state"] == "CANDIDATE_PENDING_P3_PROTECTED_PREDECESSOR"
+        assert successor["claim_boundary"]["cm4_theorem_protected_closed"] is False
+        assert successor["formal_target"]["candidate_theorem"] == "CMDG.CondensedCM4.cm4Target_via_pointFunctional"
+        assert "theorem cm4target_via_pointfunctional" in lowered
+    else:
+        assert "theorem cm4target" not in lowered
 
     report = REPORT.read_text(encoding="utf-8")
     assert CANDIDATE_DISPOSITION in report
