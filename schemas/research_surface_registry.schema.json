@@ -114,6 +114,8 @@
             "required": [
               "primary_page",
               "research_guide",
+              "guide_status",
+              "guide_debt",
               "chaidez_required"
             ],
             "properties": {
@@ -134,8 +136,67 @@
               },
               "chaidez_required": {
                 "const": true
+              },
+              "guide_status": {
+                "enum": [
+                  "PRESENT",
+                  "DEFERRED"
+                ]
+              },
+              "guide_debt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 12
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "guide_status": {
+                      "const": "PRESENT"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "research_guide": {
+                      "type": "string",
+                      "pattern": "^docs/.+\\.md$"
+                    },
+                    "guide_debt": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "guide_status": {
+                      "const": "DEFERRED"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "research_guide": {
+                      "type": "null"
+                    },
+                    "guide_debt": {
+                      "type": "string",
+                      "minLength": 12
+                    }
+                  }
+                }
+              }
+            ]
           },
           "claim_boundary": {
             "type": "object",
