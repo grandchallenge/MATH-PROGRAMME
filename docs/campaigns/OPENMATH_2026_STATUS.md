@@ -55,3 +55,8 @@ The initial active GCL-ERDOS3 frontier is:
 - source/library interface reconnaissance.
 
 No claim here proves Erdős Problem 3, certifies a theorem, or creates retroactive competition submission authority.
+
+
+## Claim boundary
+
+This page reports campaign state and route status. It does not itself certify a mathematical claim; protected campaign records govern durable state and theorem/certificate promotion remains subject to its own support and certification route.
