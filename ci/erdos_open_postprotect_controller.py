@@ -222,6 +222,10 @@ def run(solve_root: Path, apply: bool) -> dict[str,Any]:
         report["states"].append(_run_canary(gh, solve_root, main_sha, apply))
     except Exception as exc:
         report["errors"].append({"problem":"GCL-E2E-CANARY-001","error":str(exc)})
+    try:
+        report["states"].append(_run_canary2(gh, solve_root, main_sha, apply))
+    except Exception as exc:
+        report["errors"].append({"problem":"GCL-E2E-CANARY-002","error":str(exc)})
     return report
 
 
@@ -365,6 +369,168 @@ def _run_canary(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> dic
         pr = gh.request("POST", f"/repos/{OWNER}/{SOLVE}/pulls", {
             "title":"Advance GCL E2E canary after deterministic replay",
             "head":CANARY_ADVANCE_BRANCH,"base":"main",
+            "body":"Deterministically generated replay, bounded adjudication, and the precommitted successor for the production E2E canary. No mathematical, certification, publication, or external claim authority."
+        })
+    if not isinstance(pr,dict):
+        return {**candidate,"state":"ADVANCEMENT_CANDIDATE_READY"}
+    live = gh.request("GET", f"/repos/{OWNER}/{SOLVE}/pulls/{pr['number']}")
+    head = live.get("head",{}).get("sha") if isinstance(live,dict) else None
+    if head != candidate.get("head_sha"):
+        raise ControllerError("canary advancement PR head drift")
+    if not _approval_exists(gh, int(pr["number"]), str(head)):
+        return {**candidate,"pr_number":pr["number"],"state":"AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW"}
+    if apply:
+        out = gh.request("PUT", f"/repos/{OWNER}/{SOLVE}/pulls/{pr['number']}/merge", {
+            "sha":head,"merge_method":"squash",
+            "commit_title":f"Advance GCL E2E canary after deterministic replay (#{pr['number']})",
+            "commit_message":"Deterministic canary replay/adjudication and precommitted successor only. No external authority."
+        })
+        if not isinstance(out,dict) or out.get("merged") is not True:
+            raise ControllerError(f"canary advancement protected merge failed: {out!r}")
+        return {**candidate,"pr_number":pr["number"],"state":"PROTECTED_ADVANCEMENT_MERGED","merge_commit_sha":out.get("sha")}
+    return {**candidate,"pr_number":pr["number"],"state":"READY_FOR_PROTECTED_ADVANCEMENT_MERGE"}
+
+
+CANARY2_CLOSURE_BRANCH = "lifecycle/gcl-e2e-canary-001-cohort-closure"
+CANARY2_ADVANCE_BRANCH = "lifecycle/gcl-e2e-canary-001-advance"
+CANARY2_CLOSURE_PATH = "contributions/GCL-E2E-CANARY-002/closure.json"
+CANARY2_REPLAY_PATH = "contributions/GCL-E2E-CANARY-002/replay.json"
+CANARY2_ADJUDICATION_PATH = "contributions/GCL-E2E-CANARY-002/adjudication.json"
+CANARY2_SUCCESSOR_PATH = "work_packages/GCL_E2E_CANARY/GCL_E2E_CANARY2_002.md"
+
+def _load_canary2_module(root: Path):
+    sys.path.insert(0, str(root))
+    from ci import gcl_e2e_canary_002 as mod  # type: ignore
+    return mod
+
+def _put_text2(gh: Github, branch: str, path: str, text: str, message: str) -> None:
+    existing = _content(gh, path, branch)
+    payload = {
+        "message": message,
+        "content": base64.b64encode(text.encode("utf-8")).decode(),
+        "branch": branch,
+    }
+    if existing is not None:
+        payload["sha"] = existing[1]
+    gh.request("PUT", f"/repos/{OWNER}/{SOLVE}/contents/{path}", payload)
+
+def validate_canary2_candidate(gh: Github, solve_root: Path, branch: str) -> dict[str,Any]:
+    mod = _load_canary2_module(solve_root)
+    if branch == CANARY2_CLOSURE_BRANCH:
+        changed = _compare_files(gh, branch)
+        if changed != [CANARY2_CLOSURE_PATH]:
+            raise ControllerError(f"canary closure candidate diff mismatch: {changed}")
+        got = _content(gh, CANARY2_CLOSURE_PATH, branch)
+        if got is None:
+            raise ControllerError("canary closure candidate missing")
+        closure = json.loads(got[0])
+        errors = mod.validate_closure(closure)
+        if errors:
+            raise ControllerError("canary closure invalid: " + "; ".join(errors))
+        if _content(gh, CANARY2_CLOSURE_PATH, "main") is not None:
+            raise ControllerError("canary closure already protected")
+        ref = gh.request("GET", f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(branch,safe='/')}")
+        head = ref.get("object",{}).get("sha") if isinstance(ref,dict) else None
+        if not isinstance(head,str):
+            raise ControllerError("canary closure head unavailable")
+        return {"kind":"CANARY2_CLOSURE","branch":branch,"head_sha":head,"path":CANARY2_CLOSURE_PATH}
+    if branch == CANARY2_ADVANCE_BRANCH:
+        expected = sorted([CANARY2_REPLAY_PATH, CANARY2_ADJUDICATION_PATH, CANARY2_SUCCESSOR_PATH])
+        changed = _compare_files(gh, branch)
+        if changed != expected:
+            raise ControllerError(f"canary advancement candidate diff mismatch: {changed}")
+        replay_item = _content(gh, CANARY2_REPLAY_PATH, branch)
+        adj_item = _content(gh, CANARY2_ADJUDICATION_PATH, branch)
+        successor_item = _content(gh, CANARY2_SUCCESSOR_PATH, branch)
+        if replay_item is None or adj_item is None or successor_item is None:
+            raise ControllerError("canary advancement candidate incomplete")
+        replay = json.loads(replay_item[0])
+        adj = json.loads(adj_item[0])
+        errors = mod.validate_bundle(replay, adj, successor_item[0])
+        if errors:
+            raise ControllerError("canary advancement invalid: " + "; ".join(errors))
+        if any(_content(gh, path, "main") is not None for path in expected):
+            raise ControllerError("canary advancement already partly protected")
+        ref = gh.request("GET", f"/repos/{OWNER}/{SOLVE}/git/ref/heads/{urllib.parse.quote(branch,safe='/')}")
+        head = ref.get("object",{}).get("sha") if isinstance(ref,dict) else None
+        if not isinstance(head,str):
+            raise ControllerError("canary advancement head unavailable")
+        return {"kind":"CANARY2_ADVANCE","branch":branch,"head_sha":head,"paths":expected}
+    raise ControllerError(f"unregistered canary lifecycle branch: {branch}")
+
+def _run_canary2(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> dict[str,Any]:
+    mod = _load_canary2_module(solve_root)
+    protected_closure = _content(gh, CANARY2_CLOSURE_PATH, "main")
+    if protected_closure is None:
+        try:
+            closure = mod.build_closure(main_sha, "2026-10-07")
+        except ValueError as exc:
+            if "protected RESULT/1 absent" in str(exc):
+                return {"canary":"GCL-E2E-CANARY-002","state":"WAITING_FOR_PROTECTED_RESULT"}
+            raise
+        pr = _find_pr(gh, CANARY2_CLOSURE_BRANCH)
+        if apply and pr is None:
+            _create_branch(gh, CANARY2_CLOSURE_BRANCH, main_sha)
+            _put_text2(gh, CANARY2_CLOSURE_BRANCH, CANARY2_CLOSURE_PATH, json.dumps(closure,indent=2,sort_keys=True)+"\n", "Close GCL E2E canary cohort for deterministic replay")
+        candidate = validate_canary2_candidate(gh, solve_root, CANARY2_CLOSURE_BRANCH) if apply else {"kind":"CANARY2_CLOSURE","branch":CANARY2_CLOSURE_BRANCH}
+        if pr is None and apply:
+            pr = gh.request("POST", f"/repos/{OWNER}/{SOLVE}/pulls", {
+                "title":"Close GCL E2E canary cohort for deterministic replay",
+                "head":CANARY2_CLOSURE_BRANCH, "base":"main",
+                "body":"Mechanical one-member production canary cohort closure from protected RESULT/1 evidence. No mathematical, certification, publication, or external claim authority."
+            })
+        if not isinstance(pr,dict):
+            return {**candidate,"state":"CLOSURE_CANDIDATE_READY"}
+        live = gh.request("GET", f"/repos/{OWNER}/{SOLVE}/pulls/{pr['number']}")
+        head = live.get("head",{}).get("sha") if isinstance(live,dict) else None
+        if head != candidate.get("head_sha"):
+            raise ControllerError("canary closure PR head drift")
+        if not _approval_exists(gh, int(pr["number"]), str(head)):
+            return {**candidate,"pr_number":pr["number"],"state":"AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW"}
+        if apply:
+            out = gh.request("PUT", f"/repos/{OWNER}/{SOLVE}/pulls/{pr['number']}/merge", {
+                "sha":head,"merge_method":"squash",
+                "commit_title":f"Close GCL E2E canary cohort (#{pr['number']})",
+                "commit_message":"Mechanical canary cohort closure only. No mathematical or certification authority."
+            })
+            if not isinstance(out,dict) or out.get("merged") is not True:
+                raise ControllerError(f"canary closure protected merge failed: {out!r}")
+            return {**candidate,"pr_number":pr["number"],"state":"PROTECTED_CLOSURE_MERGED","merge_commit_sha":out.get("sha")}
+        return {**candidate,"pr_number":pr["number"],"state":"READY_FOR_PROTECTED_CLOSURE_MERGE"}
+
+    closure = json.loads(protected_closure[0])
+    errors = mod.validate_closure(closure)
+    if errors:
+        raise ControllerError("protected canary closure invalid: " + "; ".join(errors))
+    replay_main = _content(gh, CANARY2_REPLAY_PATH, "main")
+    adj_main = _content(gh, CANARY2_ADJUDICATION_PATH, "main")
+    successor_main = _content(gh, CANARY2_SUCCESSOR_PATH, "main")
+    if replay_main is not None and adj_main is not None and successor_main is not None:
+        replay = json.loads(replay_main[0])
+        adj = json.loads(adj_main[0])
+        errors = mod.validate_bundle(replay, adj, successor_main[0])
+        if errors:
+            raise ControllerError("protected canary advancement invalid: " + "; ".join(errors))
+        return {"canary":"GCL-E2E-CANARY-002","state":"ADVANCED","replay_pass":replay.get("replay_pass"),"adjudication":adj.get("disposition"),"successor":adj.get("selected_successor")}
+    if any(x is not None for x in (replay_main, adj_main, successor_main)):
+        raise ControllerError("partial protected canary advancement bundle")
+
+    replay = mod.build_replay()
+    adj = mod.build_adjudication(replay)
+    successor = mod.successor_text()
+    if replay.get("replay_pass") is not True or adj.get("disposition") != "ADVANCE":
+        return {"canary":"GCL-E2E-CANARY-002","state":"DETERMINISTIC_REPLAY_REJECTED","replay":replay}
+    pr = _find_pr(gh, CANARY2_ADVANCE_BRANCH)
+    if apply and pr is None:
+        _create_branch(gh, CANARY2_ADVANCE_BRANCH, main_sha)
+        _put_text2(gh, CANARY2_ADVANCE_BRANCH, CANARY2_REPLAY_PATH, json.dumps(replay,indent=2,sort_keys=True)+"\n", "Record GCL E2E canary deterministic replay")
+        _put_text2(gh, CANARY2_ADVANCE_BRANCH, CANARY2_ADJUDICATION_PATH, json.dumps(adj,indent=2,sort_keys=True)+"\n", "Record GCL E2E canary deterministic adjudication")
+        _put_text2(gh, CANARY2_ADVANCE_BRANCH, CANARY2_SUCCESSOR_PATH, successor, "Materialize precommitted GCL E2E canary successor")
+    candidate = validate_canary2_candidate(gh, solve_root, CANARY2_ADVANCE_BRANCH) if apply else {"kind":"CANARY2_ADVANCE","branch":CANARY2_ADVANCE_BRANCH}
+    if pr is None and apply:
+        pr = gh.request("POST", f"/repos/{OWNER}/{SOLVE}/pulls", {
+            "title":"Advance GCL E2E canary after deterministic replay",
+            "head":CANARY2_ADVANCE_BRANCH,"base":"main",
             "body":"Deterministically generated replay, bounded adjudication, and the precommitted successor for the production E2E canary. No mathematical, certification, publication, or external claim authority."
         })
     if not isinstance(pr,dict):

@@ -69,6 +69,14 @@ PROFILES = (
         receipt_schema_version="1.0.0",
         pr_title_prefix="GCL E2E canary intake",
     ),
+    IntakeProfile(
+        campaign="GCL-E2E-CANARY-002",
+        branch_prefix="intake/gcl-e2e-canary-",
+        dispatch_re=re.compile(r"^GCL-E2E-CANARY-002-IA-001$"),
+        base="contributions/GCL-E2E-CANARY-002",
+        receipt_schema_version="1.0.0",
+        pr_title_prefix="GCL E2E canary intake",
+    ),
 )
 
 
@@ -126,12 +134,9 @@ def profile_for_branch(branch_name: str) -> tuple[IntakeProfile, str]:
     for profile in PROFILES:
         if branch_name.startswith(profile.branch_prefix):
             slug = branch_name[len("intake/"):].upper()
-            if not profile.dispatch_re.fullmatch(slug):
-                raise ControllerError(
-                    f"branch does not map to registered {profile.campaign} dispatch syntax: {branch_name}"
-                )
-            return profile, slug
-    raise ControllerError("branch does not use a registered external-intake prefix")
+            if profile.dispatch_re.fullmatch(slug):
+                return profile, slug
+    raise ControllerError("branch does not map to a registered external-intake dispatch")
 
 
 def profile_for_dispatch(dispatch_id: str) -> IntakeProfile:
