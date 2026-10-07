@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0.0",
-  "record_type": "CMDG_CM4_P3_UNDERIVED_CLOSURE_CANDIDATE",
+  "record_type": "CMDG_CM4_P3_UNDERIVED_AUTHORITY_RECONCILIATION_CANDIDATE",
   "operation_id": "CMDG-CONDENSED-CM4-P3-UNDERIVED-CLOSURE-001",
   "parent_operation_id": "CMDG-CONDENSED-CM4-P3-001",
   "parent_issue": 448,
   "parent_cm4_issue": 355,
-  "state": "CANDIDATE_PENDING_PROTECTED_PREDECESSOR",
+  "state": "PROTECTED_CONTENT_PENDING_INDEPENDENT_AUTHORITY_REVIEW",
   "historical_audit": {
     "path": "governance/cmdg_condensed_cm4_p3_001.json",
     "protected_merge": "49f2eb8d4bc221e7ccc205378bc72265d1d0adc9",
@@ -25,13 +25,15 @@
       "theorem": "CMDG.CondensedCM4P3M.KernelPointBridge.profiniteSolid_isSolid_via_pointFunctional",
       "pull_request": 1215,
       "reviewed_head_candidate": "e530cc05ccb97e3bf83de38ed4c36e9f96781c73",
-      "protected_merge": null
+      "protected_merge": "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6",
+      "protected_blob_sha1": "d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7",
+      "review_status": "MISSING_ON_ORIGINAL_PR"
     }
   },
   "route_reconciliation": {
     "source_derived_p3_vanishing_status": "UNPROVED_PRESERVED_AS_SOURCE_CONCORDANCE_AUXILIARY",
-    "underived_bypass_status": "CANDIDATE_PENDING_PROTECTED_MERGE",
-    "p3_effective_status": "BLOCKING_UNTIL_PREDECESSOR_PROTECTED",
+    "underived_bypass_status": "PROTECTED_CONTENT__AUTHORITY_REVIEW_PENDING",
+    "p3_effective_status": "AUTHORITY_BLOCKED_UNTIL_SUCCESSOR_RECONCILIATION_PROTECTED",
     "intended_postmerge_status": "PROTECTED_CLOSED_BY_UNDERIVED_BYPASS"
   },
   "claim_boundary": {
@@ -45,5 +47,26 @@
     "arbitrary_ring_generalization_certified": false,
     "c06_discharged": false,
     "global_cmdg_completeness_claim": false
+  },
+  "authority_defect": {
+    "defect_class": "PROTECTED_MERGE_WITHOUT_REQUIRED_INDEPENDENT_REVIEW",
+    "original_pr": 1215,
+    "original_head": "e530cc05ccb97e3bf83de38ed4c36e9f96781c73",
+    "protected_merge": "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6",
+    "submitted_reviews_on_original_pr": 0,
+    "root_cause": "Programme profile - main had required_approving_review_count = 0; requested reviewers were advisory rather than admission-blocking.",
+    "mathematics_invalidated": false,
+    "authority_chain_incomplete": true
+  },
+  "authority_repair": {
+    "repair_pr": 1216,
+    "exact_state_under_review": {
+      "protected_merge": "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6",
+      "theorem_file": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean",
+      "theorem_file_blob_sha1": "d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7",
+      "theorem": "CMDG.CondensedCM4P3M.KernelPointBridge.profiniteSolid_isSolid_via_pointFunctional"
+    },
+    "required_disposition": "FRESH_NON_AUTHOR_APPROVAL_OF_THIS_EXACT_RECONCILIATION_HEAD",
+    "effective_condition": "this reconciliation exact head receives a non-author APPROVED review and is then protected-merged without intervening mutation"
   }
 }
