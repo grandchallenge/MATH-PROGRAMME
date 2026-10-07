@@ -1,5 +1,11 @@
 # Domain 03 · Hodge Conjecture
 
+
+!!! info "Research surface authority"
+    **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/65  
+    **AUTHORITY:** `DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md`.  
+    **EXPOSITION:** this page is the human-facing projection; the issue governs mutable research state and protected records govern admitted claims.
+
 **Campaign ID:** `HC-001`  
 **Mathematical status:** open conjecture  
 **Geometric category:** smooth projective varieties over `C`  

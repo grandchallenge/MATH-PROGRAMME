@@ -21,3 +21,8 @@ New mathematics first. Operational evidence processing and research scheduling a
 GCL-ERDOS3 is the first campaign using the frontier-advancement gate as the scheduler. Its imported conclusion-side D3/D4 lemmas are formalized; the D5 hypothesis-side file is not yet proof-receipted. The active frontier is D5 formal closure plus a scale-local reciprocal-mass-to-AP bridge.
 
 The independent-agent interface is retained. What changes is successor selection: one independent replay is the default bounded verification budget, and repeated replay requires a named reason.
+
+
+## Live research tracker
+
+Current mutable campaign state is tracked at https://github.com/grandchallenge/MATH-PROGRAMME/issues/1072. Protected programme records govern durable state.

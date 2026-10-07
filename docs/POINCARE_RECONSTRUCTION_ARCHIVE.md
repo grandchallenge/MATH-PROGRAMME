@@ -1,5 +1,11 @@
 # Hamilton–Perelman Poincaré reconstruction archive
 
+
+!!! info "Research surface authority"
+    **LIVE:** [PC-WP01 false-proof atlas tracker #72](https://github.com/grandchallenge/MATH-PROGRAMME/issues/72).  
+    **AUTHORITY:** `campaigns/poincare_reconstruction/WP01_FALSE_PROOF_ATLAS/10_CLAIM_LEDGER.yaml` and its protected review record.  
+    **EXPOSITION:** this archive presents negative knowledge and reconstruction context; the issue governs mutable follow-up and protected records govern admitted claims.
+
 ## Status
 
 The Poincaré conjecture is a solved classical theorem. This archive reconstructs the Hamilton–Perelman finite-extinction route; it does not reopen the problem or claim a new proof.
@@ -73,3 +79,7 @@ Perelman’s second preprint explicitly identifies a graph-manifold assertion as
 - event existence from schema validity;
 - equivalence of Poincaré, elliptization and geometrization;
 - novelty or priority.
+
+## Claim boundary
+
+This archive preserves qualified reconstruction and negative-knowledge results. It does not promote any false-proof route, and archive/exposition status does not substitute for theorem certification. The registered protected claim ledger and review records govern admitted claims.

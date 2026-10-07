@@ -1,5 +1,11 @@
 # Domain 06 · Yang–Mills Existence and Mass Gap
 
+
+!!! info "Research surface authority"
+    **LIVE:** [YM-001 canonical tracker #164](https://github.com/grandchallenge/MATH-PROGRAMME/issues/164), with active source/proof-completeness returns in MATHSOLVE.  
+    **AUTHORITY:** `YM-WP00-source-normalization-equivalence-audit.md` and registered protected campaign records.  
+    **EXPOSITION:** this page is a human-facing projection. The issue governs mutable research state; protected records govern promoted/certified claims.
+
 **Campaign ID:** `YM-001`  
 **Mathematical status:** open problem  
 **Programme state:** WP00 promoted; WP01 promoted as eliminative infrastructure; WP02 promoted as theorem/dependency interface ledger  

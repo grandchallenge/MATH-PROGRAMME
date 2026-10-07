@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/research_surface_registry.schema.json",
+  "title": "GCL Research Surface Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "registry_id",
+    "doctrine_ref",
+    "rollout_tracker",
+    "surfaces"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "registry_id": {
+      "const": "GCL-RESEARCH-SURFACES-001"
+    },
+    "doctrine_ref": {
+      "const": "docs/RESEARCH_SURFACE_CONTRACT.md"
+    },
+    "rollout_tracker": {
+      "const": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1224"
+    },
+    "surfaces": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "campaign_id",
+          "pattern",
+          "lifecycle",
+          "enforcement",
+          "live",
+          "authority",
+          "exposition",
+          "claim_boundary"
+        ],
+        "properties": {
+          "campaign_id": {
+            "type": "string",
+            "minLength": 3
+          },
+          "pattern": {
+            "enum": [
+              "TERMINAL_THEOREM",
+              "ACTIVE_MULTI_ROUTE",
+              "WORKER_INTAKE",
+              "SOURCE_EVIDENCE",
+              "CERTIFICATE_FORMAL",
+              "NEGATIVE_RESULT"
+            ]
+          },
+          "lifecycle": {
+            "enum": [
+              "ACTIVE",
+              "TERMINAL",
+              "MIXED"
+            ]
+          },
+          "enforcement": {
+            "enum": [
+              "REFERENCE",
+              "PILOT"
+            ]
+          },
+          "live": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "canonical_tracker",
+              "active_children"
+            ],
+            "properties": {
+              "canonical_tracker": {
+                "type": "string",
+                "pattern": "^https://github\\.com/grandchallenge/[A-Za-z0-9_.-]+/issues/[0-9]+$"
+              },
+              "active_children": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^https://github\\.com/grandchallenge/[A-Za-z0-9_.-]+/issues/[0-9]+$"
+                }
+              }
+            }
+          },
+          "authority": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "records"
+            ],
+            "properties": {
+              "records": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 3
+                }
+              }
+            }
+          },
+          "exposition": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "primary_page",
+              "research_guide",
+              "guide_status",
+              "guide_debt",
+              "chaidez_required"
+            ],
+            "properties": {
+              "primary_page": {
+                "type": "string",
+                "pattern": "^docs/.+\\.md$"
+              },
+              "research_guide": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^docs/.+\\.md$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "chaidez_required": {
+                "const": true
+              },
+              "guide_status": {
+                "enum": [
+                  "PRESENT",
+                  "DEFERRED"
+                ]
+              },
+              "guide_debt": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 12
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "guide_status": {
+                      "const": "PRESENT"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "research_guide": {
+                      "type": "string",
+                      "pattern": "^docs/.+\\.md$"
+                    },
+                    "guide_debt": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "guide_status": {
+                      "const": "DEFERRED"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "research_guide": {
+                      "type": "null"
+                    },
+                    "guide_debt": {
+                      "type": "string",
+                      "minLength": 12
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "claim_boundary": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "registry_confers_authority",
+              "issue_confers_certification",
+              "mkdocs_confers_certification"
+            ],
+            "properties": {
+              "registry_confers_authority": {
+                "const": false
+              },
+              "issue_confers_certification": {
+                "const": false
+              },
+              "mkdocs_confers_certification": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
