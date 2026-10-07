@@ -1,17 +1,20 @@
 {
   "schema_version": "1.0.0",
-  "record_type": "CMDG_CM4_UNDERIVED_ROUTE_RECONCILIATION_CANDIDATE",
+  "record_type": "CMDG_CM4_UNDERIVED_ROUTE_RECONCILIATION_TERMINAL",
   "operation_id": "CMDG-CONDENSED-CM4-UNDERIVED-RECONCILIATION-001",
   "parent_operation_id": "CMDG-CONDENSED-CM4-001",
   "issue": 355,
-  "state": "CANDIDATE_PENDING_P3_AUTHORITY_RECONCILIATION",
+  "state": "PROTECTED_FORMAL_MODULE_LEVEL_CLOSED",
   "predecessor": {
     "closure_record": "governance/cmdg_condensed_cm4_p3_underived_closure_001.json",
     "p3_pr": 1215,
     "reviewed_head_candidate": "e530cc05ccb97e3bf83de38ed4c36e9f96781c73",
     "protected_merge": "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6",
     "original_pr_review_status": "MISSING_INDEPENDENT_REVIEW",
-    "authority_repair_pr": 1216
+    "authority_repair_pr": 1216,
+    "authority_repair_review_id": 5441283873,
+    "authority_repair_reviewed_head": "e388349e2c60386bbab782b01ec57dcabdb19485",
+    "authority_repair_merge": "03cc8ce5ab230f62889e666ec3ffb28b55f60fff"
   },
   "selected_route": "POINT_FUNCTIONAL_UNDERIVED",
   "formal_target": {
@@ -33,22 +36,22 @@
     },
     {
       "id": "CM4-P3",
-      "status": "PROTECTED_CONTENT_PENDING_AUTHORITY_RECONCILIATION",
-      "route_role": "UNDERIVED_ROUTE_PREDECESSOR_AUTHORITY_REPAIR"
+      "status": "PROTECTED_CLOSED_BY_UNDERIVED_BYPASS",
+      "route_role": "DISCHARGED_BY_SELECTED_UNDERIVED_ROUTE"
     },
     {
       "id": "CM4-P4",
-      "status": "NONBLOCKING_SOURCE_AUXILIARY_EFFECTIVE_ON_RECONCILIATION_PROTECTED_MERGE",
+      "status": "NONBLOCKING_SOURCE_AUXILIARY",
       "route_role": "SOURCE_DERIVED_ROUTE_ONLY"
     },
     {
       "id": "CM4-P5",
-      "status": "NONBLOCKING_SOURCE_AUXILIARY_EFFECTIVE_ON_RECONCILIATION_PROTECTED_MERGE",
+      "status": "NONBLOCKING_SOURCE_AUXILIARY",
       "route_role": "SOURCE_DERIVED_ROUTE_ONLY"
     },
     {
       "id": "CM4-P6",
-      "status": "NONBLOCKING_SOURCE_AUXILIARY_EFFECTIVE_ON_RECONCILIATION_PROTECTED_MERGE",
+      "status": "NONBLOCKING_SOURCE_AUXILIARY",
       "route_role": "SOURCE_ROUTE_FINAL_WITNESS_DISPLACED_BY_UNDERIVED_TARGET"
     }
   ],
@@ -58,11 +61,11 @@
     "changed_proof_architecture": "The protected module-level theorem is obtained by Point-functional reconstruction and coefficient solidity rather than reconstruction of the source derived RHom/Ext chain.",
     "preservation_rule": "P4-P6 remain registered as source-proof auxiliaries and must not be described as proved or deleted from source-concordance history."
   },
-  "candidate_disposition": "CM4_MODULE_TARGET_AUTHORITY_RECONCILIATION_CANDIDATE__P4_P5_P6_NONBLOCKING_SOURCE_AUXILIARIES",
+  "candidate_disposition": "CMDG_CONDENSED_CM4_MODULE_LEVEL_PROTECTED_CLOSED",
   "claim_boundary": {
     "cm4_target_candidate": true,
-    "cm4_theorem_protected_closed": false,
-    "p3_closed": false,
+    "cm4_theorem_protected_closed": true,
+    "p3_closed": true,
     "p4_proved": false,
     "p5_proved": false,
     "p6_source_route_proved": false,
@@ -75,5 +78,6 @@
     "graph_certified": false,
     "global_cmdg_completeness_claim": false
   },
-  "effective_condition": "Fresh non-author APPROVED review of this exact PR head followed by protected merge; no intervening mutation."
+  "effective_condition": "SATISFIED_BY_PR_1216_EXACT_HEAD_APPROVAL_AND_PROTECTED_MERGE",
+  "terminal_disposition": "CMDG_CONDENSED_CM4_MODULE_LEVEL_PROTECTED_CLOSED"
 }
