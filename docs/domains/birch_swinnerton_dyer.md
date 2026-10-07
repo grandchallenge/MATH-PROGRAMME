@@ -1,5 +1,11 @@
 # Domain 04 · Birch–Swinnerton-Dyer
 
+
+!!! info "Research surface authority"
+    **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/66  
+    **AUTHORITY:** `DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`.  
+    **EXPOSITION:** this page is the human-facing projection; the issue governs mutable research state and protected records govern admitted claims.
+
 **Campaign ID:** `BSD-001`  
 **Mathematical status:** open conjecture  
 **Canonical field:** elliptic curves over `Q`  
