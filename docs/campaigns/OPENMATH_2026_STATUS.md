@@ -1,5 +1,11 @@
 # OPENMATH-2026 — Current Campaign State
 
+
+!!! info "Research surface authority"
+    **LIVE:** [OPENMATH-2026 canonical tracker #1072](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1072) and the Solve orchestration tracker.  
+    **AUTHORITY:** `governance/openmath_2026_campaign_state.json` and the bounded-operation checkpoint.  
+    **EXPOSITION:** this page explains the campaign. Live issue/controller state governs operations; protected records govern durable programme state.
+
 > **Canonical machine authority:** `governance/openmath_2026_campaign_state.json`
 >
 > This page is a human projection of that record. It is not a second source of truth.
