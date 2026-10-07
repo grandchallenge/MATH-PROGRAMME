@@ -4,7 +4,7 @@
 
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/113  
-    **AUTHORITY:** `campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/README.md` and protected successors.  
+    **AUTHORITY:** `campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/00_INTAKE_AND_SOURCE_LOCK.md` and protected successors.  
     **EXPOSITION:** this page explains the active campaign; the issue governs mutable research state and protected records govern admitted claims.
 
 ## Status
