@@ -1,18 +1,22 @@
 # CMDG-CONDENSED-CM4-P3-UNDERIVED-CLOSURE-001
 
-State: `CANDIDATE_PENDING_PROTECTED_PREDECESSOR`
+State: `PROTECTED_CONTENT_PENDING_INDEPENDENT_AUTHORITY_REVIEW`
 
-This successor preserves the historical P3 exact-tree audit and its source-path blocker. It does not rewrite that audit.
+The underived theorem is now present on protected `main`, but the original admission chain is defective.
 
-The separately governed Point-functional route has already protected coefficient solidity and the residual Hom theorem. The remaining module-level P3 target is the theorem
+- original PR: #1215
+- reviewed candidate head: `e530cc05ccb97e3bf83de38ed4c36e9f96781c73`
+- protected merge: `442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6`
+- protected theorem file blob: `d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7`
+- submitted reviews on #1215: **none**
+- root cause: the `Programme profile - main` ruleset required zero approving reviews, so the review request was advisory rather than blocking.
 
-`CMDG.CondensedCM4P3M.KernelPointBridge.profiniteSolid_isSolid_via_pointFunctional`
+The mathematics is not invalidated: the theorem was formally validated and is on protected main. The defect is the missing independent authority step.
 
-on PR #1215, current exact head `e530cc05ccb97e3bf83de38ed4c36e9f96781c73`.
+This successor repairs that defect by binding a fresh non-author review to the exact protected theorem state above. P3 remains authority-blocked until this reconciliation exact head is independently **APPROVED** and then protected-merged without intervening mutation.
 
-If and only if that exact theorem is protected-admitted, this successor reclassifies CM4-P3 as
+After that protected successor admission, the operative P3 disposition becomes:
+
 `PROTECTED_CLOSED_BY_UNDERIVED_BYPASS`.
 
-The historical profinite/discrete Ext/cohomology vanishing theorem remains unproved. It is retained for source-concordance accounting and is no longer a module-level blocker once the underived theorem is protected.
-
-Nonclaims: no P4/P5/P6 source theorem, no derived/complex Proposition 0.5.7, no arbitrary-ring theorem, no C06 discharge, and no global CMDG completeness claim.
+The historical Ext/cohomology source-path theorem remains unproved and preserved for source-concordance accounting. No P4/P5/P6 source theorem, derived/complex proposition, arbitrary-ring theorem, C06 discharge, or global CMDG completeness claim is created.
