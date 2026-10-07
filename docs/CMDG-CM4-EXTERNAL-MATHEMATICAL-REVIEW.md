@@ -1,5 +1,9 @@
 # CMDG-CM4 — External Mathematical Review Packet
 
+!!! info "Live source of truth"
+    This page is a reviewer-facing projection. Current external-review status, questions, and returned disposition are tracked on [MATH-PROGRAMME #1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222). Protected repository receipts govern already-certified theorem claims.
+
+
 ## Purpose
 
 This packet asks for independent mathematical review of a Lean-checked theorem closing the current mathlib TODO
