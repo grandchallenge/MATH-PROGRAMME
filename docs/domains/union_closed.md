@@ -1,5 +1,11 @@
 # Domain 01 · Union-Closed Sets
 
+
+!!! info "Research surface authority"
+    **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/1  
+    **AUTHORITY:** `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`.  
+    **EXPOSITION:** this page is the human-facing projection; the issue governs mutable research state and protected records govern admitted claims.
+
 **Campaign ID:** `UC`  
 **Mathematical status:** open conjecture  
 **Programme role:** foundational demonstration domain and Wave Two documentary candidate  
