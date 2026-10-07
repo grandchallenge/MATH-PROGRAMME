@@ -79,3 +79,7 @@ Perelman’s second preprint explicitly identifies a graph-manifold assertion as
 - event existence from schema validity;
 - equivalence of Poincaré, elliptization and geometrization;
 - novelty or priority.
+
+## Claim boundary
+
+This archive preserves qualified reconstruction and negative-knowledge results. It does not promote any false-proof route, and archive/exposition status does not substitute for theorem certification. The registered protected claim ledger and review records govern admitted claims.
