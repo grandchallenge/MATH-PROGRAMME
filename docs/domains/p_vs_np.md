@@ -1,5 +1,11 @@
 # Domain 07 · P versus NP
 
+
+!!! info "Research surface authority"
+    **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/162  
+    **AUTHORITY:** `PNP-WP00-source-definition-equivalence-audit.md`.  
+    **EXPOSITION:** this page is the human-facing projection; the issue governs mutable research state and protected records govern admitted claims.
+
 **Campaign ID:** `PNP-001`  
 **Mathematical status:** open problem  
 **Programme state:** WP00 source, model, and encoding dossier merged  
