@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "contract_id": "GCL-RESEARCH-SURFACE-CONTRACT-001-CLOSURE",
   "governed_work_id": "GCL-RESEARCH-SURFACE-CONTRACT-001",
   "binding": {
-    "status": "CANDIDATE_AWAITING_PROTECTED_ADMISSION",
+    "status": "CANONICAL_ON_PROTECTED_MAIN",
     "policy_refs": [
       "AGENTS.md",
       "docs/RESEARCH_SURFACE_CONTRACT.md",
@@ -16,39 +16,60 @@
     "entry_id": "GCL-RESEARCH-SURFACE-CONTRACT-001"
   },
   "review_provenance": {
-    "complete": false,
+    "complete": true,
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1224"
+      "MATH-PROGRAMME issue #1224 rollout tracker",
+      "MATH-PROGRAMME PR #1225 exact reviewed head 2338b3f5920b2a330c960342447c5fd5676eb602",
+      "MATH-PROGRAMME PR #1225 independent APPROVED review PRR_kwDOSuWV7M8AAAABRNGNDQ by jimsteeg",
+      "MATH-PROGRAMME issue #1224 comment 6048872337 protected admission/readback receipt"
     ]
   },
   "cross_document_consistency": {
-    "status": "pending",
+    "status": "reviewed",
     "checked_against": [
       "docs/CHAIDEZ_PEDAGOGICAL_PROTOCOL.md",
       "docs/GRAND_CHALLENGE_PEDAGOGY_STANDARD.md",
       "docs/CLAIM_BOUNDARY_DOCTRINE.md",
-      "AGENTS.md"
+      "AGENTS.md",
+      "docs/RESEARCH_SURFACE_CONTRACT.md",
+      "governance/research_surfaces.json"
     ],
     "conflicts": []
   },
   "final_editorial_integration": {
-    "status": "pending",
+    "status": "reviewed",
     "authoritative_artifact_ref": "docs/RESEARCH_SURFACE_CONTRACT.md",
     "integration_notes": [
-      "MkDocs navigation and pilot authority boxes are candidate content pending protected admission."
+      "The programme-wide LIVE / AUTHORITY / EXPOSITION contract, registry, MkDocs authority boxes, active-estate coverage, and fail-closed validators were protected-admitted by PR #1225.",
+      "Protected-main readback confirmed the exact signed merge before this terminal documentary reconciliation; no mathematical or certification claim is promoted by this closeout."
     ]
   },
-  "unresolved_documentary_obligations": [
-    "protected_pr_admission_and_readback"
-  ],
+  "unresolved_documentary_obligations": [],
   "authority_refs": [
     "docs/decisions/ADR-0023_RESEARCH_SURFACE_CONTRACT.md",
-    "governance/research_surfaces.json"
+    "governance/research_surfaces.json",
+    "MATH-PROGRAMME issue #1224"
   ],
-  "terminal_evidence_refs": [],
+  "terminal_evidence_refs": [
+    "MATH-PROGRAMME PR #1225 exact reviewed head 2338b3f5920b2a330c960342447c5fd5676eb602",
+    "MATH-PROGRAMME PR #1225 independent APPROVED review PRR_kwDOSuWV7M8AAAABRNGNDQ by jimsteeg",
+    "MATH-PROGRAMME Programme policy run 37636174860 success on exact reviewed head",
+    "protected documentary merge 00189715250e4e5c6050a6b269f7a5e5b48f46c0 verified=true reason=valid",
+    "protected main readback 00189715250e4e5c6050a6b269f7a5e5b48f46c0",
+    "MATH-PROGRAMME issue #1224 comment 6048872337 protected admission/readback receipt"
+  ],
   "admission": {
-    "phase": "candidate",
-    "required_next_step": "protected_pr_admission_and_readback"
+    "phase": "protected",
+    "exact_reviewed_head": "2338b3f5920b2a330c960342447c5fd5676eb602",
+    "independent_review_id": "PRR_kwDOSuWV7M8AAAABRNGNDQ",
+    "independent_reviewer": "jimsteeg",
+    "programme_policy_run": 37636174860,
+    "programme_policy_conclusion": "success",
+    "protected_merge": "00189715250e4e5c6050a6b269f7a5e5b48f46c0",
+    "protected_merge_signature_verified": true,
+    "protected_merge_signature_reason": "valid",
+    "protected_main_readback": "00189715250e4e5c6050a6b269f7a5e5b48f46c0",
+    "terminal_receipt_ref": "MATH-PROGRAMME issue #1224 comment 6048872337 protected admission/readback receipt"
   },
   "claim_boundary": {
     "creates_new_authority": false,
