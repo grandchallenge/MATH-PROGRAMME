@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3MFiniteQuotientBridge
+import CMDGCondensedCM4P3E
 import Mathlib.Condensed.Discrete.Characterization
 import CMDGCondensedCM4P3G
 import CMDGCondensedCM4P3GFiniteBooleanMeasureHom
@@ -2121,6 +2122,28 @@ theorem coefficientObject_isSolid_via_pointFunctional :
 #print axioms coefficient_eq_zero_of_solidification_kernel
 #print axioms coefficientMappingOutInjectivity_of_pointFunctional
 #print axioms coefficientObject_isSolid_via_pointFunctional
+
+/-- Immediate propagation of the Point-functional coefficient theorem through protected P3-E:
+every profinite solid value is solid. -/
+theorem profiniteSolid_isSolid_via_pointFunctional
+    (S : Profinite.{u}) :
+    CondensedMod.IsSolid CMDG.CondensedCM4P3G.R.{u}
+      ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj S) := by
+  exact CMDG.CondensedCM4P3E.profiniteSolid_isSolid_of_coefficient S
+    coefficientObject_isSolid_via_pointFunctional
+
+/-- Terminal P3 residual theorem obtained by composing protected P3-E with the
+Point-functional coefficient-solidity closure. -/
+theorem residualHomTheorem_via_pointFunctional
+    (S : Profinite.{u}) :
+    CMDG.CondensedCM4P3C.ResidualHomTheorem S := by
+  exact CMDG.CondensedCM4P3E.residualHomTheorem_of_coefficientSolid S
+    coefficientObject_isSolid_via_pointFunctional
+
+#check profiniteSolid_isSolid_via_pointFunctional
+#check residualHomTheorem_via_pointFunctional
+#print axioms profiniteSolid_isSolid_via_pointFunctional
+#print axioms residualHomTheorem_via_pointFunctional
 
 #check weightedFiniteBooleanCoefficient_measurePoint_allTrue
 #check profinitePointProbe
