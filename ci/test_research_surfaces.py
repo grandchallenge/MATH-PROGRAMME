@@ -36,6 +36,11 @@ class ResearchSurfaceTests(unittest.TestCase):
         bad["surfaces"][0]["claim_boundary"]["issue_confers_certification"] = True
         self.assertTrue(any("schema:" in e for e in MOD.validate(bad)))
 
+    def test_active_governed_campaign_coverage_is_fail_closed(self):
+        bad = copy.deepcopy(self.data)
+        bad["surfaces"] = [row for row in bad["surfaces"] if row["campaign_id"] != "OZ-001"]
+        self.assertTrue(any("active governed campaign missing research surface: OZ-001" in e for e in MOD.validate(bad)))
+
 
 if __name__ == "__main__":
     unittest.main()
