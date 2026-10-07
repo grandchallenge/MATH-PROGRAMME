@@ -2,6 +2,7 @@ import unittest
 
 from ci.external_intake_evidence_admission import (
     ControllerError,
+    exact_clerk_approval_exists,
     merge_protected,
     validate_pr_binding,
 )
@@ -21,6 +22,14 @@ class FakeGithub:
                     "sha": "d041809826dfb92a4baf15607e62d6b7b65d9ee3"
                 }
             }
+        if method == "GET" and path == "/repos/grandchallenge/MATHSOLVE/pulls/919/reviews?per_page=100":
+            return [
+                {
+                    "user": {"login": "gcl-council-clerk[bot]"},
+                    "state": "APPROVED",
+                    "commit_id": "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
+                }
+            ]
         if method == "PUT" and path == "/repos/grandchallenge/MATHSOLVE/pulls/919/merge":
             return {"merged": True, "sha": "a" * 40, "message": "Pull Request successfully merged"}
         raise AssertionError((method, path, payload))
@@ -95,6 +104,27 @@ class ExternalIntakeEvidenceAdmissionTests(unittest.TestCase):
                 candidate(),
                 pull_request(base={"ref": "other"}),
             )
+
+
+    def test_exact_head_clerk_approval_is_required_and_detected(self):
+        gh = FakeGithub()
+        self.assertTrue(
+            exact_clerk_approval_exists(
+                gh,
+                919,
+                "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
+            )
+        )
+
+    def test_wrong_head_clerk_approval_is_not_accepted(self):
+        gh = FakeGithub()
+        self.assertFalse(
+            exact_clerk_approval_exists(
+                gh,
+                919,
+                "0" * 40,
+            )
+        )
 
     def test_protected_merge_is_expected_head_locked_and_squash_only(self):
         gh = FakeGithub()

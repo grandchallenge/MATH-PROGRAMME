@@ -391,12 +391,12 @@ def _run_canary(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> dic
     return {**candidate,"pr_number":pr["number"],"state":"READY_FOR_PROTECTED_ADVANCEMENT_MERGE"}
 
 
-CANARY2_CLOSURE_BRANCH = "lifecycle/gcl-e2e-canary-001-cohort-closure"
-CANARY2_ADVANCE_BRANCH = "lifecycle/gcl-e2e-canary-001-advance"
+CANARY2_CLOSURE_BRANCH = "lifecycle/gcl-e2e-canary-002-cohort-closure"
+CANARY2_ADVANCE_BRANCH = "lifecycle/gcl-e2e-canary-002-advance"
 CANARY2_CLOSURE_PATH = "contributions/GCL-E2E-CANARY-002/closure.json"
 CANARY2_REPLAY_PATH = "contributions/GCL-E2E-CANARY-002/replay.json"
 CANARY2_ADJUDICATION_PATH = "contributions/GCL-E2E-CANARY-002/adjudication.json"
-CANARY2_SUCCESSOR_PATH = "work_packages/GCL_E2E_CANARY/GCL_E2E_CANARY2_002.md"
+CANARY2_SUCCESSOR_PATH = "work_packages/GCL_E2E_CANARY/GCL_E2E_CANARY_003.md"
 
 def _load_canary2_module(root: Path):
     sys.path.insert(0, str(root))

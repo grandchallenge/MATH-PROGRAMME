@@ -5,6 +5,9 @@ import unittest
 from pathlib import Path
 
 from ci.erdos_open_postprotect_controller import (
+    CANARY2_ADVANCE_BRANCH,
+    CANARY2_CLOSURE_BRANCH,
+    CANARY2_SUCCESSOR_PATH,
     _advanced_state,
     _approval_exists,
     _merge,
@@ -46,6 +49,20 @@ class ErdosPostprotectControllerTests(unittest.TestCase):
             closure_path("241"),
             "contributions/ERDOS-OPEN-001/RECON_TRANCHE_001/"
             "closures/ERDOS-241-BLIND-COHORT-001.json",
+        )
+
+    def test_canary2_lifecycle_identities_are_disjoint_and_exact(self):
+        self.assertEqual(
+            CANARY2_CLOSURE_BRANCH,
+            "lifecycle/gcl-e2e-canary-002-cohort-closure",
+        )
+        self.assertEqual(
+            CANARY2_ADVANCE_BRANCH,
+            "lifecycle/gcl-e2e-canary-002-advance",
+        )
+        self.assertEqual(
+            CANARY2_SUCCESSOR_PATH,
+            "work_packages/GCL_E2E_CANARY/GCL_E2E_CANARY_003.md",
         )
 
     def test_unregistered_problem_stops_at_synthesis_ready(self):

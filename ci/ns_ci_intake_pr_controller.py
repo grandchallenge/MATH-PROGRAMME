@@ -170,18 +170,32 @@ def fetch_text(gh: Github, path: str, ref: str) -> tuple[str, str]:
 
 
 def list_intake_branches(gh: Github) -> list[str]:
+    # Discover candidate heads from open PRs rather than Git matching-refs.
+    # Council Clerk/Release Trust app tokens have bounded pull-request access,
+    # while matching-refs can legitimately return no visible refs for those
+    # installations. Validation below still requires a registered branch
+    # prefix, exact dispatch syntax, exact protected dispatch, and exact diff.
     names: list[str] = []
-    for profile in PROFILES:
-        prefix = urllib.parse.quote(f"heads/{profile.branch_prefix}", safe="/")
-        refs = gh.get_optional(f"/repos/{OWNER}/{REPO}/git/matching-refs/{prefix}")
-        if refs is None:
-            continue
-        if not isinstance(refs, list):
-            raise ControllerError("matching-refs response is not a list")
-        for item in refs:
-            ref = item.get("ref") if isinstance(item, dict) else None
-            if isinstance(ref, str) and ref.startswith("refs/heads/"):
-                names.append(ref[len("refs/heads/"):])
+    page = 1
+    while True:
+        pulls = gh.request(
+            "GET",
+            f"/repos/{OWNER}/{REPO}/pulls?state=open&base=main&per_page=100&page={page}",
+        )
+        if not isinstance(pulls, list):
+            raise ControllerError("open pull-request list response is not a list")
+        for item in pulls:
+            if not isinstance(item, dict):
+                continue
+            head = item.get("head")
+            ref = head.get("ref") if isinstance(head, dict) else None
+            if not isinstance(ref, str):
+                continue
+            if any(ref.startswith(profile.branch_prefix) for profile in PROFILES):
+                names.append(ref)
+        if len(pulls) < 100:
+            break
+        page += 1
     return sorted(set(names))
 
 
