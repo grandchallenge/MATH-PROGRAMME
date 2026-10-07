@@ -1,6 +1,7 @@
 import Mathlib.Condensed.Solid
 import Mathlib.Topology.Category.Profinite.Nobeling.Induction
 import Mathlib.Algebra.Ring.ULift
+import CMDGCondensedCM4P3GPointFunctional
 
 /-!
 CMDG-CONDENSED-CM4-001 Stage-A blocker fixture.
@@ -34,5 +35,18 @@ def CM4Target : Prop :=
 theorem nobelingAvailable (S : Profinite.{u}) :
     Module.Free ℤ (LocallyConstant S ℤ) := by
   infer_instance
+
+/-- Underived Point-functional closure of the exact module-level CM4 target.
+
+This theorem intentionally proves only the governed module-level integer-coefficient target.
+It does not certify the source-derived/complex form of Proposition 0.5.7 or any arbitrary-ring
+generalization. -/
+theorem cm4Target_via_pointFunctional : CM4Target := by
+  intro S
+  exact
+    CMDG.CondensedCM4P3M.KernelPointBridge.profiniteSolid_isSolid_via_pointFunctional S
+
+#check cm4Target_via_pointFunctional
+#print axioms cm4Target_via_pointFunctional
 
 end CMDG.CondensedCM4
