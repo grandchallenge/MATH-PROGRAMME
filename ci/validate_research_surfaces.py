@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "governance/research_surfaces.json"
 SCHEMA = ROOT / "schemas/research_surface_registry.schema.json"
 MKDOCS = ROOT / "mkdocs.yml"
+GOVERNED_CAMPAIGNS = ROOT / "governance/governed_campaign_registry.json"
 
 CHAIDEZ_REFERENCE_MARKERS = (
     "## 1. Status",
@@ -50,6 +51,16 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
     ids = [row.get("campaign_id") for row in data.get("surfaces", [])]
     if len(ids) != len(set(ids)):
         errors.append("registry: duplicate campaign_id")
+
+    governed = json.loads(GOVERNED_CAMPAIGNS.read_text(encoding="utf-8"))
+    required_active = {
+        row["campaign_id"]
+        for row in governed.get("campaigns", [])
+        if str(row.get("lifecycle", "")).startswith("active")
+    }
+    missing_active = sorted(required_active - set(ids))
+    for campaign_id in missing_active:
+        errors.append(f"registry: active governed campaign missing research surface: {campaign_id}")
 
     nav = _nav_paths(yaml.safe_load(MKDOCS.read_text(encoding="utf-8")).get("nav", []))
 
