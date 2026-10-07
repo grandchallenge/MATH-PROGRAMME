@@ -31,6 +31,7 @@ except ModuleNotFoundError:
 OWNER = "grandchallenge"
 REPO = "MATHSOLVE"
 EXPECTED_AUTHOR = "gcl-release-trust[bot]"
+EXPECTED_REVIEWER = "gcl-council-clerk[bot]"
 
 
 def branch_head_sha(gh: Github, branch: str) -> str:
@@ -96,6 +97,27 @@ def validate_pr_binding(
         "author": author,
     }
 
+
+
+def exact_clerk_approval_exists(
+    gh: Github,
+    pr_number: int,
+    head_sha: str,
+) -> bool:
+    reviews = gh.request(
+        "GET",
+        f"/repos/{OWNER}/{REPO}/pulls/{pr_number}/reviews?per_page=100",
+    )
+    if not isinstance(reviews, list):
+        raise ControllerError("evidence PR review list response malformed")
+    return any(
+        isinstance(review, dict)
+        and isinstance(review.get("user"), dict)
+        and review["user"].get("login") == EXPECTED_REVIEWER
+        and review.get("state") == "APPROVED"
+        and review.get("commit_id") == head_sha
+        for review in reviews
+    )
 
 def merge_protected(
     gh: Github,
@@ -173,14 +195,26 @@ def run(apply: bool) -> dict[str, Any]:
                     f"{item['dispatch_id']}: evidence PR response malformed"
                 )
             binding = validate_pr_binding(gh, item, live)
+            approved = exact_clerk_approval_exists(
+                gh,
+                int(binding["pr_number"]),
+                str(binding["head_sha"] or ""),
+            )
             candidate = {
                 "campaign": item["campaign"],
                 "dispatch_id": item["dispatch_id"],
                 "branch": branch,
                 **binding,
-                "state": "VALIDATED_FOR_PROTECTED_MERGE",
+                "clerk_exact_head_approval": approved,
+                "state": (
+                    "VALIDATED_FOR_PROTECTED_MERGE"
+                    if approved
+                    else "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW"
+                ),
             }
             report["candidates"].append(candidate)
+            if not approved:
+                continue
             if apply:
                 merged = merge_protected(
                     merge_gh,
