@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "CMDG_CM4_UNDERIVED_ROUTE_RECONCILIATION_CANDIDATE",
+  "operation_id": "CMDG-CONDENSED-CM4-UNDERIVED-RECONCILIATION-001",
+  "parent_operation_id": "CMDG-CONDENSED-CM4-001",
+  "issue": 355,
+  "state": "CANDIDATE_PENDING_P3_PROTECTED_PREDECESSOR",
+  "predecessor": {
+    "closure_record": "governance/cmdg_condensed_cm4_p3_underived_closure_001.json",
+    "p3_pr": 1215,
+    "reviewed_head_candidate": "e530cc05ccb97e3bf83de38ed4c36e9f96781c73",
+    "protected_merge": null
+  },
+  "selected_route": "POINT_FUNCTIONAL_UNDERIVED",
+  "formal_target": {
+    "definition": "CMDG.CondensedCM4.CM4Target",
+    "candidate_theorem": "CMDG.CondensedCM4.cm4Target_via_pointFunctional",
+    "fixture": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean",
+    "scope": "MODULE_LEVEL_ONLY_Z_BOUNDARY"
+  },
+  "prerequisite_reconciliation": [
+    {
+      "id": "CM4-P1",
+      "status": "AVAILABLE",
+      "route_role": "PROTECTED_AVAILABLE"
+    },
+    {
+      "id": "CM4-P2",
+      "status": "PROTECTED_CLOSED",
+      "route_role": "PROTECTED_AVAILABLE"
+    },
+    {
+      "id": "CM4-P3",
+      "status": "PENDING_PROTECTED_UNDERIVED_CLOSURE",
+      "route_role": "UNDERIVED_ROUTE_PREDECESSOR"
+    },
+    {
+      "id": "CM4-P4",
+      "status": "NONBLOCKING_SOURCE_AUXILIARY_CANDIDATE",
+      "route_role": "SOURCE_DERIVED_ROUTE_ONLY"
+    },
+    {
+      "id": "CM4-P5",
+      "status": "NONBLOCKING_SOURCE_AUXILIARY_CANDIDATE",
+      "route_role": "SOURCE_DERIVED_ROUTE_ONLY"
+    },
+    {
+      "id": "CM4-P6",
+      "status": "NONBLOCKING_SOURCE_AUXILIARY_CANDIDATE",
+      "route_role": "SOURCE_ROUTE_FINAL_WITNESS_DISPLACED_BY_UNDERIVED_TARGET"
+    }
+  ],
+  "source_concordance": {
+    "p4_p5_p6_proved": false,
+    "source_derived_chain_reproduced": false,
+    "changed_proof_architecture": "The protected module-level theorem is obtained by Point-functional reconstruction and coefficient solidity rather than reconstruction of the source derived RHom/Ext chain.",
+    "preservation_rule": "P4-P6 remain registered as source-proof auxiliaries and must not be described as proved or deleted from source-concordance history."
+  },
+  "candidate_disposition": "CM4_MODULE_TARGET_CANDIDATE__P4_P5_P6_NONBLOCKING_SOURCE_AUXILIARIES_PENDING_P3_PROTECTED_MERGE",
+  "claim_boundary": {
+    "cm4_target_candidate": true,
+    "cm4_theorem_protected_closed": false,
+    "p3_closed": false,
+    "p4_proved": false,
+    "p5_proved": false,
+    "p6_source_route_proved": false,
+    "derived_complex_form_certified": false,
+    "arbitrary_finite_type_z_algebra_free_solid_certified": false,
+    "arbitrary_commutative_ring_certified": false,
+    "noncommutative_ring_certified": false,
+    "c04_broadened": false,
+    "c06_discharged": false,
+    "graph_certified": false,
+    "global_cmdg_completeness_claim": false
+  }
+}
