@@ -1,5 +1,11 @@
 # Domain 02 · Navier–Stokes Critical Integrability
 
+
+!!! info "Research surface authority"
+    **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/55  
+    **AUTHORITY:** `DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md`.  
+    **EXPOSITION:** this page is the human-facing projection; the issue governs mutable research state and protected records govern admitted claims.
+
 **Campaign ID:** `NS-CI-001`  
 **Mathematical status:** open problem  
 **Primary setting:** three-dimensional incompressible Navier–Stokes on `R^3`  
