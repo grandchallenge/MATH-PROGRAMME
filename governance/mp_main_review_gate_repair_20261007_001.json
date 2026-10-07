@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "MP_MAIN_REVIEW_GATE_REPAIR_RECEIPT",
+  "operation_id": "MP-MAIN-REVIEW-GATE-REPAIR-20261007-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "ruleset_id": 17137629,
+  "ruleset_name": "Programme profile - main",
+  "repaired_at": "2026-10-07T03:38:07-07:00",
+  "defect": {
+    "required_approving_review_count_before": 0,
+    "effect": "Requested reviewers were advisory; theorem-bearing PR #1215 could merge without submitted approval.",
+    "affected_pr": 1215,
+    "affected_merge": "442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6"
+  },
+  "repair": {
+    "required_approving_review_count": 1,
+    "dismiss_stale_reviews_on_push": true,
+    "require_last_push_approval": true,
+    "required_review_thread_resolution": true,
+    "bypass_actors_preserved": [
+      {
+        "actor_id": 4423678,
+        "actor_type": "Integration",
+        "bypass_mode": "pull_request"
+      }
+    ],
+    "required_status_checks_preserved": [
+      "validate-json",
+      "formal-validation / formal-validation",
+      "policy / policy",
+      "security / action-policy"
+    ]
+  },
+  "authority_effect": "FUTURE_MAIN_ADMISSIONS_REQUIRE_AT_LEAST_ONE_FRESH_APPROVAL; DOES_NOT_RETROACTIVELY CURE PR #1215",
+  "reconciliation_required": "PR #1216 must receive a fresh non-author APPROVED review on its final exact head and then protected-merge."
+}
