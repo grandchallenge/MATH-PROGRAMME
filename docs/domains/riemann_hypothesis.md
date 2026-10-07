@@ -1,5 +1,11 @@
 # Domain 08 · Riemann Hypothesis
 
+
+!!! info "Research surface authority"
+    **LIVE:** [RH-001 canonical tracker #163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), with route trackers in MATHSOLVE.  
+    **AUTHORITY:** `RH-WP00-source-normalization-equivalence-audit.md` and registered protected campaign records.  
+    **EXPOSITION:** this page is a human-facing projection. The issue governs mutable research state; protected records govern promoted/certified claims.
+
 **Campaign ID:** `RH-001`  
 **Mathematical status:** open conjecture  
 **Programme state:** WP00 promoted; WP01 and WP02 implemented, merged, and CI-passed but not formally promoted  
