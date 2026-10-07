@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "CMDG_CM4_P3_UNDERIVED_CLOSURE_CANDIDATE",
+  "operation_id": "CMDG-CONDENSED-CM4-P3-UNDERIVED-CLOSURE-001",
+  "parent_operation_id": "CMDG-CONDENSED-CM4-P3-001",
+  "parent_issue": 448,
+  "parent_cm4_issue": 355,
+  "state": "CANDIDATE_PENDING_PROTECTED_PREDECESSOR",
+  "historical_audit": {
+    "path": "governance/cmdg_condensed_cm4_p3_001.json",
+    "protected_merge": "49f2eb8d4bc221e7ccc205378bc72265d1d0adc9",
+    "disposition": "OPEN_WITH_CHARACTERIZED_BLOCKER",
+    "preserved_as_historical_source_path_audit": true
+  },
+  "underived_route": {
+    "coefficient_solidity": {
+      "theorem": "CMDG.CondensedCM4P3M.KernelPointBridge.coefficientObject_isSolid_via_pointFunctional",
+      "protected_merge": "ceae2761577bd03e7d94dada627ef7cb06fd3f6b"
+    },
+    "residual_hom": {
+      "theorem": "CMDG.CondensedCM4P3M.KernelPointBridge.residualHomTheorem_via_pointFunctional",
+      "protected_on_main_at": "cb81b6b347e8597b67a4d6bce6ffcaffa1448703"
+    },
+    "profinite_solid_target": {
+      "theorem": "CMDG.CondensedCM4P3M.KernelPointBridge.profiniteSolid_isSolid_via_pointFunctional",
+      "pull_request": 1215,
+      "reviewed_head_candidate": "e530cc05ccb97e3bf83de38ed4c36e9f96781c73",
+      "protected_merge": null
+    }
+  },
+  "route_reconciliation": {
+    "source_derived_p3_vanishing_status": "UNPROVED_PRESERVED_AS_SOURCE_CONCORDANCE_AUXILIARY",
+    "underived_bypass_status": "CANDIDATE_PENDING_PROTECTED_MERGE",
+    "p3_effective_status": "BLOCKING_UNTIL_PREDECESSOR_PROTECTED",
+    "intended_postmerge_status": "PROTECTED_CLOSED_BY_UNDERIVED_BYPASS"
+  },
+  "claim_boundary": {
+    "p3_closed": false,
+    "source_derived_p3_vanishing_proved": false,
+    "p4_proved": false,
+    "p5_proved": false,
+    "p6_source_route_proved": false,
+    "cm4_parent_closed": false,
+    "derived_complex_form_certified": false,
+    "arbitrary_ring_generalization_certified": false,
+    "c06_discharged": false,
+    "global_cmdg_completeness_claim": false
+  }
+}
