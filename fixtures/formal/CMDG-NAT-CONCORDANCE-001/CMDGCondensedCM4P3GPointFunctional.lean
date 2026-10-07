@@ -2134,6 +2134,18 @@ theorem coefficientObject_isSolid_via_pointFunctional :
 #print axioms basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel
 #print axioms kernelProductFunctional_eq_zero_of_solidification_kernel
 
+/-- Immediate propagation of the protected Point-functional coefficient theorem through
+protected P3-E: every profinite solid value is solid. -/
+theorem profiniteSolid_isSolid_via_pointFunctional
+    (S : Profinite.{u}) :
+    CondensedMod.IsSolid CMDG.CondensedCM4P3G.R.{u}
+      ((Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj S) := by
+  exact CMDG.CondensedCM4P3E.profiniteSolid_isSolid_of_coefficient S
+    coefficientObject_isSolid_via_pointFunctional
+
+#check profiniteSolid_isSolid_via_pointFunctional
+#print axioms profiniteSolid_isSolid_via_pointFunctional
+
 /-- Point-functional coefficient solidity discharges the exact underived P3-C residual Hom theorem for every profinite target. -/
 theorem residualHomTheorem_via_pointFunctional
     (S : Profinite.{u}) :
