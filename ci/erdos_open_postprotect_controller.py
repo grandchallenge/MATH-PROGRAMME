@@ -302,11 +302,11 @@ def _run_canary(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> dic
             if "protected RESULT/1 absent" in str(exc):
                 return {"canary":"GCL-E2E-CANARY-001","state":"WAITING_FOR_PROTECTED_RESULT"}
             raise
-        if apply:
+        pr = _find_pr(gh, CANARY_CLOSURE_BRANCH)
+        if apply and pr is None:
             _create_branch(gh, CANARY_CLOSURE_BRANCH, main_sha)
             _put_text(gh, CANARY_CLOSURE_BRANCH, CANARY_CLOSURE_PATH, json.dumps(closure,indent=2,sort_keys=True)+"\n", "Close GCL E2E canary cohort for deterministic replay")
         candidate = validate_canary_candidate(gh, solve_root, CANARY_CLOSURE_BRANCH) if apply else {"kind":"CANARY_CLOSURE","branch":CANARY_CLOSURE_BRANCH}
-        pr = _find_pr(gh, CANARY_CLOSURE_BRANCH)
         if pr is None and apply:
             pr = gh.request("POST", f"/repos/{OWNER}/{SOLVE}/pulls", {
                 "title":"Close GCL E2E canary cohort for deterministic replay",
@@ -354,13 +354,13 @@ def _run_canary(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> dic
     successor = mod.successor_text()
     if replay.get("replay_pass") is not True or adj.get("disposition") != "ADVANCE":
         return {"canary":"GCL-E2E-CANARY-001","state":"DETERMINISTIC_REPLAY_REJECTED","replay":replay}
-    if apply:
+    pr = _find_pr(gh, CANARY_ADVANCE_BRANCH)
+    if apply and pr is None:
         _create_branch(gh, CANARY_ADVANCE_BRANCH, main_sha)
         _put_text(gh, CANARY_ADVANCE_BRANCH, CANARY_REPLAY_PATH, json.dumps(replay,indent=2,sort_keys=True)+"\n", "Record GCL E2E canary deterministic replay")
         _put_text(gh, CANARY_ADVANCE_BRANCH, CANARY_ADJUDICATION_PATH, json.dumps(adj,indent=2,sort_keys=True)+"\n", "Record GCL E2E canary deterministic adjudication")
         _put_text(gh, CANARY_ADVANCE_BRANCH, CANARY_SUCCESSOR_PATH, successor, "Materialize precommitted GCL E2E canary successor")
     candidate = validate_canary_candidate(gh, solve_root, CANARY_ADVANCE_BRANCH) if apply else {"kind":"CANARY_ADVANCE","branch":CANARY_ADVANCE_BRANCH}
-    pr = _find_pr(gh, CANARY_ADVANCE_BRANCH)
     if pr is None and apply:
         pr = gh.request("POST", f"/repos/{OWNER}/{SOLVE}/pulls", {
             "title":"Advance GCL E2E canary after deterministic replay",
