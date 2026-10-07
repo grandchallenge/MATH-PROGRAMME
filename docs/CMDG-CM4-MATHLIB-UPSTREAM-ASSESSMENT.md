@@ -1,5 +1,9 @@
 # CMDG-CM4 — Mathlib Upstream Readiness Assessment
 
+!!! info "Live source of truth"
+    This page is an upstream-planning projection. Current port sequencing, blockers, and maintainer feedback are tracked on [MATH-PROGRAMME #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223). Protected repository receipts govern the underlying GCL theorem claim.
+
+
 ## Executive assessment
 
 **Recommendation: upstream, but not as the current GCL file stack.**
