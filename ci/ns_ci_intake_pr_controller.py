@@ -77,6 +77,14 @@ PROFILES = (
         receipt_schema_version="1.0.0",
         pr_title_prefix="GCL E2E canary intake",
     ),
+    IntakeProfile(
+        campaign="GCL-E2E-CANARY-003",
+        branch_prefix="intake/gcl-e2e-canary-",
+        dispatch_re=re.compile(r"^GCL-E2E-CANARY-003-IA-001$"),
+        base="contributions/GCL-E2E-CANARY-003",
+        receipt_schema_version="1.0.0",
+        pr_title_prefix="GCL E2E canary intake",
+    ),
 )
 
 
