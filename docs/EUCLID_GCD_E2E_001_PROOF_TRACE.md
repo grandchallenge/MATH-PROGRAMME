@@ -2,6 +2,12 @@
 
 <p class="page-deck">A concrete arithmetic question carried from source-conscious intake through deterministic construction, independent checking, Lean replay, and bounded Programme closeout.</p>
 
+
+!!! info "Research surface authority"
+    **LIVE:** [EUCLID-GCD-E2E-001 canonical closeout tracker #240](https://github.com/grandchallenge/MATH-PROGRAMME/issues/240).  
+    **AUTHORITY:** `governance/euclid_gcd_e2e_001_closeout.json`.  
+    **EXPOSITION:** this proof trace explains the protected result; the protected closeout governs the certified claim.
+
 ## The approachable task
 
 Find the greatest common divisor of `252` and `105`.
