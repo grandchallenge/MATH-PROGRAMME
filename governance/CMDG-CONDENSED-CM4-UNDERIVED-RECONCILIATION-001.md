@@ -1,48 +1,38 @@
 # CMDG-CONDENSED-CM4-UNDERIVED-RECONCILIATION-001
 
-State: `CANDIDATE_PENDING_P3_AUTHORITY_RECONCILIATION`
+State: `PROTECTED_FORMAL_MODULE_LEVEL_CLOSED`
 
-This successor repairs the authority chain for the module-level CM4 route and simultaneously reconciles the parent dependency graph.
+The Point-functional underived route now has a complete protected authority chain.
 
-## Protected mathematical state
+## Terminal authority receipt
 
-The Point-functional underived theorem is already on protected main at merge:
+- theorem protected merge: `442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6`
+- authority-reconciliation PR: #1216
+- independently reviewed exact head: `e388349e2c60386bbab782b01ec57dcabdb19485`
+- reviewer: `jimsteeg`
+- review ID: `5441283873`
+- protected reconciliation merge: `03cc8ce5ab230f62889e666ec3ffb28b55f60fff`
+- CM4 fixture blob on protected main: `8ab0051746507099f7321460fe091e56a84b57bb`
 
-`442dbc15b0cc7d4b068d6cbf73ae3be8f96f0dc6`.
+The protected fixture contains the exact module-level theorem:
 
-Its exact protected source blob is:
+`CMDG.CondensedCM4.cm4Target_via_pointFunctional : CM4Target`.
 
-`d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7`.
+It independently replayed with axioms `[propext, Classical.choice, Quot.sound]` and no `sorryAx`.
 
-The original PR #1215 received no submitted independent review. Therefore protected mathematical content exists, but P3 closure authority is withheld pending this successor reconciliation.
-
-## Selected proof route
-
-1. weighted Point-measure reconstruction;
-2. product-functional faithfulness;
-3. coefficient-object solidity;
-4. `profiniteSolid_isSolid_via_pointFunctional`;
-5. direct parent witness `CMDG.CondensedCM4.cm4Target_via_pointFunctional`.
-
-The parent wrapper independently compiles with axioms `[propext, Classical.choice, Quot.sound]` and no `sorryAx`.
-
-## Dependency reconciliation
+## Terminal dependency reconciliation
 
 - **P1:** available.
 - **P2:** protected-closed.
-- **P3:** protected mathematical content, authority repair pending.
-- **P4:** unproved source-proof auxiliary; nonblocking for the selected underived route once this reconciliation is protected.
-- **P5:** unproved source-proof auxiliary; nonblocking for the selected underived route once this reconciliation is protected.
-- **P6:** unproved source-route final-witness step; displaced for the module-level target by the direct underived witness once this reconciliation is protected.
+- **P3:** `PROTECTED_CLOSED_BY_UNDERIVED_BYPASS`.
+- **P4:** `NONBLOCKING_SOURCE_AUXILIARY`; unproved.
+- **P5:** `NONBLOCKING_SOURCE_AUXILIARY`; unproved.
+- **P6:** `NONBLOCKING_SOURCE_AUXILIARY`; unproved source-route final-witness step, displaced for this module-level route.
 
-P4-P6 remain registered for source-concordance and are not claimed proved.
+The exact governed module-level integer-coefficient CM4 target is therefore formally closed.
 
-## Effective condition
+Terminal disposition:
 
-This reconciliation becomes authoritative only if this exact PR head receives a fresh non-author **APPROVED** review and is then protected-merged without intervening mutation.
+`CMDG_CONDENSED_CM4_MODULE_LEVEL_PROTECTED_CLOSED`
 
-Until then, P3 and parent CM4 remain governance-open despite the protected theorem content.
-
-## Claim boundary
-
-No derived/complex Proposition 0.5.7, arbitrary-ring result, broader C04, C06, CM5, graph-completeness, or global-CMDG claim is made.
+This does not certify the derived/complex source form, arbitrary rings, broader C04, C06, CM5, graph completeness, or global CMDG completeness.
