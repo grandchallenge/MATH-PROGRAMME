@@ -110,9 +110,9 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
         class FakeGithub:
             def request(self, method, path):
                 if "/branches?" in path:
-                    if "page=1" in path:
+                    if "&page=1" in path:
                         return [{"name": "unrelated-" + str(i)} for i in range(100)]
-                    if "page=2" in path:
+                    if "&page=2" in path:
                         return [{"name": "intake/gcl-e2e-canary-003-ia-001"}]
                     return []
                 if "/pulls?" in path:
