@@ -164,6 +164,8 @@ def main() -> int:
     errors = validate()
     from validate_exposition_integrity import errors as exposition_integrity_errors
     errors.extend(exposition_integrity_errors())
+    from validate_accessible_research_guides import validate as guide_structure_errors
+    errors.extend(guide_structure_errors())
     if errors:
         for error in errors:
             print(error)
