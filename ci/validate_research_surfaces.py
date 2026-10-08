@@ -62,7 +62,7 @@ def _mature_exposition_relation_errors(row: dict[str, Any], primary_text: str, g
         if ref not in combined:
             errors.append(f"{cid}: mature exposition missing registered authority record {ref}")
 
-    markers = re.findall(r"\\*\\*(?:programme|campaign|research) state:\\*\\*\\s*([^\\n]+)", combined, flags=re.IGNORECASE)
+    markers = re.findall(r"\*\*(?:programme|campaign|research) state:\*\*\s*([^\n]+)", combined, flags=re.IGNORECASE)
     lifecycle = row.get("lifecycle")
     if lifecycle == "TERMINAL" and any("active" in marker.lower() for marker in markers):
         errors.append(f"{cid}: terminal lifecycle conflicts with exposition state marker")
