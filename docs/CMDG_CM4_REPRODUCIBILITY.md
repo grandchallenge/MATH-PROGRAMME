@@ -28,17 +28,24 @@ A Linux environment or WSL2 with `git`, `python3`, a Python environment able to 
 
 For a new researcher, avoid altering the dependency manifest or running `lake update`. That changes the question being reproduced.
 
-## One-command formal replay
+## Formal replay against the exact protected proof snapshot
+
+This sequence can be executed against the stated immutable commit **without** requiring the later external-release script:
 
 ```bash
 git clone https://github.com/grandchallenge/MATH-PROGRAMME.git
 cd MATH-PROGRAMME
 git checkout --detach 7a0f33588aa8d1add4d941c9b4681b6910644bf1
 python3 -m pip install --requirement requirements/policy.txt
-bash ci/replay_cmdg_cm4_external.sh
+python3 ci/formal_validation.py validate
+(cd fixtures/formal/CMDG-NAT-CONCORDANCE-001 && lake exe cache get)
+python3 ci/formal_validation.py run --lane cmdg-cm4 --mode promotion --changed-paths-json '[]'
+python3 ci/formal_validation.py run --lane cmdg-cm4-p3 --mode promotion --changed-paths-json '[]'
 ```
 
-The script is intentionally self-contained and read-only with respect to protected GitHub state. It reads and validates locked proof sources, fetches the manifest-pinned mathlib cache, and calls the existing governed compiler with the **promotion-mode** lane configuration. It does not push branches, open PRs, request reviews, or perform GitHub API mutations.
+A convenience script, `ci/replay_cmdg_cm4_external.sh`, is included in the newer external-release branch and will become available on `main` after its protected admission. Run it from that newer checkout as `bash ci/replay_cmdg_cm4_external.sh`. It checks the same **immutable protected theorem and bridge blobs** before invoking the two lanes. Do **not** expect that script to exist when checking out the earlier `7a0f335...` commit.
+
+Both procedures are read-only with respect to protected GitHub state. They use the manifest-pinned mathlib dependency and existing governed compiler with the **promotion-mode** lane configuration. They do not push branches, open PRs, request reviews, or perform GitHub API mutations.
 
 Two phases are compiled:
 
