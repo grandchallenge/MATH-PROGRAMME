@@ -1,9 +1,13 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 from ci.gcl_erdos3_lease_expiry_pr_controller import (
     BRANCH_RE,
     ControllerError,
     open_pr,
+    main,
     parse_utc,
 )
 
@@ -27,6 +31,17 @@ class GclErdos3LeaseExpiryPrControllerTests(unittest.TestCase):
     def test_utc_parser_requires_z(self) -> None:
         with self.assertRaises(ControllerError):
             parse_utc("2026-10-04T16:38:54+00:00", "clock")
+
+    def test_per_branch_errors_fail_controller_workflow(self) -> None:
+        report = {"schema_version": "1.0.0", "errors": [
+            {"branch": "registered-expiry", "error": "identity drift"}
+        ], "authority_created": False}
+        with TemporaryDirectory() as directory:
+            output = str(Path(directory) / "report.json")
+            with patch("sys.argv", ["gcl_erdos3_lease_expiry_pr_controller.py", "--report", output]):
+                with patch("ci.gcl_erdos3_lease_expiry_pr_controller.run", return_value=report):
+                    self.assertEqual(main(), 1)
+            self.assertIn('"identity drift"', Path(output).read_text(encoding="utf-8"))
 
     def test_pr_creation_is_only_pull_request_post(self) -> None:
         class FakeGithub:
