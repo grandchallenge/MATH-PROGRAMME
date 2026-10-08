@@ -13,30 +13,6 @@ Frankl's union-closed sets conjecture remains open. The campaign has a mature pr
 
 For every finite nonempty union-closed family with nonempty support (excluding both the empty family and the singleton family consisting only of the empty set), the target is to prove that some element belongs to at least half of the member sets.
 
-## 3. Current obstruction
-
-The missing step is a genuine local-to-global bridge. Verified small-universe results, pairing lemmas, lattice constraints, and restricted certificates do not by themselves imply the universal conjecture.
-
-## 4. Working model
-
-Mathematical work should consume only the exact restricted claims protected in the campaign spine. Documentary work is separate: the full-tier documentary *The Element in Half the Worlds* is admitted and navigable at [the published reader](../documentaries/union_closed.md). Public admission supplies exposition, not a proof of Frankl's conjecture.
-
-## 5. Theorem-spine location
-
-Programme authority is `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`. Supporting protected artifacts include the WP01 status spine, WP02 Lean handoff, Agent Council audit, and the qualified downstream certification records referenced by tracker #1.
-
-## 6. Debt audit
-
-Mathematical debt: the universal bridge beyond bounded/restricted results. Documentary admission is complete; any remaining source-concordance, mathematics, or accessibility corrections are separate editorial debt, not an unperformed initial publication.
-
-## 7. Claim boundary
-
-No protected record proves or refutes Frankl's conjecture. Certification of restricted claims, finite verification, and publication work do not promote the universal statement.
-
-## 8. First executable step
-
-Read tracker #1 and the current protected master plan. For mathematics, select the smallest exact residual not already covered by qualified restricted claims. For documentary work, inspect the admitted edition record and full-tier reader, then open a bounded editorial correction supported by exact published sources.
-
 ## Reader entry and prerequisites
 
 **Status:** open conjecture; exact finite and restricted proof evidence only. **Audience:** undergraduate combinatorics readers, research collaborators, and independent checkers. **Time to first example:** 5 minutes. **Time to first fixture:** 10 minutes.
@@ -48,6 +24,14 @@ Read tracker #1 and the current protected master plan. For mathematics, select t
 | Deferred | Entropy methods, the governed UC-WP05 lattice spine, Lean formalization |
 
 A family is *union-closed* if the union of any two members is a member. Its *support* is the union of all member sets. The support must be nonempty for the target statement.
+
+## 3. Current obstruction
+
+The missing step is a genuine local-to-global bridge. Verified small-universe results, pairing lemmas, lattice constraints, and restricted certificates do not by themselves imply the universal conjecture.
+
+## 4. Working model
+
+Mathematical work should consume only the exact restricted claims protected in the campaign spine. Documentary work is separate: the full-tier documentary *The Element in Half the Worlds* is admitted and navigable at [the published reader](../documentaries/union_closed.md). Public admission supplies exposition, not a proof of Frankl's conjecture.
 
 ## Core bridge and first examples by hand
 
@@ -75,6 +59,18 @@ print(closed, counts, max(counts.values()) * 2 >= len(F))
 ## First theorem or local proposition
 
 **Singleton lemma.** If a finite union-closed family contains \(\{x\}\), then at least half its member sets contain \(x\). **Proof:** map each member \(A\) missing \(x\) to \(A\cup\{x\}\). Union-closure ensures the image is present, and deleting \(x\) recovers \(A\), so the map is injective into the containing members. This is elementary and does not settle the universal problem.
+
+## 5. Theorem-spine location
+
+Programme authority is `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`. Supporting protected artifacts include the WP01 status spine, WP02 Lean handoff, Agent Council audit, and the qualified downstream certification records referenced by tracker #1.
+
+## 6. Debt audit
+
+Mathematical debt: the universal bridge beyond bounded/restricted results. Documentary admission is complete; any remaining source-concordance, mathematics, or accessibility corrections are separate editorial debt, not an unperformed initial publication.
+
+## 7. Claim boundary
+
+No protected record proves or refutes Frankl's conjecture. Certification of restricted claims, finite verification, and publication work do not promote the universal statement.
 
 ## Challenge ladder
 
@@ -106,3 +102,6 @@ The first independently checkable claim is finite union closure plus frequency c
 
 **First executable step with completion test:** Run the four-set fixture above, independently verify the singleton injection, and write an exact one-paragraph account of why neither verifies every finite family.
 
+## 8. First executable step
+
+Read tracker #1 and the current protected master plan. For mathematics, select the smallest exact residual not already covered by qualified restricted claims. For documentary work, inspect the admitted edition record and full-tier reader, then open a bounded editorial correction supported by exact published sources.
