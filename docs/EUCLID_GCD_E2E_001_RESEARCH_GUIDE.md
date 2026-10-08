@@ -15,7 +15,7 @@ The exercise demonstrates the full Forge → Solve → Cert → Programme path o
 
 ## 3. Exact result
 
-The protected claim set covers the concrete gcd instance, the three linked Euclidean divisions, the Bézout identity `21 = -2*252 + 5*105`, and soundness of the accepted-certificate predicate for the bounded formalization.
+The terminal Stage 1 Programme closeout was protected at `183ff2a0adfbe5bd0ffd5f2e638089b94b868c54` (tracker #240). The archived candidate JSON still describes its pre-merge state; this is historical provenance, not the current gate. The protected claim set covers the concrete gcd instance, the three linked Euclidean divisions, the Bézout identity `21 = -2*252 + 5*105`, and soundness of the accepted-certificate predicate for the bounded formalization.
 
 ## 4. Authority chain
 
@@ -23,7 +23,7 @@ The authoritative Programme record is `governance/euclid_gcd_e2e_001_closeout.js
 
 ## 5. What remains open
 
-Nothing remains for Stage 1 itself. Any linear-Diophantine successor or historical Book VII microcampaign is a separate operation and must not be inferred from this closeout.
+Nothing remains for Stage 1 itself. The linear-Diophantine Stage 2 successor has independently completed and is explained in [its certified proof trace](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md). The historical Book VII microcampaign remains a separate source-concordance and admission operation, not a Stage 1 consequence.
 
 ## 6. Claim boundary
 
