@@ -315,6 +315,10 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         "permission-pull-requests: write",
         "MATHSOLVE_INTAKE_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
         "MATHSOLVE_EVIDENCE_MERGE_TOKEN: ${{ steps.merge-token.outputs.token }}",
+        "MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "python ci/gcl_erdos3_lease_expiry_pr_controller.py",
+        "--report gcl-erdos3-lease-expiry-pr-controller-report.json",
+        "gcl-erdos3-lease-expiry-pr-controller-report.json",
         "python ci/ns_ci_intake_pr_controller.py",
         "--apply",
         "--report ns-ci-intake-pr-controller-report.json",
@@ -353,6 +357,38 @@ def ns_ci_intake_pr_controller_errors(texts: dict[str, str]) -> list[str]:
         errors.append(
             f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one contents-write merge grant is required"
         )
+    # The lease-expiry controller may reuse only the bounded intake token.
+    # It must never gain the CEI contents-write protected-merge credential.
+    lease_steps = [
+        step for step in job.get("steps", [])
+        if isinstance(step, dict)
+        and step.get("name") == "Reconcile registered GCL-ERDOS3 lease-expiry branches to PRs"
+    ]
+    if len(lease_steps) != 1:
+        errors.append(
+            f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: exactly one lease-expiry PR controller step is required"
+        )
+    else:
+        lease = lease_steps[0]
+        expected_env = {
+            "MATHSOLVE_LEASE_EXPIRY_PR_TOKEN": "${{ steps.intake-token.outputs.token }}"
+        }
+        if lease.get("env") != expected_env:
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: lease-expiry PR stage must use only the intake token"
+            )
+        run = lease.get("run", "")
+        if not isinstance(run, str) or not all(
+            marker in run for marker in (
+                "set -euo pipefail",
+                "python ci/gcl_erdos3_lease_expiry_pr_controller.py",
+                "--apply",
+                "--report gcl-erdos3-lease-expiry-pr-controller-report.json",
+            )
+        ):
+            errors.append(
+                f"{NS_CI_INTAKE_PR_CONTROLLER_WORKFLOW}: lease-expiry PR stage command drift"
+            )
     forbidden = (
         "permission-administration:",
         "permission-actions: write",
