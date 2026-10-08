@@ -17,30 +17,6 @@ The campaign asks whether every relevant Leray–Hopf solution satisfies
 `∫_0^T ||u(t)||_6^4 dt < ∞`
 for every finite `T`. This is the scale-critical Ladyzhenskaya–Prodi–Serrin pair `(4,6)`.
 
-## 3. Exact obstruction
-
-Energy-class control yields `L^2_t L^6_x`, not the required `L^4_t L^6_x`. The missing gain cannot come from finite-interval inclusion. A successful route needs a genuinely equation-specific cancellation, commutator, depletion, decorrelation, or comparable mechanism.
-
-## 4. Working model
-
-The prior L4 excursion-persistence route is terminated absent such a mechanism. The direct L5 critical-integral lane is the active mathematical direction. The WP06 computability/undecidability lane is non-blocking and supplies no evidence for the true viscous equation without a complete reduction.
-
-## 5. Theorem-spine location
-
-Authority is `DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md`; LIVE state is tracker #55. The MATHCERT qualification is interface-only and leaves the analytic predicates and continuation bridge obligations explicit.
-
-## 6. Debt audit
-
-Open debt includes the direct critical-integral estimate, any required weak–strong uniqueness/correspondence interfaces for the exact target class, and source-normalized closure of imported analytic predicates used downstream.
-
-## 7. Claim boundary
-
-No regularity theorem, universal critical-integrability theorem, undecidability result, blow-up result, or independence result is admitted by the current protected state.
-
-## 8. First executable step
-
-Continue the L5 lane only with an equation-specific estimate that survives the existing false-proof controls. Do not reopen L4 or elevate WP06 evidence without a new protected bridge theorem.
-
 ## Reader entry and prerequisites
 
 **Status:** open analytic estimate, conditional regularity interface only. **Audience:** graduate PDE students, analysts, formalization collaborators. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
@@ -50,6 +26,14 @@ Continue the L5 lane only with an equation-specific estimate that survives the e
 | Required | Improper integrals, \(L^p\) spaces, elementary Hölder inequality |
 | Helpful | Weak solutions, Sobolev embedding, Navier–Stokes scaling |
 | Deferred | Leray–Hopf theory, critical regularity criteria, nonlinear commutators |
+
+## 3. Exact obstruction
+
+Energy-class control yields `L^2_t L^6_x`, not the required `L^4_t L^6_x`. The missing gain cannot come from finite-interval inclusion. A successful route needs a genuinely equation-specific cancellation, commutator, depletion, decorrelation, or comparable mechanism.
+
+## 4. Working model
+
+The prior L4 excursion-persistence route is terminated absent such a mechanism. The direct L5 critical-integral lane is the active mathematical direction. The WP06 computability/undecidability lane is non-blocking and supplies no evidence for the true viscous equation without a complete reduction.
 
 ## Core bridge and first examples by hand
 
@@ -82,6 +66,18 @@ Input \(\alpha=1/3\); operation checks the elementary criterion \(\int_0^1t^{-\b
 
 **Finite-interval embedding.** For finite \(T\), \(\|f\|_{L^2(0,T)}\le T^{1/4}\|f\|_{L^4(0,T)}\). Hölder applied to \(\int |f|^2\cdot1\) proves this. The reverse inference is not valid, as the edge example shows.
 
+## 5. Theorem-spine location
+
+Authority is `DOMAIN_02_NAVIER_STOKES_CRITICAL_INTEGRABILITY_MASTER_PLAN.md`; LIVE state is tracker #55. The MATHCERT qualification is interface-only and leaves the analytic predicates and continuation bridge obligations explicit.
+
+## 6. Debt audit
+
+Open debt includes the direct critical-integral estimate, any required weak–strong uniqueness/correspondence interfaces for the exact target class, and source-normalized closure of imported analytic predicates used downstream.
+
+## 7. Claim boundary
+
+No regularity theorem, universal critical-integrability theorem, undecidability result, blow-up result, or independence result is admitted by the current protected state.
+
 ## Challenge ladder
 
 | Stage | Duty | Completion test |
@@ -112,3 +108,6 @@ Finite scalar checks are independently replayable. The real PDE theorem would re
 
 **First executable step / completion test:** Replay both scalar integrals and produce an exact restricted L5 estimate statement naming the missing PDE-specific term without asserting it has been proved.
 
+## 8. First executable step
+
+Continue the L5 lane only with an equation-specific estimate that survives the existing false-proof controls. Do not reopen L4 or elevate WP06 evidence without a new protected bridge theorem.
