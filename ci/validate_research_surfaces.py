@@ -162,6 +162,8 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
 
 def main() -> int:
     errors = validate()
+    from validate_exposition_integrity import errors as exposition_integrity_errors
+    errors.extend(exposition_integrity_errors())
     if errors:
         for error in errors:
             print(error)
