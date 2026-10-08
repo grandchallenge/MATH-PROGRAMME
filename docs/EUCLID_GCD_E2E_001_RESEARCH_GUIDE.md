@@ -68,7 +68,7 @@ print(a, gcd(252, 105), -2*252 + 5*105)
 # 21 21 21
 ```
 
-Input, quotient/remainder operation and expected output are exact. **Support route:** independent arithmetic regression, not replacement for MATHCERT's protected checker.
+Input, quotient/remainder operation and expected output are exact. **Support route:** independent arithmetic regression, not replacement for MATHCERT's protected checker. **Limitation:** tests only the displayed inputs and no general producer correctness.
 
 ## First theorem or local proposition
 
