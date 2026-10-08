@@ -166,6 +166,8 @@ def main() -> int:
     errors.extend(exposition_integrity_errors())
     from validate_accessible_research_guides import validate as guide_structure_errors
     errors.extend(guide_structure_errors())
+    from replay_accessible_guide_fixtures import replay as guide_fixture_errors
+    errors.extend(guide_fixture_errors())
     if errors:
         for error in errors:
             print(error)
