@@ -1,5 +1,7 @@
 # Domain 02 · Navier–Stokes Critical Integrability
 
+**Accessible research guide:** [NS-CI-001 Research Guide](NS_CI_001_RESEARCH_GUIDE.md)
+
 
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/55  
