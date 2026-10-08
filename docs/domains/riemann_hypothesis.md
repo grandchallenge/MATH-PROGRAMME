@@ -11,6 +11,8 @@
 **Programme state:** WP00 promoted; WP01 and WP02 implemented, merged, and CI-passed but not formally promoted  
 **Governance:** `ADR-0009`; `ADR-0010`
 
+**Accessible research guide:** [RH-001 Research Guide](RH_001_RESEARCH_GUIDE.md)
+
 ## Canonical challenge
 
 Every nontrivial zero of the meromorphically continued Riemann zeta function should have real part `1/2`, with zeros counted using the campaign's fixed multiplicity and range conventions.
