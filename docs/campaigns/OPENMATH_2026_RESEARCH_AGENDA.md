@@ -25,4 +25,4 @@ The independent-agent interface is retained. What changes is successor selection
 
 ## Live research tracker
 
-Current mutable campaign state is tracked at https://github.com/grandchallenge/MATH-PROGRAMME/issues/1072. Protected programme records govern durable state.
+Current mutable campaign state is tracked at https://github.com/grandchallenge/MATH-PROGRAMME/issues/1072. The registered active child is https://github.com/grandchallenge/MATHSOLVE/issues/454. Protected programme authority is indexed by `governance/openmath_2026_campaign_state.json` and `governance/bounded_operation_checkpoints/OPENMATH-2026.json`; those protected records, not this exposition page, govern durable state.
