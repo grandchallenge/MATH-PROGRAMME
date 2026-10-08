@@ -4,6 +4,7 @@ from ci.ns_ci_intake_pr_controller import (
     ControllerError,
     derive_dispatch_id,
     expected_paths,
+    list_intake_branches,
     main_has_any_raw,
     profile_for_dispatch,
     sha256_text,
@@ -85,6 +86,51 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             profile_for_dispatch("ERDOS-1052-S1-IA-001").receipt_schema_version,
             "1.0.0",
         )
+
+    def test_discovers_evidence_branch_before_any_pr_exists(self) -> None:
+        class FakeGithub:
+            def request(self, method, path):
+                self.assert_method = method
+                if "/branches?" in path:
+                    return [
+                        {"name": "intake/gcl-e2e-canary-003-ia-001"},
+                        {"name": "intake/unregistered-branch"},
+                        {"name": "main"},
+                    ]
+                if "/pulls?" in path:
+                    return []
+                raise AssertionError(path)
+
+        self.assertEqual(
+            list_intake_branches(FakeGithub()),
+            ["intake/gcl-e2e-canary-003-ia-001"],
+        )
+
+    def test_branch_discovery_paginates_and_deduplicates(self) -> None:
+        class FakeGithub:
+            def request(self, method, path):
+                if "/branches?" in path:
+                    if "page=1" in path:
+                        return [{"name": "unrelated-" + str(i)} for i in range(100)]
+                    if "page=2" in path:
+                        return [{"name": "intake/gcl-e2e-canary-003-ia-001"}]
+                    return []
+                if "/pulls?" in path:
+                    return [{"head": {"ref": "intake/gcl-e2e-canary-003-ia-001"}}]
+                raise AssertionError(path)
+
+        self.assertEqual(
+            list_intake_branches(FakeGithub()),
+            ["intake/gcl-e2e-canary-003-ia-001"],
+        )
+
+    def test_branch_discovery_fails_closed_on_malformed_listing(self) -> None:
+        class FakeGithub:
+            def request(self, method, path):
+                return {"unexpected": "value"} if "/branches?" in path else []
+
+        with self.assertRaises(ControllerError):
+            list_intake_branches(FakeGithub())
 
     def test_dispatch_level_first_result_lock_detects_any_protected_raw(self) -> None:
         class FakeGithub:
