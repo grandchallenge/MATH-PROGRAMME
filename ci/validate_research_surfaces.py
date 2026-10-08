@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -39,6 +40,47 @@ def _nav_paths(node: Any) -> set[str]:
         for item in node.values():
             out |= _nav_paths(item)
     return out
+
+
+def _mature_exposition_relation_errors(row: dict[str, Any], primary_text: str, guide_text: str) -> list[str]:
+    """Fail closed on machine-checkable drift for surfaces with a PRESENT reader handoff.
+
+    Deferred guides remain explicit debt and are not silently upgraded to this stricter contract.
+    """
+    if row.get("exposition", {}).get("guide_status") != "PRESENT":
+        return []
+
+    cid = row.get("campaign_id", "<unknown>")
+    combined = primary_text + "\n" + guide_text
+    errors: list[str] = []
+
+    for tracker in row.get("live", {}).get("active_children", []):
+        if tracker not in combined:
+            errors.append(f"{cid}: mature exposition missing active child tracker {tracker}")
+
+    for ref in row.get("authority", {}).get("records", []):
+        if ref not in combined:
+            errors.append(f"{cid}: mature exposition missing registered authority record {ref}")
+
+    markers = re.findall(r"\\*\\*(?:programme|campaign|research) state:\\*\\*\\s*([^\\n]+)", combined, flags=re.IGNORECASE)
+    lifecycle = row.get("lifecycle")
+    if lifecycle == "TERMINAL" and any("active" in marker.lower() for marker in markers):
+        errors.append(f"{cid}: terminal lifecycle conflicts with exposition state marker")
+    if lifecycle == "ACTIVE" and any(any(word in marker.lower() for word in ("terminal", "closed")) for marker in markers):
+        errors.append(f"{cid}: active lifecycle conflicts with exposition state marker")
+
+    lowered = combined.lower()
+    forbidden_conferrals = (
+        "this page certifies",
+        "this guide certifies",
+        "mkdocs certifies",
+        "this issue certifies",
+        "the live tracker certifies",
+    )
+    if any(phrase in lowered for phrase in forbidden_conferrals):
+        errors.append(f"{cid}: exposition text attempts to confer certification authority")
+
+    return errors
 
 
 def validate(registry: dict[str, Any] | None = None) -> list[str]:
@@ -97,6 +139,7 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
                         errors.append(f"{cid}: reference page missing Chaidez marker {marker}")
 
         guide = expo.get("research_guide")
+        gtext = ""
         if guide:
             gp = ROOT / guide
             if not gp.is_file():
@@ -108,6 +151,11 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
                 trackers = [row.get("live", {}).get("canonical_tracker", "")] + row.get("live", {}).get("active_children", [])
                 if trackers and not any(t and t in gtext for t in trackers):
                     errors.append(f"{cid}: research guide missing live tracker link")
+
+        primary_text = ""
+        if page and (ROOT / page).is_file():
+            primary_text = (ROOT / page).read_text(encoding="utf-8")
+        errors.extend(_mature_exposition_relation_errors(row, primary_text, gtext))
 
     return errors
 
