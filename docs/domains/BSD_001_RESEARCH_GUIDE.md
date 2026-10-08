@@ -69,7 +69,7 @@ print("affine", len(points), "projective", len(points)+1)
 # affine 7 projective 8; the extra point is at infinity on this nonsingular cubic.
 ```
 
-Inputs \(p=5\), the polynomial and explicit enumeration are fixed; output is the enumerated list and its counts. The command is independently executable. **Support route:** exact finite arithmetic, not a rank proof or certificate of BSD.
+Inputs \(p=5\), the polynomial and explicit enumeration are fixed; output is the enumerated list and its counts. The command is independently executable. **Support route:** exact finite arithmetic. **Limitation:** a local count does not prove rank, L-function statements, or BSD.
 
 ## First theorem or local proposition
 
