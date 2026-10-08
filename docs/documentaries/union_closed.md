@@ -28,13 +28,13 @@
 <p class="monograph-section__eyebrow">A note to the reader</p>
 ## Wonder first; the universal quantifier always visible
 
-A finite family of sets can obey one simple closure law and still resist a universal abundance theorem. Frankl’s conjecture says that some element belongs to at least half of the sets in every finite nonempty union-closed family. It is an **Open conjecture**.
+A finite family of sets can obey one simple closure law and still resist a universal abundance theorem. Frankl’s conjecture says that some element belongs to at least half of the sets in every **nontrivial** finite union-closed family, meaning here a finite union-closed family with nonempty support. The empty-only family $\mathcal F=\{\varnothing\}$ is an essential excluded edge case: its support is empty, so no such element exists. It is an **Open conjecture**.
 
 The plates are mnemonic maps, not proof diagrams. Definitions, exact quantifiers, theorem labels, finite-certificate scopes, source links, and the claim ledger govern the mathematics.
 
 **Edition status:** Open conjecture; full-tier documentary exposition; no proof claim.
 
-<div class="conjecture-box"><strong>Open conjecture · Frankl</strong><p>Let $\mathcal F$ be a finite nonempty union-closed family. Then there is an element $x\in\operatorname{supp}(\mathcal F)$ such that $2\operatorname{freq}_{\mathcal F}(x)\ge |\mathcal F|$.</p></div>
+<div class="conjecture-box"><strong>Open conjecture · Frankl</strong><p>Let $\mathcal F$ be a finite union-closed family with $\operatorname{supp}(\mathcal F)\ne\varnothing$. Then there is an element $x\in\operatorname{supp}(\mathcal F)$ such that $2\operatorname{freq}_{\mathcal F}(x)\ge |\mathcal F|$.</p></div>
 <div class="warning-box"><strong>Claim boundary</strong><p>This is a source-normalized illustrated documentary. It does not prove Frankl's conjecture, establish a new universal frequency bound, certify unreviewed proof claims, or make a novelty, priority, or public-release claim.</p></div>
 </section>
 
@@ -112,7 +112,7 @@ Choose a uniform random member $A\in\mathcal F$ and write its membership indicat
 
 Known terrain includes elementary families, bounded exact verification, average-size inequalities, rigorous dimension-free constants, structural restrictions on minimal counterexamples, and formalized lattice results.
 
-<div class="conjecture-box"><strong>Still open universally</strong><p>No admitted result proves that every finite nonempty union-closed family has an element in at least half its sets.</p></div>
+<div class="conjecture-box"><strong>Still open universally</strong><p>No admitted result proves that every nontrivial finite union-closed family (one with nonempty support) has an element in at least half its sets.</p></div>
 
 Recent posted proof claims remain current-awareness entries until their theorem statements, dependencies, and complete proofs are independently audited. Repository merge, citation count, or public attention does not change mathematical status.
 </section>
@@ -131,7 +131,7 @@ The programme separates human proof, imported theorem, Lean theorem, exact finit
 <section class="monograph-section" id="appendix-definitions" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
 ## Precise definitions and normalizations
 
-For finite $\mathcal F\subseteq\mathcal P(U)$, define $\operatorname{supp}(\mathcal F)=\bigcup\mathcal F$ and $\operatorname{freq}_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|$. An element is abundant when $2\operatorname{freq}_{\mathcal F}(x)\ge|\mathcal F|$. The canonical target excludes the empty family and reduces the ground set to the support.
+For finite $\mathcal F\subseteq\mathcal P(U)$, define $\operatorname{supp}(\mathcal F)=\bigcup\mathcal F$ and $\operatorname{freq}_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|$. An element is abundant when $2\operatorname{freq}_{\mathcal F}(x)\ge|\mathcal F|$. The canonical target requires nonempty support and reduces the ground set to the support. It excludes both the empty family and the family $\{\varnothing\}$: in either case no support element exists.
 </section>
 <section class="monograph-section" id="appendix-elementary" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
 ## Elementary proof spine
