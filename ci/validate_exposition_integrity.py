@@ -20,7 +20,8 @@ def errors(root: Path = ROOT) -> list[str]:
 
     documentary = read("docs/documentaries/union_closed.md")
     old_quantifiers = (
-        "every finite nonempty union-closed family",
+        "Frankl’s conjecture says that some element belongs to at least half of the sets in every finite nonempty union-closed family",
+        "No admitted result proves that every finite nonempty union-closed family",
         "Let $\\mathcal F$ be a finite nonempty union-closed family.",
     )
     if any(s in documentary for s in old_quantifiers):
