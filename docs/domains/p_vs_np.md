@@ -1,5 +1,7 @@
 # Domain 07 · P versus NP
 
+**Accessible research guide:** [PNP-001 Research Guide](PNP_001_RESEARCH_GUIDE.md)
+
 
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/162  
