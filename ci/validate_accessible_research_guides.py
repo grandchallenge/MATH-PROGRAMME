@@ -71,7 +71,7 @@ def validate_text(text: str, path: str) -> list[str]:
             problems.append(f"{path}: invalid Python fixture syntax: {exc}")
         if "# Expected" not in snippet:
             problems.append(f"{path}: fixture has no expected output")
-    if "## Claim boundary" not in text and "## 7. Claim boundary" not in text and "## 8. Claim boundary" not in text:
+    if not re.search(r"^## (?:\\d+\\. )?Claim boundary", text, re.MULTILINE):
         problems.append(f"{path}: missing claim-boundary section")
     return problems
 
