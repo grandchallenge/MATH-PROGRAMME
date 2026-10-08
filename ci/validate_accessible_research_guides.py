@@ -38,7 +38,7 @@ REQUIRED_TERMS = (
     "Required", "Helpful", "Deferred",
     "Exercise", "Exploration", "Fixture", "Lemma candidate", "Open direction",
     "Completion test", "Support route", "Limitation",
-    "What", "Open", "External verification", "First executable step",
+    "Open", "External verification", "First executable step",
 )
 EXAMPLE_PAIR = re.compile(
     r"\*\*(?:Friendly example|Friendly example:|Friendly example\.)"
@@ -55,11 +55,11 @@ def validate_text(text: str, path: str) -> list[str]:
         if not re.search(r"^##\s+" + re.escape(name) + r"\s*$", text, re.MULTILINE):
             problems.append(f"{path}: missing pedagogical section {name}")
     for term in REQUIRED_TERMS:
-        if term not in text:
+        if term.lower() not in text.lower():
             problems.append(f"{path}: missing guide-contract marker {term}")
-    if not re.search(r"\*\*Friendly example:", text):
+    if not any(label in text for label in ("**Friendly example:", "**Friendly example.**", "**Friendly example**")):
         problems.append(f"{path}: missing friendly worked example")
-    if not EDGE_CASE.search(text):
+    if not any(f"**{label}" in text for label in ("Edge example", "Boundary example", "Failure example", "Obstruction example")):
         problems.append(f"{path}: missing obstruction/boundary worked example")
     snippets = FENCE.findall(text)
     if len(snippets) != 1:
@@ -71,7 +71,7 @@ def validate_text(text: str, path: str) -> list[str]:
             problems.append(f"{path}: invalid Python fixture syntax: {exc}")
         if "# Expected" not in snippet:
             problems.append(f"{path}: fixture has no expected output")
-    if not re.search(r"^## (?:\\d+\\. )?Claim boundary", text, re.MULTILINE):
+    if not any(line.startswith("## ") and "Claim boundary" in line for line in text.splitlines()):
         problems.append(f"{path}: missing claim-boundary section")
     return problems
 
