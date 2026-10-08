@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "control_id": "MP-ERDOS-OPEN-POSTPROTECT-LIFECYCLE-001",
-  "status": "ACTIVE_CANDIDATE",
+  "status": "ACTIVE",
   "purpose": "Carry ERDOS-OPEN protected R1+A1 evidence through the mechanical blind-cohort closure gate and recognize only registered deterministic advancement bundles. Mathematical synthesis is never inferred from RESULT/1 validity. The same bounded controller carries the uniquely registered GCL-E2E-CANARY-001 through one-member closure and deterministic fixed-answer advancement.",
   "target_repository": "grandchallenge/MATHSOLVE",
   "controller_repository": "grandchallenge/MATH-PROGRAMME",
@@ -83,5 +83,28 @@
     "fixed_expected_answer": 4,
     "precommitted_successor": "GCL-E2E-CANARY-002",
     "authority_effect": false
+  },
+  "live_qualification": {
+    "protected_controller_merge_commit": "dc4f7ef74f8d80d0b97ac81e855dee1157d6971d",
+    "workflow_run_id": 37750817215,
+    "workflow_event": "push",
+    "conclusion": "success",
+    "workflow_job_id": 113223296868,
+    "workflow_artifact_id": 11538171175,
+    "protected_mathsolve_main": "7507b802e4d92d45b681687f833c00c13c128fab",
+    "observed_states": {
+      "99": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW",
+      "101": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW",
+      "138": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW",
+      "241": "ADVANCED",
+      "470": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW",
+      "593": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW",
+      "595": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW",
+      "1052": "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW"
+    },
+    "errors": [],
+    "authority_created": false,
+    "qualifies_after_pr": 1228,
+    "qualification_scope": "Registered deterministic controller execution and protected-merge review barriers only; not mathematical adjudication or claim certification"
   }
 }
