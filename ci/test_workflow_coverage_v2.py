@@ -353,6 +353,33 @@ def main() -> int:
         registry=registry,
     )
 
+    # Added lease-expiry PR reconciliation must not borrow the protected-merge token.
+    nsci_lease_stage_removed = dict(texts)
+    nsci_lease_stage_removed[nsci_controller] = nsci_lease_stage_removed[nsci_controller].replace(
+        "      - name: Reconcile registered GCL-ERDOS3 lease-expiry branches to PRs",
+        "      - name: Removed GCL-ERDOS3 reconciliation",
+        1,
+    )
+    require_error(
+        nsci_lease_stage_removed,
+        evidence,
+        "exactly one lease-expiry PR controller step is required",
+        registry=registry,
+    )
+
+    nsci_lease_elevated = dict(texts)
+    nsci_lease_elevated[nsci_controller] = nsci_lease_elevated[nsci_controller].replace(
+        "          MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "          MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.merge-token.outputs.token }}",
+        1,
+    )
+    require_error(
+        nsci_lease_elevated,
+        evidence,
+        "lease-expiry PR stage must use only the intake token",
+        registry=registry,
+    )
+
     print("workflow coverage v3 adversarial tests passed")
     return 0
 
