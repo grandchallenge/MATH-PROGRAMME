@@ -279,7 +279,7 @@ def main()->int:
         return 2
     args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
     print(json.dumps(report,sort_keys=True))
-    return 0
+    return 1 if report.get("errors") else 0
 
 if __name__=="__main__":
     raise SystemExit(main())
