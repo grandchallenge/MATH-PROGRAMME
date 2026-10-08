@@ -79,6 +79,16 @@ jobs:
             --apply \
             --report external-intake-evidence-admission-report.json
 
+      - name: Reconcile registered GCL-ERDOS3 lease-expiry branches to PRs
+        env:
+          MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.intake-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          # PR creation only for exact registered pre-existing lease-expiry branches; no branch writes.
+          python ci/gcl_erdos3_lease_expiry_pr_controller.py \
+            --apply \
+            --report gcl-erdos3-lease-expiry-pr-controller-report.json
+
       - name: Preserve controller evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -87,5 +97,6 @@ jobs:
           path: |
             ns-ci-intake-pr-controller-report.json
             external-intake-evidence-admission-report.json
+            gcl-erdos3-lease-expiry-pr-controller-report.json
           if-no-files-found: warn
           retention-days: 30
