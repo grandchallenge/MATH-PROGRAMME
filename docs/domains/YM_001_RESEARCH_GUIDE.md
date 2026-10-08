@@ -1,7 +1,7 @@
 # YM-001 Accessible Research Guide
 
 !!! info "Research surface authority"
-    **LIVE:** [YM-001 canonical tracker #164](https://github.com/grandchallenge/MATH-PROGRAMME/issues/164), with registered contribution surfaces [MATHSOLVE #716](https://github.com/grandchallenge/MATHSOLVE/issues/716), [#717](https://github.com/grandchallenge/MATHSOLVE/issues/717), and [#718](https://github.com/grandchallenge/MATHSOLVE/issues/718).  
+    **LIVE:** [YM-001 canonical tracker #164](https://github.com/grandchallenge/MATH-PROGRAMME/issues/164), with historical, **closed** contribution returns [MATHSOLVE #716](https://github.com/grandchallenge/MATHSOLVE/issues/716), [#717](https://github.com/grandchallenge/MATHSOLVE/issues/717), and [#718](https://github.com/grandchallenge/MATHSOLVE/issues/718). These returns are not active child controllers.  
     **AUTHORITY:** `YM-WP00-source-normalization-equivalence-audit.md` and `governance/governed_campaign_registry.json`.  
     **EXPOSITION:** this guide explains protected state; it does not promote or certify mathematics.
 
@@ -32,8 +32,8 @@ Programme authority:
 - `governance/governed_campaign_registry.json`
 
 LIVE coordination:
-- Programme #164
-- MATHSOLVE #716–#718 for the bounded D003 contribution tranche.
+- Programme #164 (canonical campaign mirror; current open-theorem work must be read from the protected Solve handoff)
+- MATHSOLVE #716–#718 (closed historical D003 contribution returns; not new active work)
 
 ## 7. Debt audit
 
