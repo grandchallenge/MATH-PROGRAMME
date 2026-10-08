@@ -13,30 +13,6 @@ The rational Hodge conjecture remains open. The campaign has a source-normalized
 
 For every smooth projective complex variety `X` and codimension `p`, the target is surjectivity of the rational cycle-class map onto rational Hodge classes of type `(p,p)`.
 
-## 3. Exact obstruction
-
-The easy direction—algebraic cycle classes have Hodge type `(p,p)`—is not the conjecture. The open direction is to construct algebraic cycles representing arbitrary rational Hodge classes while preserving projectivity, rational coefficients, codimension, cohomology theory, and universal quantifiers.
-
-## 4. Working model
-
-The campaign explicitly rejects substitution by the integral Hodge conjecture, unrestricted compact-Kähler analogues, Hodge-locus algebraicity, motivated/absolute Hodge classes, numerical period recognition, or Tate-style specialization without a proved bridge.
-
-## 5. Theorem-spine location
-
-Authority is `DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md`. LIVE coordination is tracker #65. The protected baseline includes the known cases `p=0,1,n-1,n` and the dimension-at-most-three consequence; those are boundary conditions, not evidence for the unrestricted conjecture.
-
-## 6. Debt audit
-
-The first new unrestricted case is fourfolds in codimension two. Before opening mechanism work, the campaign still needs one exact restricted target with variety class, dimension, codimension, coefficient ring, cycle equivalence, implication direction, and certification boundary fixed.
-
-## 7. Claim boundary
-
-No new Hodge case, algebraicity algorithm, numerical certification, novelty, or priority claim is admitted.
-
-## 8. First executable step
-
-Select one exact post-WP00 restricted theorem obligation and register its full formulation boundary before any Solve-owned proof or computation begins.
-
 ## Reader entry and prerequisites
 
 **Status:** rational Hodge conjecture open; protected formulation and known-case boundary only. **Audience:** graduate geometry students and research collaborators. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
@@ -46,6 +22,14 @@ Select one exact post-WP00 restricted theorem obligation and register its full f
 | Required | Cohomology degree, complex projective space, codimension |
 | Helpful | Divisors, algebraic cycles, Hodge decomposition |
 | Deferred | Intersection theory, motives, period comparison, deformation theory |
+
+## 3. Exact obstruction
+
+The easy direction—algebraic cycle classes have Hodge type `(p,p)`—is not the conjecture. The open direction is to construct algebraic cycles representing arbitrary rational Hodge classes while preserving projectivity, rational coefficients, codimension, cohomology theory, and universal quantifiers.
+
+## 4. Working model
+
+The campaign explicitly rejects substitution by the integral Hodge conjecture, unrestricted compact-Kähler analogues, Hodge-locus algebraicity, motivated/absolute Hodge classes, numerical period recognition, or Tate-style specialization without a proved bridge.
 
 ## Core bridge and first examples by hand
 
@@ -80,6 +64,18 @@ for dimension in (1, 2, 3, 4):
 
 **Point case on \(\mathbb P^1\).** The class of one closed point generates \(H^2(\mathbb P^1,\mathbb Q)\), so the rational cycle-class map in codimension one is surjective. This is a classical imported result, not a new GCL theorem; its complete geometric proof and foundations belong to the sources in the protected master plan.
 
+## 5. Theorem-spine location
+
+Authority is `DOMAIN_03_HODGE_CONJECTURE_MASTER_PLAN.md`. LIVE coordination is tracker #65. The protected baseline includes the known cases `p=0,1,n-1,n` and the dimension-at-most-three consequence; those are boundary conditions, not evidence for the unrestricted conjecture.
+
+## 6. Debt audit
+
+The first new unrestricted case is fourfolds in codimension two. Before opening mechanism work, the campaign still needs one exact restricted target with variety class, dimension, codimension, coefficient ring, cycle equivalence, implication direction, and certification boundary fixed.
+
+## 7. Claim boundary
+
+No new Hodge case, algebraicity algorithm, numerical certification, novelty, or priority claim is admitted.
+
 ## Challenge ladder
 
 | Stage | Duty | Completion test |
@@ -110,3 +106,6 @@ The indexing fixture is replayable; the divisor theorem is imported from a class
 
 **First executable step / completion test:** Run the indexing fixture and write a proposed restricted case with exact dimension/codimension/coefficient profile and a source-backed proof obligation; do not claim it is solved.
 
+## 8. First executable step
+
+Select one exact post-WP00 restricted theorem obligation and register its full formulation boundary before any Solve-owned proof or computation begins.
