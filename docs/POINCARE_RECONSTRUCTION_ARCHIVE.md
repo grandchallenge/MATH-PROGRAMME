@@ -1,5 +1,7 @@
 # Hamilton–Perelman Poincaré reconstruction archive
 
+**Accessible research guide:** [Poincaré Reconstruction Research Guide](POINCARE_RECONSTRUCTION_RESEARCH_GUIDE.md)
+
 
 !!! info "Research surface authority"
     **LIVE:** [PC-WP01 false-proof atlas tracker #72](https://github.com/grandchallenge/MATH-PROGRAMME/issues/72).  
