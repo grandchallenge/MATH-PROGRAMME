@@ -3,7 +3,7 @@
 <p class="page-deck">A human-facing account of GCL's protected CM4 result: what was proved, why the inherited route was difficult, how the Point-functional bypass works, what remains open, and where to follow the live external-review and mathlib-upstream work.</p>
 
 !!! info "Research surface authority"
-    **Canonical campaign tracker:** [MATH-PROGRAMME #355](https://github.com/grandchallenge/MATH-PROGRAMME/issues/355)  
+    **Canonical campaign tracker:** [https://github.com/grandchallenge/MATH-PROGRAMME/issues/355](https://github.com/grandchallenge/MATH-PROGRAMME/issues/355)  
     **Protected mathematical claims** on this page are projections of protected repository records.  
     **Live external-review status** is tracked in [MATH-PROGRAMME #1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222).  
     **Live mathlib-upstream status** is tracked in [MATH-PROGRAMME #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).  
