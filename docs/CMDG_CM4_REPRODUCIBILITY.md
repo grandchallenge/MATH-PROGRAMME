@@ -28,6 +28,35 @@ A Linux environment or WSL2 with `git`, `python3`, a Python environment able to 
 
 For a new researcher, avoid altering the dependency manifest or running `lake update`. That changes the question being reproduced.
 
+## Checkout preflight and missing-file recovery
+
+First check that the commands are being run from the **repository root** and that the formal validator exists in the checked-out tree:
+
+```bash
+pwd
+git rev-parse --show-toplevel
+git rev-parse HEAD
+git status --short
+git ls-tree HEAD -- ci/formal_validation.py
+test -f ci/formal_validation.py && echo "Formal validator present"
+```
+
+At the pinned `7a0f335...` commit, `ci/formal_validation.py` is tracked and must be present in a complete checkout. If `python3` reports `can't open file '.../MATH-PROGRAMME/ci/formal_validation.py': [Errno 2] No such file or directory`, **the formal replay has not started**. That error is a local path/checkout failure, not a Lean result.
+
+- If `git ls-tree HEAD -- ci/formal_validation.py` prints nothing, the current commit does not contain the expected file: check the repository and checkout SHA.
+- If `git ls-tree` lists it but `test -f` fails, the working tree is incomplete, sparse, or has a local deletion. Preserve local changes before restoring files.
+- The safest recovery, especially if another `MATH-PROGRAMME` checkout already exists, is a separate fresh clone:
+
+```bash
+cd /home/jim
+git clone https://github.com/grandchallenge/MATH-PROGRAMME.git MATH-PROGRAMME-CM4-replay
+cd MATH-PROGRAMME-CM4-replay
+git checkout --detach 7a0f33588aa8d1add4d941c9b4681b6910644bf1
+test -f ci/formal_validation.py || { echo "REPRODUCTION_BLOCKED: missing formal validator" >&2; exit 2; }
+```
+
+The `/home/jim` parent directory in this example is only a local path; choose a different parent on another machine. Continue with the prerequisites and formal-replay commands below **inside the new checkout**. Do not mark a failed preflight as a successful formal reproduction.
+
 ## Formal replay against the exact protected proof snapshot
 
 This sequence can be executed against the stated immutable commit **without** requiring the later external-release script:
@@ -36,6 +65,7 @@ This sequence can be executed against the stated immutable commit **without** re
 git clone https://github.com/grandchallenge/MATH-PROGRAMME.git
 cd MATH-PROGRAMME
 git checkout --detach 7a0f33588aa8d1add4d941c9b4681b6910644bf1
+test -f ci/formal_validation.py || { echo "REPRODUCTION_BLOCKED: missing formal validator" >&2; exit 2; }
 python3 -m pip install --requirement requirements/policy.txt
 python3 ci/formal_validation.py validate
 (cd fixtures/formal/CMDG-NAT-CONCORDANCE-001 && lake exe cache get)
