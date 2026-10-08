@@ -13,30 +13,6 @@ OZ-001 is active. The campaign has source-normalized Apéry/Brown–Zudilin inte
 
 The campaign audits exact recurrences, companion identities, congruences, symbolic certificates, formal declarations, and finite computations for their precise relationship to odd zeta values and related periods.
 
-## 3. Current obstruction
-
-The flagship T3 route is neither proved nor refuted. Its surviving proof class is an exact two-dimensional rational delta certificate or a two-stage fibre telescoper/sequence-identification certificate. T1-top and DEPTH remain separately blocked; neither may be substituted for another without a verified bridge.
-
-## 4. Working model
-
-Finite agreement, recurrence residuals, source admission, and local symbolic checks are evidence only. Producer/verifier separation, singularity handling, boundary terms, adversarial mutations, and predecessor failed-route exclusions remain mandatory.
-
-## 5. Theorem-spine location
-
-Authority begins at `campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/00_INTAKE_AND_SOURCE_LOCK.md` and continues through protected successors. LIVE state is tracker #113, which names the current flagship and broader source-replay operations.
-
-## 6. Debt audit
-
-Open debt includes the T3 exact certificate/counterexample, T1-top certificate recovery or replacement, DEPTH reopening requirements, Sharp-12 gating, quarantined Lean declarations, and the separate primes `2,3` completion problem.
-
-## 7. Claim boundary
-
-No new irrationality, infinitude, Sharp-12 theorem, companion theorem, or certification result follows from source admission, finite computation, or this guide.
-
-## 8. First executable step
-
-Read tracker #113 and the current protected predecessor for the flagship T3 operation. Work only in the characterized surviving certificate class or return an exact source-normalized counterexample/blocker.
-
 ## Reader entry and prerequisites
 
 **Status:** active bounded formal/replay routes with characterized blockers. **Audience:** graduate discrete mathematics readers and certificate/replay contributors. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
@@ -46,6 +22,14 @@ Read tracker #113 and the current protected predecessor for the flagship T3 oper
 | Required | Binomial coefficients, finite sums, integer arithmetic |
 | Helpful | Recurrences, hypergeometric identities |
 | Deferred | Creative telescoping over \(\mathbb Q(n,k,\ell)\), boundary singularities, symbolic certificate proof |
+
+## 3. Current obstruction
+
+The flagship T3 route is neither proved nor refuted. Its surviving proof class is an exact two-dimensional rational delta certificate or a two-stage fibre telescoper/sequence-identification certificate. T1-top and DEPTH remain separately blocked; neither may be substituted for another without a verified bridge.
+
+## 4. Working model
+
+Finite agreement, recurrence residuals, source admission, and local symbolic checks are evidence only. Producer/verifier separation, singularity handling, boundary terms, adversarial mutations, and predecessor failed-route exclusions remain mandatory.
 
 ## Core bridge and first examples by hand
 
@@ -78,6 +62,18 @@ Inputs \(0,1,2\), finite integer-sum evaluator; expected output shown. **Support
 
 **Integrality lemma.** Every \(A_n\) above is a nonnegative integer, because its finite summands are products of squares of integer binomial coefficients. This elementary statement is not the outstanding T3 identity, a recurrence theorem, or an irrationality proof.
 
+## 5. Theorem-spine location
+
+Authority begins at `campaigns/odd_zeta/OZ_WP00_SOURCE_NORMALIZATION_EQUIVALENCE/00_INTAKE_AND_SOURCE_LOCK.md` and continues through protected successors. LIVE state is tracker #113, which names the current flagship and broader source-replay operations.
+
+## 6. Debt audit
+
+Open debt includes the T3 exact certificate/counterexample, T1-top certificate recovery or replacement, DEPTH reopening requirements, Sharp-12 gating, quarantined Lean declarations, and the separate primes `2,3` completion problem.
+
+## 7. Claim boundary
+
+No new irrationality, infinitude, Sharp-12 theorem, companion theorem, or certification result follows from source admission, finite computation, or this guide.
+
 ## Challenge ladder
 
 | Stage | Duty | Completion test |
@@ -108,3 +104,6 @@ Finite sums can be independently reproduced; an actual T3 proof needs producer/v
 
 **First executable step / completion test:** Reproduce \([1,5,73]\), then retrieve the *actual* protected T3 term and write a bounded rational certificate ansatz with explicit singularity/boundary conditions. Do not identify this pedagogical sum with the open protected certificate without a bridge.
 
+## 8. First executable step
+
+Read tracker #113 and the current protected predecessor for the flagship T3 operation. Work only in the characterized surviving certificate class or return an exact source-normalized counterexample/blocker.
