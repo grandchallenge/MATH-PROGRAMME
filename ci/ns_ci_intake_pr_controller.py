@@ -178,33 +178,43 @@ def fetch_text(gh: Github, path: str, ref: str) -> tuple[str, str]:
 
 
 def list_intake_branches(gh: Github) -> list[str]:
-    # Discover candidate heads from open PRs rather than Git matching-refs.
-    # Council Clerk/Release Trust app tokens have bounded pull-request access,
-    # while matching-refs can legitimately return no visible refs for those
-    # installations. Validation below still requires a registered branch
-    # prefix, exact dispatch syntax, exact protected dispatch, and exact diff.
-    names: list[str] = []
-    page = 1
-    while True:
-        pulls = gh.request(
-            "GET",
-            f"/repos/{OWNER}/{REPO}/pulls?state=open&base=main&per_page=100&page={page}",
-        )
-        if not isinstance(pulls, list):
-            raise ControllerError("open pull-request list response is not a list")
-        for item in pulls:
-            if not isinstance(item, dict):
-                continue
-            head = item.get("head")
-            ref = head.get("ref") if isinstance(head, dict) else None
-            if not isinstance(ref, str):
-                continue
-            if any(ref.startswith(profile.branch_prefix) for profile in PROFILES):
-                names.append(ref)
-        if len(pulls) < 100:
-            break
-        page += 1
-    return sorted(set(names))
+    # Find un-PR'd evidence branches using the repository branches API.
+    # An open-PR-only discovery loop cannot create the first PR for a branch.
+    # Branch listing requires only the same bounded contents:read token.
+    # Retain open-PR discovery for backward compatibility and deduplicate.
+    names: set[str] = set()
+    for source in ("branches", "pulls"):
+        page = 1
+        while True:
+            if source == "branches":
+                path = f"/repos/{OWNER}/{REPO}/branches?per_page=100&page={page}"
+            else:
+                path = (
+                    f"/repos/{OWNER}/{REPO}/pulls?"
+                    f"state=open&base=main&per_page=100&page={page}"
+                )
+            items = gh.request("GET", path)
+            if not isinstance(items, list):
+                raise ControllerError(f"{source} discovery response is not a list")
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                if source == "branches":
+                    ref = item.get("name")
+                else:
+                    head = item.get("head")
+                    ref = head.get("ref") if isinstance(head, dict) else None
+                if not isinstance(ref, str):
+                    continue
+                try:
+                    profile_for_branch(ref)
+                except ControllerError:
+                    continue
+                names.add(ref)
+            if len(items) < 100:
+                break
+            page += 1
+    return sorted(names)
 
 
 def main_has_any_raw(gh: Github, dispatch_id: str) -> bool:
