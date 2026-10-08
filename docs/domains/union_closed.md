@@ -10,7 +10,7 @@
 
 **Campaign ID:** `UC`  
 **Mathematical status:** open conjecture  
-**Programme role:** foundational demonstration domain with an admitted Wave Two documentary  
+**Programme role:** foundational demonstration domain with an admitted Wave Two documentary
 **Governance:** `ADR-0002`, `ADR-0007`, `ADR-0010`
 
 ## Claim boundary
