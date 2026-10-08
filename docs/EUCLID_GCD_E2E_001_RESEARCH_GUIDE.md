@@ -66,6 +66,8 @@ The authoritative Programme record is `governance/euclid_gcd_e2e_001_closeout.js
 
 Nothing remains for Stage 1 itself. The linear-Diophantine Stage 2 successor has independently completed and is explained in [its certified proof trace](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md). The historical Book VII microcampaign remains a separate source-concordance and admission operation, not a Stage 1 consequence.
 
+The terminal provenance record is `governance/euclid_gcd_e2e_001_terminal_readback_001.json`; it preserves the historical candidate as a candidate and confirms protected Stage 1 readback without conferring new certification.
+
 ## 6. Claim boundary
 
 The result is not a novelty, priority, universal producer-correctness, or historical-verbatim-equivalence claim. This guide creates no additional certification effect.
