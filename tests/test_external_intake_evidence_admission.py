@@ -1,3 +1,4 @@
+from pathlib import Path
 import unittest
 
 from ci.external_intake_evidence_admission import (
@@ -125,6 +126,29 @@ class ExternalIntakeEvidenceAdmissionTests(unittest.TestCase):
                 "0" * 40,
             )
         )
+
+    def test_admission_script_has_only_the_exact_merge_write_surface(self):
+        """Guard the bounded contents-write credential against direct API writes."""
+        source = Path("ci/external_intake_evidence_admission.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(source.count('"PUT"'), 1)
+        self.assertIn(
+            'f"/repos/{OWNER}/{REPO}/pulls/{pr_number}/merge"',
+            source,
+        )
+        for forbidden in (
+            '"POST"',
+            '"PATCH"',
+            '"DELETE"',
+            '"/contents/',
+            '"/git/refs/',
+            '"/git/commits',
+            '"/git/trees',
+            '"/git/blobs',
+        ):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, source)
 
     def test_protected_merge_is_expected_head_locked_and_squash_only(self):
         gh = FakeGithub()
