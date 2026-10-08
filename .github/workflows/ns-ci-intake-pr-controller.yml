@@ -14,7 +14,9 @@ permissions:
   contents: read
 
 concurrency:
-  group: external-intake-pr-controller
+  # Frequent workflow_run wakes must not evict explicit/scheduled reconciliation.
+  # GitHub retains only one pending run per concurrency group.
+  group: external-intake-pr-controller-${{ github.event_name == 'workflow_run' && 'event' || 'direct' }}
   cancel-in-progress: false
 
 jobs:
