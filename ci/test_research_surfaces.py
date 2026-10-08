@@ -41,6 +41,29 @@ class ResearchSurfaceTests(unittest.TestCase):
         bad["surfaces"] = [row for row in bad["surfaces"] if row["campaign_id"] != "OZ-001"]
         self.assertTrue(any("active governed campaign missing research surface: OZ-001" in e for e in MOD.validate(bad)))
 
+    def test_live_child_exposition_drift_rejected_for_present_guide(self):
+        bad = copy.deepcopy(self.data)
+        row = next(r for r in bad["surfaces"] if r["campaign_id"] == "OPENMATH-2026")
+        row["live"]["active_children"] = ["https://github.com/grandchallenge/MATHSOLVE/issues/999999"]
+        self.assertTrue(any("mature exposition missing active child tracker" in e for e in MOD.validate(bad)))
+
+    def test_authority_exposition_drift_rejected_for_present_guide(self):
+        bad = copy.deepcopy(self.data)
+        row = next(r for r in bad["surfaces"] if r["campaign_id"] == "OPENMATH-2026")
+        row["authority"]["records"].append("AGENTS.md")
+        self.assertTrue(any("mature exposition missing registered authority record AGENTS.md" in e for e in MOD.validate(bad)))
+
+    def test_terminal_lifecycle_conflict_detected(self):
+        row = copy.deepcopy(next(r for r in self.data["surfaces"] if r["campaign_id"] == "OPENMATH-2026"))
+        row["lifecycle"] = "TERMINAL"
+        errors = MOD._mature_exposition_relation_errors(row, "**Programme state:** active research", "")
+        self.assertTrue(any("terminal lifecycle conflicts" in e for e in errors))
+
+    def test_exposition_cannot_confer_certification(self):
+        row = copy.deepcopy(next(r for r in self.data["surfaces"] if r["campaign_id"] == "OPENMATH-2026"))
+        errors = MOD._mature_exposition_relation_errors(row, "", "This guide certifies the result.")
+        self.assertTrue(any("attempts to confer certification authority" in e for e in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
