@@ -10,7 +10,7 @@
 
 **Campaign ID:** `UC`  
 **Mathematical status:** open conjecture  
-**Programme role:** foundational demonstration domain and Wave Two documentary candidate  
+**Programme role:** foundational demonstration domain with an admitted Wave Two documentary  
 **Governance:** `ADR-0002`, `ADR-0007`, `ADR-0010`
 
 ## Claim boundary
@@ -29,13 +29,16 @@ WP01 is a completed baseline. Its WP02/MATHCERT handoff has been discharged, but
 - [UC-DOC-WP00 source-lock package](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK)
 - [UC-DOC-WP00 canonical claim ledger](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/union_closed/UC_DOC_WP00_DOCUMENTARY_SOURCE_LOCK/10_CLAIM_LEDGER.yaml)
 - [UC-DOC-WP00 schema-bound review](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/reviews/union_closed/UC-DOC-WP00.agent_review.yaml)
-- [Pre-admission documentary candidate metadata](../documentaries/DOCUMENTARY_CANDIDATES.json)
+- [Admitted documentary: *The Element in Half the Worlds*](../documentaries/union_closed.md)
+- [Admitted web-edition record](../documentaries/union_closed.edition.json)
+- [Admitted publication manifest](../documentaries/ARTIFACT_MANIFEST.json)
+- [Historical pre-admission candidate registry (now empty)](../documentaries/DOCUMENTARY_CANDIDATES.json)
 
 ## Documentary state
 
-*The Element in Half the Worlds* is source-locked as a proposed full-tier documentary and registered as a pre-admission candidate. The candidate metadata are public. Its source pointer remains repository-only, and no Union-Closed browser page, edition record, public source record, asset directory, or admitted manifest volume yet exists.
+*The Element in Half the Worlds* is now an **admitted full-tier documentary** in the public Documentary Library. Its browser page, edition record, source record, native assets, manifest entry, and navigation are present. The prior pre-admission candidate entry has been consumed (the candidates registry is empty). The protected source-lock metadata remains historical provenance and is not silently rewritten.
 
-UC-DOC-WP01 may continue construction. Public admission must add the page, edition record, assets, source record, collection row, navigation entry, and manifest volume atomically and pass the generalized documentary and programme policy gates.
+Admission governs **documentary publication**, not the truth of Frankl's conjecture. The web reader still carries open mathematical debt, including the universal half-frequency step; the complete illustrated source-bundle pointer is recorded as `metadata_only` rather than a public downloadable complete source artifact.
 
 ## What may be relied upon
 
@@ -43,4 +46,4 @@ Readers may rely on the explicitly bounded computations, checked local Lean lemm
 
 ## Current frontier
 
-The mathematical frontier and later Work Package state are maintained in the domain master plan. The documentary frontier is the governed UC-DOC-WP01 conversion and atomic-admission obligation. This page remains an orientation index rather than a duplicate theorem or milestone ledger.
+The mathematical frontier and later Work Package state are maintained in the domain master plan. The documentary admission step has been completed; further documentary revisions require their own governed editorial/source-concordance checks. This page remains an orientation index rather than a duplicate theorem or milestone ledger.
