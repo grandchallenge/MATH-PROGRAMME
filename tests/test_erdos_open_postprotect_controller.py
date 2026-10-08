@@ -3,7 +3,9 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
+import ci.erdos_open_postprotect_controller as controller
 from ci.erdos_open_postprotect_controller import (
     CANARY2_ADVANCE_BRANCH,
     CANARY2_CLOSURE_BRANCH,
@@ -14,6 +16,7 @@ from ci.erdos_open_postprotect_controller import (
     _advanced_state,
     _approval_exists,
     _merge,
+    _report_exit_code,
     branch_name,
     closure_path,
 )
@@ -138,6 +141,61 @@ class ErdosPostprotectControllerTests(unittest.TestCase):
         self.assertEqual(payload["sha"], "c" * 40)
         self.assertEqual(payload["merge_method"], "squash")
         self.assertNotIn("admin", str(payload).lower())
+
+
+    def test_existing_erdos_closure_pr_reuses_exact_head_without_rewrite(self):
+        fake_gh = MagicMock()
+        fake_gh.request.return_value = {"head": {"sha": "a" * 40}}
+
+        class ClosureModule:
+            @staticmethod
+            def build_closure(problem, main_sha, date):
+                return {"problem": problem, "source_commit": main_sha}
+
+            @staticmethod
+            def validate_closure(problem, closure):
+                return []
+
+        existing_pr = {"number": 77}
+        candidate = {
+            "problem": "593",
+            "branch": branch_name("593"),
+            "path": closure_path("593"),
+            "head_sha": "a" * 40,
+            "closure": {"problem": "593"},
+        }
+        with (
+            patch.dict("os.environ", {"MATHSOLVE_ERDOS_LIFECYCLE_TOKEN": "test-token"}),
+            patch.object(controller, "Github", return_value=fake_gh),
+            patch.object(controller, "PROBLEMS", ("593",)),
+            patch.object(controller, "_main_sha", return_value="b" * 40),
+            patch.object(controller, "_local_sha", return_value="b" * 40),
+            patch.object(controller, "_load_closure_module", return_value=ClosureModule),
+            patch.object(controller, "_content", return_value=None),
+            patch.object(controller, "_find_pr", return_value=existing_pr),
+            patch.object(controller, "validate_candidate", return_value=candidate),
+            patch.object(controller, "_approval_exists", return_value=False),
+            patch.object(controller, "_create_branch") as create_branch,
+            patch.object(controller, "_put_closure") as put_closure,
+            patch.object(controller, "_run_canary", return_value={"canary": "1", "state": "ADVANCED"}),
+            patch.object(controller, "_run_canary2", return_value={"canary": "2", "state": "ADVANCED"}),
+            patch.object(controller, "_run_canary3", return_value={"canary": "3", "state": "WAITING"}),
+        ):
+            report = controller.run(Path("."), apply=True)
+
+        create_branch.assert_not_called()
+        put_closure.assert_not_called()
+        self.assertEqual(report["errors"], [])
+        erdos_state = next(x for x in report["states"] if x.get("problem") == "593")
+        self.assertEqual(erdos_state["state"], "AWAITING_COUNCIL_CLERK_DOCUMENTARY_REVIEW")
+        self.assertEqual(erdos_state["head_sha"], "a" * 40)
+
+    def test_report_errors_make_controller_run_fail(self):
+        self.assertEqual(_report_exit_code({"errors": []}), 0)
+        self.assertEqual(
+            _report_exit_code({"errors": [{"problem": "593", "error": "head drift"}]}),
+            1,
+        )
 
 
 if __name__ == "__main__":

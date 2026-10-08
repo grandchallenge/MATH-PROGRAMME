@@ -188,13 +188,13 @@ def run(solve_root: Path, apply: bool) -> dict[str,Any]:
                     continue
                 raise
             branch=branch_name(problem)
-            if apply:
+            pr=_find_pr(gh,branch)
+            if apply and pr is None:
                 _create_branch(gh,branch,main_sha)
                 _put_closure(gh,branch,problem,closure)
             candidate=validate_candidate(gh,solve_root,branch) if apply else {
                 "problem":problem,"branch":branch,"path":path,"closure":closure
             }
-            pr=_find_pr(gh,branch)
             if pr is None and apply:
                 pr=gh.request("POST",f"/repos/{OWNER}/{SOLVE}/pulls",{
                     "title":f"Close ERDOS-{problem} blind cohort for synthesis",
@@ -718,6 +718,10 @@ def _run_canary3(gh: Github, solve_root: Path, main_sha: str, apply: bool) -> di
         return {**candidate,"pr_number":pr["number"],"state":"PROTECTED_ADVANCEMENT_MERGED","merge_commit_sha":out.get("sha")}
     return {**candidate,"pr_number":pr["number"],"state":"READY_FOR_PROTECTED_ADVANCEMENT_MERGE"}
 
+def _report_exit_code(report: dict[str,Any]) -> int:
+    return 1 if report.get("errors") else 0
+
+
 def main() -> int:
     ap=argparse.ArgumentParser()
     ap.add_argument("--solve-root",type=Path,required=True)
@@ -726,7 +730,7 @@ def main() -> int:
     args=ap.parse_args()
     try:
         report=run(args.solve_root.resolve(),args.apply)
-        rc=0
+        rc=_report_exit_code(report)
     except Exception as exc:
         report={"schema_version":"1.0.0","controller":"GCL_ERDOS_OPEN_POSTPROTECT_LIFECYCLE","fatal_error":str(exc),"authority_created":False}
         rc=2
