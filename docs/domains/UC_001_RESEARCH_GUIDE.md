@@ -11,7 +11,7 @@ Frankl's union-closed sets conjecture remains open. The campaign has a mature pr
 
 ## 2. Plain object
 
-For every finite nonempty union-closed family other than the trivial empty-family edge case, the target is to prove that some element belongs to at least half of the member sets.
+For every finite nonempty union-closed family with nonempty support (excluding both the empty family and the singleton family consisting only of the empty set), the target is to prove that some element belongs to at least half of the member sets.
 
 ## 3. Current obstruction
 
@@ -19,7 +19,7 @@ The missing step is a genuine local-to-global bridge. Verified small-universe re
 
 ## 4. Working model
 
-Mathematical work should consume only the exact restricted claims protected in the campaign spine. Documentary work is separate: the proposed full-tier documentary remains subject to its own governed construction and atomic-admission requirements.
+Mathematical work should consume only the exact restricted claims protected in the campaign spine. Documentary work is separate: the full-tier documentary *The Element in Half the Worlds* is admitted and navigable at [the published reader](../documentaries/union_closed.md). Public admission supplies exposition, not a proof of Frankl's conjecture.
 
 ## 5. Theorem-spine location
 
@@ -27,7 +27,7 @@ Programme authority is `DOMAIN_01_UNION_CLOSED_MASTER_PLAN.md`. Supporting prote
 
 ## 6. Debt audit
 
-Mathematical debt: the universal bridge beyond bounded/restricted results. Documentary debt: convert the source-locked candidate into the complete page/edition/assets/source/manifest bundle before public admission.
+Mathematical debt: the universal bridge beyond bounded/restricted results. Documentary admission is complete; any remaining source-concordance, mathematics, or accessibility corrections are separate editorial debt, not an unperformed initial publication.
 
 ## 7. Claim boundary
 
@@ -35,4 +35,4 @@ No protected record proves or refutes Frankl's conjecture. Certification of rest
 
 ## 8. First executable step
 
-Read tracker #1 and the current protected master plan. For mathematics, select the smallest exact residual not already covered by qualified restricted claims. For documentary work, follow the UC-DOC governed admission sequence.
+Read tracker #1 and the current protected master plan. For mathematics, select the smallest exact residual not already covered by qualified restricted claims. For documentary work, inspect the admitted edition record and full-tier reader, then open a bounded editorial correction supported by exact published sources.
