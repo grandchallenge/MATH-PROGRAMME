@@ -74,6 +74,41 @@ def homepage_render_errors(index_html: Path) -> list[str]:
     return errors
 
 
+
+class InfoAdmonitionParser(VisibleTextParser):
+    """Detect the actual rendered info panel, not just its visible prose."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.info_boxes = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        super().handle_starttag(tag, attrs)
+        if tag == "div":
+            classes = set((dict(attrs).get("class") or "").split())
+            if {"admonition", "info"}.issubset(classes):
+                self.info_boxes += 1
+
+
+def admonition_render_errors(page_html: Path, expected_title: str) -> list[str]:
+    """Protect against MkDocs emitting literal !!! info instead of an info panel."""
+    if not page_html.is_file():
+        return [f"built admonition page is missing: {page_html}"]
+
+    parser = InfoAdmonitionParser()
+    parser.feed(page_html.read_text(encoding="utf-8"))
+    visible = parser.text()
+
+    errors: list[str] = []
+    if re.search(r'(?m)^\s*!!!\s+info\b', visible):
+        errors.append(f"{page_html} exposes literal !!! info markup")
+    if parser.info_boxes == 0:
+        errors.append(f"{page_html} has no rendered info admonition")
+    if expected_title not in visible:
+        errors.append(f"{page_html} is missing admonition title: {expected_title}")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -83,14 +118,20 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    errors = homepage_render_errors(Path(args.site_dir) / "index.html")
+    site_dir = Path(args.site_dir)
+    errors = homepage_render_errors(site_dir / "index.html")
+    for relative_path, title in (
+        ("CMDG_CM4/index.html", "Research surface authority"),
+        ("CMDG_CM4_RESEARCH_GUIDE/index.html", "Live work is issue-led"),
+    ):
+        errors.extend(admonition_render_errors(site_dir / relative_path, title))
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
         print(f"rendered documentation validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
 
-    print("rendered homepage contains no visible Markdown leakage and all front-door sections are present")
+    print("rendered homepage and CM4 info admonitions passed their HTML checks")
     return 0
 
 
