@@ -9,6 +9,15 @@
     **Live mathlib-upstream status** is tracked in [MATH-PROGRAMME #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).  
     If this page and an issue disagree about active work, the issue governs the active-work state. If either conflicts with a protected theorem receipt about an already-certified claim, the protected receipt governs the claim.
 
+## For independent readers and contributors
+
+- [Self-contained mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md): the exact statement, a finite model, the proof spine, and falsification-oriented review questions.
+- [Independent reproducibility protocol](CMDG_CM4_REPRODUCIBILITY.md): immutable source hashes, pinned Lean/mathlib environment, executable verification, expected local evidence and failure gates.
+- [Specialist review packet](CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md) and [review issue #1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222).
+- [Mathlib integration assessment](CMDG-CM4-MATHLIB-UPSTREAM-ASSESSMENT.md) and [upstream issue #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).
+
+No external expert-review conclusion or upstream mathlib acceptance is implied by the existence of these materials.
+
 ## 1. Status
 
 | Field | Current meaning |
