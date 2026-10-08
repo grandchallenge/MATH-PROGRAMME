@@ -1,5 +1,7 @@
 # Domain 04 · Birch–Swinnerton-Dyer
 
+**Accessible research guide:** [BSD-001 Research Guide](BSD_001_RESEARCH_GUIDE.md)
+
 
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/66  

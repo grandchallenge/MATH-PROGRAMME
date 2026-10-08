@@ -1,5 +1,7 @@
 # Domain 06 · Yang–Mills Existence and Mass Gap
 
+**Accessible research guide:** [YM-001 Research Guide](YM_001_RESEARCH_GUIDE.md)
+
 
 !!! info "Research surface authority"
     **LIVE:** [YM-001 canonical tracker #164](https://github.com/grandchallenge/MATH-PROGRAMME/issues/164), with active source/proof-completeness returns in MATHSOLVE.  

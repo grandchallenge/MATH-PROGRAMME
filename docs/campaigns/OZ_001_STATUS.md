@@ -1,5 +1,7 @@
 # OZ-001 — Odd Zeta research surface
 
+**Accessible research guide:** [OZ-001 Research Guide](OZ_001_RESEARCH_GUIDE.md)
+
 <p class="page-deck">Human-facing projection of the active Odd Zeta campaign under the GCL Research Surface Contract.</p>
 
 !!! info "Research surface authority"
