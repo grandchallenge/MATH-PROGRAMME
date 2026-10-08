@@ -13,30 +13,6 @@ P versus NP remains open. The campaign has a protected machine/encoding/source b
 
 The target is the exact uniform language-theoretic proposition comparing deterministic and nondeterministic polynomial time under locked Turing-machine, encoding, malformed-input, bit-length, and many-one reduction conventions.
 
-## 3. Exact obstruction
-
-The current blocker is definition-level concordance: any imported formal statement or restricted result must be shown to match the Programme machine-and-encoding lock before it can serve as a theorem interface. Restricted circuit, proof-complexity, oracle, or nonuniform results cannot be silently upgraded.
-
-## 4. Working model
-
-Historical theorem work embedded in Programme is frozen as lineage. New mathematical work must be Solve-owned or explicitly waived and must carry the full uniformity/encoding/reduction assumptions.
-
-## 5. Theorem-spine location
-
-Authority is `PNP-WP00-source-definition-equivalence-audit.md`; LIVE state is tracker #162. Protected successors include WP01 false-proof controls and WP02 theorem/barrier/lower-bound bookkeeping.
-
-## 6. Debt audit
-
-The next debt is an exact definition-concordance audit that yields one bounded theorem interface. Only after that should a restricted algorithmic or lower-bound target be opened.
-
-## 7. Claim boundary
-
-No new polynomial-time algorithm for an NP-complete language, unrestricted machine/circuit lower bound, barrier circumvention, novelty, or priority claim is admitted.
-
-## 8. First executable step
-
-Resolve the definition-level relationship between the candidate formal statement and the locked Programme model. Then open one Solve-owned restricted target with all uniformity and encoding assumptions explicit.
-
 ## Reader entry and prerequisites
 
 **Status:** open complexity separation, source/encoding baseline audited. **Audience:** undergraduate algorithms students, graduate complexity readers, agentic formalizers. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
@@ -46,6 +22,14 @@ Resolve the definition-level relationship between the candidate formal statement
 | Required | Boolean logic, finite algorithms, truth assignments |
 | Helpful | Asymptotic bit complexity, reductions, Turing machines |
 | Deferred | Relativization, circuit lower bounds, proof complexity |
+
+## 3. Exact obstruction
+
+The current blocker is definition-level concordance: any imported formal statement or restricted result must be shown to match the Programme machine-and-encoding lock before it can serve as a theorem interface. Restricted circuit, proof-complexity, oracle, or nonuniform results cannot be silently upgraded.
+
+## 4. Working model
+
+Historical theorem work embedded in Programme is frozen as lineage. New mathematical work must be Solve-owned or explicitly waived and must carry the full uniformity/encoding/reduction assumptions.
 
 ## Core bridge and first examples by hand
 
@@ -73,6 +57,18 @@ print(sum(sat2(x) for x in (False, True)))
 ## First theorem or local proposition
 
 **Certificate verification lemma.** Given a CNF formula and a complete Boolean assignment, checking whether the assignment satisfies the formula requires inspecting each literal occurrence at most once and can be implemented in time linear in the encoded formula length. This proves efficient *verification*, not efficient discovery or the P/NP relation.
+
+## 5. Theorem-spine location
+
+Authority is `PNP-WP00-source-definition-equivalence-audit.md`; LIVE state is tracker #162. Protected successors include WP01 false-proof controls and WP02 theorem/barrier/lower-bound bookkeeping.
+
+## 6. Debt audit
+
+The next debt is an exact definition-concordance audit that yields one bounded theorem interface. Only after that should a restricted algorithmic or lower-bound target be opened.
+
+## 7. Claim boundary
+
+No new polynomial-time algorithm for an NP-complete language, unrestricted machine/circuit lower bound, barrier circumvention, novelty, or priority claim is admitted.
 
 ## Challenge ladder
 
@@ -104,3 +100,6 @@ The finite truth-table output is independently checkable; the verifier lemma can
 
 **First executable step / completion test:** Reproduce the two assignment counts, then write one exact encoding-level statement whose formalization could be compared to WP00 without weakening uniformity or bit-length rules.
 
+## 8. First executable step
+
+Resolve the definition-level relationship between the candidate formal statement and the locked Programme model. Then open one Solve-owned restricted target with all uniformity and encoding assumptions explicit.
