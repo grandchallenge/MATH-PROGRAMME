@@ -110,6 +110,8 @@ Each completed pillar passed exact-head CI, independent non-author review by `ji
 
 The original machine-readable closeout candidate (retained unmodified for historical provenance) is [`governance/euclid_gcd_e2e_001_closeout.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/euclid_gcd_e2e_001_closeout.json).
 
+The terminal provenance record is `governance/euclid_gcd_e2e_001_terminal_readback_001.json`; it preserves the historical candidate as a candidate and confirms protected Stage 1 readback without conferring new certification.
+
 ## Claim boundary
 
 This Stage 1 result does **not** establish:
