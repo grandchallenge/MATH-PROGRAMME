@@ -3,7 +3,7 @@
 
 !!! info "Research surface authority"
     **LIVE:** [RH-001 canonical tracker #163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), with route trackers in MATHSOLVE.  
-    **AUTHORITY:** `RH-WP00-source-normalization-equivalence-audit.md` and registered protected campaign records.  
+    **AUTHORITY:** `RH-WP00-source-normalization-equivalence-audit.md`, registered protected campaign records, and `governance/rh_001_authority_transition_r080.json` for the latest protected Route C transition.  
     **EXPOSITION:** this page is a human-facing projection. The issue governs mutable research state; protected records govern promoted/certified claims.
 
 **Campaign ID:** `RH-001`  
@@ -31,6 +31,10 @@ PR #90 implemented and merged the two authorized successor packages:
 Their deterministic replay and integrated programme-policy workflow passed. They are not formally promoted: the governing legacy review records retain `promotion_recommended: false` and blocking Referee findings pending independent source-locator review and a schema-bound or explicitly superseding promotion decision.
 
 Mechanism generation, claimed-proof promotion, unrestricted numerical search, novelty claims, and any new zero-range certification remain closed.
+
+### Latest protected forward transition
+
+On MATHSOLVE protected `main` at `e3c15b95722048be5ff0f186d85d24b41fd57a81`, RH-R080 protects the signed-projective normality interface for Route C. It proves that pointwise positivity is stronger than necessary for the abstract C4 normal-family implication: uniform `kappa_delta` control on every strict substrip is sufficient. Actual CCM `kappa_delta` control remains open, so this does not discharge actual-family C4, determinant convergence, or RH.
 
 ## Canonical artifacts
 
