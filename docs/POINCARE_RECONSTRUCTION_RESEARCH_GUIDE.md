@@ -72,7 +72,7 @@ print([(name, obj["homology_sphere"], obj["simply_connected"])
 # Expected: one true/true row and one true/false row
 ```
 
-**Support route:** a finite logical regression fixture, not validation of the imported topological facts.
+**Support route:** a finite logical regression fixture. **Limitation:** the imported homology and fundamental-group facts are not validated computationally by this record.
 
 ## First theorem or local proposition
 
