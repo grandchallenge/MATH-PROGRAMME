@@ -13,34 +13,6 @@ VGSE-001 has completed bounded Programme admission and downstream synchronizatio
 
 VGSE converts broad reconstruction questions into bounded successor mandates with explicit inputs, outputs, replay conditions, and claim boundaries.
 
-## 3. Exact obstruction
-
-The protected authority chain establishes route admission and synchronization, not the substantive target theorem. Certification remains blocked on new evidence satisfying the route contract.
-
-## 4. Working model
-
-Subsequent mechanical-semantics and identifiability-aware work must consume the protected bounded-admission state without inferring theorem truth from engineering completion.
-
-## 5. Theorem-spine location
-
-Authority:
-- `governance/vgse_bounded_admission_decision.json`
-- `governance/vgse_post_repin_closure.json`
-
-LIVE coordination begins at tracker #170 and continues through the current successor issues named by the Programme route.
-
-## 6. Debt audit
-
-Open debt is evidence, not route activation: prove or falsify the bounded successor claims, preserve exact semantic interfaces, and produce a certification-ready evidence packet before adjudication.
-
-## 7. Claim boundary
-
-No substantive theorem or certification result is admitted by route activation, issue closure, or this guide.
-
-## 8. First executable step
-
-Read the latest protected successor record downstream of the post-repin closure, then execute the smallest active bounded mandate.
-
 ## Reader entry and prerequisites
 
 **Status:** bounded route activated; substantive certification pending evidence. **Audience:** graduate geometry/engineering readers and verification contributors. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
@@ -50,6 +22,14 @@ Read the latest protected successor record downstream of the post-repin closure,
 | Required | Two-dimensional coordinates, determinants, affine transformations |
 | Helpful | Inverse problems, identifiability, constraint systems |
 | Deferred | VGSE five-root geometry, mechanism semantics and protected formal interfaces |
+
+## 3. Exact obstruction
+
+The protected authority chain establishes route admission and synchronization, not the substantive target theorem. Certification remains blocked on new evidence satisfying the route contract.
+
+## 4. Working model
+
+Subsequent mechanical-semantics and identifiability-aware work must consume the protected bounded-admission state without inferring theorem truth from engineering completion.
 
 ## Core bridge and first examples by hand
 
@@ -78,6 +58,22 @@ Inputs are the two landmark triples; operation computes twice signed triangle ar
 ## First theorem or local proposition
 
 **Affine uniqueness lemma.** An affine map \(T(x)=Ax+b\) on \(\mathbb R^2\) is determined by its values on three noncollinear points: subtract the first image from the others; the two independent displacement vectors span \(\mathbb R^2\), determining \(A\), then \(b\). If the points are collinear, this argument fails. This is ordinary linear algebra.
+
+## 5. Theorem-spine location
+
+Authority:
+- `governance/vgse_bounded_admission_decision.json`
+- `governance/vgse_post_repin_closure.json`
+
+LIVE coordination begins at tracker #170 and continues through the current successor issues named by the Programme route.
+
+## 6. Debt audit
+
+Open debt is evidence, not route activation: prove or falsify the bounded successor claims, preserve exact semantic interfaces, and produce a certification-ready evidence packet before adjudication.
+
+## 7. Claim boundary
+
+No substantive theorem or certification result is admitted by route activation, issue closure, or this guide.
 
 ## Challenge ladder
 
@@ -109,3 +105,6 @@ Toy affine uniqueness is directly provable. For VGSE, a certificate requires the
 
 **First executable step / completion test:** Replay both determinants, then extract from the protected successor one actual observation map, one identified ambiguity (if any), and its exact admissibility tests; return a bounded theorem, replay, or source-verified obstruction.
 
+## 8. First executable step
+
+Read the latest protected successor record downstream of the post-repin closure, then execute the smallest active bounded mandate.
