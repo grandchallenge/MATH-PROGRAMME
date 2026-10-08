@@ -13,26 +13,6 @@ This campaign slice is terminal. The bounded certified result is `gcd(252,105)=2
 
 The exercise demonstrates the full Forge → Solve → Cert → Programme path on a small theorem where the mathematical object, construction, witness, checker, formal theorem, and institutional authority can be kept distinct.
 
-## 3. Exact result
-
-The terminal Stage 1 Programme closeout was protected at `183ff2a0adfbe5bd0ffd5f2e638089b94b868c54` (tracker #240). The archived candidate JSON still describes its pre-merge state; this is historical provenance, not the current gate. The protected claim set covers the concrete gcd instance, the three linked Euclidean divisions, the Bézout identity `21 = -2*252 + 5*105`, and soundness of the accepted-certificate predicate for the bounded formalization.
-
-## 4. Authority chain
-
-The authoritative Programme record is `governance/euclid_gcd_e2e_001_closeout.json`. The human proof trace is `docs/EUCLID_GCD_E2E_001_PROOF_TRACE.md`.
-
-## 5. What remains open
-
-Nothing remains for Stage 1 itself. The linear-Diophantine Stage 2 successor has independently completed and is explained in [its certified proof trace](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md). The historical Book VII microcampaign remains a separate source-concordance and admission operation, not a Stage 1 consequence.
-
-## 6. Claim boundary
-
-The result is not a novelty, priority, universal producer-correctness, or historical-verbatim-equivalence claim. This guide creates no additional certification effect.
-
-## 7. First executable step
-
-For audit or replay, begin from the protected closeout record and follow its exact Forge, Solve, Cert, and Programme identities. For new mathematics, open a separate successor with its own authority chain.
-
 ## Reader entry and prerequisites
 
 **Status:** bounded certified Stage 1; independently protected Stage 2 exists. **Audience:** beginning number theory readers, engineers of proof checkers, formalization collaborators. **Time to first example:** 3 minutes. **Time to first fixture:** 5 minutes.
@@ -74,6 +54,22 @@ Input, quotient/remainder operation and expected output are exact. **Support rou
 
 **Euclidean invariance.** If \(a=qb+r\), then \(\gcd(a,b)=\gcd(b,r)\): the common divisors coincide because \(r=a-qb\) and \(a=qb+r\). Applying this three times proves the example's gcd.
 
+## 3. Exact result
+
+The terminal Stage 1 Programme closeout was protected at `183ff2a0adfbe5bd0ffd5f2e638089b94b868c54` (tracker #240). The archived candidate JSON still describes its pre-merge state; this is historical provenance, not the current gate. The protected claim set covers the concrete gcd instance, the three linked Euclidean divisions, the Bézout identity `21 = -2*252 + 5*105`, and soundness of the accepted-certificate predicate for the bounded formalization.
+
+## 4. Authority chain
+
+The authoritative Programme record is `governance/euclid_gcd_e2e_001_closeout.json`. The human proof trace is `docs/EUCLID_GCD_E2E_001_PROOF_TRACE.md`.
+
+## 5. What remains open
+
+Nothing remains for Stage 1 itself. The linear-Diophantine Stage 2 successor has independently completed and is explained in [its certified proof trace](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md). The historical Book VII microcampaign remains a separate source-concordance and admission operation, not a Stage 1 consequence.
+
+## 6. Claim boundary
+
+The result is not a novelty, priority, universal producer-correctness, or historical-verbatim-equivalence claim. This guide creates no additional certification effect.
+
 ## Challenge ladder
 
 | Stage | Duty | Completion test |
@@ -105,3 +101,6 @@ The protected Stage 1 theorem is not produced by this teaching fixture. Cross-pi
 
 **First executable step / completion test:** Recalculate all remainders and the Bézout witness independently, compare exact output against the published trace, and mark the \((0,0)\) case excluded.
 
+## 7. First executable step
+
+For audit or replay, begin from the protected closeout record and follow its exact Forge, Solve, Cert, and Programme identities. For new mathematics, open a separate successor with its own authority chain.
