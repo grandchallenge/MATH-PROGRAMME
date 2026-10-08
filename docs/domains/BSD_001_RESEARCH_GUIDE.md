@@ -13,30 +13,6 @@ The Birch–Swinnerton-Dyer conjecture remains open. WP00–WP04 have normalized
 
 The campaign keeps three obligations separate: Mordell–Weil rank equals analytic rank; finiteness of the Tate–Shafarevich group; and the refined leading-term formula with periods, regulator, Tamagawa numbers, torsion, and normalization data explicit.
 
-## 3. Exact obstruction
-
-A parity theorem, family theorem, one-prime result, finite curve computation, or `p`-adic formula does not establish the universal complex conjecture. The selected restricted target must be proved under its exact one-prime and nonvacuity firewalls before it can enter certification.
-
-## 4. Working model
-
-Future theorem work is Solve-owned. The protected Programme stack supplies source normalization, false-proof exclusions, theorem dependencies, bounded computation, and target selection; it does not silently confer theorem status.
-
-## 5. Theorem-spine location
-
-Authority is `DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`; LIVE state is tracker #66. The current bounded target is `BSD-R2-A1`.
-
-## 6. Debt audit
-
-Open debt is the proof package for `BSD-R2-A1`: exact local/global hypotheses, source dependencies, one-prime firewall, nonvacuity boundary, and a clean MATHCERT handoff.
-
-## 7. Claim boundary
-
-The rank equality, refined formula, finiteness of `Sha`, and `BSD-R2-A1` remain unproved. Computation and formal interfaces do not substitute for theorem proof.
-
-## 8. First executable step
-
-Construct the Solve-owned `BSD-R2-A1` proof package from the protected target contract. Do not promote finite examples, statistics, or nonvacuity witnesses.
-
 ## Reader entry and prerequisites
 
 **Status:** BSD open, restricted target \(BSD\)-\(R2\)-\(A1\) unproved. **Audience:** graduate arithmetic readers and source auditors. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
@@ -46,6 +22,14 @@ Construct the Solve-owned `BSD-R2-A1` proof package from the protected target co
 | Required | Modular arithmetic, polynomial equations, rational numbers |
 | Helpful | Elliptic curves, group law, analytic functions |
 | Deferred | Heights, Selmer groups, \(\Sha\), \(L\)-functions and leading-term normalizations |
+
+## 3. Exact obstruction
+
+A parity theorem, family theorem, one-prime result, finite curve computation, or `p`-adic formula does not establish the universal complex conjecture. The selected restricted target must be proved under its exact one-prime and nonvacuity firewalls before it can enter certification.
+
+## 4. Working model
+
+Future theorem work is Solve-owned. The protected Programme stack supplies source normalization, false-proof exclusions, theorem dependencies, bounded computation, and target selection; it does not silently confer theorem status.
 
 ## Core bridge and first examples by hand
 
@@ -74,6 +58,18 @@ Inputs \(p=5\), the polynomial and explicit enumeration are fixed; output is the
 ## First theorem or local proposition
 
 **Pairing lemma (odd characteristic).** For fixed \(x\in\mathbb F_p\), solutions of \(y^2=f(x)\) occur as \(y\) and \(-y\), except \(y=0\), which pairs with itself. This follows from \(y^2=(-y)^2\) and explains the parity pattern in finite point counts. It says nothing about analytic rank.
+
+## 5. Theorem-spine location
+
+Authority is `DOMAIN_04_BIRCH_SWINNERTON_DYER_MASTER_PLAN.md`; LIVE state is tracker #66. The current bounded target is `BSD-R2-A1`.
+
+## 6. Debt audit
+
+Open debt is the proof package for `BSD-R2-A1`: exact local/global hypotheses, source dependencies, one-prime firewall, nonvacuity boundary, and a clean MATHCERT handoff.
+
+## 7. Claim boundary
+
+The rank equality, refined formula, finiteness of `Sha`, and `BSD-R2-A1` remain unproved. Computation and formal interfaces do not substitute for theorem proof.
 
 ## Challenge ladder
 
@@ -105,3 +101,6 @@ Finite point enumeration is independently replayable. Any arithmetic/analytic ra
 
 **First executable step / completion test:** Reproduce the finite enumeration, verify its pairing property, and write the exact \(BSD\)-\(R2\)-\(A1\) hypotheses and missing proof node before considering a solver.
 
+## 8. First executable step
+
+Construct the Solve-owned `BSD-R2-A1` proof package from the protected target contract. Do not promote finite examples, statistics, or nonvacuity witnesses.
