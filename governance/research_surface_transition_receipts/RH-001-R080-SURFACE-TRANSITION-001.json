@@ -1,0 +1,59 @@
+{
+  "record_type": "GCL_RESEARCH_SURFACE_TRANSITION_RECONCILIATION_RECEIPT",
+  "schema_version": "1.0.0",
+  "receipt_id": "RH-001-R080-SURFACE-TRANSITION-001",
+  "campaign_id": "RH-001",
+  "parent_trackers": [
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1229",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1230"
+  ],
+  "transition": {
+    "live_tracker": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/163",
+    "live_transition": "RH-R080 protected Solve transition recorded in mutable LIVE tracker after protected readback",
+    "authority_pr": "https://github.com/grandchallenge/MATHSOLVE/pull/1014",
+    "authority_candidate_head": "dae0b947262a63a62cd5e457a3648cb342260c02",
+    "authority_protected_merge": "e3c15b95722048be5ff0f186d85d24b41fd57a81",
+    "authority_protected_readback": "e3c15b95722048be5ff0f186d85d24b41fd57a81",
+    "authority_signature_verified": true,
+    "authority_record": "work_packages/RH_R080_SIGNED_PROJECTIVE_NORMALITY.md",
+    "programme_authority_transition_record": "governance/rh_001_authority_transition_r080.json"
+  },
+  "observation": {
+    "programme_baseline": "4d63850d715862a596713711c267821172c542f3",
+    "external_authority_advanced_before_registration": {
+      "reconcile_status": "CONSISTENT",
+      "errors": [],
+      "note": "Existing reconciler could not detect an external protected authority transition until that transition was represented in the registered Programme AUTHORITY surface; this was the dynamic synchronization gap exercised by this tranche."
+    },
+    "stale_exposition_commit": "23f311194e7dd0fbd6f4a347a6047fcf9506d82c",
+    "stale_exposition_validation": {
+      "status": "RECONCILE",
+      "diagnostic": "RH-001: mature exposition missing registered authority record governance/rh_001_authority_transition_r080.json",
+      "authority_effect": "NONE",
+      "automatic_claim_promotion": false,
+      "next_action": "repair listed surface relations through ordinary issue/protected-record/docs routes"
+    }
+  },
+  "reconciliation": {
+    "guide_update_commit": "de306a6e6d35eeee37d43b851775021cc6018021",
+    "domain_page_update_commit": "4546b061792524788da4f8e15a5773c8b43c8aed",
+    "exact_after_validation_head": "4546b061792524788da4f8e15a5773c8b43c8aed",
+    "validate_research_surfaces": "PASS",
+    "reconcile_research_surfaces": {
+      "rh_status": "CONSISTENT",
+      "errors": [],
+      "authority_effect": "NONE",
+      "automatic_claim_promotion": false,
+      "next_action": "none"
+    }
+  },
+  "claim_boundary": {
+    "mathematical_authority_created_by_reconciliation": false,
+    "certification_authority_created": false,
+    "automatic_claim_promotion": false,
+    "rh_proved": false,
+    "actual_ccm_c4_discharged": false,
+    "determinant_convergence_proved": false
+  },
+  "disposition": "DYNAMIC_LIVE_AUTHORITY_EXPOSITION_RECONCILIATION_EXERCISED"
+}
