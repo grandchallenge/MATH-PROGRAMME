@@ -109,7 +109,7 @@ theorem weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
 
 /-- Evaluating an arbitrary Point measure section through the solid comparison and a coefficient
 morphism is exactly the product functional of its Nöbeling coordinate vector. -/
-theorem applied_d_point_kernelProductFunctional
+theorem applied_d_point_kernelProductFunctional_via_globalPointLift
     (X : Profinite.{u})
     (d :
       (Condensed.profiniteSolid CMDG.CondensedCM4P3G.R.{u}).obj X ⟶
@@ -260,7 +260,7 @@ theorem canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
       (ConcreteCategory.hom eU.hom) μ = s := by
     have h := ConcreteCategory.congr_hom eU.inv_hom_id s
     simpa [μ, ConcreteCategory.comp_apply] using h
-  have hcompat := applied_d_point_kernelProductFunctional X d μ
+  have hcompat := applied_d_point_kernelProductFunctional_via_globalPointLift X d μ
   have hk0raw := congrArg
     (fun F : (IntegralBasisIndex X → ℤ) →+ ℤ => F aμ) hk
   have hk0 : kernelProductFunctional X d aμ = 0 := by
@@ -382,7 +382,7 @@ theorem coefficientObject_isSolid :
     (CMDG.CondensedCM4P3D.coefficientResidualHomTheorem_iff_isSolid.{u}).1 hres
 
 #check weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
-#check applied_d_point_kernelProductFunctional
+#check applied_d_point_kernelProductFunctional_via_globalPointLift
 #check canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
 #check coefficient_hom_ext_canonicalPoint
 #check eq_zero_of_kernelProductFunctional_eq_zero
@@ -391,7 +391,7 @@ theorem coefficientObject_isSolid :
 #check coefficientObject_isSolid
 
 #print axioms weightedFiniteBooleanMeasureLimitLift_allTrue_realizes_point
-#print axioms applied_d_point_kernelProductFunctional
+#print axioms applied_d_point_kernelProductFunctional_via_globalPointLift
 #print axioms canonicalPointComponent_eq_zero_of_kernelProductFunctional_eq_zero
 #print axioms coefficient_hom_ext_canonicalPoint
 #print axioms eq_zero_of_kernelProductFunctional_eq_zero
