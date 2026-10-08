@@ -104,11 +104,11 @@ The protected MATHCERT disposition is:
 | MATHFORGE | `3622bac82a39cdb9e82ec463919d9e6927c1ec0e` | fixed the modern statement, risks, source boundary, and downstream contract |
 | MATHSOLVE | `3a8493aa322f0e640c921b8824c4d7f88a8c057d` | produced deterministic candidate evidence |
 | MATHCERT | `78b69e6a3461a83f4893d61c421b1570c08a9ba6` | independently checked the candidate and proved the bounded Lean theorems |
-| MATH-PROGRAMME | pending this closeout | binds the cross-pillar receipt and publishes this page |
+| MATH-PROGRAMME | `183ff2a0adfbe5bd0ffd5f2e638089b94b868c54` | protected Stage 1 closeout and published proof trace |
 
 Each completed pillar passed exact-head CI, independent non-author review by `jimsteeg`, Human Steward exact-head disposition, deliberate protected merge, and protected-main readback.
 
-The machine-readable closeout candidate is [`governance/euclid_gcd_e2e_001_closeout.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/euclid_gcd_e2e_001_closeout.json).
+The original machine-readable closeout candidate (retained unmodified for historical provenance) is [`governance/euclid_gcd_e2e_001_closeout.json`](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/euclid_gcd_e2e_001_closeout.json).
 
 ## Claim boundary
 
@@ -121,7 +121,7 @@ This Stage 1 result does **not** establish:
 - completion or activation of the linear Diophantine extension;
 - completion or activation of `EUCLID-ELEMENTS-BOOK-VII-MICRO-001`.
 
-The linear Diophantine theorem remains blocked until this Programme closeout is independently approved, Human-Steward-authorized, protected-merged, and read back. The Book VII microcampaign additionally requires protected Stage 2 completion and an exact historical source lock.
+The Stage 1 closeout was independently approved and merged into protected Programme `main` at `183ff2a0adfbe5bd0ffd5f2e638089b94b868c54`; [tracker #240](https://github.com/grandchallenge/MATH-PROGRAMME/issues/240#issuecomment-5190940620) records terminal readback. The [Stage 2 linear-Diophantine theorem and bounded examples](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md) are now certified under their separate protected authority chain. The Book VII historical microcampaign remains subject to its independent source, licensing, and admission gates. Neither successor strengthens the bounded Stage 1 gcd claim.
 
 ## Reproduce the bounded checks
 
@@ -130,4 +130,4 @@ The authoritative executable and formal surfaces remain in their protected repos
 - MATHSOLVE candidate and producer at merge `3a8493aa322f0e640c921b8824c4d7f88a8c057d`;
 - MATHCERT checker, tests, and Lean module at merge `78b69e6a3461a83f4893d61c421b1570c08a9ba6`.
 
-The Programme closeout validator checks the exact receipt, arithmetic trace, Bézout witness, page content, and non-inflation boundaries without contacting the network.
+The Programme closeout validator checks the frozen Stage 1 candidate receipt, arithmetic trace, Bézout witness, and non-inflation boundaries without contacting the network. That candidate includes historical pending-gate fields; the terminal protected gate is established separately by the exact merge/readback evidence in tracker #240 and the Stage 2 protected lineage. Do not infer current pending status from frozen candidate metadata.
