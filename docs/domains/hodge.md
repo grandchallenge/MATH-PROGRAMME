@@ -1,5 +1,7 @@
 # Domain 03 · Hodge Conjecture
 
+**Accessible research guide:** [HC-001 Research Guide](HC_001_RESEARCH_GUIDE.md)
+
 
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/65  
