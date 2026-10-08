@@ -1,5 +1,7 @@
 # VGSE-001 — Governed successor engineering research surface
 
+**Accessible research guide:** [VGSE-001 Research Guide](VGSE_001_RESEARCH_GUIDE.md)
+
 <p class="page-deck">Human-facing projection of the bounded VGSE successor route under the GCL Research Surface Contract.</p>
 
 !!! info "Research surface authority"
