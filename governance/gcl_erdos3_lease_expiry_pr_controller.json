@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "MP-GCL-ERDOS3-LEASE-EXPIRY-PR-CONTROLLER-001",
+  "status": "ACTIVE_BOUNDED",
+  "purpose": "Open ordinary MATHSOLVE pull requests for already-created GCL-ERDOS3 silent-lease expiry reconciliation branches. The controller validates lifecycle-only state and has no authority to write branches, merge, adjudicate mathematics, or promote frontier claims.",
+  "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
+  "environment": "release-trust",
+  "target_repository": "grandchallenge/MATHSOLVE",
+  "branch_profile": {
+    "prefix": "maintenance/gcl-erdos3-lease-expiry-",
+    "pattern": "^maintenance/gcl-erdos3-lease-expiry-gcl-erdos3-e3-v03-ia-([0-9]{3})-e([0-9]+)$",
+    "dispatch_pattern": "^GCL-ERDOS3-E3-V03-IA-[0-9]{3}$",
+    "assignment_id": "E3-V03",
+    "lease_policy_id": "GCL-IA-LEASE-25M-24M-001"
+  },
+  "token_scope": {
+    "repositories": [
+      "MATHSOLVE"
+    ],
+    "permissions": {
+      "contents": "read",
+      "pull_requests": "write"
+    }
+  },
+  "allowed_changed_paths": [
+    "work_packages/GCL_ERDOS3/CAMPAIGN.json",
+    "work_packages/GCL_ERDOS3/FRONTIER.json",
+    "work_packages/GCL_ERDOS3/dispatches/<dispatch_id>.json"
+  ],
+  "required_expiry_state": {
+    "dispatch_state": "LEASE_EXPIRED__NO_RETURN",
+    "dispatch_status": "LEASE_EXPIRED__NO_RETURN",
+    "replay_budget_consumed": false,
+    "valid_result_count_at_expiry": 0,
+    "campaign_status": "ACTIVE__E3_V03_LEASE_EXPIRED",
+    "campaign_dispatch_state": "VERIFY_LEASE_EXPIRED__REISSUE_REQUIRED",
+    "active_dispatches_empty": true,
+    "verification_status": "LEASE_EXPIRED__REISSUE_REQUIRED",
+    "candidate_promotion_forbidden": true
+  },
+  "allowed_actions": [
+    "read protected MATHSOLVE main and registered lease-expiry branches",
+    "compare an expiry branch against protected main",
+    "validate exact dispatch, lease epoch, activation receipt, expiry timestamps, and zero-return state",
+    "open a pull request from an existing validated lease-expiry branch to main"
+  ],
+  "prohibited_actions": [
+    "write repository contents",
+    "create or alter lease-expiry branches",
+    "merge or approve pull requests",
+    "modify protected main",
+    "modify issues",
+    "modify campaign state outside the already-created candidate branch",
+    "perform mathematical adjudication",
+    "promote a theorem or frontier node",
+    "claim certification or canonical mathematical effect",
+    "use administration, actions-write, checks-write, issues-write, or workflow-write authority"
+  ],
+  "wake": {
+    "kind": "shared External intake PR controller GitHub Actions job",
+    "cadence": "every 10 minutes",
+    "manual_replay": true
+  },
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "mathematical_claim": false,
+    "claim_promotion": false
+  }
+}
