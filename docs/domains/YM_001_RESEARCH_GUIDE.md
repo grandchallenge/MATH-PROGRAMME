@@ -46,3 +46,70 @@ Issue closure, source discovery, replay, numerical evidence, or this guide canno
 ## 9. First executable step
 
 Read #164, then re-fetch the current protected Solve handoff for the smallest surviving D003 proof-completeness node. Work only against protected source locks and return an exact theorem, falsification, or blocker.
+
+## Reader entry and prerequisites
+
+**Status:** open existence-and-mass-gap target, protected source/theorem interfaces only. **Audience:** graduate mathematical physics readers, source auditors, and proof-completeness reviewers. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
+
+| Level | Concepts |
+| --- | --- |
+| Required | Matrices, eigenvalues, limits of real sequences |
+| Helpful | Hilbert spaces, spectra, positive operators |
+| Deferred | Gauge fields, constructive QFT, Osterwalder–Schrader reconstruction and Slavnov identities |
+
+## Core bridge and first examples by hand
+
+**Friendly example:** the finite Hermitian matrix \(H=\operatorname{diag}(0,2)\) has vacuum energy 0 and first excited energy 2. Its finite spectral gap is exactly 2.
+
+**Obstruction example:** the sequence \(H_n=\operatorname{diag}(0,1/n)\) has a positive gap for each finite \(n\), but the gaps tend to zero. Thus showing positivity **at every regulator** does not establish a strictly positive limiting physical gap. Neither matrix is a model of the actual four-dimensional Yang–Mills theory.
+
+Bridge: finite spectrum → regulator-dependent gap → absence of uniform lower bound → continuum/OS reconstruction and positive physical gap as separate theorem obligations.
+
+## First computation or fixture
+
+Python 3 exact rational toy gap experiment:
+
+```python
+from fractions import Fraction
+for n in (1, 2, 5, 10):
+    gap = Fraction(1, n)
+    print(n, gap)
+# Expected: (1,1), (2,1/2), (5,1/5), (10,1/10), printed as separate rows
+```
+
+Input \(n\); operation reads the nonzero eigenvalue of a two-dimensional diagonal matrix; output is exact rational arithmetic. **Support route:** elementary regression fixture. **Limitation:** no continuum, interacting QFT or Yang–Mills evidence.
+
+## First theorem or local proposition
+
+**Vanishing-gap lemma.** For \(H_n=\operatorname{diag}(0,1/n)\), every finite \(H_n\) has positive spectral gap but \(\inf_n\operatorname{gap}(H_n)=0\). Proof: for any \(\varepsilon>0\), choose an integer \(n>1/\varepsilon\). This demonstrates why a regulator-independent bound is a separate analytic requirement; it cannot substitute for the full theory existence axioms.
+
+## Challenge ladder
+
+| Stage | Duty | Completion test |
+| --- | --- | --- |
+| Exercise | Find the eigenvalues of \(H=\operatorname{diag}(0,2)\) | 0 and 2 |
+| Exploration | Derive the finite \(H_n\) gaps | \(1/n\) |
+| Fixture | Execute rational checker | Match all four values |
+| Lemma candidate | Prove vanishing-gap lemma | Quantified \(\varepsilon\) argument |
+| Open direction | Trace one D003 theorem-grade convergence dependency | Name topology/domain/uniformity needed by actual downstream statement |
+
+## Certification path and continuation graph
+
+The finite-matrix lemma is independently provable but not a YM certificate. Native Solve proof-completeness work must source-lock the actual continuum/OS/Slavnov statements and preserve its function-space, IR, regulator and uniformity conditions before any Cert handoff.
+
+`matrix fixture → uniform-gap obstruction → exact D003 source theorem → continuum/OS convergence bridge [OPEN] → physical-spectrum construction → Cert [not yet eligible]`
+
+## Trust quartet
+
+**Proved:** elementary vanishing-gap lemma, and only bounded source claims protected by GCL. **Checked:** rational matrix fixture and closed historical D003 returns. **Open:** construction, full reconstruction, spectral gap. **External verification:** convergence and reconstruction in actual primary sources, not the finite toy model.
+
+## Bibliography and source audit
+
+| Source | Role | Audit state |
+| --- | --- | --- |
+| [YM WP00 source audit](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/YM-WP00-source-normalization-equivalence-audit.md) | Canonical Clay target and axiomatic floor | Protected Programme authority |
+| [D003 UV/large-field supplement](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/campaigns/yang_mills/YM_D003_UV_LARGE_FIELD_SUPPLEMENT.json) | Bounded source context | Protected, not terminal bridge |
+| Jaffe–Witten; Osterwalder–Schrader; Balaban / MRS sources (locked in protected ledger) | Imported theorem dependencies | Exact source scope and proof completeness remain controlling |
+
+**First executable step / completion test:** Reproduce the finite counterexample and identify one actual missing D003 implication with named domain, topology, uniformity estimate and source identity; do not infer a physical mass gap from the toy sequence.
+
