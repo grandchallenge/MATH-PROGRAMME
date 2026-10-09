@@ -98,9 +98,10 @@ def check_merge_queue(detail: dict, c: dict) -> None:
 
 def projected(detail: dict) -> dict:
     result = {key: copy.deepcopy(detail[key]) for key in WRITABLE}
-    params = review_params(result)
-    for key in ("required_approving_review_count", "require_last_push_approval"):
-        params[key] = "<NARROW_REVIEW_MIGRATION>"
+    if any(rule["type"] == "pull_request" for rule in result["rules"]):
+        params = review_params(result)
+        for key in ("required_approving_review_count", "require_last_push_approval"):
+            params[key] = "<NARROW_REVIEW_MIGRATION>"
     return result
 
 
