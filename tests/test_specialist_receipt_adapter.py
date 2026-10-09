@@ -49,9 +49,38 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
             "reviewer_identity": "gcl-independent-mathematical-referee",
             "review_independence": "INDEPENDENT_NON_AUTHOR",
             "review_scope": self.receipt["review_scope"],
+            "review_anchor": {
+                "source_pr_number": 42,
+                "source_pr_head_sha": "3" * 40,
+                "review_id": 177,
+                "reviewer_login": "gcl-independent-mathematical-referee",
+            },
         }
+        self.source_pr = {
+            "merged_at": "2026-10-09T10:00:00Z",
+            "head": {"sha": "3" * 40},
+            "base": {"ref": "main"},
+            "user": {"login": "cert-evidence-author"},
+            "changed_files": 1,
+        }
+        self.source_files = [
+            {"filename": "certificates/CM4-review.json",
+             "status": "added", "sha": self.proof_blob},
+        ]
+        self.source_reviews = [
+            {"id": 177, "state": "APPROVED",
+             "commit_id": "3" * 40,
+             "submitted_at": "2026-10-09T10:15:00Z",
+             "user": {"login": "gcl-independent-mathematical-referee"}},
+        ]
 
     def api(self, path: str):
+        if path == "/repos/grandchallenge/MATHCERT/pulls/42":
+            return self.source_pr
+        if path == "/repos/grandchallenge/MATHCERT/pulls/42/files?per_page=100":
+            return self.source_files
+        if path == "/repos/grandchallenge/MATHCERT/pulls/42/reviews?per_page=100":
+            return self.source_reviews
         if path == "/repos/grandchallenge/MATHCERT/git/ref/heads/main":
             return {"object": {"sha": self.source}}
         if path.startswith("/repos/grandchallenge/MATHCERT/contents/"):
@@ -136,6 +165,50 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
     def test_proof_with_changed_claim_scope_rejected(self):
         self.proof["review_scope"] = "Unrelated theorem"
         with self.assertRaisesRegex(ReceiptError, "scope differs"):
+            self.verify()
+
+    def test_forged_domain_pr_review_rejected(self):
+        self.source_reviews[0]["state"] = "COMMENTED"
+        with self.assertRaisesRegex(ReceiptError, "not approved"):
+            self.verify()
+
+    def test_domain_approval_on_wrong_head_rejected(self):
+        self.source_reviews[0]["commit_id"] = "4" * 40
+        with self.assertRaisesRegex(ReceiptError, "not approved"):
+            self.verify()
+
+    def test_unmerged_domain_pr_rejected(self):
+        self.source_pr["merged_at"] = None
+        with self.assertRaisesRegex(ReceiptError, "not merged"):
+            self.verify()
+
+    def test_domain_pr_unrelated_file_rejected(self):
+        self.source_files[0]["sha"] = "5" * 40
+        with self.assertRaisesRegex(ReceiptError, "does not contain"):
+            self.verify()
+
+    def test_domain_review_later_dismissed_rejected(self):
+        self.source_reviews.append({
+            "id": 178, "state": "DISMISSED", "commit_id": "3" * 40,
+            "submitted_at": "2026-10-09T10:16:00Z",
+            "user": {"login": "gcl-independent-mathematical-referee"},
+        })
+        with self.assertRaisesRegex(ReceiptError, "not approved"):
+            self.verify()
+
+    def test_domain_pr_self_review_rejected(self):
+        self.source_pr["user"]["login"] = "gcl-independent-mathematical-referee"
+        with self.assertRaisesRegex(ReceiptError, "own reviewer"):
+            self.verify()
+
+    def test_missing_domain_review_anchor_rejected(self):
+        self.proof.pop("review_anchor")
+        with self.assertRaisesRegex(ReceiptError, "anchor"):
+            self.verify()
+
+    def test_domain_review_receipt_identity_mismatch(self):
+        self.proof["review_anchor"]["reviewer_login"] = "different"
+        with self.assertRaisesRegex(ReceiptError, "identity mismatch"):
             self.verify()
 
     def test_noncertifying_source_path_rejected(self):
