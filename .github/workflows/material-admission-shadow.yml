@@ -34,7 +34,7 @@ jobs:
           GITHUB_EVENT_PATH: ${{ github.event_path }}
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_REF: ${{ github.ref }}
-          PROTECTED_REPO: protected-base
+          PROTECTED_REPO: .
         run: |
           cd protected-base
           python ci/specialist_admission_shadow.py
