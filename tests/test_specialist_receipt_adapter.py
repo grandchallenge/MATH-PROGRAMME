@@ -5,9 +5,14 @@ import copy
 import json
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ci"))
+from agent_routine_review import (  # noqa: E402
+    RoutineReviewError, exact_specialist_disposition,
+    specialist_domain_for_file_manifest, review_body,
+)
 from specialist_receipt_adapter import (  # noqa: E402
     ReceiptError, material_fingerprint, protected_specialist_receipt,
 )
@@ -145,6 +150,62 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
         rows = [{"filename": "docs/foo.md", "status": "evil", "sha": "f" * 40}]
         with self.assertRaises(ReceiptError):
             material_fingerprint(rows)
+
+
+    def test_multi_file_governance_specialist_accepted_only_with_protected_receipt(self):
+        head = self.head
+        files = [
+            {"filename": "ci/agent_routine_review.py", "status": "modified", "sha": "e" * 40},
+            {"filename": "ci/specialist_admission_shadow.py", "status": "modified", "sha": "f" * 40},
+        ]
+        pr = {
+            "state": "open", "draft": False, "changed_files": 2,
+            "head": {"sha": head, "repo": {"full_name": "grandchallenge/MATH-PROGRAMME"}},
+            "base": {"ref": "main", "sha": "b" * 40},
+            "user": {"login": "fyremael"},
+        }
+        witness = {"disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+                   "domain": "PROTECTION", "subject_sha": head}
+        with patch.dict("os.environ", {"SPECIALIST_READ_TOKEN": "read-domain-token"}), \\
+             patch("agent_routine_review.protected_specialist_receipt", return_value=witness) as verified:
+            finding = exact_specialist_disposition(pr, files, head, read_token="programme-token")
+        self.assertEqual(finding, witness)
+        self.assertEqual(verified.call_args.kwargs["domain"], "PROTECTION")
+        body = review_body(head, {"disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+                                  "material_evidence": witness})
+        self.assertIn("separately protected", body)
+        self.assertNotIn("Verifier and Adversary are non-authoring", body)
+
+    def test_unclassified_mixed_paths_rejected_without_domain_lookup(self):
+        with self.assertRaisesRegex(RoutineReviewError, "unresolved or mixed"):
+            specialist_domain_for_file_manifest([
+                {"filename": "ci/agent_routine_review.py"},
+                {"filename": "docs/CM4.md"},
+            ])
+
+    def test_workflow_scopes_only_read_to_specialist_domains(self):
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/agent-routine-review.yml").read_text(encoding="utf-8")
+        self.assertIn("SPECIALIST_READ_TOKEN", workflow)
+        self.assertIn("permission-contents: read", workflow)
+        self.assertEqual(workflow.count("permission-pull-requests: write"), 1)
+        self.assertIn("MATHCERT", workflow)
+        self.assertIn("MATHFORGE", workflow)
+        self.assertIn("INTELLECT", workflow)
+
+    def test_specialist_cannot_self_approve(self):
+        pr = {
+            "state": "open", "draft": False, "changed_files": 1,
+            "head": {"sha": self.head,
+                     "repo": {"full_name": "grandchallenge/MATH-PROGRAMME"}},
+            "base": {"ref": "main", "sha": self.source},
+            "user": {"login": "gcl-release-trust[bot]"},
+        }
+        with self.assertRaisesRegex(RoutineReviewError, "self-authorship"):
+            exact_specialist_disposition(pr, [
+                {"filename": "ci/agent_routine_review.py", "status": "modified",
+                 "sha": "e" * 40}
+            ], self.head, read_token="reader")
 
 
 if __name__ == "__main__":
