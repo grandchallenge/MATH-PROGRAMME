@@ -94,7 +94,7 @@ def protected_path(path: str) -> bool:
 def domain_for_paths(paths: list[str], registry: dict | None = None) -> str | None:
     if not paths or len(paths) > 100 or any(
         not isinstance(p, str) or not p or
-        p.startswith("/") or ".." in p.split("/") or "\\x00" in p
+        p.startswith("/") or ".." in p.split("/") or "\x00" in p
         for p in paths
     ):
         return None
