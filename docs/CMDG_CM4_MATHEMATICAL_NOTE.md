@@ -13,8 +13,8 @@ For a profinite space $S$, the free solid condensed abelian group $\mathbb Z[S]^
 Fix an arbitrary universe $u$. Let $S$ be a profinite space at that universe and let $R=\mathrm{ULift}^{u+1}(\mathbb Z)$. Write $P(S)$ for the exact mathlib construction `(Condensed.profiniteSolid R).obj S`. The proved proposition is
 
 $$
-  \forall S:\operatorname{Profinite}_u,\qquad
-  \operatorname{CondensedMod.IsSolid}_R(P(S)).
+  \forall S:\mathrm{Profinite}_u,\qquad
+  \mathrm{CondensedMod.IsSolid}_R(P(S)).
 $$
 
 The `ULift` is part of the type-correct formal statement, not an extension to arbitrary coefficient rings. The terminal wrapper is literally:
