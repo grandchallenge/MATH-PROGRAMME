@@ -273,15 +273,15 @@ def review_body(head: str, decision: dict) -> str:
         )
     return (
         "GCL-DELEGATED-MATERIAL-ADMISSION-001 / "
-        + mode + " / GitHub mechanical approval only.\\n"
-        + f"Exact PR head: {head}\\n"
-        + scope + "\\n"
+        + mode + " / GitHub mechanical approval only.\n"
+        + f"Exact PR head: {head}\n"
+        + scope + "\n"
         + "No new mathematical certification, source-semantic adjudication, "
         "constitutional/security authority, or external-claim promotion "
-        "is created. GH-OS native merge queue remains authoritative.\\n"
-        + "Bound evidence (JSON):\\n```json\\n"
+        "is created. GH-OS native merge queue remains authoritative.\n"
+        + "Bound evidence (JSON):\n```json\n"
         + json.dumps(decision, sort_keys=True, indent=2)
-        + "\\n```"
+        + "\n```"
     )
 
 
