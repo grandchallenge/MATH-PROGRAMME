@@ -1,0 +1,208 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": true,
+      "review_id": null,
+      "state": "PENDING"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+      "name": "formal-validation / formal-validation",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 113780546804,
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 113780546666,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "5 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-10-09T10:28:16Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-10-09T10:35:19Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+    "exact_head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+    "pr_number": 1254,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "Audit mathematical typography across GitHub Markdown and MkDocs"
+  },
+  "integration": {
+    "merge_commit_sha": "f1e0a298a604bfee62e07b15483cb651281eadee",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 6,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 113780514989,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 113780515204,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 113780515363,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 113780546759,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 113780546570,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 113780522098,
+          "conclusion": "success",
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 113780546804,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "policy / policy",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 113780523978,
+          "conclusion": "skipped",
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 113780546666,
+          "conclusion": null,
+          "head_sha": "c9f3671d971c525fb682a60d3800ee1784c3086b",
+          "name": "security / action-policy",
+          "status": "queued"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-10-09T10:35:28Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "ff38e771360d2852aa9aa826525669ac045b98c0ab8c46f37fb9c34433a56906"
+  },
+  "report_id": "PRVSR-LIVE-PR1254-c9f3671d971c-20261009103528",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "repository_policy_or_workflow",
+      "material_nonclaims_blockers_or_residuals"
+    ]
+  }
+}
