@@ -87,6 +87,66 @@ def _protected_json(
     return record, blob
 
 
+def _verify_review_origin(
+    api_get: Callable[[str], Any], repository: str,
+    proof_path: str, proof_blob: str, proof_record: dict,
+    reviewer: str, candidate_author: str,
+) -> dict[str, Any]:
+    """Verify the stated reviewer actually approved the exact domain evidence.
+
+    GitHub approval corroborates record provenance; it never substitutes for
+    the mathematical/domain review represented by that separately protected
+    evidence.
+    """
+    anchor = proof_record.get("review_anchor")
+    if not isinstance(anchor, dict):
+        raise ReceiptError("missing authenticated source review anchor")
+    n = anchor.get("source_pr_number")
+    r_id = anchor.get("review_id")
+    if type(n) is not int or n <= 0 or type(r_id) is not int or r_id <= 0:
+        raise ReceiptError("invalid domain PR/review identifier")
+    source_head = _sha(anchor.get("source_pr_head_sha"))
+    if anchor.get("reviewer_login") != reviewer:
+        raise ReceiptError("attested reviewer identity mismatch")
+    prefix = f"/repos/{repository}/pulls/{n}"
+    pr = api_get(prefix)
+    if (not isinstance(pr, dict) or not pr.get("merged_at") or
+            (pr.get("head") or {}).get("sha") != source_head or
+            (pr.get("base") or {}).get("ref") != "main"):
+        raise ReceiptError("source review PR not merged at exact reviewed head")
+    author = ((pr.get("user") or {}).get("login") or "")
+    if not author or author.casefold() in (reviewer.casefold(), candidate_author.casefold()) and reviewer.casefold() == author.casefold():
+        raise ReceiptError("source PR author cannot act as own reviewer")
+    if not isinstance(pr.get("changed_files"), int) or not 1 <= pr["changed_files"] < 100:
+        raise ReceiptError("source PR changed-file count not bounded")
+    changed = api_get(prefix + "/files?per_page=100")
+    if not isinstance(changed, list) or len(changed) != pr["changed_files"]:
+        raise ReceiptError("source PR exact file list missing or truncated")
+    if not any(
+        isinstance(item, dict) and item.get("filename") == proof_path
+        and item.get("status") in ("added", "modified")
+        and item.get("sha") == proof_blob for item in changed
+    ):
+        raise ReceiptError("reviewed domain PR does not contain evidence blob")
+    reviews = api_get(prefix + "/reviews?per_page=100")
+    if not isinstance(reviews, list) or len(reviews) >= 100:
+        raise ReceiptError("domain PR review list missing or truncated")
+    reviewer_reviews = [
+        item for item in reviews if isinstance(item, dict)
+        and (item.get("user") or {}).get("login") == reviewer
+    ]
+    if not reviewer_reviews:
+        raise ReceiptError("no authenticated independent domain review")
+    # The latest state of that reviewer is authoritative, not an old approval
+    # followed by CHANGES_REQUESTED or DISMISSED.
+    last = max(reviewer_reviews, key=lambda row: (row.get("submitted_at") or "", row.get("id") or 0))
+    if (last.get("id") != r_id or last.get("state") != "APPROVED"
+            or last.get("commit_id") != source_head):
+        raise ReceiptError("domain review not approved on exact current source head")
+    return {"source_pr_number": n, "source_pr_head_sha": source_head,
+            "authenticated_review_id": r_id, "reviewer_login": reviewer}
+
+
 def protected_specialist_receipt(
     *, head: str, files: list[dict], domain: str,
     api_get: Callable[[str], Any], candidate_author: str,
@@ -155,6 +215,9 @@ def protected_specialist_receipt(
         raise ReceiptError("missing specialist-reviewed claim/scope")
     if record["review_scope"] != proof_record.get("review_scope"):
         raise ReceiptError("specialist reviewed scope differs from receipt")
+    origin = _verify_review_origin(
+        api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author,
+    )
     # Reconfirm current protected branch has not moved during retrieval.
     now = api_get(f"/repos/{owner}/git/ref/heads/main")
     if _sha(((now or {}).get("object") or {}).get("sha")) != protected_sha:
@@ -168,6 +231,7 @@ def protected_specialist_receipt(
         "protected_underlying_blob": proof_blob,
         "domain": domain,
         "review_scope": record["review_scope"],
+        "authenticated_review_origin": origin,
         "subject_sha": head,
         "material_fingerprint": fingerprint,
         "authority": {
