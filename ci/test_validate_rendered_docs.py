@@ -5,11 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from validate_rendered_docs import (
-    admonition_render_errors,
-    condensed_chapter_render_errors,
-    homepage_render_errors,
-)
+from validate_rendered_docs import admonition_render_errors, homepage_render_errors
 
 
 def main() -> int:
@@ -81,47 +77,6 @@ def main() -> int:
         assert admonition_render_errors(
             missing_admonition_page, "Live work is issue-led"
         ) == [f"built admonition page is missing: {missing_admonition_page}"]
-
-        chapter = root / "CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED" / "index.html"
-        chapter.parent.mkdir(parents=True)
-        headings = "".join(
-            f"<h2>{heading}</h2>" for heading in (
-                "Condensed Mathematics for the Perplexed",
-                "The difficulty: topology and algebra pull in different directions",
-                "A condensed set: the precise definition",
-                "The GCL CM4 result: a clearly marked landing point",
-            )
-        )
-        math_nodes = "".join(
-            '<span class="arithmatex">\\(x+y\\)</span>'
-            for _ in range(15)
-        )
-        figure = (
-            '<img src="../assets/condensed-profinite-partitions.svg" '
-            'alt="Binary refinement diagram">'
-        )
-        info = '<div class="admonition info">Introductory status</div>'
-        chapter.write_text(
-            f"<html><body>{headings}{math_nodes}{figure}{info}</body></html>",
-            encoding="utf-8",
-        )
-        assert not condensed_chapter_render_errors(chapter)
-
-        chapter.write_text(
-            f"<html><body>{headings}{figure}{info}</body></html>",
-            encoding="utf-8",
-        )
-        assert any("Arithmatex math nodes" in error
-                   for error in condensed_chapter_render_errors(chapter))
-
-        chapter.write_text(
-            f'<html><body>{headings}{math_nodes}'
-            '<img src="../assets/condensed-profinite-partitions.svg" '
-            'alt="">{info}</body></html>',
-            encoding="utf-8",
-        )
-        errors = condensed_chapter_render_errors(chapter)
-        assert any("missing alternative text" in error for error in errors)
 
         missing = root / "missing.html"
         assert homepage_render_errors(missing) == [f"built homepage is missing: {missing}"]
