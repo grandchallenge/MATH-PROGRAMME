@@ -142,6 +142,11 @@ It does not promote:
 - CM5;
 - global dependency-graph certification.
 
+## Independent proof and replay materials
+
+- [Mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md): a complete reader-facing argument map separating the finite heuristic from the general profinite theorem.
+- [Reproducibility protocol](CMDG_CM4_REPRODUCIBILITY.md): one exact immutable historical checkout, Lean/mathlib identity checks, two formal lanes, and adversarial failure tests.
+
 ## Where to go next
 
 - Start with the [CM4 result page](CMDG_CM4.md).

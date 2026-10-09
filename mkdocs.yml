@@ -30,6 +30,8 @@ nav:
       - CMDG Condensed Mathematics:
           - CM4 Result and Proof Route: CMDG_CM4.md
           - CM4 Accessible Research Guide: CMDG_CM4_RESEARCH_GUIDE.md
+          - CM4 Mathematical Note: CMDG_CM4_MATHEMATICAL_NOTE.md
+          - CM4 Independent Reproduction: CMDG_CM4_REPRODUCIBILITY.md
           - CM4 External Mathematical Review: CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md
           - CM4 Mathlib Upstream Assessment: CMDG-CM4-MATHLIB-UPSTREAM-ASSESSMENT.md
       - VGSE Predecessor Mandates:
@@ -247,6 +249,8 @@ theme:
 # Enable the admonition syntax used for authority and status notices.
 markdown_extensions:
   - admonition
+  - pymdownx.arithmatex:
+      generic: true
 
 extra_css:
   - stylesheets/extra.css
@@ -259,3 +263,4 @@ extra_css:
 
 extra_javascript:
   - javascripts/semantic-catalog.js
+  - javascripts/mkdocs-math.js
