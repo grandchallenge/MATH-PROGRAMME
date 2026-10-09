@@ -42,10 +42,24 @@ jobs:
           owner: grandchallenge
           repositories: MATH-PROGRAMME
           permission-pull-requests: write
+      - name: Mint separately scoped protected-domain evidence token
+        id: domain-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATHFORGE
+            MATHCERT
+            INTELLECT
+          permission-contents: read
+          permission-pull-requests: read
       - name: Evaluate exact content-bound material profile and record delegated review
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REVIEW_APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          SPECIALIST_READ_TOKEN: ${{ steps.domain-token.outputs.token }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |

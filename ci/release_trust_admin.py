@@ -48,7 +48,7 @@ EXPECTED_STRICT_STATUS_CHECKS = {
 EXPECTED_REVIEW_POLICY = {
     "grandchallenge/MATHCERT": (1, True),
     "grandchallenge/MATHSOLVE": (0, False),
-    "grandchallenge/MATH-PROGRAMME": (1, True),
+    "grandchallenge/MATH-PROGRAMME": (0, False),
     "grandchallenge/INTELLECT": (0, False),
 }
 EXPECTED_BYPASS_ACTORS = {

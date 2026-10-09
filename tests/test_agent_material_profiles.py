@@ -125,8 +125,9 @@ class DelegatedMaterialProfilesTests(unittest.TestCase):
             out = delegated_classification(pr, changed, head, token="dummy",
                                            prefix=f"/repos/{REPOSITORY}")
         self.assertEqual(out["profile_id"], "DOC-FINAL-NEWLINE-001")
-        body = review_body(head, out)
-        self.assertIn("logical audit passes", body)
+        body = review_body(head, {"disposition": "ROUTINE_BOUNDED",
+                                  "material_evidence": out})
+        self.assertIn("audit passes", body)
         self.assertIn("scientific_certification", body)
 
     def test_stale_or_mismatched_blob_never_approved(self) -> None:
