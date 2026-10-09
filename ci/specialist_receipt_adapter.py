@@ -73,7 +73,12 @@ def _protected_json(
         raise ReceiptError("protected record not a GitHub blob")
     blob = _sha(item.get("sha"))
     try:
-        # GitHub Contents API wraps RFC 4648 base64 with newlines. Only strip\n        # its canonical line breaks; reject every other invalid encoded byte.\n        encoded = item["content"]\n        if not isinstance(encoded, str):\n            raise ReceiptError("GitHub content encoding is not text")\n        content = base64.b64decode(encoded.replace("\\n", "").replace("\\r", ""), validate=True)
+        # GitHub Contents API wraps base64 with newlines. Only strip
+        # canonical line breaks; reject other invalid encoded bytes.
+        encoded = item["content"]
+        if not isinstance(encoded, str):
+            raise ReceiptError("GitHub content encoding is not text")
+        content = base64.b64decode(encoded.replace("\n", "").replace("\r", ""), validate=True)
         record = json.loads(content)
     except (KeyError, ValueError, TypeError) as err:
         raise ReceiptError("protected record content invalid") from err
