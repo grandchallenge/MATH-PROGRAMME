@@ -28,6 +28,37 @@ permission to merge or proof of scientific correctness. It cannot substitute
 for a GitHub App review, actual specialist evidence, a required status, or a
 protected merge queue's own decision.
 
+## Protected-domain review evidence (candidate read-only adapter)
+
+`ci/specialist_receipt_adapter.py` now implements a fail-closed readback
+for a future protected specialist-review route. It recognizes *only* a receipt
+already present on a domain-authorized protected `main`: MATHCERT for
+mathematical review, MATHFORGE for source-semantic review, and INTELLECT for
+protection/authority review. The deterministic receipt path is
+
+`governance/material_admission_receipts/MATH-PROGRAMME-<exact-subject-head>.json`.
+
+A valid envelope must assert the precise subject Git commit and canonical
+complete changed-file fingerprint, positive protected-admission disposition,
+named review scope, and exact Git blob of a separate domain-owned source
+document. Both receipt and underlying evidence are fetched from pinned
+protected repository commits; the protected source must remain unchanged
+throughout the operation. The adapter never reads a candidate-supplied
+`GCL-REVIEW/1` comment as review authority. GitHub review statuses alone
+are not proof of the domain record.
+
+The positive unit fixtures exercise the *adapter's* identity checks, **not**
+an actual protected mathematical certificate. There are currently no
+new protected domain receipts granted by this code. Even when a valid receipt
+is observed, the shadow mode returns an explicitly nonauthoritative
+`SPECIALIST_EVIDENCE_RECOGNIZED_SHADOW` finding. Domain-issued admission
+depends upon the original domain's protected certification/review process.
+
+This model is intentionally exact-head rather than general evidence-closure
+equivalence. Accepting an exact material closure across independent base
+commits will require a separately reviewed normalization/identity migration;
+it must never be inferred from a SHA coincidence or PR comment.
+
 ## Evidence still missing for enforcement
 
 An authoritative specialist-evidence adapter must independently verify
