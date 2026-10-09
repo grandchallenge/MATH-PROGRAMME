@@ -291,7 +291,7 @@ class SolveSpecialistTests(unittest.TestCase):
             if args[:2] == ("rev-parse", "refs/remotes/origin/gcl-shadow"):
                 return sha
             if args[0] == "diff":
-                return b"M\\x00governance/mathsolve_routing_audit.json\\x00"
+                return b"M\x00governance/mathsolve_routing_audit.json\x00"
             if args[0] == "show":
                 return b"{}\\n"
             return ""
