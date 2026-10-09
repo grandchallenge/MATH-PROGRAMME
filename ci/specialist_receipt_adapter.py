@@ -89,7 +89,7 @@ def _protected_json(
 
 def _verify_review_origin(
     api_get: Callable[[str], Any], repository: str,
-    proof_path: str, proof_blob: str, proof_record: dict,
+    proof_path: str, proof_blob: str, receipt_record: dict,
     reviewer: str, candidate_author: str,
 ) -> dict[str, Any]:
     """Verify the stated reviewer actually approved the exact domain evidence.
@@ -98,7 +98,11 @@ def _verify_review_origin(
     the mathematical/domain review represented by that separately protected
     evidence.
     """
-    anchor = proof_record.get("review_anchor")
+    # Review IDs exist only after GitHub records the approval. Therefore the
+    # anchor belongs in the separately admitted *later* receipt, not in the
+    # immutable evidence blob that the reviewer approved on the source PR.
+    # Requiring it in the reviewed blob creates an impossible dependency cycle.
+    anchor = receipt_record.get("review_anchor")
     if not isinstance(anchor, dict):
         raise ReceiptError("missing authenticated source review anchor")
     n = anchor.get("source_pr_number")
@@ -215,8 +219,10 @@ def protected_specialist_receipt(
         raise ReceiptError("missing specialist-reviewed claim/scope")
     if record["review_scope"] != proof_record.get("review_scope"):
         raise ReceiptError("specialist reviewed scope differs from receipt")
+    if "review_anchor" in proof_record:
+        raise ReceiptError("review anchor must be on later protected receipt, not reviewed evidence")
     origin = _verify_review_origin(
-        api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author,
+        api_get, owner, p, proof_blob, record, reviewer, candidate_author,
     )
     # Reconfirm current protected branch has not moved during retrieval.
     now = api_get(f"/repos/{owner}/git/ref/heads/main")
