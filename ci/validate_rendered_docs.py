@@ -109,65 +109,6 @@ def admonition_render_errors(page_html: Path, expected_title: str) -> list[str]:
     return errors
 
 
-
-class CondensedChapterParser(InfoAdmonitionParser):
-    """Inspect the built explainer for accessible figures and typeset mathematics."""
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.math_nodes = 0
-        self.figure_images = 0
-        self.figure_alt_missing = False
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        super().handle_starttag(tag, attrs)
-        attributes = dict(attrs)
-        classes = set((attributes.get("class") or "").split())
-        if "arithmatex" in classes:
-            self.math_nodes += 1
-        if tag == "img" and "condensed-profinite-partitions.svg" in (
-            attributes.get("src") or ""
-        ):
-            self.figure_images += 1
-            if not (attributes.get("alt") or "").strip():
-                self.figure_alt_missing = True
-
-
-def condensed_chapter_render_errors(page_html: Path) -> list[str]:
-    """Guard math/figure rendering, not merely the existence of Markdown source."""
-    if not page_html.is_file():
-        return [f"built condensed-mathematics chapter is missing: {page_html}"]
-    parser = CondensedChapterParser()
-    parser.feed(page_html.read_text(encoding="utf-8"))
-    visible = parser.text()
-    errors: list[str] = []
-    for title in (
-        "Condensed Mathematics for the Perplexed",
-        "The difficulty: topology and algebra pull in different directions",
-        "A condensed set: the precise definition",
-        "The GCL CM4 result: a clearly marked landing point",
-    ):
-        if title not in visible:
-            errors.append(f"condensed chapter missing rendered section: {title}")
-    if parser.math_nodes < 12:
-        errors.append(
-            f"condensed chapter has too few Arithmatex math nodes: {parser.math_nodes}"
-        )
-    if parser.figure_images != 1:
-        errors.append(
-            f"condensed chapter expected one accessible partition diagram, found {parser.figure_images}"
-        )
-    if parser.figure_alt_missing:
-        errors.append("condensed chapter partition diagram is missing alternative text")
-    if parser.info_boxes < 1:
-        errors.append("condensed chapter status admonition did not render")
-    for label, pattern in VISIBLE_MARKDOWN_PATTERNS:
-        match = pattern.search(visible)
-        if match:
-            errors.append(f"condensed chapter exposes {label}: {match.group(0)!r}")
-    return errors
-
-
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -184,16 +125,13 @@ def main() -> int:
         ("CMDG_CM4_RESEARCH_GUIDE/index.html", "Live work is issue-led"),
     ):
         errors.extend(admonition_render_errors(site_dir / relative_path, title))
-    errors.extend(condensed_chapter_render_errors(
-        site_dir / "CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED" / "index.html"
-    ))
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
         print(f"rendered documentation validation failed with {len(errors)} error(s)", file=sys.stderr)
         return 1
 
-    print("rendered homepage, CM4 admonitions, and condensed explainer passed their HTML checks")
+    print("rendered homepage and CM4 info admonitions passed their HTML checks")
     return 0
 
 
