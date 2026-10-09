@@ -49,6 +49,7 @@ jobs:
           GITHUB_EVENT_PATH: ${{ github.event_path }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
+          # gh api POST only from the protected controller after classification.
           # No candidate-controlled code runs: reviewer and frozen registry come
           # from protected main. Only byte-proved routine profiles may approve.
           # The App cannot certify theorems or modify branch protections.
