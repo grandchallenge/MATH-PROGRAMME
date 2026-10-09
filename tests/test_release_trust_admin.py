@@ -4,6 +4,7 @@ import copy
 import json
 import sys
 import unittest
+from unittest.mock import Mock, patch
 import urllib.request
 from pathlib import Path
 
@@ -15,6 +16,8 @@ sys.path.insert(0, str(ROOT / "ci"))
 from release_trust_admin import (  # noqa: E402
     EXPECTED_BYPASS_ACTORS,
     EXPECTED_STRICT_STATUS_CHECKS,
+    EXPECTED_REVIEW_POLICY,
+    apply_contract,
     RULESET_NAMES,
     ReleaseTrustError,
     branch_ruleset,
@@ -82,6 +85,60 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         ):
             validate_contract(contract, self.schema)
 
+    def _matching_ruleset_snapshots(self) -> dict:
+        found = {}
+        for entry in self.contract["repositories"]:
+            policy = repository_policy(self.contract["branch_policy"], entry)
+            raw = ruleset_payload(RULESET_NAMES[entry["repository"]], policy, entry["required_checks"])
+            raw["source"] = entry["repository"]
+            found[entry["repository"]] = raw
+        return found
+
+    def test_broad_apply_is_read_only_when_live_rulesets_match(self) -> None:
+        snapshots = self._matching_ruleset_snapshots()
+        client = Mock()
+        client.request.return_value = {"homepage": self.contract["pages"]["homepage"]}
+        with patch("release_trust_admin.branch_ruleset",
+                   side_effect=lambda ignored, repository: snapshots[repository]):
+            apply_contract(client, self.contract)
+        calls = [call.args[0] for call in client.request.call_args_list]
+        self.assertEqual(calls, ["GET"])
+
+    def test_broad_apply_blocks_unsafe_review_rule_drift_before_mutating(self) -> None:
+        snapshots = self._matching_ruleset_snapshots()
+        programme = snapshots["grandchallenge/MATH-PROGRAMME"]
+        review = next(rule for rule in programme["rules"] if rule["type"] == "pull_request")
+        review["parameters"]["required_approving_review_count"] = 0
+        client = Mock()
+        with patch("release_trust_admin.branch_ruleset",
+                   side_effect=lambda ignored, repository: snapshots[repository]):
+            with self.assertRaisesRegex(ReleaseTrustError, "broad Release Trust apply blocked"):
+                apply_contract(client, self.contract)
+        client.request.assert_not_called()
+
+    def test_live_review_policy_is_repository_specific(self) -> None:
+        for entry in self.contract["repositories"]:
+            repo = entry["repository"]
+            expected = EXPECTED_REVIEW_POLICY[repo]
+            self.assertEqual(
+                (entry["required_approving_reviews"], entry["require_last_push_approval"]),
+                expected,
+            )
+            effective = repository_policy(self.contract["branch_policy"], entry)
+            self.assertEqual(
+                (effective["required_approving_reviews"], effective["require_last_push_approval"]),
+                expected,
+            )
+
+    def test_review_policy_drift_rejected(self) -> None:
+        for repo in ("grandchallenge/MATHCERT", "grandchallenge/MATH-PROGRAMME"):
+            modified = copy.deepcopy(self.contract)
+            entry = next(row for row in modified["repositories"] if row["repository"] == repo)
+            entry["required_approving_reviews"] = 0
+            entry["require_last_push_approval"] = False
+            with self.assertRaisesRegex(ReleaseTrustError, "review-policy map drift"):
+                validate_contract(modified, self.schema)
+
     def test_required_bypass_map_is_exact(self) -> None:
         actual = {
             entry["repository"]: entry["bypass_actors"]
@@ -143,7 +200,10 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             [item["context"] for item in status["required_status_checks"]],
             entry["required_checks"],
         )
-        self.assertEqual(len(status["required_status_checks"]), 3)
+        self.assertEqual(len(status["required_status_checks"]), 4)
+        self.assertEqual(status["required_status_checks"][-1], {"context": "routing-enforcement"})
+        self.assertEqual(reviews["required_approving_review_count"], 1)
+        self.assertTrue(reviews["require_last_push_approval"])
         self.assertTrue(reviews["dismiss_stale_reviews_on_push"])
         self.assertTrue(reviews["required_review_thread_resolution"])
         self.assertEqual(payload["bypass_actors"], [])
@@ -171,6 +231,8 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             ],
         )
         self.assertEqual(len(status["required_status_checks"]), 4)
+        self.assertEqual(policy["required_approving_reviews"], 1)
+        self.assertTrue(policy["require_last_push_approval"])
         self.assertEqual(payload["bypass_actors"], EXPECTED_BYPASS_ACTORS[entry["repository"]])
         self.assertFalse(policy["enforce_admins"])
 
