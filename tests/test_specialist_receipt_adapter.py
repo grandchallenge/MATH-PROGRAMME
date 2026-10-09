@@ -209,7 +209,7 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
         }
         witness = {"disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
                    "domain": "PROTECTION", "subject_sha": head}
-        with patch.dict("os.environ", {"SPECIALIST_READ_TOKEN": "read-domain-token"}), \\
+        with patch.dict("os.environ", {"SPECIALIST_READ_TOKEN": "read-domain-token"}), \
              patch("agent_routine_review.protected_specialist_receipt", return_value=witness) as verified:
             finding = exact_specialist_disposition(pr, files, head, read_token="programme-token")
         self.assertEqual(finding, witness)
