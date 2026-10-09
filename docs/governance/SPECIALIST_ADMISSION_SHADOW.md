@@ -32,9 +32,13 @@ protected merge queue's own decision.
 
 `ci/specialist_receipt_adapter.py` now implements a fail-closed readback
 for a future protected specialist-review route. It recognizes *only* a receipt
-already present on a domain-authorized protected `main`: MATHCERT for
-mathematical review, MATHFORGE for source-semantic review, and INTELLECT for
-protection/authority review. The deterministic receipt path is
+already present on a domain-authorized protected `main`: MATHFORGE for
+source-semantic review, MATHSOLVE for execution/replay/adjudication integrity,
+MATHCERT for independent mathematical proof review, and INTELLECT for
+protection/authority review. This four-domain registry lives at
+`governance/specialist_admission_domains.json` and is checked against a
+bounded protected-controller code contract. A change to the registry alone
+cannot expand App review authority. The deterministic receipt path is
 
 `governance/material_admission_receipts/MATH-PROGRAMME-<exact-subject-head>.json`.
 
@@ -66,6 +70,49 @@ This model is intentionally exact-head rather than general evidence-closure
 equivalence. Accepting an exact material closure across independent base
 commits will require a separately reviewed normalization/identity migration;
 it must never be inferred from a SHA coincidence or PR comment.
+
+## MATHSOLVE — solution and execution integrity only
+
+MATHSOLVE is now an explicitly recognized specialist domain:
+`SOLUTION_INTEGRITY`, protected owner `grandchallenge/MATHSOLVE`, and
+evidence confined to `contributions/` on the owning repository's protected
+`main`. Its role is **to test whether a provisional returned result was
+captured faithfully, reproduced, and adjudicated on the recorded evidence**.
+It does *not* verify mathematical truth by itself.
+
+The new Solve-scoped review record type is
+`GCL_DOMAIN_ROLE_SCOPED_REVIEW_V1`, with positive disposition
+`ROLE_SCOPED_REVIEW_ACCEPTED` and
+`ROLE_SCOPED_NON_AUTHOR_SPECIALIST` independence declaration. This is not
+relabelled as a MATHCERT-independent theorem review. An authenticated
+non-author GitHub review of the exact evidence PR remains necessary for the
+specialist evidence packet, but not for ordinary MATHSOLVE maintenance.
+
+The Solve proof record and admission receipt must refer to the *same*
+`solve_execution` source-locked record. That record binds dispatch ID,
+result reference and SHA-256, plus exact blobs of three distinct, already
+protected JSON artifacts:
+
+1. `GCL_SOLVE_CAPTURE_RECEIPT_V1` — captured result digest.
+2. `GCL_SOLVE_REPLAY_RECEIPT_V1` — passed replay of that captured digest.
+3. `GCL_SOLVE_ADJUDICATION_RECEIPT_V1` — adjudicated replay, with exact
+   replay-blob and dispatch/result lineage.
+
+Every artifact is fetched from protected MATHSOLVE and checked against
+its Git blob SHA and the other links in the chain. Missing, ambiguous,
+negative, stale, or cross-campaign evidence fails closed. The following
+claim effects are **all false** in both the Solve binding and adjudication:
+mathematical claim promotion, certification, publication, source-semantic
+adjudication, and security authority expansion.
+
+For now the protected Programme routing surface for MATHSOLVE is deliberately
+narrow: `governance/mathsolve_*`, `governance/solve_execution_*`, and
+`governance/solution_integrity_*`. A source theorem in a Lean file still
+routes to MATHCERT; workflow, admission-controller, and protection changes
+still route to INTELLECT. Mixed or unknown scopes remain unadmitted. This
+registration **does not** install a required `material-admission` status
+or bypass existing protection. A real domain-produced protected positive
+receipt and PR/merge-group replay remain necessary before enforcement.
 
 ## Evidence still missing for enforcement
 
