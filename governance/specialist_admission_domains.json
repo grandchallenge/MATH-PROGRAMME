@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "GCL-SPECIALIST-ADMISSION-DOMAINS-001",
+  "authority": "PROTECTED_REPOSITORY_ONLY",
+  "target_repository": "grandchallenge/MATH-PROGRAMME",
+  "status": "SHADOW_PLUS_SCOPED_REVIEW_NOT_REQUIRED_CHECK",
+  "domains": [
+    {
+      "id": "MATHEMATICAL",
+      "repository": "grandchallenge/MATHCERT",
+      "protected_ref": "main",
+      "evidence_prefix": "certificates/",
+      "independence": "INDEPENDENT_NON_AUTHOR",
+      "review_scope": "MATHEMATICAL_PROOF_REVIEW",
+      "candidate_prefixes": []
+    },
+    {
+      "id": "SOURCE_SEMANTIC",
+      "repository": "grandchallenge/MATHFORGE",
+      "protected_ref": "main",
+      "evidence_prefix": "governance/",
+      "independence": "ROLE_SCOPED_NON_AUTHOR_SPECIALIST",
+      "review_scope": "SOURCE_SEMANTIC_REVIEW",
+      "candidate_prefixes": [
+        "governance/source_"
+      ]
+    },
+    {
+      "id": "SOLUTION_INTEGRITY",
+      "repository": "grandchallenge/MATHSOLVE",
+      "protected_ref": "main",
+      "evidence_prefix": "contributions/",
+      "independence": "ROLE_SCOPED_NON_AUTHOR_SPECIALIST",
+      "review_scope": "SOLVE_EXECUTION_INTEGRITY_ONLY",
+      "candidate_prefixes": [
+        "governance/mathsolve_",
+        "governance/solve_execution_",
+        "governance/solution_integrity_"
+      ]
+    },
+    {
+      "id": "PROTECTION",
+      "repository": "grandchallenge/INTELLECT",
+      "protected_ref": "main",
+      "evidence_prefix": "governance/",
+      "independence": "ROLE_SCOPED_NON_AUTHOR_SPECIALIST",
+      "review_scope": "SECURITY_AND_GOVERNANCE_REVIEW",
+      "candidate_prefixes": []
+    }
+  ],
+  "boundaries": {
+    "unmapped_or_mixed": "REJECT",
+    "candidate_claims_as_authority": false,
+    "mathematical_certification_by_solve": false,
+    "source_adjudication_by_solve": false,
+    "constitutional_authority_by_solve": false,
+    "external_claim_promotion_by_solve": false,
+    "no_required_check_cutover": true
+  }
+}
