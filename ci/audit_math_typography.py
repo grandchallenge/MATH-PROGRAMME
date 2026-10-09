@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import urllib.request
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,7 +118,35 @@ def rendered_issues(root: Path, site: Path):
                              "expected": expected, "actual": actual})
     return checked, findings
 
-def audit(root: Path = ROOT, site: Path | None = None):
+def github_render_probe(root: Path):
+    """Render two public flagship pages through GitHub's real GFM HTML API.
+
+    This observes the server renderer, not JavaScript KaTeX in a browser.
+    Network failures are reported explicitly, not counted as passes.
+    """
+    records = []
+    for rel in ("docs/CMDG_CM4_MATHEMATICAL_NOTE.md",
+                "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md"):
+        source = (root / rel).read_text(encoding="utf-8")
+        payload = json.dumps({"text": source, "mode": "gfm",
+                              "context": "grandchallenge/MATH-PROGRAMME"}).encode("utf-8")
+        request = urllib.request.Request(
+            "https://api.github.com/markdown", data=payload,
+            headers={"Accept": "text/html", "Content-Type": "application/json",
+                     "User-Agent": "GCL-typography-audit",
+                     "X-GitHub-Api-Version": "2026-03-10"}, method="POST")
+        try:
+            with urllib.request.urlopen(request, timeout=12) as response:
+                html = response.read().decode("utf-8")
+            has_math = bool(re.search(r"math-inline|math-display|class=.math\b|katex", html, re.I))
+            records.append({"path": rel, "status": "ok" if has_math else "no-math-markers",
+                            "html_bytes": len(html), "math_markup_observed": has_math})
+        except (OSError, UnicodeError, ValueError) as exc:
+            records.append({"path": rel, "status": "unavailable",
+                            "reason": f"{type(exc).__name__}: {exc}"[:160]})
+    return records
+
+def audit(root: Path = ROOT, site: Path | None = None, github_live: bool = False):
     paths = sorted(p for p in root.rglob("*.md")
                    if not any(part in SKIP for part in p.relative_to(root).parts))
     issues = []
@@ -128,6 +158,14 @@ def audit(root: Path = ROOT, site: Path | None = None):
         "scanned_public_markdown_files": sum(p.is_relative_to(root / "docs") for p in paths),
         "findings": issues,
     }
+    report["findings_by_kind_and_context"] = dict(Counter(
+        f["kind"] + ":" + f["context"] for f in issues
+    ))
+    report["top_markdown_paths"] = Counter(
+        f["path"] for f in issues if f["context"] == "markdown"
+    ).most_common(20)
+    if github_live:
+        report["github_render_probe"] = github_render_probe(root)
     if site is not None:
         checked, rendered = rendered_issues(root, site)
         report["rendered_math_pages_checked"] = checked
@@ -139,11 +177,13 @@ def main():
     ap.add_argument("--root", type=Path, default=ROOT)
     ap.add_argument("--site-dir", type=Path)
     ap.add_argument("--output", type=Path)
+    ap.add_argument("--github-live", action="store_true",
+                    help="Use GitHub Markdown API for two flagship notes")
     ap.add_argument("--gate", action="store_true",
                     help="Fail on mathematical typography defects in the two CM4 flagship pages")
     args = ap.parse_args()
     root = args.root.resolve()
-    report = audit(root, args.site_dir)
+    report = audit(root, args.site_dir, github_live=args.github_live)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n",
