@@ -26,4 +26,4 @@ python3 ci/audit_math_typography.py --root . --site-dir site --output site/math-
 
 The inventory is generated on each successful protected build and becomes part of the published documentation artifact.
 
-**Limitations:** a source syntax check cannot prove that GitHub's live KaTeX renderer accepts every mathematical command. Arithmatex-wrapper inspection proves that Markdown reached the math rendering layer, not that browser-side JavaScript painted every glyph correctly. Those are distinct tests and require live-renderer/browser validation. The audit preserves that distinction instead of claiming visual correctness from a successful build.
+**Limitations:** a source syntax check cannot prove that GitHub's browser-side MathJax renderer accepts every mathematical command. Arithmatex-wrapper inspection proves that Markdown reached the math rendering layer, not that browser-side JavaScript painted every glyph correctly. Those are distinct tests and require live-renderer/browser validation. The audit preserves that distinction instead of claiming visual correctness from a successful build.
