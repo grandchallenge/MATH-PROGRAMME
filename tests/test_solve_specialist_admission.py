@@ -279,6 +279,28 @@ class SolveSpecialistTests(unittest.TestCase):
         with self.assertRaises(ReceiptError):
             self.verify()
 
+    def test_merge_group_solve_scope_is_identified_but_not_approved(self):
+        sha, base = "a" * 40, "b" * 40
+        ref = "refs/heads/gh-readonly-queue/main/pr-solve-test"
+        event = {"merge_group": {"head_sha": sha, "head_ref": ref,
+                                  "base_ref": "refs/heads/main"}}
+        env = {"GITHUB_SHA": sha, "GITHUB_REF": ref}
+        def protected_git(root, *args, binary=False):
+            if args[:2] == ("rev-parse", "HEAD"):
+                return base
+            if args[:2] == ("rev-parse", "refs/remotes/origin/gcl-shadow"):
+                return sha
+            if args[0] == "diff":
+                return b"M\\x00governance/mathsolve_routing_audit.json\\x00"
+            if args[0] == "show":
+                return b"{}\\n"
+            return ""
+        with patch.object(shadow, "git", side_effect=protected_git):
+            result = shadow.shadow_merge_group(event, Path("."), env)
+        self.assertEqual(result["disposition"], "SPECIALIST_REVIEW_PENDING")
+        self.assertEqual(result["specialist_domain_hint"], "SOLUTION_INTEGRITY")
+        self.assertIn("not yet evaluated", result["reason"])
+
     def test_workflows_include_solve_readonly_and_no_cutover(self):
         for name in ("agent-routine-review.yml", "material-admission-shadow.yml"):
             workflow = (ROOT / ".github/workflows" / name).read_text()
