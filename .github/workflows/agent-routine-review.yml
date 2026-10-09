@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       pr_number:
-        description: Exact existing routine PR to classify and, if safe, approve
+        description: Existing PR number, classified only by protected bounded profiles
         required: true
         type: number
 
@@ -24,7 +24,7 @@ concurrency:
 jobs:
   review:
     if: github.repository == 'grandchallenge/MATH-PROGRAMME' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'))
-    name: Exact-scope delegated review (non-mathematical)
+    name: Protected material-profile delegated review
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     environment: release-trust
@@ -42,13 +42,15 @@ jobs:
           owner: grandchallenge
           repositories: MATH-PROGRAMME
           permission-pull-requests: write
-      - name: Evaluate exact routine material closure and record delegated review
+      - name: Evaluate exact content-bound material profile and record delegated review
         env:
           GITHUB_TOKEN: ${{ github.token }}
           REVIEW_APP_TOKEN: ${{ steps.app-token.outputs.token }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
-          # gh api POST equivalent: the protected Python reviewer may submit an App-scoped
-          # approving review only after verifying exact image removal and required checks.
+          # gh api POST only from the protected controller after classification.
+          # No candidate-controlled code runs: reviewer and frozen registry come
+          # from protected main. Only byte-proved routine profiles may approve.
+          # The App cannot certify theorems or modify branch protections.
           python ci/agent_routine_review.py
