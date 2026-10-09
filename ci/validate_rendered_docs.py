@@ -131,7 +131,7 @@ def main() -> int:
     # Whole-repository GFM-source audit plus checks on actual built Arithmatex HTML.
     # Publish the complete finding inventory without failing established legacy pages;
     # enforce strict typography on the newly repaired CM4 mathematical flagships.
-    math_report = audit(ROOT, site_dir)
+    math_report = audit(ROOT, site_dir, github_live=True)
     (site_dir / "math-typography-audit.json").write_text(
         json.dumps(math_report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
@@ -149,6 +149,12 @@ def main() -> int:
         f"{len(math_report.get('rendered_findings', []))} rendered findings; "
         "full inventory in site/math-typography-audit.json"
     )
+    print("math typography findings by class:",
+          json.dumps(math_report["findings_by_kind_and_context"], sort_keys=True))
+    print("math typography top ordinary Markdown paths:",
+          json.dumps(math_report["top_markdown_paths"][:12]))
+    print("GitHub live GFM render probe:",
+          json.dumps(math_report.get("github_render_probe", [])))
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
