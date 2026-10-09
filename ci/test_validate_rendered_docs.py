@@ -89,9 +89,10 @@ def main() -> int:
         docs.mkdir()
         note = docs / "note.md"
         note.write_text(
-            "# Note\n\nInline $x^2$ and displayed:\n\n$\n x^2+y^2=z^2\n$\n"
-            "\n" + chr(96) * 3 + "tex\n"
-            "\\operatorname{ThisIsCode}\n"
+            "# Note\n\nInline $x^2$ and displayed:\n\n"
+            + chr(36) * 2 + "\n x^2+y^2=z^2\n" + chr(36) * 2 + "\n"
+            + "\n" + chr(96) * 3 + "tex\n"
+            + "\\operatorname{ThisIsCode}\n"
             + chr(96) * 3 + "\n",
             encoding="utf-8",
         )
