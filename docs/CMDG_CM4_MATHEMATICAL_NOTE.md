@@ -6,7 +6,7 @@
 
 ## Abstract
 
-For a profinite space $S$, the free solid condensed abelian group $\mathbb Z[S]^{\blacksquare}$ is solid. This result is known from Clausen–Scholze's work on condensed mathematics. GCL has formalized the corresponding **module-level** assertion for the exact `CondensedMod.IsSolid` predicate and universe-lifted integer coefficients in a pinned Lean 4/mathlib environment. Instead of reconstructing the original derived-$\mathrm{RHom}$ argument, the formal proof uses the measure/dual model of the free solid object, Nöbeling freeness of locally constant integer-valued functions, a weighted finite-Boolean reconstruction of Point-sections, and a functional-detection argument for coefficient morphisms. This note identifies the principal statements and the interfaces that require external mathematical attention.
+For a profinite space $S$, the free solid condensed abelian group $\mathbb Z[S]^{\blacksquare}$ is solid. This result is known from Clausen–Scholze's work on condensed mathematics. GCL has formalized the corresponding **module-level** assertion for the exact `CondensedMod.IsSolid` predicate and universe-lifted integer coefficients in a pinned Lean 4/mathlib environment. Instead of reconstructing the original derived Hom ($\mathrm{RHom}$) argument, the formal proof uses the measure/dual model of the free solid object, Nöbeling freeness of locally constant integer-valued functions, a weighted finite-Boolean reconstruction of Point-sections, and a functional-detection argument for coefficient morphisms. This note identifies the principal statements and the interfaces that require external mathematical attention.
 
 ## 1. Statement and exact formal boundary
 
