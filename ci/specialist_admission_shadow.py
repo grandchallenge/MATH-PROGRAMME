@@ -71,7 +71,7 @@ def specialist_domain(paths: list[str]) -> str | None:
 
 
 def observe_specialist_receipt(head: str, files: list[dict], paths: list[str],
-                               token: str) -> dict:
+                               token: str, candidate_author: str) -> dict:
     """Recognize protected domain evidence but never change admission authority."""
     domain = specialist_domain(paths)
     if domain is None:
@@ -81,6 +81,7 @@ def observe_specialist_receipt(head: str, files: list[dict], paths: list[str],
         proof = protected_specialist_receipt(
             head=head, files=files, domain=domain,
             api_get=lambda path: api("GET", path, token=token),
+            candidate_author=candidate_author,
         )
     except (ReceiptError, RoutineReviewError) as err:
         return {"disposition": "SPECIALIST_REVIEW_PENDING",
@@ -116,8 +117,10 @@ def shadow_pr(event: dict, token: str) -> dict:
             pr, files, head, token=token, prefix=prefix,
         )
     except (MaterialAdmissionError, RoutineReviewError) as err:
-        observation = observe_specialist_receipt(head, files, paths,
-                                                os.environ.get("SPECIALIST_READ_TOKEN") or token)
+        observation = observe_specialist_receipt(
+            head, files, paths, os.environ.get("SPECIALIST_READ_TOKEN") or token,
+            ((pr.get("user") or {}).get("login") or ""),
+        )
         if observation["disposition"] == "SPECIALIST_REVIEW_PENDING":
             observation["path_class"] = classify_paths(paths)
         return {"changed_files": count, "paths": paths, **observation}
