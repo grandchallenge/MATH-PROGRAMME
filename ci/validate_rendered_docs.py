@@ -153,6 +153,8 @@ def main() -> int:
           json.dumps(math_report["findings_by_kind_and_context"], sort_keys=True))
     print("math typography top ordinary Markdown paths:",
           json.dumps(math_report["top_markdown_paths"][:12]))
+    print("MkDocs rendered math findings:",
+          json.dumps(math_report.get("rendered_findings", [])))
     print("GitHub live GFM render probe:",
           json.dumps(math_report.get("github_render_probe", [])))
     if errors:
