@@ -143,6 +143,88 @@ def _verify_review_origin(
             "authenticated_review_id": r_id, "reviewer_login": reviewer}
 
 
+
+def _verify_solve_integrity(
+    api_get: Callable[[str], Any], repository: str, protected_head: str,
+    receipt: dict, proof: dict, proof_path: str,
+) -> dict[str, Any]:
+    """Inspect actual protected capture -> replay -> adjudication evidence.
+
+    Solve verifies execution fidelity and the disposition of a *provisional*
+    result. Only Cert may turn a mathematical proof into a certified claim.
+    """
+    value = receipt.get("solve_execution")
+    if not isinstance(value, dict) or proof.get("solve_execution") != value:
+        raise ReceiptError("Solve execution evidence missing or scope mismatch")
+    if set(value) != {
+        "schema_version", "dispatch_id", "result_ref", "result_sha256",
+        "capture", "replay", "adjudication", "claim_effects",
+    } or value["schema_version"] != "1.0.0":
+        raise ReceiptError("Solve execution binding schema invalid")
+    for key in ("dispatch_id", "result_ref"):
+        if not isinstance(value.get(key), str) or not value[key].strip():
+            raise ReceiptError("Solve missing dispatch or result identity")
+    result_sha = value.get("result_sha256")
+    if not isinstance(result_sha, str) or not re.fullmatch(r"[a-f0-9]{64}", result_sha):
+        raise ReceiptError("Solve result digest missing")
+    no_claim = {
+        "mathematical_claim_effect": False,
+        "certification_effect": False,
+        "publication_effect": False,
+        "source_semantic_effect": False,
+        "security_authority_effect": False,
+    }
+    if value.get("claim_effects") != no_claim:
+        raise ReceiptError("Solve evidence attempted to promote claim or authority")
+    bound = {}
+    paths = []
+    for name in ("capture", "replay", "adjudication"):
+        ref = value.get(name)
+        if not isinstance(ref, dict) or set(ref) != {"path", "blob_sha"}:
+            raise ReceiptError("Solve missing exact capture/replay/adjudication source lock")
+        path = ref.get("path")
+        if not isinstance(path, str) or not path.startswith("contributions/") or not path.endswith(".json"):
+            raise ReceiptError("Solve evidence not under protected contributions")
+        if path == proof_path or path in paths:
+            raise ReceiptError("Solve evidence self-reference or duplicate")
+        paths.append(path)
+        locked = _sha(ref.get("blob_sha"))
+        document, actual_blob = _protected_json(api_get, repository, path, protected_head)
+        if actual_blob != locked:
+            raise ReceiptError("Solve evidence source lock changed")
+        if document.get("dispatch_id") != value["dispatch_id"] or document.get("result_ref") != value["result_ref"]:
+            raise ReceiptError("Solve dispatch/return lineage mismatch")
+        bound[name] = document
+    captured, replayed, adjudicated = (bound[name] for name in ("capture", "replay", "adjudication"))
+    if (captured.get("record_type") != "GCL_SOLVE_CAPTURE_RECEIPT_V1" or
+            captured.get("result_sha256") != result_sha):
+        raise ReceiptError("Solve capture digest or type is not verified")
+    if (replayed.get("record_type") != "GCL_SOLVE_REPLAY_RECEIPT_V1" or
+            replayed.get("input_result_sha256") != result_sha or
+            replayed.get("capture_blob_sha") != value["capture"]["blob_sha"] or
+            replayed.get("replay_pass") is not True):
+        raise ReceiptError("Solve replay does not independently bind captured input")
+    if (adjudicated.get("record_type") != "GCL_SOLVE_ADJUDICATION_RECEIPT_V1" or
+            adjudicated.get("replay_blob_sha") != value["replay"]["blob_sha"] or
+            adjudicated.get("adjudication_disposition") != "REPLAYED_AND_ADJUDICATED" or
+            not isinstance(adjudicated.get("adjudication_id"), str) or
+            not adjudicated["adjudication_id"].strip() or
+            adjudicated.get("claim_effects") != no_claim):
+        raise ReceiptError("Solve adjudication invalid or attempted claim promotion")
+    return {
+        "domain": "SOLUTION_INTEGRITY",
+        "dispatch_id": value["dispatch_id"],
+        "result_ref": value["result_ref"],
+        "result_sha256": result_sha,
+        "capture_blob_sha": value["capture"]["blob_sha"],
+        "replay_blob_sha": value["replay"]["blob_sha"],
+        "adjudication_blob_sha": value["adjudication"]["blob_sha"],
+        "adjudication_id": adjudicated["adjudication_id"],
+        "claim_effects": no_claim,
+        "mathematical_certification": False,
+    }
+
+
 def protected_specialist_receipt(
     *, head: str, files: list[dict], domain: str,
     api_get: Callable[[str], Any], candidate_author: str,
