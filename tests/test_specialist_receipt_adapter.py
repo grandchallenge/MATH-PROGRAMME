@@ -39,7 +39,16 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
                                    "blob_sha": self.proof_blob},
             "review_scope": "Exact source-bound CM4 theorem evidence, no new claims",
         }
-        self.proof = {"record_type": "MATHCERT_PROTECTED_REVIEW", "status": "ADJUDICATED"}
+        self.proof = {
+            "record_type": "GCL_DOMAIN_INDEPENDENT_REVIEW_V1",
+            "authority_domain": "MATHEMATICAL",
+            "subject_repository": "grandchallenge/MATH-PROGRAMME",
+            "subject_sha": self.head,
+            "material_fingerprint": material_fingerprint(self.files),
+            "disposition": "INDEPENDENT_REVIEW_ACCEPTED",
+            "reviewer_identity": "gcl-independent-mathematical-referee",
+            "review_scope": self.receipt["review_scope"],
+        }
 
     def api(self, path: str):
         if path == "/repos/grandchallenge/MATHCERT/git/ref/heads/main":
@@ -93,6 +102,26 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
     def test_refuted_or_pending_specialist_evidence_is_not_approved(self):
         self.receipt["verdict"] = "PENDING"
         with self.assertRaisesRegex(ReceiptError, "positive"):
+            self.verify()
+
+    def test_proof_with_wrong_reviewed_bytes_rejected(self):
+        self.proof["material_fingerprint"] = "0" * 64
+        with self.assertRaisesRegex(ReceiptError, "not positively bound"):
+            self.verify()
+
+    def test_proof_with_wrong_review_role_rejected(self):
+        self.proof["authority_domain"] = "SOURCE_SEMANTIC"
+        with self.assertRaisesRegex(ReceiptError, "not positively bound"):
+            self.verify()
+
+    def test_proof_with_missing_reviewer_identity_rejected(self):
+        self.proof["reviewer_identity"] = ""
+        with self.assertRaisesRegex(ReceiptError, "identity"):
+            self.verify()
+
+    def test_proof_with_changed_claim_scope_rejected(self):
+        self.proof["review_scope"] = "Unrelated theorem"
+        with self.assertRaisesRegex(ReceiptError, "scope differs"):
             self.verify()
 
     def test_noncertifying_source_path_rejected(self):
