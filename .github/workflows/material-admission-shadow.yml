@@ -1,0 +1,63 @@
+name: GCL material-admission observation
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+  merge_group:
+    types: [checks_requested]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: material-admission-shadow-${{ github.event.pull_request.number || github.event.merge_group.head_sha || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  observe:
+    name: Observe material closure (no admission authority)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    environment: release-trust
+    steps:
+      - name: Mint read-only protected-domain review token
+        id: domain-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATHFORGE
+            MATHCERT
+            INTELLECT
+          permission-contents: read
+          permission-pull-requests: read
+      - name: Check out protected main, never candidate code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          path: protected-base
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Evaluate PR or native queue head as inert data
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SPECIALIST_READ_TOKEN: ${{ steps.domain-token.outputs.token }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF: ${{ github.ref }}
+          PROTECTED_REPO: .
+        run: |
+          cd protected-base
+          python ci/specialist_admission_shadow.py
+      - name: Preserve explicit nonauthoritative observation
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: material-admission-observation
+          path: protected-base/material-admission-shadow.json
+          if-no-files-found: ignore
+          retention-days: 14
