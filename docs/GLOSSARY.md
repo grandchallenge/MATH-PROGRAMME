@@ -175,3 +175,5 @@ The chain of definitions, propositions, lemmas, corollaries, examples, and count
 ## Terminology authority
 
 The [Agent Council Terminology Registry](AGENT_COUNCIL_TERMINOLOGY_REGISTRY.md) governs terms that materially affect review, lifecycle, continuity, and cross-artifact interpretation. The [Programme Status Taxonomy](STATUS_TAXONOMY.md) gives the public mapping among claim status, artifact lifecycle, and campaign disposition.
+
+**ADVERSARIAL CANARY — NOT A MATHEMATICAL RESULT:** This unreviewed edit asserts 1 = 2. It must never be promoted or merged.
