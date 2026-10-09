@@ -16,6 +16,7 @@ from pathlib import Path
 
 from agent_material_profiles import MaterialAdmissionError, classify_text, load_registry
 from agent_routine_review import RoutineReviewError, api, delegated_classification
+from specialist_receipt_adapter import ReceiptError, protected_specialist_receipt
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 CONTROL = "GCL-AGENT-ADMISSION-SPECIALIST-001"
@@ -53,6 +54,41 @@ def classify_paths(paths: list[str]) -> str:
     return "SPECIALIST_REVIEW_PENDING"
 
 
+def specialist_domain(paths: list[str]) -> str | None:
+    """Only exact coherent path-based authority routes; ambiguity is pending."""
+    if not paths:
+        return None
+    def classify(path: str) -> str | None:
+        if reserved_path(path):
+            return "PROTECTION"
+        if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
+            return "MATHEMATICAL"
+        if path.startswith("governance/source_"):
+            return "SOURCE_SEMANTIC"
+        return None
+    classes = {classify(path) for path in paths}
+    return classes.pop() if len(classes) == 1 else None
+
+
+def observe_specialist_receipt(head: str, files: list[dict], paths: list[str],
+                               token: str) -> dict:
+    """Recognize protected domain evidence but never change admission authority."""
+    domain = specialist_domain(paths)
+    if domain is None:
+        return {"disposition": "SPECIALIST_REVIEW_PENDING",
+                "reason": "unmapped/mixed specialist domain", "subject_sha": head}
+    try:
+        proof = protected_specialist_receipt(
+            head=head, files=files, domain=domain,
+            api_get=lambda path: api("GET", path, token=token),
+        )
+    except (ReceiptError, RoutineReviewError) as err:
+        return {"disposition": "SPECIALIST_REVIEW_PENDING",
+                "domain": domain, "reason": str(err), "subject_sha": head}
+    return {"disposition": "SPECIALIST_EVIDENCE_RECOGNIZED_SHADOW",
+            "domain": domain, "evidence": proof, "subject_sha": head}
+
+
 def shadow_pr(event: dict, token: str) -> dict:
     number = event.get("number")
     if not isinstance(number, int) or number <= 0:
@@ -80,9 +116,10 @@ def shadow_pr(event: dict, token: str) -> dict:
             pr, files, head, token=token, prefix=prefix,
         )
     except (MaterialAdmissionError, RoutineReviewError) as err:
-        return {"disposition": classify_paths(paths),
-                "reason": str(err), "changed_files": count,
-                "subject_sha": head, "paths": paths}
+        observation = observe_specialist_receipt(head, files, paths, token)
+        if observation["disposition"] == "SPECIALIST_REVIEW_PENDING":
+            observation["path_class"] = classify_paths(paths)
+        return {"changed_files": count, "paths": paths, **observation}
     fresh = api("GET", f"{prefix}/pulls/{number}", token=token)
     if ((fresh.get("head") or {}).get("sha") != head or
             (fresh.get("base") or {}).get("sha") != (pr.get("base") or {}).get("sha")):
