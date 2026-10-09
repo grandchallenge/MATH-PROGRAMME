@@ -19,7 +19,20 @@ jobs:
     name: Observe material closure (no admission authority)
     runs-on: ubuntu-24.04
     timeout-minutes: 8
+    environment: release-trust
     steps:
+      - name: Mint read-only protected-domain review token
+        id: domain-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: |
+            MATHFORGE
+            MATHCERT
+            INTELLECT
+          permission-contents: read
       - name: Check out protected main, never candidate code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -30,6 +43,7 @@ jobs:
       - name: Evaluate PR or native queue head as inert data
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          SPECIALIST_READ_TOKEN: ${{ steps.domain-token.outputs.token }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
           GITHUB_SHA: ${{ github.sha }}
