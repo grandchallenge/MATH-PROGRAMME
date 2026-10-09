@@ -1,0 +1,151 @@
+from __future__ import annotations
+
+import base64
+import copy
+import json
+import sys
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ci"))
+from specialist_receipt_adapter import (  # noqa: E402
+    ReceiptError, material_fingerprint, protected_specialist_receipt,
+)
+
+
+class ProtectedSpecialistReceiptTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.head = "a" * 40
+        self.source = "b" * 40
+        self.receipt_blob = "c" * 40
+        self.proof_blob = "d" * 40
+        self.files = [{"filename": "fixtures/formal/CM4.lean",
+                       "status": "modified", "sha": "e" * 40}]
+        self.receipt = {
+            "schema_version": "1.0.0",
+            "record_type": "GCL_PROTECTED_SPECIALIST_ADMISSION_EVIDENCE",
+            "authority_domain": "MATHEMATICAL",
+            "source_repository": "grandchallenge/MATHCERT",
+            "subject": {"repository": "grandchallenge/MATH-PROGRAMME",
+                        "head_sha": self.head,
+                        "material_fingerprint": material_fingerprint(self.files)},
+            "verdict": "ADMISSIBLE_FOR_PROTECTED_ADMISSION",
+            "protected_evidence": {"path": "certificates/CM4-review.json",
+                                   "blob_sha": self.proof_blob},
+            "review_scope": "Exact source-bound CM4 theorem evidence, no new claims",
+        }
+        self.proof = {"record_type": "MATHCERT_PROTECTED_REVIEW", "status": "ADJUDICATED"}
+
+    def api(self, path: str):
+        if path == "/repos/grandchallenge/MATHCERT/git/ref/heads/main":
+            return {"object": {"sha": self.source}}
+        if path.startswith("/repos/grandchallenge/MATHCERT/contents/"):
+            content = self.receipt if "material_admission_receipts" in path else self.proof
+            sha = self.receipt_blob if "material_admission_receipts" in path else self.proof_blob
+            return {"type": "file", "encoding": "base64", "sha": sha,
+                    "content": base64.b64encode(json.dumps(content).encode()).decode()}
+        raise AssertionError("unadmitted API path " + path)
+
+    def verify(self, fetch=None):
+        return protected_specialist_receipt(
+            head=self.head, files=self.files, domain="MATHEMATICAL",
+            api_get=fetch or self.api)
+
+    def test_exact_protected_record_recognized_with_no_new_certification(self):
+        result = self.verify()
+        self.assertEqual(result["disposition"], "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED")
+        self.assertEqual(result["subject_sha"], self.head)
+        self.assertFalse(result["authority"]["new_certification_created"])
+        self.assertEqual(result["material_fingerprint"], material_fingerprint(self.files))
+
+    def test_candidate_forged_review_not_consulted(self):
+        # Only the MATHCERT protected main API is ever called.
+        visited = []
+        def read(path):
+            visited.append(path)
+            return self.api(path)
+        self.verify(read)
+        self.assertTrue(visited)
+        self.assertTrue(all("/repos/grandchallenge/MATHCERT/" in x for x in visited))
+
+    def test_wrong_authority_domain_fail_closed(self):
+        with self.assertRaises(ReceiptError):
+            protected_specialist_receipt(head=self.head, files=self.files,
+                                         domain="MODEL_USER_APPROVED", api_get=self.api)
+
+    def test_changed_candidate_blob_invalidates_review(self):
+        files = copy.deepcopy(self.files)
+        files[0]["sha"] = "f" * 40
+        with self.assertRaisesRegex(ReceiptError, "candidate material"):
+            protected_specialist_receipt(head=self.head, files=files,
+                                         domain="MATHEMATICAL", api_get=self.api)
+
+    def test_changed_candidate_head_invalidates_review(self):
+        with self.assertRaisesRegex(ReceiptError, "candidate material"):
+            protected_specialist_receipt(head="f" * 40, files=self.files,
+                                         domain="MATHEMATICAL", api_get=self.api)
+
+    def test_refuted_or_pending_specialist_evidence_is_not_approved(self):
+        self.receipt["verdict"] = "PENDING"
+        with self.assertRaisesRegex(ReceiptError, "positive"):
+            self.verify()
+
+    def test_noncertifying_source_path_rejected(self):
+        self.receipt["protected_evidence"]["path"] = "docs/CM4-review.json"
+        with self.assertRaisesRegex(ReceiptError, "source path"):
+            self.verify()
+
+    def test_source_identity_mismatch_rejected(self):
+        self.receipt["source_repository"] = "grandchallenge/MATHSOLVE"
+        with self.assertRaisesRegex(ReceiptError, "not authoritative"):
+            self.verify()
+
+    def test_underlying_evidence_changed_rejected(self):
+        self.receipt["protected_evidence"]["blob_sha"] = "f" * 40
+        with self.assertRaisesRegex(ReceiptError, "byte identity"):
+            self.verify()
+
+    def test_self_reference_rejected(self):
+        self.receipt["protected_evidence"]["path"] = (
+            "governance/material_admission_receipts/MATH-PROGRAMME-" + self.head + ".json"
+        )
+        with self.assertRaises(ReceiptError):
+            self.verify()
+
+    def test_live_main_advance_fails_closed(self):
+        count = 0
+        def moving(path):
+            nonlocal count
+            if path.endswith("/git/ref/heads/main"):
+                count += 1
+                return {"object": {"sha": "f" * 40 if count == 2 else self.source}}
+            return self.api(path)
+        with self.assertRaisesRegex(ReceiptError, "moved"):
+            self.verify(moving)
+
+    def test_missing_protected_receipt_fails_closed(self):
+        def missing(path):
+            if "material_admission_receipts" in path:
+                raise ReceiptError("HTTP 404 no admitted receipt")
+            return self.api(path)
+        with self.assertRaises(ReceiptError):
+            self.verify(missing)
+
+    def test_missing_or_duplicate_material_manifest_not_trusted(self):
+        for manifest in ([], self.files * 2):
+            with self.subTest(manifest=manifest), self.assertRaises(ReceiptError):
+                material_fingerprint(manifest)
+
+    def test_material_fingerprint_order_independent(self):
+        rows = self.files + [{"filename": "docs/CM4.md",
+                              "status": "modified", "sha": "f" * 40}]
+        self.assertEqual(material_fingerprint(rows), material_fingerprint(list(reversed(rows))))
+
+    def test_unknown_manifest_status_rejected(self):
+        rows = [{"filename": "docs/foo.md", "status": "evil", "sha": "f" * 40}]
+        with self.assertRaises(ReceiptError):
+            material_fingerprint(rows)
+
+
+if __name__ == "__main__":
+    unittest.main()
