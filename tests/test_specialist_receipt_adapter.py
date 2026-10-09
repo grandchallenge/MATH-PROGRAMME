@@ -47,6 +47,7 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
             "material_fingerprint": material_fingerprint(self.files),
             "disposition": "INDEPENDENT_REVIEW_ACCEPTED",
             "reviewer_identity": "gcl-independent-mathematical-referee",
+            "review_independence": "INDEPENDENT_NON_AUTHOR",
             "review_scope": self.receipt["review_scope"],
         }
 
@@ -63,7 +64,7 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
     def verify(self, fetch=None):
         return protected_specialist_receipt(
             head=self.head, files=self.files, domain="MATHEMATICAL",
-            api_get=fetch or self.api)
+            api_get=fetch or self.api, candidate_author="fyremael")
 
     def test_exact_protected_record_recognized_with_no_new_certification(self):
         result = self.verify()
@@ -85,19 +86,22 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
     def test_wrong_authority_domain_fail_closed(self):
         with self.assertRaises(ReceiptError):
             protected_specialist_receipt(head=self.head, files=self.files,
-                                         domain="MODEL_USER_APPROVED", api_get=self.api)
+                                         domain="MODEL_USER_APPROVED", api_get=self.api,
+                                         candidate_author="fyremael")
 
     def test_changed_candidate_blob_invalidates_review(self):
         files = copy.deepcopy(self.files)
         files[0]["sha"] = "f" * 40
         with self.assertRaisesRegex(ReceiptError, "candidate material"):
             protected_specialist_receipt(head=self.head, files=files,
-                                         domain="MATHEMATICAL", api_get=self.api)
+                                         domain="MATHEMATICAL", api_get=self.api,
+                                         candidate_author="fyremael")
 
     def test_changed_candidate_head_invalidates_review(self):
         with self.assertRaisesRegex(ReceiptError, "candidate material"):
             protected_specialist_receipt(head="f" * 40, files=self.files,
-                                         domain="MATHEMATICAL", api_get=self.api)
+                                         domain="MATHEMATICAL", api_get=self.api,
+                                         candidate_author="fyremael")
 
     def test_refuted_or_pending_specialist_evidence_is_not_approved(self):
         self.receipt["verdict"] = "PENDING"
@@ -107,6 +111,16 @@ class ProtectedSpecialistReceiptTests(unittest.TestCase):
     def test_proof_with_wrong_reviewed_bytes_rejected(self):
         self.proof["material_fingerprint"] = "0" * 64
         with self.assertRaisesRegex(ReceiptError, "not positively bound"):
+            self.verify()
+
+    def test_proof_missing_independence_rejected(self):
+        self.proof["review_independence"] = "ROLE_SCOPED_NON_AUTHOR_SPECIALIST"
+        with self.assertRaisesRegex(ReceiptError, "independence"):
+            self.verify()
+
+    def test_candidate_cannot_serve_as_independent_reviewer(self):
+        self.proof["reviewer_identity"] = "fyremael"
+        with self.assertRaisesRegex(ReceiptError, "candidate author"):
             self.verify()
 
     def test_proof_with_wrong_review_role_rejected(self):
