@@ -45,6 +45,12 @@ EXPECTED_STRICT_STATUS_CHECKS = {
     "grandchallenge/MATH-PROGRAMME": False,
     "grandchallenge/INTELLECT": False,
 }
+EXPECTED_REVIEW_POLICY = {
+    "grandchallenge/MATHCERT": (1, True),
+    "grandchallenge/MATHSOLVE": (0, False),
+    "grandchallenge/MATH-PROGRAMME": (1, True),
+    "grandchallenge/INTELLECT": (0, False),
+}
 EXPECTED_BYPASS_ACTORS = {
     "grandchallenge/MATHCERT": [],
     "grandchallenge/MATHSOLVE": [],
@@ -106,11 +112,13 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
             "certify",
             "policy / policy",
             "security / action-policy",
+            "routing-enforcement",
         ],
         "grandchallenge/MATHSOLVE": [
             "ledgers",
             "policy / policy",
             "security / action-policy",
+            "routing-enforcement",
         ],
         "grandchallenge/MATH-PROGRAMME": [
             "validate-json",
@@ -143,6 +151,12 @@ def validate_contract(contract: dict[str, Any], schema: dict[str, Any]) -> None:
     }
     if bypass != expected_bypass:
         raise ReleaseTrustError("required ruleset bypass-actor map drift")
+    review_policy = {
+        entry["repository"]: (entry["required_approving_reviews"], entry["require_last_push_approval"])
+        for entry in repositories
+    }
+    if review_policy != EXPECTED_REVIEW_POLICY:
+        raise ReleaseTrustError("required repository review-policy map drift")
 
 
 def repository_policy(
@@ -150,6 +164,8 @@ def repository_policy(
 ) -> dict[str, Any]:
     effective = dict(policy)
     effective["strict_status_checks"] = entry["strict_status_checks"]
+    effective["required_approving_reviews"] = entry["required_approving_reviews"]
+    effective["require_last_push_approval"] = entry["require_last_push_approval"]
     effective["bypass_actors"] = _normalized_bypass_actors(entry.get("bypass_actors"))
     effective["enforce_admins"] = not bool(effective["bypass_actors"])
     return effective
@@ -366,20 +382,37 @@ def branch_ruleset(client: GitHubClient, repository: str) -> dict[str, Any]:
 
 
 def apply_contract(client: GitHubClient, contract: dict[str, Any]) -> None:
+    """Read back live rulesets without broad, destructive replacement.
+
+    Any ruleset drift requires its own admitted exact-scope migration. The
+    general Release Trust apply must not discard newly admitted GH-OS checks,
+    specialist review requirements, or GitHub settings omitted by its renderer.
+    """
     pages = contract["pages"]
-    client.request("PATCH", f"/repos/{pages['repository']}", {"homepage": pages["homepage"]})
     policy = contract["branch_policy"]
+    errors: list[str] = []
     for entry in contract["repositories"]:
         repository = entry["repository"]
-        current = branch_ruleset(client, repository)
-        ruleset_id = current["id"]
+        raw = branch_ruleset(client, repository)
         effective_policy = repository_policy(policy, entry)
+        current_errors = ruleset_errors(
+            normalize_ruleset(raw),
+            effective_policy,
+            entry["required_checks"],
+            RULESET_NAMES[repository],
+        )
+        errors.extend(f"{repository}: {err}" for err in current_errors)
+    if errors:
+        raise ReleaseTrustError(
+            "broad Release Trust apply blocked on live ruleset drift; "
+            "use an exact protected ruleset migration: " + "; ".join(errors)
+        )
+    metadata = client.request("GET", f"/repos/{pages['repository']}")
+    homepage = str(metadata.get("homepage") or "")
+    if homepage.rstrip("/") != pages["homepage"].rstrip("/"):
         client.request(
-            "PUT",
-            f"/repos/{repository}/rulesets/{ruleset_id}",
-            ruleset_payload(
-                RULESET_NAMES[repository], effective_policy, entry["required_checks"]
-            ),
+            "PATCH", f"/repos/{pages['repository']}",
+            {"homepage": pages["homepage"]},
         )
 
 
