@@ -43,7 +43,15 @@ complete changed-file fingerprint, positive protected-admission disposition,
 named review scope, and exact Git blob of a separate domain-owned source
 document. Both receipt and underlying evidence are fetched from pinned
 protected repository commits; the protected source must remain unchanged
-throughout the operation. The adapter never reads a candidate-supplied
+throughout the operation. The underlying evidence must additionally anchor an
+actual merged PR in the domain repository. The adapter reads the source PR,
+verifies the exact reviewed head, the precise underlying evidence blob in that
+PR, a real non-author GitHub `APPROVED` review with the declared review ID,
+and that no later reviewer disposition supersedes the approval. The role and
+independence assertions are checked against this attributable GitHub review
+and exact protected bytes; GitHub approval alone still cannot certify a theorem.
+The read token has domain-only contents and pull-request read permissions.
+The adapter never reads a candidate-supplied
 `GCL-REVIEW/1` comment as review authority. GitHub review statuses alone
 are not proof of the domain record.
 
