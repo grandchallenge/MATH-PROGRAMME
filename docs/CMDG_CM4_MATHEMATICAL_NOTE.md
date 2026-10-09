@@ -6,16 +6,16 @@
 
 ## Abstract
 
-For a profinite space \(S\), the free solid condensed abelian group \(\mathbb Z[S]^{\blacksquare}\) is solid. This result is known from Clausen–Scholze's work on condensed mathematics. GCL has formalized the corresponding **module-level** assertion for the exact `CondensedMod.IsSolid` predicate and universe-lifted integer coefficients in a pinned Lean 4/mathlib environment. Instead of reconstructing the original derived-\(\mathrm{RHom}\) argument, the formal proof uses the measure/dual model of the free solid object, Nöbeling freeness of locally constant integer-valued functions, a weighted finite-Boolean reconstruction of Point-sections, and a functional-detection argument for coefficient morphisms. This note identifies the principal statements and the interfaces that require external mathematical attention.
+For a profinite space $S$, the free solid condensed abelian group $\mathbb Z[S]^{\blacksquare}$ is solid. This result is known from Clausen–Scholze's work on condensed mathematics. GCL has formalized the corresponding **module-level** assertion for the exact `CondensedMod.IsSolid` predicate and universe-lifted integer coefficients in a pinned Lean 4/mathlib environment. Instead of reconstructing the original derived-$\mathrm{RHom}$ argument, the formal proof uses the measure/dual model of the free solid object, Nöbeling freeness of locally constant integer-valued functions, a weighted finite-Boolean reconstruction of Point-sections, and a functional-detection argument for coefficient morphisms. This note identifies the principal statements and the interfaces that require external mathematical attention.
 
 ## 1. Statement and exact formal boundary
 
-Fix an arbitrary universe \(u\). Let \(S\) be a profinite space at that universe and let \(R=\mathrm{ULift}^{u+1}(\mathbb Z)\). Write \(P(S)\) for the exact mathlib construction `(Condensed.profiniteSolid R).obj S`. The proved proposition is
+Fix an arbitrary universe $u$. Let $S$ be a profinite space at that universe and let $R=\mathrm{ULift}^{u+1}(\mathbb Z)$. Write $P(S)$ for the exact mathlib construction `(Condensed.profiniteSolid R).obj S`. The proved proposition is
 
-\[
+$$
   \forall S:\operatorname{Profinite}_u,\qquad
   \operatorname{CondensedMod.IsSolid}_R(P(S)).
-\]
+$$
 
 The `ULift` is part of the type-correct formal statement, not an extension to arbitrary coefficient rings. The terminal wrapper is literally:
 
@@ -43,15 +43,15 @@ One way to recognize the obstacle is to consider morphisms from the free profini
 
 ### A finite example before the general construction
 
-For a finite discrete profinite space \(S=\{s_1,\ldots,s_n\}\), the integer-valued functions \(C(S,\mathbb Z)\) are \(\mathbb Z^n\). A homomorphism \(\lambda:C(S,\mathbb Z)\to\mathbb Z\) is determined by its values on characteristic functions:
+For a finite discrete profinite space $S=\{s_1,\ldots,s_n\}$, the integer-valued functions $C(S,\mathbb Z)$ are $\mathbb Z^n$. A homomorphism $\lambda:C(S,\mathbb Z)\to\mathbb Z$ is determined by its values on characteristic functions:
 
-\[
+$$
    \lambda(f)=\sum_{j=1}^{n}\lambda(\mathbf 1_{\{s_j\}})\, f(s_j).
-\]
+$$
 
 The finite example illustrates **detection by coefficients**. It is not a proof that every functional on an infinite profinite space is a finite sum of evaluations, or that an arbitrary condensed morphism is determined by its underlying ordinary set-theoretic points. Those steps require the separate formal reconstruction and faithfulness lemmas below.
 
-For a general profinite \(S\), any continuous map from \(S\) to a discrete target with finite image factors through a finite quotient. The compatible system of finite quotients is therefore a natural way to observe a locally constant function. Nöbeling's theorem supplies freeness for \(C(S,\mathbb Z)\), even when \(S\) is infinite. The argument combines these ingredients without pretending that the finite model is the complete proof.
+For a general profinite $S$, any continuous map from $S$ to a discrete target with finite image factors through a finite quotient. The compatible system of finite quotients is therefore a natural way to observe a locally constant function. Nöbeling's theorem supplies freeness for $C(S,\mathbb Z)$, even when $S$ is infinite. The argument combines these ingredients without pretending that the finite model is the complete proof.
 
 ## 3. The proof spine and its nontrivial joints
 
@@ -77,13 +77,13 @@ The crucial universal quantifier concerns **arbitrary Point-measure sections**. 
 
 ### C. Annihilate the product functional
 
-For a solid-side coefficient morphism \(d\), the formal development defines a product functional on the Nöbeling coordinate vector. The central vanishing statements include
+For a solid-side coefficient morphism $d$, the formal development defines a product functional on the Nöbeling coordinate vector. The central vanishing statements include
 
 `kernelProductFunctional_evaluationWeight_eq_zero_of_solidification_kernel`,
 `basisCombination_kernelProductFunctional_eq_zero_of_solidification_kernel`, and
 `kernelProductFunctional_eq_zero_of_solidification_kernel`.
 
-Conceptually, when \(d\) lies in the kernel of precomposition with the relevant solidification map, the scalar functional associated to \(d\) must vanish. The *formal meaning* of the kernel condition and the quantification over test data, not the informal slogan, is what must be checked by an independent referee.
+Conceptually, when $d$ lies in the kernel of precomposition with the relevant solidification map, the scalar functional associated to $d$ must vanish. The *formal meaning* of the kernel condition and the quantification over test data, not the informal slogan, is what must be checked by an independent referee.
 
 ### D. Lift scalar vanishing back to morphism vanishing
 
@@ -102,9 +102,9 @@ This is the deepest possible hidden gap from a mathematical-exposition perspecti
 Finally,
 
 `coefficientMappingOutInjectivity_of_pointFunctional`
-\(\longrightarrow\)
+$\longrightarrow$
 `coefficientObject_isSolid_via_pointFunctional`
-\(\longrightarrow\)
+$\longrightarrow$
 `profiniteSolid_isSolid_via_pointFunctional`
 
 establish the mapping-out criterion for the coefficient object and transports it to the profinite solid object. The wrapper `cm4Target_via_pointFunctional` then closes the exact `CM4Target` proposition.
