@@ -32,6 +32,7 @@ class IntakeProfile:
     base: str
     receipt_schema_version: str
     pr_title_prefix: str
+    queue_binding: dict[str, Any] | None = None
 
 
 PROFILES = (
@@ -138,19 +139,74 @@ def content_text(item: dict[str, Any]) -> str:
     return base64.b64decode(encoded).decode("utf-8")
 
 
-def profile_for_branch(branch_name: str) -> tuple[IntakeProfile, str]:
+QUEUE_BINDINGS_PATH = ".gcl/worker_queue/INTAKE_BINDINGS.json"
+
+
+def protected_queue_bindings(gh: Github) -> list[dict[str, Any]]:
+    """Fetch only protected-main queue producer contracts, never branch data."""
+    path = f"/repos/{OWNER}/{REPO}/contents/{QUEUE_BINDINGS_PATH}?ref=main"
+    item = gh.get_optional(path)
+    if item is None:
+        return []  # New intake contract is not yet admitted on protected main.
+    if not isinstance(item, dict):
+        raise ControllerError("protected queue intake manifest response is malformed")
+    document = json.loads(content_text(item))
+    if document.get("record_type") != "GCL_QUEUE_INTAKE_BINDINGS" or document.get("schema_version") != "1.0.0":
+        raise ControllerError("protected queue intake binding schema mismatch")
+    auth = document.get("authority_effect")
+    if auth != {"queue_operation_only":True,"mathematical":False,"certification":False}:
+        raise ControllerError("protected queue intake authority boundary mismatch")
+    entries = document.get("bindings")
+    if not isinstance(entries, list):
+        raise ControllerError("protected queue intake bindings are not a list")
+    ids = [x.get("dispatch_id") for x in entries]
+    if any(not isinstance(x,str) for x in ids) or len(set(ids)) != len(ids):
+        raise ControllerError("protected queue intake dispatch identities are malformed or duplicated")
+    return entries
+
+
+def profile_for_queue_binding(binding: dict[str, Any]) -> IntakeProfile:
+    did = binding["dispatch_id"]
+    path = str(binding.get("dispatch_path") or "")
+    parts = Path(path)
+    if parts.is_absolute() or ".." in parts.parts or parts.name != did + ".json":
+        raise ControllerError("protected queue dispatch path is unsafe or unbound")
+    campaign = binding.get("campaign")
+    if campaign not in {"RH-001","ERDOS-OPEN"}:
+        raise ControllerError("queue intake campaign unregistered")
+    return IntakeProfile(
+        campaign=campaign,
+        branch_prefix="intake/" + did.lower(),
+        dispatch_re=re.compile("^" + re.escape(did) + "$"),
+        base=parts.parent.parent.as_posix(),
+        receipt_schema_version="1.0.0",
+        pr_title_prefix="GCL queue intake",
+        queue_binding=binding,
+    )
+
+
+def profile_for_branch(branch_name: str, gh: Github | None = None) -> tuple[IntakeProfile, str]:
     for profile in PROFILES:
         if branch_name.startswith(profile.branch_prefix):
             slug = branch_name[len("intake/"):].upper()
             if profile.dispatch_re.fullmatch(slug):
                 return profile, slug
+    if gh is not None:
+        for binding in protected_queue_bindings(gh):
+            profile = profile_for_queue_binding(binding)
+            if branch_name == profile.branch_prefix:
+                return profile, binding["dispatch_id"]
     raise ControllerError("branch does not map to a registered external-intake dispatch")
 
 
-def profile_for_dispatch(dispatch_id: str) -> IntakeProfile:
+def profile_for_dispatch(dispatch_id: str, gh: Github | None = None) -> IntakeProfile:
     for profile in PROFILES:
         if profile.dispatch_re.fullmatch(dispatch_id):
             return profile
+    if gh is not None:
+        for binding in protected_queue_bindings(gh):
+            if binding.get("dispatch_id") == dispatch_id:
+                return profile_for_queue_binding(binding)
     raise ControllerError(f"dispatch is not registered with the external intake controller: {dispatch_id}")
 
 
@@ -158,8 +214,8 @@ def derive_dispatch_id(branch_name: str) -> str:
     return profile_for_branch(branch_name)[1]
 
 
-def expected_paths(dispatch_id: str, comment_id: int) -> tuple[str, str]:
-    profile = profile_for_dispatch(dispatch_id)
+def expected_paths(dispatch_id: str, comment_id: int, gh: Github | None = None) -> tuple[str, str]:
+    profile = profile_for_dispatch(dispatch_id, gh)
     raw = f"{profile.base}/raw/{dispatch_id}/github-comment-{comment_id}.md"
     receipt = f"{profile.base}/receipts/{dispatch_id}/github-comment-{comment_id}.json"
     return raw, receipt
@@ -204,11 +260,24 @@ def list_intake_branches(gh: Github) -> list[str]:
         if len(pulls) < 100:
             break
         page += 1
+    # Previously this controller only inspected open PRs, which cannot
+    # discover a freshly captured evidence branch that has no PR yet.
+    # The queue manifest provides a bounded exact list of permitted heads.
+    for binding in protected_queue_bindings(gh):
+        profile = profile_for_queue_binding(binding)
+        branch = profile.branch_prefix
+        if branch in names:
+            continue
+        receipt_directory = f"{profile.base}/receipts/{binding['dispatch_id']}"
+        encoded = urllib.parse.quote(receipt_directory, safe="/")
+        ref = urllib.parse.quote(branch, safe="")
+        if gh.get_optional(f"/repos/{OWNER}/{REPO}/contents/{encoded}?ref={ref}") is not None:
+            names.append(branch)
     return sorted(set(names))
 
 
 def main_has_any_raw(gh: Github, dispatch_id: str) -> bool:
-    profile = profile_for_dispatch(dispatch_id)
+    profile = profile_for_dispatch(dispatch_id, gh)
     raw_dir = f"{profile.base}/raw/{dispatch_id}"
     encoded_dir = urllib.parse.quote(raw_dir, safe="/")
     items = gh.get_optional(f"/repos/{OWNER}/{REPO}/contents/{encoded_dir}?ref=main")
@@ -248,7 +317,7 @@ def compare_files(gh: Github, branch: str) -> list[str]:
 
 
 def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
-    profile, dispatch_id = profile_for_branch(branch)
+    profile, dispatch_id = profile_for_branch(branch, gh)
     dispatch_dir = f"{profile.base}/dispatches"
     dispatch_text, dispatch_blob = fetch_text(
         gh, f"{dispatch_dir}/{dispatch_id}.json", "main"
@@ -280,7 +349,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
     if not match:
         raise ControllerError(f"{dispatch_id}: receipt comment identity malformed")
     comment_id = int(match.group(1))
-    raw_path, expected_receipt = expected_paths(dispatch_id, comment_id)
+    raw_path, expected_receipt = expected_paths(dispatch_id, comment_id, gh)
     if receipt_path != expected_receipt:
         raise ControllerError(f"{dispatch_id}: receipt path mismatch")
     if changed != sorted([raw_path, receipt_path]):
@@ -305,10 +374,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
         "github_comment_id": receipt.get("github_comment_id") == comment_id,
         "raw_artifact_path": receipt.get("raw_artifact_path") == raw_path,
         "raw_sha256": receipt.get("raw_sha256") == sha256_text(raw_text),
-        "bootstrap_sha256": receipt.get("bootstrap_sha256") == dispatch.get("bootstrap_sha256"),
         "source_handoff_commit_sha": receipt.get("source_handoff_commit_sha") == dispatch.get("source_handoff_commit_sha"),
-        "source_handoff_blob_sha": receipt.get("source_handoff_blob_sha") == dispatch.get("source_handoff_blob_sha"),
-        "source_handoff_sha256": receipt.get("source_handoff_sha256") == dispatch.get("source_handoff_sha256"),
         "schema_result": receipt.get("schema_result") == "valid",
         "freshness": receipt.get("freshness") == "current_for_dispatch",
         "handling_state": receipt.get("handling_state") == "received_unadjudicated",
@@ -316,6 +382,34 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
         "independence_strength_adjudicated": receipt.get("independence_strength_adjudicated") is False,
         "canonical_claim_effect": receipt.get("canonical_claim_effect") is False,
     }
+    if profile.queue_binding is not None:
+        b = profile.queue_binding
+        task, _ = fetch_text(gh, b["task_path"], "main")
+        checks.update({
+            "queue_dispatch_identity": dispatch.get("dispatch_id") == b["dispatch_id"],
+            "queue_dispatch_issue": dispatch.get("github_issue_number") == b["github_issue_number"],
+            "queue_dispatch_task": dispatch.get("task_path") == b["task_path"],
+            "queue_dispatch_commit": dispatch.get("task_commit") == b["task_commit"],
+            "queue_task_digest": sha256_text(task) == b["task_sha256"],
+            "queue_binding_kind": receipt.get("intake_binding_kind") == "PROTECTED_QUEUE_TASK_AND_ISSUE_DIGEST",
+            "queue_receipt_task": receipt.get("task_path") == b["task_path"],
+            "queue_receipt_commit": receipt.get("task_commit") == b["task_commit"],
+            "queue_receipt_digest": receipt.get("task_sha256") == b["task_sha256"],
+            "queue_receipt_issue_digest": receipt.get("issue_body_sha256") == b["issue_body_sha256"],
+            "queue_certification_effect": receipt.get("certification_effect") is False,
+            "queue_managed": receipt.get("queue_managed") is True,
+            "queue_reservation_enforced": receipt.get("worker_reservation_enforced") is True,
+            "queue_receipt_actor": isinstance(receipt.get("authenticated_github_actor"), str) and bool(receipt["authenticated_github_actor"]),
+            "queue_reservation_owner": receipt.get("worker_reservation_owner") == receipt.get("authenticated_github_actor"),
+            "queue_agent_ref": receipt.get("agent_ref") == dispatch.get("agent_ref"),
+            "queue_no_legacy_bootstrap": "bootstrap_path" not in receipt,
+        })
+    else:
+        checks.update({
+            "bootstrap_sha256": receipt.get("bootstrap_sha256") == dispatch.get("bootstrap_sha256"),
+            "source_handoff_blob_sha": receipt.get("source_handoff_blob_sha") == dispatch.get("source_handoff_blob_sha"),
+            "source_handoff_sha256": receipt.get("source_handoff_sha256") == dispatch.get("source_handoff_sha256"),
+        })
     failed = sorted(name for name, ok in checks.items() if not ok)
     if failed:
         raise ControllerError(f"{dispatch_id}: receipt validation failed: {', '.join(failed)}")
@@ -345,7 +439,7 @@ def validate_candidate(gh: Github, branch: str) -> dict[str, Any]:
 def open_pr(gh: Github, item: dict[str, Any]) -> dict[str, Any]:
     dispatch_id = item["dispatch_id"]
     comment_id = item["github_comment_id"]
-    profile = profile_for_dispatch(dispatch_id)
+    profile = profile_for_dispatch(dispatch_id, gh)
     title = f"{profile.pr_title_prefix}: {dispatch_id}"
     body = (
         f"Trusted intake snapshot for {profile.campaign} dispatch {dispatch_id}, GitHub comment {comment_id}. "
