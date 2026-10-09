@@ -119,11 +119,26 @@ def protected_specialist_receipt(
     _sha(proof.get("blob_sha"))
     if proof.get("path") == name:
         raise ReceiptError("self-referential receipt")
-    _, proof_blob = _protected_json(api_get, owner, p, protected_sha)
+    proof_record, proof_blob = _protected_json(api_get, owner, p, protected_sha)
     if proof_blob != proof["blob_sha"]:
         raise ReceiptError("protected underlying evidence byte identity drift")
+    # The receipt must not point to an unrelated protected JSON object.
+    # A second, independently admitted review artifact has to bind the exact
+    # candidate bytes and the same domain with a positive scoped disposition.
+    if (proof_record.get("record_type") != "GCL_DOMAIN_INDEPENDENT_REVIEW_V1" or
+            proof_record.get("authority_domain") != domain or
+            proof_record.get("subject_repository") != REPO or
+            proof_record.get("subject_sha") != head or
+            proof_record.get("material_fingerprint") != fingerprint or
+            proof_record.get("disposition") != "INDEPENDENT_REVIEW_ACCEPTED"):
+        raise ReceiptError("underlying specialist review not positively bound")
+    reviewer = proof_record.get("reviewer_identity")
+    if not isinstance(reviewer, str) or not reviewer.strip():
+        raise ReceiptError("independent reviewer identity not attested")
     if not isinstance(record.get("review_scope"), str) or not record["review_scope"].strip():
         raise ReceiptError("missing specialist-reviewed claim/scope")
+    if record["review_scope"] != proof_record.get("review_scope"):
+        raise ReceiptError("specialist reviewed scope differs from receipt")
     # Reconfirm current protected branch has not moved during retrieval.
     now = api_get(f"/repos/{owner}/git/ref/heads/main")
     if _sha(((now or {}).get("object") or {}).get("sha")) != protected_sha:
