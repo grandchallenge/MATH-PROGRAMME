@@ -15,7 +15,7 @@ from typing import Any, Callable
 
 from specialist_domains import REPOSITORY as REPO, load_domains
 
-SHA = re.compile(r"[0-9a-f]{40}\\Z")
+SHA = re.compile(r"[0-9a-f]{40}\Z")
 PREFIX = "governance/material_admission_receipts/"
 RECORD_TYPE = "GCL_PROTECTED_SPECIALIST_ADMISSION_EVIDENCE"
 
