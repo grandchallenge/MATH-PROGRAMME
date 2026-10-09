@@ -250,6 +250,7 @@ def exact_specialist_disposition(pr: dict, files: list[dict], head: str,
     return protected_specialist_receipt(
         head=head, files=files, domain=domain,
         api_get=lambda path: api("GET", path, token=source_token),
+        candidate_author=pr["user"]["login"],
     )
 
 
