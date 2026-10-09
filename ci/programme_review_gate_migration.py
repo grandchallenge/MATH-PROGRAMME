@@ -12,8 +12,10 @@ import argparse
 import copy
 import json
 import os
+import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from release_trust_admin import GitHubClient, branch_ruleset
 
 ROOT = Path(__file__).resolve().parents[1]
