@@ -13,13 +13,9 @@ import re
 import urllib.parse
 from typing import Any, Callable
 
-REPO = "grandchallenge/MATH-PROGRAMME"
-SHA = re.compile(r"[0-9a-f]{40}\Z")
-ROUTES = {
-    "MATHEMATICAL": ("grandchallenge/MATHCERT", "certificates/"),
-    "SOURCE_SEMANTIC": ("grandchallenge/MATHFORGE", "governance/"),
-    "PROTECTION": ("grandchallenge/INTELLECT", "governance/"),
-}
+from specialist_domains import REPOSITORY as REPO, load_domains
+
+SHA = re.compile(r"[0-9a-f]{40}\\Z")
 PREFIX = "governance/material_admission_receipts/"
 RECORD_TYPE = "GCL_PROTECTED_SPECIALIST_ADMISSION_EVIDENCE"
 
@@ -159,9 +155,11 @@ def protected_specialist_receipt(
     _sha(head)
     if not isinstance(candidate_author, str) or not candidate_author.strip():
         raise ReceiptError("missing attributable candidate author")
-    if domain not in ROUTES:
+    domains = load_domains()
+    if domain not in domains:
         raise ReceiptError("unknown specialist domain")
-    owner, evidence_prefix = ROUTES[domain]
+    route = domains[domain]
+    owner, evidence_prefix = route["repository"], route["evidence_prefix"]
     fingerprint = material_fingerprint(files)
     ref = api_get(f"/repos/{owner}/git/ref/heads/main")
     protected_sha = _sha(((ref or {}).get("object") or {}).get("sha"))
@@ -192,7 +190,7 @@ def protected_specialist_receipt(
     # The receipt must not point to an unrelated protected JSON object.
     # A second, independently admitted review artifact has to bind the exact
     # candidate bytes and the same domain with a positive scoped disposition.
-    if (proof_record.get("record_type") != "GCL_DOMAIN_INDEPENDENT_REVIEW_V1" or
+    if (proof_record.get("record_type") != route["review_record_type"] or
             proof_record.get("authority_domain") != domain or
             proof_record.get("subject_repository") != REPO or
             proof_record.get("subject_sha") != head or
@@ -205,16 +203,20 @@ def protected_specialist_receipt(
     if reviewer.casefold() == candidate_author.casefold():
         raise ReceiptError("candidate author cannot be sole specialist reviewer")
     declared_independence = proof_record.get("review_independence")
-    expected_independence = (
-        "INDEPENDENT_NON_AUTHOR" if domain == "MATHEMATICAL"
-        else "ROLE_SCOPED_NON_AUTHOR_SPECIALIST"
-    )
+    expected_independence = route["independence"]
     if declared_independence != expected_independence:
         raise ReceiptError("required specialist-review independence not attested")
     if not isinstance(record.get("review_scope"), str) or not record["review_scope"].strip():
         raise ReceiptError("missing specialist-reviewed claim/scope")
     if record["review_scope"] != proof_record.get("review_scope"):
         raise ReceiptError("specialist reviewed scope differs from receipt")
+    solve_evidence = None
+    if domain == "SOLUTION_INTEGRITY":
+        if record["review_scope"] != route["review_scope"]:
+            raise ReceiptError("Solve review must be execution integrity only")
+        solve_evidence = _verify_solve_integrity(
+            api_get, owner, protected_sha, record, proof_record, p,
+        )
     origin = _verify_review_origin(
         api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author,
     )
@@ -231,6 +233,7 @@ def protected_specialist_receipt(
         "protected_underlying_blob": proof_blob,
         "domain": domain,
         "review_scope": record["review_scope"],
+        "solve_execution_evidence": solve_evidence,
         "authenticated_review_origin": origin,
         "subject_sha": head,
         "material_fingerprint": fingerprint,
