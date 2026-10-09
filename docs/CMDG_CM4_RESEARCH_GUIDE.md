@@ -7,6 +7,8 @@
     Mathlib upstreaming is tracked on [#1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).  
     This guide teaches the route; it does not replace those trackers.
 
+For an introductory path that does not assume condensed mathematics, first read [*Condensed Mathematics for the Perplexed*](CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md). The present guide starts from that framework and proceeds to the CM4 proof obligations.
+
 ## Status and intended reader
 
 | Field | Value |
