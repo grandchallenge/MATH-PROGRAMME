@@ -50,7 +50,7 @@ def validate_pr_binding(
 ) -> dict[str, Any]:
     dispatch_id = item["dispatch_id"]
     branch = item["branch"]
-    profile = profile_for_dispatch(dispatch_id)
+    profile = profile_for_dispatch(dispatch_id, gh)
 
     if pr.get("state") != "open":
         raise ControllerError(f"{dispatch_id}: evidence PR is not open")
