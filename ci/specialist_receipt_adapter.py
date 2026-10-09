@@ -84,7 +84,7 @@ def _protected_json(
 
 def protected_specialist_receipt(
     *, head: str, files: list[dict], domain: str,
-    api_get: Callable[[str], Any],
+    api_get: Callable[[str], Any], candidate_author: str,
 ) -> dict[str, Any]:
     """Verify a bound domain receipt; never accept one from the candidate branch.
 
@@ -92,6 +92,8 @@ def protected_specialist_receipt(
     remains within the domain owner's previously adjudicated claim scope.
     """
     _sha(head)
+    if not isinstance(candidate_author, str) or not candidate_author.strip():
+        raise ReceiptError("missing attributable candidate author")
     if domain not in ROUTES:
         raise ReceiptError("unknown specialist domain")
     owner, evidence_prefix = ROUTES[domain]
@@ -135,6 +137,15 @@ def protected_specialist_receipt(
     reviewer = proof_record.get("reviewer_identity")
     if not isinstance(reviewer, str) or not reviewer.strip():
         raise ReceiptError("independent reviewer identity not attested")
+    if reviewer.casefold() == candidate_author.casefold():
+        raise ReceiptError("candidate author cannot be sole specialist reviewer")
+    declared_independence = proof_record.get("review_independence")
+    expected_independence = (
+        "INDEPENDENT_NON_AUTHOR" if domain == "MATHEMATICAL"
+        else "ROLE_SCOPED_NON_AUTHOR_SPECIALIST"
+    )
+    if declared_independence != expected_independence:
+        raise ReceiptError("required specialist-review independence not attested")
     if not isinstance(record.get("review_scope"), str) or not record["review_scope"].strip():
         raise ReceiptError("missing specialist-reviewed claim/scope")
     if record["review_scope"] != proof_record.get("review_scope"):
