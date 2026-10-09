@@ -17,6 +17,7 @@ from pathlib import Path
 from agent_material_profiles import MaterialAdmissionError, classify_text, load_registry
 from agent_routine_review import RoutineReviewError, api, delegated_classification
 from specialist_receipt_adapter import ReceiptError, protected_specialist_receipt
+from specialist_domains import domain_for_paths, protected_path
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 CONTROL = "GCL-AGENT-ADMISSION-SPECIALIST-001"
@@ -39,13 +40,7 @@ def git(root: Path, *args: str, binary: bool = False) -> str | bytes:
 
 
 def reserved_path(path: str) -> bool:
-    return path.startswith((
-        ".github/workflows/", ".ghos-routing/", "governance/release_trust",
-        "governance/constitutional", "schemas/release_trust",
-    )) or path in (
-        "ci/agent_routine_review.py", "ci/agent_material_profiles.py",
-        "ci/specialist_admission_shadow.py", "mkdocs.yml",
-    )
+    return protected_path(path)
 
 
 def classify_paths(paths: list[str]) -> str:
@@ -55,19 +50,7 @@ def classify_paths(paths: list[str]) -> str:
 
 
 def specialist_domain(paths: list[str]) -> str | None:
-    """Only exact coherent path-based authority routes; ambiguity is pending."""
-    if not paths:
-        return None
-    def classify(path: str) -> str | None:
-        if reserved_path(path):
-            return "PROTECTION"
-        if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
-            return "MATHEMATICAL"
-        if path.startswith("governance/source_"):
-            return "SOURCE_SEMANTIC"
-        return None
-    classes = {classify(path) for path in paths}
-    return classes.pop() if len(classes) == 1 else None
+    return domain_for_paths(paths)
 
 
 def observe_specialist_receipt(head: str, files: list[dict], paths: list[str],
