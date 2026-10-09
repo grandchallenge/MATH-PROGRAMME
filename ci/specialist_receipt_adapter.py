@@ -115,7 +115,7 @@ def _verify_review_origin(
             (pr.get("base") or {}).get("ref") != "main"):
         raise ReceiptError("source review PR not merged at exact reviewed head")
     author = ((pr.get("user") or {}).get("login") or "")
-    if not author or author.casefold() in (reviewer.casefold(), candidate_author.casefold()) and reviewer.casefold() == author.casefold():
+    if not author or author.casefold() == reviewer.casefold():
         raise ReceiptError("source PR author cannot act as own reviewer")
     if not isinstance(pr.get("changed_files"), int) or not 1 <= pr["changed_files"] < 100:
         raise ReceiptError("source PR changed-file count not bounded")
