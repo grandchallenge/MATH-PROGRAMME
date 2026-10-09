@@ -108,7 +108,7 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         snapshots = self._matching_ruleset_snapshots()
         programme = snapshots["grandchallenge/MATH-PROGRAMME"]
         review = next(rule for rule in programme["rules"] if rule["type"] == "pull_request")
-        review["parameters"]["required_approving_review_count"] = 0
+        review["parameters"]["required_approving_review_count"] = 1
         client = Mock()
         with patch("release_trust_admin.branch_ruleset",
                    side_effect=lambda ignored, repository: snapshots[repository]):
@@ -134,8 +134,8 @@ class ReleaseTrustAdminTests(unittest.TestCase):
         for repo in ("grandchallenge/MATHCERT", "grandchallenge/MATH-PROGRAMME"):
             modified = copy.deepcopy(self.contract)
             entry = next(row for row in modified["repositories"] if row["repository"] == repo)
-            entry["required_approving_reviews"] = 0
-            entry["require_last_push_approval"] = False
+            entry["required_approving_reviews"] = 0 if repo.endswith("MATHCERT") else 1
+            entry["require_last_push_approval"] = False if repo.endswith("MATHCERT") else True
             with self.assertRaisesRegex(ReleaseTrustError, "review-policy map drift"):
                 validate_contract(modified, self.schema)
 
@@ -231,8 +231,8 @@ class ReleaseTrustAdminTests(unittest.TestCase):
             ],
         )
         self.assertEqual(len(status["required_status_checks"]), 4)
-        self.assertEqual(policy["required_approving_reviews"], 1)
-        self.assertTrue(policy["require_last_push_approval"])
+        self.assertEqual(policy["required_approving_reviews"], 0)
+        self.assertFalse(policy["require_last_push_approval"])
         self.assertEqual(payload["bypass_actors"], EXPECTED_BYPASS_ACTORS[entry["repository"]])
         self.assertFalse(policy["enforce_admins"])
 
