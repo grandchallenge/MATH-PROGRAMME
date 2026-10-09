@@ -116,7 +116,7 @@ def shadow_pr(event: dict, token: str) -> dict:
             pr, files, head, token=token, prefix=prefix,
         )
     except (MaterialAdmissionError, RoutineReviewError) as err:
-        observation = observe_specialist_receipt(head, files, paths, token)
+        observation = observe_specialist_receipt(head, files, paths,\n                                                os.environ.get("SPECIALIST_READ_TOKEN") or token)
         if observation["disposition"] == "SPECIALIST_REVIEW_PENDING":
             observation["path_class"] = classify_paths(paths)
         return {"changed_files": count, "paths": paths, **observation}
