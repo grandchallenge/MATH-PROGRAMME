@@ -9,6 +9,10 @@
     **Live mathlib-upstream status** is tracked in [MATH-PROGRAMME #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).  
     If this page and an issue disagree about active work, the issue governs the active-work state. If either conflicts with a protected theorem receipt about an already-certified claim, the protected receipt governs the claim.
 
+## For readers new to condensed mathematics
+
+Begin with [*Condensed Mathematics for the Perplexed*](CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md), a foundational introduction from convergent sequences and profinite probes through sheaf descent and solid abelian groups. This page then explains GCL's restricted CM4 theorem and its exact evidentiary status.
+
 ## For independent readers and contributors
 
 - [Self-contained mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md): the exact statement, a finite model, the proof spine, and falsification-oriented review questions.
