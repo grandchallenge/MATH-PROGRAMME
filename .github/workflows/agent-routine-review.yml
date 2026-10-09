@@ -1,0 +1,54 @@
+name: GCL bounded routine agent review
+
+on:
+  workflow_run:
+    workflows:
+      - Programme policy checks
+      - formal-validation
+      - GCL conformance
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Exact existing routine PR to classify and, if safe, approve
+        required: true
+        type: number
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gcl-routine-review-${{ github.event.workflow_run.head_sha || inputs.pr_number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.repository == 'grandchallenge/MATH-PROGRAMME' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'))
+    name: Exact-scope delegated review (non-mathematical)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    environment: release-trust
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Mint scoped non-author reviewing App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-pull-requests: write
+      - name: Evaluate exact routine material closure and record delegated review
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REVIEW_APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          # gh api POST equivalent: the protected Python reviewer may submit an App-scoped
+          # approving review only after verifying exact image removal and required checks.
+          python ci/agent_routine_review.py
