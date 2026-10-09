@@ -19,6 +19,9 @@ from typing import Any
 from agent_material_profiles import (
     MaterialAdmissionError, classify_text, load_registry,
 )
+from specialist_receipt_adapter import (
+    ReceiptError, protected_specialist_receipt, ROUTES,
+)
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 APP_REVIEWER = "gcl-release-trust[bot]"
@@ -194,6 +197,62 @@ def delegated_classification(pr: dict, files: list[dict], head: str,
     return classify_text(path, before, after, load_registry())
 
 
+
+def specialist_domain_for_file_manifest(files: list[dict]) -> str:
+    """Fail closed on mixed, unclassified or provenance-ambiguous changes."""
+    if not files or len(files) > 100:
+        raise RoutineReviewError("no exact candidate file inventory")
+    def domain(path: str) -> str | None:
+        if path.startswith((
+            ".github/workflows/", ".ghos-routing/", "ci/agent_",
+            "ci/specialist_", "schemas/release_trust",
+            "governance/release_trust",
+        )) or path == "mkdocs.yml":
+            return "PROTECTION"
+        if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
+            return "MATHEMATICAL"
+        if path.startswith("governance/source_"):
+            return "SOURCE_SEMANTIC"
+        return None
+    domains = {domain(str(row.get("filename") or "")) for row in files}
+    if len(domains) != 1 or None in domains:
+        raise RoutineReviewError("candidate specialist class unresolved or mixed")
+    return domains.pop()
+
+
+def verify_specialist_envelope(pr: dict, files: list[dict], head: str) -> None:
+    if pr.get("state") != "open" or pr.get("draft"):
+        raise RoutineReviewError("candidate is not ready")
+    if not re.fullmatch(r"[0-9a-f]{40}", head):
+        raise RoutineReviewError("invalid candidate SHA")
+    if (pr.get("head") or {}).get("sha") != head:
+        raise RoutineReviewError("head mismatch")
+    if (pr.get("head") or {}).get("repo", {}).get("full_name") != REPOSITORY:
+        raise RoutineReviewError("external candidate is ineligible")
+    if (pr.get("base") or {}).get("ref") != "main":
+        raise RoutineReviewError("candidate base is not protected main")
+    if not re.fullmatch(r"[0-9a-f]{40}", str((pr.get("base") or {}).get("sha") or "")):
+        raise RoutineReviewError("missing protected base identity")
+    if (pr.get("user") or {}).get("login") in ("", None, APP_REVIEWER, "gcl-release-trust"):
+        raise RoutineReviewError("App self-authorship excluded")
+    if pr.get("changed_files") != len(files) or not (1 <= len(files) <= 100):
+        raise RoutineReviewError("changed-file inventory incomplete")
+
+
+def exact_specialist_disposition(pr: dict, files: list[dict], head: str,
+                                 *, read_token: str) -> dict:
+    """Consume only already protected domain reviews, not PR comments."""
+    verify_specialist_envelope(pr, files, head)
+    domain = specialist_domain_for_file_manifest(files)
+    source_token = os.environ.get("SPECIALIST_READ_TOKEN", "")
+    if not source_token or not read_token:
+        raise RoutineReviewError("specialist source credential unavailable")
+    return protected_specialist_receipt(
+        head=head, files=files, domain=domain,
+        api_get=lambda path: api("GET", path, token=source_token),
+    )
+
+
 def review_body(head: str, evidence: dict) -> str:
     """Structured exact-head functional audit, not scientific certification."""
     return (
@@ -230,9 +289,19 @@ def main() -> int:
     files = api("GET", f"{prefix}/pulls/{number}/files?per_page=100", token=read_token)
     # The protected registry supplies the sole authority for generic routine
     # profiles. Candidate PR text and branch content are never loaded as policy.
-    evidence = delegated_classification(
-        pr, files, head, token=read_token, prefix=prefix,
-    )
+    # A material specialist route is permitted only with *preexisting*
+    # domain-protected evidence bound to the complete candidate material.
+    # The fallback cannot turn any unclassified edit into routine authority.
+    try:
+        evidence = delegated_classification(
+            pr, files, head, token=read_token, prefix=prefix,
+        )
+        disposition = "ROUTINE_BOUNDED"
+    except MaterialAdmissionError:
+        evidence = exact_specialist_disposition(
+            pr, files, head, read_token=read_token,
+        )
+        disposition = "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED"
     checks = api("GET", f"{prefix}/commits/{head}/check-runs?per_page=100", token=read_token)
     statuses = api("GET", f"{prefix}/commits/{head}/status", token=read_token)
     if checks.get("total_count", 0) > 100:
@@ -256,7 +325,7 @@ def main() -> int:
     response = api("POST", f"{prefix}/pulls/{number}/reviews", token=review_token, payload={
         "event": "APPROVE",
         "commit_id": head,
-        "body": review_body(head, evidence),
+        "body": review_body(head, {"disposition": disposition, "material_evidence": evidence}),
     })
     if response.get("state") != "APPROVED":
         raise RoutineReviewError("GitHub did not record an approved App review")
@@ -267,6 +336,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except (RoutineReviewError, MaterialAdmissionError, OSError, KeyError, ValueError) as error:
+    except (RoutineReviewError, ReceiptError, MaterialAdmissionError, OSError, KeyError, ValueError) as error:
         print("Fail closed: " + str(error), file=sys.stderr)
         sys.exit(1)
