@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
+
+from audit_math_typography import audit
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -125,6 +128,27 @@ def main() -> int:
         ("CMDG_CM4_RESEARCH_GUIDE/index.html", "Live work is issue-led"),
     ):
         errors.extend(admonition_render_errors(site_dir / relative_path, title))
+    # Whole-repository GFM-source audit plus checks on actual built Arithmatex HTML.
+    # Publish the complete finding inventory without failing established legacy pages;
+    # enforce strict typography on the newly repaired CM4 mathematical flagships.
+    math_report = audit(ROOT, site_dir)
+    (site_dir / "math-typography-audit.json").write_text(
+        json.dumps(math_report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    flagship_pages = {
+        "docs/CMDG_CM4_MATHEMATICAL_NOTE.md",
+        "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md",
+    }
+    for finding in math_report["findings"] + math_report.get("rendered_findings", []):
+        if finding["path"] in flagship_pages and finding.get("context", "markdown") == "markdown":
+            errors.append(f"{finding['path']}: {finding['kind']} at line {finding.get('line', 0)}")
+    print(
+        f"math typography audit: {math_report['scanned_markdown_files']} files, "
+        f"{math_report['scanned_public_markdown_files']} public pages, "
+        f"{len(math_report['findings'])} source findings, "
+        f"{len(math_report.get('rendered_findings', []))} rendered findings; "
+        "full inventory in site/math-typography-audit.json"
+    )
     if errors:
         for error in errors:
             print(error, file=sys.stderr)
