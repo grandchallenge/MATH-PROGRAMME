@@ -272,12 +272,16 @@ def protected_specialist_receipt(
     # The receipt must not point to an unrelated protected JSON object.
     # A second, independently admitted review artifact has to bind the exact
     # candidate bytes and the same domain with a positive scoped disposition.
+    expected_disposition = (
+        "ROLE_SCOPED_REVIEW_ACCEPTED" if domain == "SOLUTION_INTEGRITY"
+        else "INDEPENDENT_REVIEW_ACCEPTED"
+    )
     if (proof_record.get("record_type") != route["review_record_type"] or
             proof_record.get("authority_domain") != domain or
             proof_record.get("subject_repository") != REPO or
             proof_record.get("subject_sha") != head or
             proof_record.get("material_fingerprint") != fingerprint or
-            proof_record.get("disposition") != "INDEPENDENT_REVIEW_ACCEPTED"):
+            proof_record.get("disposition") != expected_disposition):
         raise ReceiptError("underlying specialist review not positively bound")
     reviewer = proof_record.get("reviewer_identity")
     if not isinstance(reviewer, str) or not reviewer.strip():
