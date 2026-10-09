@@ -98,6 +98,26 @@ def rendered_issues(root: Path, site: Path):
     for path in sorted((root / "docs").rglob("*.md")):
         if any(part in SKIP for part in path.relative_to(root).parts):
             continue
+        # Documentary editions hand-author HTML and load their own pinned
+        # MathJax. Their math never passes through Arithmatex; instead, check
+        # their explicitly separate script path in the built HTML.
+        documentary = path.read_text(encoding="utf-8")
+        if "documentary-mathjax.js" in documentary:
+            rel = path.relative_to(root / "docs").with_suffix("")
+            html_path = site / rel / "index.html"
+            if path.name == "index.md":
+                html_path = site / rel.parent / "index.html"
+            if not html_path.is_file():
+                findings.append({"path": path.relative_to(root).as_posix(),
+                                 "kind": "documentary-page-missing"})
+                continue
+            html = html_path.read_text(encoding="utf-8")
+            checked += 1
+            if ("documentary-mathjax.js" not in html
+                    or "mathjax@3.2.2" not in html):
+                findings.append({"path": path.relative_to(root).as_posix(),
+                                 "kind": "documentary-mathjax-loader-missing"})
+            continue
         expected = source_math_count(path)
         if not expected:
             continue
