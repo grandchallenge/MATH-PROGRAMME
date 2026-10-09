@@ -140,7 +140,8 @@ def shadow_merge_group(event: dict, root: Path, env: dict[str, str]) -> dict:
     if len(records) != 2 or records[0] != b"M":
         paths = [value.decode("utf-8", errors="replace") for value in records[1::2]]
         return {"disposition": classify_paths(paths),
-                "reason": "merge group not exactly one modified documentation file",
+                "specialist_domain_hint": specialist_domain(paths),
+                "reason": "merge group not exactly one modified documentation file; no group-bound specialist receipt admitted",
                 "subject_sha": sha, "protected_base": base, "paths": paths}
     try:
         path = records[1].decode("utf-8")
@@ -148,8 +149,11 @@ def shadow_merge_group(event: dict, root: Path, env: dict[str, str]) -> dict:
         new = git(root, "show", f"{sha}:{path}", binary=True)
         evidence = classify_text(path, old, new, load_registry())
     except (MaterialAdmissionError, UnicodeDecodeError) as err:
-        return {"disposition": classify_paths([records[1].decode("utf-8", errors="replace")]),
-                "reason": str(err), "subject_sha": sha, "protected_base": base}
+        pending_paths = [records[1].decode("utf-8", errors="replace")]
+        return {"disposition": classify_paths(pending_paths),
+                "specialist_domain_hint": specialist_domain(pending_paths),
+                "reason": str(err) + "; group-bound specialist receipt not yet evaluated",
+                "subject_sha": sha, "protected_base": base}
     # Another base movement is a new subject: fail closed rather than publishing
     # a stale group classification as if it were current.
     if git(root, "ls-remote", "origin", "refs/heads/main").split()[0] != base:
