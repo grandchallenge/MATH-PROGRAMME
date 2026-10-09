@@ -1,6 +1,9 @@
 name: GCL bounded routine agent review
 
 on:
+  pull_request_target:
+    types: [ready_for_review, synchronize, reopened]
+    branches: [main]
   workflow_run:
     workflows:
       - Programme policy checks
@@ -23,7 +26,16 @@ concurrency:
 
 jobs:
   review:
-    if: github.repository == 'grandchallenge/MATH-PROGRAMME' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'))
+    if: >-
+      github.repository == 'grandchallenge/MATH-PROGRAMME' &&
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'pull_request_target' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        !github.event.pull_request.draft) ||
+       (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.conclusion == 'success'))
     name: Protected material-profile delegated review
     runs-on: ubuntu-24.04
     timeout-minutes: 8

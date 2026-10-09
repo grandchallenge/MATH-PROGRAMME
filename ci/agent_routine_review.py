@@ -131,6 +131,20 @@ def candidate_number(event: dict, event_name: str) -> tuple[int, str] | None:
         if value is None or not str(value).isdigit():
             return None
         return int(value), ""
+    if event_name == "pull_request_target":
+        if event.get("action") not in ("ready_for_review", "synchronize", "reopened"):
+            return None
+        pr = event.get("pull_request") or {}
+        number = event.get("number")
+        sha = (pr.get("head") or {}).get("sha")
+        if (type(number) is not int or number <= 0 or
+                not isinstance(sha, str) or
+                not re.fullmatch(r"[a-f0-9]{40}", sha) or
+                (pr.get("head") or {}).get("repo", {}).get("full_name") != REPOSITORY or
+                (pr.get("base") or {}).get("ref") != "main" or
+                pr.get("draft")):
+            return None
+        return number, sha
     if event_name == "workflow_run":
         run = event.get("workflow_run") or {}
         if run.get("event") != "pull_request" or run.get("conclusion") != "success":
@@ -140,7 +154,17 @@ def candidate_number(event: dict, event_name: str) -> tuple[int, str] | None:
         prs = run.get("pull_requests") or []
         if len(prs) != 1:
             return None
-        return int(prs[0]["number"]), str(run.get("head_sha") or "")
+        linked = prs[0]
+        number = linked.get("number")
+        # A pull_request workflow often runs on a synthetic merge commit.
+        # Trust the PR-linked exact head instead; a missing link fails closed.
+        linked_head = (linked.get("head") or {}).get("sha")
+        sha = linked_head or run.get("head_sha")
+        if (type(number) is not int or number <= 0 or
+                not isinstance(sha, str) or
+                not re.fullmatch(r"[a-f0-9]{40}", sha)):
+            return None
+        return number, sha
     return None
 
 

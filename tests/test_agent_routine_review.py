@@ -120,6 +120,63 @@ class RoutineAgentReviewTests(unittest.TestCase):
                              "pull_requests": []},
         }, "workflow_run"))
 
+    def test_ready_event_binds_internal_pr_to_immutable_head(self) -> None:
+        pr = {
+            "number": 1265, "draft": False,
+            "head": {"sha": self.head, "repo": {"full_name": REPOSITORY}},
+            "base": {"ref": "main"},
+        }
+        event = {"action": "ready_for_review", "number": 1265, "pull_request": pr}
+        self.assertEqual(candidate_number(event, "pull_request_target"), (1265, self.head))
+
+    def test_ready_replay_rejects_fork_draft_and_stale_action(self) -> None:
+        pr = {
+            "number": 1265, "draft": False,
+            "head": {"sha": self.head, "repo": {"full_name": REPOSITORY}},
+            "base": {"ref": "main"},
+        }
+        event = {"action": "ready_for_review", "number": 1265, "pull_request": pr}
+        for operation, changed in (
+            ("fork", {"head": {"sha": self.head, "repo": {"full_name": "other/fork"}}}),
+            ("draft", {"draft": True}),
+            ("wrong_base", {"base": {"ref": "develop"}}),
+            ("unbound_head", {"head": {"sha": "nope", "repo": {"full_name": REPOSITORY}}}),
+        ):
+            with self.subTest(operation=operation):
+                sample = {**pr, **changed}
+                self.assertIsNone(candidate_number({**event, "pull_request": sample},
+                                                   "pull_request_target"))
+        self.assertIsNone(candidate_number({**event, "action": "labeled"},
+                                           "pull_request_target"))
+
+    def test_workflow_run_uses_pr_linked_head_not_synthetic_merge_sha(self) -> None:
+        event = {"workflow_run": {
+            "event": "pull_request", "conclusion": "success",
+            "repository": {"full_name": REPOSITORY},
+            "head_sha": "b" * 40,
+            "pull_requests": [{"number": 1265, "head": {"sha": self.head}}],
+        }}
+        self.assertEqual(candidate_number(event, "workflow_run"), (1265, self.head))
+
+    def test_workflow_run_multiple_prs_fails_closed(self) -> None:
+        event = {"workflow_run": {
+            "event": "pull_request", "conclusion": "success",
+            "repository": {"full_name": REPOSITORY},
+            "head_sha": "b" * 40,
+            "pull_requests": [{"number": 1}, {"number": 2}],
+        }}
+        self.assertIsNone(candidate_number(event, "workflow_run"))
+
+    def test_protected_workflow_has_no_candidate_checkout(self) -> None:
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/agent-routine-review.yml").read_text(encoding="utf-8")
+        self.assertIn("pull_request_target:", workflow)
+        self.assertIn("ready_for_review", workflow)
+        self.assertIn("ref: main", workflow)
+        self.assertIn("permission-pull-requests: write", workflow)
+        self.assertNotIn("ref: ${{ github.event.pull_request.head.sha }}", workflow)
+
+
 
 if __name__ == "__main__":
     unittest.main()
