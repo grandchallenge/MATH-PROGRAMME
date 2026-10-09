@@ -121,7 +121,7 @@ def rendered_issues(root: Path, site: Path):
 def github_render_probe(root: Path):
     """Render two public flagship pages through GitHub's real GFM HTML API.
 
-    This observes the server renderer, not JavaScript KaTeX in a browser.
+    This observes the server renderer, not JavaScript MathJax in a browser.
     Network failures are reported explicitly, not counted as passes.
     """
     records = []
