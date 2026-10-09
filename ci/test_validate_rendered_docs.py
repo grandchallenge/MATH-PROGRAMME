@@ -122,6 +122,27 @@ def main() -> int:
         )
         assert rendered_issues(root, site) == (1, [])
 
+        custom = docs / "documentaries" / "sample.md"
+        custom.parent.mkdir()
+        custom.write_text(
+            '<div>$x^2$</div>\n'
+            '<script src="../../javascripts/documentary-mathjax.js"></script>'
+            '<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>',
+            encoding="utf-8",
+        )
+        custom_page = site / "documentaries" / "sample" / "index.html"
+        custom_page.parent.mkdir(parents=True)
+        custom_page.write_text(
+            '<script src="../../javascripts/documentary-mathjax.js"></script>'
+            '<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>',
+            encoding="utf-8",
+        )
+        assert rendered_issues(root, site) == (2, [])
+        custom_page.write_text("<p>Missing MathJax</p>", encoding="utf-8")
+        assert any(f["kind"] == "documentary-mathjax-loader-missing"
+                   for f in rendered_issues(root, site)[1])
+
+
     print("rendered documentation validator rejection tests passed")
     return 0
 
