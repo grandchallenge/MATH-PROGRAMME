@@ -20,7 +20,7 @@ from agent_material_profiles import (
     MaterialAdmissionError, classify_text, load_registry,
 )
 from specialist_receipt_adapter import (
-    ReceiptError, protected_specialist_receipt, ROUTES,
+    ReceiptError, protected_specialist_receipt,
 )
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
@@ -253,20 +253,34 @@ def exact_specialist_disposition(pr: dict, files: list[dict], head: str,
     )
 
 
-def review_body(head: str, evidence: dict) -> str:
-    """Structured exact-head functional audit, not scientific certification."""
+def review_body(head: str, decision: dict) -> str:
+    """Exact-head mechanical permission with explicit noncertifying provenance."""
+    mode = decision.get("disposition")
+    if mode not in ("ROUTINE_BOUNDED", "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED"):
+        raise RoutineReviewError("unauthorized reviewer disposition")
+    if mode == "ROUTINE_BOUNDED":
+        scope = (
+            "Verifier and Adversary are non-authoring read-only *logical* "
+            "audit passes of this protected controller, not separately "
+            "independent theorem specialists."
+        )
+    else:
+        scope = (
+            "This controller recognized a prior separately protected "
+            "domain-owned exact-material specialist receipt. The role review, "
+            "its epistemic merit, and the original claim scope are owned "
+            "by the source repository; the App does not generate them."
+        )
     return (
-        "GCL-DELEGATED-MATERIAL-ADMISSION-001 / ROUTINE_BOUNDED / "
-        "GitHub mechanical approval only.\\n"
-        f"Exact PR head: {head}\\n"
-        "Verifier and Adversary are read-only *logical audit passes* "
-        "of this protected controller; they are not independent people, "
-        "sessions, or theorem reviewers.\\n"
-        "No mathematical, source, security, constitutional, certification "
-        "or external-claim authority is conferred. Native merge queue and "
-        "material-specific specialist review retain authority.\\n"
-        "Evidence (JSON):\\n```json\\n"
-        + json.dumps(evidence, sort_keys=True, indent=2)
+        "GCL-DELEGATED-MATERIAL-ADMISSION-001 / "
+        + mode + " / GitHub mechanical approval only.\\n"
+        + f"Exact PR head: {head}\\n"
+        + scope + "\\n"
+        + "No new mathematical certification, source-semantic adjudication, "
+        "constitutional/security authority, or external-claim promotion "
+        "is created. GH-OS native merge queue remains authoritative.\\n"
+        + "Bound evidence (JSON):\\n```json\\n"
+        + json.dumps(decision, sort_keys=True, indent=2)
         + "\\n```"
     )
 
@@ -297,7 +311,7 @@ def main() -> int:
             pr, files, head, token=read_token, prefix=prefix,
         )
         disposition = "ROUTINE_BOUNDED"
-    except MaterialAdmissionError:
+    except (MaterialAdmissionError, RoutineReviewError):
         evidence = exact_specialist_disposition(
             pr, files, head, read_token=read_token,
         )
