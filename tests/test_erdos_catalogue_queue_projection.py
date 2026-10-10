@@ -32,18 +32,35 @@ class QueueProjectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.validate_receipt({**self.report, "receipts": [bad]}, self.issue)
 
-    @patch.object(mod, "gh")
-    def test_missing_project_state_no_mutation(self, api):
-        api.side_effect = [
-            {"state": "open", "labels": [{"name": n} for n in ("gcl-job", "gcl-pickup:direct-editorial", "gcl-role:source-audit")]},
-            {"issue_url": f"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/{self.issue}", "body": self.body},
-            {"fields": [{"name": "Status", "id": "F", "options": [{"name": "Todo", "id": "T"}]}]},
-            {"id": "PROJECT"},
-            {"items": [{"id": "I", "content": {"url": f"https://github.com/grandchallenge/MATH-PROGRAMME/issues/{self.issue}"}}]},
-        ]
-        with self.assertRaisesRegex(ValueError, "no unique RETURNED state"):
-            mod.reconcile(self.report, self.issue, False)
-        self.assertEqual(api.call_count, 5)
+    @patch.object(mod, "graph")
+    def test_missing_project_state_no_mutation(self, graphql):
+        graphql.return_value = {"organization": {"projectV2": {
+            "id": "PROJECT", "fields": {"pageInfo": {"hasNextPage": False},
+            "nodes": [{"name": "Status", "id": "F", "options": [{"name": "Todo", "id": "T"}]}]}
+        }}}
+        with self.assertRaisesRegex(ValueError, "one RETURNED option"):
+            mod.project_metadata()
+        graphql.assert_called_once()
+
+    @patch.object(mod, "graph")
+    def test_targeted_project_membership_and_status(self, graphql):
+        graphql.return_value = {"repository": {"issue": {
+            "projectItems": {"pageInfo": {"hasNextPage": False}, "nodes": [
+                {"id": "ITEM", "project": {"id": "PROJECT", "number": 2},
+                 "fieldValueByName": {"name": "RETURNED"}}
+            ]}
+        }}}
+        self.assertEqual(mod.issue_project_item(self.issue, "PROJECT"),
+                         {"id": "ITEM", "status": "RETURNED"})
+        self.assertEqual(graphql.call_count, 1)
+
+    @patch.object(mod, "graph")
+    def test_targeted_project_membership_ambiguity_fails_closed(self, graphql):
+        graphql.return_value = {"repository": {"issue": {
+            "projectItems": {"pageInfo": {"hasNextPage": True}, "nodes": []}
+        }}}
+        with self.assertRaisesRegex(ValueError, "paginated"):
+            mod.issue_project_item(self.issue, "PROJECT")
 
 
 if __name__ == "__main__":
