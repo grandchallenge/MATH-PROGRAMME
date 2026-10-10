@@ -40,11 +40,11 @@ class EventPathAcceptance(unittest.TestCase):
     def test_malformed_and_edited_remain_rejected_and_versioned(self):
         bad = copy.deepcopy(self.event)
         bad["comment"]["id"] = 902
-        bad["comment"]["body"] = "RESULT/1\\nCANARY: MALFORMED"
+        bad["comment"]["body"] = "RESULT/1\nCANARY: MALFORMED"
         edited = copy.deepcopy(bad)
         edited["action"] = "edited"
         edited["comment"]["updated_at"] = "2026-10-10T00:01:00Z"
-        edited["comment"]["body"] = "RESULT/1\\nCANARY: ALTERED"
+        edited["comment"]["body"] = "RESULT/1\nCANARY: ALTERED"
         report, count = self._report([self.event, bad, edited, copy.deepcopy(edited)])
         self.assertEqual(3, count)
         self.assertEqual(1, report["summary"]["structurally_valid_current_returns"])
@@ -55,7 +55,7 @@ class EventPathAcceptance(unittest.TestCase):
         report, _ = self._report([self.event])
         changed = copy.deepcopy(self.event)
         changed["action"] = "edited"
-        changed["comment"]["body"] += "\\nUnreviewed change"
+        changed["comment"]["body"] += "\nUnreviewed change"
         changed["comment"]["updated_at"] = "2026-10-10T00:02:00Z"
         with patch.object(projection, "gh") as gh, patch.object(projection, "project_metadata") as metadata:
             gh.side_effect = [
