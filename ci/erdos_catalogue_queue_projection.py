@@ -51,7 +51,7 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     comment = gh("api", f"repos/{OWNER}/{REPO}/issues/comments/{receipt['comment_id']}")
     if not isinstance(comment, dict) or comment.get("issue_url") != f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue}":
         raise ValueError("comment-to-issue binding failed")
-    if not comment.get("body", "").startswith("RESULT/1\\n"):
+    if not comment.get("body", "").startswith("RESULT/1\n"):
         raise ValueError("return no longer exists or has been edited")
     # Never trust a historical event after a comment edit; verify exact body digest.
     import hashlib
