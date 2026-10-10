@@ -138,6 +138,11 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
         if path in CONTROL_PLANE_PATHS:
             active.add("contracts")
             matched = True
+        if path == ".ghos-routing/workflows.json":
+            # The contracts shard validates exact controller capabilities and
+            # workflow routing. This metadata does not invalidate mathematics.
+            active.add("contracts")
+            matched = True
         if path.startswith("docs/") or path in {"mkdocs.yml", "requirements/docs.txt"}:
             active.add("docs")
             matched = True

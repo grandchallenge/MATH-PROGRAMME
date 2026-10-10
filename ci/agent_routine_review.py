@@ -224,7 +224,7 @@ def delegated_classification(pr: dict, files: list[dict], head: str,
 
 
 def specialist_domain_for_file_manifest(files: list[dict]) -> str:
-    """Route solely by protected specialist domain registry; ambiguity fails."""
+    """Use protected four-domain routing, retaining mainline operational exceptions."""
     if not files or len(files) > 100:
         raise RoutineReviewError("no exact candidate file inventory")
     paths = [row.get("filename") for row in files if isinstance(row, dict)]

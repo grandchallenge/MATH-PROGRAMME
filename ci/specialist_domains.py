@@ -88,7 +88,16 @@ def protected_path(path: str) -> bool:
         ".github/workflows/", ".ghos-routing/", "governance/release_trust",
         "governance/constitutional", "schemas/release_trust", "ci/agent_",
         "ci/specialist_",
-    )) or path in ("mkdocs.yml", "governance/specialist_admission_domains.json")
+    )) or path in (
+        "mkdocs.yml", "governance/specialist_admission_domains.json",
+        # Protected-main operational custody, queue, and policy controller lanes.
+        "ci/erdos_catalogue_queue_projection.py",
+        "tests/test_erdos_catalogue_queue_projection.py",
+        "ci/erdos_event_custody.py",
+        "tests/test_erdos_event_custody.py",
+        "ci/validate_workflow_coverage_v2.py",
+        "tests/test_agent_routine_review.py",
+    )
 
 
 def domain_for_paths(paths: list[str], registry: dict | None = None) -> str | None:

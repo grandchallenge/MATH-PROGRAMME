@@ -111,26 +111,36 @@ narrow: `governance/mathsolve_*`, `governance/solve_execution_*`, and
 routes to MATHCERT; workflow, admission-controller, and protection changes
 still route to INTELLECT. Mixed or unknown scopes remain unadmitted. This
 registration **does not** install a required `material-admission` status
-or bypass existing protection. A real domain-produced protected positive
-receipt and PR/merge-group replay remain necessary before enforcement.
+or bypass existing protection. A real domain-produced positive receipt
+is necessary only when an explicitly reserved claim or authority
+transition demands Solve execution-integrity evidence, never for
+ordinary research, maintenance or already-delegated execution.
 
-## Evidence still missing for enforcement
+## Selective verification; universal gate cancelled
 
-An authoritative specialist-evidence adapter must independently verify
-source, role, exact material closure and promotion boundary from already
-protected Forge/Solve/Cert/INTELLECT/Council records, rather than a comment
-by the candidate. It must distinguish appropriate logical agent passes from
-truly independent domain certification where required.
+The Human Steward explicitly rejected requiring specialist verification
+for every relevant or substantive change. The proposed repository-wide
+mandatory `material-admission` check is **cancelled**, not pending.
+See the corrected protected-issue programme mandate,
+[MATH-PROGRAMME #1251](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1251).
 
-Before `material-admission` becomes a mandatory ruleset context, demonstrate
-real positive and hostile cases, the candidate-independent controller bytes,
-merge-group status publication against the queue SHA, and a safe way for
-legitimately reviewed existing substantive PRs to proceed.
+Research exploration, provisional findings, routine operations and
+authorized agent-executed work continue under their existing CI and
+protected GitHub merge requirements without a new specialist signoff.
 
-Never change security-sensitive branch ruleset `17137629` or dedicated
-GH-OS merge-queue ruleset `21969152` under a routine shadow transaction.
-The governed, exact-scope migration with preservation readback is WP-E of
-issue #1251.
+Protected domain-owned evidence can be required by the corresponding
+specific authority transaction: MATHCERT certification, MATHFORGE
+authoritative source adjudication, INTELLECT reserved governance/security
+authority, or genuine external claim promotion. MATHSOLVE capture/replay/
+adjudication integrity is available as a narrowly scoped evidence
+capability when such an effect explicitly calls for it; it neither
+certifies mathematical results nor creates a routine Solve approval gate.
+
+Any future scope-specific guard must be independently governed,
+tested with authentic evidence, and demonstrably nonblocking for
+ordinary work. No blanket required context is to be added to Programme
+rulesets. Existing GitHub review, protected branch and GH-OS checks
+remain operative.
 
 The source-of-truth work index remains the issue and protected repository.
 MkDocs is this explanatory read model, not an independent source of claim

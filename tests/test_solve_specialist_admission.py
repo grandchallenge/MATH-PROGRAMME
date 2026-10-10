@@ -185,6 +185,14 @@ class SolveSpecialistTests(unittest.TestCase):
                          "MATHEMATICAL")
         self.assertEqual(domain_for_paths([".github/workflows/unsafe.yml"]), "PROTECTION")
         self.assertTrue(protected_path("ci/specialist_domains.py"))
+        for guarded in ("ci/erdos_catalogue_queue_projection.py",
+                        "tests/test_erdos_catalogue_queue_projection.py",
+                        "ci/erdos_event_custody.py",
+                        "tests/test_erdos_event_custody.py",
+                        "ci/validate_workflow_coverage_v2.py",
+                        "tests/test_agent_routine_review.py"):
+            with self.subTest(guarded=guarded):
+                self.assertEqual(domain_for_paths([guarded]), "PROTECTION")
         for paths in (["governance/mathsolve_routing_audit.json", "docs/claim.md"],
                       ["governance/mathsolve_routing_audit.json", "ci/agent_routine_review.py"],
                       ["governance/mathsolve_routing_audit.json", "fixtures/formal/theorem.lean"],

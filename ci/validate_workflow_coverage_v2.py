@@ -349,10 +349,66 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:qualify: non-Pages job permissions may not exceed contents: read",
+        "erdos-catalogue-intake.yml:capture: non-Pages job permissions may not exceed contents: read",
+        "erdos-catalogue-queue-projection.yml:reconcile: non-Pages job permissions may not exceed contents: read",
     }
     errors = [error for error in errors if error not in delegated_permission_errors]
     errors.extend(recovery_failover_errors(texts))
     errors.extend(remediation_envelope_errors(texts))
+    queue_projection = texts.get("erdos-catalogue-queue-projection.yml")
+    if queue_projection is not None:
+        workflow = v3.legacy.load_yaml_text(queue_projection)
+        jobs = workflow.get("jobs", {})
+        projection = _job(workflow, "reconcile")
+        if workflow.get("permissions") != {"contents": "read"} or set(jobs) != {"reconcile", "ledger", "canary"}:
+            errors.append("erdos queue projection: unrecognized workflow or write scope")
+        ledger = _job(workflow, "ledger")
+        canary = _job(workflow, "canary")
+        if ledger.get("permissions") != {"contents": "read"} or canary.get("permissions") != {"contents": "read"}:
+            errors.append("erdos event custody: only base contents-read job permissions allowed")
+        ledger_text = str(ledger)
+        canary_text = str(canary)
+        for required in (
+            "ci/erdos_event_custody.py --mode ledger",
+            "steps.ledger-token.outputs.token",
+            "secrets.GCL_COUNCIL_CLERK_APP_ID",
+            "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY",
+            "permission-issues",
+        ):
+            if required not in ledger_text:
+                errors.append(f"erdos event custody: missing bounded ledger marker {required}")
+        for required in ("ci/erdos_event_custody.py --mode canary", "github.token", "2500"):
+            if required not in canary_text:
+                errors.append(f"erdos event canary: missing isolated acceptance marker {required}")
+        if "permission-organization-projects" in ledger_text or "steps.queue-token.outputs.token" in ledger_text:
+            errors.append("erdos event custody: ledger must not use Project mutation token")
+        if projection.get("permissions") != {"contents": "read", "issues": "write"}:
+            errors.append("erdos queue projection: exact job write permissions required")
+        steps = projection.get("steps", [])
+        runs = "\\n".join(str(step.get("run", "")) for step in steps)
+        if ("ci/erdos_catalogue_programme_intake.py --live-snapshot" not in runs
+                or "ci/erdos_catalogue_queue_projection.py --report" not in runs
+                or "steps.queue-token.outputs.token" not in queue_projection
+                or "permission-organization-projects: write" not in queue_projection
+                or "permission-issues: write" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_APP_ID" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY" not in queue_projection):
+            errors.append("erdos queue projection: evidence source / scoped credential binding drift")
+    catalogue = texts.get("erdos-catalogue-intake.yml")
+    if catalogue is not None:
+        workflow = v3.legacy.load_yaml_text(catalogue)
+        capture = _job(workflow, "capture")
+        if capture.get("permissions") != {"contents":"read","issues":"read"}:
+            errors.append("erdos-catalogue-intake.yml:capture: permissions must be contents-read and issues-read only")
+        if set(workflow.get("jobs", {})) != {"test", "capture"}:
+            errors.append("erdos-catalogue-intake.yml: unexpected capture topology")
+        checkouts = [step for step in capture.get("steps", []) if step.get("uses", "").startswith("actions/checkout@")]
+        if len(checkouts) != 1 or checkouts[0].get("with", {}).get("ref") != "main":
+            errors.append("erdos-catalogue-intake.yml:capture: trusted-main checkout required")
+        if "write" in json.dumps(capture.get("permissions", {})):
+            errors.append("erdos-catalogue-intake.yml:capture: repository mutation is forbidden")
+        if "secrets." in catalogue or "secrets[" in catalogue:
+            errors.append("erdos-catalogue-intake.yml: repository secrets are outside the read-only capture envelope")
 
     commands = _registry_commands(root=root, registry=registry)
     prefix = "ci.yml: missing workflow coverage marker "
