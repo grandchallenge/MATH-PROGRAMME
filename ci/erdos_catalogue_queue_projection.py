@@ -25,6 +25,85 @@ def gh(*args: str) -> object:
     return json.loads(p.stdout)
 
 
+def graph(query: str, **variables: object) -> dict:
+    payload = json.dumps({"query": query, "variables": variables})
+    result = subprocess.run(["gh", "api", "graphql", "--input", "-"],
+                            input=payload, text=True, capture_output=True)
+    if result.returncode:
+        raise RuntimeError(f"targeted GraphQL query failed: {result.stderr.strip()}")
+    response = json.loads(result.stdout)
+    if response.get("errors"):
+        raise RuntimeError(f"targeted GraphQL errors: {response['errors']}")
+    return response["data"]
+
+
+PROJECT_META_QUERY = """
+query($owner: String!, $number: Int!) {
+  organization(login: $owner) {
+    projectV2(number: $number) {
+      id
+      fields(first: 100) {
+        pageInfo { hasNextPage }
+        nodes {
+          ... on ProjectV2SingleSelectField {
+            id
+            name
+            options { id name }
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+ISSUE_ITEM_QUERY = """
+query($owner: String!, $repo: String!, $number: Int!) {
+  repository(owner: $owner, name: $repo) {
+    issue(number: $number) {
+      projectItems(first: 100) {
+        pageInfo { hasNextPage }
+        nodes {
+          id
+          project { id number }
+          fieldValueByName(name: "Status") {
+            ... on ProjectV2ItemFieldSingleSelectValue { name }
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+
+def project_metadata() -> tuple[str, str, str]:
+    project = graph(PROJECT_META_QUERY, owner=OWNER, number=int(PROJECT))[
+        "organization"]["projectV2"]
+    if not project or project["fields"]["pageInfo"]["hasNextPage"]:
+        raise ValueError("Project fields missing or pagination incomplete")
+    matches = [(field, option) for field in project["fields"]["nodes"]
+               if field and field.get("name") == "Status"
+               for option in field.get("options", [])
+               if option["name"].upper() == "RETURNED"]
+    if len(matches) != 1:
+        raise ValueError("expected exactly one RETURNED option on Project Status")
+    return project["id"], matches[0][0]["id"], matches[0][1]["id"]
+
+
+def issue_project_item(issue: int, project_id: str) -> dict:
+    data = graph(ISSUE_ITEM_QUERY, owner=OWNER, repo=REPO, number=issue)
+    node = data["repository"]["issue"]
+    if node is None or node["projectItems"]["pageInfo"]["hasNextPage"]:
+        raise ValueError("Issue project membership missing or paginated")
+    matches = [item for item in node["projectItems"]["nodes"]
+               if item["project"]["id"] == project_id]
+    if len(matches) != 1:
+        raise ValueError(f"expected one Project item for #{issue}; got {len(matches)}")
+    return {"id": matches[0]["id"],
+            "status": (matches[0].get("fieldValueByName") or {}).get("name")}
+
+
 def validate_receipt(report: dict, issue: int) -> dict:
     tasks = [t for t in report.get("tasks", []) if t.get("issue_number") == issue]
     if len(tasks) != 1:
@@ -57,39 +136,27 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     import hashlib
     if hashlib.sha256(comment["body"].encode()).hexdigest() != receipt["comment_body_sha256"]:
         raise ValueError("comment changed since capture; recapture required")
-    fields = gh("project", "field-list", PROJECT, "--owner", OWNER, "--format", "json", "--limit", "100")
-    projects = gh("project", "view", PROJECT, "--owner", OWNER, "--format", "json")
-    items = gh("project", "item-list", PROJECT, "--owner", OWNER, "--format", "json", "--limit", "5000")
-    candidates = [(f, o) for f in fields["fields"] if f.get("name") in ("GCL State", "Status")
-                  for o in f.get("options", []) if o.get("name", "").upper() in STATES]
-    if len(candidates) != 1:
-        options = {f["name"]: [o.get("name") for o in f.get("options", [])] for f in fields["fields"]}
-        raise ValueError(f"no unique RETURNED state: {json.dumps(options)}")
-    field, option = candidates[0]
-    matches = [i for i in items["items"] if i.get("content", {}).get("url") == URL_PREFIX + str(issue)]
-    if len(matches) != 1:
-        raise ValueError(f"expected exactly one Project item, found {len(matches)}")
-    item = matches[0]
+    project_id, field_id, option_id = project_metadata()
+    item = issue_project_item(issue, project_id)
     before = {"issue": issue, "comment_id": receipt["comment_id"], "project_item": item["id"],
-              "status_before": item.get("status"), "target": option["name"], "dry_run": dry_run}
+              "status_before": item.get("status"), "target": "RETURNED", "dry_run": dry_run}
     if dry_run:
         return before
-    if str(item.get("status", "")).upper() != option["name"].upper():
-        subprocess.run(["gh", "project", "item-edit", "--project-id", projects["id"],
-                        "--id", item["id"], "--field-id", field["id"],
-                        "--single-select-option-id", option["id"]], check=True)
+    if str(item.get("status", "")).upper() != "RETURNED":
+        subprocess.run(["gh", "project", "item-edit", "--project-id", project_id,
+                        "--id", item["id"], "--field-id", field_id,
+                        "--single-select-option-id", option_id], check=True)
     if "gcl-state:available" in labels:
         subprocess.run(["gh", "api", "--method", "DELETE",
                         f"repos/{OWNER}/{REPO}/issues/{issue}/labels/gcl-state%3Aavailable"],
                        check=True, stdout=subprocess.DEVNULL)
-    after = gh("project", "item-list", PROJECT, "--owner", OWNER, "--format", "json", "--limit", "5000")
-    final = [i for i in after["items"] if i.get("id") == item["id"]]
-    if len(final) != 1 or str(final[0].get("status", "")).upper() != option["name"].upper():
-        raise RuntimeError("Project readback does not confirm returned state")
+    final = issue_project_item(issue, project_id)
+    if final["id"] != item["id"] or str(final["status"]).upper() != "RETURNED":
+        raise RuntimeError("Targeted Project readback does not confirm returned state")
     refreshed = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
     if "gcl-state:available" in {l["name"] for l in refreshed["labels"]}:
         raise RuntimeError("issue availability label persists")
-    before["verified_status"] = final[0].get("status")
+    before["verified_status"] = final.get("status")
     before["available_removed"] = True
     return before
 
