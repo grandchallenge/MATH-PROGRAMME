@@ -26,14 +26,17 @@ def gh(*args: str) -> object:
 
 
 def validate_receipt(report: dict, issue: int) -> dict:
+    tasks = [t for t in report.get("tasks", []) if t.get("issue_number") == issue]
+    if len(tasks) != 1:
+        raise ValueError("issue missing or ambiguous in captured catalogue task registry")
     rows = [r for r in report.get("receipts", []) if r.get("issue_number") == issue
             and r.get("validation") == "STRUCTURALLY_VALID_UNADJUDICATED"
             and r.get("event_action") != "deleted"]
     if len(rows) != 1:
         raise ValueError(f"expected exactly one current structurally valid return, got {len(rows)}")
     row = rows[0]
-    expected = f"ERDOS-CATALOGUE-{issue - 271:04d}-S01"
-    if row.get("task_id") != expected or not row.get("comment_id"):
+    expected = f"ERDOS-CATALOGUE-{row['problem_id']:04d}-S01"
+    if row.get("task_id") != expected or tasks[0].get("task_id") != expected or not row.get("comment_id"):
         raise ValueError("return binding mismatch")
     return row
 
@@ -94,15 +97,20 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--report", required=True)
-    p.add_argument("--issue", type=int, required=True)
+    p.add_argument("--issue", type=int)
+    p.add_argument("--all", action="store_true")
     p.add_argument("--dry-run", action="store_true")
     args = p.parse_args()
     try:
         with open(args.report, encoding="utf-8") as f:
             report = json.load(f)
-        if not 1270 <= args.issue <= 2492:
-            raise ValueError("issue outside catalogue binding")
-        print(json.dumps(reconcile(report, args.issue, args.dry_run), sort_keys=True))
+        if (args.issue is None) == (not args.all):
+            raise ValueError("specify exactly one of --issue or --all")
+        issues = [args.issue] if args.issue is not None else [t["issue_number"] for t in report.get("tasks", []) if t.get("structurally_valid_returns") == 1]
+        results = []
+        for issue in issues:
+            results.append(reconcile(report, issue, args.dry_run))
+        print(json.dumps(results, sort_keys=True))
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError, KeyError) as exc:
         print(f"QUEUE_RECONCILIATION_BLOCKED: {exc}", file=sys.stderr)
