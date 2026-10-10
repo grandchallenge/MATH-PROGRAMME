@@ -360,8 +360,28 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         workflow = v3.legacy.load_yaml_text(queue_projection)
         jobs = workflow.get("jobs", {})
         projection = _job(workflow, "reconcile")
-        if workflow.get("permissions") != {"contents": "read"} or set(jobs) != {"reconcile"}:
+        if workflow.get("permissions") != {"contents": "read"} or set(jobs) != {"reconcile", "ledger", "canary"}:
             errors.append("erdos queue projection: unrecognized workflow or write scope")
+        ledger = _job(workflow, "ledger")
+        canary = _job(workflow, "canary")
+        if ledger.get("permissions") != {"contents": "read"} or canary.get("permissions") != {"contents": "read"}:
+            errors.append("erdos event custody: only base contents-read job permissions allowed")
+        ledger_text = str(ledger)
+        canary_text = str(canary)
+        for required in (
+            "ci/erdos_event_custody.py --mode ledger",
+            "steps.ledger-token.outputs.token",
+            "secrets.GCL_COUNCIL_CLERK_APP_ID",
+            "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY",
+            "permission-issues",
+        ):
+            if required not in ledger_text:
+                errors.append(f"erdos event custody: missing bounded ledger marker {required}")
+        for required in ("ci/erdos_event_custody.py --mode canary", "github.token", "2500"):
+            if required not in canary_text:
+                errors.append(f"erdos event canary: missing isolated acceptance marker {required}")
+        if "permission-organization-projects" in ledger_text or "steps.queue-token.outputs.token" in ledger_text:
+            errors.append("erdos event custody: ledger must not use Project mutation token")
         if projection.get("permissions") != {"contents": "read", "issues": "write"}:
             errors.append("erdos queue projection: exact job write permissions required")
         steps = projection.get("steps", [])
