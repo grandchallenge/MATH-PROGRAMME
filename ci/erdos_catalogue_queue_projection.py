@@ -108,8 +108,32 @@ def validate_receipt(report: dict, issue: int) -> dict:
     tasks = [t for t in report.get("tasks", []) if t.get("issue_number") == issue]
     if len(tasks) != 1:
         raise ValueError("issue missing or ambiguous in captured catalogue task registry")
-    rows = [r for r in report.get("receipts", []) if r.get("issue_number") == issue
-            and r.get("validation") == "STRUCTURALLY_VALID_UNADJUDICATED"
+    # Historical event reports retain all revisions. Select only the newest
+    # revision per comment before deciding whether a current valid return exists.
+    # A tombstone or invalid edited revision revokes its older valid predecessor.
+    versions = [r for r in report.get("receipts", []) if r.get("issue_number") == issue]
+    by_comment = {}
+    for version in versions:
+        cid = version.get("comment_id")
+        old = by_comment.get(cid)
+        if old is None:
+            by_comment[cid] = version
+            continue
+        stamp = (version.get("updated_at") or "",
+                 version.get("event_action") == "deleted")
+        old_stamp = (old.get("updated_at") or "",
+                     old.get("event_action") == "deleted")
+        if stamp > old_stamp:
+            by_comment[cid] = version
+        elif stamp == old_stamp and (
+            version.get("comment_body_sha256") != old.get("comment_body_sha256")
+            or version.get("validation") != old.get("validation")
+        ):
+            # Ambiguous same-time revisions must fail closed, never choose a
+            # convenient historical success by order of iteration.
+            raise ValueError("conflicting equal-timestamp comment revisions")
+    rows = [r for r in by_comment.values()
+            if r.get("validation") == "STRUCTURALLY_VALID_UNADJUDICATED"
             and r.get("event_action") != "deleted"]
     if len(rows) != 1:
         raise ValueError(f"expected exactly one current structurally valid return, got {len(rows)}")
