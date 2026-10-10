@@ -1,0 +1,47 @@
+name: Erdős catalogue operational queue projection
+
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+  workflow_dispatch:
+  schedule:
+    - cron: '37 */6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-catalogue-queue-projection
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    permissions:
+      contents: read
+      issues: write
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (!github.event.issue.pull_request &&
+       startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
+       startsWith(github.event.comment.body, 'RESULT/1'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Rebuild unadjudicated catalogue custody snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python ci/erdos_catalogue_programme_intake.py --live-snapshot --output catalogue-intake
+      - name: Reconcile Project state and labels from verified receipts
+        env:
+          GH_TOKEN: ${{ secrets.GCL_QUEUE_PROJECT_TOKEN }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing Project-scoped GCL_QUEUE_PROJECT_TOKEN"; exit 1; }
+          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all

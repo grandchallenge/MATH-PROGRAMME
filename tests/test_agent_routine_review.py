@@ -10,6 +10,7 @@ from agent_routine_review import (  # noqa: E402
     APP_REVIEWER, REMOVE_EXACTLY, REQUIRED_HEAD_CONTEXTS, REPOSITORY,
     RoutineReviewError, candidate_number, eligible_image_removal,
     removed_patch_text, required_contexts_green,
+    specialist_domain_for_file_manifest,
 )
 
 
@@ -29,6 +30,24 @@ class RoutineAgentReviewTests(unittest.TestCase):
                 + "".join("-" + line for line in REMOVE_EXACTLY.splitlines(keepends=True))
                 + " context unchanged\n",
         }]
+
+    def test_queue_controller_is_protection_not_mathematical(self) -> None:
+        files = [{"filename": name} for name in (
+            ".ghos-routing/workflows.json",
+            ".github/workflows/erdos-catalogue-queue-projection.yml",
+            "ci/erdos_catalogue_queue_projection.py",
+            "tests/test_erdos_catalogue_queue_projection.py",
+            "ci/agent_routine_review.py",
+            "tests/test_agent_routine_review.py",
+        )]
+        self.assertEqual(specialist_domain_for_file_manifest(files), "PROTECTION")
+
+    def test_unknown_queue_related_file_still_fails_closed(self) -> None:
+        with self.assertRaisesRegex(RoutineReviewError, "unresolved or mixed"):
+            specialist_domain_for_file_manifest([
+                {"filename": "ci/erdos_catalogue_queue_projection.py"},
+                {"filename": "ci/other_unclassified_controller.py"},
+            ])
 
     def test_exact_image_removal_is_routine(self) -> None:
         eligible_image_removal(self.pr, self.files, self.head)
