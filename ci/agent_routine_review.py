@@ -237,6 +237,9 @@ def specialist_domain_for_file_manifest(files: list[dict]) -> str:
         # never to mathematical proof certification. No generic CI exemption.
         if path in ("ci/erdos_catalogue_queue_projection.py",
                     "tests/test_erdos_catalogue_queue_projection.py",
+                    "ci/erdos_event_custody.py",
+                    "tests/test_erdos_event_custody.py",
+                    "ci/validate_workflow_coverage_v2.py",
                     "tests/test_agent_routine_review.py"):
             return "PROTECTION"
         if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
