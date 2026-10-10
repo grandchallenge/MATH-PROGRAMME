@@ -145,7 +145,7 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
         "ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}",
         "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}",
         "REFEREE_LOGIN: 'github-actions[bot]'",
-        "CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
+        "CANDIDATE_APP_ID: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}",
         "REFEREE_APP_ID: '15368'",
         "Restore exact PR-only Administration actor",
         "from autonomy_github import AutonomyError, Client, identity, install_bypass",
@@ -371,8 +371,8 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
                 or "steps.queue-token.outputs.token" not in queue_projection
                 or "permission-organization-projects: write" not in queue_projection
                 or "permission-issues: write" not in queue_projection
-                or "secrets.GCL_RELEASE_TRUST_APP_ID" not in queue_projection
-                or "secrets.GCL_RELEASE_TRUST_PRIVATE_KEY" not in queue_projection):
+                or "secrets.GCL_COUNCIL_CLERK_APP_ID" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY" not in queue_projection):
             errors.append("erdos queue projection: evidence source / scoped credential binding drift")
     catalogue = texts.get("erdos-catalogue-intake.yml")
     if catalogue is not None:
