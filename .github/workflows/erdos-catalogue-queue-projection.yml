@@ -25,6 +25,7 @@ jobs:
        startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
        startsWith(github.event.comment.body, 'RESULT/1'))
     runs-on: ubuntu-24.04
+    environment: release-trust
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -39,9 +40,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python ci/erdos_catalogue_programme_intake.py --live-snapshot --output catalogue-intake
+      - name: Mint bounded Project and issue projection token
+        id: queue-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+          permission-organization-projects: write
       - name: Reconcile Project state and labels from verified receipts
         env:
-          GH_TOKEN: ${{ secrets.GCL_QUEUE_PROJECT_TOKEN }}
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
         run: |
-          test -n "$GH_TOKEN" || { echo "Missing Project-scoped GCL_QUEUE_PROJECT_TOKEN"; exit 1; }
+          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
           python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
