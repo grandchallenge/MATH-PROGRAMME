@@ -233,6 +233,11 @@ def specialist_domain_for_file_manifest(files: list[dict]) -> str:
             "governance/release_trust",
         )) or path == "mkdocs.yml":
             return "PROTECTION"
+        # Exact operational controller and its tests belong to protection,
+        # never to mathematical proof certification. No generic CI exemption.
+        if path in ("ci/erdos_catalogue_queue_projection.py",
+                    "tests/test_erdos_catalogue_queue_projection.py"):
+            return "PROTECTION"
         if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
             return "MATHEMATICAL"
         if path.startswith("governance/source_"):
