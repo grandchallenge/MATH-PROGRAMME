@@ -145,7 +145,7 @@ def recovery_failover_errors(texts: dict[str, str]) -> list[str]:
         "ADMIN_TOKEN: ${{ steps.admin-token.outputs.token }}",
         "CANDIDATE_LOGIN: ${{ format('{0}[bot]', steps.write-token.outputs.app-slug) }}",
         "REFEREE_LOGIN: 'github-actions[bot]'",
-        "CANDIDATE_APP_ID: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}",
+        "CANDIDATE_APP_ID: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}",
         "REFEREE_APP_ID: '15368'",
         "Restore exact PR-only Administration actor",
         "from autonomy_github import AutonomyError, Client, identity, install_bypass",
