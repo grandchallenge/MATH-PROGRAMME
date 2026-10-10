@@ -368,7 +368,11 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         runs = "\\n".join(str(step.get("run", "")) for step in steps)
         if ("ci/erdos_catalogue_programme_intake.py --live-snapshot" not in runs
                 or "ci/erdos_catalogue_queue_projection.py --report" not in runs
-                or "secrets.GCL_QUEUE_PROJECT_TOKEN" not in queue_projection):
+                or "steps.queue-token.outputs.token" not in queue_projection
+                or "permission-organization-projects: write" not in queue_projection
+                or "permission-issues: write" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_APP_ID" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY" not in queue_projection):
             errors.append("erdos queue projection: evidence source / scoped credential binding drift")
     catalogue = texts.get("erdos-catalogue-intake.yml")
     if catalogue is not None:
