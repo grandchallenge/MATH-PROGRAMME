@@ -9,7 +9,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 concurrency:
   group: erdos-catalogue-queue-projection
@@ -17,6 +16,9 @@ concurrency:
 
 jobs:
   reconcile:
+    permissions:
+      contents: read
+      issues: write
     if: >-
       github.event_name != 'issue_comment' ||
       (!github.event.issue.pull_request &&
