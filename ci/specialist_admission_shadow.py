@@ -17,6 +17,7 @@ from pathlib import Path
 from agent_material_profiles import MaterialAdmissionError, classify_text, load_registry
 from agent_routine_review import RoutineReviewError, api, delegated_classification
 from specialist_receipt_adapter import ReceiptError, protected_specialist_receipt
+from specialist_domains import domain_for_paths, protected_path
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 CONTROL = "GCL-AGENT-ADMISSION-SPECIALIST-001"
@@ -39,13 +40,7 @@ def git(root: Path, *args: str, binary: bool = False) -> str | bytes:
 
 
 def reserved_path(path: str) -> bool:
-    return path.startswith((
-        ".github/workflows/", ".ghos-routing/", "governance/release_trust",
-        "governance/constitutional", "schemas/release_trust",
-    )) or path in (
-        "ci/agent_routine_review.py", "ci/agent_material_profiles.py",
-        "ci/specialist_admission_shadow.py", "mkdocs.yml",
-    )
+    return protected_path(path)
 
 
 def classify_paths(paths: list[str]) -> str:
@@ -55,19 +50,7 @@ def classify_paths(paths: list[str]) -> str:
 
 
 def specialist_domain(paths: list[str]) -> str | None:
-    """Only exact coherent path-based authority routes; ambiguity is pending."""
-    if not paths:
-        return None
-    def classify(path: str) -> str | None:
-        if reserved_path(path):
-            return "PROTECTION"
-        if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
-            return "MATHEMATICAL"
-        if path.startswith("governance/source_"):
-            return "SOURCE_SEMANTIC"
-        return None
-    classes = {classify(path) for path in paths}
-    return classes.pop() if len(classes) == 1 else None
+    return domain_for_paths(paths)
 
 
 def observe_specialist_receipt(head: str, files: list[dict], paths: list[str],
@@ -157,7 +140,8 @@ def shadow_merge_group(event: dict, root: Path, env: dict[str, str]) -> dict:
     if len(records) != 2 or records[0] != b"M":
         paths = [value.decode("utf-8", errors="replace") for value in records[1::2]]
         return {"disposition": classify_paths(paths),
-                "reason": "merge group not exactly one modified documentation file",
+                "specialist_domain_hint": specialist_domain(paths),
+                "reason": "merge group not exactly one modified documentation file; no group-bound specialist receipt admitted",
                 "subject_sha": sha, "protected_base": base, "paths": paths}
     try:
         path = records[1].decode("utf-8")
@@ -165,8 +149,11 @@ def shadow_merge_group(event: dict, root: Path, env: dict[str, str]) -> dict:
         new = git(root, "show", f"{sha}:{path}", binary=True)
         evidence = classify_text(path, old, new, load_registry())
     except (MaterialAdmissionError, UnicodeDecodeError) as err:
-        return {"disposition": classify_paths([records[1].decode("utf-8", errors="replace")]),
-                "reason": str(err), "subject_sha": sha, "protected_base": base}
+        pending_paths = [records[1].decode("utf-8", errors="replace")]
+        return {"disposition": classify_paths(pending_paths),
+                "specialist_domain_hint": specialist_domain(pending_paths),
+                "reason": str(err) + "; group-bound specialist receipt not yet evaluated",
+                "subject_sha": sha, "protected_base": base}
     # Another base movement is a new subject: fail closed rather than publishing
     # a stale group classification as if it were current.
     if git(root, "ls-remote", "origin", "refs/heads/main").split()[0] != base:

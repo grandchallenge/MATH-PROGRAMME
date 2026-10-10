@@ -22,6 +22,7 @@ from agent_material_profiles import (
 from specialist_receipt_adapter import (
     ReceiptError, protected_specialist_receipt,
 )
+from specialist_domains import domain_for_paths
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 APP_REVIEWER = "gcl-release-trust[bot]"
@@ -223,34 +224,16 @@ def delegated_classification(pr: dict, files: list[dict], head: str,
 
 
 def specialist_domain_for_file_manifest(files: list[dict]) -> str:
-    """Fail closed on mixed, unclassified or provenance-ambiguous changes."""
+    """Use protected four-domain routing, retaining mainline operational exceptions."""
     if not files or len(files) > 100:
         raise RoutineReviewError("no exact candidate file inventory")
-    def domain(path: str) -> str | None:
-        if path.startswith((
-            ".github/workflows/", ".ghos-routing/", "ci/agent_",
-            "ci/specialist_", "schemas/release_trust",
-            "governance/release_trust",
-        )) or path == "mkdocs.yml":
-            return "PROTECTION"
-        # Exact operational controller and its tests belong to protection,
-        # never to mathematical proof certification. No generic CI exemption.
-        if path in ("ci/erdos_catalogue_queue_projection.py",
-                    "tests/test_erdos_catalogue_queue_projection.py",
-                    "ci/erdos_event_custody.py",
-                    "tests/test_erdos_event_custody.py",
-                    "ci/validate_workflow_coverage_v2.py",
-                    "tests/test_agent_routine_review.py"):
-            return "PROTECTION"
-        if path.startswith(("fixtures/formal/", "fixtures/cmdg/")) or path.endswith(".lean"):
-            return "MATHEMATICAL"
-        if path.startswith("governance/source_"):
-            return "SOURCE_SEMANTIC"
-        return None
-    domains = {domain(str(row.get("filename") or "")) for row in files}
-    if len(domains) != 1 or None in domains:
+    paths = [row.get("filename") for row in files if isinstance(row, dict)]
+    if len(paths) != len(files):
+        raise RoutineReviewError("invalid candidate file inventory")
+    domain = domain_for_paths(paths)
+    if domain is None:
         raise RoutineReviewError("candidate specialist class unresolved or mixed")
-    return domains.pop()
+    return domain
 
 
 def verify_specialist_envelope(pr: dict, files: list[dict], head: str) -> None:

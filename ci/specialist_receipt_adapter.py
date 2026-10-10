@@ -13,13 +13,9 @@ import re
 import urllib.parse
 from typing import Any, Callable
 
-REPO = "grandchallenge/MATH-PROGRAMME"
+from specialist_domains import REPOSITORY as REPO, load_domains
+
 SHA = re.compile(r"[0-9a-f]{40}\Z")
-ROUTES = {
-    "MATHEMATICAL": ("grandchallenge/MATHCERT", "certificates/"),
-    "SOURCE_SEMANTIC": ("grandchallenge/MATHFORGE", "governance/"),
-    "PROTECTION": ("grandchallenge/INTELLECT", "governance/"),
-}
 PREFIX = "governance/material_admission_receipts/"
 RECORD_TYPE = "GCL_PROTECTED_SPECIALIST_ADMISSION_EVIDENCE"
 
@@ -147,6 +143,88 @@ def _verify_review_origin(
             "authenticated_review_id": r_id, "reviewer_login": reviewer}
 
 
+
+def _verify_solve_integrity(
+    api_get: Callable[[str], Any], repository: str, protected_head: str,
+    receipt: dict, proof: dict, proof_path: str,
+) -> dict[str, Any]:
+    """Inspect actual protected capture -> replay -> adjudication evidence.
+
+    Solve verifies execution fidelity and the disposition of a *provisional*
+    result. Only Cert may turn a mathematical proof into a certified claim.
+    """
+    value = receipt.get("solve_execution")
+    if not isinstance(value, dict) or proof.get("solve_execution") != value:
+        raise ReceiptError("Solve execution evidence missing or scope mismatch")
+    if set(value) != {
+        "schema_version", "dispatch_id", "result_ref", "result_sha256",
+        "capture", "replay", "adjudication", "claim_effects",
+    } or value["schema_version"] != "1.0.0":
+        raise ReceiptError("Solve execution binding schema invalid")
+    for key in ("dispatch_id", "result_ref"):
+        if not isinstance(value.get(key), str) or not value[key].strip():
+            raise ReceiptError("Solve missing dispatch or result identity")
+    result_sha = value.get("result_sha256")
+    if not isinstance(result_sha, str) or not re.fullmatch(r"[a-f0-9]{64}", result_sha):
+        raise ReceiptError("Solve result digest missing")
+    no_claim = {
+        "mathematical_claim_effect": False,
+        "certification_effect": False,
+        "publication_effect": False,
+        "source_semantic_effect": False,
+        "security_authority_effect": False,
+    }
+    if value.get("claim_effects") != no_claim:
+        raise ReceiptError("Solve evidence attempted to promote claim or authority")
+    bound = {}
+    paths = []
+    for name in ("capture", "replay", "adjudication"):
+        ref = value.get(name)
+        if not isinstance(ref, dict) or set(ref) != {"path", "blob_sha"}:
+            raise ReceiptError("Solve missing exact capture/replay/adjudication source lock")
+        path = ref.get("path")
+        if not isinstance(path, str) or not path.startswith("contributions/") or not path.endswith(".json"):
+            raise ReceiptError("Solve evidence not under protected contributions")
+        if path == proof_path or path in paths:
+            raise ReceiptError("Solve evidence self-reference or duplicate")
+        paths.append(path)
+        locked = _sha(ref.get("blob_sha"))
+        document, actual_blob = _protected_json(api_get, repository, path, protected_head)
+        if actual_blob != locked:
+            raise ReceiptError("Solve evidence source lock changed")
+        if document.get("dispatch_id") != value["dispatch_id"] or document.get("result_ref") != value["result_ref"]:
+            raise ReceiptError("Solve dispatch/return lineage mismatch")
+        bound[name] = document
+    captured, replayed, adjudicated = (bound[name] for name in ("capture", "replay", "adjudication"))
+    if (captured.get("record_type") != "GCL_SOLVE_CAPTURE_RECEIPT_V1" or
+            captured.get("result_sha256") != result_sha):
+        raise ReceiptError("Solve capture digest or type is not verified")
+    if (replayed.get("record_type") != "GCL_SOLVE_REPLAY_RECEIPT_V1" or
+            replayed.get("input_result_sha256") != result_sha or
+            replayed.get("capture_blob_sha") != value["capture"]["blob_sha"] or
+            replayed.get("replay_pass") is not True):
+        raise ReceiptError("Solve replay does not independently bind captured input")
+    if (adjudicated.get("record_type") != "GCL_SOLVE_ADJUDICATION_RECEIPT_V1" or
+            adjudicated.get("replay_blob_sha") != value["replay"]["blob_sha"] or
+            adjudicated.get("adjudication_disposition") != "REPLAYED_AND_ADJUDICATED" or
+            not isinstance(adjudicated.get("adjudication_id"), str) or
+            not adjudicated["adjudication_id"].strip() or
+            adjudicated.get("claim_effects") != no_claim):
+        raise ReceiptError("Solve adjudication invalid or attempted claim promotion")
+    return {
+        "domain": "SOLUTION_INTEGRITY",
+        "dispatch_id": value["dispatch_id"],
+        "result_ref": value["result_ref"],
+        "result_sha256": result_sha,
+        "capture_blob_sha": value["capture"]["blob_sha"],
+        "replay_blob_sha": value["replay"]["blob_sha"],
+        "adjudication_blob_sha": value["adjudication"]["blob_sha"],
+        "adjudication_id": adjudicated["adjudication_id"],
+        "claim_effects": no_claim,
+        "mathematical_certification": False,
+    }
+
+
 def protected_specialist_receipt(
     *, head: str, files: list[dict], domain: str,
     api_get: Callable[[str], Any], candidate_author: str,
@@ -159,9 +237,11 @@ def protected_specialist_receipt(
     _sha(head)
     if not isinstance(candidate_author, str) or not candidate_author.strip():
         raise ReceiptError("missing attributable candidate author")
-    if domain not in ROUTES:
+    domains = load_domains()
+    if domain not in domains:
         raise ReceiptError("unknown specialist domain")
-    owner, evidence_prefix = ROUTES[domain]
+    route = domains[domain]
+    owner, evidence_prefix = route["repository"], route["evidence_prefix"]
     fingerprint = material_fingerprint(files)
     ref = api_get(f"/repos/{owner}/git/ref/heads/main")
     protected_sha = _sha(((ref or {}).get("object") or {}).get("sha"))
@@ -192,12 +272,16 @@ def protected_specialist_receipt(
     # The receipt must not point to an unrelated protected JSON object.
     # A second, independently admitted review artifact has to bind the exact
     # candidate bytes and the same domain with a positive scoped disposition.
-    if (proof_record.get("record_type") != "GCL_DOMAIN_INDEPENDENT_REVIEW_V1" or
+    expected_disposition = (
+        "ROLE_SCOPED_REVIEW_ACCEPTED" if domain == "SOLUTION_INTEGRITY"
+        else "INDEPENDENT_REVIEW_ACCEPTED"
+    )
+    if (proof_record.get("record_type") != route["review_record_type"] or
             proof_record.get("authority_domain") != domain or
             proof_record.get("subject_repository") != REPO or
             proof_record.get("subject_sha") != head or
             proof_record.get("material_fingerprint") != fingerprint or
-            proof_record.get("disposition") != "INDEPENDENT_REVIEW_ACCEPTED"):
+            proof_record.get("disposition") != expected_disposition):
         raise ReceiptError("underlying specialist review not positively bound")
     reviewer = proof_record.get("reviewer_identity")
     if not isinstance(reviewer, str) or not reviewer.strip():
@@ -205,16 +289,20 @@ def protected_specialist_receipt(
     if reviewer.casefold() == candidate_author.casefold():
         raise ReceiptError("candidate author cannot be sole specialist reviewer")
     declared_independence = proof_record.get("review_independence")
-    expected_independence = (
-        "INDEPENDENT_NON_AUTHOR" if domain == "MATHEMATICAL"
-        else "ROLE_SCOPED_NON_AUTHOR_SPECIALIST"
-    )
+    expected_independence = route["independence"]
     if declared_independence != expected_independence:
         raise ReceiptError("required specialist-review independence not attested")
     if not isinstance(record.get("review_scope"), str) or not record["review_scope"].strip():
         raise ReceiptError("missing specialist-reviewed claim/scope")
     if record["review_scope"] != proof_record.get("review_scope"):
         raise ReceiptError("specialist reviewed scope differs from receipt")
+    solve_evidence = None
+    if domain == "SOLUTION_INTEGRITY":
+        if record["review_scope"] != route["review_scope"]:
+            raise ReceiptError("Solve review must be execution integrity only")
+        solve_evidence = _verify_solve_integrity(
+            api_get, owner, protected_sha, record, proof_record, p,
+        )
     origin = _verify_review_origin(
         api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author,
     )
@@ -231,6 +319,7 @@ def protected_specialist_receipt(
         "protected_underlying_blob": proof_blob,
         "domain": domain,
         "review_scope": record["review_scope"],
+        "solve_execution_evidence": solve_evidence,
         "authenticated_review_origin": origin,
         "subject_sha": head,
         "material_fingerprint": fingerprint,
