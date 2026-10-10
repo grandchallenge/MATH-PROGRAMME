@@ -19,9 +19,9 @@ class QueueProjectionTests(unittest.TestCase):
     def test_registry_bound_valid_receipt(self):
         self.assertEqual(mod.validate_receipt(self.report, self.issue)["comment_id"], 77)
 
-    def test_duplicate_fail_closed(self):
-        with self.assertRaises(ValueError):
-            mod.validate_receipt({**self.report, "receipts": [self.receipt, self.receipt]}, self.issue)
+    def test_duplicate_delivery_is_idempotent(self):
+        receipt = mod.validate_receipt({**self.report, "receipts": [self.receipt, self.receipt]}, self.issue)
+        self.assertEqual(self.receipt["comment_id"], receipt["comment_id"])
 
     def test_no_registry_binding_fail_closed(self):
         with self.assertRaises(ValueError):
