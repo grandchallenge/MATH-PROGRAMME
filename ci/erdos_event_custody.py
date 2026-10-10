@@ -41,7 +41,7 @@ def record(event: dict) -> dict:
         raise ValueError("not a catalogue task")
     if action not in {"created", "edited", "deleted"}:
         raise ValueError("unsupported action")
-    if action == "created" and not (comment.get("body") or "").startswith("RESULT/1\\n"):
+    if action == "created" and not (comment.get("body") or "").startswith("RESULT/1\n"):
         raise ValueError("not a RESULT/1 creation")
     if not isinstance(comment.get("id"), int):
         raise ValueError("missing authenticated comment identifier")
@@ -57,19 +57,19 @@ def append(event: dict) -> dict:
     evidence = record(event)
     replies = gh(f"repos/{OWNER}/{REPO}/issues/{LEDGER}/comments?per_page=100", "--paginate", "--slurp")
     flattened = [item for page in replies for item in page]
-    marker = f"{PREFIX}\\nKEY: {evidence['key']}\\n"
+    marker = f"{PREFIX}\nKEY: {evidence['key']}\n"
     found = [c for c in flattened if (c.get("body") or "").startswith(marker)]
     if len(found) > 1:
         raise ValueError("duplicate ledger entry violates uniqueness")
     if found:
-        if f"PAYLOAD_SHA256: {evidence['digest']}\\n" not in found[0]["body"]:
+        if f"PAYLOAD_SHA256: {evidence['digest']}\n" not in found[0]["body"]:
             raise ValueError("ledger record identity collision")
         return {"status": "EXISTS", "ledger_comment": found[0]["id"], "key": evidence["key"]}
-    text = (marker + f"PAYLOAD_SHA256: {evidence['digest']}\\n"
-            + f"ISSUE: {evidence['issue']}\\nCOMMENT: {evidence['comment']}\\n"
-            + f"ACTION: {evidence['action']}\\n"
-            + f"PAYLOAD_BASE64: {evidence['raw']}\\n"
-            + "AUTHORITY: OPERATIONAL_EVENT_CUSTODY_ONLY\\n")
+    text = (marker + f"PAYLOAD_SHA256: {evidence['digest']}\n"
+            + f"ISSUE: {evidence['issue']}\nCOMMENT: {evidence['comment']}\n"
+            + f"ACTION: {evidence['action']}\n"
+            + f"PAYLOAD_BASE64: {evidence['raw']}\n"
+            + "AUTHORITY: OPERATIONAL_EVENT_CUSTODY_ONLY\n")
     posted = gh("-X", "POST", f"repos/{OWNER}/{REPO}/issues/{LEDGER}/comments",
                 "--input", "-", payload={"body": text})
     verify = gh(f"repos/{OWNER}/{REPO}/issues/comments/{posted['id']}")
