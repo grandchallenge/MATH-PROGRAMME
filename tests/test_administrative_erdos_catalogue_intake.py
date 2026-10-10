@@ -155,6 +155,12 @@ class CatalogueIntakeTests(unittest.TestCase):
         self.assertEqual(32,len(ids));self.assertEqual(32,len(set(ids)))
         self.assertTrue(all(s['worker_runtime_id'] is None for s in batch['slots']))
         self.assertFalse(any(batch['authority_effects'].values()))
+        self.assertEqual("PUBLISHED_FOR_AUTHENTICATED_SELF_PICKUP", batch['state'])
+        self.assertTrue(all(s['state'] == "PUBLISHED_AWAITING_AUTHENTICATED_WORKER" for s in batch['slots']))
+        self.assertEqual([], batch['activation']['worker_runtime_claims'])
+        self.assertEqual(32, len({r['issue_number'] for r in batch['issues']}))
+        self.assertEqual({470, 593}, {r['problem_id'] for r in batch['native_residuals']})
+        self.assertEqual("REUSE_DO_NOT_DUPLICATE_DISPATCH", batch['activation']['native_residual_policy'])
 
     def test_read_only_workflow_envelope_rejects_write_and_untrusted_checkout(self):
         import sys

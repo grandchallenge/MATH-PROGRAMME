@@ -2,7 +2,7 @@
   "record_type": "ERDOS_CATALOGUE_PILOT_BATCH",
   "schema_version": "1.0.0",
   "batch_id": "ERDOS-CATALOGUE-BATCH-001",
-  "state": "PREPARED_SOURCE_BATCH",
+  "state": "PUBLISHED_FOR_AUTHENTICATED_SELF_PICKUP",
   "timebox_minutes_per_task": 35,
   "slots": [
     {
@@ -10,7 +10,7 @@
       "subject": "geometry",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         99,
         101
@@ -21,7 +21,7 @@
       "subject": "set theory and hypergraphs",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         593,
         595,
@@ -33,7 +33,7 @@
       "subject": "Sidon and additive extremal",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         241,
         14,
@@ -47,7 +47,7 @@
       "subject": "additive bases",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         9,
         10,
@@ -62,7 +62,7 @@
       "subject": "primes and covering systems",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         4,
         6,
@@ -76,7 +76,7 @@
       "subject": "divisors and arithmetic source recovery",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         470,
         1052,
@@ -91,7 +91,7 @@
       "subject": "additive combinatorics",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         138,
         1,
@@ -104,7 +104,7 @@
       "subject": "analysis and polynomial status reconciliation",
       "worker_runtime_id": null,
       "authenticated_actor": null,
-      "state": "AWAITING_EXPLICIT_WORKER_ASSIGNMENT",
+      "state": "PUBLISHED_AWAITING_AUTHENTICATED_WORKER",
       "problem_ids": [
         522
       ]
@@ -372,5 +372,39 @@
     "certification": false,
     "publication": false,
     "canonical_repository_mutation": false
+  },
+  "activation": {
+    "transaction": "ERDOS-CATALOGUE-BATCH-001-SELF-PICKUP-20261010",
+    "mode": "DIRECT_EDITORIAL_AUTHENTICATED_SELF_PICKUP",
+    "dispatch_claim": "PUBLIC_ISSUE_OFFERS_NOT_AGENT_RUNTIME_LAUNCHES",
+    "coordinator_issue": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2503",
+    "bootstrap": "https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md",
+    "observed_utc": "2026-10-10",
+    "observed_issue_state": {
+      "available": 31,
+      "returned_issue_number": 1273,
+      "returned_problem_id": 4
+    },
+    "first_priority_problems": [
+      99,
+      101,
+      138,
+      241,
+      470,
+      593,
+      595,
+      1052
+    ],
+    "returned_review": {
+      "issue_number": 1273,
+      "comment_id": 6094193171,
+      "source_review_issue": 2504,
+      "status": "AWAITING_SOURCE_SEMANTIC_AND_WORK_DESIGN_REVIEW"
+    },
+    "worker_runtime_claims": [],
+    "source_470_593": "grandchallenge/MATHSOLVE:contributions/ERDOS-OPEN-001/SUCCESSOR_003/adjudications/ERDOS-SUCCESSOR-003-ADJUDICATION-001.json",
+    "native_residual_policy": "REUSE_DO_NOT_DUPLICATE_DISPATCH",
+    "successor_gate": "PROTECTED_ACCEPTED_SOURCE_REVIEW_REQUIRED_BEFORE_SOLVE_DISPATCH",
+    "expansion_gate": "GENUINE_RETURN_AND_SOURCE_REVIEW_READBACK_REQUIRED"
   }
 }

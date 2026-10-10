@@ -43,12 +43,20 @@ routine custody, engineering or metadata work.
 
 ## First processing batch
 
-`governance/erdos_catalogue/BATCH-001.json` prepares 32 distinct issue IDs in
-eight disjoint work slots. Runtime owners are explicitly unassigned until an
-authenticated worker is allocated; a prepared slot is not a running worker.
-Coordinate one owner/runtime per problem before execution, particularly when
-several chats share one authenticated actor. Direct-editorial workers do not
-post `/claim`; they return on the bound issue under its existing instructions.
+`governance/erdos_catalogue/BATCH-001.json` publishes 32 distinct issue IDs in
+eight disjoint cooperative subject slots for authenticated **self-pickup**.
+Live activation control: [pilot issue #2503](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2503).
+At activation readback on 2026-10-10, 31 pilot assignments had AVAILABLE labels;
+Problem 4 ([#1273](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1273))
+had a genuine returned `RESULT/1`, routed to [critical source review #2504](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2504).
+These are observations, not assumed permanent counts. Runtime owners and
+GitHub actors remain null until an independently verifiable authenticated worker
+actually begins work. Queue publication does **not** launch eight agents and
+must never be used to manufacture runtime identities, lease evidence, or returns.
+Workers follow [WORKERS.md](https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md),
+select an AVAILABLE issue, perform its bounded source audit, and return `RESULT/1`
+on that issue without `/claim`. Coordinate one worker per task before execution,
+particularly when multiple sessions share an authenticated actor.
 
 The batch contains:
 
@@ -85,3 +93,21 @@ The collector writes local/report artifacts only. It does not change Project
 state, close issues, accept a source claim, grant a Solve lease, or certify a
 theorem. There is no self-promotion from a worker's return into an accepted
 mathematical result.
+
+## Restart and successor gate · 10 October 2026
+
+Initial priority is source/reuse reconciliation for Erdős 99, 101, 138, 241,
+470, 593, 595 and 1052. The existing protected MATHSOLVE
+`ERDOS-SUCCESSOR-003-ADJUDICATION-001` is authoritative for the 593 kernel
+replay and 470 historical generator/coverage residuals. Do not treat catalogue
+source-audit offers as duplicate mathematical successor dispatches. The status
+of 470 and 593 is **not solved or certified** by this activation.
+
+A current structurally valid worker return is only `CAPTURED_UNADJUDICATED`;
+its source evidence, theorem-to-statement semantics, bounded successor and
+replay tests require a separate critical disposition. Source-approved bounded
+successors enter MATHSOLVE only under its protected packet, dispatch and
+execution-lease authority. MATHFORGE and MATHCERT remain separately controlled.
+Expansion requires readback of genuine attributable returns, independently
+reviewed primary sources, replay/falsification quality and duplicate-work cost.
+No fixed calendar date or fabricated throughput condition authorizes expansion.
