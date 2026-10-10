@@ -349,10 +349,26 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:qualify: non-Pages job permissions may not exceed contents: read",
+        "erdos-catalogue-intake.yml:capture: non-Pages job permissions may not exceed contents: read",
     }
     errors = [error for error in errors if error not in delegated_permission_errors]
     errors.extend(recovery_failover_errors(texts))
     errors.extend(remediation_envelope_errors(texts))
+    catalogue = texts.get("erdos-catalogue-intake.yml")
+    if catalogue is not None:
+        workflow = v3.legacy.load_yaml_text(catalogue)
+        capture = _job(workflow, "capture")
+        if capture.get("permissions") != {"contents":"read","issues":"read"}:
+            errors.append("erdos-catalogue-intake.yml:capture: permissions must be contents-read and issues-read only")
+        if set(workflow.get("jobs", {})) != {"test", "capture"}:
+            errors.append("erdos-catalogue-intake.yml: unexpected capture topology")
+        checkouts = [step for step in capture.get("steps", []) if step.get("uses", "").startswith("actions/checkout@")]
+        if len(checkouts) != 1 or checkouts[0].get("with", {}).get("ref") != "main":
+            errors.append("erdos-catalogue-intake.yml:capture: trusted-main checkout required")
+        if "write" in json.dumps(capture.get("permissions", {})):
+            errors.append("erdos-catalogue-intake.yml:capture: repository mutation is forbidden")
+        if "secrets." in catalogue or "secrets[" in catalogue:
+            errors.append("erdos-catalogue-intake.yml: repository secrets are outside the read-only capture envelope")
 
     commands = _registry_commands(root=root, registry=registry)
     prefix = "ci.yml: missing workflow coverage marker "
