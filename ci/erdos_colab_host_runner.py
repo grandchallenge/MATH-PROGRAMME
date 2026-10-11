@@ -19,6 +19,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import uuid
 
 from ci.erdos_forge_copilot_pilot import (
@@ -266,8 +267,38 @@ def publish_provisional(directory: Path) -> dict:
     return receipt
 
 
+def selftest() -> int:
+    """No-network, no-Colab execution of the actual remote/host byte contract."""
+    task = {"problem_id":41, "review_issue":2536,
+            "cohort_id":"ERDOS-ROLLING-024-001",
+            "source_comment_sha256":"a"*64,
+            "protected_formal_source_sha256":"b"*64,
+            "protected_formal_source_blob":"c"*40}
+    with tempfile.TemporaryDirectory() as td:
+        folder = Path(td)
+        task_bytes = json.dumps(task, sort_keys=True).encode()
+        prompt_bytes = b"Frozen synthetic offline proof-critic fixture; not a research result."
+        job = job_packet(task_bytes, prompt_bytes,
+                         backend="witness_only", model_id=None, model_revision=None,
+                         max_new_tokens=0)
+        result, receipt = remote_module().execute(task_bytes, prompt_bytes, job)
+        (folder / "task.json").write_bytes(task_bytes)
+        (folder / "prompt.txt").write_bytes(prompt_bytes)
+        (folder / "job.json").write_text(json.dumps(job))
+        (folder / "erdos_review_result.json").write_text(json.dumps(result))
+        (folder / "erdos_review_receipt.json").write_text(json.dumps(receipt))
+        output = verify_artifacts(folder)
+        if output["role_pass_count"] != 0 or output["backend"] != "witness_only":
+            raise RuntimeError("selftest falsely claims a model review")
+        print(json.dumps({"state":"SELFTEST_GREEN_NO_COLAB_NO_MODEL",
+                          "witness":result["witness"],
+                          "authority_effects":AUTHORITY}))
+        return 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
+    p.add_argument("--selftest", action="store_true", help="no-network contract replay for governed CI")
     p.add_argument("--backend", choices=("witness_only", "local_transformers"),
                    default="witness_only")
     p.add_argument("--accelerator", choices=("CPU", "T4", "L4", "A100"),
@@ -283,6 +314,8 @@ def main() -> int:
     p.add_argument("--publish-provisional", action="store_true",
                    help="Post reviewed provisional evidence to existing GitHub issue, never certify")
     args = p.parse_args()
+    if args.selftest:
+        return selftest()
     if args.publish_provisional and (not args.execute or args.backend != "local_transformers"):
         p.error("only a genuinely executed two-role model review may publish provisional evidence")
     if not 60 <= args.timeout <= 3600:
