@@ -150,7 +150,7 @@ jobs:
       - name: Preflight exact protected Forge candidate and queue state
         id: prep
         env:
-          GH_TOKEN: ${ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           python ci/erdos_forge_copilot_pilot.py prepare --out forge-erdos-pilot
@@ -174,7 +174,7 @@ jobs:
       - name: Run non-authoring mathematical critique with no mutation tools
         if: steps.prep.outputs.ready == 'true'
         env:
-          GITHUB_TOKEN: ${ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           copilot --version > forge-erdos-pilot/copilot-version.txt
@@ -195,7 +195,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: erdos-forge-copilot-pilot-${ github.run_id }}-${ github.run_attempt }}
+          name: erdos-forge-copilot-pilot-${{ github.run_id }}-${{ github.run_attempt }}
           path: forge-erdos-pilot/
           retention-days: 90
           if-no-files-found: error
@@ -220,11 +220,11 @@ jobs:
           python-version: '3.12'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         with:
-          name: erdos-forge-copilot-pilot-${ github.run_id }}-${ github.run_attempt }}
+          name: erdos-forge-copilot-pilot-${{ github.run_id }}-${{ github.run_attempt }}
           path: forge-erdos-pilot
       - name: Bind and publish nonauthoritative critical evidence or recorded blocker
         env:
-          GH_TOKEN: ${ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           python ci/erdos_forge_copilot_pilot.py publish --out forge-erdos-pilot \
             | tee -a "$GITHUB_STEP_SUMMARY"
