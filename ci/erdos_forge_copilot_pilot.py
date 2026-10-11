@@ -163,7 +163,8 @@ def deterministic_witness() -> dict:
             "conclusion": "FINITE_PREDICATE_NON_EQUIVALENCE_ONLY"}
 
 
-def prepare(outdir: Path) -> dict:
+def prepare(outdir: Path, *, model_run_identity: str = "GITHUB_COPILOT_ACTIONS_NEW_SESSION",
+            independence_claim: str = "RUNTIME_SEPARATION_ONLY_NOT_MATHCERT_PROOF_INDEPENDENCE") -> dict:
     outdir.mkdir(parents=True, exist_ok=True)
     row = selected_record(json.loads(ROSTER.read_text(encoding="utf-8")))
     issue_id = row["source_critical_review_issue"]
@@ -198,8 +199,8 @@ def prepare(outdir: Path) -> dict:
             "protected_formal_source_blob": source_pointer["git_blob_sha1"],
             "protected_formal_source_sha256": digest(source),
             "cohort_id": "ERDOS-ROLLING-024-001",
-            "model_run_identity": "GITHUB_COPILOT_ACTIONS_NEW_SESSION",
-            "independence_claim": "RUNTIME_SEPARATION_ONLY_NOT_MATHCERT_PROOF_INDEPENDENCE"}
+            "model_run_identity": model_run_identity,
+            "independence_claim": independence_claim
     (outdir / "task.json").write_text(json.dumps(task, indent=2) + "\n")
     (outdir / "prompt.txt").write_text(make_prompt(task, source, original))
     (outdir / "status.json").write_text(json.dumps(meta, indent=2) + "\n")
