@@ -103,6 +103,19 @@ class EditorialActivationTests(unittest.TestCase):
             a.preflight()
         self.assertFalse(any("POST" in c.args for c in gh.call_args_list))
 
+    @patch.object(a,"gh",return_value=[])
+    @patch.object(a,"fields",return_value={})
+    @patch.object(a,"issue")
+    def test_second_pickup_mode_and_unknown_lifecycle_block_before_project(self,issue,fields,gh):
+        for hostile in ("gcl-pickup:reservation-controlled","gcl-state:unknown"):
+            row=staged(2556)
+            row["labels"].append({"name":hostile})
+            issue.return_value=row
+            with patch.object(a,"project_record") as project:
+                with self.assertRaisesRegex(ValueError,"lifecycle drift"):
+                    a.preflight()
+                project.assert_not_called()
+
     @patch.object(a,"gh")
     def test_editorial_option_identity_fails_closed(self,gh):
         gh.return_value={"fields":[{"id":a.QUEUE_FIELD_ID,"name":"Queue Class",
