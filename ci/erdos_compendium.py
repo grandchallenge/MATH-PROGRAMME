@@ -139,7 +139,7 @@ def reader_card(row: dict, curated: str | None, commit: str) -> str:
         f"- **Formal-statement coverage:** {provider}. Presence does not mean the statement or proof has been checked.",
         f"- **External mathematical status:** [consult current problem page]({source}) and its dated bibliography.",
         "",
-        f"[Back to catalogue](../catalogue/index.md) · [Compendium introduction](../../index.md)",
+        f"[Back to catalogue](../catalogue/index.md) · [Compendium introduction](../index.md)",
         "",
     ])
     return "\n".join(body)
@@ -228,7 +228,7 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
     index.extend(f"| {clean_cell(label)} | {count} |" for label, count in sorted(status_counts.items()))
     index.extend([
         "", "No status line certifies a theorem, a solved problem, or independent external work.",
-        "", "[Compendium overview](../../index.md)", "",
+        "", "[Compendium overview](../index.md)", "",
     ])
     (catalogue / "index.md").write_text("\n".join(index), encoding="utf-8")
     expected = len(rows) + len(ranges) + 1
