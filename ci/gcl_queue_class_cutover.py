@@ -27,6 +27,25 @@ AVAILABLE_VIEW_ID = "PVTV_lADOB9Ao_c4BlwurzgL64bo"
 DIRECT = "gcl-pickup:direct-editorial"
 SOURCE_ROLE = "gcl-role:source-audit"
 ERDOS = re.compile(r"^(?:\[GCL-ERDOS\]\s+)?ERDOS-CATALOGUE-\d{4}-S\d{2}\b")
+ROLLING_ROSTER = Path(__file__).resolve().parents[1] / "governance/erdos_catalogue/ROLLING_RESEARCH_024.json"
+
+def protected_rolling_critics() -> dict[int,int]:
+    """Exact protected source-semantic critic docket mapping: issue -> Erdős ID."""
+    data=json.loads(ROLLING_ROSTER.read_text(encoding="utf-8"))
+    if (data.get("record_type")!="GCL_ERDOS_ROLLING_RESEARCH_COHORT"
+        or data.get("cohort_id")!="ERDOS-ROLLING-024-001"
+        or len(data.get("items") or [])!=24):
+        raise ValueError("protected Erdős rolling-24 roster identity/size drift")
+    result={}
+    for row in data["items"]:
+        issue=row.get("source_critical_review_issue")
+        problem=row.get("problem_id")
+        if not isinstance(issue,int) or not isinstance(problem,int) or issue<=0 or problem<=0 or issue in result:
+            raise ValueError("protected source critic docket identity/uniqueness drift")
+        result[issue]=problem
+    return result
+
+
 REPOS = {
     "grandchallenge/MATHSOLVE": "reservation_controlled",
     "grandchallenge/MATH-PROGRAMME": "direct_editorial",
@@ -172,14 +191,24 @@ def classify(item: dict) -> tuple[str,str]:
         raise ValueError(f"{repo}#{number}: missing/contradictory direct pickup label")
     source=SOURCE_ROLE in names
     tagged=bool(ERDOS.match(title))
-    # The protected MP-MATH-TYPO-ED07 job is an *editorial* source-defect
-    # inventory, notwithstanding its operational source-audit role label.
-    # Pin both issue identity and exact work-package prefix; a role alone
-    # must not reclassify documentary triage as mathematical research.
-    if repo=="grandchallenge/MATH-PROGRAMME" and number==1262:
-        if not title.startswith("MP-MATH-TYPO-ED07 — ") or not source:
+    # Exact protected editorial typography inventories, despite source role.
+    editorial_source_dockets={1262:"MP-MATH-TYPO-ED07 — ",
+                              1264:"MP-MATH-TYPO-ED09 — "}
+    if repo=="grandchallenge/MATH-PROGRAMME" and number in editorial_source_dockets:
+        if not title.startswith(editorial_source_dockets[number]) or not source:
             raise ValueError(f"{repo}#{number}: editorial typography identity drift")
         return "Editorial",mode
+    # Protected ERDOS-ROLLING-024 source-semantic critics are *mathematics*
+    # even though they execute by direct issue pickup rather than Solve /claim.
+    # The issue number is bound to a problem in the protected cohort registry;
+    # both title and SOURCE role must agree with that immutable identity.
+    if repo=="grandchallenge/MATH-PROGRAMME":
+        roster=protected_rolling_critics()
+        if number in roster:
+            prefix=f"ERDOS {roster[number]} — critical source and lemma review of "
+            if not source or not title.startswith(prefix):
+                raise ValueError(f"{repo}#{number}: protected Erdős rolling critic identity drift")
+            return "Mathematics",mode
     if repo=="grandchallenge/MATH-PROGRAMME" and (source or tagged):
         if not (source and tagged):
             raise ValueError(f"{repo}#{number}: ambiguous mathematics source-audit")
