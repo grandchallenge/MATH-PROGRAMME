@@ -40,6 +40,47 @@ class Contract(unittest.TestCase):
         self.assertEqual({x["issue"] for x in corrections},{1273,2556})
         self.assertEqual({x["class"] for x in corrections},{"Editorial","Mathematics"})
 
+    def test_source_role_is_not_always_mathematics(self):
+        triage=make_item(1262,"grandchallenge/MATH-PROGRAMME",
+          "MP-MATH-TYPO-ED07 — Complete public documentation defect triage outside named guides and documentaries",
+          ["gcl-job",DIRECT,"gcl-role:source-audit"],"Mathematics")
+        self.assertEqual(classify(triage),("Editorial","direct_editorial"))
+        corrections,summary=prepare(project(),[triage])
+        self.assertEqual(summary["classes_expected"],{"Editorial":1})
+        self.assertEqual(corrections[0]["class"],"Editorial")
+        # The exception is a single exact registered identity, not a broad
+        # license to reclassify all source-audit work by role alone.
+        forged=make_item(1262,"grandchallenge/MATH-PROGRAMME",
+          "MP-MATH-TYPO-ED08 — Another source task",
+          ["gcl-job",DIRECT,"gcl-role:source-audit"],"Editorial")
+        with self.assertRaisesRegex(ValueError,"typography identity drift"):
+            classify(forged)
+
+    def test_all_ambiguous_items_are_reported_before_any_write(self):
+        items=[
+            make_item(1262,"grandchallenge/MATH-PROGRAMME",
+              "MP-MATH-TYPO-ED07 — source defect triage",
+              ["gcl-job",DIRECT,"gcl-role:source-audit"],"Mathematics"),
+            make_item(9001,"grandchallenge/MATH-PROGRAMME",
+              "Unknown source study",["gcl-job",DIRECT,"gcl-role:source-audit"],"Editorial"),
+            make_item(9002,"grandchallenge/MATH-PROGRAMME",
+              "Another unknown source",["gcl-job",DIRECT,"gcl-role:source-audit"],"Editorial"),
+        ]
+        with self.assertRaisesRegex(ValueError,"2 Project item.*ambiguous class") as exc:
+            prepare(project(),items)
+        self.assertIn("#9001",str(exc.exception))
+        self.assertIn("#9002",str(exc.exception))
+
+    def test_blocker_text_is_published_without_success(self):
+        receipt={"record_type":"GCL_QUEUE_CLASS_CUTOVER_RECEIPT",
+                 "applied":False,"dry_run":False,
+                 "blocker":"2 Project item(s) have ambiguous class: #9001 | #9002"}
+        body=receipt_message(receipt,run_url="https://github.com/actions/runs/1",
+                             protected_sha="f"*40)
+        self.assertIn("BLOCKED / UNVERIFIED",body)
+        self.assertIn("#9001",body)
+        self.assertNotIn("**Project classification:** VERIFIED",body)
+
     def test_mathsolve_pickup_unchanged(self):
         proof=make_item(999,"grandchallenge/MATHSOLVE","Proof",
                         ["gcl-job","gcl-state:available"],"Mathematics")
