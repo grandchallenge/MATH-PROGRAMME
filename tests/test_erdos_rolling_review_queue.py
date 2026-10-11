@@ -3,8 +3,13 @@ import copy
 import json
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from ci.erdos_rolling_review_queue import candidates, LABELS, FIELD_EXPECTED, TEXT_FIELDS
+from ci.erdos_rolling_review_queue import (
+    candidates, LABELS, FIELD_EXPECTED, TEXT_FIELDS,
+    review_already_recorded, project_fields, ISSUE_FIELD_IDS,
+    PROJECT_STATUS_FIELD_ID, PROJECT_TODO_OPTION_ID
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -47,6 +52,42 @@ class ReviewQueueContract(unittest.TestCase):
         second["source_critical_review_issue"] = first["source_critical_review_issue"]
         with self.assertRaises(ValueError):
             candidates(changed)
+
+    def test_recorded_revise_is_not_reoffered(self):
+        review = {"body": "GCL-CRITICAL-REVIEW/1\nDATE: 2026-10-10\nDISPOSITION: REVISE\n"}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=[review]):
+            self.assertEqual(review_already_recorded(2506), "REVISE")
+
+    def test_recorded_blocked_is_not_reoffered(self):
+        review = {"body": "GCL-CRITICAL-REVIEW/1\nDISPOSITION: BLOCKED\n"}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=[review]):
+            self.assertEqual(review_already_recorded(2520), "BLOCKED")
+
+    def test_ambiguous_reviewer_dispositions_fail_closed(self):
+        return_body = "GCL-CRITICAL-REVIEW/1\nDISPOSITION: REVISE\n"
+        with patch("ci.erdos_rolling_review_queue.gh",
+                   return_value=[{"body": return_body}, {"body": return_body}]):
+            with self.assertRaises(ValueError):
+                review_already_recorded(2506)
+
+    def test_project_status_not_org_issue_fields(self):
+        fields = {"fields": [
+            {"name": "Status", "id": PROJECT_STATUS_FIELD_ID,
+             "options": [{"name": "Todo", "id": PROJECT_TODO_OPTION_ID}]}
+        ]}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=fields):
+            self.assertEqual(project_fields()["Status"]["id"], PROJECT_STATUS_FIELD_ID)
+        self.assertEqual(ISSUE_FIELD_IDS["GCL State"], 47953501)
+        self.assertEqual(ISSUE_FIELD_IDS["GCL Cohort"], 47953514)
+
+    def test_project_field_mismatch_blocks(self):
+        fields = {"fields": [
+            {"name": "Status", "id": "wrong",
+             "options": [{"name": "Todo", "id": PROJECT_TODO_OPTION_ID}]}
+        ]}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=fields):
+            with self.assertRaises(ValueError):
+                project_fields()
 
     def test_deploy_only_existing_direct_editorial_labels(self):
         self.assertTrue({"gcl-job", "gcl-pickup:direct-editorial", "gcl-state:available"} <= LABELS)
