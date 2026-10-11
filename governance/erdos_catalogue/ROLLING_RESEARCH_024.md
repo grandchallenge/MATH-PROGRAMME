@@ -8,8 +8,8 @@ Exactly the 8 existing first-reconnaissance problems and 16 protected-source ope
 
 ## Current workload
 
-- 14 issues carry prior bounded-design RESULT/1 comments; these are **worker evidence, unadjudicated**. All fourteen now have issue-bound critical source-review dockets; the last four were created as #2520–#2523.
-- 10 issues still await their direct-editorial initial source/work-design return; they remain AVAILABLE on their original issues. Never duplicate a RESULT/1.
+- 15 issues carry prior bounded-design RESULT/1 comments; these are **worker evidence, unadjudicated**. All fifteen have issue-bound critical source-review dockets; Erdős #18 was returned on #1287 and receives source-critical review at #2525.
+- 9 issues still await their direct-editorial initial source/work-design return; they remain AVAILABLE on their original issues. Never duplicate a RESULT/1.
 - No claimable new MATHSOLVE job is created by this selection. Prior Solve successor branches/cohorts (including 241, 470 and 593) remain separately authoritative.
 
 ## Initial roster
@@ -31,7 +31,7 @@ Exactly the 8 existing first-reconnaissance problems and 16 protected-source ope
 | 14 | [#1283](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1283) | Design returned; source review required | ERDOS-014-UNIQUE-SUM-SEMANTICS-CERT-001 | [#2522](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2522) |
 | 15 | [#1284](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1284) | Design returned; source review required | ERDOS-015-REAL-ORDERED-PAIR-SEMANTICS-001 | [#2523](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2523) |
 | 17 | [#1286](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1286) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 18 | [#1287](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1287) | Source design pending | Extract bounded exact target from source audit | After source return |
+| 18 | [#1287](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1287) | Design returned; source review required | ERDOS-018-BINARY-DIVISOR-SEMANTIC-LEAN-001 | [#2525](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2525) |
 | 25 | [#1294](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1294) | Source design pending | Extract bounded exact target from source audit | After source return |
 | 30 | [#1299](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1299) | Source design pending | Extract bounded exact target from source audit | After source return |
 | 32 | [#1301](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1301) | Source design pending | Extract bounded exact target from source audit | After source return |
