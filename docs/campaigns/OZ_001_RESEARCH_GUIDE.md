@@ -34,6 +34,7 @@ Finite agreement, recurrence residuals, source admission, and local symbolic che
 ## Core bridge and first examples by hand
 
 For illustration—not as the campaign's unresolved Brown–Zudilin certificate—define the integer Apéry-style sum
+
 $$
 A_n=\sum_{k=0}^n\binom nk^2\binom{n+k}k^2.
 $$
