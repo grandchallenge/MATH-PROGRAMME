@@ -7,15 +7,11 @@
 
 ## 1. Status
 
-The three-dimensional Navier–Stokes critical-integrability target remains open. The protected interface and conditional-regularity structure are qualified, but the universal estimate
-`u in L^4_t L^6_x`
-for the full rapidly decreasing data class is unproved.
+The three-dimensional Navier–Stokes critical-integrability target remains open. The protected interface and conditional-regularity structure are qualified, but the universal estimate $u\in L_t^4 L_x^6$ for the full rapidly decreasing data class is unproved.
 
 ## 2. Plain object
 
-The campaign asks whether every relevant Leray–Hopf solution satisfies
-`∫_0^T ||u(t)||_6^4 dt < ∞`
-for every finite `T`. This is the scale-critical Ladyzhenskaya–Prodi–Serrin pair `(4,6)`.
+The campaign asks whether every relevant Leray–Hopf solution satisfies $\int_0^T \left\|u(t)\right\|_6^4\,dt < \infty$ for every finite $T$. This is the scale-critical Ladyzhenskaya–Prodi–Serrin pair $(4,6)$.
 
 ## Reader entry and prerequisites
 
@@ -23,13 +19,13 @@ for every finite `T`. This is the scale-critical Ladyzhenskaya–Prodi–Serrin 
 
 | Level | Concepts |
 | --- | --- |
-| Required | Improper integrals, \(L^p\) spaces, elementary Hölder inequality |
+| Required | Improper integrals, $L^p$ spaces, elementary Hölder inequality |
 | Helpful | Weak solutions, Sobolev embedding, Navier–Stokes scaling |
 | Deferred | Leray–Hopf theory, critical regularity criteria, nonlinear commutators |
 
 ## 3. Exact obstruction
 
-Energy-class control yields `L^2_t L^6_x`, not the required `L^4_t L^6_x`. The missing gain cannot come from finite-interval inclusion. A successful route needs a genuinely equation-specific cancellation, commutator, depletion, decorrelation, or comparable mechanism.
+Energy-class control yields $L_t^2 L_x^6$, not the required $L_t^4 L_x^6$. The missing gain cannot come from finite-interval inclusion. A successful route needs a genuinely equation-specific cancellation, commutator, depletion, decorrelation, or comparable mechanism.
 
 ## 4. Working model
 
@@ -37,13 +33,13 @@ The prior L4 excursion-persistence route is terminated absent such a mechanism. 
 
 ## Core bridge and first examples by hand
 
-Energy control yields a time \(L^2\) condition where the target asks for \(L^4\). These exponents cannot be reversed.
+Energy control yields a time $L^2$ condition where the target asks for $L^4$. These exponents cannot be reversed.
 
-**Friendly example:** for \(f(t)=1\) on \((0,1)\), both \(\int_0^1|f|^2dt\) and \(\int_0^1|f|^4dt\) equal 1.
+**Friendly example:** for $f(t)=1$ on $(0,1)$, both $\int_0^1|f|^2dt$ and $\int_0^1|f|^4dt$ equal 1.
 
-**Edge example:** \(f(t)=t^{-1/3}\) has \(\int_0^1|f|^2dt=3\), but \(\int_0^1|f|^4dt=\infty\), because the integrand is \(t^{-4/3}\). This is a **scalar counterexample to a functional-analytic inference**, not a Navier–Stokes solution or blow-up example.
+**Edge example:** $f(t)=t^{-1/3}$ has $\int_0^1|f|^2dt=3$, but $\int_0^1|f|^4dt=\infty$, because the integrand is $t^{-4/3}$. This is a **scalar counterexample to a functional-analytic inference**, not a Navier–Stokes solution or blow-up example.
 
-Bridge: time-integrability condition → stronger exponent → failure of \(L^2\)-to-\(L^4\) implication → search for PDE-specific gain.
+Bridge: time-integrability condition → stronger exponent → failure of the $L^2$ to $L^4$ implication → search for PDE-specific gain.
 
 ## First computation or fixture
 
@@ -60,11 +56,11 @@ for q in (2, 4):
 # 4 4/3 divergent
 ```
 
-Input \(\alpha=1/3\); operation checks the elementary criterion \(\int_0^1t^{-\beta}dt<\infty\iff\beta<1\). **Support route:** exact arithmetic fixture. **Limitation:** it is not PDE evidence.
+Input $\alpha=1/3$; operation checks the elementary criterion $\int_0^1t^{-\beta}dt<\infty\iff\beta<1$. **Support route:** exact arithmetic fixture. **Limitation:** it is not PDE evidence.
 
 ## First theorem or local proposition
 
-**Finite-interval embedding.** For finite \(T\), \(\|f\|_{L^2(0,T)}\le T^{1/4}\|f\|_{L^4(0,T)}\). Hölder applied to \(\int |f|^2\cdot1\) proves this. The reverse inference is not valid, as the edge example shows.
+**Finite-interval embedding.** For finite $T$, $\|f\|_{L^2(0,T)}\le T^{1/4}\|f\|_{L^4(0,T)}$. Hölder applied to $\int |f|^2\cdot1$ proves this. The reverse inference is not valid, as the edge example shows.
 
 ## 5. Theorem-spine location
 
@@ -82,10 +78,10 @@ No regularity theorem, universal critical-integrability theorem, undecidability 
 
 | Stage | Duty | Completion test |
 | --- | --- | --- |
-| Exercise | Integrate \(t^{-2/3}\) by hand | Obtain 3 |
-| Exploration | Find exponents \(\alpha\) with \(2\alpha<1\le4\alpha\) | Give interval \([1/4,1/2)\) |
-| Fixture | Replay exponent checker | Exact \(2/3\) and \(4/3\) |
-| Lemma candidate | Prove \(L^4\hookrightarrow L^2\) on \((0,T)\) | State dependence on \(T\) |
+| Exercise | Integrate $t^{-2/3}$ by hand | Obtain 3 |
+| Exploration | Find exponents $\alpha$ with $2\alpha<1\le4\alpha$ | Give interval $[1/4,1/2)$ |
+| Fixture | Replay exponent checker | Exact $2/3$ and $4/3$ |
+| Lemma candidate | Prove $L^4\hookrightarrow L^2$ on $(0,T)$ | State dependence on $T$ |
 | Open direction | Specify an equation-specific signed gain | Name actual PDE term and admissible bound |
 
 ## Certification path and continuation graph

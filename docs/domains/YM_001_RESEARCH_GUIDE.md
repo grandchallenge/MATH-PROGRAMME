@@ -33,9 +33,9 @@ Programme state is routed through the exact theorem/dependency obligations rathe
 
 ## Core bridge and first examples by hand
 
-**Friendly example:** the finite Hermitian matrix \(H=\operatorname{diag}(0,2)\) has vacuum energy 0 and first excited energy 2. Its finite spectral gap is exactly 2.
+**Friendly example:** the finite Hermitian matrix $H=\mathrm{diag}(0,2)$ has vacuum energy 0 and first excited energy 2. Its finite spectral gap is exactly 2.
 
-**Obstruction example:** the sequence \(H_n=\operatorname{diag}(0,1/n)\) has a positive gap for each finite \(n\), but the gaps tend to zero. Thus showing positivity **at every regulator** does not establish a strictly positive limiting physical gap. Neither matrix is a model of the actual four-dimensional Yang–Mills theory.
+**Obstruction example:** the sequence $H_n=\mathrm{diag}(0,1/n)$ has a positive gap for each finite $n$, but the gaps tend to zero. Thus showing positivity **at every regulator** does not establish a strictly positive limiting physical gap. Neither matrix is a model of the actual four-dimensional Yang–Mills theory.
 
 Bridge: finite spectrum → regulator-dependent gap → absence of uniform lower bound → continuum/OS reconstruction and positive physical gap as separate theorem obligations.
 
@@ -51,11 +51,11 @@ for n in (1, 2, 5, 10):
 # Expected: (1,1), (2,1/2), (5,1/5), (10,1/10), printed as separate rows
 ```
 
-Input \(n\); operation reads the nonzero eigenvalue of a two-dimensional diagonal matrix; output is exact rational arithmetic. **Support route:** elementary regression fixture. **Limitation:** no continuum, interacting QFT or Yang–Mills evidence.
+Input $n$; operation reads the nonzero eigenvalue of a two-dimensional diagonal matrix; output is exact rational arithmetic. **Support route:** elementary regression fixture. **Limitation:** no continuum, interacting QFT or Yang–Mills evidence.
 
 ## First theorem or local proposition
 
-**Vanishing-gap lemma.** For \(H_n=\operatorname{diag}(0,1/n)\), every finite \(H_n\) has positive spectral gap but \(\inf_n\operatorname{gap}(H_n)=0\). Proof: for any \(\varepsilon>0\), choose an integer \(n>1/\varepsilon\). This demonstrates why a regulator-independent bound is a separate analytic requirement; it cannot substitute for the full theory existence axioms.
+**Vanishing-gap lemma.** For $H_n=\mathrm{diag}(0,1/n)$, every finite $H_n$ has positive spectral gap but $\inf_n\mathrm{gap}(H_n)=0$. Proof: for any $\varepsilon>0$, choose an integer $n>1/\varepsilon$. This demonstrates why a regulator-independent bound is a separate analytic requirement; it cannot substitute for the full theory existence axioms.
 
 ## 5. Restricted claim
 
@@ -83,10 +83,10 @@ Issue closure, source discovery, replay, numerical evidence, or this guide canno
 
 | Stage | Duty | Completion test |
 | --- | --- | --- |
-| Exercise | Find the eigenvalues of \(H=\operatorname{diag}(0,2)\) | 0 and 2 |
-| Exploration | Derive the finite \(H_n\) gaps | \(1/n\) |
+| Exercise | Find the eigenvalues of $H=\mathrm{diag}(0,2)$ | 0 and 2 |
+| Exploration | Derive the finite $H_n$ gaps | $1/n$ |
 | Fixture | Execute rational checker | Match all four values |
-| Lemma candidate | Prove vanishing-gap lemma | Quantified \(\varepsilon\) argument |
+| Lemma candidate | Prove vanishing-gap lemma | Quantified $\varepsilon$ argument |
 | Open direction | Trace one D003 theorem-grade convergence dependency | Name topology/domain/uniformity needed by actual downstream statement |
 
 ## Certification path and continuation graph
