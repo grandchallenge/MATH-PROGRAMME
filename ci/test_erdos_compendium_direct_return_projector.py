@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Independent positive/hostile tests for bounded Compendium direct returns."""
 import unittest
-from ci import erdos_compendium_direct_return_projector as m
+import erdos_compendium_direct_return_projector as m
 
 SHA="a"*40
 
