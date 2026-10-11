@@ -396,7 +396,7 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
         "ci/erdos_forge_copilot_pilot.py prepare",
         "steps.prep.outputs.ready",
         "npm install -g @github/copilot@1.0.66",
-        "--max-ai-credits=30",
+        "--model=gpt-5.4 --max-ai-credits=30 --no-auto-update",
         "--available-tools=read",
         "--deny-tool=shell",
         "--deny-tool=write",
