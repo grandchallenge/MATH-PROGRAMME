@@ -7,6 +7,9 @@ on:
       - 'ci/erdos_catalogue_programme_intake.py'
       - 'ci/erdos_rolling_review_queue.py'
       - 'ci/erdos_forge_copilot_pilot.py'
+      - 'ci/erdos_colab_host_runner.py'
+      - 'colab/erdos_024_remote_review.py'
+      - 'tests/test_erdos_colab_review.py'
       - 'tests/test_erdos_forge_copilot_pilot.py'
       - 'tests/test_erdos_rolling_review_queue.py'
       - 'tests/test_administrative_erdos_catalogue_intake.py'
@@ -42,7 +45,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install --requirement requirements/policy.txt
-      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot
+      - name: Governed Colab host entrypoint contract (no OAuth, no GPU, no cost)
+        run: PYTHONPATH=. python ci/erdos_colab_host_runner.py --selftest
+      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review
       - run: python ci/erdos_catalogue_programme_intake.py --events governance/erdos_catalogue/EMPTY_EVENTS.json --output catalogue-validation
 
   capture:
