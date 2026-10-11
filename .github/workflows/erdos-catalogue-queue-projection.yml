@@ -77,9 +77,9 @@ jobs:
           test -n "$GH_TOKEN"
           mkdir -p "$GITHUB_WORKSPACE/typography-ed08"
           cd solve
-          python ci/test_gcl_queue_class_contract.py
-          python ci/test_reconcile_math_typography_editorial_queue.py
-          python ci/reconcile_math_typography_editorial_queue.py --apply \
+          python "$PWD/ci/test_gcl_queue_class_contract.py"
+          python "$PWD/ci/test_reconcile_math_typography_editorial_queue.py"
+          python "$PWD/ci/reconcile_math_typography_editorial_queue.py" --apply \
             | tee "$GITHUB_WORKSPACE/typography-ed08/controller.log"
           python - <<'PY'
           import json
@@ -118,8 +118,8 @@ jobs:
                 "Seven editor assignments ED01–ED07: RETURNED (not visually certified).\n"+
                 "ED08 #1263: AVAILABLE, role VERIFY, Queue Class Editorial.\n"+
                 "ED09 #1264: BLOCKED.\n"+
-                f"Controller protected MATHSOLVE commit: \`{d['protected_controller']}\`\n"+
-                f"Project ID: \`{d['project']}\`\n"+
+                f"Controller protected MATHSOLVE commit: `{d['protected_controller']}`\n"+
+                f"Project ID: `{d['project']}`\n"+
                 f"Workflow evidence: {run}\n\n"+
                 "Actual browser rendering remains to be independently checked by ED08.\n")
           Path("typography-ed08/comment.md").write_text(body,encoding="utf-8")
