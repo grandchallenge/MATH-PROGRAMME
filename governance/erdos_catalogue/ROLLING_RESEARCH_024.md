@@ -8,8 +8,8 @@ Exactly the 8 existing first-reconnaissance problems and 16 protected-source ope
 
 ## Current workload
 
-- 16 issues carry prior bounded-design RESULT/1 comments; these are **worker evidence, unadjudicated**. All sixteen have issue-bound critical source-review dockets; new Erdős #18/#25 source returns are bound to critical reviews #2525/#2527.
-- 8 issues still await their direct-editorial initial source/work-design return; they remain AVAILABLE on their original issues. Never duplicate a RESULT/1.
+- All 24 original catalogue issues now have a bounded-design RESULT/1 comment; these are **worker evidence, unadjudicated**. All 24 have issue-bound critical source-review dockets. All remain subject to actual independent source/semantic adjudication.
+- 0 original source-design issues await initial return; they remain AVAILABLE on their original issues. Never duplicate a RESULT/1.
 - No claimable new MATHSOLVE job is created by this selection. Prior Solve successor branches/cohorts (including 241, 470 and 593) remain separately authoritative.
 
 ## Initial roster
@@ -30,16 +30,16 @@ Exactly the 8 existing first-reconnaissance problems and 16 protected-source ope
 | 12 | [#1281](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1281) | Design returned; source review required | ERDOS-012-ISGOOD-SEMANTICS-DYADIC-001 | [#2521](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2521) |
 | 14 | [#1283](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1283) | Design returned; source review required | ERDOS-014-UNIQUE-SUM-SEMANTICS-CERT-001 | [#2522](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2522) |
 | 15 | [#1284](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1284) | Design returned; source review required | ERDOS-015-REAL-ORDERED-PAIR-SEMANTICS-001 | [#2523](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2523) |
-| 17 | [#1286](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1286) | Source design pending | Extract bounded exact target from source audit | After source return |
+| 17 | [#1286](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1286) | Design returned; source review required | ERDOS-017-CLUSTER-PRIME-DIFFERENCE-CERT-001 | [#2529](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2529) |
 | 18 | [#1287](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1287) | Design returned; source review required | ERDOS-018-BINARY-DIVISOR-SEMANTIC-LEAN-001 | [#2525](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2525) |
 | 25 | [#1294](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1294) | Design returned; source review required | ERDOS-025-SIZE-TRUNCATION-LOG-DENSITY-001 | [#2527](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2527) |
-| 30 | [#1299](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1299) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 32 | [#1301](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1301) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 33 | [#1302](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1302) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 36 | [#1305](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1305) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 39 | [#1308](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1308) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 40 | [#1309](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1309) | Source design pending | Extract bounded exact target from source audit | After source return |
-| 41 | [#1310](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1310) | Source design pending | Extract bounded exact target from source audit | After source return |
+| 30 | [#1299](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1299) | Design returned; source review required | ERDOS-030-SIDON-PAIR-SUM-SEMANTIC-CERT-001 | [#2530](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2530) |
+| 32 | [#1301](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1301) | Design returned; source review required | ERDOS-032-CRT-FINITE-COMPLEMENT-OBSTRUCTION-001 | [#2531](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2531) |
+| 33 | [#1302](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1302) | Design returned; source review required | ERDOS-033-EVENTUAL-TO-TOTAL-SQUARE-BASIS-001 | [#2532](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2532) |
+| 36 | [#1305](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1305) | Design returned; source review required | ERDOS-036-OVERLAP-COUNTING-FIDELITY-001 | [#2533](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2533) |
+| 39 | [#1308](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1308) | Design returned; source review required | ERDOS-039-SIDON-POSITIVE-DIFFERENCE-SEMANTICS-001 | [#2534](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2534) |
+| 40 | [#1309](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1309) | Design returned; source review required | ERDOS-040-REPRESENTATION-MASS-BOUNDARY-001 | [#2535](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2535) |
+| 41 | [#1310](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1310) | Design returned; source review required | ERDOS-041-FINSET-VERSUS-MULTISET-REGRESSION-001 | [#2536](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2536) |
 
 ## Promotion and replenishment
 
