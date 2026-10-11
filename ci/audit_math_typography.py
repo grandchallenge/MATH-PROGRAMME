@@ -146,7 +146,8 @@ def github_render_probe(root: Path):
     """
     records = []
     for rel in ("docs/CMDG_CM4_MATHEMATICAL_NOTE.md",
-                "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md"):
+                "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md",
+                "docs/PRIME_INFORMATION_GEOMETRY.md"):
         source = (root / rel).read_text(encoding="utf-8")
         payload = json.dumps({"text": source, "mode": "gfm",
                               "context": "grandchallenge/MATH-PROGRAMME"}).encode("utf-8")
@@ -200,7 +201,7 @@ def main():
     ap.add_argument("--github-live", action="store_true",
                     help="Use GitHub Markdown API for two flagship notes")
     ap.add_argument("--gate", action="store_true",
-                    help="Fail on mathematical typography defects in the two CM4 flagship pages")
+                    help="Fail on mathematical typography defects in flagged public mathematical pages")
     args = ap.parse_args()
     root = args.root.resolve()
     report = audit(root, args.site_dir, github_live=args.github_live)
@@ -218,7 +219,8 @@ def main():
         print(f"MkDocs rendered math pages checked: {report['rendered_math_pages_checked']}")
     if args.gate:
         targets = {"docs/CMDG_CM4_MATHEMATICAL_NOTE.md",
-                   "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md"}
+                   "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md",
+                   "docs/PRIME_INFORMATION_GEOMETRY.md"}
         errors = [f for f in report["findings"] + report.get("rendered_findings", [])
                   if f["path"] in targets and f.get("context", "markdown") == "markdown"]
         if errors:
