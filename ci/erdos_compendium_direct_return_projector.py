@@ -47,7 +47,7 @@ def parse_result(body: str) -> dict | None:
     for line in body.splitlines()[1:]:
         # Source text and explanatory blocks are permitted; required fields
         # must be unambiguous single-line uppercase header entries.
-        m=re.match(r"^([A-Z_]+):[ \t]*(.*)$",line)
+        m=re.match(r"^([A-Z0-9_]+):[ \t]*(.*)$",line)
         if m and m.group(1) in RETURN_FIELDS | {"GITHUB_ACTOR"}:
             if m.group(1) in values:
                 return None
