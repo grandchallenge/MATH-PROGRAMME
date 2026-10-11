@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -17,7 +18,6 @@ ROSTER = ROOT / "governance/erdos_catalogue/ROLLING_RESEARCH_024.json"
 OWNER, REPO, PROJECT = "grandchallenge", "MATH-PROGRAMME", 2
 PROJECT_ID = "PVT_kwDOB9Ao_c4Blwur"
 PROJECT_STATUS_FIELD_ID = "PVTSSF_lADOB9Ao_c4BlwurzhkcRPQ"
-PROJECT_TODO_OPTION_ID = "f75ad846"
 ISSUE_FIELD_IDS = {"GCL State":47953501, "GCL Campaign":47953502,
                    "GCL Role":47953503, "GCL Collaboration":47953504,
                    "GCL Phase":47953505, "GCL Cohort":47953514, "GCL Timebox":47953515}
@@ -120,16 +120,14 @@ def project_fields() -> dict:
     status = by_name.get("Status")
     if not status or status.get("id") != PROJECT_STATUS_FIELD_ID:
         raise ValueError("protected Project #2 Status field identity mismatch")
-    # GitHub CLI may omit options from project field-list even for a valid
-    # single-select field. The option ID is pinned in the protected binding.
-    # When options are returned they MUST agree; always verify the written
-    # Project item option after mutation, not merely field-list metadata.
+    # The live project Status option ID may be updated by GitHub owners.
+    # Bind exact named option at the current verified Project field identity,
+    # then re-fetch and match *that same ID* after the write. Reject unknowns.
     raw_options = status.get("options") or []
-    if raw_options:
-        matches = [op for op in raw_options
-                   if op.get("name") == "Todo" and op.get("id") == PROJECT_TODO_OPTION_ID]
-        if len(matches) != 1:
-            raise ValueError("Project Todo option conflicts with protected binding")
+    matches = [op for op in raw_options if op.get("name") == "Todo"]
+    if len(matches) != 1 or not re.fullmatch(r"[0-9a-f]{8}", str(matches[0].get("id", ""))):
+        raise ValueError("no unique well-formed Todo option from live protected Project field")
+    status["validated_todo_option_id"] = matches[0]["id"]
     return by_name
 
 
@@ -181,7 +179,7 @@ query($id:ID!){
   }
  }
 }"""
-    response = gh("graphql", "-f", f"query={query}", "-F", f"id={item_id}")
+    response = gh("api", "graphql", "-f", f"query={query}", "-F", f"id={item_id}")
     value = ((response.get("data") or {}).get("node") or {}).get("fieldValueByName") or {}
     if not value.get("name") or not value.get("optionId"):
         raise ValueError("Project Status readback is missing/ambiguous")
@@ -221,11 +219,12 @@ def apply_one(task: dict, fields: dict, dry_run: bool) -> dict:
     if missing:
         raise RuntimeError(f"Issue Field readback failed #{ident}: {missing}")
     status_field = fields["Status"]
+    live_todo_id = status_field["validated_todo_option_id"]
     gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
               "--field-id", status_field["id"],
-              "--single-select-option-id", PROJECT_TODO_OPTION_ID)
+              "--single-select-option-id", live_todo_id)
     actual_status = project_status(item)
-    if actual_status != {"name": "Todo", "optionId": PROJECT_TODO_OPTION_ID}:
+    if actual_status != {"name": "Todo", "optionId": live_todo_id}:
         raise RuntimeError(f"Project Status write/readback drift #{ident}: {actual_status}")
     if review_already_recorded(ident) is not None:
         return {"issue": ident, "state": "REVIEW_RETURNED_DURING_PROJECT_UPDATE"}
