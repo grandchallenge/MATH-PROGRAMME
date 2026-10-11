@@ -60,12 +60,6 @@ jobs:
           repositories: MATH-PROGRAMME
           permission-issues: write
           permission-organization-projects: write
-      - name: Reconcile Project state and labels from verified receipts
-        env:
-          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
-        run: |
-          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
-          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
       - name: Verify full Project Queue Class contract and protected semantic readback
         env:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
@@ -89,6 +83,12 @@ jobs:
         run: |
           python ci/gcl_queue_class_cutover.py --publish-issue 2563 --receipt queue-cutover/receipt.json
 
+      - name: Reconcile Project state and labels from verified receipts
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
+          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
       - name: Checkout protected MATHSOLVE controller
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
