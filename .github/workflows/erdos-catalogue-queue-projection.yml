@@ -60,6 +60,73 @@ jobs:
           repositories: MATH-PROGRAMME
           permission-issues: write
           permission-organization-projects: write
+      - name: Checkout protected MATHSOLVE controller
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATHSOLVE
+          ref: main
+          path: solve
+          persist-credentials: false
+      - name: Validate bounded controller and apply authorized queue transition
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          mkdir -p "$GITHUB_WORKSPACE/typography-ed08"
+          cd solve
+          python ci/test_gcl_queue_class_contract.py
+          python ci/test_reconcile_math_typography_editorial_queue.py
+          python ci/reconcile_math_typography_editorial_queue.py --apply \
+            | tee "$GITHUB_WORKSPACE/typography-ed08/controller.log"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path("../typography-ed08")
+          lines=(out/"controller.log").read_text().strip().splitlines()
+          assert lines, "controller emitted no receipt"
+          receipt=json.loads(lines[-1])
+          assert receipt.get("receipt")=="TYPO-ED08-ACTIVATION-READBACK/1"
+          assert receipt.get("complete") is True
+          assert receipt.get("available")==1263 and receipt.get("still_blocked")==1264
+          assert receipt.get("returned")==list(range(1256,1263))
+          (out/"receipt.json").write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+          PY
+      - name: Preserve verifiable controller result or failure log
+        if: always() && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08')))
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: typography-ed08-project-readback-${{ github.run_id }}-${{ github.run_attempt }}
+          path: typography-ed08/
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Record exact ED08 activation receipt on campaign issue
+        if: success() && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08')))
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path("typography-ed08/receipt.json").read_text())
+          run=f"https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{os.environ['GITHUB_RUN_ID']}"
+          body=("TYPO-ED08-ACTIVATION-READBACK/1\n\n"+
+                "Actual Project #2 readback, performed by the existing Council Clerk release-trust workflow.\n"+
+                "Seven editor assignments ED01–ED07: RETURNED (not visually certified).\n"+
+                "ED08 #1263: AVAILABLE, role VERIFY, Queue Class Editorial.\n"+
+                "ED09 #1264: BLOCKED.\n"+
+                f"Controller protected MATHSOLVE commit: \`{d['protected_controller']}\`\n"+
+                f"Project ID: \`{d['project']}\`\n"+
+                f"Workflow evidence: {run}\n\n"+
+                "Actual browser rendering remains to be independently checked by ED08.\n")
+          Path("typography-ed08/comment.md").write_text(body,encoding="utf-8")
+          PY
+          gh issue comment 1255 --repo grandchallenge/MATH-PROGRAMME \
+            --body-file typography-ed08/comment.md
+
       - name: Reconcile Project state and labels from verified receipts
         env:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
@@ -95,93 +162,6 @@ jobs:
         run: |
           test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
           python ci/erdos_rolling_review_queue.py --apply
-
-  typography-ed08:
-    name: Protected ED08 typography queue reconciliation
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-24.04
-    environment: release-trust
-    timeout-minutes: 20
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout protected MATHSOLVE controller
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          repository: grandchallenge/MATHSOLVE
-          ref: main
-          path: solve
-          persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: '3.12'
-      - name: Mint existing scoped Council Clerk queue token
-        id: typography-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
-        with:
-          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
-          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
-          owner: grandchallenge
-          repositories: MATH-PROGRAMME
-          permission-issues: write
-          permission-organization-projects: write
-      - name: Validate bounded controller and apply authorized queue transition
-        env:
-          GH_TOKEN: ${{ steps.typography-token.outputs.token }}
-        run: |
-          set -euo pipefail
-          test -n "$GH_TOKEN"
-          mkdir -p "$GITHUB_WORKSPACE/typography-ed08"
-          cd solve
-          python ci/test_gcl_queue_class_contract.py
-          python ci/test_reconcile_math_typography_editorial_queue.py
-          python ci/reconcile_math_typography_editorial_queue.py --apply \
-            | tee "$GITHUB_WORKSPACE/typography-ed08/controller.log"
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          out=Path("../typography-ed08")
-          lines=(out/"controller.log").read_text().strip().splitlines()
-          assert lines, "controller emitted no receipt"
-          receipt=json.loads(lines[-1])
-          assert receipt.get("receipt")=="TYPO-ED08-ACTIVATION-READBACK/1"
-          assert receipt.get("complete") is True
-          assert receipt.get("available")==1263 and receipt.get("still_blocked")==1264
-          assert receipt.get("returned")==list(range(1256,1263))
-          (out/"receipt.json").write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
-          PY
-      - name: Preserve verifiable controller result or failure log
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: typography-ed08-project-readback-${{ github.run_id }}-${{ github.run_attempt }}
-          path: typography-ed08/
-          retention-days: 90
-          if-no-files-found: warn
-      - name: Record exact ED08 activation receipt on campaign issue
-        if: success()
-        env:
-          GH_TOKEN: ${{ steps.typography-token.outputs.token }}
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          d=json.loads(Path("typography-ed08/receipt.json").read_text())
-          run=f"https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{os.environ['GITHUB_RUN_ID']}"
-          body=("TYPO-ED08-ACTIVATION-READBACK/1\n\n"+
-                "Actual Project #2 readback, performed by the existing Council Clerk release-trust workflow.\n"+
-                "Seven editor assignments ED01–ED07: RETURNED (not visually certified).\n"+
-                "ED08 #1263: AVAILABLE, role VERIFY, Queue Class Editorial.\n"+
-                "ED09 #1264: BLOCKED.\n"+
-                f"Controller protected MATHSOLVE commit: \`{d['protected_controller']}\`\n"+
-                f"Project ID: \`{d['project']}\`\n"+
-                f"Workflow evidence: {run}\n\n"+
-                "Actual browser rendering remains to be independently checked by ED08.\n")
-          Path("typography-ed08/comment.md").write_text(body,encoding="utf-8")
-          PY
-          gh issue comment 1255 --repo grandchallenge/MATH-PROGRAMME \
-            --body-file typography-ed08/comment.md
 
   ledger:
     if: >-
