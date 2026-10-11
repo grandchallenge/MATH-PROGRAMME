@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "governance/erdos_catalogue/REGISTRY.json"
 EDITORIAL = ROOT / "governance/erdos_compendium/editorial"
-GENERATED = ROOT / "docs/erdos/generated"
+GENERATED = ROOT / "docs/erdos"
 EXPECTED_COUNT = 1221
 REQUIRED_EDITORIAL_HEADINGS = (
     "## The question in plain language",
@@ -148,10 +148,11 @@ def reader_card(row: dict, curated: str | None, commit: str) -> str:
 def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
           output: Path = GENERATED) -> dict:
     data, rows = load_registry(registry)
-    if output.exists():
-        shutil.rmtree(output)
     problems = output / "problems"
     catalogue = output / "catalogue"
+    for directory in (problems, catalogue):
+        if directory.exists():
+            shutil.rmtree(directory)
     problems.mkdir(parents=True)
     catalogue.mkdir(parents=True)
     commit = data["source"]["source_commit"]
@@ -231,7 +232,7 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
     ])
     (catalogue / "index.md").write_text("\n".join(index), encoding="utf-8")
     expected = len(rows) + len(ranges) + 1
-    written = len(list(output.rglob("*.md")))
+    written = len(list(problems.rglob("*.md"))) + len(list(catalogue.rglob("*.md")))
     if written != expected:
         raise ValueError(f"compendium generation incomplete: expected {expected}, got {written}")
     return {"problems": len(rows), "editorial": len(curated_ids),
@@ -239,7 +240,8 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
 
 
 def clean(output: Path = GENERATED) -> None:
-    if output.exists():
-        shutil.rmtree(output)
+    for directory in (output / "problems", output / "catalogue"):
+        if directory.exists():
+            shutil.rmtree(directory)
 
 
