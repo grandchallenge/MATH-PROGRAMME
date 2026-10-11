@@ -113,7 +113,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Verify two-class source/pickup separation and fail-closed views
-        run: python3 -m unittest discover -s ci -p 'test_gcl_queue_class_cutover.py' -v
+        run: python3 ci/test_gcl_queue_class_cutover.py
 
   validate-json:
     needs: [impact, policy-shard, queue-cutover-contract]
