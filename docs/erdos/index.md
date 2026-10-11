@@ -15,7 +15,7 @@
 
 ## Browse every registered problem
 
-[Open the complete numbered catalogue](generated/catalogue/)
+[Open the complete numbered catalogue](catalogue/)
 
 The catalogue is divided into sets of roughly 100 problem numbers. Each entry links to the original problem, the exact corresponding GCL GitHub issue, the protected source snapshot and—when one exists—a developed mathematical explanation. The index is generated **deterministically** from the protected registry; no worker report is automatically promoted into public mathematics.
 
