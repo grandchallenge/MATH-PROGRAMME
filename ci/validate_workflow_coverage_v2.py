@@ -370,7 +370,9 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
     }:
         errors.append(f"{key}: trusted publisher must lack copilot-requests permission")
     for name, job in (("forge-pilot-review", agent), ("forge-pilot-evidence", publisher)):
-        if job.get("timeout-minutes", 0) > (12 if name == "forge-pilot-review" else 5):
+        raw_timeout = str(job.get("timeout-minutes", ""))
+        bound = 12 if name == "forge-pilot-review" else 5
+        if not raw_timeout.isdecimal() or not (1 <= int(raw_timeout) <= bound):
             errors.append(f"{key}: {name} exceeds bounded timeout")
         condition = str(job.get("if", ""))
         if "github.event_name == 'push'" not in condition:
