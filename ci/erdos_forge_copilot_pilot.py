@@ -200,7 +200,7 @@ def prepare(outdir: Path, *, model_run_identity: str = "GITHUB_COPILOT_ACTIONS_N
             "protected_formal_source_sha256": digest(source),
             "cohort_id": "ERDOS-ROLLING-024-001",
             "model_run_identity": model_run_identity,
-            "independence_claim": independence_claim
+            "independence_claim": independence_claim}
     (outdir / "task.json").write_text(json.dumps(task, indent=2) + "\n")
     (outdir / "prompt.txt").write_text(make_prompt(task, source, original))
     (outdir / "status.json").write_text(json.dumps(meta, indent=2) + "\n")
