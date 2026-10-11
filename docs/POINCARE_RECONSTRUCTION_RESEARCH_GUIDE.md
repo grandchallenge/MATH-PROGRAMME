@@ -25,9 +25,9 @@ The archive distinguishes the analytic Ricci-flow theorems imported from the lit
 
 ## Core bridge and first examples by hand
 
-**Friendly example:** \(S^3\) is closed and simply connected. It is the conclusion of the classical Poincaré theorem, not a new GCL theorem.
+**Friendly example:** $S^3$ is closed and simply connected. It is the conclusion of the classical Poincaré theorem, not a new GCL theorem.
 
-**Failure example:** replacing the hypothesis "simply connected" with "has the same integer homology as \(S^3\)" is invalid. The classical Poincaré *homology sphere* has the homology of \(S^3\) but nontrivial fundamental group (the binary icosahedral group). The two conditions must not be silently exchanged.
+**Failure example:** replacing the hypothesis "simply connected" with "has the same integer homology as $S^3$" is invalid. The classical Poincaré *homology sphere* has the homology of $S^3$ but nontrivial fundamental group (the binary icosahedral group). The two conditions must not be silently exchanged.
 
 Bridge: manifold invariants → false homology-to-homotopy inference → true classical theorem hypotheses → imported Ricci flow / surgery → finite history reconstruction.
 
@@ -49,7 +49,7 @@ print([(name, obj["homology_sphere"], obj["simply_connected"])
 
 ## First theorem or local proposition
 
-**Elementary logical proposition.** From \(P(x)\) alone one cannot infer \(Q(x)\) when an admitted instance satisfies \(P\land\neg Q\). Here the classical homology sphere is an imported counterexample to the false implication. The protected atlas records its source; the guide does not reproduce the Ricci-flow theorem.
+**Elementary logical proposition.** From $P(x)$ alone one cannot infer $Q(x)$ when an admitted instance satisfies $P\land\neg Q$. Here the classical homology sphere is an imported counterexample to the false implication. The protected atlas records its source; the guide does not reproduce the Ricci-flow theorem.
 
 ## 3. Exact contribution
 
@@ -78,7 +78,7 @@ No new Poincaré proof, machine-checked proof of the theorem, novelty, or priori
 
 | Stage | Duty | Completion test |
 | --- | --- | --- |
-| Exercise | Distinguish \(\pi_1\) from \(H_1\) | Name their different definitions |
+| Exercise | Distinguish $\pi_1$ from $H_1$ | Name their different definitions |
 | Exploration | Inspect the imported homology sphere example | Identify false implication |
 | Fixture | Execute logical record check | Two contrasting rows |
 | Lemma candidate | Formalize the counterexample pattern | State premises and failed conclusion |
