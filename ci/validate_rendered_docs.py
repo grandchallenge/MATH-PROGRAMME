@@ -112,6 +112,58 @@ def admonition_render_errors(page_html: Path, expected_title: str) -> list[str]:
     return errors
 
 
+class CM4DisplayMathParser(HTMLParser):
+    """Capture only actual display-math Arithmatex containers."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._depth = 0
+        self._parts: list[str] = []
+        self.displays: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if self._depth:
+            self._depth += 1
+        elif tag == "div" and "arithmatex" in (dict(attrs).get("class") or "").split():
+            self._depth = 1
+            self._parts = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if self._depth:
+            self._depth -= 1
+            if not self._depth:
+                self.displays.append("".join(self._parts))
+
+    def handle_data(self, data: str) -> None:
+        if self._depth:
+            self._parts.append(data)
+
+
+def cm4_display_math_errors(page_html: Path) -> list[str]:
+    """Guard the known CM4 formula against silent raw-TeX publication.
+
+    A generic wrapper-count audit missed a bare [ ... ] display, since it
+    counted no math source and consequently demanded no generated wrapper.
+    This page-specific witness binds the intended formula to an actual
+    display (not inline) Arithmatex container before client-side MathJax.
+    It does not claim to prove JavaScript/browser glyph rendering.
+    """
+    if not page_html.is_file():
+        return [f"built CM4 result page is missing: {page_html}"]
+
+    parsed = CM4DisplayMathParser()
+    parsed.feed(page_html.read_text(encoding="utf-8"))
+    expected = re.compile(
+        r"\\mathbb\s*\{?Z\}?\s*\[S\]\s*\^\s*\{\s*\\square\s*\}"
+    )
+    if not any(expected.search(display) for display in parsed.displays):
+        return [
+            f"{page_html} has no Arithmatex display for "
+            r"\mathbb Z[S]^{\square}; possible raw TeX or missing math wrapper"
+        ]
+    return []
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -128,6 +180,7 @@ def main() -> int:
         ("CMDG_CM4_RESEARCH_GUIDE/index.html", "Live work is issue-led"),
     ):
         errors.extend(admonition_render_errors(site_dir / relative_path, title))
+    errors.extend(cm4_display_math_errors(site_dir / "CMDG_CM4" / "index.html"))
     # Whole-repository GFM-source audit plus checks on actual built Arithmatex HTML.
     # Publish the complete finding inventory without failing established legacy pages;
     # enforce strict typography on the newly repaired CM4 mathematical flagships.
