@@ -172,6 +172,14 @@ def classify(item: dict) -> tuple[str,str]:
         raise ValueError(f"{repo}#{number}: missing/contradictory direct pickup label")
     source=SOURCE_ROLE in names
     tagged=bool(ERDOS.match(title))
+    # The protected MP-MATH-TYPO-ED07 job is an *editorial* source-defect
+    # inventory, notwithstanding its operational source-audit role label.
+    # Pin both issue identity and exact work-package prefix; a role alone
+    # must not reclassify documentary triage as mathematical research.
+    if repo=="grandchallenge/MATH-PROGRAMME" and number==1262:
+        if not title.startswith("MP-MATH-TYPO-ED07 — ") or not source:
+            raise ValueError(f"{repo}#{number}: editorial typography identity drift")
+        return "Editorial",mode
     if repo=="grandchallenge/MATH-PROGRAMME" and (source or tagged):
         if not (source and tagged):
             raise ValueError(f"{repo}#{number}: ambiguous mathematics source-audit")
@@ -199,8 +207,13 @@ def prepare(project:dict, items:list[dict]) -> tuple[list[dict],dict]:
             raise ValueError("duplicate "+name+" Project view")
     corrections=[]
     expected=Counter()
+    conflicts=[]
     for item in items:
-        cls,mode=classify(item)
+        try:
+            cls,mode=classify(item)
+        except (ValueError,TypeError,KeyError) as exc:
+            conflicts.append(str(exc))
+            continue
         expected[cls]+=1
         current=(item.get("fieldValueByName") or {}).get("name")
         if current not in (None,"Editorial","Mathematics"):
@@ -209,6 +222,10 @@ def prepare(project:dict, items:list[dict]) -> tuple[list[dict],dict]:
             corrections.append({"item_id":item["id"],"repo":item["content"]["repository"]["nameWithOwner"],
                                 "issue":item["content"]["number"],"was":current,
                                 "class":cls,"mode":mode,"option":opts[cls]})
+    if conflicts:
+        raise ValueError(f"{len(conflicts)} Project item(s) have ambiguous class: " +
+                         " | ".join(conflicts[:30]) +
+                         (f" (+{len(conflicts)-30} more)" if len(conflicts)>30 else ""))
     return corrections, {"items":len(items),"classes_expected":dict(expected),
                          "corrections":len(corrections),"views":views}
 
@@ -318,6 +335,8 @@ def receipt_message(receipt: dict | None, *, run_url: str, protected_sha: str) -
         ])
     else:
         lines.append("- No complete and verified applied Project receipt was available. Inspect the linked run's logs and archived receipt; **do not assert cutover success**.")
+        if isinstance(receipt, dict) and receipt.get("blocker"):
+            lines.append("- Exact controller blocker: `" + str(receipt["blocker"])[:3000].replace("`", "'") + "`")
     lines.extend(["",
       "This readback does not establish class-specific active-worker capacity enforcement, live two-lane pickup/RESULT/1 replay, chapter acceptance, mathematical certification, or overall cutover closure.",
       "",
@@ -386,6 +405,14 @@ def main() -> int:
         return execute(args.apply,args.receipt)
     except (ValueError,RuntimeError,KeyError,TypeError,subprocess.SubprocessError, OSError) as error:
         print("CUTOVER_BLOCKED",str(error),file=sys.stderr,flush=True)
+        if args.apply and args.publish_issue is None:
+            args.receipt.parent.mkdir(parents=True,exist_ok=True)
+            args.receipt.write_text(json.dumps({
+                "record_type":"GCL_QUEUE_CLASS_CUTOVER_RECEIPT",
+                "applied":False,"dry_run":False,"blocker":str(error),
+                "queue_field":QUEUE_FIELD_ID,
+                "boundary":"controller failure; no completion asserted"
+            },sort_keys=True,indent=2)+"\n",encoding="utf-8")
         return 2
 
 
