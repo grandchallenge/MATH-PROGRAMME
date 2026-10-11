@@ -16,6 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 ROSTER = ROOT / "governance/erdos_catalogue/ROLLING_RESEARCH_024.json"
 OWNER, REPO, PROJECT = "grandchallenge", "MATH-PROGRAMME", 2
 PROJECT_ID = "PVT_kwDOB9Ao_c4Blwur"
+PROJECT_STATUS_FIELD_ID = "PVTSSF_lADOB9Ao_c4BlwurzhkcRPQ"
+PROJECT_TODO_OPTION_ID = "f75ad846"
+ISSUE_FIELD_IDS = {"GCL State":47953501, "GCL Campaign":47953502,
+                   "GCL Role":47953503, "GCL Collaboration":47953504,
+                   "GCL Phase":47953505, "GCL Cohort":47953514, "GCL Timebox":47953515}
 LABELS = {"gcl-job", "gcl-pickup:direct-editorial", "gcl-collab:cooperative",
           "gcl-role:source-audit", "gcl-state:available"}
 FIELD_EXPECTED = {"GCL State": "AVAILABLE", "GCL Role": "SOURCE",
@@ -71,15 +76,23 @@ def issue(ident: int) -> dict:
     return data
 
 
-def review_is_already_accepted(ident: int) -> bool:
+def review_already_recorded(ident: int) -> str | None:
+    """An existing SOURCE_ACCEPTED, REVISE or BLOCKED review must never be re-offered."""
     comments = gh("api", f"repos/{OWNER}/{REPO}/issues/{ident}/comments?per_page=100")
     if not isinstance(comments, list) or len(comments) == 100:
         raise ValueError("ambiguous critical review history or pagination")
+    dispositions = []
     for comment in comments:
-        body = comment.get("body", "")
-        if body.startswith("GCL-CRITICAL-REVIEW/1") and "\nDISPOSITION: SOURCE_ACCEPTED" in body:
-            return True
-    return False
+        body = comment.get("body") or ""
+        if body.startswith("GCL-CRITICAL-REVIEW/1"):
+            rows = [line.split(":", 1)[1].strip() for line in body.splitlines()
+                    if line.startswith("DISPOSITION:")]
+            if len(rows) != 1 or rows[0] not in {"SOURCE_ACCEPTED", "REVISE", "BLOCKED"}:
+                raise ValueError("invalid existing critical-review disposition")
+            dispositions.append(rows[0])
+    if len(dispositions) > 1:
+        raise ValueError("multiple critic dispositions; protected reconciliation required")
+    return dispositions[0] if dispositions else None
 
 
 def verified_source_issue(task: dict) -> dict:
@@ -98,19 +111,36 @@ def verified_source_issue(task: dict) -> dict:
 
 
 def project_fields() -> dict:
+    """Only Status is a Project V2 field; GCL State/Role/etc are organization Issue Fields."""
     data = gh("project", "field-list", str(PROJECT), "--owner", OWNER, "--format", "json")
     fields = data.get("fields") or []
-    by_name = {f["name"]: f for f in fields}
-    if len(by_name) != len(fields):
+    by_name = {field["name"]: field for field in fields}
+    if len(fields) != len(by_name):
         raise ValueError("duplicate Project field")
-    for name in (*FIELD_EXPECTED, *TEXT_FIELDS):
-        if name not in by_name:
-            raise ValueError(f"missing Project field: {name}")
-    for name, target in FIELD_EXPECTED.items():
-        options = [opt for opt in by_name[name].get("options", []) if opt["name"] == target]
-        if len(options) != 1:
-            raise ValueError(f"Project option {name}/{target} missing or ambiguous")
+    status = by_name.get("Status")
+    if not status or status.get("id") != PROJECT_STATUS_FIELD_ID:
+        raise ValueError("protected Project #2 Status field identity mismatch")
+    options = [op for op in status.get("options", [])
+               if op.get("name") == "Todo" and op.get("id") == PROJECT_TODO_OPTION_ID]
+    if len(options) != 1:
+        raise ValueError("missing exact Project Todo option")
     return by_name
+
+
+def add_issue_fields(ident: int) -> None:
+    """POST additive Issue Field values; PUT would overwrite unrelated fields."""
+    expected = {k: v for k, v in {**FIELD_EXPECTED, **TEXT_FIELDS}.items() if k != "Status"}
+    expected["GCL Timebox"] = 35
+    payload = {"issue_field_values": [
+        {"field_id": ISSUE_FIELD_IDS[name], "value": value}
+        for name, value in expected.items()
+    ]}
+    process = subprocess.run(
+        ["gh", "api", f"repos/{OWNER}/{REPO}/issues/{ident}/issue-field-values",
+         "--method", "POST", "--input", "-"],
+        input=json.dumps(payload), capture_output=True, text=True, timeout=90)
+    if process.returncode:
+        raise RuntimeError(f"issue field POST failed for #{ident}: {process.stderr[:350]}")
 
 
 def project_item_for_issue(ident: int) -> str | None:
@@ -144,8 +174,10 @@ def issue_fields(ident: int) -> dict:
 def apply_one(task: dict, fields: dict, dry_run: bool) -> dict:
     ident = task["issue"]
     obj = verified_source_issue(task)
-    if review_is_already_accepted(ident):
-        return {"issue": ident, "state": "SOURCE_ACCEPTED_REQUIRES_PROTECTED_ADJUDICATION"}
+    disposition = review_already_recorded(ident)
+    if disposition is not None:
+        return {"issue": ident, "state": "REVIEW_ALREADY_RECORDED",
+                "disposition": disposition}
     item = project_item_for_issue(ident)
     if dry_run:
         return {"issue": ident, "state": "DRY_RUN", "project_item": item}
@@ -154,32 +186,42 @@ def apply_one(task: dict, fields: dict, dry_run: bool) -> dict:
                    "--url", obj["html_url"], "--format", "json")
         item = added["id"]
         if project_item_for_issue(ident) != item:
-            raise RuntimeError("Project add missing on readback")
-    for name, target in FIELD_EXPECTED.items():
-        f = fields[name]
-        option = next(o["id"] for o in f["options"] if o["name"] == target)
-        gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
-                  "--field-id", f["id"], "--single-select-option-id", option)
-    for name, value in TEXT_FIELDS.items():
-        gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
-                  "--field-id", fields[name]["id"], "--text", value)
+            raise RuntimeError("Project item-add readback failed")
+    add_issue_fields(ident)
+    expected = {k: v for k, v in {**FIELD_EXPECTED, **TEXT_FIELDS}.items()
+                if k != "Status"}
+    expected["GCL Timebox"] = 35
     actual = issue_fields(ident)
-    missing = {k: v for k, v in {**FIELD_EXPECTED, **TEXT_FIELDS}.items() if k != "Status" and actual.get(k) != v}
+    missing = {k: v for k, v in expected.items() if actual.get(k) != v}
     if missing:
-        raise RuntimeError(f"Issue Field readback failed for {ident}: {missing}; do not label AVAILABLE")
+        raise RuntimeError(f"Issue Field readback failed #{ident}: {missing}")
+    status_field = fields["Status"]
+    gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
+              "--field-id", status_field["id"],
+              "--single-select-option-id", PROJECT_TODO_OPTION_ID)
+    if review_already_recorded(ident) is not None:
+        return {"issue": ident, "state": "REVIEW_RETURNED_DURING_PROJECT_UPDATE"}
     obj = issue(ident)
-    existing = {l["name"] for l in obj.get("labels", [])}
-    if any(s.startswith("gcl-state:") and s != "gcl-state:available" for s in existing):
-        raise RuntimeError("lifecycle changed during projection")
+    existing = {label["name"] for label in obj.get("labels", [])}
+    if any(label.startswith("gcl-state:") and label != "gcl-state:available"
+           for label in existing):
+        raise RuntimeError("lifecycle label changed during projection")
     additions = sorted(LABELS - existing)
     if additions:
-        gh_action("api", f"repos/{OWNER}/{REPO}/issues/{ident}/labels",
-                  "--method", "POST", "-f", "labels[]=" + additions[0],
-                  *sum([["-f", "labels[]=" + name] for name in additions[1:]], []))
+        proc = subprocess.run(
+            ["gh", "api", f"repos/{OWNER}/{REPO}/issues/{ident}/labels",
+             "--method", "POST", "--input", "-"],
+            input=json.dumps({"labels": additions}),
+            capture_output=True, text=True, timeout=90)
+        if proc.returncode:
+            raise RuntimeError(f"labels POST failed #{ident}: {proc.stderr[:350]}")
     final = issue(ident)
-    final_labels = {l["name"] for l in final["labels"]}
-    if not LABELS.issubset(final_labels) or project_item_for_issue(ident) != item:
-        raise RuntimeError("availability/project final readback incomplete")
+    if not LABELS.issubset({label["name"] for label in final["labels"]}):
+        raise RuntimeError("final queue label readback failed")
+    if project_item_for_issue(ident) != item:
+        raise RuntimeError("final Project membership readback failed")
+    if any(issue_fields(ident).get(k) != v for k, v in expected.items()):
+        raise RuntimeError("final Issue Field readback failed")
     return {"issue": ident, "state": "AVAILABLE_REVIEW_ONLY", "item": item}
 
 

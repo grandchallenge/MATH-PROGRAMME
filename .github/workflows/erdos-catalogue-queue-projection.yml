@@ -1,6 +1,12 @@
 name: Erdős catalogue operational queue projection
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'ci/erdos_rolling_review_queue.py'
+      - 'governance/erdos_catalogue/ROLLING_RESEARCH_024.json'
+      - '.github/workflows/erdos-catalogue-queue-projection.yml'
   issue_comment:
     types: [created, edited, deleted]
   workflow_dispatch:
