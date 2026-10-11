@@ -95,7 +95,7 @@ class EditorialActivationTests(unittest.TestCase):
         gh.assert_not_called()
 
     @patch.object(a,"project_record",side_effect=ValueError("conflicting live Queue Class"))
-    @patch.object(a,"gh")
+    @patch.object(a,"gh",return_value=[])
     @patch.object(a,"fields",return_value={})
     @patch.object(a,"issue",side_effect=staged)
     def test_wrong_mathematics_class_never_rewritten(self,issue,fields,gh,record):
