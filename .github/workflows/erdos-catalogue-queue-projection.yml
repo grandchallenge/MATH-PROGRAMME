@@ -87,18 +87,29 @@ jobs:
 
       - name: Admit three bounded Editorial Compendium assignments from source evidence
         id: editorial-admit
-        if: github.event_name == 'push'
+        if: github.event_name != 'issue_comment'
         continue-on-error: true
         env:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
         run: |
           set -euo pipefail
+          # Once the trusted Clerk has published VERIFIED, workers may have
+          # returned results. Never re-admit those issues on a scheduled run.
+          gh api --paginate "repos/grandchallenge/MATH-PROGRAMME/issues/2552/comments?per_page=100" \
+            | jq -s 'add' > "$RUNNER_TEMP/compendium-admission-history.json"
+          if jq -e 'any(.[]; .user.login == "gcl-council-clerk[bot]" and
+            ((.body // "") | startswith("ERDOS-COMPENDIUM-EDITORIAL-ADMISSION/1\\n\\nThree Editorial writing assignments #2556–#2558: **VERIFIED**.")))' \
+            "$RUNNER_TEMP/compendium-admission-history.json" >/dev/null; then
+            echo "already_admitted=true" >> "$GITHUB_OUTPUT"
+            echo "EDITORIAL_ALREADY_ADMITTED: verified protected receipt; no work-state replay"
+            exit 0
+          fi
           python ci/test_erdos_compendium_editorial_activate.py
           python ci/erdos_compendium_editorial_activate.py \
             --apply --receipt editorial-admission/receipt.json
 
       - name: Archive real three-item Editorial admission receipt
-        if: always() && github.event_name == 'push'
+        if: always() && github.event_name != 'issue_comment' && steps.editorial-admit.outputs.already_admitted != 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: erdos-compendium-editorial-admission-${{ github.run_id }}-${{ github.run_attempt }}
@@ -107,7 +118,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Publish factual Editorial staging-to-AVAILABLE receipt
-        if: always() && github.event_name == 'push' && steps.queue-token.outputs.token != ''
+        if: always() && github.event_name != 'issue_comment' && steps.editorial-admit.outputs.already_admitted != 'true' && steps.queue-token.outputs.token != ''
         env:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
         run: |
