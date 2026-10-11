@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Deterministic, source-qualified, 1,221-entry Erdős MkDocs reference builder.
 
 No network, worker comments, GitHub API, or unreviewed theorem promotion.
@@ -7,7 +6,6 @@ Curated source-reviewed essays live outside docs/ and are copied as authored.
 """
 from __future__ import annotations
 
-import argparse
 import json
 import re
 import shutil
@@ -245,17 +243,3 @@ def clean(output: Path = GENERATED) -> None:
         shutil.rmtree(output)
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--check", action="store_true",
-                        help="Validate complete deterministic generation, then remove the build-only source")
-    args = parser.parse_args()
-    result = build()
-    print(json.dumps(result, sort_keys=True))
-    if args.check:
-        clean()
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
