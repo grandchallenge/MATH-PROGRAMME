@@ -5,7 +5,7 @@
 This adapter reuses the GSD/QTR Colab control protocol: host allocates a runtime, uploads immutable research inputs, executes, downloads verified receipts, and stops the runtime. The GSD/QTR launchers are campaign-specific, so the bounded Erdős implementation comprises two standalone modules:
 
 - ci/erdos_colab_host_runner.py: GitHub queue/source guards and Colab session lifecycle
-- experiments/erdos-024/colab/remote_review.py: exact input verification, deterministic mathematical checks, optional model assessments and SHA-256 receipt
+- colab/erdos_024_remote_review.py: exact input verification, deterministic mathematical checks, optional model assessments and SHA-256 receipt
 
 ## Governance
 
