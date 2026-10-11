@@ -51,10 +51,10 @@ class Contract(unittest.TestCase):
             update_class_batch(rows*(BATCH_SIZE//2+1))
 
     def test_exhausted_quota_never_enters_full_project_query(self):
-        with TemporaryDirectory() as d, \\
-             patch.dict("os.environ",{"GH_TOKEN":"masked-test-token"}), \\
+        with TemporaryDirectory() as d, \
+             patch.dict("os.environ",{"GH_TOKEN":"masked-test-token"}), \
              patch("gcl_queue_class_cutover.guard_project_api_budget",
-                   side_effect=RuntimeError("Clerk rate budget insufficient")) as budget, \\
+                   side_effect=RuntimeError("Clerk rate budget insufficient")) as budget, \
              patch("gcl_queue_class_cutover.read_full_project") as project_read:
             with self.assertRaisesRegex(RuntimeError,"rate budget insufficient"):
                 execute(True,Path(d)/"blocked.json")
@@ -62,10 +62,10 @@ class Contract(unittest.TestCase):
             project_read.assert_not_called()
 
     def test_dry_run_does_not_consume_live_quota_guard(self):
-        with TemporaryDirectory() as d, \\
-             patch("gcl_queue_class_cutover.guard_project_api_budget") as budget, \\
+        with TemporaryDirectory() as d, \
+             patch("gcl_queue_class_cutover.guard_project_api_budget") as budget, \
              patch("gcl_queue_class_cutover.read_full_project",
-                   return_value=(project(), [])), \\
+                   return_value=(project(), [])), \
              patch("gcl_queue_class_cutover.reconcile_views"):
             self.assertEqual(execute(False,Path(d)/"preview.json"),0)
             budget.assert_not_called()
