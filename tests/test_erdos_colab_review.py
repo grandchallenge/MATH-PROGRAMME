@@ -55,6 +55,13 @@ class ColabReviewContracts(unittest.TestCase):
             with self.assertRaises(ValueError):
                 remote.execute(changed_task, changed_prompt, job)
 
+    def test_changed_remote_review_code_digest_is_not_accepted(self):
+        task, prompt, job = packet()
+        corrupted = copy.deepcopy(job)
+        corrupted["remote_source_sha256"] = "0"*64
+        with self.assertRaises(ValueError):
+            remote.execute(task, prompt, corrupted)
+
     def test_wrong_original_comment_or_provider_digest_fails(self):
         task, prompt, job = packet()
         for key, value in [("source_comment_sha256", ""), ("protected_formal_source_blob", "nothex"),
