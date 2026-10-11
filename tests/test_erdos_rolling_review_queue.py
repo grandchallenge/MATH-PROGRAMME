@@ -14,12 +14,12 @@ class ReviewQueueContract(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT/"governance/erdos_catalogue/ROLLING_RESEARCH_024.json").read_text())
 
-    def test_exact_fourteen_bindings(self):
+    def test_exact_review_bindings(self):
         tasks = candidates(self.data)
-        self.assertEqual(len(tasks), 14)
-        self.assertEqual(len({x["issue"] for x in tasks}), 14)
+        self.assertEqual(len(tasks), 15)
+        self.assertEqual(len({x["issue"] for x in tasks}), 15)
         self.assertEqual({x["problem"] for x in tasks},
-                         {99,101,138,241,470,593,595,1052,9,10,11,12,14,15})
+                         {99,101,138,241,470,593,595,1052,9,10,11,12,14,15,18})
 
     def test_cannot_expand_scope(self):
         changed = copy.deepcopy(self.data)

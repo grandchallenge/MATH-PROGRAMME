@@ -14,9 +14,9 @@ def check():
  assert m["cohort_id"]=="ERDOS-ROLLING-024-001"
  assert m["state"]=="SELECTED_FOR_PREPARATION_NOT_SOLVE_DISPATCHED"
  assert m["size_limit"]==24 and len(items)==len(set(ids))==24 and ids==expected
- assert len([x for x in items if x["worker_result_comment_id"]])==14
- assert len([x for x in items if not x["worker_result_comment_id"]])==10
- assert len([x for x in items if x["source_critical_review_issue"]])==14
+ assert len([x for x in items if x["worker_result_comment_id"]])==15
+ assert len([x for x in items if not x["worker_result_comment_id"]])==9
+ assert len([x for x in items if x["source_critical_review_issue"]])==15
  assert not any(m["authority_effects"].values())
  tt={int(x["problem_id"]):x for x in t["entries"]}
  rr={x["problem_id"]:x for x in r["issues"]}
@@ -33,5 +33,5 @@ def check():
   assert (x["stage"]=="RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW")==bool(x["worker_result_comment_id"])
   assert not x["source_critical_review_issue"] or x["worker_result_comment_id"]
   assert not x["proposed_target"] or x["worker_result_comment_id"]
- print("ERDOS-ROLLING-024: 24 selected; 14 worker-returned pending review; 10 source-design pending; zero Solve authority")
+ print("ERDOS-ROLLING-024: 24 selected; 15 worker-returned pending review; 9 source-design pending; zero Solve authority")
 if __name__=="__main__": check()

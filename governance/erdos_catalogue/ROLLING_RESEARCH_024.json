@@ -16,9 +16,9 @@
   "selection_rule": "reuse BATCH-001 existing_recon_reuse (8) plus protected_source_open (16), preserve protected FC statement locks and statuses; no duplicate Solve lease",
   "snapshot": {
     "date": "2026-10-10",
-    "worker_reported_bounded_design_returns": 14,
-    "existing_catalogue_source_audits_awaiting_return": 10,
-    "critical_source_dockets_already_open": 14,
+    "worker_reported_bounded_design_returns": 15,
+    "existing_catalogue_source_audits_awaiting_return": 9,
+    "critical_source_dockets_already_open": 15,
     "dockets_to_create_for_existing_returns": 0
   },
   "advance_rule": "A per-problem source-semantic review, primary-source pin, current-status check, exact bounded proof/counterexample/reduction target, positive and hostile tests, duplicate Solve dispatch check and protected MATHSOLVE authority are prerequisites to first /claim. Source-audit RESULT/1 alone is not source acceptance.",
@@ -526,11 +526,15 @@
         "path": "FormalConjectures/ErdosProblems/18.lean",
         "git_blob_sha1": "053fb5458c8e51faf7dfd3a2c15c96125e5ad903"
       },
-      "stage": "CATALOGUE_SOURCE_DESIGN_REQUIRED",
-      "worker_result_comment_id": null,
-      "source_critical_review_issue": null,
-      "proposed_target": null,
-      "next_step": "COMPLETE_EXISTING_CATALOGUE_WORK_PACKAGE",
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104115714,
+      "source_critical_review_issue": 2525,
+      "proposed_target": {
+        "id": "ERDOS-018-BINARY-DIVISOR-SEMANTIC-LEAN-001",
+        "summary": "Kernel check h(2^k)=k for k≥1, exact endpoint normalization, finite hostile cases",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
       "launch_gates": {
         "statement_fidelity": false,
         "primary_sources_checked": false,

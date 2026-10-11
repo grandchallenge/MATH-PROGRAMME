@@ -45,8 +45,9 @@ def candidates(data: dict) -> list[dict]:
             seen.add(review)
             out.append({"problem": n, "issue": review, "catalogue": slot["catalogue_issue"],
                         "result": result})
-    if len(out) != 14 or len(seen) != 14:
-        raise ValueError("review docket count drift; reconcile protected selection first")
+    returned = sum(1 for slot in slots if slot["worker_result_comment_id"] is not None)
+    if len(out) != returned or len(seen) != returned:
+        raise ValueError("one bound review docket required for each returned design; reconcile protected selection first")
     return out
 
 
