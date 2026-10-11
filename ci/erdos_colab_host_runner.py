@@ -28,7 +28,7 @@ from ci.erdos_forge_copilot_pilot import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-REMOTE = ROOT / "experiments/erdos-024/colab/remote_review.py"
+REMOTE = ROOT / "colab/erdos_024_remote_review.py"
 SHA = re.compile(r"[a-f0-9]{40}\Z")
 PROVENANCE = "GCL_ERDOS_COLAB_LOGICAL_REVIEW"
 AUTHORITY = {
