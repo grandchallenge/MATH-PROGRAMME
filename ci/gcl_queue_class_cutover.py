@@ -279,12 +279,107 @@ def execute(apply:bool, report:Path) -> int:
     return 0
 
 
+
+RECEIPT_MARKER = "<!-- GCL-QUEUE-CLASS-CUTOVER-READBACK/1 -->"
+
+
+def receipt_message(receipt: dict | None, *, run_url: str, protected_sha: str) -> str:
+    """Render a deliberately non-authoritative snapshot, never inferred success."""
+    complete = (isinstance(receipt, dict)
+                and receipt.get("record_type") == "GCL_QUEUE_CLASS_CUTOVER_RECEIPT"
+                and receipt.get("applied") is True
+                and receipt.get("dry_run") is False
+                and receipt.get("global_available_view_unchanged") is True
+                and receipt.get("queue_field") == QUEUE_FIELD_ID
+                and isinstance(receipt.get("items"), int)
+                and receipt["items"] > 0
+                and isinstance(receipt.get("post_readback"), dict)
+                and receipt["post_readback"].get("items") == receipt["items"]
+                and isinstance(receipt.get("saved_view_ids"), dict)
+                and all(receipt["saved_view_ids"].get(k) for k in VIEW_FILTERS)
+                and set((receipt.get("classes_expected") or {})) == {"Editorial", "Mathematics"}
+                and sum(receipt["classes_expected"].values()) == receipt["items"])
+    lines = [RECEIPT_MARKER, "# Protected GCL queue-class readback",
+             "", "**Project classification:** " + ("VERIFIED" if complete else "BLOCKED / UNVERIFIED"),
+             "", "- Protected source SHA: `" + protected_sha + "`",
+             "- GitHub Actions run: " + run_url,
+             "- Project: https://github.com/orgs/grandchallenge/projects/2"]
+    if complete:
+        lines.extend([
+            "- Project items fully re-read: **" + str(receipt["items"]) + "**",
+            "- Classified Editorial: **" + str(receipt["classes_expected"]["Editorial"]) + "**",
+            "- Classified Mathematics: **" + str(receipt["classes_expected"]["Mathematics"]) + "**",
+            "- Queue Class field: `" + QUEUE_FIELD_ID + "`",
+            "- EDITORIAL saved view: `" + str(receipt["saved_view_ids"]["EDITORIAL"]) + "`",
+            "- MATHEMATICS saved view: `" + str(receipt["saved_view_ids"]["MATHEMATICS"]) + "`",
+            "- Global AVAILABLE view identity preserved: `" + AVAILABLE_VIEW_ID + "`",
+            "- Correction candidates at start of this run: " + str(receipt.get("corrections")),
+        ])
+    else:
+        lines.append("- No complete and verified applied Project receipt was available. Inspect the linked run's logs and archived receipt; **do not assert cutover success**.")
+    lines.extend(["",
+      "This readback does not establish class-specific active-worker capacity enforcement, live two-lane pickup/RESULT/1 replay, chapter acceptance, mathematical certification, or overall cutover closure.",
+      "",
+      "Cutover authority: https://github.com/grandchallenge/MATHSOLVE/issues/1049"])
+    return "\n".join(lines) + "\n"
+
+
+def publish_readback(report: Path, issue: int) -> int:
+    """Upsert one evidence-only comment using the scoped Council Clerk App token."""
+    if not os.environ.get("GH_TOKEN"):
+        raise RuntimeError("short-lived Council Clerk GH_TOKEN absent")
+    if issue != 2563:
+        raise ValueError("unexpected queue cutover receipt target")
+    receipt = None
+    if report.exists():
+        receipt = json.loads(report.read_text(encoding="utf-8"))
+    run_id = os.environ.get("GITHUB_RUN_ID", "")
+    sha = os.environ.get("GITHUB_SHA", "")
+    if not run_id.isdecimal() or not re.fullmatch(r"[0-9a-f]{40}", sha):
+        raise RuntimeError("GitHub run identity or protected SHA missing")
+    body = receipt_message(receipt,
+                           run_url=f"https://github.com/{OWNER}/MATH-PROGRAMME/actions/runs/{run_id}",
+                           protected_sha=sha)
+
+    def api(*args: str, stdin: str | None = None) -> object:
+        result = subprocess.run(["gh", "api", *args], text=True, input=stdin,
+                                capture_output=True, timeout=75, check=False)
+        if result.returncode:
+            raise RuntimeError("receipt GitHub API error: " + result.stderr[:350])
+        return json.loads(result.stdout)
+
+    issue_data = api(f"repos/{OWNER}/MATH-PROGRAMME/issues/{issue}")
+    if issue_data.get("state") != "open" or issue_data.get("comments", 0) >= 100:
+        raise RuntimeError("receipt issue closed or comment list pagination unsafe")
+    comments = api(f"repos/{OWNER}/MATH-PROGRAMME/issues/{issue}/comments?per_page=100")
+    matches = [entry for entry in comments
+               if RECEIPT_MARKER in str(entry.get("body", ""))]
+    if len(matches) > 1:
+        raise RuntimeError("duplicate controller receipts; refuse overwrite")
+    payload = json.dumps({"body":body})
+    if matches:
+        api("--method", "PATCH",
+            f"repos/{OWNER}/MATH-PROGRAMME/issues/comments/{matches[0]['id']}",
+            "--input", "-", stdin=payload)
+    else:
+        api("--method", "POST",
+            f"repos/{OWNER}/MATH-PROGRAMME/issues/{issue}/comments",
+            "--input", "-", stdin=payload)
+    print("RECEIPT_PUBLISHED", "VERIFIED" if receipt and receipt.get("applied") else "BLOCKED", flush=True)
+    return 0
+
+
 def main() -> int:
     parser=argparse.ArgumentParser()
     parser.add_argument("--apply",action="store_true")
     parser.add_argument("--receipt",type=Path,required=True)
+    parser.add_argument("--publish-issue",type=int)
     args=parser.parse_args()
     try:
+        if args.publish_issue is not None:
+            if args.apply:
+                raise ValueError("--publish-issue cannot run with --apply")
+            return publish_readback(args.receipt, args.publish_issue)
         return execute(args.apply,args.receipt)
     except (ValueError,RuntimeError,KeyError,TypeError,subprocess.SubprocessError, OSError) as error:
         print("CUTOVER_BLOCKED",str(error),file=sys.stderr,flush=True)
