@@ -261,13 +261,42 @@ class ColabReviewContracts(unittest.TestCase):
             def fake_call(argv, trace, *, deadline=90):
                 observed.append((argv[2], list(argv)))
                 trace.write_text("{}")
+                if argv[2] == "download" and argv[-2].endswith("receipt.json"):
+                    Path(argv[-1]).write_text(json.dumps({"status":"GREEN_ENGINEERING"}))
             args = SimpleNamespace(colab="colab", accelerator="CPU", timeout=300)
             with patch.object(host, "call", side_effect=fake_call):
                 host.colab_execute(folder, args, "gcl-erdos41-test")
             self.assertEqual([p[0] for p in observed],
-                             ["new","upload","upload","upload","exec","download","download","stop"])
+                             ["new","upload","upload","upload","upload","upload",
+                              "exec","download","download","stop"])
             self.assertEqual(json.loads((folder/"RUN_STATUS.json").read_text())["state"], "VERIFYING")
             self.assertNotIn("--gpu", observed[0][1])
+            self.assertEqual(observed[6][1][observed[6][1].index("-f") + 1],
+                             str(folder / "colab-entry.py"))
+            self.assertEqual([Path(row[1][-2]).name for row in observed[7:9]],
+                             ["erdos_review_receipt.json", "erdos_review_result.json"])
+            self.assertIn("sys.argv = [worker]", (folder/"colab-entry.py").read_text())
+
+    def test_red_remote_receipt_stops_before_result_download(self):
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            for name in ("task.json", "prompt.txt", "job.json"):
+                (folder/name).write_text("{}")
+            observed = []
+            def fake_call(argv, trace, *, deadline=90):
+                observed.append((argv[2], list(argv)))
+                trace.write_text("{}")
+                if argv[2] == "download":
+                    Path(argv[-1]).write_text(json.dumps({
+                        "status":"RED_ENGINEERING", "error_type":"ValueError",
+                        "error":"source digest mismatch"}))
+            args = SimpleNamespace(colab="colab", accelerator="CPU", timeout=300)
+            with patch.object(host, "call", side_effect=fake_call):
+                with self.assertRaisesRegex(RuntimeError, "source digest mismatch"):
+                    host.colab_execute(folder, args, "gcl-erdos41-test")
+            self.assertEqual([row[0] for row in observed].count("download"), 1)
+            self.assertEqual(observed[-1][0], "stop")
 
     def test_colab_cleanup_even_if_model_execution_fails(self):
         from types import SimpleNamespace
