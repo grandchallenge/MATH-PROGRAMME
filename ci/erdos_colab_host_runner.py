@@ -154,6 +154,27 @@ def call(argv: list[str], trace: Path, *, deadline: int = 90) -> None:
         raise RuntimeError("Colab CLI operation failed: " + argv[2])
 
 
+def colab_entry_source() -> str:
+    return (
+        "import runpy, sys\n"
+        "worker = '/content/erdos_024_remote_review.py'\n"
+        "sys.argv = [worker]\n"
+        "try:\n"
+        "    runpy.run_path(worker, run_name='__main__')\n"
+        "except SystemExit as exc:\n"
+        "    if exc.code not in (None, 0):\n"
+        "        raise\n"
+    )
+
+
+def require_green_remote_receipt(path: Path) -> None:
+    receipt = json.loads(path.read_text())
+    if receipt.get("status") != "GREEN_ENGINEERING":
+        error_type = str(receipt.get("error_type", "RemoteExecutionError"))[:80]
+        error = str(receipt.get("error", "remote worker returned a failure receipt"))[:300]
+        raise RuntimeError(f"Colab worker failed: {error_type}: {error}")
+
+
 def colab_execute(folder: Path, args, session: str) -> None:
     cli = [args.colab, "--auth=oauth2"]
     active = False
@@ -164,24 +185,31 @@ def colab_execute(folder: Path, args, session: str) -> None:
             alloc += ["--gpu", args.accelerator]
         call(alloc, folder / "colab-new.json")
         active = True
+        entry = folder / "colab-entry.py"
+        entry.write_text(colab_entry_source())
         for local, remote in [
-            ("task.json", "/content/erdos_task.json"),
-            ("prompt.txt", "/content/erdos_prompt.txt"),
-            ("job.json", "/content/erdos_job.json"),
+            (folder / "task.json", "/content/erdos_task.json"),
+            (folder / "prompt.txt", "/content/erdos_prompt.txt"),
+            (folder / "job.json", "/content/erdos_job.json"),
+            (REMOTE, "/content/erdos_024_remote_review.py"),
+            (entry, "/content/erdos_colab_entry.py"),
         ]:
-            call(cli + ["upload", "-s", session, str(folder / local), remote],
-                 folder / ("colab-upload-" + local + ".json"))
+            call(cli + ["upload", "-s", session, str(local), remote],
+                 folder / ("colab-upload-" + local.name + ".json"))
         write_status(folder, "RUNNING", "run fixed source-locked remote mathematical review")
-        call(cli + ["exec", "-s", session, "-f", str(REMOTE),
+        call(cli + ["exec", "-s", session, "-f", str(entry),
                     "--timeout", str(args.timeout)],
              folder / "colab-exec.json", deadline=args.timeout + 90)
-        write_status(folder, "VERIFYING", "download exact typed evidence and receipt")
-        for remote, local in [
-            ("/content/erdos_review_result.json", "erdos_review_result.json"),
-            ("/content/erdos_review_receipt.json", "erdos_review_receipt.json"),
-        ]:
-            call(cli + ["download", "-s", session, remote, str(folder / local)],
-                 folder / ("colab-download-" + local + ".json"))
+        write_status(folder, "VERIFYING", "download authoritative receipt before result")
+        receipt = folder / "erdos_review_receipt.json"
+        call(cli + ["download", "-s", session,
+                    "/content/erdos_review_receipt.json", str(receipt)],
+             folder / "colab-download-erdos_review_receipt.json")
+        require_green_remote_receipt(receipt)
+        result = folder / "erdos_review_result.json"
+        call(cli + ["download", "-s", session,
+                    "/content/erdos_review_result.json", str(result)],
+             folder / "colab-download-erdos_review_result.json")
     finally:
         if active:
             # A failed cleanup is not a successful terminal run.
