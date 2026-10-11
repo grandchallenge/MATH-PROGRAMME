@@ -16,6 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 ROSTER = ROOT / "governance/erdos_catalogue/ROLLING_RESEARCH_024.json"
 OWNER, REPO, PROJECT = "grandchallenge", "MATH-PROGRAMME", 2
 PROJECT_ID = "PVT_kwDOB9Ao_c4Blwur"
+PROJECT_STATUS_FIELD_ID = "PVTSSF_lADOB9Ao_c4BlwurzhkcRPQ"
+PROJECT_TODO_OPTION_ID = "f75ad846"
+ISSUE_FIELD_IDS = {"GCL State":47953501, "GCL Campaign":47953502,
+                   "GCL Role":47953503, "GCL Collaboration":47953504,
+                   "GCL Phase":47953505, "GCL Cohort":47953514, "GCL Timebox":47953515}
 LABELS = {"gcl-job", "gcl-pickup:direct-editorial", "gcl-collab:cooperative",
           "gcl-role:source-audit", "gcl-state:available"}
 FIELD_EXPECTED = {"GCL State": "AVAILABLE", "GCL Role": "SOURCE",
@@ -71,15 +76,23 @@ def issue(ident: int) -> dict:
     return data
 
 
-def review_is_already_accepted(ident: int) -> bool:
+def review_already_recorded(ident: int) -> str | None:
+    """An existing SOURCE_ACCEPTED, REVISE or BLOCKED review must never be re-offered."""
     comments = gh("api", f"repos/{OWNER}/{REPO}/issues/{ident}/comments?per_page=100")
     if not isinstance(comments, list) or len(comments) == 100:
         raise ValueError("ambiguous critical review history or pagination")
+    dispositions = []
     for comment in comments:
-        body = comment.get("body", "")
-        if body.startswith("GCL-CRITICAL-REVIEW/1") and "\nDISPOSITION: SOURCE_ACCEPTED" in body:
-            return True
-    return False
+        body = comment.get("body") or ""
+        if body.startswith("GCL-CRITICAL-REVIEW/1"):
+            rows = [line.split(":", 1)[1].strip() for line in body.splitlines()
+                    if line.startswith("DISPOSITION:")]
+            if len(rows) != 1 or rows[0] not in {"SOURCE_ACCEPTED", "REVISE", "BLOCKED"}:
+                raise ValueError("invalid existing critical-review disposition")
+            dispositions.append(rows[0])
+    if len(dispositions) > 1:
+        raise ValueError("multiple critic dispositions; protected reconciliation required")
+    return dispositions[0] if dispositions else None
 
 
 def verified_source_issue(task: dict) -> dict:
