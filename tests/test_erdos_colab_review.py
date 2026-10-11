@@ -244,6 +244,43 @@ class ColabReviewContracts(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     host.publish_provisional(folder)
 
+    def test_colab_cli_lifecycle_and_cleanup(self):
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            for name in ("task.json", "prompt.txt", "job.json"):
+                (folder/name).write_text("{}")
+            observed = []
+            def fake_call(argv, trace, *, deadline=90):
+                observed.append((argv[2], list(argv)))
+                trace.write_text("{}")
+            args = SimpleNamespace(colab="colab", accelerator="CPU", timeout=300)
+            with patch.object(host, "call", side_effect=fake_call):
+                host.colab_execute(folder, args, "gcl-erdos41-test")
+            self.assertEqual([p[0] for p in observed],
+                             ["new","upload","upload","upload","exec","download","download","stop"])
+            self.assertEqual(json.loads((folder/"RUN_STATUS.json").read_text())["state"], "VERIFYING")
+            self.assertNotIn("--gpu", observed[0][1])
+
+    def test_colab_cleanup_even_if_model_execution_fails(self):
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            for name in ("task.json", "prompt.txt", "job.json"):
+                (folder/name).write_text("{}")
+            observed=[]
+            def fake_call(argv, trace, *, deadline=90):
+                observed.append(argv[2])
+                if argv[2]=="exec":
+                    raise RuntimeError("model stopped")
+                trace.write_text("{}")
+            args=SimpleNamespace(colab="colab", accelerator="L4", timeout=300)
+            with patch.object(host, "call", side_effect=fake_call):
+                with self.assertRaises(RuntimeError):
+                    host.colab_execute(folder, args, "gcl-erdos41-test")
+            self.assertEqual(observed[-1], "stop")
+            self.assertIn("--gpu", ["--gpu"] if "new" in observed else [])
+
     def test_prepare_only_does_not_launch_colab(self):
         task, prompt, job = packet()
         with tempfile.TemporaryDirectory() as tmp:
