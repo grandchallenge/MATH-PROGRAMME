@@ -20,7 +20,7 @@ class EditorialActivationTests(unittest.TestCase):
         self.assertEqual(set(a.OPTIONS),set(a.ISSUE_FIELDS))
 
     @patch.object(a,"source_return",return_value=610000001)
-    @patch.object(a,"project_membership",side_effect=lambda n:f"PVTI_{n}")
+    @patch.object(a,"project_record",side_effect=lambda n:{"id":None,"queue_class":None})
     @patch.object(a,"gh",return_value=[])
     @patch.object(a,"fields",return_value={})
     @patch.object(a,"issue",side_effect=staged)
@@ -33,7 +33,7 @@ class EditorialActivationTests(unittest.TestCase):
         self.assertFalse(any("POST" in call.args for call in gh.call_args_list))
 
     @patch.object(a,"source_return",side_effect=ValueError("source unverified"))
-    @patch.object(a,"project_membership",return_value="PVTI_2556")
+    @patch.object(a,"project_record",return_value={"id":"PVTI_2556","queue_class":"Editorial"})
     @patch.object(a,"gh",return_value=[])
     @patch.object(a,"fields",return_value={})
     @patch.object(a,"issue",side_effect=staged)
@@ -43,7 +43,7 @@ class EditorialActivationTests(unittest.TestCase):
         self.assertFalse(any("POST" in c.args for c in gh.call_args_list))
 
     @patch.object(a,"source_return",return_value=9)
-    @patch.object(a,"project_membership",return_value="PVTI_2556")
+    @patch.object(a,"project_record",return_value={"id":"PVTI_2556","queue_class":"Editorial"})
     @patch.object(a,"gh",return_value=[])
     @patch.object(a,"fields",return_value={})
     @patch.object(a,"issue")
@@ -54,7 +54,79 @@ class EditorialActivationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"lifecycle drift"):
             a.preflight()
 
-    @patch.object(a,"project_membership",return_value="PVTI_2556")
+    @patch.object(a,"editorial_option_id",return_value="deadbeef")
+    @patch.object(a,"project_record")
+    @patch.object(a,"gh")
+    def test_bind_three_missing_project_items_then_verify_all(self,gh,record,option):
+        created={}
+        classified=set()
+        def live(n):
+            if n not in created:
+                return {"id":None,"queue_class":None}
+            return {"id":created[n],"queue_class":"Editorial" if n in classified else None}
+        def mutate(*args,**kwargs):
+            if args[:2]==("project","item-add"):
+                n=int(args[args.index("--url")+1].split("/")[-1])
+                created[n]=f"PVTI_{n}"
+                return {"id":created[n]}
+            if args[:2]==("project","item-edit"):
+                n=int(args[args.index("--id")+1].split("_")[-1])
+                classified.add(n)
+                self.assertEqual(args[args.index("--field-id")+1],a.QUEUE_FIELD_ID)
+                self.assertEqual(args[args.index("--single-select-option-id")+1],"deadbeef")
+                return {}
+            self.fail("unexpected GitHub call in Project binding")
+        gh.side_effect=mutate
+        record.side_effect=live
+        rows=[{"issue":n,"project_item":None} for n in a.DOCKETS]
+        a.bind_editorial_items(rows)
+        self.assertEqual(set(created),set(a.DOCKETS))
+        self.assertEqual(classified,set(a.DOCKETS))
+        self.assertTrue(all(x["project_class"]=="Editorial" for x in rows))
+        self.assertEqual(gh.call_count,6)
+
+    @patch.object(a,"editorial_option_id",return_value="deadbeef")
+    @patch.object(a,"project_record")
+    @patch.object(a,"gh")
+    def test_already_bound_editorial_is_replayed_without_mutation(self,gh,record,option):
+        record.side_effect=lambda n:{"id":f"PVTI_{n}","queue_class":"Editorial"}
+        rows=[{"issue":n,"project_item":f"PVTI_{n}"} for n in a.DOCKETS]
+        a.bind_editorial_items(rows)
+        gh.assert_not_called()
+
+    @patch.object(a,"project_record",side_effect=ValueError("conflicting live Queue Class"))
+    @patch.object(a,"gh",return_value=[])
+    @patch.object(a,"fields",return_value={})
+    @patch.object(a,"issue",side_effect=staged)
+    def test_wrong_mathematics_class_never_rewritten(self,issue,fields,gh,record):
+        with self.assertRaisesRegex(ValueError,"conflicting live Queue Class"):
+            a.preflight()
+        self.assertFalse(any("POST" in c.args for c in gh.call_args_list))
+
+    @patch.object(a,"gh",return_value=[])
+    @patch.object(a,"fields",return_value={})
+    @patch.object(a,"issue")
+    def test_second_pickup_mode_and_unknown_lifecycle_block_before_project(self,issue,fields,gh):
+        for hostile in ("gcl-pickup:reservation-controlled","gcl-state:unknown"):
+            row=staged(2556)
+            row["labels"].append({"name":hostile})
+            issue.return_value=row
+            with patch.object(a,"project_record") as project:
+                with self.assertRaisesRegex(ValueError,"lifecycle drift"):
+                    a.preflight()
+                project.assert_not_called()
+
+    @patch.object(a,"gh")
+    def test_editorial_option_identity_fails_closed(self,gh):
+        gh.return_value={"fields":[{"id":a.QUEUE_FIELD_ID,"name":"Queue Class",
+                                    "options":[{"name":"Mathematics","id":"12345678"}]}]}
+        with self.assertRaisesRegex(ValueError,"Editorial Project option ID"):
+            a.editorial_option_id()
+        gh.return_value={"fields":[{"id":a.QUEUE_FIELD_ID,"name":"Queue Class",
+                                    "options":[{"name":"Editorial","id":"deadbeef"}]}]}
+        self.assertEqual(a.editorial_option_id(),"deadbeef")
+
+    @patch.object(a,"project_record",return_value={"id":"PVTI_2556","queue_class":"Editorial"})
     @patch.object(a,"issue")
     @patch.object(a,"fields",return_value=a.OPTIONS)
     @patch.object(a,"gh",return_value=[])
@@ -69,7 +141,7 @@ class EditorialActivationTests(unittest.TestCase):
         self.assertEqual(gh.call_args_list[1].kwargs["payload"],{"labels":["gcl-state:available"]})
         self.assertTrue(all("/claim" not in str(c) for c in gh.call_args_list))
 
-    @patch.object(a,"project_membership",return_value="PVTI_2556")
+    @patch.object(a,"project_record",return_value={"id":"PVTI_2556","queue_class":"Editorial"})
     @patch.object(a,"issue",return_value=staged(2556))
     @patch.object(a,"fields",return_value=a.OPTIONS)
     @patch.object(a,"gh",return_value=[])

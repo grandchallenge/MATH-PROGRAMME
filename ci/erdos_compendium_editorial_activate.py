@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -54,7 +55,8 @@ def issue(n: int) -> dict:
     return gh("api",f"repos/{REPO}/issues/{n}")
 
 
-def project_membership(n: int) -> str:
+def project_record(n: int) -> dict:
+    """Read exactly one Project #2 item, or prove that it has not been added."""
     q="""query($n:Int!){
       repository(owner:"grandchallenge",name:"MATH-PROGRAMME"){
         issue(number:$n){
@@ -64,7 +66,7 @@ def project_membership(n: int) -> str:
               id
               project{id}
               fieldValueByName(name:"Queue Class"){
-                ... on ProjectV2ItemFieldSingleSelectValue{name}
+                ... on ProjectV2ItemFieldSingleSelectValue{name optionId}
               }
             }
           }
@@ -79,9 +81,67 @@ def project_membership(n: int) -> str:
     if (connection.get("pageInfo") or {}).get("hasNextPage"):
         raise ValueError(f"#{n} Project item membership truncated")
     rows=[x for x in connection.get("nodes",[]) if (x.get("project") or {}).get("id")==PROJECT_ID]
-    if len(rows)!=1 or (rows[0].get("fieldValueByName") or {}).get("name")!="Editorial":
-        raise ValueError(f"#{n} lacks unique Project #2 Editorial class binding")
-    return rows[0]["id"]
+    if len(rows)>1:
+        raise ValueError(f"#{n} duplicate Project #2 items")
+    if not rows:
+        return {"id":None, "queue_class":None}
+    row=rows[0]
+    option=row.get("fieldValueByName") or {}
+    queue_class=option.get("name")
+    if not isinstance(row.get("id"),str) or not row["id"].startswith("PVTI_"):
+        raise ValueError(f"#{n} malformed Project #2 item ID")
+    if queue_class not in (None,"Editorial"):
+        raise ValueError(f"#{n} conflicting live Queue Class {queue_class!r}; no mutation")
+    return {"id":row["id"],"queue_class":queue_class}
+
+
+def editorial_option_id() -> str:
+    """Get the live Editorial option, never invent a Project field choice."""
+    data=gh("project","field-list","2","--owner","grandchallenge","--format","json")
+    fields_list=data.get("fields") or []
+    matches=[f for f in fields_list
+             if f.get("name")=="Queue Class" and f.get("id")==QUEUE_FIELD_ID]
+    if len(matches)!=1:
+        raise ValueError("live Project Queue Class field identity missing or ambiguous")
+    options=[x.get("id") for x in matches[0].get("options",[])
+             if x.get("name")=="Editorial"]
+    if len(options)!=1 or not re.fullmatch(r"[0-9a-f]{8}",str(options[0])):
+        raise ValueError("live Editorial Project option ID missing or ambiguous")
+    return options[0]
+
+
+def bind_editorial_items(rows: list[dict]) -> None:
+    """Create only missing bound items, classify, then verify all before pickup."""
+    option=editorial_option_id()
+    for row in rows:
+        n=row["issue"]
+        current=project_record(n)
+        if current["id"] is None:
+            # The three exact issues have already passed ALL source/identity
+            # checks. No generic Project membership publication is permitted.
+            added=gh("project","item-add","2","--owner","grandchallenge",
+                     "--url",f"https://github.com/{REPO}/issues/{n}",
+                     "--format","json")
+            new_id=added.get("id")
+            current=project_record(n)
+            if new_id!=current["id"] or not isinstance(new_id,str):
+                raise ValueError(f"#{n} Project attachment identity readback failed")
+        if current["queue_class"] is None:
+            gh("project","item-edit","--id",current["id"],
+               "--project-id",PROJECT_ID,"--field-id",QUEUE_FIELD_ID,
+               "--single-select-option-id",option)
+        confirmed=project_record(n)
+        if confirmed["id"]!=current["id"] or confirmed["queue_class"]!="Editorial":
+            raise ValueError(f"#{n} Project Editorial class write/readback failed")
+        row["project_item"]=confirmed["id"]
+        row["project_class"]="Editorial"
+    # Bind all three before exposing ANY one to a worker.
+    if len(rows)!=len(DOCKETS) or len({x["project_item"] for x in rows})!=len(DOCKETS):
+        raise ValueError("three unique Project Editorial bindings not established")
+    for row in rows:
+        actual=project_record(row["issue"])
+        if actual!={"id":row["project_item"],"queue_class":"Editorial"}:
+            raise ValueError(f"#{row['issue']} Project membership changed during activation")
 
 
 def source_return(problem:int,source_issue:int,assignment:str)->int:
@@ -108,8 +168,10 @@ def preflight() -> list[dict]:
         if (data.get("state")!="open" or data.get("pull_request")
             or not (data.get("title") or "").startswith(f"EC-ED0{n-2554} — Erdős #{problem} — ")
             or not REQUIRED.issubset(labels)
-            or labels.intersection({"gcl-state:reserved","gcl-state:returned",
-                                    "gcl-state:blocked","gcl-state:closed"})):
+            or {x for x in labels if x.startswith("gcl-pickup:")}
+               != {"gcl-pickup:direct-editorial"}
+            or {x for x in labels if x.startswith("gcl-state:")}
+               not in (set(), {"gcl-state:available"})):
             raise ValueError(f"#{n} editorial identity, pickup or lifecycle drift")
         if "gcl-state:available" in labels and any(
             fields(n).get(k)!=v for k,v in OPTIONS.items()
@@ -123,9 +185,10 @@ def preflight() -> list[dict]:
             (x.get("body") or "").startswith("RESULT/1\n") for x in comments
         ):
             raise ValueError(f"#{n} previously returned or unbounded comment history")
-        item=project_membership(n)
+        item=project_record(n)   # absence is staged; wrong class fails closed
         evidence=source_return(problem,source_id,assignment)
-        rows.append({"issue":n,"problem":problem,"project_item":item,
+        rows.append({"issue":n,"problem":problem,
+                     "project_item":item["id"],"project_class":item["queue_class"],
                      "source_issue":source_id,"source_comment":evidence,
                      "was_available": "gcl-state:available" in labels})
     return rows
@@ -139,6 +202,8 @@ def apply(rows:list[dict]):
         if not row["was_available"]:
             gh("api",f"repos/{REPO}/issues/{n}/issue-field-values",
                "--method","POST","--input","-",payload=payload)
+            if any(fields(n).get(k)!=v for k,v in OPTIONS.items()):
+                raise ValueError(f"#{n} metadata write/readback failed; availability withheld")
             gh("api",f"repos/{REPO}/issues/{n}/labels",
                "--method","POST","--input","-",
                payload={"labels":["gcl-state:available"]})
@@ -149,7 +214,7 @@ def apply(rows:list[dict]):
         labels={x["name"] for x in data.get("labels",[])}
         if ("gcl-state:available" not in labels
             or labels.intersection({"gcl-state:blocked","gcl-state:reserved","gcl-state:returned"})
-            or project_membership(n)!=row["project_item"]):
+            or project_record(n)!={"id":row["project_item"],"queue_class":"Editorial"}):
             raise ValueError(f"#{n} post-activation Issue/Project readback failed")
 
 
@@ -167,9 +232,11 @@ def main() -> int:
     try:
         if args.apply and not os.environ.get("GH_TOKEN"):
             raise ValueError("missing scoped Council Clerk token")
-        rows=preflight()  # EVERY issue source and Project identity before FIRST mutation
+        rows=preflight()  # EVERY source and issue identity before FIRST mutation
         receipt["preflight"]=rows
         if args.apply:
+            bind_editorial_items(rows)
+            receipt["bound_project_items"] = [r["project_item"] for r in rows]
             apply(rows)
             receipt["applied"]=True
             receipt["verified"]=True
