@@ -41,7 +41,9 @@ A finite test verifies that the set {1,2,3} has exactly one 3-element subset, wh
 - GCL research state: source candidacy only; no automatic Forge acceptance, Solve claim, Cert or external publication
 - terminal report: RUN_STATUS.json history including RED on failure; raw Colab CLI output not retained, only its digest and byte count
 
-The host code intentionally **does not post evidence to GitHub**. The protected Programme workflow for Copilot remains disabled by #2541. A later controlled evidence-publishing integration should use the existing host GitHub authentication, recheck current queue and source custody, and submit *unadjudicated* evidence under the previously governed transaction. It must not impersonate a GitHub PR approval or formal certifier.
+The host defaults to **not posting anything**. After an actual two-pass local-model Colab execution and full receipt verification, an explicit --publish-provisional flag may post a GCL-FORGE-CRITIQUE-CANDIDATE/1 comment using the **same already authenticated host GitHub account**. This comment is an internal, unadjudicated research-evidence receipt, not formal publication of a proved mathematical result or an independent GitHub PR approval. The publisher rechecks live issue state, issue fields, original RESULT/1 custody, prior critical dispositions, model-output roles and receipt digests. Witness-only runs cannot post review evidence. Colab has no GitHub token. The host saves a local .attempted-<job SHA-256> ticket before allocating a session, suppressing duplicate spending for the same input on that host even after RED; this is a **host-local lock**, not a distributed lease. No unattended cross-host scheduler has been admitted.
+
+An explicitly authorized model command with provisional evidence submission appends --publish-provisional. Do not use that flag to report test-only synthetic reviews as production findings. The protected Programme workflow for Copilot remains disabled by #2541. No protected changes to ordinary GitHub policy, source-semantic acceptance, Solve authority or MATHCERT result follow from an internal issue comment.
 
 ## Tests and status
 
