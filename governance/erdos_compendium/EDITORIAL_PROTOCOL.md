@@ -1,0 +1,80 @@
+# Erdős Compendium — documentary production protocol
+
+State: ACTIVE_READER_REFERENCE_V1
+Coverage authority: MATH-PROGRAMME/governance/erdos_catalogue/REGISTRY.json
+Explanatory manuscripts: governance/erdos_compendium/editorial/NNNN.md
+Publication: MkDocs on protected main, ci/erdos_compendium_hook.py
+Claim authority: NONE — source evidence and independent mathematical certification remain separately governed
+
+## Universal coverage, truthful depth
+
+Every one of the 1,221 registered problem IDs has a stable reference page:
+subject tags and snapshot status, the original problem link, GCL issue, and
+explicit source/proof caveats. This is REFERENCE_COVERAGE, **not 1,221 reviewed
+explanations**. The generator prints separate counts for catalogue coverage
+and developed editorial articles and must fail closed on missing or duplicate IDs.
+
+Do not invent mathematical statements from topic labels. No external agent
+runtime, independent reviewer, solved result, source-authoritative theorem,
+worker return, or MathCert conclusion can be inferred from registry metadata,
+a GitHub issue, source audit, or a text generator.
+
+## How to produce each genuinely complete explanatory article
+
+1. **Bind the exact problem.** Read its current external statement and dated
+   sources, and its pinned catalogue snapshot and GCL issue. Record any
+   status drift. Check variants and quantifiers before paraphrasing.
+2. **Check evidence.** Reconcile existing Forge/Solve/Cert protected work,
+   returned RESULT/1 comments, reviewer dispositions and mathematical
+   counterexamples; distinguish a local lemma from parent-conjecture closure.
+3. **Author to the template.** Add precisely one
+   governance/erdos_compendium/editorial/NNNN.md with all six H2 headings:
+   question in plain language; small example; what is known; GCL's current
+   state; what remains; sources and claim boundaries. Use exact mathematical
+   typesetting. Avoid synthetic proof figures or unverified current statuses.
+4. **Adversarial editorial check.** Verify that the small example is valid,
+   the theorem statement matches its primary source, the language does not
+   imply novelty/certification, each reported GCL outcome exists in protected
+   state, and an open case remains open.
+5. **Protect and publish.** Route the manuscript through normal documentation
+   CI. The build generates the corresponding public problem page and updates
+   its editorial coverage count. Do not turn editorial signoff into
+   mathematical proof acceptance or add routine Human Steward approval.
+6. **Correction and revision.** If the live mathematical status changes,
+   edit the authored article in a new protected PR; never silently infer that
+   the frozen snapshot label has become current truth.
+
+## Production order and duplication rule
+
+Use existing catalogue audits and critical reviews before soliciting new
+research. Initial article exemplars #1, #2, #3 are source-bound, manually
+authored first-pass explanations. Next useful editorial candidates are the
+returned, critically reviewed pilot subjects #4, #7, #9, #10, #99, #101,
+#138, #241, #470, #593, #595, #1052; these have genuine RESULT/1 comments
+or protected mathematical work, but are **not** thereby source-accepted.
+First reconcile the latest claims/critical dockets, then write an article.
+No duplicate MATHSOLVE mathematical job is authorized by this editorial list.
+
+The existing 1,221 registered source-audit tasks are the entry point for
+the rest of the catalogue; do not create 1,221 duplicate source jobs merely
+to populate documentary pages. Expand editorial coverage across subject
+families according to source-review readiness and actual mathematical
+content. A completed, reviewable article is a better throughput measure
+than total pages or task labels.
+
+## Evidence and closure checks
+
+- Generator checks source-commit lock, 1,221 unique problem IDs, issue
+  identities, valid topic/status metadata, article section contract and
+  expected generated page count.
+- MkDocs strict build checks rendering. Hook checks public HTML sentinels and
+  removes temporary generated Markdown; committed source remains registry
+  plus authored manuscripts.
+- The page itself shows a clear distinction between snapshot status and
+  current mathematical proof/source authority.
+- Proof/claim authority remains in protected Forge/Solve/Cert records;
+  documentary source prose is a human model of that authority, never a
+  replacement for it.
+- The MkDocs compendium is a documentary **reference annex** and must not
+  be added as a released illustrated documentary edition without a
+  separately governed release-manifest/source-record transaction.

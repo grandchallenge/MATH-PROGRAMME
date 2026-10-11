@@ -111,6 +111,7 @@ nav:
           - "Resource Note: Project-Based Research": RESOURCE_NOTES/PROJECT_BASED_UNDERGRADUATE_RESEARCH.md
       - Documentary Library:
           - Collection and Authority Guide: documentaries/index.md
+          - Erdős Compendium — all registered problems: erdos/index.md
           - The Shape of a Sphere: documentaries/poincare.md
           - The Hidden Music of Elliptic Curves: documentaries/bsd.md
           - The Geometry of Hidden Harmony: documentaries/hodge.md
@@ -251,6 +252,9 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Use light mode
+
+hooks:
+  - ci/erdos_compendium_hook.py
 
 # Enable the admonition syntax used for authority and status notices.
 markdown_extensions:
