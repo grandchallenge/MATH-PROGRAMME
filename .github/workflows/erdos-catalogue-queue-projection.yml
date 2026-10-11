@@ -60,6 +60,35 @@ jobs:
           repositories: MATH-PROGRAMME
           permission-issues: write
           permission-organization-projects: write
+      - name: Reconcile Project state and labels from verified receipts
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
+          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
+      - name: Verify full Project Queue Class contract and protected semantic readback
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing Council Clerk Project token"; exit 1; }
+          python ci/test_gcl_queue_class_cutover.py
+          python ci/gcl_queue_class_cutover.py --apply --receipt queue-cutover/receipt.json
+      - name: Preserve Queue Class cutover receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: gcl-queue-semantic-cutover-${{ github.run_id }}-${{ github.run_attempt }}
+          path: queue-cutover/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Publish durable Project cutover success or blocker readback
+        if: always() && steps.queue-token.outputs.token != ''
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          python ci/gcl_queue_class_cutover.py --publish-issue 2563 --receipt queue-cutover/receipt.json
+
       - name: Checkout protected MATHSOLVE controller
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -126,35 +155,6 @@ jobs:
           PY
           gh issue comment 1255 --repo grandchallenge/MATH-PROGRAMME \
             --body-file typography-ed08/comment.md
-
-      - name: Reconcile Project state and labels from verified receipts
-        env:
-          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
-        run: |
-          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
-          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
-      - name: Verify full Project Queue Class contract and protected semantic readback
-        env:
-          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
-        run: |
-          test -n "$GH_TOKEN" || { echo "Missing Council Clerk Project token"; exit 1; }
-          python ci/test_gcl_queue_class_cutover.py
-          python ci/gcl_queue_class_cutover.py --apply --receipt queue-cutover/receipt.json
-      - name: Preserve Queue Class cutover receipt
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: gcl-queue-semantic-cutover-${{ github.run_id }}-${{ github.run_attempt }}
-          path: queue-cutover/receipt.json
-          retention-days: 90
-          if-no-files-found: warn
-
-      - name: Publish durable Project cutover success or blocker readback
-        if: always() && steps.queue-token.outputs.token != ''
-        env:
-          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
-        run: |
-          python ci/gcl_queue_class_cutover.py --publish-issue 2563 --receipt queue-cutover/receipt.json
 
       - name: Publish bound Erdős-024 source critic dockets in Project #2
         env:
