@@ -44,8 +44,9 @@ def locked_inputs(task_bytes: bytes, prompt_bytes: bytes, job: dict) -> dict:
     """Reject mixed-input, escalated-scope or unpinned model jobs."""
     keys = {"schema_version", "kind", "cohort_id", "problem_id",
             "review_issue", "task_sha256", "prompt_sha256", "backend",
-            "model_id", "model_revision", "max_new_tokens", "remote_source_sha256"}
-    if set(job) != keys or job["schema_version"] != 1 or job["kind"] != "GCL_ERDOS_COLAB_LOGICAL_REVIEW":
+            "model_id", "model_revision", "max_new_tokens", "remote_source_sha256",
+            "host_runner_source_sha256"}
+    if set(job) != keys or job["schema_version"] != 2 or job["kind"] != "GCL_ERDOS_COLAB_LOGICAL_REVIEW":
         raise ValueError("unexpected Colab workload grammar")
     if job["cohort_id"] != "ERDOS-ROLLING-024-001" or job["problem_id"] != 41 or job["review_issue"] != 2536:
         raise ValueError("unexpected protected Erdős subject")
@@ -55,6 +56,8 @@ def locked_inputs(task_bytes: bytes, prompt_bytes: bytes, job: dict) -> dict:
         raise ValueError("source-locked input changed")
     if not SHA.fullmatch(str(job["remote_source_sha256"])) or job["remote_source_sha256"] != sha(Path(__file__).read_bytes()):
         raise ValueError("remote mathematical reviewer code differs from source-locked job")
+    if not SHA.fullmatch(str(job["host_runner_source_sha256"])):
+        raise ValueError("host Colab runner source is not locked")
     task = json.loads(task_bytes)
     if (task.get("problem_id"), task.get("review_issue"), task.get("cohort_id")) != (
         41, 2536, "ERDOS-ROLLING-024-001"
@@ -184,6 +187,7 @@ def execute(task_data: bytes, prompt_data: bytes, job: dict,
         "input_task_sha256": job["task_sha256"],
         "input_prompt_sha256": job["prompt_sha256"],
         "remote_source_sha256": job["remote_source_sha256"],
+        "host_runner_source_sha256": job["host_runner_source_sha256"],
         "witness": witness,
         "role_passes": [],
         "authority_effects": NO_AUTHORITY,
@@ -216,6 +220,7 @@ def execute(task_data: bytes, prompt_data: bytes, job: dict,
         "input_task_sha256": job["task_sha256"],
         "input_prompt_sha256": job["prompt_sha256"],
         "remote_source_sha256": job["remote_source_sha256"],
+        "host_runner_source_sha256": job["host_runner_source_sha256"],
         "job_sha256": sha(json.dumps(job, sort_keys=True, separators=(",", ":")).encode()),
         "model_id": model_id,
         "transformers_version": framework_version,

@@ -62,6 +62,17 @@ class ColabReviewContracts(unittest.TestCase):
         with self.assertRaises(ValueError):
             remote.execute(task, prompt, corrupted)
 
+    def test_missing_or_invalid_host_runner_digest_is_not_accepted(self):
+        task, prompt, job = packet()
+        for value in (None, "not-a-sha"):
+            corrupted = copy.deepcopy(job)
+            if value is None:
+                del corrupted["host_runner_source_sha256"]
+            else:
+                corrupted["host_runner_source_sha256"] = value
+            with self.assertRaises(ValueError):
+                remote.execute(task, prompt, corrupted)
+
     def test_wrong_original_comment_or_provider_digest_fails(self):
         task, prompt, job = packet()
         for key, value in [("source_comment_sha256", ""), ("protected_formal_source_blob", "nothex"),
