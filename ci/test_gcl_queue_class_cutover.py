@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Queue Class cutover: targeted semantic, view, and fail-closed fixtures."""
 import unittest
-from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message
+from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, protected_rolling_critics
 
 DIRECT = "gcl-pickup:direct-editorial"
 
@@ -80,6 +80,28 @@ class Contract(unittest.TestCase):
         self.assertIn("BLOCKED / UNVERIFIED",body)
         self.assertIn("#9001",body)
         self.assertNotIn("**Project classification:** VERIFIED",body)
+
+    def test_protected_rolling_critic_is_mathematics_even_with_direct_pickup(self):
+        roster=protected_rolling_critics()
+        self.assertEqual(len(roster),24)
+        for n in (2520,2521,2536):
+            p=roster[n]
+            task=make_item(n,"grandchallenge/MATH-PROGRAMME",
+               f"ERDOS {p} — critical source and lemma review of ERDOS-{p:03d}-BOUNDARY-001",
+               ["gcl-job",DIRECT,"gcl-role:source-audit"],"Editorial")
+            self.assertEqual(classify(task),("Mathematics","direct_editorial"))
+        wrong=make_item(2520,"grandchallenge/MATH-PROGRAMME",
+               "ERDOS 999 — critical source and lemma review of ERDOS-999-BOUNDARY-001",
+               ["gcl-job",DIRECT,"gcl-role:source-audit"],"Editorial")
+        with self.assertRaisesRegex(ValueError,"rolling critic identity drift"):
+            classify(wrong)
+
+    def test_second_exact_typography_source_triage_is_editorial(self):
+        ed09=make_item(1264,"grandchallenge/MATH-PROGRAMME",
+          "MP-MATH-TYPO-ED09 — Historical mathematical records: evidence-preserving typography triage",
+          ["gcl-job",DIRECT,"gcl-role:source-audit"],"Mathematics")
+        self.assertEqual(classify(ed09),("Editorial","direct_editorial"))
+        self.assertEqual(prepare(project(),[ed09])[0][0]["class"],"Editorial")
 
     def test_mathsolve_pickup_unchanged(self):
         proof=make_item(999,"grandchallenge/MATHSOLVE","Proof",
