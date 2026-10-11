@@ -111,7 +111,9 @@ def preflight() -> list[dict]:
             or labels.intersection({"gcl-state:reserved","gcl-state:returned",
                                     "gcl-state:blocked","gcl-state:closed"})):
             raise ValueError(f"#{n} editorial identity, pickup or lifecycle drift")
-        if labels.intersection({"gcl-state:available"}) and fields(n)!=OPTIONS:
+        if "gcl-state:available" in labels and any(
+            fields(n).get(k)!=v for k,v in OPTIONS.items()
+        ):
             raise ValueError(f"#{n} AVAILABLE label without complete Issue Field readback")
         values=fields(n)
         if values and any(k in values and values[k]!=v for k,v in OPTIONS.items()):
