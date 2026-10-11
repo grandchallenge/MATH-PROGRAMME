@@ -137,8 +137,9 @@ def apply(rows:list[dict]):
         if not row["was_available"]:
             gh("api",f"repos/{REPO}/issues/{n}/issue-field-values",
                "--method","POST","--input","-",payload=payload)
-            data=gh("issue","edit",str(n),"--repo",REPO,
-                    "--add-label","gcl-state:available")
+            gh("api",f"repos/{REPO}/issues/{n}/labels",
+               "--method","POST","--input","-",
+               payload={"labels":["gcl-state:available"]})
         readback=fields(n)
         if any(readback.get(k)!=v for k,v in OPTIONS.items()):
             raise ValueError(f"#{n} authoritative state/campaign/role readback failed")
