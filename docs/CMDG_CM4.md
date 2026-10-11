@@ -44,9 +44,9 @@ Start with a profinite space (S): a compact, totally disconnected topological sp
 
 Condensed mathematics provides a way to form a free condensed abelian group on (S). Solid mathematics then asks for a stronger object, usually written informally as
 
-[
-\mathbb Z[S]^{\solid}.
-]
+$$
+\mathbb Z[S]^{\square}.
+$$
 
 The CM4 target asks whether this free solid object is actually **solid** in the precise sense encoded by mathlib's `CondensedMod.IsSolid` predicate.
 
