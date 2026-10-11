@@ -340,6 +340,13 @@ def guard_project_api_budget(corrections: int) -> dict:
 def execute(apply:bool, report:Path) -> int:
     if apply and not os.environ.get("GH_TOKEN"):
         raise RuntimeError("--apply requires authenticated short-lived GH_TOKEN")
+    # Rate inspection must precede the first full-Project GraphQL query.
+    # Once the shared Clerk installation is exhausted, even the read-only
+    # 1,000+ item snapshot cannot complete. Do not spend/retry graph reads
+    # or partly mutate fields until the installation quota recovers.
+    if apply:
+        initial_budget = guard_project_api_budget(0)
+        print("INITIAL_API_BUDGET",json.dumps(initial_budget,sort_keys=True),flush=True)
     project,items=read_full_project()
     changes,summary=prepare(project,items)
     receipt={"record_type":"GCL_QUEUE_CLASS_CUTOVER_RECEIPT",

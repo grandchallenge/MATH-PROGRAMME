@@ -3,7 +3,9 @@
 import unittest
 import json
 from unittest.mock import patch, Mock
-from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, protected_rolling_critics, update_class_batch, guard_project_api_budget, BATCH_SIZE
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, protected_rolling_critics, update_class_batch, guard_project_api_budget, BATCH_SIZE, execute
 
 DIRECT = "gcl-pickup:direct-editorial"
 
@@ -47,6 +49,26 @@ class Contract(unittest.TestCase):
             update_class_batch([rows[0],rows[0]])
         with self.assertRaisesRegex(ValueError,"invalid Queue Class batch size"):
             update_class_batch(rows*(BATCH_SIZE//2+1))
+
+    def test_exhausted_quota_never_enters_full_project_query(self):
+        with TemporaryDirectory() as d, \
+             patch.dict("os.environ",{"GH_TOKEN":"masked-test-token"}), \
+             patch("gcl_queue_class_cutover.guard_project_api_budget",
+                   side_effect=RuntimeError("Clerk rate budget insufficient")) as budget, \
+             patch("gcl_queue_class_cutover.read_full_project") as project_read:
+            with self.assertRaisesRegex(RuntimeError,"rate budget insufficient"):
+                execute(True,Path(d)/"blocked.json")
+            budget.assert_called_once_with(0)
+            project_read.assert_not_called()
+
+    def test_dry_run_does_not_consume_live_quota_guard(self):
+        with TemporaryDirectory() as d, \
+             patch("gcl_queue_class_cutover.guard_project_api_budget") as budget, \
+             patch("gcl_queue_class_cutover.read_full_project",
+                   return_value=(project(), [])), \
+             patch("gcl_queue_class_cutover.reconcile_views"):
+            self.assertEqual(execute(False,Path(d)/"preview.json"),0)
+            budget.assert_not_called()
 
     def test_quota_guard_fails_before_mutations(self):
         def budget(graphql,core):
