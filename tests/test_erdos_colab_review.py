@@ -174,7 +174,7 @@ class ColabReviewContracts(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with patch.object(host, "prepare") as pre, patch.object(host, "colab_execute") as launcher, \
                  patch.object(host, "ROOT", Path(tmp)):
-                def fake_prepare(path):
+                def fake_prepare(path, **kwargs):
                     (path/"task.json").write_bytes(task)
                     (path/"prompt.txt").write_bytes(prompt)
                     return {"ready":True}
