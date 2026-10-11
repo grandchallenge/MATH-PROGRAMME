@@ -33,9 +33,9 @@ Historical theorem work embedded in Programme is frozen as lineage. New mathemat
 
 ## Core bridge and first examples by hand
 
-**Friendly example:** \(\varphi=(x\lor y)\land(\neg x\lor y)\) is satisfiable: take \(y=\mathrm{true}\), either value of \(x\). A supplied assignment is an efficiently checkable certificate.
+**Friendly example:** $\varphi=(x\lor y)\land(\neg x\lor y)$ is satisfiable: take $y=\mathrm{true}$, either value of $x$. A supplied assignment is an efficiently checkable certificate.
 
-**Edge example:** \(\psi=x\land\neg x\) is unsatisfiable. Trying both assignments proves this *one* instance unsatisfiable. This finite case does not imply an efficient general SAT solver or \(P=NP\).
+**Edge example:** $\psi=x\land\neg x$ is unsatisfiable. Trying both assignments proves this *one* instance unsatisfiable. This finite case does not imply an efficient general SAT solver or $P=NP$.
 
 Bridge: Boolean formula → assignment certificate → fast verification → potentially vast witness search → exact uniform complexity-class question.
 
@@ -74,7 +74,7 @@ No new polynomial-time algorithm for an NP-complete language, unrestricted machi
 
 | Stage | Duty | Completion test |
 | --- | --- | --- |
-| Exercise | Evaluate \(\varphi\) with \(y=1\) | Both clauses true |
+| Exercise | Evaluate $\varphi$ with $y=1$ | Both clauses true |
 | Exploration | Find all satisfying assignments | Exactly two |
 | Fixture | Run enumeration script | Print 2 and 0 |
 | Lemma candidate | State verifier runtime against bit encoding | Bound by formula length |
@@ -88,7 +88,7 @@ The finite truth-table output is independently checkable; the verifier lemma can
 
 ## Trust quartet
 
-**Proved:** Boolean evaluation and linear-time certificate verification for a specified encoding. **Checked:** two tiny truth tables. **Open:** \(P\stackrel{?}=NP\). **External verification:** correspondence of imported formal definitions, machine conventions and reductions.
+**Proved:** Boolean evaluation and linear-time certificate verification for a specified encoding. **Checked:** two tiny truth tables. **Open:** $P\stackrel{?}=NP$. **External verification:** correspondence of imported formal definitions, machine conventions and reductions.
 
 ## Bibliography and source audit
 
