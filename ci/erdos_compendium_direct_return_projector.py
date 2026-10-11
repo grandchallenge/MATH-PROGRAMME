@@ -109,6 +109,14 @@ def evaluate(issue: dict, fields: list[dict], comments: list[dict]) -> dict:
         return skip("unavailable_or_invalid_state")
     if state=="AVAILABLE" and lifecycle!={"gcl-state:available"}:
         return skip("state_label_disagreement")
+    # A prior worker-result event may have written the authoritative RETURNED
+    # field and added the RETURNED label before the old AVAILABLE label was
+    # removed. Only this exact partial transition is replayable.
+    if state=="RETURNED" and lifecycle not in (
+        {"gcl-state:available"}, {"gcl-state:returned"},
+        {"gcl-state:available","gcl-state:returned"}
+    ):
+        return skip("returned_state_label_disagreement")
     ids=set()
     valid=[]
     for comment in comments:
