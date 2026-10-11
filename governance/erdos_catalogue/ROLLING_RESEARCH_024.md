@@ -8,7 +8,7 @@ Exactly the 8 existing first-reconnaissance problems and 16 protected-source ope
 
 ## Current workload
 
-- 14 issues carry prior bounded-design RESULT/1 comments; these are **worker evidence, unadjudicated**. Ten have existing critical source-review dockets, four need dockets (problems 11, 12, 14 and 15).
+- 14 issues carry prior bounded-design RESULT/1 comments; these are **worker evidence, unadjudicated**. All fourteen now have issue-bound critical source-review dockets; the last four were created as #2520–#2523.
 - 10 issues still await their direct-editorial initial source/work-design return; they remain AVAILABLE on their original issues. Never duplicate a RESULT/1.
 - No claimable new MATHSOLVE job is created by this selection. Prior Solve successor branches/cohorts (including 241, 470 and 593) remain separately authoritative.
 
@@ -26,10 +26,10 @@ Exactly the 8 existing first-reconnaissance problems and 16 protected-source ope
 | 1052 | [#2323](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2323) | Design returned; source review required | ERDOS-1052-CANONICAL-FACTOR-LEAN-CERT-001 | [#2518](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2518) |
 | 9 | [#1278](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1278) | Design returned; source review required | ERDOS-009-PARITY-EXACT-REP-CERT-001 | [#2516](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2516) |
 | 10 | [#1279](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1279) | Design returned; source review required | ERDOS-010-POPCOUNT-SEMANTIC-CERTIFICATE-001 | [#2517](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2517) |
-| 11 | [#1280](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1280) | Design returned; source review required | ERDOS-011-CRT-EXPONENT-BOUNDARY-001 | Open review docket |
-| 12 | [#1281](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1281) | Design returned; source review required | ERDOS-012-ISGOOD-SEMANTICS-DYADIC-001 | Open review docket |
-| 14 | [#1283](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1283) | Design returned; source review required | ERDOS-014-UNIQUE-SUM-SEMANTICS-CERT-001 | Open review docket |
-| 15 | [#1284](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1284) | Design returned; source review required | ERDOS-015-REAL-ORDERED-PAIR-SEMANTICS-001 | Open review docket |
+| 11 | [#1280](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1280) | Design returned; source review required | ERDOS-011-CRT-EXPONENT-BOUNDARY-001 | Review issue-bound source evidence |
+| 12 | [#1281](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1281) | Design returned; source review required | ERDOS-012-ISGOOD-SEMANTICS-DYADIC-001 | Review issue-bound source evidence |
+| 14 | [#1283](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1283) | Design returned; source review required | ERDOS-014-UNIQUE-SUM-SEMANTICS-CERT-001 | Review issue-bound source evidence |
+| 15 | [#1284](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1284) | Design returned; source review required | ERDOS-015-REAL-ORDERED-PAIR-SEMANTICS-001 | Review issue-bound source evidence |
 | 17 | [#1286](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1286) | Source design pending | Extract bounded exact target from source audit | After source return |
 | 18 | [#1287](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1287) | Source design pending | Extract bounded exact target from source audit | After source return |
 | 25 | [#1294](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1294) | Source design pending | Extract bounded exact target from source audit | After source return |
