@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from validate_rendered_docs import admonition_render_errors, homepage_render_errors
+from validate_rendered_docs import admonition_render_errors, cm4_display_math_errors, homepage_render_errors
 from audit_math_typography import source_issues, source_math_count, rendered_issues
 
 
@@ -73,6 +73,54 @@ def main() -> int:
             "no rendered info admonition" in error
             for error in admonition_render_errors(cm4_page, "Research surface authority")
         )
+
+        # Real pre-MathJax HTML wrapper witness, not merely source math counts.
+        cm4_page.write_text(
+            r'<html><body><div class="arithmatex">\['
+            r'\mathbb Z[S]^{\square}.\]</div></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page) == []
+
+        # The originally published error: raw square brackets and an undefined
+        # macro, with no div.arithmatex. Old generic wrapper counting missed it.
+        cm4_page.write_text(
+            r'<html><body><p>[ \mathbb Z[S]^{\solid}. ]</p></body></html>',
+            encoding="utf-8",
+        )
+        assert any(
+            "no Arithmatex display" in error
+            for error in cm4_display_math_errors(cm4_page)
+        )
+
+        # Supported TeX rendered as *plain text* is still a publication defect.
+        cm4_page.write_text(
+            r'<html><body><p>\mathbb Z[S]^{\square}.</p></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page)
+
+        # An inline Arithmatex wrapper is not a displayed formula.
+        cm4_page.write_text(
+            r'<html><body><span class="arithmatex">'
+            r'\(\mathbb Z[S]^{\square}\)</span></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page)
+
+        # A different display is not sufficient; require this exact witness.
+        cm4_page.write_text(
+            r'<html><body><div class="arithmatex">\[x^2\]</div>'
+            r'<p>\mathbb Z[S]^{\square}.</p></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page)
+
+        # Missing page fails closed rather than disappearing from the site.
+        cm4_page.unlink()
+        assert cm4_display_math_errors(cm4_page) == [
+            f"built CM4 result page is missing: {cm4_page}"
+        ]
 
         missing_admonition_page = root / "CMDG_CM4_RESEARCH_GUIDE" / "index.html"
         assert admonition_render_errors(
