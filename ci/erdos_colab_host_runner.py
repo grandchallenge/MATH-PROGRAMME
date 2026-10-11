@@ -200,10 +200,9 @@ def main() -> int:
     if args.backend == "local_transformers" and args.accelerator == "CPU":
         p.error("explicit Colab GPU required for local model review")
     if args.backend == "local_transformers" and (
-            not args.model_id or not args.model_revision or not SHA.match(args.model_revision + "0"*24)):
-        # exact 40-hex SHA, not floating model aliases.
-        if not args.model_revision or not re.fullmatch(r"[a-f0-9]{40}", args.model_revision):
-            p.error("explicit 40-character pinned model commit required")
+            not args.model_id or not args.model_revision or
+            not re.fullmatch(r"[a-f0-9]{40}", args.model_revision)):
+        p.error("explicit model repository and pinned 40-character commit required")
     if args.backend == "witness_only" and (args.model_id or args.model_revision):
         p.error("witness-only probe has no text-generation model")
     if args.backend == "local_transformers" and not args.execute:
@@ -216,7 +215,9 @@ def main() -> int:
     output.mkdir(parents=True, exist_ok=False)
     write_status(output, "QUEUED", "prepare source-locked Forge candidate")
     try:
-        prepared = prepare(output)
+        prepared = prepare(
+            output, model_run_identity="GCL_COLAB_LOGICAL_ROLE_PASSES",
+            independence_claim="ROLE_SCOPED_PREPARATORY_NOT_CERT_INDEPENDENCE")
         if not prepared["ready"]:
             write_status(output, "RED", "queue not available: " + prepared["state"])
             print(json.dumps({"state":"NOT_READY", "reason":prepared["state"],
