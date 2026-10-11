@@ -16,7 +16,7 @@ def check():
  assert m["size_limit"]==24 and len(items)==len(set(ids))==24 and ids==expected
  assert len([x for x in items if x["worker_result_comment_id"]])==14
  assert len([x for x in items if not x["worker_result_comment_id"]])==10
- assert len([x for x in items if x["source_critical_review_issue"]])==10
+ assert len([x for x in items if x["source_critical_review_issue"]])==14
  assert not any(m["authority_effects"].values())
  tt={int(x["problem_id"]):x for x in t["entries"]}
  rr={x["problem_id"]:x for x in r["issues"]}
