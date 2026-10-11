@@ -28,6 +28,7 @@ from ci.erdos_forge_copilot_pilot import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+HOST = Path(__file__).resolve()
 REMOTE = ROOT / "colab/erdos_024_remote_review.py"
 SHA = re.compile(r"[a-f0-9]{40}\Z")
 PROVENANCE = "GCL_ERDOS_COLAB_LOGICAL_REVIEW"
@@ -59,13 +60,14 @@ def remote_module():
 def job_packet(task: bytes, prompt: bytes, *,
                backend: str, model_id: str | None,
                model_revision: str | None, max_new_tokens: int) -> dict:
-    job = {"schema_version": 1, "kind": PROVENANCE,
+    job = {"schema_version": 2, "kind": PROVENANCE,
            "cohort_id": "ERDOS-ROLLING-024-001",
            "problem_id": 41, "review_issue": 2536,
            "task_sha256": sha(task), "prompt_sha256": sha(prompt),
            "backend": backend, "model_id": model_id,
            "model_revision": model_revision, "max_new_tokens": max_new_tokens,
-           "remote_source_sha256": sha(REMOTE.read_bytes())}
+           "remote_source_sha256": sha(REMOTE.read_bytes()),
+           "host_runner_source_sha256": sha(HOST.read_bytes())}
     remote_module().locked_inputs(task, prompt, job)
     return job
 
@@ -95,6 +97,9 @@ def verify_artifacts(directory: Path) -> dict:
     if (receipt.get("remote_source_sha256") != sha(REMOTE.read_bytes()) or
             result.get("remote_source_sha256") != sha(REMOTE.read_bytes())):
         raise ValueError("remote Colab source identity not attested")
+    if (receipt.get("host_runner_source_sha256") != sha(HOST.read_bytes()) or
+            result.get("host_runner_source_sha256") != sha(HOST.read_bytes())):
+        raise ValueError("host Colab runner identity not attested")
     if receipt.get("authority_effects") != AUTHORITY or result.get("authority_effects") != AUTHORITY:
         raise ValueError("remote runtime tried to promote mathematical authority")
     if result.get("record_type") != "GCL_ERDOS_COLAB_LOGICAL_REVIEW_RESULT":
