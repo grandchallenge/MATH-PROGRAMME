@@ -297,7 +297,8 @@ def receipt_message(receipt: dict | None, *, run_url: str, protected_sha: str) -
                 and receipt["post_readback"].get("items") == receipt["items"]
                 and isinstance(receipt.get("saved_view_ids"), dict)
                 and all(receipt["saved_view_ids"].get(k) for k in VIEW_FILTERS)
-                and set((receipt.get("classes_expected") or {})) == {"Editorial", "Mathematics"}
+                and isinstance(receipt.get("classes_expected"), dict)
+                and set(receipt["classes_expected"]) == {"Editorial", "Mathematics"}
                 and sum(receipt["classes_expected"].values()) == receipt["items"])
     lines = [RECEIPT_MARKER, "# Protected GCL queue-class readback",
              "", "**Project classification:** " + ("VERIFIED" if complete else "BLOCKED / UNVERIFIED"),
@@ -358,14 +359,16 @@ def publish_readback(report: Path, issue: int) -> int:
         raise RuntimeError("duplicate controller receipts; refuse overwrite")
     payload = json.dumps({"body":body})
     if matches:
-        api("--method", "PATCH",
+        posted = api("--method", "PATCH",
             f"repos/{OWNER}/MATH-PROGRAMME/issues/comments/{matches[0]['id']}",
             "--input", "-", stdin=payload)
     else:
-        api("--method", "POST",
+        posted = api("--method", "POST",
             f"repos/{OWNER}/MATH-PROGRAMME/issues/{issue}/comments",
             "--input", "-", stdin=payload)
-    print("RECEIPT_PUBLISHED", "VERIFIED" if receipt and receipt.get("applied") else "BLOCKED", flush=True)
+    if posted.get("body") != body:
+        raise RuntimeError("receipt comment readback mismatch")
+    print("RECEIPT_PUBLISHED", "VERIFIED" if "**Project classification:** VERIFIED" in body else "BLOCKED", flush=True)
     return 0
 
 
