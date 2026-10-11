@@ -131,7 +131,8 @@ jobs:
 
   forge-pilot-review:
     name: One bounded Forge mathematical critique (Copilot, evidence only)
-    if: github.event_name == 'push' && needs.reconcile.result == 'success'
+    # Quarantined pending INTELLECT #118: a green queue repair never authorizes AI execution.
+    if: github.event_name == 'push' && needs.reconcile.result == 'success' && false
     needs: [reconcile]
     runs-on: ubuntu-24.04
     timeout-minutes: 12
@@ -202,7 +203,8 @@ jobs:
 
   forge-pilot-evidence:
     name: Publish unadjudicated Forge reviewer evidence (never an approval)
-    if: github.event_name == 'push' && needs.forge-pilot-review.result == 'success'
+    # Quarantined with model worker: no model evidence publishing during governance review.
+    if: github.event_name == 'push' && needs.forge-pilot-review.result == 'success' && false
     needs: [forge-pilot-review]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
