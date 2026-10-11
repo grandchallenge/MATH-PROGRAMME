@@ -111,19 +111,36 @@ def verified_source_issue(task: dict) -> dict:
 
 
 def project_fields() -> dict:
+    """Only Status is a Project V2 field; GCL State/Role/etc are organization Issue Fields."""
     data = gh("project", "field-list", str(PROJECT), "--owner", OWNER, "--format", "json")
     fields = data.get("fields") or []
-    by_name = {f["name"]: f for f in fields}
-    if len(by_name) != len(fields):
+    by_name = {field["name"]: field for field in fields}
+    if len(fields) != len(by_name):
         raise ValueError("duplicate Project field")
-    for name in (*FIELD_EXPECTED, *TEXT_FIELDS):
-        if name not in by_name:
-            raise ValueError(f"missing Project field: {name}")
-    for name, target in FIELD_EXPECTED.items():
-        options = [opt for opt in by_name[name].get("options", []) if opt["name"] == target]
-        if len(options) != 1:
-            raise ValueError(f"Project option {name}/{target} missing or ambiguous")
+    status = by_name.get("Status")
+    if not status or status.get("id") != PROJECT_STATUS_FIELD_ID:
+        raise ValueError("protected Project #2 Status field identity mismatch")
+    options = [op for op in status.get("options", [])
+               if op.get("name") == "Todo" and op.get("id") == PROJECT_TODO_OPTION_ID]
+    if len(options) != 1:
+        raise ValueError("missing exact Project Todo option")
     return by_name
+
+
+def add_issue_fields(ident: int) -> None:
+    """POST additive Issue Field values; PUT would overwrite unrelated fields."""
+    expected = {k: v for k, v in {**FIELD_EXPECTED, **TEXT_FIELDS}.items() if k != "Status"}
+    expected["GCL Timebox"] = 35
+    payload = {"issue_field_values": [
+        {"field_id": ISSUE_FIELD_IDS[name], "value": value}
+        for name, value in expected.items()
+    ]}
+    process = subprocess.run(
+        ["gh", "api", f"repos/{OWNER}/{REPO}/issues/{ident}/issue-field-values",
+         "--method", "POST", "--input", "-"],
+        input=json.dumps(payload), capture_output=True, text=True, timeout=90)
+    if process.returncode:
+        raise RuntimeError(f"issue field POST failed for #{ident}: {process.stderr[:350]}")
 
 
 def project_item_for_issue(ident: int) -> str | None:
