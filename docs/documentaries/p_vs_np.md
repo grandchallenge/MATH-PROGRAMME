@@ -6,61 +6,64 @@
 <div class="monograph-layout"><aside class="monograph-contents" aria-label="Manuscript contents"><p class="monograph-contents__title">The journey</p><ol><li><a href="#reader-note">How to Read the Machine</a></li><li><a href="#verification">Finding and Checking</a></li><li><a href="#classes">The Classes P and NP</a></li><li><a href="#reductions">Reductions Preserve Difficulty</a></li><li><a href="#complete">The Complete Problems</a></li><li><a href="#barriers">The Frontier and Its Barriers</a></li></ol><p class="monograph-contents__title">Technical appendix</p><ol><li><a href="#appendix-machines">Machines, Encodings, and Clocks</a></li><li><a href="#appendix-forms">Decision, Search, Optimization, and Counting</a></li><li><a href="#appendix-lower-bounds">Circuits and Proof Complexity</a></li><li><a href="#appendix-trust">Claim-Level Trust Matrix</a></li><li><a href="#sources">Sources</a></li></ol></aside>
 <article class="monograph-body" aria-label="The Shape of Computational Truth manuscript">
 <section class="monograph-section" id="reader-note" data-reader-section markdown="1"><p class="monograph-section__eyebrow">A note to the reader</p>
-## How to Read the Machine
+<h2>How to Read the Machine</h2>
 Complexity theory asks not merely whether a problem can be solved, but how resources grow with encoded input length. The labyrinths and gates in this edition are metaphors. Machine models, encodings, reduction direction, worst-case quantifiers, and uniformity govern the mathematics.
 
-**Edition status:** Open Millennium Prize Problem; machine-normalized documentary; no algorithm or lower-bound claim.
+<strong>Edition status:</strong> Open Millennium Prize Problem; machine-normalized documentary; no algorithm or lower-bound claim.
 <div class="conjecture-box"><strong>Open problem</strong><p>Determine whether every language in \(\mathsf{NP}\) is in \(\mathsf{P}\). Since \(\mathsf{P}\subseteq\mathsf{NP}\), the question is whether the inclusion is equality.</p></div><div class="warning-box"><strong>Claim boundary</strong><p>A fast heuristic, a quantum speedup, a restricted lower bound, an oracle separation, or success on a finite benchmark does not settle the uniform worst-case machine-level question.</p></div></section>
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/p_vs_np/verification.svg" width="1024" height="1536" loading="lazy" alt="A maze contrasts discovering a path with rapidly verifying a supplied path certificate."></button><figcaption><span class="plate-label">Plate I</span><strong>Finding and checking</strong><small>Pedagogical orientation only. The verifier definition governs the claim.</small></figcaption></figure>
 <section class="monograph-section" id="verification" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter I</p>
-## Finding and Checking
+<h2>Finding and Checking</h2>
 A supplied Sudoku grid, Hamiltonian cycle, or satisfying assignment may be rapidly checked even when discovering it appears difficult.
 <div class="definition-box"><strong>Definition</strong><p>A language \(L\) lies in \(\mathsf{NP}\) when a polynomial-time verifier \(V\) and polynomial \(p\) satisfy: \(x\in L\) exactly when some certificate \(y\), with \(|y|\le p(|x|)\), has \(V(x,y)=1\).</p></div><div class="theorem-box"><strong>Established inclusion</strong><p>\(\mathsf{P}\subseteq\mathsf{NP}\): a deterministic polynomial-time algorithm supplies a verifier that simply runs the algorithm.</p></div></section>
 <section class="monograph-section" id="classes" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter II</p>
-## The Classes P and NP
+<h2>The Classes P and NP</h2>
 \[\mathsf{P}\subseteq\mathsf{NP},\qquad \mathsf{P}\stackrel{?}{=}\mathsf{NP}.\]
 Polynomial time is robust across standard reasonable machine models only after encoding costs and uniformity are fixed. Unary and binary encodings can assign radically different input lengths to the same numerical value.
 <div class="warning-box"><strong>Encoding guardrail</strong><p>An algorithm polynomial in a numerical magnitude may be exponential in its bit length. Every complexity claim must state the representation and count the resources used to read, transform, and verify it.</p></div></section>
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/p_vs_np/reduction.svg" width="1024" height="1536" loading="lazy" alt="Directed gateways map one decision problem into another while preserving yes and no instances."></button><figcaption><span class="plate-label">Plate II</span><strong>The grammar of reduction</strong><small>Pedagogical orientation only. Reduction direction is theorem-critical.</small></figcaption></figure>
 <section class="monograph-section" id="reductions" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter III</p>
-## Reductions Preserve Difficulty
+<h2>Reductions Preserve Difficulty</h2>
 A polynomial-time many-one reduction satisfies \(x\in A\Longleftrightarrow f(x)\in B\). If \(A\le_p B\), an efficient solver for \(B\) yields one for \(A\); the direction cannot be reversed by rhetoric.
 <div class="definition-box"><strong>Definition</strong><p>A language is NP-hard when every language in \(\mathsf{NP}\) reduces to it. It is NP-complete when it is NP-hard and itself belongs to \(\mathsf{NP}\).</p></div></section>
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/p_vs_np/complete.svg" width="1024" height="1536" loading="lazy" alt="SAT sits at a hub linked to graph, scheduling, routing, and packing problems by polynomial reductions."></button><figcaption><span class="plate-label">Plate III</span><strong>The complete problems</strong><small>Pedagogical orientation only. Exact reduction chains govern completeness.</small></figcaption></figure>
 <section class="monograph-section" id="complete" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter IV</p>
-## The Complete Problems
+<h2>The Complete Problems</h2>
 <div class="imported-box"><strong>Imported established theorem · Cook–Levin</strong><p>Boolean satisfiability is NP-complete. A polynomial-time algorithm for SAT would place every language in \(\mathsf{NP}\) inside \(\mathsf{P}\).</p></div>
 Computation tableaux encode accepting machine histories as Boolean formulas. Thousands of graph, scheduling, routing, packing, algebraic, and logical problems are complete through explicit reduction chains. Decision, search, optimization, and counting remain distinct contracts unless an interreduction is proved.</section>
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/p_vs_np/barriers.svg" width="1024" height="1536" loading="lazy" alt="Relativization, natural proofs, and algebrization form distinct barriers around the unresolved central question."></button><figcaption><span class="plate-label">Plate IV</span><strong>The walls around the frontier</strong><small>Pedagogical orientation only. Barriers constrain technique families; they do not settle the problem.</small></figcaption></figure>
 <section class="monograph-section" id="barriers" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Chapter V</p>
-## The Frontier and Its Barriers
+<h2>The Frontier and Its Barriers</h2>
 <div class="ledger-pair"><div><h3>Relativization</h3><p>Oracles exist relative to which P equals NP and others relative to which they differ.</p><h3>Natural proofs</h3><p>Broad constructive circuit arguments conflict with strong pseudorandom functions.</p></div><span aria-hidden="true">≠</span><div><h3>Algebrization</h3><p>Even arithmetized relativizing methods meet oracle-style limits.</p><h3>Meaning</h3><p>These are barriers to methods, not evidence of undecidability.</p></div></div>
 Quantum computation, interactive proofs, PCPs, approximation, parameterization, and average-case theory reveal nearby structure without deciding equality.
 <p class="monograph-pullquote">A reduction is a bridge of obligation: solve the destination, and every source problem may cross.</p></section>
 <section class="monograph-section" id="appendix-machines" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
-## Machines, Encodings, and Clocks
+<h2>Machines, Encodings, and Clocks</h2>
 A deterministic Turing machine decides a language in polynomial time when its worst-case step count is \(n^{O(1)}\). A nondeterministic machine accepts if at least one polynomially bounded branch accepts. The verifier and nondeterministic definitions of NP are equivalent. Uniformity excludes an unrelated advice circuit for each input length.</section>
 <section class="monograph-section" id="appendix-forms" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
-## Decision, Search, Optimization, and Counting
+<h2>Decision, Search, Optimization, and Counting</h2>
 Self-reduction recovers a SAT witness from polynomially many decision queries. This theorem does not automatically transfer to every search problem. Approximation changes the output contract; a heuristic or approximation ratio is not an exact polynomial-time algorithm for the NP-complete decision problem.</section>
 <section class="monograph-section" id="appendix-lower-bounds" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix C</p>
-## Circuits and Proof Complexity
+<h2>Circuits and Proof Complexity</h2>
 Strong lower bounds are known for restricted circuits and proof systems. The unrestricted lower bounds needed for P versus NP remain open. Cryptographic consequences are conditional: P = NP would undermine standard one-way-function assumptions, while P ≠ NP alone does not guarantee secure cryptography.</section>
 <section class="monograph-section" id="appendix-trust" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix D</p>
-## Claim-Level Trust Matrix
-| Claim | Trust class | Qualification |
-|---|---|---|
-| \(\mathsf{P}\subseteq\mathsf{NP}\) | established | direct verifier construction |
-| SAT is NP-complete | imported established | Cook–Levin |
-| Restricted circuit/proof lower bounds | established in model | no unrestricted separation |
-| Relativization, natural proofs, algebrization | imported established | barriers to method families |
-| P = NP or P ≠ NP | open | neither direction proved |
-| Quantum advantage | model-specific | no known NP-complete polynomial-time algorithm |
-| AI benchmark success | empirical | not worst-case classification |
-| Illuminated plates | pedagogical | never authoritative machine proofs |
+<h2>Claim-Level Trust Matrix</h2>
+<table class="monograph-trust-table">
+  <thead><tr><th scope="col">Claim</th><th scope="col">Trust class</th><th scope="col">Qualification</th></tr></thead>
+  <tbody>
+    <tr><td>\(\mathsf{P}\subseteq\mathsf{NP}\)</td><td>established</td><td>direct verifier construction</td></tr>
+    <tr><td>SAT is NP-complete</td><td>imported established</td><td>Cook–Levin</td></tr>
+    <tr><td>Restricted circuit/proof lower bounds</td><td>established in model</td><td>no unrestricted separation</td></tr>
+    <tr><td>Relativization, natural proofs, algebrization</td><td>imported established</td><td>barriers to method families</td></tr>
+    <tr><td>P = NP or P ≠ NP</td><td>open</td><td>neither direction proved</td></tr>
+    <tr><td>Quantum advantage</td><td>model-specific</td><td>no known NP-complete polynomial-time algorithm</td></tr>
+    <tr><td>AI benchmark success</td><td>empirical</td><td>not worst-case classification</td></tr>
+    <tr><td>Illuminated plates</td><td>pedagogical</td><td>never authoritative machine proofs</td></tr>
+  </tbody>
+</table>
 <div class="warning-box"><strong>Final claim boundary</strong><p>This edition supplies no new algorithm, reduction, circuit lower bound, proof-system lower bound, oracle theorem, or cryptographic construction that settles P versus NP.</p></div></section>
 <section class="monograph-section" id="sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
-## Governing literature and campaign record
+<h2>Governing literature and campaign record</h2>
 <div class="bibliography"><p><a href="https://www.claymath.org/millennium/p-vs-np/">Clay Mathematics Institute: P versus NP</a>.</p><p><a href="https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf">Stephen Cook, official problem description</a>.</p><p><a href="https://doi.org/10.1145/800157.805047">Cook–Levin foundations</a>.</p><p><a href="https://doi.org/10.1137/0204037">Baker, Gill, and Solovay: relativization</a>.</p><p><a href="https://doi.org/10.1145/237814.237866">Razborov and Rudich: natural proofs</a>.</p><p><a href="https://doi.org/10.1145/780542.780545">Aaronson and Wigderson: algebrization</a>.</p></div>
 Programme links: [Domain 07](../../domains/p_vs_np/) · [claim-authority record](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/PNP-WP00-source-definition-equivalence-audit.md) · [campaign artifacts](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/campaigns/p_vs_np) · [review records](https://github.com/grandchallenge/MATH-PROGRAMME/tree/main/reviews/p_vs_np)</section>
 <section class="monograph-colophon" aria-labelledby="edition-record-title"><h2 id="edition-record-title">Edition record</h2><p>This browser-native edition uses the immutable Poincaré reference contract and shared open-problem status vocabulary. Native SVG diagrams are pedagogical; semantic HTML carries the machine definitions and reductions.</p><p>The committed pointer is a source record; the checksum-locked complete illustrated source bundle is the authoritative source artifact. MathJax 3.2.2 is a version-pinned network enhancement, and the source TeX remains present when unavailable.</p><p><strong>Web claim boundary:</strong> Browser-native, source-normalized exposition of the machine-and-encoding question P versus NP. Fast heuristics, finite experiments, average-case success, quantum algorithms, oracle separations, special-case algorithms, restricted circuit lower bounds, and proof-complexity results are not promoted to P = NP or P ≠ NP.</p><div class="monograph-actions"><a class="monograph-button" href="../p_vs_np.edition.json">Web-edition data</a><a class="monograph-button" href="../documentary_web.schema.json">Reusable schema</a><a class="monograph-button" href="../sources/the_shape_of_computational_truth.tex">Source record</a><a class="monograph-button" href="../ARTIFACT_MANIFEST.json">Artifact manifest</a></div><dl class="edition-integrity"><div><dt>Rendered PDF</dt><dd>19,050,413 bytes · <code>2bde341f24383dbaa66c326488bc01355990a8c676f7a5ac2e518905b75097a9</code> · <code>metadata_only</code></dd></div><div><dt>Complete LaTeX source</dt><dd>66,883 bytes · <code>166497cf0b5b4dfc8124c002b6dd510816779907864df0611328a8172ab9729f</code> · <code>metadata_only</code></dd></div><div><dt>Authoritative complete illustrated source bundle</dt><dd>37,547,668 bytes · <code>f7afac36f2381738bd6b850519df151f48a9c2983a7e8fcee78c2442ff2c5a2a</code> · <code>metadata_only</code></dd></div></dl></section>

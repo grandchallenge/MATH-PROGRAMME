@@ -35,9 +35,9 @@ Mathematical work should consume only the exact restricted claims protected in t
 
 ## Core bridge and first examples by hand
 
-**Friendly example.** On the universe \(\{1,2\}\), take \(\mathcal F=\{\varnothing,\{1\},\{2\},\{1,2\}\}\). This is union-closed. Each element occurs in exactly two of four sets, reaching the half threshold with equality.
+**Friendly example.** On the universe $\{1,2\}$, take $\mathcal F=\{\varnothing,\{1\},\{2\},\{1,2\}\}$. This is union-closed. Each element occurs in exactly two of four sets, reaching the half threshold with equality.
 
-**Edge example.** \(\mathcal F=\{\varnothing\}\) is nonempty as a family and union-closed, but its support is empty. It has no candidate witness. This is why the conjecture must exclude the empty-support case, not merely the empty family.
+**Edge example.** $\mathcal F=\{\varnothing\}$ is nonempty as a family and union-closed, but its support is empty. It has no candidate witness. This is why the conjecture must exclude the empty-support case, not merely the empty family.
 
 The bridge is: union operation → closed family → frequency count → witnessed small cases → the missing uniform all-families argument.
 
@@ -58,7 +58,7 @@ print(closed, counts, max(counts.values()) * 2 >= len(F))
 
 ## First theorem or local proposition
 
-**Singleton lemma.** If a finite union-closed family contains \(\{x\}\), then at least half its member sets contain \(x\). **Proof:** map each member \(A\) missing \(x\) to \(A\cup\{x\}\). Union-closure ensures the image is present, and deleting \(x\) recovers \(A\), so the map is injective into the containing members. This is elementary and does not settle the universal problem.
+**Singleton lemma.** If a finite union-closed family contains $\{x\}$, then at least half its member sets contain $x$. **Proof:** map each member $A$ missing $x$ to $A\cup\{x\}$. Union-closure ensures the image is present, and deleting $x$ recovers $A$, so the map is injective into the containing members. This is elementary and does not settle the universal problem.
 
 ## 5. Theorem-spine location
 
@@ -77,7 +77,7 @@ No protected record proves or refutes Frankl's conjecture. Certification of rest
 | Stage | Bounded duty | Completion test |
 | --- | --- | --- |
 | Exercise | Count frequencies in the four-set example | Obtain 2 and 2 |
-| Exploration | List all families on \(\{1\}\) | Identify the empty-support exclusion |
+| Exploration | List all families on $\{1\}$ | Identify the empty-support exclusion |
 | Fixture | Re-run the four-set checker | Reproduce three expected outputs |
 | Lemma candidate | Verify singleton injection for a new family | Exhibit injection and inverse on image |
 | Open direction | Describe a proof route for families without singleton members | State the missing noncircular lemma; do not claim it |

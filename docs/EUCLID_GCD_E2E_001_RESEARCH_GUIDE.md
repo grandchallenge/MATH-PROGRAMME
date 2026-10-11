@@ -25,9 +25,9 @@ The exercise demonstrates the full Forge → Solve → Cert → Programme path o
 
 ## Core bridge and first examples by hand
 
-**Friendly example:** \(252=2\cdot105+42\), \(105=2\cdot42+21\), \(42=2\cdot21+0\). Thus the last nonzero remainder is 21. The Bézout witness \(-2\cdot252+5\cdot105=21\) makes the maximality check explicit.
+**Friendly example:** $252=2\cdot105+42$, $105=2\cdot42+21$, $42=2\cdot21+0$. Thus the last nonzero remainder is 21. The Bézout witness $-2\cdot252+5\cdot105=21$ makes the maximality check explicit.
 
-**Edge example:** inputs \((0,0)\) are excluded from this campaign's accepted certificate contract. A generic library may define \(\gcd(0,0)=0\), but that does not license applying this particular positive-divisor normalization or its terminal descent trace to \((0,0)\).
+**Edge example:** inputs $(0,0)$ are excluded from this campaign's accepted certificate contract. A generic library may define $\gcd(0,0)=0$, but that does not license applying this particular positive-divisor normalization or its terminal descent trace to $(0,0)$.
 
 Bridge: division with remainder → gcd witness → candidate construction → independent exact replay → Lean soundness theorem.
 
@@ -52,7 +52,7 @@ Input, quotient/remainder operation and expected output are exact. **Support rou
 
 ## First theorem or local proposition
 
-**Euclidean invariance.** If \(a=qb+r\), then \(\gcd(a,b)=\gcd(b,r)\): the common divisors coincide because \(r=a-qb\) and \(a=qb+r\). Applying this three times proves the example's gcd.
+**Euclidean invariance.** If $a=qb+r$, then $\gcd(a,b)=\gcd(b,r)$: the common divisors coincide because $r=a-qb$ and $a=qb+r$. Applying this three times proves the example's gcd.
 
 ## 3. Exact result
 
@@ -77,14 +77,14 @@ The result is not a novelty, priority, universal producer-correctness, or histor
 | Stage | Duty | Completion test |
 | --- | --- | --- |
 | Exercise | Compute first remainder by hand | 42 |
-| Exploration | Try inputs \((105,252)\) | Same gcd, altered trace |
+| Exploration | Try inputs $(105,252)$ | Same gcd, altered trace |
 | Fixture | Execute the code | Exact rows and final three 21s |
 | Lemma candidate | Prove Euclidean invariance | Both common-divisor inclusions |
 | Open direction | Inspect a different coefficient pair | Explicit candidate and separate certification contract |
 
 ## Certification path and continuation graph
 
-The protected Stage 1 theorem is not produced by this teaching fixture. Cross-pillar source/producer/verifier hashes and the accepted-certificate Lean statement are recorded in the frozen Stage 1 closeout, with **terminal completion** evidenced by protected Programme merge \(`183ff2a0…`\) and tracker #240.
+The protected Stage 1 theorem is not produced by this teaching fixture. Cross-pillar source/producer/verifier hashes and the accepted-certificate Lean statement are recorded in the frozen Stage 1 closeout, with **terminal completion** evidenced by protected Programme merge (`183ff2a0…`) and tracker #240.
 
 `arithmetic trace → Bézout witness → independent GCD checker → accepted-certificate soundness → Stage 2 Diophantine proof trace → historical Book VII concordance [separate]`
 
@@ -101,7 +101,7 @@ The protected Stage 1 theorem is not produced by this teaching fixture. Cross-pi
 | [Terminal tracker readback](https://github.com/grandchallenge/MATH-PROGRAMME/issues/240#issuecomment-5190940620) | Stage 1 admission | Protected-merge provenance |
 | [Stage 2 proof trace](EUCLID_DIOPHANTINE_E2E_002_PROOF_TRACE.md) | Independent successor | Separate protected claim |
 
-**First executable step / completion test:** Recalculate all remainders and the Bézout witness independently, compare exact output against the published trace, and mark the \((0,0)\) case excluded.
+**First executable step / completion test:** Recalculate all remainders and the Bézout witness independently, compare exact output against the published trace, and mark the $(0,0)$ case excluded.
 
 ## 7. First executable step
 

@@ -35,9 +35,9 @@ Subsequent mechanical-semantics and identifiability-aware work must consume the 
 
 A generic inverse problem asks whether measurements determine hidden parameters. The following affine-geometry toy models *identifiability*, not a VGSE theorem.
 
-**Friendly example:** three source points \((0,0),(1,0),(0,1)\) determine an affine map from their three target images because they are not collinear.
+**Friendly example:** three source points $(0,0),(1,0),(0,1)$ determine an affine map from their three target images because they are not collinear.
 
-**Failure example:** three collinear points \((0,0),(1,0),(2,0)\) leave the map's action in the vertical direction undetermined. This is exact non-identifiability. It makes no claim about five-root constructions, foldability, or mechanical feasibility.
+**Failure example:** three collinear points $(0,0),(1,0),(2,0)$ leave the map's action in the vertical direction undetermined. This is exact non-identifiability. It makes no claim about five-root constructions, foldability, or mechanical feasibility.
 
 Bridge: measured landmark positions → constraint matrix → rank → inverse uniqueness or ambiguity → specified protected successor target.
 
@@ -57,7 +57,7 @@ Inputs are the two landmark triples; operation computes twice signed triangle ar
 
 ## First theorem or local proposition
 
-**Affine uniqueness lemma.** An affine map \(T(x)=Ax+b\) on \(\mathbb R^2\) is determined by its values on three noncollinear points: subtract the first image from the others; the two independent displacement vectors span \(\mathbb R^2\), determining \(A\), then \(b\). If the points are collinear, this argument fails. This is ordinary linear algebra.
+**Affine uniqueness lemma.** An affine map $T(x)=Ax+b$ on $\mathbb R^2$ is determined by its values on three noncollinear points: subtract the first image from the others; the two independent displacement vectors span $\mathbb R^2$, determining $A$, then $b$. If the points are collinear, this argument fails. This is ordinary linear algebra.
 
 ## 5. Theorem-spine location
 
@@ -80,7 +80,7 @@ No substantive theorem or certification result is admitted by route activation, 
 | Stage | Duty | Completion test |
 | --- | --- | --- |
 | Exercise | Compute the first determinant | 1 |
-| Exploration | Change third point to \((2,0)\) | Determinant 0 |
+| Exploration | Change third point to $(2,0)$ | Determinant 0 |
 | Fixture | Replay determinant script | Outputs 1 and 0 |
 | Lemma candidate | Prove affine uniqueness | Use invertibility of two-vector basis |
 | Open direction | Read current protected identifiability mandate | Name actual state variables, observation map and residual |
