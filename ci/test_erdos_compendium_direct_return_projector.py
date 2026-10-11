@@ -96,6 +96,15 @@ class CompendiumReturnTests(unittest.TestCase):
         self.assertTrue(r["project"])
         self.assertTrue(r["repair_incomplete_transition"])
 
+    def test_return_label_write_interruption_is_idempotently_repairable(self):
+        both=[*m.ASSIGNMENT_LABELS,"gcl-state:available","gcl-state:returned"]
+        r=m.evaluate(issue(labels=both),fields("RETURNED"),[result()])
+        self.assertTrue(r["project"])
+        self.assertTrue(r["repair_incomplete_transition"])
+        self.assertFalse(r["publication_authorized"])
+        forged=[*m.ASSIGNMENT_LABELS,"gcl-state:unknown"]
+        self.assertFalse(m.evaluate(issue(labels=forged),fields("RETURNED"),[result()])["project"])
+
     def test_worker_failure_return_is_allowed_without_fictional_pr(self):
         c=result(disposition="BLOCKED")
         c["body"]=c["body"].replace(f"https://github.com/{m.REPO}/pull/1 head {SHA}",
