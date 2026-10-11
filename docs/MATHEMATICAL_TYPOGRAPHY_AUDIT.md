@@ -71,7 +71,7 @@ Every line number in this table is from the locked protected base above. The lin
 
 #### Documentary structural corrections (distinct from math diagnostics)
 
-Both remaining documentary editions hand-author HTML and load `javascripts/documentary-mathjax.js`, which explicitly supports their delimiter forms. The protected MkDocs config does **not** enable `md_in_html`. Thus raw `##` headings and pipe tables nested in their hand-authored HTML can leak literally into the built page. This is a **confirmed MkDocs presentation/semantic markup defect**, distinct from the 18 valid MathJax source findings.
+Both remaining documentary editions hand-author HTML and use a separately pinned documentary MathJax bootstrap that explicitly supports their delimiter forms. The protected MkDocs config does **not** enable `md_in_html`. Thus raw `##` headings and pipe tables nested in their hand-authored HTML can leak literally into the built page. This is a **confirmed MkDocs presentation/semantic markup defect**, distinct from the 18 valid MathJax source findings.
 
 - P versus NP: 11 literal headings, one Markdown trust table with eight data rows, one raw bold status label. Replaced with native accessible `h2`/`table`/`strong` elements without altering any math or status cell.
 - Yang–Mills: 11 literal headings, one Markdown trust table with nine data rows, one raw bold status label. Same semantic HTML repair, retaining the exact statements and trust statuses.
