@@ -16,10 +16,10 @@ class ReviewQueueContract(unittest.TestCase):
 
     def test_exact_review_bindings(self):
         tasks = candidates(self.data)
-        self.assertEqual(len(tasks), 15)
-        self.assertEqual(len({x["issue"] for x in tasks}), 15)
+        self.assertEqual(len(tasks), 16)
+        self.assertEqual(len({x["issue"] for x in tasks}), 16)
         self.assertEqual({x["problem"] for x in tasks},
-                         {99,101,138,241,470,593,595,1052,9,10,11,12,14,15,18})
+                         {99,101,138,241,470,593,595,1052,9,10,11,12,14,15,18,25})
 
     def test_cannot_expand_scope(self):
         changed = copy.deepcopy(self.data)

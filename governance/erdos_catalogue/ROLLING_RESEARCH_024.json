@@ -16,9 +16,9 @@
   "selection_rule": "reuse BATCH-001 existing_recon_reuse (8) plus protected_source_open (16), preserve protected FC statement locks and statuses; no duplicate Solve lease",
   "snapshot": {
     "date": "2026-10-10",
-    "worker_reported_bounded_design_returns": 15,
-    "existing_catalogue_source_audits_awaiting_return": 9,
-    "critical_source_dockets_already_open": 15,
+    "worker_reported_bounded_design_returns": 16,
+    "existing_catalogue_source_audits_awaiting_return": 8,
+    "critical_source_dockets_already_open": 16,
     "dockets_to_create_for_existing_returns": 0
   },
   "advance_rule": "A per-problem source-semantic review, primary-source pin, current-status check, exact bounded proof/counterexample/reduction target, positive and hostile tests, duplicate Solve dispatch check and protected MATHSOLVE authority are prerequisites to first /claim. Source-audit RESULT/1 alone is not source acceptance.",
@@ -558,11 +558,15 @@
         "path": "FormalConjectures/ErdosProblems/25.lean",
         "git_blob_sha1": "c0d694d14a5af690b125cfe37f5a520bc7f39c49"
       },
-      "stage": "CATALOGUE_SOURCE_DESIGN_REQUIRED",
-      "worker_result_comment_id": null,
-      "source_critical_review_issue": null,
-      "proposed_target": null,
-      "next_step": "COMPLETE_EXISTING_CATALOGUE_WORK_PACKAGE",
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104151067,
+      "source_critical_review_issue": 2527,
+      "proposed_target": {
+        "id": "ERDOS-025-SIZE-TRUNCATION-LOG-DENSITY-001",
+        "summary": "Kernel check finite cutoff and finite-prefix eventual periodicity/log-density with noncoprime moduli",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
       "launch_gates": {
         "statement_fidelity": false,
         "primary_sources_checked": false,
