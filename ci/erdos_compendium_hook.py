@@ -21,10 +21,10 @@ def on_pre_build(config, **kwargs):
 def on_post_build(config, **kwargs):
     site = Path(config["site_dir"])
     required = [
-        site / "erdos/generated/catalogue/index.html",
-        site / "erdos/generated/problems/0001/index.html",
-        site / "erdos/generated/problems/0002/index.html",
-        site / "erdos/generated/problems/0003/index.html",
+        site / "erdos/catalogue/index.html",
+        site / "erdos/problems/0001/index.html",
+        site / "erdos/problems/0002/index.html",
+        site / "erdos/problems/0003/index.html",
     ]
     missing = [str(path) for path in required if not path.is_file()]
     clean()
