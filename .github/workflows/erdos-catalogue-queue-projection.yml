@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/gcl_queue_class_cutover.py'
+      - 'ci/test_gcl_queue_class_cutover.py'
       - 'ci/erdos_forge_copilot_pilot.py'
       - 'tests/test_erdos_forge_copilot_pilot.py'
       - 'governance/erdos_catalogue/ROLLING_RESEARCH_024.json'
@@ -70,6 +72,52 @@ jobs:
         run: |
           test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
           python ci/erdos_rolling_review_queue.py --apply
+
+  semantic-queue-cutover:
+    name: Protected Editorial/Mathematics semantic Project reconciliation
+    if: >-
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
+    needs: [reconcile]
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Positive/hostile pure queue cutover tests
+        run: python -m unittest discover -s ci -p 'test_gcl_queue_class_cutover.py' -v
+      - name: Mint short-lived Council Clerk Project administration token
+        id: project-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-organization-projects: write
+      - name: Reconcile exact Queue Class and create/read back both saved views
+        env:
+          GH_TOKEN: ${{ steps.project-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "No authorized organization Projects write token"; exit 1; }
+          python ci/gcl_queue_class_cutover.py --apply --receipt queue-cutover/receipt.json
+      - name: Preserve complete class/readback receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: gcl-queue-semantic-cutover-${{ github.run_id }}-${{ github.run_attempt }}
+          path: queue-cutover/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
 
   ledger:
     if: >-
