@@ -9,9 +9,9 @@
 
 | Problem | The central question | Public result | GCL evidence |
 | --- | --- | --- | --- |
-| [Erdős #1](generated/problems/0001/) | How efficiently can integers give every subset a different sum? | The original constant-factor conjecture has been disproved | Source/proof provenance audited; independent full replay outstanding |
-| [Erdős #2](generated/problems/0002/) | Can congruence systems cover all integers using only enormous periods? | No; an upper bound exists, with a large numerical gap remaining | Registered source-audit task; no independent proof replay |
-| [Erdős #3](generated/problems/0003/) | Does a divergent reciprocal sum force progressions of every length? | Open | Active dedicated GCL mathematics campaign; four-term frontier |
+| [Erdős #1](problems/0001/) | How efficiently can integers give every subset a different sum? | The original constant-factor conjecture has been disproved | Source/proof provenance audited; independent full replay outstanding |
+| [Erdős #2](problems/0002/) | Can congruence systems cover all integers using only enormous periods? | No; an upper bound exists, with a large numerical gap remaining | Registered source-audit task; no independent proof replay |
+| [Erdős #3](problems/0003/) | Does a divergent reciprocal sum force progressions of every length? | Open | Active dedicated GCL mathematics campaign; four-term frontier |
 
 ## Browse every registered problem
 
