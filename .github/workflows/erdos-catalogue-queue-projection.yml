@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/erdos_forge_copilot_pilot.py'
+      - 'tests/test_erdos_forge_copilot_pilot.py'
       - 'governance/erdos_catalogue/ROLLING_RESEARCH_024.json'
       - '.github/workflows/erdos-catalogue-queue-projection.yml'
   issue_comment:
@@ -126,3 +128,103 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           PYTHONPATH=. python ci/erdos_event_custody.py --mode canary --event "$GITHUB_EVENT_PATH"
+
+  forge-pilot-review:
+    name: One bounded Forge mathematical critique (Copilot, evidence only)
+    if: github.event_name == 'push' && needs.reconcile.result == 'success'
+    needs: [reconcile]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+      issues: read
+      copilot-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Preflight exact protected Forge candidate and queue state
+        id: prep
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_forge_copilot_pilot.py prepare --out forge-erdos-pilot
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path("forge-erdos-pilot/status.json").read_text())
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("ready="+("true" if d["ready"] else "false")+"\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("Forge critique canary: "+d["state"]+". No mathematical authority effect.\n")
+          PY
+      - name: Provision fixed Node runtime
+        if: steps.prep.outputs.ready == 'true'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Install bounded Copilot CLI
+        if: steps.prep.outputs.ready == 'true'
+        run: npm install -g @github/copilot@1.0.66
+      - name: Run non-authoring mathematical critique with no mutation tools
+        if: steps.prep.outputs.ready == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          copilot --version > forge-erdos-pilot/copilot-version.txt
+          timeout 420s copilot -p "$(cat forge-erdos-pilot/prompt.txt)" -s \
+            --model=gpt-5.4 --max-ai-credits=30 --no-auto-update --no-ask-user \
+            --disable-builtin-mcps --available-tools=read \
+            --deny-tool=shell --deny-tool=write --deny-tool=url \
+            > forge-erdos-pilot/model-output.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from ci.erdos_forge_copilot_pilot import validate_model_output
+          d=Path("forge-erdos-pilot")
+          validate_model_output(json.loads((d/"model-output.json").read_text()),
+                                json.loads((d/"task.json").read_text()))
+          PY
+      - name: Preserve bounded pilot or exact blocker for readback
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-forge-copilot-pilot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: forge-erdos-pilot/
+          retention-days: 90
+          if-no-files-found: error
+
+  forge-pilot-evidence:
+    name: Publish unadjudicated Forge reviewer evidence (never an approval)
+    if: github.event_name == 'push' && needs.forge-pilot-review.result == 'success'
+    needs: [forge-pilot-review]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: erdos-forge-copilot-pilot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: forge-erdos-pilot
+      - name: Bind and publish nonauthoritative critical evidence or recorded blocker
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python ci/erdos_forge_copilot_pilot.py publish --out forge-erdos-pilot \
+            | tee -a "$GITHUB_STEP_SUMMARY"

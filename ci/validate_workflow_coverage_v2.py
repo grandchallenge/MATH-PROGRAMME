@@ -342,9 +342,94 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
             errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: forbidden remediation capability {forbidden}")
     return errors
 
+def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
+    """Explicit, claim-free, cost-bounded exception to generic read-only workflow rule.
+
+    This does NOT grant certification, source acceptance, or a Solve lease.
+    Only the named jobs in the existing registered persistent controller qualify.
+    """
+    key = "erdos-catalogue-queue-projection.yml"
+    source = texts.get(key)
+    if source is None:
+        return []
+    wf = v3.legacy.load_yaml_text(source)
+    jobs = wf.get("jobs", {})
+    expected = {"reconcile", "ledger", "canary",
+                "forge-pilot-review", "forge-pilot-evidence"}
+    if set(jobs) != expected:
+        return [f"{key}: Forge pilot requires exact five-job topology"]
+    agent = _job(wf, "forge-pilot-review")
+    publisher = _job(wf, "forge-pilot-evidence")
+    errors: list[str] = []
+    if agent.get("permissions") != {
+        "contents": "read", "issues": "read", "copilot-requests": "write"
+    }:
+        errors.append(f"{key}: AI model job must be repository-read and copilot-only")
+    if publisher.get("permissions") != {
+        "contents": "read", "issues": "write", "actions": "read"
+    }:
+        errors.append(f"{key}: trusted publisher must lack copilot-requests permission")
+    for name, job in (("forge-pilot-review", agent), ("forge-pilot-evidence", publisher)):
+        raw_timeout = str(job.get("timeout-minutes", ""))
+        bound = 12 if name == "forge-pilot-review" else 5
+        if not raw_timeout.isdecimal() or not (1 <= int(raw_timeout) <= bound):
+            errors.append(f"{key}: {name} exceeds bounded timeout")
+        condition = str(job.get("if", ""))
+        if "github.event_name == 'push'" not in condition:
+            errors.append(f"{key}: {name} cannot incur scheduled/repeated AI action")
+        if job.get("runs-on") != "ubuntu-24.04":
+            errors.append(f"{key}: {name} needs bounded approved runner")
+        steps = job.get("steps", [])
+        main_checkout = [z for z in steps if
+                         str(z.get("uses", "")).startswith("actions/checkout@") and
+                         z.get("with", {}).get("ref") == "main" and
+                         str(z.get("with", {}).get("persist-credentials", "")).lower() == "false"]
+        if len(main_checkout) != 1:
+            errors.append(f"{key}: {name} must checkout protected main without retained credential")
+    if agent.get("needs") != ["reconcile"]:
+        errors.append(f"{key}: Forge pilot must follow queue reconciler")
+    if publisher.get("needs") != ["forge-pilot-review"]:
+        errors.append(f"{key}: evidence publication must follow independent model run")
+    agent_text = str(agent)
+    publisher_text = str(publisher)
+    for required in (
+        "ci/erdos_forge_copilot_pilot.py prepare",
+        "steps.prep.outputs.ready",
+        "npm install -g @github/copilot@1.0.66",
+        "--model=gpt-5.4 --max-ai-credits=30 --no-auto-update",
+        "--available-tools=read",
+        "--deny-tool=shell",
+        "--deny-tool=write",
+        "--deny-tool=url",
+        "--disable-builtin-mcps",
+        "--no-ask-user",
+        "--no-auto-update",
+        "timeout 420s",
+        "copilot-requests",
+        "GITHUB_TOKEN",
+        "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+    ):
+        if required not in agent_text:
+            errors.append(f"{key}: missing protected read-only AI boundary {required}")
+    for forbidden in ("gh pr merge", "git push", "--allow-all", "permission-contents: write"):
+        if forbidden in agent_text or forbidden in publisher_text:
+            errors.append(f"{key}: forbidden pilot capability {forbidden}")
+    for required in (
+        "ci/erdos_forge_copilot_pilot.py publish",
+        "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+        "GH_TOKEN",
+    ):
+        if required not in publisher_text:
+            errors.append(f"{key}: missing separately-scoped evidence publisher {required}")
+    if "copilot" in str(publisher.get("permissions", {})) or "issues" not in str(publisher.get("permissions", {})):
+        errors.append(f"{key}: agent credentials may not appear in evidence publisher")
+    return errors
+
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
+    pilot_errors = erdos_forge_copilot_pilot_errors(texts)
     delegated_permission_errors = {
         f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
@@ -352,7 +437,13 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         "erdos-catalogue-intake.yml:capture: non-Pages job permissions may not exceed contents: read",
         "erdos-catalogue-queue-projection.yml:reconcile: non-Pages job permissions may not exceed contents: read",
     }
+    if not pilot_errors:
+        delegated_permission_errors |= {
+            "erdos-catalogue-queue-projection.yml:forge-pilot-review: non-Pages job permissions may not exceed contents: read",
+            "erdos-catalogue-queue-projection.yml:forge-pilot-evidence: non-Pages job permissions may not exceed contents: read",
+        }
     errors = [error for error in errors if error not in delegated_permission_errors]
+    errors.extend(pilot_errors)
     errors.extend(recovery_failover_errors(texts))
     errors.extend(remediation_envelope_errors(texts))
     queue_projection = texts.get("erdos-catalogue-queue-projection.yml")
@@ -360,7 +451,9 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         workflow = v3.legacy.load_yaml_text(queue_projection)
         jobs = workflow.get("jobs", {})
         projection = _job(workflow, "reconcile")
-        if workflow.get("permissions") != {"contents": "read"} or set(jobs) != {"reconcile", "ledger", "canary"}:
+        if (workflow.get("permissions") != {"contents": "read"} or
+                set(jobs) != {"reconcile", "ledger", "canary",
+                              "forge-pilot-review", "forge-pilot-evidence"}):
             errors.append("erdos queue projection: unrecognized workflow or write scope")
         ledger = _job(workflow, "ledger")
         canary = _job(workflow, "canary")

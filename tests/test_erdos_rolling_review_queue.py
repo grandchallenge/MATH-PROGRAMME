@@ -80,6 +80,11 @@ class ReviewQueueContract(unittest.TestCase):
         self.assertEqual(ISSUE_FIELD_IDS["GCL State"], 47953501)
         self.assertEqual(ISSUE_FIELD_IDS["GCL Cohort"], 47953514)
 
+    def test_project_cli_without_options(self):
+        response = {"fields": [{"name": "Status", "id": PROJECT_STATUS_FIELD_ID}]}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=response):
+            self.assertEqual(project_fields()["Status"]["id"], PROJECT_STATUS_FIELD_ID)
+
     def test_project_field_mismatch_blocks(self):
         fields = {"fields": [
             {"name": "Status", "id": "wrong",

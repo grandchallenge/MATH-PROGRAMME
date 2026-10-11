@@ -120,10 +120,16 @@ def project_fields() -> dict:
     status = by_name.get("Status")
     if not status or status.get("id") != PROJECT_STATUS_FIELD_ID:
         raise ValueError("protected Project #2 Status field identity mismatch")
-    options = [op for op in status.get("options", [])
-               if op.get("name") == "Todo" and op.get("id") == PROJECT_TODO_OPTION_ID]
-    if len(options) != 1:
-        raise ValueError("missing exact Project Todo option")
+    # GitHub CLI may omit options from project field-list even for a valid
+    # single-select field. The option ID is pinned in the protected binding.
+    # When options are returned they MUST agree; always verify the written
+    # Project item option after mutation, not merely field-list metadata.
+    raw_options = status.get("options") or []
+    if raw_options:
+        matches = [op for op in raw_options
+                   if op.get("name") == "Todo" and op.get("id") == PROJECT_TODO_OPTION_ID]
+        if len(matches) != 1:
+            raise ValueError("Project Todo option conflicts with protected binding")
     return by_name
 
 
@@ -163,6 +169,25 @@ query($o:String!, $r:String!, $n:Int!){
     return found[0] if found else None
 
 
+def project_status(item_id: str) -> dict:
+    """Read the exact Project V2 Status after write; no optimistic label projection."""
+    query = """
+query($id:ID!){
+ node(id:$id){
+  ... on ProjectV2Item {
+   fieldValueByName(name:"Status") {
+    ... on ProjectV2ItemFieldSingleSelectValue {name optionId}
+   }
+  }
+ }
+}"""
+    response = gh("graphql", "-f", f"query={query}", "-F", f"id={item_id}")
+    value = ((response.get("data") or {}).get("node") or {}).get("fieldValueByName") or {}
+    if not value.get("name") or not value.get("optionId"):
+        raise ValueError("Project Status readback is missing/ambiguous")
+    return value
+
+
 def issue_fields(ident: int) -> dict:
     records = gh("api", f"repos/{OWNER}/{REPO}/issues/{ident}/issue-field-values")
     if not isinstance(records, list):
@@ -199,6 +224,9 @@ def apply_one(task: dict, fields: dict, dry_run: bool) -> dict:
     gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
               "--field-id", status_field["id"],
               "--single-select-option-id", PROJECT_TODO_OPTION_ID)
+    actual_status = project_status(item)
+    if actual_status != {"name": "Todo", "optionId": PROJECT_TODO_OPTION_ID}:
+        raise RuntimeError(f"Project Status write/readback drift #{ident}: {actual_status}")
     if review_already_recorded(ident) is not None:
         return {"issue": ident, "state": "REVIEW_RETURNED_DURING_PROJECT_UPDATE"}
     obj = issue(ident)
