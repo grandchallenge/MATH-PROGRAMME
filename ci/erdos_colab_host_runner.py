@@ -210,7 +210,7 @@ def publish_provisional(directory: Path) -> dict:
     result = json.loads((directory / "erdos_review_result.json").read_text())
     receipt = json.loads((directory / "erdos_review_receipt.json").read_text())
     row = selected_record(json.loads(ROSTER.read_text()))
-    if row["source_critical_review_issue"] != PILOT_PROBLEM + 2495:
+    if row["source_critical_review_issue"] != 2536:
         raise ValueError("pilot docket has changed")
     source = gh(f"repos/{REPO}/issues/comments/{row['worker_result_comment_id']}")
     if sha((source.get("body") or "").encode()) != task["source_comment_sha256"]:
@@ -229,7 +229,7 @@ def publish_provisional(directory: Path) -> dict:
                     "comment_url": prior[0].get("html_url") if len(prior) == 1 else None}
         raise ValueError("cannot publish candidate to changed queue: " + reason)
     body = (EVIDENCE_MARKER + "\n"
-            + f"COHORT_ID: {row['source_critical_review_issue']}:ERDOS-ROLLING-024-001\n"
+            + "COHORT_ID: ERDOS-ROLLING-024-001\n"
             + f"PROBLEM_ID: 41\nREVIEW_ISSUE: {review_id}\n"
             + f"SOURCE_COMMENT_ID: {row['worker_result_comment_id']}\n"
             + f"SOURCE_COMMENT_SHA256: {task['source_comment_sha256']}\n"
