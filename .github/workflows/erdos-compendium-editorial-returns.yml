@@ -111,6 +111,38 @@ jobs:
             echo "RETURNED #$n readback verified from genuine RESULT/1"
           done
 
+      - name: Publish verified return transport to durable Compendium parent
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for receipt in editorial-returns/verified-*.json; do
+            [ -f "$receipt" ] || break
+            # Only trusted controller readback values, not untrusted worker text.
+            python - "$receipt" <<'PY'
+          import json,sys
+          from pathlib import Path
+          d=json.loads(Path(sys.argv[1]).read_text())
+          assert d["record_type"]=="GCL_COMPENDIUM_DIRECT_EDITORIAL_RETURN/1"
+          assert d["issue_number"] in (2556,2557,2558)
+          assert d["editorial_accepted"] is False and d["publication_authorized"] is False
+          body=(
+              "GCL-COMPENDIUM-DIRECT-RESULT-READBACK/1\n\n"
+              f"Issue #{d['issue_number']}: operational RETURNED readback verified.\n"
+              f"Authenticated return: https://github.com/grandchallenge/MATH-PROGRAMME/issues/{d['issue_number']}#issuecomment-{d['comment_id']}\n"
+              f"Assignment: {d['assignment_id']}; self-reported disposition: {d['self_reported_disposition']}.\n"
+              f"Protected head: {d['protected_head']}; "
+              f"controller: https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{d['controller_run']}.\n"
+              "Transport evidence only; independent editorial review, mathematical certification, "
+              "protected manuscript admission, and public rendering remain separate gates.\n"
+          )
+          Path("editorial-returns/comment.md").write_text(body,encoding="utf-8")
+          PY
+            gh issue comment 2552 --repo "$GITHUB_REPOSITORY" \
+              --body-file editorial-returns/comment.md
+          done
+
       - name: Preserve authority-neutral direct return replay receipt
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
