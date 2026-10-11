@@ -168,8 +168,10 @@ def preflight() -> list[dict]:
         if (data.get("state")!="open" or data.get("pull_request")
             or not (data.get("title") or "").startswith(f"EC-ED0{n-2554} — Erdős #{problem} — ")
             or not REQUIRED.issubset(labels)
-            or labels.intersection({"gcl-state:reserved","gcl-state:returned",
-                                    "gcl-state:blocked","gcl-state:closed"})):
+            or {x for x in labels if x.startswith("gcl-pickup:")}
+               != {"gcl-pickup:direct-editorial"}
+            or {x for x in labels if x.startswith("gcl-state:")}
+               not in (set(), {"gcl-state:available"})):
             raise ValueError(f"#{n} editorial identity, pickup or lifecycle drift")
         if "gcl-state:available" in labels and any(
             fields(n).get(k)!=v for k,v in OPTIONS.items()
