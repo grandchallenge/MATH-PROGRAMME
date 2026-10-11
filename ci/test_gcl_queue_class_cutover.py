@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Queue Class cutover: targeted semantic, view, and fail-closed fixtures."""
 import unittest
-from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID
+from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message
 
 DIRECT = "gcl-pickup:direct-editorial"
 
@@ -72,6 +72,36 @@ class Contract(unittest.TestCase):
     def test_view_filter_contract(self):
         self.assertEqual(VIEW_FILTERS["EDITORIAL"],'is:open "Queue Class":Editorial')
         self.assertEqual(VIEW_FILTERS["MATHEMATICS"],'is:open "Queue Class":Mathematics')
+
+
+    def test_cutover_receipt_requires_complete_post_readback(self):
+        good={
+            "record_type":"GCL_QUEUE_CLASS_CUTOVER_RECEIPT",
+            "applied":True,"dry_run":False,
+            "queue_field":QUEUE_FIELD_ID,"items":4,
+            "classes_expected":{"Editorial":1,"Mathematics":3},
+            "post_readback":{"items":4},
+            "saved_view_ids":{"EDITORIAL":"view-1","MATHEMATICS":"view-2"},
+            "global_available_view_unchanged":True,
+            "corrections":3
+        }
+        args={"run_url":"https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/10",
+              "protected_sha":"a"*40}
+        text=receipt_message(good,**args)
+        self.assertIn("**Project classification:** VERIFIED",text)
+        self.assertIn("Mathematics: **3**",text)
+        self.assertIn("active-worker capacity enforcement",text)
+        for defect in (
+            {"post_readback":{"items":3}},
+            {"applied":False},
+            {"saved_view_ids":{"EDITORIAL":"view-1"}},
+            {"classes_expected":{"Editorial":4}},
+            {"global_available_view_unchanged":False},
+        ):
+            candidate={**good,**defect}
+            self.assertIn("BLOCKED / UNVERIFIED",receipt_message(candidate,**args))
+        self.assertIn("BLOCKED / UNVERIFIED",receipt_message(None,**args))
+
 
 if __name__=="__main__":
     unittest.main()
