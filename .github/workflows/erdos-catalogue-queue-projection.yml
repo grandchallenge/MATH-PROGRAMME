@@ -71,7 +71,7 @@ jobs:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
         run: |
           test -n "$GH_TOKEN" || { echo "Missing Council Clerk Project token"; exit 1; }
-          python -m unittest discover -s ci -p 'test_gcl_queue_class_cutover.py' -v
+          python ci/test_gcl_queue_class_cutover.py
           python ci/gcl_queue_class_cutover.py --apply --receipt queue-cutover/receipt.json
       - name: Preserve Queue Class cutover receipt
         if: always()
