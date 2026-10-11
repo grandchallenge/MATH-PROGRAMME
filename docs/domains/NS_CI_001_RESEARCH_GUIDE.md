@@ -11,7 +11,7 @@ The three-dimensional Navier–Stokes critical-integrability target remains open
 
 ## 2. Plain object
 
-The campaign asks whether every relevant Leray–Hopf solution satisfies $\int_0^T \lVert u(t)\rVert_6^4\,dt < \infty$ for every finite $T$. This is the scale-critical Ladyzhenskaya–Prodi–Serrin pair $(4,6)$.
+The campaign asks whether every relevant Leray–Hopf solution satisfies $\int_0^T \left\|u(t)\right\|_6^4\,dt < \infty$ for every finite $T$. This is the scale-critical Ladyzhenskaya–Prodi–Serrin pair $(4,6)$.
 
 ## Reader entry and prerequisites
 
