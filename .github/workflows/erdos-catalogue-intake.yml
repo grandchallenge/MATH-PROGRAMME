@@ -8,6 +8,10 @@ on:
       - 'ci/erdos_rolling_review_queue.py'
       - 'ci/erdos_forge_copilot_pilot.py'
       - 'ci/erdos_colab_host_runner.py'
+      - 'ci/erdos_41_lean_colab_host.py'
+      - 'colab/erdos_41_lean_worker.py'
+      - 'experiments/erdos-024/lean/**'
+      - 'tests/test_erdos_41_lean_colab.py'
       - 'ci/erdos_41_queue_bridge.py'
       - 'ci/erdos_41_colab_finite_replay.py'
       - 'tests/test_erdos_41_queue_bridge.py'
@@ -57,7 +61,7 @@ jobs:
           python ci/erdos_41_colab_finite_replay.py --help
           python ci/erdos_41_queue_bridge.py --help
           python ci/erdos_41_colab_handoff.py
-      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff
+      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff tests.test_erdos_41_lean_colab
       - run: python ci/erdos_catalogue_programme_intake.py --events governance/erdos_catalogue/EMPTY_EVENTS.json --output catalogue-validation
 
   capture:
