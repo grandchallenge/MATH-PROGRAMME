@@ -84,7 +84,7 @@ The result is not a novelty, priority, universal producer-correctness, or histor
 
 ## Certification path and continuation graph
 
-The protected Stage 1 theorem is not produced by this teaching fixture. Cross-pillar source/producer/verifier hashes and the accepted-certificate Lean statement are recorded in the frozen Stage 1 closeout, with **terminal completion** evidenced by protected Programme merge $`183ff2a0…`$ and tracker #240.
+The protected Stage 1 theorem is not produced by this teaching fixture. Cross-pillar source/producer/verifier hashes and the accepted-certificate Lean statement are recorded in the frozen Stage 1 closeout, with **terminal completion** evidenced by protected Programme merge (`183ff2a0…`) and tracker #240.
 
 `arithmetic trace → Bézout witness → independent GCD checker → accepted-certificate soundness → Stage 2 Diophantine proof trace → historical Book VII concordance [separate]`
 
