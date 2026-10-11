@@ -34,13 +34,13 @@
     <article class="monograph-body" aria-label="The Shape of a Sphere manuscript">
       <section class="monograph-section" id="reader-note" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">A note to the reader</p>
-      ## Wonder first; authority always visible
+      <h2>Wonder first; authority always visible</h2>
 
       This web edition is meant to be entered as one enters an old observatory: first by wonder, then by instruments, and finally by exact measurement. Its illuminated plates are aids to orientation and memory. They are not proof diagrams. The prose, equations, cited sources, and explicit trust labels govern every mathematical claim.
 
       The Poincaré theorem is solved. This volume reconstructs the classical Hamilton–Perelman route for a broad reader; it does not offer a new proof, an independent verification of the nonlinear estimates, or a machine-checked formalization of Ricci flow with surgery.
 
-      The committed `.tex` file is a source record. The checksum-locked complete illustrated source bundle is the authoritative source artifact; the checksum-locked PDF is the rendered edition. Both are currently identified as `metadata_only`, without an asserted stable public release locator.
+      The committed <code>.tex</code> file is a source record. The checksum-locked complete illustrated source bundle is the authoritative source artifact; the checksum-locked PDF is the rendered edition. Both are currently identified as <code>metadata_only</code>, without an asserted stable public release locator.
 
       <div class="claim-box"><strong>Established theorem</strong><p>Every closed, connected, simply connected topological three-manifold is homeomorphic to the three-sphere.</p></div>
       <div class="guardrail"><strong>Category guardrail</strong><p>Pictures of two-dimensional spheres and tori are analogies. The theorem concerns three-manifolds. Passing among topological, PL, smooth, and Riemannian categories uses dimension-three theorems; it is not definitional.</p></div>
@@ -50,11 +50,11 @@
 
       <section class="monograph-section" id="loops" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter I</p>
-      ## The question hidden inside a loop
+      <h2>The question hidden inside a loop</h2>
 
       Imagine living in a universe with no outside. There is no surrounding room from which to inspect its shape. You may travel, draw loops, stretch them, and ask whether they can be pulled tight without tearing the world. Topology begins from this austere freedom: it studies what survives every continuous deformation.
 
-      A space is **simply connected** when every loop can be contracted continuously to a point. On the ordinary sphere, a loop can slide and shrink until nothing remains. On a torus, a loop winding through the central hole cannot disappear. The loop remembers a global obstruction that no local inspection reveals.
+      A space is <strong>simply connected</strong> when every loop can be contracted continuously to a point. On the ordinary sphere, a loop can slide and shrink until nothing remains. On a torus, a loop winding through the central hole cannot disappear. The loop remembers a global obstruction that no local inspection reveals.
 
       The theorem asks whether this loop test completely recognizes the three-sphere among closed three-dimensional worlds:
 
@@ -69,9 +69,9 @@
 
       <section class="monograph-section" id="geometry" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter II</p>
-      ## When geometry becomes an engine
+      <h2>When geometry becomes an engine</h2>
 
-      Richard Hamilton’s proposal was to place a Riemannian metric on the manifold and let that metric evolve by **Ricci flow**:
+      Richard Hamilton’s proposal was to place a Riemannian metric on the manifold and let that metric evolve by <strong>Ricci flow</strong>:
 
       $$\frac{\partial g}{\partial t}=-2\operatorname{Ric}(g).$$
 
@@ -88,7 +88,7 @@
 
       <section class="monograph-section" id="surgery" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter III</p>
-      ## The craft of controlled surgery
+      <h2>The craft of controlled surgery</h2>
 
       Once a high-curvature neck is known to be close to a standard cylinder, the flow can be stopped just before catastrophe. One cuts across carefully chosen two-spheres, removes the most singular ends, attaches standard caps, and restarts the evolution on the surviving components.
 
@@ -103,7 +103,7 @@
 
       <section class="monograph-section" id="extinction" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter IV</p>
-      ## Extinction, reversal, and the sphere
+      <h2>Extinction, reversal, and the sphere</h2>
 
       Perelman proved finite extinction for the relevant class of three-manifolds: after finite time the surgery flow has no surviving component. This endpoint is useful because a finite process can be reversed. Local finiteness of surgery times on each bounded interval, combined with a finite extinction time, gives a finite event history.
 
@@ -118,22 +118,25 @@
 
       <section class="monograph-section" id="appendix-categories" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix A</p>
-      ## Definitions and category bridges
+      <h2>Definitions and category bridges</h2>
 
-      A **closed** manifold is compact and has empty boundary. A **topological three-manifold** is Hausdorff, second countable, and locally homeomorphic to $\mathbb{R}^3$. In dimension three, classical triangulation and smoothing theorems permit the topological manifold to be treated through PL and smooth structures, after which one chooses a Riemannian metric.
+      A <strong>closed</strong> manifold is compact and has empty boundary. A <strong>topological three-manifold</strong> is Hausdorff, second countable, and locally homeomorphic to $\mathbb{R}^3$. In dimension three, classical triangulation and smoothing theorems permit the topological manifold to be treated through PL and smooth structures, after which one chooses a Riemannian metric.
 
       The conclusion produced by the analytic route is naturally smooth: the simply connected component is diffeomorphic to $S^3$. Forgetting smooth structure gives the required homeomorphism. These arrows are mathematical theorems, not changes of vocabulary.
 
-      | Interface | Role | Status in this edition |
-      |---|---|---|
-      | Topological $\to$ PL $\to$ smooth | permits Ricci-flow input | imported classical theorem |
-      | Smooth $\to$ Riemannian | choose initial metric | established construction |
-      | Diffeomorphic $\to$ homeomorphic | returns to Clay statement | immediate implication |
+      <table class="monograph-trust-table">
+        <thead><tr><th scope="col">Interface</th><th scope="col">Role</th><th scope="col">Status in this edition</th></tr></thead>
+        <tbody>
+          <tr><td>Topological $\to$ PL $\to$ smooth</td><td>permits Ricci-flow input</td><td>imported classical theorem</td></tr>
+          <tr><td>Smooth $\to$ Riemannian</td><td>choose initial metric</td><td>established construction</td></tr>
+          <tr><td>Diffeomorphic $\to$ homeomorphic</td><td>returns to Clay statement</td><td>immediate implication</td></tr>
+        </tbody>
+      </table>
       </section>
 
       <section class="monograph-section" id="appendix-flow" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix B</p>
-      ## Ricci flow and its controls
+      <h2>Ricci flow and its controls</h2>
 
       Under parabolic rescaling, curvature and time transform together. The surgery parameters therefore form a hierarchy rather than a collection of universal constants: a canonical-neighbourhood accuracy is fixed; associated curvature controls are obtained; surgery tolerances are chosen sufficiently small; cutting and trigger scales are then derived. Silent interchange of local, stagewise, and global constants is a common source of false proofs.
 
@@ -152,24 +155,27 @@
 
       <section class="monograph-section" id="appendix-trust" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix C</p>
-      ## Claim-level trust matrix
+      <h2>Claim-level trust matrix</h2>
 
-      | Claim | Trust class | Qualification |
-      |---|---|---|
-      | Poincaré theorem | established | classical solved theorem |
-      | Top/PL/Diff bridge in dimension three | imported | classical category theorem |
-      | Ricci-flow analytic core | imported | not independently reconstructed here |
-      | Finite extinction route | imported | source-normalized to Perelman and Morgan–Tian |
-      | Finite-event backward evaluator | kernel-checked, bounded | conditional on imported event equations |
-      | Illuminated plates | pedagogical | never authoritative proof diagrams |
-      | New proof or novelty | not claimed | explicitly excluded |
+      <table class="monograph-trust-table">
+        <thead><tr><th scope="col">Claim</th><th scope="col">Trust class</th><th scope="col">Qualification</th></tr></thead>
+        <tbody>
+          <tr><td>Poincaré theorem</td><td>established</td><td>classical solved theorem</td></tr>
+          <tr><td>Top/PL/Diff bridge in dimension three</td><td>imported</td><td>classical category theorem</td></tr>
+          <tr><td>Ricci-flow analytic core</td><td>imported</td><td>not independently reconstructed here</td></tr>
+          <tr><td>Finite extinction route</td><td>imported</td><td>source-normalized to Perelman and Morgan–Tian</td></tr>
+          <tr><td>Finite-event backward evaluator</td><td>kernel-checked, bounded</td><td>conditional on imported event equations</td></tr>
+          <tr><td>Illuminated plates</td><td>pedagogical</td><td>never authoritative proof diagrams</td></tr>
+          <tr><td>New proof or novelty</td><td>not claimed</td><td>explicitly excluded</td></tr>
+        </tbody>
+      </table>
 
       <div class="guardrail"><strong>Final claim boundary</strong><p>This web edition changes presentation, not theorem strength. It adds responsive reading, searchability, accessibility, source links, plate enlargement, reading-position memory, and print treatment. It does not alter the archived mathematical disposition of PC-001.</p></div>
       </section>
 
       <section class="monograph-section" id="sources" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Sources</p>
-      ## The governing literature
+      <h2>The governing literature</h2>
 
       <div class="bibliography">
       <p>Richard S. Hamilton, “Three-manifolds with positive Ricci curvature,” <em>Journal of Differential Geometry</em> 17 (1982), 255–306.</p>
