@@ -28,7 +28,7 @@ The catalogue is divided into sets of roughly 100 problem numbers. Each entry li
 5. **What remains.** Isolate the smallest missing mathematical step rather than saying only "more research is needed".
 6. **Sources and claim boundaries.** Link primary evidence, explicit assumptions, unresolved reviews and formal-check status.
 
-The first three entries establish the editorial standard. Other entries remain transparently designated **reference entries awaiting source review** until substantive material is admitted. This is deliberate: automatically converting topic labels into 1,221 invented mathematical stories would be misleading.
+The first three entries establish the editorial standard. Other entries remain transparently designated **reference entries awaiting source review** until substantive material is admitted. The [editorial production protocol](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/EDITORIAL_PROTOCOL.md) specifies how those references become evidence-checked explanations without duplicating research jobs. This is deliberate: automatically converting topic labels into 1,221 invented mathematical stories would be misleading.
 
 ## Authority and updates
 
