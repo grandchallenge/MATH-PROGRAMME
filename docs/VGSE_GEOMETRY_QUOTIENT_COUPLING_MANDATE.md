@@ -16,7 +16,7 @@ The target object is a possible coupling
 \Phi:\mathcal G\rightarrow\mathcal Q,
 ]
 
-where \(\mathcal Q=(\mathbb R_{>0})^8\) is the protected WP01/WP02 quotient coordinate space and \(\mathcal G\) is only the geometry family that the qualified C05 evidence actually supports.
+where $\mathcal Q=(\mathbb R_{>0})^8$ is the protected WP01/WP02 quotient coordinate space and $\mathcal G$ is only the geometry family that the qualified C05 evidence actually supports.
 
 ## Authority and live bind
 
@@ -47,15 +47,15 @@ The protected evidence does **not** establish VGSE-C06. The visible source geome
 
 Keep three levels separate:
 
-1. **Geometry space \(\mathcal G\).** Define exactly the variables, constraints, symmetries, scale status, relabeling/orientation conventions, degeneracies, connected components, and provenance of every admitted realization.
-2. **Quotient space \(\mathcal Q\).** Use only the eight canonical positive quotient coordinates except when raw weights are needed to demonstrate gauge equivalence.
-3. **Response manifold \(\mathcal R\).** Use the protected WP03 response map only for downstream validation. Matching a response does not prove a geometry coupling.
+1. **Geometry space $\mathcal G$.** Define exactly the variables, constraints, symmetries, scale status, relabeling/orientation conventions, degeneracies, connected components, and provenance of every admitted realization.
+2. **Quotient space $\mathcal Q$.** Use only the eight canonical positive quotient coordinates except when raw weights are needed to demonstrate gauge equivalence.
+3. **Response manifold $\mathcal R$.** Use the protected WP03 response map only for downstream validation. Matching a response does not prove a geometry coupling.
 
 Do not silently promote a visible drawing or source-vector extraction into a certified parameterized geometry family.
 
 ## First substantive obligation — evidence audit
 
-Before proposing a preferred map, enumerate every authorized pair \((g,x)\) and classify it as:
+Before proposing a preferred map, enumerate every authorized pair $(g,x)$ and classify it as:
 
 - directly protected correspondence;
 - reconstructed correspondence;
@@ -73,8 +73,8 @@ At minimum test:
 - **H0 — no identifiable coupling.** Geometry and quotient response may be independent or the evidence may be insufficient.
 - **H1 — direct Euclidean length rule.** Deliberately test and attempt to falsify simple edge-length/ratio rules. Existing C06 evidence is an explicit adverse boundary.
 - **H2 — dimensionless geometric invariants.** Length ratios, angle combinations, normalized areas, projective/cross-ratio quantities where defined, local shape descriptors, and symmetry-invariant coordinates.
-- **H3 — low-dimensional smooth coupling.** If \(x=\Phi(z)\), measure rank, null directions, singular sets, and conditioning of \(D\Phi\).
-- **H4 — bounded latent-variable coupling.** If geometry alone is insufficient, test \(x=\Phi(z,\lambda)\) only with an explicit, bounded latent dimension and interpretable role.
+- **H3 — low-dimensional smooth coupling.** If $x=\Phi(z)$, measure rank, null directions, singular sets, and conditioning of $D\Phi$.
+- **H4 — bounded latent-variable coupling.** If geometry alone is insufficient, test $x=\Phi(z,\lambda)$ only with an explicit, bounded latent dimension and interpretable role.
 
 ## Identifiability and normalization
 
