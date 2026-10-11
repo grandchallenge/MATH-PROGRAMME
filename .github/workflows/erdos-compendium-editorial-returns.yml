@@ -1,0 +1,163 @@
+name: GCL Compendium Editorial direct RESULT/1 projection
+
+on:
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: "43 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gcl-compendium-direct-return
+  queue: max
+  cancel-in-progress: false
+
+jobs:
+  project-return:
+    permissions:
+      contents: read
+    environment: release-trust
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (!github.event.issue.pull_request &&
+       (github.event.issue.number == 2556 ||
+        github.event.issue.number == 2557 ||
+        github.event.issue.number == 2558) &&
+       startsWith(github.event.comment.body, 'RESULT/1'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Mint Council Clerk token for three bounded Issue Field transitions
+        id: returns-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+
+      - name: Replay only three exact issue-bound authenticated Compendium returns
+        env:
+          GH_TOKEN: ${{ steps.returns-token.outputs.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p editorial-returns
+          if [ "$EVENT_NAME" = "issue_comment" ]; then
+            issue_numbers="$EVENT_ISSUE_NUMBER"
+          else
+            issue_numbers="2556 2557 2558"
+          fi
+          for n in $issue_numbers; do
+            case "$n" in 2556|2557|2558) ;; *) echo "Unbound issue $n"; exit 1 ;; esac
+            gh api "repos/$GITHUB_REPOSITORY/issues/$n" \
+              > "$RUNNER_TEMP/issue-$n.json"
+            gh api "repos/$GITHUB_REPOSITORY/issues/$n/issue-field-values" \
+              > "$RUNNER_TEMP/fields-$n.json"
+            gh api --paginate --slurp \
+              "repos/$GITHUB_REPOSITORY/issues/$n/comments?per_page=100" \
+              > "$RUNNER_TEMP/comment-pages-$n.json"
+            jq 'add // []' "$RUNNER_TEMP/comment-pages-$n.json" \
+              > "$RUNNER_TEMP/comments-$n.json"
+
+            python ci/erdos_compendium_direct_return_projector.py \
+              --issue "$RUNNER_TEMP/issue-$n.json" \
+              --fields "$RUNNER_TEMP/fields-$n.json" \
+              --comments "$RUNNER_TEMP/comments-$n.json" \
+              --output "editorial-returns/projection-$n.json"
+            if [ "$(jq -r '.project' "editorial-returns/projection-$n.json")" != "true" ]; then
+              echo "NOT_PROJECTED #$n: $(jq -r '.reason' "editorial-returns/projection-$n.json")"
+              continue
+            fi
+
+            # RESULT/1 is transport evidence only, never an editorial verdict.
+            printf '%s\n' '{"issue_field_values":[{"field_id":47953501,"value":"RETURNED"}]}' \
+              > "$RUNNER_TEMP/returned-field.json"
+            gh api --method POST \
+              "repos/$GITHUB_REPOSITORY/issues/$n/issue-field-values" \
+              --input "$RUNNER_TEMP/returned-field.json" >/dev/null
+            gh api "repos/$GITHUB_REPOSITORY/issues/$n/issue-field-values" \
+              > "$RUNNER_TEMP/field-readback-$n.json"
+            jq -e 'any(.[]; .issue_field_name=="GCL State" and .single_select_option.name=="RETURNED")' \
+              "$RUNNER_TEMP/field-readback-$n.json" >/dev/null
+
+            gh issue edit "$n" --repo "$GITHUB_REPOSITORY" \
+              --add-label "gcl-state:returned" >/dev/null
+            gh issue edit "$n" --repo "$GITHUB_REPOSITORY" \
+              --remove-label "gcl-state:available" >/dev/null 2>&1 || true
+
+            gh issue view "$n" --repo "$GITHUB_REPOSITORY" --json labels \
+              > "$RUNNER_TEMP/label-readback-$n.json"
+            jq -e '
+              ([.labels[].name] | index("gcl-state:returned")) != null and
+              ([.labels[].name] | index("gcl-state:available")) == null
+            ' "$RUNNER_TEMP/label-readback-$n.json" >/dev/null
+
+            # Provenance only; never copy untrusted comment text into artifacts.
+            jq --arg head "$GITHUB_SHA" --arg run "$GITHUB_RUN_ID" \
+              '{record_type:"GCL_COMPENDIUM_DIRECT_EDITORIAL_RETURN/1",
+                issue_number,comment_id,authenticated_actor,assignment_id,
+                self_reported_disposition,state_to_write,
+                protected_head:$head,controller_run:$run,
+                editorial_accepted:false,publication_authorized:false,
+                mathematical_effect:false}' \
+              "editorial-returns/projection-$n.json" \
+              > "editorial-returns/verified-$n.json"
+            echo "RETURNED #$n readback verified from genuine RESULT/1"
+          done
+
+      - name: Publish verified return transport to durable Compendium parent
+        env:
+          GH_TOKEN: ${{ steps.returns-token.outputs.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for receipt in editorial-returns/verified-*.json; do
+            [ -f "$receipt" ] || break
+            # Only trusted controller readback values, not untrusted worker text.
+            python - "$receipt" <<'PY'
+          import json,sys
+          from pathlib import Path
+          d=json.loads(Path(sys.argv[1]).read_text())
+          assert d["record_type"]=="GCL_COMPENDIUM_DIRECT_EDITORIAL_RETURN/1"
+          assert d["issue_number"] in (2556,2557,2558)
+          assert d["editorial_accepted"] is False and d["publication_authorized"] is False
+          body=(
+              "GCL-COMPENDIUM-DIRECT-RESULT-READBACK/1\n\n"
+              f"Issue #{d['issue_number']}: operational RETURNED readback verified.\n"
+              f"Authenticated return: https://github.com/grandchallenge/MATH-PROGRAMME/issues/{d['issue_number']}#issuecomment-{d['comment_id']}\n"
+              f"Assignment: {d['assignment_id']}; self-reported disposition: {d['self_reported_disposition']}.\n"
+              f"Protected head: {d['protected_head']}; "
+              f"controller: https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{d['controller_run']}.\n"
+              "Transport evidence only; independent editorial review, mathematical certification, "
+              "protected manuscript admission, and public rendering remain separate gates.\n"
+          )
+          Path("editorial-returns/comment.md").write_text(body,encoding="utf-8")
+          PY
+            gh issue comment 2552 --repo "$GITHUB_REPOSITORY" \
+              --body-file editorial-returns/comment.md
+          done
+
+      - name: Preserve authority-neutral direct return replay receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: gcl-compendium-direct-return-${{ github.run_id }}-${{ github.run_attempt }}
+          path: editorial-returns/
+          retention-days: 30
+          if-no-files-found: warn
