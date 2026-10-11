@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Queue Class cutover: targeted semantic, view, and fail-closed fixtures."""
 import unittest
-from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, protected_rolling_critics
+import json
+from unittest.mock import patch, Mock
+from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, protected_rolling_critics, update_class_batch, guard_project_api_budget, BATCH_SIZE
 
 DIRECT = "gcl-pickup:direct-editorial"
 
@@ -26,6 +28,46 @@ def project():
     }
 
 class Contract(unittest.TestCase):
+    def test_graphql_alias_batch_verifies_all_exact_item_ids(self):
+        rows=[{"item_id":"PVTI_001","option":"a1"},
+              {"item_id":"PVTI_002","option":"b2"}]
+        with patch("gcl_queue_class_cutover.graphql") as graphql:
+            graphql.return_value={"m0":{"projectV2Item":{"id":"PVTI_001"}},
+                                  "m1":{"projectV2Item":{"id":"PVTI_002"}}}
+            update_class_batch(rows)
+            graphql.assert_called_once()
+            mutation=graphql.call_args.args[0]
+            self.assertIn("m0:updateProjectV2ItemFieldValue",mutation)
+            self.assertIn("m1:updateProjectV2ItemFieldValue",mutation)
+            self.assertEqual(graphql.call_args.kwargs["option1"],"b2")
+            graphql.return_value["m1"]["projectV2Item"]["id"]="PVTI_wrong"
+            with self.assertRaisesRegex(RuntimeError,"incorrect item ID"):
+                update_class_batch(rows)
+        with self.assertRaisesRegex(ValueError,"duplicate Project item"):
+            update_class_batch([rows[0],rows[0]])
+        with self.assertRaisesRegex(ValueError,"invalid Queue Class batch size"):
+            update_class_batch(rows*(BATCH_SIZE//2+1))
+
+    def test_quota_guard_fails_before_mutations(self):
+        def budget(graphql,core):
+            return Mock(returncode=0,stdout=json.dumps({"resources":{
+                "graphql":{"remaining":graphql},
+                "core":{"remaining":core}}}))
+        with patch("gcl_queue_class_cutover.subprocess.run") as run:
+            run.return_value=budget(500,500)
+            result=guard_project_api_budget(200)
+            self.assertGreaterEqual(result["graphql_minimum"],200)
+            self.assertEqual(result["graphql_remaining"],500)
+            run.return_value=budget(10,500)
+            with self.assertRaisesRegex(RuntimeError,"rate budget insufficient"):
+                guard_project_api_budget(200)
+            run.return_value=budget(500,0)
+            with self.assertRaisesRegex(RuntimeError,"rate budget insufficient"):
+                guard_project_api_budget(200)
+            run.return_value=Mock(returncode=1,stderr="rate limited",stdout="")
+            with self.assertRaisesRegex(RuntimeError,"preflight unavailable"):
+                guard_project_api_budget(200)
+
     def test_cross_class_same_pickup(self):
         src=make_item(1273,"grandchallenge/MATH-PROGRAMME",
           "[GCL-ERDOS] ERDOS-CATALOGUE-0004-S01 — prime gaps",
