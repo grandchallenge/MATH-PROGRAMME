@@ -15,13 +15,13 @@ The campaign keeps three obligations separate: Mordell–Weil rank equals analyt
 
 ## Reader entry and prerequisites
 
-**Status:** BSD open, restricted target \(BSD\)-\(R2\)-\(A1\) unproved. **Audience:** graduate arithmetic readers and source auditors. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
+**Status:** BSD open, restricted target `BSD-R2-A1` unproved. **Audience:** graduate arithmetic readers and source auditors. **Time to first example:** 10 minutes. **Time to first fixture:** 10 minutes.
 
 | Level | Concepts |
 | --- | --- |
 | Required | Modular arithmetic, polynomial equations, rational numbers |
 | Helpful | Elliptic curves, group law, analytic functions |
-| Deferred | Heights, Selmer groups, \(\Sha\), \(L\)-functions and leading-term normalizations |
+| Deferred | Heights, Selmer groups, $\Sha$, $L$ functions and leading-term normalizations |
 
 ## 3. Exact obstruction
 
@@ -33,9 +33,9 @@ Future theorem work is Solve-owned. The protected Programme stack supplies sourc
 
 ## Core bridge and first examples by hand
 
-**Friendly example:** the curve \(y^2=x^3-x\) has rational point \((0,0)\), since both sides vanish. Its reduction modulo 5 can also be checked by finite enumeration.
+**Friendly example:** the curve $y^2=x^3-x$ has rational point $(0,0)$, since both sides vanish. Its reduction modulo 5 can also be checked by finite enumeration.
 
-**Boundary example:** finding points modulo 5 does not determine the Mordell–Weil rank over \(\mathbb Q\), the order of vanishing of a complex \(L\)-function, or finiteness of \(\Sha\). Even a complete count over **one** finite field lacks the needed global-to-analytic bridge.
+**Boundary example:** finding points modulo 5 does not determine the Mordell–Weil rank over $\mathbb Q$, the order of vanishing of a complex $L$ function, or finiteness of $\Sha$. Even a complete count over **one** finite field lacks the needed global-to-analytic bridge.
 
 Bridge: rational curve equation → local finite-field points → arithmetic data → complex analytic rank → conjectural global rank equality.
 
@@ -53,11 +53,11 @@ print("affine", len(points), "projective", len(points)+1)
 # affine 7 projective 8; the extra point is at infinity on this nonsingular cubic.
 ```
 
-Inputs \(p=5\), the polynomial and explicit enumeration are fixed; output is the enumerated list and its counts. The command is independently executable. **Support route:** exact finite arithmetic. **Limitation:** a local count does not prove rank, L-function statements, or BSD.
+Inputs $p=5$, the polynomial and explicit enumeration are fixed; output is the enumerated list and its counts. The command is independently executable. **Support route:** exact finite arithmetic. **Limitation:** a local count does not prove rank, L-function statements, or BSD.
 
 ## First theorem or local proposition
 
-**Pairing lemma (odd characteristic).** For fixed \(x\in\mathbb F_p\), solutions of \(y^2=f(x)\) occur as \(y\) and \(-y\), except \(y=0\), which pairs with itself. This follows from \(y^2=(-y)^2\) and explains the parity pattern in finite point counts. It says nothing about analytic rank.
+**Pairing lemma (odd characteristic).** For fixed $x\in\mathbb F_p$, solutions of $y^2=f(x)$ occur as $y$ and $-y$, except $y=0$, which pairs with itself. This follows from $y^2=(-y)^2$ and explains the parity pattern in finite point counts. It says nothing about analytic rank.
 
 ## 5. Theorem-spine location
 
@@ -75,11 +75,11 @@ The rank equality, refined formula, finiteness of `Sha`, and `BSD-R2-A1` remain 
 
 | Stage | Duty | Completion test |
 | --- | --- | --- |
-| Exercise | Verify \((0,0)\) lies on the displayed curve | Substitute both coordinates |
-| Exploration | Count solutions for each \(x\pmod5\) | Reconcile with script |
+| Exercise | Verify $(0,0)$ lies on the displayed curve | Substitute both coordinates |
+| Exploration | Count solutions for each $x\pmod5$ | Reconcile with script |
 | Fixture | Re-run finite enumeration | Exact same list and counts |
-| Lemma candidate | Prove pairing of \(\pm y\) | Handle \(y=0\) explicitly |
-| Open direction | Read exact \(BSD\)-\(R2\)-\(A1\) profile | State one-prime/nonvacuity conditions without relaxing them |
+| Lemma candidate | Prove pairing of $\pm y$ | Handle $y=0$ explicitly |
+| Open direction | Read exact `BSD-R2-A1` profile | State one-prime/nonvacuity conditions without relaxing them |
 
 ## Certification path and continuation graph
 
@@ -89,7 +89,7 @@ Finite point enumeration is independently replayable. Any arithmetic/analytic ra
 
 ## Trust quartet
 
-**Proved:** elementary pairing under odd characteristic. **Checked:** one finite field point count. **Open:** BSD rank equality, \(\Sha\) finiteness and leading term, including \(BSD\)-\(R2\)-\(A1\). **External verification:** imported rank/\(L\)-function comparisons and local/global bridges.
+**Proved:** elementary pairing under odd characteristic. **Checked:** one finite field point count. **Open:** BSD rank equality, $\Sha$ finiteness and leading term, including `BSD-R2-A1`. **External verification:** imported comparisons involving ranks and $L$ functions, and local/global bridges.
 
 ## Bibliography and source audit
 
@@ -99,7 +99,7 @@ Finite point enumeration is independently replayable. Any arithmetic/analytic ra
 | [Tracker #66](https://github.com/grandchallenge/MATH-PROGRAMME/issues/66) | LIVE stage routing | No theorem authority |
 | Classical Mordell–Weil and BSD literature (source ledger in master plan) | Mathematical prerequisites | Imported; not proved by the toy code |
 
-**First executable step / completion test:** Reproduce the finite enumeration, verify its pairing property, and write the exact \(BSD\)-\(R2\)-\(A1\) hypotheses and missing proof node before considering a solver.
+**First executable step / completion test:** Reproduce the finite enumeration, verify its pairing property, and write the exact `BSD-R2-A1` hypotheses and missing proof node before considering a solver.
 
 ## 8. First executable step
 
