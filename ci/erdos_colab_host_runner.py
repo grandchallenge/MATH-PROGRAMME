@@ -21,7 +21,10 @@ import subprocess
 import sys
 import uuid
 
-from ci.erdos_forge_copilot_pilot import prepare
+from ci.erdos_forge_copilot_pilot import (
+    EVIDENCE_MARKER, PILOT_PROBLEM, REPO, ROSTER, comment_history,
+    exact_existing, gh, prepare, review_ready, selected_record,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 REMOTE = ROOT / "experiments/erdos-024/colab/remote_review.py"
@@ -180,6 +183,89 @@ def colab_execute(folder: Path, args, session: str) -> None:
             call(cli + ["stop", "-s", session], folder / "colab-stop.json")
 
 
+def reserve_exact_job(root: Path, job: dict) -> Path:
+    """One charge attempt per exact packet on this control host, including RED runs.
+
+    No globally shared lock is claimed. A distributed host deployment needs its
+    own persisted, atomic lease before unattended model execution is enabled.
+    """
+    ticket = root / (".attempted-" + sha(compact(job)))
+    ticket.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(ticket, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    with os.fdopen(fd, "w") as handle:
+        handle.write(datetime.now(timezone.utc).isoformat() + "\n")
+    return ticket
+
+
+def publish_provisional(directory: Path) -> dict:
+    """Same authenticated host login; only an unadjudicated Forge issue comment.
+
+    Only after independent source-bound, role-scoped model evidence exists.
+    No GitHub reviewer identity separation or mathematical authority invented.
+    """
+    verification = verify_artifacts(directory)
+    if verification["role_pass_count"] != 2 or verification["backend"] != "local_transformers":
+        raise ValueError("not a substantive two-role AI critique")
+    task = json.loads((directory / "task.json").read_text())
+    result = json.loads((directory / "erdos_review_result.json").read_text())
+    receipt = json.loads((directory / "erdos_review_receipt.json").read_text())
+    row = selected_record(json.loads(ROSTER.read_text()))
+    if row["source_critical_review_issue"] != PILOT_PROBLEM + 2495:
+        raise ValueError("pilot docket has changed")
+    source = gh(f"repos/{REPO}/issues/comments/{row['worker_result_comment_id']}")
+    if sha((source.get("body") or "").encode()) != task["source_comment_sha256"]:
+        raise ValueError("original worker return changed since reviewer execution")
+    if source.get("issue_url") != f"https://api.github.com/repos/{REPO}/issues/{row['catalogue_issue']}":
+        raise ValueError("source issue custody changed")
+    review_id = row["source_critical_review_issue"]
+    issue = gh(f"repos/{REPO}/issues/{review_id}")
+    fields = gh(f"repos/{REPO}/issues/{review_id}/issue-field-values")
+    comments = comment_history(review_id)
+    allowed, reason = review_ready(issue, fields, comments)
+    if not allowed:
+        if reason == "CANDIDATE_EVIDENCE_ALREADY_SUBMITTED":
+            prior = exact_existing(comments, EVIDENCE_MARKER)
+            return {"state": "IDEMPOTENT_CANDIDATE_ALREADY_PRESENT",
+                    "comment_url": prior[0].get("html_url") if len(prior) == 1 else None}
+        raise ValueError("cannot publish candidate to changed queue: " + reason)
+    body = (EVIDENCE_MARKER + "\n"
+            + f"COHORT_ID: {row['source_critical_review_issue']}:ERDOS-ROLLING-024-001\n"
+            + f"PROBLEM_ID: 41\nREVIEW_ISSUE: {review_id}\n"
+            + f"SOURCE_COMMENT_ID: {row['worker_result_comment_id']}\n"
+            + f"SOURCE_COMMENT_SHA256: {task['source_comment_sha256']}\n"
+            + f"PROVIDER_BLOB: {task['protected_formal_source_blob']}\n"
+            + f"RUNTIME: COLAB_LOCAL_TRANSFORMERS\n"
+            + f"MODEL: {receipt['model_id']}\n"
+            + f"PROMPT_SHA256: {verification['prompt_sha256']}\n"
+            + f"RESULT_SHA256: {verification['result_sha256']}\n"
+            + "AUTHENTICATION: SAME_EXISTING_GITHUB_OPERATOR\n"
+            + "ROLE_SEPARATION: DISTINCT_LOGICAL_PASSES_NOT_PHYSICAL_IDENTITIES\n"
+            + "STATUS: UNADJUDICATED_FORGE_PREPARATORY_EVIDENCE\n"
+            + "FORGE_SOURCE_SEMANTICS_ACCEPTED: NO\n"
+            + "MATHSOLVE_DISPATCH_AUTHORIZED: NO\n"
+            + "MATHCERT_CERTIFIED: NO\n"
+            + "FORMAL_PUBLICATION: NO\n\n"
+            + "ROLE_FINDINGS_JSON:\n" + json.dumps(result["role_passes"], indent=2) + "\n\n"
+            + "FINITE_WITNESS_JSON:\n" + json.dumps(result["witness"], sort_keys=True)
+            + "\n\nNEXT: governed source-semantic review. No automatic Solve or Cert transition.\n")
+    posted = subprocess.run(
+        ["gh", "api", "--method", "POST", f"repos/{REPO}/issues/{review_id}/comments",
+         "--input", "-"],
+        input=json.dumps({"body": body}), text=True, capture_output=True,
+        check=False, timeout=60)
+    if posted.returncode:
+        raise RuntimeError("authenticated Forge evidence comment rejected: " + posted.stderr[:200])
+    comment = json.loads(posted.stdout)
+    if not comment.get("id") or not comment.get("html_url"):
+        raise RuntimeError("GitHub did not return an inspectable candidate receipt")
+    receipt = {"state": "PROVISIONAL_COMMENT_PUBLISHED_NOT_CERTIFIED",
+               "comment_id": comment["id"], "comment_url": comment["html_url"],
+               "result_sha256": verification["result_sha256"], "authority_effects": AUTHORITY}
+    (directory / "provisional-issue-receipt.json").write_text(
+        json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    return receipt
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--backend", choices=("witness_only", "local_transformers"),
@@ -193,8 +279,12 @@ def main() -> int:
     p.add_argument("--colab", default=str(Path.home() / ".local/bin/colab"))
     p.add_argument("--output-root", type=Path, default=ROOT / "runs/erdos-colab")
     p.add_argument("--execute", action="store_true",
-                   help="Launch real Colab only after protected control review")
+                   help="Launch a real Colab session under existing operator authority")
+    p.add_argument("--publish-provisional", action="store_true",
+                   help="Post reviewed provisional evidence to existing GitHub issue, never certify")
     args = p.parse_args()
+    if args.publish_provisional and (not args.execute or args.backend != "local_transformers"):
+        p.error("only a genuinely executed two-role model review may publish provisional evidence")
     if not 60 <= args.timeout <= 3600:
         p.error("remote execution timeout must be 60-3600 seconds")
     if args.backend == "local_transformers" and args.accelerator == "CPU":
@@ -238,11 +328,15 @@ def main() -> int:
             return 0
         if not Path(args.colab).is_file() and shutil.which(args.colab) is None:
             raise RuntimeError("Colab CLI missing on authorized control host")
+        ticket = reserve_exact_job(args.output_root, job)
         session = "gcl-erdos41-" + uuid.uuid4().hex[:12]
         colab_execute(output, args, session)
         verified = verify_artifacts(output)
-        write_status(output, "GREEN", "verified receipt, independent logical-role records")
-        print(json.dumps({**verified, "run_dir":str(output)}))
+        report = publish_provisional(output) if args.publish_provisional else None
+        write_status(output, "GREEN", "verified Colab receipt and role-scoped findings")
+        print(json.dumps({**verified, "run_dir":str(output),
+                          "one_shot_ticket":str(ticket),
+                          "provisional_publication":report}))
         return 0
     except Exception as exc:
         write_status(output, "RED", type(exc).__name__ + ": " + str(exc))
