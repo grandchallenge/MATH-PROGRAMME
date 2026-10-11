@@ -169,6 +169,81 @@ class ColabReviewContracts(unittest.TestCase):
             with self.assertRaises(ValueError):
                 host.verify_artifacts(folder)
 
+    def test_same_host_duplicate_exact_job_is_not_rerun(self):
+        _, _, job = packet("local_transformers")
+        with tempfile.TemporaryDirectory() as tmp:
+            ticket = host.reserve_exact_job(Path(tmp), job)
+            self.assertTrue(ticket.is_file())
+            with self.assertRaises(FileExistsError):
+                host.reserve_exact_job(Path(tmp), job)
+
+    def test_no_provisional_post_for_witness_probe(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder, _, _ = self._folder(tmp, "witness_only")
+            with self.assertRaises(ValueError):
+                host.publish_provisional(folder)
+
+    def test_same_login_model_findings_can_be_published_as_unadjudicated(self):
+        from unittest.mock import MagicMock
+        with tempfile.TemporaryDirectory() as tmp:
+            folder, result, receipt = self._folder(tmp, "local_transformers")
+            raw = "RESULT/1\nPROBLEM_ID: 41\n"
+            task = json.loads((folder/"task.json").read_text())
+            task["source_comment_sha256"] = host.sha(raw.encode())
+            task_bytes = json.dumps(task).encode()
+            prompt = (folder/"prompt.txt").read_bytes()
+            job = host.job_packet(task_bytes, prompt, backend="local_transformers",
+                                  model_id="Qwen/Qwen2.5-1.5B-Instruct",
+                                  model_revision="d"*40, max_new_tokens=850)
+            result, receipt = remote.execute(
+                task_bytes, prompt, job, reviewer=lambda _, role: verdict(role))
+            (folder/"task.json").write_bytes(task_bytes)
+            (folder/"job.json").write_text(json.dumps(job))
+            (folder/"erdos_review_result.json").write_text(json.dumps(result))
+            (folder/"erdos_review_receipt.json").write_text(json.dumps(receipt))
+            row = {"source_critical_review_issue": 2536,
+                   "worker_result_comment_id": 6104193801, "catalogue_issue": 1310}
+            issue = {"state":"open", "labels":[{"name":name} for name in
+                     ("gcl-job", "gcl-pickup:direct-editorial", "gcl-state:available",
+                      "gcl-role:source-audit")]}
+            fields = [{"issue_field_name":"GCL State",
+                       "single_select_option":{"name":"AVAILABLE"}}]
+            def gh_return(*args):
+                if args[0].endswith("/comments/6104193801"):
+                    return {"body":raw,
+                            "issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/1310"}
+                if args[0].endswith("/issue-field-values"):
+                    return fields
+                return issue
+            command = MagicMock()
+            command.returncode = 0
+            command.stdout = json.dumps({"id": 888,
+                                          "html_url":"https://github.com/grandchallenge/MATH-PROGRAMME/issues/2536#issuecomment-888"})
+            with patch.object(host, "gh", side_effect=gh_return), \
+                 patch.object(host, "selected_record", return_value=row), \
+                 patch.object(host, "comment_history", return_value=[]), \
+                 patch.object(host.subprocess, "run", return_value=command) as post:
+                published = host.publish_provisional(folder)
+            self.assertEqual(published["state"], "PROVISIONAL_COMMENT_PUBLISHED_NOT_CERTIFIED")
+            self.assertFalse(any(published["authority_effects"].values()))
+            payload = json.loads(post.call_args.kwargs["input"])["body"]
+            self.assertIn("ROLE_SEPARATION: DISTINCT_LOGICAL_PASSES_NOT_PHYSICAL_IDENTITIES", payload)
+            self.assertIn("MATHCERT_CERTIFIED: NO", payload)
+            self.assertIn("VERIFIER", payload)
+            self.assertIn("ADVERSARY", payload)
+
+    def test_publisher_rejects_existing_critical_disposition(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder, _, _ = self._folder(tmp, "local_transformers")
+            with patch.object(host, "gh", return_value={"state":"open","labels":[]}), \
+                 patch.object(host, "selected_record", return_value={
+                     "source_critical_review_issue":2536,"worker_result_comment_id":6104193801,
+                     "catalogue_issue":1310}), \
+                 patch.object(host, "comment_history", return_value=[
+                     {"body":"GCL-CRITICAL-REVIEW/1\nDISPOSITION: REVISE\n"}]):
+                with self.assertRaises(ValueError):
+                    host.publish_provisional(folder)
+
     def test_prepare_only_does_not_launch_colab(self):
         task, prompt, job = packet()
         with tempfile.TemporaryDirectory() as tmp:
