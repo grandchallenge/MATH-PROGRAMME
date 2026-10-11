@@ -369,11 +369,14 @@ def main() -> int:
         session = "gcl-erdos41-" + uuid.uuid4().hex[:12]
         colab_execute(output, args, session)
         verified = verify_artifacts(output)
+        from ci.erdos_41_colab_handoff import write_handoff
+        intake_handoff = write_handoff(output, verified)
         report = publish_provisional(output) if args.publish_provisional else None
         write_status(output, "GREEN", "verified Colab receipt and role-scoped findings")
         print(json.dumps({**verified, "run_dir":str(output),
                           "one_shot_ticket":str(ticket),
-                          "provisional_publication":report}))
+                          "provisional_publication":report,
+                          "intake_handoff":intake_handoff}))
         return 0
     except Exception as exc:
         write_status(output, "RED", type(exc).__name__ + ": " + str(exc))
