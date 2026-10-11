@@ -18,6 +18,8 @@ On this protected snapshot the public pages contained **177 line-level audit dia
 | Erdős-024 governance note: unescaped dollar currency | 1 | Escape the literal currency dollar to prevent a false mathematical opening delimiter | 0 |
 | **ED07 subtotal** | **48** | **Nine substantive files, plus this ledger** | **18 (intentional documentary forms)** |
 
+**Critical semantic exception:** the Euclid guide's original line 87 wrapped a literal protected Git commit identifier in math delimiters. This was not a mathematical formula. The candidate now shows the *unchanged* identifier as parenthesized inline code, avoiding an accidental double-dollar display interpretation when Markdown strips code spans. Of the six guides' 58 originally delimited spans, **57 genuine TeX formula bodies remain byte-identical** and this one source identifier is corrected as code. No mathematical claim or source SHA is changed.
+
 ## Original line-by-line public-page finding inventory
 
 Every line number in this table is from the locked protected base above. The line numbers in the new candidate may shift after converting HTML tables. A set of numbers refers to audit **diagnostics**; line 36 of the Yang–Mills documentary has two separate diagnostics.
