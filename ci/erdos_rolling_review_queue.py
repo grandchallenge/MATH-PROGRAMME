@@ -174,8 +174,10 @@ def issue_fields(ident: int) -> dict:
 def apply_one(task: dict, fields: dict, dry_run: bool) -> dict:
     ident = task["issue"]
     obj = verified_source_issue(task)
-    if review_is_already_accepted(ident):
-        return {"issue": ident, "state": "SOURCE_ACCEPTED_REQUIRES_PROTECTED_ADJUDICATION"}
+    disposition = review_already_recorded(ident)
+    if disposition is not None:
+        return {"issue": ident, "state": "REVIEW_ALREADY_RECORDED",
+                "disposition": disposition}
     item = project_item_for_issue(ident)
     if dry_run:
         return {"issue": ident, "state": "DRY_RUN", "project_item": item}
@@ -184,32 +186,42 @@ def apply_one(task: dict, fields: dict, dry_run: bool) -> dict:
                    "--url", obj["html_url"], "--format", "json")
         item = added["id"]
         if project_item_for_issue(ident) != item:
-            raise RuntimeError("Project add missing on readback")
-    for name, target in FIELD_EXPECTED.items():
-        f = fields[name]
-        option = next(o["id"] for o in f["options"] if o["name"] == target)
-        gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
-                  "--field-id", f["id"], "--single-select-option-id", option)
-    for name, value in TEXT_FIELDS.items():
-        gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
-                  "--field-id", fields[name]["id"], "--text", value)
+            raise RuntimeError("Project item-add readback failed")
+    add_issue_fields(ident)
+    expected = {k: v for k, v in {**FIELD_EXPECTED, **TEXT_FIELDS}.items()
+                if k != "Status"}
+    expected["GCL Timebox"] = 35
     actual = issue_fields(ident)
-    missing = {k: v for k, v in {**FIELD_EXPECTED, **TEXT_FIELDS}.items() if k != "Status" and actual.get(k) != v}
+    missing = {k: v for k, v in expected.items() if actual.get(k) != v}
     if missing:
-        raise RuntimeError(f"Issue Field readback failed for {ident}: {missing}; do not label AVAILABLE")
+        raise RuntimeError(f"Issue Field readback failed #{ident}: {missing}")
+    status_field = fields["Status"]
+    gh_action("project", "item-edit", "--id", item, "--project-id", PROJECT_ID,
+              "--field-id", status_field["id"],
+              "--single-select-option-id", PROJECT_TODO_OPTION_ID)
+    if review_already_recorded(ident) is not None:
+        return {"issue": ident, "state": "REVIEW_RETURNED_DURING_PROJECT_UPDATE"}
     obj = issue(ident)
-    existing = {l["name"] for l in obj.get("labels", [])}
-    if any(s.startswith("gcl-state:") and s != "gcl-state:available" for s in existing):
-        raise RuntimeError("lifecycle changed during projection")
+    existing = {label["name"] for label in obj.get("labels", [])}
+    if any(label.startswith("gcl-state:") and label != "gcl-state:available"
+           for label in existing):
+        raise RuntimeError("lifecycle label changed during projection")
     additions = sorted(LABELS - existing)
     if additions:
-        gh_action("api", f"repos/{OWNER}/{REPO}/issues/{ident}/labels",
-                  "--method", "POST", "-f", "labels[]=" + additions[0],
-                  *sum([["-f", "labels[]=" + name] for name in additions[1:]], []))
+        proc = subprocess.run(
+            ["gh", "api", f"repos/{OWNER}/{REPO}/issues/{ident}/labels",
+             "--method", "POST", "--input", "-"],
+            input=json.dumps({"labels": additions}),
+            capture_output=True, text=True, timeout=90)
+        if proc.returncode:
+            raise RuntimeError(f"labels POST failed #{ident}: {proc.stderr[:350]}")
     final = issue(ident)
-    final_labels = {l["name"] for l in final["labels"]}
-    if not LABELS.issubset(final_labels) or project_item_for_issue(ident) != item:
-        raise RuntimeError("availability/project final readback incomplete")
+    if not LABELS.issubset({label["name"] for label in final["labels"]}):
+        raise RuntimeError("final queue label readback failed")
+    if project_item_for_issue(ident) != item:
+        raise RuntimeError("final Project membership readback failed")
+    if any(issue_fields(ident).get(k) != v for k, v in expected.items()):
+        raise RuntimeError("final Issue Field readback failed")
     return {"issue": ident, "state": "AVAILABLE_REVIEW_ONLY", "item": item}
 
 
