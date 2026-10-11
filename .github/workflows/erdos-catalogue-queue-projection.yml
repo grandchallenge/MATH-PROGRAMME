@@ -56,6 +56,12 @@ jobs:
         run: |
           test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
           python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
+      - name: Publish bound Erdős-024 source critic dockets in Project #2
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
+          python ci/erdos_rolling_review_queue.py --apply
 
   ledger:
     if: >-
