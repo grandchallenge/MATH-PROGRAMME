@@ -277,6 +277,66 @@ def reconcile_views(project:dict, *, apply:bool) -> None:
                 raise RuntimeError("Project view mutation readback failed: "+name)
 
 
+
+BATCH_SIZE = 10
+
+
+def update_class_batch(rows: list[dict]) -> None:
+    """Use small GraphQL alias groups; verify exact ID for every mutation."""
+    if not rows or len(rows) > BATCH_SIZE:
+        raise ValueError("invalid Queue Class batch size")
+    variables = {"project":PROJECT_ID,"field":QUEUE_FIELD_ID}
+    definitions = ["$project:ID!","$field:ID!"]
+    fields = []
+    seen = set()
+    for i, row in enumerate(rows):
+        item, option = row["item_id"], row["option"]
+        if not isinstance(item,str) or not item.startswith("PVTI_") or item in seen:
+            raise ValueError("invalid or duplicate Project item in Queue Class batch")
+        if not isinstance(option,str) or not option:
+            raise ValueError("missing Queue Class option ID")
+        seen.add(item)
+        definitions.extend((f"$item{i}:ID!",f"$option{i}:String!"))
+        variables[f"item{i}"] = item
+        variables[f"option{i}"] = option
+        fields.append(
+            f"m{i}:updateProjectV2ItemFieldValue(input:{{"
+            f"projectId:$project,itemId:$item{i},fieldId:$field,"
+            f"value:{{singleSelectOptionId:$option{i}}}"
+            "}){projectV2Item{id}}"
+        )
+    mutation = "mutation("+",".join(definitions)+"){"+ " ".join(fields) +"}"
+    result = graphql(mutation,**variables)
+    for i, row in enumerate(rows):
+        if (result.get(f"m{i}") or {}).get("projectV2Item",{}).get("id") != row["item_id"]:
+            raise RuntimeError("Queue Class batch mutation returned incorrect item ID")
+
+
+def guard_project_api_budget(corrections: int) -> dict:
+    """Fail before the first write when the shared Clerk API quota is insufficient."""
+    proc = subprocess.run(["gh","api","rate_limit"],capture_output=True,
+                          text=True,timeout=40,check=False)
+    if proc.returncode:
+        raise RuntimeError("Clerk rate-limit preflight unavailable: "+proc.stderr[:280])
+    rate = json.loads(proc.stdout).get("resources") or {}
+    if not isinstance(rate,dict):
+        raise RuntimeError("Clerk rate-limit preflight malformed")
+    graphql_budget = (rate.get("graphql") or {}).get("remaining")
+    core_budget = (rate.get("core") or {}).get("remaining")
+    required_graphql = max(200, ((corrections + BATCH_SIZE-1)//BATCH_SIZE)*2+100)
+    if not isinstance(graphql_budget,int) or not isinstance(core_budget,int):
+        raise RuntimeError("Clerk API budget unknown: refusal before mutations")
+    if graphql_budget < required_graphql or core_budget < 25:
+        raise RuntimeError(
+            f"Clerk rate budget insufficient before mutations: "
+            f"GraphQL {graphql_budget}/{required_graphql} needed, REST {core_budget}/25 needed; "
+            "retry after GitHub installation limit resets"
+        )
+    return {"graphql_remaining":graphql_budget,
+            "graphql_minimum":required_graphql,"rest_remaining":core_budget}
+
+
+
 def execute(apply:bool, report:Path) -> int:
     if apply and not os.environ.get("GH_TOKEN"):
         raise RuntimeError("--apply requires authenticated short-lived GH_TOKEN")
@@ -295,13 +355,15 @@ def execute(apply:bool, report:Path) -> int:
         reconcile_views(project,apply=False)
         return 0
     # All items and both classes were checked before the first mutation.
-    for i,c in enumerate(changes,1):
-        result=graphql(MUTATE_CLASS,project=PROJECT_ID,item=c["item_id"],
-                       field=QUEUE_FIELD_ID,option=c["option"])
-        if result["updateProjectV2ItemFieldValue"]["projectV2Item"]["id"]!=c["item_id"]:
-            raise RuntimeError("mutation identity mismatch")
-        if i%100==0:
-            print(f"CLASSIFIED {i}/{len(changes)}",flush=True)
+    # Protect the independent cutover against the shared Clerk installation
+    # quota, then use bounded aliases and exact response identity checks.
+    budget = guard_project_api_budget(len(changes))
+    print("API_BUDGET",json.dumps(budget,sort_keys=True),flush=True)
+    for start in range(0,len(changes),BATCH_SIZE):
+        update_class_batch(changes[start:start+BATCH_SIZE])
+        done=min(start+BATCH_SIZE,len(changes))
+        if done%100==0 or done==len(changes):
+            print(f"CLASSIFIED {done}/{len(changes)}",flush=True)
     # Reread and refuse to claim success on stale or partial pagination.
     checked,rows=read_full_project()
     pending,recheck=prepare(checked,rows)
