@@ -13,6 +13,7 @@ import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 
 from validate_documentary_library import documentary_contract_errors
+from validate_erdos_rolling_024 import check as validate_erdos_rolling_024
 from openai_ten_proofs_intake_control import validation_errors as openai_ten_proofs_intake_errors
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -567,6 +568,7 @@ def main() -> int:
     )
     errors.extend(documentary_contract_errors())
     errors.extend(openai_ten_proofs_intake_errors())
+    validate_erdos_rolling_024()
 
     if errors:
         for error in errors:
