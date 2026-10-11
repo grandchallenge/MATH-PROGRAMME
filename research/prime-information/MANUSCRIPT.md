@@ -3,6 +3,7 @@
 
 **Grand Challenge Labs — manuscript draft 0.1 (11 October 2026).**  
 **Status:** research exposition and internally derived mathematics; **not certified, not a novelty or publication claim**.  
+**Rendered mathematical edition:** [Read with MathJax typesetting](https://grandchallenge.github.io/MATH-PROGRAMME/PRIME_INFORMATION_GEOMETRY/).  
 **Related programme:** [TCU-001 uniform transition problem](TRANSITION_TCU_001.md).
 
 ## Abstract
@@ -29,7 +30,7 @@ The arithmetic weight $\log p$ is not automatically a Shannon entropy. It become
 
 ### 1.1 Prime Number Theorem as modular information capacity
 
-Put $L(m)=\operatorname{lcm}(1,2,\dots,m)$ and $\psi(m)=\sum_{p^j\le m}\log p$. The elementary identity
+Put $L(m)=\mathop{\mathrm{lcm}}(1,2,\dots,m)$ and $\psi(m)=\sum_{p^j\le m}\log p$. The elementary identity
 $$
 \log L(m)=\psi(m)
 $$
@@ -98,7 +99,7 @@ $$
 M_y(s)=\mathbb E_{Q_s}\log N=\sum_{p\le y}\frac{\log p}{p^s-1},
 $$
 $$
-\sigma_y^2(s)=\operatorname{Var}_{Q_s}(\log N)
+\sigma_y^2(s)=\mathop{\mathrm{Var}}_{Q_s}(\log N)
 =\sum_{p\le y}\frac{(\log p)^2p^s}{(p^s-1)^2}.
 $$
 For the infinite Euler product $\zeta(s)$, normalizability requires $s>1$. The pole of $\zeta(s)$ at $1$ is an established analytic fact; it does not by itself imply PNT. The zeta statistical-mechanical analogy appears in earlier research, notably Golomb (1992) and Merhav (2026).
@@ -148,7 +149,7 @@ This is an exact information accounting identity, valid at every finite $X,y$.
 
 ### 4.2 An exact conditioning construction
 
-Draw $N\sim Q_s$ and independently $W\sim\operatorname{Exp}(s)$. Put $E=\log N+W$. For $t>0$,
+Draw $N\sim Q_s$ and independently $W\sim\mathop{\mathrm{Exp}}(s)$. Put $E=\log N+W$. For $t>0$,
 $$
 f_{N,E}(n,t)=\frac{s e^{-st}}{Z_y(s)}\mathbf1_{\{\log n\le t\}},
 $$
@@ -177,7 +178,7 @@ Suppose $y$ is fixed and $k=\pi(y)$. Write $a_i=\log p_i$. Uniform smooth intege
 $$
 (v_1,\dots,v_k)\in\mathbb Z_{\ge0}^k,\qquad \sum_i a_iv_i\le t.
 $$
-After rescaling $w_i=a_iv_i/t$, these fill the solid simplex $\{w_i\ge0,\sum_iw_i\le1\}$. Each marginal coordinate of the limiting uniform simplex is $\operatorname{Beta}(1,k)$, with differential entropy
+After rescaling $w_i=a_iv_i/t$, these fill the solid simplex $\{w_i\ge0,\sum_iw_i\le1\}$. Each marginal coordinate of the limiting uniform simplex is $\mathop{\mathrm{Beta}}(1,k)$, with differential entropy
 $$
 h_k=-\log k+\frac{k-1}{k}.
 $$
