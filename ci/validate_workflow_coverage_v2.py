@@ -383,7 +383,7 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
         main_checkout = [z for z in steps if
                          str(z.get("uses", "")).startswith("actions/checkout@") and
                          z.get("with", {}).get("ref") == "main" and
-                         z.get("with", {}).get("persist-credentials") is False]
+                         str(z.get("with", {}).get("persist-credentials", "")).lower() == "false"]
         if len(main_checkout) != 1:
             errors.append(f"{key}: {name} must checkout protected main without retained credential")
     if agent.get("needs") != ["reconcile"]:
