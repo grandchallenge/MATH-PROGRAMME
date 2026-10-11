@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/erdos_compendium_editorial_activate.py'
+      - 'ci/test_erdos_compendium_editorial_activate.py'
       - 'ci/gcl_queue_class_cutover.py'
       - 'ci/test_gcl_queue_class_cutover.py'
       - 'ci/erdos_forge_copilot_pilot.py'
@@ -82,6 +84,59 @@ jobs:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
         run: |
           python ci/gcl_queue_class_cutover.py --publish-issue 2563 --receipt queue-cutover/receipt.json
+
+      - name: Admit three bounded Editorial Compendium assignments from source evidence
+        id: editorial-admit
+        if: github.event_name == 'push'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/test_erdos_compendium_editorial_activate.py
+          python ci/erdos_compendium_editorial_activate.py \
+            --apply --receipt editorial-admission/receipt.json
+
+      - name: Archive real three-item Editorial admission receipt
+        if: always() && github.event_name == 'push'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-compendium-editorial-admission-${{ github.run_id }}-${{ github.run_attempt }}
+          path: editorial-admission/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Publish factual Editorial staging-to-AVAILABLE receipt
+        if: always() && github.event_name == 'push' && steps.queue-token.outputs.token != ''
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          src=Path("editorial-admission/receipt.json")
+          r=json.loads(src.read_text()) if src.is_file() else {}
+          verified=(r.get("verified") is True and r.get("applied") is True
+                    and [x.get("issue") for x in r.get("preflight",[])] == [2556,2557,2558])
+          status="VERIFIED" if verified else "BLOCKED / UNVERIFIED"
+          body=("ERDOS-COMPENDIUM-EDITORIAL-ADMISSION/1\n\n"
+                f"Three Editorial writing assignments #2556–#2558: **{status}**.\n"
+                "Only exact bound source packets for Erdős #7, #9, #10 are eligible; "
+                "review #2555 remains STAGED. "
+                "Direct issue-bound RESULT/1 remains the return route; no /claim.\n"
+                f"Protected Programme SHA: `{os.environ['GITHUB_SHA']}`\n"
+                f"Controller run: https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{os.environ['GITHUB_RUN_ID']}\n")
+          if verified:
+            body+=("Verified Issue Field GCL State=AVAILABLE, Editorial Project membership, "
+                   "identity, role, campaign, source-return provenance and labels for all three. "
+                   "No worker has been launched or declared successful.\n")
+          else:
+            body+=("Exact admission blocker: `"+str(r.get("blocker","no complete admission receipt"))[:3000].replace("`","'")+"`\n")
+          Path("editorial-admission/comment.md").parent.mkdir(parents=True,exist_ok=True)
+          Path("editorial-admission/comment.md").write_text(body,encoding="utf-8")
+          PY
+          gh issue comment 2552 --repo grandchallenge/MATH-PROGRAMME \
+            --body-file editorial-admission/comment.md
 
       - name: Reconcile Project state and labels from verified receipts
         env:

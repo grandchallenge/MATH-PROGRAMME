@@ -114,6 +114,8 @@ jobs:
           python-version: "3.12"
       - name: Verify two-class source/pickup separation and fail-closed views
         run: python3 ci/test_gcl_queue_class_cutover.py
+      - name: Test source-locked editorial admission and hostile state/readback cases
+        run: python3 ci/test_erdos_compendium_editorial_activate.py
 
   validate-json:
     needs: [impact, policy-shard, queue-cutover-contract]
