@@ -8,7 +8,7 @@ from unittest.mock import patch
 from ci.erdos_rolling_review_queue import (
     candidates, LABELS, FIELD_EXPECTED, TEXT_FIELDS,
     review_already_recorded, project_fields, ISSUE_FIELD_IDS,
-    PROJECT_STATUS_FIELD_ID, PROJECT_TODO_OPTION_ID
+    PROJECT_STATUS_FIELD_ID, project_status
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -73,22 +73,46 @@ class ReviewQueueContract(unittest.TestCase):
     def test_project_status_not_org_issue_fields(self):
         fields = {"fields": [
             {"name": "Status", "id": PROJECT_STATUS_FIELD_ID,
-             "options": [{"name": "Todo", "id": PROJECT_TODO_OPTION_ID}]}
+             "options": [{"name": "Todo", "id": "aa440011"}]}
         ]}
         with patch("ci.erdos_rolling_review_queue.gh", return_value=fields):
             self.assertEqual(project_fields()["Status"]["id"], PROJECT_STATUS_FIELD_ID)
         self.assertEqual(ISSUE_FIELD_IDS["GCL State"], 47953501)
         self.assertEqual(ISSUE_FIELD_IDS["GCL Cohort"], 47953514)
 
-    def test_project_cli_without_options(self):
-        response = {"fields": [{"name": "Status", "id": PROJECT_STATUS_FIELD_ID}]}
-        with patch("ci.erdos_rolling_review_queue.gh", return_value=response):
-            self.assertEqual(project_fields()["Status"]["id"], PROJECT_STATUS_FIELD_ID)
+    def test_drifted_live_todo_id_is_rebound_and_not_trusted_blindly(self):
+        fields = {"fields": [
+            {"name": "Status", "id": PROJECT_STATUS_FIELD_ID,
+             "options": [{"name": "Todo", "id": "bc123def"},
+                         {"name": "Done", "id": "ff112233"}]}
+        ]}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=fields):
+            self.assertEqual(project_fields()["Status"]["validated_todo_option_id"], "bc123def")
+
+    def test_missing_or_ambiguous_live_todo_fails_closed(self):
+        for options in ([], [{"name":"Todo","id":"garbage!"}],
+                        [{"name":"Todo","id":"aaaa0000"}, {"name":"Todo","id":"bbbb1111"}]):
+            fields = {"fields": [{"name":"Status","id":PROJECT_STATUS_FIELD_ID,
+                                  "options": options}]}
+            with patch("ci.erdos_rolling_review_queue.gh", return_value=fields):
+                with self.assertRaises(ValueError):
+                    project_fields()
+
+    def test_graphql_status_readback_uses_gh_api(self):
+        result = {"data": {"node": {"fieldValueByName": {
+            "name": "Todo", "optionId": "bc123def"}}}}
+        with patch("ci.erdos_rolling_review_queue.gh", return_value=result) as fn:
+            self.assertEqual(project_status("PVTI_example"),
+                             {"name":"Todo","optionId":"bc123def"})
+        self.assertEqual(fn.call_args.args[:2], ("api", "graphql"))
+        with patch("ci.erdos_rolling_review_queue.gh", return_value={"data":{}}):
+            with self.assertRaises(ValueError):
+                project_status("PVTI_example")
 
     def test_project_field_mismatch_blocks(self):
         fields = {"fields": [
             {"name": "Status", "id": "wrong",
-             "options": [{"name": "Todo", "id": PROJECT_TODO_OPTION_ID}]}
+             "options": [{"name": "Todo", "id": "aa440011"}]}
         ]}
         with patch("ci.erdos_rolling_review_queue.gh", return_value=fields):
             with self.assertRaises(ValueError):
