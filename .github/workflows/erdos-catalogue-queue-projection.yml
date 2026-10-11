@@ -82,6 +82,13 @@ jobs:
           retention-days: 90
           if-no-files-found: warn
 
+      - name: Publish durable Project cutover success or blocker readback
+        if: always() && steps.queue-token.outputs.token != ''
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          python ci/gcl_queue_class_cutover.py --publish-issue 2563 --receipt queue-cutover/receipt.json
+
       - name: Publish bound Erdős-024 source critic dockets in Project #2
         env:
           GH_TOKEN: ${{ steps.queue-token.outputs.token }}
