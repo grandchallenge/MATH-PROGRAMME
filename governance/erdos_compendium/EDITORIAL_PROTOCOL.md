@@ -25,9 +25,8 @@ A protected manuscript merge is **not** editorial acceptance. The site
 generator reads `EDITORIAL_ADMISSIONS.json` and refuses to promote any
 new `editorial/NNNN.md` into an explanatory public page or reviewed coverage
 count unless a separate, protected editorial admission provides the **exact
-SHA-256 of its stripped manuscript text**, source-claim check, read-only
-critical review, protected admission PR, successful MkDocs run, and an
-independent, recorded **public HTML and mathematical rendering readback**.
+SHA-256 of its stripped manuscript text**, source-claim check, recorded editorial critical check, protected admission PR, successful MkDocs run, and an
+evidence-backed **public HTML and mathematical rendering readback**.
 Absent admission evidence leaves the manuscript on its public page marked
 **UNACCEPTED DRAFT**, with source link and an explicit noncertification warning,
 excluded from the separately reviewed coverage count. This deliberately
@@ -38,8 +37,7 @@ bytes invalidate its existing admission, causing the generator to fail closed
 until the review record is deliberately updated.
 Transport `RESULT/1` or merged source alone never satisfies these fields.
 The gate validates the evidence record's shape and source-hash identity;
-protected reviewers must additionally check that linked evidence actually
-supports an acceptance decision before authorizing ledger updates. Never
+the accountable editorial agent must verify that linked evidence supports the proposed acceptance decision; applicable protected approvals are still enforced. Never
 equate a syntactically valid link with proof of successful verification.
 
 The original #1–#3 are narrowly grandfathered as **legacy authored
@@ -71,7 +69,7 @@ acceptance does not grant mathematical certification.
    question in plain language; small example; what is known; GCL's current
    state; what remains; sources and claim boundaries. Use exact mathematical
    typesetting. Avoid synthetic proof figures or unverified current statuses.
-4. **Adversarial editorial check.** Verify that the small example is valid,
+4. **Accountable editorial self-check.** Verify that the small example is valid,
    the theorem statement matches its primary source, the language does not
    imply novelty/certification, each reported GCL outcome exists in protected
    state, and an open case remains open.
@@ -80,7 +78,7 @@ acceptance does not grant mathematical certification.
    UNACCEPTED DRAFT page, **excluded** from reviewed coverage. Read back both
    the actual GitHub and deployed mathematical rendering; only then propose
    a SHA-256-bound `EDITORIAL_ADMISSIONS.json` row through a separate protected
-   PR with actual non-author approval. Its merge may promote the reviewed
+   PR satisfying its applicable branch-protection checks and approvals. Its merge may promote the reviewed
    coverage count. Never equate editorial signoff with mathematical proof
    certification or require routine Human Steward approval.
 6. **Correction and revision.** If the live mathematical status changes,
