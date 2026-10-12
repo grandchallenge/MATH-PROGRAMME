@@ -14,7 +14,31 @@ from pathlib import Path
 PUBLIC = "https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/"
 
 
+def protected_editorial_state(problem_id: int = 7) -> bool:
+    """Read protected editorial authority; never infer it from the live page."""
+    from erdos_compendium import load_admissions, manuscript
+
+    admitted = load_admissions().get(problem_id)
+    if admitted is None:
+        return False
+    source = manuscript(problem_id)
+    if source is None:
+        raise RuntimeError("accepted record has no manuscript")
+    digest = hashlib.sha256(source.encode("utf-8")).hexdigest()
+    if digest != admitted["source_sha256"]:
+        raise RuntimeError("stale editorial admission source hash")
+    return True
+
+
+def publication_state_matches(observed: dict, admitted: bool) -> bool:
+    """Fail closed on wrong public classification in either lifecycle state."""
+    if admitted:
+        return observed["reviewed"] and not observed["draft"] and not observed["notCertified"]
+    return observed["draft"] and observed["notCertified"] and not observed["reviewed"]
+
+
 def verify(browser, url: str = PUBLIC) -> dict:
+    admitted = protected_editorial_state()
     page = browser.new_page(viewport={"width": 1280, "height": 850},
                             device_scale_factor=1)
     errors: list[str] = []
@@ -41,6 +65,7 @@ def verify(browser, url: str = PUBLIC) -> dict:
       return {
         title: document.title,
         draft: prose.includes('UNACCEPTED DRAFT'),
+        reviewed: prose.includes('Reviewed explanatory article — evidence qualified'),
         provenance: prose.includes('Erdős Problem #7'),
         theorem: prose.includes('Theorem 1.4'),
         source: prose.includes('Balister'),
@@ -53,7 +78,7 @@ def verify(browser, url: str = PUBLIC) -> dict:
       };
     }""")
     checks = {
-        "draft_warning": observed["draft"] and observed["notCertified"],
+        "publication_state": publication_state_matches(observed, admitted),
         "problem_identity": observed["provenance"],
         "theorem_source": observed["theorem"] and observed["source"],
         "finite_example": observed["covered"],
@@ -80,7 +105,7 @@ def verify(browser, url: str = PUBLIC) -> dict:
         "observed": observed,
         "dom_sha256": hashlib.sha256(html_bytes).hexdigest(),
         "identity_scope": "deployed_browser_dom_not_deep_theorem_proof",
-        "editorial_accepted": False,
+        "editorial_accepted": admitted,
         "mathematical_certified": False,
     }
 
