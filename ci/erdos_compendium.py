@@ -123,7 +123,7 @@ def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = 
     body = [
         f"# Erdős Problem #{n}",
         "",
-        f"**Editorial depth:** {'Legacy authored exemplar — not separately admitted' if legacy else ('Reviewed explanatory article — evidence qualified' if curated else ('Authored manuscript awaiting editorial acceptance' if pending else 'Reference entry — substantive explanation pending source review'))}.  ",
+        f"**Editorial depth:** {'Legacy authored exemplar — not separately admitted' if legacy else ('Authored explanatory DRAFT — NOT editorially accepted' if pending else ('Reviewed explanatory article — evidence qualified' if curated else 'Reference entry — substantive explanation pending source review'))}.  ",
         f"**Snapshot classification:** {status} (not automatically the live result).  ",
         f"**Subject areas:** {topics}.",
         "",
@@ -143,19 +143,20 @@ def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = 
                 "source-verified editorial acceptance or mathematical certification.",
                 "",
             ])
-        body.extend([curated, ""])
-    else:
         if pending:
             body.extend([
-                "!!! warning \"Editorial manuscript pending acceptance\"",
-                "    A protected authored manuscript exists, but has not passed the "
-                "separate editorial acceptance and deployed-HTML checks. This "
-                "page therefore remains an indexed reference; the draft is not "
-                "promoted into the public explanatory text.",
+                "!!! warning \"UNACCEPTED DRAFT — mathematical editorial review pending\"",
+                "    This material is a provisional, source-qualified manuscript "
+                "published for line-by-line scrutiny and real HTML/LaTeX testing. "
+                "It has NOT received separate GCL editorial acceptance or "
+                "independent mathematical certification. Its presence on this "
+                "website is not evidence of a solution, reviewed coverage, or final publication.",
                 "",
-                f"[Inspect the unaccepted manuscript](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/editorial/{n:04d}.md).",
+                f"[Review the underlying draft on GitHub](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/editorial/{n:04d}.md).",
                 "",
             ])
+        body.extend([curated, ""])
+    else:
         body.extend([
             "## The question in plain language",
             "",
@@ -237,18 +238,21 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
             if admission["source_sha256"] != actual_hash:
                 raise ValueError(f"Admitted manuscript changed without re-review: #{n}")
         reviewed = article is not None and admission is not None
-        curated = article if (legacy or reviewed) else None
+        pending = article is not None and not legacy and not reviewed
+        # Publish clearly labeled, non-accepted drafts so actual deployed
+        # mathematical HTML can be verified before the separate admission.
+        # Only the reviewed_ids count is authoritative for accepted coverage.
+        curated = article
         if reviewed:
             reviewed_ids.append(n)
         if legacy:
             legacy_ids.append(n)
-        if article and not curated:
+        if pending:
             pending_ids.append(n)
         if curated:
             curated_ids.append(n)
         (problems / f"{n:04d}.md").write_text(
-            reader_card(row, curated, commit, pending=article is not None and not curated,
-                        legacy=legacy), encoding="utf-8")
+            reader_card(row, curated, commit, pending=pending, legacy=legacy), encoding="utf-8")
     if set(admissions) - found_ids:
         raise ValueError("Admission references an absent registry manuscript")
 
