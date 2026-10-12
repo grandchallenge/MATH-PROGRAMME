@@ -4,6 +4,7 @@
 **Research state:** active mathematical target, **not proved**.  
 **Version:** 0.1, 2026-10-11.  
 **Owner:** GCL mathematical research, MATHFORGE → MATHSOLVE; certification reserved to MATHCERT.  
+**Rendered mathematical edition:** [Read the transition research note with typeset equations](https://grandchallenge.github.io/MATH-PROGRAMME/PRIME_INFORMATION_TRANSITION/).  
 **Companion:** [Synthesis manuscript](MANUSCRIPT.md).
 
 ### 1. The central question
