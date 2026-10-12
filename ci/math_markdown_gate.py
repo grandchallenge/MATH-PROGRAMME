@@ -77,6 +77,12 @@ def issues(source: str) -> list[tuple[str, str, int]]:
                 in_display = False
             continue
 
+        if re.search(r"\\operatorname\b", line):
+            add("unsupported-operatorname", line, n)
+        for pattern, kind in LEGACY:
+            if re.search(pattern, line):
+                add(kind, line, n)
+
         if in_display:
             display_has_body |= bool(stripped)
             if DOUBLE.search(line):
@@ -85,12 +91,6 @@ def issues(source: str) -> list[tuple[str, str, int]]:
 
         if DOUBLE.search(line):
             add("display-delimiter-not-on-own-line", line, n)
-
-        for pattern, kind in LEGACY:
-            if re.search(pattern, line):
-                add(kind, line, n)
-        if re.search(r"\\operatorname\b", line):
-            add("unsupported-operatorname", line, n)
 
         dollar_positions = [match.start() for match in DOLLAR.finditer(line)]
         if len(dollar_positions) % 2:
