@@ -6,6 +6,7 @@ Curated source-reviewed essays live outside docs/ and are copied as authored.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import shutil
@@ -15,6 +16,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "governance/erdos_catalogue/REGISTRY.json"
 EDITORIAL = ROOT / "governance/erdos_compendium/editorial"
+ACCEPTANCE = ROOT / "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
+# Existing published exemplars #1–#3 predate this acceptance ledger. They are
+# preserved only as clearly qualified LEGACY articles, not reviewed admissions.
+LEGACY_EXEMPLARS = frozenset({1, 2, 3})
 GENERATED = ROOT / "docs/erdos"
 EXPECTED_COUNT = 1221
 REQUIRED_EDITORIAL_HEADINGS = (
@@ -25,6 +30,43 @@ REQUIRED_EDITORIAL_HEADINGS = (
     "## What remains",
     "## Sources and claim boundaries",
 )
+
+
+def load_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
+    """A reviewed publication needs exact-source, protected, and rendered evidence.
+
+    The manifest is a proposed editorial decision, not proof certification.
+    Publication still requires normal protected PR review and site checks.
+    """
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if (not isinstance(data, dict)
+            or set(data) != {"record_type", "admissions"}
+            or data["record_type"] != "ERDOS_COMPENDIUM_EDITORIAL_ADMISSIONS/1"
+            or not isinstance(data["admissions"], list)):
+        raise ValueError("Invalid editorial admission manifest")
+    required = {"problem_id", "source_sha256", "source_check",
+                "critical_review", "protected_admission",
+                "mkdocs_run", "public_html_readback"}
+    link_patterns = {
+        "source_check": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\\d+#issuecomment-\\d+",
+        "critical_review": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/(issues|pull)/\\d+#issuecomment-\\d+",
+        "protected_admission": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/\\d+",
+        "mkdocs_run": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/actions/runs/\\d+",
+        "public_html_readback": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\\d+#issuecomment-\\d+",
+    }
+    accepted = {}
+    for row in data["admissions"]:
+        if not isinstance(row, dict) or set(row) != required:
+            raise ValueError("Incomplete or unexpected editorial admission fields")
+        n = row["problem_id"]
+        if (type(n) is not int or n <= 0 or n in LEGACY_EXEMPLARS
+                or n in accepted or not re.fullmatch(r"[0-9a-f]{64}", row["source_sha256"])):
+            raise ValueError("Invalid, duplicated, or legacy editorial admission identity")
+        for key, pattern in link_patterns.items():
+            if not isinstance(row[key], str) or not re.fullmatch(pattern, row[key]):
+                raise ValueError(f"Invalid {key} evidence link for editorial #{n}")
+        accepted[n] = row
+    return accepted
 
 
 def clean_cell(value: object) -> str:
@@ -67,7 +109,7 @@ def manuscript(problem_id: int, base: Path = EDITORIAL) -> str | None:
     return text
 
 
-def reader_card(row: dict, curated: str | None, commit: str) -> str:
+def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = False, legacy: bool = False) -> str:
     n = row["problem_id"]
     issue = row["issue_number"]
     topics = ", ".join(clean_cell(x) for x in row["topics"]) or "not classified"
@@ -81,7 +123,7 @@ def reader_card(row: dict, curated: str | None, commit: str) -> str:
     body = [
         f"# Erdős Problem #{n}",
         "",
-        f"**Editorial depth:** {'Authored explanatory article — evidence qualified' if curated else 'Reference entry — substantive explanation pending source review'}.  ",
+        f"**Editorial depth:** {'Legacy authored exemplar — not separately admitted' if legacy else ('Reviewed explanatory article — evidence qualified' if curated else ('Authored manuscript awaiting editorial acceptance' if pending else 'Reference entry — substantive explanation pending source review'))}.  ",
         f"**Snapshot classification:** {status} (not automatically the live result).  ",
         f"**Subject areas:** {topics}.",
         "",
@@ -93,8 +135,27 @@ def reader_card(row: dict, curated: str | None, commit: str) -> str:
         "",
     ]
     if curated:
+        if legacy:
+            body.extend([
+                "!!! warning \"Legacy editorial exemplar\"",
+                "    This early authored explanation predates the manuscript-acceptance ledger. "
+                "It is provided as a qualified educational exemplar, not a separate "
+                "source-verified editorial acceptance or mathematical certification.",
+                "",
+            ])
         body.extend([curated, ""])
     else:
+        if pending:
+            body.extend([
+                "!!! warning \"Editorial manuscript pending acceptance\"",
+                "    A protected authored manuscript exists, but has not passed the "
+                "separate editorial acceptance and deployed-HTML checks. This "
+                "page therefore remains an indexed reference; the draft is not "
+                "promoted into the public explanatory text.",
+                "",
+                f"[Inspect the unaccepted manuscript](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/editorial/{n:04d}.md).",
+                "",
+            ])
         body.extend([
             "## The question in plain language",
             "",
@@ -146,8 +207,9 @@ def reader_card(row: dict, curated: str | None, commit: str) -> str:
 
 
 def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
-          output: Path = GENERATED) -> dict:
+          output: Path = GENERATED, admissions_path: Path = ACCEPTANCE) -> dict:
     data, rows = load_registry(registry)
+    admissions = load_admissions(admissions_path)
     problems = output / "problems"
     catalogue = output / "catalogue"
     for directory in (problems, catalogue):
@@ -157,12 +219,38 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
     catalogue.mkdir(parents=True)
     commit = data["source"]["source_commit"]
     curated_ids: list[int] = []
+    pending_ids: list[int] = []
+    reviewed_ids: list[int] = []
+    legacy_ids: list[int] = []
+    found_ids = set()
     for row in rows:
         n = row["problem_id"]
         article = manuscript(n, editorial)
         if article:
+            found_ids.add(n)
+        legacy = article is not None and n in LEGACY_EXEMPLARS
+        admission = admissions.get(n)
+        if admission is not None:
+            if article is None:
+                raise ValueError(f"Admission without manuscript for #{n}")
+            actual_hash = hashlib.sha256(article.encode("utf-8")).hexdigest()
+            if admission["source_sha256"] != actual_hash:
+                raise ValueError(f"Admitted manuscript changed without re-review: #{n}")
+        reviewed = article is not None and admission is not None
+        curated = article if (legacy or reviewed) else None
+        if reviewed:
+            reviewed_ids.append(n)
+        if legacy:
+            legacy_ids.append(n)
+        if article and not curated:
+            pending_ids.append(n)
+        if curated:
             curated_ids.append(n)
-        (problems / f"{n:04d}.md").write_text(reader_card(row, article, commit), encoding="utf-8")
+        (problems / f"{n:04d}.md").write_text(
+            reader_card(row, curated, commit, pending=article is not None and not curated,
+                        legacy=legacy), encoding="utf-8")
+    if set(admissions) - found_ids:
+        raise ValueError("Admission references an absent registry manuscript")
 
     buckets: dict[int, list[dict]] = {}
     for row in rows:
@@ -186,7 +274,10 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
         ]
         for row in group:
             n = row["problem_id"]
-            treatment = "Explanatory article" if n in curated_ids else "Reference entry"
+            treatment = ("Reviewed explainer" if n in reviewed_ids else
+                         "Legacy exemplar" if n in legacy_ids else
+                         "Manuscript awaiting acceptance" if n in pending_ids else
+                         "Reference entry")
             lines.append(
                 f"| [#{n}](../problems/{n:04d}.md) | "
                 f"{clean_cell(row['catalogue_status'])} | {treatment} | "
@@ -199,8 +290,9 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
     index = [
         "# All registered Erdős problems",
         "",
-        f"**{len(rows):,} indexed reference entries; {len(curated_ids)} authored explanatory articles.** "
-        "The two counts are deliberately different.",
+        f"**{len(rows):,} indexed references; {len(reviewed_ids)} separately admitted explanations; "
+        f"{len(legacy_ids)} legacy authored exemplars; {len(pending_ids)} manuscripts pending acceptance.** "
+        "A merged draft is not editorial acceptance; legacy exemplars are not counted as reviewed.",
         "",
         "The frozen status labels are **not live mathematical facts**. "
         "Read individual source histories before claiming that any problem has been proved or disproved.",
@@ -214,7 +306,7 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
         f"| [#{name.replace('-', '–#')} ]({name}.md) | {count} |"
         for name, count in ranges
     )
-    index.extend(["", "## Editorially developed entries", ""])
+    index.extend(["", "## Editorially displayed entries", ""])
     if curated_ids:
         index.extend(f"- [Erdős #{n}](../problems/{n:04d}.md)" for n in curated_ids)
     else:
@@ -236,7 +328,9 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
     if written != expected:
         raise ValueError(f"compendium generation incomplete: expected {expected}, got {written}")
     return {"problems": len(rows), "editorial": len(curated_ids),
-            "ranges": len(ranges), "pages": written, "statuses": dict(status_counts)}
+            "reviewed": len(reviewed_ids), "legacy": len(legacy_ids),
+            "pending": len(pending_ids), "ranges": len(ranges),
+            "pages": written, "statuses": dict(status_counts)}
 
 
 def clean(output: Path = GENERATED) -> None:
