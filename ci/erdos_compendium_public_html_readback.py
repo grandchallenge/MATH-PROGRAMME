@@ -85,6 +85,46 @@ def verify(browser, url: str = PUBLIC) -> dict:
     }
 
 
+def verify_github(browser, sha: str) -> dict:
+    """Actual GitHub rendered Markdown, never a raw-source or API assumption."""
+    import re
+    if not re.fullmatch(r"[0-9a-f]{40}", sha):
+        raise RuntimeError("missing exact protected manuscript SHA")
+    url = ("https://github.com/grandchallenge/MATH-PROGRAMME/blob/" + sha +
+           "/governance/erdos_compendium/editorial/0007.md")
+    page = browser.new_page(viewport={"width": 1280, "height": 850})
+    response = page.goto(url, wait_until="domcontentloaded", timeout=45000)
+    if response is None or response.status != 200:
+        raise RuntimeError(f"GitHub Markdown page GET failed: {response.status if response else None}")
+    # GitHub renders Markdown/MathJax client-side. Inspect its completed DOM,
+    # not the raw .md (which cannot establish rich rendering).
+    page.wait_for_function(
+        """() => {
+          const root = document.querySelector('.markdown-body');
+          return root && root.innerText.includes('Theorem 1.4') &&
+            root.querySelectorAll('mjx-container').length >= 7;
+        }""",
+        timeout=60000,
+    )
+    page.locator(".markdown-body mjx-container").first.screenshot(
+        path="readback/github-first-rendered-math.png", timeout=20000)
+    observed = page.evaluate("""() => {
+      const root = document.querySelector('.markdown-body');
+      return { renderedMath: root.querySelectorAll('mjx-container').length,
+        theorem: root.innerText.includes('Theorem 1.4'),
+        source: root.innerText.includes('Hough'),
+        example: root.innerText.includes('48 uncovered') };
+    }""")
+    if not (observed["renderedMath"] >= 7 and observed["theorem"] and
+            observed["source"] and observed["example"]):
+        raise RuntimeError("GitHub rendered Markdown source probes failed: " +
+                           json.dumps(observed))
+    dom_hash = hashlib.sha256(page.content().encode("utf-8")).hexdigest()
+    page.close()
+    return {"url": url, "status": "PASS", "observed": observed,
+            "dom_sha256": dom_hash}
+
+
 def main() -> None:
     args = argparse.ArgumentParser()
     args.add_argument("--url", default=PUBLIC)
@@ -93,9 +133,11 @@ def main() -> None:
         raise SystemExit("Refusing unbound public URL")
     Path("readback").mkdir(exist_ok=True)
     from playwright.sync_api import sync_playwright
+    import os
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
         result = verify(browser)
+        result["github_render"] = verify_github(browser, os.environ["DEPLOYED_SHA"])
         browser.close()
     Path("readback/readback.json").write_text(
         json.dumps(result, sort_keys=True, indent=2) + "\n", encoding="utf-8")
