@@ -81,7 +81,8 @@ jobs:
         run: |
           set -euo pipefail
           test "$(jq -r '.status' readback/readback.json)" = PASS
-          test "$(jq -r '.editorial_accepted' readback/readback.json)" = false
+          admission_state="$(jq -r '.editorial_accepted' readback/readback.json)"
+          case "$admission_state" in true|false) ;; *) echo "Invalid protected editorial state" >&2; exit 1;; esac
           test "$(jq -r '.mathematical_certified' readback/readback.json)" = false
           test "$(jq -r '.github_render.status' readback/readback.json)" = PASS
           marker="ERDOS-COMPENDIUM-PUBLIC-HTML-READBACK/1 deployed_sha=$DEPLOYED_SHA"
@@ -93,15 +94,17 @@ jobs:
           json_hash="$(sha256sum readback/readback.json | cut -d' ' -f1)"
           dom_hash="$(jq -r '.dom_sha256' readback/readback.json)"
           math_count="$(jq -r '.observed.mathOutputs' readback/readback.json)"
-          github_count="$(jq -r '.github_render.observed.renderedMath' readback/readback.json)"
+          github_count="$(jq -r '.github_render.renderedMath' readback/readback.json)"
+          github_renderer="$(jq -r '.github_render.renderer' readback/readback.json)"
+          test "$github_count" -ge 7
           {
             printf '%s\n' "$marker"
             printf 'Readback: PASS; HTML URL: https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/\n'
-            printf 'MkDocs MathJax CHTML nodes: %s; draft warning and theorem/example probes: PASS.\n' "$math_count"
-            printf 'Exact-head GitHub rendered MathJax nodes: %s; source/math probes: PASS.\n' "$github_count"
+            printf 'MkDocs MathJax CHTML nodes: %s; protected-ledger editorial state, theorem/example probes: PASS.\n' "$math_count"
+            printf 'Exact-head GitHub visible rendered mathematics: %s nodes, renderer %s; source/math probes: PASS.\n' "$github_count" "$github_renderer"
             printf 'Browser DOM SHA-256: %s; evidence JSON SHA-256: %s\n' "$dom_hash" "$json_hash"
             printf 'Protected controller: https://github.com/%s/actions/runs/%s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
             printf 'Review artifact: erdos-compendium-live-html-%s\n' "$GITHUB_RUN_ID"
-            printf 'Site readback only: editorial_accepted=false, mathematical_certified=false. Does NOT advance Project state.\n'
+            printf 'Site readback only: editorial_accepted=%s (protected source-bound ledger); mathematical_certified=false. Does NOT advance Project state.\n' "$admission_state"
           } > readback/receipt.md
           gh issue comment 2556 --repo "$GITHUB_REPOSITORY" --body-file readback/receipt.md
