@@ -16,9 +16,9 @@ PUBLIC = "https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/"
 
 def protected_editorial_state(problem_id: int = 7) -> bool:
     """Read protected editorial authority; never infer it from the live page."""
-    from erdos_compendium import load_admissions, manuscript
+    from erdos_compendium import load_batch_admissions, manuscript
 
-    admitted = load_admissions().get(problem_id)
+    admitted = load_batch_admissions().get(problem_id)
     if admitted is None:
         return False
     source = manuscript(problem_id)
