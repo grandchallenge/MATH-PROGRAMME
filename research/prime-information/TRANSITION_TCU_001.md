@@ -143,7 +143,7 @@ $$
 }\tag{I}
 $$
 
-This upper bound is nonasymptotic. A summable local-energy influence estimate making the right-hand side $o(1)$ would close the second obligation in TCU-001. It would also avoid the uncontrolled step of summing pointwise $O$-terms over a growing set of primes.
+This upper bound is nonasymptotic. A summable local-energy influence estimate making the right-hand side $o(1)$ would close the second obligation in TCU-001. It would also avoid the uncontrolled step of summing pointwise error terms over a growing set of primes.
 
 ### 4. Boundary tests that any theorem must pass
 
@@ -191,7 +191,7 @@ The fixed $u$ law and the growing $u$ law are not interchangeable without unifor
 ### 5. Work packages
 
 - **TCU-WP1, slack local law:** Prove $\alpha\Delta=1+o(1)$ uniformly for $y,u\to\infty$, preferably with an explicit bound in terms of $\alpha\sigma_y(\alpha)$ and a verified local limit error for the exponential-smoothed energy.
-- **TCU-WP2, single-prime leave-one-out local law:** Compare $f_{-p}(t-j\log p)$ to $f_E(t)$ in the $Q_{p,\alpha}$-weighted $L^2$ sense of (I), uniformly over all $p\le y$ and $j\ge0$. Track prime-power tails separately.
+- **TCU-WP2, single-prime leave-one-out local law:** Compare $f_{-p}(t-j\log p)$ to $f_E(t)$ in the weighted $L^2$ sense under $Q_{p,\alpha}$ of (I), uniformly over all $p\le y$ and $j\ge0$. Track prime-power tails separately.
 - **TCU-WP3, matching transition:** Combine (M), WP1 and WP2; obtain a uniform explicit remainder and reconcile it with both the sparse simplex and Dickman regimes. If the target fails, construct a rigorously sourced counterregime.
 - **TCU-WP4, reproducible falsification:** Independently enumerate accessible $(X,y)$, compute exact $T,\Delta,K_\alpha,\sigma$, and compare predictions; include $k=1$, fixed small $k$, $u$ close to $1$, moderate $u$, and growing $k$ controls. Numerical agreement is not proof.
 - **TCU-WP5, priority and source audit:** Compare against HT93, Tenenbaum 2023, literature on probabilistic smooth numbers, conditional local limit theorems, and entropy of logarithmic combinatorial structures. Record theorem-level novelty only after review.
