@@ -15,6 +15,8 @@
 
 > **Quantum completion boundary (QW-001):** [Quantum-weight pro-completion and Weiss obstruction](QUANTUM_WEIGHT_PRO_COMPLETION_004.md) distinguishes a *tower of finite-weight free quantum BV factorization algebras* (each has Weiss descent) from its **ordinary liquid-category inverse limit** (which fails Weiss descent on an explicit disconnected open). The quantum weight is $w=r+2k$ for field degree $r$ and $\hbar$ power $k$; the BV differential preserves it. The proper pro-category Čech comparison and a corrected descent-compatible completion remain open.
 
+> **PRO-001 — the pro-valued locality test:** [Pro-valued Weiss no-go](PRO_VALUED_WEISS_NO_GO_005.md) demonstrates that a **tower of quantum-weight finite-stage factorization algebras** is *not necessarily* a factorization algebra **valued in the pro-category**. A compatible family of local quantum BV moments on a genuine Weiss cover requires unbounded weight cutoffs; every global pro-morphism into a constant object has a bounded cutoff. This identifies a further completion/locality obstruction without any arbitrary singular-product or renormalization claim.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
