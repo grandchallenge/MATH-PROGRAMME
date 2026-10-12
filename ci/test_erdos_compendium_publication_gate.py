@@ -258,6 +258,42 @@ class EditorialGateTests(unittest.TestCase):
                 cycles.add(min(rotations))
         self.assertEqual(len(cycles), n**5)
 
+    def test_bulk_001_quality_sample_exact_and_full_manuscript_coverage(self):
+        import random
+        qa = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001_QA.json").read_text(encoding="utf-8"))
+        intake = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json").read_text(encoding="utf-8"))
+        self.assertEqual(qa["record_type"], "ERDOS_COMPENDIUM_BATCH_EDITORIAL_QA/1")
+        self.assertEqual(qa["cohort_id"], intake["cohort_id"])
+        self.assertEqual(qa["source_registry_blob"], intake["source_registry_blob"])
+        self.assertIn("SELF_REVIEW", qa["review_kind"])
+        ids = sorted(x["problem_id"] for x in intake["items"])
+        self.assertEqual(len(ids), 50)
+        self.assertEqual(
+            qa["sample_problem_ids"],
+            sorted(random.Random(int(hashlib.sha256(qa["sample_seed"].encode("utf-8")).hexdigest(),16)).sample(ids,10)))
+        exceptions = set(qa["exception_problem_ids"])
+        self.assertEqual(exceptions, {12, 15, 19, 23, 26, 38, 41, 522, 1112})
+        selected = set(qa["sample_problem_ids"]) | exceptions
+        self.assertEqual(selected, {x["problem_id"] for x in qa["reviewed"]})
+        links = {x["problem_id"]: x["source_return"] for x in intake["items"]}
+        for row in qa["reviewed"]:
+            self.assertEqual(row["source_return"], links[row["problem_id"]])
+            self.assertEqual(row["editorial_check"], "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS")
+            self.assertGreaterEqual(len(row["finding"]), 30)
+            if row["problem_id"] in exceptions:
+                self.assertIn("EXCEPTION", row["selection"])
+        for n in ids:
+            # Verifies section contract + supported mathematical syntax for
+            # ALL 50 articles, not just the sample or the 38 new sources.
+            content = manuscript(n)
+            self.assertIn("## The question in plain language", content)
+            self.assertIn("## A small example", content)
+            self.assertIn("## Sources and claim boundaries", content)
+            self.assertIn(links[n], content,
+                          f"Missing exact issue-comment source attribution for #{n}")
+        self.assertIn("NO_MATH_CERTIFICATION", qa["disposition"])
+        self.assertIn("Await protected PR merge", qa["publication_gate"])
+
     def test_bulk_001_exact_finite_examples(self):
         """Batch-level mathematical replay, not certification of asymptotic claims."""
         import itertools
