@@ -13,6 +13,8 @@
 
 > **QFT-COND-003 — compact-support localization:** [Research note and proofs](COMPACT_SUPPORT_FACTORISATION_003.md) constructs liquid compact-support test objects as filtered colimits of nuclear Fréchet support stages, gives a restricted classical and polynomial free quantum BV Weiss-descent construction, and records a rigorous failure of the naive completed **projective LF** tensor substitution. The completion/infinite-product boundary remains unresolved; no interacting-field theorem is claimed.
 
+> **Quantum completion boundary (QW-001):** [Quantum-weight pro-completion and Weiss obstruction](QUANTUM_WEIGHT_PRO_COMPLETION_004.md) distinguishes a *tower of finite-weight free quantum BV factorization algebras* (each has Weiss descent) from its **ordinary liquid-category inverse limit** (which fails Weiss descent on an explicit disconnected open). The quantum weight is $w=r+2k$ for field degree $r$ and $\hbar$ power $k$; the BV differential preserves it. The proper pro-category Čech comparison and a corrected descent-compatible completion remain open.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
