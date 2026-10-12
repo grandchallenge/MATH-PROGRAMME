@@ -158,7 +158,7 @@ class EditorialGateTests(unittest.TestCase):
                 missing += 1
             else:
                 self.fail("Unknown source evidence state")
-        self.assertEqual((returned, missing), (37, 13))
+        self.assertEqual((returned, missing), (50, 0))
         self.assertIn("NOT accepted", data["status_semantics"])
 
     def test_bulk_001_six_new_source_boundaries(self):
