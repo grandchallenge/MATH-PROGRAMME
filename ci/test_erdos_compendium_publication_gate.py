@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from erdos_compendium import EDITORIAL, build, load_admissions, manuscript
+from erdos_compendium import EDITORIAL, build, load_admissions, load_batch_admissions, manuscript
 from erdos_compendium_public_html_readback import publication_state_matches
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
@@ -40,6 +40,48 @@ class EditorialGateTests(unittest.TestCase):
             "mkdocs_run": REPO + "/actions/runs/38137356772",
             "public_html_readback": REPO + "/issues/2552#issuecomment-6109065121",
         }
+
+    def _v2(self, entries, batch_id="EC-BULK-0001"):
+        return {"record_type": "ERDOS_COMPENDIUM_EDITORIAL_ADMISSIONS/2",
+                "admissions": [], "batches": [{
+                    "batch_id": batch_id,
+                    "critical_review": REPO + "/pull/2588#issuecomment-6108689695",
+                    "protected_admission": REPO + "/pull/2588",
+                    "mkdocs_run": REPO + "/actions/runs/38204827132",
+                    "public_html_readback": REPO + "/issues/2556#issuecomment-6117889968",
+                    "entries": entries,
+                }]}
+
+    def test_batch_v2_source_hash_and_shared_evidence(self):
+        good_sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
+        row = {"problem_id": 7, "source_sha256": good_sha,
+               "source_check": REPO + "/issues/1276#issuecomment-6103364800"}
+        with tempfile.TemporaryDirectory() as root:
+            manifest = Path(root) / "admissions.json"
+            def save(data):
+                manifest.write_text(json.dumps(data), encoding="utf-8")
+            save(self._v2([row]))
+            self.assertEqual(set(load_batch_admissions(manifest)), {7})
+            counts = build(output=Path(root)/"site", admissions_path=manifest)
+            self.assertEqual(counts["reviewed"], 1)
+            save(self._v2([row, row]))
+            with self.assertRaisesRegex(ValueError, "duplicated"):
+                load_batch_admissions(manifest)
+            save(self._v2([{**row, "source_sha256": "0"*64}]))
+            with self.assertRaisesRegex(ValueError, "changed without re-review"):
+                build(output=Path(root)/"site", admissions_path=manifest)
+            bad = self._v2([row]); bad["batches"][0]["mkdocs_run"] = "https://example.com/fake"
+            save(bad)
+            with self.assertRaisesRegex(ValueError, "Invalid batch mkdocs_run"):
+                load_batch_admissions(manifest)
+            bad = self._v2([row]); bad["batches"][0]["entries"][0].pop("source_check")
+            save(bad)
+            with self.assertRaisesRegex(ValueError, "Invalid per-article"):
+                load_batch_admissions(manifest)
+            bad = self._v2([row] * 251)
+            save(bad)
+            with self.assertRaisesRegex(ValueError, "batch size"):
+                load_batch_admissions(manifest)
 
     def test_merged_drafts_do_not_auto_promote(self):
         counts, pages, index = self._build([])
