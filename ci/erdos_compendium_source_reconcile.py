@@ -141,6 +141,8 @@ def reconcile(manifest: dict, auth: str, workers: int = 12) -> tuple[dict, dict]
         ready += bool(url)
         if author:
             authors.add(author)
+    if isinstance(manifest.get("source_queue_readback"), dict):
+        manifest["source_queue_readback"]["post_initial_source_return_count"] = ready
     manifest["observed_date"] = dt.datetime.now(dt.timezone.utc).date().isoformat()
     manifest["status_semantics"] = (
         f"{ready} authenticated issue-bound RESULT/1 source returns; "
