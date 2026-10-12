@@ -45,12 +45,14 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(counts["problems"], 1221)
         self.assertEqual(counts["reviewed"], 0)
         self.assertEqual(counts["legacy"], 3)
-        self.assertEqual(counts["editorial"], 3)
+        self.assertEqual(counts["editorial"], 5)
         self.assertEqual(counts["pending"], 2)
         self.assertIn("Legacy authored exemplar", pages[1])
         for n in (4, 7):
-            self.assertIn("Editorial manuscript pending acceptance", pages[n])
-            self.assertNotIn("## What is known\n\n- **Necessary divisibility", pages[n])
+            self.assertIn("UNACCEPTED DRAFT", pages[n])
+            self.assertIn("NOT editorially accepted", pages[n])
+            self.assertIn("## The question in plain language", pages[n])
+            self.assertIn("## A small example", pages[n])
         self.assertIn("0 separately admitted explanations", index)
         self.assertIn("2 manuscripts pending acceptance", index)
 
@@ -58,10 +60,11 @@ class EditorialGateTests(unittest.TestCase):
         text = manuscript(7)
         good_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
         counts, pages, _ = self._build([self._admission(7, good_sha)])
-        self.assertEqual((counts["reviewed"], counts["editorial"], counts["pending"]), (1, 4, 1))
+        self.assertEqual((counts["reviewed"], counts["editorial"], counts["pending"]), (1, 5, 1))
         self.assertIn("## What is known", pages[7])
         self.assertIn("A **covering system**", pages[7])
-        self.assertIn("Editorial manuscript pending acceptance", pages[4])
+        self.assertIn("UNACCEPTED DRAFT", pages[4])
+        self.assertNotIn("UNACCEPTED DRAFT", pages[7])
 
     def test_stale_evidence_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "changed without re-review"):
