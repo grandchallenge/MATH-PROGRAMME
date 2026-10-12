@@ -17,6 +17,8 @@
 
 > **PRO-001 — the pro-valued locality test:** [Pro-valued Weiss no-go](PRO_VALUED_WEISS_NO_GO_005.md) demonstrates that a **tower of quantum-weight finite-stage factorization algebras** is *not necessarily* a factorization algebra **valued in the pro-category**. A compatible family of local quantum BV moments on a genuine Weiss cover requires unbounded weight cutoffs; every global pro-morphism into a constant object has a bounded cutoff. This identifies a further completion/locality obstruction without any arbitrary singular-product or renormalization claim.
 
+> **CF-001: completed filtered free quantum observables.** [Proof and Costello–Gwilliam comparison](COMPLETE_FILTERED_LIQUID_WEISS_006.md) constructs split complete p-liquid quantum-weight objects with completed tensor and Cech colimits, proves Weiss descent in that target and reconciles the earlier ordinary-product and pro-category no-go results. Full enriched comparison to differentiable pro-cochain complexes remains open.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
