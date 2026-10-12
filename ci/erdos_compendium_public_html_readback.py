@@ -153,7 +153,7 @@ def verify_github(browser, sha: str) -> dict:
               const r = el.getBoundingClientRect();
               return r.width > 2 && r.height > 2;
            }).length >= 7;
-        }""", selectors, timeout=25000)
+        }""", arg=selectors, timeout=25000)
     except PlaywrightTimeoutError:
         pass  # Evidence must still be written before failing closed.
 
