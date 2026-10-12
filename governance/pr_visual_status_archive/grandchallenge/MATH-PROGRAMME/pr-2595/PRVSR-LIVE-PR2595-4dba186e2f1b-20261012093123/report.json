@@ -1,0 +1,162 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-10-12T08:04:19Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-10-12T09:31:21Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+    "exact_head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+    "pr_number": 2595,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "EC-BULK-001: 50-slot source-led Compendium cohort (15 new articles staged)"
+  },
+  "integration": {
+    "merge_commit_sha": "2bafdf69358e41d5574d6feea3f1e7f39bac7699",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 41,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 881F:34C3D6:1360E5:16B5D3:6ACCA8ED and timestamp 2026-10-12 09:31:25 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 114748287535,
+          "conclusion": null,
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "Analyze (actions)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114748287661,
+          "conclusion": null,
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "Analyze (c-cpp)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114748287357,
+          "conclusion": null,
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "Analyze (python)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114748287675,
+          "conclusion": "skipped",
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 114748286094,
+          "conclusion": null,
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114748286230,
+          "conclusion": null,
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "Observe material closure (no admission authority)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114748286390,
+          "conclusion": null,
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "admit",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114748287986,
+          "conclusion": "skipped",
+          "head_sha": "4dba186e2f1b190c554b58b6db96b82b0dd24efe",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-10-12T09:31:23Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "2933dda92032941f3b52a67c08c5e04d87e6f737a9dde48f4010811c63a2e460"
+  },
+  "report_id": "PRVSR-LIVE-PR2595-4dba186e2f1b-20261012093123",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "repository_policy_or_workflow"
+    ]
+  }
+}
