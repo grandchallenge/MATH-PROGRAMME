@@ -69,7 +69,7 @@ def main():
     try:
         launch(args.colab,run)
         receipt=json.loads((run/"receipt.json").read_text())
-        if receipt.get("source_sha256")!=identity["source_sha256"] or receipt.get("toolchain")!=TOOLCHAIN or receipt.get("status")!="GREEN_LEAN_CHECKED_UNADJUDICATED" or receipt.get("exit_code")!=0 or any(receipt.get("authority_effects",{}).values()):
+        if receipt.get("source_sha256")!=identity["source_sha256"] or receipt.get("toolchain")!=TOOLCHAIN or receipt.get("status")!="GREEN_LEAN_CHECKED_UNADJUDICATED" or receipt.get("exit_code")!=0 or any(receipt.get("authority_effects",{}).values()) or not str(receipt.get("lean_version","")).startswith("Lean (version 4.29.1,") or (receipt.get("elan_provisioning")=="installed_pinned_release" and receipt.get("elan_archive_sha256")!="42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63"):
             raise RuntimeError("untrusted or failed Lean receipt")
         print(json.dumps({"state":"VERIFIED_UNADJUDICATED","receipt_sha256":digest(run/"receipt.json"),"run_dir":str(run),**identity}))
     except Exception:

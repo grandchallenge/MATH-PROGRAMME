@@ -13,7 +13,7 @@ class LeanWorkerTests(unittest.TestCase):
             class Result:
                 def __init__(self,returncode,stdout="",stderr=""):
                     self.returncode,self.stdout,self.stderr=returncode,stdout,stderr
-            with patch.object(worker.subprocess,"run",side_effect=[Result(0,"Lean v4.29.1"),Result(1,"","error")]):
+            with patch.object(worker,"provision_elan",return_value=("elan","preinstalled_version_checked",None)), patch.object(worker.subprocess,"run",side_effect=[Result(0,"Lean (version 4.29.1, x86_64-unknown-linux-gnu)"),Result(1,"","error")]):
                 self.assertEqual(worker.execute(source,receipt),1)
             self.assertEqual(json.loads(receipt.read_text())["status"],"RED_LEAN")
     def test_success_is_not_certification(self):
@@ -23,7 +23,7 @@ class LeanWorkerTests(unittest.TestCase):
             class Result:
                 def __init__(self,returncode,stdout="",stderr=""):
                     self.returncode,self.stdout,self.stderr=returncode,stdout,stderr
-            with patch.object(worker.subprocess,"run",side_effect=[Result(0,"Lean v4.29.1"),Result(0)]):
+            with patch.object(worker,"provision_elan",return_value=("elan","preinstalled_version_checked",None)), patch.object(worker.subprocess,"run",side_effect=[Result(0,"Lean (version 4.29.1, x86_64-unknown-linux-gnu)"),Result(0)]):
                 self.assertEqual(worker.execute(source,receipt),0)
             data=json.loads(receipt.read_text())
             self.assertEqual(data["status"],"GREEN_LEAN_CHECKED_UNADJUDICATED")
