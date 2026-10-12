@@ -162,6 +162,77 @@ class EditorialGateTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "batch size"):
                 load_batch_admissions(manifest)
 
+    def test_bulk_002_200_existing_issue_slots_and_authentic_returns(self):
+        """200 original queue jobs, not invented articles or accepted entries."""
+        manifest_path = ROOT / "governance/erdos_compendium/batches/EC-BULK-002.json"
+        data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        self.assertEqual(data["record_type"], "ERDOS_COMPENDIUM_BULK_INTAKE/1")
+        self.assertEqual((data["cohort_id"], data["target_count"]), ("EC-BULK-002", 200))
+        self.assertEqual(len(data["items"]), 200)
+        self.assertTrue(data["source_queue_readback"]["all_200_open_available"])
+        self.assertEqual(data["source_queue_readback"]["baseline_source_return_count"], 0)
+        registry, rows = load_registry()
+        source = ROOT / "governance/erdos_catalogue/REGISTRY.json"
+        binary = source.read_bytes()
+        blob = hashlib.sha1(b"blob " + str(len(binary)).encode() + b"\0" + binary).hexdigest()
+        self.assertEqual(data["source_registry_blob"], blob)
+        ids = [x["problem_id"] for x in data["items"]]
+        expected = sorted(x["problem_id"] for x in rows
+                          if 42 <= x["problem_id"] <= 245
+                          and x["problem_id"] not in {99, 101, 138, 241})
+        self.assertEqual(ids, expected)
+        issues = {r["problem_id"]: r["issue_number"] for r in rows}
+        ready = 0
+        for item in data["items"]:
+            self.assertEqual(set(item), {
+                "problem_id", "audit_issue", "source_return", "evidence_state"})
+            n = item["problem_id"]
+            self.assertEqual(item["audit_issue"], issues[n])
+            if item["evidence_state"] == "RESULT_PRESENT_UNADJUDICATED":
+                ready += 1
+                self.assertRegex(
+                    item["source_return"],
+                    r"^https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/" +
+                    str(issues[n]) + r"#issuecomment-[0-9]+$")
+                article = manuscript(n)
+                self.assertIsNotNone(article, f"Source-ready #{n} has no manuscript yet")
+                self.assertIn(item["source_return"], article)
+            elif item["evidence_state"] == "NO_RESULT_AT_READBACK":
+                self.assertIsNone(item["source_return"])
+            else:
+                self.fail("Unknown source state in 200-slot batch")
+        self.assertGreaterEqual(ready, 3)
+        self.assertNotIn(42, load_batch_admissions(ACCEPTANCE),
+                         "Cohort source evidence is not an acceptance")
+
+    def test_bulk_002_source_return_parser_rejects_forgeries(self):
+        from erdos_compendium_source_reconcile import valid_return
+        item = {"problem_id": 42, "audit_issue": 1311}
+        comment = {
+            "user": {"login": "review-worker"},
+            "body": "\n".join([
+                "RESULT/1", "ASSIGNMENT_ID: ERDOS-CATALOGUE-0042-S01",
+                "PROBLEM_ID: 42", "DISPOSITION: STATUS_CONFLICT",
+                "CONTEXT_CLASS: ZERO_CONTEXT", "TIMEBOX_OBSERVED: NO",
+                "## Exact statement and normalization",
+                "## Dated status and primary evidence",
+                "## Strongest verified interface",
+                "## Proposed bounded successor task",
+                "## Prerequisites and blocker",
+                "## Reuse and claim boundary",
+            ]),
+        }
+        self.assertTrue(valid_return(item, comment))
+        self.assertFalse(valid_return(item, {**comment, "user": {}}))
+        self.assertFalse(valid_return(item, {**comment,
+                         "body": comment["body"].replace("PROBLEM_ID: 42",
+                                                         "PROBLEM_ID: 43")}))
+        self.assertFalse(valid_return(item, {**comment,
+                         "body": "Note: " + comment["body"]}))
+        self.assertFalse(valid_return(item, {**comment,
+                         "body": comment["body"].replace(
+                             "## Prerequisites and blocker", "## Not reviewed")}))
+
     def test_bulk_001_source_return_is_not_acceptance(self):
         """Fail closed on mismatched registry identities or fabricated source readiness."""
         manifest = ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json"
