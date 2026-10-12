@@ -46,8 +46,14 @@ The original #1–#3 are narrowly grandfathered as **legacy authored
 exemplars** to avoid silently withdrawing existing historical pedagogy.
 They are visibly marked as not separately accepted, are excluded from the
 reviewed count, and the grandfather rule must not expand to later manuscripts.
-As of this gate #4 and #7 are authored but unaccepted **visible drafts** pending independent
-checks. New contributions, including #9 and #10, use the same ledger.
+At the initial gate cutover, #4 and #7 were both authored **visible drafts**.
+The protected `EDITORIAL_ADMISSIONS.json` is the current editorial authority,
+not this historical prose: the generator checks the exact source hash before
+promoting an article into the reviewed count. Erdős #4 remains an unaccepted
+draft without its own admitted ledger row. Erdős #7 is separately admitted
+**only upon protected merge of the proposal referencing the verified source
+and rendered-site evidence**. New contributions, including #9 and #10, use
+the same ledger.
 The full site can deploy with these reference entries; acceptance requires
 actual deployed HTML verification in a separate transaction. Editorial
 acceptance does not grant mathematical certification.
@@ -69,10 +75,14 @@ acceptance does not grant mathematical certification.
    the theorem statement matches its primary source, the language does not
    imply novelty/certification, each reported GCL outcome exists in protected
    state, and an open case remains open.
-5. **Protect and publish.** Route the manuscript through normal documentation
-   CI. The build generates the corresponding public problem page and updates
-   its editorial coverage count. Do not turn editorial signoff into
-   mathematical proof acceptance or add routine Human Steward approval.
+5. **Protect, publish and separately admit.** Route the authored manuscript
+   through normal documentation CI. The build first generates a conspicuously
+   UNACCEPTED DRAFT page, **excluded** from reviewed coverage. Read back both
+   the actual GitHub and deployed mathematical rendering; only then propose
+   a SHA-256-bound `EDITORIAL_ADMISSIONS.json` row through a separate protected
+   PR with actual non-author approval. Its merge may promote the reviewed
+   coverage count. Never equate editorial signoff with mathematical proof
+   certification or require routine Human Steward approval.
 6. **Correction and revision.** If the live mathematical status changes,
    edit the authored article in a new protected PR; never silently infer that
    the frozen snapshot label has become current truth.
