@@ -32,10 +32,10 @@ documentary evidence only; a separate protected admission decision is required.
 4. **Balister et al., Inventiones 228 (2022)**:
    [arXiv:1811.03547](https://arxiv.org/pdf/1811.03547), Theorem 1.4,
    printed page 4 of publicly accessible version 1, states
-   \(\,2\mid L\ \lor\ 9\mid L\ \lor\ 15\mid L\,\) for a distinct covering
-   with \(L\) the lcm of its moduli. With every modulus odd, this becomes
-   \(9\mid L\) or \(15\mid L\). The authors explicitly caution that
-   \(15\mid L\) does *not* establish \(15\mid m_i\) for one modulus.
+   $\,2\mid L\ \lor\ 9\mid L\ \lor\ 15\mid L\,$ for a distinct covering
+   with $L$ the lcm of its moduli. With every modulus odd, this becomes
+   $9\mid L$ or $15\mid L$. The authors explicitly caution that
+   $15\mid L$ does *not* establish $15\mid m_i$ for one modulus.
    This resolves the **theorem-location obligation left open** in the
    EC-ED02 original RESULT/1; this is a preprint-to-journal theorem
    interface check, **not a full proof replay**. PASS with version qualifier.
@@ -53,11 +53,11 @@ documentary evidence only; a separate protected admission decision is required.
 
 Pure integer enumeration over the full lcm period:
 
-- For \((m_i,a_i)=((3,0),(5,1),(7,2))\): lcm \(105\);
-  uncovered \(48\), covered \(57\). CRT gives \(2\cdot4\cdot6=48\);
-  \(n=4\) is an explicit uncovered residue.
-- For \((2,0),(3,0),(4,1),(6,5),(12,7)\): lcm \(12\);
-  uncovered \(0\), covered \(12\), but not an all-odd example.
+- For $(m_i,a_i)=((3,0),(5,1),(7,2))$: lcm $105$;
+  uncovered $48$, covered $57$. CRT gives $2\cdot4\cdot6=48$;
+  $n=4$ is an explicit uncovered residue.
+- For $(2,0),(3,0),(4,1),(6,5),(12,7)$: lcm $12$;
+  uncovered $0$, covered $12$, but not an all-odd example.
 
 These checks verify the pedagogical fixtures, **not** the main conjecture.
 
