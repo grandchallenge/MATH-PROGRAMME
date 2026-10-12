@@ -5,6 +5,8 @@
 **Research issue:** [QFT-COND-004](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2603).  
 **Prerequisites:** [compact-support polynomial BV Weiss descent](COMPACT_SUPPORT_FACTORISATION_003.md); [classical degree-product no-go](DEGREE_COMPLETION_WEISS_NO_GO_004.md).
 
+> **PRO-001 successor audit:** [Pro-valued Weiss non-descent](PRO_VALUED_WEISS_NO_GO_005.md) proves that the **same quantum-weight tower also fails Weiss descent as a pro-valued observable assignment**, detected by compatible local maps to a constant real coefficient object that cannot be represented with one global finite-weight cutoff. This does **not** invalidate the prior theorem that the tower is a *pro-object in the category of Weiss-local factorization algebras*. The distinction has been established by a full quantum BV cohomological witness.
+
 ## 1. Exact construction and hypotheses
 
 Fix real $0<p\le1$, $m>0$, and the stable symmetric monoidal category
