@@ -1,6 +1,6 @@
 # Erdős Compendium — documentary production protocol
 
-State: ACTIVE_READER_REFERENCE_V1
+State: ACTIVE_READER_REFERENCE_V2
 Coverage authority: MATH-PROGRAMME/governance/erdos_catalogue/REGISTRY.json
 Explanatory manuscripts: governance/erdos_compendium/editorial/NNNN.md
 Publication: MkDocs on protected main, ci/erdos_compendium_hook.py
@@ -25,9 +25,8 @@ A protected manuscript merge is **not** editorial acceptance. The site
 generator reads `EDITORIAL_ADMISSIONS.json` and refuses to promote any
 new `editorial/NNNN.md` into an explanatory public page or reviewed coverage
 count unless a separate, protected editorial admission provides the **exact
-SHA-256 of its stripped manuscript text**, source-claim check, read-only
-critical review, protected admission PR, successful MkDocs run, and an
-independent, recorded **public HTML and mathematical rendering readback**.
+SHA-256 of its stripped manuscript text**, source-claim check, recorded editorial critical check, protected admission PR, successful MkDocs run, and an
+evidence-backed **public HTML and mathematical rendering readback**.
 Absent admission evidence leaves the manuscript on its public page marked
 **UNACCEPTED DRAFT**, with source link and an explicit noncertification warning,
 excluded from the separately reviewed coverage count. This deliberately
@@ -38,8 +37,7 @@ bytes invalidate its existing admission, causing the generator to fail closed
 until the review record is deliberately updated.
 Transport `RESULT/1` or merged source alone never satisfies these fields.
 The gate validates the evidence record's shape and source-hash identity;
-protected reviewers must additionally check that linked evidence actually
-supports an acceptance decision before authorizing ledger updates. Never
+the accountable editorial agent must verify that linked evidence supports the proposed acceptance decision; applicable protected approvals are still enforced. Never
 equate a syntactically valid link with proof of successful verification.
 
 The original #1–#3 are narrowly grandfathered as **legacy authored
@@ -71,7 +69,7 @@ acceptance does not grant mathematical certification.
    question in plain language; small example; what is known; GCL's current
    state; what remains; sources and claim boundaries. Use exact mathematical
    typesetting. Avoid synthetic proof figures or unverified current statuses.
-4. **Adversarial editorial check.** Verify that the small example is valid,
+4. **Accountable editorial self-check.** Verify that the small example is valid,
    the theorem statement matches its primary source, the language does not
    imply novelty/certification, each reported GCL outcome exists in protected
    state, and an open case remains open.
@@ -80,7 +78,7 @@ acceptance does not grant mathematical certification.
    UNACCEPTED DRAFT page, **excluded** from reviewed coverage. Read back both
    the actual GitHub and deployed mathematical rendering; only then propose
    a SHA-256-bound `EDITORIAL_ADMISSIONS.json` row through a separate protected
-   PR with actual non-author approval. Its merge may promote the reviewed
+   PR satisfying its applicable branch-protection checks and approvals. Its merge may promote the reviewed
    coverage count. Never equate editorial signoff with mathematical proof
    certification or require routine Human Steward approval.
 6. **Correction and revision.** If the live mathematical status changes,
@@ -121,3 +119,11 @@ than total pages or task labels.
 - The MkDocs compendium is a documentary **reference annex** and must not
   be added as a released illustrated documentary edition without a
   separately governed release-manifest/source-record transaction.
+
+## Batch editorial operations (2026-10-12)
+
+Routine explanatory articles may be authored and critically checked by the same accountable editorial agent. Record the check accurately as a self-review, including theorem/source matching, examples, notation, dates, and explicit claim limits. Do not describe a self-review as external mathematical certification.
+
+Use batches of up to four articles per documentation PR. After protected merger and live rendering readback, group eligible SHA-256-locked admission records in a separate protected PR. Preserve all required evidence fields, existing CI, branch protection, and approval rules. The existing critical-review field may link to a clearly identified self-critical review record; it must never imply a different reviewer performed the work.
+
+Escalate substantive mathematical contradictions, unresolved source ambiguity, potential new theorems, or changes to certified mathematical authority rather than silently approving them. An ordinary article does not need its own independent specialist review. A merged draft remains unaccepted until its admission is protected-merged and public HTML verified.
