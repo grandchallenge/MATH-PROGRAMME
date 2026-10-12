@@ -70,8 +70,8 @@ class EditorialGateTests(unittest.TestCase):
         # Legacy authored sources have a documented, bounded exception;
         # new articles must render correctly on GitHub *and* on MkDocs.
         source = manuscript(7)
-        self.assertNotIn(r"\\(", source)
-        self.assertNotIn(r"\\[", source)
+        self.assertNotIn(r"\(", source)
+        self.assertNotIn(r"\[", source)
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "0009.md"
             path.write_text(source + chr(10) + r"\(x\)" + chr(10), encoding="utf-8")
