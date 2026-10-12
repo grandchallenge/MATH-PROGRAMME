@@ -53,21 +53,21 @@ class EditorialGateTests(unittest.TestCase):
                 }]}
 
     def test_browser_readback_reads_active_v2_batch_ledger(self):
-        """The live site verifier must read V2, not reject it as V1."""
-        self.assertTrue(protected_editorial_state(7))
-        self.assertFalse(protected_editorial_state(8))
-        self.assertTrue(publication_state_matches(
-            {"reviewed": True, "draft": False, "notCertified": False},
-            admitted=protected_editorial_state(7)))
-        self.assertTrue(publication_state_matches(
-            {"reviewed": False, "draft": True, "notCertified": True},
-            admitted=protected_editorial_state(8)))
+        """V2 browser verifier accepts original #7 and protected new #8."""
+        for n in (7, 8):
+            self.assertTrue(protected_editorial_state(n))
+            self.assertTrue(publication_state_matches(
+                {"reviewed": True, "draft": False, "notCertified": False},
+                admitted=protected_editorial_state(n)))
 
     def test_active_v2_ledger_preserves_exact_legacy_admission(self):
         """V1→V2 migration must preserve identity and all six evidence fields."""
         import copy
         actual = load_batch_admissions(ACCEPTANCE)
-        self.assertEqual(set(actual), {7}, "Migration must not silently admit draft articles")
+        cohort = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json").read_text(encoding="utf-8"))
+        expected_ids = {x["problem_id"] for x in cohort["items"]}
+        self.assertEqual(len(expected_ids), 50)
+        self.assertEqual(set(actual), expected_ids, "No new admission outside protected source cohort")
         row = copy.deepcopy(actual[7])
         self.assertEqual(row.pop("batch_id"), "EC-LEGACY-0007")
         self.assertEqual(row, {
@@ -84,12 +84,39 @@ class EditorialGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             root = Path(root)
             counts = build(output=root / "site", admissions_path=ACCEPTANCE)
-            self.assertEqual(counts["reviewed"], 1)
-            self.assertEqual(counts["pending"],
-                             counts["editorial"] - counts["legacy"] - 1)
+            self.assertEqual(counts["reviewed"], 50)
+            self.assertEqual(counts["pending"], 0)
+            self.assertEqual(counts["editorial"], counts["legacy"] + counts["reviewed"])
             accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
             self.assertIn("Reviewed explanatory article", accepted_page)
             self.assertNotIn("UNACCEPTED DRAFT", accepted_page)
+
+    def test_bulk_001_protected_admission_evidence_and_exact_source(self):
+        """Full-batch admission must bind every manuscript and all shared receipts."""
+        proposal = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001_ADMISSION_PROPOSAL.json").read_text(encoding="utf-8"))
+        ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        self.assertEqual(proposal["record_type"], "ERDOS_COMPENDIUM_BATCH_ADMISSION_PROPOSAL/1")
+        self.assertEqual(proposal["cohort_id"], "EC-BULK-001")
+        self.assertEqual(proposal["new_admission_count"], 49)
+        self.assertEqual(len(ledger["batches"]), 2)
+        batch = ledger["batches"][1]
+        self.assertEqual(batch["batch_id"], "EC-BULK-001")
+        self.assertEqual(batch["protected_admission"], REPO + "/pull/2608")
+        for field in ("critical_review", "mkdocs_run", "public_html_readback"):
+            self.assertEqual(batch[field], proposal[field])
+        expected = {r["problem_id"]: r for r in proposal["entries"]}
+        actual = {r["problem_id"]: r for r in batch["entries"]}
+        self.assertEqual(len(expected), 49)
+        self.assertEqual(actual, expected)
+        self.assertNotIn(7, actual)
+        for n, row in expected.items():
+            self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),
+                             row["source_sha256"], f"Stale source in admitted article #{n}")
+            self.assertIn(row["source_check"], manuscript(n),
+                          f"No exact issue-source link in article #{n}")
+        self.assertEqual(proposal["public_browser_digest"],
+                         "9a47a82c4c449439cbf3acd651a6d2a529939c562c2b30a2fa96361547d0bf89")
+        self.assertIn("NOT_MATHEMATICAL_CERTIFICATION", proposal["disposition"])
 
     def test_v2_rejects_cross_version_duplicate_admission(self):
         sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
