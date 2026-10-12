@@ -11,6 +11,8 @@
 
 > **Derived comparison resolved (QFT-COND-002):** [Derived Schwartz tensor theorem](DERIVED_SCHWARTZ_TENSOR_002.md) establishes the **object-level** tensor equivalence in the derived category of real $p$ -liquid vector spaces for all finite-dimensional Euclidean Schwartz test-function spaces. Higher Tor vanishes by nuclear Fréchet liquid flatness (Clausen–Scholze, Theorem 4.11 and Remark 4.12). This is an established source-backed application, **not** a new theorem about QFT. Free BV observables and factorization descent remain unproved.
 
+> **QFT-COND-003 — compact-support localization:** [Research note and proofs](COMPACT_SUPPORT_FACTORISATION_003.md) constructs liquid compact-support test objects as filtered colimits of nuclear Fréchet support stages, gives a restricted classical and polynomial free quantum BV Weiss-descent construction, and records a rigorous failure of the naive completed **projective LF** tensor substitution. The completion/infinite-product boundary remains unresolved; no interacting-field theorem is claimed.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
