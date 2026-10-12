@@ -47,7 +47,7 @@ jobs:
       - name: Install pinned read-only real-browser probe
         run: |
           set -euo pipefail
-          python -m pip install 'playwright==1.55.0'
+          python -m pip install --requirement requirements/compendium_public_html.txt
           python -m playwright install --with-deps chromium
       - name: Read live deployed HTML with MathJax JavaScript completed
         run: python ci/erdos_compendium_public_html_readback.py
