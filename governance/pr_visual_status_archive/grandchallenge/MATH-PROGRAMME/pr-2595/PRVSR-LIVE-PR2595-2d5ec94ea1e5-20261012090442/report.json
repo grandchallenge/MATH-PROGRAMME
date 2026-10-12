@@ -1,0 +1,204 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-10-12T08:04:19Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-10-12T09:04:37Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+    "exact_head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+    "pr_number": 2595,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "EC-BULK-001: 50-slot source-led Compendium cohort (15 new articles staged)"
+  },
+  "integration": {
+    "merge_commit_sha": "78cf406f59294ebc18778d3a9b4639d73071baed",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 23,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 4807:211E4B:1F377:4868F:6ACCA2AB and timestamp 2026-10-12 09:04:44 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 114738684886,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 114738684919,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 114738684501,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 114738691779,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Classify material formal closure",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 114738690103,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 114738696483,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114738696220,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114738696488,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Observe material closure (no admission authority)",
+          "status": "waiting"
+        },
+        {
+          "check_run_id": 114738696310,
+          "conclusion": "skipped",
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Protected material-profile delegated review",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 114738689920,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 114738692319,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "admit",
+          "status": "waiting"
+        },
+        {
+          "check_run_id": 114738696494,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "policy / policy",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 114738693817,
+          "conclusion": "skipped",
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 114738696380,
+          "conclusion": null,
+          "head_sha": "2d5ec94ea1e543074e77e96a4b90830f6d704eae",
+          "name": "security / action-policy",
+          "status": "queued"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-10-12T09:04:42Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "bcdafb8ecbeb42d04b02c9f6d9dd38f45c4a7d872ee581147274f19a302c2bbc"
+  },
+  "report_id": "PRVSR-LIVE-PR2595-2d5ec94ea1e5-20261012090442",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "repository_policy_or_workflow"
+    ]
+  }
+}
