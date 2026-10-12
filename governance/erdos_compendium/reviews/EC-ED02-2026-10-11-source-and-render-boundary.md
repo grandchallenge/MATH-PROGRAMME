@@ -1,7 +1,7 @@
 # EC-ED02 — Erdős #7: non-authoring source and publication-boundary assessment
 
 Date: 2026-10-11. Scope: the authored manuscript at
-\`governance/erdos_compendium/editorial/0007.md\` and its linked evidence.
+`governance/erdos_compendium/editorial/0007.md` and its linked evidence.
 Disposition: **SOURCE_CLAIMS_BOUNDED_PASS; PUBLIC_HTML_UNVERIFIED; EDITORIAL_ACCEPTANCE_WITHHELD**.
 
 This review is a distinct **read-only logical critical pass**, not an independent
@@ -64,14 +64,14 @@ These checks verify the pedagogical fixtures, **not** the main conjecture.
 ## GitHub/MkDocs/HTML/authority boundary
 
 - The source manuscript merged in [PR #2577](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2577)
-  at head \`0b5897bbbf0de699f59ae312586bbcd662b24873\`.
+  at head `0b5897bbbf0de699f59ae312586bbcd662b24873`.
 - Worker [RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2556#issuecomment-6108695648)
   was transported to Project **RETURNED** by
   [Council Clerk #38139713290](https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/38139713290),
   with [parent readback](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2552#issuecomment-6109065121).
 - [MkDocs Pages deployment #38137356772](https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/38137356772)
   completed successfully against merger commit
-  \`2a6b6de70229f760f924270ab03387b2d16ae461\`.
+  `2a6b6de70229f760f924270ab03387b2d16ae461`.
 - **Direct public page HTML, rendered MathJax/KaTeX formula glyphs, internal
   links, accessibility and actual GitHub rich Markdown were not observed
   from this review runtime**; the public website URL returned no accessible
@@ -86,12 +86,12 @@ These checks verify the pedagogical fixtures, **not** the main conjecture.
 
 1. Protected gate PR CI and non-author approval; no required-check shortcut.
 2. Verify direct public URL
-   \`https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/\`
+   `https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/`
    against expected source and mathematics after corrected deploy;
    capture a durable issue-comment receipt with rendered formula checks.
 3. Provide a distinct *logical* non-authoring acceptance review of the amended
    exact SHA (identity independence is not implied).
 4. Only after proof of these editorial predicates, append a source-hash-bound
-   record to \`EDITORIAL_ADMISSIONS.json\` through a separate protected PR.
+   record to `EDITORIAL_ADMISSIONS.json` through a separate protected PR.
 5. The original conjecture is still open and no Solve/Cert authority changes.
 
