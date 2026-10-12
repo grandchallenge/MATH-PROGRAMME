@@ -1,0 +1,150 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_BATCH_EDITORIAL_QA/1",
+  "cohort_id": "EC-BULK-001",
+  "source_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "editorial_identity": "fyremael",
+  "review_kind": "ACCOUNTABLE_AGENT_SELF_REVIEW_NOT_INDEPENDENT_MATHCERT",
+  "review_date": "2026-10-12",
+  "sample_method": "Python random.Random(int(hashlib.sha256(seed.encode('utf-8')).hexdigest(),16)).sample(sorted(problem_ids),10), then sort selected IDs",
+  "sample_seed": "EC-BULK-001|90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5|2026-10-12|50",
+  "sample_problem_ids": [
+    8,
+    9,
+    17,
+    19,
+    22,
+    26,
+    27,
+    38,
+    101,
+    138
+  ],
+  "exception_problem_ids": [
+    12,
+    15,
+    19,
+    23,
+    26,
+    38,
+    41,
+    522,
+    1112
+  ],
+  "reviewed": [
+    {
+      "problem_id": 8,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1277#issuecomment-6120990392",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "Hough min-modulus theorem is external; individual-colour singleton counterexample needs all moduli >1"
+    },
+    {
+      "problem_id": 9,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1278#issuecomment-6103585999",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "zero exponents and positive upper density versus Pan near-linear lower count are separated"
+    },
+    {
+      "problem_id": 12,
+      "selection": "RISK_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1281#issuecomment-6103838848",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "original Property P forbids repeated upper summands but frozen IsGood allows them"
+    },
+    {
+      "problem_id": 15,
+      "selection": "RISK_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1284#issuecomment-6103934603",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "ordered real conditional series distinct from unconditional rational/real Summable"
+    },
+    {
+      "problem_id": 17,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1286#issuecomment-6104178003",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "97 is an exceptional noncluster prime, not a refutation of infinitely many cluster primes"
+    },
+    {
+      "problem_id": 19,
+      "selection": "SAMPLED_AND_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1288#issuecomment-6121164915",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "large-n theorem leaves finite universal cases; DECIDABLE not categorically PROVED"
+    },
+    {
+      "problem_id": 22,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1291#issuecomment-6121038353",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "strict n²/8 edge threshold distinguished from asymptotic density; source proof not GCL replayed"
+    },
+    {
+      "problem_id": 23,
+      "selection": "RISK_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1292#issuecomment-6121180103",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "FALSIFIABLE indicates finite counterexample would disprove, not that one is already known"
+    },
+    {
+      "problem_id": 26,
+      "selection": "SAMPLED_AND_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1295#issuecomment-6121415960",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "public unrestricted counterexample is thin; pinned formal theorem additionally requires thick A"
+    },
+    {
+      "problem_id": 27,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1296#issuecomment-6121316701",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "independent *random residues* distinguished from arithmetic independence of moduli"
+    },
+    {
+      "problem_id": 38,
+      "selection": "SAMPLED_AND_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1307#issuecomment-6121416629",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "2026 public model-assisted proof provenance correctly disclosed; no independent GCL replay"
+    },
+    {
+      "problem_id": 41,
+      "selection": "RISK_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1310#issuecomment-6104193801",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "3-element subsets versus 3-element multisets unresolved historic original convention"
+    },
+    {
+      "problem_id": 101,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1370#issuecomment-6098728078",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "pair-counting inequality is weak quadratic, and n^{2-o(1)} lower constructions do not refute little-o"
+    },
+    {
+      "problem_id": 138,
+      "selection": "DETERMINISTIC_SAMPLE",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1407#issuecomment-6098796505",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "product p·2^p versus incorrect tower p^{2^p}; 3-colour evidence not 2-colour proof"
+    },
+    {
+      "problem_id": 522,
+      "selection": "RISK_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1793#issuecomment-6121442891",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "convergence in probability versus almost sure, open/closed disk and unadjudicated forum claim"
+    },
+    {
+      "problem_id": 1112,
+      "selection": "RISK_EXCEPTION",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2383#issuecomment-6121460106",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "for (d1,d2,k)=(2,3,3) uniform multiplier fails; general parameter classification remains open"
+    }
+  ],
+  "automatic_coverage": "All 50 exact source-return identities, all present six-section authored article structure, cross-renderer markdown typography and finite-math tests must pass protected CI. Sampling does not replace per-article deterministic checks.",
+  "disposition": "CRITICALLY_SELF_REVIEWED_FOR_DOCUMENTARY_SCOPE_ONLY; NO_MATH_CERTIFICATION_OR_EDITORIAL_ADMISSION",
+  "publication_gate": "Await protected PR merge, exact source SHA256 binding, post-merge deploy and public HTML rendering readback before adding V2 ledger batch."
+}
