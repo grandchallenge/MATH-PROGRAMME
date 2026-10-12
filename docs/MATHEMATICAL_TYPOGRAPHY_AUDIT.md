@@ -2,37 +2,15 @@
 
 This page describes the repository-wide mathematical typography audit. The public record is the [machine-readable audit inventory](https://grandchallenge.github.io/MATH-PROGRAMME/math-typography-audit.json), generated from the exact protected documentation build. That inventory enumerates file paths, line numbers, diagnostic classes, and short source excerpts. It is an *audit*, not a claim that every historical file has been repaired.
 
-## Source-first mathematical Markdown contract (binding on new work)
+## Source-first mathematical Markdown contract
 
-**Rule:** Mathematical Markdown is authored in a renderer-safe form from the
-first committed candidate. Do not rely on corrective editorial work after merge.
-The protected PR classifier runs `ci/math_markdown_gate.py` against **all added
-or modified Markdown files** (not just `docs/`) and fails on newly introduced
-defects. The check compares against the exact protected-base source to allow
-unchanged historical audit debt, but never permits newly broken markup.
+**Binding rule for new work:** Mathematical Markdown must be correctly typeset in its first committed source. Do not defer repairs until after protected merge. The required classifier runs `ci/math_markdown_gate.py` across **all added or modified Markdown files**, including research notes outside the public docs directory. It compares candidate markup to the exact protected-base source, allowing unchanged historical defects but rejecting every new defect.
 
-Authoring preflight: `python3 ci/math_markdown_gate.py --file path/to/note.md`.
-Display math requires a nonempty paired block with both `$` markers alone
-on separate lines and blank lines before opening and after closing; inline
-math uses complete paired `$...# Mathematical typography: GitHub and MkDocs compatibility
+A valid inline expression has paired single-dollar delimiters on the same line. A display expression has two standalone double-dollar delimiter lines, a nonempty TeX body, and blank lines separating it from prose. Inline math cannot touch words or hyphens. Unmatched/legacy math delimiters and unsupported operator macros fail this source gate. Code fences and inline code remain literal.
 
-This page describes the repository-wide mathematical typography audit. The public record is the [machine-readable audit inventory](https://grandchallenge.github.io/MATH-PROGRAMME/math-typography-audit.json), generated from the exact protected documentation build. That inventory enumerates file paths, line numbers, diagnostic classes, and short source excerpts. It is an *audit*, not a claim that every historical file has been repaired.
+**Before opening a PR:** `python3 ci/math_markdown_gate.py --file path/to/note.md`. The repository classifier runs the equivalent diff-bound check automatically on PR and push transitions.
 
- markers in the same line. Neither may
-touch prose characters or hyphens. Legacy delimiters and the known
-GitHub-unsupported `\\operatorname` macro are rejected. Fenced code and
-inline code are preserved as literal examples.
-
-For a public MkDocs reading edition, strict `mkdocs build --strict` and
-`ci/validate_rendered_docs.py` additionally check mathematical Arithmatex
-wrappers against source math, with explicit strict acceptance for the prime
-information synthesis and transition pages. Actual browser-side MathJax paint
-requires a separate live rendering test; the source and HTML gates make no
-false claim about it.
-
-This rule supersedes the prior practice of treating research Markdown outside
-`docs/` as an unguarded staging area. It does not alter theorem certification
-or legal/policy authority boundaries.
+For public reading editions the strict MkDocs build and rendered-Arithmatex check additionally verify that the manuscript's equations reached the HTML math renderer. Such checks do not prove actual browser-side MathJax glyph painting, which remains a separate acceptance step. This contract does not change mathematical certification boundaries.
 
 ## What is checked
 
