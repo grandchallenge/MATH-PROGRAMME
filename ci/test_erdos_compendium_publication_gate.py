@@ -158,8 +158,58 @@ class EditorialGateTests(unittest.TestCase):
                 missing += 1
             else:
                 self.fail("Unknown source evidence state")
-        self.assertEqual((returned, missing), (27, 23))
+        self.assertEqual((returned, missing), (33, 17))
         self.assertIn("NOT accepted", data["status_semantics"])
+
+    def test_bulk_001_six_new_source_boundaries(self):
+        """Check finite constructions without conflating them with deep claims."""
+        from math import log, isqrt
+        from itertools import combinations
+
+        # #5: ratio of the two normalizations is a finite identity.
+        for n, p, next_p in [(3, 5, 7), (4, 7, 11), (5, 11, 13)]:
+            self.assertAlmostEqual(
+                (next_p-p) / log(n),
+                ((next_p-p) / log(p)) * (log(p) / log(n)))
+        # #8: singleton residue classes of modulus >1 do not cover a cycle.
+        for m in range(2, 20):
+            self.assertTrue(all(
+                any(x % m != r for x in range(m))
+                for r in range(m)))
+        # #13: lower construction with b=c allowed is forbidden-triple-free.
+        for N in range(1, 51):
+            A = list(range((2*N)//3 + 1, N+1))
+            for a in A:
+                for b in A:
+                    for c in A:
+                        if a < min(b, c):
+                            self.assertNotEqual((b+c) % a, 0)
+        # #16: any odd prime plus 1 has prime=2, and then n=3.
+        def prime(n):
+            return n >= 2 and all(n % d for d in range(2, isqrt(n) + 1))
+        self.assertEqual([p+1 for p in range(2, 200)
+                          if prime(p) and (p+1) % 2], [3])
+        # #21: f(2)=3, witnessed by a triangle; <=2 edges have a hit.
+        edges = [frozenset((1, 2)), frozenset((1, 3)),
+                 frozenset((2, 3))]
+        self.assertTrue(all(a & b for a, b in combinations(edges, 2)))
+        self.assertFalse(any(all(v in edge for edge in edges)
+                             for v in (1, 2, 3)))
+        self.assertTrue(all(
+            any(hit & edge for hit in combinations((1,2,3), 2))
+            for edge in edges))
+        # #22: C4 is K4-free and has independence number 2, not o(4).
+        C4 = {frozenset(e) for e in ((0,1),(1,2),(2,3),(3,0))}
+        self.assertEqual(len(C4), 4)
+        self.assertGreaterEqual(len(C4), 4*4/8)
+        self.assertTrue(any(all(
+            frozenset(pair) not in C4
+            for pair in combinations(vertices, 2))
+            for vertices in combinations(range(4), 2)))
+        self.assertFalse(any(all(
+            frozenset(pair) not in C4
+            for pair in combinations(vertices, 2))
+            for vertices in combinations(range(4), 3)))
 
     def test_bulk_001_exact_finite_examples(self):
         """Batch-level mathematical replay, not certification of asymptotic claims."""
