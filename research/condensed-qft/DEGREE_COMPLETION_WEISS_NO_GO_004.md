@@ -2,6 +2,7 @@
 
 **Status:** explicit **negative theorem** for a precise categorical product completion of *classical* free massive scalar BV polynomial observables; source-backed compactness and a direct proof. This is a mathematical diagnostic, **not** a claim of originality over all existing factorization-algebra literature or a statement about established renormalized quantum observables.
 
+**Research tracker:** [QFT-COND-004](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2603).  
 **Positive predecessor:** [QFT-COND-003](COMPACT_SUPPORT_FACTORISATION_003.md) proves Weiss descent for the *direct sum* of smooth-kernel finite polynomial degrees, including the polynomial free quantum BV differential, using the correctly defined liquid tensor. The present negative result concerns taking their **infinite product** instead.
 
 ## 1. Exact completion and claim
