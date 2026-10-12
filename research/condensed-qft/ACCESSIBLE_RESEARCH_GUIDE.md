@@ -7,6 +7,8 @@
 **Support route:** elementary proof and exact finite fixtures first; source-concordant theorem research and later formal certification separately.  
 **First runnable fixture:** Python 3 standard library only, below.
 
+> **Completed restricted mathematics (TK-1 through TK-4):** [Analytic-condensed tensor/kernel note](ANALYTIC_TENSOR_KERNEL_001.md). It proves an all-Schwartz **scalar-Hom-level** kernel comparison, Scholze-backed Banach completed-tensor comparison for the $L^2$ massive free field, a finite-free derived liquid comparison, and explicit infrared/ordinary-solidification no-go boundaries. The **infinite-dimensional derived Schwartz object-level comparison remains open**; these results are not a novel QFT theorem.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
