@@ -5,6 +5,8 @@
 **Research tracker:** [QFT-COND-004](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2603).  
 **Positive predecessor:** [QFT-COND-003](COMPACT_SUPPORT_FACTORISATION_003.md) proves Weiss descent for the *direct sum* of smooth-kernel finite polynomial degrees, including the polynomial free quantum BV differential, using the correctly defined liquid tensor. The present negative result concerns taking their **infinite product** instead.
 
+> **Quantum-level extension:** [QW-001 — Quantum-weight pro-completion and realized Weiss obstruction](QUANTUM_WEIGHT_PRO_COMPLETION_004.md) proves that finite quantum-weight truncations of the actual free quantum BV complex form a pro-object in factorization algebras, while their **categorical inverse-limit realization** again fails Weiss descent on the same genuine cover. The obstruction is detected by full quantum BV cochain maps; it does **not** imply a failure of every completed quantum factorization formalism.
+
 ## 1. Exact completion and claim
 
 Fix $0<p\le1$, a real mass $m>0$, and $\mathcal C_p=D(\mathrm{Liq}_p(\mathbb R))$. For each open $U\subset\mathbb R$ let $A_p(U)$ be the filtered-colimit liquid compact-support test object of QFT-COND-003. The free BV generator is the two-term cochain complex
