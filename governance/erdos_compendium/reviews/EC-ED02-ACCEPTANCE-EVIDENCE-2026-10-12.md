@@ -22,8 +22,8 @@ interfaces, **not** deep proof reconstruction:
   distinct **odd square-free** covering systems.
 - Balister et al. (2022), Theorem 1.4 in
   [arXiv:1811.03547v1](https://arxiv.org/abs/1811.03547), page 4: for a
-  distinct covering with lcm (L), either (2mid L), (9mid L), or
-  (15mid L). Odd requires 9 or 15 to divide the lcm; one individual
+  distinct covering with least common multiple $L$, either $2\mid L$,
+  $9\mid L$, or $15\mid L$. Odd requires 9 or 15 to divide the lcm; one individual
   modulus need **not** be divisible by 15.
 - Bispels et al. 2026 is a repeated-modulus variant, not the all-distinct
   problem. Mian–Siddique 2026's lcm ≤ 10,000 formal exclusion remains an
