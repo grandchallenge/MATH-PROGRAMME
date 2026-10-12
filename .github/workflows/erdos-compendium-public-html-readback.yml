@@ -49,7 +49,9 @@ jobs:
           set -euo pipefail
           python -m pip install --requirement requirements/compendium_public_html.txt
           python -m playwright install --with-deps chromium
-      - name: Read live deployed HTML with MathJax JavaScript completed
+      - name: Read live deployed HTML and exact-head GitHub MathJax DOM
+        env:
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
         run: python ci/erdos_compendium_public_html_readback.py
 
       - name: Store screenshot and bounded DOM evidence
@@ -81,6 +83,7 @@ jobs:
           test "$(jq -r '.status' readback/readback.json)" = PASS
           test "$(jq -r '.editorial_accepted' readback/readback.json)" = false
           test "$(jq -r '.mathematical_certified' readback/readback.json)" = false
+          test "$(jq -r '.github_render.status' readback/readback.json)" = PASS
           marker="ERDOS-COMPENDIUM-PUBLIC-HTML-READBACK/1 deployed_sha=$DEPLOYED_SHA"
           if gh api --paginate "repos/$GITHUB_REPOSITORY/issues/2556/comments?per_page=100" \
               --jq '.[].body' | grep -Fq "$marker"; then
@@ -90,10 +93,12 @@ jobs:
           json_hash="$(sha256sum readback/readback.json | cut -d' ' -f1)"
           dom_hash="$(jq -r '.dom_sha256' readback/readback.json)"
           math_count="$(jq -r '.observed.mathOutputs' readback/readback.json)"
+          github_count="$(jq -r '.github_render.observed.renderedMath' readback/readback.json)"
           {
             printf '%s\n' "$marker"
             printf 'Readback: PASS; HTML URL: https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/\n'
-            printf 'Full MathJax CHTML nodes: %s; visible draft warning and theorem/example probes: PASS.\n' "$math_count"
+            printf 'MkDocs MathJax CHTML nodes: %s; draft warning and theorem/example probes: PASS.\n' "$math_count"
+            printf 'Exact-head GitHub rendered MathJax nodes: %s; source/math probes: PASS.\n' "$github_count"
             printf 'Browser DOM SHA-256: %s; evidence JSON SHA-256: %s\n' "$dom_hash" "$json_hash"
             printf 'Protected controller: https://github.com/%s/actions/runs/%s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
             printf 'Review artifact: erdos-compendium-live-html-%s\n' "$GITHUB_RUN_ID"
