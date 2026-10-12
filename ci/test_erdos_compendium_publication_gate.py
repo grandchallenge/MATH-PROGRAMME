@@ -10,6 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from erdos_compendium import EDITORIAL, build, load_admissions, manuscript
+from erdos_compendium_public_html_readback import publication_state_matches
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
 
@@ -79,6 +80,17 @@ class EditorialGateTests(unittest.TestCase):
                 manuscript(9, base=Path(temp))
             path.write_text(source, encoding="utf-8")
             self.assertEqual(manuscript(9, base=Path(temp)), source)
+
+    def test_live_publication_state_is_ledger_bound_and_fail_closed(self):
+        draft = {"draft": True, "reviewed": False, "notCertified": True}
+        accepted = {"draft": False, "reviewed": True, "notCertified": False}
+        mixed = {"draft": True, "reviewed": True, "notCertified": True}
+        self.assertTrue(publication_state_matches(draft, False))
+        self.assertTrue(publication_state_matches(accepted, True))
+        self.assertFalse(publication_state_matches(draft, True))
+        self.assertFalse(publication_state_matches(accepted, False))
+        self.assertFalse(publication_state_matches(mixed, True))
+        self.assertFalse(publication_state_matches(mixed, False))
 
     def test_stale_evidence_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "changed without re-review"):
