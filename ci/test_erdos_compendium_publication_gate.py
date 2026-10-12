@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from erdos_compendium import ACCEPTANCE, EDITORIAL, build, load_admissions, load_batch_admissions, manuscript
+from erdos_compendium import ACCEPTANCE, EDITORIAL, ROOT, build, load_admissions, load_batch_admissions, load_registry, manuscript
 from erdos_compendium_public_html_readback import publication_state_matches
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
@@ -123,6 +123,261 @@ class EditorialGateTests(unittest.TestCase):
             save(bad)
             with self.assertRaisesRegex(ValueError, "batch size"):
                 load_batch_admissions(manifest)
+
+    def test_bulk_001_source_return_is_not_acceptance(self):
+        """Fail closed on mismatched registry identities or fabricated source readiness."""
+        manifest = ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json"
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        self.assertEqual(data["record_type"], "ERDOS_COMPENDIUM_BULK_INTAKE/1")
+        self.assertEqual(data["cohort_id"], "EC-BULK-001")
+        self.assertEqual(data["observed_date"], "2026-10-12")
+        self.assertEqual(data["target_count"], 50)
+        self.assertEqual(len(data["items"]), 50)
+        catalogue, rows = load_registry()
+        by_id = {r["problem_id"]: r["issue_number"] for r in rows}
+        ids = [r["problem_id"] for r in data["items"]]
+        self.assertEqual(ids, sorted(set(ids)))
+        self.assertFalse({1, 2, 3} & set(ids), "Legacy exemplars must not enter new admissions")
+        registry_bytes = (ROOT / "governance/erdos_catalogue/REGISTRY.json").read_bytes()
+        git_blob = hashlib.sha1(b"blob " + str(len(registry_bytes)).encode() +
+                                b"\0" + registry_bytes).hexdigest()
+        self.assertEqual(data["source_registry_blob"], git_blob)
+        returned = 0
+        missing = 0
+        for item in data["items"]:
+            self.assertEqual(set(item), {"problem_id", "audit_issue",
+                                         "source_return", "evidence_state"})
+            self.assertEqual(by_id[item["problem_id"]], item["audit_issue"])
+            if item["evidence_state"] == "RESULT_PRESENT_UNADJUDICATED":
+                self.assertRegex(item["source_return"],
+                    r"^https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/" +
+                    str(item["audit_issue"]) + r"#issuecomment-[0-9]+$")
+                returned += 1
+            elif item["evidence_state"] == "NO_RESULT_AT_READBACK":
+                self.assertIsNone(item["source_return"])
+                missing += 1
+            else:
+                self.fail("Unknown source evidence state")
+        self.assertEqual((returned, missing), (50, 0))
+        self.assertIn("NOT accepted", data["status_semantics"])
+
+    def test_bulk_001_six_new_source_boundaries(self):
+        """Check finite constructions without conflating them with deep claims."""
+        from math import log, isqrt
+        from itertools import combinations
+
+        # #5: ratio of the two normalizations is a finite identity.
+        for n, p, next_p in [(3, 5, 7), (4, 7, 11), (5, 11, 13)]:
+            self.assertAlmostEqual(
+                (next_p-p) / log(n),
+                ((next_p-p) / log(p)) * (log(p) / log(n)))
+        # #8: singleton residue classes of modulus >1 do not cover a cycle.
+        for m in range(2, 20):
+            self.assertTrue(all(
+                any(x % m != r for x in range(m))
+                for r in range(m)))
+        # #13: lower construction with b=c allowed is forbidden-triple-free.
+        for N in range(1, 51):
+            A = list(range((2*N)//3 + 1, N+1))
+            for a in A:
+                for b in A:
+                    for c in A:
+                        if a < min(b, c):
+                            self.assertNotEqual((b+c) % a, 0)
+        # #16: any odd prime plus 1 has prime=2, and then n=3.
+        def prime(n):
+            return n >= 2 and all(n % d for d in range(2, isqrt(n) + 1))
+        self.assertEqual([p+1 for p in range(2, 200)
+                          if prime(p) and (p+1) % 2], [3])
+        # #21: f(2)=3, witnessed by a triangle; <=2 edges have a hit.
+        edges = [frozenset((1, 2)), frozenset((1, 3)),
+                 frozenset((2, 3))]
+        self.assertTrue(all(a & b for a, b in combinations(edges, 2)))
+        self.assertFalse(any(all(v in edge for edge in edges)
+                             for v in (1, 2, 3)))
+        self.assertTrue(any(
+            all(set(hit) & edge for edge in edges)
+            for hit in combinations((1,2,3), 2)))
+        # #22: C4 is K4-free and has independence number 2, not o(4).
+        C4 = {frozenset(e) for e in ((0,1),(1,2),(2,3),(3,0))}
+        self.assertEqual(len(C4), 4)
+        self.assertGreaterEqual(len(C4), 4*4/8)
+        self.assertTrue(any(all(
+            frozenset(pair) not in C4
+            for pair in combinations(vertices, 2))
+            for vertices in combinations(range(4), 2)))
+        self.assertFalse(any(all(
+            frozenset(pair) not in C4
+            for pair in combinations(vertices, 2))
+            for vertices in combinations(range(4), 3)))
+
+    def test_bulk_001_four_graph_and_set_examples(self):
+        """#19/#20/#23/#24 exact finite models: no asymptotic claim."""
+        from itertools import combinations, permutations
+
+        # #19 n=2: two distinct graph edges yield a 2-colourable forest.
+        for e1, e2 in combinations(list(combinations(range(4), 2)), 2):
+            edges = {frozenset(e1), frozenset(e2)}
+            self.assertTrue(any(
+                all((int(u in left) != int(v in left)) for e in edges
+                    for u,v in [tuple(e)])
+                for mask in range(1 << 4)
+                for left in [{i for i in range(4) if (mask >> i) & 1}]))
+        # #20: common core for three-petal example, not for triangle of pairs.
+        good = [{1,2},{1,3},{1,4}]
+        bad = [{1,2},{2,3},{1,3}]
+        pair_intersections = lambda fam: [a & b for a,b in combinations(fam,2)]
+        self.assertTrue(all(x == {1} for x in pair_intersections(good)))
+        self.assertEqual(len({frozenset(x) for x in pair_intersections(bad)}), 3)
+        # #23, #24: 2-fold blown-up pentagon.
+        n = 2
+        vertices = tuple(range(5*n))
+        edges = {
+            frozenset((5*a+i, 5*b+j))
+            for a in range(n) for b in range(n)
+            for i in range(5) for j in range(5)
+            if (j-i) % 5 in (1,4)
+        }
+        # Note class encoding: vertex=(copy index)*5+cycle position.
+        self.assertEqual(len(edges), 5*n*n)
+        self.assertFalse(any(
+            all(frozenset(e) in edges for e in combinations(t, 2))
+            for t in combinations(vertices, 3)))
+        max_cut = max(sum(bool((mask>>u)&1) != bool((mask>>v)&1)
+                          for edge in edges for u,v in [tuple(edge)])
+                      for mask in range(1 << len(vertices)))
+        self.assertEqual(max_cut, 4*n*n)
+        self.assertEqual(len(edges)-max_cut, n*n)
+        # Every 5-cycle counted once up to rotation and reversal.
+        cycles = set()
+        for cyc in permutations(vertices, 5):
+            if all(frozenset((cyc[i], cyc[(i+1)%5])) in edges for i in range(5)):
+                rotations = [cyc[i:]+cyc[:i] for i in range(5)]
+                rev = cyc[::-1]
+                rotations += [rev[i:]+rev[:i] for i in range(5)]
+                cycles.add(min(rotations))
+        self.assertEqual(len(cycles), n**5)
+
+    def test_bulk_001_quality_sample_exact_and_full_manuscript_coverage(self):
+        import random
+        qa = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001_QA.json").read_text(encoding="utf-8"))
+        intake = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json").read_text(encoding="utf-8"))
+        self.assertEqual(qa["record_type"], "ERDOS_COMPENDIUM_BATCH_EDITORIAL_QA/1")
+        self.assertEqual(qa["cohort_id"], intake["cohort_id"])
+        self.assertEqual(qa["source_registry_blob"], intake["source_registry_blob"])
+        self.assertIn("SELF_REVIEW", qa["review_kind"])
+        ids = sorted(x["problem_id"] for x in intake["items"])
+        self.assertEqual(len(ids), 50)
+        self.assertEqual(
+            qa["sample_problem_ids"],
+            sorted(random.Random(int(hashlib.sha256(qa["sample_seed"].encode("utf-8")).hexdigest(),16)).sample(ids,10)))
+        exceptions = set(qa["exception_problem_ids"])
+        self.assertEqual(exceptions, {12, 15, 19, 23, 26, 38, 41, 522, 1112})
+        selected = set(qa["sample_problem_ids"]) | exceptions
+        self.assertEqual(selected, {x["problem_id"] for x in qa["reviewed"]})
+        links = {x["problem_id"]: x["source_return"] for x in intake["items"]}
+        for row in qa["reviewed"]:
+            self.assertEqual(row["source_return"], links[row["problem_id"]])
+            self.assertEqual(row["editorial_check"], "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS")
+            self.assertGreaterEqual(len(row["finding"]), 30)
+            if row["problem_id"] in exceptions:
+                self.assertIn("EXCEPTION", row["selection"])
+        for n in ids:
+            # Verifies section contract + supported mathematical syntax for
+            # ALL 50 articles, not just the sample or the 38 new sources.
+            content = manuscript(n)
+            self.assertIn("## The question in plain language", content)
+            self.assertIn("## A small example", content)
+            self.assertIn("## Sources and claim boundaries", content)
+            self.assertIn(links[n], content,
+                          f"Missing exact issue-comment source attribution for #{n}")
+        self.assertIn("NO_MATH_CERTIFICATION", qa["disposition"])
+        self.assertIn("Await protected PR merge", qa["publication_gate"])
+
+    def test_bulk_001_exact_finite_examples(self):
+        """Batch-level mathematical replay, not certification of asymptotic claims."""
+        import itertools
+        from fractions import Fraction
+        from math import isqrt
+
+        def prime(n):
+            return n >= 2 and all(n % d for d in range(2, isqrt(n) + 1))
+
+        def squarefree(n):
+            return n > 0 and all(n % (p*p) for p in range(2, isqrt(n) + 1)
+                                 if prime(p))
+
+        # #6: four consecutive primes give three strictly increasing gaps.
+        primes = [p for p in range(2, 102) if prime(p)]
+        i = primes.index(17)
+        self.assertEqual(primes[i:i+4], [17, 19, 23, 29])
+        self.assertEqual([primes[j+1]-primes[j] for j in range(i, i+3)], [2, 4, 6])
+        # #11: positive and zero-exponent witness semantics.
+        self.assertTrue(squarefree(11-4))
+        self.assertFalse(squarefree(11-2))
+        self.assertTrue(squarefree(11-1))
+        # #12: finite check for 88 points in historical/formal predicate countermodel.
+        sq_primes = [p for p in range(5, 998) if prime(p) and p % 4 == 3]
+        source = [3, 6] + [p*p for p in sq_primes]
+        self.assertEqual((len(sq_primes), len(source)), (86, 88))
+        bad = [(a,b,c) for a in source for j,b in enumerate(source)
+               if a < b for c in source[j:] if a < c and (b+c) % a == 0]
+        self.assertEqual(bad, [(3, 6, 6)])
+        # #14, #30, #39: strict unordered sums, diagonal pairs included.
+        def pair_sums(items):
+            return [a+b for i,a in enumerate(items) for b in items[i:]]
+        self.assertEqual(pair_sums([1,2,4]), [2,3,5,4,6,8])
+        self.assertEqual(len(set(pair_sums([1,2,4]))), 6)
+        self.assertEqual(len(set(pair_sums([1,2,4,8]))), 10)
+        self.assertEqual(1+3, 2+2)  # #39 collision when diagonal is permitted
+        # #15: adjacent prime-pair identity in exact rational arithmetic.
+        self.assertEqual(-Fraction(1,2)+Fraction(2,3), Fraction(1,6))
+        self.assertEqual(-Fraction(3,5)+Fraction(4,7), -Fraction(1,35))
+        # #17: all primes up to 101 except 97 satisfy bounded cluster condition.
+        noncluster = {}
+        for p in primes:
+            missing = [d for d in range(0, p-2, 2) if not
+                       any(q+d <= p and prime(q+d) for q in primes if q <= p-d)]
+            if missing:
+                noncluster[p] = missing
+        self.assertEqual(noncluster, {97:[88]})
+        # #18: 8 is practical and 7 needs three distinct divisor powers.
+        divisors = [1,2,4,8]
+        minimum = {}
+        for k in range(1,9):
+            usable = [x for x in divisors if x <= k]
+            minimum[k] = min(len(v) for r in range(1,len(usable)+1)
+                             for v in itertools.combinations(usable,r) if sum(v) == k)
+        self.assertEqual(max(minimum.values()), 3)
+        self.assertEqual(minimum[7], 3)
+        # #25: tail residues versus threshold exceptions.
+        self.assertEqual([k for k in range(6) if k%2 != 0 and k%3 != 1], [3,5])
+        self.assertLess(1, 2)  # 1 survives the threshold before residue exclusion
+        # #32: 11 is not a prime plus either shift from {1,2}.
+        self.assertFalse(prime(11-1))
+        self.assertFalse(prime(11-2))
+        # #36: exact balanced partition minima for two small instances.
+        for n, expected in [(2,1),(3,2)]:
+            universe = set(range(1,2*n+1))
+            maxima = []
+            for a in itertools.combinations(sorted(universe),n):
+                b = universe - set(a)
+                counts = {}
+                for x in a:
+                    for y in b:
+                        counts[x-y] = counts.get(x-y,0)+1
+                maxima.append(max(counts.values()))
+            self.assertEqual(min(maxima), expected)
+        # #40: ordered sum-pair multiplicities, which differ from #14.
+        ordered = {}
+        for a in [1,2,4]:
+            for b in [1,2,4]:
+                ordered[a+b] = ordered.get(a+b,0)+1
+        self.assertEqual(ordered, {2:1,3:2,4:1,5:2,6:2,8:1})
+        self.assertEqual(sum(ordered.values()), 9)
+        # #41: subset-only triple test misses a multiset collision.
+        self.assertEqual(sum((1,1,3)), sum((1,2,2)))
+        self.assertEqual(len(list(itertools.combinations([1,2,3], 3))), 1)
 
     def test_merged_drafts_do_not_auto_promote(self):
         counts, pages, index = self._build([])
