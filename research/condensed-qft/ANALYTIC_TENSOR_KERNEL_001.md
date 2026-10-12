@@ -4,6 +4,8 @@
 **Source of record:** [QFT-COND-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2596).  
 **Scope:** real scalar coefficients; ordinary condensed category, Scholze's quasiseparated $\mathcal M$ complete category, and finite free objects in a liquid (parameter $p$) derived category. No claim about arbitrary derived completed tensor products or interacting fields.
 
+> **Successor result (QFT-COND-002):** [Derived Schwartz tensor comparison](DERIVED_SCHWARTZ_TENSOR_002.md) proves the previously open **infinite-dimensional** Schwartz comparison as an object-level equivalence in $D(\operatorname{Liq}_p(\mathbb R))$; see Clausen–Scholze, *Complex Geometry*, Theorem 4.11 and Remark 4.12. This does not transfer the statement to the earlier $\mathcal M$-complete Banach category or establish a new QFT observable theorem. The material below remains the intentionally more restricted TK-1 to TK-4 predecessor.
+
 ## 0. Outcome at a glance
 
 This note constructs **three precisely distinguished** realizations and establishes:
