@@ -2,17 +2,17 @@
 
 **Status:** mathematically proved **restricted comparison**, contingent only on precisely attributed published source theorems. **Not novel**: the new content here is the explicit assembly and limitation audit, not a new nuclear tensor theorem or new result in QFT.  
 **Source of record:** [QFT-COND-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2596).  
-**Scope:** real scalar coefficients; ordinary condensed category, Scholze's quasiseparated $\mathcal M$-complete category, and finite free objects in a $p$-liquid derived category. No claim about arbitrary derived completed tensor products or interacting fields.
+**Scope:** real scalar coefficients; ordinary condensed category, Scholze's quasiseparated $\mathcal M$ complete category, and finite free objects in a liquid (parameter $p$) derived category. No claim about arbitrary derived completed tensor products or interacting fields.
 
 ## 0. Outcome at a glance
 
 This note constructs **three precisely distinguished** realizations and establishes:
 
 1. **Schwartz kernel comparison (all $a,b\ge1$, infinite-dimensional):** the scalar-valued maps *out of the ordinary condensed tensor* of the two Schwartz spaces are canonically the tempered distribution kernels on the product. This proves a Hom-level comparison; **it does not prove an object-level tensor equivalence**.
-2. **Banach analytic tensor comparison (arbitrary real Banach spaces):** the tensor of the two associated $\mathcal M$-complete condensed real spaces is canonically the condensed realization of their completed projective Banach tensor. This is Scholze's Proposition 4.10; we transport the free massive scalar covariance through it.
-3. **Infrared boundary:** at zero mass the same $L^2$-bounded covariance construction fails, with an explicit Fourier-annulus counterexample. 
-4. **Derived tensor comparison (finite-dimensional only):** finite free $p$-liquid modules are tensor-flat as finite sums of the monoidal unit, so there are no higher Tor terms. This is not a statement about infinite-dimensional Schwartz spaces.
-5. **No-go control:** derived ordinary $\mathbb Z$-solidification kills the condensed topological real line. It is therefore not a conservative coefficient realization for real free-field observables.
+2. **Banach analytic tensor comparison (arbitrary real Banach spaces):** the tensor of the two associated $\mathcal M$ complete condensed real spaces is canonically the condensed realization of their completed projective Banach tensor. This is Scholze's Proposition 4.10; we transport the free massive scalar covariance through it.
+3. **Infrared boundary:** at zero mass the same $L^2$ bounded covariance construction fails, with an explicit Fourier-annulus counterexample. 
+4. **Derived tensor comparison (finite-dimensional only):** finite free liquid (parameter $p$) modules are tensor-flat as finite sums of the monoidal unit, so there are no higher Tor terms. This is not a statement about infinite-dimensional Schwartz spaces.
+5. **No-go control:** derived ordinary $\mathbb Z$ solidification kills the condensed topological real line. It is therefore not a conservative coefficient realization for real free-field observables.
 
 In particular, the status of the original **infinite-dimensional derived Schwartz tensor** question remains **OPEN**. None of the established isomorphisms below is passed off as that theorem.
 
@@ -20,7 +20,7 @@ In particular, the status of the original **infinite-dimensional derived Schwart
 
 Fix a sufficiently large but controlled cardinal/site for condensed modules as in the source references; size changes are not asserted to be harmless without the standard accessibility setup.
 
-For a metrizable real topological vector space $E$ write $\underline E$ for its associated condensed $\underline{\mathbb R}$-module,
+For a metrizable real topological vector space $E$ write $\underline E$ for its associated condensed $\underline{\mathbb R}$ -module,
 
 $$
 \underline E(S)=\mathrm{Cont}(S,E)
@@ -34,7 +34,7 @@ $$
 
 The canonical condensed-realization functor on metrizable spaces is fully faithful as a functor of underlying spaces by Scholze, *Lectures on Analytic Geometry*, Proposition 1.2(2). Hence it is fully faithful on continuous real-linear maps and on jointly continuous real-bilinear maps when the product of source spaces remains metrizable.
 
-**Analytic Banach realization.** Let $\mathcal A_{\mathcal M}$ denote Scholze's category of *quasiseparated $\mathcal M$-complete condensed real vector spaces*, as in *Lectures on Analytic Geometry*, Definition 4.1. It carries the projective tensor $\otimes_{\pi,\mathcal M}$ defined by Proposition 4.9, characterized by its universal property for bilinear maps into another $\mathcal M$-complete object. For a real Banach space $V$,
+**Analytic Banach realization.** Let $\mathcal A_{\mathcal M}$ denote Scholze's category of *quasiseparated $\mathcal M$ complete condensed real vector spaces*, as in *Lectures on Analytic Geometry*, Definition 4.1. It carries the projective tensor $\otimes_{\pi,\mathcal M}$ defined by Proposition 4.9, characterized by its universal property for bilinear maps into another $\mathcal M$ complete object. For a real Banach space $V$,
 
 $$
 j_{\mathcal M}(V)=\underline V\in\mathcal A_{\mathcal M}.
@@ -52,7 +52,7 @@ $$
 
 Here $\widehat\otimes_\pi$ on the right is the **classical completed projective Banach tensor**. The category $\mathcal A_{\mathcal M}$ is not asserted to be abelian or stable, and its underived tensor is **not** decorated with a derived symbol.
 
-**Finite derived realization.** Fix $0<p\le1$ and use the (source-proved) analytic ring of $p$-liquid real vector spaces; write $\mathcal D_p=D(\mathrm{Liq}_p(\mathbb R))$ with its derived symmetric monoidal tensor $\otimes^{\mathbb L}_{\mathrm{Liq}_p}$. Its unit is the $p$-liquid real coefficient object $\underline{\mathbb R}$ in degree zero. On finite-dimensional spaces set
+**Finite derived realization.** Fix $0<p\le1$ and use the (source-proved) analytic ring of liquid (parameter $p$) real vector spaces; write $\mathcal D_p=D(\mathrm{Liq}_p(\mathbb R))$ with its derived symmetric monoidal tensor $\otimes^{\mathbb L}_{\mathrm{Liq}_p}$. Its unit is the liquid (parameter $p$) real coefficient object $\underline{\mathbb R}$ in degree zero. On finite-dimensional spaces set
 
 $$
 j_p(\mathbb R^n)=\underline{\mathbb R}^{\oplus n}[0].
@@ -84,7 +84,7 @@ $$
 \underline{E_a}\times\underline{E_b}\longrightarrow\underline{\mathbb R}
 $$
 
-that are $\underline{\mathbb R}$-linear in each argument. Since $E_a$ and $E_b$ are Fréchet and metrizable, so is $E_a\times E_b$; moreover, $\underline{E_a\times E_b}\cong\underline{E_a}\times\underline{E_b}$. By full faithfulness of condensed realization on metrizable topological spaces (Scholze, Proposition 1.2(2)), those morphisms correspond **bijectively** to jointly continuous bilinear maps $E_a\times E_b\to\mathbb R$. Thus the left side equals $\mathrm{Bil}_{c}(E_a,E_b;\mathbb R)$.
+that are $\underline{\mathbb R}$ linear in each argument. Since $E_a$ and $E_b$ are Fréchet and metrizable, so is $E_a\times E_b$; moreover, $\underline{E_a\times E_b}\cong\underline{E_a}\times\underline{E_b}$. By full faithfulness of condensed realization on metrizable topological spaces (Scholze, Proposition 1.2(2)), those morphisms correspond **bijectively** to jointly continuous bilinear maps $E_a\times E_b\to\mathbb R$. Thus the left side equals $\mathrm{Bil}_{c}(E_a,E_b;\mathbb R)$.
 
 By the universal property of the completed locally convex projective tensor product,
 
@@ -139,7 +139,7 @@ For real $f,g$, this is a real-valued bilinear form (although its Fourier presen
 **Theorem TK-2 (infinite-dimensional analytic-condensed free covariance).** The following assertions hold.
 
 1. $B_m$ is real-bilinear, symmetric, positive and bounded with sharp bilinear operator norm $\|B_m\|=m^{-2}$.
-2. It determines a unique morphism in the explicitly chosen $\mathcal M$-complete category,
+2. It determines a unique morphism in the explicitly chosen $\mathcal M$ complete category,
 
    $$
    \boxed{\quad
@@ -176,7 +176,7 @@ $$
 
 Positivity and symmetry follow from the real Fourier multiplier; equivalently, $B_m(f,g)=\langle f,G_m g\rangle_{L^2}$ where $G_m=\mathcal F^{-1}M_{(|p|^2+m^2)^{-1}}\mathcal F$ is a bounded positive self-adjoint operator. Its norm is the essential supremum of its multiplier, $m^{-2}$: any nonzero Fourier-space $L^2$ function supported in a sufficiently small ball around $0$ approaches this bound. Therefore the bilinear norm is exactly $m^{-2}$.
 
-By the universal property of the projective Banach tensor, $B_m$ corresponds uniquely to $\widetilde B_m\in(H\widehat\otimes_\pi H)'$. Applying $j_{\mathcal M}$ and the canonical isomorphism (A), proved in the cited Scholze source, gives exactly one $\mathcal A_{\mathcal M}$-morphism $\beta_m$. Thus this step is not a conjectural application of an unnamed "condensed completion."
+By the universal property of the projective Banach tensor, $B_m$ corresponds uniquely to $\widetilde B_m\in(H\widehat\otimes_\pi H)'$. Applying $j_{\mathcal M}$ and the canonical isomorphism (A), proved in the cited Scholze source, gives exactly one $\mathcal A_{\mathcal M}$ morphism $\beta_m$. Thus this step is not a conjectural application of an unnamed "condensed completion."
 
 The continuous injection $\mathcal S(\mathbb R^d)\hookrightarrow L^2(\mathbb R^d)$ makes the restricted $B_m$ jointly Schwartz-continuous. Apply TK-1, or equivalently the classical Schwartz kernel theorem, to obtain the unique $K_m$. The Fourier multiplier formula identifies its translation-invariant distribution kernel; it is well-defined and tempered because $(|p|^2+m^2)^{-1}$ is bounded and of at most polynomial growth. $\square$
 
@@ -190,22 +190,22 @@ The continuous injection $\mathcal S(\mathbb R^d)\hookrightarrow L^2(\mathbb R^d
 
 **Proof.** Fix $0<\varepsilon<1$. Choose any nonzero real Schwartz function $f_\varepsilon$ whose Fourier transform is supported inside the annulus $\varepsilon<|p|<2\varepsilon$; by symmetric choice of Fourier profile the inverse transform can be real. Normalize $\|f_\varepsilon\|_{L^2}=1$. On this support, $|p|^{-2}\ge(2\varepsilon)^{-2}$, hence
 
-$
+$$
 B_0(f_\varepsilon,f_\varepsilon)
 =\frac1{(2\pi)^d}\int
 \frac{|\widehat f_\varepsilon(p)|^2}{|p|^2}\,dp
 \ge \frac1{4\varepsilon^2}.
-$
+$$
 
 The lower bound diverges as $\varepsilon\downarrow0$, proving unboundedness. A bounded functional on $H\widehat\otimes_\pi H$ would give a bounded bilinear form on $H\times H$, a contradiction. $\square$
 
-**Scope:** this rules out the unmodified $L^2$-Banach projective-tensor realization of this covariance, not every massless distributional propagator or every possible infrared-regularized analytic realization. For $d\ge3$, $|p|^{-2}$ is locally integrable near $p=0$, and the corresponding tempered distribution can be treated separately. For low dimensions, extensions/zero-mode treatment require additional care. It is **a known analytic infrared phenomenon**, not a new quantum-field result.
+**Scope:** this rules out the unmodified $L^2$ Banach projective-tensor realization of this covariance, not every massless distributional propagator or every possible infrared-regularized analytic realization. For $d\ge3$, $|p|^{-2}$ is locally integrable near $p=0$, and the corresponding tempered distribution can be treated separately. For low dimensions, extensions/zero-mode treatment require additional care. It is **a known analytic infrared phenomenon**, not a new quantum-field result.
 
 **Replay:** \`python3 research/condensed-qft/fixtures/massive_spectral_bounds.py\` checks positive-mass finite spectral multipliers and the exact $\varepsilon^{-2}$ lower-bound scaling with rational arithmetic. The continuum conclusion is established by the preceding proof, *not* by finite samples.
 
 ## 4. Finite free derived comparison — and no further
 
-**Proposition TK-3.** In the fixed source-proven $p$-liquid derived category $\mathcal D_p$, for all finite $n,k\ge0$,
+**Proposition TK-3.** In the fixed source-proven liquid (parameter $p$) derived category $\mathcal D_p$, for all finite $n,k\ge0$,
 
 $$
 \boxed{\quad
@@ -219,11 +219,11 @@ canonically, and the object is concentrated in degree zero.
 
 **Proof.** By definition the two inputs are finite direct sums of $n$ and $k$ copies of the symmetric monoidal unit $\underline{\mathbb R}[0]$. The tensor functor in any stable symmetric monoidal category is bi-exact and preserves finite direct sums, while $\mathbf1\otimes\mathbf1\simeq\mathbf1$. Thus the tensor of two finite free units is a sum of $nk$ units, concentrated in degree zero. Identifying $\mathbb R^n\widehat\otimes_\pi\mathbb R^k\simeq\mathbb R^{nk}$ recovers the classical finite-dimensional completed tensor. $\square$
 
-The proof applies to **finite free objects only**. It supplies **no** assertion that $\Phi(\mathcal S(\mathbb R^a))$ is $p$-liquid, has an exact/monoidal realization, or has zero derived Tor with another Schwartz object. In particular, do not use (TK-3) as a derived proof of (TK-1) or (TK-2).
+The proof applies to **finite free objects only**. It supplies **no** assertion that $\Phi(\mathcal S(\mathbb R^a))$ is liquid (parameter $p$), has an exact/monoidal realization, or has zero derived Tor with another Schwartz object. In particular, do not use (TK-3) as a derived proof of (TK-1) or (TK-2).
 
 ## 5. Obstruction to the wrong category: ordinary solidification
 
-Let $L(-)^{\square}:D(\mathrm{Cond}(\mathrm{Ab}))\to D(\mathrm{Solid})$ denote **derived ordinary $\mathbb Z$-solidification**, not the analytic $\mathcal M$-completion of Sections 1–3.
+Let $L(-)^{\square}:D(\mathrm{Cond}(\mathrm{Ab}))\to D(\mathrm{Solid})$ denote **derived ordinary $\mathbb Z$ solidification**, not the analytic $\mathcal M$ completion of Sections 1–3.
 
 **Proposition TK-4 (no-go, imported from Scholze).** The condensed additive group of the real line satisfies
 
@@ -231,7 +231,7 @@ $$
 L(\underline{\mathbb R})^{\square}\simeq0.
 $$
 
-Consequently $L(\underline{\mathbb R}^{\oplus n})^\square\simeq0$ for every finite $n$. In particular, ordinary derived $\mathbb Z$-solidification cannot be a faithful realization of the real scalar coefficient object, even on finite-dimensional real Gaussian degrees of freedom.
+Consequently $L(\underline{\mathbb R}^{\oplus n})^\square\simeq0$ for every finite $n$. In particular, ordinary derived $\mathbb Z$ solidification cannot be a faithful realization of the real scalar coefficient object, even on finite-dimensional real Gaussian degrees of freedom.
 
 **Proof.** The displayed vanishing is *Lectures on Condensed Mathematics*, Corollary 6.1(iii), and is not proved anew here. The derived solidification is a left adjoint and preserves finite direct sums; apply it to each summand. The source coefficient $\underline{\mathbb R}$ is nonzero because its value at the one-point profinite set is $\mathbb R\ne0$. Thus the proposed realization is not conservative even on the scalar coefficient. $\square$
 
@@ -252,7 +252,7 @@ Consequently $L(\underline{\mathbb R}^{\oplus n})^\square\simeq0$ for every fini
 
 ### Primary sources (stable 2026 editions)
 
-1. P. Scholze, *Lectures on Analytic Geometry*, May 2026, Sections 1, 4, 6: https://people.mpim-bonn.mpg.de/scholze/Analytic.pdf. **Exact imported boundaries:** Proposition 1.2(2) (fully faithful metrizable condensed realization); Definition 4.1, Propositions 4.9–4.10 ($\mathcal M$-complete projective tensor and Banach comparison); Theorem 6.5 and Appendix to Lecture VI (liquid analytic-ring category).
+1. P. Scholze, *Lectures on Analytic Geometry*, May 2026, Sections 1, 4, 6: https://people.mpim-bonn.mpg.de/scholze/Analytic.pdf. **Exact imported boundaries:** Proposition 1.2(2) (fully faithful metrizable condensed realization); Definition 4.1, Propositions 4.9–4.10 ($\mathcal M$ complete projective tensor and Banach comparison); Theorem 6.5 and Appendix to Lecture VI (liquid analytic-ring category).
 2. P. Scholze, *Lectures on Condensed Mathematics*, arXiv:2605.03658v1 (2026), Corollary 6.1(iii): https://arxiv.org/abs/2605.03658. **Exact imported boundary:** derived ordinary solidification of the topological real line vanishes.
 3. Classical Schwartz kernel/nuclear tensor theorem, for example Richard Melrose's *Schwartz' kernel theorem* notes or standard distribution theory references. **Exact imported boundary:** $\mathcal S(\mathbb R^a)\widehat\otimes_\pi\mathcal S(\mathbb R^b)\cong\mathcal S(\mathbb R^{a+b})$ and continuous bilinear maps correspond to unique tempered distribution kernels.
 
@@ -260,14 +260,16 @@ Do **not** treat the 2026 editions of sources as novel results dated 2026; both 
 
 ## 7. New work that remains genuinely capable of producing a theorem
 
-**Next attempt (TK-5, unproved):** specify a stable analytic category (for example, a fixed $p$-liquid theory), and construct a functor on a narrowly defined class of nuclear Fréchet test spaces into that category. **Before** claiming a tensor isomorphism:
+**Next attempt (TK-5, unproved):** specify a stable analytic category (for example, a fixed liquid (parameter $p$) theory), and construct a functor on a narrowly defined class of nuclear Fréchet test spaces into that category. **Before** claiming a tensor isomorphism:
 
 1. Exhibit the actual image of $\mathcal S(\mathbb R^d)$ and establish whether it is liquid and how to compute it.
 2. Construct a well-typed canonical map
+
    $$
    \Phi(E_a)\otimes^{\mathbb L}_{\mathcal D_p}\Phi(E_b)
    \longrightarrow \Phi(E_a\widehat\otimes_\pi E_b).
    $$
+
 3. Determine whether its cone vanishes on a specified test family. Check both higher homology and degree-zero completeness. Compare against a detecting collection, not only scalar maps.
 4. Independently seek a counterexample involving non-nuclear Banach spaces or failure of projective tensor exactness, while keeping the classical and derived hypotheses distinct.
 5. Only then analyze disjoint-region structure maps and Weiss descent in the corresponding free BV observable construction.
