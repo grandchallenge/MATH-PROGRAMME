@@ -12,35 +12,11 @@ approval multiplication is not intrinsically required.
 
 ## Mathematical Markdown: source-first rendering gate
 
-**Mandatory authoring rule for all newly created or modified Markdown math:**
-Before the first commit, write GitHub/MkDocs-compatible LaTeX at the source.
-Use paired inline `$...# Agent instructions
+**Mandatory authoring rule for new or modified mathematical Markdown:** Write renderer-safe mathematics before the first commit. Use paired single-dollar inline delimiters on one line, and paired double-dollar display delimiters alone on their own lines, separated from surrounding prose by blank lines. Never attach math delimiters directly to words or hyphens. Avoid legacy backslash-parenthesis/backslash-bracket math delimiters and GitHub-incompatible operator macros.
 
-MATH-PROGRAMME owns mathematics-specific policy and pins adopted cross-programme standards. Agents work through ordinary branches and protected pull requests. Standing delegated authority permits routine bounded administrative, documentation, engineering, workflow, maintenance, routing, synchronization, and campaign-execution transactions to proceed through protected merge and readback when their affected checks pass. Agents may not manufacture mathematical independence, self-certify substantive mathematical claims, bypass protected controls, or promote claims outside their granted authority.
+Run the source preflight using the command `python3 ci/math_markdown_gate.py --file PATH.md` before submitting a mathematical Markdown PR. The required pull-request/push impact classifier checks all modified Markdown files against their exact protected-base versions and rejects any newly introduced structural rendering defect. Existing unchanged archival debt remains tracked but cannot justify new broken mathematics.
 
-Current routine execution is governed by [`docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md`](docs/governance/STREAMLINED_EXECUTION_AMENDMENT.md), [`docs/WORKFLOW_COVERAGE.md`](docs/WORKFLOW_COVERAGE.md), and [`docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md`](docs/governance/AGENT_CADENCE_OPERATING_DESIGN.md).
-
-Canonical staffing follows `GCL-AGENT-STAFFING-001` version `1.0.0` at
-gcl-standards commit `94e94ddf2d4158494c084d0acaff04009971c16c`.
-One Codex system may staff multiple non-reserved roles through distinct,
-role-scoped logical audit passes. Identity, session, account, or generic human
-approval multiplication is not intrinsically required.
-
- delimiters within one line and paired display delimiters
-`$` *alone on their own lines*, each display separated by a blank line
-from surrounding prose. Do not attach math delimiters directly to a word or hyphen.
-Do not use `\\(...\\)`, `\\[...\\]`, or the GitHub-incompatible
-`\\operatorname` macro; use semantically equivalent supported notation
-without silently changing the mathematical operator.
-
-Run `python3 ci/math_markdown_gate.py --file PATH.md` **before filing the PR**.
-The existing `ci/policy_impact.py classify` checks every added/changed Markdown
-file in PR/push transitions against protected base bytes and fails if it introduces
-a new rendering defect. Unchanged historical defects remain audited and cannot
-be replicated in new work. For public MkDocs pages, a strict HTML/Arithmatex
-wrapper check follows source validation; neither check alone asserts successful
-browser-side mathematical typesetting. A candidate without the source-first
-pass is not ready for review or protected admission.
+Public MkDocs editions additionally require strict HTML/Arithmatex wrapper verification. Neither source nor HTML validation asserts a live browser-glyph result. Document admission and mathematical certification remain separate.
 
 ## Routine execution rule
 
