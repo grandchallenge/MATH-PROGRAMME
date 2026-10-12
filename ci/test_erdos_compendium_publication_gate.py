@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from erdos_compendium import ACCEPTANCE, EDITORIAL, ROOT, build, load_admissions, load_batch_admissions, load_registry, manuscript
-from erdos_compendium_public_html_readback import publication_state_matches
+from erdos_compendium_public_html_readback import protected_editorial_state, publication_state_matches
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
 
@@ -51,6 +51,17 @@ class EditorialGateTests(unittest.TestCase):
                     "public_html_readback": REPO + "/issues/2556#issuecomment-6117889968",
                     "entries": entries,
                 }]}
+
+    def test_browser_readback_reads_active_v2_batch_ledger(self):
+        """The live site verifier must read V2, not reject it as V1."""
+        self.assertTrue(protected_editorial_state(7))
+        self.assertFalse(protected_editorial_state(8))
+        self.assertTrue(publication_state_matches(
+            {"reviewed": True, "draft": False, "notCertified": False},
+            admitted=protected_editorial_state(7)))
+        self.assertTrue(publication_state_matches(
+            {"reviewed": False, "draft": True, "notCertified": True},
+            admitted=protected_editorial_state(8)))
 
     def test_active_v2_ledger_preserves_exact_legacy_admission(self):
         """V1→V2 migration must preserve identity and all six evidence fields."""
