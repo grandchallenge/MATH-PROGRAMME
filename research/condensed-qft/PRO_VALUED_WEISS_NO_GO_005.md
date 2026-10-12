@@ -5,6 +5,8 @@
 **Tracker:** [QFT-COND-004](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2603).  
 **Input:** [QW-001: quantum-weight tower](QUANTUM_WEIGHT_PRO_COMPLETION_004.md), [smooth polynomial free-field factorization](COMPACT_SUPPORT_FACTORISATION_003.md).
 
+> **CF-001 successor:** [The completed filtered liquid construction](COMPLETE_FILTERED_LIQUID_WEISS_006.md) passes Weiss descent using weightwise/completed Cech colimits. PRO-1 below remains true for the different pro-category Cech colimit; the full differentiable pro-cochain comparison remains open.
+
 ## 1. The missing distinction
 
 Work over the real derived liquid category
