@@ -66,6 +66,20 @@ class EditorialGateTests(unittest.TestCase):
         self.assertIn("UNACCEPTED DRAFT", pages[4])
         self.assertNotIn("UNACCEPTED DRAFT", pages[7])
 
+    def test_new_manuscript_rejects_nonportable_github_math_fences(self):
+        # Legacy authored sources have a documented, bounded exception;
+        # new articles must render correctly on GitHub *and* on MkDocs.
+        source = manuscript(7)
+        self.assertNotIn(r"\\(", source)
+        self.assertNotIn(r"\\[", source)
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "0009.md"
+            path.write_text(source + "\\n\\\\(x\\\\)\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "nonportable GitHub mathematical delimiters"):
+                manuscript(9, base=Path(temp))
+            path.write_text(source, encoding="utf-8")
+            self.assertEqual(manuscript(9, base=Path(temp)), source)
+
     def test_stale_evidence_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "changed without re-review"):
             self._build([self._admission(7, "0"*64)])
