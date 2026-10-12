@@ -195,9 +195,9 @@ class EditorialGateTests(unittest.TestCase):
         self.assertTrue(all(a & b for a, b in combinations(edges, 2)))
         self.assertFalse(any(all(v in edge for edge in edges)
                              for v in (1, 2, 3)))
-        self.assertTrue(all(
-            any(hit & edge for hit in combinations((1,2,3), 2))
-            for edge in edges))
+        self.assertTrue(any(
+            all(set(hit) & edge for edge in edges)
+            for hit in combinations((1,2,3), 2)))
         # #22: C4 is K4-free and has independence number 2, not o(4).
         C4 = {frozenset(e) for e in ((0,1),(1,2),(2,3),(3,0))}
         self.assertEqual(len(C4), 4)
