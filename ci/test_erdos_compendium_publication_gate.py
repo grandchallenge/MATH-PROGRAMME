@@ -46,8 +46,8 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(counts["problems"], 1221)
         self.assertEqual(counts["reviewed"], 0)
         self.assertEqual(counts["legacy"], 3)
-        self.assertEqual(counts["editorial"], 7)
-        self.assertEqual(counts["pending"], 4)
+        self.assertEqual(counts["editorial"], 11)
+        self.assertEqual(counts["pending"], 8)
         self.assertIn("Legacy authored exemplar", pages[1])
         for n in (4, 7):
             self.assertIn("UNACCEPTED DRAFT", pages[n])
@@ -55,13 +55,13 @@ class EditorialGateTests(unittest.TestCase):
             self.assertIn("## The question in plain language", pages[n])
             self.assertIn("## A small example", pages[n])
         self.assertIn("0 separately admitted explanations", index)
-        self.assertIn("4 manuscripts pending acceptance", index)
+        self.assertIn("8 manuscripts pending acceptance", index)
 
     def test_exact_source_and_evidence_can_admit_only_bounded_article(self):
         text = manuscript(7)
         good_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
         counts, pages, _ = self._build([self._admission(7, good_sha)])
-        self.assertEqual((counts["reviewed"], counts["editorial"], counts["pending"]), (1, 7, 3))
+        self.assertEqual((counts["reviewed"], counts["editorial"], counts["pending"]), (1, 11, 7))
         self.assertIn("## What is known", pages[7])
         self.assertIn("A **covering system**", pages[7])
         self.assertIn("UNACCEPTED DRAFT", pages[4])
