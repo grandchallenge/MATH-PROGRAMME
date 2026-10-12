@@ -20,6 +20,8 @@ ACCEPTANCE = ROOT / "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
+# Older #4 also predates cross-renderer delimiter enforcement; remediate separately.
+MATH_DELIMITER_LEGACY = frozenset({1, 2, 3, 4})
 GENERATED = ROOT / "docs/erdos"
 EXPECTED_COUNT = 1221
 REQUIRED_EDITORIAL_HEADINGS = (
@@ -106,6 +108,13 @@ def manuscript(problem_id: int, base: Path = EDITORIAL) -> str | None:
     missing = [head for head in REQUIRED_EDITORIAL_HEADINGS if head not in text]
     if missing or re.search(r"(?m)^# ", text):
         raise ValueError(f"editorial manuscript {source} has missing sections {missing} or a duplicate H1")
+    # GitHub MathJax documents $...$ / $...$ delimiters. Markdown backslash
+    # parentheses/brackets are intentionally not accepted for new manuscripts:
+    # they work with local Arithmatex but can appear literally on GitHub.
+    if problem_id not in MATH_DELIMITER_LEGACY and any(
+        delimiter in text for delimiter in (r"\\(", r"\\)", r"\\[", r"\\]")
+    ):
+        raise ValueError(f"nonportable GitHub mathematical delimiters in #{problem_id}")
     return text
 
 
