@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from erdos_compendium import EDITORIAL, build, load_admissions, load_batch_admissions, manuscript
+from erdos_compendium import ACCEPTANCE, EDITORIAL, build, load_admissions, load_batch_admissions, manuscript
 from erdos_compendium_public_html_readback import publication_state_matches
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
@@ -51,6 +51,47 @@ class EditorialGateTests(unittest.TestCase):
                     "public_html_readback": REPO + "/issues/2556#issuecomment-6117889968",
                     "entries": entries,
                 }]}
+
+    def test_active_v2_ledger_preserves_exact_legacy_admission(self):
+        """V1→V2 migration must preserve identity and all six evidence fields."""
+        import copy
+        actual = load_batch_admissions(ACCEPTANCE)
+        self.assertEqual(set(actual), {7}, "Migration must not silently admit draft articles")
+        row = copy.deepcopy(actual[7])
+        self.assertEqual(row.pop("batch_id"), "EC-LEGACY-0007")
+        self.assertEqual(row, {
+            "problem_id": 7,
+            "source_sha256": "a559fac0a350f5d487509d980a9257dfdaa662bc11f67d0ae930557a0d14acc2",
+            "source_check": REPO + "/issues/1276#issuecomment-6103364800",
+            "critical_review": REPO + "/issues/2556#issuecomment-6118086838",
+            "protected_admission": REPO + "/pull/2587",
+            "mkdocs_run": REPO + "/actions/runs/38204827132",
+            "public_html_readback": REPO + "/issues/2556#issuecomment-6117889968",
+        })
+        self.assertEqual(row["source_sha256"],
+                         hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest())
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            counts = build(output=root / "site", admissions_path=ACCEPTANCE)
+            self.assertEqual(counts["reviewed"], 1)
+            self.assertEqual(counts["pending"],
+                             counts["editorial"] - counts["legacy"] - 1)
+            accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
+            self.assertIn("Reviewed explanatory article", accepted_page)
+            self.assertNotIn("UNACCEPTED DRAFT", accepted_page)
+
+    def test_v2_rejects_cross_version_duplicate_admission(self):
+        sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
+        data = self._v2([{
+            "problem_id": 7, "source_sha256": sha,
+            "source_check": REPO + "/issues/1276#issuecomment-6103364800",
+        }])
+        data["admissions"].append(self._admission(7, sha))
+        with tempfile.TemporaryDirectory() as root:
+            f = Path(root) / "manifest.json"
+            f.write_text(json.dumps(data), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "duplicated"):
+                load_batch_admissions(f)
 
     def test_batch_v2_source_hash_and_shared_evidence(self):
         good_sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
