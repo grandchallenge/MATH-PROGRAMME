@@ -98,7 +98,8 @@ jobs:
           gh api --paginate "repos/grandchallenge/MATH-PROGRAMME/issues/2552/comments?per_page=100" \
             | jq -s 'add' > "$RUNNER_TEMP/compendium-admission-history.json"
           if jq -e 'any(.[]; .user.login == "gcl-council-clerk[bot]" and
-            ((.body // "") | startswith("ERDOS-COMPENDIUM-EDITORIAL-ADMISSION/1\\n\\nThree Editorial writing assignments #2556–#2558: **VERIFIED**.")))' \
+            ((.body // "") | startswith("ERDOS-COMPENDIUM-EDITORIAL-ADMISSION/1")
+            and contains("Three Editorial writing assignments #2556–#2558: **VERIFIED**.")))' \
             "$RUNNER_TEMP/compendium-admission-history.json" >/dev/null; then
             echo "already_admitted=true" >> "$GITHUB_OUTPUT"
             echo "EDITORIAL_ALREADY_ADMITTED: verified protected receipt; no work-state replay"
