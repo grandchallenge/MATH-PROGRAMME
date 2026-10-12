@@ -19,6 +19,33 @@ runtime, independent reviewer, solved result, source-authoritative theorem,
 worker return, or MathCert conclusion can be inferred from registry metadata,
 a GitHub issue, source audit, or a text generator.
 
+## Admission boundary for authored manuscripts
+
+A protected manuscript merge is **not** editorial acceptance. The site
+generator reads `EDITORIAL_ADMISSIONS.json` and refuses to promote any
+new `editorial/NNNN.md` into an explanatory public page or reviewed coverage
+count unless a separate, protected editorial admission provides the **exact
+SHA-256 of its stripped manuscript text**, source-claim check, read-only
+critical review, protected admission PR, successful MkDocs run, and an
+independent, recorded **public HTML and mathematical rendering readback**.
+Absent evidence leaves an indexed source reference with a visible link to the
+pending manuscript; changed accepted manuscript bytes invalidate the gate.
+Transport `RESULT/1` or merged source alone never satisfies these fields.
+The gate validates the evidence record's shape and source-hash identity;
+protected reviewers must additionally check that linked evidence actually
+supports an acceptance decision before authorizing ledger updates. Never
+equate a syntactically valid link with proof of successful verification.
+
+The original #1–#3 are narrowly grandfathered as **legacy authored
+exemplars** to avoid silently withdrawing existing historical pedagogy.
+They are visibly marked as not separately accepted, are excluded from the
+reviewed count, and the grandfather rule must not expand to later manuscripts.
+As of this gate #4 and #7 are authored but unaccepted pending independent
+checks. New contributions, including #9 and #10, use the same ledger.
+The full site can deploy with these reference entries; acceptance requires
+actual deployed HTML verification in a separate transaction. Editorial
+acceptance does not grant mathematical certification.
+
 ## How to produce each genuinely complete explanatory article
 
 1. **Bind the exact problem.** Read its current external statement and dated
