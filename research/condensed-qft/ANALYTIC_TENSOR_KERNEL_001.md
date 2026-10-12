@@ -10,8 +10,9 @@ This note constructs **three precisely distinguished** realizations and establis
 
 1. **Schwartz kernel comparison (all $a,b\ge1$, infinite-dimensional):** the scalar-valued maps *out of the ordinary condensed tensor* of the two Schwartz spaces are canonically the tempered distribution kernels on the product. This proves a Hom-level comparison; **it does not prove an object-level tensor equivalence**.
 2. **Banach analytic tensor comparison (arbitrary real Banach spaces):** the tensor of the two associated $\mathcal M$-complete condensed real spaces is canonically the condensed realization of their completed projective Banach tensor. This is Scholze's Proposition 4.10; we transport the free massive scalar covariance through it.
-3. **Derived tensor comparison (finite-dimensional only):** finite free $p$-liquid modules are tensor-flat as finite sums of the monoidal unit, so there are no higher Tor terms. This is not a statement about infinite-dimensional Schwartz spaces.
-4. **No-go control:** derived ordinary $\mathbb Z$-solidification kills the condensed topological real line. It is therefore not a conservative coefficient realization for real free-field observables.
+3. **Infrared boundary:** at zero mass the same $L^2$-bounded covariance construction fails, with an explicit Fourier-annulus counterexample. 
+4. **Derived tensor comparison (finite-dimensional only):** finite free $p$-liquid modules are tensor-flat as finite sums of the monoidal unit, so there are no higher Tor terms. This is not a statement about infinite-dimensional Schwartz spaces.
+5. **No-go control:** derived ordinary $\mathbb Z$-solidification kills the condensed topological real line. It is therefore not a conservative coefficient realization for real free-field observables.
 
 In particular, the status of the original **infinite-dimensional derived Schwartz tensor** question remains **OPEN**. None of the established isomorphisms below is passed off as that theorem.
 
@@ -183,6 +184,25 @@ The continuous injection $\mathcal S(\mathbb R^d)\hookrightarrow L^2(\mathbb R^d
 
 **Distribution caution.** For some $d$, $k_m$ is singular at the origin; the kernel need not be an ordinary function on the diagonal. This does not define Wick square or renormalized coincident-point products.
 
+### TK-2b: an exact failure in the massless Banach construction
+
+**Proposition TK-2b (infrared counterexample).** If $m=0$, the Fourier multiplier $|p|^{-2}$ does **not** define a bounded bilinear form $B_0$ on $H=L^2(\mathbb R^d,\mathbb R)$ for any $d\ge1$. Thus the particular Banach-level analytic-condensed morphism of TK-2 does not exist for the massless covariance, without changing its domain or codomain.
+
+**Proof.** Fix $0<\varepsilon<1$. Choose any nonzero real Schwartz function $f_\varepsilon$ whose Fourier transform is supported inside the annulus $\varepsilon<|p|<2\varepsilon$; by symmetric choice of Fourier profile the inverse transform can be real. Normalize $\|f_\varepsilon\|_{L^2}=1$. On this support, $|p|^{-2}\ge(2\varepsilon)^{-2}$, hence
+
+$
+B_0(f_\varepsilon,f_\varepsilon)
+=\frac1{(2\pi)^d}\int
+\frac{|\widehat f_\varepsilon(p)|^2}{|p|^2}\,dp
+\ge \frac1{4\varepsilon^2}.
+$
+
+The lower bound diverges as $\varepsilon\downarrow0$, proving unboundedness. A bounded functional on $H\widehat\otimes_\pi H$ would give a bounded bilinear form on $H\times H$, a contradiction. $\square$
+
+**Scope:** this rules out the unmodified $L^2$-Banach projective-tensor realization of this covariance, not every massless distributional propagator or every possible infrared-regularized analytic realization. For $d\ge3$, $|p|^{-2}$ is locally integrable near $p=0$, and the corresponding tempered distribution can be treated separately. For low dimensions, extensions/zero-mode treatment require additional care. It is **a known analytic infrared phenomenon**, not a new quantum-field result.
+
+**Replay:** \`python3 research/condensed-qft/fixtures/massive_spectral_bounds.py\` checks positive-mass finite spectral multipliers and the exact $\varepsilon^{-2}$ lower-bound scaling with rational arithmetic. The continuum conclusion is established by the preceding proof, *not* by finite samples.
+
 ## 4. Finite free derived comparison — and no further
 
 **Proposition TK-3.** In the fixed source-proven $p$-liquid derived category $\mathcal D_p$, for all finite $n,k\ge0$,
@@ -223,6 +243,7 @@ Consequently $L(\underline{\mathbb R}^{\oplus n})^\square\simeq0$ for every fini
 | --- | --- | --- |
 | TK-1: condensed scalar Hom $\leftrightarrow$ tempered kernels | **Proved conditional on published theorems** | Full faithfulness [Scholze, *Analytic*, Prop. 1.2(2)] + ordinary tensor universal property + classical Schwartz tensor/kernel theorem |
 | TK-2: analytic Banach tensor and free covariance | **Proved conditional on published theorems** | [Scholze, *Analytic*, Def. 4.1, Props. 4.9–4.10] + Fourier/Plancherel/Cauchy–Schwarz |
+| TK-2b: massless unboundedness on $L^2$ | **Proved directly (classical infrared phenomenon)** | Fourier annulus localization and Plancherel | 
 | TK-3: finite free derived liquid tensor | **Proved conditional on analytic-ring monoidality** | [Scholze, *Analytic*, Thm. 6.5 and analytic-ring formalism] + monoidal unit/finite-sum identities |
 | TK-4: ordinary solidification kills reals | **Imported established theorem** | [Scholze, *Condensed*, Cor. 6.1(iii)] |
 | Infinite-dimensional derived Schwartz tensor equivalence | **OPEN** | Requires definition of $\Phi$ in a stable analytic category and comparison at the object level |
