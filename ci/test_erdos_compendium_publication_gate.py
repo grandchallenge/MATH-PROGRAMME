@@ -158,7 +158,7 @@ class EditorialGateTests(unittest.TestCase):
                 missing += 1
             else:
                 self.fail("Unknown source evidence state")
-        self.assertEqual((returned, missing), (33, 17))
+        self.assertEqual((returned, missing), (37, 13))
         self.assertIn("NOT accepted", data["status_semantics"])
 
     def test_bulk_001_six_new_source_boundaries(self):
@@ -210,6 +210,53 @@ class EditorialGateTests(unittest.TestCase):
             frozenset(pair) not in C4
             for pair in combinations(vertices, 2))
             for vertices in combinations(range(4), 3)))
+
+    def test_bulk_001_four_graph_and_set_examples(self):
+        """#19/#20/#23/#24 exact finite models: no asymptotic claim."""
+        from itertools import combinations, permutations
+
+        # #19 n=2: two distinct graph edges yield a 2-colourable forest.
+        for e1, e2 in combinations(list(combinations(range(4), 2)), 2):
+            edges = {frozenset(e1), frozenset(e2)}
+            self.assertTrue(any(
+                all((int(u in left) != int(v in left)) for e in edges
+                    for u,v in [tuple(e)])
+                for mask in range(1 << 4)
+                for left in [{i for i in range(4) if (mask >> i) & 1}]))
+        # #20: common core for three-petal example, not for triangle of pairs.
+        good = [{1,2},{1,3},{1,4}]
+        bad = [{1,2},{2,3},{1,3}]
+        pair_intersections = lambda fam: [a & b for a,b in combinations(fam,2)]
+        self.assertTrue(all(x == {1} for x in pair_intersections(good)))
+        self.assertEqual(len({frozenset(x) for x in pair_intersections(bad)}), 3)
+        # #23, #24: 2-fold blown-up pentagon.
+        n = 2
+        vertices = tuple(range(5*n))
+        edges = {
+            frozenset((5*a+i, 5*b+j))
+            for a in range(n) for b in range(n)
+            for i in range(5) for j in range(5)
+            if (j-i) % 5 in (1,4)
+        }
+        # Note class encoding: vertex=(copy index)*5+cycle position.
+        self.assertEqual(len(edges), 5*n*n)
+        self.assertFalse(any(
+            all(frozenset(e) in edges for e in combinations(t, 2))
+            for t in combinations(vertices, 3)))
+        max_cut = max(sum(bool((mask>>u)&1) != bool((mask>>v)&1)
+                          for edge in edges for u,v in [tuple(edge)])
+                      for mask in range(1 << len(vertices)))
+        self.assertEqual(max_cut, 4*n*n)
+        self.assertEqual(len(edges)-max_cut, n*n)
+        # Every 5-cycle counted once up to rotation and reversal.
+        cycles = set()
+        for cyc in permutations(vertices, 5):
+            if all(frozenset((cyc[i], cyc[(i+1)%5])) in edges for i in range(5)):
+                rotations = [cyc[i:]+cyc[:i] for i in range(5)]
+                rev = cyc[::-1]
+                rotations += [rev[i:]+rev[:i] for i in range(5)]
+                cycles.add(min(rotations))
+        self.assertEqual(len(cycles), n**5)
 
     def test_bulk_001_exact_finite_examples(self):
         """Batch-level mathematical replay, not certification of asymptotic claims."""
