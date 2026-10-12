@@ -68,6 +68,62 @@ def load_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
             if not isinstance(row[key], str) or not re.fullmatch(pattern, row[key]):
                 raise ValueError(f"Invalid {key} evidence link for editorial #{n}")
         accepted[n] = row
+    # V2 batch extension is parsed below; V1 remains backward compatible.
+    return accepted
+
+
+def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
+    """Validate V1 legacy rows plus V2 shared evidence and per-entry hashes.
+
+    This is a fail-closed syntactic and identity gate; a protected editorial
+    decision must still verify the *truth* of all linked evidence.
+    """
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("record_type") != "ERDOS_COMPENDIUM_EDITORIAL_ADMISSIONS/2":
+        return load_admissions(path)
+    if set(data) != {"record_type", "admissions", "batches"} or not isinstance(data["batches"], list):
+        raise ValueError("Invalid batch editorial admission manifest")
+    with __import__("tempfile").TemporaryDirectory() as td:
+        old = Path(td) / "legacy.json"
+        old.write_text(json.dumps({"record_type": "ERDOS_COMPENDIUM_EDITORIAL_ADMISSIONS/1",
+                                   "admissions": data["admissions"]}), encoding="utf-8")
+        accepted = load_admissions(old)
+    link_patterns = {
+        "critical_review": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/(issues|pull)/\d+#issuecomment-\d+",
+        "protected_admission": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/\d+",
+        "mkdocs_run": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/actions/runs/\d+",
+        "public_html_readback": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\d+#issuecomment-\d+",
+        "source_check": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\d+#issuecomment-\d+",
+    }
+    seen_batches = set()
+    for batch in data["batches"]:
+        shared = {"batch_id", "critical_review", "protected_admission", "mkdocs_run",
+                  "public_html_readback", "entries"}
+        if not isinstance(batch, dict) or set(batch) != shared:
+            raise ValueError("Invalid batch fields")
+        batch_id = batch["batch_id"]
+        if (not isinstance(batch_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{4,80}", batch_id)
+                or batch_id in seen_batches):
+            raise ValueError("Invalid or duplicate editorial batch identity")
+        seen_batches.add(batch_id)
+        if not isinstance(batch["entries"], list) or not batch["entries"] or len(batch["entries"]) > 250:
+            raise ValueError("Invalid editorial batch size")
+        for key in ("critical_review", "protected_admission", "mkdocs_run", "public_html_readback"):
+            if not isinstance(batch[key], str) or not re.fullmatch(link_patterns[key], batch[key]):
+                raise ValueError(f"Invalid batch {key}")
+        for entry in batch["entries"]:
+            if not isinstance(entry, dict) or set(entry) != {"problem_id", "source_sha256", "source_check"}:
+                raise ValueError("Invalid per-article batch evidence")
+            n = entry["problem_id"]
+            if (type(n) is not int or n <= 0 or n in LEGACY_EXEMPLARS or n in accepted
+                    or not isinstance(entry["source_sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", entry["source_sha256"])):
+                raise ValueError("Invalid, duplicated, or legacy batch admission identity")
+            if not isinstance(entry["source_check"], str) or not re.fullmatch(link_patterns["source_check"], entry["source_check"]):
+                raise ValueError("Invalid batch article source_check")
+            accepted[n] = {**entry, **{key: batch[key] for key in
+                            ("critical_review", "protected_admission", "mkdocs_run", "public_html_readback")},
+                           "batch_id": batch_id}
     return accepted
 
 
@@ -219,7 +275,7 @@ def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = 
 def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
           output: Path = GENERATED, admissions_path: Path = ACCEPTANCE) -> dict:
     data, rows = load_registry(registry)
-    admissions = load_admissions(admissions_path)
+    admissions = load_batch_admissions(admissions_path)
     problems = output / "problems"
     catalogue = output / "catalogue"
     for directory in (problems, catalogue):
