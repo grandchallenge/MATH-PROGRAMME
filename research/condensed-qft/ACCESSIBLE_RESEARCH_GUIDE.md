@@ -9,7 +9,7 @@
 
 > **Completed restricted mathematics (TK-1 through TK-4):** [Analytic-condensed tensor/kernel note](ANALYTIC_TENSOR_KERNEL_001.md). It proves an all-Schwartz **scalar-Hom-level** kernel comparison, Scholze-backed Banach completed-tensor comparison for the $L^2$ massive free field, a finite-free derived liquid comparison, and explicit infrared/ordinary-solidification no-go boundaries. The **infinite-dimensional derived Schwartz object-level comparison remains open**; these results are not a novel QFT theorem.
 
-> **Derived comparison resolved (QFT-COND-002):** [Derived Schwartz tensor theorem](DERIVED_SCHWARTZ_TENSOR_002.md) establishes the **object-level** tensor equivalence in the derived category of real $p$-liquid vector spaces for all finite-dimensional Euclidean Schwartz test-function spaces. Higher Tor vanishes by nuclear Fréchet liquid flatness (Clausen–Scholze, Theorem 4.11 and Remark 4.12). This is an established source-backed application, **not** a new theorem about QFT. Free BV observables and factorization descent remain unproved.
+> **Derived comparison resolved (QFT-COND-002):** [Derived Schwartz tensor theorem](DERIVED_SCHWARTZ_TENSOR_002.md) establishes the **object-level** tensor equivalence in the derived category of real $p$ -liquid vector spaces for all finite-dimensional Euclidean Schwartz test-function spaces. Higher Tor vanishes by nuclear Fréchet liquid flatness (Clausen–Scholze, Theorem 4.11 and Remark 4.12). This is an established source-backed application, **not** a new theorem about QFT. Free BV observables and factorization descent remain unproved.
 
 ## 1. The object and the scientific question
 
