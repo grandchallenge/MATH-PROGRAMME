@@ -86,42 +86,101 @@ def verify(browser, url: str = PUBLIC) -> dict:
 
 
 def verify_github(browser, sha: str) -> dict:
-    """Actual GitHub rendered Markdown, never a raw-source or API assumption."""
+    """Independently inspect GitHub's visible rich-rendered Markdown.
+
+    GitHub can use SVG, MathML or CommonHTML outputs. Count only physically
+    visible rendered math nodes, not any unprocessed TeX/source text.
+    Save a bounded public-page diagnostic even if rendering fails.
+    """
     import re
+    from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+
     if not re.fullmatch(r"[0-9a-f]{40}", sha):
         raise RuntimeError("missing exact protected manuscript SHA")
     url = ("https://github.com/grandchallenge/MATH-PROGRAMME/blob/" + sha +
            "/governance/erdos_compendium/editorial/0007.md")
     page = browser.new_page(viewport={"width": 1280, "height": 850})
+    errors: list[str] = []
+    page.on("pageerror", lambda err: errors.append(str(err)[:300]))
     response = page.goto(url, wait_until="domcontentloaded", timeout=45000)
     if response is None or response.status != 200:
-        raise RuntimeError(f"GitHub Markdown page GET failed: {response.status if response else None}")
-    # GitHub renders Markdown/MathJax client-side. Inspect its completed DOM,
-    # not the raw .md (which cannot establish rich rendering).
-    page.wait_for_function(
-        """() => {
-          const root = document.querySelector('.markdown-body');
-          return root && root.innerText.includes('Theorem 1.4') &&
-            root.querySelectorAll('mjx-container').length >= 7;
-        }""",
-        timeout=60000,
-    )
-    page.locator(".markdown-body mjx-container").first.screenshot(
+        raise RuntimeError(f"GitHub Markdown GET failed: {response.status if response else None}")
+
+    selectors = {
+        "mathjax_chtml": "mjx-container",
+        "mathjax_svg": "mjx-container[jax='SVG'] svg",
+        "katex": ".katex",
+        "native_mathml": "math",
+        "github_math_svg": "[data-math-style] svg",
+        "github_render_svg": ".js-render-target svg",
+        "math_role": "[role='math']",
+    }
+    def snapshot() -> dict:
+        return page.evaluate("""selectors => {
+            const root = document.querySelector('.markdown-body');
+            const visible = e => {
+                const r = e.getBoundingClientRect();
+                const style = getComputedStyle(e);
+                return r.width > 2 && r.height > 2
+                    && style.display !== 'none' && style.visibility !== 'hidden';
+            };
+            const counts = {};
+            for (const [name, css] of Object.entries(selectors)) {
+                counts[name] = root
+                  ? Array.from(root.querySelectorAll(css)).filter(visible).length : 0;
+            }
+            const body = root?.innerText || '';
+            return {
+                url: location.href, title: document.title,
+                rootFound: !!root,
+                rootChars: body.length, textStart: body.slice(0, 800),
+                markers: {
+                    theorem: body.includes('Theorem 1.4'),
+                    source: body.includes('Hough'),
+                    example: body.includes('48 uncovered')
+                },
+                counts,
+                unprocessedMath: root
+                  ? (body.match(/\\$\\$|\\\\equiv|\\\\operatorname/g) || []).length : null,
+            };
+        }""", selectors)
+    try:
+        page.wait_for_function("""selectors => {
+           const root = document.querySelector('.markdown-body');
+           if (!root || !root.innerText.includes('Theorem 1.4')) return false;
+           const css = Object.values(selectors).join(',');
+           return Array.from(root.querySelectorAll(css)).filter(el => {
+              const r = el.getBoundingClientRect();
+              return r.width > 2 && r.height > 2;
+           }).length >= 7;
+        }""", selectors, timeout=25000)
+    except PlaywrightTimeoutError:
+        pass  # Evidence must still be written before failing closed.
+
+    observed = snapshot()
+    observed["scriptErrors"] = errors[:10]
+    Path("readback/github-diagnostic.json").write_text(
+        json.dumps(observed, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    page.screenshot(path="readback/github-page-viewport.png", full_page=False)
+    counts = observed["counts"]
+    math_count = max(counts.values(), default=0)
+    valid = (observed["rootFound"] and math_count >= 7
+             and all(observed["markers"].values())
+             and observed["unprocessedMath"] == 0 and not errors)
+    if not valid:
+        page.close()
+        raise RuntimeError("GitHub rich-rendered math UNVERIFIED; "
+                           "bounded screenshot and DOM diagnostic preserved: " +
+                           json.dumps(observed, sort_keys=True)[:2200])
+
+    # The element must have nonzero layout and be on the rendered page.
+    winner = max(selectors, key=lambda name: counts[name])
+    page.locator(".markdown-body " + selectors[winner]).first.screenshot(
         path="readback/github-first-rendered-math.png", timeout=20000)
-    observed = page.evaluate("""() => {
-      const root = document.querySelector('.markdown-body');
-      return { renderedMath: root.querySelectorAll('mjx-container').length,
-        theorem: root.innerText.includes('Theorem 1.4'),
-        source: root.innerText.includes('Hough'),
-        example: root.innerText.includes('48 uncovered') };
-    }""")
-    if not (observed["renderedMath"] >= 7 and observed["theorem"] and
-            observed["source"] and observed["example"]):
-        raise RuntimeError("GitHub rendered Markdown source probes failed: " +
-                           json.dumps(observed))
     dom_hash = hashlib.sha256(page.content().encode("utf-8")).hexdigest()
     page.close()
     return {"url": url, "status": "PASS", "observed": observed,
+            "renderedMath": math_count, "renderer": winner,
             "dom_sha256": dom_hash}
 
 
@@ -137,6 +196,10 @@ def main() -> None:
     with sync_playwright() as pw:
         browser = pw.chromium.launch(headless=True)
         result = verify(browser)
+        # Durable site-only evidence is diagnostic, not an admission.
+        provisional = dict(result, status="PARTIAL", github_render={"status": "UNVERIFIED"})
+        Path("readback/mkdocs-only.json").write_text(
+            json.dumps(provisional, sort_keys=True, indent=2) + "\n", encoding="utf-8")
         result["github_render"] = verify_github(browser, os.environ["DEPLOYED_SHA"])
         browser.close()
     Path("readback/readback.json").write_text(
