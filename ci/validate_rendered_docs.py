@@ -191,6 +191,8 @@ def main() -> int:
     flagship_pages = {
         "docs/CMDG_CM4_MATHEMATICAL_NOTE.md",
         "docs/CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md",
+        "docs/PRIME_INFORMATION_GEOMETRY.md",
+        "docs/PRIME_INFORMATION_TRANSITION.md",
     }
     for finding in math_report["findings"] + math_report.get("rendered_findings", []):
         if finding["path"] in flagship_pages and finding.get("context", "markdown") == "markdown":

@@ -2,6 +2,16 @@
 
 This page describes the repository-wide mathematical typography audit. The public record is the [machine-readable audit inventory](https://grandchallenge.github.io/MATH-PROGRAMME/math-typography-audit.json), generated from the exact protected documentation build. That inventory enumerates file paths, line numbers, diagnostic classes, and short source excerpts. It is an *audit*, not a claim that every historical file has been repaired.
 
+## Source-first mathematical Markdown contract
+
+**Binding rule for new work:** Mathematical Markdown must be correctly typeset in its first committed source. Do not defer repairs until after protected merge. The required classifier runs `ci/math_markdown_gate.py` across **all added or modified Markdown files**, including research notes outside the public docs directory. It compares candidate markup to the exact protected-base source, allowing unchanged historical defects but rejecting every new defect.
+
+A valid inline expression has paired single-dollar delimiters on the same line. A display expression has two standalone double-dollar delimiter lines, a nonempty TeX body, and blank lines separating it from prose. Inline math cannot touch words or hyphens. Unmatched/legacy math delimiters and unsupported operator macros fail this source gate. Code fences and inline code remain literal.
+
+**Before opening a PR:** `python3 ci/math_markdown_gate.py --file path/to/note.md`. The repository classifier runs the equivalent diff-bound check automatically on PR and push transitions.
+
+For public reading editions the strict MkDocs build and rendered-Arithmatex check additionally verify that the manuscript's equations reached the HTML math renderer. Such checks do not prove actual browser-side MathJax glyph painting, which remains a separate acceptance step. This contract does not change mathematical certification boundaries.
+
 ## What is checked
 
 - **Repository Markdown source (GitHub compatibility):** every Markdown file outside generated/build directories is examined for legacy math delimiters, disallowed operator macros, math attached to prose, and suspicious unpaired dollar delimiters. Inline code and fenced code blocks are excluded. Findings inside HTML are labelled separately from ordinary Markdown.
