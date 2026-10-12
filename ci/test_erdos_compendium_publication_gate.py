@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from erdos_compendium import ACCEPTANCE, EDITORIAL, build, load_admissions, load_batch_admissions, manuscript
+from erdos_compendium import ACCEPTANCE, EDITORIAL, ROOT, build, load_admissions, load_batch_admissions, load_registry, manuscript
 from erdos_compendium_public_html_readback import publication_state_matches
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
@@ -123,6 +123,43 @@ class EditorialGateTests(unittest.TestCase):
             save(bad)
             with self.assertRaisesRegex(ValueError, "batch size"):
                 load_batch_admissions(manifest)
+
+    def test_bulk_001_source_return_is_not_acceptance(self):
+        """Fail closed on mismatched registry identities or fabricated source readiness."""
+        manifest = ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json"
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        self.assertEqual(data["record_type"], "ERDOS_COMPENDIUM_BULK_INTAKE/1")
+        self.assertEqual(data["cohort_id"], "EC-BULK-001")
+        self.assertEqual(data["observed_date"], "2026-10-12")
+        self.assertEqual(data["target_count"], 50)
+        self.assertEqual(len(data["items"]), 50)
+        catalogue, rows = load_registry()
+        by_id = {r["problem_id"]: r["issue_number"] for r in rows}
+        ids = [r["problem_id"] for r in data["items"]]
+        self.assertEqual(ids, sorted(set(ids)))
+        self.assertFalse({1, 2, 3} & set(ids), "Legacy exemplars must not enter new admissions")
+        registry_bytes = (ROOT / "governance/erdos_catalogue/REGISTRY.json").read_bytes()
+        git_blob = hashlib.sha1(b"blob " + str(len(registry_bytes)).encode() +
+                                b"\0" + registry_bytes).hexdigest()
+        self.assertEqual(data["source_registry_blob"], git_blob)
+        returned = 0
+        missing = 0
+        for item in data["items"]:
+            self.assertEqual(set(item), {"problem_id", "audit_issue",
+                                         "source_return", "evidence_state"})
+            self.assertEqual(by_id[item["problem_id"]], item["audit_issue"])
+            if item["evidence_state"] == "RESULT_PRESENT_UNADJUDICATED":
+                self.assertRegex(item["source_return"],
+                    r"^https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/" +
+                    str(item["audit_issue"]) + r"#issuecomment-[0-9]+$")
+                returned += 1
+            elif item["evidence_state"] == "NO_RESULT_AT_READBACK":
+                self.assertIsNone(item["source_return"])
+                missing += 1
+            else:
+                self.fail("Unknown source evidence state")
+        self.assertEqual((returned, missing), (27, 23))
+        self.assertIn("NOT accepted", data["status_semantics"])
 
     def test_merged_drafts_do_not_auto_promote(self):
         counts, pages, index = self._build([])
