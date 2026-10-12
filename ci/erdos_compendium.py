@@ -48,11 +48,11 @@ def load_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                 "critical_review", "protected_admission",
                 "mkdocs_run", "public_html_readback"}
     link_patterns = {
-        "source_check": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\\d+#issuecomment-\\d+",
-        "critical_review": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/(issues|pull)/\\d+#issuecomment-\\d+",
-        "protected_admission": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/\\d+",
-        "mkdocs_run": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/actions/runs/\\d+",
-        "public_html_readback": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\\d+#issuecomment-\\d+",
+        "source_check": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\d+#issuecomment-\d+",
+        "critical_review": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/(issues|pull)/\d+#issuecomment-\d+",
+        "protected_admission": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/\d+",
+        "mkdocs_run": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/actions/runs/\d+",
+        "public_html_readback": r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/\d+#issuecomment-\d+",
     }
     accepted = {}
     for row in data["admissions"]:
