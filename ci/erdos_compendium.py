@@ -112,7 +112,7 @@ def manuscript(problem_id: int, base: Path = EDITORIAL) -> str | None:
     # parentheses/brackets are intentionally not accepted for new manuscripts:
     # they work with local Arithmatex but can appear literally on GitHub.
     if problem_id not in MATH_DELIMITER_LEGACY and any(
-        delimiter in text for delimiter in (r"\\(", r"\\)", r"\\[", r"\\]")
+        delimiter in text for delimiter in (r"\(", r"\)", r"\[", r"\]")
     ):
         raise ValueError(f"nonportable GitHub mathematical delimiters in #{problem_id}")
     return text
