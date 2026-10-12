@@ -28,8 +28,14 @@ count unless a separate, protected editorial admission provides the **exact
 SHA-256 of its stripped manuscript text**, source-claim check, read-only
 critical review, protected admission PR, successful MkDocs run, and an
 independent, recorded **public HTML and mathematical rendering readback**.
-Absent evidence leaves an indexed source reference with a visible link to the
-pending manuscript; changed accepted manuscript bytes invalidate the gate.
+Absent admission evidence leaves the manuscript on its public page marked
+**UNACCEPTED DRAFT**, with source link and an explicit noncertification warning,
+excluded from the separately reviewed coverage count. This deliberately
+allows the actual deployed Markdown/MathJax to be examined before a distinct
+acceptance transaction; hiding the text until after deployed-text verification
+would be a circular, impossible prerequisite. Changed accepted manuscript
+bytes invalidate its existing admission, causing the generator to fail closed
+until the review record is deliberately updated.
 Transport `RESULT/1` or merged source alone never satisfies these fields.
 The gate validates the evidence record's shape and source-hash identity;
 protected reviewers must additionally check that linked evidence actually
@@ -40,7 +46,7 @@ The original #1–#3 are narrowly grandfathered as **legacy authored
 exemplars** to avoid silently withdrawing existing historical pedagogy.
 They are visibly marked as not separately accepted, are excluded from the
 reviewed count, and the grandfather rule must not expand to later manuscripts.
-As of this gate #4 and #7 are authored but unaccepted pending independent
+As of this gate #4 and #7 are authored but unaccepted **visible drafts** pending independent
 checks. New contributions, including #9 and #10, use the same ledger.
 The full site can deploy with these reference entries; acceptance requires
 actual deployed HTML verification in a separate transaction. Editorial
