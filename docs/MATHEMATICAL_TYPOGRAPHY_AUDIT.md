@@ -2,6 +2,38 @@
 
 This page describes the repository-wide mathematical typography audit. The public record is the [machine-readable audit inventory](https://grandchallenge.github.io/MATH-PROGRAMME/math-typography-audit.json), generated from the exact protected documentation build. That inventory enumerates file paths, line numbers, diagnostic classes, and short source excerpts. It is an *audit*, not a claim that every historical file has been repaired.
 
+## Source-first mathematical Markdown contract (binding on new work)
+
+**Rule:** Mathematical Markdown is authored in a renderer-safe form from the
+first committed candidate. Do not rely on corrective editorial work after merge.
+The protected PR classifier runs `ci/math_markdown_gate.py` against **all added
+or modified Markdown files** (not just `docs/`) and fails on newly introduced
+defects. The check compares against the exact protected-base source to allow
+unchanged historical audit debt, but never permits newly broken markup.
+
+Authoring preflight: `python3 ci/math_markdown_gate.py --file path/to/note.md`.
+Display math requires a nonempty paired block with both `$` markers alone
+on separate lines and blank lines before opening and after closing; inline
+math uses complete paired `$...# Mathematical typography: GitHub and MkDocs compatibility
+
+This page describes the repository-wide mathematical typography audit. The public record is the [machine-readable audit inventory](https://grandchallenge.github.io/MATH-PROGRAMME/math-typography-audit.json), generated from the exact protected documentation build. That inventory enumerates file paths, line numbers, diagnostic classes, and short source excerpts. It is an *audit*, not a claim that every historical file has been repaired.
+
+ markers in the same line. Neither may
+touch prose characters or hyphens. Legacy delimiters and the known
+GitHub-unsupported `\\operatorname` macro are rejected. Fenced code and
+inline code are preserved as literal examples.
+
+For a public MkDocs reading edition, strict `mkdocs build --strict` and
+`ci/validate_rendered_docs.py` additionally check mathematical Arithmatex
+wrappers against source math, with explicit strict acceptance for the prime
+information synthesis and transition pages. Actual browser-side MathJax paint
+requires a separate live rendering test; the source and HTML gates make no
+false claim about it.
+
+This rule supersedes the prior practice of treating research Markdown outside
+`docs/` as an unguarded staging area. It does not alter theorem certification
+or legal/policy authority boundaries.
+
 ## What is checked
 
 - **Repository Markdown source (GitHub compatibility):** every Markdown file outside generated/build directories is examined for legacy math delimiters, disallowed operator macros, math attached to prose, and suspicious unpaired dollar delimiters. Inline code and fenced code blocks are excluded. Findings inside HTML are labelled separately from ordinary Markdown.
