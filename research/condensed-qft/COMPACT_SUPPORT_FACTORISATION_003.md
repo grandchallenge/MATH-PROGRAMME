@@ -174,6 +174,8 @@ python3 research/condensed-qft/fixtures/finite_weiss_bv.py
 
 This checks exact finite configuration-space Čech $H_0$ ranks and BV compatibility. It is **not** a numerical substitute for the infinite-dimensional source and partition-of-unity proofs.
 
+> **Completion caveat resolved negatively:** [QFT-COND-004 — naive degree-product Weiss no-go](DEGREE_COMPLETION_WEISS_NO_GO_004.md) constructs a genuine directed Weiss cover of countably separated intervals on which the categorical **infinite product of classical polynomial degrees fails descent**, detected in degree-zero cohomology by massive-scalar moment functionals. This does **not** contradict the finite direct-sum polynomial theorem below or establish failure for every corrected/adic completion.
+
 ## 7. Claim ledger and genuine frontier
 
 | Boundary | Status | Support |
