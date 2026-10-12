@@ -161,6 +161,91 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual((returned, missing), (27, 23))
         self.assertIn("NOT accepted", data["status_semantics"])
 
+    def test_bulk_001_exact_finite_examples(self):
+        """Batch-level mathematical replay, not certification of asymptotic claims."""
+        import itertools
+        from fractions import Fraction
+        from math import isqrt
+
+        def prime(n):
+            return n >= 2 and all(n % d for d in range(2, isqrt(n) + 1))
+
+        def squarefree(n):
+            return n > 0 and all(n % (p*p) for p in range(2, isqrt(n) + 1)
+                                 if prime(p))
+
+        # #6: four consecutive primes give three strictly increasing gaps.
+        primes = [p for p in range(2, 102) if prime(p)]
+        i = primes.index(17)
+        self.assertEqual(primes[i:i+4], [17, 19, 23, 29])
+        self.assertEqual([primes[j+1]-primes[j] for j in range(i, i+3)], [2, 4, 6])
+        # #11: positive and zero-exponent witness semantics.
+        self.assertTrue(squarefree(11-4))
+        self.assertFalse(squarefree(11-2))
+        self.assertTrue(squarefree(11-1))
+        # #12: finite check for 88 points in historical/formal predicate countermodel.
+        sq_primes = [p for p in range(5, 998) if prime(p) and p % 4 == 3]
+        source = [3, 6] + [p*p for p in sq_primes]
+        self.assertEqual((len(sq_primes), len(source)), (86, 88))
+        bad = [(a,b,c) for a in source for j,b in enumerate(source)
+               if a < b for c in source[j:] if a < c and (b+c) % a == 0]
+        self.assertEqual(bad, [(3, 6, 6)])
+        # #14, #30, #39: strict unordered sums, diagonal pairs included.
+        def pair_sums(items):
+            return [a+b for i,a in enumerate(items) for b in items[i:]]
+        self.assertEqual(pair_sums([1,2,4]), [2,3,5,4,6,8])
+        self.assertEqual(len(set(pair_sums([1,2,4]))), 6)
+        self.assertEqual(len(set(pair_sums([1,2,4,8]))), 10)
+        self.assertEqual(1+3, 2+2)  # #39 collision when diagonal is permitted
+        # #15: adjacent prime-pair identity in exact rational arithmetic.
+        self.assertEqual(-Fraction(1,2)+Fraction(2,3), Fraction(1,6))
+        self.assertEqual(-Fraction(3,5)+Fraction(4,7), -Fraction(1,35))
+        # #17: all primes up to 101 except 97 satisfy bounded cluster condition.
+        noncluster = {}
+        for p in primes:
+            missing = [d for d in range(0, p-2, 2) if not
+                       any(q+d <= p and prime(q+d) for q in primes if q <= p-d)]
+            if missing:
+                noncluster[p] = missing
+        self.assertEqual(noncluster, {97:[88]})
+        # #18: 8 is practical and 7 needs three distinct divisor powers.
+        divisors = [1,2,4,8]
+        minimum = {}
+        for k in range(1,9):
+            usable = [x for x in divisors if x <= k]
+            minimum[k] = min(len(v) for r in range(1,len(usable)+1)
+                             for v in itertools.combinations(usable,r) if sum(v) == k)
+        self.assertEqual(max(minimum.values()), 3)
+        self.assertEqual(minimum[7], 3)
+        # #25: tail residues versus threshold exceptions.
+        self.assertEqual([k for k in range(6) if k%2 != 0 and k%3 != 1], [3,5])
+        self.assertLess(1, 2)  # 1 survives the threshold before residue exclusion
+        # #32: 11 is not a prime plus either shift from {1,2}.
+        self.assertFalse(prime(11-1))
+        self.assertFalse(prime(11-2))
+        # #36: exact balanced partition minima for two small instances.
+        for n, expected in [(2,1),(3,2)]:
+            universe = set(range(1,2*n+1))
+            maxima = []
+            for a in itertools.combinations(sorted(universe),n):
+                b = universe - set(a)
+                counts = {}
+                for x in a:
+                    for y in b:
+                        counts[x-y] = counts.get(x-y,0)+1
+                maxima.append(max(counts.values()))
+            self.assertEqual(min(maxima), expected)
+        # #40: ordered sum-pair multiplicities, which differ from #14.
+        ordered = {}
+        for a in [1,2,4]:
+            for b in [1,2,4]:
+                ordered[a+b] = ordered.get(a+b,0)+1
+        self.assertEqual(ordered, {2:1,3:2,4:1,5:2,6:2,8:1})
+        self.assertEqual(sum(ordered.values()), 9)
+        # #41: subset-only triple test misses a multiset collision.
+        self.assertEqual(sum((1,1,3)), sum((1,2,2)))
+        self.assertEqual(len(list(itertools.combinations([1,2,3], 3))), 1)
+
     def test_merged_drafts_do_not_auto_promote(self):
         counts, pages, index = self._build([])
         self.assertEqual(counts["problems"], 1221)
