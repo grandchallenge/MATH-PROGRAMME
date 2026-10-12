@@ -74,7 +74,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertNotIn(r"\\[", source)
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "0009.md"
-            path.write_text(source + "\\n\\\\(x\\\\)\\n", encoding="utf-8")
+            path.write_text(source + chr(10) + r"\(x\)" + chr(10), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "nonportable GitHub mathematical delimiters"):
                 manuscript(9, base=Path(temp))
             path.write_text(source, encoding="utf-8")
