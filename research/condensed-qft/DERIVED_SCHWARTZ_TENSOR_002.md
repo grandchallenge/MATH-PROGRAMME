@@ -10,10 +10,10 @@
 Fix a real number $p$ with $0<p\le 1$. Let
 
 $$
-\mathcal L_p=\operatorname{Liq}_p(\mathbb R)
+\mathcal L_p=\mathrm{Liq}_p(\mathbb R)
 $$
 
-be the abelian category of $p$-liquid condensed real vector spaces, in the sense of Clausen–Scholze. The tensor product in this category is the **liquid** tensor product, here denoted by $\otimes_{\mathbb R,<p}^{\mathrm{liq}}$. Its derived symmetric monoidal category is
+be the abelian category of $p$ -liquid condensed real vector spaces, in the sense of Clausen–Scholze. The tensor product in this category is the **liquid** tensor product, here denoted by $\otimes_{\mathbb R,<p}^{\mathrm{liq}}$. Its derived symmetric monoidal category is
 
 $$
 \mathcal D_p=D(\mathcal L_p),
@@ -27,7 +27,7 @@ $$
 \Phi_p(E)=\underline E[0]\in\mathcal D_p.
 $$
 
-This is well-typed: the condensed realization of a nuclear Fréchet space is $p$-liquid for every $0<p\le1$, as described in Clausen–Scholze, *Condensed Mathematics and Complex Geometry*, Remark 4.12 (and Section 2, on inverse limits of Banach spaces). The association is functorial on continuous real-linear maps. This functor is defined only on the stated source category; it is not claimed to be exact on the entire nonabelian category of locally convex spaces.
+This is well-typed: the condensed realization of a nuclear Fréchet space is $p$ -liquid for every $0<p\le1$, as described in Clausen–Scholze, *Condensed Mathematics and Complex Geometry*, Remark 4.12 (and Section 2, on inverse limits of Banach spaces). The association is functorial on continuous real-linear maps. This functor is defined only on the stated source category; it is not claimed to be exact on the entire nonabelian category of locally convex spaces.
 
 For integers $a,b\ge1$ define $E_a=\mathcal S(\mathbb R^a,\mathbb R)$ and $E_b=\mathcal S(\mathbb R^b,\mathbb R)$ with their classical nuclear Fréchet topologies.
 
@@ -52,7 +52,7 @@ It is an **object-level** derived equivalence, not merely an equivalence after a
 
 ### Proof
 
-**Step A — membership and tensor flatness.** The spaces $E_a,E_b$ are nuclear Fréchet, hence their condensed realizations are $p$-liquid. More strongly, Clausen–Scholze's *Condensed Mathematics and Complex Geometry*, Theorem 4.11 and Remark 4.12 (p. 46 in the cited PDF), establish that nuclear Fréchet spaces are **flat for the liquid tensor**. Therefore the exact degree-zero $p$-liquid objects $\underline{E_a}$ and $\underline{E_b}$ compute their derived tensor in degree zero:
+**Step A — membership and tensor flatness.** The spaces $E_a,E_b$ are nuclear Fréchet, hence their condensed realizations are $p$ -liquid. More strongly, Clausen–Scholze's *Condensed Mathematics and Complex Geometry*, Theorem 4.11 and Remark 4.12 (p. 46 in the cited PDF), establish that nuclear Fréchet spaces are **flat for the liquid tensor**. Therefore the exact degree-zero $p$ -liquid objects $\underline{E_a}$ and $\underline{E_b}$ compute their derived tensor in degree zero:
 
 $$
 \underline{E_a}[0]\otimes_{\mathbb R,<p}^{\mathbb L}
@@ -88,9 +88,9 @@ under the external product. Applying condensed realization and combining with St
 **Derived consequence.** The comparison morphism, defined by the external product followed by the universal property of the liquid tensor, has zero cone:
 
 $$
-\operatorname{Cone}(\mathrm{comparison}_{a,b})\simeq0,
+\mathrm{Cone}(\mathrm{comparison}_{a,b})\simeq0,
 \qquad
-\operatorname{Tor}^{\mathrm{liq}}_i(\underline E_a,\underline E_b)=0
+\mathrm{Tor}^{\mathrm{liq}}_i(\underline E_a,\underline E_b)=0
 \quad(i>0).
 $$
 
@@ -116,14 +116,14 @@ $$
 
 This is the standard Hermite characterization of Schwartz functions; it is not an innovation of condensed mathematics. Hermite coefficients are real for real-valued test functions.
 
-An especially transparent source-compatible $p$-liquid inverse system is obtained by taking
+An especially transparent source-compatible $p$ -liquid inverse system is obtained by taking
 
 $$
 q=p/2,\qquad L_d\in\mathbb N,\qquad L_dq>d,
 \qquad \lambda_\nu=(1+|\nu|)^{-L_d}.
 $$
 
-With $I=I_d$ countable, all $\lambda_\nu$ are nonzero. The multiplier is $q$-summable because the number of multiindices with $|\nu|=n$ equals $\binom{n+d-1}{d-1}$, and
+With $I=I_d$ countable, all $\lambda_\nu$ are nonzero. The multiplier is $q$ -summable because the number of multiindices with $|\nu|=n$ equals $\binom{n+d-1}{d-1}$, and
 
 $$
 \binom{n+d-1}{d-1}
@@ -191,14 +191,14 @@ the rapidly decreasing topology on $I_a\times I_b$ agrees with that on $\mathbb 
 The previous [TK-1](ANALYTIC_TENSOR_KERNEL_001.md) established only
 
 $$
-\operatorname{Hom}_{\mathrm{CondMod}_{\underline{\mathbb R}}}
+\mathrm{Hom}_{\mathrm{CondMod}_{\underline{\mathbb R}}}
 (\underline E_a\otimes_{\underline{\mathbb R}}\underline E_b,\underline{\mathbb R})
 \cong\mathcal S'(\mathbb R^{a+b}).
 $$
 
 It did **not** identify objects or establish any higher-Tor vanishing. DC-1 improves that **logical scope** by using the **different, p-liquid monoidal category**, the actual analytic tensor, and flatness. It does not establish a stronger result than the original Clausen–Scholze source.
 
-The previous TK-2 used Scholze's $\mathcal M$-complete category and Banach projective tensor. That underived tensor cannot simply be substituted into $\mathcal D_p$. DC-1's flatness and derived equivalence come from the liquid source theorems; the categories are not being conflated.
+The previous TK-2 used Scholze's $\mathcal M$ -complete category and Banach projective tensor. That underived tensor cannot simply be substituted into $\mathcal D_p$. DC-1's flatness and derived equivalence come from the liquid source theorems; the categories are not being conflated.
 
 The previous massless covariance counterexample TK-2b was a failure of boundedness on $L^2$, **not** a counterexample to DC-1. The Schwartz-space derived tensor equivalence persists at $m=0$ because the test-space comparison does not depend on a mass parameter. Infrared behavior of a covariance, especially existence of a massless inverse on given function/distribution spaces, is a separate analytical question.
 
@@ -206,8 +206,8 @@ The previous massless covariance counterexample TK-2b was a failure of boundedne
 
 | Duty | Primary source / evidence | Status |
 | --- | --- | --- |
-| $p$-liquid abelian and derived symmetric monoidal categories | Scholze, *Lectures on Analytic Geometry* (2026), Theorem 6.5 | Established, imported |
-| $p$-liquidity of complete locally convex inverse-limit spaces | Clausen–Scholze, *Condensed Mathematics and Complex Geometry* (2026), Lecture II; Scholze, *Analytic*, Lectures II–VI | Established, imported |
+| $p$ -liquid abelian and derived symmetric monoidal categories | Scholze, *Lectures on Analytic Geometry* (2026), Theorem 6.5 | Established, imported |
+| $p$ -liquidity of complete locally convex inverse-limit spaces | Clausen–Scholze, *Condensed Mathematics and Complex Geometry* (2026), Lecture II; Scholze, *Analytic*, Lectures II–VI | Established, imported |
 | Flatness and tensor of prescribed countable diagonal inverse limits | Clausen–Scholze, *Complex Geometry*, Theorem 4.11, p. 46 | Established, imported |
 | General nuclear Fréchet p-liquid flatness and completed tensor | Clausen–Scholze, *Complex Geometry*, Remark 4.12, p. 46 | Established, imported |
 | Vanishing $\mathbf R^1\varprojlim$ in the relevant dense-image towers | Clausen–Scholze, *Complex Geometry*, Lemma 4.8, pp. 43–44 | Established, imported |
