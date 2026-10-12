@@ -30,10 +30,24 @@ def launch(colab,folder):
         if allocated: cli(prefix+["stop","-s",session])
 def main():
     p=argparse.ArgumentParser()
+    p.add_argument("--selftest",action="store_true",help="offline governed host and worker contract tests; no GitHub/Colab allocation")
     p.add_argument("--execute",action="store_true")
     p.add_argument("--colab",default="colab")
     p.add_argument("--output",type=Path,default=ROOT/"runs/erdos-41-lean")
     args=p.parse_args()
+    if args.selftest:
+        from unittest import TestLoader, TextTestRunner
+        suite = TestLoader().loadTestsFromNames((
+            "tests.test_erdos_41_lean_colab",
+            "tests.test_erdos_41_lean_colab_host",
+        ))
+        result = TextTestRunner(verbosity=2).run(suite)
+        if not result.wasSuccessful():
+            raise SystemExit(1)
+        print(json.dumps({"state": "SELFTEST_GREEN_NO_GITHUB_NO_COLAB", "tests": result.testsRun,
+                          "source_sha256": digest(SOURCE), "worker_sha256": digest(WORKER),
+                          "toolchain": TOOLCHAIN}))
+        return
     # Existing source-lock and authenticated Project queue are mandatory at live kickoff.
     from ci.erdos_forge_copilot_pilot import gh,review_ready,comment_history,selected_record,ROSTER
     row=selected_record(json.loads(ROSTER.read_text()))
