@@ -28,7 +28,7 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "10 original authenticated issue-bound RESULT/1 returns #447–#456: four original source-fidelity PARTIAL (#447,#450,#455,#456), one original PARTIAL plus subsequent checked mathematical supplement (#449), five original SOURCE_LOCK_READY (#448,#451–#454). 190 original issues still lack returns. Six substantive unaccepted manuscripts (#448,#449,#451–#454), six early exception-critical reviews, no protected admission or MathCert.",
+  "status_semantics": "10 authenticated original RESULT/1 returns (#447-#456); 190 original issues without returns. Nine substantive unaccepted manuscripts (#448,#449,#451-#454,#457-#459). #457-#459 source audits are locally staged but UNPOSTED and do not count as authenticated returns. Six prior exception reviews plus three conditional pre-return exception reviews, no protected admission or MathCert.",
   "source_queue_readback": {
     "post_initial_source_return_count": 10,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
@@ -498,15 +498,17 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_SOURCE_AUDIT_DRAFT_READY",
       "article_path": "governance/erdos_compendium/editorial/0457.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_AUTHENTICATED_SOURCE_RETURN_PENDING",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "AUTHENTICATED_ISSUE_BOUND_RESULT_NOT_YET_POSTED",
+        "PROTECTED_EDITORIAL_ADMISSION_PENDING"
       ],
       "exceptions": [
-        "PRIMARY_SOURCE_DIRECTION_CONFLICT"
+        "PRIMARY_SOURCE_1979_1980_OPPOSITE_DIRECTIONS",
+        "EXTERNAL_LEAN_NOT_GCL_REPLAYED"
       ],
       "critical_sample_selected": false,
       "math_risk_flags": [
@@ -515,7 +517,11 @@
       ],
       "critical_review_required": true,
       "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0457_UNPOSTED_RESULT.md",
-      "source_audit_draft_sha256": "27c68b721d88bcfbbb9c5608aab05d3a0cb08264492ce03240de4dd1fbfefc25"
+      "source_audit_draft_sha256": "27c68b721d88bcfbbb9c5608aab05d3a0cb08264492ce03240de4dd1fbfefc25",
+      "manuscript_sha256_pre_admission": "67dc59da5c564e0e1709df75419d56a22cbf7896876ca9fb34e7e2090b3f2167",
+      "manuscript_raw_file_sha256_pre_admission": "f7ca1f72d3077afe08443793fd726ad80849779185f3f8c9b7ddd5f745726e28",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-003.md"
     },
     {
       "problem_id": 458,
@@ -538,19 +544,31 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_SOURCE_AUDIT_DRAFT_READY",
       "article_path": "governance/erdos_compendium/editorial/0458.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_AUTHENTICATED_SOURCE_RETURN_PENDING",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "AUTHENTICATED_ISSUE_BOUND_RESULT_NOT_YET_POSTED",
+        "PROTECTED_EDITORIAL_ADMISSION_PENDING"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "SPECIAL_STATUS_FALSIFIABLE_NOT_DISPROVED",
+        "EXTERNAL_2026_COMPUTATION_UNREPLAYED",
+        "FORMAL_PROVIDER_SORRY",
+        "PINNED_VS_LIVE_STATUS_DATE_DRIFT"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [
         "ATYPICAL_CATALOGUE_STATUS:falsifiable"
       ],
-      "critical_review_required": true
+      "critical_review_required": true,
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0458_UNPOSTED_RESULT.md",
+      "source_audit_draft_sha256": "8012581063c5eba12ecc8c660b57549ef2a8f71a7b6fce06b1af22dfd582968d",
+      "manuscript_sha256_pre_admission": "3bea117e422dab3a31b10639ca7086d675a207ff97452ab10ec1219eb33e068f",
+      "manuscript_raw_file_sha256_pre_admission": "115bdfd0c18e1dcda5c5aeab0b92f1ad1d9b31d87bd8f9812d5e1389c33fc8c5",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-004.md"
     },
     {
       "problem_id": 459,
@@ -573,19 +591,28 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_SOURCE_AUDIT_DRAFT_READY",
       "article_path": "governance/erdos_compendium/editorial/0459.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_AUTHENTICATED_SOURCE_RETURN_PENDING",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "AUTHENTICATED_ISSUE_BOUND_RESULT_NOT_YET_POSTED",
+        "PROTECTED_EDITORIAL_ADMISSION_PENDING"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "PINNED_VS_LIVE_FORMAL_METADATA_DRIFT",
+        "LIVE_TRACKER_DIRECT_READ_HTTP_403",
+        "EXTERNAL_LEAN_NOT_GCL_REPLAYED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false,
+      "critical_review_required": true,
       "source_audit_draft_sha256": "69f994a574e26c9bb18774980ccfce06361dbce8a18bb7d3e17e6972dd472d84",
-      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0459_UNPOSTED_RESULT.md"
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0459_UNPOSTED_RESULT.md",
+      "manuscript_sha256_pre_admission": "0966fae1a4acf797f33e4f3b653640a9041e7124eeeaffee9535a1cac637fb30",
+      "manuscript_raw_file_sha256_pre_admission": "a811219a79803e140b5076fd6935b233e3b4a54023083499cd3dc4f0f23a387e",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-003.md"
     },
     {
       "problem_id": 460,
@@ -6754,24 +6781,28 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 6,
+    "count": 9,
     "problem_ids": [
       448,
       449,
       451,
       452,
       453,
-      454
+      454,
+      457,
+      458,
+      459
     ],
     "qa": {
-      "tests_passed": 56,
-      "subtests_passed": 3,
-      "strict_mkdocs_build": "PASS_AT_HEAD_555438542a34ae8029dad356314cc77a45ea826b",
+      "tests_passed": 66,
+      "subtests_passed": 5,
+      "strict_mkdocs_build": "PASS_LOCAL_2026-10-13_66_TESTS_5_SUBTESTS",
       "early_exception_reviews_passed": 6,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
       "public_browser_math_readback": "NOT_YET",
-      "accepted_count": 0
+      "accepted_count": 0,
+      "pre_return_exception_reviews_passed": 3
     }
   },
   "latest_protected_main_recheck": {
