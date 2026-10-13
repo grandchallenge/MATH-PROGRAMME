@@ -28,12 +28,16 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "5 original authenticated RESULT/1 returns (2 SOURCE_LOCK_READY, 3 originally PARTIAL); #449 has separate authenticated critical-source supplement restoring documentary source fidelity, without rewriting original PARTIAL record. Four unaccepted six-section article drafts #448/#449/#451/#453 (the #453 source return is staged but unposted), three documented editorial exception reviews, no protected admission.",
+  "status_semantics": "7 original authenticated issue-bound RESULT/1 returns: #447 and #450 PARTIAL; #448/#451/#452/#453 SOURCE_LOCK_READY pending editorial review; #449 original PARTIAL preserved with independent source-fidelity supplement. 193 no returns. Five unaccepted documentary drafts; zero protected editorial admissions or mathematical certifications.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 5,
+    "post_initial_source_return_count": 7,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
     "authenticated_source_author_count": 1,
-    "readback_state": "COMPLETE_200_ISSUES"
+    "readback_state": "COMPLETE_200_ISSUES",
+    "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
+    "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
+    "inventory_valid_issue_count": 200,
+    "inventory_exceptions": 0
   },
   "items": [
     {
@@ -272,19 +276,31 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1722#issuecomment-6144051742",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1722#issuecomment-6144051742",
+      "evidence_state": "SOURCE_LOCK_READY_PENDING_EDITORIAL_REVIEW",
       "article_path": "governance/erdos_compendium/editorial/0452.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "AWAITING_DECLARED_CRITICAL_REVIEW",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "FORMAL_METADATA_REFRESH_REQUIRED",
+        "INDEPENDENT_PNT_CRT_FORMAL_REPLAY_NOT_DONE"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "FORMAL_STATEMENT_METADATA_DRIFT",
+        "DIRECT_CURRENT_ERDOS_PAGE_READBACK_NOT_VERIFIED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": false,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6144051742,
+      "source_return_content_sha256": "0d938b7ca73a29f716227925b1147fd657c7446c20ccc8669fa6b44934d1e4cb",
+      "source_return_disposition": "SOURCE_LOCK_READY",
+      "manuscript_sha256_pre_admission": "746821f73fa802fddee7f526897fc574e30ebbcc73a33d20b2e2bae11116bcf3",
+      "manuscript_raw_file_sha256_pre_admission": "efc62ac92479438011e79c232a6907f66dcc6b87a967d5f8b25a99e62405ee07",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1722#issuecomment-6144051742"
     },
     {
       "problem_id": 453,
@@ -304,20 +320,31 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "UNPOSTED_SOURCE_DRAFT_NOT_A_RETURN",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1723#issuecomment-6144060255",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1723#issuecomment-6144060255",
+      "evidence_state": "SOURCE_LOCK_READY_PENDING_EDITORIAL_REVIEW",
       "article_path": "governance/erdos_compendium/editorial/0453.md",
-      "article_status": "UNACCEPTED_DRAFT_PENDING_ISSUE_RESULT",
-      "editorial_review_status": "PENDING_SOURCE_POST_AND_CRITICAL_REVIEW",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "AWAITING_DECLARED_CRITICAL_REVIEW",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "FORMAL_PROVIDER_SORRY",
+        "INDEPENDENT_LEAN_REPLAY_NOT_DONE"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "EXTERNAL_LEAN_PROOF_NOT_GCL_REPLAYED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
       "critical_review_required": true,
-      "source_return_staging_path": "governance/erdos_compendium/batches/EC-BULK-004_0453_UNPOSTED_RESULT.md"
+      "source_return_staging_path": "governance/erdos_compendium/batches/EC-BULK-004_0453_UNPOSTED_RESULT.md",
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6144060255,
+      "source_return_content_sha256": "d37012666b370817ecab2bb3cafd960659f188705386886f3f670372b17d1f3c",
+      "source_return_disposition": "SOURCE_LOCK_READY",
+      "manuscript_sha256_pre_admission": "c7fbb70aae19a38ca53280adc99b50aefaadcf9e83284d579af4519636f03061",
+      "manuscript_raw_file_sha256_pre_admission": "726d0065f53ff7b0b2c065d8bc9be3b39e6a00ea019da8d11ace6504a060d768",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1723#issuecomment-6144060255"
     },
     {
       "problem_id": 454,
@@ -6683,18 +6710,19 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 4,
+    "count": 5,
     "problem_ids": [
       448,
       449,
       451,
+      452,
       453
     ],
     "qa": {
       "tests_passed": 53,
       "subtests_passed": 3,
-      "strict_mkdocs_build": "PASS_AT_EARLY_ARTICLE_HEAD",
-      "exception_reviews_passed": 3,
+      "strict_mkdocs_build": "PASS_AT_HEAD_61fa340ab0b3dd718e506a5ad326f5b9f5cc53b6",
+      "early_exception_reviews_passed": 3,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
       "public_browser_math_readback": "NOT_YET",
