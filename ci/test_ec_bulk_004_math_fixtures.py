@@ -1,0 +1,70 @@
+"""Reproducible finite examples and mathematical exception fixtures for EC-BULK-004.
+
+These are sanity checks, not proofs of asymptotic density or analytic theorems.
+"""
+from fractions import Fraction
+
+
+def divisors(n: int) -> list[int]:
+    return [d for d in range(1, n + 1) if n % d == 0]
+
+
+def occupied_dyadic_bins(n: int) -> int:
+    return len({d.bit_length() - 1 for d in divisors(n)})
+
+
+def close_divisor_pairs(n: int) -> int:
+    ds = divisors(n)
+    return sum(a < b < 2 * a for a in ds for b in ds)
+
+
+def primes_in_open_interval(lo: int, hi: int) -> list[int]:
+    return [
+        p for p in range(lo + 1, hi)
+        if p >= 2 and all(p % d for d in range(2, int(p**0.5) + 1))
+    ]
+
+
+def acceptable_451(k: int, n: int) -> bool:
+    assert n > 2 * k
+    return all(
+        all((n - i) % p for i in range(1, k + 1))
+        for p in primes_in_open_interval(k, 2 * k)
+    )
+
+
+def test_448_examples() -> None:
+    assert divisors(12) == [1, 2, 3, 4, 6, 12]
+    assert occupied_dyadic_bins(12) == 4
+    assert divisors(6) == [1, 2, 3, 6]
+    assert occupied_dyadic_bins(6) == 3
+
+
+def test_449_secondary_claim_counterexample() -> None:
+    tau, tau_plus, r = len(divisors(6)), occupied_dyadic_bins(6), close_divisor_pairs(6)
+    assert (tau, tau_plus, r) == (4, 3, 1)
+    assert r + tau < Fraction(tau * tau, tau_plus)  # Online displayed inequality is false.
+    for n in range(1, 1001):
+        tau, tau_plus, r = len(divisors(n)), occupied_dyadic_bins(n), close_divisor_pairs(n)
+        assert 2 * r + tau >= Fraction(tau * tau, tau_plus)  # Correct general inequality.
+
+
+def test_450_exact_periodicity() -> None:
+    # At n=3, the admissible divisors in (n,2n) are 4 and 5.
+    count = lambda m: m % 4 == 0 or m % 5 == 0
+    assert sum(count(m) for m in range(20)) == 8
+    assert sum(count(m) for m in range(1, 20)) == 7
+    assert all(count(m) == count(m + 20) for m in range(100))
+
+
+def test_451_small_cases_and_product_upper_construction() -> None:
+    for k, answer in [(2, 6), (3, 9), (4, 20), (5, 13)]:
+        assert acceptable_451(k, answer)
+        assert all(not acceptable_451(k, n) for n in range(2 * k + 1, answer))
+    for k in range(2, 31):
+        primes = primes_in_open_interval(k, 2 * k)
+        m = 1
+        for p in primes:
+            m *= p
+        n = m * (2 * k // m + 1)
+        assert acceptable_451(k, n)
