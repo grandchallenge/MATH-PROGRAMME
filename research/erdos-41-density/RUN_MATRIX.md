@@ -26,3 +26,14 @@ The source-locked proof files use Lean 4.29.1; mathlib git commit 5e932f97dd2553
 | Original M3 shell-energy deficit | Docket #2622, multiscale gate | OPEN, stronger target |
 
 This audit does not certify the full Erdős conjecture or authorize a new worker task without queue governance.
+
+## Cross-pattern Hall method audit
+
+| Bound | Status |
+| --- | --- |
+| Generic shell-pattern Hall injection | Elementary written proof; all patterns including repeated shell labels |
+| Two-adjacent-shell mixed-pattern inequality | Elementary written proof, arithmetic Lean certificate and hostile x=y=7 fixture |
+| Universal-Hall counterprofiles, gapped and ungapped | Written infinite proof; seven new deterministic tests of numeric and actual finite M3 fixtures |
+| Original finite-window valley for actual M3 | OPEN: range-only Hall constraints are insufficient |
+
+Consult [CROSS_PATTERN_HALL.md](CROSS_PATTERN_HALL.md). A feasible shell-occupancy profile need not be an M3 set.
