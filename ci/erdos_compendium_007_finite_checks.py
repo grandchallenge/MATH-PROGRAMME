@@ -5,7 +5,7 @@ Finite fixtures do not prove any open Erdős problem.
 """
 from __future__ import annotations
 from functools import lru_cache
-from math import isqrt, prod
+from math import isqrt, prod, factorial, gcd
 import json
 
 LIMIT = 2000
@@ -92,6 +92,69 @@ def main():
     for modulus, bounds, expected in cases:
         assert block_values(bounds) == expected
         assert all(v % modulus == 1 for v in expected)
+    # Three further bounded claims: Korselt witnesses, Luca small cases, factorial subtraction.
+    def isprime_trial(n):
+        return n >= 2 and all(n % d for d in range(2, isqrt(n) + 1))
+    def korselt(n):
+        fs = prime_factors(n)
+        return n > 1 and not isprime_trial(n) and prod(fs) == n and all((n - 1) % (p - 1) == 0 for p in fs)
+    carmichael = [(n, prime_factors(n)) for n in (561, 1105, 1729)]
+    assert all(korselt(n) for n, _ in carmichael)
+    # Independent direct modular verification of the universal Fermat property for each finite witness.
+    assert all(all(pow(a, n - 1, n) == 1 for a in range(1, n) if gcd(a, n) == 1) for n, _ in carmichael)
+    factvals = [factorial(n) + 1 for n in range(1, 6)]
+    assert factvals == [2, 3, 7, 25, 121]
+    subtractions = {}
+    for prime in (101, 211):
+        assert isprime_trial(prime)
+        fs = [factorial(k) for k in range(1, 10) if factorial(k) < prime]
+        diffs = [prime - f for f in fs]
+        assert all(x > 1 and not isprime_trial(x) for x in diffs)
+        subtractions[prime] = diffs
+    assert subtractions == {101: [100, 99, 95, 77], 211: [210, 209, 205, 187, 91]}
+    # #1060: divisor-count collision problem. k*sigma(k) >= k^2.
+    n_bound = 65536
+    root = isqrt(n_bound)
+    sig2 = sigma_by_sieve(root)
+    assert all(sig2[k] == sigma_by_trial(k) for k in range(1, root + 1))
+    from collections import defaultdict
+    inverse = defaultdict(list)
+    for k in range(1, root + 1):
+        value = k * sig2[k]
+        if value <= n_bound:
+            inverse[value].append(k)
+    collisions = [(n, inverse[n]) for n in sorted(inverse) if len(inverse[n]) >= 2]
+    assert collisions == [
+        (336, [12, 14]), (5952, [48, 62]), (10080, [60, 70]),
+        (27776, [112, 124]), (44352, [132, 154]),
+        (60480, [160, 189]), (61152, [156, 182])]
+    assert max(len(v) for v in inverse.values()) == 2
+    # #1064: exact totient comparison, with phi(0)=0 as in natural-number arithmetic.
+    phi_limit = 200000
+    phi = list(range(phi_limit + 1))
+    for p0 in range(2, phi_limit + 1):
+        if phi[p0] == p0:
+            for q in range(p0, phi_limit + 1, p0):
+                phi[q] -= phi[q] // p0
+    counts = [0, 0, 0]
+    first_less = []
+    for n in range(1, phi_limit + 1):
+        a = phi[n]
+        b = phi[n - a]
+        if a > b:
+            counts[0] += 1
+        elif a == b:
+            counts[1] += 1
+        else:
+            counts[2] += 1
+            if len(first_less) < 10:
+                first_less.append(n)
+    assert counts == [194833, 175, 4992]
+    assert first_less == [30, 60, 66, 120, 132, 138, 174, 210, 240, 246]
+    for k in range(1, 20):
+        n = 15 * 2**k
+        if n <= phi_limit:
+            assert phi[n] == 4 * 2**k and phi[n - phi[n]] == 5 * 2**k
     result = {
         "record_type": "EC_BULK_007_FINITE_ARITHMETIC/1",
         "cohort_id": "EC-BULK-007",
@@ -102,6 +165,19 @@ def main():
         "problem_1055": {"prime_bound": LIMIT, "prime_count": len(primes),
                          "two_rank_algorithms_agree": True,
                          "least_class_prime_1_to_5": [first[r] for r in range(1, 6)]},
+        "problem_1060": {"n_bound_exhaustive": n_bound,
+                          "two_sigma_algorithms_agree": True,
+                          "max_multiplicity": 2,
+                          "collisions": [{"n": n, "preimages": pre} for n, pre in collisions]},
+        "problem_1064": {"n_bound_exhaustive": phi_limit,
+                          "gt_eq_lt_counts": counts,
+                          "first_strict_less_values": first_less,
+                          "exceptional_family": "15*2^k, k>=1 (symbolic totient identity)"},
+        "problem_1057": {"korselt_witnesses": [n for n, _ in carmichael],
+                          "finite_fermat_check_all_coprime_bases": True},
+        "problem_1058": {"factorial_plus_one_n_1_to_5": factvals,
+                          "historical_n_equals_1_indexing_exception": True},
+        "problem_1059": {"checked_prime_subtractions": {str(k): v for k, v in subtractions.items()}},
         "problem_1056": {"verified_witnesses": [
             {"p": 11, "bounds": [3, 5, 8], "products": [12, 210]},
             {"p": 17, "bounds": [2, 6, 12, 16], "products": [120, 332640, 32760]}]},

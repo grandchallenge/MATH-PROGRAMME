@@ -36,15 +36,20 @@
     1053,
     1055,
     1056,
+    1057,
+    1058,
+    1059,
+    1060,
+    1064,
     1219,
     1220,
     1221
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 6,
+    "valid_result_grammar": 11,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 162,
+    "missing_results": 157,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
@@ -97,7 +102,7 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "Three additional authenticated issue-bound PARTIAL source audits and three drafts added. Six total structurally valid source returns, source-fidelity pending. Deterministic 20-sample remains not completed.",
+  "note": "Eleven authenticated issue-bound returns and eleven unaccepted six-section drafts. Two new Codex-assisted returns underwent accountable check; source-fidelity pending. Four concurrent worker pilot completed 1 draft and 3 timed out, do not infer capacity or active workers. Reserved 20-sample review remains unperformed.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
     "strict_mkdocs_build": "PASS_2026-10-13_LOCAL_ONLY",
@@ -110,6 +115,11 @@
       1053,
       1055,
       1056,
+      1057,
+      1058,
+      1059,
+      1060,
+      1064,
       1219,
       1220,
       1221
@@ -117,12 +127,17 @@
     "public_deployment": "NOT_ATTEMPTED",
     "live_browser_mathjax": "NOT_ATTEMPTED",
     "reviewed_critical_sample_count": 0,
-    "authored_explanatory_draft_count_on_branch": 68,
+    "authored_explanatory_draft_count_on_branch": 73,
     "accepted_protected_v2_count_at_build": 50,
     "new_cohort_unaccepted_drafts": [
       1053,
       1055,
       1056,
+      1057,
+      1058,
+      1059,
+      1060,
+      1064,
       1219,
       1220,
       1221
@@ -135,8 +150,8 @@
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 162,
-    "prepared_groups": 11,
+    "live_available_original_issues_without_result": 157,
+    "prepared_groups": 10,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
     "Codex_CLI_in_CHAD_WSL": "FOUND_V0.146.1_USING_NVM_NODE22_PATH",
@@ -144,7 +159,10 @@
     "codex_is_optional": "YES_NOT_A_GOVERNANCE_BLOCKER",
     "note": "No source-audit state advanced from a proposed workgroup or unavailable runtime.",
     "Codex_logged_in": "CHATGPT_LOGIN_VERIFIED",
-    "one_source_worker_smoke": "RAN_65_SECONDS_TIMED_OUT_NO_ACCEPTED_RETURN"
+    "one_source_worker_smoke": "RAN_65_SECONDS_TIMED_OUT_NO_ACCEPTED_RETURN",
+    "authenticated_codex_1060": "COMPLETED_REVIEWED_POSTED",
+    "parallel_codex_1061_to_1064": "FOUR_LAUNCHED_ONE_VALID_DRAFT_1064_THREE_TIMEOUT_NO_ACCEPTED_RESULT",
+    "verified_active_workers_at_checkpoint": 0
   },
   "latest_protected_main_readback": "88b493d0c40c0fdec97b372ade65b27468e5475c",
   "coverage_receipt": "governance/erdos_compendium/batches/EC-BULK-007_CATALOGUE_READBACK.json",
@@ -167,6 +185,36 @@
       "review_result": "FINITE_PRODUCT_CHECK_PASS; SOURCE_AND_FORMAL_HYPOTHESES_PENDING",
       "sampled": false,
       "finding": "Both finite witness products verified; interval {1} convention and full Guy/Makowski source require review."
+    },
+    {
+      "problem_id": 1057,
+      "review_result": "FINITE_KORSELT_WITNESS_PASS; PRIMARY_BOUNDS_UNVERIFIED",
+      "sampled": false,
+      "finding": "561, 1105 and 1729 satisfy Korselt; external x^0.3389 bound remains strictly below the desired density exponent, and disputed 0.34 is excluded."
+    },
+    {
+      "problem_id": 1058,
+      "review_result": "FACTORIAL_SMALL_CASES_PASS; PUBLISHED_PROOF_UNREPLAYED",
+      "sampled": false,
+      "finding": "Five factorial factorizations verified; n=1 needs p0 boundary convention; Luca 2001 is external proof, not GCL mathematical certification."
+    },
+    {
+      "problem_id": 1059,
+      "review_result": "FINITE_FACTORIAL_SUBTRACTIONS_PASS; PRIMARY_GUY_SOURCE_PENDING",
+      "sampled": false,
+      "finding": "Primes 101 and 211 and every required factorial subtraction verified exactly; infinitude and Guy A2 page still open review."
+    },
+    {
+      "problem_id": 1060,
+      "review_result": "FINITE_INVERSE_DIVISOR_COLLISIONS_VERIFIED; HISTORICAL_PRIMARY_SOURCE_MISSING",
+      "sampled": false,
+      "finding": "Two sigma algorithms agree for all k<=256; exact f(n)<=2 for n<=65536 with seven collisions; frozen Lean proof remains sorry. The original Erdős primary citation is unlocated."
+    },
+    {
+      "problem_id": 1064,
+      "review_result": "FINITE_TOTIENT_SIEVE_AND_EXPLICIT_INFINITE_FAMILY_VERIFIED; PRIMARY_PAPER_PROOF_UNREPLAYED",
+      "sampled": false,
+      "finding": "Totient comparisons over n<=200000 give (194833,175,4992); explicit n=15*2^k family gives strict reverse for all k>=1; Luca–Pomerance established density one in published literature but GCL did not reprove it."
     }
   ],
   "finite_verification_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS.json",
