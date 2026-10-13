@@ -12,10 +12,10 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from erdos_compendium_source_reconcile import token
+from erdos_compendium_source_reconcile import token, get_comments, valid_return
 
 REPO = "grandchallenge/MATH-PROGRAMME"
-LABELS = {"gcl-job", "gcl-state:available", "gcl-role:source-audit", "gcl-pickup:direct-editorial"}
+LABELS = {"gcl-job", "gcl-role:source-audit", "gcl-pickup:direct-editorial"}
 
 
 def read_issue(number: int, auth: str) -> dict:
@@ -56,6 +56,16 @@ def audit(manifest: dict, auth: str, workers: int) -> dict:
             errors.append("ISSUE_BODY_DRIFT")
         if not LABELS.issubset(labels):
             errors.append("QUEUE_LABELS_MISMATCH")
+        queue_custody = "AVAILABLE" if "gcl-state:available" in labels else "UNVERIFIED"
+        if queue_custody == "UNVERIFIED":
+            expected_return = item.get("source_return")
+            if expected_return and any(
+                c.get("html_url") == expected_return and valid_return(item, c)
+                for c in get_comments(issue, auth)
+            ):
+                queue_custody = "AUTHENTICATED_RETURN_POSTED"
+            else:
+                errors.append("QUEUE_AVAILABLE_MISSING_WITHOUT_VERIFIED_RETURN")
         if f"https://www.erdosproblems.com/{n}" not in body:
             errors.append("ORIGINAL_SOURCE_URL_MISSING")
         if manifest["source"]["source_commit"] not in body:
@@ -63,7 +73,8 @@ def audit(manifest: dict, auth: str, workers: int) -> dict:
         return {"problem_id": n, "issue_number": issue,
                 "issue_url": obj.get("html_url"), "state": obj.get("state"),
                 "issue_body_sha256": hashlib.sha256(body.encode()).hexdigest(),
-                "labels": sorted(labels), "exceptions": errors}
+                "labels": sorted(labels), "queue_custody": queue_custody,
+                "exceptions": errors}
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         records = sorted(pool.map(one, items), key=lambda z: z["problem_id"])
     return {
