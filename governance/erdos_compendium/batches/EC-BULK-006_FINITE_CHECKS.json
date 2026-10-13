@@ -1,0 +1,72 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_FINITE_CHECKS/1",
+  "cohort_id": "EC-BULK-006",
+  "authority": "FINITE_ARITHMETIC_ONLY_NO_ASYMPTOTIC_CLAIMS",
+  "checks": {
+    "853_prime_gap_missing": {
+      "4": 6,
+      "10": 8,
+      "30": 10,
+      "100": 16
+    },
+    "854_primorial_gaps": [
+      {
+        "k": 3,
+        "primorial": 30,
+        "phi": 8,
+        "max_gap": 6,
+        "first_missing_even": 8,
+        "distinct_consecutive_gaps": 3
+      },
+      {
+        "k": 4,
+        "primorial": 210,
+        "phi": 48,
+        "max_gap": 10,
+        "first_missing_even": 12,
+        "distinct_consecutive_gaps": 5
+      },
+      {
+        "k": 5,
+        "primorial": 2310,
+        "phi": 480,
+        "max_gap": 14,
+        "first_missing_even": 16,
+        "distinct_consecutive_gaps": 7
+      },
+      {
+        "k": 6,
+        "primorial": 30030,
+        "phi": 5760,
+        "max_gap": 22,
+        "first_missing_even": 20,
+        "distinct_consecutive_gaps": 10
+      },
+      {
+        "k": 7,
+        "primorial": 510510,
+        "phi": 92160,
+        "max_gap": 26,
+        "first_missing_even": 28,
+        "distinct_consecutive_gaps": 13
+      },
+      {
+        "k": 8,
+        "primorial": 9699690,
+        "phi": 1658880,
+        "max_gap": 34,
+        "first_missing_even": 32,
+        "distinct_consecutive_gaps": 16
+      }
+    ],
+    "855_prime_count": {
+      "20": 8,
+      "100": 25,
+      "120": 30
+    }
+  },
+  "methods": [
+    "Sieve of Eratosthenes versus trial primality",
+    "GCD totatives versus independently marked wheel"
+  ]
+}
