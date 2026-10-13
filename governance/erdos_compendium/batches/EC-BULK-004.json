@@ -682,17 +682,30 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_PARTIAL_SOURCE_AUDIT_WITH_HISTORICAL_PROOF_EXCEPTION",
       "article_path": "governance/erdos_compendium/editorial/0461.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_WITH_SOURCE_EXCEPTIONS",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "AUTHENTICATED_ISSUE_BOUND_RESULT_NOT_YET_POSTED",
+        "HISTORICAL_LOWER_BOUND_PROOF_NOT_INSPECTED",
+        "PROTECTED_EDITORIAL_ADMISSION_PENDING"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "ORIGINAL_MODERN_UNIFORMITY_CLARIFICATION",
+        "HISTORICAL_LOWER_BOUND_PROOF_NOT_INSPECTED"
+      ],
       "critical_sample_selected": false,
-      "math_risk_flags": [],
-      "critical_review_required": false
+      "math_risk_flags": [
+        "HALL_MATCHING_STRENGTHENING_FALSE"
+      ],
+      "critical_review_required": true,
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0461_UNPOSTED_RESULT.md",
+      "source_audit_draft_sha256": "67f95a1b5b782e8f6fcebc677e3eb2b131b18d65342126217fdabc5e4e43e565",
+      "manuscript_sha256_pre_admission": "5d6395bcdeb5784f2e5c68bfbe9788f7d03ff97256348bba4d1bde68c87adad3",
+      "manuscript_raw_file_sha256_pre_admission": "99f55ead8fc4ab4bea76607a6865b62bb215845f8e4297246122a836243fef23",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-006.md"
     },
     {
       "problem_id": 462,
@@ -6791,12 +6804,12 @@
     "completed": 0,
     "disposition": "NOT_STARTED",
     "exception_policy": "All atypical logical-status classifications (falsifiable, decidable, not provable, not disprovable, verifiable) and every additional source/status/formalization/semantic discrepancy require critical review even when not sampled.",
-    "total_current_review_required": 33
+    "total_current_review_required": 40
   },
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 9,
+    "count": 11,
     "problem_ids": [
       448,
       449,
@@ -6806,18 +6819,22 @@
       454,
       457,
       458,
-      459
+      459,
+      460,
+      461
     ],
     "qa": {
       "tests_passed": 66,
       "subtests_passed": 5,
-      "strict_mkdocs_build": "PASS_LOCAL_2026-10-13_66_TESTS_5_SUBTESTS",
+      "strict_mkdocs_build": "PASS_LOCAL_2026-10-13_AFTER_0461",
       "early_exception_reviews_passed": 6,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
       "public_browser_math_readback": "NOT_YET",
       "accepted_count": 0,
-      "pre_return_exception_reviews_passed": 3
+      "pre_return_exception_reviews_passed": 5,
+      "latest_targeted_pytest": "24 passed, 514 subtests",
+      "full_suite_after_0461": "NOT_VERIFIED"
     }
   },
   "latest_protected_main_recheck": {
