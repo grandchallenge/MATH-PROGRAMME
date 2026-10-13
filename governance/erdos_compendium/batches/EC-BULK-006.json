@@ -5916,14 +5916,17 @@
     }
   ],
   "observed_date": "2026-10-13",
-  "status_semantics": "1 authenticated issue-bound RESULT/1 source returns; 199 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority. One substantive draft exists for #852; not reviewed, merged, deployed or admitted.",
+  "status_semantics": "1 authenticated issue-bound RESULT/1 source returns; 199 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority. One substantive draft exists for #852; not reviewed, merged, deployed or admitted. Optional Codex quota exhaustion does not suspend cohort work.",
   "worker_capacity": {
     "observed_date": "2026-10-13",
-    "codex_cli": "0.146.1; authenticated; usage-limit error; retry after 04:17 local",
-    "gemini_cli": "0.1.14; interactive Google OAuth required; not executed",
-    "execution_state": "EXTERNAL_WORKER_CAPACITY_BLOCKED",
+    "codex_cli": "Observed optional Codex CLI quota exhaustion on 2026-10-13; informational, not a cohort stop condition.",
+    "gemini_cli": "Observed optional Gemini CLI OAuth requirement on 2026-10-13; informational, not a cohort stop condition.",
+    "execution_state": "ACTIVE_NO_GENERAL_RUNTIME_BLOCKER",
     "pending_source_audits": 199,
-    "scope_isolation": "EC-BULK-006 only"
+    "scope_isolation": "EC-BULK-006 only",
+    "codex_policy": "OPTIONAL_SPECIALIST_ONLY: use when an identified technical requirement needs Codex capabilities; quota exhaustion is not a blocker to ordinary audits, mathematical exposition, verification or GitHub editorial coordination.",
+    "routine_execution": "Use authenticated GitHub/CHAD, direct mathematical source review, local verification scripts, and other permitted agents; choose tools per task, without Codex-first or Codex-only scheduling.",
+    "next_step": "Continue source research on remaining 199 issue assignments now; accept only genuine authenticated RESULT/1 reports with checked mathematical evidence."
   },
   "counts": {
     "source_returns_unadjudicated": 1,
