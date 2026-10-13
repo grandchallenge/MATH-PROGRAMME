@@ -28,16 +28,17 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "21 authentic original issue-bound RESULT/1 returns; 11 newly posted #457–462,#467–468,#475–477; 179 original issues missing. Source-fidelity exceptions remain explicit. Thirteen unaccepted manuscripts, zero protected publication merges or V2 admissions.",
+  "status_semantics": "22 authenticated issue-bound RESULT/1 research returns with exact original issue provenance; 178 no returns. Fourteen unaccepted six-section documentary drafts. #463 source and quantifier comparison verified against original 1980 p.92; later 1992 source remains uninspected and mathematical conjecture OPEN. Local full tests and strict MkDocs PASS; 0 protected production merges and 0 accepted EC-BULK-004 admissions.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 21,
-    "comment_results_source": "LIVE_GITHUB_API_11_COMMENT_IDS_2026-10-13",
+    "post_initial_source_return_count": 22,
+    "comment_results_source": "LIVE_GITHUB_ISSUE_COMMENT_RECONCILIATION_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "ELEVEN_NEW_COMMENT_IDS_READ_BACK_FULL_200_ISSUE_SCAN_PENDING",
+    "readback_state": "COMPLETE_200_ISSUES_RECONCILED_22_SOURCE_COMMENTS",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
-    "inventory_exceptions": 0
+    "inventory_exceptions": 0,
+    "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)"
   },
   "items": [
     {
@@ -797,19 +798,34 @@
         "number theory",
         "primes"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1733#issuecomment-6156938593",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1733#issuecomment-6156938593",
+      "evidence_state": "BOUNDED_TASK_DESIGNED_PRIMARY_1980_SEMANTICS_VERIFIED_1992_COMPANION_PENDING",
       "article_path": "governance/erdos_compendium/editorial/0463.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_WITH_SOURCE_BOUNDARY_UNACCEPTED",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "ER92e_1992_PRIMARY_COMPANION_NOT_INSPECTED",
+        "FORMAL_PROOF_SORRY",
+        "OPEN_UNIFORM_REACH_LOWER_BOUND"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "MODERN_FUNCTION_FORMULATION_VS_ORIGINAL_EVERY_FIXED_C_EQUIVALENCE",
+        "RELATED_1992_MINIMUM_TRIVIAL_IF_PRIME_CANDIDATES_UNRESTRICTED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6156938593,
+      "source_return_content_sha256": "b6cb7a710215c1d211a238882d9ca89b5c75265567fde02d50feb862c11973db",
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "manuscript_sha256_pre_admission": "9206f12fe9b36d86cd1c88deefc712414d0da9503b857062ae9ba7994966dd4f",
+      "manuscript_raw_file_sha256_pre_admission": "b854a65d8abc29d6c6620682173b0376fbe15f3e8b033326d7312ba7b138c877",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-011.md",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1733#issuecomment-6156938593"
     },
     {
       "problem_id": 464,
@@ -6900,8 +6916,8 @@
   },
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
-    "observed_date": "2026-10-14",
-    "count": 13,
+    "observed_date": "2026-10-13",
+    "count": 14,
     "problem_ids": [
       448,
       449,
@@ -6915,13 +6931,14 @@
       460,
       461,
       462,
+      463,
       476
     ],
     "qa": {
-      "tests_passed": 66,
-      "subtests_passed": 5,
-      "strict_mkdocs_build": "PASS_LOCAL_2026-10-13_AFTER_0462",
-      "early_exception_reviews_passed": 6,
+      "tests_passed": 99,
+      "subtests_passed": 517,
+      "strict_mkdocs_build": "PASS_AT_HEAD_9932b233b205187a4986a6161b8b1d543121936b",
+      "early_exception_reviews_passed": 11,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
       "public_browser_math_readback": "NOT_YET",
@@ -6930,7 +6947,8 @@
       "latest_targeted_pytest": "29 passed, 514 subtests (tests/test_erdos_compendium_*)",
       "full_suite_after_0461": "NOT_VERIFIED",
       "full_suite_after_0462": "NOT_VERIFIED",
-      "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK"
+      "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK",
+      "latest_full_tests": "99 PASSED 517 SUBTESTS"
     }
   },
   "latest_protected_main_recheck": {
