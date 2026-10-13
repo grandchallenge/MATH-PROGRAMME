@@ -23,6 +23,16 @@ class Cohort003Tests(unittest.TestCase):
         self.assertLessEqual(result["articles"], result["source_returns"])
         self.assertEqual(len(result["sample_problem_ids"]), 20)
 
+    def test_bare_tex_commands_rejected_in_inline_and_display_math(self):
+        for fragment in ('$mathbb{R}^2$', '$Nleq6$', '$sum_{i=1}^N$', '$$a,quad b$$'):
+            with self.subTest(fragment=fragment):
+                with self.assertRaisesRegex(AssertionError, 'Bare TeX command'):
+                    ec003.check_math_commands(fragment, 999)
+
+    def test_valid_tex_commands_accepted_in_inline_and_display_math(self):
+        good = r'$\mathbb{R}^2$ and $$a,\quad b,\qquad c$$ and $N\leq6$'
+        ec003.check_math_commands(good, 999)
+
     def test_strict_gate_requires_actual_complete_batch_and_qa(self):
         checkpoint = ec003.verify()
         if checkpoint["strict_ready"]:

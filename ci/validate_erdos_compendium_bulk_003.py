@@ -36,7 +36,7 @@ REPO = "grandchallenge/MATH-PROGRAMME"
 BARE_MATH = re.compile(
     r"(?<!\\)\b(?:mathbb|mathcal|frac|sqrt|quad|qquad|cdot|leq|geq|"
     r"subseteq|infty|alpha|beta|gamma|limsup|lfloor|rfloor|ldots|operatorname)\b"
-    r"|(?<!\\)\b[A-Za-z](?:geq|leq|subseteq)\b|(?<!\\)\bsum_"
+    r"|(?<!\\)\b[A-Za-z](?:geq|leq|subseteq)(?=\d|\b)|(?<!\\)\bsum_"
 )
 
 def check_math_commands(text: str, problem_id: int) -> None:
