@@ -99,6 +99,34 @@ It preserves and reflects **associated-graded quasi-isomorphisms** and hence ind
 
 **Finite analytic coefficient case.** Finite-dimensional real vector spaces realize as finite free p-liquid real modules, for which the liquid tensor and ordinary tensor agree and no higher Tor appears. Consequently FC-1 gives an exact finite-free coefficient bridge to the **underlying algebraic finite-dimensional B.5 sector**. On finite-dimensional standard differentiable vector spaces, real-linear maps are smooth. No equivalence of infinite-dimensional differentiable pro-cochains is inferred.
 
+## 5. FC-2: Weiss descent propagates across finite filtrations
+
+The full comparison requires a theorem that does **not** assume a weight-preserving differential. The following result is one such theorem.
+
+**Theorem FC-2 (finite-filtered Weiss propagation).** Let $\mathcal C$ be any stable cocomplete infinity-category, and let $X$ be a covariant assignment from Euclidean opens to **length-$L$ filtered objects** of $\mathcal C$, with filtration-preserving structure maps. Suppose every associated-graded assignment
+
+$
+U\longmapsto
+\mathrm{gr}^i_FX(U)
+=
+\mathrm{cofib}\bigl(F^{i+1}X(U)\to F^iX(U)\bigr),
+\qquad 0\le i<L,
+$
+
+satisfies Weiss homotopy-cosheaf descent. Then the **entire filtered assignment** satisfies Weiss descent in the finite filtered category (whose colimits are computed levelwise).
+
+**Proof.** For a Weiss cover, form the canonical augmented Čech comparison $c$ in the category of finite filtration diagrams. It is a morphism of filtered objects. Evaluation at any filtration stage commutes with colimits because the diagram-category colimits are levelwise. In a stable category the cofiber functor is exact and preserves colimits, so $\mathrm{gr}^i_F(c)$ is precisely the Čech comparison for $\mathrm{gr}^i_FX$, hence an equivalence by hypothesis. The exact triangles
+
+$
+F^{i+1}X\longrightarrow F^iX\longrightarrow\mathrm{gr}^i_FX
+$
+
+and downward induction from $F^LX=0$ show that $F^i(c)$ is an equivalence for every $i$. Thus $c$ is a filtered equivalence. $\square$
+
+**Consequence.** FC-2 tolerates off-diagonal and filtration-raising differential components $D_{ji}$ with $j>i$—including the nontrivial example FC-0B—provided they define a compatible filtered prefactorization/cosheaf assignment and its associated graded has Weiss descent. This is a precise **derived local-to-global propagation principle**, not a requirement that the differential split. It proves only Weiss descent; coherent disjoint-open multiplication, complete tensor, and continuity must still be checked separately.
+
+**A completed extension, conditional on the declared target.** Suppose a completion category takes objects with truncations $X/F^NX$, declares its completed Čech homotopy colimit by quotientwise Čech colimits followed by the derived inverse limit, and detects equivalences on all finite quotients. If every quotient is a finite-filtered assignment satisfying the hypotheses of FC-2, then the completed object has Weiss descent **in that declared target**. This is a formal, conditional theorem: it does not identify the completed target with Costello–Gwilliam B.6 or prove preservation of analytic smooth multilinear structures.
+
 ## 5. The next infinite-dimensional construction
 
 For an infinite complete *underlying graded-split* object $X=\prod_{i\ge0}X_i$ one can specify an upper-triangular differential $D_{ji}:X_i\to X_j[1]$, $j\ge i$, with every finite truncation satisfying (T1), and upper-triangular filtration-preserving morphisms satisfying $D_Yf=fD_X$. In every fixed quotient $X/F^N$ all sums and products of blocks are finite. This defines a **coefficientwise computable** enriched-matrix presentation of complete filtered objects **when compatible underlying graded splittings exist**.
@@ -109,13 +137,14 @@ Unlike CF-001, the enlarged triangular category does **not** generally compute c
 
 This is a more faithful next boundary than attempting to assert a full equivalence from matching filtered quotients alone.
 
-## 6. Evidence, tests, priority limits
+## 7. Evidence, tests, priority limits
 
 | Claim | Status |
 | --- | --- |
 | FC-0A excluded filtered automorphism | Direct proof; elementary formal-series mathematics |
 | FC-0B filtered-acyclic versus graded-nonacyclic obstruction | Direct proof; elementary filtered homological algebra |
 | FC-1 finite-dimensional triangular dg equivalence | Direct proof; classical finite linear algebra |
+| FC-2 Weiss descent propagation across a finite filtration | Direct stable-category proof; applies to off-diagonal differentials |
 | Finite free p-liquid coefficient correspondence | Published liquid module formalism |
 | Infinite triangular matrix data under chosen graded splitting | Explicit candidate; no general descent or fully faithful functor proved |
 | Full Costello–Gwilliam differentiable pro-cochain analytic equivalence | **OPEN** |
