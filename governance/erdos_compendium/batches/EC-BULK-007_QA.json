@@ -110,7 +110,7 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "19 authenticated returns and 19 unaccepted drafts. Issue #2337 corrected to remove a false pointwise interpretation of an asymptotic graph-theory bound. Full primary source-fidelity and 20 sampled critical reviews not complete.",
+  "note": "19 authenticated source returns and 19 UNACCEPTED drafts. Playwright-core@1.58.2 installed, Chromium@156.0.8078.4 launched. Real browser verified 24 pages (508 math expressions), zero MathJax markup errors; public cohort deployment not yet attempted. Source fidelity and protected publication are still pending.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
     "strict_mkdocs_build": "PASS_LOCAL_19_DRAFTS_REBUILT",
@@ -140,8 +140,8 @@
       1220,
       1221
     ],
-    "public_deployment": "NOT_ATTEMPTED",
-    "live_browser_mathjax": "NOT_ATTEMPTED",
+    "public_deployment": "NOT_ATTEMPTED_FOR_COHORT_007",
+    "live_browser_mathjax": "PASS_5_PREVIOUSLY_PUBLISHED_MATH_PAGES_54_OF_54_RENDERED_ZERO_MERROR",
     "reviewed_critical_sample_count": 0,
     "authored_explanatory_draft_count_on_branch": 81,
     "accepted_protected_v2_count_at_build": 50,
@@ -167,7 +167,14 @@
       1221
     ],
     "local_math_bootstrap": "PASS_19_DRAFTS_ARITHMATEX_WITH_SITE_MATHJAX_LOADER",
-    "local_browser_mathjax": "NOT_VERIFIED"
+    "local_browser_mathjax": "PASS_19_UNACCEPTED_DRAFTS_CHROMIUM_454_OF_454_EQUATIONS_RENDERED_ZERO_MERROR",
+    "browser_qa_reproducible_setup": "ci/erdos_compendium_browser_qa_bootstrap.sh",
+    "browser_qa_reproducible_test": "ci/erdos_compendium_browser_render_check.cjs",
+    "browser_qa_receipt": "governance/erdos_compendium/batches/EC-BULK-007_BROWSER_RENDER_QA.json",
+    "browser_qa_tested": 24,
+    "browser_qa_passed": 24,
+    "local_draft_math_expressions_rendered": 454,
+    "public_existing_math_expressions_rendered": 54
   },
   "worker_execution_readback": {
     "authenticated_operator": "fyremael",
@@ -302,5 +309,6 @@
   "finite_verification_phase2_program": "ci/erdos_compendium_007_phase2_checks.py",
   "finite_verification_phase2_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE2.json",
   "finite_verification_phase3_program": "ci/erdos_compendium_007_phase3_checks.py",
-  "finite_verification_phase3_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE3.json"
+  "finite_verification_phase3_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE3.json",
+  "browser_qa_gate_note": "Real Chromium browser verified 19 local unpublished drafts (454 mathematical expressions) and 5 already-published public math pages (54 expressions). Cohort drafts are not yet publicly deployed, so public cohort verification and V2 admission gate remain pending."
 }
