@@ -4,12 +4,12 @@
 
 ## 1. Precise setting
 
-Fix $0<p\leq1$, and take the standard full abelian category $\mathcal A=\mathrm{Liq}_p(\mathbb R)\subset\mathrm{Cond}(\mathbb R)$. The inclusion preserves all colimits [Clausen–Scholze, Theorem 3.11]. A complete locally convex real vector space defines a $p$-liquid object; for metrizable complete locally convex spaces this is the ordinary condensed realization $E\mapsto\underline E$.
+Fix $0<p\leq1$, and take the standard full abelian category $\mathcal A=\mathrm{Liq}_p(\mathbb R)\subset\mathrm{Cond}(\mathbb R)$. The inclusion preserves all colimits [Clausen–Scholze, Theorem 3.11]. A complete locally convex real vector space defines a liquid at parameter $p$ object; for metrizable complete locally convex spaces this is the ordinary condensed realization $E\mapsto\underline E$.
 
 Let $V\subseteq\mathbb R^d$ be open and $L_1\subseteq L_2\subseteq\cdots\Subset V$ an exhaustion by compact sets such that each compact subset of $V$ is contained in some $L_b$. Put
 
 $$
-G_b=\mathcal D_{L_b}(V)=\{f\in C^\infty(V):\operatorname{supp}(f)\subseteq L_b\},\qquad
+G_b=\mathcal D_{L_b}(V)=\{f\in C^\infty(V):\mathrm{supp}(f)\subseteq L_b\},\qquad
 A_p(V)=\varinjlim_b\underline{G_b}.
 \tag{13.1}
 $$
@@ -19,7 +19,7 @@ Every $G_b$ is a nuclear Fréchet space. For $b\le c$, the inclusion $G_b\to G_c
 **Categorical input C1 (sectionwise colimit).** Filtered colimits in $\mathrm{Cond}(\mathbb R)$ are evaluated sectionwise on the profinite test site: filtered colimits of abelian-group-valued sheaves on this finite-cover site remain sheaves, because filtered colimits commute with finite limits in abelian groups. Theorem 3.11 ensures that the colimit in $\mathcal A$ is the same one. Thus, for every profinite $S$,
 
 $$
-A_p(V)(S)=\varinjlim_b\operatorname{Cont}(S,G_b).
+A_p(V)(S)=\varinjlim_b\mathrm{Cont}(S,G_b).
 \tag{13.2}
 $$
 
@@ -40,13 +40,13 @@ Then the canonical map
 
 $$
 \Phi_H:
-\varinjlim_b\operatorname{Hom}_{\mathcal A}(\underline H,\underline{G_b})
+\varinjlim_b\mathrm{Hom}_{\mathcal A}(\underline H,\underline{G_b})
 \xrightarrow{\ \sim\ }
-\operatorname{Hom}_{\mathcal A}(\underline H,A_p(V))
+\mathrm{Hom}_{\mathcal A}(\underline H,A_p(V))
 \tag{13.3}
 $$
 
-is a bijection. In fact the proof applies to any Fréchet $H$ whose condensed realization is $p$-liquid.
+is a bijection. In fact the proof applies to any Fréchet $H$ whose condensed realization is liquid at parameter $p$.
 
 **Proof: surjectivity, step 1 (continuous point probes).** Let $F:\underline H\to A_p(V)$ be liquid-linear. For any $x\in V$, the maps $G_b\to\mathbb R$, $g\mapsto g(x)$, are compatible continuous linear maps, hence induce a liquid-linear evaluation $\mathrm{ev}_x:A_p(V)\to\underline{\mathbb R}$. The composition
 
@@ -80,9 +80,9 @@ Because $H$ is Fréchet, it is a Baire space. At least one $H_{b_0}$ has nonempt
 The theorem does **not** exchange the outer inverse limit over source support with the target filtered colimit:
 
 $$
-\varprojlim_{\mathbf a}\varinjlim_b\operatorname{Hom}(\underline{H_{\mathbf a}},\underline{G_b})
+\varprojlim_{\mathbf a}\varinjlim_b\mathrm{Hom}(\underline{H_{\mathbf a}},\underline{G_b})
 \not\cong_{\rm general}
-\varinjlim_b\varprojlim_{\mathbf a}\operatorname{Hom}(\underline{H_{\mathbf a}},\underline{G_b}).
+\varinjlim_b\varprojlim_{\mathbf a}\mathrm{Hom}(\underline{H_{\mathbf a}},\underline{G_b}).
 $$
 
 The identity $\mathcal D(\mathbb R)\to\mathcal D(\mathbb R)$ remains the direct counterexample to a uniform compact output support for *all* source stages. LFO3-S supplies precisely one output support stage **for each fixed** $\mathbf a$.
@@ -94,9 +94,9 @@ Let $\mathcal D(V)=\varinjlim_b^{\mathrm{strict\ LF}}G_b$ with its usual locally
 For every profinite $S$, a continuous map $S\to\mathcal D(V)$ has compact image and hence lands in some $G_b$. It is continuous as a map $S\to G_b$. Conversely each such stage map is continuous into the LF space. Therefore
 
 $$
-\varinjlim_b\operatorname{Cont}(S,G_b)
+\varinjlim_b\mathrm{Cont}(S,G_b)
 \cong
-\operatorname{Cont}(S,\mathcal D(V))
+\mathrm{Cont}(S,\mathcal D(V))
 \tag{13.5}
 $$
 
@@ -114,7 +114,7 @@ As an independent proof route, any liquid-linear $F:\underline H\to\underline{\m
 
 ## 4. Limits of the result
 
-The theorem is entirely **underived**: it compares $\operatorname{Hom}$ sets for degree-zero nuclear Fréchet source stages. It says **nothing** about comparison maps for $\operatorname{Ext}^i$, derived internal Hom, infinite inverse towers, or differentiable pro-cochain enrichments. The DLI-011/LPR-012 nonzero Roos $\varprojlim^1$ obstruction remains independent.
+The theorem is entirely **underived**: it compares $\mathrm{Hom}$ sets for degree-zero nuclear Fréchet source stages. It says **nothing** about comparison maps for $\mathrm{Ext}^i$, derived internal Hom, infinite inverse towers, or differentiable pro-cochain enrichments. The DLI-011/LPR-012 nonzero Roos $\varprojlim^1$ obstruction remains independent.
 
 It does **not** establish compactness of $\underline H$ relative to arbitrary filtered diagrams, nor does it license interchanging the source-stage inverse limit with the target-stage filtered colimit or quantum-weight completion.
 
@@ -125,4 +125,4 @@ It does **not** establish compactness of $\underline H$ relative to arbitrary fi
 - **Alternative factorization:** A. G. Smirnov, [On kernel theorems for (LF)-spaces](https://arxiv.org/abs/math/0612756), Lemma 1 attributing Fréchet-to-LF factorization to Grothendieck.
 - **Novelty:** no mathematical priority asserted. This is an explicit source-grounded resolution of the *programme's LFO3 obligation*. It must not be described as a novel theorem in condensed analysis.
 
-**Next boundary:** verify higher derived $\operatorname{RHom}$ comparison for these stages and the correct smooth pro-cochain enrichment, with degree shifts, quantum-weight tower limits and Weiss descent treated separately.
+**Next boundary:** verify higher derived $\mathrm{RHom}$ comparison for these stages and the correct smooth pro-cochain enrichment, with degree shifts, quantum-weight tower limits and Weiss descent treated separately.
