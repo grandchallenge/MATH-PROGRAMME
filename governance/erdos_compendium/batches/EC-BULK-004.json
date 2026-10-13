@@ -1133,19 +1133,25 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_PRIMARY_SOURCE_AUDIT",
       "article_path": "governance/erdos_compendium/editorial/0475.md",
       "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_WITH_SOURCE_EXCEPTIONS",
       "blockers": [
         "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "FINITE_PRIME_CUTOFF_NOT_EXTRACTED",
+        "AUTHENTICATED_RESULT_UNPOSTED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [
         "ATYPICAL_CATALOGUE_STATUS:decidable"
       ],
-      "critical_review_required": true
+      "critical_review_required": true,
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0475_UNPOSTED_RESULT.md",
+      "source_audit_draft_sha256": "cd8ef31fcf3cf06e1426ad3b5677181d4fe7778a687c64590d375aede14b8c9b",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-009.md"
     },
     {
       "problem_id": 476,
@@ -1168,17 +1174,27 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_PRIMARY_SOURCE_AUDIT",
       "article_path": "governance/erdos_compendium/editorial/0476.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_WITH_SOURCE_EXCEPTIONS",
       "blockers": [
         "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "PRIMARY_1994_PROOF_NOT_FULLY_INSPECTED",
+        "EXTERNAL_LEAN_NOT_REPLAYED",
+        "AUTHENTICATED_RESULT_UNPOSTED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0476_UNPOSTED_RESULT.md",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-009.md",
+      "source_audit_draft_sha256": "9756d07b68186bcf39eb6fc2dc5f483c12c2329da669eeaee17c66391e899edc",
+      "manuscript_raw_file_sha256_pre_admission": "e4b2c78930907688bd0a369f65bc52e90ef02167337425c97e1e4324cf0370ef",
+      "manuscript_sha256_pre_admission": "ea7d1205cee6af23068ba339e95fb7c586227ae8faa9745328faed341bcd8621",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))"
     },
     {
       "problem_id": 477,
@@ -6822,8 +6838,8 @@
   },
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
-    "observed_date": "2026-10-13",
-    "count": 12,
+    "observed_date": "2026-10-14",
+    "count": 13,
     "problem_ids": [
       448,
       449,
@@ -6836,7 +6852,8 @@
       459,
       460,
       461,
-      462
+      462,
+      476
     ],
     "qa": {
       "tests_passed": 66,
@@ -6855,8 +6872,8 @@
     }
   },
   "latest_protected_main_recheck": {
-    "date": "2026-10-13",
-    "head": "c794af1a08c9a9549b38be5ea70249a9c720bbb2",
+    "date": "2026-10-14",
+    "head": "2e6201300a0cde2159dba9fd72b0c5679a2a57fb",
     "registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
     "admissions_blob": "03d927f147709079ac42a31d9ce81ad5a244ba8b",
     "accepted_scope_collisions": 0
