@@ -26,7 +26,7 @@ Conversely, compatible stagewise continuous multilinear maps assemble uniquely i
 
 ## 2. Precisely what transfers to p-liquid maps
 
-With $A_p(U)=\varinjlim_K\underline{\mathcal D_K(U)}$ in real $p$-liquid modules, the nuclear Fréchet tensor theorem and full faithfulness of the Fréchet realization identify each stagewise Hom term in (LFO1) with
+With $A_p(U)=\varinjlim_K\underline{\mathcal D_K(U)}$ in real liquid modules with parameter $p$, the nuclear Fréchet tensor theorem and full faithfulness of the Fréchet realization identify each stagewise Hom term in (LFO1) with
 
 $$
 \mathrm{Hom}_{\mathrm{Liq}_p}
