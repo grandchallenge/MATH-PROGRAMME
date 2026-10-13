@@ -28,12 +28,12 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "22 authenticated issue-bound RESULT/1 research returns with exact original issue provenance; 178 no returns. Fourteen unaccepted six-section documentary drafts. #463 source and quantifier comparison verified against original 1980 p.92; later 1992 source remains uninspected and mathematical conjecture OPEN. Local full tests and strict MkDocs PASS; 0 protected production merges and 0 accepted EC-BULK-004 admissions.",
+  "status_semantics": "23 original issue-bound authenticated RESULT/1 source comments, 177 missing; 15 substantive six-section unaccepted drafts, most recent #464 documentary SOURCE_LOCK_READY with exact original fractional-part vs vacuous nearest-integer wording audited. Latest 464 standalone mathematical fixture PASS, full CHAD suite and strict MkDocs pending shell recovery, no production PR or V2 admission.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 22,
-    "comment_results_source": "LIVE_GITHUB_ISSUE_COMMENT_RECONCILIATION_2026-10-13",
+    "post_initial_source_return_count": 23,
+    "comment_results_source": "LIVE_GITHUB_464_COMMENT_ID_READBACK_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "COMPLETE_200_ISSUES_RECONCILED_22_SOURCE_COMMENTS",
+    "readback_state": "23_ORIGINAL_ISSUE_COMMENTS_KNOWN_FULL_200_ISSUE_RECONCILE_PENDING",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
@@ -845,19 +845,36 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1734#issuecomment-6157166081",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1734#issuecomment-6157166081",
+      "evidence_state": "SOURCE_LOCK_READY_DOCUMENTARY_FORMAL_PROOF_NOT_REPLAYED",
       "article_path": "governance/erdos_compendium/editorial/0464.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_PENDING_FULL_BUILD_AND_HISTORICAL_SOURCE_CHECK",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "POLLINGTON_DEMATHAN_FULL_PRIMARY_PROOF_NOT_GCL_AUDITED",
+        "CHAD_RUN_BASH_TEMPORARILY_INVALID_ARGUMENT",
+        "STRICT_MKDOCS_LATEST_ARTICLE_HEAD_NOT_RUN"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "PRIMARY_FRACTIONAL_PART_VS_MAINTAINED_NEAREST_INTEGER_VACUITY",
+        "PERES_SCHLAG_REAL_WITNESS_NOT_EXPLICIT_IRRATIONAL",
+        "PINNED_FC464_PLACEHOLDER",
+        "EXTERNAL_LEAN_NOT_GCL_REPLAYED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6157166081,
+      "source_return_content_sha256": "5d7093458a3b22905a031819b9e99bc0e73c62a781d709d9d982135a22e3aabe",
+      "source_return_disposition": "SOURCE_LOCK_READY",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-012.md",
+      "manuscript_sha256_pre_admission": "9a7e13e083441b8bf53be2b7a33c60bce1cb1dca37418466e7b4294044adeb60",
+      "manuscript_raw_file_sha256_pre_admission": "392832c9ec7d9ffe9fab107ab436a3c95256e106ddeef3683c623222f0c7779d",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1734#issuecomment-6157166081"
     },
     {
       "problem_id": 465,
@@ -6917,7 +6934,7 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 14,
+    "count": 15,
     "problem_ids": [
       448,
       449,
@@ -6932,12 +6949,13 @@
       461,
       462,
       463,
+      464,
       476
     ],
     "qa": {
       "tests_passed": 99,
       "subtests_passed": 517,
-      "strict_mkdocs_build": "PASS_AT_HEAD_9932b233b205187a4986a6161b8b1d543121936b",
+      "strict_mkdocs_build": "PENDING_NEW_464_SOURCE_HEAD",
       "early_exception_reviews_passed": 11,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
@@ -6948,7 +6966,9 @@
       "full_suite_after_0461": "NOT_VERIFIED",
       "full_suite_after_0462": "NOT_VERIFIED",
       "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK",
-      "latest_full_tests": "99 PASSED 517 SUBTESTS"
+      "latest_full_tests": "PENDING_CHAD_RUN_BASH_EXECUTION_ERROR",
+      "latest_source_head_verified": "793d5c2f75c1a03d2ed0b5a01ebfb5569f999cd9",
+      "standalone_math_fixture_464": "3_CHECKS_PASSED_PYTHON_LOCAL"
     }
   },
   "latest_protected_main_recheck": {
