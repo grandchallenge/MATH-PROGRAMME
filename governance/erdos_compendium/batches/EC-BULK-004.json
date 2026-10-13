@@ -28,7 +28,7 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "10 authenticated original RESULT/1 returns (#447-#456); 190 original issues without returns. Nine substantive unaccepted manuscripts (#448,#449,#451-#454,#457-#459). #457-#459 source audits are locally staged but UNPOSTED and do not count as authenticated returns. Six prior exception reviews plus three conditional pre-return exception reviews, no protected admission or MathCert.",
+  "status_semantics": "10 authenticated original RESULT/1 returns (#447-#456); 190 issues without returns. Ten substantive unaccepted manuscripts (#448,#449,#451-#454,#457-#460). #457-#460 source audits are locally staged but UNPOSTED and do not count as authenticated returns. Ten bounded accountable exception reviews across five review documents, no protected admission or MathCert.",
   "source_queue_readback": {
     "post_initial_source_return_count": 10,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
@@ -634,17 +634,32 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_PARTIAL_SOURCE_AUDIT_WITH_CRITICAL_EXCEPTION",
       "article_path": "governance/erdos_compendium/editorial/0460.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_WITH_SOURCE_EXCEPTIONS",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "AUTHENTICATED_ISSUE_BOUND_RESULT_NOT_YET_POSTED",
+        "EXTERNAL_MEAN_GROWTH_PROOF_INTEGRAL_ERROR",
+        "PROTECTED_EDITORIAL_ADMISSION_PENDING"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "ORIGINAL_1977_VS_1980_GREEDY_RULE_DRIFT",
+        "ORIGINAL_UNTRUNCATED_VS_MODERN_TRUNCATED",
+        "EXTERNAL_MEAN_GROWTH_PROOF_INTEGRAL_ERROR"
+      ],
       "critical_sample_selected": true,
-      "math_risk_flags": [],
-      "critical_review_required": true
+      "math_risk_flags": [
+        "UNVERIFIED_POINTWISE_DIVERGENCE",
+        "EXTERNAL_THEOREM_8_PROOF_GAP"
+      ],
+      "critical_review_required": true,
+      "source_audit_draft_sha256": "52eb596c29abfbde0c1058d2dfb36f500178d7bcbd93ef8530c085724870904a",
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0460_UNPOSTED_RESULT.md",
+      "manuscript_sha256_pre_admission": "8e7eb5f25a048393028d3914bc94ce81eef9a5567522d08dbc845082e874cd17",
+      "manuscript_raw_file_sha256_pre_admission": "56379a541e33ba9c6545bba2fdb41934f541f76b76a3325bcdcef78bb2588870",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-005.md"
     },
     {
       "problem_id": 461,
