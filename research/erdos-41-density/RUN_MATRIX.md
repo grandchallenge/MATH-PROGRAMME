@@ -1,0 +1,16 @@
+# E041 density transfer: bounded run matrix
+
+The present programme separates mathematical proof, computer checking, and conjectural exploration. Code changes are admitted only under protected GitHub checks; proof evidence is not MATHCERT certification.
+
+| Track | Method | Acceptance | State |
+| --- | --- | --- | --- |
+| E3 two-term padding | Lean 4.29.1 with pinned mathlib | Compiler exit 0; source SHA-256; no admitted holes | Kernel checked |
+| Source-index affine H3 | Lean 4.29.1 with pinned mathlib | Compiler exit 0; source SHA-256; no admitted holes | Kernel checked |
+| Affine cubic growth | Lean 4.29.1 core | Compiler exit 0; source SHA-256; no admitted holes | Kernel checked |
+| Actual image H3 | Full written proof | Inverse of injective affine image and sum/card identity | Written proof; not a separate kernel theorem |
+| Counting liminf equivalence | Full written proof | Ordered enumeration and counting growth equivalence | Written proof; not a separate kernel theorem |
+| Finite adversarial replays | Python standard-library unittest | Exact E3-to-H3 prefixes, count identity, M3 countercase | Four tests passed |
+| Multiscale M3 packing | Elementary written proof | Number of three-term multisets fits into sum range | Proved elementary lemma |
+| Dyadic shell-energy deficit | OPEN new claim | Independent proof or counterexample | Unresolved; no solution promotion |
+
+The source-locked proof files use Lean 4.29.1; mathlib git commit 5e932f97dd25535344f80f9dd8da3aab83df0fe6. Colab is not used to certify this mathematical result; the local authenticated CHAD Lean compiler supplies verification and provenance. A new Colab job would need explicit protected registration and an authorized issue, rather than reusing the previous finite #41 one-shot receipt.
