@@ -23,7 +23,7 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "18 authenticated issue-bound RESULT/1 source returns (#652..#669), 182 without returns; 18 six-section UNACCEPTED draft articles (#652..#669). New #663..#669 source limits are explicit and not editorially accepted. #662 remains SOURCE_SEMANTICS_HOLD_PENDING_PRIMARY. No consolidated production PR or protected merge, deployed MathJax browser validation, or V2 editorial admissions.",
+  "status_semantics": "18 authenticated RESULT/1 source returns (#652..#669), 182 originals without returns; 18 source-linked six-section UNACCEPTED drafts. CHAD Python fixture tests 7/7 PASS for #663..#669 (not full CI). #662 historical statement semantics still held; #664 Alon primary unlocated. No consolidated production PR, protected merge, deployed browser math check or V2 editorial admission.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
@@ -67,7 +67,9 @@
       "GCL_CONTROL_BASH_RESULT/1:ffc8c46a3d604621bb95e60e2eb4f2b3"
     ],
     "issues_663_to_666_native_available": true,
-    "issues_663_to_666_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:4736e74fffec445195c2b05f62220a1b"
+    "issues_663_to_666_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:4736e74fffec445195c2b05f62220a1b",
+    "issues_667_to_669_native_available": true,
+    "issues_667_to_669_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:86d51a8f62644c5e98bd1013d4bb6582"
   },
   "sample_policy": {
     "sample_count": 20,
@@ -7515,11 +7517,21 @@
   "tranche_663_669": {
     "source_return_count": 7,
     "draft_count": 7,
-    "exact_finite_fixture_tests_passed": 7,
-    "fixture_execution": "2026-10-13 current session JS deterministic exact arithmetic; no GitHub Actions or pytest claim",
-    "critical_review": "PENDING",
+    "qa_file": "governance/erdos_compendium/batches/EC-BULK-005_TRANCHE_0663_0669_QA.json",
+    "qa_commit": "95460257c91c3aa3c79a52f7905ef4898b9411b5",
+    "fixture_suite": "ci/test_erdos_compendium_ec005_fixtures_663_669.py",
+    "fixture_run_id": "GCL_CONTROL_BASH_RESULT/1:492729f0fc334eb29251e38c498648d0",
+    "fixture_python_tests_passed": 7,
+    "fixture_python_tests_total": 7,
+    "source_grammar_and_article_structure_pass": 7,
+    "reader_maths_proof_certification": false,
+    "full_strict_mkdocs": "NOT_RUN",
     "public_browser_math": "NOT_VERIFIED",
-    "notable_exception_664": "ALON_PRIMARY_PROOF_NOT_LOCATED",
-    "notable_exception_668": "M4_EQ_1_SECONDARY_SUBCLAIM_REFUTED"
+    "critical_review": "PENDING",
+    "notable_source_flags": [
+      "664_ALON_PRIMARY_PROOF_NOT_LOCATED",
+      "668_N4_SECONDARY_CLAIM_FALSE_MAIN_LIMIT_OPEN",
+      "666_EXTERNAL_LEAN_NOT_GCL_REPLAYED"
+    ]
   }
 }
