@@ -190,7 +190,10 @@
     418,
     419,
     420,
-    421
+    421,
+    422,
+    423,
+    424
   ],
   "reviewed": [
     {
@@ -537,9 +540,33 @@
       "article_sha256": "8d5d1010cac8eb16cbd70035cda91ded4c8130761b208528e35e012e20f9f357",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Verified interval-product collision for 2,3,6: first two multiply to final singleton 6; fifteen intervals of prime sequence 2,3,5,7,11 are all distinct. Historical Erdős–Graham p.84 asks density ONE, whereas Selfridge reported density >1/e-epsilon is insufficient. Preserved material status conflict: frozen catalogue SOLVED vs live maintained OPEN and pinned FormalConjectures research OPEN with by sorry. Commented claimed solution not certified."
+    },
+    {
+      "problem_id": 422,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1692#issuecomment-6157180709",
+      "article_sha256": "0873ee2a7b9ed4cbb5279f5b7fadae7201637e4a0dfb3e28d484b17e040e06d7",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently calculated Hofstadter Q values through n=500 while checking both recursive input indices at every step. Verified initial terms and absence within that finite prefix of 7,13,15,18,27,29,34,36,49; these are NOT globally proven omissions. Historical Erdős–Graham p.83 and maintained OPEN status agree, and pinned FormalConjectures Q is partial with proof placeholders. No totality or infinite-omissions result claimed."
+    },
+    {
+      "problem_id": 423,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1693#issuecomment-6157191320",
+      "article_sha256": "aecba64717aaa70860e82c8470ffeb17910d3268d9b0885ba825ff14d42722f2",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently recomputed first twenty greedy consecutive-sum terms, verified small block witnesses, and derived exact omission count b_n=a_n-n and elementary monotonicity. Compared Tang arXiv:2603.09939 Theorem 1.3 establishing unbounded omissions with the maintained OPEN asymptotic question; confirmed absence of 423.lean in the frozen formal provider. No inferred density or precise asymptotic formula."
+    },
+    {
+      "problem_id": 424,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1694#issuecomment-6157245654",
+      "article_sha256": "e5fb66962765778eb109e2e3bc74bfc77d90b0c44c94368ae6c393e0e0804279",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently proved mod-3 invariant: closure of initial {2,3} under xy-1 with distinct elements always lies in residues 0 or 2, excluding every integer congruent to 1 mod 3 and disproving the historical 'almost all' wording. Identified material semantic distinction between lower positive density in the newer externally reported candidate and the pinned FormalConjectures HasPosDensity predicate; frozen formal erdos_424 is by sorry. External Lean build has NOT been replayed by GCL; maintain source-status exception."
     }
   ],
-  "review_count": 43,
+  "review_count": 46,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
