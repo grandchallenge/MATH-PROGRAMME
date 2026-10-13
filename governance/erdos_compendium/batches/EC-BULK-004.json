@@ -28,9 +28,9 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "1 authenticated issue-bound RESULT/1 PARTIAL source return, source-fidelity blocked; 199 without returns. Zero articles accepted. No certification or editorial admission.",
+  "status_semantics": "5 authenticated issue-bound RESULT/1 records: 2 SOURCE_LOCK_READY pending editorial review (#448,#451), 3 PARTIAL with explicit source blockers (#447,#449,#450); 195 no returns. Two unaccepted mathematical manuscripts; no protected publication/admission or mathematical certification.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 0,
+    "post_initial_source_return_count": 5,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
     "authenticated_source_author_count": 1,
     "readback_state": "COMPLETE_200_ISSUES"
@@ -66,15 +66,15 @@
       ],
       "exceptions": [
         "SOURCE_TEXT_ACCESS",
-        "FORMAL_PROOF_EXTERNAL_ONLY",
-        "DIRECT_ERDOS_LIVE_HTTP_403"
+        "FORMAL_PROOF_EXTERNAL_ONLY"
       ],
       "critical_sample_selected": false,
       "source_return_author": "fyremael",
       "source_return_comment_id": 6141186112,
       "source_return_disposition": "PARTIAL",
       "math_risk_flags": [],
-      "critical_review_required": true
+      "critical_review_required": true,
+      "source_return_content_sha256": "a586975f0557ee7cc7faee145bd1e73da741ace805b26d4cfcb0660efcebbe02"
     },
     {
       "problem_id": 448,
@@ -95,19 +95,26 @@
         "number theory",
         "divisors"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1718#issuecomment-6142995429",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1718#issuecomment-6142995429",
+      "evidence_state": "SOURCE_LOCK_READY_PENDING_EDITORIAL_REVIEW",
       "article_path": "governance/erdos_compendium/editorial/0448.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "AWAITING_DECLARED_CRITICAL_REVIEW",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "PROTECTED_FC_MAIN_THEOREM_SORRY",
+        "INDEPENDENT_LEAN_REPLAY_NOT_DONE"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "FORMAL_SOURCE_PROOF_NOT_GCL_REPLAYED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": false,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6142995429,
+      "source_return_content_sha256": "43eac4b4367178eded02499e9de2ec1beb3a98918b1aa985765f860293d27eca",
+      "source_return_disposition": "SOURCE_LOCK_READY"
     },
     {
       "problem_id": 449,
@@ -128,19 +135,28 @@
         "number theory",
         "divisors"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1719#issuecomment-6143008498",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1719#issuecomment-6143008498",
+      "evidence_state": "PARTIAL_RETURN_SOURCE_FIDELITY_BLOCKED",
       "article_path": "governance/erdos_compendium/editorial/0449.md",
       "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "editorial_review_status": "SOURCE_FIDELITY_BLOCKED",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "PUBLIC_SECONDARY_INEQUALITY_FALSE_AT_N_EQUALS_6",
+        "HALL_TENENBAUM_1988_SECTION_4_6_PRIMARY_TEXT_NOT_INSPECTED",
+        "POSITIVE_DENSITY_LOWER_BOUND_NOT_YET_VERIFIED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "MATHEMATICAL_SOURCE_INEQUALITY_CONTRADICTION",
+        "SOURCE_FIDELITY_REQUIRED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": false,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6143008498,
+      "source_return_content_sha256": "163fd187bc8b88d2347b02e1ccf16084ef97eaeab89743c1249c1b1a4ef04585",
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 450,
@@ -161,19 +177,28 @@
         "number theory",
         "divisors"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1720#issuecomment-6143039970",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1720#issuecomment-6143039970",
+      "evidence_state": "PARTIAL_RETURN_SOURCE_FIDELITY_BLOCKED",
       "article_path": "governance/erdos_compendium/editorial/0450.md",
       "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "editorial_review_status": "SOURCE_FIDELITY_BLOCKED",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "ORIGINAL_X_QUANTIFIER_UNSPECIFIED",
+        "EPSILON_N_SCALING_UNSPECIFIED",
+        "FORD_2008_BOUNDARY_NOT_MATCHED_TO_QUANTIFIER"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "QUANTIFIER_AMBIGUITY",
+        "MATHEMATICAL_SOURCE_EXCEPTION"
+      ],
       "critical_sample_selected": true,
       "math_risk_flags": [],
-      "critical_review_required": true
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6143039970,
+      "source_return_content_sha256": "e63dbea9b3d0a21efe5c8840ea76487fc3454175574156541945e98c2606231f",
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 451,
@@ -193,19 +218,27 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1721#issuecomment-6143054330",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1721#issuecomment-6143054330",
+      "evidence_state": "SOURCE_LOCK_READY_PENDING_EDITORIAL_REVIEW",
       "article_path": "governance/erdos_compendium/editorial/0451.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "AWAITING_DECLARED_CRITICAL_REVIEW",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "EXTERNAL_2026_LOWER_BOUND_NOT_GCL_CERTIFIED",
+        "UPPER_GROWTH_CONJECTURE_UNRESOLVED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "POST_REGISTRY_2026_SOURCE_ADVANCE",
+        "FORMAL_PROOF_EXTERNAL_ONLY"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": false,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6143054330,
+      "source_return_content_sha256": "9ddd6ae1103cfdc9770cf61c6052548c6583ce8fbcfcf3708233ec1c3cd1c137",
+      "source_return_disposition": "SOURCE_LOCK_READY"
     },
     {
       "problem_id": 452,
@@ -6631,5 +6664,6 @@
     "disposition": "NOT_STARTED",
     "exception_policy": "All atypical logical-status classifications (falsifiable, decidable, not provable, not disprovable, verifiable) and every additional source/status/formalization/semantic discrepancy require critical review even when not sampled.",
     "total_current_review_required": 33
-  }
+  },
+  "last_evidence_checkpoint": "2026-10-13"
 }
