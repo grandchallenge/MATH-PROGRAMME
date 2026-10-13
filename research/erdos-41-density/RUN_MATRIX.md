@@ -50,3 +50,15 @@ Consult [CROSS_PATTERN_HALL.md](CROSS_PATTERN_HALL.md). A feasible shell-occupan
 | Infinite M3 finite-window density valley | OPEN; no solution promotion |
 
 See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md) and ADDITIVE_SHADOW_RECEIPT.json.
+\n## Arbitrarily many cubic-shadow blocks
+
+| Obligation | Verification | State |
+| --- | --- | --- |
+| Exact first/second moments of T(X) | Written count proof; exhaustive finite genuine B3 enumeration | Proved |
+| Cross-block centroid/variance identity (CROSS) | Written proof for any finite r; exact-rational tests on disjoint partitions | Proved |
+| Translation covariance and parity obstruction | Exact algebra and concrete B3 anchored collision | Proved |
+| Polynomial algebra certificates | Pinned Lean 4.29.1 exit 0 when final receipt GREEN | Separate kernel checks |
+| Persistent lower density implies shadow collision | Scale test finds no divergent factor | Unresolved |
+| Complete Erdős #41 solution | Not claimed | OPEN |
+
+See [CROSS_SCALE_SHADOW_MOMENTS.md](CROSS_SCALE_SHADOW_MOMENTS.md); no mathematical certification or protected dispatch follows automatically.

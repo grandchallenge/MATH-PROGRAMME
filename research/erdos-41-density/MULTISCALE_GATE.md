@@ -14,6 +14,10 @@ The protected successor manuscript [CROSS_PATTERN_HALL.md](CROSS_PATTERN_HALL.md
 
 See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md). The exact cubic difference-shadow theorem shows that each finite M3 block X has **(n³−n²+2n)/2** distinct values of a+b−c, and disjoint blocks have disjoint shadows. The resulting diameter-sensitive cubic bound is strictly more informative than counting only triple-sum enclosing intervals. A separate distinct-integer second-moment inequality detects collisions between real mixed triple-sum lists even when all interval Hall inequalities pass. The previous *consecutive-integers* Hall counterprofiles violate the new shadow bound, which pinpoints an actual arithmetic flaw in those fake B3 sets. The true M3 finite-window valley criterion remains unproved, and neither the shadow count nor the variance bound alone establishes it.
 
+## 2026-10-13 arbitrary-scale cubic-shadow moment test
+
+[CROSS_SCALE_SHADOW_MOMENTS.md](CROSS_SCALE_SHADOW_MOMENTS.md) proves exact first/second shadow moments and the joint inequality across any finite collection of disjoint M3 blocks, preserving their centroids and variances. Tests on genuine B3 fixtures pass. A scale analysis finds **no divergent factor** from these moment inequalities under hypothetical critical-scale occupancies: the leading geometric powers cancel, so the method does **not** force a contradiction for every positive normalized density. Independent recentering of shadows is invalid because T(X+h)=T(X)+h, and translation-invariant a+b−2c is not B3-injective. The finite-window valley problem remains OPEN.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
