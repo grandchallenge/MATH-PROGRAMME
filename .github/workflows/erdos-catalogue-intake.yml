@@ -9,6 +9,12 @@ on:
       - 'ci/erdos_forge_copilot_pilot.py'
       - 'ci/erdos_colab_host_runner.py'
       - 'ci/erdos_41_lean_colab_host.py'
+      - 'ci/gcl_lean_colab_jobs.py'
+      - 'governance/lean_colab/**'
+      - 'research/erdos-41-critique/**'
+      - '.agents/skills/gcl-lean-colab/**'
+      - 'docs/lean-colab/**'
+      - 'tests/test_gcl_lean_colab_jobs.py'
       - 'colab/erdos_41_lean_worker.py'
       - 'experiments/erdos-024/lean/**'
       - 'tests/test_erdos_41_lean_colab.py'
@@ -60,12 +66,16 @@ jobs:
         run: PYTHONPATH=. python ci/erdos_colab_host_runner.py --selftest
       - name: Governed Lean Colab host selftest (offline, no GitHub or Colab)
         run: PYTHONPATH=. python ci/erdos_41_lean_colab_host.py --selftest
+      - name: Governed Lean Colab skill registry
+        run: |
+          python ci/gcl_lean_colab_jobs.py list
+          python ci/gcl_lean_colab_jobs.py verify
       - name: Governed Erdős #41 helper reachability contracts
         run: |
           python ci/erdos_41_colab_finite_replay.py --help
           python ci/erdos_41_queue_bridge.py --help
           python ci/erdos_41_colab_handoff.py
-      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff tests.test_erdos_41_lean_colab tests.test_erdos_41_lean_colab_host tests.test_erdos_41_lean_bootstrap
+      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff tests.test_erdos_41_lean_colab tests.test_erdos_41_lean_colab_host tests.test_erdos_41_lean_bootstrap tests.test_gcl_lean_colab_jobs
       - run: python ci/erdos_catalogue_programme_intake.py --events governance/erdos_catalogue/EMPTY_EVENTS.json --output catalogue-validation
 
   capture:
