@@ -169,7 +169,22 @@
     397,
     398,
     399,
-    400
+    400,
+    401,
+    402,
+    403,
+    404,
+    405,
+    406,
+    407,
+    408,
+    409,
+    410,
+    411,
+    413,
+    415,
+    416,
+    417
   ],
   "reviewed": [
     {
@@ -436,9 +451,41 @@
       "article_sha256": "4be0b943833c98e31f284610d65a2c0db5c4f9ed6938ad20d9d4d3d0437f88bb",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Verified exact identities for a=2,3,4,9 in the family c=8a^2+8a+1 using integer central binomial coefficients. Algebraic reduction (4a+1)(4a+3)(c+1)=2(2a+1)^2(2c+1) explains the infinite family for disjoint positive index sets; statement interpretation and formal status remain expressly bounded."
+    },
+    {
+      "problem_id": 401,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1671#issuecomment-6144433577",
+      "article_sha256": "0ca2262cfd1f946f254b8d18383a3a17a8b5876c6e693af22d1e1712518129d6",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Checked the registered infinitely-many-n versus all-large-n quantifiers in the maintained source; rederived exact factorial quotient (36! 2^36)/(8! 34!)=2^31. External claim PROVED (LEAN) is documented but its proof and axioms are not independently replayed. This is a non-certifying source boundary."
+    },
+    {
+      "problem_id": 404,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1674#issuecomment-6144433881",
+      "article_sha256": "36a6374847b26ed00649ccb0c7ffd8bae1acfb3b1f799eca66e65f46612a3fb2",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Checked the maintained open status, exact 1!+4!=25 and five k!/5 residues modulo 5 for k=5..9: 4,4,3,4,1. These finite facts do not prove global p-adic boundedness or an infinite valuation chain; the proposed modular task is strictly bounded."
+    },
+    {
+      "problem_id": 409,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1679#issuecomment-6144462343",
+      "article_sha256": "5224c6260f7c339a20d5ecf2f5ebec9f14b7cf71e8e3d1c34912effcfcaabc7a",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently verified totient orbit 45->25->21->13 in 3 steps, c(1)=1, and exhaustive integer search up to 1000 giving maximum 7 at 949; the monotone composite-descent lemma establishes termination only, not the open growth or basin-density problems."
+    },
+    {
+      "problem_id": 413,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1683#issuecomment-6144462961",
+      "article_sha256": "461762b4029343c437f4fb8b3d13c49f644fc5849dc116878aacfbf39e9d5540",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently checked omega barrier n=5 and failure n=7, and separately re-derived Lau theorem implication to the weakened epsilon question using log(h+1)<=h. The coefficient-one full omega-barrier question remains open and no Lean proof or analytic theorem is certified."
     }
   ],
-  "review_count": 33,
+  "review_count": 37,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
