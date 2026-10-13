@@ -1,0 +1,113 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_BATCH_EDITORIAL_QA/1",
+  "cohort_id": "EC-BULK-007",
+  "source_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "editorial_identity": "fyremael",
+  "review_kind": "ACCOUNTABLE_AGENT_SELF_REVIEW_NOT_INDEPENDENT_MATHCERT",
+  "review_date": "2026-10-13",
+  "status": "INCOMPLETE_SOURCE_AND_PUBLICATION_PHASE",
+  "sample_method": "Python random.Random(int(hashlib.sha256(seed.encode()).hexdigest(),16)).sample(sorted(problem_ids),20), then sort",
+  "sample_seed": "EC-BULK-007|90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5|2026-10-13|168",
+  "sample_problem_ids": [
+    1062,
+    1065,
+    1084,
+    1087,
+    1090,
+    1094,
+    1097,
+    1099,
+    1101,
+    1104,
+    1110,
+    1115,
+    1135,
+    1159,
+    1160,
+    1173,
+    1186,
+    1188,
+    1200,
+    1219
+  ],
+  "sample_reviews_completed": 0,
+  "sample_reviews_remaining": 20,
+  "exception_problem_ids": [
+    1219,
+    1220,
+    1221
+  ],
+  "reviewed": [],
+  "source_return_readback": {
+    "valid_result_grammar": 3,
+    "mathematically_source_fidelity_accepted": 0,
+    "missing_results": 165,
+    "malformed_nonresearch_event_examples_issue_2491": 2
+  },
+  "identity_validation": {
+    "original_source_issue_count": 168,
+    "source_mappings_unique": true,
+    "issue_labels_and_authorship_readback": 168,
+    "issue_metadata_flags": {}
+  },
+  "finite_example_checks": [
+    {
+      "problem_id": 1219,
+      "test": "Color six edges by parity of endpoint sum; both odds and evens form red triples",
+      "result": "PASS",
+      "proof_certification": false
+    },
+    {
+      "problem_id": 1220,
+      "test": "Red C5 and blue complement C5 both triangle-free",
+      "result": "PASS",
+      "proof_certification": false
+    },
+    {
+      "problem_id": 1221,
+      "test": "Five equal gaps, r=2, cyclic two-gap spans all 2/5 and ratio 1",
+      "result": "PASS",
+      "proof_certification": false
+    }
+  ],
+  "source_exceptions": [
+    {
+      "problem_id": 1219,
+      "finding": "Primary theorem and external Lean replay not independently checked",
+      "disposition": "UNADJUDICATED"
+    },
+    {
+      "problem_id": 1220,
+      "finding": "Shelah-Stanley forcing model to BOTH inaccessible hypotheses remains unverified; external formal claim unreplicated",
+      "disposition": "UNADJUDICATED"
+    },
+    {
+      "problem_id": 1221,
+      "finding": "Pinned open status conflicts with September 2026 claimed theorem; missing exact paper proof/version audit",
+      "disposition": "UNADJUDICATED"
+    }
+  ],
+  "production_pr": null,
+  "protected_production_merge": null,
+  "public_browser_math_verification": null,
+  "v2_admission_pr": null,
+  "protected_v2_merge": null,
+  "coverage_complete": false,
+  "note": "Deterministic sample reserved for eventual critical review of 20 completed articles; not a claim that 20 articles were reviewed.",
+  "local_validation": {
+    "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
+    "strict_mkdocs_build": "PASS_LOCAL_ONLY",
+    "generated_reference_page_count": 1221,
+    "generated_markdown_page_count": 1235,
+    "accepted_protected_v2_count_at_base_head": 50,
+    "legacy_unadmitted_exemplars": 3,
+    "current_local_pending_drafts": 12,
+    "new_drafts_verified_in_generated_html_unaccepted_label": [
+      1219,
+      1220,
+      1221
+    ],
+    "public_deployment": "NOT_ATTEMPTED",
+    "live_browser_mathjax": "NOT_ATTEMPTED"
+  }
+}
