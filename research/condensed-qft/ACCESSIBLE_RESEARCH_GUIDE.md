@@ -25,6 +25,8 @@
 
 > **LFO-013 — underived LFO3 is resolved:** [Strict LF liquid realization and the LFO3 surjectivity theorem](LFO3_SURJECTIVITY_THEOREM_013.md) proves the fixed-source Fréchet to strict-LF-output Hom bijection using scalar probes, Baire category and profinite-plot factorization; the liquid filtered colimit agrees with the strict LF condensed realization for the actual test-function filtration. The stagewise output support may still depend on the source stage. Higher derived Hom and the Costello–Gwilliam differentiable pro-cochain comparison remain open. [Verification matrix](RUN_MATRIX_013.md).
 
+> **DRM-014 — the derived mapping boundary:** [Source-support derived mapping formula, scalar Mittag–Leffler case and explicit higher-Ext counterexample](DERIVED_MAPPING_OBSTRUCTION_014.md) show that mapping out of compact-support liquid sources is a derived inverse limit. Scalar-valued degree-zero restrictions are surjective by Hahn–Banach, but this does not establish higher Ext comparisons. An exact square-zero module counterexample shows why the successful degree-zero LFO-013 comparison cannot automatically be lifted to derived Hom, even for split monomorphic target stages. **Actual liquid target-stage higher Ext and the Costello–Gwilliam smooth pro-cochain comparison remain open.** [Verification matrix](RUN_MATRIX_014.md).
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
