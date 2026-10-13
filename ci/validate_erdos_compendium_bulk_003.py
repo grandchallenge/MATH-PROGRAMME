@@ -31,6 +31,21 @@ VALID_STATES = {"RESULT_PRESENT_UNADJUDICATED", "NO_RESULT_AT_READBACK"}
 REPO = "grandchallenge/MATH-PROGRAMME"
 
 
+
+# Reject common missing backslashes within $...$ or $$...$$ mathematics.
+BARE_MATH = re.compile(
+    r"(?<!\\)\b(?:mathbb|mathcal|frac|sqrt|quad|qquad|cdot|leq|geq|"
+    r"subseteq|infty|alpha|beta|gamma|limsup|lfloor|rfloor|ldots|operatorname)\b"
+    r"|(?<!\\)\b[A-Za-z](?:geq|leq|subseteq)\b|(?<!\\)\bsum_"
+)
+
+def check_math_commands(text: str, problem_id: int) -> None:
+    for match in re.finditer(r"(?s)\$\$(.*?)\$\$|\$([^$\n]+)\$", text):
+        math = match.group(1) if match.group(1) is not None else match.group(2)
+        bad = BARE_MATH.search(math)
+        assert bad is None, f"Bare TeX command in #{problem_id}: {bad.group(0)}"
+
+
 def git_blob_sha(raw: bytes) -> str:
     payload = b"blob " + str(len(raw)).encode() + b"\0" + raw
     return hashlib.sha1(payload).hexdigest()
@@ -96,6 +111,7 @@ def verify(strict: bool = False) -> dict:
             assert headings == SECTIONS, f"Bad six-section structure for #{n}: {headings}"
             assert url in text, f"Article #{n} has no original source comment URL"
             assert text.count("$$") % 2 == 0, f"Unpaired display math in #{n}"
+            check_math_commands(text, n)
             assert not re.search(r"\\\[|\\\]|\\\(|\\\)", text), n
             assert len(text.split()) >= 350, f"Insufficient substantive article #{n}"
             digest = hashlib.sha256(text.strip().encode("utf-8")).hexdigest()
