@@ -2,6 +2,7 @@
 import importlib.util
 import pathlib
 import unittest
+from unittest import mock
 
 HERE = pathlib.Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("ec003", HERE / "validate_erdos_compendium_bulk_003.py")
@@ -32,6 +33,32 @@ class Cohort003Tests(unittest.TestCase):
     def test_valid_tex_commands_accepted_in_inline_and_display_math(self):
         good = r'$\mathbb{R}^2$ and $$a,\quad b,\qquad c$$ and $N\leq6$'
         ec003.check_math_commands(good, 999)
+
+    def test_qa_stale_article_digest_is_rejected(self):
+        original_load = ec003.load
+
+        def stale_qa(path):
+            data = original_load(path)
+            if path.name == "EC-BULK-003_QA.json":
+                data["reviewed"][0]["article_sha256"] = "0" * 64
+            return data
+
+        with mock.patch.object(ec003, "load", side_effect=stale_qa):
+            with self.assertRaisesRegex(AssertionError, "Stale QA article digest"):
+                ec003.verify()
+
+    def test_duplicate_qa_reviews_are_rejected(self):
+        original_load = ec003.load
+
+        def duplicate_qa(path):
+            data = original_load(path)
+            if path.name == "EC-BULK-003_QA.json":
+                data["reviewed"].append(dict(data["reviewed"][0]))
+            return data
+
+        with mock.patch.object(ec003, "load", side_effect=duplicate_qa):
+            with self.assertRaisesRegex(AssertionError, "Duplicate QA review receipt"):
+                ec003.verify()
 
     def test_strict_gate_requires_actual_complete_batch_and_qa(self):
         checkpoint = ec003.verify()
