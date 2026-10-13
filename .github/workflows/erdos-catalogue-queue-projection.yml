@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/erdos_rolling_review_completion.py'
+      - 'ci/test_erdos_rolling_review_completion.py'
       - 'ci/erdos_compendium_editorial_activate.py'
       - 'ci/test_erdos_compendium_editorial_activate.py'
       - 'ci/gcl_queue_class_cutover.py'
@@ -389,3 +391,52 @@ jobs:
         run: |
           python ci/erdos_forge_copilot_pilot.py publish --out forge-erdos-pilot \
             | tee -a "$GITHUB_STEP_SUMMARY"
+
+  rolling-critical-review-completion:
+    name: Reconcile 14 Erdős critical-review returns (Council Clerk)
+    # Event comments do not authorize queue mutation. The scheduled, manual,
+    # or main-push controller reads all authoritative review comments itself.
+    if: github.event_name != 'issue_comment'
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Exercise exact-14 completion and hostile replay tests
+        run: python ci/test_erdos_rolling_review_completion.py
+      - name: Mint existing bounded Council Clerk Project token
+        id: review-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+          permission-organization-projects: write
+      - name: Run full exact-comment preflight and reconcile operational return states
+        env:
+          GH_TOKEN: ${{ steps.review-token.outputs.token }}
+          GCL_CONTROLLER_ID: erdos-rolling-review-completion
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          python ci/erdos_rolling_review_completion.py --apply \
+            --receipt rolling-critical-reviews/receipt.json
+      - name: Preserve independently readable full receipt or fail-closed blocker
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-rolling-024-critical-review-completion-${{ github.run_id }}-${{ github.run_attempt }}
+          path: rolling-critical-reviews/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
