@@ -200,7 +200,8 @@
     428,
     429,
     430,
-    431
+    431,
+    432
   ],
   "reviewed": [
     {
@@ -627,9 +628,17 @@
       "article_sha256": "3ca118a1040bfe81d9a59415e9165e4dd6cf128697d696e6af74f6fbf83f1720",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently proved parity necessity: if either infinite summand set contained elements of opposite parity, infinitely many composite even sums would occur, violating eventual-prime sumset. Verified Elsholtz–Harper 2015 hypothetical sqrt-scale bounds and distinguished Tao–Ziegler 2023 triangular partial prime sumsets. Detected MATERIAL post-April-2026 development: OpenAI/math October 6 overview family 013 newly CLAIMS no finite modification of primes can be A+B with both summands nontrivial. Direct inspection of public comparator OstmannComplete.lean found main named theorem declarations by sorry; other Lean modules require exact-head compilation/trust and mathematical source audit. Retained dated maintained OPEN versus newer external claim rather than certifying it."
+    },
+    {
+      "problem_id": 432,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1702#issuecomment-6157488945",
+      "article_sha256": "183e024ea8475c5cc66a3a727d1f431be255d88657237a24dcd0ff8006cd21ec",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently verified finite A={1,3},B={2,4} gives distinct pairwise-coprime sumset {3,5,7} despite two representations of 5. Proved universal injection from each c≥2 in any pairwise-coprime set to its smallest prime factor, giving |C∩[1,x]|≤π(x)+1 and zero NATURAL density. This does not solve the finer infinite-sumset prime-scale density problem. Maintained OPEN statement and unrefereed Sungchul Lee 2026 manuscript were distinguished, no pinned FC432 file or Lean proof."
     }
   ],
-  "review_count": 53,
+  "review_count": 54,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
