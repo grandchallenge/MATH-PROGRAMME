@@ -5,8 +5,8 @@ on:
     branches: [main]
     paths:
       - 'ci/erdos_rolling_review_queue.py'
-      - 'ci/erdos_rolling_review_completion.py'
-      - 'ci/test_erdos_rolling_review_completion.py'
+      - 'ci/erdos_catalogue_queue_projection.py'
+      - 'tests/test_erdos_catalogue_queue_projection.py'
       - 'ci/erdos_compendium_editorial_activate.py'
       - 'ci/test_erdos_compendium_editorial_activate.py'
       - 'ci/gcl_queue_class_cutover.py'
@@ -160,7 +160,7 @@ jobs:
           python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
       - name: Verify exact-14 review completion and replay invariants
         if: github.event_name != 'issue_comment'
-        run: python ci/test_erdos_rolling_review_completion.py
+        run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
       - name: Reconcile 14 completed critical reviews with Council Clerk custody
         if: github.event_name != 'issue_comment'
         env:
@@ -169,7 +169,7 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$GH_TOKEN"
-          python ci/erdos_rolling_review_completion.py --apply             --receipt rolling-critical-reviews/receipt.json
+          python ci/erdos_catalogue_queue_projection.py --review-completion --apply             --receipt rolling-critical-reviews/receipt.json
       - name: Preserve critical review completion or exact operational blocker
         if: always() && github.event_name != 'issue_comment'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

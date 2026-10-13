@@ -123,7 +123,7 @@ jobs:
       - name: Test source-locked editorial admission and hostile state/readback cases
         run: python3 ci/test_erdos_compendium_editorial_activate.py
       - name: Test exact-14 rolling review completion and idempotent replays
-        run: python3 ci/test_erdos_rolling_review_completion.py
+        run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
       - name: Test the sealed scheduled Editorial replay and no-RESULT authority
         run: python3 ci/test_erdos_compendium_editorial_replay.py
 
