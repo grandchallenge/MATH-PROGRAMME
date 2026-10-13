@@ -137,7 +137,13 @@ def verify(strict: bool = False) -> dict:
         for row in qa.get("reviewed", []):
             n = row["problem_id"]
             assert n in expected
-            assert row.get("source_return") == m["items"][nums.index(n)]["source_return"]
+            assert n not in checked, f"Duplicate QA review receipt for #{n}"
+            item = m["items"][nums.index(n)]
+            assert row.get("source_return") == item["source_return"], n
+            assert item.get("article_path"), f"QA review of missing article #{n}"
+            assert row.get("article_sha256") == item.get("manuscript_sha256_pre_admission"), (
+                f"Stale QA article digest for #{n}; re-review changes before admission"
+            )
             assert row.get("editorial_check") in (
                 "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
                 "MATERIAL_DEFECT_CORRECTED",
