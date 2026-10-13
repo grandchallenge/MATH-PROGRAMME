@@ -21,6 +21,8 @@
 
 > **FC-007 — beyond the split-weight category:** [Triangular filtered dg comparison](TRIANGULAR_FILTERED_COMPARISON_007.md) proves two finite counterexamples to a full Costello–Gwilliam equivalence: filtered maps may mix weights, and filtered differentials may raise weight. The same note proves an exact finite-dimensional triangular-matrix equivalence and a finite-filtered Weiss descent propagation theorem that tolerates filtration-raising differentials. Infinite-dimensional differentiable enrichment remains open.
 
+> **LFO-010 — strict LF output and infinite-jet boundary:** [Underived smooth multilinear maps to compact-support outputs and the infinite-jet non-splitting obstruction](STRICT_LF_OUTPUT_DERIVED_BOUNDARY_010.md) provides the mixed source-support inverse-limit/target-support filtered-colimit formula, a proof that no *uniform* output compact support can be imposed, and the nonzero strict Fréchet extension for the full Borel jet map. The unrestricted liquid LF-output Hom comparison and smooth derived pro-cochain equivalence remain **open**. [Verification ledger](RUN_MATRIX_010.md).
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
