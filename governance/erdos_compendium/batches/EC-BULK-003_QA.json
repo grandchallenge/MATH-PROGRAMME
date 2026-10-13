@@ -196,7 +196,9 @@
     424,
     425,
     426,
-    427
+    427,
+    428,
+    429
   ],
   "reviewed": [
     {
@@ -591,9 +593,25 @@
       "article_sha256": "3bc089ce9127d9f542e54103f1a0dd59afa268a442c21330d4e91b7da0e59c7c",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently verified exact witness n=2,d=6,k=4 gives 5+7+11+13=36, and checked Pilatte's conditional reduction from Shiu's 2000 consecutive-congruent-primes theorem: a block of d primes all 1 mod d supplies a residue-correcting prefix of t=d-r terms. Examined n-indexing, positive k, d=1 and zero-modulus exclusion. Pinned FC427 statement, Shiu theorem and conditional implication each have by sorry; external Lean status not claimed as GCL-certified."
+    },
+    {
+      "problem_id": 428,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1698#issuecomment-6157388132",
+      "article_sha256": "be870b4d6eaf2ed836cb134eb53f5fcf097165df2d5fe319f41a7e671a640a48",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Checked finite A={1,3,5}, n=8 yields {7,5,3}, all prime, but finite A has zero relative liminf to pi(x). Verified original liminf ratio differs essentially from the positive-limsup analogue conditionally attributed to Erdős–Graham under the unproved prime k-tuple conjecture. Pinned FC428 uses positive liminf atTop and by sorry; no proof or density promotion."
+    },
+    {
+      "problem_id": 429,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1699#issuecomment-6157408525",
+      "article_sha256": "05fed79cae4291decb7b4472379088e6fa58c96f0162d3ad62500b2fdbb236ff",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Checked finite A={2,4} omits a residue class modulo every prime and shift n=1 yields {3,5}; this cannot establish or refute an INFINITE translate theorem. Matched Weisenberg's published INTEGERS 24 A89 (2024) primary negative construction of arbitrarily sparse infinite admissible sets with NO prime translate; squarefree p^2 variant distinct. Confirmed no FC429 file in frozen revision and later main 429.lean has by sorry/external proof claim, not GCL certification."
     }
   ],
-  "review_count": 49,
+  "review_count": 51,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
