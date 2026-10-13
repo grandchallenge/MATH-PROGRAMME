@@ -23,11 +23,11 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "25 issue-bound RESULT/1 returns; 25 unaccepted articles #652..#676; 175 missing. #662 historical source hold; #673 m>1 auxiliary correction. No protected merge, deployed MathJax or V2 admission.",
+  "status_semantics": "33 authenticated original issue RESULT/1 returns and 33 six-section unaccepted drafts (#652..#684); 167 unprocessed. #662 SOURCE_SEMANTICS_HOLD (historical text); #678 and #683 SOURCE_SEMANTICS_HOLD (provably false strict/quantifier pinned FC targets). Eight bounded exact fixture groups passed in local Python but CHAD runner unavailable; no full CI/strict MkDocs/deployed browser MathJax, critical review, protected publication or V2 admission.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
-    "post_initial_source_return_count": 25,
+    "post_initial_source_return_count": 33,
     "authenticated_source_author_count": 1,
     "all_200_open_available": null,
     "all_200_open_and_labeled_available": true,
@@ -69,7 +69,9 @@
     "issues_663_to_666_native_available": true,
     "issues_663_to_666_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:4736e74fffec445195c2b05f62220a1b",
     "issues_667_to_669_native_available": true,
-    "issues_667_to_669_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:86d51a8f62644c5e98bd1013d4bb6582"
+    "issues_667_to_669_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:86d51a8f62644c5e98bd1013d4bb6582",
+    "issues_677_to_684_native_available": true,
+    "issues_677_to_684_native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:84199774b89b47b9af7a883058a0284d"
   },
   "sample_policy": {
     "sample_count": 20,
@@ -1165,22 +1167,28 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1948#issuecomment-6157157903",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1948#issuecomment-6157157903",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "SOURCE_BOUNDED_VERIFIED_PRIMARY_PASSAGES_PARTIAL",
       "article_path": "governance/erdos_compendium/editorial/0677.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_MATH_SOURCE_CRITICAL_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "CRITICAL_REVIEW_AND_PRIMARY_SOURCE_COMPLETION_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "OPEN_EQUAL_LENGTH_LCM_UNRESOLVED",
+        "PUBLISHED_FIXED_K_THUE_SIEGEL_FINITE_NOT_ZERO",
+        "PINNED_FC_MAIN_SORRY"
+      ],
+      "source_return_comment_id": 6157157903,
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED"
     },
     {
       "problem_id": 678,
@@ -1200,22 +1208,30 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1949#issuecomment-6157169242",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1949#issuecomment-6157169242",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "MATERIAL_FALSE_FORMAL_TARGET_SOURCE_REPAIR_REQUIRED",
       "article_path": "governance/erdos_compendium/editorial/0678.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "SOURCE_SEMANTICS_HOLD_FALSE_PINNED_FORMAL_TARGET",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "FALSE_PINNED_FORMAL_THEOREM_BLOCKS_ADMISSION",
+        "ORIGINAL_SOURCE_OR_LEAN_TARGET_CORRECTION_PENDING",
+        "CRITICAL_REVIEW_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "FALSE_PINNED_FC_TARGET_INFINITE_PAIR_PER_FIXED_K",
+        "CAMBIE_THEOREM_VARYING_K_PROVED",
+        "EXTERNAL_LEAN_PNT_AXIOM_NOT_GCL_REPLAYED"
+      ],
+      "source_return_comment_id": 6157169242,
+      "source_return_disposition": "STATUS_CONFLICT"
     },
     {
       "problem_id": 679,
@@ -1235,22 +1251,28 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1950#issuecomment-6157178530",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1950#issuecomment-6157178530",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "SOURCE_BOUNDED_VERIFIED_PRIMARY_PASSAGES_PARTIAL",
       "article_path": "governance/erdos_compendium/editorial/0679.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_MATH_SOURCE_CRITICAL_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "CRITICAL_REVIEW_AND_PRIMARY_SOURCE_COMPLETION_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "MAIN_RELATIVE_EPS_QUESTION_OPEN",
+        "ADDITIVE_O1_STRENGTHENING_REFUTED_NOT_MAIN",
+        "LAU_C_LOGK_WEAKER_THAN_TARGET"
+      ],
+      "source_return_comment_id": 6157178530,
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 680,
@@ -1271,22 +1293,28 @@
         "number theory",
         "primes"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1951#issuecomment-6157186853",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1951#issuecomment-6157186853",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "SOURCE_BOUNDED_VERIFIED_PRIMARY_PASSAGES_PARTIAL",
       "article_path": "governance/erdos_compendium/editorial/0680.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_MATH_SOURCE_CRITICAL_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "CRITICAL_REVIEW_AND_PRIMARY_SOURCE_COMPLETION_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "PRIME_WITNESSES_ALLOWED_UNLIKE_681",
+        "PINNED_FC_SORRY",
+        "GAP_HEURISTICS_NOT_THEOREMS"
+      ],
+      "source_return_comment_id": 6157186853,
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 681,
@@ -1307,22 +1335,28 @@
         "number theory",
         "primes"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1952#issuecomment-6157193715",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1952#issuecomment-6157193715",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "SOURCE_BOUNDED_VERIFIED_PRIMARY_PASSAGES_PARTIAL",
       "article_path": "governance/erdos_compendium/editorial/0681.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_MATH_SOURCE_CRITICAL_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "CRITICAL_REVIEW_AND_PRIMARY_SOURCE_COMPLETION_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "COMPOSITE_WITNESS_REQUIRED",
+        "PINNED_FC_SORRY",
+        "NECESSARY_K4_SIZE_NOT_SUFFICIENT"
+      ],
+      "source_return_comment_id": 6157193715,
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED"
     },
     {
       "problem_id": 682,
@@ -1343,22 +1377,28 @@
         "number theory",
         "primes"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1953#issuecomment-6157202336",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1953#issuecomment-6157202336",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "SOURCE_BOUNDED_VERIFIED_PRIMARY_PASSAGES_PARTIAL",
       "article_path": "governance/erdos_compendium/editorial/0682.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_MATH_SOURCE_CRITICAL_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": true,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "CRITICAL_REVIEW_AND_PRIMARY_SOURCE_COMPLETION_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "GAfNI_TAO_ALMOST_ALL_PROVED",
+        "INFINITE_EXCEPTION_GAPS_STILL_OPEN",
+        "STRICT_GAP_THRESHOLD_DIFFERS_AT_TWINS"
+      ],
+      "source_return_comment_id": 6157202336,
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED"
     },
     {
       "problem_id": 683,
@@ -1380,22 +1420,30 @@
         "primes",
         "binomial coefficients"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1954#issuecomment-6157212475",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1954#issuecomment-6157212475",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "MATERIAL_FALSE_FORMAL_TARGET_SOURCE_REPAIR_REQUIRED",
       "article_path": "governance/erdos_compendium/editorial/0683.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "SOURCE_SEMANTICS_HOLD_FALSE_PINNED_FORMAL_TARGET",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "FALSE_PINNED_FORMAL_THEOREM_BLOCKS_ADMISSION",
+        "ORIGINAL_SOURCE_OR_LEAN_TARGET_CORRECTION_PENDING",
+        "CRITICAL_REVIEW_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "FALSE_PINNED_STRICT_GT_COUNTEREXAMPLE_N_POWER2_K_N_MINUS1",
+        "MAINTAINED_WEAK_GEQ_CONJECTURE_OPEN",
+        "K_EQUALS_N_P1_ENDPOINT_UNDEFINED"
+      ],
+      "source_return_comment_id": 6157212475,
+      "source_return_disposition": "STATUS_CONFLICT"
     },
     {
       "problem_id": 684,
@@ -1417,22 +1465,28 @@
         "primes",
         "binomial coefficients"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1955#issuecomment-6157222098",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1955#issuecomment-6157222098",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "SOURCE_BOUNDED_VERIFIED_PRIMARY_PASSAGES_PARTIAL",
       "article_path": "governance/erdos_compendium/editorial/0684.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_MATH_SOURCE_CRITICAL_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "CRITICAL_REVIEW_AND_PRIMARY_SOURCE_COMPLETION_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "APSSV26_LOG_SQUARED_UPPER_AND_INFINITE_LOG_LOWER_SOURCE_PROVED",
+        "F20_UNDEFINED",
+        "OPTIMAL_GROWTH_OPEN"
+      ],
+      "source_return_comment_id": 6157222098,
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED"
     },
     {
       "problem_id": 685,
@@ -7557,6 +7611,62 @@
       "author": "accountable_coordinator",
       "latest_article_commit": "a57ebc8361aa2a21b12b1010f2899f9180303bdf",
       "notes": "See source issue and tranche QA for exact claim limits"
+    },
+    "article_0677": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1948#issuecomment-6157157903",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "9eb0fbb98d2e20e40118bb6907baa62d0d3f65e3",
+      "notes": "Source-bound mathematical exposition; unresolved research and document/QA boundaries retained."
+    },
+    "article_0678": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1949#issuecomment-6157169242",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "9fcef8d5d1cee382242eb3173b52d5f7360b22f6",
+      "notes": "MATERIAL FORMAL TARGET CONFLICT: held until source-semantic correction, not an editorial admission."
+    },
+    "article_0679": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1950#issuecomment-6157178530",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "47692e801db943efcacb70892e9b45c570da81bc",
+      "notes": "Source-bound mathematical exposition; unresolved research and document/QA boundaries retained."
+    },
+    "article_0680": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1951#issuecomment-6157186853",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "9539586f99e6852c5b829eccf7c9101fc5ab2e9c",
+      "notes": "Source-bound mathematical exposition; unresolved research and document/QA boundaries retained."
+    },
+    "article_0681": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1952#issuecomment-6157193715",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "9dcb0e992734d05af367ae7a62c921e9473c76c6",
+      "notes": "Source-bound mathematical exposition; unresolved research and document/QA boundaries retained."
+    },
+    "article_0682": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1953#issuecomment-6157202336",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "fdd23435b66cc48252703f0f2886e049f4e8bf95",
+      "notes": "Source-bound mathematical exposition; unresolved research and document/QA boundaries retained."
+    },
+    "article_0683": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1954#issuecomment-6157212475",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "5728a48c84e30991215a27c4b99d06784b88d988",
+      "notes": "MATERIAL FORMAL TARGET CONFLICT: held until source-semantic correction, not an editorial admission."
+    },
+    "article_0684": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1955#issuecomment-6157222098",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "1316fb5e93fc9df2b6e479794cfa1bc891ff348a",
+      "notes": "Source-bound mathematical exposition; unresolved research and document/QA boundaries retained."
     }
   },
   "tranche_quality_check": {
@@ -7612,5 +7722,24 @@
     "run": "GCL_CONTROL_BASH_RESULT/1:ea95e47067e34d2fb8ce1f1c020df61a",
     "math_certification": false,
     "admissions": 0
+  },
+  "tranche_677_684": {
+    "source_returns": 8,
+    "unaccepted_articles": 8,
+    "qa_file": "governance/erdos_compendium/batches/EC-BULK-005_TRANCHE_0677_0684_QA.json",
+    "qa_commit": "9193df80af0ca350adf751f57d45dda21fbf5323",
+    "regression_script": "ci/test_erdos_compendium_ec005_fixtures_677_684.py",
+    "local_exact_check_groups_passed": 8,
+    "remote_chad": "UNAVAILABLE_RUNTIME_INVALID_ARGUMENT",
+    "source_comment_grammar_passed": 8,
+    "article_structure_passed": 8,
+    "false_formal_target_holds": [
+      678,
+      683
+    ],
+    "strict_mkdocs": "NOT_RUN",
+    "deployed_browser_math": "NOT_RUN",
+    "critical_review": "PENDING",
+    "v2_admitted": 0
   }
 }
