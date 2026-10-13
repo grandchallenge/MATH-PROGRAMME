@@ -2,6 +2,10 @@
 
 **Research status: OPEN CONJECTURAL LEMMA.** This note identifies a strong, falsifiable sufficient condition for the current repetition-allowed Erdős #41 conjecture. It does not claim to prove that condition. Its implication to the Erdős conclusion is elementary and established below.
 
+## 2026-10-13 adversarial status update
+
+The audited follow-up [SHELL_HARDY_AUDIT.md](SHELL_HARDY_AUDIT.md) proves that the proposed shell-energy deficit is equivalent to logarithmic Cesàro decay of cubed normalized counting density. It is **strictly stronger than the original density-dip conclusion at the level of general counting profiles even when the ordinary cubic packing bound holds**. This is not a counterexample among M3 sets. The proposed shell-energy deficit remains OPEN and is not assumed true. The follow-up supplies the *finite-window valley criterion* (V), exactly equivalent to the original M3 Erdős conjecture, as the better primary multiscale target.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
