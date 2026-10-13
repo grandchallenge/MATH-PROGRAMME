@@ -10,12 +10,12 @@
 | Filtered colimits of condensed modules evaluated on profinite plots | Sheaf condition with finite covers and filtered colimits commuting with finite limits | PROVED | Applies to filtered diagrams, not arbitrary inverse limits |
 | Scalar point evaluations on $H$ continuous | Full faithfulness of Fréchet condensed realization; $H$ metrizable | PROVED | Does not assert source compactness |
 | Uniform compact support for all global images | Increasing sequence of closed subspaces $H_b$, Baire theorem | PROVED | Fixed Fréchet source $H$ |
-| Factorization of every $S$-plot through chosen $G_{b_0}$ | Stagewise factorization of filtered colimit plots plus closed embedding | PROVED | Cannot infer from global points alone |
+| Factorization of every plot from a profinite $S$ through chosen $G_{b_0}$ | Stagewise factorization of filtered colimit plots plus closed embedding | PROVED | Cannot infer from global points alone |
 | LFO3 surjectivity | Previous two rows | PROVED | Underived Hom sets |
 | LFO3 injectivity | Monic stage maps into filtered colimit | PROVED | Underived Hom sets |
 | $A_p(V)\cong\underline{\mathcal D(V)}$ | Strict LF bounded-set regularity; compact image of profinite plot lies in stage | PROVED | Specific strict LF sequence, not arbitrary LF |
 | Independence from source support | Identity map $\mathcal D(\mathbb R)\to\mathcal D(\mathbb R)$ | COUNTEREXAMPLE to interchanging outer source limits | Does not contradict fixed-source LFO3 |
-| Higher $\operatorname{RHom}$ and $\operatorname{Ext}^i$ | No proof supplied | OPEN | Must not be inferred from LFO3 |
+| Higher $\mathrm{RHom}$ and $\mathrm{Ext}^i$ | No proof supplied | OPEN | Must not be inferred from LFO3 |
 | Pro-cochain mapping enrichment | No equivalence proof supplied | OPEN | Must not be inferred from LFO3 |
 | Mathematical novelty | Classical ingredients; explicit adapted proof | NOT CLAIMED | No external priority claim |
 | Numerical fixture | Not applicable to Baire/profinite categorical proof | NOT RUN | Do not report finite tests as proof |
@@ -27,7 +27,7 @@ All mathematical display expressions in the associated proof use Markdown-compat
 
 ## Review focus
 
-1. Verify that filtered colimits in real $p$-liquid modules are computed in condensed modules and that profinite section evaluation commutes with these filtered colimits.
+1. Verify that filtered colimits in real liquid at parameter $p$ modules are computed in condensed modules and that profinite section evaluation commutes with these filtered colimits.
 2. Ensure the plot factorization uses **closed** support stages rather than incorrectly treating pointwise equality as sufficient for arbitrary condensed objects.
 3. Verify classical **strict LF** regularity and topology inheritance, not properties of arbitrary LF systems.
 4. Confirm that no derived conclusion is made from underived Hom bijectivity.
