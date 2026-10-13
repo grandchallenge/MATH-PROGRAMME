@@ -198,7 +198,8 @@
     426,
     427,
     428,
-    429
+    429,
+    430
   ],
   "reviewed": [
     {
@@ -609,9 +610,17 @@
       "article_sha256": "05fed79cae4291decb7b4472379088e6fa58c96f0162d3ad62500b2fdbb236ff",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Checked finite A={2,4} omits a residue class modulo every prime and shift n=1 yields {3,5}; this cannot establish or refute an INFINITE translate theorem. Matched Weisenberg's published INTEGERS 24 A89 (2024) primary negative construction of arbitrarily sparse infinite admissible sets with NO prime translate; squarefree p^2 variant distinct. Confirmed no FC429 file in frozen revision and later main 429.lean has by sorry/external proof claim, not GCL certification."
+    },
+    {
+      "problem_id": 430,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1700#issuecomment-6157433586",
+      "article_sha256": "e2171314d356c93fb456ed0e3c38609f177b143290e3b433bee73af700c7a643",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently exact-factored every candidate 2≤m<n for n=8,20,22; the source-defined descending sequence gives [7,5], [19,17,13,11], and [21,19,17,13], respectively. Checked least-prime-factor >n-m equivalence to every-prime-factor condition and static composite witness formulation linked to #385. Preserved source's terminal value 1 ambiguity (vacuously satisfies factor condition but is not prime); no finite evidence promoted to eventual theorem. Frozen provider explicitly lacks 430.lean."
     }
   ],
-  "review_count": 51,
+  "review_count": 52,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
