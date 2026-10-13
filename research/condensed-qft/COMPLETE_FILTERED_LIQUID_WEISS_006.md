@@ -5,6 +5,8 @@
 **Research issue:** [QFT-COND-004](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2603).  
 **Inputs:** [polynomial BV and Weiss descent](COMPACT_SUPPORT_FACTORISATION_003.md); [quantum weight and ordinary inverse-limit no-go](QUANTUM_WEIGHT_PRO_COMPLETION_004.md); [pro-valued no-go](PRO_VALUED_WEISS_NO_GO_005.md).
 
+> **FC-007 scope correction:** [Triangular filtered dg comparison](TRIANGULAR_FILTERED_COMPARISON_007.md) demonstrates that this split-weight category is **not full or essentially surjective** in the general Costello–Gwilliam complete filtered category. It constructs the exact finite-dimensional triangular alternative and proves Weiss descent propagation across finite filtrations, including filtration-raising differentials. The present restricted completed Weiss theorem remains valid **only in its specified split target**.
+
 ## 1. A genuinely completed analytic target
 
 Fix $0<p\le1$ and set
