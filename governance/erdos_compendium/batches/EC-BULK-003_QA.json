@@ -224,9 +224,49 @@
       "article_sha256": "0a0a22a7e3d77958b461064cc20c495e2eba6533d5959e5194c180b19a345be9",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Verified rational finite 32-term certificate and source admission gaps; original 1971 paper inaccessible; no equality from upper bound."
+    },
+    {
+      "problem_id": 302,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1572#issuecomment-6138135229",
+      "article_sha256": "7182b0dcef697aee9e5b555565d96001b8cb82536e248153e95027e275d0e548",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Read manuscript against the maintained #302 source: proved finite f(12)=10 is consistent with the exact three forbidden triples; Cambie's 5/8 lower bound refutes the original 1/2 conjectural asymptotic, while the exact extremal density remains open. Kitamura's stronger reported computational/formal upper constant is explicitly unverified here; pinned 302.lean is absent, later source with sorry is not proof."
+    },
+    {
+      "problem_id": 303,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1573#issuecomment-6138027474",
+      "article_sha256": "1ef033232ef5389684e6b376f83b350f89b3ba1806e5b3ceaab4c691e03e0e01",
+      "editorial_check": "SOURCE_BOUNDED_PASS_WITH_DISCLOSED_LIMITS",
+      "finding": "Checked exact monochromatic parity witness (4,6,12): 1/4=1/6+1/12 with three distinct positive denominators. Brown–Rödl's externally published 1991 general finite-coloring corollary is cited as proof; its positive-domain result implies the maintained integer-domain claim. Pinned Lean declaration has sorry and was not compiled, so no GCL formal certification."
+    },
+    {
+      "problem_id": 327,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1597#issuecomment-6138265400",
+      "article_sha256": "0ec344bc80c8b5b334526109b4e36cb395765baa8a4a2e8509a0c12746ef1180",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently checked the 2026-07-16 original Sawin arXiv:2607.15419 abstract and Theorem 1: positive-density sets avoid a+b dividing 2ab, refuting precisely Problem 327's SECOND o(N) question. The FIRST question about improvement over the odd-number baseline for a+b dividing ab remains separate and open. Finite (1,3,5) and (2,6) divisibility examples verified; external preprint is not a GCL proof certificate."
+    },
+    {
+      "problem_id": 353,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1623#issuecomment-6140243445",
+      "article_sha256": "0676cd272b456299e413dcfa860a738d70c89f0c4d17008c7982203eb8c5f007",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Reviewed Koizumi's attributed infinite-measure isosceles unit-area trapezoid theorem and exact example: parallel bases 2 and 1 at height 2/3 give area 1, and leg squared lengths are 25/36. Distinguished triangle and cyclic-quadrilateral variants; pinned FormalConjectures 353.lean contains sorry and no Lean replay or formal semantic equivalence is certified."
+    },
+    {
+      "problem_id": 354,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1624#issuecomment-6140244047",
+      "article_sha256": "239935f52cd46b3a41935c952f472e4c900937d55ae47a5fbe62b85263df06a0",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Exact finite α=1, β=√2 floor sequences check: the ten initial terms sum to 72 and satisfy the gap-free sorted subset-sum criterion through 72. This proves only finite coverage, not eventual completeness. The pinned part-(ii) Lean file hardcodes base 2 in place of quantified γ; the 1989 primary paper and current-formal semantic fix remain unverified, so the problem stays open."
     }
   ],
-  "review_count": 20,
-  "status": "IN_PROGRESS_MISSING_COHORT_SOURCE_AND_18_SAMPLE_REVIEWS",
-  "disposition": "DOCUMENTARY_EDITORIAL_CRITICAL_CHECK_ONLY_NOT_PROOF_CERTIFICATION"
+  "review_count": 25,
+  "status": "IN_PROGRESS_PRE_ADMISSION",
+  "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
