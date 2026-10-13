@@ -505,10 +505,17 @@
       "blockers": [
         "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "PRIMARY_SOURCE_DIRECTION_CONFLICT"
+      ],
       "critical_sample_selected": false,
-      "math_risk_flags": [],
-      "critical_review_required": false
+      "math_risk_flags": [
+        "1979_1980_OPPOSITE_DIRECTIONS",
+        "EXTERNAL_LEAN_NOT_RECOMPILED"
+      ],
+      "critical_review_required": true,
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0457_UNPOSTED_RESULT.md",
+      "source_audit_draft_sha256": "27c68b721d88bcfbbb9c5608aab05d3a0cb08264492ce03240de4dd1fbfefc25"
     },
     {
       "problem_id": 458,
@@ -6764,5 +6771,12 @@
       "public_browser_math_readback": "NOT_YET",
       "accepted_count": 0
     }
+  },
+  "latest_protected_main_recheck": {
+    "date": "2026-10-13",
+    "head": "c794af1a08c9a9549b38be5ea70249a9c720bbb2",
+    "registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+    "admissions_blob": "03d927f147709079ac42a31d9ce81ad5a244ba8b",
+    "accepted_scope_collisions": 0
   }
 }
