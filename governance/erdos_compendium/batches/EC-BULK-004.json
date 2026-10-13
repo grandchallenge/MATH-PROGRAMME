@@ -728,17 +728,31 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_PARTIAL_SOURCE_AUDIT_WITH_VARIANCE_PROOF_EXCEPTION",
       "article_path": "governance/erdos_compendium/editorial/0462.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "PRE_RETURN_CRITICAL_DRAFT_PASS_WITH_SOURCE_EXCEPTIONS",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "AUTHENTICATED_ISSUE_BOUND_RESULT_NOT_YET_POSTED",
+        "EXTERNAL_VARIANCE_PROOF_ARITHMETIC_GAP",
+        "PROTECTED_EDITORIAL_ADMISSION_PENDING"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "ORIGINAL_GLOBAL_COMPOSITE_VS_LOCAL_ALL_INTEGER",
+        "EXTERNAL_2026_VARIANCE_PROOF_GAP"
+      ],
       "critical_sample_selected": false,
-      "math_risk_flags": [],
-      "critical_review_required": false
+      "math_risk_flags": [
+        "ALMOST_ALL_NOT_ALL_X",
+        "UNVERIFIED_EXTERNAL_FINITE_CERTIFICATE"
+      ],
+      "critical_review_required": true,
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-007.md",
+      "source_audit_draft_path": "governance/erdos_compendium/batches/EC-BULK-004_0462_UNPOSTED_RESULT.md",
+      "source_audit_draft_sha256": "915c249e4ba0b112509451fe9155f2727675d53105c75103cc186d015563d5b2",
+      "manuscript_sha256_pre_admission": "9dabb7350776e981b8f096cc4c0b4beee0b0bb9fcca37d4ca1e5525a08c9dcce",
+      "manuscript_raw_file_sha256_pre_admission": "78b662dfe66cd8b74610a07d92d679c7d926b74bd08c3f4ae2369e5b9f222732",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))"
     },
     {
       "problem_id": 463,
@@ -6804,12 +6818,12 @@
     "completed": 0,
     "disposition": "NOT_STARTED",
     "exception_policy": "All atypical logical-status classifications (falsifiable, decidable, not provable, not disprovable, verifiable) and every additional source/status/formalization/semantic discrepancy require critical review even when not sampled.",
-    "total_current_review_required": 40
+    "total_current_review_required": 41
   },
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 11,
+    "count": 12,
     "problem_ids": [
       448,
       449,
@@ -6821,20 +6835,23 @@
       458,
       459,
       460,
-      461
+      461,
+      462
     ],
     "qa": {
       "tests_passed": 66,
       "subtests_passed": 5,
-      "strict_mkdocs_build": "PASS_LOCAL_2026-10-13_AFTER_0461",
+      "strict_mkdocs_build": "PASS_LOCAL_2026-10-13_AFTER_0462",
       "early_exception_reviews_passed": 6,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
       "public_browser_math_readback": "NOT_YET",
       "accepted_count": 0,
-      "pre_return_exception_reviews_passed": 5,
-      "latest_targeted_pytest": "24 passed, 514 subtests",
-      "full_suite_after_0461": "NOT_VERIFIED"
+      "pre_return_exception_reviews_passed": 6,
+      "latest_targeted_pytest": "29 passed, 514 subtests (tests/test_erdos_compendium_*)",
+      "full_suite_after_0461": "NOT_VERIFIED",
+      "full_suite_after_0462": "NOT_VERIFIED",
+      "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK"
     }
   },
   "latest_protected_main_recheck": {
