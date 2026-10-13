@@ -202,7 +202,8 @@
     430,
     431,
     432,
-    433
+    433,
+    434
   ],
   "reviewed": [
     {
@@ -645,9 +646,17 @@
       "article_sha256": "dd5a927727972be4ee8f258a9d46d6b4748e7406db26b2442e9c78c504fde89c",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently proved exact Frobenius number G({8,9,10})=31: 31 cannot use ≤3 coins (sum≤30) or ≥4 (sum≥32), while 32..39 are all representable and adding 8 covers all larger integers. This falsifies a MATERIAL TYPO on the maintained Erdős #433 page: displayed FLOOR upper bound gives g(3,10)≤29, contradicted by witness. Site's own November 2025 correction comment specifies CEILING; source audit flags need for primary Dixmier 1990 transcription. Independently enumerated gcd-one subsets for n=10,k=3 obtaining g=31 with two maximizing sets. Dixmier fixed-k asymptotic still externally proved. Pinned FormalConjectures provider lacks 433.lean; no GCL Lean certification."
+    },
+    {
+      "problem_id": 434,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1704#issuecomment-6157575578",
+      "article_sha256": "ec53cadcb615f83d1947c80ebc1aa72ff0d1d093272f53c2c2ae67eeb712c76f",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently enumerated the precise sixteen positive numerical-semigroup gaps of A={8,9,10}: {1..7,11..15,21,22,23,31}, verified 32..39 are representable and adding 8 covers all larger integers. Exhaustive gcd-one k=3,n=10 enumeration gives maximal GENUS 16, attained by {8,9,10} and {5,9,10}. Distinct from Problem 433 maximizing LARGEST gap. Attributed general extremal set theorem to Géza Kiss 2002, verified admissible k≥2 scope, and preserved newer Lean Kneser-axiom vs claimed unconditional branch trust distinction; pinned FC434 proof bodies by sorry."
     }
   ],
-  "review_count": 55,
+  "review_count": 56,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
