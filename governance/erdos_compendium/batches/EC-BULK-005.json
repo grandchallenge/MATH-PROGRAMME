@@ -23,11 +23,11 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "1 authenticated issue-bound RESULT/1 source returns; 199 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority.",
+  "status_semantics": "2 authenticated issue-bound RESULT/1 source returns; 198 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
-    "post_initial_source_return_count": 1,
+    "post_initial_source_return_count": 2,
     "authenticated_source_author_count": 1,
     "all_200_open_available": null,
     "all_200_open_and_labeled_available": true,
@@ -92,8 +92,8 @@
       "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
       "source_fidelity_state": "ORIGINAL_PRIMARY_NOT_VERIFIED",
       "article_path": "governance/erdos_compendium/editorial/0652.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "SOURCE_FIDELITY_BLOCKED",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
@@ -126,22 +126,27 @@
         "geometry",
         "distances"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1924#issuecomment-6141940643",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1924#issuecomment-6141940643",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "EXTERNAL_PROOF_NOT_GCL_REPLAYED",
       "article_path": "governance/erdos_compendium/editorial/0653.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "STATUS_CONFLICT_PENDING_MATH_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "GCL_LEAN_REPLAY_NOT_PERFORMED",
+        "ORIGINAL_ER97E_PAGE_UNINSPECTED"
       ],
-      "exceptions": []
+      "exceptions": [
+        "MAINTAINED_OPEN_VS_EXTERNAL_CERTIFIED_PROVED",
+        "FORMAL_PROVIDER_COMMIT_MISMATCH"
+      ],
+      "source_return_disposition": "STATUS_CONFLICT"
     },
     {
       "problem_id": 654,
@@ -7187,5 +7192,12 @@
       ],
       "exceptions": []
     }
-  ]
+  ],
+  "execution_capacity": {
+    "chad_codex_version": "0.146.1",
+    "canary_problem_id": 653,
+    "canary_result": "USAGE_LIMIT_BEFORE_RESEARCH",
+    "canary_return_count": 0,
+    "verified_parallel_worker_capacity": 0
+  }
 }
