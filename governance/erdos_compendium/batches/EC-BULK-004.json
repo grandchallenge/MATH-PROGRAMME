@@ -28,9 +28,9 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "9 authentic original issue-bound RESULT/1 source returns (#447–#455), comprising 3 source-fidelity-partial (#447,#450,#455), 1 original PARTIAL with separate recovered source-critical mathematical supplement (#449), and 5 original SOURCE_LOCK_READY (#448,#451,#452,#453,#454) with separately preserved analytic correction for #454. 191 original issues without returns. Six substantive unaccepted manuscripts (#448,#449,#451–#454), six early exception reviews, no protected admission or MathCert.",
+  "status_semantics": "10 original authenticated issue-bound RESULT/1 returns #447–#456: four original source-fidelity PARTIAL (#447,#450,#455,#456), one original PARTIAL plus subsequent checked mathematical supplement (#449), five original SOURCE_LOCK_READY (#448,#451–#454). 190 original issues still lack returns. Six substantive unaccepted manuscripts (#448,#449,#451–#454), six early exception-critical reviews, no protected admission or MathCert.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 9,
+    "post_initial_source_return_count": 10,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
     "authenticated_source_author_count": 1,
     "readback_state": "COMPLETE_200_ISSUES",
@@ -454,19 +454,29 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1726#issuecomment-6144332144",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1726#issuecomment-6144332144",
+      "evidence_state": "PARTIAL_RETURN_SOURCE_FIDELITY_BLOCKED",
       "article_path": "governance/erdos_compendium/editorial/0456.md",
       "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "editorial_review_status": "SOURCE_FIDELITY_BLOCKED",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "EXTERNAL_MAY_2026_71_PAGE_PROOF_NOT_PRIMARY_REVIEWED",
+        "EARLIER_ER79e_P80_NOT_INSPECTED",
+        "INDEPENDENT_DENSITY_PROOF_CRITICAL_REVIEW_REQUIRED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "UNADJUDICATED_AI_ASSISTED_EXTERNAL_PROOF_CLAIM",
+        "FORMAL_RESEARCH_THEOREMS_SORRY",
+        "DENSITY_ONE_STATUS_UNRESOLVED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": false,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6144332144,
+      "source_return_content_sha256": "40b63dd232bb17928c1e431ee7510e30182396426713c5c177c75b01018a4ebd",
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 457,
@@ -6745,9 +6755,9 @@
       454
     ],
     "qa": {
-      "tests_passed": 55,
+      "tests_passed": 56,
       "subtests_passed": 3,
-      "strict_mkdocs_build": "PASS_AT_HEAD_a7bbc41d7dc8a9420bb4ce04e1aeafbbf8f05d29",
+      "strict_mkdocs_build": "PASS_AT_HEAD_555438542a34ae8029dad356314cc77a45ea826b",
       "early_exception_reviews_passed": 6,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
