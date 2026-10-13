@@ -50,17 +50,20 @@
     1067,
     1068,
     1069,
+    1070,
+    1071,
     1072,
     1073,
+    1074,
     1219,
     1220,
     1221
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 22,
+    "valid_result_grammar": 25,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 146,
+    "missing_results": 143,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
@@ -113,7 +116,7 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "22 authenticated issue-bound research returns; 22 six-section unaccepted drafts. Current 3 authored over GitHub API during CHAD shell outage. Primary source review incomplete; 20 critical reviews and protected production still pending. Former 24/24 browser pass does not cover new three drafts.",
+  "note": "25 authenticated source returns and 25 UNACCEPTED six-section draft manuscripts. Six GitHub-connector-authored manuscripts still require strict MkDocs and Chromium readback. 143 source returns and all 20 critical sample reviews remain. 1070 June 2026 counterexample is status conflict pending independent proof audit; no protected publication or V2 admission.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
     "strict_mkdocs_build": "PASS_LOCAL_19_DRAFTS_REBUILT",
@@ -146,7 +149,7 @@
     "public_deployment": "NOT_ATTEMPTED_FOR_COHORT_007",
     "live_browser_mathjax": "PASS_5_PREVIOUSLY_PUBLISHED_MATH_PAGES_54_OF_54_RENDERED_ZERO_MERROR",
     "reviewed_critical_sample_count": 0,
-    "authored_explanatory_draft_count_on_branch": 84,
+    "authored_explanatory_draft_count_on_branch": 87,
     "accepted_protected_v2_count_at_build": 50,
     "new_cohort_unaccepted_drafts": [
       1053,
@@ -166,8 +169,11 @@
       1067,
       1068,
       1069,
+      1070,
+      1071,
       1072,
       1073,
+      1074,
       1219,
       1220,
       1221
@@ -182,15 +188,16 @@
     "local_draft_math_expressions_rendered": 454,
     "public_existing_math_expressions_rendered": 54,
     "new_three_drafts_build_check": "NOT_RUN_CHAD_SHELL_UNAVAILABLE",
-    "browser_qa_scope_note": "Existing 24/24 Chromium receipt covered 19 previous drafts and 5 already-public pages. Three newly authored drafts 1069/1072/1073 have NOT yet been browser checked."
+    "browser_qa_scope_note": "Prior real Chromium 24/24 pass covered 19 cohort drafts and 5 public pages. Current six new article drafts 1069–1074 have NOT been rendered in Chromium.",
+    "new_six_drafts_build_check": "NOT_RUN_CHAD_SHELL_UNAVAILABLE"
   },
   "worker_execution_readback": {
     "authenticated_operator": "fyremael",
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 146,
-    "prepared_groups": 10,
+    "live_available_original_issues_without_result": 143,
+    "prepared_groups": 9,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
     "Codex_CLI_in_CHAD_WSL": "FOUND_V0.146.1_USING_NVM_NODE22_PATH",
@@ -330,6 +337,27 @@
       "review_result": "BOUND_FINITE_EVIDENCE_AND_PRIMARY_PROVENANCE_PARTIAL",
       "sampled": false,
       "finding": "Seven composite factorial divisors through u=1000 verified, strict modulus/search range clarified; asymptotic claim remains open.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1070,
+      "review_result": "NEW_2026_PREPRINT_STATUS_CONFLICT",
+      "sampled": false,
+      "finding": "New Dúcz–Varga preprint arXiv:2606.28157 (June 2026) claims a finite unit-distance graph with independent ratio <1/4. Catalogue still OPEN. Requires proof and exact-construction audit; STATUS_CONFLICT.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1071,
+      "review_result": "PRIMARY_SOURCE_FIDELITY_PENDING",
+      "sampled": false,
+      "finding": "Catalogue PROVED (LEAN) externally; pinned statement refers to external Lean files but local theorems still sorry. Endpoint conventions, whole-segment containment and connected region hypotheses not independently checked.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1074,
+      "review_result": "PRIMARY_SOURCE_FIDELITY_PENDING",
+      "sampled": false,
+      "finding": "EHS/Pillai sets, distinct density denominators, m=1 edge and finite 8!+1,9!+1,14!+1 witnesses checked; no density proof or original-paper audit.",
       "source_fidelity_disposition": "PENDING"
     }
   ],
