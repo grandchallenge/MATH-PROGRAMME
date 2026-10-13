@@ -28,7 +28,7 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "5 original authenticated RESULT/1 returns (2 SOURCE_LOCK_READY, 3 originally PARTIAL); #449 has separate authenticated critical-source supplement restoring documentary source fidelity, without rewriting original PARTIAL record. Three unaccepted six-section article drafts #448/#449/#451, three documented editorial exception reviews, no protected admission.",
+  "status_semantics": "5 original authenticated RESULT/1 returns (2 SOURCE_LOCK_READY, 3 originally PARTIAL); #449 has separate authenticated critical-source supplement restoring documentary source fidelity, without rewriting original PARTIAL record. Four unaccepted six-section article drafts #448/#449/#451/#453 (the #453 source return is staged but unposted), three documented editorial exception reviews, no protected admission.",
   "source_queue_readback": {
     "post_initial_source_return_count": 5,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
@@ -306,17 +306,18 @@
       ],
       "source_return": null,
       "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "evidence_state": "UNPOSTED_SOURCE_DRAFT_NOT_A_RETURN",
       "article_path": "governance/erdos_compendium/editorial/0453.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT_PENDING_ISSUE_RESULT",
+      "editorial_review_status": "PENDING_SOURCE_POST_AND_CRITICAL_REVIEW",
       "blockers": [
         "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
       ],
       "exceptions": [],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_staging_path": "governance/erdos_compendium/batches/EC-BULK-004_0453_UNPOSTED_RESULT.md"
     },
     {
       "problem_id": 454,
@@ -6682,14 +6683,15 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 3,
+    "count": 4,
     "problem_ids": [
       448,
       449,
-      451
+      451,
+      453
     ],
     "qa": {
-      "tests_passed": 51,
+      "tests_passed": 53,
       "subtests_passed": 3,
       "strict_mkdocs_build": "PASS_AT_EARLY_ARTICLE_HEAD",
       "exception_reviews_passed": 3,

@@ -68,3 +68,29 @@ def test_451_small_cases_and_product_upper_construction() -> None:
             m *= p
         n = m * (2 * k // m + 1)
         assert acceptable_451(k, n)
+
+
+def test_453_pomerance_strict_prime_product_examples() -> None:
+    # Paper p. 400: a GOOD index satisfies the strict > inequality for ALL 1 <= i < n.
+    primes = primes_in_open_interval(1, 1000)
+    assert primes[:10] == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+    def strict_good(n: int) -> bool:
+        return all(primes[n - 1] ** 2 > primes[n - i - 1] * primes[n + i - 1]
+                   for i in range(1, n))
+
+    assert [n for n in range(2, 21) if strict_good(n)] == [3, 5, 7, 10, 12, 13, 16, 17, 19, 20]
+    assert strict_good(3) and strict_good(5)
+    assert not strict_good(2) and not strict_good(4)
+    assert [primes[4 - i] * primes[4 + i] for i in range(1, 5)] == [91, 85, 57, 46]
+    # Incorrect reversal at n=3 is explicitly falsified.
+    assert all(not (primes[2] ** 2 < primes[2 - i] * primes[2 + i]) for i in (1, 2))
+
+
+def test_453_sublinear_midpoint_identity() -> None:
+    # The elementary model a_n = log(n+1) has exact strict midpoint inequality:
+    # (n+1)^2 - (n-i+1)(n+i+1) = i^2 > 0.
+    # This does NOT establish the infinite-vertex theorem for arbitrary sublinear sequences.
+    for n in range(2, 100):
+        for i in range(1, n):
+            assert (n + 1) ** 2 - (n - i + 1) * (n + i + 1) == i * i
