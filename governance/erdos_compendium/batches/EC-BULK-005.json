@@ -528,12 +528,14 @@
       "critical_sample_selected": false,
       "blockers": [
         "ORIGINAL_ER97E_AND_LENZ_PRIMARY_NOT_INSPECTED",
-        "CRITICAL_REVIEW_PENDING"
+        "CRITICAL_REVIEW_PENDING",
+        "ORIGINAL_1997_DISTINCTNESS_CONVENTION_UNINSPECTED"
       ],
       "exceptions": [
         "CROSS_DISTANCE_LITTLE_O_NOT_KNOWN",
         "FOUR_DIMENSIONAL_FIXTURE_NOT_PLANAR",
-        "MAINTAINED_2026_F_O_F_DIRECTION_CORRECTED"
+        "MAINTAINED_2026_F_O_F_DIRECTION_CORRECTED",
+        "CROSS_TEAM_DISTINCTNESS_NOT_EXPLICIT_IN_MAINTAINED_SOURCE"
       ],
       "source_return_comment_id": 6144502326,
       "source_return_disposition": "PARTIAL",
@@ -7392,5 +7394,30 @@
       "latest_article_commit": "c24b2925559de647f6a4cf7ffe6816ea2fe56ff3",
       "notes": "Status conflict: literal source statement is inconsistent and must not be editorially accepted until canonical historical source fixed."
     }
+  },
+  "tranche_quality_check": {
+    "scope": [
+      657,
+      658,
+      659,
+      660,
+      661,
+      662
+    ],
+    "qa_file": "governance/erdos_compendium/batches/EC-BULK-005_TRANCHE_0657_0662_QA.json",
+    "qa_commit": "86303ccec47a3eb94cc551921ffd6e80e8b604ed",
+    "fixture_suite": "ci/test_erdos_compendium_ec005_fixtures.py",
+    "fixture_local_tests_passed": 6,
+    "fixture_local_tests_total": 6,
+    "exact_source_issue_comments_checked": 6,
+    "article_sections_checked": 6,
+    "review_type": "ACCOUNTABLE_AUTHOR_SELF_CHECK_ONLY",
+    "no_math_certification": true,
+    "strict_mkdocs_not_run": true,
+    "browser_math_not_run": true,
+    "production_publication_not_run": true,
+    "editorial_admission_not_run": true,
+    "blocker_662": "MATERIAL_SOURCE_STATEMENT_DISCREPANCY_PRIMARY_ER97E_UNINSPECTED",
+    "next_prerequisite": "CONTINUE_189_ORIGINAL_SOURCE_AUDITS_AND_ARTICLES_BEFORE_CONSOLIDATED_PRODUCTION_PR"
   }
 }
