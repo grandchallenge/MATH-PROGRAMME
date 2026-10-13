@@ -26,35 +26,39 @@ $$
 
 **Boundary:** The argument proves nonzero higher derived inverse-limit cohomology in $D(\mathrm{Liq}_p(\mathbb R))$ under P1–P3. It does not assert that its underlying-point evaluation fully characterizes the cohomology object, nor that a BV quantum-weight tower contains this particular shift subsystem. It requires no comparison of Fréchet $\operatorname{Ext}^1$ with liquid $\operatorname{Ext}^1$.
 
-## 3. LFO3 on actual compact-support stages
+## 3. LFO3 on actual compact-support stages — CLOSED BY LFO-013
 
-For Euclidean opens $U_i,V$, choose nested compact exhaustions and write $E_{i,a}=\mathcal D_{K_{i,a}}(U_i)$, $G_b=\mathcal D_{L_b}(V)$, and $H_{\mathbf a}=\widehat\otimes_{\pi,i}E_{i,a_i}$.
+The earlier open surjectivity question has now been resolved **for the specified compact-support test-function targets**. See [LFO3-S theorem and full proof](LFO3_SURJECTIVITY_THEOREM_013.md).
 
-The open comparison is
+For fixed nuclear Fréchet $H_{\mathbf a}$, the comparison
 
 $$
-\Phi_{\mathbf a}:\varinjlim_b\operatorname{Hom}_{\mathcal A}(\underline{H_{\mathbf a}},\underline{G_b})
-\longrightarrow
-\operatorname{Hom}_{\mathcal A}(\underline{H_{\mathbf a}},\varinjlim_b\underline{G_b}).
-\tag{LFO3}
+\varinjlim_b\operatorname{Hom}_{\mathcal A}(\underline{H_{\mathbf a}},\underline{G_b})
+\xrightarrow{\sim}
+\operatorname{Hom}_{\mathcal A}(\underline{H_{\mathbf a}},A_p(V))
 $$
 
-**Proposition LPR-2 (injectivity conditional on monomorphism preservation).** If $\underline{G_b}\to\underline{G_{b'}}$ are monomorphisms and their filtered colimit maps $\underline{G_b}\to\varinjlim_b\underline{G_b}$ remain monomorphisms, then $\Phi_{\mathbf a}$ is injective.
+is a bijection. The proof uses point evaluations $A_p(V)\to\mathbb R$ to produce continuous scalar functionals on $H_{\mathbf a}$; Baire's theorem forces a common compact target support; filtered colimits computed on profinite plots and closed embeddings $G_b\hookrightarrow G_c$ then upgrade pointwise support control to an actual liquid factorization. Injectivity uses monomorphisms of support stages.
 
-**Proof.** If two stagewise maps yield the same morphism into the colimit, move both to a common larger stage $G_c$. The difference $\underline H\to\underline{G_c}$ vanishes after composition with the monomorphism $\underline{G_c}\to\varinjlim_b\underline{G_b}$, hence already vanishes at stage $c$. $\square$
+Moreover, strict LF bounded-set regularity gives a natural identification
 
-**Remaining surjectivity question:** Does every *liquid* morphism from each fixed nuclear Fréchet input stage into $A_p(V)=\varinjlim_b\underline{G_b}$ factor through a single output support stage? Grothendieck's classical Fréchet-to-strict-LF factorization theorem answers this for **continuous linear maps into the classical LF topology**, but it cannot be silently applied to a morphism into a colimit taken in $\mathcal A$. The missing bridge is an identification of $A_p(V)$ with the classical condensed/liquid realization of $\mathcal D(V)$ that reflects the relevant linear maps, or a direct liquid relative-stage factorization theorem.
+$$
+A_p(V)=\varinjlim_b\underline{\mathcal D_{L_b}(V)}
+\cong\underline{\mathcal D(V)}
+$$
 
-This is a *relative compactness* question for the particular support diagram, not a claim that $\underline H$ is compact with respect to every filtered colimit.
+as liquid modules, by checking maps from arbitrary profinite sets. This identification is specific to the regular strict LF test-function system.
 
-## 4. Concrete tests for a final LFO3 adjudication
+**Non-consequence:** the output support stage still depends on the source support stage. The global interchange $\varprojlim_{\mathbf a}\varinjlim_b\not\cong\varinjlim_b\varprojlim_{\mathbf a}$ remains false in general; the identity on $\mathcal D(\mathbb R)$ supplies the counterexample.
 
-1. Compare $\varinjlim_b\underline{\mathcal D_{L_b}(V)}$ with $\underline{\mathcal D(V)}$ formed from the locally convex LF space, including maps from profinite test spaces.
-2. Check whether the candidate comparison preserves global points, plots and bounded input sets. Underlying-point equality alone is insufficient for Hom comparison.
-3. Attempt to construct a liquid morphism $\underline H\to A_p(V)$ whose support is not uniformly bounded on $H$, or establish a theorem forcing factorization through some $G_b$.
-4. Test the same bridge for higher derived Hom and finite tensor products, separately from the underived case.
+## 4. Remaining derived and enriched tests
 
-**Disposition:** LPR-1 is proved from explicit standard-category axioms; LPR-2 gives injectivity under verified stage monomorphisms. **LFO3 surjectivity remains open.** Neither result proves enriched B.6 equivalence, Weiss descent, or renormalized BV operations.
+1. Establish higher derived $\operatorname{RHom}$ mapping-object behavior for the same fixed compact-support stages, with exactness hypotheses recorded.
+2. Compare countable source-stage inverse limits and quantum-weight pro-completions in the specified stable category; DLI-011 remains a nontrivial warning.
+3. Define the differentiable pro-cochain enrichment of Costello–Gwilliam Appendix B.6 and test multiplicative/cofibration compatibility.
+4. Verify Weiss descent and the completion order for the actual free BV observables.
+
+**Disposition:** LPR-1 persists under standard liquid-category axioms; **underived LFO3 is proved**, not merely injective. This does not prove enriched B.6 equivalence, Weiss descent, or interacting BV operations.
 
 ## References
 
