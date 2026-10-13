@@ -23,11 +23,11 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "4 authenticated issue-bound RESULT/1 source returns (#652,#653,#654,#655), 196 without returns. Four staged six-section UNACCEPTED draft articles, #652..#655. Two PARTIAL latest returns with historical-original primary-source limitations. No cohort editorial acceptance, protected production merge, public browser rendering, or V2 admission.",
+  "status_semantics": "5 authenticated issue-bound RESULT/1 returns (#652..#656), 195 without returns. Five staged six-section UNACCEPTED draft articles (#652..#656). Source-fidelity and critical editorial checks pending; no consolidated production PR/merge, browser-rendered MathJax validation, or V2 admission.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
-    "post_initial_source_return_count": 4,
+    "post_initial_source_return_count": 5,
     "authenticated_source_author_count": 1,
     "all_200_open_available": null,
     "all_200_open_and_labeled_available": true,
@@ -51,7 +51,9 @@
     "issue_655_native_state_option_id": 83946714,
     "project_state_correction_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2552#issuecomment-6143440991",
     "project_issue_654_gcl_state": "AVAILABLE_NATIVE_ISSUE_FIELD_VERIFIED",
-    "issue_654_native_field_readback_receipt": "GCL_CONTROL_BASH_RESULT/1:87e7d7ae71e748158d468ced83c9cc9f"
+    "issue_654_native_field_readback_receipt": "GCL_CONTROL_BASH_RESULT/1:87e7d7ae71e748158d468ced83c9cc9f",
+    "project_issue_656_gcl_state": "AVAILABLE_NATIVE_ISSUE_FIELD_VERIFIED",
+    "issue_656_native_field_readback_receipt": "GCL_CONTROL_BASH_RESULT/1:b811a005b57147ee9835fd664745a3c9"
   },
   "sample_policy": {
     "sample_count": 20,
@@ -271,22 +273,33 @@
         "number theory",
         "additive combinatorics"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1927#issuecomment-6143605307",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1927#issuecomment-6143605307",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "KMRR24_THEOREM_1_2_I_DIRECTLY_INSPECTED_HISTORICAL_SOURCES_PENDING",
       "article_path": "governance/erdos_compendium/editorial/0656.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_CRITICAL_SOURCE_AND_HISTORICAL_CHECK",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "ER75B_ER80_ORIGINAL_PASSAGES_NOT_INSPECTED",
+        "CRITICAL_EDITORIAL_REVIEW_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "PUBLISHED_RESOLUTION_CONFIRMED_KMRR24",
+        "UPPER_ASYMPTOTIC_VS_UPPER_BANACH_DENSITY",
+        "B_SUBSET_A_REQUIRED",
+        "DIAGONAL_EXCLUSION_AND_TRANSLATION_CRITICAL"
+      ],
+      "source_return_comment_id": 6143605307,
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "primary_publication": "https://doi.org/10.1090/cams/34",
+      "primary_theorem": "Theorem 1.2(i), printed page 481",
+      "queue_native_state": "AVAILABLE_VERIFIED"
     },
     {
       "problem_id": 657,
@@ -7261,6 +7274,13 @@
       "author": "accountable_coordinator",
       "latest_article_commit": "bdfb2465724be21079bda84d27aef245c2655916",
       "notes": "Published two-axis powers 2/3 counterexample to near-n statement, historical source passages not yet inspected."
+    },
+    "article_0656": {
+      "status": "UNACCEPTED_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1927#issuecomment-6143605307",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "f1ca289e559d7fbf75ae15d4cecc0d962e24e0f3",
+      "notes": "Published KMRR24 theorem 1.2(i) directly inspected; preserved B subset A, distinct elements and shift."
     }
   }
 }
