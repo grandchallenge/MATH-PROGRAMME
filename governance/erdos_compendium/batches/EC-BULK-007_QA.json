@@ -34,12 +34,16 @@
   "sample_reviews_remaining": 20,
   "exception_problem_ids": [
     1053,
+    1054,
     1055,
     1056,
     1057,
     1058,
     1059,
     1060,
+    1061,
+    1062,
+    1063,
     1064,
     1219,
     1220,
@@ -47,9 +51,9 @@
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 11,
+    "valid_result_grammar": 15,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 157,
+    "missing_results": 153,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
@@ -102,7 +106,7 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "Eleven authenticated issue-bound returns and eleven unaccepted six-section drafts. Two new Codex-assisted returns underwent accountable check; source-fidelity pending. Four concurrent worker pilot completed 1 draft and 3 timed out, do not infer capacity or active workers. Reserved 20-sample review remains unperformed.",
+  "note": "15 authenticated source-return comments and 15 six-section source-bounded drafts. No source lock adjudication or full 20-article critical sampling. Four partial reviews are mathematical arithmetic checks, not claims of source-fidelity acceptance.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
     "strict_mkdocs_build": "PASS_2026-10-13_LOCAL_ONLY",
@@ -127,16 +131,20 @@
     "public_deployment": "NOT_ATTEMPTED",
     "live_browser_mathjax": "NOT_ATTEMPTED",
     "reviewed_critical_sample_count": 0,
-    "authored_explanatory_draft_count_on_branch": 73,
+    "authored_explanatory_draft_count_on_branch": 77,
     "accepted_protected_v2_count_at_build": 50,
     "new_cohort_unaccepted_drafts": [
       1053,
+      1054,
       1055,
       1056,
       1057,
       1058,
       1059,
       1060,
+      1061,
+      1062,
+      1063,
       1064,
       1219,
       1220,
@@ -150,7 +158,7 @@
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 157,
+    "live_available_original_issues_without_result": 153,
     "prepared_groups": 10,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
@@ -215,8 +223,38 @@
       "review_result": "FINITE_TOTIENT_SIEVE_AND_EXPLICIT_INFINITE_FAMILY_VERIFIED; PRIMARY_PAPER_PROOF_UNREPLAYED",
       "sampled": false,
       "finding": "Totient comparisons over n<=200000 give (194833,175,4992); explicit n=15*2^k family gives strict reverse for all k>=1; Luca–Pomerance established density one in published literature but GCL did not reprove it."
+    },
+    {
+      "problem_id": 1054,
+      "review_result": "PARTIAL_SOURCE_STATUS_CONFLICT",
+      "sampled": false,
+      "finding": "Local divisor-prefix checks prove n=2,5 impossible; Tao obstruction and 2026 limsup claim require independent primary-source and semantic review.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1061,
+      "review_result": "BOUNDED_ORDERED_COUNT_PASS",
+      "sampled": false,
+      "finding": "Exact ordered sigma-sum pair counts 8,12,26 for x=10,20,40; external 2026 claim not independently proof-audited.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1062,
+      "review_result": "BRUTE_FORCE_EXACT_15_PASS",
+      "sampled": true,
+      "finding": "All 2^15 subsets checked and interval 2n/3 bound justified; Lebensold and newer density claims require primary review.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1063,
+      "review_result": "BINOMIAL_MINIMA_K_2_TO_9_PASS",
+      "sampled": false,
+      "finding": "Eight exact minima reproduced by divisibility enumeration; published improved lcm upper bound remains externally reported, no independent source proof replay.",
+      "source_fidelity_disposition": "PENDING"
     }
   ],
   "finite_verification_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS.json",
-  "finite_verification_program": "ci/erdos_compendium_007_finite_checks.py"
+  "finite_verification_program": "ci/erdos_compendium_007_finite_checks.py",
+  "finite_verification_phase2_program": "ci/erdos_compendium_007_phase2_checks.py",
+  "finite_verification_phase2_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE2.json"
 }
