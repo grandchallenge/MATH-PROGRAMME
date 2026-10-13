@@ -33,22 +33,26 @@
   "sample_reviews_completed": 0,
   "sample_reviews_remaining": 20,
   "exception_problem_ids": [
+    1053,
+    1055,
+    1056,
     1219,
     1220,
     1221
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 3,
+    "valid_result_grammar": 6,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 165,
+    "missing_results": 162,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
     "original_source_issue_count": 168,
     "source_mappings_unique": true,
     "issue_labels_and_authorship_readback": 168,
-    "issue_metadata_flags": {}
+    "issue_metadata_flags": {},
+    "source_issue_identity_readback": 168
   },
   "finite_example_checks": [
     {
@@ -93,38 +97,78 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "Deterministic sample reserved for eventual critical review of 20 completed articles; not a claim that 20 articles were reviewed.",
+  "note": "Three additional authenticated issue-bound PARTIAL source audits and three drafts added. Six total structurally valid source returns, source-fidelity pending. Deterministic 20-sample remains not completed.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
-    "strict_mkdocs_build": "PASS_LOCAL_ONLY",
+    "strict_mkdocs_build": "PASS_2026-10-13_LOCAL_ONLY",
     "generated_reference_page_count": 1221,
     "generated_markdown_page_count": 1235,
     "accepted_protected_v2_count_at_base_head": 50,
     "legacy_unadmitted_exemplars": 3,
     "current_local_pending_drafts": 12,
     "new_drafts_verified_in_generated_html_unaccepted_label": [
+      1053,
+      1055,
+      1056,
       1219,
       1220,
       1221
     ],
     "public_deployment": "NOT_ATTEMPTED",
-    "live_browser_mathjax": "NOT_ATTEMPTED"
+    "live_browser_mathjax": "NOT_ATTEMPTED",
+    "reviewed_critical_sample_count": 0,
+    "authored_explanatory_draft_count_on_branch": 68,
+    "accepted_protected_v2_count_at_build": 50,
+    "new_cohort_unaccepted_drafts": [
+      1053,
+      1055,
+      1056,
+      1219,
+      1220,
+      1221
+    ],
+    "local_math_bootstrap": "PASS_ARITHMATEX_AND_EXTERNAL_MATHJAX_LOADER_REFERENCED_SIX_PAGES",
+    "local_browser_mathjax": "NOT_VERIFIED"
   },
   "worker_execution_readback": {
     "authenticated_operator": "fyremael",
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 165,
+    "live_available_original_issues_without_result": 162,
     "prepared_groups": 11,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
-    "Codex_CLI_in_CHAD_WSL": "NOT_FOUND",
+    "Codex_CLI_in_CHAD_WSL": "FOUND_V0.146.1_USING_NVM_NODE22_PATH",
     "npx_CLI_bootstrap": "FAILED_MISSING_NPM_MODULE",
     "codex_is_optional": "YES_NOT_A_GOVERNANCE_BLOCKER",
-    "note": "No source-audit state advanced from a proposed workgroup or unavailable runtime."
+    "note": "No source-audit state advanced from a proposed workgroup or unavailable runtime.",
+    "Codex_logged_in": "CHATGPT_LOGIN_VERIFIED",
+    "one_source_worker_smoke": "RAN_65_SECONDS_TIMED_OUT_NO_ACCEPTED_RETURN"
   },
   "latest_protected_main_readback": "88b493d0c40c0fdec97b372ade65b27468e5475c",
   "coverage_receipt": "governance/erdos_compendium/batches/EC-BULK-007_CATALOGUE_READBACK.json",
-  "prepared_workgroups": "governance/erdos_compendium/batches/EC-BULK-007_WORKGROUPS.json"
+  "prepared_workgroups": "governance/erdos_compendium/batches/EC-BULK-007_WORKGROUPS.json",
+  "exception_reviews": [
+    {
+      "problem_id": 1053,
+      "review_result": "ELEMENTARY_LEMMA_AND_FINITE_CHECKS_PASS; PRIMARY_SOURCE_LOCK_OUTSTANDING",
+      "sampled": false,
+      "finding": "Squarefree restriction correctly separated from general open little-o claim. All sigma checks match two algorithms; Guy B2 and 1956 full paper remain uninspected."
+    },
+    {
+      "problem_id": 1055,
+      "review_result": "BOUNDED_PRIME_RANK_CHECK_PASS; HISTORICAL_SOURCE_FIDELITY_PENDING",
+      "sampled": false,
+      "finding": "303 prime ranks checked twice, initial least primes confirmed; frozen Lean exists_p contains sorry, not independent GCL theorem certification."
+    },
+    {
+      "problem_id": 1056,
+      "review_result": "FINITE_PRODUCT_CHECK_PASS; SOURCE_AND_FORMAL_HYPOTHESES_PENDING",
+      "sampled": false,
+      "finding": "Both finite witness products verified; interval {1} convention and full Guy/Makowski source require review."
+    }
+  ],
+  "finite_verification_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS.json",
+  "finite_verification_program": "ci/erdos_compendium_007_finite_checks.py"
 }
