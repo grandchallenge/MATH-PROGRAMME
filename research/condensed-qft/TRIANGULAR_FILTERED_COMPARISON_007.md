@@ -103,7 +103,7 @@ It preserves and reflects **associated-graded quasi-isomorphisms** and hence ind
 
 The full comparison requires a theorem that does **not** assume a weight-preserving differential. The following result is one such theorem.
 
-**Theorem FC-2 (finite-filtered Weiss propagation).** Let $\mathcal C$ be any stable cocomplete infinity-category, and let $X$ be a covariant assignment from Euclidean opens to **length-$L$ filtered objects** of $\mathcal C$, with filtration-preserving structure maps. Suppose every associated-graded assignment
+**Theorem FC-2 (finite-filtered Weiss propagation).** Let $\mathcal C$ be any stable cocomplete infinity-category, and let $X$ be a covariant assignment from Euclidean opens to **filtered objects of length $L$** of $\mathcal C$, with filtration-preserving structure maps. Suppose every associated-graded assignment
 
 $
 U\longmapsto
@@ -127,7 +127,7 @@ and downward induction from $F^LX=0$ show that $F^i(c)$ is an equivalence for ev
 
 **A completed extension, conditional on the declared target.** Suppose a completion category takes objects with truncations $X/F^NX$, declares its completed Čech homotopy colimit by quotientwise Čech colimits followed by the derived inverse limit, and detects equivalences on all finite quotients. If every quotient is a finite-filtered assignment satisfying the hypotheses of FC-2, then the completed object has Weiss descent **in that declared target**. This is a formal, conditional theorem: it does not identify the completed target with Costello–Gwilliam B.6 or prove preservation of analytic smooth multilinear structures.
 
-## 5. The next infinite-dimensional construction
+## 6. The next infinite-dimensional construction
 
 For an infinite complete *underlying graded-split* object $X=\prod_{i\ge0}X_i$ one can specify an upper-triangular differential $D_{ji}:X_i\to X_j[1]$, $j\ge i$, with every finite truncation satisfying (T1), and upper-triangular filtration-preserving morphisms satisfying $D_Yf=fD_X$. In every fixed quotient $X/F^N$ all sums and products of blocks are finite. This defines a **coefficientwise computable** enriched-matrix presentation of complete filtered objects **when compatible underlying graded splittings exist**.
 
