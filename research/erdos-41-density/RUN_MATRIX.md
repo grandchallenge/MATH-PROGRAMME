@@ -37,3 +37,16 @@ This audit does not certify the full Erdős conjecture or authorize a new worker
 | Original finite-window valley for actual M3 | OPEN: range-only Hall constraints are insufficient |
 
 Consult [CROSS_PATTERN_HALL.md](CROSS_PATTERN_HALL.md). A feasible shell-occupancy profile need not be an M3 set.
+
+## Additive-shadow / second-moment track
+
+| Obligation | Status |
+| --- | --- |
+| Exact cubic shadow cardinality and cross-block disjointness | Written proof, finite exhaustive checks on genuine M3 fixtures; not a full Lean set-injection proof |
+| Diameter and difference-shadow inequalities | Written elementary corollaries; finite hostile tests |
+| Distinct-integer second-moment inequality | Written sorted-integer proof; exact-rational and integer checks |
+| XXY/XYY cross-pattern moment counterfixture | Exact witness, individual patterns injective and Hall-feasible, combined moment slack -1872 |
+| Polynomial/variance algebra and fixture calculations | Lean 4.29.1 kernel-checked when receipt GREEN |
+| Infinite M3 finite-window density valley | OPEN; no solution promotion |
+
+See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md) and ADDITIVE_SHADOW_RECEIPT.json.

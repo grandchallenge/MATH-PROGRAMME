@@ -10,6 +10,10 @@ The audited follow-up [SHELL_HARDY_AUDIT.md](SHELL_HARDY_AUDIT.md) proves that t
 
 The protected successor manuscript [CROSS_PATTERN_HALL.md](CROSS_PATTERN_HALL.md) proves the exact joint sum-range constraint for any collection of three-shell patterns, including an explicit two-adjacent-shell inequality excluded by neither separate mixed-shell counts nor the ordinary global packing count. It then constructs an *ungapped synthetic occupancy profile* obeying **every** such range-volume constraint and even the sharp cubic counting bound, yet having a positive normalized lower density. This is a failure of the proposed proof method, not an M3 counterexample: the synthetic set has explicit three-sum collisions. A gapped variant similarly refutes deriving the stronger shell-energy average from this entire family of volume constraints. Genuine joint arithmetic information beyond enclosing ranges is required for that route. The exact finite-window valley criterion remains OPEN for actual M3 sets.
 
+## 2026-10-13 actual additive-shadow and moment restrictions
+
+See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md). The exact cubic difference-shadow theorem shows that each finite M3 block X has **(n³−n²+2n)/2** distinct values of a+b−c, and disjoint blocks have disjoint shadows. The resulting diameter-sensitive cubic bound is strictly more informative than counting only triple-sum enclosing intervals. A separate distinct-integer second-moment inequality detects collisions between real mixed triple-sum lists even when all interval Hall inequalities pass. The previous *consecutive-integers* Hall counterprofiles violate the new shadow bound, which pinpoints an actual arithmetic flaw in those fake B3 sets. The true M3 finite-window valley criterion remains unproved, and neither the shadow count nor the variance bound alone establishes it.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
