@@ -110,5 +110,24 @@ class EC005Fixtures(unittest.TestCase):
         self.assertEqual(first_translation(8, sum_of_two_squares), 96)
 
 
+    def test_676_prime_square_remainder_exceptions(self):
+        def prime(p):
+            return p >= 2 and all(p % d for d in range(2, math.isqrt(p) + 1))
+
+        def witness(n):
+            for p in range(2, math.isqrt(n) + 1):
+                if prime(p) and n % (p*p) < p:
+                    return (p, n // (p*p), n % (p*p))
+            return None
+
+        self.assertEqual(witness(10), (3, 1, 1))
+        self.assertEqual(witness(24), (2, 6, 0))
+        self.assertIsNone(witness(6))
+        self.assertIsNone(witness(14))
+        exceptions = [n for n in range(1, 401) if witness(n) is None]
+        self.assertEqual(len(exceptions), 86)
+        self.assertEqual(exceptions[:10], [1,2,3,6,7,14,15,22,23,30])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
