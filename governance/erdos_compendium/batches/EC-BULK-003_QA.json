@@ -281,9 +281,25 @@
       "article_sha256": "239935f52cd46b3a41935c952f472e4c900937d55ae47a5fbe62b85263df06a0",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Exact finite α=1, β=√2 floor sequences check: the ten initial terms sum to 72 and satisfy the gap-free sorted subset-sum criterion through 72. This proves only finite coverage, not eventual completeness. The pinned part-(ii) Lean file hardcodes base 2 in place of quantified γ; the 1989 primary paper and current-formal semantic fix remain unverified, so the problem stays open."
+    },
+    {
+      "problem_id": 360,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1630#issuecomment-6140559439",
+      "article_sha256": "55ecbf5872e680105f31acc2cd9a5402a7a997855cbfd84fa97618dff40b77df",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Verified exact two-color partition for n=5: {1,2} has subset sums 0,1,2,3 and {3,4} has 0,3,4,7, whereas the single class has 1+4=5, hence f(5)=2. Compared article with Conlon–Fox–Pham arXiv:2104.14766 and maintained problem statement: the external theorem determines Θ(n^(1/3)(n/phi(n))/((log n)^(1/3)(log log n)^(2/3))), not an exact value for every n. No pinned formal statement/proof or GCL certification."
+    },
+    {
+      "problem_id": 366,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1636#issuecomment-6140560123",
+      "article_sha256": "3d6c8e7a24bcb651b09c4cf6930a07381b5f20d53943f193ada3ebf8fdc07fec",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently checked 12167=23^3 and 12168=2^3*3^2*13^2; this is the REVERSED (3-full then 2-full) orientation, not a witness for original (2-full then 3-full). Live Erdős #366 and pinned FormalConjectures theorem confirm open existential statement with sorry. The reported search below 10^22 and abc-conditional remarks are not accepted universal proofs."
     }
   ],
-  "review_count": 27,
+  "review_count": 29,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
