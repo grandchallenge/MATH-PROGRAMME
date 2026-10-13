@@ -49,15 +49,18 @@
     1066,
     1067,
     1068,
+    1069,
+    1072,
+    1073,
     1219,
     1220,
     1221
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 19,
+    "valid_result_grammar": 22,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 149,
+    "missing_results": 146,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
@@ -110,7 +113,7 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "19 authenticated source returns and 19 UNACCEPTED drafts. Playwright-core@1.58.2 installed, Chromium@156.0.8078.4 launched. Real browser verified 24 pages (508 math expressions), zero MathJax markup errors; public cohort deployment not yet attempted. Source fidelity and protected publication are still pending.",
+  "note": "22 authenticated issue-bound research returns; 22 six-section unaccepted drafts. Current 3 authored over GitHub API during CHAD shell outage. Primary source review incomplete; 20 critical reviews and protected production still pending. Former 24/24 browser pass does not cover new three drafts.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
     "strict_mkdocs_build": "PASS_LOCAL_19_DRAFTS_REBUILT",
@@ -143,7 +146,7 @@
     "public_deployment": "NOT_ATTEMPTED_FOR_COHORT_007",
     "live_browser_mathjax": "PASS_5_PREVIOUSLY_PUBLISHED_MATH_PAGES_54_OF_54_RENDERED_ZERO_MERROR",
     "reviewed_critical_sample_count": 0,
-    "authored_explanatory_draft_count_on_branch": 81,
+    "authored_explanatory_draft_count_on_branch": 84,
     "accepted_protected_v2_count_at_build": 50,
     "new_cohort_unaccepted_drafts": [
       1053,
@@ -162,6 +165,9 @@
       1066,
       1067,
       1068,
+      1069,
+      1072,
+      1073,
       1219,
       1220,
       1221
@@ -174,14 +180,16 @@
     "browser_qa_tested": 24,
     "browser_qa_passed": 24,
     "local_draft_math_expressions_rendered": 454,
-    "public_existing_math_expressions_rendered": 54
+    "public_existing_math_expressions_rendered": 54,
+    "new_three_drafts_build_check": "NOT_RUN_CHAD_SHELL_UNAVAILABLE",
+    "browser_qa_scope_note": "Existing 24/24 Chromium receipt covered 19 previous drafts and 5 already-public pages. Three newly authored drafts 1069/1072/1073 have NOT yet been browser checked."
   },
   "worker_execution_readback": {
     "authenticated_operator": "fyremael",
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 149,
+    "live_available_original_issues_without_result": 146,
     "prepared_groups": 10,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
@@ -302,6 +310,27 @@
       "sampled": false,
       "finding": "K_aleph1 has countable infinitely vertex-connected K_aleph0 subgraph; one positive example does not prove all graph claim, open status retained.",
       "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1069,
+      "review_result": "BOUND_FINITE_EVIDENCE_AND_PRIMARY_PROVENANCE_PARTIAL",
+      "sampled": false,
+      "finding": "Szemerédi–Trotter 1983 original Theorem 2 read directly on printed p.382; the full covering lemma proof and 1987 attribution still need source-fidelity review.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1072,
+      "review_result": "BOUND_FINITE_EVIDENCE_AND_PRIMARY_PROVENANCE_PARTIAL",
+      "sampled": false,
+      "finding": "Wilson endpoint and factorial-residue checks through p=150; n=0 versus positive-index p=2 convention distinguished; prime-density claims remain open.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1073,
+      "review_result": "BOUND_FINITE_EVIDENCE_AND_PRIMARY_PROVENANCE_PARTIAL",
+      "sampled": false,
+      "finding": "Seven composite factorial divisors through u=1000 verified, strict modulus/search range clarified; asymptotic claim remains open.",
+      "source_fidelity_disposition": "PENDING"
     }
   ],
   "finite_verification_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS.json",
@@ -310,5 +339,7 @@
   "finite_verification_phase2_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE2.json",
   "finite_verification_phase3_program": "ci/erdos_compendium_007_phase3_checks.py",
   "finite_verification_phase3_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE3.json",
-  "browser_qa_gate_note": "Real Chromium browser verified 19 local unpublished drafts (454 mathematical expressions) and 5 already-published public math pages (54 expressions). Cohort drafts are not yet publicly deployed, so public cohort verification and V2 admission gate remain pending."
+  "browser_qa_gate_note": "Real Chromium browser verified 19 local unpublished drafts (454 mathematical expressions) and 5 already-published public math pages (54 expressions). Cohort drafts are not yet publicly deployed, so public cohort verification and V2 admission gate remain pending.",
+  "finite_verification_phase4_program": "ci/erdos_compendium_007_phase4_checks.py",
+  "finite_verification_phase4_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE4.json"
 }
