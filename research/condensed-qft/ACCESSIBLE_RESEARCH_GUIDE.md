@@ -19,6 +19,8 @@
 
 > **CF-001: completed filtered free quantum observables.** [Proof and Costello–Gwilliam comparison](COMPLETE_FILTERED_LIQUID_WEISS_006.md) constructs split complete p-liquid quantum-weight objects with completed tensor and Cech colimits, proves Weiss descent in that target and reconciles the earlier ordinary-product and pro-category no-go results. Full enriched comparison to differentiable pro-cochain complexes remains open.
 
+> **FC-007 — beyond the split-weight category:** [Triangular filtered dg comparison](TRIANGULAR_FILTERED_COMPARISON_007.md) proves two finite counterexamples to a full Costello–Gwilliam equivalence: filtered maps may mix weights, and filtered differentials may raise weight. The same note proves an exact finite-dimensional triangular-matrix equivalence and a finite-filtered Weiss descent propagation theorem that tolerates filtration-raising differentials. Infinite-dimensional differentiable enrichment remains open.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
