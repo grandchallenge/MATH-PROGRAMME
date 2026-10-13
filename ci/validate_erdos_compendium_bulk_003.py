@@ -98,7 +98,10 @@ def verify(strict: bool = False) -> dict:
             assert text.count("$$") % 2 == 0, f"Unpaired display math in #{n}"
             assert not re.search(r"\\\[|\\\]|\\\(|\\\)", text), n
             assert len(text.split()) >= 350, f"Insufficient substantive article #{n}"
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            digest = hashlib.sha256(text.strip().encode("utf-8")).hexdigest()
+            raw_digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            if x.get("manuscript_raw_file_sha256_pre_admission"):
+                assert x["manuscript_raw_file_sha256_pre_admission"] == raw_digest, n
             if x.get("manuscript_sha256_pre_admission"):
                 assert x["manuscript_sha256_pre_admission"] == digest, n
             assert x.get("article_status") == "UNACCEPTED_DRAFT", n
