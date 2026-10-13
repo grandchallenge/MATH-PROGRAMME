@@ -28,10 +28,12 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "0 authenticated issue-bound RESULT/1 source returns; 200 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority.",
+  "status_semantics": "1 authenticated issue-bound RESULT/1 PARTIAL source return, source-fidelity blocked; 199 without returns. Zero articles accepted. No certification or editorial admission.",
   "source_queue_readback": {
     "post_initial_source_return_count": 0,
-    "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK"
+    "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
+    "authenticated_source_author_count": 1,
+    "readback_state": "COMPLETE_200_ISSUES"
   },
   "items": [
     {
@@ -52,17 +54,25 @@
       "topics": [
         "combinatorics"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1717#issuecomment-6141186112",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1717#issuecomment-6141186112",
+      "evidence_state": "PARTIAL_RETURN_SOURCE_FIDELITY_BLOCKED",
       "article_path": "governance/erdos_compendium/editorial/0447.md",
       "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "editorial_review_status": "SOURCE_FIDELITY_BLOCKED",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "PRIMARY_KLEITMAN_1971_FULL_TEXT_NOT_INSPECTED",
+        "EXTERNAL_LEAN_PROOF_NOT_GCL_REPLAYED"
       ],
-      "exceptions": [],
-      "critical_sample_selected": false
+      "exceptions": [
+        "SOURCE_TEXT_ACCESS",
+        "FORMAL_PROOF_EXTERNAL_ONLY",
+        "DIRECT_ERDOS_LIVE_HTTP_403"
+      ],
+      "critical_sample_selected": false,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6141186112,
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 448,
