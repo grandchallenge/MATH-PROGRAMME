@@ -28,7 +28,7 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "5 authenticated issue-bound RESULT/1 records: 2 SOURCE_LOCK_READY pending editorial review (#448,#451), 3 PARTIAL with explicit source blockers (#447,#449,#450); 195 no returns. Two unaccepted mathematical manuscripts; no protected publication/admission or mathematical certification.",
+  "status_semantics": "5 original authenticated RESULT/1 returns (2 SOURCE_LOCK_READY, 3 originally PARTIAL); #449 has separate authenticated critical-source supplement restoring documentary source fidelity, without rewriting original PARTIAL record. Three unaccepted six-section article drafts #448/#449/#451, three documented editorial exception reviews, no protected admission.",
   "source_queue_readback": {
     "post_initial_source_return_count": 5,
     "comment_results_source": "PENDING_FULL_GITHUB_ISSUE_COMMENT_READBACK",
@@ -100,7 +100,7 @@
       "evidence_state": "SOURCE_LOCK_READY_PENDING_EDITORIAL_REVIEW",
       "article_path": "governance/erdos_compendium/editorial/0448.md",
       "article_status": "UNACCEPTED_DRAFT",
-      "editorial_review_status": "AWAITING_DECLARED_CRITICAL_REVIEW",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_PENDING_PROTECTED_ADMISSION",
       "blockers": [
         "PROTECTED_FC_MAIN_THEOREM_SORRY",
         "INDEPENDENT_LEAN_REPLAY_NOT_DONE"
@@ -118,7 +118,8 @@
       "manuscript_sha256_pre_admission": "dec0bcd3f3803cec6406c2f0ab40779acbb738225be55c32ae6400bd79924cac",
       "manuscript_raw_file_sha256_pre_admission": "38db0498e43e7486943367661e31bbf0df49824b1c0fea7b7ff040baec393bb0",
       "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
-      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1718#issuecomment-6142995429"
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1718#issuecomment-6142995429",
+      "critical_review_receipt": "https://github.com/grandchallenge/MATH-PROGRAMME/blob/editorial/ec-bulk-004-200/governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-001.md"
     },
     {
       "problem_id": 449,
@@ -141,18 +142,16 @@
       ],
       "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1719#issuecomment-6143008498",
       "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1719#issuecomment-6143008498",
-      "evidence_state": "PARTIAL_RETURN_SOURCE_FIDELITY_BLOCKED",
+      "evidence_state": "SOURCE_LOCK_READY_VIA_CRITICAL_SUPPLEMENT",
       "article_path": "governance/erdos_compendium/editorial/0449.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "SOURCE_FIDELITY_BLOCKED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_PENDING_PROTECTED_ADMISSION",
       "blockers": [
-        "PUBLIC_SECONDARY_INEQUALITY_FALSE_AT_N_EQUALS_6",
-        "HALL_TENENBAUM_1988_SECTION_4_6_PRIMARY_TEXT_NOT_INSPECTED",
-        "POSITIVE_DENSITY_LOWER_BOUND_NOT_YET_VERIFIED"
+        "HALL_TENENBAUM_1988_SECTION_4_6_PRIMARY_TEXT_NOT_INSPECTED_FOR_PRECISE_BOOK_CLAIMS"
       ],
       "exceptions": [
-        "MATHEMATICAL_SOURCE_INEQUALITY_CONTRADICTION",
-        "SOURCE_FIDELITY_REQUIRED"
+        "MATHEMATICAL_SOURCE_INEQUALITY_CONTRADICTION_DOCUMENTED",
+        "INDEPENDENT_ELEMENTARY_RECONSTRUCTION_NOT_MATHCERT"
       ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
@@ -160,7 +159,13 @@
       "source_return_author": "fyremael",
       "source_return_comment_id": 6143008498,
       "source_return_content_sha256": "163fd187bc8b88d2347b02e1ccf16084ef97eaeab89743c1249c1b1a4ef04585",
-      "source_return_disposition": "PARTIAL"
+      "source_return_disposition": "PARTIAL",
+      "source_fidelity_supplement": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1719#issuecomment-6143318025",
+      "source_fidelity_state": "SOURCE_LOCK_READY_VIA_CRITICAL_SUPPLEMENT",
+      "manuscript_sha256_pre_admission": "8202f25b5bf0d69eff49f49fe7ab640b5b5777629c6643c262d0ab8cbdfd1862",
+      "manuscript_raw_file_sha256_pre_admission": "0232fb018ecd014cc7bb141c20a4af8c655360f65cf81be6fd7b61021eb77b3d",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "critical_review_receipt": "https://github.com/grandchallenge/MATH-PROGRAMME/blob/editorial/ec-bulk-004-200/governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-001.md"
     },
     {
       "problem_id": 450,
@@ -227,7 +232,7 @@
       "evidence_state": "SOURCE_LOCK_READY_PENDING_EDITORIAL_REVIEW",
       "article_path": "governance/erdos_compendium/editorial/0451.md",
       "article_status": "UNACCEPTED_DRAFT",
-      "editorial_review_status": "AWAITING_DECLARED_CRITICAL_REVIEW",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_PENDING_PROTECTED_ADMISSION",
       "blockers": [
         "EXTERNAL_2026_LOWER_BOUND_NOT_GCL_CERTIFIED",
         "UPPER_GROWTH_CONJECTURE_UNRESOLVED"
@@ -246,7 +251,8 @@
       "manuscript_sha256_pre_admission": "e46f77a8d2d9d394a77cdbc34f6493aaaa8bae7a67ef24d7c79c8bf4af139453",
       "manuscript_raw_file_sha256_pre_admission": "24b456a7be2e8fb6bae1d8ec81c1bf9a56d23da255fee3b4cc76070aef3f3d25",
       "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
-      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1721#issuecomment-6143054330"
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1721#issuecomment-6143054330",
+      "critical_review_receipt": "https://github.com/grandchallenge/MATH-PROGRAMME/blob/editorial/ec-bulk-004-200/governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-001.md"
     },
     {
       "problem_id": 452,
@@ -6676,17 +6682,20 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-13",
-    "count": 2,
+    "count": 3,
     "problem_ids": [
       448,
+      449,
       451
     ],
     "qa": {
-      "editorial_regression_tests_passed": 33,
+      "tests_passed": 51,
       "subtests_passed": 3,
-      "site_build": "PRIOR_STRICT_BUILD_PASSED_RECHECK_LATEST_PENDING",
-      "critical_review": "NOT_YET_ACCEPTED",
-      "published_readback": "NOT_YET",
+      "strict_mkdocs_build": "PASS_AT_EARLY_ARTICLE_HEAD",
+      "exception_reviews_passed": 3,
+      "deterministic_20_sample_reviews_passed": 0,
+      "protected_production_merge": "NONE",
+      "public_browser_math_readback": "NOT_YET",
       "accepted_count": 0
     }
   }
