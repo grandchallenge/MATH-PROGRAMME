@@ -45,15 +45,19 @@
     1062,
     1063,
     1064,
+    1065,
+    1066,
+    1067,
+    1068,
     1219,
     1220,
     1221
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 15,
+    "valid_result_grammar": 19,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 153,
+    "missing_results": 149,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
@@ -106,10 +110,10 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "15 authenticated source-return comments and 15 six-section source-bounded drafts. No source lock adjudication or full 20-article critical sampling. Four partial reviews are mathematical arithmetic checks, not claims of source-fidelity acceptance.",
+  "note": "19 authenticated returns and 19 unaccepted drafts. Issue #2337 corrected to remove a false pointwise interpretation of an asymptotic graph-theory bound. Full primary source-fidelity and 20 sampled critical reviews not complete.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
-    "strict_mkdocs_build": "PASS_2026-10-13_LOCAL_ONLY",
+    "strict_mkdocs_build": "PASS_LOCAL_19_DRAFTS_REBUILT",
     "generated_reference_page_count": 1221,
     "generated_markdown_page_count": 1235,
     "accepted_protected_v2_count_at_base_head": 50,
@@ -117,13 +121,21 @@
     "current_local_pending_drafts": 12,
     "new_drafts_verified_in_generated_html_unaccepted_label": [
       1053,
+      1054,
       1055,
       1056,
       1057,
       1058,
       1059,
       1060,
+      1061,
+      1062,
+      1063,
       1064,
+      1065,
+      1066,
+      1067,
+      1068,
       1219,
       1220,
       1221
@@ -131,7 +143,7 @@
     "public_deployment": "NOT_ATTEMPTED",
     "live_browser_mathjax": "NOT_ATTEMPTED",
     "reviewed_critical_sample_count": 0,
-    "authored_explanatory_draft_count_on_branch": 77,
+    "authored_explanatory_draft_count_on_branch": 81,
     "accepted_protected_v2_count_at_build": 50,
     "new_cohort_unaccepted_drafts": [
       1053,
@@ -146,11 +158,15 @@
       1062,
       1063,
       1064,
+      1065,
+      1066,
+      1067,
+      1068,
       1219,
       1220,
       1221
     ],
-    "local_math_bootstrap": "PASS_ARITHMATEX_AND_EXTERNAL_MATHJAX_LOADER_REFERENCED_SIX_PAGES",
+    "local_math_bootstrap": "PASS_19_DRAFTS_ARITHMATEX_WITH_SITE_MATHJAX_LOADER",
     "local_browser_mathjax": "NOT_VERIFIED"
   },
   "worker_execution_readback": {
@@ -158,7 +174,7 @@
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 153,
+    "live_available_original_issues_without_result": 149,
     "prepared_groups": 10,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
@@ -251,10 +267,40 @@
       "sampled": false,
       "finding": "Eight exact minima reproduced by divisibility enumeration; published improved lcm upper bound remains externally reported, no independent source proof replay.",
       "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1065,
+      "review_result": "PRIME_WITNESS_FINITE_REVIEW_PASS",
+      "sampled": true,
+      "finding": "Small and larger prime-pattern families distinguished; Guy B46 not page-checked, universal infinitude unproved.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1066,
+      "review_result": "ASYMPTOTIC_VS_FINITE_BOUND_CORRECTED_AND_PROVISIONALLY_CHECKED",
+      "sampled": false,
+      "finding": "Corrected original source-return comment in place on 2026-10-13; 5/16 is an asymptotic upper coefficient, NOT an exact upper bound for n=6. Six-vertex disjoint triangles give g(6)=2.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1067,
+      "review_result": "EXTERNAL_ZFC_COUNTEREXAMPLE_NOT_REPLAYED",
+      "sampled": false,
+      "finding": "Catalogue DISPROVED, Soukup/Bowler-Pitz external proof; variant cardinality and edge versus vertex connectivity not conflated; Lean replay absent.",
+      "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1068,
+      "review_result": "COUNTABLE_GRAPH_EXAMPLE_AND_VARIANT_REVIEW",
+      "sampled": false,
+      "finding": "K_aleph1 has countable infinitely vertex-connected K_aleph0 subgraph; one positive example does not prove all graph claim, open status retained.",
+      "source_fidelity_disposition": "PENDING"
     }
   ],
   "finite_verification_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS.json",
   "finite_verification_program": "ci/erdos_compendium_007_finite_checks.py",
   "finite_verification_phase2_program": "ci/erdos_compendium_007_phase2_checks.py",
-  "finite_verification_phase2_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE2.json"
+  "finite_verification_phase2_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE2.json",
+  "finite_verification_phase3_program": "ci/erdos_compendium_007_phase3_checks.py",
+  "finite_verification_phase3_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE3.json"
 }
