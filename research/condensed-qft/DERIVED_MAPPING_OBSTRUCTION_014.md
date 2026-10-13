@@ -95,7 +95,7 @@ A sufficient *conditional* hypothesis is that $\underline H$ admits a projective
 
 **This is an example in an ordinary module category, not in the actual liquid test-function target diagram.** It shows why the logical step from underived LFO3 to derived LFO3 is invalid without more hypotheses.
 
-Take $k=\mathbb R$, let $V$ be a $k$-vector space with basis $e_0,e_1,\ldots$, and define the commutative square-zero ring
+Take $k=\mathbb R$, let $V$ be a vector space over $k$ with basis $e_0,e_1,\ldots$, and define the commutative square-zero ring
 
 $$
 R=k\oplus V,\qquad
@@ -134,7 +134,7 @@ $$
 \tag{14.9}
 $$
 
-Define an $R$-linear map $f:V\to N$ by assigning to each $e_j$ the element $e_0$ in the $j$th target summand and zero in all other summands. It is $R$-linear because $V$ acts trivially on both $V$ and its image in the target's square-zero ideal. Every finite stage $N_b$ has a **uniform finite target-summand support bound**. Every coboundary $v\mapsto vt$ also has finite target-summand support, because $t\in N$ is a direct-sum element. But $f$ has unbounded target-summand support. Hence its nonzero extension class $[f]$ is not in the image of (14.8). $\square$
+Define a map $f:V\to N$ linear over $R$, assigning to each basis vector $e_j$ the element $e_0$ in the target summand indexed by $j$ and zero in all other summands. It is $R$-linear because $V$ acts trivially on both $V$ and its image in the target's square-zero ideal. Every finite stage $N_b$ has a **uniform finite target-summand support bound**. Every coboundary $v\mapsto vt$ also has finite target-summand support, because $t\in N$ is a direct-sum element. But $f$ has unbounded target-summand support. Hence its nonzero extension class $[f]$ is not in the image of (14.8). $\square$
 
 The source $M$ is cyclic but is not finitely presented: its first syzygy $V$ is infinitely generated. The example demonstrates that degree-zero Hom factorization plus even **split monomorphic** target transitions does not automatically imply degree-one derived factorization.
 
