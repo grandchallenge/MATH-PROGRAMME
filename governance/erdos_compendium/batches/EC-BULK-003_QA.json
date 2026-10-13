@@ -199,7 +199,8 @@
     427,
     428,
     429,
-    430
+    430,
+    431
   ],
   "reviewed": [
     {
@@ -618,9 +619,17 @@
       "article_sha256": "e2171314d356c93fb456ed0e3c38609f177b143290e3b433bee73af700c7a643",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently exact-factored every candidate 2≤m<n for n=8,20,22; the source-defined descending sequence gives [7,5], [19,17,13,11], and [21,19,17,13], respectively. Checked least-prime-factor >n-m equivalence to every-prime-factor condition and static composite witness formulation linked to #385. Preserved source's terminal value 1 ambiguity (vacuously satisfies factor condition but is not prime); no finite evidence promoted to eventual theorem. Frozen provider explicitly lacks 430.lean."
+    },
+    {
+      "problem_id": 431,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1701#issuecomment-6157465402",
+      "article_sha256": "3ca118a1040bfe81d9a59415e9165e4dd6cf128697d696e6af74f6fbf83f1720",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently proved parity necessity: if either infinite summand set contained elements of opposite parity, infinitely many composite even sums would occur, violating eventual-prime sumset. Verified Elsholtz–Harper 2015 hypothetical sqrt-scale bounds and distinguished Tao–Ziegler 2023 triangular partial prime sumsets. Detected MATERIAL post-April-2026 development: OpenAI/math October 6 overview family 013 newly CLAIMS no finite modification of primes can be A+B with both summands nontrivial. Direct inspection of public comparator OstmannComplete.lean found main named theorem declarations by sorry; other Lean modules require exact-head compilation/trust and mathematical source audit. Retained dated maintained OPEN versus newer external claim rather than certifying it."
     }
   ],
-  "review_count": 52,
+  "review_count": 53,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
