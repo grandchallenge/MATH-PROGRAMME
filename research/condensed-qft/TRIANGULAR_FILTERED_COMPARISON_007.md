@@ -105,21 +105,21 @@ The full comparison requires a theorem that does **not** assume a weight-preserv
 
 **Theorem FC-2 (finite-filtered Weiss propagation).** Let $\mathcal C$ be any stable cocomplete infinity-category, and let $X$ be a covariant assignment from Euclidean opens to **filtered objects of length $L$** of $\mathcal C$, with filtration-preserving structure maps. Suppose every associated-graded assignment
 
-$
+$$
 U\longmapsto
 \mathrm{gr}^i_FX(U)
 =
 \mathrm{cofib}\bigl(F^{i+1}X(U)\to F^iX(U)\bigr),
 \qquad 0\le i<L,
-$
+$$
 
 satisfies Weiss homotopy-cosheaf descent. Then the **entire filtered assignment** satisfies Weiss descent in the finite filtered category (whose colimits are computed levelwise).
 
 **Proof.** For a Weiss cover, form the canonical augmented Čech comparison $c$ in the category of finite filtration diagrams. It is a morphism of filtered objects. Evaluation at any filtration stage commutes with colimits because the diagram-category colimits are levelwise. In a stable category the cofiber functor is exact and preserves colimits, so $\mathrm{gr}^i_F(c)$ is precisely the Čech comparison for $\mathrm{gr}^i_FX$, hence an equivalence by hypothesis. The exact triangles
 
-$
+$$
 F^{i+1}X\longrightarrow F^iX\longrightarrow\mathrm{gr}^i_FX
-$
+$$
 
 and downward induction from $F^LX=0$ show that $F^i(c)$ is an equivalence for every $i$. Thus $c$ is a filtered equivalence. $\square$
 
