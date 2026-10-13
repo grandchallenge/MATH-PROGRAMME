@@ -23,13 +23,21 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "0 authenticated issue-bound RESULT/1 source returns; 200 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority.",
+  "status_semantics": "1 authenticated issue-bound RESULT/1 source returns; 199 without returns at this readback. These are source EVIDENCE ONLY: no automatic article acceptance, mathematical proof certification, or protected-merge authority.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
-    "post_initial_source_return_count": 0,
-    "authenticated_source_author_count": 0,
-    "all_200_open_available": null
+    "post_initial_source_return_count": 1,
+    "authenticated_source_author_count": 1,
+    "all_200_open_available": null,
+    "all_200_open_and_labeled_available": true,
+    "all_200_issue_titles_verified": true,
+    "all_200_registry_body_hashes_verified": true,
+    "all_200_gitHub_issues_unassigned": true,
+    "project_state_individually_checked": false,
+    "project_queue_class_audit_changes_needed": 0,
+    "saved_queue_views_verified": true,
+    "all_200_github_issues_unassigned": true
   },
   "sample_policy": {
     "sample_count": 20,
@@ -78,11 +86,11 @@
         "geometry",
         "distances"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1923#issuecomment-6141669045",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1923#issuecomment-6141669045",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "ORIGINAL_PRIMARY_NOT_VERIFIED",
       "article_path": "governance/erdos_compendium/editorial/0652.md",
       "article_status": "NOT_STARTED",
       "editorial_review_status": "NOT_STARTED",
@@ -91,9 +99,13 @@
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": true,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "PRIMARY_ERDOS_FISHBURN_1997_EXACT_QUESTION_PAGE_NOT_INSPECTED"
       ],
-      "exceptions": []
+      "exceptions": [
+        "EXACT_ORIGINAL_SOURCE_NOT_INSPECTED",
+        "DIRECT_LIVE_ERDOS_PAGE_HTTP_403"
+      ],
+      "source_return_disposition": "PARTIAL"
     },
     {
       "problem_id": 653,
