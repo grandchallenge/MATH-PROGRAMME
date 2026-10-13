@@ -195,7 +195,8 @@
     423,
     424,
     425,
-    426
+    426,
+    427
   ],
   "reviewed": [
     {
@@ -582,9 +583,17 @@
       "article_sha256": "2357774983bd6e81e937b1354ebc18e9a58ba931d91516593555499a6c28baba",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently checked K3 contains three different noninduced K2 copies but one K3 copy, clarifying unique isomorphism types rather than occurrence counts. Matched published Bradač–Christoph 2024 negative theorem M(n)=o(2^(n choose 2)/n!) to pinned FC426 infinitely-often positive-fraction negation. The pinned Lean theorem ends by sorry; an external formalization is reported but not replayed or certified by GCL."
+    },
+    {
+      "problem_id": 427,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1697#issuecomment-6157367255",
+      "article_sha256": "3bc089ce9127d9f542e54103f1a0dd59afa268a442c21330d4e91b7da0e59c7c",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently verified exact witness n=2,d=6,k=4 gives 5+7+11+13=36, and checked Pilatte's conditional reduction from Shiu's 2000 consecutive-congruent-primes theorem: a block of d primes all 1 mod d supplies a residue-correcting prefix of t=d-r terms. Examined n-indexing, positive k, d=1 and zero-modulus exclusion. Pinned FC427 statement, Shiu theorem and conditional implication each have by sorry; external Lean status not claimed as GCL-certified."
     }
   ],
-  "review_count": 48,
+  "review_count": 49,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
