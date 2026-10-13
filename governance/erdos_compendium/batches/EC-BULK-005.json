@@ -23,11 +23,11 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "3 authenticated issue-bound RESULT/1 source returns (#652,#653,#655), 197 without returns. Three staged unaccepted draft articles (#652,#653,#655). #655 is PARTIAL pending original Er97e primary passage. No source-qualified cohort completion, protected publication or admission.",
+  "status_semantics": "4 authenticated issue-bound RESULT/1 source returns (#652,#653,#654,#655), 196 without returns. Four staged six-section UNACCEPTED draft articles, #652..#655. Two PARTIAL latest returns with historical-original primary-source limitations. No cohort editorial acceptance, protected production merge, public browser rendering, or V2 admission.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
-    "post_initial_source_return_count": 3,
+    "post_initial_source_return_count": 4,
     "authenticated_source_author_count": 1,
     "all_200_open_available": null,
     "all_200_open_and_labeled_available": true,
@@ -49,7 +49,9 @@
     "issue_655_native_field_readback_receipt": "GCL_CONTROL_BASH_RESULT/1:e0e92cbffa254d1f8d846cf4dc307417",
     "issue_655_native_state_field_id": 47953501,
     "issue_655_native_state_option_id": 83946714,
-    "project_state_correction_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2552#issuecomment-6143440991"
+    "project_state_correction_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2552#issuecomment-6143440991",
+    "project_issue_654_gcl_state": "AVAILABLE_NATIVE_ISSUE_FIELD_VERIFIED",
+    "issue_654_native_field_readback_receipt": "GCL_CONTROL_BASH_RESULT/1:87e7d7ae71e748158d468ced83c9cc9f"
   },
   "sample_policy": {
     "sample_count": 20,
@@ -179,22 +181,32 @@
         "geometry",
         "distances"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1925#issuecomment-6143503155",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1925#issuecomment-6143503155",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "MODERN_PRIMARY_CHECKED_HISTORICAL_PRIMARY_MISSING",
       "article_path": "governance/erdos_compendium/editorial/0654.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "SOURCE_FIDELITY_PENDING_HISTORICAL_PRIMARY",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "ER87B_ERPA90_ER97E_ORIGINAL_PASSAGES_NOT_INSPECTED",
+        "CRITICAL_EDITORIAL_REVIEW_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "NEAR_N_CONJECTURE_DISPROVED_PUBLISHED_2026",
+        "ONE_THIRD_PLUS_C_OPEN",
+        "GENERAL_POSITION_VARIANT_NOT_RESOLVED",
+        "EARLY_MODEL_RESPONSE_STRONGER_CLAIM_RETRACTED"
+      ],
+      "source_return_comment_id": 6143503155,
+      "source_return_disposition": "PARTIAL",
+      "source_return_primary_2026": "https://arxiv.org/abs/2601.22401v3",
+      "source_return_gcl_native_state": "AVAILABLE_VERIFIED"
     },
     {
       "problem_id": 655,
@@ -7242,6 +7254,13 @@
       "staged_commit": "db1ec97c480e371c6f96a906f5f39d7e15cc6dd4",
       "notes": "Literal n-gon counterexample attributed to Zach Hunter; original Er97e passage and queue gate pending.",
       "latest_article_commit": "167c70e25f1e0f641105cfa71bdcad44e7028e74"
+    },
+    "article_0654": {
+      "status": "UNACCEPTED_PARTIAL_SOURCE_RETURN_PRESENT",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1925#issuecomment-6143503155",
+      "author": "accountable_coordinator",
+      "latest_article_commit": "bdfb2465724be21079bda84d27aef245c2655916",
+      "notes": "Published two-axis powers 2/3 counterexample to near-n statement, historical source passages not yet inspected."
     }
   }
 }
