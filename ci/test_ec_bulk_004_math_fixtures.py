@@ -94,3 +94,37 @@ def test_453_sublinear_midpoint_identity() -> None:
     for n in range(2, 100):
         for i in range(1, n):
             assert (n + 1) ** 2 - (n - i + 1) * (n + i + 1) == i * i
+
+
+
+def test_452_explicit_crt_three_integer_block() -> None:
+    # These finite congruences are a reproducible CRT fixture, not an asymptotic proof.
+    from math import log, prod
+
+    groups = ((5, 7, 11, 13), (17, 19, 23, 29), (31, 37, 41, 43))
+    moduli = [prod(group) for group in groups]
+    assert moduli == [5005, 215441, 2022161]
+    assert prod(moduli) == 2180460221945005
+    a = 2099999228442114
+    for j, group in enumerate(groups, 1):
+        assert (a + j) % moduli[j - 1] == 0
+        for p in group:
+            assert all(p % d != 0 for d in range(2, int(p**0.5) + 1))
+            assert (a + j) % p == 0
+        assert 4 > log(log(a + j))
+
+
+def test_454_prime_graph_additive_gap() -> None:
+    # The signed gap can be negative; do NOT use truncated natural subtraction.
+    primes = primes_in_open_interval(1, 1000)
+    def difference(n: int) -> int:
+        return min(primes[n - i - 1] + primes[n + i - 1] - 2 * primes[n - 1]
+                   for i in range(1, n))
+    assert {n: difference(n) for n in (2, 3, 4, 5)} == {2: 1, 3: 0, 4: 2, 5: -2}
+    # For n>=3, all offsets except i=n-1 have odd primes on both sides.
+    for n in range(3, 20):
+        for i in range(1, n - 1):
+            d = primes[n - i - 1] + primes[n + i - 1] - 2 * primes[n - 1]
+            assert d % 2 == 0
+            if d > 0:
+                assert d >= 2
