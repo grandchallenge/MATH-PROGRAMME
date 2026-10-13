@@ -128,3 +128,30 @@ def test_454_prime_graph_additive_gap() -> None:
             assert d % 2 == 0
             if d > 0:
                 assert d >= 2
+
+
+
+def test_456_totient_and_least_prime_examples() -> None:
+    # Direct exact finite fixtures; no inference about density-one conjectures.
+    from math import gcd
+
+    def prime(k: int) -> bool:
+        return k >= 2 and all(k % d != 0 for d in range(2, int(k**0.5) + 1))
+
+    def phi(k: int) -> int:
+        return sum(1 for t in range(1, k + 1) if gcd(t, k) == 1)
+
+    for n, expected_p, expected_m in (
+        (2, 3, 3), (3, 7, 7), (4, 5, 5),
+        (8, 17, 15), (16, 17, 17), (32, 97, 51),
+    ):
+        p = next(q for q in range(n + 1, 2000, n) if prime(q))
+        m = next(q for q in range(1, p + 1) if phi(q) % n == 0)
+        assert (p, m) == (expected_p, expected_m)
+        assert n + 1 <= m <= p
+    # For odd exponents >=3, n+1 is composite, phi(2n)=n,
+    # and the first prime congruent to 1 mod n must be >=2n+1.
+    for k in range(1, 6):
+        n = 2 ** (2 * k + 1)
+        assert (n + 1) % 3 == 0 and n + 1 > 3
+        assert phi(2 * n) == n
