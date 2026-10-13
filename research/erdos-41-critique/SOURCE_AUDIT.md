@@ -33,3 +33,11 @@ Frozen Lean: leanprover/lean4:v4.29.1. Frozen mathlib commit: 5e932f97dd25535344
     lake env lean PredicateComparison.lean
 
 This is a mathematical review candidate. A positive Lean kernel run is mathematical evidence for stated definitions only. Protected acceptance, Solve dispatch, MATHCERT and public claims remain separate.
+
+## 2026-10-13: source-fidelity resolution on infinite carriers
+
+The earlier frozen-provider finding above applies to historical Formal Conjectures commit 85f863718beeec7b58a3a1926ee92e3472bc2020 only. Upstream Formal Conjectures PR #5241 merged on **2026-09-01** and changed the live Erdős #41 hypothesis to a repetition-preserving Multiset. Thus the frozen exactly-three Finset defect is already corrected upstream, rather than being an open upstream issue.
+
+See [Infinite-set fidelity and exact counterexamples](INFINITE_FIDELITY.md). Explicit infinite base-100 sets establish that (i) exact-three distinct-subset uniqueness is weaker than either historical at-most-three subset-sum uniqueness or modern repeated-summand uniqueness, and (ii) those two stronger hypotheses are incomparable. A rigorous positional-digit proof and finite table certificates accompany the examples.
+
+Historical Er80 p. 98 uses zero-or-one summand coefficients and sums of at most three terms, while the explicitly repetition-permitted version is documented by Helm (1996) and represented in the current Formal Conjectures file. The two asymptotic *conclusions* are equivalent for any infinite set; the underlying *hypotheses* are not. Keep the modern M3 question OPEN and the Er80 H3 form as a distinct documented historical variant.
