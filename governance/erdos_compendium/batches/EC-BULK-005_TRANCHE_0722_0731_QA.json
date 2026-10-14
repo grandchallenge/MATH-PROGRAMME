@@ -1,0 +1,128 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "tranche": {
+    "first_problem": 722,
+    "last_problem": 731,
+    "exact_count": 10
+  },
+  "authority": {
+    "registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+    "source_catalogue_blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+    "editorial_branch": "editorial/ec-bulk-005-200",
+    "actor": "fyremael"
+  },
+  "original_issues": [
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    1999,
+    2000,
+    2001,
+    2002
+  ],
+  "original_result_comment_ids": [
+    6162455826,
+    6162457531,
+    6162459491,
+    6162461221,
+    6162481383,
+    6162483246,
+    6162485219,
+    6162487153,
+    6162502499,
+    6162504954
+  ],
+  "native_original_issue_fields": {
+    "state": "AVAILABLE",
+    "role": "SOURCE",
+    "receipt": "GCL_CONTROL_BASH_RESULT/1:33beb37483614f9eb34666a44d73ee79"
+  },
+  "readback": {
+    "ten_original_comments_exact_result1_grammar_passed": 10,
+    "duplicate_comments": 0,
+    "author_match": 10,
+    "ten_editorial_articles_present": 10,
+    "six_h2_headings_passed": 10,
+    "source_issue_backlinks": 10,
+    "balanced_display_delimiters": 10
+  },
+  "test_suite": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_722_731.py",
+    "source_commit": "3d9a68af00b0e57c6a3bc07a2df42e88f5055071",
+    "method": "Authenticated CHAD gh api GET exact branch content | base64 -d | python3 unittest",
+    "result": "PASS",
+    "passed": 10,
+    "total": 10,
+    "exit_code": 0,
+    "receipt": "GCL_CONTROL_BASH_RESULT/1:89ccf9000dde43189ed12a8a6c8d7ca8",
+    "scope": "Finite mathematical fixtures only, not asymptotic theorem proofs"
+  },
+  "mathematical_boundaries": [
+    {
+      "n": 722,
+      "status": "PROVED_KEEVASH",
+      "source": "Keevash 2014 primary arxiv:1401.3665; original large-n theorem, complete proof not replayed",
+      "exception": "EARLIER_PROVISIONAL_JOURNAL_METADATA_CORRECTED_IN_ISSUE_AND_ARTICLE"
+    },
+    {
+      "n": 723,
+      "status": "FALSIFIABLE",
+      "exception": "PRIME_POWER_ORDER_OPEN; finite Fano plane and Bruck-Ryser q=6 obstruction do not decide q=12"
+    },
+    {
+      "n": 724,
+      "status": "OPEN",
+      "exception": "MOLS_GENERAL_SQRT_LOWER_UNKNOWN, finite-field n−1 result special"
+    },
+    {
+      "n": 725,
+      "status": "OPEN_GENERAL",
+      "exception": "NEW_AUGUST_2026_LI_ARXIV_2608_01671_SUBLINEAR_EXTENDED_RESULT_REPORTS_LEAN_NOT_REPLAYED; Godsil-McKay older k=o(n^6/7); no fixed-k collapse or full k≈n theorem"
+    },
+    {
+      "n": 726,
+      "status": "OPEN",
+      "exception": "FOR_ODD_PRIMES_FLOOR_IDENTITY_TRUE; p=2 strict-threshold discrepancy 1/2 when n odd; GCL pinned sorry"
+    },
+    {
+      "n": 727,
+      "status": "OPEN",
+      "exception": "K2_INFINTUDE_UNKNOWN; k1 historically proved; GCL pinned main sorry"
+    },
+    {
+      "n": 728,
+      "status": "PROVED_LITERAL_TRIVIAL_AND_EXTERNAL_STRONGER",
+      "exception": "Maintained literal a=b=n trivial; pinned formal theorem stronger bounded-log near-central; direct semantic ambiguity original EGRS75 page uninspected",
+      "admission_hold": true
+    },
+    {
+      "n": 729,
+      "status": "PROVED_EXTERNAL_LEAN_REPORTED",
+      "exception": "Bound K depends on C only, denominator reduced, external Barreto-Leeham Lean GCL unreplayed"
+    },
+    {
+      "n": 730,
+      "status": "OPEN_CURRENT_FROZEN_SOLVED_CONFLICT",
+      "exception": "Pinned 2025 metadata SOLVED; maintained site December 2025 OPEN and protected #730.lean main sorry; finite examples 87/88 607/608 verified; no infinitude proof",
+      "admission_hold": true
+    },
+    {
+      "n": 731,
+      "status": "OPEN",
+      "exception": "Least central binomial nondivisor asymptotic equivalence unknown; log scale exp((log n)^(1/2+o(1))) does not supply ratio-one normal order"
+    }
+  ],
+  "governance": {
+    "all_new_articles_unaccepted": true,
+    "protected_main_merge": false,
+    "independent_critical_source_review": "PENDING",
+    "historical_primary_proof_review": "INCOMPLETE",
+    "strict_mkdocs": "NOT_RUN",
+    "public_browser_mathjax": "NOT_VERIFIED",
+    "v2_admissions": 0
+  }
+}
