@@ -208,7 +208,8 @@
     436,
     437,
     438,
-    439
+    439,
+    440
   ],
   "reviewed": [
     {
@@ -699,9 +700,17 @@
       "article_sha256": "1bf9b93f0325622d1c61776cf2f805fc9db70826457a77ebbfdab2c8d932ec4f",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently verified parity-coloring witness distinct even 2 and 14 sum to 16. Distinguished elementary finite coloring example from Khalfalah–Szemerédi 2006 universal theorem for nonconstant integer polynomial attaining an odd value. Identified infinite chromatic graph equivalence and necessity of keeping same-color DISTINCT pair; no pinned Lean replay."
+    },
+    {
+      "problem_id": 440,
+      "selection": "DETERMINISTIC_SAMPLE_AND_RISK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1710#issuecomment-6158510176",
+      "article_sha256": "d2fed481ac8ff8bb3c178e3989834a73ee23ed0b0ec6f4c034fa86e6a32689c1",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently verified A=N yields lcm(i,i+1)=i(i+1), so A(1000)=31 and normalized ratio tends to 1. Source checks distinguish Erdős–Szemerédi 1980 best liminf value 1 from the different sharp pointwise upper constant c=sum_{j>=1}1/(sqrt(j)(j+1)) approximately 1.86. No pinned Lean replay, and longer-block generalization was not conflated with pairs."
     }
   ],
-  "review_count": 61,
+  "review_count": 62,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
