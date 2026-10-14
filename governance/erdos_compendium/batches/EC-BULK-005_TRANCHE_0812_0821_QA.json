@@ -1,0 +1,108 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 812,
+    "to": 821,
+    "count": 10,
+    "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "actor": "fyremael",
+  "original_issues": [
+    2083,
+    2084,
+    2085,
+    2086,
+    2087,
+    2088,
+    2089,
+    2090,
+    2091,
+    2092
+  ],
+  "authenticated_comment_ids": [
+    6179242938,
+    6179243546,
+    6179244184,
+    6179244901,
+    6179245491,
+    6179246096,
+    6179246681,
+    6179247324,
+    6179247904,
+    6179249034
+  ],
+  "source_dispositions": [
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED",
+    "SOURCE_LOCK_READY",
+    "STATUS_CONFLICT",
+    "SOURCE_LOCK_READY",
+    "BOUNDED_TASK_DESIGNED",
+    "SOURCE_LOCK_READY",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED"
+  ],
+  "article_sha256": {
+    "812": "eb8870b17c69d021a5e08a75cbb67f7d847eade4fcbb53f06cda4e09306a7c6e",
+    "813": "861e093b88ba7aa51b77b7f9a5caf7ef34419573e2b5c8cb24003081cda7c9b1",
+    "814": "d921e1a792bdbd8bad488868a2e8be048babbbe1ecc14786bd1b8fc83c0be169",
+    "815": "6a8cbff144e951094634ceaeb0abf10c34a04a27fd0e5fa0822e3c92ff247457",
+    "816": "2419e1ab83bdc33e007a75c3c542e2eaba116b834d24f78c62e30860da3e3606",
+    "817": "843f43cd3c5f745d6eed44f9530a7f034c3478faac671899f40f39476cc98fdb",
+    "818": "1b244c81b16fef512562875b9bcb900606f637c176cfceb34fdeffbf2d2598a6",
+    "819": "b42dd1b145f3135cfea246e70c4612e5fb8577b2f31b45b1fbf6f7f6302712a0",
+    "820": "e1f64c14755393aeb8c85a3236317b1cc1b1016662b7a0d6b96b00db969457b8",
+    "821": "f0a691a851a7c876623e581c4ff7dc63038fbb0c0c8269e36b13d8da7c48dd7a"
+  },
+  "source_math_gate": "PASS_ALL_TEN",
+  "finite_fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_812_821.py",
+    "passed": 10,
+    "note": "Exact finite computations and constructive elementary lemmas only; no external asymptotic theorem proof replay"
+  },
+  "exception_holds": [
+    {
+      "problem_id": 815,
+      "exceptions": [
+        "DISPROVED_C23_WHILE_EVEN_LENGTH_VARIANT_OPEN"
+      ],
+      "blockers": [
+        "EVEN_CYCLE_SUBQUESTION_OPEN",
+        "NARINS_POKROVSKIY_SZABO_FULL_CONSTRUCTION_PENDING"
+      ]
+    },
+    {
+      "problem_id": 818,
+      "exceptions": [
+        "PROVED_SOLOMYOSI_ENERGY_POSITIVE_TO_SIGNED_REDUCTION"
+      ],
+      "blockers": [
+        "ORIGINAL_SOLOMYOSI_FULL_PROOF_PENDING",
+        "SIGNED_EXTENSION_DRAFT_EXPLICIT_REDUCTION"
+      ]
+    },
+    {
+      "problem_id": 820,
+      "exceptions": [
+        "OPEN_EXPONENTIAL_GCD_BASE_GE2_SEMANTICS"
+      ],
+      "blockers": [
+        "ORIGINAL_1974_BASE_CONVENTION_PENDING",
+        "VAN_DOORN_COMMENT_SKETCH_UNVERIFIED"
+      ]
+    }
+  ],
+  "qa_boundaries": {
+    "source_primary_full_proof": "PARTIAL_NOT_COMPLETE",
+    "independent_review": "PENDING",
+    "external_lean_replay": "NOT_DONE",
+    "local_mkdocs": "PASS_LOCAL_NOT_DEPLOYED",
+    "browser_mathematical_rendering": "NOT_VERIFIED",
+    "protected_merge": "NOT_MERGED",
+    "v2_editorial_admission": "NOT_ADMITTED",
+    "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:70b29e06423e4423b1db3f02fcac31b1",
+    "cohort_test_suite": "206_PASSED_0_FAILED"
+  }
+}
