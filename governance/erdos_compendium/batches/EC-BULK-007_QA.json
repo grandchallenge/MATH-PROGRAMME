@@ -59,15 +59,16 @@
     1076,
     1077,
     1078,
+    1082,
     1219,
     1220,
     1221
   ],
   "reviewed": [],
   "source_return_readback": {
-    "valid_result_grammar": 29,
+    "valid_result_grammar": 30,
     "mathematically_source_fidelity_accepted": 0,
-    "missing_results": 139,
+    "missing_results": 138,
     "malformed_nonresearch_event_examples_issue_2491": 2
   },
   "identity_validation": {
@@ -121,15 +122,15 @@
   "v2_admission_pr": null,
   "protected_v2_merge": null,
   "coverage_complete": false,
-  "note": "29 authenticated source returns/29 unaccepted drafts, 139 outstanding. Full 168-issue live hash/identity check passed; 14 returned issues still have gcl-state:available label, excluded from discovery workgroups but require controller-authorized custody/state reconciliation, NOT manually relabeled. Project classification audit clean but not per-item return state evidence. 34/34 browser QA pass (738/738 expressions). Critical review 0/20, protected production and V2 admission pending.",
+  "note": "30 authenticated issue-bound returns and 30 UNACCEPTED drafts, 138 outstanding. Exact #1082 local-distances counterexample validated, global part still OPEN. Full 168 issue body/label readback 0 identity errors. Fifteen returned issues still available-labelled and de-duplicated from 138 planned work items, need controller custody reconciliation. All 35 Chromium pages pass. Source-fidelity and 20 critical reviews not complete; no protected PR/admission.",
   "local_validation": {
     "publication_gate_and_editorial_replay_tests": "PASS_22_TESTS",
-    "strict_mkdocs_build": "PASS_LOCAL_29_DRAFTS_2026-10-14",
+    "strict_mkdocs_build": "PASS_LOCAL_30_UNACCEPTED_DRAFTS_2026-10-14",
     "generated_reference_page_count": 1221,
     "generated_markdown_page_count": 1235,
     "accepted_protected_v2_count_at_base_head": 50,
     "legacy_unadmitted_exemplars": 3,
-    "current_local_pending_drafts": 38,
+    "current_local_pending_drafts": 39,
     "new_drafts_verified_in_generated_html_unaccepted_label": [
       1053,
       1054,
@@ -157,14 +158,15 @@
       1076,
       1077,
       1078,
+      1082,
       1219,
       1220,
       1221
     ],
     "public_deployment": "NOT_ATTEMPTED_FOR_COHORT_007",
-    "live_browser_mathjax": "PASS_5_EXISTING_PUBLIC_ARTICLES_54_OF_54_EQUATIONS_ZERO_MERROR",
+    "live_browser_mathjax": "PASS_5_PREVIOUSLY_PUBLISHED_MATH_PAGES_54_OF_54_ZERO_MERROR",
     "reviewed_critical_sample_count": 0,
-    "authored_explanatory_draft_count_on_branch": 91,
+    "authored_explanatory_draft_count_on_branch": 92,
     "accepted_protected_v2_count_at_build": 50,
     "new_cohort_unaccepted_drafts": [
       1053,
@@ -193,21 +195,22 @@
       1076,
       1077,
       1078,
+      1082,
       1219,
       1220,
       1221
     ],
     "local_math_bootstrap": "PASS_29_DRAFTS_ARITHMATEX_WITH_SITE_MATHJAX_LOADER",
-    "local_browser_mathjax": "PASS_29_DRAFTS_CHROMIUM_684_OF_684_EQUATIONS_ZERO_MERROR",
+    "local_browser_mathjax": "PASS_30_UNACCEPTED_DRAFTS_CHROMIUM_701_OF_701_ZERO_MERROR",
     "browser_qa_reproducible_setup": "ci/erdos_compendium_browser_qa_bootstrap.sh",
     "browser_qa_reproducible_test": "ci/erdos_compendium_browser_render_check.cjs",
     "browser_qa_receipt": "governance/erdos_compendium/batches/EC-BULK-007_BROWSER_RENDER_QA.json",
-    "browser_qa_tested": 34,
-    "browser_qa_passed": 34,
-    "local_draft_math_expressions_rendered": 684,
+    "browser_qa_tested": 35,
+    "browser_qa_passed": 35,
+    "local_draft_math_expressions_rendered": 701,
     "public_existing_math_expressions_rendered": 54,
     "new_three_drafts_build_check": "PASS_LOCAL_29_DRAFTS_2026-10-14",
-    "browser_qa_scope_note": "The real Chromium check covers all 29 currently unaccepted EC-BULK-007 drafts and five already-published public examples, not a public deployment of the new cohort.",
+    "browser_qa_scope_note": "35/35 real Chromium test on 30 unpublished EC-BULK-007 drafts and five already-published public mathematical pages. New cohort is not publicly deployed.",
     "new_six_drafts_build_check": "PASS_LOCAL_29_DRAFTS_2026-10-14"
   },
   "worker_execution_readback": {
@@ -215,7 +218,7 @@
     "CHAD_shell": "REACHABLE",
     "project_audit_inventory": 1311,
     "project_classification_discrepancies": 0,
-    "live_available_original_issues_without_result": 139,
+    "live_available_original_issues_without_result": 138,
     "prepared_groups": 9,
     "maximum_group_size": 16,
     "workers_launched_and_verified": 0,
@@ -228,8 +231,8 @@
     "authenticated_codex_1060": "COMPLETED_REVIEWED_POSTED",
     "parallel_codex_1061_to_1064": "FOUR_LAUNCHED_ONE_VALID_DRAFT_1064_THREE_TIMEOUT_NO_ACCEPTED_RESULT",
     "verified_active_workers_at_checkpoint": 0,
-    "original_missing_return_labeled_available": 139,
-    "returned_still_labeled_available": 14,
+    "original_missing_return_labeled_available": 138,
+    "returned_still_labeled_available": 15,
     "returned_not_labeled_available": 15,
     "project_classification_audit": "PASS_1311_ITEMS_1271_MATHEMATICS_40_EDITORIAL_ZERO_SEMANTIC_CLASS_CHANGES",
     "project_saved_view_readback": "PASS_EXACT_EDITORIAL_MATHEMATICS_AVAILABLE_VIEW_IDS_AND_FILTERS",
@@ -412,6 +415,13 @@
       "sampled": false,
       "finding": "Haxell/Haxell-Szabo reported theorem and exact small K_2,2,2 examples, sharp rounding/hypotheses require primary proof review.",
       "source_fidelity_disposition": "PENDING"
+    },
+    {
+      "problem_id": 1082,
+      "review_result": "EXACT_EIGHT_POINT_LOCAL_DISTANCES_COUNTEREXAMPLE",
+      "sampled": false,
+      "finding": "Eight exact Q(sqrt(3)) points: 28 pair distances and 56 triple determinants independently verified. Three local distinct distances from every point (<floor(8/2)=4) falsifies single-point conjecture; global distinct distance set has four values and does NOT falsify global conjecture. Original historical and external Lean proof not independently replayed.",
+      "source_fidelity_disposition": "PENDING"
     }
   ],
   "finite_verification_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS.json",
@@ -420,9 +430,11 @@
   "finite_verification_phase2_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE2.json",
   "finite_verification_phase3_program": "ci/erdos_compendium_007_phase3_checks.py",
   "finite_verification_phase3_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE3.json",
-  "browser_qa_gate_note": "Local real-Chromium MathJax verified 29 draft pages (684/684 expressions, 0 merror), plus five separately published public pages (54/54). Public cohort deployment/readback remains pending protected production.",
+  "browser_qa_gate_note": "Real Chromium 30/30 UNACCEPTED local manuscript pages MathJax 701/701, and 5/5 already-public pages 54/54. Public cohort 007 deployment/render gate still pending.",
   "finite_verification_phase4_program": "ci/erdos_compendium_007_phase4_checks.py",
   "finite_verification_phase4_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE4.json",
   "finite_verification_phase5_program": "ci/erdos_compendium_007_phase5_checks.py",
-  "finite_verification_phase5_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE5.json"
+  "finite_verification_phase5_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE5.json",
+  "finite_verification_phase6_program": "ci/erdos_compendium_007_phase6_checks.py",
+  "finite_verification_phase6_receipt": "governance/erdos_compendium/batches/EC-BULK-007_FINITE_CHECKS_PHASE6.json"
 }
