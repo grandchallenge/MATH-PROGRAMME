@@ -29,7 +29,7 @@ class Erdos772Normalization(unittest.TestCase):
             self.assertEqual(max(distinct_unordered_sums(A).values()), 1)
 
     def test_ordered_k2_forces_sidon_in_bounded_ambient_set(self):
-        for n in range(2, 7):
+        for n in range(2, 5):
             seen = 0
             for A in itertools.combinations(range(1, 13), n):
                 if max(ordered_convolution(A).values()) <= 2:

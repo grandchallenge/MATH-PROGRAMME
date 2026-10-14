@@ -5,7 +5,7 @@
   "source_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
   "registry_id": "MP-ERDOS-FULL-CATALOGUE-001",
   "protected_base_head": "10fd41c8ab7af25a4d498da8649faa8b2ffa210d",
-  "observed_date": "2026-10-13",
+  "observed_date": "2026-10-14",
   "source": {
     "source_repository": "teorth/erdosproblems",
     "source_commit": "536408716724a2402bdfa7c1d764bf83d64a8c89",
@@ -23,11 +23,11 @@
       "EC-BULK-004"
     ]
   },
-  "status_semantics": "120 authentic original issue-bound RESULT/1 returns and 120 six-section UNACCEPTED drafts (#652..#771), 80 outstanding. New source-semantic holds #765 (C4-free graph extremal leading asymptotic proved but stronger +n/4 second-order disproved), #770 ('mutually coprime' means joint gcd one, not pairwise). Inherited semantic holds preserved. CHAD finite #762-771 suite 10/10 PASS, not full published source theorem or Lean kernel replay. Protected 200-article publication, exact-source-hash V2 admission, >=20 critical sample, full historical proof checks, strict MkDocs and real-browser MathJax not completed.",
+  "status_semantics": "121 authentic original issue-bound RESULT/1 returns and 121 six-section UNACCEPTED drafts (#652..#772), 79 outstanding. New source-semantic holds #765 (C4-free graph extremal leading asymptotic proved but stronger +n/4 second-order disproved), #770 ('mutually coprime' means joint gcd one, not pairwise). Inherited semantic holds preserved. CHAD finite #762-771 suite 10/10 PASS, not full published source theorem or Lean kernel replay. Protected 200-article publication, exact-source-hash V2 admission, >=20 critical sample, full historical proof checks, strict MkDocs and real-browser MathJax not completed. #772 exact original 1985 proof read; historical upper/literal ordered-convolution semantic conflict on editorial hold.",
   "source_queue_readback": {
     "comment_results_source": "AUTHENTICATED_GITHUB_ISSUE_COMMENTS",
     "readback_state": "COMPLETE_200_ISSUE_COMMENT_THREADS",
-    "post_initial_source_return_count": 120,
+    "post_initial_source_return_count": 121,
     "authenticated_source_author_count": 1,
     "all_200_open_available": null,
     "all_200_open_and_labeled_available": true,
@@ -5146,22 +5146,30 @@
         "sidon sets",
         "additive combinatorics"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "source_return_author": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
-      "source_fidelity_state": "NOT_VERIFIED",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2043#issuecomment-6167012528",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2043#issuecomment-6167012528",
+      "source_return_author": "fyremael",
+      "evidence_state": "RESULT_PRESENT_UNADJUDICATED",
+      "source_fidelity_state": "ALON_ERDOS_1985_PP201_202_DIRECTLY_INSPECTED_CONVOLUTION_SEMANTIC_HOLD",
       "article_path": "governance/erdos_compendium/editorial/0772.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "DRAFTED_UNACCEPTED",
+      "editorial_review_status": "PENDING_INDEPENDENT_SEMANTIC_SOURCE_AND_LATEX_REVIEW",
       "publication_state": "NOT_MERGED",
       "public_math_rendering_state": "NOT_VERIFIED",
       "editorial_admission_state": "NOT_ADMITTED",
       "critical_sample_selected": false,
       "blockers": [
-        "AUTHENTICATED_SOURCE_AUDIT_NOT_YET_VERIFIED"
+        "LITERAL_ORDERED_K2_H2_EQUALS_N_CONTRADICTS_ALL_K_N23_UPPER",
+        "ER80E_ER84D_UPPER_SCOPE_PRIMARY_CHECK_PENDING",
+        "SEPARATE_CRITICAL_REVIEW_AND_RENDERING_PENDING"
       ],
-      "exceptions": []
+      "exceptions": [
+        "ALON_ERDOS_1985_DISTINCT_UNORDERED_B2K_VS_CATALOGUE_ORDERED_CONVOLUTION",
+        "K2_EXACT_H2_N",
+        "K1_CONVOLUTION_EMPTY_ELIGIBLE_FAMILY_FOR_N_GE2"
+      ],
+      "source_return_comment_id": 6167012528,
+      "source_return_disposition": "STATUS_CONFLICT"
     },
     {
       "problem_id": 773,
@@ -9063,5 +9071,39 @@
     "strict_mkdocs": "NOT_RUN",
     "deployed_math_browser": "NOT_VERIFIED",
     "editorial_admitted": 0
+  },
+  "tranche_772_781": {
+    "state": "IN_PROGRESS_SOURCE_PROVENANCE_NOT_ADMITTED",
+    "verified_returns": 1,
+    "covered_problem_ids": [
+      772
+    ],
+    "remaining_problem_ids": [
+      773,
+      774,
+      775,
+      776,
+      777,
+      778,
+      779,
+      780,
+      781
+    ],
+    "source_comment_ids": [
+      6167012528
+    ],
+    "source_disposition": "STATUS_CONFLICT",
+    "source_author": "fyremael",
+    "article_paths": [
+      "governance/erdos_compendium/editorial/0772.md"
+    ],
+    "fixture_suite": "ci/test_erdos_compendium_ec005_772_semantics.py",
+    "finite_tests_passed": 4,
+    "finite_tests_total": 4,
+    "math_markdown_gate": "PASS",
+    "independent_critical_review": "PENDING",
+    "protected_publication": "NONE",
+    "public_rendering": "NOT_VERIFIED",
+    "v2_editorial_admission": "NONE"
   }
 }
