@@ -118,7 +118,7 @@ function pageUrl(base,n) {
         } catch(e) {error = e.message;}
         let screenshot = null;
         let screenshotSha256 = null;
-        if (!error && ((scope==='local_drafts' && [1053,1084,1087,1090,1094].includes(n))
+        if (!error && ((scope==='local_drafts' && [1053,1084,1087,1090,1094,1097,1099,1101].includes(n))
           || (scope==='public_accepted_sample' && n===1052))) {
           screenshot = path.join(shots,scope+'-'+n+'.png');
           await page.screenshot({path:screenshot});
