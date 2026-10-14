@@ -209,6 +209,75 @@ class EditorialGateTests(unittest.TestCase):
                          f"{sorted(required ^ set(owners))}")
         self.assertEqual(len(owners), 242)
 
+    def test_full_1221_catalogue_ownership(self):
+        """All registry IDs have one owner; staged owners are not admissions."""
+        _, rows = load_registry()
+        by_id = {row["problem_id"]: row for row in rows}
+        universe = set(range(1, 1222))
+        self.assertEqual(len(rows), 1221)
+        self.assertEqual(set(by_id), universe)
+        raw = (ROOT / "governance/erdos_catalogue/REGISTRY.json").read_bytes()
+        blob = hashlib.sha1(b"blob " + str(len(raw)).encode() +
+                            bytes([0]) + raw).hexdigest()
+        self.assertEqual(blob, "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5")
+        # Each tuple: cohort, inclusive range, omitted IDs, additional IDs,
+        # manifest expected on protected main, exact cohort cardinality.
+        partitions = (
+            ("EC-BULK-001", 4, 41, (), (99, 101, 138, 241, 390, 470, 522,
+                                        550, 593, 595, 1052, 1112), True, 50),
+            ("EC-BULK-002", 42, 245, (99, 101, 138, 241), (), True, 200),
+            ("EC-BULK-003", 246, 446, (390,), (), True, 200),
+            ("EC-BULK-004", 447, 651, (470, 522, 550, 593, 595),
+             (), False, 200),
+            ("EC-BULK-005", 652, 851, (), (), False, 200),
+            ("EC-BULK-006", 852, 1051, (), (), False, 200),
+            ("EC-BULK-007", 1053, 1221, (1112,), (), False, 168),
+        )
+        owners = {n: "LEGACY" for n in (1, 2, 3)}
+        for n in (1, 2, 3):
+            self.assertIsNotNone(manuscript(n))
+        for cohort, low, high, omit, extra, required_on_main, expected_n in partitions:
+            expected = set(range(low, high + 1)).difference(omit).union(extra)
+            self.assertEqual(len(expected), expected_n, cohort)
+            for n in expected:
+                self.assertIn(n, universe)
+                self.assertNotIn(n, owners,
+                                 f"Duplicate #{n}: {owners.get(n)} and {cohort}")
+                owners[n] = cohort
+            path = ROOT / "governance/erdos_compendium/batches" / f"{cohort}.json"
+            if not path.exists():
+                self.assertFalse(required_on_main,
+                                 f"Missing protected manifest: {cohort}")
+                continue  # staged reservation, not documentary admission
+            record = json.loads(path.read_text(encoding="utf-8"))
+            items = record["items"]
+            ids = [item["problem_id"] for item in items]
+            self.assertEqual(record["cohort_id"], cohort)
+            self.assertEqual(record["target_count"], expected_n)
+            self.assertEqual(record["source_registry_blob"], blob)
+            self.assertEqual(len(ids), expected_n)
+            self.assertEqual(len(set(ids)), expected_n)
+            self.assertEqual(set(ids), expected,
+                             f"Wrong issue ownership in {cohort}")
+            for item in items:
+                n = item["problem_id"]
+                row = by_id[n]
+                self.assertEqual(item["audit_issue"], row["issue_number"])
+                if item.get("source_return"):
+                    self.assertRegex(
+                        item["source_return"],
+                        r"^https://github[.]com/grandchallenge/MATH-PROGRAMME/"
+                        r"issues/" + str(row["issue_number"]) +
+                        r"#issuecomment-[0-9]+$")
+                if "original_issue_body_sha256" in item:
+                    self.assertEqual(item["original_issue_body_sha256"],
+                                     row["issue_body_sha256"])
+        self.assertEqual(set(owners), universe)
+        self.assertEqual(len(owners), 1221)
+        admitted = load_batch_admissions(ACCEPTANCE)
+        self.assertFalse(set(admitted) - universe)
+        self.assertFalse(set(admitted) & {1, 2, 3})
+
     def test_bulk_002_200_existing_issue_slots_and_authentic_returns(self):
         """200 original queue jobs, not invented articles or accepted entries."""
         manifest_path = ROOT / "governance/erdos_compendium/batches/EC-BULK-002.json"
