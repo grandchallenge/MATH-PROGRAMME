@@ -28,17 +28,18 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "24 authenticated issue-bound RESULT/1 source comments (176 missing); 16 substantial six-section UNACCEPTED_DRAFT articles, latest #465 documentary source-ready but critical-review write blocked by safety check. Six standalone #464/#465 mathematical fixtures reproduced, full branch pytest/MkDocs not rerun because CHAD run_bash unavailable. No protected production or V2 admissions.",
+  "status_semantics": "25 authenticated original issue-bound RESULT/1 returns, 175 missing. 17 six-section documentary manuscripts, all UNACCEPTED_DRAFT. Latest #466 mathematically solved in literature with exact original source and independent qualitative Kronecker argument; original quantitative proofs not GCL-replayed, no MathCert. 108 tests and 517 subtests plus strict MkDocs pass at pre-review head 4743a4be; no production PR/merge or V2 admission.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 24,
+    "post_initial_source_return_count": 25,
     "comment_results_source": "LIVE_GITHUB_465_COMMENT_ID_READBACK_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "24_COMMENT_IDS_RECORDED_FULL_200_ISSUE_RECONCILE_PENDING",
+    "readback_state": "TWENTY_FIVE_COMMENT_IDS_SOURCE_RECONCILIATION_PENDING_2026_10_14",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
     "inventory_exceptions": 0,
-    "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)"
+    "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)",
+    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1736#issuecomment-6166375563"
   },
   "items": [
     {
@@ -942,19 +943,35 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1736#issuecomment-6166375563",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1736#issuecomment-6166375563",
+      "evidence_state": "SOURCE_LOCK_READY_DOCUMENTARY_HISTORICAL_QUANTITATIVE_PROOFS_NOT_GCL_REPLAYED",
       "article_path": "governance/erdos_compendium/editorial/0466.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_PENDING_PROTECTED_BATCH_ADMISSION",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "1976_SARKOZY_COMPLETE_QUANTITATIVE_PROOF_PENDING",
+        "ORIGINAL_GRAHAM_LOG_CONSTRUCTION_NOT_PRIMARY_INSPECTED",
+        "INDEPENDENT_LEAN_REPLAY_NOT_DONE"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "MODERN_EXPLICIT_DELTA_SEVENTH_EXPONENT_NOT_1980_SOURCE_VERIFIED",
+        "DISK_VS_CIRCUMFERENCE_NORMALIZATION",
+        "HISTORICAL_GRAHAM_SARKOZY_PRIMARY_PROOF_NOT_FULLY_INSPECTED"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6166375563,
+      "source_return_content_sha256": "162e872cd1b5382b13ab601f5cb5589b7e4c18e65c04e7fdfb7cceecbc93d13f",
+      "source_return_disposition": "SOURCE_LOCK_READY",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-013.md",
+      "manuscript_sha256_pre_admission": "ef27bd7d3245feb880fbeb4abe273ba8089e59bc8ba06b8783bd9e77d937ce9f",
+      "manuscript_raw_file_sha256_pre_admission": "5f7e2711f1bbd7930d2ce31ff25eeb793ce99d5dc6b5fb61fd77c02c8dbef384",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1736#issuecomment-6166375563"
     },
     {
       "problem_id": 467,
@@ -6949,8 +6966,8 @@
   },
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
-    "observed_date": "2026-10-13",
-    "count": 16,
+    "observed_date": "2026-10-14",
+    "count": 17,
     "problem_ids": [
       448,
       449,
@@ -6967,12 +6984,13 @@
       463,
       464,
       465,
+      466,
       476
     ],
     "qa": {
-      "tests_passed": 99,
+      "tests_passed": 108,
       "subtests_passed": 517,
-      "strict_mkdocs_build": "PENDING_464_465_SOURCE_HEAD",
+      "strict_mkdocs_build": "PASS_AT_HEAD_4743a4bec5097f0d7f924c9240ac0460536d5af7",
       "early_exception_reviews_passed": 11,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
@@ -6983,11 +7001,13 @@
       "full_suite_after_0461": "NOT_VERIFIED",
       "full_suite_after_0462": "NOT_VERIFIED",
       "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK",
-      "latest_full_tests": "PENDING_CHAD_SHELL_TEMPORARILY_UNAVAILABLE",
+      "latest_full_tests": "108 PASSED 517 SUBTESTS AT HEAD_4743a4bec5097f0d7f924c9240ac0460536d5af7",
       "latest_source_head_verified": "793d5c2f75c1a03d2ed0b5a01ebfb5569f999cd9",
       "standalone_math_fixture_464": "3_CHECKS_PASSED_PYTHON_LOCAL",
       "standalone_464_465_math_fixtures": "SIX_CHECKS_REPRODUCED_IN_LOCAL_PYTHON",
-      "last_source_review_465": "PENDING_GITHUB_WRITE_SAFETY_BLOCK"
+      "last_source_review_465": "PENDING_GITHUB_WRITE_SAFETY_BLOCK",
+      "verified_test_receipt": "GCL_CONTROL_BASH_RESULT/1:6cd8bfffbd09466a9e48f6b10d7dd415",
+      "verified_build_receipt": "GCL_CONTROL_BASH_RESULT/1:876fbfd5341944af8fbf8606ea155d68"
     }
   },
   "latest_protected_main_recheck": {
