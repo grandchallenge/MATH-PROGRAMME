@@ -1,0 +1,149 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 842,
+    "to": 851,
+    "count": 10,
+    "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "actor": "fyremael",
+  "original_issues": [
+    2113,
+    2114,
+    2115,
+    2116,
+    2117,
+    2118,
+    2119,
+    2120,
+    2121,
+    2122
+  ],
+  "authenticated_comment_ids": [
+    6180741287,
+    6180741766,
+    6180742351,
+    6180742794,
+    6180743658,
+    6180744077,
+    6180744502,
+    6180744982,
+    6180745835,
+    6180746210
+  ],
+  "source_dispositions": [
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT"
+  ],
+  "article_sha256": {
+    "842": "c5c2e759dc5e0227630e0759c6c5a5b341d0998105686686407280dcad0ea248",
+    "843": "16428df7f4475802281ab0788e05204277d6b4e67c9bfae153189cb281d0b84b",
+    "844": "c79e6d566bb63661a84bd2c8d8a2cc336bb0cd0f97a600bbd348bbe30809cf26",
+    "845": "ab335f5b1e9aae507175dc27ce2bd01786091e491b30f36a83a9ac4454ef3834",
+    "846": "36cb7264c7a37e805f7ae970f64b9b740dacbfb9cdb6c2ec0ef5a9fd3103ce93",
+    "847": "405370a28d6d4d282a6a022be53baa8c2c555d8b0d3741dbccb1956d8505a7da",
+    "848": "53f8650c41fa45c579846ee0e5a85b602fc1da05865665edf14828e300a2c6c5",
+    "849": "5810002ab796e9d6342d0f292c707ad87071049d3cf68615359f112e7680727f",
+    "850": "495b332c6b19912444e4cad3fb9f0f815de1c982e09001c342b99565f713115a",
+    "851": "d8b92bbfcf8e9fbf4949dd6331e7e3a8fa6eb6f13cd1dd0f6cd9162b47aa3eb8"
+  },
+  "source_math_gate": "PASS_ALL_TEN",
+  "finite_fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_842_851.py",
+    "passed": 10,
+    "note": "Exact finite coloring, number theoretic, subset-sum, congruence and Pascal fixtures; no infinite asymptotic or primary proof certificate"
+  },
+  "exception_holds": [
+    {
+      "problem_id": 845,
+      "exceptions": [
+        "DISPROVED_VAN_DOORN_EVERTS_SMOOTH_SUM_RATIO_LT6"
+      ],
+      "blockers": [
+        "VAN_DOORN_EVERTS2025_FULL_CONSTRUCTION_NOT_REPLAYED",
+        "OPTIMAL_SPREAD_CONSTANT_STILL_OPEN"
+      ]
+    },
+    {
+      "problem_id": 846,
+      "exceptions": [
+        "DISPROVED_INFINITE_PLANAR_LOCAL_INDEPENDENCE_GLOBAL_CHROMATIC"
+      ],
+      "blockers": [
+        "PSV26_AND_RRS24_INFINITE_CONSTRUCTION_PROOFS_NOT_REPLAYED",
+        "PROJECTION_DETAILS_PENDING"
+      ]
+    },
+    {
+      "problem_id": 847,
+      "exceptions": [
+        "DISPROVED_REIHER_RODL_SALES_INFINITE_AP_FREE_LOCAL_GLOBAL"
+      ],
+      "blockers": [
+        "REIHER_RODL_SALES2024_THEOREM_FULL_PROOF_NOT_REPLAYED",
+        "INFINITE_COMPACTNESS_SCOPE"
+      ]
+    },
+    {
+      "problem_id": 848,
+      "exceptions": [
+        "REGISTRY_DECIDABLE_SOURCE_REPORTED_SAWHNEY_EVENTUAL_STABILITY"
+      ],
+      "blockers": [
+        "SAWHNEY_STABILITY_NOTE_PRIMARY_PROOF_NOT_REPLAYED",
+        "REGISTRY_DECIDABLE_VS_SOURCE_SOLVED_STATUS"
+      ]
+    },
+    {
+      "problem_id": 849,
+      "exceptions": [
+        "OPEN_SINGMASTER_MULTIPLICITY_T_GEQ5"
+      ],
+      "blockers": [
+        "INTERIOR_PASCAL_THEOREM_FULL_PROOF_NOT_REPLAYED",
+        "GLOBAL_T_GEQ5_MULTIPLICITY_OPEN"
+      ]
+    },
+    {
+      "problem_id": 850,
+      "exceptions": [
+        "OPEN_ERDOS_WOODS_THREE_SHIFT_RADICAL_CONJECTURE"
+      ],
+      "blockers": [
+        "SHOREY_TIJDENMAN_STRONG_ABC_IS_CONDITIONAL",
+        "THREE_SHIFTS_OPEN"
+      ]
+    },
+    {
+      "problem_id": 851,
+      "exceptions": [
+        "REPORTED_SOLVED_PRICE_GPT52_MODEL_ASSISTED_PRIMARY_PROOF_HOLD"
+      ],
+      "blockers": [
+        "PRICE_GPT52_PRIMARY_FULL_PROOF_NOT_REPLAYED",
+        "GREEN_SAWHNEY_QUANTITATIVE_SOURCE_COMMENT_UNVERIFIED",
+        "OMEGA_VS_BIGOMEGA_AMBIGUITY"
+      ]
+    }
+  ],
+  "qa_boundaries": {
+    "source_primary_full_proof": "PARTIAL_NOT_COMPLETE",
+    "independent_review": "PENDING",
+    "external_lean_replay": "NOT_DONE",
+    "local_mkdocs": "PASS_LOCAL_NOT_DEPLOYED",
+    "browser_mathematical_rendering": "NOT_VERIFIED",
+    "protected_merge": "NOT_MERGED",
+    "v2_editorial_admission": "NOT_ADMITTED",
+    "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:af4ee021eba74371b0e766ca9726a50a",
+    "cohort_test_suite": "236_PASSED_0_FAILED"
+  }
+}
