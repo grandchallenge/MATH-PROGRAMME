@@ -70,10 +70,24 @@ function pageUrl(base,n) {
   const page = await context.newPage();
   const results = [];
   let currentErrors=[];
+  let ancillaryApiWarnings=[];
+  // Site-wide GitHub repo/release badges request these unauthenticated public APIs.
+  // The upstream API can return 403 without affecting any local MathJax geometry.
+  // Retain such 403s explicitly as external-service warnings; do not mislabel them
+  // as renderer failures, and never ignore an unexpected console/page error.
+  const ancillaryGithubUrls=new Set([
+    'https://api.github.com/repos/grandchallenge/MATH-PROGRAMME',
+    'https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/releases/latest'
+  ]);
   page.on('pageerror',e=>currentErrors.push('pageerror: '+e.message));
   page.on('console',m=>{
-    if (m.type()==='error' && !m.text().includes('404'))
-      currentErrors.push('console: '+m.text().slice(0,250));
+    if (m.type()!=='error' || m.text().includes('404')) return;
+    const sourceUrl=m.location()?.url || '';
+    if(ancillaryGithubUrls.has(sourceUrl) && m.text().includes('403')) {
+      ancillaryApiWarnings.push('external GitHub API HTTP 403: '+sourceUrl);
+    } else {
+      currentErrors.push('console: '+m.text().slice(0,250)+' at '+sourceUrl);
+    }
   });
   try {
     for (const [scope,ids,base] of [['local_drafts',localIds,local],
@@ -81,6 +95,7 @@ function pageUrl(base,n) {
       for (const n of ids) {
         const url = pageUrl(base,n);
         currentErrors=[];
+        ancillaryApiWarnings=[];
         let error = null;
         let status = 0;
         let stats = {};
@@ -115,17 +130,19 @@ function pageUrl(base,n) {
           if(!stats.sampleBoundingBox?.height) throw Error('No visible mathematical glyph geometry');
           if(scope==='local_drafts' && !stats.draftWarning) throw Error('Missing UNACCEPTED DRAFT warning');
           if(scope==='public_accepted_sample' && stats.draftWarning) throw Error('Unexpected draft warning on public exemplar');
+          if(currentErrors.length) throw Error('Unexpected browser console errors: '+currentErrors.join(' | '));
         } catch(e) {error = e.message;}
         let screenshot = null;
         let screenshotSha256 = null;
-        if (!error && ((scope==='local_drafts' && [1053,1084,1087,1090,1094,1097,1099,1101,1104,1110,1115,1119,1121].includes(n))
+        if (!error && ((scope==='local_drafts' && [1053,1084,1087,1090,1094,1097,1099,1101,1104,1110,1115,1119,1121,1123,1127].includes(n))
           || (scope==='public_accepted_sample' && n===1052))) {
           screenshot = path.join(shots,scope+'-'+n+'.png');
           await page.screenshot({path:screenshot});
           screenshotSha256 = sha256(screenshot);
         }
         const result={scope,problem_id:n,url,status,pass:!error,...stats,
-          browserErrors:currentErrors.slice(),error,screenshot,screenshot_sha256:screenshotSha256};
+          browserErrors:currentErrors.slice(),externalServiceWarnings:ancillaryApiWarnings.slice(),
+          error,screenshot,screenshot_sha256:screenshotSha256};
         console.log(JSON.stringify({scope,problem_id:n,pass:!error,rendered:stats.rendered,
           math:stats.arithmatex,error}));
         results.push(result);
@@ -146,6 +163,8 @@ function pageUrl(base,n) {
       'The public pages are ALREADY PUBLISHED articles. This does not certify public deployment of current cohort drafts.',
     local_drafts_accepted:false,protected_admission_certification:false,
     tested:results.length,passed,failed:results.length-passed,
+    externalServiceWarningCount:results.reduce((a,r)=>a+r.externalServiceWarnings.length,0),
+    externalServiceWarningPolicy:'Only exact public GitHub repository/release API HTTP 403 responses are classified ancillary; unexpected errors fail the page. All external warnings remain visible in each result.',
     results};
   fs.mkdirSync(path.dirname(output),{recursive:true});
   fs.writeFileSync(output,JSON.stringify(receipt,null,2)+'\n');
