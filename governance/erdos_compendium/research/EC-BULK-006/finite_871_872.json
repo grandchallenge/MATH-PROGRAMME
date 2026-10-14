@@ -1,0 +1,487 @@
+{
+  "871": {
+    "examples": [
+      {
+        "A": [
+          1,
+          2,
+          3,
+          5,
+          8
+        ],
+        "diagonal": 1,
+        "n": 6,
+        "ordered": 3,
+        "unordered": 2
+      },
+      {
+        "A": [
+          1,
+          2,
+          3,
+          5,
+          8
+        ],
+        "diagonal": 0,
+        "n": 8,
+        "ordered": 2,
+        "unordered": 1
+      },
+      {
+        "A": [
+          1,
+          2,
+          3,
+          5,
+          8
+        ],
+        "diagonal": 1,
+        "n": 10,
+        "ordered": 3,
+        "unordered": 2
+      }
+    ],
+    "identity": "R_ordered(n)=2*R_unordered(n)-1_{n even and n/2 in A}",
+    "unordered_ordered_identity_tests": 4080
+  },
+  "872": {
+    "definition": "primitive antichain of [2,n], alternating perfect-play minimax, terminal size",
+    "first_player_conventions": "P maximizes; S minimizes",
+    "notable": {
+      "finite_values_are_not_asymptotic_claims": true,
+      "first_player_difference_at_n": 9,
+      "shortener_first_exceeds_pi_n_at_n": 25
+    },
+    "table": [
+      {
+        "maximal_antichains": 1,
+        "minimum_size": 1,
+        "n": 2,
+        "pi_n": 1,
+        "prolonger_first": 1,
+        "remaining_states": 2,
+        "selected_states": 2,
+        "shortener_first": 1,
+        "witness": [
+          2
+        ]
+      },
+      {
+        "maximal_antichains": 1,
+        "minimum_size": 2,
+        "n": 3,
+        "pi_n": 2,
+        "prolonger_first": 2,
+        "remaining_states": 4,
+        "selected_states": 4,
+        "shortener_first": 2,
+        "witness": [
+          2,
+          3
+        ]
+      },
+      {
+        "maximal_antichains": 2,
+        "minimum_size": 2,
+        "n": 4,
+        "pi_n": 2,
+        "prolonger_first": 2,
+        "remaining_states": 4,
+        "selected_states": 6,
+        "shortener_first": 2,
+        "witness": [
+          3,
+          4
+        ]
+      },
+      {
+        "maximal_antichains": 2,
+        "minimum_size": 3,
+        "n": 5,
+        "pi_n": 3,
+        "prolonger_first": 3,
+        "remaining_states": 8,
+        "selected_states": 12,
+        "shortener_first": 3,
+        "witness": [
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "maximal_antichains": 3,
+        "minimum_size": 3,
+        "n": 6,
+        "pi_n": 3,
+        "prolonger_first": 3,
+        "remaining_states": 12,
+        "selected_states": 16,
+        "shortener_first": 3,
+        "witness": [
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "maximal_antichains": 3,
+        "minimum_size": 4,
+        "n": 7,
+        "pi_n": 4,
+        "prolonger_first": 4,
+        "remaining_states": 24,
+        "selected_states": 32,
+        "shortener_first": 4,
+        "witness": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "maximal_antichains": 5,
+        "minimum_size": 4,
+        "n": 8,
+        "pi_n": 4,
+        "prolonger_first": 4,
+        "remaining_states": 24,
+        "selected_states": 44,
+        "shortener_first": 4,
+        "witness": [
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      {
+        "maximal_antichains": 6,
+        "minimum_size": 4,
+        "n": 9,
+        "pi_n": 4,
+        "prolonger_first": 5,
+        "remaining_states": 44,
+        "selected_states": 72,
+        "shortener_first": 4,
+        "witness": [
+          3,
+          5,
+          7,
+          8
+        ]
+      },
+      {
+        "maximal_antichains": 10,
+        "minimum_size": 4,
+        "n": 10,
+        "pi_n": 4,
+        "prolonger_first": 5,
+        "remaining_states": 52,
+        "selected_states": 102,
+        "shortener_first": 4,
+        "witness": [
+          3,
+          7,
+          8,
+          10
+        ]
+      },
+      {
+        "maximal_antichains": 10,
+        "minimum_size": 5,
+        "n": 11,
+        "pi_n": 5,
+        "prolonger_first": 6,
+        "remaining_states": 104,
+        "selected_states": 204,
+        "shortener_first": 5,
+        "witness": [
+          3,
+          7,
+          8,
+          10,
+          11
+        ]
+      },
+      {
+        "maximal_antichains": 12,
+        "minimum_size": 5,
+        "n": 12,
+        "pi_n": 5,
+        "prolonger_first": 6,
+        "remaining_states": 136,
+        "selected_states": 252,
+        "shortener_first": 5,
+        "witness": [
+          3,
+          7,
+          8,
+          10,
+          11
+        ]
+      },
+      {
+        "maximal_antichains": 12,
+        "minimum_size": 6,
+        "n": 13,
+        "pi_n": 6,
+        "prolonger_first": 7,
+        "remaining_states": 272,
+        "selected_states": 504,
+        "shortener_first": 6,
+        "witness": [
+          3,
+          7,
+          8,
+          10,
+          11,
+          13
+        ]
+      },
+      {
+        "maximal_antichains": 22,
+        "minimum_size": 6,
+        "n": 14,
+        "pi_n": 6,
+        "prolonger_first": 7,
+        "remaining_states": 288,
+        "selected_states": 732,
+        "shortener_first": 6,
+        "witness": [
+          3,
+          8,
+          10,
+          11,
+          13,
+          14
+        ]
+      },
+      {
+        "maximal_antichains": 23,
+        "minimum_size": 6,
+        "n": 15,
+        "pi_n": 6,
+        "prolonger_first": 7,
+        "remaining_states": 572,
+        "selected_states": 1132,
+        "shortener_first": 6,
+        "witness": [
+          3,
+          8,
+          10,
+          11,
+          13,
+          14
+        ]
+      },
+      {
+        "maximal_antichains": 35,
+        "minimum_size": 6,
+        "n": 16,
+        "pi_n": 6,
+        "prolonger_first": 7,
+        "remaining_states": 572,
+        "selected_states": 1528,
+        "shortener_first": 6,
+        "witness": [
+          3,
+          10,
+          11,
+          13,
+          14,
+          16
+        ]
+      },
+      {
+        "maximal_antichains": 35,
+        "minimum_size": 7,
+        "n": 17,
+        "pi_n": 7,
+        "prolonger_first": 8,
+        "remaining_states": 1144,
+        "selected_states": 3056,
+        "shortener_first": 7,
+        "witness": [
+          3,
+          10,
+          11,
+          13,
+          14,
+          16,
+          17
+        ]
+      },
+      {
+        "maximal_antichains": 47,
+        "minimum_size": 7,
+        "n": 18,
+        "pi_n": 7,
+        "prolonger_first": 8,
+        "remaining_states": 1432,
+        "selected_states": 3896,
+        "shortener_first": 7,
+        "witness": [
+          4,
+          5,
+          11,
+          13,
+          14,
+          17,
+          18
+        ]
+      },
+      {
+        "maximal_antichains": 47,
+        "minimum_size": 8,
+        "n": 19,
+        "pi_n": 8,
+        "prolonger_first": 9,
+        "remaining_states": 2864,
+        "selected_states": 7792,
+        "shortener_first": 8,
+        "witness": [
+          4,
+          5,
+          11,
+          13,
+          14,
+          17,
+          18,
+          19
+        ]
+      },
+      {
+        "maximal_antichains": 63,
+        "minimum_size": 8,
+        "n": 20,
+        "pi_n": 8,
+        "prolonger_first": 9,
+        "remaining_states": 3280,
+        "selected_states": 10240,
+        "shortener_first": 8,
+        "witness": [
+          4,
+          5,
+          11,
+          13,
+          14,
+          17,
+          18,
+          19
+        ]
+      },
+      {
+        "maximal_antichains": 65,
+        "minimum_size": 8,
+        "n": 21,
+        "pi_n": 8,
+        "prolonger_first": 10,
+        "remaining_states": 7072,
+        "selected_states": 16512,
+        "shortener_first": 8,
+        "witness": [
+          4,
+          5,
+          7,
+          11,
+          13,
+          17,
+          18,
+          19
+        ]
+      },
+      {
+        "maximal_antichains": 125,
+        "minimum_size": 8,
+        "n": 22,
+        "pi_n": 8,
+        "prolonger_first": 10,
+        "remaining_states": 7232,
+        "selected_states": 24592,
+        "shortener_first": 8,
+        "witness": [
+          4,
+          5,
+          7,
+          13,
+          17,
+          18,
+          19,
+          22
+        ]
+      },
+      {
+        "n": 23,
+        "pi_n": 9,
+        "prolonger_first": 11,
+        "remaining_states": 14464,
+        "selected_states": 49184,
+        "shortener_first": 9
+      },
+      {
+        "n": 24,
+        "pi_n": 9,
+        "prolonger_first": 11,
+        "remaining_states": 18176,
+        "selected_states": 59264,
+        "shortener_first": 9
+      },
+      {
+        "n": 25,
+        "pi_n": 9,
+        "prolonger_first": 11,
+        "remaining_states": 32528,
+        "selected_states": 109296,
+        "shortener_first": 10
+      },
+      {
+        "n": 26,
+        "pi_n": 9,
+        "prolonger_first": 11,
+        "remaining_states": 32824,
+        "selected_states": 163368,
+        "shortener_first": 10
+      },
+      {
+        "n": 27,
+        "pi_n": 9,
+        "prolonger_first": 11,
+        "remaining_states": 53688,
+        "selected_states": 262488,
+        "shortener_first": 10
+      },
+      {
+        "n": 28,
+        "pi_n": 9,
+        "prolonger_first": 12,
+        "remaining_states": 55896,
+        "selected_states": 355728,
+        "shortener_first": 10
+      },
+      {
+        "n": 29,
+        "pi_n": 10,
+        "prolonger_first": 13,
+        "remaining_states": 111792,
+        "selected_states": 711456,
+        "shortener_first": 11
+      },
+      {
+        "n": 30,
+        "pi_n": 10,
+        "prolonger_first": 13,
+        "remaining_states": 154800,
+        "selected_states": 879936,
+        "shortener_first": 11
+      }
+    ]
+  },
+  "scope": "Erdos 871-872 exact finite checks; not an asymptotic proof",
+  "validation": {
+    "ordered_unordered_identity": "PASS all nonempty A subsets [1,8], n=2..17",
+    "terminal_antichain_crosscheck": "PASS n=2..22",
+    "two_independent_minimax_encodings": "PASS n=2..30"
+  }
+}
