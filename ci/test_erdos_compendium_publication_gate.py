@@ -218,7 +218,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(set(by_id), universe)
         raw = (ROOT / "governance/erdos_catalogue/REGISTRY.json").read_bytes()
         blob = hashlib.sha1(b"blob " + str(len(raw)).encode() +
-                            b"\\0" + raw).hexdigest()
+                            bytes([0]) + raw).hexdigest()
         self.assertEqual(blob, "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5")
         # Each tuple: cohort, inclusive range, omitted IDs, additional IDs,
         # manifest expected on protected main, exact cohort cardinality.
