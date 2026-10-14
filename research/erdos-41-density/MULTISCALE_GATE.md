@@ -22,6 +22,10 @@ See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md). The exact cubic di
 
 See [SHADOW_CORRELATION_SPECTRUM.md](SHADOW_CORRELATION_SPECTRUM.md). For any finite B3 carrier A and subblock X, the autocorrelation of its genuine unordered pair-sum set P_X at a difference a−b between distinct A elements is exactly |X| when both anchors lie in X, and zero otherwise. Cross-pair spectra P_X−P_Y for disjoint blocks avoid **all** differences A−A. This is a stronger arithmetic-location restriction than enclosing shell intervals. However the resulting A-indexed Gram matrix has explicit cardinality-only eigenvalues and is always positive semidefinite; PSD of that particular matrix is not a route to a new density gap. The original M3 finite-window valley remains OPEN.
 
+## 2026-10-14 fourth-order off-difference-spectrum energy
+
+See [OFF_SPECTRUM_FOURTH_MOMENT.md](OFF_SPECTRUM_FOURTH_MOMENT.md). The exact selector theorem determines the pair-sum autocorrelation at all differences of A. Splitting the fourth-order additive energy of P_X into those known differences and its complement yields the **exact** on-spectrum energy q²+n³(n−1) and a Cauchy lower bound for the remaining off-spectrum mass. Under an *explicitly conditional finite-block critical-size hypothesis* n≈D^(1/3), the off-spectrum energy is at least a positive constant times D^(5/3). This is not an M3 contradiction: the mass may reside at numerous differences not among A−A. A new cross-scale interaction controlling that off-spectrum reservoir is required. The finite-window valley remains OPEN.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
