@@ -28,18 +28,18 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "25 authenticated original issue-bound RESULT/1 returns, 175 missing. 17 six-section documentary manuscripts, all UNACCEPTED_DRAFT. Latest #466 mathematically solved in literature with exact original source and independent qualitative Kronecker argument; original quantitative proofs not GCL-replayed, no MathCert. 108 tests and 517 subtests plus strict MkDocs pass at pre-review head 4743a4be; no production PR/merge or V2 admission.",
+  "status_semantics": "26 authenticated original issue-bound RESULT/1 returns, 174 no return; 17 unaccepted substantive six-section drafts. #466 source-ready with critical review and full suite pass. #469 only STATUS_CONFLICT, no manuscript: July 2026 Lewis claimed result and machine-proof artifacts exist, but maintained page still OPEN; independent theorem/Lean semantic replay pending. No protected production merge, public MathJax browser receipt or V2 admission.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 25,
+    "post_initial_source_return_count": 26,
     "comment_results_source": "LIVE_GITHUB_465_COMMENT_ID_READBACK_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "TWENTY_FIVE_COMMENT_IDS_SOURCE_RECONCILIATION_PENDING_2026_10_14",
+    "readback_state": "TWENTY_SIX_ISSUE_BOUND_AUTHENTICATED_RETURNS_FULL_RECONCILIATION_PENDING",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
     "inventory_exceptions": 0,
     "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)",
-    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1736#issuecomment-6166375563"
+    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1739#issuecomment-6166559482"
   },
   "items": [
     {
@@ -1079,19 +1079,33 @@
         "number theory",
         "divisors"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1739#issuecomment-6166559482",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1739#issuecomment-6166559482",
+      "evidence_state": "STATUS_CONFLICT_2026_CLAIMED_PROOF_EXTERNAL_LEAN_NOT_INDEPENDENTLY_REPLAYED",
       "article_path": "governance/erdos_compendium/editorial/0469.md",
       "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "editorial_review_status": "SOURCE_FIDELITY_EXCEPTION_PENDING_INDEPENDENT_THEOREM_CHECK",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "INDEPENDENT_LEAN_KERNEL_CHECK_REQUIRED",
+        "INDEPENDENT_PRIMARY_MANUSCRIPT_PROOF_REVIEW_REQUIRED",
+        "ACTUAL_STATEMENT_EQUIVALENCE_MANUAL_ADJUDICATION_REQUIRED"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "MAINTAINED_WEBSITE_OPEN_VS_CANONICAL_CATALOGUE_PROVED",
+        "2026_LEWIS_UNREVIEWED_CLAIMED_SOLUTION",
+        "CURRENT_PROVIDER_BY_SORRY_EXTERNAL_PROOF_LINK",
+        "PINNED_FORMAL_PROVIDER_OPEN"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6166559482,
+      "source_return_content_sha256": "4a7756bf1e7bd07ec11102dd036c67548e238d6d1d31eb97acd0732409cb30ae",
+      "source_return_disposition": "STATUS_CONFLICT",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1739#issuecomment-6166559482",
+      "finite_fixture_path": "tests/test_erdos_compendium_0469_source_exception.py"
     },
     {
       "problem_id": 471,
