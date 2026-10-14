@@ -278,6 +278,59 @@ class EditorialGateTests(unittest.TestCase):
         self.assertFalse(set(admitted) - universe)
         self.assertFalse(set(admitted) & {1, 2, 3})
 
+    def test_render_amendments_are_exact_and_historical_sources_preserved(self):
+        """Typographical corrections cannot rewrite historical admission evidence."""
+        import copy
+        from unittest.mock import patch
+        from erdos_compendium import RENDER_AMENDMENTS
+        doc = json.loads(RENDER_AMENDMENTS.read_text(encoding="utf-8"))
+        ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        history = {e["problem_id"]: (e, b["batch_id"])
+                   for b in ledger["batches"] for e in b["entries"]}
+        amended = load_batch_admissions(ACCEPTANCE)
+        expected = {301, 311, 326, 346, 400}
+        self.assertEqual({r["problem_id"] for r in doc["entries"]}, expected)
+        self.assertEqual(len(amended), 250)
+        for row in doc["entries"]:
+            n = row["problem_id"]
+            old, batch = history[n]
+            self.assertEqual(row["previous_sha256"], old["source_sha256"])
+            self.assertEqual(row["source_check"], old["source_check"])
+            self.assertEqual(row["batch_id"], batch)
+            self.assertEqual(row["corrected_sha256"], amended[n]["source_sha256"])
+            self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),
+                             row["corrected_sha256"])
+            self.assertEqual(amended[n]["render_preview_receipt"], doc["browser_readback"])
+        with tempfile.TemporaryDirectory() as tmp:
+            for failure in ("previous_sha256", "source_check"):
+                bad = copy.deepcopy(doc)
+                bad["entries"][0][failure] = (
+                    "0"*64 if failure == "previous_sha256" else
+                    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1#issuecomment-1")
+                dest = Path(tmp) / "amendment.json"
+                dest.write_text(json.dumps(bad), encoding="utf-8")
+                with patch("erdos_compendium.RENDER_AMENDMENTS", dest):
+                    with self.assertRaisesRegex(ValueError, "Invalid or stale"):
+                        load_batch_admissions(ACCEPTANCE)
+
+    def test_render_amended_set_notation_is_portable_tex(self):
+        """The formerly-unrendered set braces remain balanced and explicit."""
+        expected = {
+            301: (r"\{1,\ldots,N\}", r"\{1,\ldots,n\}"),
+            311: (r"\{1,\ldots,N\}", r"\{1\}"),
+            326: (r"A=\{a_1<a_2<\cdots\}", r"C=\{c_n\}"),
+            346: (r"A=\{a_1<a_2<\cdots\}",),
+            400: (r"\{0,1,2,3,4,5\}",),
+        }
+        for n, fragments in expected.items():
+            article = manuscript(n)
+            for part in fragments:
+                self.assertIn(part, article, (n, part))
+            self.assertNotIn("${", article,
+                             f"Unescaped opening set brace in #{n}")
+            self.assertNotIn("={a_", article,
+                             f"Unescaped set-comprehension brace in #{n}")
+
     def test_bulk_002_200_existing_issue_slots_and_authentic_returns(self):
         """200 original queue jobs, not invented articles or accepted entries."""
         manifest_path = ROOT / "governance/erdos_compendium/batches/EC-BULK-002.json"
