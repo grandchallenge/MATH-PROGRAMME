@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "governance/erdos_catalogue/REGISTRY.json"
 EDITORIAL = ROOT / "governance/erdos_compendium/editorial"
 ACCEPTANCE = ROOT / "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
+RENDER_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_RENDER_AMENDMENTS.json"
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
@@ -124,6 +125,48 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
             accepted[n] = {**entry, **{key: batch[key] for key in
                             ("critical_review", "protected_admission", "mkdocs_run", "public_html_readback")},
                            "batch_id": batch_id}
+    # Preserve historical V2 source hashes and evidence on their original batches.
+    # A protected, source-bound rendering amendment replaces only the effective
+    # manuscript digest; the original admission remains auditable and immutable.
+    if Path(path).resolve() == ACCEPTANCE.resolve() and RENDER_AMENDMENTS.exists():
+        doc = json.loads(RENDER_AMENDMENTS.read_text(encoding="utf-8"))
+        if (set(doc) != {"record_type", "revision_id", "source_issue",
+                         "scope", "protected_admission", "browser_readback",
+                         "entries"}
+                or doc["record_type"] != "ERDOS_COMPENDIUM_EDITORIAL_RENDER_AMENDMENTS/1"
+                or doc["revision_id"] != "EC-MATHJAX-20261014-A"
+                or doc["scope"] != "TYPOGRAPHY_ONLY_NO_MATHEMATICAL_CERTIFICATION"
+                or doc["source_issue"] !=
+                   "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2637"
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/[0-9]+",
+                                    doc["protected_admission"])
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/2637#issuecomment-[0-9]+",
+                                    doc["browser_readback"])):
+            raise ValueError("Invalid rendering amendment authority and receipts")
+        corrected = set()
+        for row in doc["entries"]:
+            if set(row) != {"problem_id", "batch_id", "previous_sha256",
+                            "corrected_sha256", "source_check"}:
+                raise ValueError("Invalid rendering amendment fields")
+            n = row["problem_id"]
+            if (type(n) is not int or n in corrected or n not in accepted
+                    or n not in {301, 311, 326, 346, 400}
+                    or row["batch_id"] != "EC-BULK-003"
+                    or row["batch_id"] != accepted[n]["batch_id"]
+                    or row["previous_sha256"] != accepted[n]["source_sha256"]
+                    or row["source_check"] != accepted[n]["source_check"]
+                    or not isinstance(row["corrected_sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", row["corrected_sha256"])
+                    or row["previous_sha256"] == row["corrected_sha256"]):
+                raise ValueError(f"Invalid or stale rendering amendment #{n}")
+            corrected.add(n)
+            accepted[n] = {**accepted[n],
+                           "source_sha256": row["corrected_sha256"],
+                           "render_amendment_id": doc["revision_id"],
+                           "render_amendment_authority": doc["protected_admission"],
+                           "render_preview_receipt": doc["browser_readback"]}
+        if corrected != {301, 311, 326, 346, 400}:
+            raise ValueError("Incomplete 5-article rendering correction batch")
     return accepted
 
 

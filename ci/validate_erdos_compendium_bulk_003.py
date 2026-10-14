@@ -83,6 +83,19 @@ def verify(strict: bool = False) -> dict:
         hashes = {e["problem_id"]: e["source_sha256"] for e in batches[0]["entries"]}
         assert hashes == {x["problem_id"]: x["manuscript_sha256_pre_admission"] for x in m["items"]}, "Stale V2 source digest"
 
+    # The intake and its 200 historical digests stay immutable. Rendering-only
+    # corrections have a separate protected, exact-source amendment record.
+    amendments_file = ROOT / "governance/erdos_compendium/EDITORIAL_RENDER_AMENDMENTS.json"
+    render_amendments = {}
+    if amendments_file.exists():
+        from erdos_compendium import load_batch_admissions, ACCEPTANCE
+        accepted_current = load_batch_admissions(ACCEPTANCE)
+        for row in load(amendments_file)["entries"]:
+            n = row["problem_id"]
+            assert n not in render_amendments, f"Duplicate render amendment #{n}"
+            assert accepted_current[n]["source_sha256"] == row["corrected_sha256"], n
+            render_amendments[n] = row
+
     returns = 0
     articles = 0
     exceptions = []
@@ -122,10 +135,17 @@ def verify(strict: bool = False) -> dict:
             assert len(text.split()) >= 350, f"Insufficient substantive article #{n}"
             digest = hashlib.sha256(text.strip().encode("utf-8")).hexdigest()
             raw_digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            if x.get("manuscript_raw_file_sha256_pre_admission"):
-                assert x["manuscript_raw_file_sha256_pre_admission"] == raw_digest, n
-            if x.get("manuscript_sha256_pre_admission"):
-                assert x["manuscript_sha256_pre_admission"] == digest, n
+            if n in render_amendments:
+                correction = render_amendments[n]
+                assert correction["previous_sha256"] == x["manuscript_sha256_pre_admission"], n
+                assert digest == correction["corrected_sha256"], n
+                # The original raw-byte digest is intentionally historical; the
+                # amended manuscript is independently bound by its normalized SHA.
+            else:
+                if x.get("manuscript_raw_file_sha256_pre_admission"):
+                    assert x["manuscript_raw_file_sha256_pre_admission"] == raw_digest, n
+                if x.get("manuscript_sha256_pre_admission"):
+                    assert x["manuscript_sha256_pre_admission"] == digest, n
             assert x.get("article_status") == "UNACCEPTED_DRAFT", n
             articles += 1
         else:
