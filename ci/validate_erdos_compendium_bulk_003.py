@@ -75,7 +75,13 @@ def verify(strict: bool = False) -> dict:
     assert not expected.intersection(x["problem_id"] for x in others["items"])
     admitted = [e["problem_id"] for b in ledger["batches"] for e in b["entries"]]
     admitted += [e["problem_id"] for e in ledger.get("admissions", [])]
-    assert not expected.intersection(admitted), "Already admitted problem in EC-BULK-003"
+    overlapping = expected.intersection(admitted)
+    assert overlapping in (set(), expected), "Partial EC-BULK-003 admission"
+    if overlapping:
+        batches = [b for b in ledger["batches"] if b["batch_id"] == "EC-BULK-003"]
+        assert len(batches) == 1 and len(batches[0]["entries"]) == 200
+        hashes = {e["problem_id"]: e["source_sha256"] for e in batches[0]["entries"]}
+        assert hashes == {x["problem_id"]: x["manuscript_sha256_pre_admission"] for x in m["items"]}, "Stale V2 source digest"
 
     returns = 0
     articles = 0

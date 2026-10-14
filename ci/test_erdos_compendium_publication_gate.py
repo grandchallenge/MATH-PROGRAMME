@@ -67,7 +67,9 @@ class EditorialGateTests(unittest.TestCase):
         cohort = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json").read_text(encoding="utf-8"))
         expected_ids = {x["problem_id"] for x in cohort["items"]}
         self.assertEqual(len(expected_ids), 50)
-        self.assertEqual(set(actual), expected_ids, "No new admission outside protected source cohort")
+        new_ids = {n for n in range(246, 447) if n != 390}
+        self.assertEqual(set(actual), expected_ids | new_ids,
+                         "Only the two exact protected editorial cohorts may be admitted")
         row = copy.deepcopy(actual[7])
         self.assertEqual(row.pop("batch_id"), "EC-LEGACY-0007")
         self.assertEqual(row, {
@@ -84,7 +86,7 @@ class EditorialGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             root = Path(root)
             counts = build(output=root / "site", admissions_path=ACCEPTANCE)
-            self.assertEqual(counts["reviewed"], 50)
+            self.assertEqual(counts["reviewed"], 250)
             self.assertEqual(counts["pending"], counts["editorial"] - counts["legacy"] - counts["reviewed"])
             accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
             self.assertIn("Reviewed explanatory article", accepted_page)
@@ -97,7 +99,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(proposal["record_type"], "ERDOS_COMPENDIUM_BATCH_ADMISSION_PROPOSAL/1")
         self.assertEqual(proposal["cohort_id"], "EC-BULK-001")
         self.assertEqual(proposal["new_admission_count"], 49)
-        self.assertEqual(len(ledger["batches"]), 2)
+        self.assertEqual(len(ledger["batches"]), 3)
         batch = ledger["batches"][1]
         self.assertEqual(batch["batch_id"], "EC-BULK-001")
         self.assertEqual(batch["protected_admission"], REPO + "/pull/2608")
