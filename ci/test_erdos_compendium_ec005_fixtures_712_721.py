@@ -44,7 +44,7 @@ class EC005Fixtures(unittest.TestCase):
         for n in range(2,6):
             edges=combs(n,2)
             # Brute force: only the empty edge family avoids K2.
-            safe=[chosen for mask in range(1<<len(edges))
+            safe=[mask for mask in range(1<<len(edges))
                   if not [edges[j] for j in range(len(edges)) if mask & (1<<j)]]
             self.assertEqual(len(safe),1)
 
