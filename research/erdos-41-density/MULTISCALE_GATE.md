@@ -18,6 +18,10 @@ See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md). The exact cubic di
 
 [CROSS_SCALE_SHADOW_MOMENTS.md](CROSS_SCALE_SHADOW_MOMENTS.md) proves exact first/second shadow moments and the joint inequality across any finite collection of disjoint M3 blocks, preserving their centroids and variances. Tests on genuine B3 fixtures pass. A scale analysis finds **no divergent factor** from these moment inequalities under hypothetical critical-scale occupancies: the leading geometric powers cancel, so the method does **not** force a contradiction for every positive normalized density. Independent recentering of shadows is invalid because T(X+h)=T(X)+h, and translation-invariant a+b−2c is not B3-injective. The finite-window valley problem remains OPEN.
 
+## 2026-10-14 exact difference-spectrum selector
+
+See [SHADOW_CORRELATION_SPECTRUM.md](SHADOW_CORRELATION_SPECTRUM.md). For any finite B3 carrier A and subblock X, the autocorrelation of its genuine unordered pair-sum set P_X at a difference a−b between distinct A elements is exactly |X| when both anchors lie in X, and zero otherwise. Cross-pair spectra P_X−P_Y for disjoint blocks avoid **all** differences A−A. This is a stronger arithmetic-location restriction than enclosing shell intervals. However the resulting A-indexed Gram matrix has explicit cardinality-only eigenvalues and is always positive semidefinite; PSD of that particular matrix is not a route to a new density gap. The original M3 finite-window valley remains OPEN.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is

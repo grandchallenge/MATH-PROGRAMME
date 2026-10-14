@@ -62,3 +62,14 @@ See [ADDITIVE_SHADOW_MOMENTS.md](ADDITIVE_SHADOW_MOMENTS.md) and ADDITIVE_SHADOW
 | Complete Erdős #41 solution | Not claimed | OPEN |
 
 See [CROSS_SCALE_SHADOW_MOMENTS.md](CROSS_SCALE_SHADOW_MOMENTS.md); no mathematical certification or protected dispatch follows automatically.
+
+## Exact pair-sum autocorrelation / cross-block spectra
+
+| Obligation | Verified method | State |
+| --- | --- | --- |
+| B3 pair-sum autocorrelation selector | Complete written triple-multiset injection proof; genuine B3 exhaustive/block tests | PROVED |
+| Cross-P_X/P_Y difference exclusion | Written color-multiplicity contradiction; random genuine B3 partitions | PROVED |
+| Full A-indexed Gram eigenspectrum | Closed-form block-matrix decomposition; randomized quadratic-form certificates | PROVED |
+| Naive PSD-only or independently summed cross-spectra strategy | Exact cardinality-only eigenvalues; genuine B3 overlapping cross-spectra witness | OBSTRUCTED |
+| Arithmetic/polynomial Lean receipts | Lean 4.29.1 exit 0 when recorded in SHADOW_CORRELATION_RECEIPT.json | SEPARATELY CHECKED |
+| Genuine infinite M3 density valley and shell energy deficit | No growing contradiction established | OPEN |
