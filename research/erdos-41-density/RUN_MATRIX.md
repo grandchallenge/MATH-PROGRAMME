@@ -73,3 +73,16 @@ See [CROSS_SCALE_SHADOW_MOMENTS.md](CROSS_SCALE_SHADOW_MOMENTS.md); no mathemati
 | Naive PSD-only or independently summed cross-spectra strategy | Exact cardinality-only eigenvalues; genuine B3 overlapping cross-spectra witness | OBSTRUCTED |
 | Arithmetic/polynomial Lean receipts | Lean 4.29.1 exit 0 when recorded in SHADOW_CORRELATION_RECEIPT.json | SEPARATELY CHECKED |
 | Genuine infinite M3 density valley and shell energy deficit | No growing contradiction established | OPEN |
+
+## Fourth-moment off-spectrum additive energy
+
+| Obligation | Method | State |
+| --- | --- | --- |
+| Pair-sum energy exact spectrum decomposition | B3 selector plus integer Counter proof | Written exact theorem |
+| Cauchy fourth-moment lower bound | Sum of pair-pair differences, support diameter bound | Written exact theorem |
+| D^(5/3) off-spectrum bound | Finite-block critical-size conditional inequalities | Proved conditionally, not a B3 density solution |
+| Positive genuine M3 fixtures and negative fake-B3 clusters | Five new deterministic exact-rational tests | Passed |
+| Lean arithmetic certificates | Pinned Lean 4.29.1, log and source hash | Independently checked only when receipt GREEN |
+| Infinite cross-scale overlap contradiction | Not obtained | OPEN |
+
+See [OFF_SPECTRUM_FOURTH_MOMENT.md](OFF_SPECTRUM_FOURTH_MOMENT.md). No theorem certification or Solve dispatch is inferred.
