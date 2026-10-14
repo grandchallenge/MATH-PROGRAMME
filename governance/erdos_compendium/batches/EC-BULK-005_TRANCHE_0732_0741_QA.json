@@ -1,0 +1,128 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "tranche": {
+    "first": 732,
+    "last": 741,
+    "count": 10
+  },
+  "frozen_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "original_issues": [
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012
+  ],
+  "authenticated_original_result_comment_ids": [
+    6162823659,
+    6162836553,
+    6162844005,
+    6162858794,
+    6162870899,
+    6162885046,
+    6162892639,
+    6162866768,
+    6162869659,
+    6162871859
+  ],
+  "source_actor": "fyremael",
+  "native_issue_state": {
+    "state": "AVAILABLE",
+    "role": "SOURCE",
+    "chad_receipt": "GCL_CONTROL_BASH_RESULT/1:400c4ee9579640cfb5eba56617fa38a1"
+  },
+  "live_original_return_readback": {
+    "unique_issue_comments": 10,
+    "result1_grammar_passed": 10,
+    "authenticated_author_match": 10,
+    "duplicate_issue_comments": 0
+  },
+  "article_readback": {
+    "articles_present": 10,
+    "six_sections": 10,
+    "original_comment_backlinks_present": 10,
+    "display_math_delimiters_balanced": 10,
+    "all_unaccepted": true
+  },
+  "finite_regressions": {
+    "path": "ci/test_erdos_compendium_ec005_fixtures_732_741.py",
+    "committed_source": "42cecec2e5440e549e72f067114f848947b29d72",
+    "authenticated_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:79109bbe845649bc9bc03636c93211af",
+    "exit_code": 0,
+    "passed": 10,
+    "total": 10,
+    "scope": "Finite combinatorial arithmetic only. Infinitary cardinal/set-theoretic results and published asymptotics not replayed."
+  },
+  "source_boundaries": [
+    {
+      "n": 732,
+      "status": "COUNT_LOWER_PROVED",
+      "exception": "Source badge PROVED applies exponential number-of-compatible-sequences lower bound. Separate full necessary-and-sufficient compatibility characterization not proved in source.",
+      "admission_hold": true
+    },
+    {
+      "n": 733,
+      "status": "LINE_SEQUENCE_UPPER_PROVED",
+      "exception": "Szemeredi-Trotter exp(O(sqrt n)) upper established; subsequent limit log f(n)/sqrt n not inferred.",
+      "admission_hold": true
+    },
+    {
+      "n": 734,
+      "status": "OPEN",
+      "exception": "Nontrivial PBD per-block-size O(sqrt n) multiplicity requires asymptotic construction, Fano finite case not sufficient."
+    },
+    {
+      "n": 735,
+      "status": "SOLVED_CLASSIFICATION",
+      "exception": "Murty four configuration cases externally ABKPR08 proved, projective exception and exact primary theorem uninspected."
+    },
+    {
+      "n": 736,
+      "status": "NOT_PROVABLE",
+      "exception": "Komjath-Shelah KoSh05 provides model-relative counterexample for Taylor finite-subgraph universality; not absolute ZFC disproof."
+    },
+    {
+      "n": 737,
+      "status": "PROVED",
+      "exception": "Thomassen fixed edge for every large cycle length stronger than EHS cycle existence; no source proof replay."
+    },
+    {
+      "n": 738,
+      "status": "OPEN",
+      "exception": "Infinite-chromatic triangle-free induced all finite trees; stars verified restricted family, finite C5 not counterexample."
+    },
+    {
+      "n": 739,
+      "status": "NOT_PROVABLE",
+      "exception": "Komjath Ko88b negative consistency for aleph2/aleph1, Shelah positive under L; GCH unresolved; model quantifier preserved."
+    },
+    {
+      "n": 740,
+      "status": "OPEN_WITH_UNRECONCILED_CONSISTENCY_COMMENT",
+      "exception": "Pinned #740.lean main by sorry, r=0 vacuous semantic addition; maintained OPEN, 2026 forum points to #1175 Shelah consistency negative at aleph1 r=3 not primary-verified.",
+      "admission_hold": true
+    },
+    {
+      "n": 741,
+      "status": "SOLVED_BY_EXTERNAL_VARIANTS",
+      "exception": "Strict existing density part i FALSE; upper density variant TRUE; lower density variant OPEN in pinned #741.lean; basis part ii TRUE externally; all pinned theorem bodies by sorry, external Lean not GCL replayed.",
+      "admission_hold": true
+    }
+  ],
+  "concurrency_note": "A concurrent same-branch writer staged #739-#741 while coordinator was processing #732-#738. Duplicate create returned HTTP 422, so coordinator fetched and reconciled authoritative persisted article and original issue comment identities. No duplicate source comment was left.",
+  "governance": {
+    "unaccepted_count": 10,
+    "primary_original_paper_proof_review": "INCOMPLETE",
+    "minimum_20_critical_sample": "NOT_COMPLETE",
+    "strict_MkDocs": "NOT_RUN",
+    "deployed_browser_mathjax": "NOT_VERIFIED",
+    "protected_production_merge": false,
+    "v2_admitted": 0
+  }
+}
