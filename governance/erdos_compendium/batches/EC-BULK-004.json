@@ -28,18 +28,18 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "30 authenticated original-issue source RESULT/1 comments; 170 original issues without comment. 20 complete six-section documentary article drafts all UNACCEPTED_DRAFT. #474 special status PARTIAL due original Er95d/Va99 primary source gaps; 1988 Shelah forcing primary inspected; 2026 arXiv 2601.02923 Theorem 0.1 reports GCH-only countermodel at continuum aleph6, independent proof replay pending. Deterministic sample #474 remains NOT complete despite source-bound critical review. No protected production or V2 admissions or actual public browser rendering.",
+  "status_semantics": "31 authenticated original issue-bound source RESULT/1 returns, 169 original issues without returns. 21 six-section unaccepted documentary manuscripts. #474 PARTIAL status-specific source gap with 2026 Shelah preprint and CH vs aleph2 distinction; fixed sample not finished. #478 source-ready historical 1980/2024, Jul 2026 Hu p^8/15 proof claim unreviewed, main conjecture OPEN. No protected production merge, live browser rendering or V2 admission.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 30,
+    "post_initial_source_return_count": 31,
     "comment_results_source": "LIVE_GITHUB_465_COMMENT_ID_READBACK_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "THIRTY_AUTHENTICATED_ORIGINAL_RESULT_COMMENTS_FULL_200_RECONCILIATION_PENDING",
+    "readback_state": "31_AUTHENTICATED_ORIGINAL_ISSUE_RETURNS_200_RECONCILIATION_PENDING",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
     "inventory_exceptions": 0,
     "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)",
-    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1744#issuecomment-6167424347"
+    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1748#issuecomment-6167582562"
   },
   "items": [
     {
@@ -1453,19 +1453,37 @@
         "number theory",
         "factorials"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1748#issuecomment-6167582562",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1748#issuecomment-6167582562",
+      "evidence_state": "SOURCE_LOCK_READY_HISTORICAL_1980_2024_BUT_2026_AUTHOR_IMPROVEMENT_UNADJUDICATED",
       "article_path": "governance/erdos_compendium/editorial/0478.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_WITH_UNREVIEWED_2026_ASYMPTOTIC_EXCEPTION",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "HU_2026_INDEPENDENT_INCIDENCE_PROOF_REVIEW_PENDING",
+        "GCL_FORMAL_LEAN_REPLAY_NOT_DONE",
+        "ERDOS_1_MINUS_E_INV_ASYMPTOTIC_OPEN"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "HU_JULY_2026_UNREFEREED_P8_OVER_15_CLAIM",
+        "AUTHOR_PARTIAL_LEAN_EXTERNAL_INCIDENCE_DEPENDENCY",
+        "WILSON_P_MINUS_2_UPPER_BOUND_FALSE_AT_P_2_3",
+        "MAINTAINED_PAGE_PREDATES_2026_CLAIM"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6167582562,
+      "source_return_content_sha256": "7e3050815a5fc9d778968935b9a050a5d05ebbefea75c187e11ccce3bef074a6",
+      "source_return_disposition": "SOURCE_LOCK_READY",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-017.md",
+      "manuscript_sha256_pre_admission": "4cf890e2998e6884f900e17afef24218181a6290ed80c71093875965b731cbb4",
+      "manuscript_raw_file_sha256_pre_admission": "d30b7ea45a0841d589cbe170f4a80c4fce046f544614c3c8a746b04ce21a61f7",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1748#issuecomment-6167582562",
+      "finite_fixture_path": "tests/test_erdos_compendium_0478_factorials.py"
     },
     {
       "problem_id": 479,
@@ -7044,7 +7062,7 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-14",
-    "count": 20,
+    "count": 21,
     "problem_ids": [
       448,
       449,
@@ -7065,12 +7083,13 @@
       471,
       472,
       474,
-      476
+      476,
+      478
     ],
     "qa": {
       "tests_passed": 108,
       "subtests_passed": 517,
-      "strict_mkdocs_build": "PENDING_NEW_0474_REGISTER_HEAD",
+      "strict_mkdocs_build": "PENDING_0478_REGISTER_HEAD",
       "early_exception_reviews_passed": 11,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
@@ -7081,14 +7100,14 @@
       "full_suite_after_0461": "NOT_VERIFIED",
       "full_suite_after_0462": "NOT_VERIFIED",
       "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK",
-      "latest_full_tests": "PENDING_NEW_0474_REGISTER_HEAD",
+      "latest_full_tests": "PENDING_0478_REGISTER_HEAD",
       "latest_source_head_verified": "793d5c2f75c1a03d2ed0b5a01ebfb5569f999cd9",
       "standalone_math_fixture_464": "3_CHECKS_PASSED_PYTHON_LOCAL",
       "standalone_464_465_math_fixtures": "SIX_CHECKS_REPRODUCED_IN_LOCAL_PYTHON",
       "last_source_review_465": "PENDING_GITHUB_WRITE_SAFETY_BLOCK",
       "verified_test_receipt": "GCL_CONTROL_BASH_RESULT/1:6cd8bfffbd09466a9e48f6b10d7dd415",
       "verified_build_receipt": "GCL_CONTROL_BASH_RESULT/1:876fbfd5341944af8fbf8606ea155d68",
-      "article_specific_tests": "3 PASS ON HEAD_3805ccbaea0207e0303e49452b4c322f7fdf682e"
+      "article_specific_tests": "3 PASSED HEAD_ceca6bdbd7cac199feca4753a2478e8652155083"
     }
   },
   "latest_protected_main_recheck": {
