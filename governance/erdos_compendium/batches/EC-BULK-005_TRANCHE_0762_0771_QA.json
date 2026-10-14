@@ -1,0 +1,135 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 762,
+    "to": 771,
+    "count": 10,
+    "original_issues": [
+      2033,
+      2034,
+      2035,
+      2036,
+      2037,
+      2038,
+      2039,
+      2040,
+      2041,
+      2042
+    ],
+    "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "source_comment_ids": [
+    6166537666,
+    6166539880,
+    6166542253,
+    6166563608,
+    6166565843,
+    6166568370,
+    6166614811,
+    6166618233,
+    6166621526,
+    6166624548
+  ],
+  "authenticated_actor": "fyremael",
+  "native_source_queue": {
+    "issue_state": "AVAILABLE",
+    "issue_role": "SOURCE",
+    "chad_receipt": "GCL_CONTROL_BASH_RESULT/1:0bca6610473d44978578f1c5f701acb4"
+  },
+  "live_readback": {
+    "result1_grammar_passed": 10,
+    "source_comments_unique": 10,
+    "source_comment_actor_matched": 10,
+    "article_files_present": 10,
+    "required_six_headings_passed": 10,
+    "original_source_comment_links": 10,
+    "unaccepted_status": 10,
+    "balanced_display_math": 10,
+    "note": "Initial GitHub read for #762 returned transient remote disconnect; retried and verified all six headings, backlink and unaccepted status."
+  },
+  "article_blob_shas": [
+    "a377a7fb7901219ca0df4aa0dff20e0e9798c482",
+    "dacd8f4732e63d9010455c729fdc848d22b5da96",
+    "77f520a56f07777a04a1440eedd611a435557a81",
+    "77c38bc66775c1557f5894135ce8a217263d8304",
+    "021f543f73f14a58147ffdd6a9e57fa223de28e7",
+    "d6bbd00cdb507005953ac26819ec1634664cd490",
+    "da841f7628ece58abe9770c80aaf853b2ef6b8f0",
+    "b6639b7a845057de3980e9ca21e1a4f4d24c7e68",
+    "2bc862ee02f723e0ef6da80843f68e84b53ff1b5",
+    "f42da36f50089f97192d1de906ac0c81f30d3a19"
+  ],
+  "finite_tests": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_762_771.py",
+    "source_commit": "967369f087fab06b95be33caa5dd05c478773945",
+    "authenticated_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:3d5331b9981a4375ac383c781032d91d",
+    "exit_code": 0,
+    "passed": 10,
+    "total": 10,
+    "scope": "Finite exact arithmetic and graph examples, not published asymptotic theorem proofs"
+  },
+  "source_claims": [
+    {
+      "n": 762,
+      "status": "DISPROVED_EXTERNAL_LEAN_REPORTED",
+      "risk": "Steiner graph ω=4,ζ=4,χ=7 source, 2026 native_decide/decide update not GCL kernel replayed"
+    },
+    {
+      "n": 763,
+      "status": "DISPROVED",
+      "risk": "Erdős–Fuchs twofold cumulative sum linear error O(1) impossible, Montgomery–Vaughan later improvement"
+    },
+    {
+      "n": 764,
+      "status": "DISPROVED",
+      "risk": "Vaughan triple/h-fold convolution theorem, not automatic transfer of stronger twofold error rate"
+    },
+    {
+      "n": 765,
+      "status": "MIXED_SOLVED",
+      "risk": "Leading ex(n,C4)~n^(3/2)/2 proved; Erdős +n/4+O(sqrt n) second-order formula disproved Ma–Yang on positive-density n",
+      "admission_hold": true
+    },
+    {
+      "n": 766,
+      "status": "OPEN",
+      "risk": "f(n;k,l) monotone nondecreasing elementary, STRICT increasing asymptotically unknown"
+    },
+    {
+      "n": 767,
+      "status": "PROVED",
+      "risk": "Jiang n≥3k+3, historical Lewin 'disproof' may concern small n or different scope"
+    },
+    {
+      "n": 768,
+      "status": "OPEN",
+      "risk": "Divisor-per-prime modular condition, large-N rate uncertain, sqrt(logN loglogN) vs sqrt(logN) loglogN distinct"
+    },
+    {
+      "n": 769,
+      "status": "OPEN",
+      "risk": "Cube tiling homothetic unequal size, c(d)>>d^d lower conjecture unknown; n+1 prime/composite upper cases"
+    },
+    {
+      "n": 770,
+      "status": "OPEN_WITH_SOURCE_SEMANTICS_CONFLICT",
+      "risk": "Literal 'mutually coprime' must be gcd of entire prefix=1, NOT pairwise, confirmed n=4 h=5 and shared factor gcd(15,80)=5; original Er74b not yet inspected",
+      "admission_hold": true
+    },
+    {
+      "n": 771,
+      "status": "PROVED",
+      "risk": "Erdős–Graham lower + Alon–Freiman upper f(n)~n/(2logn), S depends on target m"
+    }
+  ],
+  "governance": {
+    "protected_main_unmodified": true,
+    "articles_unaccepted": 10,
+    "full_historical_proof_review": "PENDING",
+    "independent_critical_sample": "PENDING",
+    "strict_mkdocs": "NOT_RUN",
+    "deployed_browser_math": "NOT_VERIFIED",
+    "v2_admission": 0
+  }
+}
