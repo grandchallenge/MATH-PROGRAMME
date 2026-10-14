@@ -39,7 +39,7 @@ jobs:
           python3 ci/assure_pr.py check
           python -m unittest discover -s tests -p 'test_assurance_product.py'
       - name: Upload bounded assurance evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: gcl-assure-pr-001-dossier
           path: |
@@ -71,7 +71,7 @@ jobs:
           python3 ci/disclose_pr.py check
           python -m unittest discover -s tests -p 'test_disclosure_gate.py'
       - name: Upload bounded disclosure evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: gcl-disclose-pr-001-dossier
           path: |
