@@ -28,18 +28,18 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "32 authenticated original issue-bound RESULT/1 comments, 168 absent returns; 22 six-section documentary manuscripts, all UNACCEPTED_DRAFT. Latest #479 SOURCE_LOCK_READY for 1980 original and Tang 2025 established k=2^i proof, current conjecture still OPEN; pinned FC479 quantifies k>1 rather than full integers k!=1, newer upstream corrects binder but not GCL admitted, selected critical sample 479 pending formal equivalence. Full QA required at new manifest head; no protected production merge, public live MathJax browser verification or V2 admission.",
+  "status_semantics": "33 authenticated original issue-bound RESULT/1 returns, 167 missing; 23 six-section UNACCEPTED_DRAFT articles. #480 modern Chung-Graham 1984 theorem proved and sharp α~0.39441967 source checked; 1980 original p96 false vs p107 fixed-n true and golden-rotation sharpness discrepancy left PARTIAL, FC480 by sorry. No protected production PR/merge, public live browser MathJax or V2 editorial admission.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 32,
+    "post_initial_source_return_count": 33,
     "comment_results_source": "LIVE_GITHUB_465_COMMENT_ID_READBACK_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "32_AUTHENTICATED_ORIGINAL_ISSUE_RETURNS_FULL_RECONCILIATION_PENDING",
+    "readback_state": "33_AUTHENTICATED_ORIGINAL_RESULT_IDS_FULL_RECONCILIATION_PENDING",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
     "inventory_exceptions": 0,
     "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)",
-    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1749#issuecomment-6167988790"
+    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1750#issuecomment-6168422064"
   },
   "items": [
     {
@@ -1553,19 +1553,37 @@
       "topics": [
         "number theory"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1750#issuecomment-6168422064",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1750#issuecomment-6168422064",
+      "evidence_state": "PARTIAL_RETURN_ORIGINAL_1980_QUANTIFIER_AND_OPTIMALITY_TEXT_CONFLICT",
       "article_path": "governance/erdos_compendium/editorial/0480.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_DRAFT_PASS_WITH_HISTORICAL_QUANTIFIER_AND_SHARPNESS_SOURCE_BLOCKER_UNACCEPTED",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "ORIGINAL_INFINITELY_MANY_DISTINCT_N_READING_NOT_ADJUDICATED",
+        "1980_P107_GOLDEN_ROTATION_HISTORICAL_ERRATUM_UNEXPLAINED",
+        "1984_FULL_42_PAGE_PROOF_NOT_GCL_INDEPENDENTLY_REPLAYED",
+        "NO_LEAN_MATHCERT"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "ORIGINAL_1980_P96_FALSE_P107_TRUE_FIXED_N_SCOPE_DISCREPANCY",
+        "1980_GOLDEN_ROTATION_OPTIMALITY_CLAIM_NOT_MODERN_EXTREMIZER",
+        "THREE_PINNED_FC480_LEAN_PROOFS_BY_SORRY"
+      ],
       "critical_sample_selected": false,
       "math_risk_flags": [],
-      "critical_review_required": false
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6168422064,
+      "source_return_content_sha256": "d14c465464b6d48737af76ae111b702ec68fe63947703e29dc8109a429c03d90",
+      "source_return_disposition": "PARTIAL",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-EXCEPTIONS-019.md",
+      "manuscript_sha256_pre_admission": "bb3593889143115fe7c4402372178a3b62e83f807d21e81e9c116a71c084c82a",
+      "manuscript_raw_file_sha256_pre_admission": "988bf0e224f1420dd682fc9063937669c1c701a1df5f4ff4e702a4c8255e95c2",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1750#issuecomment-6168422064",
+      "finite_fixture_path": "tests/test_erdos_compendium_0480_fibonacci_clustering.py"
     },
     {
       "problem_id": 481,
@@ -7080,7 +7098,7 @@
   "last_evidence_checkpoint": "2026-10-13",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-14",
-    "count": 22,
+    "count": 23,
     "problem_ids": [
       448,
       449,
@@ -7103,12 +7121,13 @@
       474,
       476,
       478,
-      479
+      479,
+      480
     ],
     "qa": {
       "tests_passed": 108,
       "subtests_passed": 517,
-      "strict_mkdocs_build": "PENDING_NEW_0479_REVIEW_HEAD",
+      "strict_mkdocs_build": "PENDING_NEW_0480_REVIEW_HEAD",
       "early_exception_reviews_passed": 11,
       "deterministic_20_sample_reviews_passed": 0,
       "protected_production_merge": "NONE",
@@ -7119,14 +7138,14 @@
       "full_suite_after_0461": "NOT_VERIFIED",
       "full_suite_after_0462": "NOT_VERIFIED",
       "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK",
-      "latest_full_tests": "PENDING_NEW_0479_REVIEW_HEAD",
+      "latest_full_tests": "PENDING_NEW_0480_REVIEW_HEAD",
       "latest_source_head_verified": "793d5c2f75c1a03d2ed0b5a01ebfb5569f999cd9",
       "standalone_math_fixture_464": "3_CHECKS_PASSED_PYTHON_LOCAL",
       "standalone_464_465_math_fixtures": "SIX_CHECKS_REPRODUCED_IN_LOCAL_PYTHON",
       "last_source_review_465": "PENDING_GITHUB_WRITE_SAFETY_BLOCK",
       "verified_test_receipt": "GCL_CONTROL_BASH_RESULT/1:6cd8bfffbd09466a9e48f6b10d7dd415",
       "verified_build_receipt": "GCL_CONTROL_BASH_RESULT/1:876fbfd5341944af8fbf8606ea155d68",
-      "article_specific_tests": "4 PASS AT SOURCE_HEAD_c1b6f0356fde96d737d4e34ef7ec679f8bf5b628"
+      "article_specific_tests": "5 PASS AT_SOURCE_HEAD_1376786fea5b8f3a221e2e482f91aec71d51dd3a"
     }
   },
   "latest_protected_main_recheck": {
