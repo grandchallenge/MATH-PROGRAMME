@@ -81,7 +81,8 @@ class EC005Checks(unittest.TestCase):
             self.assertEqual(Fraction(n-1,n),Fraction(n-1)*Fraction(1,n))
             self.assertEqual(Fraction(2*(n-1),n),Fraction(n-1)*Fraction(2,n))
         # Arithmetic scale warning only, not a random-graph limit proof.
-        self.assertGreater(10**6**(2/3) if False else 1000000**(2/3)/math.log(1000000),1000**(2/3)/math.log(1000))
+        self.assertGreater(1000000**(2/3)/math.log(1000000),
+                           1000**(2/3)/math.log(1000))
 
     def test_746_finite_cycle_vs_nonhamiltonian_graph(self):
         C5={frozenset((i,(i+1)%5)) for i in range(5)}
