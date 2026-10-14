@@ -28,18 +28,19 @@
       "EC-BULK-003"
     ]
   },
-  "status_semantics": "38 authenticated original issue-bound RESULT/1 source audits, 162 original issues without source return. 28 substantive six-section UNACCEPTED_DRAFT manuscripts. Erdős #485 original sparse polynomial squares over Q PROVED; 1961 direct source and full Schinzel-Zannier 2009 Theorem1 proof inspected; 1987 image-only archival auxiliary lemma pages and external Lean proof not independently replayed. GCL exact rational fixtures pass; editorial #485 review source/math pass with formal blocker. No protected production PR/merge, public browser MathJax or V2 editorial admission.",
+  "status_semantics": "39 authenticated original issue-bound RESULT/1 source audits, 161 original issues without source return. 29 substantive six-section UNACCEPTED_DRAFT manuscripts. Erdős #486 OPEN with divergent-tail question: 1961 original m>=n versus 1980/maintained m>n, pinned Lean missing threshold and selected-moduli predicate. Summable-exclusion-mass special case independently proved by finite periodic approximations, not general solution. No protected production PR/merge, public browser MathJax or V2 editorial admission.",
   "source_queue_readback": {
-    "post_initial_source_return_count": 38,
+    "post_initial_source_return_count": 39,
     "comment_results_source": "LIVE_GITHUB_465_COMMENT_ID_READBACK_2026-10-13",
     "authenticated_source_author_count": 1,
-    "readback_state": "38_AUTHENTICATED_ORIGINAL_RESULT_COMMENTS_FULL_LIVE_RECONCILIATION_PENDING",
+    "readback_state": "39_AUTHENTICATED_ORIGINAL_RESULT_COMMENTS_FULL_LIVE_RECONCILIATION_PENDING",
     "reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1:423d05006f8649599f356296164cccd1",
     "inventory_receipt": "GCL_CONTROL_BASH_RESULT/1:4e5f7707ce3d4e4ab74d86e7f01b23a8",
     "inventory_valid_issue_count": 200,
     "inventory_exceptions": 0,
     "full_reconciliation_receipt": "GCL_CONTROL_BASH_RESULT/1 (read-only 22 source returns; 178 no return, 200 slots)",
-    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1755#issuecomment-6180254764"
+    "latest_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1757#issuecomment-6180871578",
+    "latest_individual_return_verified": "ORIGINAL_0486_AUTHENTICATED_GITHUB_COMMENT_READBACK"
   },
   "items": [
     {
@@ -1864,19 +1865,37 @@
         "number theory",
         "primitive sets"
       ],
-      "source_return": null,
-      "source_return_url": null,
-      "evidence_state": "NO_RESULT_AT_READBACK",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1757#issuecomment-6180871578",
+      "source_return_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1757#issuecomment-6180871578",
+      "evidence_state": "ERDOS1961_GE_VS_ERDOS1980_GT_AND_PINNED_LEAN_THRESHOLD_MISMATCH_SOURCE_LOCKED",
       "article_path": "governance/erdos_compendium/editorial/0486.md",
-      "article_status": "NOT_STARTED",
-      "editorial_review_status": "NOT_STARTED",
+      "article_status": "UNACCEPTED_DRAFT",
+      "editorial_review_status": "CRITICAL_SAMPLE_MATH_PASS_SEMANTIC_RECONCILIATION_AND_PROTECTED_ADMISSION_PENDING",
       "blockers": [
-        "SOURCE_AUDIT_RESULT_NOT_YET_VERIFIED"
+        "ERDOS1961_GE_VS_ERDOS1980_GT_SEMANTIC_EQUIVALENCE_UNRESOLVED",
+        "PINNED_LEAN486_MISSING_ACTIVATION_AND_SELECTED_MODULI",
+        "GENERAL_DIVERGENT_TAIL_REMAINS_OPEN",
+        "PROTECTED_BATCH_AND_PUBLIC_BROWSER_MATHJAX_NOT_DONE"
       ],
-      "exceptions": [],
+      "exceptions": [
+        "PRIMARY_SOURCE_1961_NONSTRICT_ACTIVATION",
+        "PRIMARY_SOURCE_1980_AND_CATALOGUE_STRICT_ACTIVATION",
+        "PINNED_FORMAL_STATEMENT_THRESHOLD_MISMATCH"
+      ],
       "critical_sample_selected": true,
       "math_risk_flags": [],
-      "critical_review_required": true
+      "critical_review_required": true,
+      "source_return_author": "fyremael",
+      "source_return_comment_id": 6180871578,
+      "source_return_content_sha256": "cfeb7d6011f287b8232c95eb2d171556acdc2a6da6db5867ab5b7dfaadcb5d7e",
+      "source_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "source_return_verified": "AUTHENTICATED_GITHUB_COMMENT_READBACK",
+      "critical_review_receipt": "governance/erdos_compendium/reviews/EC-BULK-004-CRIT-SAMPLE-0486.md",
+      "manuscript_sha256_pre_admission": "766e97953f8fe0f6e1ec9193c43ac408ffab510a642538f9750a885105e87015",
+      "manuscript_raw_file_sha256_pre_admission": "50e493c1aef5a53098b03b5f0fbf5bd01ec7133c6f8ce22a6deb56bbcdd4a456",
+      "manuscript_hash_method": "SHA256(UTF8(article_text.strip()))",
+      "source_claim_check": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1757#issuecomment-6180871578",
+      "finite_fixture_path": "tests/test_erdos_compendium_0486_activated_residues.py"
     },
     {
       "problem_id": 487,
@@ -7190,10 +7209,10 @@
     "exception_policy": "All atypical logical-status classifications (falsifiable, decidable, not provable, not disprovable, verifiable) and every additional source/status/formalization/semantic discrepancy require critical review even when not sampled.",
     "total_current_review_required": 41
   },
-  "last_evidence_checkpoint": "2026-10-13",
+  "last_evidence_checkpoint": "2026-10-14",
   "article_draft_checkpoint": {
     "observed_date": "2026-10-14",
-    "count": 28,
+    "count": 29,
     "problem_ids": [
       448,
       449,
@@ -7222,7 +7241,8 @@
       482,
       483,
       484,
-      485
+      485,
+      486
     ],
     "qa": {
       "tests_passed": 108,
@@ -7234,23 +7254,25 @@
       "public_browser_math_readback": "NOT_YET",
       "accepted_count": 0,
       "pre_return_exception_reviews_passed": 6,
-      "latest_targeted_pytest": "103 passed, 514 subtests passed (tests/test_erdos_compendium_*)",
+      "latest_targeted_pytest": "106 passed, 514 subtests passed (tests/test_erdos_compendium_*)",
       "full_suite_after_0461": "NOT_VERIFIED",
       "full_suite_after_0462": "NOT_VERIFIED",
       "local_math_markup_0462": "ARITHMATEX_DELIMITERS_AND_PINNED_LOADER_PRESENT_NOT_BROWSER_READBACK",
-      "latest_full_tests": "NOT_RUN_2026-10-14_TARGETED_ONLY",
+      "latest_full_tests": "NOT_VERIFIED_AFTER_0486",
       "latest_source_head_verified": "793d5c2f75c1a03d2ed0b5a01ebfb5569f999cd9",
       "standalone_math_fixture_464": "3_CHECKS_PASSED_PYTHON_LOCAL",
       "standalone_464_465_math_fixtures": "SIX_CHECKS_REPRODUCED_IN_LOCAL_PYTHON",
       "last_source_review_465": "PENDING_GITHUB_WRITE_SAFETY_BLOCK",
-      "verified_test_receipt": "GCL_CONTROL_BASH_RESULT/1:080ec5b2fbf442fb9cbbc7ef64ac5581",
-      "verified_build_receipt": "GCL_CONTROL_BASH_RESULT/1:080ec5b2fbf442fb9cbbc7ef64ac5581",
-      "article_specific_tests": "5 PASS AT_SOURCE_HEAD_c17ef87cc7be6442d75b681f7f5957abce69ab1d"
+      "verified_test_receipt": "GCL_CONTROL_BASH_RESULT/1:9816b07386e5432fa903d3cf35ed7257",
+      "verified_build_receipt": "GCL_CONTROL_BASH_RESULT/1:9816b07386e5432fa903d3cf35ed7257",
+      "article_specific_tests": "3 PASS 0486 FINITE ACTIVATION RESIDUE AND SUMMABLE TAIL",
+      "local_browser_mathjax_0486": "PASS_CHROMIUM_LOCAL_75_OF_75_MATHJAX_NO_MERROR_NO_JS_EXCEPTIONS",
+      "verified_browser_receipt": "GCL_CONTROL_BASH_RESULT/1:LOCAL_PLAYWRIGHT_20261014_164429"
     }
   },
   "latest_protected_main_recheck": {
     "date": "2026-10-14",
-    "head": "2e6201300a0cde2159dba9fd72b0c5679a2a57fb",
+    "head": "8228565e623fb680e9394c1a829938ffef1ccefa",
     "registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
     "admissions_blob": "03d927f147709079ac42a31d9ce81ad5a244ba8b",
     "accepted_scope_collisions": 0
