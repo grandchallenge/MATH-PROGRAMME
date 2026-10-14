@@ -204,7 +204,11 @@
     432,
     433,
     434,
-    435
+    435,
+    436,
+    437,
+    438,
+    439
   ],
   "reviewed": [
     {
@@ -663,9 +667,41 @@
       "article_sha256": "e2dabc36c61101f64e8553965677b9e12af9830e611850b8b2fed8bf1b4e62ae",
       "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
       "finding": "Independently verified nontrivial coefficients of binomial row n=6 are {6,15,20}, and the numerical-semigroup Frobenius number is exactly 49: 49 is unreachable and every value 50..55 is represented; since generator 6 is present all n≥50 are reachable. Checked Hwang–Song's general published formula evaluates to (2−1)C(6,2)+(3−1)C(6,3)−6=49, and prime-power n must be excluded because binomial-generator gcd is not 1. Pinned FC provider lacks #435; external maintained PROVED(LEAN) is not independently replayed."
+    },
+    {
+      "problem_id": 436,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1706#issuecomment-6158367859",
+      "article_sha256": "1921f1e87304066125ce4fbe3f07cc66bf8dcb970c7014f8e81c73f4bb7b776c",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently computed k=2 nonzero squares mod 11 as {1,3,4,5,9}, first consecutive pair at 3,4, so r(2,2,11)=3. Source distinction preserved: Hildebrand 1991 proves eventual bounded consecutive PAIR for all fixed k, but odd-k TRIPLE for k>=5 and quantitative k growth remain open. No pinned FC436 theorem."
+    },
+    {
+      "problem_id": 437,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1707#issuecomment-6158406991",
+      "article_sha256": "28bfe489ac4ebb80bca75f9a7c5ee5b13349eb676a208cf186bb7574d56534cb",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently computed increasing factors (1,2,8,9) yield running products 1,2,16,144 with three squares. Checked square condition from parity of all prime valuations and cited Bui–Pratt–Zaharescu 2024 asymptotic lower exp(-sqrt2 u) and upper exp(-u/sqrt2) where u=sqrt(log x loglog x), distinguishing positive x^(1-epsilon) answer from absence of exact asymptotic constant."
+    },
+    {
+      "problem_id": 438,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1708#issuecomment-6158423003",
+      "article_sha256": "056a2a0eca142db6c395b729e4e4c1f63f3a0fd9645725620bf56c686f689869",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently enumerated all 121 ordered pair sums of eleven Massias classes {1,5,9,13,14,17,21,25,26,29,30} modulo 32 and confirmed no sum is square residue among {0,1,4,9,16,17,25}. Matched Khalfalah–Lodha–Szemerédi 2002 global maximum (11/32+o(1))N with Lagarias–Odlyzko–Shearer modular bound. Diagonal sums included."
+    },
+    {
+      "problem_id": 439,
+      "selection": "RISK_SOURCE_MATH_STATUS",
+      "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1709#issuecomment-6158436004",
+      "article_sha256": "1bf9b93f0325622d1c61776cf2f805fc9db70826457a77ebbfdab2c8d932ec4f",
+      "editorial_check": "SOURCE_EXCEPTION_DOCUMENTED",
+      "finding": "Independently verified parity-coloring witness distinct even 2 and 14 sum to 16. Distinguished elementary finite coloring example from Khalfalah–Szemerédi 2006 universal theorem for nonconstant integer polynomial attaining an odd value. Identified infinite chromatic graph equivalence and necessity of keeping same-color DISTINCT pair; no pinned Lean replay."
     }
   ],
-  "review_count": 57,
+  "review_count": 61,
   "status": "IN_PROGRESS_PRE_ADMISSION",
   "disposition": "SOURCE_BOUNDED_CRITICAL_EDITORIAL_REVIEW_NOT_MATHEMATICAL_CERTIFICATION"
 }
