@@ -1,0 +1,123 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 702,
+    "to": 711,
+    "count": 10,
+    "original_issue_from": 1973,
+    "original_issue_to": 1982,
+    "registry_git_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "original_issue_comment_ids": [
+    6160980606,
+    6160982063,
+    6160983288,
+    6160984432,
+    6161000541,
+    6161008094,
+    6161013048,
+    6161018596,
+    6161024068,
+    6161033451
+  ],
+  "source_verification": {
+    "authenticated_actor": "fyremael",
+    "original_issue_comments_present": 10,
+    "source_result1_grammar_pass": 10,
+    "unique_issue_mappings": 10,
+    "existing_comment_duplicates": 0,
+    "queue_native_state": "AVAILABLE SOURCE",
+    "chad_state_receipt": "GCL_CONTROL_BASH_RESULT/1:98b6efb0fae8412fbd36a171c45ca65a"
+  },
+  "drafts": {
+    "present": 10,
+    "six_h2_headings": 10,
+    "source_issue_return_links": 10,
+    "balanced_display_math": 10,
+    "status": "UNACCEPTED",
+    "source_primary_review": "PARTIAL",
+    "independent_critical_review": "PENDING",
+    "strict_MkDocs": "NOT_RUN",
+    "deployed_browser_math": "NOT_VERIFIED"
+  },
+  "regression": {
+    "source": "ci/test_erdos_compendium_ec005_fixtures_702_711.py",
+    "source_commit": "453687c1f42c9f2fc438ebadb20c373ad2cec333",
+    "execution": "Authenticated CHAD gh API GET branch source piped to Python3 unittest",
+    "chad_receipt": "GCL_CONTROL_BASH_RESULT/1:af380ad4c2524754a5bf1f0c9154b930",
+    "passed": 10,
+    "total": 10,
+    "exit_code": 0,
+    "reported_test_duration_seconds": 0.001,
+    "scope": "Finite arithmetic and combinatorics checks only, not cited historical theorem proof verification"
+  },
+  "source_limits": [
+    {
+      "n": 702,
+      "status": "PROVED_MAINTAINED",
+      "risk": "PRIMARY FRANKL 1977 PUBLISHER ABSTRACT STATES n>n0(k); maintained catalogue states all n. Full original paper or small-n completion not independently inspected.",
+      "hold": true
+    },
+    {
+      "n": 703,
+      "status": "PROVED",
+      "risk": "Frankl-Rödl r proportional to n exponential saving distinct from fixed-r Frankl-Füredi exact extremal formulas."
+    },
+    {
+      "n": 704,
+      "status": "OPEN_SHARP_BASE_AND_LIMIT",
+      "risk": "EXponential growth established, existence of limit unresolved."
+    },
+    {
+      "n": 705,
+      "status": "DISPROVED",
+      "risk": "O'Donnell arbitrary girth external theorem; pinned FC body sorry, not internal proof."
+    },
+    {
+      "n": 706,
+      "status": "OPEN_POLYNOMIAL",
+      "risk": "Elementary exponential 7^r bound does not imply polynomial."
+    },
+    {
+      "n": 707,
+      "status": "DISPROVED_EXTERNAL_LEAN_REPORTED",
+      "risk": "Alexeev-Mixon and Hall counterexamples; pinned main statement stronger arbitrary-modulus vs prime-power variants, main bodies sorry."
+    },
+    {
+      "n": 708,
+      "status": "OPEN",
+      "risk": "AT_MOST vs EXACTLY cardinality source ambiguity: g(n) can exceed M=|I| in smallest admissible intervals. Full original ErSu59 statement required.",
+      "hold": true
+    },
+    {
+      "n": 709,
+      "status": "OPEN",
+      "risk": "System of distinct representatives requires Hall, not merely product divisibility as in #708."
+    },
+    {
+      "n": 710,
+      "status": "OPEN",
+      "risk": "Sharp f(n) asymptotic unresolved, open endpoints matter in finite examples."
+    },
+    {
+      "n": 711,
+      "status": "OPEN_FIRST_PART_ONLY",
+      "risk": "Wouter van Doorn 2026 second part proved, first max_m f(n,m)≤n^(1+o(1)) open."
+    }
+  ],
+  "governance": {
+    "protected_merge": false,
+    "critical_sample_review": "PENDING",
+    "v2_editorial_admissions": 0,
+    "no_kernel_math_certification": true,
+    "no_claim_of_finished_cohort": true,
+    "retained_prior_source_semantic_holds": [
+      662,
+      678,
+      683,
+      697
+    ]
+  },
+  "next": "#712 source issue #1983, continue exact original-source audits and articles; preserve five? source semantic holds including #702 and #708."
+}
