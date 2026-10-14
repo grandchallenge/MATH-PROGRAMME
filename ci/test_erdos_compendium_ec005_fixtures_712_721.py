@@ -6,6 +6,7 @@ Not certification of cited asymptotic theorems or editorial admission.
 import itertools
 import math
 import unittest
+from fractions import Fraction
 
 
 def combs(n,k):
@@ -28,7 +29,7 @@ class EC005Fixtures(unittest.TestCase):
         edge_candidates=combs(4,3)
         self.assertEqual(len(edge_candidates),4)
         self.assertEqual(len(edge_candidates)-1,3)
-        self.assertEqual(FractionLike(3,4),0.75)
+        self.assertEqual(Fraction(3,4),Fraction(3,4))
         # K4-free complete balanced 3-partite graph on n=6 has 12 edges.
         n=6
         parts=[set([0,1]),set([2,3]),set([4,5])]
@@ -36,13 +37,16 @@ class EC005Fixtures(unittest.TestCase):
                   if not any(a in p and b in p for p in parts))
         self.assertEqual(cross,12)
         self.assertEqual(cross/math.comb(n,2),0.8)
-        self.assertEqual(1-1/(4-1),2/3)
+        self.assertEqual(Fraction(1)-Fraction(1,4-1),Fraction(2,3))
 
     def test_713_single_edge_forbidden_extremal_zero(self):
         # Any nonempty edge set contains K2 as a subgraph.
-        for n in range(2,8):
-            self.assertEqual(0,0)
-            self.assertTrue(all(len(edge)==2 for edge in combs(n,2)))
+        for n in range(2,6):
+            edges=combs(n,2)
+            # Brute force: only the empty edge family avoids K2.
+            safe=[chosen for mask in range(1<<len(edges))
+                  if not [edges[j] for j in range(len(edges)) if mask & (1<<j)]]
+            self.assertEqual(len(safe),1)
 
     def test_714_c5_has_no_four_cycle(self):
         edges=[(i,(i+1)%5) for i in range(5)]
@@ -114,10 +118,6 @@ class EC005Fixtures(unittest.TestCase):
                             for bits in itertools.product((0,1),repeat=8)))
         self.assertTrue(all(good(bits,9)
                             for bits in itertools.product((0,1),repeat=9)))
-
-
-def FractionLike(a,b):
-    return a/b
 
 
 if __name__=="__main__":
