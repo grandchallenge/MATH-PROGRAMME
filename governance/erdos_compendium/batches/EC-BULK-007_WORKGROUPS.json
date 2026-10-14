@@ -764,7 +764,7 @@
       ]
     }
   ],
-  "authority_boundary": "Prepared only. No active worker lease or dispatch inferred; Project state and authenticated pickup must be separately confirmed.",
+  "authority_boundary": "All 139 unreturned issues verified open and gcl-state:available with frozen body SHA, but group plan is NOT a dispatch or lease. 14 already-returned issues also retain available label and must be excluded from pickup; only controller can reconcile custody. Project per-item GCL state still requires independent readback.",
   "excluded_already_returned": [
     1053,
     1054,
@@ -795,5 +795,22 @@
     1219,
     1220,
     1221
+  ],
+  "source_issue_readback_utc": "2026-10-14T00:58:20.664130+00:00",
+  "returned_but_still_eligible_issue_label_problem_ids": [
+    1065,
+    1066,
+    1067,
+    1068,
+    1069,
+    1070,
+    1071,
+    1072,
+    1073,
+    1074,
+    1075,
+    1076,
+    1077,
+    1078
   ]
 }
