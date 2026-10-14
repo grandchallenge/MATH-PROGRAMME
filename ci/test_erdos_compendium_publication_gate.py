@@ -163,6 +163,52 @@ class EditorialGateTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "batch size"):
                 load_batch_admissions(manifest)
 
+    def test_bulk_001_002_boundary_is_contiguous_and_nonoverlapping(self):
+        """Every registered #4–#245 belongs to exactly one intake cohort."""
+        _, rows = load_registry()
+        issue_by_id = {row["problem_id"]: row["issue_number"] for row in rows}
+        required = set(range(4, 246))
+        self.assertTrue(required <= issue_by_id.keys(),
+                        "Canonical registry has a missing #4–#245 identity")
+        selected_001 = set(range(4, 42)) | {99, 101, 138, 241}
+        selected_002 = set(range(42, 246)) - {99, 101, 138, 241}
+        expected_001_outliers = {390, 470, 522, 550, 593, 595, 1052, 1112}
+        owners = {}
+        for cohort, expected_size, expected_in_range in (
+            ("EC-BULK-001", 50, selected_001),
+            ("EC-BULK-002", 200, selected_002),
+        ):
+            path = (ROOT / "governance/erdos_compendium/batches" /
+                    f"{cohort}.json")
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(manifest["cohort_id"], cohort)
+            self.assertEqual(manifest["target_count"], expected_size)
+            items = manifest["items"]
+            ids = [item["problem_id"] for item in items]
+            self.assertEqual(len(ids), expected_size)
+            self.assertEqual(len(set(ids)), len(ids),
+                             f"Duplicate within {cohort}")
+            self.assertEqual(set(ids) & required, expected_in_range,
+                             f"Wrong #4–#245 membership in {cohort}")
+            if cohort == "EC-BULK-001":
+                self.assertEqual(set(ids) - required, expected_001_outliers)
+            else:
+                self.assertFalse(set(ids) - required)
+            for item in items:
+                n = item["problem_id"]
+                self.assertIn(n, issue_by_id,
+                              f"Unknown registered problem #{n}")
+                self.assertEqual(item["audit_issue"], issue_by_id[n],
+                                 f"Wrong canonical issue for #{n}")
+                if n in required:
+                    self.assertNotIn(n, owners,
+                                     f"Problem #{n} assigned twice")
+                    owners[n] = cohort
+        self.assertEqual(set(owners), required,
+                         f"Missing/extra #4–#245 assignments: "
+                         f"{sorted(required ^ set(owners))}")
+        self.assertEqual(len(owners), 242)
+
     def test_bulk_002_200_existing_issue_slots_and_authentic_returns(self):
         """200 original queue jobs, not invented articles or accepted entries."""
         manifest_path = ROOT / "governance/erdos_compendium/batches/EC-BULK-002.json"
