@@ -320,7 +320,7 @@
     "709": "52e5ba7e4fcc2b4a649e8fe9d746ee23810e997f939702e41ec6c82858409bb0",
     "710": "3867b8c29d754e7f28e97499bd172faf97c47d1bd60bc62eabdbca7cad5a55c0",
     "711": "5621735f6674f9bfd754708e459a24ac550288be0d2f239911b492f1b2ca9334",
-    "712": "e8ac767a934103669655fa413039996cf6ee01ed6781ffe3b3e08ac44b8856fb",
+    "712": "e741eb77658c5085acc40ef2ee3998052a74ac1fa97ea45d2a31b3c08b835283",
     "713": "ac780f026b368a2c20f2f5bec4f5d6ab1975aed12a4ebec2fb607804f410aea9",
     "714": "322dd11b6dcb28e9cac638f20f2066d6e49df7fc448071dbcd99d247d5566ece",
     "715": "9ab42585af70bc45e31cd21180a48ec7cdc9f4025c827c1c8fa717aab555b789",
@@ -471,5 +471,22 @@
   },
   "regression_suite": "236_PASSED_0_FAILED",
   "local_strict_mkdocs": "PASS_LOCAL_NOT_DEPLOYED",
-  "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:af4ee021eba74371b0e766ca9726a50a"
+  "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:af4ee021eba74371b0e766ca9726a50a",
+  "post_cohort_critical_rendering_correction": {
+    "problem_id": 712,
+    "initial_cohort_sha256": "e8ac767a934103669655fa413039996cf6ee01ed6781ffe3b3e08ac44b8856fb",
+    "final_sha256": "e741eb77658c5085acc40ef2ee3998052a74ac1fa97ea45d2a31b3c08b835283",
+    "description": "Consolidated concurrent TeX improvements on EC-BULK-005 branch from PR #2642 with correction of all four remaining math/prose touching defects",
+    "source_fidelity_and_status": "UNCHANGED_DRAFTED_UNACCEPTED",
+    "browser_rendering_reverification": "PASS_HEADLESS_CHROMIUM"
+  },
+  "local_chromium_mathjax_200_pages": {
+    "qa_file": "governance/erdos_compendium/batches/EC-BULK-005_BROWSER_MATHJAX_QA.json",
+    "pages_passed": 200,
+    "pages_failed": 0,
+    "expressions_painted": 1624,
+    "mathjax_errors": 0,
+    "javascript_errors": 0,
+    "verification_boundary": "REAL_LOCAL_BROWSER_NOT_PUBLIC_DEPLOYMENT"
+  }
 }
