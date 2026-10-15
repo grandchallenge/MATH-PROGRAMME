@@ -111,3 +111,17 @@ The finite theorem is not an automatic Forge/Solve/Cert transition.
 | Density-sensitive higher-order overlap leading to Erdős #41 | Not obtained | OPEN |
 
 The infinite example is intentionally sparse, with A(N)=O(log N); it is **not** a counterexample to Erdős #41.
+
+## Density-forced geometric mixed-block mass
+
+| Obligation | Method | Disposition |
+| --- | --- | --- |
+| Exact two-block mixed-center mass and weighted mass | Polynomial identities; genuine B3 deterministic tests | PROVED |
+| Positive lower density forces x,y at separated geometric scales | B3 cubic finite counting bound and two lower-density endpoints | PROVED conditionally |
+| Mixed support ≥3xy and c^4 N^(2/3)/24 | Pointwise B3 positive-pair matching | PROVED |
+| Summation over many cuts | Exact representation span-multiplicity identity | PROVED; fake logarithmic factor excluded |
+| Single-scale finite-critical examples | Bose-Chowla published modular B3 construction | Literature-grounded method boundary |
+| Matching budget eventually exceeded for every c>0 | Lower demand order N, ambient budget order N^(4/3) | NOT PROVED; present argument insufficient |
+| Original Erdős #41 | No infinite collision/density valley | OPEN |
+
+Source: [DENSITY_FORCED_MIXED_BUDGET.md](DENSITY_FORCED_MIXED_BUDGET.md).
