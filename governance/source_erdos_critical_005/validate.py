@@ -200,5 +200,18 @@ class FiveSourceFidelityTests(unittest.TestCase):
         self.assertFalse(receipt["erdos_14"]["separate_gcl_kernel_replay"])
         self.assertFalse(receipt["mathematical_certification"])
 
+    def test_41_infinite_historical_and_modern_incomparability_witnesses(self):
+        import importlib.util
+        f=ROOT/"governance/source_erdos_critical_005/erdos41_infinite_models.py"
+        spec=importlib.util.spec_from_file_location("erdos41_infinite_models",f)
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        proof=module.run()
+        self.assertEqual(proof["family_check_tail_sizes"],list(range(8)))
+        self.assertIs(proof["original_problem_41_settled"],False)
+        self.assertIn("SUPERINCREASING",proof["proven_for_all_finite_subsets"])
+        doc=ROOT/"governance/source_erdos_critical_005/ERDOS_041_INFINITE_SEMANTIC_SEPARATION.md"
+        self.assertIn("logically incomparable even among infinite",doc.read_text())
+
 if __name__=="__main__":
     unittest.main(verbosity=2)
