@@ -150,5 +150,24 @@ class FiveSourceFidelityTests(unittest.TestCase):
         self.assertIn("Leave all five gcl-review:revise",self.ledger["correction_issue_states"])
         self.assertIn("RETURNED",self.ledger["correction_issue_states"])
 
+    def test_12_1970_primary_example_disambiguates_later_stronger_usage(self):
+        import importlib.util
+        path=ROOT/"governance/source_erdos_critical_005/property_p_1970_primary_regression.py"
+        spec=importlib.util.spec_from_file_location("erdos12_1970_primary",path)
+        mod=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        output=mod.audit()
+        self.assertEqual(output["checked_m"],200)
+        self.assertTrue(output["all_weak"])
+        self.assertIs(output["all_strong"],False)
+        self.assertFalse(output["historical_statement_solved"])
+        info=json.loads((ROOT/"governance/source_erdos_critical_005/PRIMARY_1970_PROPERTY_P_ADJUDICATION.json").read_text())
+        self.assertTrue(info["original_1970_source_semantics_adjudicated"])
+        self.assertEqual(info["review_issue"],2521)
+        self.assertEqual(info["primary_pdf_sha256"],
+                         "4adba03f04de19ebb6ac9bddc6eaf43567619ca96c6cbe574e4c04be3595d0f3")
+        self.assertFalse(info["external_formal_i_ii_kernel_replayed"])
+        self.assertFalse(info["gcl_review_label_clearance_authorized"])
+
 if __name__=="__main__":
     unittest.main(verbosity=2)
