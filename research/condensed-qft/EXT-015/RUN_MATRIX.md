@@ -1,5 +1,7 @@
 # QFT-COND-005 / EXT-015 — RUN MATRIX
 
+> Can an extension carry genuinely global analytic information that no compact-support stage can capture?
+
 **Canonical mathematical specification:** [SPEC.md](SPEC.md). **Worker tasks:** [WORK_PACKAGES.md](WORK_PACKAGES.md). **Adversarial controls:** [EXTENSION_DOCKET.md](EXTENSION_DOCKET.md). **Parent:** [issue #2617](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617).
 
 The listed evidence is a **plan**, not a mathematical certification. A row cannot become PROVED by workflow success, a numerical fixture, an unreviewed claim, or a citation to a related but different exact category.
