@@ -113,6 +113,10 @@ The cross-block forbidden-difference theorem gives (P_X-P_Y)∩D(A)=empty for di
 
 The fourth-moment identity is therefore a **precisely formulated higher-order target**, not a solution. It is stronger information than positive semidefiniteness of the A-indexed Gram matrix, whose spectrum was fixed purely by cardinality. It also identifies the exact missing data: Fourier/additive energy at differences **not** in A-A.
 
+## Pointwise matching successor
+
+The follow-up [SPECTRAL_MATCHING_COMPETITION.md](SPECTRAL_MATCHING_COMPETITION.md) proves an exact cap on *combined* internal and cross-block difference multiplicities at every nonzero difference, plus the resulting joint quadratic correlation budget. This constrains off-spectrum correlation concentration beyond the lower bound here, but currently does not create a scale-growing contradiction. Both results must be used with their distinct verification boundaries.
+
 ## 5. Verification and boundary
 
 The exact identity (KNOWN/OFF) is established by the earlier B3 multiset-injection theorem, and (LOWER/COARSE/CRITICAL) follows from elementary Cauchy–Schwarz and integer counting. The executable fixtures compare exact Counter-based additive energies against these identities and bounds for genuine B3 sets and negative controls. The Lean file checks only the arithmetic inequalities used in the coarse estimate, not the complete universal B3/Fourier proof.
