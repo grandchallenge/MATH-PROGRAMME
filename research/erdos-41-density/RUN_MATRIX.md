@@ -166,3 +166,17 @@ Written proof: [CROSS_SCALE_OVERLAP_ENERGY.md](CROSS_SCALE_OVERLAP_ENERGY.md); n
 | Full inner-color positive pairs against narrow outer bin | B3 finite interval upper bound, O_c(N^(17/18)) total | PROVED conditional method no-go |\n| Outer occupied bin count and cross-bin collision reduction | B3 short interval packing and exact off-diagonal energy | PROVED conditionally |\n| Complete mixed-spectrum collision under persistent density | Not deduced; selection-independent higher-order input missing | OPEN |
 
 See [DENSITY_LOCALIZED_ZERO_OVERLAP.md](DENSITY_LOCALIZED_ZERO_OVERLAP.md). No Erdős #41 solved state, certification or Solve dispatch.
+
+## Localized outer-difference supply under positive density
+
+| Obligation | Mathematical evidence | Status |
+| --- | --- | --- |
+| Extract populated coarse outer bin of diameter ≤N/R² | Persistent lower density plus finite B3 shell upper bound | PROVED conditionally |
+| Fine-bin maximum O(N^(5/18)) | Translation-invariant B3 triple counting | PROVED |
+| ≥(c²/(16J²))N^(2/3) unique small positive outer differences | Distinct Sidon differences and inter-bin pair count | PROVED conditionally |
+| Exact lower sub-sum of cross-block overlap over small differences | Prior correlation identity restricted to genuine differences | PROVED (may be zero) |
+| Forced positive intersection with inner cross-pair difference spectrum | No such theorem; finite B3 adversarial fixtures | OPEN |
+| Python hostile and positive tests | Genuine 29-term B3 fixture; non-B3 duplicate differences | Verified |
+| Pinned Lean arithmetic receipts | LocalOuterDifferenceSupply.lean; complete B3 theorem not formalized | Separate check |
+
+See [CROSS_BIN_LOCAL_DIFFERENCE_SUPPLY.md](CROSS_BIN_LOCAL_DIFFERENCE_SUPPLY.md). No claimed solution or MATHCERT certification.
