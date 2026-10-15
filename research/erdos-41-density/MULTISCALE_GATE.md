@@ -38,6 +38,10 @@ The admitted fourth-moment theorem and its [spectral matching successor](SPECTRA
 
 See [DENSITY_FORCED_MIXED_BUDGET.md](DENSITY_FORCED_MIXED_BUDGET.md). A persistent positive B3 lower bound A(N)≥cN^(1/3) forces geometrically separated inner and outer blocks with actual mixed centered-representation weight ≥(c^5/48)N and mixed-lag support ≥(c^4/24)N^(2/3). These are **rigorous density-dependent consequences**, not hypothetical counting models. However the global pointwise matching budget over O(N) lags is O(N^(4/3)); the new lower bound does **not** exceed it. Summing mixed representations over logarithmically many cuts repeats the same representations according to their color-span, so that factor cannot be treated as independent extra matching demand. This completes a bounded no-overclaim audit, not Erdős #41.
 
+## 2026-10-15 geometric two-tail mixed-lag dispersion
+
+[MIXED_LAG_BALLISTIC_DISPERSION.md](MIXED_LAG_BALLISTIC_DISPERSION.md) proves exact zero-mean and second-moment formulas for mixed centered B3 representations across arbitrary disjoint blocks. When X is below Y with gap g>0, **both** the negative extreme-type and positive extreme-type lag supports contain at least |X||Y| distinct integers, at distances at least 2g from zero. One-third of the total mixed representation support weight is necessarily in these macroscopic tails. Under the hypothetical persistent density lower bound A(N)≥cN^(1/3), there are at least (c^4/72)N^(2/3) distinct lag values in each of two opposite-sign intervals separated from the origin by a fixed c-dependent fraction of N. This rigorously REFUTES simple small-radius localization as a proof method, but does NOT imply the required upper o(N^(2/3)) lag cardinality or a matching overload. Erdős #41 remains OPEN.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
