@@ -1,0 +1,98 @@
+{
+  "record_type": "EC_BULK_007_FINITE_PHASE_13/1",
+  "cohort_id": "EC-BULK-007",
+  "mathematical_certification": false,
+  "problem_1116": {
+    "f": "z^2",
+    "a": 1,
+    "b": 4,
+    "r": 3,
+    "n_r_a": 2,
+    "n_r_b": 2,
+    "ratio": "1",
+    "no_unbounded_ratio_conclusion": true
+  },
+  "problem_1117": {
+    "f": "1+z^2",
+    "r": "arbitrary positive",
+    "max_modulus": "1+r^2",
+    "maximizing_angles": [
+      "0",
+      "pi"
+    ],
+    "nu_r": 2,
+    "monomial_excluded": true,
+    "no_unbounded_maxima_conclusion": true
+  },
+  "problem_1118": {
+    "f": "exp(z)",
+    "c": "positive",
+    "E_c": "Re(z)>log(c)",
+    "plane_area": "infinite",
+    "T_f": "empty",
+    "not_a_finite_E_c_example": true
+  },
+  "problem_1119": {
+    "finite_family_size": 7,
+    "functions": "f_j(z)=z+j, 0<=j<7",
+    "at_z_3_values": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "distinct_values_at_each_z": 7,
+    "does_not_establish_ZFC_independence": true
+  },
+  "problem_1120": {
+    "degree_samples": [
+      1,
+      2,
+      3,
+      10
+    ],
+    "f": "z^n",
+    "root_modulus": "0",
+    "lemniscate": "closed unit disk",
+    "shortest_path_length": "1",
+    "does_not_establish_worst_case_n_growth": true
+  },
+  "problem_1121": {
+    "exact_two_disk_instances": [
+      {
+        "r1": "2",
+        "r2": "3",
+        "center_separation": "4",
+        "minimal_enclosing_radius": "9/2",
+        "sum_of_radii": "5"
+      },
+      {
+        "r1": "1",
+        "r2": "1",
+        "center_separation": "2",
+        "minimal_enclosing_radius": "2",
+        "sum_of_radii": "2"
+      },
+      {
+        "r1": "4",
+        "r2": "1",
+        "center_separation": "2",
+        "minimal_enclosing_radius": "4",
+        "sum_of_radii": "5"
+      },
+      {
+        "r1": "1",
+        "r2": "3",
+        "center_separation": "4",
+        "minimal_enclosing_radius": "4",
+        "sum_of_radii": "4"
+      }
+    ],
+    "nonseparability_condition_for_two_disks": "d<=r1+r2",
+    "not_full_n_disk_or_Lean_proof": true
+  },
+  "result": "FINITE_CHECKS_PASS"
+}
