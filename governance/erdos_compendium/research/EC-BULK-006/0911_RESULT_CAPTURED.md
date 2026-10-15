@@ -1,0 +1,24 @@
+RESULT/1
+ASSIGNMENT_ID: ERDOS-CATALOGUE-0911-S01
+PROBLEM_ID: 911
+DISPOSITION: PARTIAL
+CONTEXT_CLASS: ZERO_CONTEXT
+TIMEBOX_OBSERVED: NO
+
+## Exact statement and normalization
+Size Ramsey number Rhat(G) = MINIMUM number of host EDGES m such that some host H with m edges arrows target G under EVERY red-blue edge coloring, producing a monochromatic not-necessarily-induced G. Erdős [Er82e,p78] asks: does some positive f(C) with f(C)/C -> infinity as C -> infinity satisfy for EVERY sufficiently large real C and EVERY finite simple target G with n vertices and e(G)>=C*n, Rhat(G)>f(C)*e(G)? Current https://www.erdosproblems.com/911 OPEN, no accepted proof; NOT ordinary vertex Ramsey number, nor target-edge count bound independent of C.
+
+## Dated status and primary evidence
+P. Erdős, 'Some of my favourite problems which recently have been solved', North-Holland Mathematics Studies 74 (1982)59–79 printed p78, author PDF https://users.renyi.hu/~p_erdos/1982-33.pdf, cites late-added question. Original invariant Erdős, Faudree, Rousseau and Schelp 'The size Ramsey number', Periodica Mathematica Hungarica 9(1978)145–161 DOI10.1007/BF02018930. Conlon, Fox, Wigderson 'Three early problems on size Ramsey numbers', Combinatorica 43 (2023)743–768, arXiv:2111.05420; Theorem1.1 for K_{s,t} s<=t gives Rhat(K_{s,t})=Omega(s^{2-s/t}*t*2^s), enough for a dense edge-dominant biclique subclass but not uniform general targets. Pikhurko 2002/03 fixed-template bipartite Ramsey asymptotic does not cover growing both sides. July27 2026 independent AI-disclosed working report https://erdosproblemaday.com/report/911 PARTIAL derives and checks exact bipartite minimum-degree reduction, not a solution. Maintained catalogue notes possible missing literature; no comprehensive negative nonexistence claim is made.
+
+## Strongest verified interface
+Elementary universal bound: target G with e>=1 edges has Rhat(G)>=2e-1, since any host with <=2e-2 edges can two-color into color piles each <=e-1, neither containing G. Exact structural lemma for any target G with n>=1 and e>0: some spanning cut B keeps >=e/2 edges (random bipartition expectation), repeatedly delete vertices with CURRENT degree < e/(4n); <=n steps remove <e/4 edges, leaving NONEMPTY bipartite F subset G with e(F)>e/4 and min degree >=e/(4n). Then define beta(d)=inf_{F finite simple bipartite min degree>=d} Rhat(F)/e(F). TARGET MONOTONICITY F subset G implies Rhat(G)>=Rhat(F). Original Erdős 911 is mathematically equivalent up to absolute factors to beta(d)/d -> infinity: forward use e(F)/v(F)>=d/2 so beta(d)>=f(d/2); reverse obtain min degree >=ceil(C/4), e(F)>e/4 and Rhat(G)>beta(ceil(C/4))*e/4, so f(C)=beta(ceil(C/4))/4. THIS DOES NOT PROVE beta(d)/d divergent. Exact CHAD finite_910_911.py/json independent exhaustive all 33,861 NONEMPTY labelled simple graphs n2..6 confirms max cuts, bipartite degree-pruning, e(F)>e/4 and degree bound. Also independently builds projective plane incidence graphs q2,3,5,7,11: N=q²+q+1 per side, each degree q+1, e=(q+1)N, all pairs of points have exactly one common line and vice versa, hence C4-FREE. Consequently these regular graph families with arbitrarily large min degree contain no K_{2,2} or larger biclique and defeat attempts to reduce ALL targets to a dense biclique. These are exact verified finite/source-grounded necessary test cases, not estimates on Rhat(P_q) beyond trivial lower bound.
+
+## Proposed bounded successor task
+PROVE missing UNIFORM bound Rhat(F)>=g(d)*e(F) for EVERY bipartite target min-degree at least d with g(d)/d->infinity, including projective-plane incidence and high-girth families. Acceptance source-reviewed mathematical proof and independent specialist adjudication, or source-matched no-placeholder Lean kernel with exact axioms; no finite samples can certify uniform d. Initial formalizable subtask: prove target monotonicity, two-pile bound, cut-and-prune >e/4 lemma and reduction beta equivalence, with exact all 33861 graph fixtures and five projective planes replay. Any failure in min-degree cut, target mapping or high-girth counterfamily invalidates claimed reduction. Review Conlon–Fox–Wigderson 2023 theorem hypotheses carefully for edge-dominating biclique special regime.
+
+## Prerequisites and blocker
+Published 2023 biclique theorem imported not independently proved, 1982 original PDF exact displayed formula recognized via maintained modern statement because scan OCR imperfect. Uniform beta(d)=omega(d) remains UNPROVED, no GCL independent solution or Lean. No protected editorial admission, deployed browser MathJax verification or V2.
+
+## Reuse and claim boundary
+Reuses original 1982/1978 and modern 2023 primary sources and July2026 labelled PARTIAL report, independently reconstructs elementary structural reduction, cardinal/exact graph checks and projective-plane incidence obstruction. E0911 remains OPEN. No new universal size Ramsey result or protected merge claimed.
