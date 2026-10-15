@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_RESEARCH_HANDOFF_CANDIDATES",
+  "programme": "QFT-COND-005",
+  "transaction": "EXT-015",
+  "question": "Can an extension carry genuinely global analytic information that no compact-support stage can capture?",
+  "source_repository": "grandchallenge/MATH-PROGRAMME",
+  "source_protected_head": "1f28f95d7c0e4059685830391ba4dfe37760d043",
+  "parent_issue_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617",
+  "state": "PREPARED_NOT_DISPATCHED",
+  "authorizes_execution": false,
+  "authorizes_result_comment": false,
+  "project_queue_activation": false,
+  "controller_generated_dispatch": false,
+  "source_files": [
+    "research/condensed-qft/EXT-015/SPEC.md",
+    "research/condensed-qft/EXT-015/WORK_PACKAGES.md",
+    "research/condensed-qft/EXT-015/RUN_MATRIX.md",
+    "research/condensed-qft/LFO3_SURJECTIVITY_THEOREM_013.md",
+    "research/condensed-qft/DERIVED_MAPPING_OBSTRUCTION_014.md"
+  ],
+  "handoffs": [
+    {
+      "id": "EXT-015A",
+      "issue": 2653,
+      "issue_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2653",
+      "candidate_path": "research/condensed-qft/EXT-015/handoffs/EXT-015A.md",
+      "scope": "liquid quotient realization; degree-one Ext injectivity",
+      "prerequisites": [
+        "C0",
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "independent_of": [
+        "EXT-015B"
+      ],
+      "return_state": "NO_RETURN",
+      "worker": "UNASSIGNED",
+      "protected_dispatch": "NOT_CREATED",
+      "pickup_mode": "TO_BE_SELECTED_BY_AUTHORIZED_CONTROLLER"
+    },
+    {
+      "id": "EXT-015B",
+      "issue": 2654,
+      "issue_url": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2654",
+      "candidate_path": "research/condensed-qft/EXT-015/handoffs/EXT-015B.md",
+      "scope": "genuine liquid projective presentation; first syzygy; Borel jet control",
+      "prerequisites": [
+        "C0",
+        "C4"
+      ],
+      "independent_of": [
+        "EXT-015A"
+      ],
+      "return_state": "NO_RETURN",
+      "worker": "UNASSIGNED",
+      "protected_dispatch": "NOT_CREATED",
+      "pickup_mode": "TO_BE_SELECTED_BY_AUTHORIZED_CONTROLLER"
+    }
+  ],
+  "activation_gates": [
+    "Protected merge and exact-main readback of candidate handoffs",
+    "Authorized controller selects supported pickup route and return issue",
+    "Authenticated GitHub actor and duplicate dispatch/return reconciliation",
+    "Protected exact-source task issuance with digest/commit custody",
+    "Worker lease/reservation if route is reservation_controlled",
+    "Queue class Mathematics and actual capacity guard verified separately from pickup mode",
+    "Independent mathematical review on returned proofs before certification"
+  ],
+  "precedence": "Source documents at source_protected_head are mathematical premises. Handoffs become immutable task inputs only after protected admission and separate controller issuance."
+}
