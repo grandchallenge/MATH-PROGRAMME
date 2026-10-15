@@ -124,6 +124,8 @@ jobs:
         run: python3 ci/test_erdos_compendium_editorial_activate.py
       - name: Test exact-14 rolling review completion and idempotent replays
         run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
+      - name: Verify five source-locked Erdős corrections and hostile semantic fixtures
+        run: python3 governance/source_erdos_critical_005/validate.py
       - name: Test the sealed scheduled Editorial replay and no-RESULT authority
         run: python3 ci/test_erdos_compendium_editorial_replay.py
 
