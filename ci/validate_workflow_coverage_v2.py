@@ -9,6 +9,7 @@ import validate_workflow_coverage_v3 as v3
 RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.yml"
 QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualification.yml"
 CONSTRUCTION_GATE_WORKFLOW = "construction-gate-runtime.yml"
+ROLLING_REVIEW_DIRECT_WORKFLOW = "erdos-rolling-review-completion.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -30,6 +31,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     RECOVERY_FAILOVER_WORKFLOW,
     QUALIFICATION_ONLY_WORKFLOW,
     CONSTRUCTION_GATE_WORKFLOW,
+    ROLLING_REVIEW_DIRECT_WORKFLOW,
     "ghos-routing-enforcement.yml",
 }
 
@@ -426,6 +428,75 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
+    """Fail closed on any widened, unaudited direct Council Clerk entry point."""
+    key = ROLLING_REVIEW_DIRECT_WORKFLOW
+    source = texts.get(key)
+    if source is None:
+        return []
+    workflow = v3.legacy.load_yaml_text(source)
+    errors: list[str] = []
+    if _trigger(workflow) != {"workflow_dispatch": ""}:
+        errors.append(f"{key}: only explicit workflow_dispatch from main is permitted")
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(f"{key}: top-level GitHub token must be contents read only")
+    if set(workflow.get("jobs", {})) != {"council-clerk-complete-reviews"}:
+        errors.append(f"{key}: unexpected job topology")
+    job = _job(workflow, "council-clerk-complete-reviews")
+    if (job.get("environment") != "release-trust"
+            or job.get("permissions") != {"contents": "read"}
+            or "refs/heads/main" not in str(job.get("if", ""))
+            or "grandchallenge/MATH-PROGRAMME" not in str(job.get("if", ""))):
+        errors.append(f"{key}: missing protected-source/release-trust job envelope")
+    steps = job.get("steps") or []
+    if len(steps) != 6 or not all(isinstance(x, dict) for x in steps):
+        errors.append(f"{key}: expected exactly six protected transaction steps")
+        return errors
+    checkout, python, tests, credential, execute, receipt = steps
+    if (checkout.get("uses") !=
+            "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            or checkout.get("with") != {"ref": "main", "persist-credentials": "false"}):
+        errors.append(f"{key}: wrong immutable protected-main checkout")
+    if (python.get("uses") !=
+            "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            or python.get("with") != {"python-version": "3.12"}):
+        errors.append(f"{key}: unapproved Python bootstrap")
+    if "tests/test_erdos_catalogue_queue_projection.py" not in str(tests.get("run", "")):
+        errors.append(f"{key}: missing hostile exact-14 controller test")
+    token = credential.get("with") or {}
+    if (credential.get("uses") !=
+            "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
+            or token.get("owner") != "grandchallenge"
+            or token.get("repositories") != "MATH-PROGRAMME"
+            or token.get("permission-issues") != "write"
+            or token.get("permission-organization-projects") != "write"
+            or set(token) != {"app-id", "private-key", "owner", "repositories",
+                              "permission-issues", "permission-organization-projects"}
+            or "GCL_COUNCIL_CLERK_APP_ID" not in str(token["app-id"])
+            or "GCL_COUNCIL_CLERK_PRIVATE_KEY" not in str(token["private-key"])):
+        errors.append(f"{key}: Council Clerk token permission or identity drift")
+    run = str(execute.get("run", ""))
+    env = execute.get("env") or {}
+    if (env.get("GCL_CONTROLLER_ID") != "erdos-rolling-review-completion"
+            or "steps.council.outputs.token" not in str(env.get("GH_TOKEN", ""))
+            or "ci/erdos_catalogue_queue_projection.py" not in run
+            or "--review-completion --apply" not in run
+            or "--receipt rolling-critical-reviews/receipt.json" not in run
+            or "test -n" not in run):
+        errors.append(f"{key}: unrecognized exact-14 bounded controller invocation")
+    if (receipt.get("uses") !=
+            "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+            or receipt.get("if") != "always()"
+            or receipt.get("with", {}).get("path") !=
+               "rolling-critical-reviews/receipt.json"):
+        errors.append(f"{key}: controller completion/blocker receipt not retained")
+    for forbidden in ("gh pr merge", "gh project item-edit", "gh api --method PUT",
+                      "permission-administration", "secrets.GCL_RELEASE_TRUST"):
+        if forbidden in source:
+            errors.append(f"{key}: forbidden broad control-plane capability {forbidden}")
+    return errors
+
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
@@ -446,6 +517,7 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
     errors.extend(pilot_errors)
     errors.extend(recovery_failover_errors(texts))
     errors.extend(remediation_envelope_errors(texts))
+    errors.extend(rolling_review_direct_errors(texts))
     queue_projection = texts.get("erdos-catalogue-queue-projection.yml")
     if queue_projection is not None:
         workflow = v3.legacy.load_yaml_text(queue_projection)
