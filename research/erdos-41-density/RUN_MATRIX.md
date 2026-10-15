@@ -86,3 +86,15 @@ See [CROSS_SCALE_SHADOW_MOMENTS.md](CROSS_SCALE_SHADOW_MOMENTS.md); no mathemati
 | Infinite cross-scale overlap contradiction | Not obtained | OPEN |
 
 See [OFF_SPECTRUM_FOURTH_MOMENT.md](OFF_SPECTRUM_FOURTH_MOMENT.md). No theorem certification or Solve dispatch is inferred.
+
+## Off-spectrum spectral-matching competition
+
+| Mathematical obligation | Verification | Disposition |
+| --- | --- | --- |
+| Fixed-d matching among internal and external pair representations | Complete written B3 three-summand multiset proof | Proved |
+| Pointwise sum of correlations at nonzero difference ≤block size | Finite B3 fixture tests and hostile non-B3 union | Proved |
+| Exact first off-spectrum mass and quadratic budget | Rational polynomial identity, Counter tests | Proved |
+| Spectral arithmetic certificate | Pinned Lean 4.29.1 compiler receipt and SHA256 when GREEN | Separate checks |
+| Persistent B3 density forces collision | Ordinary capacity estimates have no accumulating scale factor | OPEN |
+
+The finite theorem is not an automatic Forge/Solve/Cert transition.

@@ -26,6 +26,10 @@ See [SHADOW_CORRELATION_SPECTRUM.md](SHADOW_CORRELATION_SPECTRUM.md). For any fi
 
 See [OFF_SPECTRUM_FOURTH_MOMENT.md](OFF_SPECTRUM_FOURTH_MOMENT.md). The exact selector theorem determines the pair-sum autocorrelation at all differences of A. Splitting the fourth-order additive energy of P_X into those known differences and its complement yields the **exact** on-spectrum energy q²+n³(n−1) and a Cauchy lower bound for the remaining off-spectrum mass. Under an *explicitly conditional finite-block critical-size hypothesis* n≈D^(1/3), the off-spectrum energy is at least a positive constant times D^(5/3). This is not an M3 contradiction: the mass may reside at numerous differences not among A−A. A new cross-scale interaction controlling that off-spectrum reservoir is required. The finite-window valley remains OPEN.
 
+## 2026-10-14 pointwise off-spectrum matching competition
+
+The admitted fourth-moment theorem and its [spectral matching successor](SPECTRAL_MATCHING_COMPETITION.md) now give a *pointwise* B3 restriction. For any nonzero difference d, the internal pair-sum autocorrelation of a block X and all cross-correlations with disjoint external blocks have combined multiplicity at most |X|. Their positive unordered pairs must have pairwise disjoint supports when d is off A−A. This yields exact off-spectrum first mass and a joint quadratic energy upper budget, beyond enclosing interval volumes. But geometric critical-scale models still have the same leading power on both sides: this does not force Erdős #41's low-density windows. The genuine arithmetic matching theorem is accepted as a bounded result only after its protected review.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
