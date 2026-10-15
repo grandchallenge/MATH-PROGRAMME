@@ -18,14 +18,14 @@ $$
 
 where a SINGLE numerical $C>1$ is independent of $q$ and the particular projective plane.
 
-The stated condition allows selecting a whole line when its size is small; some definitions of proper blocking sets forbid this and cannot silently replace the actual problem. A plane of order $q$ has $q^2+q+1$ points and lines; each line has $q+1$ points and any two lines meet in one point. Not every finite projective plane is assumed Desarguesian; testing $\operatorname{PG}(2,q)$ is not all planes.
+The stated condition allows selecting a whole line when its size is small; some definitions of proper blocking sets forbid this and cannot silently replace the actual problem. A plane of order $q$ has $q^2+q+1$ points and lines; each line has $q+1$ points and any two lines meet in one point. Not every finite projective plane is assumed Desarguesian; testing $\mathrm{PG}(2,q)$ is not all planes.
 
 ## Mathematical fixture, exactly verified
 
 The program constructs all normalized 1-dimensional projective classes of nonzero triples over $\mathbb F_q$ for prime $q=2,3$. Lines use dot-product-zero incidence. It verifies $q^2+q+1$ points and lines, $q+1$ points per line, and every pair of distinct lines meeting in exactly one point. It enumerates all $2^{q^2+q+1}$ subsets.
 
-- Fano $\operatorname{PG}(2,2)$: **no subset can hit each line in only 1 or 2 points**; exhaustive optimal maximum line intersection is $C_{\min}=3$. A whole projective line meets itself in 3 and each other line in 1.
-- $\operatorname{PG}(2,3)$: the same **$C_{\min}=3$**; a 6-point witness set attains it. Stored witness point indices and all feasible subset histograms are in the phase-18 receipt.
+- Fano $\mathrm{PG}(2,2)$: **no subset can hit each line in only 1 or 2 points**; exhaustive optimal maximum line intersection is $C_{\min}=3$. A whole projective line meets itself in 3 and each other line in 1.
+- $\mathrm{PG}(2,3)$: the same **$C_{\min}=3$**; a 6-point witness set attains it. Stored witness point indices and all feasible subset histograms are in the phase-18 receipt.
 
 These results are finite exact enumerations only. They **cannot** show that a single $C=3$ or any finite $C$ suffices for all finite projective planes.
 

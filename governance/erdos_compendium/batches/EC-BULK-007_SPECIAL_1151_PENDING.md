@@ -11,7 +11,7 @@
 
 ## Independent verification boundaries
 
-The reported proof and community review predate GCL's audit. We have **not** rebuilt the Lean environment or checked all theorem/axiom dependencies ourselves. The current problem statement also leaves the fixed point $x_0$ ambiguous: arbitrary fixed point versus special Erdős point $x_0=\cos(p\pi/q)$ with odd $p,q$. An unrestricted all-$x_0$ reading can be false at interpolation nodes.
+The reported proof and community review predate GCL's audit. We have **not** rebuilt the Lean environment or checked all theorem/axiom dependencies ourselves. The current problem statement also leaves the fixed point $x_0$ ambiguous: arbitrary fixed point versus special Erdős point $x_0=\cos(p\pi/q)$ with odd $p,q$. An unrestricted all‑$x_0$ reading can be false at interpolation nodes.
 
 Theorem 1.1(a) handles **nonempty** closed target sets; the **empty** target requires an additional divergent construction. Erdős's 1943 corrigendum reportedly proves divergence for special $x_0$, while the 1943 added-in-proof claim about arbitrary closed sets was unproved in that source. Avoid circular citation of Erdős's unproved remark.
 

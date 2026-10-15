@@ -10,9 +10,11 @@
 ## Exact inconsistency
 
 If $A=\{2^i3^j:i,j\ge0\}$ and $B$ is any set of **strictly positive** integers, then $1\notin A+B$. Under the literal Schnirelmann density
+
 $$
 \sigma(S)=\inf_{N\ge1}|S\cap[1,N]|/N
 $$
+
 we have $\sigma(A+B)=0$. For $B=\{1\}\cup 2\mathbb Z_{>0}$ one verifies $\sigma(B)=1/2$. Therefore the literal transcription, without further conventions, **cannot** define the intended open essential-component problem.
 
 The likely repair is a convention involving $0$ in $A$, $B$ or an augmented sumset, but it is not legitimate to guess which convention the original mathematicians use. Ruzsa explicitly describes this as a nontrivial open question, rather than a trivial no-result.

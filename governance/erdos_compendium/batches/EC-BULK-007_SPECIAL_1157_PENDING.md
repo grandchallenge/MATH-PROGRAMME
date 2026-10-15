@@ -2,7 +2,7 @@
 
 **SOURCE_NORMALIZATION_PENDING**, not a proof of the open hypergraph problem.
 
-The current catalogue at https://www.erdosproblems.com/1157 introduces parameters $t,k,r\ge2$, but immediately defines a family of $r$-uniform hypergraphs with $k$ vertices and $s$ edges. Variable **$s$ is unbound** in the introducing quantification, while **$t$ is unused** in the primary $\mathrm{ex}_r(n,\mathcal F)$ quantity. The text later uses a different **$t$-uniform** Brown–Erdős–Sós conjecture involving both $r$ and $t$. These must not be merged.
+The current catalogue at https://www.erdosproblems.com/1157 introduces parameters $t,k,r\ge2$, but immediately defines a family of $r$‑uniform hypergraphs with $k$ vertices and $s$ edges. Variable **$s$ is unbound** in the introducing quantification, while **$t$ is unused** in the primary $\mathrm{ex}_r(n,\mathcal F)$ quantity. The text later uses a different **$t$‑uniform** Brown–Erdős–Sós conjecture involving both $r$ and $t$. These must not be merged.
 
 Original issue return: https://github.com/grandchallenge/MATH-PROGRAMME/issues/2428#issuecomment-6184851029
 Primary original mathematical reference: Brown, Erdős, Sós (1973), BES73; Vardi (1999) §3.64.

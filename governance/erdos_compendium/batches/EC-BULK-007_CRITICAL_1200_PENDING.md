@@ -27,7 +27,7 @@ The minimum $2927/2310$ only concerns this **finite** search and does NOT provid
 2. Independently enumerate the $6912$ assignments, verify $14$ covers, and audit the minimal reciprocal-sum witness using an independent algorithm or exhaustive certificate.
 3. Separately reconstruct the ErRu80 positive-proportion divisible-class result and clarify its difference from an all-integers bounded reciprocal-sum cover.
 4. Source-check the claimed implication from #688's epsilon lower bound, including all quantifiers; do not borrow a currently unproved implication as a theorem.
-5. Independently derive a meaningful growing-$x$ structural bound or an explicit conditional route; do not extrapolate $x=12$ data.
+5. Independently derive a meaningful growing‑$x$ structural bound or an explicit conditional route; do not extrapolate $x=12$ data.
 6. Record specialist nonauthor identity, original source page citations and signed APPROVE/REVISE, including exact scope, before declaring this mandatory deterministic critical sample accepted.
 
 **Critical approval PENDING. Cohort total approved 0/20.**

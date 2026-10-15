@@ -29,7 +29,7 @@ The deterministic program ci/erdos_compendium_007_phase15_checks.py tests ALL m=
 
 ## Mandatory independent review obligations
 
-1. Source-lock Lagarias original 1985, 2010 and 2016 papers and identify Collatz/Erdős historical attribution and the conversational $500 valuation rather than an unverified offered prize.
+1. Source-lock Lagarias original 1985, 2010 and 2016 papers and identify Collatz/Erdős historical attribution and the conversational \$500 valuation rather than an unverified offered prize.
 2. Verify the exact Tao published logarithmic-density almost-all result including normalization, quantifier, density and actual conclusion; show explicitly why it does not prove termination for every m.
 3. Independently implement or audit the finite sweep, exact step count, positive k, and any overflow/cycle assumptions. Require a separate reproducible test of m=1 and m=6171.
 4. Confirm frozen Lean theorem's `sorry` status, distinguish statement formalization from proof or kernel certificate, and audit proof dependency chain if newer formal artifacts appear.
