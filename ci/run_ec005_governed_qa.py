@@ -14,6 +14,7 @@ from pathlib import Path
 import audit_erdos_compendium_ec005_browser as browser_qa
 import test_erdos_compendium_ec005_source_lock_25 as source_lock_25
 import test_erdos_compendium_ec005_conflicts_04 as conflict_04
+import test_erdos_compendium_ec005_typography as typography_qa
 import test_erdos_compendium_ec005_conflicts_03 as conflict_03
 import test_erdos_compendium_ec005_conflicts_02 as conflicts_02
 import test_erdos_compendium_ec005_conflicts_01 as conflict_01
@@ -45,6 +46,7 @@ import test_erdos_compendium_ec005_fixtures_842_851 as _module_24
 
 MODULES=(
     source_lock_25,
+    typography_qa,
     conflict_04,
     conflict_03,
     conflicts_02,
