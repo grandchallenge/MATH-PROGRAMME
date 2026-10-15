@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "governance/erdos_catalogue/REGISTRY.json"
 EDITORIAL = ROOT / "governance/erdos_compendium/editorial"
 ACCEPTANCE = ROOT / "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
+RENDER_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_RENDER_AMENDMENTS.json"
+STATUS_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_STATUS_AMENDMENTS.json"
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
@@ -124,6 +126,95 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
             accepted[n] = {**entry, **{key: batch[key] for key in
                             ("critical_review", "protected_admission", "mkdocs_run", "public_html_readback")},
                            "batch_id": batch_id}
+    # Preserve historical V2 source hashes and evidence on their original batches.
+    # A protected, source-bound rendering amendment replaces only the effective
+    # manuscript digest; the original admission remains auditable and immutable.
+    if Path(path).resolve() == ACCEPTANCE.resolve() and RENDER_AMENDMENTS.exists():
+        doc = json.loads(RENDER_AMENDMENTS.read_text(encoding="utf-8"))
+        if (set(doc) != {"record_type", "revision_id", "source_issue",
+                         "scope", "protected_admission", "browser_readback",
+                         "entries"}
+                or doc["record_type"] != "ERDOS_COMPENDIUM_EDITORIAL_RENDER_AMENDMENTS/1"
+                or doc["revision_id"] != "EC-MATHJAX-20261014-A"
+                or doc["scope"] != "TYPOGRAPHY_ONLY_NO_MATHEMATICAL_CERTIFICATION"
+                or doc["source_issue"] !=
+                   "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2637"
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/[0-9]+",
+                                    doc["protected_admission"])
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/issues/2637#issuecomment-[0-9]+",
+                                    doc["browser_readback"])):
+            raise ValueError("Invalid rendering amendment authority and receipts")
+        corrected = set()
+        for row in doc["entries"]:
+            if set(row) != {"problem_id", "batch_id", "previous_sha256",
+                            "corrected_sha256", "source_check"}:
+                raise ValueError("Invalid rendering amendment fields")
+            n = row["problem_id"]
+            if (type(n) is not int or n in corrected or n not in accepted
+                    or n not in {301, 311, 326, 346, 400}
+                    or row["batch_id"] != "EC-BULK-003"
+                    or row["batch_id"] != accepted[n]["batch_id"]
+                    or row["previous_sha256"] != accepted[n]["source_sha256"]
+                    or row["source_check"] != accepted[n]["source_check"]
+                    or not isinstance(row["corrected_sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", row["corrected_sha256"])
+                    or row["previous_sha256"] == row["corrected_sha256"]):
+                raise ValueError(f"Invalid or stale rendering amendment #{n}")
+            corrected.add(n)
+            accepted[n] = {**accepted[n],
+                           "source_sha256": row["corrected_sha256"],
+                           "render_amendment_id": doc["revision_id"],
+                           "render_amendment_authority": doc["protected_admission"],
+                           "render_preview_receipt": doc["browser_readback"]}
+        if corrected != {301, 311, 326, 346, 400}:
+            raise ValueError("Incomplete 5-article rendering correction batch")
+    # Editorial-state text updates after protected admission must not rewrite
+    # the historically reviewed V2 batch entries. Enforce an exact protected,
+    # source-bound two-entry overlay with immutable old hashes and no theorem
+    # certification or change to original source review disposition.
+    if Path(path).resolve() == ACCEPTANCE.resolve() and STATUS_AMENDMENTS.exists():
+        doc = json.loads(STATUS_AMENDMENTS.read_text(encoding="utf-8"))
+        expected = {"record_type", "revision_id", "scope", "source_issue",
+                    "pre_fix_public_failure", "protected_patch", "entries"}
+        prefix = "https://github.com/grandchallenge/MATH-PROGRAMME/"
+        if (not isinstance(doc, dict) or set(doc) != expected
+                or doc["record_type"] != "ERDOS_COMPENDIUM_EDITORIAL_STATUS_AMENDMENTS/1"
+                or doc["revision_id"] != "EC005-R3-STATUS-20261015-A"
+                or doc["scope"] != "EDITORIAL_STATUS_TEXT_ONLY_NO_THEOREM_CERTIFICATION"
+                or doc["source_issue"] != prefix + "issues/2552"
+                or doc["pre_fix_public_failure"] != prefix + "issues/2552#issuecomment-6185743558"
+                or not isinstance(doc["protected_patch"], str)
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/[1-9][0-9]*",
+                                    doc["protected_patch"])
+                or not isinstance(doc["entries"], list)
+                or len(doc["entries"]) != 2):
+            raise ValueError("Invalid EC005-R3 protected status amendment evidence")
+        corrected = set()
+        for row in doc["entries"]:
+            required = {"problem_id", "batch_id", "previous_sha256",
+                        "corrected_sha256", "source_check"}
+            if not isinstance(row, dict) or set(row) != required:
+                raise ValueError("Invalid EC005-R3 amendment fields")
+            n = row["problem_id"]
+            if (type(n) is not int or n not in {765, 772} or n in corrected
+                    or n not in accepted or accepted[n]["batch_id"] != "EC-BULK-005-R3"
+                    or row["batch_id"] != "EC-BULK-005-R3"
+                    or row["previous_sha256"] != accepted[n]["source_sha256"]
+                    or row["source_check"] != accepted[n]["source_check"]
+                    or not isinstance(row["corrected_sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", row["corrected_sha256"])
+                    or row["corrected_sha256"] == row["previous_sha256"]
+                    or hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest()
+                    != row["corrected_sha256"]):
+                raise ValueError(f"Invalid or stale EC005-R3 status amendment #{n}")
+            corrected.add(n)
+            accepted[n] = {**accepted[n],
+                           "source_sha256": row["corrected_sha256"],
+                           "status_amendment_id": doc["revision_id"],
+                           "status_amendment_authority": doc["protected_patch"],
+                           "pre_fix_status_failure": doc["pre_fix_public_failure"]}
+        if corrected != {765, 772}:
+            raise ValueError("Incomplete EC005-R3 two-article status correction")
     return accepted
 
 

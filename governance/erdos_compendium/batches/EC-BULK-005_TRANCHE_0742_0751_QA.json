@@ -1,0 +1,136 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 742,
+    "to": 751,
+    "distinct_problems": 10,
+    "source_issues": [
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "authenticated_actor": "fyremael",
+  "issue_bound_comment_ids": [
+    6163042233,
+    6163044558,
+    6163046983,
+    6163049493,
+    6163052203,
+    6163080860,
+    6163083611,
+    6163086167,
+    6163089123,
+    6163091443
+  ],
+  "article_commit_shas": [
+    "b40984901a3cb15d51216f1a1e186edaf5657a16",
+    "b6629454bb8df0b9455750c902cf9cdef4bfa5bc",
+    "3180fad1267ae4a9de2518926886b7d2c2ff0448",
+    "eee7ed152ab3032fb5628ee11560b323ddae5ed7",
+    "5fe45388b541dea87acefa8e624a59798cb6fce9",
+    "bef6d05ea626bcec2b97689be1f921612ff29796",
+    "bad7e3ed097ba8cd0de5351340457634e2d3fabe",
+    "b057f85ce3cd953332a479cf1bb93a8d49afc2e1",
+    "e4b327792e843a4343a2a800f08aa7fa47227fc5",
+    "056b4ac784b61bc37c2f5406785420c26875e90a"
+  ],
+  "source_preflight": {
+    "native_state": "AVAILABLE",
+    "native_role": "SOURCE",
+    "chad_receipt": "GCL_CONTROL_BASH_RESULT/1:f82c5afc7ee84058bf6c636ae9141e00",
+    "existing_comments_before": 0
+  },
+  "live_readback": {
+    "source_result1_valid": 10,
+    "unique_source_comment_on_each_original_issue": 10,
+    "source_actor_matching": 10,
+    "article_present": 10,
+    "six_headings": 10,
+    "source_link_correct": 10,
+    "math_display_delimiters_balanced": 10
+  },
+  "fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_742_751.py",
+    "last_code_commit": "3bdd95264a78a16b5fba79ea1d3332c33fa7f043",
+    "chad_pass_receipt": "GCL_CONTROL_BASH_RESULT/1:2fa723373ae54a70aeb2553009461b4a",
+    "exit_code": 0,
+    "passed": 10,
+    "total": 10,
+    "scope": "Small finite exact arithmetic, graph and combinatorial fixtures. No proof of random-graph limit laws or infinite statements."
+  },
+  "mathematical_source_boundaries": [
+    {
+      "n": 742,
+      "status": "DECIDABLE_NOT_PROVED_ALL_N",
+      "hold": true,
+      "details": "Furedi proved n≥n0; residual finite n not source-certified. Pinned FC main and auxiliary theorem bodies sorry; finite verification still needed."
+    },
+    {
+      "n": 743,
+      "status": "FALSIFIABLE_OPEN",
+      "details": "Gyarfas arbitrary-tree packing conjecture, 2024 claimed proof preprint not independently certified; n=4 exact partition verified."
+    },
+    {
+      "n": 744,
+      "status": "DISPROVED",
+      "details": "Rodl–Tuza fixed-k eventually constant f_k(n)=binom(k−1,2); n=4,k=4 special f=2 not contradicted."
+    },
+    {
+      "n": 745,
+      "status": "MATERIAL_FALSE_SOURCE_PARAMETER",
+      "hold": true,
+      "details": "Maintained page p=1/n and second-largest O(log n), but KSS80 primary abstract concerns supercritical p=λ/n with λ>1; Aldous 1997 critical p=1/n top ranked components scale n^(2/3). Must source-correct before admission."
+    },
+    {
+      "n": 746,
+      "status": "PROVED",
+      "details": "Korshunov 1977 almost-sure high probability Hamiltonicity threshold, Komlos–Szemeredi 1983 limiting window distribution; uniformly random graph, not deterministic density."
+    },
+    {
+      "n": 747,
+      "status": "SOLVED",
+      "details": "Shamir three-uniform perfect matching ℓ(n)∼n log n sharp threshold Kahn 2023, earlier JKV2008 order."
+    },
+    {
+      "n": 748,
+      "status": "PROVED",
+      "details": "Cameron–Erdos f(n) sum-free subset count 2^(n/2+O(1)), Green/Sapozhenko parity-dependent constants; not maximal family count."
+    },
+    {
+      "n": 749,
+      "status": "OPEN_LOWER_VARIANT",
+      "details": "Bhalla 2026 upper-density variant proves source-reported O(1/epsilon) sum representations, does not prove lower-density original; pinned FC main sorry."
+    },
+    {
+      "n": 750,
+      "status": "FROZEN_PROVED_VS_CURRENT_OPEN",
+      "hold": true,
+      "details": "Pinned FC answer(True) with sorry main theorem for arbitrary f(m)→infinity; only linear εm variant source-proved. Current site OPEN and comment claimed full solution unreviewed."
+    },
+    {
+      "n": 751,
+      "status": "DISPROVED_EXTERNAL_LEAN_REPORTED",
+      "details": "Bondy–Vince cycle lengths differ≤2 in min-degree≥3, with 4-critical subgraph reduction; external Lean not GCL certified."
+    }
+  ],
+  "governance": {
+    "all_ten_articles_unaccepted": true,
+    "all_ten_issues_authenticated_source": true,
+    "protected_main_merge": "NONE",
+    "original_primary_full_proofs": "NOT_COMPLETE",
+    "critical_review_minimum_twenty_sample": "PENDING",
+    "strict_mkdocs": "NOT_RUN",
+    "deployed_real_browser_math": "NOT_VERIFIED",
+    "v2_exact_hash_admission": 0
+  }
+}

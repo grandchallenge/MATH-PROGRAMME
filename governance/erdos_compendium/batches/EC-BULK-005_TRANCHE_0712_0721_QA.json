@@ -1,0 +1,137 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "tranche": {
+    "first": 712,
+    "last": 721,
+    "count": 10
+  },
+  "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "original_issues": [
+    1983,
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992
+  ],
+  "authenticated_original_issue_result_comments": [
+    6162267007,
+    6162268375,
+    6162270173,
+    6162286407,
+    6162288001,
+    6162292413,
+    6162293998,
+    6162310042,
+    6162311539,
+    6162313245
+  ],
+  "authenticated_actor": "fyremael",
+  "native_issue_state": {
+    "value": "AVAILABLE SOURCE",
+    "receipt": "GCL_CONTROL_BASH_RESULT/1:0dfa7e9cebd14db4afc94f2dd3f9bdaf"
+  },
+  "original_issue_preflight_comment_count_zero": true,
+  "live_readback": {
+    "issue_bound_return_count": 10,
+    "duplicate_issue_returns": 0,
+    "result1_grammar_valid": 10,
+    "comment_headings_valid": 10,
+    "articles_present": 10,
+    "six_article_headings": 10,
+    "source_links": 10,
+    "math_display_balanced": 10,
+    "escaped_code_invalid": 0
+  },
+  "exact_fixture_test": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_712_721.py",
+    "last_test_source_commit": "0178e87554d7c431ea8f82d0dbf85d12c3c5b76f",
+    "runner": "CHAD authenticated gh api --method GET exact editorial branch then Python unittest",
+    "final_pass_receipt": "GCL_CONTROL_BASH_RESULT/1:10e742a179824f2293f3d41405ae8dac",
+    "exit_code": 0,
+    "passed": 10,
+    "total": 10,
+    "prior_failures_repaired": [
+      "Initial floating-point equality in rational Turán-density normalization failed; replaced with exact fractions.",
+      "Subsequent K2 finite enumeration introduced a list comprehension variable typo; corrected and reran."
+    ],
+    "scope": "Bounded finite checks only; not proof of historical cited theorems or deployed MathJax."
+  },
+  "mathematical_source_boundaries": [
+    {
+      "n": 712,
+      "status": "OPEN",
+      "exception": "MAINTAINED_GRAPH_BASE_FACTOR_HALF_WRONG_FOR_BINOM_N_2_DENOMINATOR; correct normalized r=2 Turán density 1−1/(k−1).",
+      "admission_hold": true
+    },
+    {
+      "n": 713,
+      "status": "OPEN_NONDEGENERATE",
+      "exception": "LITERAL_UNQUALIFIED_EVERY_BIPARTITE_GRAPH_K2_COUNTEREXAMPLE_ZERO_EXTREMAL; original exclusion hypotheses uninspected.",
+      "admission_hold": true
+    },
+    {
+      "n": 714,
+      "status": "OPEN_R_GE_4",
+      "exception": "KST upper bound and Brown/ERS r=3 positive special cases, not full matching lower."
+    },
+    {
+      "n": 715,
+      "status": "PROVED",
+      "exception": "Tashkinov 4-regular cubic subgraph source attribution, original theorem pages not read."
+    },
+    {
+      "n": 716,
+      "status": "PROVED_EXTERNAL_LEAN_REPORTED",
+      "exception": "Ruzsa-Szemeredi (6,3) result proved, external formal kernel and sorries not admitted GCL."
+    },
+    {
+      "n": 717,
+      "status": "PROVED",
+      "exception": "Fox-Lee-Sudakov chromatic-to-topological-clique O(sqrt n/log n) attributed to author primary abstract."
+    },
+    {
+      "n": 718,
+      "status": "PROVED",
+      "exception": "Komlos-Szemeredi/Bollobas-Thomason C r²n topological-minor theorem, full proofs not replayed."
+    },
+    {
+      "n": 719,
+      "status": "OPEN",
+      "exception": "Erdos-Sauer clique packing decomposition; reduction e−r t exact, general case unresolved."
+    },
+    {
+      "n": 720,
+      "status": "MIXED_RESULT",
+      "exception": "Catalogue aggregate PROVED badge masks (i) size Ramsey path ratio /n→infinity DISPROVED by Beck linear upper; (ii) path /n²→0 PROVED; (iii) cycle /n²→0 PROVED.",
+      "admission_hold": true
+    },
+    {
+      "n": 721,
+      "status": "SOLVED_SPECIFIC_BOUND_CHALLENGES",
+      "exception": "Hunter 2022 superpolylog lower and Bloom-Sisask upper exp(O(log^9 k)), exact growth still unsettled."
+    }
+  ],
+  "prior_source_semantics_holds": [
+    662,
+    678,
+    683,
+    697,
+    702,
+    708
+  ],
+  "governance": {
+    "all_articles_unaccepted": true,
+    "full_primary_proof_pages": "NOT_COMPLETE",
+    "minimum_20_critical_article_sample": "PENDING",
+    "protected_production_merge": "NONE",
+    "strict_MkDocs": "NOT_RUN",
+    "real_browser_MathJax": "NOT_VERIFIED",
+    "v2_editorial_admission_count": 0
+  }
+}

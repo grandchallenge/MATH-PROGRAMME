@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/erdos_catalogue_queue_projection.py'
+      - 'tests/test_erdos_catalogue_queue_projection.py'
       - 'ci/erdos_compendium_editorial_activate.py'
       - 'ci/test_erdos_compendium_editorial_activate.py'
       - 'ci/gcl_queue_class_cutover.py'
@@ -156,6 +158,26 @@ jobs:
         run: |
           test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
           python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
+      - name: Verify exact-14 review completion and replay invariants
+        if: github.event_name != 'issue_comment'
+        run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
+      - name: Reconcile 14 completed critical reviews with Council Clerk custody
+        if: github.event_name != 'issue_comment'
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+          GCL_CONTROLLER_ID: erdos-rolling-review-completion
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          python ci/erdos_catalogue_queue_projection.py --review-completion --apply             --receipt rolling-critical-reviews/receipt.json
+      - name: Preserve critical review completion or exact operational blocker
+        if: always() && github.event_name != 'issue_comment'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-rolling-review-completion-${{ github.run_id }}-${{ github.run_attempt }}
+          path: rolling-critical-reviews/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
       - name: Checkout protected MATHSOLVE controller
         if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1

@@ -1,0 +1,163 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "tranche": {
+    "from": 732,
+    "to": 741,
+    "exact_count": 10
+  },
+  "cooperative_reconciliation": true,
+  "authority": {
+    "registry_git_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+    "source_catalogue_blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+    "branch": "editorial/ec-bulk-005-200",
+    "authenticated_actor": "fyremael",
+    "original_issues": [
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012
+    ]
+  },
+  "original_issue_comment_ids": [
+    6162823659,
+    6162836553,
+    6162844005,
+    6162858794,
+    6162870899,
+    6162885046,
+    6162892639,
+    6162866768,
+    6162869659,
+    6162871859
+  ],
+  "article_commits": [
+    "fc80e914ab1d766419e438d5c32e0920659ec4d5",
+    "9c3048028ee56ee35c9caba00780d163abcca98c",
+    "49c970b3c8069bb98557151f9778e1153db44df6",
+    "92f00ca3d5ae6c3fe78db89ba029b3dce397497b",
+    "b9d048c792795ba104e3a3c0291cc92ad6aeb0fa",
+    "89468e1bc944e3983f529a95432a2748f6d5b3a4",
+    "ada1184086725ff7bed7e8fca7e64520b284da1e",
+    "4029c300143d45b4692225a7afa454b93e07a336",
+    "6dfe08459d193f50ce8f6a480302931fa22db2fc",
+    "eabf87aae50350952c89e13edbe8a1696d130c9e"
+  ],
+  "readback": {
+    "source_comments_exactly_one_per_issue": 10,
+    "original_issues_gcl_state": "AVAILABLE",
+    "original_issues_gcl_role": "SOURCE",
+    "native_field_receipt": "GCL_CONTROL_BASH_RESULT/1:565ea7c1c6034eb4b7a56a7837f0685f",
+    "source_comment_result1_grammar_passed": 10,
+    "source_comment_author_passed": 10,
+    "source_comment_six_section_passed": 10,
+    "article_present": 10,
+    "article_exact_six_heading_passed": 10,
+    "article_source_backlink_passed": 10,
+    "math_display_delimiters_balanced": 10
+  },
+  "duplicate_event_recovery": {
+    "duplicated_comments_removed": [
+      6162832002,
+      6162903738
+    ],
+    "kept_originals": [
+      6162823659,
+      6162866768
+    ],
+    "authenticated_deletion_receipts": [
+      "GCL_CONTROL_BASH_RESULT/1:4c6dc8b9aa9c49638d5a7aaccc7d6605",
+      "GCL_CONTROL_BASH_RESULT/1:2e8e645d9e404751b8fa8af387e4d440"
+    ],
+    "confirmation": "After cleanup, exact live readback showed one original-source RESULT/1 per issue for #732–#741. Never duplicate an assignment return."
+  },
+  "fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_732_741_coord_review.py",
+    "source_commit": "4f783b6770b6784a4b2a9f8bba81f17ab7efe1ad",
+    "chad_receipt": "GCL_CONTROL_BASH_RESULT/1:38086833e81a4fdeb79175d2408656d0",
+    "exit_code": 0,
+    "passed": 10,
+    "total": 10,
+    "scope": "Bounded finite combinatorics, geometry, graph and additive-set checks; NO infinitary cardinal consistency or author theorem proof replay"
+  },
+  "source_dispositions": [
+    {
+      "id": 732,
+      "disposition": "PARTIAL",
+      "maintained": "PROVED_AGGREGATE",
+      "exception": "Alon lower count proved, full block-compatible sequence characterization not source-closed",
+      "hold": true
+    },
+    {
+      "id": 733,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "PROVED",
+      "exception": "Szemeredi-Trotter 1983 upper exp(O(sqrt n)) via original author PDF and journal metadata; limit constant still separate"
+    },
+    {
+      "id": 734,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "OPEN",
+      "exception": "All large n bounded block-size frequency with nontriviality essential"
+    },
+    {
+      "id": 735,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "SOLVED",
+      "exception": "Murty magic configurations author paper Ackerman et al 2008; positive weights required, exceptional seven-point shape not independently reproduced"
+    },
+    {
+      "id": 736,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "NOT_PROVABLE",
+      "exception": "Komjath-Shelah consistency negative, not ZFC unconditional negation; infinitary chromatic age property"
+    },
+    {
+      "id": 737,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "PROVED",
+      "exception": "Thomassen 1983 one common edge for all sufficiently large finite cycle lengths in aleph1 chromatic graph"
+    },
+    {
+      "id": 738,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "OPEN",
+      "exception": "Gyárfás induced every finite tree in infinite chromatic triangle-free graph; no finite C5 test settles it"
+    },
+    {
+      "id": 739,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "NOT_PROVABLE",
+      "exception": "Komjath 1988 relative consistency no aleph1 chromatic subgraph in aleph2 graph; constructibility positive special case; GCH question open"
+    },
+    {
+      "id": 740,
+      "disposition": "BOUNDED_TASK_DESIGNED",
+      "maintained": "OPEN",
+      "exception": "Formal pinned theorem sorry; r0 vacuous vs source r>=1; May 2026 forum claimed consistency obstruction via #1175 needs primary audit",
+      "hold": true
+    },
+    {
+      "id": 741,
+      "disposition": "STATUS_CONFLICT",
+      "maintained": "SOLVED_LEAN_AGGREGATE",
+      "exception": "Strict positive natural density first part FALSE, positive upper density TRUE, positive lower density still OPEN in pinned file; second additive-basis obstruction TRUE reported externally, GCL pinned bodies all sorry",
+      "hold": true
+    }
+  ],
+  "governance": {
+    "all_new_articles_unaccepted": true,
+    "original_full_proof_review": "NOT_COMPLETE",
+    "critical_sample_review": "PENDING",
+    "strict_mkdocs": "NOT_RUN",
+    "deployed_real_browser_math": "NOT_VERIFIED",
+    "protected_main_batch_merge": "NONE",
+    "v2_editorial_admissions": 0
+  }
+}
