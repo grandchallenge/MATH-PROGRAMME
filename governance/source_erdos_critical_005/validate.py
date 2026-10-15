@@ -242,6 +242,17 @@ class FiveSourceFidelityTests(unittest.TestCase):
         bad=json.loads(json.dumps(registry))
         bad['excluded_until_replay'].pop('14')
         with self.assertRaises(m.SourceLockError):m.verify(bad,roster)
+    def test_41_compiled_lean_source_interface_and_axioms(self):
+        import hashlib
+        root=ROOT/'governance/source_erdos_critical_005'
+        x=json.loads((root/'ERDOS41_HISTORICAL_LEAN_INTERFACE.json').read_text())
+        self.assertEqual(hashlib.sha256((root/'Erdos41HistoricalSourcePredicates.lean').read_bytes()).hexdigest(),x['source_sha256'])
+        self.assertEqual(x['exit_code'],0)
+        self.assertEqual(x['historical_fixed_triple_implication_axioms'],['propext','Quot.sound'])
+        self.assertEqual(x['modern_fixed_triple_implication_axioms'],[])
+        self.assertFalse(x['imported_mathlib_finset_multiset_comparison_complete'])
+        self.assertFalse(x['mathematical_conjecture_solved'])
+        self.assertFalse(x['revision_clearance_authorized'])
 
 if __name__=="__main__":
     unittest.main(verbosity=2)
