@@ -27,6 +27,7 @@ on:
       - 'tests/test_erdos41_zero_sum_fibers.py'
       - 'tests/test_erdos41_density_mixed_budget.py'
       - 'tests/test_erdos41_mixed_ballistic_dispersion.py'
+      - 'tests/test_erdos41_cross_scale_overlap_energy.py'
       - 'research/erdos-41-density/**'
       - 'research/erdos-41-critique/**'
       - 'colab/erdos_41_lean_worker.py'
@@ -89,7 +90,7 @@ jobs:
           python ci/erdos_41_colab_finite_replay.py --help
           python ci/erdos_41_queue_bridge.py --help
           python ci/erdos_41_colab_handoff.py
-      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff tests.test_erdos_41_lean_colab tests.test_erdos_41_lean_colab_host tests.test_erdos_41_lean_bootstrap tests.test_gcl_lean_colab_jobs tests.test_erdos41_infinite_fidelity tests.test_erdos41_density_transfer tests.test_erdos41_shell_hardy tests.test_erdos41_cross_patterns tests.test_erdos41_additive_shadow tests.test_erdos41_multiscale_shadow_moments tests.test_erdos41_shadow_correlation tests.test_erdos41_off_spectrum_energy tests.test_erdos41_spectral_matching tests.test_erdos41_zero_sum_fibers tests.test_erdos41_density_mixed_budget tests.test_erdos41_mixed_ballistic_dispersion
+      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff tests.test_erdos_41_lean_colab tests.test_erdos_41_lean_colab_host tests.test_erdos_41_lean_bootstrap tests.test_gcl_lean_colab_jobs tests.test_erdos41_infinite_fidelity tests.test_erdos41_density_transfer tests.test_erdos41_shell_hardy tests.test_erdos41_cross_patterns tests.test_erdos41_additive_shadow tests.test_erdos41_multiscale_shadow_moments tests.test_erdos41_shadow_correlation tests.test_erdos41_off_spectrum_energy tests.test_erdos41_spectral_matching tests.test_erdos41_zero_sum_fibers tests.test_erdos41_density_mixed_budget tests.test_erdos41_mixed_ballistic_dispersion tests.test_erdos41_cross_scale_overlap_energy
       - run: python ci/erdos_catalogue_programme_intake.py --events governance/erdos_catalogue/EMPTY_EVENTS.json --output catalogue-validation
 
   capture:

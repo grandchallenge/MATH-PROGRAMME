@@ -139,3 +139,16 @@ Source: [DENSITY_FORCED_MIXED_BUDGET.md](DENSITY_FORCED_MIXED_BUDGET.md).
 | Mixed-lag upper o(N^(2/3)) or cross-scale weighted overload | No such bound established | OPEN |
 
 See [MIXED_LAG_BALLISTIC_DISPERSION.md](MIXED_LAG_BALLISTIC_DISPERSION.md).
+\n## Cross-scale mixed-lag collision energies
+
+| Obligation | Verification | Result |
+| --- | --- | --- |
+| Exact cross-family centered-lag overlap energy | Direct pair-sum difference counting; independent integer correlation tests | PROVED |
+| Same-center contribution zero for disjoint genuine B3 blocks | B2 injection from B3; hostile non-B2 fixture | PROVED |
+| Within-family self-collision identity | Exact pair-sum autocorrelation on twice outer differences | PROVED |
+| Global pressure with actual within energies | Cauchy–Schwarz with controlled occupied support size | PROVED, may be vacuous |
+| No automatic logarithmic gain when partitioning inner B3 set | Exact missing cross-positive-pair identity | PROVED |
+| Genuine finite B3 2/3-family overlap zero; 4-family nonzero | Executable deterministic enumeration | VERIFIED |
+| Persistent positive B3 density forces matching overload | Missing density-sensitive cross-energy lower bound | OPEN |
+
+Written proof: [CROSS_SCALE_OVERLAP_ENERGY.md](CROSS_SCALE_OVERLAP_ENERGY.md); no MATHCERT, mathematical resolution, or Solve dispatch.
