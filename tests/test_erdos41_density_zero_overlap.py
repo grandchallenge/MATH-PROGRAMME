@@ -71,10 +71,8 @@ class ZeroOverlapDensitySelectionTests(unittest.TestCase):
                 gamma=(R-1)/R**(2*k)
                 B=ceil(2/gamma)
                 self.assertLessEqual(Q(1,B),gamma/2)
-                self.assertEqual(c-3/R**Q(1,3),c/2) if False else None
                 self.assertEqual(c-3*(c/6),c/2)
                 for j in range(1,k+1):
-                    nco=c/(2*R**(2*j//3)) if (2*j)%3==0 else None
                     self.assertLessEqual(gamma,
                         (R-1)/R**(2*j+2) if j<k else gamma)
                     self.assertGreater(c**2/(4*B),0)
@@ -85,16 +83,75 @@ class ZeroOverlapDensitySelectionTests(unittest.TestCase):
             for k in (2,3,4):
                 N=R**(12*k)
                 self.assertEqual(N,R**(12*k))
-                self.assertLessEqual(R**(2*k),R**(2*k))
+                self.assertEqual(N**1, R**(12*k))
                 B=ceil(Q(2*R**(2*k),R-1))
                 self.assertLessEqual(B,2*R**(2*k))
-                self.assertGreaterEqual(Q(c,2)*N**Q(1,3),
-                                         0) if False else None
                 # Nonfloating integer-power versions of the exponents.
-                self.assertGreaterEqual(
-                    Q(c,2)*R**(4*k)//R**(2*k//1),Q(0))
-                self.assertGreater(
-                    Q(N,R**(2*k+1)),R**(10*k-1) if k>=1 else 0)
+                self.assertGreater(Q(c,2)*R**(4*k),0)
+                self.assertEqual(Q(N,R**(2*k+1)), R**(10*k-1))
+
+    def test_narrow_outer_center_width_enforces_sublinear_complete_mass(self):
+        for c in (Q(1),Q(1,2),Q(1,4)):
+            R=int((6/c)**3)
+            for k in (2,3,4):
+                N=R**(12*k)
+                B=ceil(Q(2*R**(2*k),R-1))
+                self.assertGreaterEqual(B,
+                    Q(2*R**(2*k),R-1))
+                # N^(1/6)=R^(2k), N^(5/6)=R^(10k).
+                C=Q(R**2*(R-1),2)
+                self.assertLessEqual(Q(N,B),C*R**(10*k))
+                # Any B3 subset of the bin has y^3 <= 6(3*width+1).
+                width=Q(N,B)
+                y3_upper=6*(3*width+1)
+                self.assertLessEqual(y3_upper,
+                                     24*(width+1))
+                # Upper total representation cubed <=
+                # (n(n+1)/2)^3 * 24(width+1), n<=3*N^(1/3).
+                n_upper=3*R**(4*k)
+                q=n_upper*(n_upper+1)//2
+                total_cube_bound=q**3*y3_upper
+                self.assertLess(total_cube_bound,N**3)
+
+    def test_full_centered_color_family_finite_capacity(self):
+        inner=(1,2,5,7839,10987,24546,28974)
+        Y=(45864,50877)
+        self.assertTrue(is_b3(inner+Y))
+        self.assertEqual(len(fiber(inner,Y)),
+                         len(fiber(inner,Y).keys()))
+        total=len(inner)*(len(inner)+1)//2*len(Y)
+        self.assertEqual(sum(fiber(inner,Y).values()),total)
+        self.assertLess(total,4*max(inner+Y))
+
+    def test_exact_cross_bin_overlap_and_same_bin_zero(self):
+        X=(1,2,5);Z=(573,745,1209)
+        bins=[(2442,),(3098,)]
+        self.assertTrue(is_b3(X+Z+bins[0]+bins[1]))
+        fs=[fiber(X,Y) for Y in bins]
+        gs=[fiber(Z,Y) for Y in bins]
+        for f,g in zip(fs,gs):
+            self.assertFalse(set(f)&set(g))
+        total=sum(sum(fiber(X,Y).values()) for Y in bins)
+        self.assertEqual(total,len(X)*(len(X)+1)//2*2)
+        cross=sum(sum(fi[d]*gj[d] for d in fi) for i,fi in
+                  enumerate(fs) for j,gj in enumerate(gs) if i!=j)
+        ffull=fiber(X,bins[0]+bins[1])
+        gfull=fiber(Z,bins[0]+bins[1])
+        self.assertEqual(cross,sum(v*gfull[d] for d,v in ffull.items()))
+        self.assertEqual(cross,1)
+
+    def test_polynomial_number_of_occupied_center_bins_gate(self):
+        for k in (2,3,4):
+            R=216
+            N=R**(12*k)
+            B=ceil(Q(2*R**(2*k),R-1))
+            width=Q(N,B)
+            C=Q(R**2*(R-1),2)
+            self.assertLessEqual(width,C*R**(10*k))
+            # y^3 <= 6(3width+1) <= 6(3C+1)N^(5/6).
+            self.assertLessEqual(6*(3*width+1),
+                                 6*(3*C+1)*R**(10*k))
+            self.assertGreater(B,0)
 
     def test_no_false_mathematical_status(self):
         # The theorem is conditional on a hypothetical global density bound.
