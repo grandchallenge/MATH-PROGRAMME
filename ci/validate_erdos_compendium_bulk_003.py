@@ -95,6 +95,19 @@ def verify(strict: bool = False) -> dict:
             assert n not in render_amendments, f"Duplicate render amendment #{n}"
             assert accepted_current[n]["source_sha256"] == row["corrected_sha256"], n
             render_amendments[n] = row
+    # Problem #399 is independently admitted under EC-BULK-003. Preserve
+    # its historical intake/QA SHA-256 values, and compare the current source
+    # against the separately protected 25-article typography amendment.
+    legacy_path = ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_LEGACY25.json"
+    if legacy_path.exists():
+        from erdos_compendium import load_batch_admissions, ACCEPTANCE
+        accepted_current = load_batch_admissions(ACCEPTANCE)
+        history = {z["problem_id"]: z for z in load(legacy_path)["entries"]}
+        row = history[399]
+        assert row["batch_id"] == "EC-BULK-003"
+        assert accepted_current[399]["source_sha256"] == row["corrected_sha256"]
+        assert 399 not in render_amendments
+        render_amendments[399] = row
 
     returns = 0
     articles = 0
@@ -138,6 +151,9 @@ def verify(strict: bool = False) -> dict:
             if n in render_amendments:
                 correction = render_amendments[n]
                 assert correction["previous_sha256"] == x["manuscript_sha256_pre_admission"], n
+                if n == 399:
+                    assert correction["previous_raw_sha256"] == x["manuscript_raw_file_sha256_pre_admission"], n
+                    assert correction["corrected_raw_sha256"] == raw_digest, n
                 assert digest == correction["corrected_sha256"], n
                 # The original raw-byte digest is intentionally historical; the
                 # amended manuscript is independently bound by its normalized SHA.
