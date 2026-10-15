@@ -152,3 +152,17 @@ See [MIXED_LAG_BALLISTIC_DISPERSION.md](MIXED_LAG_BALLISTIC_DISPERSION.md).
 | Persistent positive B3 density forces matching overload | Missing density-sensitive cross-energy lower bound | OPEN |
 
 Written proof: [CROSS_SCALE_OVERLAP_ENERGY.md](CROSS_SCALE_OVERLAP_ENERGY.md); no MATHCERT, mathematical resolution, or Solve dispatch.
+
+## Density-localized zero-overlap selection
+
+| Obligation | Method | Boundary |
+| --- | --- | --- |
+| Lag intervals disjoint when inner gaps exceed outer diameter | Exact integer interval endpoints | PROVED |
+| B3 lower bound on actual occupied lag support | Weighted positive-pair matching | PROVED |
+| Hypothetical positive lower density populates geometric inner shells | Cubic finite B3 upper bound, nested density lower bound | PROVED conditionally |
+| Outer pigeonhole bin with controlled diameter and many B3 points | Explicit bin count B_k | PROVED conditionally |
+| k(N) proportional to log N; all disjoint, polynomial support per family | Exact exponent inequalities | PROVED conditionally |
+| Existing genuine B3 positive, hostile non-B3 tests | Deterministic tests | Verified |
+| Full inner-color positive pairs against narrow outer bin | B3 finite interval upper bound, O_c(N^(17/18)) total | PROVED conditional method no-go |\n| Outer occupied bin count and cross-bin collision reduction | B3 short interval packing and exact off-diagonal energy | PROVED conditionally |\n| Complete mixed-spectrum collision under persistent density | Not deduced; selection-independent higher-order input missing | OPEN |
+
+See [DENSITY_LOCALIZED_ZERO_OVERLAP.md](DENSITY_LOCALIZED_ZERO_OVERLAP.md). No Erdős #41 solved state, certification or Solve dispatch.

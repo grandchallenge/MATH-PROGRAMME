@@ -199,3 +199,197 @@ class RoutineAgentReviewTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# GCL-ARC-001: protection-grade role evidence, one real transport login.
+from agent_role_receipt import AgentRoleError, verify_agent_role_receipt  # noqa: E402
+
+
+class ProtectedAgentRoleReceiptTests(unittest.TestCase):
+    def setUp(self):
+        self.head = "a" * 40
+        self.source_head = "b" * 40
+        self.blob = "c" * 40
+        self.digest = "d" * 64
+        self.path = "governance/agent_execution/reviews/MATH-PROGRAMME-" + self.head + ".json"
+        self.subject = {"repository": "grandchallenge/MATH-PROGRAMME",
+                        "head_sha": self.head, "material_sha256": self.digest}
+        self.receipt = {
+            "schema_version": "2.0.0",
+            "record_type": "GCL_PROTECTED_AGENT_ROLE_ADMISSION_EVIDENCE_V1",
+            "source_repository": "grandchallenge/INTELLECT",
+            "authority_domain": "PROTECTION",
+            "subject": self.subject,
+            "verdict": "ADMISSIBLE_FOR_PROTECTED_ADMISSION",
+            "protected_evidence": {"path": self.path, "blob_sha": self.blob},
+            "source_review_anchor": {
+                "source_pr_number": 123,
+                "source_pr_head_sha": self.source_head,
+                "review_dossier_blob_sha": self.blob,
+            }
+        }
+        self.dossier = {
+            "record_type": "GCL_AGENT_REVIEW_DOSSIER_V1",
+            "subject": self.subject, "work_class": "MATERIAL_CONTROL",
+            "transport_login": "fyremael",
+            "claimed_effects": {"mathematical_certification": False,
+                                "reserved_authorization": False,
+                                "credential_escalation": False},
+            "passes": [
+                {"role": role, "logical_pass_id": "PASS-" + role,
+                 "reviewer_system_id": "same-agent",
+                 "transport_login": "fyremael",
+                 "subject_head_sha": self.head,
+                 "mode": "non_authoring_read_only", "write_set": [],
+                 "read_set": ["source exact H"],
+                 "checks": [{"command": "python -m unittest",
+                             "exit_code": 0, "receipt_sha256": self.digest}],
+                 "negative_controls": ["forged-metadata-rejected"]
+                      if role == "ADVERSARY" else [],
+                 "finding": "ACCEPT_BOUNDED", "unresolved": []}
+                for role in ("VERIFIER", "ADVERSARY", "REFEREE")
+            ]
+        }
+        self.pr = {"merged_at": "2026-10-15T08:00:00Z",
+                   "head": {"sha": self.source_head}, "base": {"ref": "main"},
+                   "changed_files": 1}
+        self.source_files = [
+            {"filename": self.path, "sha": self.blob, "status": "added"}]
+        self.runs = [
+            {"name": name, "conclusion": "success", "head_sha": self.source_head}
+            for name in ("test (3.11.14)", "test (3.12.13)",
+                         "policy / policy", "security / action-policy",
+                         "routing-enforcement")
+        ]
+
+    def read(self, repo, path, revision):
+        self.assertEqual(repo, "grandchallenge/INTELLECT")
+        self.assertEqual(path, self.path)
+        self.assertEqual(revision, "e"*40)
+        return self.dossier, self.blob
+
+    def api(self, path):
+        prefix = "/repos/grandchallenge/INTELLECT"
+        responses = {
+            prefix + "/pulls/123": self.pr,
+            prefix + "/pulls/123/files?per_page=100": self.source_files,
+            prefix + "/commits/" + self.source_head +
+                "/check-runs?per_page=100":
+                {"total_count": len(self.runs), "check_runs": self.runs},
+            prefix + "/git/ref/heads/main": {"object": {"sha": "e"*40}}
+        }
+        return responses[path]
+
+    def evaluate(self):
+        return verify_agent_role_receipt(
+            receipt=self.receipt, receipt_path="governance/material_admission_receipts/"
+              "MATH-PROGRAMME-" + self.head + ".json", receipt_blob="f"*40,
+            read_protected_json=self.read, api_get=self.api,
+            protected_sha="e"*40, subject_head=self.head,
+            material_digest=self.digest, actual_actor="fyremael")
+
+    def test_version_two_dispatch_before_legacy_schema(self):
+        # End-to-end dispatch must reach the protected ARC1 verifier.
+        from unittest.mock import patch
+        import specialist_receipt_adapter as legacy
+        fs = [{"filename": "ci/erdos_catalogue_queue_projection.py",
+               "status": "modified", "sha": "e" * 40}]
+        new_receipt = dict(self.receipt)
+        new_receipt["subject"] = {
+            "repository": "grandchallenge/MATH-PROGRAMME",
+            "head_sha": self.head,
+            "material_sha256": legacy.material_fingerprint(fs)}
+        ref_url = "/repos/grandchallenge/INTELLECT/git/ref/heads/main"
+        with patch.object(legacy, "_protected_json", return_value=(new_receipt, "f"*40)):
+            with patch.object(legacy, "verify_agent_role_receipt",
+                              return_value={"disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED"}) as verifier:
+                result = legacy.protected_specialist_receipt(
+                    head=self.head, files=fs, domain="PROTECTION",
+                    api_get=lambda url: {"object": {"sha": "f"*40}}
+                        if url == ref_url else {},
+                    candidate_author="fyremael")
+                self.assertEqual(result["disposition"],
+                                 "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED")
+                verifier.assert_called_once()
+
+    def test_version_two_for_other_domain_rejected(self):
+        # This lane must not re-interpret MATHCERT or other specialist receipts.
+        from unittest.mock import patch
+        import specialist_receipt_adapter as legacy
+        fs = [{"filename": "ci/erdos_catalogue_queue_projection.py",
+               "status": "modified", "sha": "e" * 40}]
+        with patch.object(legacy, "_protected_json", return_value=(self.receipt,"f"*40)):
+            with patch.object(legacy, "verify_agent_role_receipt") as verifier:
+                with self.assertRaises(legacy.ReceiptError):
+                    legacy.protected_specialist_receipt(
+                        head=self.head, files=fs, domain="MATHEMATICAL",
+                        api_get=lambda url: {"object": {"sha": "f"*40}},
+                        candidate_author="fyremael")
+                verifier.assert_not_called()
+
+    def test_valid_shared_login_three_real_role_passes(self):
+        r = self.evaluate()
+        self.assertEqual(r["disposition"], "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED")
+        self.assertEqual(r["authenticated_review_origin"]["agent_roles_verified"],
+                         ["VERIFIER", "ADVERSARY", "REFEREE"])
+        self.assertFalse(r["authority"]["new_certification_created"])
+
+    def test_wrong_candidate_head_rejected(self):
+        self.receipt["subject"]["head_sha"] = "9"*40
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_changed_dossier_blob_rejected(self):
+        self.receipt["protected_evidence"]["blob_sha"] = "9"*40
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_review_mode_cannot_write(self):
+        self.dossier["passes"][0]["write_set"].append("main")
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_cloned_pass_id_rejected(self):
+        self.dossier["passes"][1]["logical_pass_id"] = "PASS-VERIFIER"
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_adversary_without_negative_controls_rejected(self):
+        self.dossier["passes"][1]["negative_controls"] = []
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_referee_revise_is_a_blocker(self):
+        self.dossier["passes"][2]["finding"] = "REVISE"
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_failed_check_is_a_blocker(self):
+        self.dossier["passes"][0]["checks"][0]["exit_code"] = 1
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_never_embed_own_pr_head_in_dossier(self):
+        self.dossier["source_pr_head_sha"] = self.source_head
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_protected_source_merge_required(self):
+        self.pr["merged_at"] = None
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_source_pr_must_contain_actual_blob(self):
+        self.source_files[0]["sha"] = "9"*40
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_every_protected_ci_check_required(self):
+        self.runs[0]["conclusion"] = "failure"
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_source_main_moved_readback_rejected(self):
+        original = self.api
+        def moved(path):
+            if path.endswith("/git/ref/heads/main"):
+                return {"object": {"sha": "9"*40}}
+            return original(path)
+        self.api = moved
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_forged_github_actor_rejected(self):
+        self.dossier["transport_login"] = "fake-reviewer"
+        with self.assertRaises(AgentRoleError): self.evaluate()
+
+    def test_claim_certification_rejected(self):
+        self.dossier["claimed_effects"]["mathematical_certification"] = True
+        with self.assertRaises(AgentRoleError): self.evaluate()

@@ -14,6 +14,7 @@ import urllib.parse
 from typing import Any, Callable
 
 from specialist_domains import REPOSITORY as REPO, load_domains
+from agent_role_receipt import AgentRoleError, verify_agent_role_receipt
 
 SHA = re.compile(r"[0-9a-f]{40}\Z")
 PREFIX = "governance/material_admission_receipts/"
@@ -247,6 +248,22 @@ def protected_specialist_receipt(
     protected_sha = _sha(((ref or {}).get("object") or {}).get("sha"))
     name = f"{PREFIX}MATH-PROGRAMME-{head}.json"
     record, receipt_blob = _protected_json(api_get, owner, name, protected_sha)
+    # GCL-ARC-001 applies only to protected PROTECTION receipts; all other
+    # specialist domains retain their existing exact independent reviewer gate.
+    if domain == "PROTECTION" and record.get("record_type") == (
+        "GCL_PROTECTED_AGENT_ROLE_ADMISSION_EVIDENCE_V1"
+    ):
+        try:
+            return verify_agent_role_receipt(
+                receipt=record, receipt_path=name, receipt_blob=receipt_blob,
+                read_protected_json=lambda repository, path, revision:
+                    _protected_json(api_get, repository, path, revision),
+                api_get=api_get, protected_sha=protected_sha,
+                subject_head=head, material_digest=fingerprint,
+                actual_actor=candidate_author,
+            )
+        except AgentRoleError as error:
+            raise ReceiptError(str(error)) from error
     if (record.get("schema_version"), record.get("record_type"),
         record.get("authority_domain"), record.get("source_repository")) != (
         "1.0.0", RECORD_TYPE, domain, owner,
