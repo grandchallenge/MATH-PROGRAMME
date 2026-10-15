@@ -1,7 +1,7 @@
 """Regression contract for EC-BULK-005 source-level mathematical typography.
 
-Inspects 20 previously corrected drafts. After separate protected R6, #814 is
-editorially reviewed, with historical source-return and mathematical caveats kept.
+Inspects 20 typography-corrected source articles. Protected R6 admitted #814,
+while R7 proposes #718, #722 and #747. Historical typography evidence persists.
 """
 from __future__ import annotations
 import hashlib
@@ -28,9 +28,11 @@ class EC005Typography(unittest.TestCase):
                     for e in batch["entries"]}
         self.assertEqual(len(TARGETS), 20)
         self.assertTrue(TARGETS <= set(items))
-        self.assertEqual(TARGETS & accepted, {814}, "Exactly #814 is admitted by R6")
+        self.assertEqual(TARGETS & accepted, {814, 718, 722, 747}, "Only exact R6/R7 entries admitted among typography targets")
         r6=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R6")
         self.assertEqual([e["problem_id"] for e in r6["entries"] if e["problem_id"] in TARGETS],[814])
+        r7=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R7")
+        self.assertEqual([e["problem_id"] for e in r7["entries"] if e["problem_id"] in TARGETS],[718,722,747])
         self.assertTrue({765, 836} <= accepted)
         for n in TARGETS:
             with self.subTest(problem=n):
