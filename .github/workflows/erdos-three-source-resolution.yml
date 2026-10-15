@@ -1,0 +1,70 @@
+name: Erdős three corrected source Council adjudication
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gcl-erdos-three-source-council-adjudication
+  cancel-in-progress: false
+
+jobs:
+  council-clerk-source-remediation:
+    if: github.repository == 'grandchallenge/MATH-PROGRAMME' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: release-trust
+    permissions:
+      contents: read
+    steps:
+      - name: Check out protected source at main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up pinned Python interpreter
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Test source locks, hostile controls and no-write preflight
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 governance/source_erdos_critical_005/validate.py
+          PYTHONPATH=. python3 tests/test_erdos_three_source_resolution.py
+      - name: Mint narrowly scoped Council Clerk App token
+        id: council
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+          permission-organization-projects: read
+      - name: Source-locked read-only preflight with scoped Council identity
+        env:
+          GH_TOKEN: ${{ steps.council.outputs.token }}
+          GCL_CONTROLLER_ID: erdos-three-source-resolution
+        run: |
+          set -euo pipefail
+          python3 ci/erdos_three_source_resolution.py --receipt artifacts/erdos-three-source-resolution/preflight.json
+      - name: Adjudicate exactly three source revisions
+        env:
+          GH_TOKEN: ${{ steps.council.outputs.token }}
+          GCL_CONTROLLER_ID: erdos-three-source-resolution
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          python3 ci/erdos_three_source_resolution.py --apply --receipt artifacts/erdos-three-source-resolution/receipt.json
+      - name: Retain authenticated receipt and failure evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-three-source-adjudication-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/erdos-three-source-resolution
+          retention-days: 90
+          if-no-files-found: warn
