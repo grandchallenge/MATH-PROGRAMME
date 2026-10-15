@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+"""Immutable source checks and finite falsifiers. No open conjecture proof."""
+import hashlib
+import itertools
+import json
+import unittest
+from pathlib import Path
+from fractions import Fraction
+
+ROOT=Path(__file__).resolve().parents[1]
+LEDGER=ROOT/"governance/erdos_catalogue/CRITICAL_SOURCE_CORRECTIONS_005.json"
+SNAP=ROOT/"fixtures/formal/ERDOS-CRITICAL-SOURCE-CORRECTIONS-005/SOURCE_SNAPSHOTS.json"
+IDS={11:2520,12:2521,14:2522,15:2523,41:2536}
+OLD={11:"f0d8fa230850d0e0b7b8e7fa037e6f9ef47c0440",
+     12:"29ce2d40361aba4e4a498f314f5dd60c62ded7d7",
+     14:"0993d4a8e8f6eddd3ca7818bdc1c9c942cda2797",
+     15:"20e1006e8c22aa73a3516592a6a7ff32f5a577a6",
+     41:"5e9eeb26586d087f4b2ab3d82734ea5ed87ddf50"}
+
+def weak_p(a):
+    return all(not(x<b and x<c and b!=c and (b+c)%x==0)
+               for x in a for b in a for c in a)
+def strict_p(a):
+    return all(not(x<b and x<c and (b+c)%x==0)
+               for x in a for b in a for c in a)
+def weak_b3(a):
+    sums=[sum(t) for t in itertools.combinations(a,3)]
+    return len(sums)==len(set(sums))
+def strong_b3(a):
+    sums=[sum(t) for t in itertools.combinations_with_replacement(a,3)]
+    return len(sums)==len(set(sums))
+def r(a,n):
+    return sum(x+y==n for x,y in itertools.combinations_with_replacement(a,2))
+def c(a,n):
+    return sum(x+y==n for x in a for y in a)
+def diag(a,n):
+    return int(n%2==0 and n//2 in a)
+
+class FiveSourceFidelityTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.ledger=json.loads(LEDGER.read_text())
+        cls.snaps=json.loads(SNAP.read_text())
+        cls.rows={i["problem_id"]:i for i in cls.ledger["source_corrections"]}
+        cls.sources={i["problem_id"]:(i,(ROOT/i["source_snapshot"]).read_bytes())
+                     for i in cls.snaps["items"]}
+
+    def test_exact_five_bindings(self):
+        self.assertEqual(set(self.rows),set(IDS))
+        self.assertEqual({n:v["review_issue"] for n,v in self.rows.items()},IDS)
+        self.assertEqual(set(self.sources),set(IDS))
+        for n,row in self.rows.items():
+            self.assertEqual(row["catalogue_issue"],1269+n)
+
+    def test_original_source_locks_preserved_and_git_blob_fidelity(self):
+        self.assertIs(self.ledger["original_protected_source_locks_mutated"],False)
+        for n,(p,src) in self.sources.items():
+            blob=hashlib.sha1(f"blob {len(src)}\0".encode()+src).hexdigest()
+            self.assertEqual(blob,p["refreshed_blob_sha1"])
+            self.assertEqual(hashlib.sha256(src).hexdigest(),p["refreshed_file_sha256"])
+            self.assertEqual(p["original_blob_sha1"],OLD[n])
+            self.assertEqual(self.rows[n]["frozen_blob"],OLD[n])
+            self.assertEqual(self.rows[n]["refreshed_blob"],blob)
+            self.assertIn(b"Copyright",src)
+
+    def test_no_solve_certification_or_revision_clearance(self):
+        effects=self.ledger["governance_effects"]
+        self.assertEqual(effects["proposed_correction_count"],5)
+        self.assertEqual(effects["source_statement_fix_verified"],3)
+        self.assertEqual(effects["partial_or_external_exception_count"],2)
+        for key in ("old_source_mutation","mathematical_certification","solve_dispatch",
+                    "research_claim_acceptance","clear_revision_labels","change_issue_fields"):
+            self.assertIs(effects[key],False,key)
+        self.assertTrue(all(x["claimable"] is False for x in self.rows.values()))
+
+    def test_11_eventual_distinct_from_all_odd_and_polarity(self):
+        s=self.sources[11][1].decode()
+        for frag in ("∀ᶠ n : ℕ in atTop, Odd n",
+                     "theorem erdos_11.variants.all_odd",
+                     "theorem eventually_of_all_odd","¬ 2 ^ p ≡ 2 [MOD p ^ 2]"):
+            self.assertIn(frag,s)
+        self.assertNotEqual(pow(2,3,9),2%9)
+        self.assertEqual(pow(2,1093,1093**2),2)
+
+    def test_12_partial_repair_and_explicit_uncertainty(self):
+        s=self.sources[12][1].decode()
+        self.assertIn("a < c → b = c",s)
+        self.assertIn("theorem erdos_12.variants.schoen",s)
+        self.assertIn("theorem erdos_12.variants.baier",s)
+        self.assertIn("∃ C >",s)
+        self.assertIn("PREDICATE_ADJUDICATION_REQUIRED",self.rows[12]["source_fidelity_status"])
+
+    def test_12_repetition_is_real_predicate_difference(self):
+        self.assertTrue(weak_p((3,6)))
+        self.assertFalse(strict_p((3,6)))
+        for mask in range(1<<7):
+            a=tuple(i for i in range(1,8) if mask&(1<<(i-1)))
+            if strict_p(a):
+                self.assertTrue(weak_p(a))
+    def test_14_verified_external_claim_not_local_certification(self):
+        s=self.sources[14][1].decode()
+        for frag in ("nonUniqueSumCount","allUniqueSums A","almostSquareRoot","IsLittleO"):
+            self.assertIn(frag,s)
+        row=self.rows[14]
+        self.assertEqual(row["research_status"],"EXTERNAL_CLAIM_REVIEW_PENDING")
+        self.assertEqual({x["part"] for x in row["external_results"]},{"i","ii"})
+        self.assertEqual({x["credited_solver"] for x in row["external_results"]},{"JenW1N"})
+        self.assertTrue(all(len(x["task_bundle_sha256"])==64 for x in row["external_results"]))
+        self.assertEqual({x["downloaded_source_sha256"] for x in row["external_results"]},
+                         {"496840684dd5dc4f0747bf4732ee4fe246340353f8a11aae00bde325fa100ca5",
+                          "188ebf8bdf3a04694155ddf3e2d87c64f53d545781cfda7b63e21d6b1434cd74"})
+        self.assertTrue(all(x["published_proof_sha256"]==x["downloaded_source_sha256"]
+                            and x["kernel_replayed_by_gcl"] is False
+                            for x in row["external_results"]))
+
+    def test_14_pair_symmetry_diagonal_and_zero(self):
+        for mask in range(1<<7):
+            a=tuple(i for i in range(7) if mask&(1<<i))
+            for n in range(15):
+                self.assertEqual(2*r(a,n),c(a,n)+diag(a,n))
+                self.assertEqual(r(a,n)==1,c(a,n)+diag(a,n)==2)
+        self.assertEqual(sum(r((0,1),n)!=1 for n in (1,2)),0)
+        self.assertEqual(sum(r((1,),n)!=1 for n in (1,2)),1)
+
+    def test_15_correct_ordered_real_limit_not_rational_summable(self):
+        s=self.sources[15][1].decode()
+        for frag in ("∃ l : ℝ, Tendsto","Finset.range N","atTop (𝓝 l)"):
+            self.assertIn(frag,s)
+        self.assertNotIn("theorem erdos_15 : Summable",s)
+        self.assertEqual(Fraction(-1,2)+Fraction(2,3),Fraction(1,6))
+        self.assertIn("CORRECTED_PROVIDER_PINNED",self.rows[15]["source_fidelity_status"])
+
+    def test_41_fresh_multiset_repeated_summands(self):
+        s=self.sources[41][1].decode()
+        for frag in ("∀ I J : Multiset α","I.card = n","I.sum = J.sum","I = J"):
+            self.assertIn(frag,s)
+        self.assertNotIn("∀ (I : Finset α)",s)
+        self.assertIn("HISTORICAL_AUDIT_PENDING",self.rows[41]["source_fidelity_status"])
+
+    def test_41_weak_finset_not_strong_multiset(self):
+        self.assertTrue(weak_b3((1,2,3)))
+        self.assertFalse(strong_b3((1,2,3)))
+        self.assertEqual(sum((1,1,3)),sum((1,2,2)))
+        for mask in range(1<<7):
+            a=tuple(i for i in range(1,8) if mask&(1<<(i-1)))
+            if strong_b3(a):
+                self.assertTrue(weak_b3(a))
+
+    def test_all_five_revision_flags_retained(self):
+        self.assertIn("Leave all five gcl-review:revise",self.ledger["correction_issue_states"])
+        self.assertIn("RETURNED",self.ledger["correction_issue_states"])
+
+if __name__=="__main__":
+    unittest.main(verbosity=2)
