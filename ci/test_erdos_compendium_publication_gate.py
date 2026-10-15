@@ -299,10 +299,18 @@ class EditorialGateTests(unittest.TestCase):
         for row in batch["entries"]:
             n=row["problem_id"]
             self.assertEqual(row["source_sha256"],hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
-            self.assertEqual(row["source_sha256"],qa["source_claims_reviewed"][str(n)]["exact_admission_sha256_stripped"])
+            historic=qa["source_claims_reviewed"][str(n)]["exact_admission_sha256_stripped"]
+            mutation=proposal["atomic_editorial_label_and_hash_promotion"][str(n)]
+            self.assertEqual(historic,mutation["source_critical_original_trimmed_sha256"])
+            self.assertEqual(row["source_sha256"],mutation["admitted_reviewed_trimmed_sha256"])
+            self.assertNotEqual(historic,row["source_sha256"])
             self.assertIn(row["source_check"],manuscript(n))
             self.assertEqual(qa["source_claims_reviewed"][str(n)]["source_disposition"],"STATUS_CONFLICT")
             self.assertTrue(qa["source_claims_reviewed"][str(n)]["historic_exceptions_retained"])
+            self.assertIn("STATUS_CONFLICT",manuscript(n))
+            self.assertNotIn("UNACCEPTED",manuscript(n))
+            self.assertNotIn("NOT ADMITTED",manuscript(n))
+            self.assertEqual(len([line for line in manuscript(n).splitlines() if line.startswith("## ")]),6)
         admitted=load_batch_admissions(ACCEPTANCE)
         self.assertEqual(len(admitted),465)
         self.assertTrue(held.isdisjoint(admitted))
