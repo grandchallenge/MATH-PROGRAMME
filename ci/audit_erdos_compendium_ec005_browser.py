@@ -11,9 +11,9 @@ import subprocess
 import socket
 import time
 from pathlib import Path
-from playwright.async_api import async_playwright
 
 async def main(args):
+    from playwright.async_api import async_playwright
     base=Path(args.site)
     assert (base/"index.html").is_file()
     socket_test=socket.socket()
