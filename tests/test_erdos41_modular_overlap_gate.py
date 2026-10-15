@@ -1,6 +1,6 @@
 """Finite exact regressions for Erdős #41 modular overlap obstruction.
 
-Run: python -m unittest tests.test_erdos41_modular_overlap_gate
+Run: python -m unittest discover -s tests -p 'test_erdos41_modular_overlap_gate.py'
 No infinite B3 density conclusion is claimed.
 """
 from itertools import combinations_with_replacement
