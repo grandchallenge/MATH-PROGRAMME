@@ -66,6 +66,21 @@ class EC005Typography(unittest.TestCase):
                                             f"Blank before display closer #{n}")
                         block_open = not block_open
                 self.assertFalse(block_open)
+                # GitHub math rendering fails when empty lines separate a
+                # display delimiter from its actual mathematical content.
+                lines = text.splitlines()
+                block_open = False
+                for i, line in enumerate(lines):
+                    if line.strip() == "$$":
+                        if not block_open:
+                            self.assertLess(i + 1, len(lines))
+                            self.assertTrue(lines[i + 1].strip(),
+                                            f"Blank after display opener #{n}")
+                        else:
+                            self.assertTrue(lines[i - 1].strip(),
+                                            f"Blank before display closer #{n}")
+                        block_open = not block_open
+                self.assertFalse(block_open)
                 plain = TEX_TOKENS.sub("", text)
                 plain = re.sub(r"\]\([^)]+\)", "](URL)", plain)
                 self.assertIsNone(PLAIN_FORMULA.search(plain),
