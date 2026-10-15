@@ -147,3 +147,50 @@ The genuine 29-point B3 fixture in CROSS_SCALE_OVERLAP_ENERGY.md gives:
 Primary source: https://www.erdosproblems.com/41 (repetition-permitted B3). Relevant external comparison: Christian Táfula, *Infinite Sidon-type sets for zero-sum linear forms*, 2026, DOI 10.1007/s00605-026-02211-4. That paper's pairwise-distinct tuple convention and additional gap hypotheses are not sufficient to complete this argument.
 
 **Priority instruction:** focus exclusively on arithmetic control of localized cross-bin representation placement and self-collision defects across nested density windows. Do not return to unconditional selected inner-block overlap estimates without evidence of a new mechanism.
+
+
+## 8. Thresholded forbidden-distance graphs: a rigorous inverse alternative
+
+The all-interval packing inequalities are useful finite diagnostics, but controlling their actual bin defects may be just as hard as the desired cross-correlation. A second rigorous reduction recasts the remaining arithmetic issue as an **extremal graph problem independent of the chosen outer set**.
+
+Let I be a finite interval of D integer positions where outer centers may lie. For fixed inner U and positive integer threshold t, define an undirected graph G_t(U,I): its vertex set is I, and distinct vertices x,y are adjacent exactly when
+
+$$
+R_{UU}(2|x-y|)\ge t.
+$$
+
+Let alpha_t(U,I) be the independence number of this actual, integer-computable graph (not an assumed random-graph model). Any actual outer set W subset of A intersect I has m=|W|, and its full positive-difference correlation satisfies
+
+$$
+\mathcal M(U,H(W))
+=\sum_{\{x,y\}\subseteq W}R_{UU}(2|x-y|)
+\ge t\,e(G_t[W]).
+$$
+
+**Theorem C (thresholded Turán gate, unconditional finite).** For every t>=1 and every m>=1,
+
+$$
+\boxed{
+\mathcal M(U,H(W))
+\ge \frac t2\left(\frac{m^2}{\alpha_t(U,I)}-m\right)_+.
+}\tag{GRAPH}
+$$
+
+**Proof.** Every induced graph G_t[W] has independence number at most alpha_t. Its complement has clique number at most alpha_t. The classical Turán upper bound on the complement's number of edges gives
+\(e(G_t[W])\ge\tfrac12(m^2/\alpha_t-m)\). Every G_t-edge has weight at least t, and the exact outer-difference identity weights each actual unordered W-pair once. QED.
+
+The quantitative inverse consequence, obtained by rearranging (GRAPH), is
+
+$$
+\boxed{
+\alpha_t(U,I)\ge \frac{m^2}{m+2\mathcal M(U,H(W))/t}.
+}\tag{INV-GRAPH}
+$$
+
+In particular, if M=0 then W itself is an independent set in G_1, and alpha_1>=m. This is an **exact structured-avoidance certificate**, but the existence of a large independent set is not yet an additive-combinatorial classification or a density-decrement proof.
+
+**Research target with explicit density input.** Persistent density gives an outer coarse bin Z of size m>=c N^(1/3)/(2J) inside I with |I|<=N/R^2+1. Prove a nontrivial upper bound on alpha_t(U,I) from the actual B3 pair-sum spectrum of U. If alpha_1<m, Stage B positivity follows. If t is itself on the inner critical scale, the quantitative formula can amplify the bound. Conversely, a large alpha_t across every nested density window must be converted into an arithmetic or gap-structure classification with a *proved* cost for the normalized counting density. Neither step is currently established.
+
+**Scaling caution.** An independence upper bound alpha_t=O(log N) with t=Omega(N^(1/3)) and m=Omega(N^(1/3)) yields only a lower bound of order N/log N from (GRAPH), not an Omega(N) matching-budget contradiction. The graph method is a research instrument, not an automatic way around Stage C.
+
+**Finite computational gate.** On a short candidate outer interval, compute G_t by exact differences of the actual pair-sum set, certify alpha_t using an exact bitset maximum-independent-set solver, and compare the lower bound with the observed weighted correlation of actual B3 outer points. Include a threshold-free zero-overlap example and the previous Sidon lift; both are essential hostile cases. Full-scale independence or Fourier inverse claims require separate mathematical proofs.
