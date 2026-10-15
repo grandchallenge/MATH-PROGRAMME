@@ -125,3 +125,17 @@ The infinite example is intentionally sparse, with A(N)=O(log N); it is **not** 
 | Original Erdős #41 | No infinite collision/density valley | OPEN |
 
 Source: [DENSITY_FORCED_MIXED_BUDGET.md](DENSITY_FORCED_MIXED_BUDGET.md).
+
+## Mixed-lag geometric dispersion and moments
+
+| Obligation | Proof and test | Status |
+| --- | --- | --- |
+| Weighted mixed first/second moments | Exact independent-sampling variance identity; Fraction checks | PROVED |
+| Two-sided extreme-type lag sets ≥xy | Fixed-lag positive-pair matching, sign-separated supports | PROVED |
+| One-third total mixed weight outside central interval | Exact extreme-type weighted mass | PROVED |
+| Density-sensitive ≥(c^4/72)N^(2/3) lags in each macroscopic tail | Previously proved separate-block density extraction | PROVED conditionally |
+| Hostile non-B3 failure | Genuine finite example of failing support bounds | Verified |
+| Lean polynomial receipts | Pinned 4.29.1 compiler; exact success only after receipt GREEN | Kernel arithmetic only |
+| Mixed-lag upper o(N^(2/3)) or cross-scale weighted overload | No such bound established | OPEN |
+
+See [MIXED_LAG_BALLISTIC_DISPERSION.md](MIXED_LAG_BALLISTIC_DISPERSION.md).
