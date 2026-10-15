@@ -58,6 +58,43 @@ def issue_readback(item, token):
             "issues":errors}
 
 
+
+def verify_saved_snapshot(manifest: dict, snapshot: dict) -> dict:
+    """Validate an already captured authenticated readback, WITHOUT live GitHub calls.
+
+    This deliberately cannot renew identity evidence, determine Projects status,
+    certify source fidelity, or change the Issue label lifecycle. A live controller
+    must repeat the authenticated scan for fresh custody claims.
+    """
+    items = manifest.get("items")
+    rows = snapshot.get("issues")
+    if (not isinstance(items, list) or len(items) != 168
+            or not isinstance(rows, list) or len(rows) != 168
+            or snapshot.get("total_issues_checked") != 168
+            or snapshot.get("issues_with_identity_flags") != 0
+            or snapshot.get("record_type") != "EC_BULK_007_SOURCE_ISSUE_READBACK/1"):
+        raise ValueError("incomplete or invalid saved cohort identity readback")
+    expected = {x["problem_id"]: x for x in items}
+    actual = {x["problem_id"]: x for x in rows}
+    if len(expected) != 168 or len(actual) != 168 or set(expected) != set(actual):
+        raise ValueError("saved readback has missing or duplicate problem identities")
+    for n, item in expected.items():
+        row = actual[n]
+        if (row.get("audit_issue") != item["audit_issue"]
+                or row.get("state") != "open" or row.get("issues") != []
+                or row.get("result_link") != item["source_return"]
+                or not row.get("result_link")
+                or not {"gcl-job", "gcl-pickup:direct-editorial", "gcl-role:source-audit"}.issubset(set(row.get("labels", [])))):
+            raise ValueError(f"saved original issue or return binding inconsistent for #{n}")
+    if snapshot.get("source_return_count_in_manifest") != 168:
+        raise ValueError("saved source return count inconsistent")
+    return {"record_type": "EC_BULK_007_SAVED_SOURCE_IDENTITY_REPLAY/1",
+            "source_issues": 168, "issue_identity_flags": 0,
+            "live_identity_freshness": "HISTORICAL_SNAPSHOT_ONLY",
+            "source_fidelity_certified": False,
+            "projects_state_confirmed": False}
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--manifest",default="governance/erdos_compendium/batches/EC-BULK-007.json")
