@@ -1,7 +1,7 @@
 """Regression contract for EC-BULK-005 source-level mathematical typography.
 
-Inspects only 20 non-admitted drafts. Does not change editorial admission,
-mathematical status or any historical source-return record.
+Inspects 20 previously corrected drafts. After separate protected R6, #814 is
+editorially reviewed, with historical source-return and mathematical caveats kept.
 """
 from __future__ import annotations
 import hashlib
@@ -20,7 +20,7 @@ TEX_TOKENS = re.compile(r"(?s)\$\$.*?\$\$|\$[^\n$]*\$")
 PLAIN_FORMULA = re.compile(r"\bbinom\(|\bex_r\(|\bex_3\(|\bΣ_[a-z]")
 
 class EC005Typography(unittest.TestCase):
-    def test_original_provenance_and_twenty_draft_hashes(self):
+    def test_original_provenance_and_twenty_source_hashes(self):
         manifest = json.loads(COHORT.read_text(encoding="utf-8"))
         items = {e["problem_id"]: e for e in manifest["items"]}
         admitted = json.loads(LEDGER.read_text(encoding="utf-8"))
@@ -28,7 +28,9 @@ class EC005Typography(unittest.TestCase):
                     for e in batch["entries"]}
         self.assertEqual(len(TARGETS), 20)
         self.assertTrue(TARGETS <= set(items))
-        self.assertFalse(TARGETS & accepted, "Amended an already-admitted article")
+        self.assertEqual(TARGETS & accepted, {814}, "Exactly #814 is admitted by R6")
+        r6=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R6")
+        self.assertEqual([e["problem_id"] for e in r6["entries"] if e["problem_id"] in TARGETS],[814])
         self.assertTrue({765, 836} <= accepted)
         for n in TARGETS:
             with self.subTest(problem=n):

@@ -304,6 +304,12 @@ def manuscript(problem_id: int, base: Path = EDITORIAL) -> str | None:
     if not source.exists():
         return None
     text = source.read_text(encoding="utf-8").strip()
+    # Reject accidental C0 control bytes (for example, Python "\\alpha" written
+    # in a non-raw literal becomes BEL). They silently corrupt rendered LaTeX.
+    # Newlines and ordinary tabs are the only allowed C0 whitespace.
+    bad_controls = sorted({ord(char) for char in text if ord(char) < 32 and ord(char) not in (9, 10)})
+    if bad_controls:
+        raise ValueError(f"nonprinting control characters in editorial manuscript {source}: {bad_controls}")
     missing = [head for head in REQUIRED_EDITORIAL_HEADINGS if head not in text]
     if missing or re.search(r"(?m)^# ", text):
         raise ValueError(f"editorial manuscript {source} has missing sections {missing} or a duplicate H1")
