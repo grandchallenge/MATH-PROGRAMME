@@ -213,5 +213,35 @@ class FiveSourceFidelityTests(unittest.TestCase):
         doc=ROOT/"governance/source_erdos_critical_005/ERDOS_041_INFINITE_SEMANTIC_SEPARATION.md"
         self.assertIn("logically incomparable even among infinite",doc.read_text())
 
+    def test_exact_admitted_active_research_source_locks(self):
+        import importlib.util
+        p=ROOT/'governance/source_erdos_critical_005/active_source_lock.py'
+        spec=importlib.util.spec_from_file_location('admitted_erdos_sources',p)
+        m=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(m)
+        registry=json.loads(m.LEDGER.read_text())
+        roster=json.loads(m.ROSTER.read_text())
+        rows=m.verify(registry,roster)
+        self.assertEqual([x['problem_id'] for x in rows],[11,12,15])
+        self.assertEqual(m.get(11)['review_issue'],2520)
+        self.assertEqual(m.get(12)['review_issue'],2521)
+        self.assertEqual(m.get(15)['review_issue'],2523)
+        self.assertIsNone(m.get(14))
+        self.assertIsNone(m.get(41))
+        with self.assertRaises(m.SourceLockError):m.get(11,purpose='solve')
+        with self.assertRaises(m.SourceLockError):m.get(15,purpose='certification')
+        bad=json.loads(json.dumps(registry))
+        bad['active_sources'][0]['source_sha256']='f'*64
+        with self.assertRaises(m.SourceLockError):m.verify(bad,roster)
+        bad=json.loads(json.dumps(registry))
+        bad['active_sources'][2]['review_issue']=2522
+        with self.assertRaises(m.SourceLockError):m.verify(bad,roster)
+        bad=json.loads(json.dumps(registry))
+        bad['authority_effects']['solve_dispatch']=True
+        with self.assertRaises(m.SourceLockError):m.verify(bad,roster)
+        bad=json.loads(json.dumps(registry))
+        bad['excluded_until_replay'].pop('14')
+        with self.assertRaises(m.SourceLockError):m.verify(bad,roster)
+
 if __name__=="__main__":
     unittest.main(verbosity=2)
