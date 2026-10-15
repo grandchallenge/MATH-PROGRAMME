@@ -67,9 +67,10 @@ class EditorialGateTests(unittest.TestCase):
         cohort = json.loads((ROOT / "governance/erdos_compendium/batches/EC-BULK-001.json").read_text(encoding="utf-8"))
         expected_ids = {x["problem_id"] for x in cohort["items"]}
         self.assertEqual(len(expected_ids), 50)
-        new_ids = {n for n in range(246, 447) if n != 390}
-        self.assertEqual(set(actual), expected_ids | new_ids,
-                         "Only the two exact protected editorial cohorts may be admitted")
+        second_ids = {n for n in range(42, 246) if n not in (99, 101, 138, 241)}
+        third_ids = {n for n in range(246, 447) if n != 390}
+        self.assertEqual(set(actual), expected_ids | second_ids | third_ids,
+                         "Only the three exact protected editorial cohorts may be admitted")
         row = copy.deepcopy(actual[7])
         self.assertEqual(row.pop("batch_id"), "EC-LEGACY-0007")
         self.assertEqual(row, {
@@ -86,7 +87,7 @@ class EditorialGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             root = Path(root)
             counts = build(output=root / "site", admissions_path=ACCEPTANCE)
-            self.assertEqual(counts["reviewed"], 250)
+            self.assertEqual(counts["reviewed"], 450)
             self.assertEqual(counts["pending"], counts["editorial"] - counts["legacy"] - counts["reviewed"])
             accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
             self.assertIn("Reviewed explanatory article", accepted_page)
@@ -99,7 +100,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(proposal["record_type"], "ERDOS_COMPENDIUM_BATCH_ADMISSION_PROPOSAL/1")
         self.assertEqual(proposal["cohort_id"], "EC-BULK-001")
         self.assertEqual(proposal["new_admission_count"], 49)
-        self.assertEqual(len(ledger["batches"]), 3)
+        self.assertEqual(len(ledger["batches"]), 4)
         batch = ledger["batches"][1]
         self.assertEqual(batch["batch_id"], "EC-BULK-001")
         self.assertEqual(batch["protected_admission"], REPO + "/pull/2608")
@@ -117,6 +118,32 @@ class EditorialGateTests(unittest.TestCase):
                           f"No exact issue-source link in article #{n}")
         self.assertEqual(proposal["public_browser_digest"],
                          "9a47a82c4c449439cbf3acd651a6d2a529939c562c2b30a2fa96361547d0bf89")
+        self.assertIn("NOT_MATHEMATICAL_CERTIFICATION", proposal["disposition"])
+
+
+    def test_bulk_002_protected_admission_evidence_and_exact_source(self):
+        """Admission of all 200 cohort 002 essays is a separately protected, hash-bound act."""
+        source = ROOT / "governance/erdos_compendium/batches/EC-BULK-002_ADMISSION_PROPOSAL.json"
+        proposal = json.loads(source.read_text(encoding="utf-8"))
+        ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        self.assertEqual(proposal["record_type"], "ERDOS_COMPENDIUM_BATCH_ADMISSION_PROPOSAL/1")
+        self.assertEqual(proposal["cohort_id"], "EC-BULK-002")
+        self.assertEqual(proposal["source_article_count"], 200)
+        self.assertEqual(proposal["new_admission_count"], 200)
+        self.assertEqual(len(proposal["entries"]), 200)
+        self.assertEqual(len(ledger["batches"]), 4)
+        batch = next(b for b in ledger["batches"] if b["batch_id"] == "EC-BULK-002")
+        self.assertEqual(batch["protected_admission"], proposal["protected_admission"])
+        for key in ("critical_review", "mkdocs_run", "public_html_readback"):
+            self.assertEqual(batch[key], proposal[key])
+        expected = {r["problem_id"]: r for r in proposal["entries"]}
+        actual = {r["problem_id"]: r for r in batch["entries"]}
+        self.assertEqual(actual, expected)
+        self.assertEqual(set(expected), set(range(42, 246)) - {99, 101, 138, 241})
+        for n, row in expected.items():
+            self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),
+                             row["source_sha256"], f"stale manuscript hash for #{n}")
+            self.assertIn(row["source_check"], manuscript(n))
         self.assertIn("NOT_MATHEMATICAL_CERTIFICATION", proposal["disposition"])
 
     def test_v2_rejects_cross_version_duplicate_admission(self):
@@ -290,7 +317,7 @@ class EditorialGateTests(unittest.TestCase):
         amended = load_batch_admissions(ACCEPTANCE)
         expected = {301, 311, 326, 346, 400}
         self.assertEqual({r["problem_id"] for r in doc["entries"]}, expected)
-        self.assertEqual(len(amended), 250)
+        self.assertEqual(len(amended), 450)
         for row in doc["entries"]:
             n = row["problem_id"]
             old, batch = history[n]
@@ -371,8 +398,11 @@ class EditorialGateTests(unittest.TestCase):
             else:
                 self.fail("Unknown source state in 200-slot batch")
         self.assertGreaterEqual(ready, 3)
-        self.assertNotIn(42, load_batch_admissions(ACCEPTANCE),
-                         "Cohort source evidence is not an acceptance")
+        admitted = load_batch_admissions(ACCEPTANCE).get(42)
+        self.assertIsNotNone(admitted, "A separate protected cohort 002 admission is now proposed")
+        self.assertEqual(admitted["batch_id"], "EC-BULK-002")
+        self.assertEqual(admitted["source_check"], data["items"][0]["source_return"])
+        self.assertEqual(admitted["protected_admission"], REPO + "/pull/2645")
 
     def test_bulk_002_source_return_parser_rejects_forgeries(self):
         from erdos_compendium_source_reconcile import valid_return
