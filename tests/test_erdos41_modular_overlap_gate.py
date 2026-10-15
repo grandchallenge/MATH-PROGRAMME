@@ -156,5 +156,63 @@ class ModularOverlapTests(unittest.TestCase):
                 self.assertGreaterEqual(q, len(paircodes))
 
 
+    def test_complete_selector_and_binary_refinement(self):
+        # One geometric inner block is the adversarial case for coloring:
+        # all pair types coincide before refinement. Use 14 inner points
+        # and 15 outer points from a genuine B3 fixture.
+        inner, outer = BASE[:14], BASE[14:]
+        pair_by_sum = {
+            inner[i]+inner[j]: (i,j)
+            for i in range(len(inner)) for j in range(i,len(inner))
+        }
+        hset = positive_differences(outer)
+        events = [
+            (pair, pair_by_sum[p-2*h])
+            for p,pair in pair_by_sum.items()
+            for h in hset if p-2*h in pair_by_sum
+        ]
+        M = len(events)
+        self.assertEqual(M, 3)
+        # Unique B2 pair labels and positive h give exact singleton capture.
+        self.assertTrue(all(a != b for a,b in events))
+        # Every positive and negative pair has disjoint vertex supports.
+        self.assertTrue(
+            all(set(a).isdisjoint(set(b)) for a,b in events)
+        )
+        # Distinct inner/outer differences eliminate double diagonals.
+        self.assertTrue(
+            all(not(a[0]==a[1] and b[0]==b[1]) for a,b in events)
+        )
+
+        def captured(mask):
+            result = 0
+            for a,b in events:
+                ca = tuple(sorted(((mask >> a[0]) & 1, (mask >> a[1]) & 1)))
+                cb = tuple(sorted(((mask >> b[0]) & 1, (mask >> b[1]) & 1)))
+                result += (ca != cb)
+            return result
+
+        total = 0
+        best = 0
+        for mask in range(1 << len(inner)):
+            value = captured(mask)
+            total += value
+            best = max(best, value)
+        # Exact expectation bound >= 5/8, no simulation.
+        self.assertGreaterEqual(8*total, 5*M*(1 << len(inner)))
+        self.assertGreaterEqual(8*best, 5*M)
+
+        # A complete Sidon type lift can still make total M vanish.
+        p, q = 5, 151
+        e = [i+2*p*((i*i) % p) for i in range(4)]
+        lifted_inner = [q*a+e[i//3] for i,a in enumerate(BASE[:12])]
+        lifted_outer = [q*a for a in BASE[12:]]
+        self.assertEqual(
+            correlation_on_positive_outer_differences(
+                lifted_inner, lifted_inner, lifted_outer
+            ), 0
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
