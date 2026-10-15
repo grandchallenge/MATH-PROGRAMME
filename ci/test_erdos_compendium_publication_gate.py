@@ -296,10 +296,13 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(doc["protected_patch"],
                          "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2677")
         accepted = load_batch_admissions(ACCEPTANCE)
-        self.assertEqual(len(accepted), 469)
         ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
         historical = {e["problem_id"]: e
                       for batch in ledger["batches"] for e in batch["entries"]}
+        # Admission cohorts run in parallel. Do not freeze the global
+        # acceptance count at this R2 batch's historical base.
+        self.assertEqual(len(accepted), len(historical))
+        self.assertGreaterEqual(len(accepted), 469)
         for row in doc["entries"]:
             n = row["problem_id"]
             self.assertEqual(row["batch_id"], accepted[n]["batch_id"])
