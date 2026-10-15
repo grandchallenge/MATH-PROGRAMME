@@ -28,11 +28,13 @@ class EC005Typography(unittest.TestCase):
                     for e in batch["entries"]}
         self.assertEqual(len(TARGETS), 20)
         self.assertTrue(TARGETS <= set(items))
-        self.assertEqual(TARGETS & accepted, {814, 718, 722, 747}, "Only exact R6/R7 entries admitted among typography targets")
+        self.assertEqual(TARGETS & accepted, {814, 718, 722, 747, 744}, "Only exact R6/R7/R8 entries admitted among typography targets")
         r6=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R6")
         self.assertEqual([e["problem_id"] for e in r6["entries"] if e["problem_id"] in TARGETS],[814])
         r7=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R7")
         self.assertEqual([e["problem_id"] for e in r7["entries"] if e["problem_id"] in TARGETS],[718,722,747])
+        r8=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R8")
+        self.assertEqual([e["problem_id"] for e in r8["entries"] if e["problem_id"] in TARGETS],[744])
         self.assertTrue({765, 836} <= accepted)
         for n in TARGETS:
             with self.subTest(problem=n):
