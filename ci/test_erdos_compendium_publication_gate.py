@@ -107,6 +107,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(len(doc["entries"]), 25)
         self.assertEqual(doc["source_issue"], REPO + "/issues/2690")
         self.assertEqual(doc["browser_receipt"], REPO + "/issues/2690#issuecomment-6203116883")
+        self.assertEqual(doc["protected_patch"], REPO + "/pull/2694")
         ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
         historic = {e["problem_id"]: {**e,"batch_id":b["batch_id"]}
                     for b in ledger["batches"] for e in b["entries"]}
