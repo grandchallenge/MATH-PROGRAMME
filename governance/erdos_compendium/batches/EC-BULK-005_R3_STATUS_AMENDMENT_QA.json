@@ -1,0 +1,31 @@
+{
+  "record_type": "EC_BULK_005_R3_EDITORIAL_STATUS_TEXT_CORRECTION/1",
+  "cohort": "EC-BULK-005",
+  "problem_ids": [
+    765,
+    772
+  ],
+  "originating_protected_admission": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2650",
+  "protected_admission_main_sha": "6b879f44792debdc1e095df3da9f3edf842d0c71",
+  "failing_deployment_run": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/38688476731",
+  "failure_receipt": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2552#issuecomment-6185743558",
+  "defect": "Public articles had reviewed header but stale UNACCEPTED DRAFT statements in body",
+  "status_amendment_ledger": "governance/erdos_compendium/EDITORIAL_STATUS_AMENDMENTS.json",
+  "protected_patch": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2653",
+  "scope": "EDITORIAL_STATUS_ONLY_NOT_MATH_CERTIFICATION",
+  "immutability": {
+    "original_EC005_R3_admission_hashes": "UNCHANGED",
+    "original_issues": "UNCHANGED",
+    "source_returns": "UNCHANGED",
+    "historical_STATUS_CONFLICT_claims": "PRESERVED",
+    "effective_hashes": "VERSIONED_SEPARATE_OVERLAY"
+  },
+  "tests": {
+    "targeted_regressions": "265_PASS",
+    "strict_mkdocs": "PASS",
+    "local_generated_pages": "2_CORRECT_REVIEWED_LABELS_NO_UNACCEPTED_TEXT",
+    "full_200_raw_sha256_consistency": "PASS",
+    "deployed_public_pages": "PENDING_PROTECTED_PATCH"
+  },
+  "next_gate": "MERGE_PROTECTED_PR_THEN_VERIFY_ALL_200_BROWSER_PAGES_12_REVIEWED_188_DRAFT_1624_MATHJAX_ZERO_ERRORS"
+}
