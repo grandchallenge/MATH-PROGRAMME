@@ -69,8 +69,8 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(len(expected_ids), 50)
         second_ids = {n for n in range(42, 246) if n not in (99, 101, 138, 241)}
         third_ids = {n for n in range(246, 447) if n != 390}
-        self.assertEqual(set(actual), expected_ids | second_ids | third_ids | set(range(670, 677)),
-                         "Only the existing three editorial cohorts and seven EC005-reviewed entries may be admitted")
+        self.assertEqual(set(actual), expected_ids | second_ids | third_ids | set(range(670, 677)) | {678, 697, 720},
+                         "Only existing cohorts, seven R1 EC005 entries and three source-adjudicated R2 entries may be admitted")
         row = copy.deepcopy(actual[7])
         self.assertEqual(row.pop("batch_id"), "EC-LEGACY-0007")
         self.assertEqual(row, {
@@ -87,7 +87,7 @@ class EditorialGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             root = Path(root)
             counts = build(output=root / "site", admissions_path=ACCEPTANCE)
-            self.assertEqual(counts["reviewed"], 457)
+            self.assertEqual(counts["reviewed"], 460)
             self.assertEqual(counts["pending"], counts["editorial"] - counts["legacy"] - counts["reviewed"])
             accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
             self.assertIn("Reviewed explanatory article", accepted_page)
@@ -100,7 +100,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(proposal["record_type"], "ERDOS_COMPENDIUM_BATCH_ADMISSION_PROPOSAL/1")
         self.assertEqual(proposal["cohort_id"], "EC-BULK-001")
         self.assertEqual(proposal["new_admission_count"], 49)
-        self.assertEqual(len(ledger["batches"]), 5)
+        self.assertEqual(len(ledger["batches"]), 6)
         batch = ledger["batches"][1]
         self.assertEqual(batch["batch_id"], "EC-BULK-001")
         self.assertEqual(batch["protected_admission"], REPO + "/pull/2608")
@@ -131,7 +131,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(proposal["source_article_count"], 200)
         self.assertEqual(proposal["new_admission_count"], 200)
         self.assertEqual(len(proposal["entries"]), 200)
-        self.assertEqual(len(ledger["batches"]), 5)
+        self.assertEqual(len(ledger["batches"]), 6)
         batch = next(b for b in ledger["batches"] if b["batch_id"] == "EC-BULK-002")
         self.assertEqual(batch["protected_admission"], proposal["protected_admission"])
         for key in ("critical_review", "mkdocs_run", "public_html_readback"):
@@ -173,6 +173,28 @@ class EditorialGateTests(unittest.TestCase):
         self.assertTrue(set(dossier["flagged_exception_ids"]).isdisjoint(
                         {row["problem_id"] for row in admitted["entries"]}))
         self.assertEqual(len(dossier["flagged_exception_ids"]), 193)
+
+    def test_ec005_r2_three_source_conflicts_admitted_with_primary_holds(self):
+        """Only #678 #697 #720 are source-adjudicated, not formally proved."""
+        base=ROOT/"governance/erdos_compendium/batches"
+        proposal=json.loads((base/"EC-BULK-005_R2_ADMISSION_PROPOSAL.json").read_text(encoding="utf-8"))
+        review=json.loads((base/"EC-BULK-005_R2_SOURCE_CONFLICT_REVIEW.json").read_text(encoding="utf-8"))
+        ledger=json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        self.assertEqual((proposal["new_admission_count"],proposal["ec005_remain_unaccepted"]),(3,190))
+        self.assertEqual(proposal["historical_conflicts_remaining_unaccepted"],35)
+        self.assertEqual(review["source_holds_from_first_ten"],[653,662,683,708,712,713,728])
+        batch=next(x for x in ledger["batches"] if x["batch_id"]=="EC-BULK-005-R2")
+        self.assertEqual(batch["entries"],proposal["entries"])
+        self.assertEqual([x["problem_id"] for x in batch["entries"]],[678,697,720])
+        for row in batch["entries"]:
+            self.assertEqual(hashlib.sha256(manuscript(row["problem_id"]).encode("utf-8")).hexdigest(),
+                             row["source_sha256"])
+            self.assertIn(row["source_check"],manuscript(row["problem_id"]))
+        for k in ("critical_review","protected_admission","mkdocs_run","public_html_readback"):
+            self.assertEqual(batch[k],proposal[k])
+        self.assertEqual(len(load_batch_admissions(ACCEPTANCE)),460)
+        for n in (653,662,683,708,712,713,728):
+            self.assertNotIn(n,load_batch_admissions(ACCEPTANCE))
 
     def test_v2_rejects_cross_version_duplicate_admission(self):
         sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
@@ -345,7 +367,7 @@ class EditorialGateTests(unittest.TestCase):
         amended = load_batch_admissions(ACCEPTANCE)
         expected = {301, 311, 326, 346, 400}
         self.assertEqual({r["problem_id"] for r in doc["entries"]}, expected)
-        self.assertEqual(len(amended), 457)
+        self.assertEqual(len(amended), 460)
         for row in doc["entries"]:
             n = row["problem_id"]
             old, batch = history[n]
