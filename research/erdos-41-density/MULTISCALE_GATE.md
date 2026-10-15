@@ -34,6 +34,10 @@ The admitted fourth-moment theorem and its [spectral matching successor](SPECTRA
 
 [ZERO_SUM_FIBER_AUDIT.md](ZERO_SUM_FIBER_AUDIT.md) proves a fixed-nonzero-lag matching bound for the translation-invariant form a+b−2c on finite repetition-permitted B3 blocks. Its weighted representation count only recovers a **quadratic** diameter bound, weaker than the cubic-shadow estimate. More decisively, an explicit INFINITE B3 set built from superseparated base-16 digit blocks has the SAME nonzero centered lag 1 in *every* block. Thus arbitrary-scale spectral disjointness or scale-independent overlap bounds fail even for genuine B3; the constructed set has counting function O(log N), hence is not an Erdős #41 counterexample. A valid higher-order accumulation theorem must use positive lower density and additional arithmetic information. The exact finite-window valley remains OPEN.
 
+## 2026-10-15 density-sensitive mixed-block bound and limitation
+
+See [DENSITY_FORCED_MIXED_BUDGET.md](DENSITY_FORCED_MIXED_BUDGET.md). A persistent positive B3 lower bound A(N)≥cN^(1/3) forces geometrically separated inner and outer blocks with actual mixed centered-representation weight ≥(c^5/48)N and mixed-lag support ≥(c^4/24)N^(2/3). These are **rigorous density-dependent consequences**, not hypothetical counting models. However the global pointwise matching budget over O(N) lags is O(N^(4/3)); the new lower bound does **not** exceed it. Summing mixed representations over logarithmically many cuts repeats the same representations according to their color-span, so that factor cannot be treated as independent extra matching demand. This completes a bounded no-overclaim audit, not Erdős #41.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
