@@ -1,0 +1,109 @@
+{
+  "p920_p921": {
+    "all_graph_chi_alpha_bounds": 33866,
+    "all_labelled_graphs": 33866,
+    "chi_at_least_four_graphs": 5281,
+    "exact_r33": 6,
+    "graph_rows": [
+      {
+        "counts": {
+          "chi_ge4": 0,
+          "chi_ge4_triangles": 0,
+          "k3free": 2,
+          "k4free": 2
+        },
+        "f_k_n_by_exhaustive_chromatic": {
+          "3": 2,
+          "4": 2
+        },
+        "min_alpha_by_clique_free": {
+          "3": 1,
+          "4": 1
+        },
+        "n": 2,
+        "total_graphs": 2
+      },
+      {
+        "counts": {
+          "chi_ge4": 0,
+          "chi_ge4_triangles": 0,
+          "k3free": 7,
+          "k4free": 8
+        },
+        "f_k_n_by_exhaustive_chromatic": {
+          "3": 2,
+          "4": 3
+        },
+        "min_alpha_by_clique_free": {
+          "3": 2,
+          "4": 1
+        },
+        "n": 3,
+        "total_graphs": 8
+      },
+      {
+        "counts": {
+          "chi_ge4": 1,
+          "chi_ge4_triangles": 1,
+          "k3free": 41,
+          "k4free": 63
+        },
+        "f_k_n_by_exhaustive_chromatic": {
+          "3": 2,
+          "4": 3
+        },
+        "min_alpha_by_clique_free": {
+          "3": 2,
+          "4": 2
+        },
+        "n": 4,
+        "total_graphs": 64
+      },
+      {
+        "counts": {
+          "chi_ge4": 66,
+          "chi_ge4_triangles": 66,
+          "k3free": 388,
+          "k4free": 958
+        },
+        "f_k_n_by_exhaustive_chromatic": {
+          "3": 3,
+          "4": 3
+        },
+        "min_alpha_by_clique_free": {
+          "3": 2,
+          "4": 2
+        },
+        "n": 5,
+        "total_graphs": 1024
+      },
+      {
+        "counts": {
+          "chi_ge4": 5214,
+          "chi_ge4_triangles": 5214,
+          "k3free": 5789,
+          "k4free": 27626
+        },
+        "f_k_n_by_exhaustive_chromatic": {
+          "3": 3,
+          "4": 4
+        },
+        "min_alpha_by_clique_free": {
+          "3": 3,
+          "4": 2
+        },
+        "n": 6,
+        "total_graphs": 32768
+      }
+    ],
+    "ramsey_transfer": "If n<r(s,t), some n-vertex Ks-free G has alpha(G)<t, so chi(G)>=ceil(n/(t-1)).",
+    "source_boundary": "Finite Ramsey transfer and odd-cycle small examples only. Not Brada\u010d v3 or Kierstead\u2013Szemer\u00e9di\u2013Trotter full theorem."
+  },
+  "record_type": "EC_BULK_006_920_921_FINITE/1",
+  "symbolic": {
+    "920": "Brada\u010d v3 r(k,t)>=a*t^(k-1)/(log t)^(2k-4) implies f_k(n)>=b*n^((k-2)/(k-1))/(log n)^((2k-4)/(k-1)). Positive log exponent is in DENOMINATOR.",
+    "921": "Set l=k-2 in KST84: no short odd cycles at length C_l*n^(1/l) implies chromatic number at most l+1=k-1, so a k-chromatic graph has some odd cycle at most C_l*n^(1/(k-2)).",
+    "921_lower": "Lovasz/Schrijver examples credited by KST84 give matching exponent. Not reconstructed by finite enumeration.",
+    "source_versions": "Bradac arXiv 2605.28793 v1 exponent s-2; v3 Jun 16 2026 exponent s-1; KST84 original Combinatorica 4 pp183-185."
+  }
+}
