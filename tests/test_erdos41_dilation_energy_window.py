@@ -85,6 +85,43 @@ def cross_interval_bounds(a, b, width, shift=0):
     return support_bound, cauchy_bound
 
 
+def thresholded_alpha(p, left, length, threshold):
+    """Exact bitset branch-and-bound independence number on a short interval."""
+    if length < 1 or threshold < 1:
+        raise ValueError("positive threshold and nonempty interval required")
+    weights = {h: sum(1 for v in p if v - 2*h in p)
+               for h in range(1, length)}
+    adjacent = [
+        sum(1 << j for j in range(length)
+            if j != i and weights[abs(i-j)] >= threshold)
+        for i in range(length)
+    ]
+    best = 0
+
+    def branch(available, chosen):
+        nonlocal best
+        if chosen + available.bit_count() <= best:
+            return
+        if not available:
+            best = max(best, chosen)
+            return
+        bit = available & -available
+        vertex = bit.bit_length() - 1
+        branch(available & ~(bit | adjacent[vertex]), chosen+1)
+        branch(available & ~bit, chosen)
+
+    branch((1 << length)-1, 0)
+    return best
+
+
+def pair_weight(p, w):
+    return sum(
+        sum(1 for v in p if v-2*(y-x) in p)
+        for x, y in combinations_with_replacement(sorted(w), 2)
+        if x < y
+    )
+
+
 class DilationEnergyStageBTests(unittest.TestCase):
     def test_b3_fixture_and_positive_difference_uniqueness(self):
         self.assertEqual(len(A), 29)
@@ -197,6 +234,37 @@ class DilationEnergyStageBTests(unittest.TestCase):
         self.assertEqual(
             correlation(inner, positive_differences(lifted_w)), 0
         )
+
+
+    def test_thresholded_forbidden_graph_turan_and_inverse(self):
+        # A bounded exact search: all 2^12 possible outer subsets.
+        p = inner_pairs(A[:3])
+        length = 12
+        expected_alpha = {1: 3, 2: 4, 3: 6}
+        for threshold, expected in expected_alpha.items():
+            alpha = thresholded_alpha(p, 0, length, threshold)
+            self.assertEqual(alpha, expected)
+            for mask in range(1 << length):
+                w = [j for j in range(length) if mask & (1 << j)]
+                m = len(w)
+                if not m:
+                    continue
+                weighted_edges = pair_weight(p, w)
+                bound = Fraction(threshold, 2) * max(
+                    Fraction(m*m, alpha) - m, 0
+                )
+                with self.subTest(threshold=threshold, mask=mask):
+                    self.assertGreaterEqual(weighted_edges, bound)
+                    # Rearranged graph inequality (quantitative inverse).
+                    self.assertGreaterEqual(
+                        alpha, Fraction(m*m, m + Fraction(2*weighted_edges, threshold))
+                    )
+
+    def test_genuine_b3_zero_gate_has_independent_outer_centers(self):
+        p = inner_pairs(A[:8])
+        w = A[8:]
+        self.assertEqual(pair_weight(p, w), 0)
+        self.assertEqual(correlation(p, positive_differences(w)), 0)
 
 
 if __name__ == "__main__":
