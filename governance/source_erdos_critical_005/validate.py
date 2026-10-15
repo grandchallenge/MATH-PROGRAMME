@@ -169,5 +169,36 @@ class FiveSourceFidelityTests(unittest.TestCase):
         self.assertFalse(info["external_formal_i_ii_kernel_replayed"])
         self.assertFalse(info["gcl_review_label_clearance_authorized"])
 
+    def test_14_immutable_historical_task_parity_and_remaining_kernel_gate(self):
+        path=ROOT/"governance/source_erdos_critical_005/ERDOS_014_EXTERNAL_TASK_PARITY.json"
+        obj=json.loads(path.read_text())
+        self.assertEqual(obj["result"],"PASS_HASHED_TASK_FILES_AND_PUBLISHED_REPORT_PARITY")
+        self.assertEqual(len(obj["provenance"]),2)
+        self.assertEqual({e["part"] for e in obj["provenance"]},{"i","ii"})
+        self.assertTrue(all(e["trusted_files_byte_verified"]==5 for e in obj["provenance"]))
+        self.assertTrue(all(e["historical_task_component_bytes_verified"] for e in obj["provenance"]))
+        self.assertTrue(all(e["original_formal_provider_git_checkout_parity"] is False for e in obj["provenance"]))
+        self.assertTrue(all(e["independent_gcl_kernel_replay"] is False for e in obj["provenance"]))
+        self.assertFalse(obj["claim_effects"]["gcl_math_certification"])
+
+    def test_41_historical_and_modern_B3_are_not_equivalent(self):
+        import importlib.util
+        f=ROOT/"governance/source_erdos_critical_005/erdos41_conventions.py"
+        spec=importlib.util.spec_from_file_location("erdos41_conventions",f)
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.assertEqual(module.validate(),793)
+        self.assertTrue(module.historical((1,2,4)))
+        self.assertFalse(module.new_multiset((1,2,4)))
+        self.assertFalse(module.historical((1,4,5)))
+        self.assertTrue(module.new_multiset((1,4,5)))
+        self.assertTrue(module.old_finset((1,2,3)))
+        self.assertFalse(module.new_multiset((1,2,3)))
+        receipt=json.loads((ROOT/"governance/source_erdos_critical_005/ERDOS_041_014_SOURCE_BOUNDARY.json").read_text())
+        self.assertFalse(receipt["erdos_41"]["source_correction_complete"])
+        self.assertFalse(receipt["erdos_41"]["revision_label_clearance"])
+        self.assertFalse(receipt["erdos_14"]["separate_gcl_kernel_replay"])
+        self.assertFalse(receipt["mathematical_certification"])
+
 if __name__=="__main__":
     unittest.main(verbosity=2)
