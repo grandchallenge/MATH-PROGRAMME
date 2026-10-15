@@ -12,6 +12,7 @@ import inspect
 import unittest
 from pathlib import Path
 import audit_erdos_compendium_ec005_browser as browser_qa
+import test_erdos_compendium_ec005_r8_source_twenty as r8_twenty
 import test_erdos_compendium_ec005_r7_source_eight as r7_eight
 import test_erdos_compendium_ec005_source_lock_25 as source_lock_25
 import test_erdos_compendium_ec005_conflicts_04 as conflict_04
@@ -46,6 +47,7 @@ import test_erdos_compendium_ec005_fixtures_832_841 as _module_23
 import test_erdos_compendium_ec005_fixtures_842_851 as _module_24
 
 MODULES=(
+    r8_twenty,
     r7_eight,
     source_lock_25,
     typography_qa,
