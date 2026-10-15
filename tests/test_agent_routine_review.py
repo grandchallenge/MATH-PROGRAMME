@@ -287,6 +287,45 @@ class ProtectedAgentRoleReceiptTests(unittest.TestCase):
             protected_sha="e"*40, subject_head=self.head,
             material_digest=self.digest, actual_actor="fyremael")
 
+    def test_version_two_dispatch_before_legacy_schema(self):
+        # End-to-end dispatch must reach the protected ARC1 verifier.
+        from unittest.mock import patch
+        import specialist_receipt_adapter as legacy
+        fs = [{"filename": "ci/erdos_catalogue_queue_projection.py",
+               "status": "modified", "sha": "e" * 40}]
+        new_receipt = dict(self.receipt)
+        new_receipt["subject"] = {
+            "repository": "grandchallenge/MATH-PROGRAMME",
+            "head_sha": self.head,
+            "material_sha256": legacy.material_fingerprint(fs)}
+        ref_url = "/repos/grandchallenge/INTELLECT/git/ref/heads/main"
+        with patch.object(legacy, "_protected_json", return_value=(new_receipt, "f"*40)):
+            with patch.object(legacy, "verify_agent_role_receipt",
+                              return_value={"disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED"}) as verifier:
+                result = legacy.protected_specialist_receipt(
+                    head=self.head, files=fs, domain="PROTECTION",
+                    api_get=lambda url: {"object": {"sha": "f"*40}}
+                        if url == ref_url else {},
+                    candidate_author="fyremael")
+                self.assertEqual(result["disposition"],
+                                 "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED")
+                verifier.assert_called_once()
+
+    def test_version_two_for_other_domain_rejected(self):
+        # This lane must not re-interpret MATHCERT or other specialist receipts.
+        from unittest.mock import patch
+        import specialist_receipt_adapter as legacy
+        fs = [{"filename": "ci/erdos_catalogue_queue_projection.py",
+               "status": "modified", "sha": "e" * 40}]
+        with patch.object(legacy, "_protected_json", return_value=(self.receipt,"f"*40)):
+            with patch.object(legacy, "verify_agent_role_receipt") as verifier:
+                with self.assertRaises(legacy.ReceiptError):
+                    legacy.protected_specialist_receipt(
+                        head=self.head, files=fs, domain="MATHEMATICAL",
+                        api_get=lambda url: {"object": {"sha": "f"*40}},
+                        candidate_author="fyremael")
+                verifier.assert_not_called()
+
     def test_valid_shared_login_three_real_role_passes(self):
         r = self.evaluate()
         self.assertEqual(r["disposition"], "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED")
