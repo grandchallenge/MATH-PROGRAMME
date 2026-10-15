@@ -29,6 +29,8 @@
 
 > **EXT-015 — genuine liquid extension programme:** [SPEC and governing question](EXT-015/SPEC.md) define the compact-support stage Ext¹ comparison and the exact goal: can an extension carry genuinely global analytic information that no compact-support stage can capture? [Work packages](EXT-015/WORK_PACKAGES.md) prescribe independent quotient-stage/injectivity, projective-resolution, positive-versus-negative surjectivity, and derived integration tracks. [Extension docket](EXT-015/EXTENSION_DOCKET.md) records hostile controls. [Run matrix](EXT-015/RUN_MATRIX.md) separates plans from verified theorems. This is a **research plan**, not yet a solution to the genuine liquid Ext problem.
 
+> **EXT-015A/B handoffs — prepared, not dispatched:** [A: quotient-stage factorization and Ext¹ injectivity](EXT-015/handoffs/EXT-015A.md) and [B: genuine liquid projective presentations and Borel-jet control](EXT-015/handoffs/EXT-015B.md) are independently executable research candidates with [controller readiness conditions](EXT-015/handoffs/READINESS.md) and a [machine-readable non-executable manifest](EXT-015/handoffs/HANDOFF_INDEX.json). Their exact mathematical source baseline is pinned; neither document creates a worker lease, Issue AVAILABLE state or RESULT/1 authority. Admitted handoff commit readback and actual protected dispatch are separate steps.
+
 ## 1. The object and the scientific question
 
 For a free Euclidean scalar field, test functions $f$ do not name individual field values at a point. They name **smeared observables**, $\phi(f)$, because quantum fields are distribution-valued objects. An algebra of observables on an open spacetime region $U$ must also know how observables on disjoint smaller regions combine.
