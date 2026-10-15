@@ -531,6 +531,8 @@ def three_source_council_errors(texts: dict[str, str]) -> list[str]:
             or python.get('with') != {'python-version':'3.12'}):
         errors.append(f'{key}: unpinned runtime bootstrap')
     test=str(tests.get('run',''))
+    if ('pip install --disable-pip-version-check --require-hashes --only-binary=:all: --no-deps -r ci/erdos_three_source_requirements.txt' not in test):
+        errors.append(f'{key}: missing hash-pinned Python dependency bootstrapping')
     if ('governance/source_erdos_critical_005/validate.py' not in test
             or 'tests/test_erdos_three_source_resolution.py' not in test):
         errors.append(f'{key}: hostile controls or source hash checks missing')
