@@ -134,7 +134,7 @@ function pageUrl(base,n) {
         } catch(e) {error = e.message;}
         let screenshot = null;
         let screenshotSha256 = null;
-        if (!error && ((scope==='local_drafts' && [1053,1084,1087,1090,1094,1097,1099,1101,1104,1110,1115,1119,1121,1123,1127,1131,1133,1135,1138,1141,1143,1146,1151,1157,1159,1162,1164,1167].includes(n))
+        if (!error && ((scope==='local_drafts' && [1053,1084,1087,1090,1094,1097,1099,1101,1104,1110,1115,1119,1121,1123,1127,1131,1133,1135,1138,1141,1143,1146,1151,1157,1159,1162,1164,1167,1169,1172,1173].includes(n))
           || (scope==='public_accepted_sample' && n===1052))) {
           screenshot = path.join(shots,scope+'-'+n+'.png');
           await page.screenshot({path:screenshot});
