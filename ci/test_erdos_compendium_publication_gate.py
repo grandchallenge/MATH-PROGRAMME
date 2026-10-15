@@ -14,6 +14,24 @@ from erdos_compendium_public_html_readback import protected_editorial_state, pub
 
 REPO = "https://github.com/grandchallenge/MATH-PROGRAMME"
 
+# The old protected ledger stays unchanged after a typography-only amendment.
+# Tests of historical batches must compare historical digests with the R4
+# amendment's previous value and current source with its corrected value.
+LEGACY25_ROWS = {
+    e["problem_id"]: e for e in json.loads(
+        (ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_LEGACY25.json")
+        .read_text(encoding="utf-8"))["entries"]
+}
+
+def current_source_digest(n: int, historic_sha: str) -> str:
+    row = LEGACY25_ROWS.get(n)
+    if row is None:
+        return historic_sha
+    if row["previous_sha256"] != historic_sha:
+        raise AssertionError(f"Old source digest changed for #{n}")
+    return row["corrected_sha256"]
+
+
 class EditorialGateTests(unittest.TestCase):
     def _build(self, admissions):
         with tempfile.TemporaryDirectory() as root:
@@ -77,6 +95,55 @@ class EditorialGateTests(unittest.TestCase):
                 {"reviewed": True, "draft": False, "notCertified": False},
                 admitted=protected_editorial_state(n)))
 
+    def test_legacy25_math_source_corrections_preserve_exact_history(self):
+        import copy
+        from unittest.mock import patch
+        from erdos_compendium import LEGACY25_TYPOGRAPHY_AMENDMENTS
+        doc = json.loads(LEGACY25_TYPOGRAPHY_AMENDMENTS.read_text(encoding="utf-8"))
+        expected = {7, 59, 399, 670, 671, 672, 673, 674, 675, 676,
+                    780, 781, 803, 804, 806, 807, 808, 809, 811, 816,
+                    818, 823, 828, 833, 841}
+        self.assertEqual(set(LEGACY25_ROWS), expected)
+        self.assertEqual(len(doc["entries"]), 25)
+        self.assertEqual(doc["source_issue"], REPO + "/issues/2690")
+        self.assertEqual(doc["browser_receipt"], REPO + "/issues/2690#issuecomment-6203116883")
+        ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        historic = {e["problem_id"]: {**e,"batch_id":b["batch_id"]}
+                    for b in ledger["batches"] for e in b["entries"]}
+        effective = load_batch_admissions(ACCEPTANCE)
+        for n, row in LEGACY25_ROWS.items():
+            with self.subTest(problem=n):
+                src = EDITORIAL / f"{n:04d}.md"
+                raw = src.read_bytes()
+                self.assertEqual(row["previous_sha256"], historic[n]["source_sha256"])
+                self.assertEqual(row["source_check"], historic[n]["source_check"])
+                self.assertEqual(row["batch_id"], historic[n]["batch_id"])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), row["corrected_raw_sha256"])
+                self.assertEqual(hashlib.sha256(manuscript(n).encode()).hexdigest(),
+                                 row["corrected_sha256"])
+                self.assertEqual(effective[n]["source_sha256"], row["corrected_sha256"])
+                self.assertEqual(effective[n]["legacy25_typography_id"],
+                                 "EC-LEGACY-25-TEX-20261015")
+                # Purely typographical: source may differ only by whitespace,
+                # including Markdown delimiter-adjacent space and blank lines.
+                self.assertEqual(
+                    hashlib.sha256("".join(raw.decode("utf-8").split()).encode()).hexdigest(),
+                    row["nonwhitespace_sha256"])
+                self.assertEqual(raw.count(b"$") % 2, 0)
+                self.assertNotEqual(row["previous_sha256"], row["corrected_sha256"])
+        with tempfile.TemporaryDirectory() as td:
+            from pathlib import Path
+            temp = Path(td) / "bad.json"
+            for mutation in ("previous_sha256", "corrected_sha256",
+                             "corrected_raw_sha256", "source_check", "batch_id"):
+                tampered = copy.deepcopy(doc)
+                entry = tampered["entries"][0]
+                entry[mutation] = ("0"*64 if "sha256" in mutation else "UNAUTHORIZED")
+                temp.write_text(json.dumps(tampered), encoding="utf8")
+                with patch("erdos_compendium.LEGACY25_TYPOGRAPHY_AMENDMENTS", temp):
+                    with self.assertRaisesRegex(ValueError, "Invalid/stale"):
+                        load_batch_admissions(ACCEPTANCE)
+
     def test_active_v2_ledger_preserves_exact_legacy_admission(self):
         """V1→V2 migration must preserve identity and all six evidence fields."""
         import copy
@@ -89,6 +156,11 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(set(actual), expected_ids | second_ids | third_ids | set(range(670, 677)) | {717, 718, 722, 747, 748, 763, 776, 777, 678, 697, 720, 765, 772, 804, 809, 811, 828, 832, 834, 836, 780, 781, 794, 795, 797, 798, 799, 800, 801, 803, 806, 807, 808, 814, 816, 818, 823, 833, 841, 842, 843, 844, 845, 846, 847},
                          "Only existing cohorts, seven R1 EC005 entries and three source-adjudicated R2 entries may be admitted")
         row = copy.deepcopy(actual[7])
+        for k in ("legacy25_typography_id", "legacy25_authority", "legacy25_browser_receipt"):
+            self.assertIn(k, row)
+            row.pop(k)
+        # Compare the V2 historical entry, not the effective R4 correction.
+        row["source_sha256"] = LEGACY25_ROWS[7]["previous_sha256"]
         self.assertEqual(row.pop("batch_id"), "EC-LEGACY-0007")
         self.assertEqual(row, {
             "problem_id": 7,
@@ -99,7 +171,7 @@ class EditorialGateTests(unittest.TestCase):
             "mkdocs_run": REPO + "/actions/runs/38204827132",
             "public_html_readback": REPO + "/issues/2556#issuecomment-6117889968",
         })
-        self.assertEqual(row["source_sha256"],
+        self.assertEqual(current_source_digest(7, row["source_sha256"]),
                          hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest())
         with tempfile.TemporaryDirectory() as root:
             root = Path(root)
@@ -159,7 +231,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(set(expected), set(range(42, 246)) - {99, 101, 138, 241})
         for n, row in expected.items():
             self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),
-                             row["source_sha256"], f"stale manuscript hash for #{n}")
+                             current_source_digest(n, row["source_sha256"]), f"stale manuscript hash for #{n}")
             self.assertIn(row["source_check"], manuscript(n))
         self.assertIn("NOT_MATHEMATICAL_CERTIFICATION", proposal["disposition"])
 
@@ -186,7 +258,7 @@ class EditorialGateTests(unittest.TestCase):
             n = row["problem_id"]
             self.assertIn(row["source_check"], manuscript(n))
             self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),
-                             row["source_sha256"])
+                             current_source_digest(n, row["source_sha256"]))
         self.assertTrue(set(dossier["flagged_exception_ids"]).isdisjoint(
                         {row["problem_id"] for row in admitted["entries"]}))
         self.assertEqual(len(dossier["flagged_exception_ids"]), 193)
@@ -394,7 +466,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(batch[key],proposal[key])
         for row in batch["entries"]:
             n=row["problem_id"]
-            self.assertEqual(row["source_sha256"],hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
+            self.assertEqual(current_source_digest(n, row["source_sha256"]),hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
             historic=qa["source_claims_reviewed"][str(n)]["exact_admission_sha256_stripped"]
             mutation=proposal["atomic_editorial_label_and_hash_promotion"][str(n)]
             self.assertEqual(historic,mutation["source_critical_original_trimmed_sha256"])
@@ -443,7 +515,7 @@ class EditorialGateTests(unittest.TestCase):
                 self.assertEqual(amended["source_sha256"],
                                  hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
             else:
-                self.assertEqual(entry["source_sha256"],
+                self.assertEqual(current_source_digest(n, entry["source_sha256"]),
                                  hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
             original=q["per_source"][str(n)]
             change=p["atomic_status_sha"][str(n)]
@@ -488,7 +560,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(r["authenticated_author"],"fyremael")
             text=manuscript(n)
             self.assertIn(entry["source_check"],text)
-            self.assertEqual(entry["source_sha256"],hashlib.sha256(text.encode("utf-8")).hexdigest())
+            self.assertEqual(current_source_digest(n, entry["source_sha256"]),hashlib.sha256(text.encode("utf-8")).hexdigest())
             self.assertNotEqual(r["historic_source_raw_sha256"],r["proposed_reviewed_raw_sha256"])
             self.assertEqual(len([line for line in text.splitlines() if line.startswith("## ")]),6)
             self.assertNotIn("UNACCEPTED",text)
@@ -519,7 +591,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(row["source_check"],source["source_url"])
             text=manuscript(n)
             self.assertIn(row["source_check"],text)
-            self.assertEqual(row["source_sha256"],hashlib.sha256(text.encode("utf-8")).hexdigest())
+            self.assertEqual(current_source_digest(n, row["source_sha256"]),hashlib.sha256(text.encode("utf-8")).hexdigest())
             self.assertNotEqual(source["initial_raw_sha256"],source["reviewed_raw_sha256"])
             self.assertEqual(len([x for x in text.splitlines() if x.startswith("## ")]),6)
             self.assertNotIn("UNACCEPTED",text)

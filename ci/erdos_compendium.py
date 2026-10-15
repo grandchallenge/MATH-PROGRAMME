@@ -20,6 +20,7 @@ ACCEPTANCE = ROOT / "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
 RENDER_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_RENDER_AMENDMENTS.json"
 STATUS_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_STATUS_AMENDMENTS.json"
 EC005_TYPOGRAPHY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_EC005.json"
+LEGACY25_TYPOGRAPHY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_LEGACY25.json"
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
@@ -267,6 +268,66 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
             }
         if amended != {765, 836}:
             raise ValueError("Incomplete EC005 R2 amended article pair")
+    # The 25-item historical-compendium correction is applied AFTER all older
+    # source- and status-bound protected overlays. It may not alter legacy
+    # admissions or assert anything about mathematical truth/proof status.
+    if Path(path).resolve() == ACCEPTANCE.resolve() and LEGACY25_TYPOGRAPHY_AMENDMENTS.exists():
+        doc = json.loads(LEGACY25_TYPOGRAPHY_AMENDMENTS.read_text(encoding="utf-8"))
+        required_doc = {"record_type", "revision_id", "scope", "source_issue",
+                        "protected_patch", "browser_receipt", "base_main_sha", "entries"}
+        expected_ids = {7, 59, 399, 670, 671, 672, 673, 674, 675, 676,
+                        780, 781, 803, 804, 806, 807, 808, 809, 811, 816,
+                        818, 823, 828, 833, 841}
+        root_url = "https://github.com/grandchallenge/MATH-PROGRAMME/"
+        if (not isinstance(doc, dict) or set(doc) != required_doc
+                or doc["record_type"] != "ERDOS_COMPENDIUM_ADMITTED_TYPOGRAPHY_AMENDMENTS/1"
+                or doc["revision_id"] != "EC-LEGACY-25-TEX-20261015"
+                or doc["scope"] != "WHITESPACE_AND_MATH_DELIMITERS_ONLY_NO_MATHEMATICAL_CERTIFICATION"
+                or doc["source_issue"] != root_url + "issues/2690"
+                or doc["base_main_sha"] != "0077c03b06915ebb08bd35a89846ceaaf881e2de"
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/[1-9][0-9]*",
+                                    doc["protected_patch"])
+                or doc["browser_receipt"] != root_url + "issues/2690#issuecomment-6203116883"
+                or not isinstance(doc["entries"], list)
+                or len(doc["entries"]) != len(expected_ids)):
+            raise ValueError("Invalid legacy25 typography amendment authority")
+        amended = set()
+        required_entry = {"problem_id", "batch_id", "source_check", "previous_sha256",
+                          "corrected_sha256", "previous_raw_sha256", "corrected_raw_sha256",
+                          "nonwhitespace_sha256"}
+        for row in doc["entries"]:
+            if not isinstance(row, dict) or set(row) != required_entry:
+                raise ValueError("Invalid legacy25 typography amendment entry schema")
+            n = row["problem_id"]
+            src = EDITORIAL / f"{n:04d}.md" if type(n) is int else None
+            if (type(n) is not int or n not in expected_ids or n in amended
+                    or n not in accepted or src is None or not src.is_file()
+                    or row["batch_id"] != accepted[n]["batch_id"]
+                    or row["source_check"] != accepted[n]["source_check"]
+                    or row["previous_sha256"] != accepted[n]["source_sha256"]
+                    or any(not isinstance(row[k], str)
+                           or not re.fullmatch(r"[a-f0-9]{64}", row[k])
+                           for k in ("previous_sha256", "corrected_sha256",
+                                     "previous_raw_sha256", "corrected_raw_sha256",
+                                     "nonwhitespace_sha256"))
+                    or hashlib.sha256(
+                        "".join(src.read_text(encoding="utf-8").split()).encode("utf-8")
+                    ).hexdigest() != row["nonwhitespace_sha256"]
+                    or row["previous_sha256"] == row["corrected_sha256"]
+                    or row["previous_raw_sha256"] == row["corrected_raw_sha256"]
+                    or hashlib.sha256(src.read_bytes()).hexdigest()
+                       != row["corrected_raw_sha256"]
+                    or hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest()
+                       != row["corrected_sha256"]):
+                raise ValueError(f"Invalid/stale legacy25 typography source #{n}")
+            amended.add(n)
+            accepted[n] = {**accepted[n],
+                           "source_sha256": row["corrected_sha256"],
+                           "legacy25_typography_id": doc["revision_id"],
+                           "legacy25_authority": doc["protected_patch"],
+                           "legacy25_browser_receipt": doc["browser_receipt"]}
+        if amended != expected_ids:
+            raise ValueError("Incomplete legacy25 typography correction")
     return accepted
 
 
