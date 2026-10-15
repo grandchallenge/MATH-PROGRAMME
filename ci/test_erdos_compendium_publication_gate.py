@@ -265,11 +265,19 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(row["previous_sha256"],historic[n]["source_sha256"])
             self.assertEqual(row["source_check"],historic[n]["source_check"])
             self.assertNotEqual(row["previous_sha256"],row["corrected_sha256"])
-            self.assertEqual(corrected[n]["source_sha256"],row["corrected_sha256"])
+            if n == 765:
+                # R2 overlays the historical R3 status amendment in sequence.
+                overlay = json.loads((ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_EC005.json").read_text(encoding="utf-8"))
+                successor = next(e for e in overlay["entries"] if e["problem_id"] == n)
+                self.assertEqual(successor["previous_sha256"], row["corrected_sha256"])
+                self.assertEqual(corrected[n]["source_sha256"], successor["corrected_sha256"])
+            else:
+                self.assertEqual(corrected[n]["source_sha256"],row["corrected_sha256"])
             self.assertEqual(corrected[n]["source_check"],historic[n]["source_check"])
             self.assertEqual(corrected[n]["status_amendment_authority"],x["protected_patch"])
             source=manuscript(n)
-            self.assertEqual(hashlib.sha256(source.encode("utf-8")).hexdigest(),row["corrected_sha256"])
+            self.assertEqual(hashlib.sha256(source.encode("utf-8")).hexdigest(),
+                             corrected[n]["source_sha256"])
             self.assertNotIn("UNACCEPTED",source)
             self.assertNotIn("DRAFTED_UNACCEPTED",source)
             self.assertIn("STATUS_CONFLICT",source)
@@ -288,9 +296,80 @@ class EditorialGateTests(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError,"Invalid or stale|Incomplete"):
                         load_batch_admissions(ACCEPTANCE)
             with patch("erdos_compendium.STATUS_AMENDMENTS",root/"nonexistent.json"):
-                historic_version=load_batch_admissions(ACCEPTANCE)
-                for n in (765,772):
-                    self.assertEqual(historic_version[n]["source_sha256"],historic[n]["source_sha256"])
+                with patch("erdos_compendium.EC005_TYPOGRAPHY_AMENDMENTS",root/"nonexistent.json"):
+                    historic_version=load_batch_admissions(ACCEPTANCE)
+                    for n in (765,772):
+                        self.assertEqual(historic_version[n]["source_sha256"],
+                                         historic[n]["source_sha256"])
+
+    def test_ec005_r2_admitted_typography_overlay_fail_closed(self):
+        """R2 is a two-entry successor to protected R3/R5, never a ledger rewrite."""
+        import copy
+        from unittest.mock import patch
+        from erdos_compendium import EC005_TYPOGRAPHY_AMENDMENTS
+        doc = json.loads(EC005_TYPOGRAPHY_AMENDMENTS.read_text(encoding="utf-8"))
+        self.assertEqual(doc["revision_id"], "EC005-TYPOGRAPHY-R2-20261015")
+        self.assertEqual({e["problem_id"] for e in doc["entries"]}, {765, 836})
+        self.assertEqual(doc["protected_patch"],
+                         "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2677")
+        accepted = load_batch_admissions(ACCEPTANCE)
+        ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        historical = {e["problem_id"]: e
+                      for batch in ledger["batches"] for e in batch["entries"]}
+        # Admission cohorts run in parallel. Do not freeze the global
+        # acceptance count at this R2 batch's historical base.
+        self.assertEqual(len(accepted), len(historical))
+        self.assertGreaterEqual(len(accepted), 469)
+        for row in doc["entries"]:
+            n = row["problem_id"]
+            self.assertEqual(row["batch_id"], accepted[n]["batch_id"])
+            self.assertEqual(row["source_check"], historical[n]["source_check"])
+            self.assertEqual(row["corrected_sha256"], accepted[n]["source_sha256"])
+            self.assertEqual(accepted[n]["typography_amendment_id"],
+                             doc["revision_id"])
+            self.assertEqual(
+                hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),
+                row["corrected_sha256"])
+        self.assertEqual(doc["entries"][1]["previous_sha256"],
+                         historical[836]["source_sha256"])
+        historic_status = json.loads((ROOT/"governance/erdos_compendium/EDITORIAL_STATUS_AMENDMENTS.json").read_text(encoding="utf-8"))
+        r3 = next(x for x in historic_status["entries"] if x["problem_id"] == 765)
+        self.assertEqual(doc["entries"][0]["previous_sha256"],
+                         r3["corrected_sha256"])
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td)/"malformed.json"
+            for field, value in (
+                ("previous_sha256", "0"*64),
+                ("source_check", "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1#issuecomment-1"),
+                ("corrected_sha256", "f"*64),
+                ("batch_id", "EC-BULK-005-R5"),
+                ("problem_id", 836),
+            ):
+                defective = copy.deepcopy(doc)
+                defective["entries"][0][field] = value
+                path.write_text(json.dumps(defective),encoding="utf-8")
+                with patch("erdos_compendium.EC005_TYPOGRAPHY_AMENDMENTS", path):
+                    with self.assertRaisesRegex(ValueError, "Invalid or stale"):
+                        load_batch_admissions(ACCEPTANCE)
+            defective = copy.deepcopy(doc)
+            defective["protected_patch"] = "https://example.invalid/fake"
+            path.write_text(json.dumps(defective),encoding="utf-8")
+            with patch("erdos_compendium.EC005_TYPOGRAPHY_AMENDMENTS", path):
+                with self.assertRaisesRegex(ValueError, "Invalid EC005 R2"):
+                    load_batch_admissions(ACCEPTANCE)
+
+    def test_ec005_r2_exact_tex_source_and_math_boundaries(self):
+        from math_markdown_gate import issues
+        for n in (765, 836):
+            text = manuscript(n)
+            self.assertIn("STATUS_CONFLICT", text)
+            self.assertEqual(len([x for x in text.splitlines()
+                                  if x.startswith("## ")]), 6)
+            self.assertGreaterEqual(text.count("$$"), 2)
+            self.assertFalse(issues(text), (n, issues(text)))
+        self.assertIn("Ma and Yang", manuscript(765))
+        self.assertIn("OPEN", manuscript(836))
+        self.assertIn("Alon", manuscript(836))
 
     def test_ec005_r4_three_editorial_sources_not_seven_holds(self):
         """Source-qualified 804/809/811 only, preserving historical conflicts."""
@@ -357,7 +436,15 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(batch[key],p[key])
         for entry in batch["entries"]:
             n=entry["problem_id"]
-            self.assertEqual(entry["source_sha256"],hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
+            if n == 836:
+                amended = load_batch_admissions(ACCEPTANCE)[n]
+                self.assertEqual(amended["typography_amendment_id"],
+                                 "EC005-TYPOGRAPHY-R2-20261015")
+                self.assertEqual(amended["source_sha256"],
+                                 hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
+            else:
+                self.assertEqual(entry["source_sha256"],
+                                 hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest())
             original=q["per_source"][str(n)]
             change=p["atomic_status_sha"][str(n)]
             self.assertEqual(original["exact_stripped_sha256"],change["source_review_original_sha256"])

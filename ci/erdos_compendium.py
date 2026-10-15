@@ -19,6 +19,7 @@ EDITORIAL = ROOT / "governance/erdos_compendium/editorial"
 ACCEPTANCE = ROOT / "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
 RENDER_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_RENDER_AMENDMENTS.json"
 STATUS_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_STATUS_AMENDMENTS.json"
+EC005_TYPOGRAPHY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_EC005.json"
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
@@ -204,8 +205,10 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                     or not isinstance(row["corrected_sha256"], str)
                     or not re.fullmatch(r"[0-9a-f]{64}", row["corrected_sha256"])
                     or row["corrected_sha256"] == row["previous_sha256"]
-                    or hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest()
-                    != row["corrected_sha256"]):
+                    or (hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest()
+                        != row["corrected_sha256"]
+                        and not (n == 765 and Path(path).resolve() == ACCEPTANCE.resolve()
+                                 and EC005_TYPOGRAPHY_AMENDMENTS.exists()))):
                 raise ValueError(f"Invalid or stale EC005-R3 status amendment #{n}")
             corrected.add(n)
             accepted[n] = {**accepted[n],
@@ -215,6 +218,55 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                            "pre_fix_status_failure": doc["pre_fix_public_failure"]}
         if corrected != {765, 772}:
             raise ValueError("Incomplete EC005-R3 two-article status correction")
+    # R2 is strictly sequential after historical V2 admission and R3 status
+    # amendment. Never rewrite the historical ledger or accept an unbound hash.
+    if Path(path).resolve() == ACCEPTANCE.resolve() and EC005_TYPOGRAPHY_AMENDMENTS.exists():
+        doc = json.loads(EC005_TYPOGRAPHY_AMENDMENTS.read_text(encoding="utf-8"))
+        expected = {"record_type", "revision_id", "scope", "source_issue",
+                    "protected_patch", "browser_readback", "entries"}
+        root_url = "https://github.com/grandchallenge/MATH-PROGRAMME/"
+        if (not isinstance(doc, dict) or set(doc) != expected
+                or doc["record_type"] != "ERDOS_COMPENDIUM_EDITORIAL_TYPOGRAPHY_AMENDMENTS/1"
+                or doc["revision_id"] != "EC005-TYPOGRAPHY-R2-20261015"
+                or doc["scope"] != "MATHEMATICAL_TYPOGRAPHY_ONLY_NO_THEOREM_CERTIFICATION"
+                or doc["source_issue"] != root_url + "issues/2643"
+                or doc["protected_patch"] != root_url + "pull/2677"
+                or not re.fullmatch(
+                    r"https://github[.]com/grandchallenge/MATH-PROGRAMME/"
+                    r"issues/2643#issuecomment-[1-9][0-9]*",
+                    doc["browser_readback"])
+                or not isinstance(doc["entries"], list)
+                or len(doc["entries"]) != 2):
+            raise ValueError("Invalid EC005 R2 rendering-correction authority")
+        amended = set()
+        for row in doc["entries"]:
+            required = {"problem_id", "batch_id", "previous_sha256",
+                        "corrected_sha256", "source_check"}
+            if not isinstance(row, dict) or set(row) != required:
+                raise ValueError("Invalid EC005 R2 entry fields")
+            n = row["problem_id"]
+            if (type(n) is not int or n not in {765, 836}
+                    or n in amended or n not in accepted
+                    or row["batch_id"] != accepted[n]["batch_id"]
+                    or row["batch_id"] != ("EC-BULK-005-R3" if n == 765 else "EC-BULK-005-R5")
+                    or row["previous_sha256"] != accepted[n]["source_sha256"]
+                    or row["source_check"] != accepted[n]["source_check"]
+                    or not isinstance(row["corrected_sha256"], str)
+                    or not re.fullmatch(r"[a-f0-9]{64}", row["corrected_sha256"])
+                    or row["corrected_sha256"] == row["previous_sha256"]
+                    or hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest()
+                       != row["corrected_sha256"]):
+                raise ValueError(f"Invalid or stale EC005 R2 rendering amendment #{n}")
+            amended.add(n)
+            accepted[n] = {
+                **accepted[n],
+                "source_sha256": row["corrected_sha256"],
+                "typography_amendment_id": doc["revision_id"],
+                "typography_amendment_authority": doc["protected_patch"],
+                "typography_preview_receipt": doc["browser_readback"],
+            }
+        if amended != {765, 836}:
+            raise ValueError("Incomplete EC005 R2 amended article pair")
     return accepted
 
 
