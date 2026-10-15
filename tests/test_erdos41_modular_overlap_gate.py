@@ -98,5 +98,63 @@ class ModularOverlapTests(unittest.TestCase):
                 )
 
 
+    def test_complete_pairtype_sidon_digit_lift(self):
+        # Explicit quadratic-order Sidon code: k=4, prime p=5.
+        k, p = 4, 5
+        q = 6*p*p + 1
+        labels = [i + 2*p*((i*i) % p) for i in range(k)]
+        self.assertEqual(labels, [0, 11, 42, 43])
+        self.assertLess(3*max(labels), q)
+        type_labels = [labels[i] + labels[j]
+                       for i in range(k) for j in range(i, k)]
+        self.assertEqual(len(set(type_labels)), k*(k+1)//2)
+
+        blocks = [[q*a + labels[i] for a in block]
+                  for i, block in enumerate(self.blocks)]
+        outer = [q*a for a in self.outer]
+        lifted = [a for block in blocks for a in block] + outer
+        self.assertTrue(is_b3(lifted))
+        self.assertEqual(len(set(b3_sums(lifted))), 4495)
+
+        pairtypes = {}
+        for i in range(k):
+            for j in range(i, k):
+                if i == j:
+                    pairtypes[(i, j)] = pair_sums(blocks[i])
+                else:
+                    pairtypes[(i, j)] = {
+                        a+b for a in blocks[i] for b in blocks[j]
+                    }
+        self.assertEqual(len(pairtypes), 10)
+        self.assertEqual(sum(map(len, pairtypes.values())), 78)
+        self.assertEqual(
+            len(set().union(*pairtypes.values())), 78
+        )
+
+        twice_differences = {2*h for h in positive_differences(outer)}
+        self.assertEqual(len(twice_differences), 136)
+        for alpha, pa in pairtypes.items():
+            for beta, pb in pairtypes.items():
+                if alpha == beta:
+                    continue
+                with self.subTest(alpha=alpha, beta=beta):
+                    self.assertFalse(
+                        {a-b for a in pa for b in pb} & twice_differences
+                    )
+
+    def test_sidon_label_scaling(self):
+        # Elementary prime-table replay, no appeal to randomness.
+        for k, p in ((2, 3), (3, 3), (4, 5), (5, 5), (7, 7), (11, 11)):
+            q = 6*p*p + 1
+            e = [i + 2*p*((i*i) % p) for i in range(k)]
+            paircodes = [(e[i]+e[j]) % q
+                         for i in range(k) for j in range(i, k)]
+            with self.subTest(k=k):
+                self.assertEqual(len(paircodes), k*(k+1)//2)
+                self.assertEqual(len(set(paircodes)), len(paircodes))
+                self.assertGreater(q, 3*max(e))
+                self.assertGreaterEqual(q, len(paircodes))
+
+
 if __name__ == "__main__":
     unittest.main()
