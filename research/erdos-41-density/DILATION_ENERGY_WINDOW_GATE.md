@@ -177,7 +177,7 @@ $$
 $$
 
 **Proof.** Every induced graph G_t[W] has independence number at most alpha_t. Its complement has clique number at most alpha_t. The classical Turán upper bound on the complement's number of edges gives
-\(e(G_t[W])\ge\tfrac12(m^2/\alpha_t-m)\). Every G_t-edge has weight at least t, and the exact outer-difference identity weights each actual unordered W-pair once. QED.
+the number of induced graph edges is at least one half of the quantity m squared divided by alpha_t minus m. Every G_t-edge has weight at least t, and the exact outer-difference identity weights each actual unordered W-pair once. QED.
 
 The quantitative inverse consequence, obtained by rearranging (GRAPH), is
 
