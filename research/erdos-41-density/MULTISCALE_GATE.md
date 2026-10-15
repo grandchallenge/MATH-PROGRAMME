@@ -42,6 +42,10 @@ See [DENSITY_FORCED_MIXED_BUDGET.md](DENSITY_FORCED_MIXED_BUDGET.md). A persiste
 
 [MIXED_LAG_BALLISTIC_DISPERSION.md](MIXED_LAG_BALLISTIC_DISPERSION.md) proves exact zero-mean and second-moment formulas for mixed centered B3 representations across arbitrary disjoint blocks. When X is below Y with gap g>0, **both** the negative extreme-type and positive extreme-type lag supports contain at least |X||Y| distinct integers, at distances at least 2g from zero. One-third of the total mixed representation support weight is necessarily in these macroscopic tails. Under the hypothetical persistent density lower bound A(N)≥cN^(1/3), there are at least (c^4/72)N^(2/3) distinct lag values in each of two opposite-sign intervals separated from the origin by a fixed c-dependent fraction of N. This rigorously REFUTES simple small-radius localization as a proof method, but does NOT imply the required upper o(N^(2/3)) lag cardinality or a matching overload. Erdős #41 remains OPEN.
 
+## 2026-10-15 exact cross-scale lag overlap energy
+
+[CROSS_SCALE_OVERLAP_ENERGY.md](CROSS_SCALE_OVERLAP_ENERGY.md) gives a fully exact expression for collisions between two inner pair-sum families translated by twice the SAME outer-block elements: the cross-energy equals the pair-sum cross-difference correlation sampled on twice the outer difference spectrum. Same-center collisions across different inner B3 blocks are forbidden, but nontrivial 4-versus-4 correlations can vanish or occur. A rigorous Cauchy overlap-pressure bound includes the exact *within*-family energies; density lower bounds alone do NOT control them. A partition budget proves that splitting the inner set into many geometric colors never creates a logarithmic gain: it removes cross-color positive pairs. An authentic finite B3 fixture exhibits three mixed families with ZERO cross-lag overlap. The persistent-positive-density overflow theorem is NOT proved and Erdős #41 remains OPEN.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is
