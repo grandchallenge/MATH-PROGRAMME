@@ -218,13 +218,62 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(batch[key],proposal[key])
         for row in batch["entries"]:
             n=row["problem_id"]
-            self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),row["source_sha256"])
-            self.assertIn(row["source_check"],manuscript(n))
             self.assertEqual(q["problem_reviews"][str(n)]["article_admission_sha256_stripped"],row["source_sha256"])
+            self.assertIn(row["source_check"],manuscript(n))
             self.assertTrue(q["problem_reviews"][str(n)]["original_exceptions_retained"])
+            # Original protected V2 hash is historical, immutable evidence.
+            # Effective hash is the separately approved editorial-state patch.
+            amended=load_batch_admissions(ACCEPTANCE)[n]
+            self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),amended["source_sha256"])
+            self.assertEqual(amended["status_amendment_id"],"EC005-R3-STATUS-20261015-A")
         registered=load_batch_admissions(ACCEPTANCE)
         self.assertEqual(len(registered),462)
         self.assertTrue(held.isdisjoint(set(registered)))
+
+    def test_ec005_r3_status_amendment_exact_two_without_rewriting_history(self):
+        """Post-admission label repair is source-bound, fail-closed and versioned."""
+        import copy
+        from unittest.mock import patch
+        from erdos_compendium import STATUS_AMENDMENTS
+        x=json.loads(STATUS_AMENDMENTS.read_text(encoding="utf-8"))
+        ledger=json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        batch=next(b for b in ledger["batches"] if b["batch_id"]=="EC-BULK-005-R3")
+        historic={e["problem_id"]:e for e in batch["entries"]}
+        self.assertEqual(x["revision_id"],"EC005-R3-STATUS-20261015-A")
+        self.assertEqual(x["scope"],"EDITORIAL_STATUS_TEXT_ONLY_NO_THEOREM_CERTIFICATION")
+        self.assertEqual({e["problem_id"] for e in x["entries"]},{765,772})
+        corrected=load_batch_admissions(ACCEPTANCE)
+        for row in x["entries"]:
+            n=row["problem_id"]
+            self.assertEqual(row["previous_sha256"],historic[n]["source_sha256"])
+            self.assertEqual(row["source_check"],historic[n]["source_check"])
+            self.assertNotEqual(row["previous_sha256"],row["corrected_sha256"])
+            self.assertEqual(corrected[n]["source_sha256"],row["corrected_sha256"])
+            self.assertEqual(corrected[n]["source_check"],historic[n]["source_check"])
+            self.assertEqual(corrected[n]["status_amendment_authority"],x["protected_patch"])
+            source=manuscript(n)
+            self.assertEqual(hashlib.sha256(source.encode("utf-8")).hexdigest(),row["corrected_sha256"])
+            self.assertNotIn("UNACCEPTED",source)
+            self.assertNotIn("DRAFTED_UNACCEPTED",source)
+            self.assertIn("STATUS_CONFLICT",source)
+            self.assertEqual(len([line for line in source.splitlines() if line.startswith("## ")]),6)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for field,bad_value in (("previous_sha256","0"*64),
+                                    ("source_check","https://github.com/grandchallenge/MATH-PROGRAMME/issues/1#issuecomment-1"),
+                                    ("corrected_sha256","0"*64),
+                                    ("problem_id",765)):
+                bad=copy.deepcopy(x)
+                bad["entries"][1][field]=bad_value
+                dest=root/"corrupt.json"
+                dest.write_text(json.dumps(bad),encoding="utf-8")
+                with patch("erdos_compendium.STATUS_AMENDMENTS",dest):
+                    with self.assertRaisesRegex(ValueError,"Invalid or stale|Incomplete"):
+                        load_batch_admissions(ACCEPTANCE)
+            with patch("erdos_compendium.STATUS_AMENDMENTS",root/"nonexistent.json"):
+                historic_version=load_batch_admissions(ACCEPTANCE)
+                for n in (765,772):
+                    self.assertEqual(historic_version[n]["source_sha256"],historic[n]["source_sha256"])
 
     def test_v2_rejects_cross_version_duplicate_admission(self):
         sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
