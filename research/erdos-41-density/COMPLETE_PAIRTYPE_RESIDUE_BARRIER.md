@@ -138,6 +138,50 @@ Do not infer a positive bound from this identity: the Sidon lift makes its right
 
 **Multiscale closure criterion.** A claimed density-dip proof must convert a proven arithmetic mixing or inverse-structure lemma into the already established base-8 finite-window valley criterion in SHELL_HARDY_AUDIT.md. A mere S_k(H)>=delta_c N at isolated N does not suffice: the general matching upper budget has the same order O(N), and the geometric sum over scales is dominated by the largest scale. An actual proof requires an explicit bounded potential with a strict decrement at every sufficiently long block of scales, or another quantified contradiction for each fixed c>0. This is a proof obligation, not an established result.
 
+## 5A. Exact Fourier diagnostic for the next arithmetic-mixing attempt
+
+The residue barrier points to a concrete **mixing-versus-resonance** approach, not a claim of mixing. Let all elements of U union W lie in [1,H] and choose any integer modulus M>4H. There is no wrap-around ambiguity among centered lags p-2z, which lie in an interval of length at most 4H. For a function on Z/MZ define
+
+$
+\widehat F(\xi)=\sum_{x\bmod M}F(x)\exp(-2\pi i\xi x/M).
+$
+
+Using the entire pair-type partition, direct Fourier expansion and Parseval give for every two types alpha,beta
+
+$
+\boxed{
+O_{\alpha\beta}(W)=
+\frac{1}{M}\sum_{\xi\bmod M}
+\widehat{\mathbf 1_{P_\alpha}}(\xi)\,
+\overline{\widehat{\mathbf 1_{P_\beta}}(\xi)}
+\,|\widehat{\mathbf 1_W}(2\xi)|^2 .
+}\tag{FOURIER}
+$
+
+This holds for actual integer overlap, not a periodic surrogate, because of M>4H. The zero-frequency term is strictly positive for nonempty types and W:
+
+$
+\frac{|P_\alpha||P_\beta||W|^2}{M}.
+$
+
+If O_alpha,beta=0, the nonzero Fourier frequencies must cancel this term **exactly**:
+
+$
+\boxed{
+\sum_{\xi\ne0}
+\widehat{\mathbf 1_{P_\alpha}}(\xi)
+\overline{\widehat{\mathbf 1_{P_\beta}}(\xi)}
+|\widehat{\mathbf 1_W}(2\xi)|^2
+=-|P_\alpha||P_\beta||W|^2 .
+}\tag{RESONANCE}
+$
+
+The finite modular lift supplies explicit examples where this cancellation occurs for **all** distinct pair types simultaneously. Therefore one cannot assume pseudorandom Fourier cancellation bounds merely from B3 and positive lower density.
+
+**Precise next proof attempt:** obtain a quantitative *inverse* for near equality in (RESONANCE) across a growing set of pair types and many nested scales. It should show either (a) an arithmetic cross-correlation lower bound together with a rigorously identified **independent** matching deficit, or (b) a structural progression/residue concentration whose **quantified** cost forces a drop in the normalized counting function. Neither (a) nor (b) is currently proved. Even the bound O_alpha,beta>=epsilon N at one scale is not sufficient by itself: the global B3 matching budget is O(N).
+
+Test the inverse theorem first against (i) the complete Sidon digit lifts, (ii) the sparse infinite B3 base-16 example, (iii) the genuine greedy finite B3 prefix, and (iv) all remaining terms in the full pair-type partition. An inverse claim failing any of these is not admissible.
+
 ## 6. Finite replay fixture
 
 The genuine 29-point B3 set in CROSS_SCALE_OVERLAP_ENERGY.md has four consecutive 3-point inner blocks and a 17-point outer block. Take k=4, p=5, q=151, e=(0,11,42,43). The unordered pair-type residue labels are
