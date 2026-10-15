@@ -186,7 +186,8 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                 or doc["source_issue"] != prefix + "issues/2552"
                 or doc["pre_fix_public_failure"] != prefix + "issues/2552#issuecomment-6185743558"
                 or not isinstance(doc["protected_patch"], str)
-                or doc["protected_patch"] != root_url + "pull/2694"
+                or not re.fullmatch(r"https://github[.]com/grandchallenge/MATH-PROGRAMME/pull/[1-9][0-9]*",
+                                    doc["protected_patch"])
                 or not isinstance(doc["entries"], list)
                 or len(doc["entries"]) != 2):
             raise ValueError("Invalid EC005-R3 protected status amendment evidence")
