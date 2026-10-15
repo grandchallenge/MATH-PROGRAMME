@@ -14,6 +14,7 @@ import urllib.parse
 from typing import Any, Callable
 
 from specialist_domains import REPOSITORY as REPO, load_domains
+from agent_role_receipt import AgentRoleError, verify_agent_role_receipt
 
 SHA = re.compile(r"[0-9a-f]{40}\Z")
 PREFIX = "governance/material_admission_receipts/"
@@ -252,6 +253,22 @@ def protected_specialist_receipt(
         "1.0.0", RECORD_TYPE, domain, owner,
     ):
         raise ReceiptError("domain or schema not authoritative")
+    # GCL-ARC-001 applies only to protected PROTECTION receipts; all other
+    # specialist domains retain their existing exact independent reviewer gate.
+    if domain == "PROTECTION" and record.get("record_type") == (
+        "GCL_PROTECTED_AGENT_ROLE_ADMISSION_EVIDENCE_V1"
+    ):
+        try:
+            return verify_agent_role_receipt(
+                receipt=record, receipt_path=name, receipt_blob=receipt_blob,
+                read_protected_json=lambda repository, path, revision:
+                    _protected_json(api_get, repository, path, revision),
+                api_get=api_get, protected_sha=protected_sha,
+                subject_head=head, material_digest=fingerprint,
+                actual_actor=candidate_author,
+            )
+        except AgentRoleError as error:
+            raise ReceiptError(str(error)) from error
     target = record.get("subject") or {}
     if (target.get("repository"), target.get("head_sha"), target.get("material_fingerprint")) != (
         REPO, head, fingerprint,
