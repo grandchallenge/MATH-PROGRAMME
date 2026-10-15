@@ -1,0 +1,419 @@
+{
+  "record_type": "EC_BULK_006_894_895_FINITE/1",
+  "authority": "bounded modular/circle arithmetic and MILP evidence, NOT a certified SAT proof",
+  "p894": {
+    "exact_modular_examples": [
+      {
+        "sequence_base": 2,
+        "modulus_q": 3,
+        "exponents_checked": [
+          0,
+          11
+        ],
+        "max_n": 2000,
+        "rotational_parameter": "1/3",
+        "minimum_circle_distance": "1/3",
+        "all_checked_powers_nonzero_mod_q": true,
+        "colour_by_integer_remainder_mod_q": true
+      },
+      {
+        "sequence_base": 3,
+        "modulus_q": 2,
+        "exponents_checked": [
+          0,
+          7
+        ],
+        "max_n": 2000,
+        "rotational_parameter": "1/2",
+        "minimum_circle_distance": "1/2",
+        "all_checked_powers_nonzero_mod_q": true,
+        "colour_by_integer_remainder_mod_q": true
+      },
+      {
+        "sequence_base": 2,
+        "modulus_q": 5,
+        "exponents_checked": [
+          0,
+          11
+        ],
+        "max_n": 2000,
+        "rotational_parameter": "1/5",
+        "minimum_circle_distance": "1/5",
+        "all_checked_powers_nonzero_mod_q": true,
+        "colour_by_integer_remainder_mod_q": true
+      }
+    ],
+    "exact_rotation_bin_implications_tested": 34136,
+    "note": "explicit rational theta works for these particular lacunary sequences; theorem for ALL lacunary sequences is imported"
+  },
+  "p895": {
+    "counterexample_encoding": "binary edge variables, every triangle <=2 edges, every positive a<b with a+b<=n triple >=1 edge",
+    "proof_boundary": "infeasible MILP is not independently proof-certified without LRAT or exact exhaustive replay",
+    "models": [
+      {
+        "n": 6,
+        "vertices": 6,
+        "edges_variables": 15,
+        "triangle_constraints": 20,
+        "schur_triples": 6,
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "proof_grade": "NUMERICAL_SOLVER_REPORT_ONLY",
+        "counterexample_edges": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "counterexample_verified_exact": true
+      },
+      {
+        "n": 9,
+        "vertices": 9,
+        "edges_variables": 36,
+        "triangle_constraints": 84,
+        "schur_triples": 16,
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "proof_grade": "NUMERICAL_SOLVER_REPORT_ONLY",
+        "counterexample_edges": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            8
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            6,
+            9
+          ]
+        ],
+        "counterexample_verified_exact": true
+      },
+      {
+        "n": 12,
+        "vertices": 12,
+        "edges_variables": 66,
+        "triangle_constraints": 220,
+        "schur_triples": 30,
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "proof_grade": "NUMERICAL_SOLVER_REPORT_ONLY",
+        "counterexample_edges": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            2,
+            12
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            3,
+            12
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            11
+          ],
+          [
+            7,
+            12
+          ],
+          [
+            8,
+            11
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            11,
+            12
+          ]
+        ],
+        "counterexample_verified_exact": true
+      },
+      {
+        "n": 15,
+        "vertices": 15,
+        "edges_variables": 105,
+        "triangle_constraints": 455,
+        "schur_triples": 49,
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "proof_grade": "NUMERICAL_SOLVER_REPORT_ONLY",
+        "counterexample_edges": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            13
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            2,
+            10
+          ],
+          [
+            2,
+            13
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            3,
+            12
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            4,
+            10
+          ],
+          [
+            4,
+            11
+          ],
+          [
+            4,
+            12
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            5,
+            12
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            11
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            14
+          ],
+          [
+            9,
+            14
+          ],
+          [
+            10,
+            15
+          ],
+          [
+            11,
+            14
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            12,
+            14
+          ],
+          [
+            13,
+            15
+          ],
+          [
+            14,
+            15
+          ]
+        ],
+        "counterexample_verified_exact": true
+      },
+      {
+        "n": 17,
+        "vertices": 17,
+        "edges_variables": 136,
+        "triangle_constraints": 680,
+        "schur_triples": 64,
+        "status": 1,
+        "message": "Time limit reached. (HiGHS Status 13: model_status is Time limit reached; primal_status is None)",
+        "proof_grade": "NUMERICAL_SOLVER_REPORT_ONLY"
+      },
+      {
+        "n": 18,
+        "vertices": 18,
+        "edges_variables": 153,
+        "triangle_constraints": 816,
+        "schur_triples": 72,
+        "status": 1,
+        "message": "Time limit reached. (HiGHS Status 13: model_status is Time limit reached; primal_status is None)",
+        "proof_grade": "NUMERICAL_SOLVER_REPORT_ONLY"
+      }
+    ]
+  }
+}

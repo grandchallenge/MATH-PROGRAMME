@@ -1,0 +1,24 @@
+RESULT/1
+ASSIGNMENT_ID: ERDOS-CATALOGUE-0895-S01
+PROBLEM_ID: 895
+DISPOSITION: BOUNDED_TASK_DESIGNED
+CONTEXT_CLASS: ZERO_CONTEXT
+TIMEBOX_OBSERVED: NO
+
+## Exact statement and normalization
+For any sufficiently large n, EVERY simple TRIANGLE-FREE graph G with vertex set {1,...,n} contains three DISTINCT pairwise independent vertices a,b,a+b, with a,b positive and a<b, a+b<=n. Each of three unordered pairs must be a NONEDGE. The graph is triangle-free, not the arithmetic triple; independent means none of the three graph edges. As a separate conjecture, Hajnal asks for an independent full nonempty finite-sums/Hindman set of arbitrarily many generators in large enough triangle-free graphs. That stronger question remains OPEN and is not settled by n18.
+
+## Dated status and primary evidence
+Original Paul Erdős, 'On some problems in combinatorial set theory', Publications de l'Institut Mathématique (Beograd) N.S. 57(71) (1995), pp61–65, problem attributed to Erdős and Hajnal, source key [Er95d] at maintained https://www.erdosproblems.com/895. Live maintainer marks PROVED and attributes the all-n>=18 result to Ben Barber by PERSONAL COMMUNICATION, who verified the n18 SAT instance; neither original SAT run nor its certificate was independently obtained by GCL. Direct publisher source index and maintained source statement checked Oct14 2026, original 1995 paper pages not independently visually inspected. Formal Conjectures upstream as of Sept19 2026 has statement and links external Boris Alexeev Lean + LRAT reconstruction and three other submitted Lean reconstructions; source review https://erdosproblems.ai/wiki/problems/additive_combinatorics/E0895 records those links but explicitly did NOT kernel replay them itself. GCL pinned protected FC-GDM-85F86371 snapshot DOES NOT include 895 source file, so newer upstream links are NOT admitted or GCL compiled; no protected proof/axiom report. Frozen teorth/erdosproblems@536408716724a2402bdfa7c1d764bf83d64a8c89 PROVED but unformalized. Independent Hindman strengthening remains OPEN.
+
+## Strongest verified interface
+FINITE n18 reduction: if every triangle-free graph on {1,...,18} contains independent arithmetic triple, then every larger triangle-free graph inherits one by inducing on first 18 vertices. Exact SAT/MILP encoding: binary variable e_uv for each unordered u<v. For every distinct a<b<c, require e_ab+e_ac+e_bc<=2 (triangle-free). For every 1<=a<b and c=a+b<=n, require e_ab+e_ac+e_bc>=1 (NO independent arithmetic triple). SAT UNSAT at n18 establishes theorem; published Barber verification and external Lean/LRAT reconstructions attribute UNSAT but NOT independently checked by GCL. CHAD finite_894_895.py/json uses SciPy HiGHS to generate exact encoding. For n6,9,12,15 solver finds feasible counterexample graph; separately exact Python checks every triangle and every additive triple for each returned edge set. n6 has edges {(1,5),(2,3),(2,5),(2,6),(3,4)}. At n17 and n18 solver hit TIME LIMIT; no SAT or UNSAT conclusion. These finite computations do NOT certify n18.
+
+## Proposed bounded successor task
+Input source-locked 18-vertex SAT encoding/CNF with SHA256, SAT UNSAT LRAT or verified certificate, explicit exact a<b,a+b<=18 indexing, triangle clauses and arithmetic clauses. Target 1: independently verify UNSAT for n18 via trusted LRAT checker and exact CNF semantic comparator; target 2: pin and build Boris Alexeev or other published Lean development against exact Lean/Mathlib dependencies with no sorry/custom axioms and literal #print axioms readback; target 3: prove hereditary restriction n>=18. Acceptance: reproducible deterministic CNF/proof hash, certificate verified, Lean theorem statement identical to original graph theorem and no unacceptable axioms, exact finite n6 witness regression; falsify by satisfying 18-vertex graph, wrong arithmetic triple definition, broken certificate, unfrozen dependencies. Stop before independent Hindman generalization. No claims of kernel replay or mathematical novelty without these gates.
+
+## Prerequisites and blocker
+Original Barber personal communication did not include an archived certificate in the source available; external Lean 2026 remains unbuilt and outside pinned protected FC snapshot. Our own n18 MILP timed out without decisive result. Historical 1995 printed full page inaccessible in this run. Strict distinction published PROVED vs GCL proof-certificate state unreviewed.
+
+## Reuse and claim boundary
+Reused maintained curator's affirmative status, external reported Lean/LRAT links (not independently rebuilt), derived exact finite SAT semantics and hereditary lemma, verified small counterexample graphs. No original n18 computational proof, no independent Lean axioms, no protected review/main merge, public live MathJax or V2 admission claimed.
