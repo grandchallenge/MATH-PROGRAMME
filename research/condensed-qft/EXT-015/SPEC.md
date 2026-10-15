@@ -1,6 +1,6 @@
 # QFT-COND-005 / EXT-015 — SPEC
 
-**Status:** GOVERNED RESEARCH PLAN; mathematical successor to DRM-014, not a proof of the outstanding extension theorem.
+**Status:** PLAN PROTECTED-ADMITTED in [PR #2652](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2652), exact protected head dabaeff025eaffdd1295563bc4d6be589031adb3. EXT-015A/B handoffs are being prepared separately; mathematical conclusions remain open.
 
 **Canonical guiding question**
 
@@ -147,7 +147,7 @@ See [WORK_PACKAGES.md](WORK_PACKAGES.md) for queue-ready instructions, [EXTENSIO
 
 ## 8. Admission, provenance and execution discipline
 
-- Current status is **PLAN_REGISTERED_PENDING_ADMISSION** until the containing PR is protected-merged. Individual work packages become eligible for activation only after readback of their exact merged specification.
+- The plan was protected-merged in PR #2652; its exact admitted SHA is recorded above. **Handoff preparation is not worker dispatch**. Individual work packages may be activated only after protected handoff admission, exact readback, and authorized controller dispatch.
 - Apply established GCL authenticated issue/worker return discipline to executable tasks. Mathematical assertions require independently checkable proofs and source citations. Routine documentation merges follow existing protected policy; do not invent review signatures or bypass protection.
 - Preserve explicit states: PLANNED, ACTIVE, RETURNED, REVIEWED, PROVED, REFUTED, BLOCKED, and ADMITTED. A returned lemma is not automatically a proved theorem.
 - Every substantive claim has a theorem statement, proof or counterexample, exact category, revision SHA, mathematical limitations, and independent critical review. Save evidence before heavy rendering. Do not replace mathematical evidence with a finite numerical fixture.

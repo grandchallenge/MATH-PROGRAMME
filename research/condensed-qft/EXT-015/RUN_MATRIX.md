@@ -23,8 +23,8 @@ The listed evidence is a **plan**, not a mathematical certification. A row canno
 | D1 | Derived comparison for actual stages | Explicit RHom chain model and higher Ext controls | OPEN | Upgrade only degree zero |
 | D2 | Costello–Gwilliam B.6 smooth enrichment | Verified differentiable cofibrations, plots and multimorphisms | OPEN | Equate continuous linear and smooth nonlinear mapping objects |
 | D3 | Filtration/Weiss comparison | Exact complete filtered tensor, pro-limits and colimits | OPEN | Interchange limits/colimits without evidence |
-| P1 | Markdown format contract | GitHub mathematical markdown gate and view/readback | PENDING CI | Unsupported LaTeX or malformed displays |
-| P2 | Plan protected admission | CI green, governed queue admission, exact main readback | PENDING | Treat proposed PR as merged |
+| P1 | Markdown format contract | GitHub mathematical markdown gate and view/readback | PLAN CI PASS; HANDOFF CI PENDING | Unsupported LaTeX or malformed displays |
+| P2 | Plan protected admission | CI green, governed queue admission, exact main readback | ADMITTED PR #2652 | Treat proposed PR as merged |
 | P3 | Worker queue activation | Controller-approved issue identities, labels and result protocol | NOT STARTED | Invent queue state or RESULT/1 return |
 
 ## Existing established controls
@@ -40,4 +40,4 @@ The lightweight plan-check fixture verifies file presence, headings, cross-refer
 
 When A–D return, replace OPEN cells with PROVED/REFUTED only after independent critical review and exact accepted proof links. Record any conditional lemma as CONDITIONAL with its hypothesis. Follow the existing GCL merge queue and read back the exact protected SHA. The programme remains open until its mathematical stopping condition in SPEC is met.
 
-**Next action:** activate A and B under current authorized queue practice *after* protected plan admission; run independent positive and adversarial C tracks on the same certified Ext model.
+**Next action:** independently prepare A/B handoffs, protect-merge and read back immutable inputs, then authorize mathematical-worker dispatch through the configured GCL route. No available status, reservation, or worker execution is implied by handoff preparation. C remains dependent on a certified liquid Ext model.
