@@ -1,0 +1,84 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort_id": "EC-BULK-005",
+  "scope": {
+    "from": 657,
+    "to": 662,
+    "source_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "evidence_state": "PREPRODUCTION_DRAFT_SELF_CHECK_ONLY_NOT_BATCH_ADMISSION",
+  "original_issues": [
+    1928,
+    1929,
+    1930,
+    1931,
+    1932,
+    1933
+  ],
+  "authenticated_result_comments": [
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1928#issuecomment-6144336937",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1929#issuecomment-6144350469",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1930#issuecomment-6144372149",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1931#issuecomment-6144471179",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1932#issuecomment-6144502326",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1933#issuecomment-6144525548"
+  ],
+  "article_paths": [
+    "governance/erdos_compendium/editorial/0657.md",
+    "governance/erdos_compendium/editorial/0658.md",
+    "governance/erdos_compendium/editorial/0659.md",
+    "governance/erdos_compendium/editorial/0660.md",
+    "governance/erdos_compendium/editorial/0661.md",
+    "governance/erdos_compendium/editorial/0662.md"
+  ],
+  "checks": {
+    "source_report_grammar": "six of six source reports present on exact original GitHub issue with canonical headers; checked by live GitHub connector",
+    "article_structure": "six of six required H2 headings present for all 6; exact branch content readback",
+    "portable_math": "balanced $$ display markers and no malformed escaped inline code spans; lightweight check, not a MathJax browser run",
+    "finite_fixture_suite": "ci/test_erdos_compendium_ec005_fixtures.py",
+    "finite_fixture_test_result": "six functions passed in local Python 3 standard-library execution; remote GitHub Actions run not yet executed",
+    "finite_fixture_suite_commit": "07cdfb86b4f17f30095d5db07a34db6fce83efd3",
+    "global_production_ci": "NOT_EXECUTED",
+    "strict_mkdocs": "NOT_EXECUTED",
+    "public_browser_math": "NOT_EXECUTED",
+    "batch_critical_sample": "NOT_EXECUTED",
+    "fully_source_qualified_count": 0,
+    "reviewer_type": "ACCOUNTABLE_AUTHOR_SELF_CHECK_NOT_INDEPENDENT_MATH_REVIEW",
+    "editorial_admission": "NONE",
+    "mathematical_certification": "NONE"
+  },
+  "individual_risk_findings": [
+    {
+      "problem_id": 657,
+      "source_status": "OPEN",
+      "limitation": "One-dimensional AP-free estimates do not prove the planar conjecture; historical original sources uninspected"
+    },
+    {
+      "problem_id": 658,
+      "source_status": "PROVED_EXTERNAL_LEAN_REPORTED",
+      "limitation": "Axis-parallel published 2004 theorem implies general square; external Lean wrapper not protected, original Er97e ambiguity"
+    },
+    {
+      "problem_id": 659,
+      "source_status": "PROVED_EXTERNAL_LEAN_REPORTED",
+      "limitation": "Bernays named theorem is external; external formalization declares an axiom and pinned wrapper has sorry; no GCL replay"
+    },
+    {
+      "problem_id": 660,
+      "source_status": "OPEN",
+      "limitation": "Historical existence/universal quantifier drift; regular pyramids supply matching upper examples, not universal lower bound"
+    },
+    {
+      "problem_id": 661,
+      "source_status": "OPEN",
+      "limitation": "Little-o remains unproved; cross-team distinctness is implicit, not verified from original; corrected F=o(f)"
+    },
+    {
+      "problem_id": 662,
+      "source_status": "MAINTAINED_OPEN_BUT_STATEMENT_CONFLICT",
+      "limitation": "Severe source-semantic defect: radius-three triangular shells count 36 not recorded 18; literal global short-distance statement refuted; original Er97e required",
+      "hold": true
+    }
+  ],
+  "batch_gate": "NO_PRODUCTION_PR_OR_EDITORIAL_ADMISSION_BEFORE_200_SOURCE_QUALIFIED_AND_FLAGS_REVIEWED"
+}

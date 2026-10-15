@@ -1,0 +1,119 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 822,
+    "to": 831,
+    "count": 10,
+    "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "actor": "fyremael",
+  "original_issues": [
+    2093,
+    2094,
+    2095,
+    2096,
+    2097,
+    2098,
+    2099,
+    2100,
+    2101,
+    2102
+  ],
+  "authenticated_comment_ids": [
+    6180074584,
+    6180075011,
+    6180075411,
+    6180075907,
+    6180076452,
+    6180076919,
+    6180077321,
+    6180077753,
+    6180078192,
+    6180078611
+  ],
+  "source_dispositions": [
+    "SOURCE_LOCK_READY",
+    "SOURCE_LOCK_READY",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED"
+  ],
+  "article_sha256": {
+    "822": "7bb60e6306195e77b27af782b99b4bc2cb6f6be2003a2b1fbaab7de56c54fddd",
+    "823": "69b2421121151ed29624301d5c8b494f86d7c751bb06884addd5fd147f6ce8de",
+    "824": "2a5b11f227eb591b80dab4996ac42841f2b2a2190beb09a9942426e8356cc277",
+    "825": "a37f815f4428b50100eff8dfc732b54b091b028af92f26d33a8a428140999cf1",
+    "826": "1c45bdfc2fe9568d342a6afd43a9f370dea3331a9a16e3478cc500dd01e1b5d5",
+    "827": "3880944ec88a1afa198833f8c087b3321caf87182fdd8bbf67a33b6c603cb169",
+    "828": "27e5e7da4c6ad4604c84c4fc69df8b81ef21256213ac4bac6f353cff8601b62e",
+    "829": "726fdc317e161fd198d1c21e1d0cea79c62ec0e799a5d5a6b4a80d569adb09bb",
+    "830": "1f3ede8c1075f7219c878ee60bf093c1b4074f333382865c2df22167749588cb",
+    "831": "3a2e7749d62405116d2a2670e59af812c426900fff9343b340cf68a80b97d08c"
+  },
+  "source_math_gate": "PASS_ALL_TEN",
+  "finite_fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_822_831.py",
+    "passed": 10,
+    "note": "Finite exact definitions and source-semantic examples only; no new proof of cited infinite/asymptotic results"
+  },
+  "exception_holds": [
+    {
+      "problem_id": 825,
+      "exceptions": [
+        "PROVED_CATALOGUE_LARSEN_ABSOLUTE_C_PRIMARY_REDUCTION_HOLD"
+      ],
+      "blockers": [
+        "LARSEN_PRIMARY_PROOF_ABSOLUTE_C_REDUCTION_NOT_CHECKED",
+        "LEAST_PRIME_FACTOR_RESTRICTION"
+      ]
+    },
+    {
+      "problem_id": 827,
+      "exceptions": [
+        "OPEN_SHARP_DISTINCT_CIRCUMRADIUS_SUBSET_THRESHOLD_K5_UPPER"
+      ],
+      "blockers": [
+        "ERDOS1978_ORIGINAL_ARGUMENT_FLAW",
+        "MARTINEZ_ROLDAN_2015_FULL_PROOF_PENDING",
+        "COMMENT_K5_UPPER_UNREPLAYED"
+      ]
+    },
+    {
+      "problem_id": 828,
+      "exceptions": [
+        "OPEN_EVERY_SHIFT_TOTIENT_DIVISIBILITY_PHI_N_CORRECTION"
+      ],
+      "blockers": [
+        "CATALOGUE_PHI_N_EXPONENT_BOUNDARY_NEEDS_EXPLICIT_A_GE_1",
+        "OPEN_ALL_SHIFTS_AND_LEHMER_SEPARATE"
+      ]
+    },
+    {
+      "problem_id": 830,
+      "exceptions": [
+        "OPEN_AMICABLE_INFINITUDE_PERFECT_DIAGONAL_SOURCE_AMBIGUITY"
+      ],
+      "blockers": [
+        "A_LEQ_B_DIAGONAL_PERFECT_VS_AMICABLE_DISTINCT_CONVENTION_HOLD",
+        "POMERANCE_PRIMARY_COUNTING_SCOPE_PENDING"
+      ]
+    }
+  ],
+  "qa_boundaries": {
+    "source_primary_full_proof": "PARTIAL_NOT_COMPLETE",
+    "independent_review": "PENDING",
+    "external_lean_replay": "NOT_DONE",
+    "local_mkdocs": "PASS_LOCAL_NOT_DEPLOYED",
+    "browser_mathematical_rendering": "NOT_VERIFIED",
+    "protected_merge": "NOT_MERGED",
+    "v2_editorial_admission": "NOT_ADMITTED",
+    "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:59c190adfbdd48009ad2d444a1999c0c",
+    "cohort_test_suite": "216_PASSED_0_FAILED"
+  }
+}

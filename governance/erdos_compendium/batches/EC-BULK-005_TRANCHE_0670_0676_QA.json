@@ -1,0 +1,90 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "tranche": {
+    "from": 670,
+    "to": 676,
+    "count": 7
+  },
+  "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "production_branch": "editorial/ec-bulk-005-200",
+  "authority": "ACCOUNTABLE_COORDINATOR_SELF_CHECK_UNACCEPTED_NOT_EDITORIAL_ADMISSION",
+  "source_issues": [
+    1941,
+    1942,
+    1943,
+    1944,
+    1945,
+    1946,
+    1947
+  ],
+  "source_comments": [
+    6156933983,
+    6156939039,
+    6156945532,
+    6156972845,
+    6156988810,
+    6157011926,
+    6157064620
+  ],
+  "audit": {
+    "authenticated_comment_count": 7,
+    "original_issue_result_grammar_pass": 7,
+    "articles_present": 7,
+    "six_section_headings_pass": 7,
+    "balanced_display_math_delimiters_pass": 7,
+    "rendered_mathjax_pass": 0,
+    "full_strict_mkdocs": "NOT_EXECUTED",
+    "full_production_ci": "NOT_EXECUTED",
+    "batch_critical_review": "NOT_EXECUTED",
+    "v2_admission": "NONE"
+  },
+  "fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_670_675.py",
+    "latest_source_commit": "04be0bdc54d2c5de9cd2637b217f9f3bacd8a1da",
+    "command": "Authenticated CHAD gh api read of exact editorial branch source, base64 decode, Python 3 unittest",
+    "chad_execution_id": "GCL_CONTROL_BASH_RESULT/1:ea95e47067e34d2fb8ce1f1c020df61a",
+    "tests_passed": 8,
+    "tests_total": 8,
+    "exit_code": 0,
+    "scope": "Only deterministic exact finite arithmetic; no theorem proof, no source-fidelity guarantee or browser check"
+  },
+  "source_math_exceptions": [
+    {
+      "problem_id": 670,
+      "status": "OPEN_FIXED_DIMENSION",
+      "exception": "Primary Ho 2026 counterexample disproves variable d(n), not fixed d; source Erdős 1997 quantifiers not independently inspected"
+    },
+    {
+      "problem_id": 671,
+      "status": "OPEN",
+      "exception": "The existential x may depend on f; Bernstein/ErVe historical proof pages not inspected"
+    },
+    {
+      "problem_id": 672,
+      "status": "VERIFIABLE",
+      "exception": "Primary 2006 k<=11 and 2009 k<=34 publisher statements; pinned 672.lean contains sorry proof holes; all-k question not solved"
+    },
+    {
+      "problem_id": 673,
+      "status": "PROVED_DENSITY_ONE",
+      "exception": "Maintained auxiliary inequality as worded for any m|n has m=1 counterexample; correct statement requires m>1"
+    },
+    {
+      "problem_id": 674,
+      "status": "PROVED_EXTERNAL_LEAN_REPORTED",
+      "exception": "Known Ko family exact prime valuations and all-r algebra verified; all-solution classification not established; GCL Lean not replayed"
+    },
+    {
+      "problem_id": 675,
+      "status": "OPEN_SUBQUESTIONS",
+      "exception": "Squarefree translation property attributed to sieve; finite minimal shifts cannot establish quantitative lower conjecture"
+    },
+    {
+      "problem_id": 676,
+      "status": "OPEN",
+      "exception": "Finite 1..400 exceptions do not establish infinitely many; maintained sieve-density conclusion does not prove eventual universal representation"
+    }
+  ],
+  "next_boundary": "Begin original source audit for #677, maintain #662 source-semantic hold; full cohort 200 source returns and articles, 10% critical sample, exact source lock, protected PR, deployed browser math and separate V2 admission remain pending."
+}

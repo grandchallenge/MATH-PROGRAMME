@@ -1,0 +1,114 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort_id": "EC-BULK-005",
+  "stage": "STAGED_UNACCEPTED_SOURCE_AUDIT",
+  "range": {
+    "first_problem": 663,
+    "last_problem": 669,
+    "count": 7
+  },
+  "authority": {
+    "source_registry_git_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+    "branch": "editorial/ec-bulk-005-200"
+  },
+  "source_results": [
+    {
+      "id": 663,
+      "issue": 1934,
+      "comment_id": 6156649685,
+      "disposition": "PARTIAL"
+    },
+    {
+      "id": 664,
+      "issue": 1935,
+      "comment_id": 6156689691,
+      "disposition": "PARTIAL"
+    },
+    {
+      "id": 665,
+      "issue": 1936,
+      "comment_id": 6156696426,
+      "disposition": "BOUNDED_TASK_DESIGNED"
+    },
+    {
+      "id": 666,
+      "issue": 1937,
+      "comment_id": 6156703095,
+      "disposition": "BOUNDED_TASK_DESIGNED"
+    },
+    {
+      "id": 667,
+      "issue": 1938,
+      "comment_id": 6156741413,
+      "disposition": "PARTIAL"
+    },
+    {
+      "id": 668,
+      "issue": 1939,
+      "comment_id": 6156746123,
+      "disposition": "PARTIAL"
+    },
+    {
+      "id": 669,
+      "issue": 1940,
+      "comment_id": 6156751929,
+      "disposition": "BOUNDED_TASK_DESIGNED"
+    }
+  ],
+  "structural_readback": {
+    "unique_original_issues": 7,
+    "authenticated_original_issue_comments": 7,
+    "comment_grammar_pass": 7,
+    "articles_present": 7,
+    "articles_six_h2_headings_pass": 7,
+    "portable_display_math_delimiters_balanced": 7,
+    "source_result_links_present": 7,
+    "all_v2_admissions": "NOT_ADMITTED",
+    "critical_primary_source_review": "PENDING",
+    "strict_mkdocs": "NOT_RUN",
+    "deployed_browser_math": "NOT_VERIFIED"
+  },
+  "fixture_test": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_663_669.py",
+    "committed_source_sha": "3709892e820c4b60e1488fa6aab7a466447eccdc",
+    "runner": "CHAD authenticated gh API exact branch source piped to Python3",
+    "record_type": "GCL_CONTROL_BASH_RESULT/1",
+    "run_id": "492729f0fc334eb29251e38c498648d0",
+    "exit_code": 0,
+    "total": 7,
+    "passed": 7,
+    "duration_reported_seconds": 0.004,
+    "scope": "small exact finite illustrations only; not publication QA or proof of asymptotic theorems"
+  },
+  "risk_flags": [
+    {
+      "id": 663,
+      "flag": "fixed-k prime asymptotic coefficient one is OPEN; primorial lower construction does not settle upper bound"
+    },
+    {
+      "id": 664,
+      "flag": "Alon disproof only catalogue-attributed; original probabilistic proof not directly located; stronger Er81 pair-cover variant OPEN"
+    },
+    {
+      "id": 665,
+      "flag": "constant block-size deficit OPEN; near-sqrt(n) 1982 constructions and conditional 1985 embedding are not a solution"
+    },
+    {
+      "id": 666,
+      "flag": "Chung/BDT four-color theorem verified at primary abstract level; full proof and external Lean replay not inspected"
+    },
+    {
+      "id": 667,
+      "flag": "monotonicity of clique exponent is non-strict only; general strictness OPEN"
+    },
+    {
+      "id": 668,
+      "flag": "n=4 uniqueness disproves only subsidiary all-n question; asymptotic number of maximizers OPEN; graph isomorphism differs from congruence"
+    },
+    {
+      "id": 669,
+      "flag": "k=3 orchard exactly-k primary theorem and at-least-k theorem need separate source verification; higher k OPEN"
+    }
+  ],
+  "admission_boundary": "NONE: all seven remain unaccepted drafts. Full 200-slot return and manuscript work, source-critical review, deterministic >=10% sample, protected PR merge and public MathJax readback precede V2 admission."
+}
