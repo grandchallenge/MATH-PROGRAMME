@@ -52,6 +52,23 @@ class EditorialGateTests(unittest.TestCase):
                     "entries": entries,
                 }]}
 
+    def test_editorial_rejects_invisible_control_characters(self):
+        """Python non-raw LaTeX literals can inject BEL into mathematical prose."""
+        with tempfile.TemporaryDirectory() as root:
+            p = Path(root) / "1149.md"
+            p.write_text(
+                "## The question in plain language\\n"
+                "## A small example\\n"
+                "## What is known\\n"
+                "## GCL's current state\\n"
+                "## What remains\\n"
+                "## Sources and claim boundaries\\n"
+                + "A corrupted alpha token: " + chr(7) + "lpha\\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "nonprinting control"):
+                manuscript(1149, base=Path(root))
+
     def test_browser_readback_reads_active_v2_batch_ledger(self):
         """V2 browser verifier accepts original #7 and protected new #8."""
         for n in (7, 8):
