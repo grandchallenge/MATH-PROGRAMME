@@ -30,6 +30,10 @@ See [OFF_SPECTRUM_FOURTH_MOMENT.md](OFF_SPECTRUM_FOURTH_MOMENT.md). The exact se
 
 The admitted fourth-moment theorem and its [spectral matching successor](SPECTRAL_MATCHING_COMPETITION.md) now give a *pointwise* B3 restriction. For any nonzero difference d, the internal pair-sum autocorrelation of a block X and all cross-correlations with disjoint external blocks have combined multiplicity at most |X|. Their positive unordered pairs must have pairwise disjoint supports when d is off A−A. This yields exact off-spectrum first mass and a joint quadratic energy upper budget, beyond enclosing interval volumes. But geometric critical-scale models still have the same leading power on both sides: this does not force Erdős #41's low-density windows. The genuine arithmetic matching theorem is accepted as a bounded result only after its protected review.
 
+## 2026-10-14 translation-invariant centered fibers: exact matching and explicit infinite obstruction
+
+[ZERO_SUM_FIBER_AUDIT.md](ZERO_SUM_FIBER_AUDIT.md) proves a fixed-nonzero-lag matching bound for the translation-invariant form a+b−2c on finite repetition-permitted B3 blocks. Its weighted representation count only recovers a **quadratic** diameter bound, weaker than the cubic-shadow estimate. More decisively, an explicit INFINITE B3 set built from superseparated base-16 digit blocks has the SAME nonzero centered lag 1 in *every* block. Thus arbitrary-scale spectral disjointness or scale-independent overlap bounds fail even for genuine B3; the constructed set has counting function O(log N), hence is not an Erdős #41 counterexample. A valid higher-order accumulation theorem must use positive lower density and additional arithmetic information. The exact finite-window valley remains OPEN.
+
 ## A rigorous packing baseline
 
 Suppose A is an M3 subset of the positive integers and m is the number of its elements in the interval [1,N]. The number of size-three multisets supported in these m elements is

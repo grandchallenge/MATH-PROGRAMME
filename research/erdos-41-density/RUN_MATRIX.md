@@ -98,3 +98,16 @@ See [OFF_SPECTRUM_FOURTH_MOMENT.md](OFF_SPECTRUM_FOURTH_MOMENT.md). No theorem c
 | Persistent B3 density forces collision | Ordinary capacity estimates have no accumulating scale factor | OPEN |
 
 The finite theorem is not an automatic Forge/Solve/Cert transition.
+
+## Translation-invariant B3 zero-sum fiber audit
+
+| Obligation | Evidence | Status |
+| --- | --- | --- |
+| Fixed-nonzero-lag matching of positive unordered pair supports | Complete B3 triple-uniqueness proof; finite exhaustive and genuine 29-element checks | PROVED |
+| Weighted fiber bound and quadratic-only diameter estimate | Exact arithmetic; bounded multi-block tests | PROVED |
+| Arbitrarily many disjoint geometrically separated blocks share lag 1 | Explicit infinite base-16 B3 construction with carry-free digit proof; 20-block exhaustive check | PROVED |
+| Non-B3 hostile test and incorrect spectral-disjointness assertion | Regression fixtures | REFUTED incorrect candidate |
+| Lean arithmetic/digit algebra | Pinned toolchain receipt after compilation | SEPARATE arithmetic only |
+| Density-sensitive higher-order overlap leading to Erdős #41 | Not obtained | OPEN |
+
+The infinite example is intentionally sparse, with A(N)=O(log N); it is **not** a counterexample to Erdős #41.
