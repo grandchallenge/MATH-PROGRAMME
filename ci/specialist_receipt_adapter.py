@@ -248,11 +248,6 @@ def protected_specialist_receipt(
     protected_sha = _sha(((ref or {}).get("object") or {}).get("sha"))
     name = f"{PREFIX}MATH-PROGRAMME-{head}.json"
     record, receipt_blob = _protected_json(api_get, owner, name, protected_sha)
-    if (record.get("schema_version"), record.get("record_type"),
-        record.get("authority_domain"), record.get("source_repository")) != (
-        "1.0.0", RECORD_TYPE, domain, owner,
-    ):
-        raise ReceiptError("domain or schema not authoritative")
     # GCL-ARC-001 applies only to protected PROTECTION receipts; all other
     # specialist domains retain their existing exact independent reviewer gate.
     if domain == "PROTECTION" and record.get("record_type") == (
@@ -269,6 +264,11 @@ def protected_specialist_receipt(
             )
         except AgentRoleError as error:
             raise ReceiptError(str(error)) from error
+    if (record.get("schema_version"), record.get("record_type"),
+        record.get("authority_domain"), record.get("source_repository")) != (
+        "1.0.0", RECORD_TYPE, domain, owner,
+    ):
+        raise ReceiptError("domain or schema not authoritative")
     target = record.get("subject") or {}
     if (target.get("repository"), target.get("head_sha"), target.get("material_fingerprint")) != (
         REPO, head, fingerprint,
