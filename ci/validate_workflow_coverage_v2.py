@@ -10,6 +10,7 @@ RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.
 QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualification.yml"
 CONSTRUCTION_GATE_WORKFLOW = "construction-gate-runtime.yml"
 ROLLING_REVIEW_DIRECT_WORKFLOW = "erdos-rolling-review-completion.yml"
+THREE_SOURCE_COUNCIL_WORKFLOW = "erdos-three-source-resolution.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -32,6 +33,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     QUALIFICATION_ONLY_WORKFLOW,
     CONSTRUCTION_GATE_WORKFLOW,
     ROLLING_REVIEW_DIRECT_WORKFLOW,
+    THREE_SOURCE_COUNCIL_WORKFLOW,
     "ghos-routing-enforcement.yml",
 }
 
@@ -497,6 +499,71 @@ def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def three_source_council_errors(texts: dict[str, str]) -> list[str]:
+    """Protect source remediation from widened authorities or manual bypass."""
+    key = THREE_SOURCE_COUNCIL_WORKFLOW
+    source = texts.get(key)
+    if source is None:
+        return []
+    workflow = v3.legacy.load_yaml_text(source)
+    errors: list[str] = []
+    if _trigger(workflow) != {'workflow_dispatch': ''}:
+        errors.append(f'{key}: only on-demand protected-main execution allowed')
+    if workflow.get('permissions') != {'contents': 'read'}:
+        errors.append(f'{key}: unscoped GitHub Actions permissions')
+    if set(workflow.get('jobs', {})) != {'council-clerk-source-remediation'}:
+        errors.append(f'{key}: unexpected job topology')
+    job = _job(workflow, 'council-clerk-source-remediation')
+    if (job.get('environment') != 'release-trust'
+            or job.get('permissions') != {'contents': 'read'}
+            or 'refs/heads/main' not in str(job.get('if',''))
+            or 'grandchallenge/MATH-PROGRAMME' not in str(job.get('if',''))):
+        errors.append(f'{key}: lost protected Council environment')
+    steps = job.get('steps') or []
+    if len(steps) != 7 or not all(isinstance(x,dict) for x in steps):
+        errors.append(f'{key}: expected exactly seven bounded steps')
+        return errors
+    checkout,python,tests,credential,preflight,apply,receipt=steps
+    if (checkout.get('uses') != 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+            or checkout.get('with') != {'ref':'main','persist-credentials':'false'}):
+        errors.append(f'{key}: checkout not protected and credential-free')
+    if (python.get('uses') != 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97'
+            or python.get('with') != {'python-version':'3.12'}):
+        errors.append(f'{key}: unpinned runtime bootstrap')
+    test=str(tests.get('run',''))
+    if ('governance/source_erdos_critical_005/validate.py' not in test
+            or 'tests/test_erdos_three_source_resolution.py' not in test):
+        errors.append(f'{key}: hostile controls or source hash checks missing')
+    token=credential.get('with') or {}
+    if (credential.get('uses') != 'actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1'
+            or token.get('owner')!='grandchallenge'
+            or token.get('repositories')!='MATH-PROGRAMME'
+            or token.get('permission-issues')!='write'
+            or token.get('permission-organization-projects')!='read'
+            or set(token)!={'app-id','private-key','owner','repositories','permission-issues','permission-organization-projects'}
+            or 'GCL_COUNCIL_CLERK_APP_ID' not in str(token.get('app-id',''))
+            or 'GCL_COUNCIL_CLERK_PRIVATE_KEY' not in str(token.get('private-key',''))):
+        errors.append(f'{key}: Council Clerk role or least privileges changed')
+    for step,needs_apply,path in ((preflight,False,'preflight.json'),(apply,True,'receipt.json')):
+        env=step.get('env') or {}
+        run=str(step.get('run',''))
+        if (env.get('GCL_CONTROLLER_ID')!='erdos-three-source-resolution'
+                or 'steps.council.outputs.token' not in str(env.get('GH_TOKEN',''))
+                or 'ci/erdos_three_source_resolution.py' not in run
+                or f'--receipt artifacts/erdos-three-source-resolution/{path}' not in run
+                or ('--apply' in run)!=needs_apply):
+            errors.append(f'{key}: missing exact bounded Council operation')
+    if (receipt.get('uses')!='actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a'
+            or receipt.get('if')!='always()'
+            or receipt.get('with',{}).get('path')!='artifacts/erdos-three-source-resolution'):
+        errors.append(f'{key}: source-adjudication receipt retention missing')
+    for forbidden in ('permission-administration','gh pr merge','gh project item-edit',
+                      'git push','pull_request_target','secrets.GCL_RELEASE_TRUST'):
+        if forbidden in source:
+            errors.append(f'{key}: forbidden control plane capability {forbidden}')
+    return errors
+
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
@@ -518,6 +585,7 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
     errors.extend(recovery_failover_errors(texts))
     errors.extend(remediation_envelope_errors(texts))
     errors.extend(rolling_review_direct_errors(texts))
+    errors.extend(three_source_council_errors(texts))
     queue_projection = texts.get("erdos-catalogue-queue-projection.yml")
     if queue_projection is not None:
         workflow = v3.legacy.load_yaml_text(queue_projection)
