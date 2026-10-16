@@ -109,11 +109,11 @@ Fix k>=1 and suppose D>=4k, n^2>=64k, and n>=cD^(1/3). Apply (SHORT-DENSITY) wit
 
 Let I be **any** interval of L+1 consecutive integers, L=ceil(D/k). For each such positive difference h, exactly L+1−h unordered pairs {x,x+h} lie in I. Since h<=ceil(L/2), this count is at least L/2. Therefore the thresholded forbidden-distance graph on I, at edge threshold t=c^3 n/(2048k), has
 
-$
+$$
 \boxed{
 e(G_t(U,I))\ge \frac{c^6}{4194304\,k^4}D^2.
 }\tag{GRAPH-DENSE}
-$
+$$
 
 Moreover the total weighted correlation on **all** pairs of potential outer positions in I is at least t times this edge count. This is a *uniform*, density-sensitive supply of popular graph edges in any translated interval of the indicated short length. It uses actual B3 pair-sum correlations, not a synthetic random-distance graph.
 
