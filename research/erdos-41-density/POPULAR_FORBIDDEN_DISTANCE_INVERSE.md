@@ -155,40 +155,40 @@ The large-independent-set alternative must not be reduced to an unproved asserti
 
 For a finite B3 set X of n>=2 elements and diameter D>0, let t_q(X) be the number of residue classes modulo q occupied by X. Then for **every** integer 1<=q<=D,
 
-$
+$$
 \boxed{
 12D\,t_q(X)^3\ge q\,n^3,\qquad
 t_q(X)\ge n\left(\frac{q}{12D}\right)^{1/3}.
 }\tag{MODULAR-DISPERSION}
-$
+$$
 
 **Proof.** Let t=t_q(X), and choose a residue class containing s>=ceil(n/t) elements. If s=1, then every occupied residue class contains exactly one point, so t=n; the claimed inequality follows from q<=D. If s>=2, translate and divide that class by q. The resulting integer B3 set has size s and diameter at most D/q. The already-proved cubic-shadow bound gives
 
-$
+$$
 s^3-s^2+2s\le 6D/q+2.
-$
+$$
 
 For every integer s>=2 one has $s^3-s^2+2s-2\ge s^3/2$. Consequently q s^3<=12D. Since s>=n/t, obtain q n^3/t^3<=12D. QED.
 
 **Critical-density corollary.** If n>=cD^(1/3), then every 1<=q<=D satisfies
 
-$
+$$
 \boxed{t_q(X)\ge \frac{c}{12^{1/3}}q^{1/3}.}\tag{MODULAR-CRITICAL}
-$
+$$
 
 In particular, if X lies in at most t residue classes modulo q, then its normalized cardinality is bounded by
 
-$
+$$
 \boxed{\frac{n}{D^{1/3}}\le
 12^{1/3}\frac{t}{q^{1/3}}.}\tag{MODULAR-COST}
-$
+$$
 
 Now let W be an **actual B3 outer independent set** in an interval of span L, and suppose m=|W|>=c L^(1/3). The same conclusion applies to W, with its actual diameter no larger than L:
 
-$
+$$
 \boxed{t_q(W)\ge\frac{c}{12^{1/3}}q^{1/3}
 \quad(1\le q\le L).}\tag{OUTER-MODULAR}
-$
+$$
 
 This is a *quantitative structural restriction on every unexpectedly large B3-independent outer set*, and it does not require the near-tiling condition of Theorem B below.
 
@@ -203,7 +203,7 @@ A truly *near-maximal* independent set does obey a stronger, quantitative struct
 Let U be any finite B3 block and W independent in G_1(U,I), write m=|W|, q=|P|, and take the integer interval containing the complete sumset P+2W of width
 
 $$
-M=2D+2\operatorname{diam}(W)+1.
+M=2D+2\mathrm{diam}(W)+1.
 $$
 
 After translating the interval to [0,M-1], let C be the complement of P+2W, so |C|=M-qm. In the cyclic group Z/MZ, define $\widehat F(\xi)=\sum_{x=0}^{M-1}F(x)e^{-2\pi i\xi x/M}$. All sums P+2W lie in that interval, with no wrap ambiguity.
