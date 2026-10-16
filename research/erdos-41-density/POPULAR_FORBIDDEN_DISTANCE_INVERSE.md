@@ -196,6 +196,66 @@ This is a *quantitative structural restriction on every unexpectedly large B3-in
 
 **Critical boundary:** the proof uses only the B3 property and cubic-shadow counting; independence does not strengthen it. Sidon-digit lifts with q about k^2 and t about k are not excluded, because k is larger than q^(1/3). A successful Stage B inverse theorem must force either t=o(q^(1/3)) for some growing q, or another structure with a separately proved density cost. We do not claim that all independent-set avoidance has this form.
 
+## 4B. Residue-capacity integer programme: a graph-specific independence bound
+
+The crude global bound (ALPHA) can be improved **without any Fourier mixing assumption**, by enforcing exact capacity at every residue class. This is an arithmetic-dependent finite certificate, not merely a restatement of an independent set.
+
+Fix a candidate outer interval I=[a,b], span L=b-a, and any integer modulus Q>=2. For residues r,s,t modulo Q define
+
+$
+A_r=\#\{p\in P:p\equiv r\bmod Q\},\qquad
+B_s=\#\{w\in W:w\equiv s\bmod Q\}.
+$
+
+Let J_2=[min(P)+2a,max(P)+2b] be the entire possible range of doubled sums, and let C_t^(2) count the integers in J_2 congruent to t modulo Q. Let I_s count candidate integers of I in residue class s.
+
+**Theorem C (modular capacity of any independent outer set).** If W subset I is independent in G_1(U,I), its residue counts satisfy the following **finite integer-linear** system:
+
+$
+\boxed{
+0\le B_s\le I_s,\qquad
+\sum_{\substack{r,s\\r+2s\equiv t\bmod Q}} A_r B_s
+\le C_t^{(2)}\quad(t\in\mathbb Z/Q\mathbb Z).
+}\tag{RESIDUE-LP2}
+$
+
+**Proof.** Independence makes (p,w) -> p+2w injective on P times W. Exactly the number on the left of each second inequality maps into the residue-t locations inside J_2, of which only C_t^(2) exist. These counts are distinct integers, so the inequality holds for each t. The first inequalities are immediate. QED.
+
+Therefore if $\mathrm{OPT}_Q(U,I)$ is the *maximum of sum_s B_s over nonnegative integer variables* satisfying (RESIDUE-LP2), then
+
+$
+\boxed{
+\alpha(G_1(U,I))\le
+\min\left\{\left\lfloor\frac{2D+2L+1}{|P|}\right\rfloor,
+\,\mathrm{OPT}_Q(U,I)\right\}
+\quad\text{for every }Q\ge2 .
+}\tag{LP-ALPHA}
+$
+
+For an **actual B3 outer subset W disjoint from U**, the map (p,w)->p+w is also injective. Thus one may add the independent family of residue constraints
+
+$
+\boxed{
+\sum_{\substack{r,s\\r+s\equiv t\bmod Q}}A_rB_s
+\le C_t^{(1)},\qquad
+C_t^{(1)}=\#\{z\in[\min P+a,\max P+b]:z\equiv t\bmod Q\}.
+}\tag{RESIDUE-LP1}
+$
+
+Moreover each actual outer residue class is itself B3 after translating and dividing by Q, hence its occupancy B_s>=2 obeys
+$B_s^3-B_s^2+2B_s\le6L/Q+2$. These extra conditions can be precomputed as an integer upper limit on each variable. They further tighten the bound for genuine B3 outer sets. None is silently imposed on an arbitrary graph-independent set.
+
+**Strict arithmetic improvement.** If U lies entirely in one parity class, then every pair sum p is even. With Q=2, the doubled sums p+2w can occupy only the **even** integers of J_2. Since there are exactly D+L+1 of those, (RESIDUE-LP2) gives
+
+$
+\boxed{\alpha(G_1(U,I))\le
+\left\lfloor\frac{D+L+1}{\binom{n+1}{2}}\right\rfloor .}\tag{PARITY-ALPHA}
+$
+
+This can be strictly sharper than *both* the global doubled-sum bound (ALPHA) and the original UUW triple-packing interval capacity. For example, U={1,5,33} is B3, n=3, D=32; for any candidate outer interval I of span L=32, (PARITY-ALPHA) gives alpha<=10, whereas global doubled packing gives <=21 and ordinary mixed B3 packing gives <=16. This example certifies a real arithmetic-sensitive improvement, but still only a constant factor at the critical exponent.
+
+For a general U, the residue programme can be solved exactly for a short candidate interval and small Q; if its upper bound is below the density-required number of outer elements, the proposed finite window is **excluded**. To turn this into Erdős #41, one would still need to show that persistent density forces such exclusion at arbitrarily many strategically owned scales, or classify residue profiles that keep every programme feasible. That universal step remains OPEN.
+
 ## 5. Rigorous inverse structure when independence nearly saturates capacity
 
 A truly *near-maximal* independent set does obey a stronger, quantitative structural constraint, beyond its cardinality.
