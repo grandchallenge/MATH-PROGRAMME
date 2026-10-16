@@ -85,26 +85,26 @@ These are necessary finite conditions, not sufficient to realize a B3 outer set.
 
 For an interval I of L+1 integers and modulus Q, let I_s count candidate outer positions in residue s. For each integer threshold t>=1, define the feasible nonnegative integer vectors b=(b_s) by
 
-$
+$$
 0\le b_s\le I_s,\quad m=\sum_s b_s,\quad
 \sum_s b_s b_{s+d}-m\mathbf1_{d=0}\le Z_{d,t}
 \quad(d\bmod Q).
-$
+$$
 
 Let OPT_(Q,t)(U,I) be the maximum m among these vectors. **Corollary (genuine B2-independent capacity):** if W is a B2 subset of I with r_U(y-x)<t at all distinct center pairs, then
 
-$
+$$
 \boxed{|W|\le \mathrm{OPT}_{Q,t}(U,I).}\tag{B2-ALPHA}
-$
+$$
 
 This is a finite integer-*quadratic* optimization, not a general forbidden-graph independence theorem. Actual B3 outer W qualify since B3 implies B2. For Q=1 it reduces to the explicit formula
 
-$
+$$
 \boxed{
 m(m-1)\le Z_{0,t},\qquad
 m\le\left\lfloor\frac{1+\sqrt{1+4Z_{0,t}}}{2}\right\rfloor .
 }\tag{ONE-CLASS}
-$
+$$
 
 For example, U={1,2,5}, I=[20,28], and t=1: r_U(h)>0 precisely for h=1,2,3,4, while h=5,6,7,8 are allowed. Thus Z_(0,1)=8 signed allowed differences. Every *B2*-independent W in I has m(m-1)<=8 and hence m<=3. The ordinary doubled-sum injectivity bound only gives m<=4. The original **B3 mixed-triple** packing already gives m<=2 in this tiny example; therefore the new corollary does not improve the known B3 extremal bound there. Its purpose is to retain residue-by-residue arithmetic exclusions for actual W.
 
