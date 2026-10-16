@@ -101,6 +101,24 @@ The cardinality bound is integer-valued, so an arbitrarily small positive right 
 
 This is directly relevant to the localized difference reservoir of CROSS_BIN_LOCAL_DIFFERENCE_SUPPLY.md: **both spectra now have rigorously certified, c-dependent positive density at compatible short scales**. Their intersection remains unproved; a comparison of their cardinalities would only force intersection if their total densities exceeded 1, which need not happen for small c.
 
+## 3A. Actual positive-density edge supply in a *short outer window*
+
+The preceding theorem counts popular forbidden differences, not edges of the graph on candidate center locations. They can be converted without randomness or choosing any actual outer points.
+
+Fix k>=1 and suppose D>=4k, n^2>=64k, and n>=cD^(1/3). Apply (SHORT-DENSITY) with parameter **2k**. Its popular differences all satisfy h<=ceil(D/(2k)), its cardinality is at least c^6 D/(2097152 k^3), and each carries weight r(h)>=c^3 n/(2048k).
+
+Let I be **any** interval of L+1 consecutive integers, L=ceil(D/k). For each such positive difference h, exactly L+1−h unordered pairs {x,x+h} lie in I. Since h<=ceil(L/2), this count is at least L/2. Therefore the thresholded forbidden-distance graph on I, at edge threshold t=c^3 n/(2048k), has
+
+$
+\boxed{
+e(G_t(U,I))\ge \frac{c^6}{4194304\,k^4}D^2.
+}\tag{GRAPH-DENSE}
+$
+
+Moreover the total weighted correlation on **all** pairs of potential outer positions in I is at least t times this edge count. This is a *uniform*, density-sensitive supply of popular graph edges in any translated interval of the indicated short length. It uses actual B3 pair-sum correlations, not a synthetic random-distance graph.
+
+**Limitation:** positive edge density does not imply a subcritical independence number, even for translation-invariant graphs without additional restrictions. For instance, a graph whose forbidden distances are exactly the odd integers has many edges but admits the even positions as an independent set. This example is **not claimed to arise from B3 pair sums**. Its purpose is to rule out a deduction from the edge count alone. The additional required input is an arithmetic mixing or inverse-structure theorem for the *specific* B3 difference spectrum.
+
 ## 4. Independence-number baseline and the exact proof obstruction
 
 Let I be any integer interval of span L and G_1(U,I) the forbidden-distance graph with edges at differences h where r(h)>0. If W subset I is independent, the map
