@@ -102,6 +102,28 @@ def call_gh(path: str) -> dict:
     return json.loads(result.stdout)
 
 
+def enforce_native_review_requirement(rules: object, minimum: int = 1) -> int:
+    """Fail closed unless effective branch rules require nonauthor GitHub review.
+
+    This validates only the native GitHub review count, not the scientific
+    or logical independence of the reviewer or the adequacy of its findings.
+    """
+    demand(isinstance(rules, list), "effective branch rules missing")
+    counts = []
+    for r in rules:
+        if not isinstance(r, dict) or r.get("type") != "pull_request":
+            continue
+        parameters = r.get("parameters")
+        if not isinstance(parameters, dict):
+            continue
+        count = parameters.get("required_approving_review_count")
+        if type(count) is int and count >= 0:
+            counts.append(count)
+    demand(counts and max(counts) >= minimum,
+           "INTELLECT lacks mandatory native nonauthor approving review")
+    return max(counts)
+
+
 def verify_live(a: dict) -> dict:
     observed = {}
     for name, row in a["repository_readbacks"].items():
@@ -118,6 +140,10 @@ def verify_live(a: dict) -> dict:
         observed[name] = {"protected": True, "pinned_artifacts_reverified": count,
                           "head_current": current_sha,
                           "head_changed_since_snapshot": current_sha != row["protected_main_sha"]}
+        if name == "INTELLECT":
+            effective = call_gh(base + "/rules/branches/main")
+            observed[name]["required_native_approving_reviews"] = (
+                enforce_native_review_requirement(effective))
     return observed
 
 

@@ -53,6 +53,8 @@ The native review-count finding above is **historical**: at the original PAAR-C 
 
 This remedies *missing GitHub approval enforcement going forward*, not the distinct execution-evidence weakness PAAR-C01/02. A native approval may come from an appropriately authorized nonauthor GitHub reviewer. A logical same-login reviewer pass cannot count as a native GitHub nonauthor approval. No historic review was fabricated. See machine-readable INTELLECT_REVIEW_RULESET_RECONCILIATION.json, retained pre/post GitHub API digests, and follow-up independently replayed findings before final closure.
 
+A new native-review regression test now exercises six positive/negative fixtures. The existing PAAR live replay has been extended to read INTELLECT's **effective** GitHub branch rules and fail if a native PR approval is no longer required. Its current authenticated readback reported one required review; this only checks the rule at replay time, not continuous drift alerting.
+
 ## Scope and effects
 
 This audit modified no protected main branch, worker custody, protected review record, publication status, or certification. A protected PR proposes these evidence artifacts for review. A sandbox consumer test is not evidence of an end-to-end production exploit. Parent GCL-PAAR-001 stays OPEN.
