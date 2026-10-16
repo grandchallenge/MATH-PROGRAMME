@@ -250,8 +250,9 @@ def protected_specialist_receipt(
     record, receipt_blob = _protected_json(api_get, owner, name, protected_sha)
     # GCL-ARC-001 applies only to protected PROTECTION receipts; all other
     # specialist domains retain their existing exact independent reviewer gate.
-    if domain == "PROTECTION" and record.get("record_type") == (
-        "GCL_PROTECTED_AGENT_ROLE_ADMISSION_EVIDENCE_V1"
+    if domain == "PROTECTION" and record.get("record_type") in (
+        "GCL_PROTECTED_AGENT_ROLE_ADMISSION_EVIDENCE_V1",
+        "GCL_PROTECTED_AGENT_ROLE_ADMISSION_EVIDENCE_V2",
     ):
         try:
             return verify_agent_role_receipt(
