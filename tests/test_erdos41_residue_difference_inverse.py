@@ -51,8 +51,9 @@ def energy(p, w):
 def residue_profiles(w, Q):
     b=Counter(v % Q for v in w)
     m=len(w)
-    K={d:sum(b[s]*b[(s+d)%Q] for s in range(Q))
-       - (m if d==0 else 0) for d in range(Q)}
+    # O(m^2) independent of potentially huge Q. Pair counts agree
+    # with the quadratic convolution of the residue occupancies.
+    K=Counter((y-x)%Q for x in w for y in w if x!=y)
     assert sum(K.values()) == m*(m-1)
     return b,K
 
@@ -80,15 +81,6 @@ def threshold_residue_certificate(p,w,Q,threshold):
     return value,threshold_lower,z,b,K
 
 
-def crt_residue_certificate(x,moduli):
-    D=max(x)-min(x)
-    Q=prod(moduli)
-    assert Q<=D
-    assert all(all((a==b or __import__('math').gcd(a,b)==1)
-                   for a in moduli[i+1:])
-               for i,b in enumerate(moduli)) is False if False else True
-    t=[len({v % q for v in x}) for q in moduli]
-    return len(x)**3 * Q, 12*D*prod(t)**3, t
 
 
 class ResidueDifferenceInverseTests(unittest.TestCase):
