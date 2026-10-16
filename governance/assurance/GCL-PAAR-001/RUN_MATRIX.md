@@ -15,6 +15,19 @@ The baseline is a sampled observation, not global certification. No live status 
 | PAAR-08 | Reconcile actual operator console, public docs and dashboards to protected authority at a sampled exact head | No fabricated status, unsupported mathematically certified/public claim | PENDING specialist execution |
 | PAAR-09 | In-memory/sandbox hostile receipts: tampered blob, forged authority, stale head, duplicate, changed theorem, invalid independent role, missing source | Fail closed, no corrupted protected writes | PENDING cross-system specialist execution |
 
+## PAAR-C10 — Constitutional native-approval regression
+
+The active INTELLECT default-branch ruleset must require at least **one native approving GitHub review**. This requirement is intentionally different from relaxed producer/worker repositories and is not satisfied by logical role assertions inside a source dossier.
+
+Run:
+
+- python3 governance/assurance/GCL-PAAR-001/test_native_review_gate.py
+- python3 governance/assurance/GCL-PAAR-001/replay_baseline.py --live
+
+The first command tests six positive/hostile cases, including zero approvals, absent pull-request rule, malformed approval count and non-list API response. The second queries GitHub's **effective main branch rules** for INTELLECT and fails closed when the verified minimum disappears. It reports required_native_approving_reviews under the INTELLECT row. Protected policy only becomes continuously monitored if an existing scheduled controller actually executes and checks the replay; do not claim continuous coverage from this command alone.
+
+The external ruleset change performed on 2026-10-16 is recorded in INTELLECT_REVIEW_RULESET_RECONCILIATION.json; its exact source/after API snapshots and hashes are retained at the authenticated CHAD audit checkpoint. A real existing open INTELLECT PR (#86) reported reviewDecision REVIEW_REQUIRED following the change. This is direct current behavior, not a simulated branch-protection claim.
+
 ## Authoritative capture
 
 The AUDIT_BASELINE.json file contains commit and Git blob SHA values for all fourteen selected controls and labels each claim VERIFIED_BOUNDED or UNVERIFIED. To obtain an independent live readback, run PAAR-01 with an authenticated GitHub CLI and explicitly compare each source SHA. A changed branch head is DRIFT, not automatic failure or an excuse to silently overwrite the historical receipt.
