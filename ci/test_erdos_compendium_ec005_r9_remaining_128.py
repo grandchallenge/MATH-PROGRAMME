@@ -36,7 +36,7 @@ class R9Remaining128(unittest.TestCase):
  def test_80_exact_hash_critical_reviewed_articles(self):
   A=load_batch_admissions(ACCEPTANCE)
   q=self.q;p=self.p
-  self.assertEqual(len(A),602)
+  self.assertEqual(len(A),650)
   self.assertEqual((p["proposed_programme_reviewed"],p["proposed_ec005_reviewed"],
                     p["proposed_ec005_unaccepted"]),(602,152,48))
   batch=next(x for x in self.ledger["batches"] if x["batch_id"]=="EC-BULK-005-R9-80")
@@ -63,14 +63,21 @@ class R9Remaining128(unittest.TestCase):
     self.assertFalse(issues(text))
  def test_48_conflicts_and_partial_not_silently_admitted(self):
   q=self.q;A=load_batch_admissions(ACCEPTANCE)
-  self.assertTrue(set(q["source_exception_hold_ids"]).isdisjoint(A))
+  r10=json.loads((B/"EC-BULK-005_R10_48_SOURCE_QUALIFICATIONS.json").read_text())
+  self.assertEqual(set(q["source_exception_hold_ids"]),
+                   {x["problem_id"] for x in r10["per_problem"]})
   for n in q["source_exception_hold_ids"]:
    with self.subTest(problem=n):
     row=self.d["items"][n-652]
     census=next(z for z in q["per_article"] if z["problem_id"]==n)
+    qualifier=next(z for z in r10["per_problem"] if z["problem_id"]==n)
     self.assertIn(row["source_return_disposition"],("PARTIAL","STATUS_CONFLICT","SOURCE_LOCK_READY"))
     self.assertEqual(row["source_return_disposition"],census["original_disposition"])
-    self.assertEqual(row["draft_sha256"],census["manuscript_raw_sha256"])
+    self.assertEqual(census["manuscript_raw_sha256"],qualifier["historical_manuscript_raw_sha256"])
+    self.assertEqual(A[n]["batch_id"],"EC-BULK-005-R10-48")
+    self.assertFalse(qualifier["disputed_source_status_cleared"])
+    self.assertEqual(qualifier["mathematical_proof_status"],"ORIGINAL_HOLD_RETAINED_NOT_CERTIFIED")
+    self.assertEqual(row["draft_sha256"],qualifier["editorially_reviewed_raw_sha256"])
     self.assertEqual(row["draft_sha256"],hashlib.sha256((R/row["article_path"]).read_bytes()).hexdigest())
     self.assertEqual(row["draft_sha256"],self.a["article_sha256"][str(n)])
     self.assertTrue(q["source_exception_hold_reasons"][str(n)])
