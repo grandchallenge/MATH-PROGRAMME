@@ -107,7 +107,8 @@ class PopularDistancesTests(unittest.TestCase):
                 self.assertGreaterEqual(s,Fraction(nv**4,256*k*k))
                 self.assertGreaterEqual(t,Fraction(nv**4,1024*k*d))
                 self.assertGreaterEqual(len(heavy),Fraction(nv**6,262144*k**3*d))
-                self.assertTrue(all(half_diff_profile(p)[x]>=t for x in heavy))
+                full_profile = half_diff_profile(p)
+                self.assertTrue(all(full_profile[x]>=t for x in heavy))
 
     def test_independence_packing_bound(self):
         for n in (3,8,14):
