@@ -43,7 +43,7 @@ $$
 }\tag{POPULAR}
 $$
 
-**Proof.** For nonnegative r(h) with sum S on D positions, Cauchy gives \(\sum_h r(h)^2\ge S^2/D\). Split into r(h)<tau and r(h)>=tau. The contribution to the second moment from the first group is less than tau S=S^2/(2D). In the second group r(h)^2<=n r(h). Consequently
+**Proof.** For nonnegative r(h) with sum S on D positions, Cauchy gives $\sum_h r(h)^2\ge S^2/D$. Split into r(h)<tau and r(h)>=tau. The contribution to the second moment from the first group is less than tau S=S^2/(2D). In the second group r(h)^2<=n r(h). Consequently
 
 $$
 n\sum_{h\in B_\tau}r(h)\ge\frac{S^2}{2D},
@@ -147,7 +147,7 @@ $$
 }
 $$
 
-**Critical limitation:** for actual B3 outer W disjoint from U, the original sum map p+w is already injective, yielding the even *stronger* ordinary three-sum packing bound \(|W|q\le2D+L+1\). Thus (ALPHA) is **not an improvement over established B3 packing** in the hypothesized critical-density configuration. Even with the popular-distance supply, no density-dip theorem follows. In particular an adversarial modulus/residue construction may keep many candidate outer positions independent despite a positive-density forbidden-distance set.
+**Critical limitation:** for actual B3 outer W disjoint from U, the original sum map p+w is already injective, yielding the even *stronger* ordinary three-sum packing bound $|W|q\le2D+L+1$. Thus (ALPHA) is **not an improvement over established B3 packing** in the hypothesized critical-density configuration. Even with the popular-distance supply, no density-dip theorem follows. In particular an adversarial modulus/residue construction may keep many candidate outer positions independent despite a positive-density forbidden-distance set.
 
 ## 5. Rigorous inverse structure when independence nearly saturates capacity
 
@@ -159,7 +159,7 @@ $$
 M=2D+2\operatorname{diam}(W)+1.
 $$
 
-After translating the interval to [0,M-1], let C be the complement of P+2W, so |C|=M-qm. In the cyclic group Z/MZ, define \(\widehat F(\xi)=\sum_{x=0}^{M-1}F(x)e^{-2\pi i\xi x/M}\). All sums P+2W lie in that interval, with no wrap ambiguity.
+After translating the interval to [0,M-1], let C be the complement of P+2W, so |C|=M-qm. In the cyclic group Z/MZ, define $\widehat F(\xi)=\sum_{x=0}^{M-1}F(x)e^{-2\pi i\xi x/M}$. All sums P+2W lie in that interval, with no wrap ambiguity.
 
 **Theorem B (near-tiling spectral complementarity):** For every nonzero frequency xi modulo M,
 
@@ -171,7 +171,7 @@ $$
 }\tag{TILING}
 $$
 
-Proof: the disjoint translates make the convolution \(\mathbf1_P*\mathbf1_{2W}\) equal the indicator of P+2W. This is 1−1_C after translating the supporting interval, so at every nonzero character its Fourier transform is minus the transform of 1_C. A common translation introduces only a unit-modulus phase. QED.
+Proof: the disjoint translates make the convolution $\mathbf1_P*\mathbf1_{2W}$ equal the indicator of P+2W. This is 1−1_C after translating the supporting interval, so at every nonzero character its Fourier transform is minus the transform of 1_C. A common translation introduces only a unit-modulus phase. QED.
 
 If qm >=(1−epsilon)M with epsilon<1, then for every nonzero xi,
 
@@ -185,7 +185,7 @@ $$
 
 Thus any nontrivial frequency with a large normalized Fourier coefficient of P must have a correspondingly small coefficient of 2W. For epsilon=0 their nonzero Fourier supports are exactly complementary, the familiar exact-tiling phenomenon.
 
-**Sharp limitation:** in hypothetical critical-density B3 configurations with arbitrarily small density coefficient c, the packing fraction qm/M can be O(c^3), far from 1. This theorem proves inverse structure only in the **near-tiling** regime. It must not be advertised as the missing general arithmetic classification for unexpectedly large \(O(D^{1/3})\) independent sets.
+**Sharp limitation:** in hypothetical critical-density B3 configurations with arbitrarily small density coefficient c, the packing fraction qm/M can be O(c^3), far from 1. This theorem proves inverse structure only in the **near-tiling** regime. It must not be advertised as the missing general arithmetic classification for unexpectedly large $O(D^{1/3})$ independent sets.
 
 ## 6. Focused next mathematical decision gate
 
