@@ -253,5 +253,29 @@ class ResidueDifferenceInverseTests(unittest.TestCase):
         self.assertGreater(len(low)*len(high),eligible_zero)
 
 
+    def test_quadratic_b2_capacity_strictly_beats_doubled_packing(self):
+        u=[1,2,5]
+        p=pair_sums(u)
+        L=8
+        weights=half_difference_weights(p,L)
+        self.assertEqual({h for h in range(1,L+1) if weights[h]>0},
+                         {1,2,3,4})
+        Z=sum(weights[abs(h)]<1 for h in range(-L,L+1) if h)
+        self.assertEqual(Z,8)
+        max_b2=sum(1 for k in range(1,10) if k*(k-1)<=Z)
+        self.assertEqual(max_b2,3)
+        doubled=(2*(max(u)-min(u))+2*L+1)//len(p)
+        mixed_b3=(2*(max(u)-min(u))+L+1)//len(p)
+        self.assertEqual((doubled,mixed_b3),(4,2))
+        # Exhaust all B2 subsets of this interval and verify the capacity.
+        I=list(range(20,29))
+        for mask in range(1<<len(I)):
+            w=[I[j] for j in range(len(I)) if (mask>>j)&1]
+            if len(w)<2 or not is_b2(w):
+                continue
+            if energy(p,w)==0:
+                self.assertLessEqual(len(w),max_b2)
+
+
 if __name__=="__main__":
     unittest.main()
