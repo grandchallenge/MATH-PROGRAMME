@@ -212,5 +212,48 @@ class PopularDistancesTests(unittest.TestCase):
         self.assertGreater(len(even_vertices),span//2)
 
 
+    def test_critical_density_modular_dispersion_all_small_moduli(self):
+        # The cube form is exact and avoids floating-point cube roots.
+        for n in (2,3,5,8,12,14,20,29):
+            u=A[:n]
+            d=u[-1]-u[0]
+            moduli=set(range(1,min(d,400)+1))
+            moduli.update((d, max(1,d//2),max(1,d//3)))
+            for q in sorted(moduli):
+                classes={v%q for v in u}
+                t=len(classes)
+                with self.subTest(n=n,q=q):
+                    self.assertGreaterEqual(12*d*t**3,q*n**3)
+                    heavy=max(
+                        (sorted(v for v in u if v%q==r) for r in classes),
+                        key=len
+                    )
+                    s=len(heavy)
+                    self.assertGreaterEqual(s*t,n)
+                    if s>=2:
+                        scaled_span=(heavy[-1]-heavy[0])//q
+                        self.assertEqual((heavy[-1]-heavy[0])%q,0)
+                        self.assertGreaterEqual(
+                            6*scaled_span+2,
+                            s**3-s**2+2*s
+                        )
+
+    def test_modular_dispersion_residue_cost_and_boundary(self):
+        # Pure modular concentration has a real density cost.
+        q=17
+        scaled=[q*a+3 for a in A[:14]]
+        self.assertTrue(b3(scaled))
+        d=scaled[-1]-scaled[0]
+        t=len({v%q for v in scaled})
+        self.assertEqual(t,1)
+        self.assertGreaterEqual(12*d*t**3,q*len(scaled)**3)
+        # An unbounded modulus q>D lies outside the theorem's scope.
+        u=A[:8]; d0=u[-1]-u[0]
+        very_large_q=100*d0
+        t0=len({v%very_large_q for v in u})
+        self.assertEqual(t0,len(u))
+        self.assertLess(12*d0*t0**3,very_large_q*len(u)**3)
+
+
 if __name__ == "__main__":
     unittest.main()
