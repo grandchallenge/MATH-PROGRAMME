@@ -167,5 +167,50 @@ class PopularDistancesTests(unittest.TestCase):
         self.assertLess(len(p),len(u)*(len(u)+1)//2)
 
 
+    def test_density_sensitive_short_graph_edge_supply(self):
+        # Verify actual positive edge count, not just distance counts, using
+        # an exact rational c (so c^3 D <= n^3 is checked without floats).
+        c = Fraction(1, 2)
+        for n,k in ((14,2),(20,2),(29,2),(29,5)):
+            with self.subTest(n=n,k=k):
+                block = A[:n]
+                d = block[-1]-block[0]
+                self.assertGreaterEqual(d, 4*k)
+                self.assertGreaterEqual(n*n,64*k)
+                self.assertGreaterEqual(n**3,c**3*d)
+                _,_,p,s,h,t,heavy,localized,_ = popular_certificate(block,2*k)
+                L=math.ceil(Fraction(d,k))
+                self.assertLessEqual(h,math.ceil(Fraction(d,2*k)))
+                edge_threshold=c**3*n/(2048*k)
+                all_weights=half_diff_profile(p)
+                # The B3 forbidden-distance graph is translation invariant.
+                graph_edges=sum(L+1-x for x in range(1,L+1)
+                                if all_weights[x]>=edge_threshold)
+                predicted=Fraction(c**6*d*d,4194304*k**4)
+                self.assertGreaterEqual(graph_edges,predicted)
+                popular_edges=sum(L+1-x for x in heavy)
+                self.assertGreaterEqual(popular_edges,predicted)
+                self.assertLessEqual(popular_edges,graph_edges)
+                self.assertTrue(all(all_weights[x]>=edge_threshold for x in heavy))
+                self.assertGreaterEqual(
+                    sum((L+1-x)*all_weights[x] for x in range(1,L+1)),
+                    edge_threshold*predicted
+                )
+
+    def test_dense_difference_graph_does_not_force_low_alpha_by_count(self):
+        # A synthetic non-B3 distance family with many edges but a large
+        # independent set: a control against count-only proof shortcuts.
+        span=30
+        odd_forbidden={h for h in range(1,span+1) if h%2}
+        vertices=list(range(span+1))
+        even_vertices=[v for v in vertices if v%2==0]
+        edges=sum(span+1-h for h in odd_forbidden)
+        self.assertGreater(edges,span*span//5)
+        self.assertTrue(all(abs(x-y) not in odd_forbidden
+                            for i,x in enumerate(even_vertices)
+                            for y in even_vertices[i+1:]))
+        self.assertGreater(len(even_vertices),span//2)
+
+
 if __name__ == "__main__":
     unittest.main()
