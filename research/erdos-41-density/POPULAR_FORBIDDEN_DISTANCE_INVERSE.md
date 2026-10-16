@@ -149,6 +149,53 @@ $$
 
 **Critical limitation:** for actual B3 outer W disjoint from U, the original sum map p+w is already injective, yielding the even *stronger* ordinary three-sum packing bound $|W|q\le2D+L+1$. Thus (ALPHA) is **not an improvement over established B3 packing** in the hypothesized critical-density configuration. Even with the popular-distance supply, no density-dip theorem follows. In particular an adversarial modulus/residue construction may keep many candidate outer positions independent despite a positive-density forbidden-distance set.
 
+## 4A. A quantitative modular structural theorem at critical density (proved)
+
+The large-independent-set alternative must not be reduced to an unproved assertion that avoidance has small Fourier coefficients. The following **unconditional B3 modular-dispersion theorem** instead supplies a rigorous and explicitly quantified density cost for residue concentration.
+
+For a finite B3 set X of n>=2 elements and diameter D>0, let t_q(X) be the number of residue classes modulo q occupied by X. Then for **every** integer 1<=q<=D,
+
+$
+\boxed{
+12D\,t_q(X)^3\ge q\,n^3,\qquad
+t_q(X)\ge n\left(\frac{q}{12D}\right)^{1/3}.
+}\tag{MODULAR-DISPERSION}
+$
+
+**Proof.** Let t=t_q(X), and choose a residue class containing s>=ceil(n/t) elements. If s=1, then every occupied residue class contains exactly one point, so t=n; the claimed inequality follows from q<=D. If s>=2, translate and divide that class by q. The resulting integer B3 set has size s and diameter at most D/q. The already-proved cubic-shadow bound gives
+
+$
+s^3-s^2+2s\le 6D/q+2.
+$
+
+For every integer s>=2 one has $s^3-s^2+2s-2\ge s^3/2$. Consequently q s^3<=12D. Since s>=n/t, obtain q n^3/t^3<=12D. QED.
+
+**Critical-density corollary.** If n>=cD^(1/3), then every 1<=q<=D satisfies
+
+$
+\boxed{t_q(X)\ge \frac{c}{12^{1/3}}q^{1/3}.}\tag{MODULAR-CRITICAL}
+$
+
+In particular, if X lies in at most t residue classes modulo q, then its normalized cardinality is bounded by
+
+$
+\boxed{\frac{n}{D^{1/3}}\le
+12^{1/3}\frac{t}{q^{1/3}}.}\tag{MODULAR-COST}
+$
+
+Now let W be an **actual B3 outer independent set** in an interval of span L, and suppose m=|W|>=c L^(1/3). The same conclusion applies to W, with its actual diameter no larger than L:
+
+$
+\boxed{t_q(W)\ge\frac{c}{12^{1/3}}q^{1/3}
+\quad(1\le q\le L).}\tag{OUTER-MODULAR}
+$
+
+This is a *quantitative structural restriction on every unexpectedly large B3-independent outer set*, and it does not require the near-tiling condition of Theorem B below.
+
+**Scale-owned density-cost corollary.** If at a sequence of scales a putative independent outer B3 block W_N of span L_N is confined to t_N=o(q_N^(1/3)) residue classes modulo q_N, with 1<=q_N<=L_N, then |W_N|/L_N^(1/3)->0 along those scales. This rules out that particular residue-concentration explanation for persistent critical density. It is a genuine conditional density decrement for **a specified structural avoidance mechanism**, not a universal deficit.
+
+**Critical boundary:** the proof uses only the B3 property and cubic-shadow counting; independence does not strengthen it. Sidon-digit lifts with q about k^2 and t about k are not excluded, because k is larger than q^(1/3). A successful Stage B inverse theorem must force either t=o(q^(1/3)) for some growing q, or another structure with a separately proved density cost. We do not claim that all independent-set avoidance has this form.
+
 ## 5. Rigorous inverse structure when independence nearly saturates capacity
 
 A truly *near-maximal* independent set does obey a stronger, quantitative structural constraint, beyond its cardinality.
