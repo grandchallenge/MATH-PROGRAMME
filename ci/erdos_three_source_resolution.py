@@ -95,15 +95,33 @@ def check_evidence():
             raise CouncilError(f'#{n}: unresolved external-proof/historical predicate case changed')
     return results
 
+def verify_installation_scope():
+    # GitHub App INSTALLATION access tokens intentionally do not implement
+    # GET /user (HTTP 403). The pinned App-token workflow is the authority.
+    # Recheck that the minted token is installed for exactly this one repo.
+    obj=api('installation/repositories?per_page=100')
+    if (not isinstance(obj,dict) or obj.get('total_count')!=1
+            or not isinstance(obj.get('repositories'),list)
+            or len(obj['repositories'])!=1
+            or obj['repositories'][0].get('full_name')!=REPO):
+        raise CouncilError('Council Clerk installation token is not restricted to MATH-PROGRAMME')
+
+
+def verify_bot_resolution(issue,blob):
+    notes=[x for x in comments(issue)
+           if (x.get('body') or '').startswith(RESOLUTION+'\n')]
+    if (len(notes)!=1 or (notes[0].get('user') or {}).get('login')!='gcl-council-clerk[bot]'
+            or blob not in notes[0]['body']):
+        raise CouncilError(f'#{issue}: authenticated Council Clerk source resolution not verified')
+
+
 def apply_transitions(rows):
     if (os.environ.get('GITHUB_ACTIONS')!='true'
             or os.environ.get('GITHUB_REF')!='refs/heads/main'
             or os.environ.get('GCL_CONTROLLER_ID')!='erdos-three-source-resolution'
             or not os.environ.get('GH_TOKEN')):
         raise CouncilError('protected main release-trust Council Clerk runtime required')
-    login=api('user').get('login')
-    if login!='gcl-council-clerk[bot]':
-        raise CouncilError('authenticated scoped Council Clerk App identity required')
+    verify_installation_scope()
     # Create a narrowly named positive source-correction marker only once.
     try:
         lab=api(f'repos/{REPO}/labels/gcl-review%3Asource-corrected')
@@ -132,6 +150,9 @@ def apply_transitions(rows):
             note.parent.mkdir(parents=True,exist_ok=True)
             note.write_text(body)
             execute('issue','comment',str(n),'-R',REPO,'--body-file',str(note))
+        # Require an authenticated APP author and exact statement lock before
+        # ANY corresponding label mutation; replay-safe after partial writes.
+        verify_bot_resolution(n,row['source_blob'])
         execute('issue','edit',str(n),'-R',REPO,'--add-label',CORRECTED,'--remove-label',REVISE)
         state=issue_snapshot(n)
         if state['revise'] or not state['corrected']:

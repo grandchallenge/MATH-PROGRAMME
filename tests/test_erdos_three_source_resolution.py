@@ -49,11 +49,30 @@ class CouncilThreeReviewTests(unittest.TestCase):
              'GCL_CONTROLLER_ID':'erdos-three-source-resolution','GH_TOKEN':'fake'}
         with patch.dict(os.environ,env,clear=True):
             with self.assertRaises(c.CouncilError):c.apply_transitions([])
-    def test_reject_forged_bot(self):
+    def test_installation_token_repository_scope(self):
+        obj={'total_count':1,'repositories':[{'full_name':c.REPO}]}
+        with patch.object(c,'api',return_value=obj):
+            self.assertIsNone(c.verify_installation_scope())
+        for bad in ({'total_count':2,'repositories':[{'full_name':c.REPO},{'full_name':'evil/other'}]},
+                    {'total_count':1,'repositories':[{'full_name':'evil/other'}]},
+                    {'login':'fyremael'}, {'total_count':1,'repositories':[]}):
+            with self.subTest(bad=bad),patch.object(c,'api',return_value=bad):
+                with self.assertRaises(c.CouncilError):c.verify_installation_scope()
+    def test_reject_noninstallation_token(self):
         env={'GITHUB_ACTIONS':'true','GITHUB_REF':'refs/heads/main',
              'GCL_CONTROLLER_ID':'erdos-three-source-resolution','GH_TOKEN':'fake'}
         with patch.dict(os.environ,env,clear=True),patch.object(c,'api',return_value={'login':'fyremael'}):
             with self.assertRaises(c.CouncilError):c.apply_transitions([])
+    def test_postwrite_bot_identity_must_match_source_blob(self):
+        blob='a1b2-source-blob'
+        row={'body':c.RESOLUTION+'\nNEW_GIT_BLOB_SHA1: '+blob+'\n',
+             'user':{'login':'gcl-council-clerk[bot]'}}
+        with patch.object(c,'comments',return_value=[row]):
+            self.assertIsNone(c.verify_bot_resolution(2520,blob))
+        for bad in ({'body':row['body'],'user':{'login':'fyremael'}},
+                    {'body':c.RESOLUTION+'\nWRONG SOURCE','user':{'login':'gcl-council-clerk[bot]'}}):
+            with self.subTest(bad=bad),patch.object(c,'comments',return_value=[bad]):
+                with self.assertRaises(c.CouncilError):c.verify_bot_resolution(2520,blob)
 
     def test_protected_workflow_bootstrap_without_unpinned_dependencies(self):
         # Runner-level smoke guard is deliberately Python stdlib only.
