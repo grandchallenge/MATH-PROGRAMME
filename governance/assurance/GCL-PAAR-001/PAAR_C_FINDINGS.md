@@ -47,6 +47,12 @@ The consumer *does reject* a stale reviewer source head, mismatched protected do
 - Add adversarial tests for nonexistent command outputs, missing artifacts, forged role passes, stale heads, duplicated passes, and false theorem promotion. Stage any schema migration so old accepted receipts are reconciled explicitly rather than silently invalidated.
 - Require an actual nonauthor independent assurance review before closing PAAR-C or final PAAR-E.
 
+## INTELLECT native review rule corrected — 2026-10-16
+
+The native review-count finding above is **historical**: at the original PAAR-C source capture, the INTELLECT ruleset required zero approvals and PR #121 had zero GitHub approvals. Following an explicit operator directive, the authenticated repository administrator changed active INTELLECT ruleset 19964077, Constitutional profile - main, from zero to **one required native approving review**. Live readback from both the ruleset object and effective /rules/branches/main confirmed one; all other ruleset fields, required checks, branch target, and bypass actor list remained unchanged. At latest readback, INTELLECT open PR #86 reported GitHub reviewDecision REVIEW_REQUIRED. The original protected main commit remained d43cdd1b478ad1816ee6c838f8e7500ca11c547f.
+
+This remedies *missing GitHub approval enforcement going forward*, not the distinct execution-evidence weakness PAAR-C01/02. A native approval may come from an appropriately authorized nonauthor GitHub reviewer. A logical same-login reviewer pass cannot count as a native GitHub nonauthor approval. No historic review was fabricated. See machine-readable INTELLECT_REVIEW_RULESET_RECONCILIATION.json, retained pre/post GitHub API digests, and follow-up independently replayed findings before final closure.
+
 ## Scope and effects
 
 This audit modified no protected main branch, worker custody, protected review record, publication status, or certification. A protected PR proposes these evidence artifacts for review. A sandbox consumer test is not evidence of an end-to-end production exploit. Parent GCL-PAAR-001 stays OPEN.
