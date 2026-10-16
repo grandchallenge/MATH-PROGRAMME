@@ -28,7 +28,7 @@ class EC005Typography(unittest.TestCase):
                     for e in batch["entries"]}
         self.assertEqual(len(TARGETS), 20)
         self.assertTrue(TARGETS <= set(items))
-        self.assertEqual(TARGETS & accepted, {814, 718, 722, 747, 744} | {827, 837, 743, 840, 714, 716, 719, 731, 764, 734, 831}, "Only exact R6/R7/R8 entries admitted among typography targets")
+        self.assertEqual(TARGETS & accepted, TARGETS, "Final R10 review covers every typography-corrected source article")
         r6=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R6")
         self.assertEqual([e["problem_id"] for e in r6["entries"] if e["problem_id"] in TARGETS],[814])
         r7=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R7")
@@ -37,6 +37,8 @@ class EC005Typography(unittest.TestCase):
         self.assertEqual([e["problem_id"] for e in r8["entries"] if e["problem_id"] in TARGETS],[744])
         r9=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R9-80")
         self.assertEqual([e["problem_id"] for e in r9["entries"] if e["problem_id"] in TARGETS],[714, 716, 719, 731, 734, 743, 764, 827, 831, 837, 840])
+        r10=next(b for b in admitted["batches"] if b["batch_id"]=="EC-BULK-005-R10-48")
+        self.assertEqual([e["problem_id"] for e in r10["entries"] if e["problem_id"] in TARGETS],[702,725,730,732])
         self.assertTrue({765, 836} <= accepted)
         for n in TARGETS:
             with self.subTest(problem=n):
