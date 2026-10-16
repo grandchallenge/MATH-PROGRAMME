@@ -36,7 +36,7 @@ $$
 0<|h|\le L,\quad h\equiv d\pmod Q\right\}
 $$
 
-with **one entry for each eligible signed integer h**. Sort its entries nondecreasingly as \(\omega_{d,1}\le\dots\le\omega_{d,N_d}\). Define \(F_d(k)=\sum_{j=1}^k\omega_{d,j}\), with F_d(0)=0. Only k<=N_d is allowed.
+with **one entry for each eligible signed integer h**. Sort its entries nondecreasingly as $\omega_{d,1}\le\dots\le\omega_{d,N_d}$. Define $F_d(k)=\sum_{j=1}^k\omega_{d,j}$, with F_d(0)=0. Only k<=N_d is allowed.
 
 ## 2. Theorem A: weighted residue-order-statistic inverse
 
@@ -80,6 +80,54 @@ $$
 For t=1, zero correlation forces these inequalities. The class capacities N_d always bound K_d automatically, but the smaller **allowed** capacities Z_d depend on the genuine forbidden spectrum. Under arbitrary positive M, the weighted lower bound measures precisely the unavoidable cost of exceeding them.
 
 These are necessary finite conditions, not sufficient to realize a B3 outer set. They can be imposed alongside the already proved linear residue capacity constraints for P+W and P+2W. Unlike those linear constraints, the new inequalities use outer **B2 difference uniqueness** and are quadratic in the outer residue occupancies.
+
+## 3A. Sharpening: localized *oriented* cross-bin inverse
+
+The signed full-outer-set theorem uses every candidate difference with absolute value at most the total outer diameter. The actual Stage B construction uses much shorter positive-difference windows from two separated fine outer bins.
+
+Let Y,Z be two nonempty, disjoint B3 subsets of the actual outer carrier with every y in Y below every z in Z. Let
+
+$
+J=[\min Z-\max Y,\ \max Z-\min Y]\cap\mathbb Z,
+\qquad |J|=\mathrm{diam}(Y)+\mathrm{diam}(Z)+1.
+$
+
+Let $b_s=\#\{y\in Y:y\equiv s\pmod Q\}$ and $c_s=\#\{z\in Z:z\equiv s\pmod Q\}$. For each d modulo Q define
+
+$
+K^{Y,Z}_d=\sum_{s\bmod Q}b_s c_{s+d}.
+$
+
+Then sum_d K^{Y,Z}_d=|Y||Z|. The B2 property makes all positive cross-bin differences z-y distinct, so each K_d picks out K_d **distinct** integers h in J with h=d modulo Q.
+
+Sort the actual weights r_U(h) over all h in J with h=d modulo Q as $v_{d,1}\le v_{d,2}\le\dots$. Define $G_d(k)=\sum_{j=1}^k v_{d,j}$ and $Z^{Y,Z}_{d,t}=\#\{h\in J:h\equiv d\pmod Q,\ r_U(h)<t\}$.
+
+**Theorem B (oriented localized weighted inverse):**
+
+$
+\boxed{
+\begin{aligned}
+\mathcal M_{Y,Z}(U)
+&:=\sum_{y\in Y}\sum_{z\in Z}r_U(z-y)\\
+&\ge\sum_{d\bmod Q}G_d(K^{Y,Z}_d)\\
+&\ge t\sum_{d\bmod Q}(K^{Y,Z}_d-Z^{Y,Z}_{d,t})_+ .
+\end{aligned}
+}\tag{LOCAL-INVERSE}
+$
+
+**Proof.** Every ordered center pair (y,z) has z-y>0 and determines a unique positive difference because the actual B3 carrier is Sidon. For each residue class d, its K_d differences are K_d *distinct* members of J. Their total weight is at least the sum of the K_d smallest possible weights there. At most Z_{d,t} of them can have weight below t, giving the threshold bound. Sum over d. No pair is charged at more than one bin pair or scale when the center-bin partition has a unique owner. QED.
+
+**Zero-correlation inverse.** If M_{Y,Z}(U)=0, then for every residue class d,
+
+$
+\boxed{\sum_s b_s c_{s+d}\le Z^{Y,Z}_{d,1}.}\tag{LOCAL-AVOID}
+$
+
+The candidate difference range has only diam(Y)+diam(Z)+1 slots, **not** the full outer-center span. Accordingly this version can provide a stronger finite exclusion than the global theorem when the two outer bins are narrow and separated.
+
+For Q>|J|-1 each residue occurs at most once in J; the order-statistic bound becomes an exact equality for the given Y,Z. For smaller Q it is a computable, potentially nontrivial *coarsened* arithmetic certificate. This equality at large Q is a verification feature, not an asymptotic density advance.
+
+**Falsifiable Stage B target:** choose bin pairs by a predeclared density-window partition, compute (LOCAL-AVOID) at a bounded collection of moduli, and attempt to show that every outer B3 pair profile with |Y|,|Z| on the hypothesized critical scale violates at least one constraint. If the inequalities remain feasible across long windows, seek an independent arithmetic inverse theorem that forces a CRT deficit as described below. Neither universal finite-window exclusion nor its multiscale consequence has been proved.
 
 ## 3. A quantitative inverse structural theorem on multiple coprime moduli
 
