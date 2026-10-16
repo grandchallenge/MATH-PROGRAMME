@@ -55,16 +55,22 @@ class CouncilThreeReviewTests(unittest.TestCase):
         with patch.dict(os.environ,env,clear=True),patch.object(c,'api',return_value={'login':'fyremael'}):
             with self.assertRaises(c.CouncilError):c.apply_transitions([])
 
-    def test_protected_workflow_contract_and_permission_falsifiers(self):
-        import sys
-        sys.path.insert(0,str(c.ROOT/'ci'))
-        from validate_workflow_coverage_v2 import three_source_council_errors,THREE_SOURCE_COUNCIL_WORKFLOW
-        source=(c.ROOT/'.github/workflows/erdos-three-source-resolution.yml').read_text()
-        docs={THREE_SOURCE_COUNCIL_WORKFLOW:source}
-        self.assertEqual(three_source_council_errors(docs),[])
-        self.assertTrue(three_source_council_errors({THREE_SOURCE_COUNCIL_WORKFLOW:source.replace('permission-issues: write','permission-issues: read')}))
-        self.assertTrue(three_source_council_errors({THREE_SOURCE_COUNCIL_WORKFLOW:source.replace('permission-organization-projects: read','permission-organization-projects: write')}))
-        self.assertTrue(three_source_council_errors({THREE_SOURCE_COUNCIL_WORKFLOW:source.replace(' --apply --receipt ',' --dry-run --receipt ')}))
-        self.assertTrue(three_source_council_errors({THREE_SOURCE_COUNCIL_WORKFLOW:source.replace('environment: release-trust','environment: other')}))
+    def test_protected_workflow_bootstrap_without_unpinned_dependencies(self):
+        # Runner-level smoke guard is deliberately Python stdlib only.
+        # The separate full workflow-coverage policy validator parses YAML
+        # and tests hostile mutations under its governed CI dependency lane.
+        workflow=c.ROOT/'.github/workflows/erdos-three-source-resolution.yml'
+        source=workflow.read_text()
+        self.assertEqual(source.count('environment: release-trust'),1)
+        self.assertEqual(source.count('permission-issues: write'),1)
+        self.assertEqual(source.count('permission-organization-projects: read'),1)
+        self.assertEqual(source.count('refs/heads/main'),1)
+        self.assertEqual(source.count('ci/erdos_three_source_resolution.py'),2)
+        self.assertEqual(source.count('--apply --receipt'),1)
+        self.assertEqual(source.count('tests/test_erdos_three_source_resolution.py'),1)
+        self.assertEqual(source.count('actions/create-github-app-token@'),1)
+        self.assertNotIn('pip install',source)
+        self.assertNotIn('permission-administration',source)
+        self.assertNotIn('pull_request_target:',source)
 
 if __name__=='__main__':unittest.main(verbosity=2)
