@@ -81,6 +81,35 @@ For t=1, zero correlation forces these inequalities. The class capacities N_d al
 
 These are necessary finite conditions, not sufficient to realize a B3 outer set. They can be imposed alongside the already proved linear residue capacity constraints for P+W and P+2W. Unlike those linear constraints, the new inequalities use outer **B2 difference uniqueness** and are quadratic in the outer residue occupancies.
 
+## 2A. Explicit finite bound on B2-independent outer carriers
+
+For an interval I of L+1 integers and modulus Q, let I_s count candidate outer positions in residue s. For each integer threshold t>=1, define the feasible nonnegative integer vectors b=(b_s) by
+
+$
+0\le b_s\le I_s,\quad m=\sum_s b_s,\quad
+\sum_s b_s b_{s+d}-m\mathbf1_{d=0}\le Z_{d,t}
+\quad(d\bmod Q).
+$
+
+Let OPT_(Q,t)(U,I) be the maximum m among these vectors. **Corollary (genuine B2-independent capacity):** if W is a B2 subset of I with r_U(y-x)<t at all distinct center pairs, then
+
+$
+\boxed{|W|\le \mathrm{OPT}_{Q,t}(U,I).}\tag{B2-ALPHA}
+$
+
+This is a finite integer-*quadratic* optimization, not a general forbidden-graph independence theorem. Actual B3 outer W qualify since B3 implies B2. For Q=1 it reduces to the explicit formula
+
+$
+\boxed{
+m(m-1)\le Z_{0,t},\qquad
+m\le\left\lfloor\frac{1+\sqrt{1+4Z_{0,t}}}{2}\right\rfloor .
+}\tag{ONE-CLASS}
+$
+
+For example, U={1,2,5}, I=[20,28], and t=1: r_U(h)>0 precisely for h=1,2,3,4, while h=5,6,7,8 are allowed. Thus Z_(0,1)=8 signed allowed differences. Every *B2*-independent W in I has m(m-1)<=8 and hence m<=3. The ordinary doubled-sum injectivity bound only gives m<=4. The original **B3 mixed-triple** packing already gives m<=2 in this tiny example; therefore the new corollary does not improve the known B3 extremal bound there. Its purpose is to retain residue-by-residue arithmetic exclusions for actual W.
+
+The integer programme can be combined with the existing **linear** residue sum-capacity system for P+W and P+2W, and the per-residue cubic-shadow B3 size restrictions. A finite infeasibility receipt rules out that finite candidate, not the infinite conjecture. Coarse Q=1 alone cannot prove a critical-density deficit because the number of allowed differences is typically order L while m^2 is only order L^(2/3).
+
 ## 3A. Sharpening: localized *oriented* cross-bin inverse
 
 The signed full-outer-set theorem uses every candidate difference with absolute value at most the total outer diameter. The actual Stage B construction uses much shorter positive-difference windows from two separated fine outer bins.
