@@ -87,16 +87,16 @@ The signed full-outer-set theorem uses every candidate difference with absolute 
 
 Let Y,Z be two nonempty, disjoint B3 subsets of the actual outer carrier with every y in Y below every z in Z. Let
 
-$
+$$
 J=[\min Z-\max Y,\ \max Z-\min Y]\cap\mathbb Z,
 \qquad |J|=\mathrm{diam}(Y)+\mathrm{diam}(Z)+1.
-$
+$$
 
 Let $b_s=\#\{y\in Y:y\equiv s\pmod Q\}$ and $c_s=\#\{z\in Z:z\equiv s\pmod Q\}$. For each d modulo Q define
 
-$
+$$
 K^{Y,Z}_d=\sum_{s\bmod Q}b_s c_{s+d}.
-$
+$$
 
 Then sum_d K^{Y,Z}_d=|Y||Z|. The B2 property makes all positive cross-bin differences z-y distinct, so each K_d picks out K_d **distinct** integers h in J with h=d modulo Q.
 
@@ -104,7 +104,7 @@ Sort the actual weights r_U(h) over all h in J with h=d modulo Q as $v_{d,1}\le 
 
 **Theorem B (oriented localized weighted inverse):**
 
-$
+$$
 \boxed{
 \begin{aligned}
 \mathcal M_{Y,Z}(U)
@@ -113,15 +113,15 @@ $
 &\ge t\sum_{d\bmod Q}(K^{Y,Z}_d-Z^{Y,Z}_{d,t})_+ .
 \end{aligned}
 }\tag{LOCAL-INVERSE}
-$
+$$
 
 **Proof.** Every ordered center pair (y,z) has z-y>0 and determines a unique positive difference because the actual B3 carrier is Sidon. For each residue class d, its K_d differences are K_d *distinct* members of J. Their total weight is at least the sum of the K_d smallest possible weights there. At most Z_{d,t} of them can have weight below t, giving the threshold bound. Sum over d. No pair is charged at more than one bin pair or scale when the center-bin partition has a unique owner. QED.
 
 **Zero-correlation inverse.** If M_{Y,Z}(U)=0, then for every residue class d,
 
-$
+$$
 \boxed{\sum_s b_s c_{s+d}\le Z^{Y,Z}_{d,1}.}\tag{LOCAL-AVOID}
-$
+$$
 
 The candidate difference range has only diam(Y)+diam(Z)+1 slots, **not** the full outer-center span. Accordingly this version can provide a stronger finite exclusion than the global theorem when the two outer bins are narrow and separated.
 
@@ -137,6 +137,8 @@ $$
 \boxed{\frac{n}{D^{1/3}}
 \le12^{1/3}\frac{t_q(X)}{q^{1/3}}.}\tag{SINGLE-MODULUS}
 $$
+
+**Proof of the single-modulus bound (included to avoid an unmerged dependency).** Let t=t_q(X). Some occupied residue class has s>=n/t points. If s=1 then t=n and the claimed estimate follows from q<=D. If s>=2, subtract its residue and divide its elements by q. The resulting s-element set is still B3, of diameter at most D/q. Its exact cubic shadow has size (s^3-s^2+2s)/2 and lies in at most 3D/q+1 integers. Hence s^3-s^2+2s<=6D/q+2. Since s^3-s^2+2s-2>=s^3/2 for all integers s>=2, we obtain q s^3<=12D. Finally s>=n/t gives q n^3<=12D t^3. This establishes (SINGLE-MODULUS) without assumptions about graph independence.
 
 Let q_1,...,q_s be **pairwise coprime** positive moduli whose product Q=prod_j q_j satisfies Q<=D. Write t_j=t_{q_j}(X). By the Chinese remainder theorem, the number t_Q(X) of occupied classes modulo Q is at most prod_j t_j. Apply (SINGLE-MODULUS) at Q:
 
