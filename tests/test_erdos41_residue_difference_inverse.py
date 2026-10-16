@@ -83,6 +83,30 @@ def threshold_residue_certificate(p,w,Q,threshold):
 
 
 
+def localized_bin_inverse(p, low, high, Q, threshold=1):
+    """Oriented cross-bin certificate using actual short difference range."""
+    assert min(high)>max(low)
+    lower=min(high)-max(low)
+    upper=max(high)-min(low)
+    r=half_difference_weights(p,upper)
+    K=Counter((z-y)%Q for y in low for z in high)
+    eligible=defaultdict(list)
+    for h in range(lower,upper+1):
+        eligible[h%Q].append(r[h])
+    order_lower=0
+    threshold_lower=0
+    zcounts={}
+    for d, needed in K.items():
+        values=sorted(eligible[d])
+        assert needed<=len(values)
+        order_lower+=sum(values[:needed])
+        z=sum(v<threshold for v in values)
+        zcounts[d]=z
+        threshold_lower+=threshold*max(0,needed-z)
+    actual=sum(r[z-y] for y in low for z in high)
+    return actual,order_lower,threshold_lower,K,zcounts,upper-lower+1
+
+
 class ResidueDifferenceInverseTests(unittest.TestCase):
     def test_all_genuine_b3_prefixes(self):
         self.assertTrue(is_b3(A))
@@ -172,6 +196,61 @@ class ResidueDifferenceInverseTests(unittest.TestCase):
         unscaled=A[:8]
         D0=unscaled[-1]-unscaled[0]
         self.assertLess(Fraction(len(x)**3,D),Fraction(len(unscaled)**3,D0))
+
+
+    def test_localized_oriented_cross_bin_certificates(self):
+        p=pair_sums(A[:14])
+        w=A[14:]
+        bins=[w[:3],w[3:7],w[7:]]
+        total=0
+        for i in range(len(bins)):
+            for j in range(i+1,len(bins)):
+                lo,hi=bins[i],bins[j]
+                actual=energy(p,lo+hi)-energy(p,lo)-energy(p,hi)
+                total+=actual
+                width=max(hi)-min(lo)-(min(hi)-max(lo))+1
+                for Q in (1,2,3,5,7,11,16,width+1):
+                    with self.subTest(i=i,j=j,Q=Q):
+                        observed,weighted,thresholded,K,Z,length=localized_bin_inverse(
+                            p,lo,hi,Q,threshold=1)
+                        self.assertEqual(observed,actual)
+                        self.assertLessEqual(weighted,actual)
+                        self.assertLessEqual(thresholded,actual)
+                        self.assertEqual(sum(K.values()),len(lo)*len(hi))
+                        self.assertEqual(length,width)
+                        if Q>width:
+                            self.assertEqual(weighted,actual)
+                        if actual==0:
+                            self.assertTrue(all(K[d]<=Z[d] for d in K))
+        self.assertLessEqual(total,energy(p,w))
+
+    def test_small_positive_cross_bin_and_exact_large_modulus(self):
+        p=pair_sums(A[:14])
+        low=A[15:17]  # 4048,5298
+        high=A[17:19] # 6704,7839
+        self.assertEqual(low,[4048,5298])
+        self.assertEqual(high,[6704,7839])
+        observed,lower,thresholded,K,Z,width=localized_bin_inverse(p,low,high,5000)
+        self.assertEqual(observed,1)
+        self.assertEqual(lower,1)
+        self.assertEqual(sum(K.values()),4)
+        self.assertGreater(5000,width)
+        self.assertLessEqual(thresholded,observed)
+
+    def test_cross_bin_repeated_difference_hostile(self):
+        # 10x10 graph-independent center pairs with repeated differences.
+        # A Sidon-only inverse applied here would yield a false conclusion.
+        p=pair_sums([1,2,5])
+        low=[100+5*j for j in range(10)]
+        high=[200+5*j for j in range(10)]
+        self.assertFalse(is_b2(low+high))
+        self.assertEqual(energy(p,low+high),0)
+        left=min(high)-max(low)
+        right=max(high)-min(low)
+        r=half_difference_weights(p,right)
+        eligible_zero=sum(r[h]==0 for h in range(left,right+1))
+        self.assertEqual(eligible_zero,right-left+1)
+        self.assertGreater(len(low)*len(high),eligible_zero)
 
 
 if __name__=="__main__":
