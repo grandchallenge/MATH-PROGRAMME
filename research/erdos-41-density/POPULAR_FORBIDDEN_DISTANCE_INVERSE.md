@@ -99,7 +99,7 @@ $$
 
 The cardinality bound is integer-valued, so an arbitrarily small positive right side simply forces at least one actual popular difference. No assumption is made that these popular distances intersect *outer* differences.
 
-This is directly relevant to the localized difference reservoir of CROSS_BIN_LOCAL_DIFFERENCE_SUPPLY.md: **both spectra now have rigorously certified, c-dependent positive density at compatible short scales**. Their intersection remains unproved; a comparison of their cardinalities would only force intersection if their total densities exceeded 1, which need not happen for small c.
+This is directly relevant to the localized difference reservoir of CROSS_BIN_LOCAL_DIFFERENCE_SUPPLY.md: **the inner popular spectrum now has positive c-dependent relative density at a compatible short scale, whereas the actual outer difference reservoir has only order N^(2/3) distinct values in an order-N interval and therefore vanishing relative density**. Their intersection remains unproved; cardinality pigeonholing cannot force it for any fixed c.
 
 ## 3A. Actual positive-density edge supply in a *short outer window*
 
@@ -192,8 +192,8 @@ Thus any nontrivial frequency with a large normalized Fourier coefficient of P m
 The preceding theorems remove one uncertainty: the actual inner pair-sum spectrum necessarily has **many popular** forbidden distances in the same short magnitude range as the proved outer-difference reservoir. There are now two precisely quantified, adversarially testable scenarios:
 
 1. **Transverse intersection:** Prove under persistent density that the popular inner distance set B_(k) intersects the actual outer difference reservoir in enough h-values, despite arbitrary residue/spacing structure.
-2. **Joint structural inverse:** If the two dense-in-a-short-window spectra remain disjoint over nested scales, show that this repeated avoidance forces a growing arithmetic period, exceptional gap concentration, or another specifically defined structure; then prove a lower-density cost using a scale-owned potential.
+2. **Joint structural inverse:** If the dense inner popular spectrum and comparatively sparse actual outer difference set remain disjoint over nested scales, show that this repeated avoidance forces a growing arithmetic period, exceptional gap concentration, or another specifically defined structure; then prove a lower-density cost using a scale-owned potential.
 
-Neither follows from two positive density estimates alone. For small c, their densities may have sum much less than one. Nor do the finite Turán independence bound or near-tiling theorem resolve the gap. We should prioritize *cross-scale quantitative inverse arithmetic* over any further unconditional block-selector overlap bounds.
+Neither follows from these cardinality estimates alone. The outer difference set is sparse relative to the short order-N window, regardless of fixed c; the inner popular set's fixed positive relative density does not force intersection. Nor do the finite Turán independence bound or near-tiling theorem resolve the gap. We should prioritize *cross-scale quantitative inverse arithmetic* over any further unconditional block-selector overlap bounds.
 
 **Validation:** exact parity-filtered r-mass, pointwise cap, both popular sets, localized window cutoffs, independence packing, and near-tiling complementarity; adversarial zero-overlap B3, Sidon-digit lifts, and non-B3 hostile test cases. Do not convert numerical fixture success into a proof of the infinite claim.
