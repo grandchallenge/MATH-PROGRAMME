@@ -201,15 +201,16 @@ if __name__ == "__main__":
     unittest.main()
 
 # GCL-ARC-001: protection-grade role evidence, one real transport login.
-from agent_role_receipt import AgentRoleError, verify_agent_role_receipt  # noqa: E402
+from agent_role_receipt import AgentRoleError, LEGACY_V1, verify_agent_role_receipt  # noqa: E402
 
 
 class ProtectedAgentRoleReceiptTests(unittest.TestCase):
     def setUp(self):
-        self.head = "a" * 40
-        self.source_head = "b" * 40
-        self.blob = "c" * 40
-        self.digest = "d" * 64
+        # The only historical V1 specimen eligible for replay is byte-pinned.
+        self.head = LEGACY_V1["subject_head"]
+        self.source_head = LEGACY_V1["source_head"]
+        self.blob = LEGACY_V1["dossier_blob"]
+        self.digest = LEGACY_V1["material_sha256"]
         self.path = "governance/agent_execution/reviews/MATH-PROGRAMME-" + self.head + ".json"
         self.subject = {"repository": "grandchallenge/MATH-PROGRAMME",
                         "head_sha": self.head, "material_sha256": self.digest}
@@ -222,7 +223,7 @@ class ProtectedAgentRoleReceiptTests(unittest.TestCase):
             "verdict": "ADMISSIBLE_FOR_PROTECTED_ADMISSION",
             "protected_evidence": {"path": self.path, "blob_sha": self.blob},
             "source_review_anchor": {
-                "source_pr_number": 123,
+                "source_pr_number": LEGACY_V1["source_pr"],
                 "source_pr_head_sha": self.source_head,
                 "review_dossier_blob_sha": self.blob,
             }
@@ -270,8 +271,8 @@ class ProtectedAgentRoleReceiptTests(unittest.TestCase):
     def api(self, path):
         prefix = "/repos/grandchallenge/INTELLECT"
         responses = {
-            prefix + "/pulls/123": self.pr,
-            prefix + "/pulls/123/files?per_page=100": self.source_files,
+            prefix + "/pulls/121": self.pr,
+            prefix + "/pulls/121/files?per_page=100": self.source_files,
             prefix + "/commits/" + self.source_head +
                 "/check-runs?per_page=100":
                 {"total_count": len(self.runs), "check_runs": self.runs},
@@ -282,7 +283,8 @@ class ProtectedAgentRoleReceiptTests(unittest.TestCase):
     def evaluate(self):
         return verify_agent_role_receipt(
             receipt=self.receipt, receipt_path="governance/material_admission_receipts/"
-              "MATH-PROGRAMME-" + self.head + ".json", receipt_blob="f"*40,
+              "MATH-PROGRAMME-" + self.head + ".json",
+            receipt_blob=LEGACY_V1["receipt_blob"],
             read_protected_json=self.read, api_get=self.api,
             protected_sha="e"*40, subject_head=self.head,
             material_digest=self.digest, actual_actor="fyremael")
