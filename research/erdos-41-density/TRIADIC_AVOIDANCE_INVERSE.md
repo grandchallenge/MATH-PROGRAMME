@@ -158,6 +158,88 @@ where Z^0_(d,e) counts **distinct** candidates of zero weight among the displaye
 
 For Q exceeding both candidate gap-range widths, every residue pair (d,e) identifies at most one candidate gap pair, and the bound becomes equality for the given actual outer bins. This is a verification limit, not an asymptotic density improvement.
 
+## 4A. A proved localized residue-spectrum density cost (the stronger inverse gate)
+
+There is a second, complementary inverse route that *does* convert **specific missing residues in the actual inner allowed-distance spectrum** into a quantified outer-density restriction. It uses the standard Cauchy–Davenport theorem in prime cyclic groups; no Fourier mixing assumption is introduced.
+
+Let Y<Z be two nonempty actual B3 outer bins, of enclosing diameters D_Y,D_Z>=1, and put
+
+$
+J=[\min Z-\max Y,\max Z-\min Y]\cap\mathbb Z,
+\qquad m_Y=|Y|,\quad m_Z=|Z|.
+$
+
+Fix integer threshold t>=1. For each prime p, let
+
+$
+E_{p,t}=\{h\bmod p:h\in J,\ r_U(h)<t\},
+\qquad e_{p,t}=|E_{p,t}|,
+$
+
+and define the finite, **inner-spectrum-only** cap
+
+$
+c_{p,t}=
+\begin{cases}
+(e_{p,t}+1)/2,&e_{p,t}<p,\\
+p,&e_{p,t}=p.
+\end{cases}
+$
+
+The first value may be a half-integer; this only weakens an integer bound and is safe. Choose pairwise distinct primes p_1,...,p_s with product Q<=min(D_Y,D_Z), and define
+
+$
+\boxed{
+B_t(U;Y,Z,\mathbf p)
+=
+\left(\frac{144D_YD_Z}{Q^2}\right)^{1/3}
+\prod_{j=1}^s c_{p_j,t}^{\,2}.
+}\tag{BIN-CRT-BUDGET}
+$
+
+**Theorem D (prime-residue localized inverse; robust form).** With
+\(\mathcal M_{Y,Z}(U)=\sum_{y\in Y,z\in Z}r_U(z-y)\), one has
+
+$
+\boxed{
+\mathcal M_{Y,Z}(U)\ge
+\frac{t}{\max(m_Y,m_Z)}
+\left[m_Ym_Z-B_t(U;Y,Z,\mathbf p)\right]_+ .
+}\tag{LOCAL-CRT-INV}
+$
+
+In particular if the actual cross-bin correlation is zero,
+
+$
+\boxed{
+m_Ym_Z\le B_1(U;Y,Z,\mathbf p).
+}\tag{ZERO-CRT}
+$
+
+**Proof, including the exact B3/B2 dependency.** Count the heavy cross-bin edges (y,z) whose weight r_U(z-y)>=t. Their number e is at most M_(Y,Z)/t. Delete at most one endpoint for every heavy edge, obtaining nonempty B3 subsets Y' subset Y and Z' subset Z without heavy cross edges unless e>=min(m_Y,m_Z), in which case the desired bound follows immediately from M>=t min(m_Y,m_Z) and B_t>=0.
+
+For every prime p, the residue-difference set (Z' mod p)−(Y' mod p) is contained in E_(p,t). If e_(p,t)<p, **Cauchy–Davenport** gives
+|Z' mod p|+|Y' mod p|−1<=e_(p,t); therefore their residue-class count product is at most ((e_(p,t)+1)/2)^2 by AM–GM. If e_(p,t)=p, each occupied residue count is at most p, yielding the same bound with c_(p,t)=p.
+
+The Chinese remainder theorem bounds the number of occupied classes modulo Q by the product of occupied classes modulo the individual primes. The elementary B3 cubic-shadow dispersion theorem (proved separately in PR #2714) bounds any B3 subset X of an enclosing integer span D>=Q by
+
+$
+|X|^3Q\le12D\,t_Q(X)^3.
+$
+
+This remains true for |X|<=1 by Q<=D. Apply it to Y',Z', multiply, and insert the prime residue-product bounds. We obtain \(|Y'||Z'|\le B_t\). If a elements of Y and b elements of Z were removed, a+b<=e, so
+
+$
+|Y'||Z'|=(m_Y-a)(m_Z-b)
+\ge m_Ym_Z-e\,\max(m_Y,m_Z).
+$
+
+Combine with e<=M/t and rearrange. This proves (LOCAL-CRT-INV). QED.
+
+**What is genuinely achieved:** a **density-sensitive positive lower bound** whenever the actual narrow-window inner allowed-distance residue projections omit enough classes across the chosen primes. The formula depends on U, the exact geometry of the outer bins, and explicit moduli; it requires neither a random-spectrum assumption nor any selection of inner block comparisons.
+
+**What is not achieved:** showing that *every* persistent-density configuration has such a prime/modulus family. If e_(p,t)=p for every usable small prime, the residue budget B_t is enormous and the inequality usually says only M>=0. Dense inner forbidden distances by themselves do not guarantee a missing allowed residue modulo any small prime: a relatively sparse zero-weight set can still hit every residue class. The need to prove *unavoidable prime-residue deficiency or another density-cost mechanism at arbitrarily many owned scales* is the remaining open Stage B boundary.
+
 ## 5. What was and was not proved about persistent density
 
 Under the **hypothetical** persistent critical bound A(N)>=cN^(1/3), existing GCL selection gives large actual outer cohorts. If a chosen m-element outer B3 subset has m>=kappa_c L^(1/3) in an interval of span L and M=0, Theorem A forces at least kappa_c^3 L/6−O_c(L^(2/3)) distinct nondegenerate additive triangles in the zero-weight distance set. This is a rigorous quantitative *structure-or-correlation* alternative.
