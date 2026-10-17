@@ -25,9 +25,6 @@ concurrency:
 
 jobs:
   origin:
-    permissions:
-      contents: read
-      pull-requests: read
     if: >-
       github.repository == 'grandchallenge/MATH-PROGRAMME' &&
       github.ref == 'refs/heads/main' &&
