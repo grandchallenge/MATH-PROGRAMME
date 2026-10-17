@@ -69,6 +69,9 @@ jobs:
       - name: Install documentation dependencies
         if: matrix.shard == 'docs'
         run: python -m pip install --requirement requirements/docs.txt
+      - name: Install Erdős Compendium finite QA dependencies
+        if: matrix.shard == 'repository-regression'
+        run: python -m pip install --requirement requirements/erdos_compendium_finite_qa.txt
       - name: Execute routed policy shard
         shell: bash
         run: python3 ci/run_policy_shard.py --shard "${{ matrix.shard }}" --log "policy-shard-${{ matrix.shard }}.log"
