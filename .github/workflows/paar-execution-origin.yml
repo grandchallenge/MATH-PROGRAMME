@@ -44,6 +44,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run independent bounded assertions
+        working-directory: trusted
         env:
           GH_TOKEN: ${{ github.token }}
           PAAR_PR: ${{ inputs.pr_number }}
@@ -51,10 +52,10 @@ jobs:
           PAAR_MATERIAL: ${{ inputs.material_sha256 }}
         run: |
           set -euo pipefail
-          test "$(git -C trusted rev-parse HEAD)" = "$GITHUB_SHA"
-          python3 trusted/ci/paar_execution_origin.py capture \
-            --candidate-dir trusted \
-            --output-file evidence/witness.json \
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python3 ci/paar_execution_origin.py capture \
+            --candidate-dir . \
+            --output-file ../evidence/witness.json \
             --pr-number "$PAAR_PR" \
             --candidate-sha "$PAAR_SHA" \
             --material-sha256 "$PAAR_MATERIAL"
