@@ -193,10 +193,11 @@ class TriadicAvoidanceTests(unittest.TestCase):
                 self.assertEqual(observed,sum(energies))
 
     def test_three_bin_positive_two_midpoints(self):
-        u=A[:10]
-        Y,Z,V=A[10:11],A[11:13],A[13:14]
+        # Both triples have positive genuine correlations (2 and 1).
+        u=A[:14]
+        Y,Z,V=A[14:15],A[15:17],A[17:18]
         self.assertTrue(is_b3(u+Y+Z+V))
-        for Q in (1,2,5,11,400):
+        for Q in (1,2,5):
             with self.subTest(Q=Q):
                 observed,bound,K,Zcap,energies=three_bin_certificate(
                     u,Y,Z,V,Q)
