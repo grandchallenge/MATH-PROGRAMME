@@ -244,6 +244,44 @@ def coarse_formula_from_occupancies(a,width):
     return result
 
 
+def synthetic_critical_scalar_bins(M):
+    """Exact integer floor(4*M/(i+1)^(2/3)), no floating point."""
+    assert M>=1
+    target=(4*M)**3
+    out=[]
+    for i in range(M):
+        denominator=(i+1)**2
+        lo,hi=0,4*M+1
+        while lo+1<hi:
+            mid=(lo+hi)//2
+            if mid**3*denominator<=target:
+                lo=mid
+            else:
+                hi=mid
+        out.append(lo)
+    return out
+
+
+def coarse_pattern_formula_from_counts(m):
+    from collections import Counter
+    from math import comb
+    n=len(m)
+    profile=Counter()
+    for i in range(n):
+        for j in range(i,n):
+            for k in range(j,n):
+                if i==j==k:
+                    w=comb(m[i]+2,3)
+                elif i==j:
+                    w=comb(m[i]+1,2)*m[k]
+                elif j==k:
+                    w=m[i]*comb(m[j]+1,2)
+                else:
+                    w=m[i]*m[j]*m[k]
+                profile[i+j+k]+=w
+    return profile
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -697,6 +735,50 @@ class ForwardShadowCapacityTests(unittest.TestCase):
         direct=coarse_triple_count_by_index_sum(bad,1)
         self.assertEqual(direct,coarse_formula_from_occupancies(bad,1))
         self.assertTrue(any(v>1 for v in direct.values()))
+
+
+    def test_scalar_multiscale_critical_density_hall_countermodel(self):
+        # Occupancy counts, NOT a genuine B3 set.
+        # Critical lower density and ALL per-sum Hall inequalities
+        # coexist across arbitrary finite coarse horizons M.
+        for M in (1,2,4,10,20,50,100):
+            with self.subTest(M=M):
+                L=(20*M)**3
+                counts=synthetic_critical_scalar_bins(M)
+                self.assertEqual(len(counts),M)
+                self.assertTrue(all(v>=4 for v in counts))
+                running=0
+                for h,v in enumerate(counts,1):
+                    running+=v
+                    # Compare integer cubes to avoid irrational thresholds:
+                    # running >= (3/20)*(hL)^(1/3)
+                    self.assertGreaterEqual((20*running)**3,
+                                            27*h*L)
+                sums=coarse_pattern_formula_from_counts(counts)
+                self.assertTrue(all(v<=3*L-2 for v in sums.values()))
+                # Check exact total multinomial multiplicity.
+                self.assertEqual(sum(sums.values()),
+                                 len(range(1))*(sum(counts)+2)*
+                                 (sum(counts)+1)*sum(counts)//6)
+                self.assertGreater(max(sums.values()),0)
+
+    def test_analytic_power_law_triple_convolution_is_uniform(self):
+        # A finite numerical replay supporting the elementary analytic
+        # proof of a uniform <=100 convolution bound. Not a B3 witness.
+        from math import fsum
+        M=100
+        a=[(i+1)**(-2/3) for i in range(M)]
+        pair=[0.0]*(2*M-1)
+        for i,ai in enumerate(a):
+            for j,aj in enumerate(a):
+                pair[i+j]+=ai*aj
+        triple=[0.0]*(3*M-2)
+        for i,pi in enumerate(pair):
+            for j,aj in enumerate(a):
+                triple[i+j]+=pi*aj
+        self.assertLessEqual(max(triple),100)
+        for s in range(M):
+            self.assertLessEqual(pair[s],10*(s+1)**(-1/3)+1e-10)
 
 
 if __name__=="__main__":
