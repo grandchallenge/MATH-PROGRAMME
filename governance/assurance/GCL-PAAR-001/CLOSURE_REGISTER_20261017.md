@@ -35,3 +35,7 @@ This programme is a **single finite cut of 20 GitHub repositories as of this sna
 `python3 governance/assurance/GCL-PAAR-001/capture_estate_scope.py --output governance/assurance/GCL-PAAR-001/ESTATE_SCOPE_20261017.json` is a **new live capture**, not a modification of the pinned snapshot; use a different output path for subsequent runs.
 
 `python3 governance/assurance/GCL-PAAR-001/inspect_estate_surfaces.py` reads the existing pinned scope and writes `ESTATE_SURFACES_20261017.json`. For re-execution, preserve the original snapshot separately. Existing `replay_baseline.py --offline` and `--live` provide the established six-repository checksum and hostile controls. Exact controls for V3 are in `governance/assurance/GCL-PAAR-001/paar_v3_origin_consumer.py` and the authenticated original Actions run #38988609732.
+
+## Closing clarification from accountable GCL audit, 2026-10-17
+
+GCL itself conducts and completes this operational integrity audit. The final decision records the twenty-repository bounded evidence and explicit exceptions. There is no extra external assurance-review prerequisite. Independently verified mathematical or publication certificates remain governed by their own existing certification pathways, not by another general PAAR workstream. Preserve the original CHAD provenance exception and the noncertifying limits of sampled page and failure-state evidence. The separate protected final receipt is the final internal closure condition.
