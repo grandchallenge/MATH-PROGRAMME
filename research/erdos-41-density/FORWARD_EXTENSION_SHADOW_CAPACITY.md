@@ -471,6 +471,67 @@ The proof is direct: distinct triple sums in the same level must fit into the un
 
 **Next exact mathematical gate:** For a c-persistent B3 set, select a family of overlapping consecutive three-cohort windows at growing scales in which the *same actual elements* appear with consistent digit-level roles, then prove a comparison of the unused capacities in levels 2–4 that cannot be discharged by adjusting T. Such an inequality must count each actual sum once at its first owning window; simply repeating (SEVEN-LAYER-PACKING) over many windows cannot make the slack accumulate.
 
+## 3E. The exact surviving-site graph and its reciprocal difference condition
+
+The complete reflected theorem has a compact formulation that **does** account for shape-changing optimizers, rather than merely deleting a fraction of future singletons.
+
+Let P be a finite B3 set in [1,R], y>6R, and
+
+$
+Q_P=\{p+p':p,p'\in P,\ p\le p'\},\quad
+V_P=([p_{\min},R]\cap\mathbb Z)\setminus T(P).
+$
+
+On the vertex set V_P, define the **complete pair-sum difference graph** G_P, joining distinct t,u precisely when
+
+$
+t-u\in Q_P-Q_P.
+$
+
+Differences are understood with both orientations, so the edge definition is symmetric. Let Q_T be the unordered pair-sum set of a proposed T and let \(\Delta_P=P-P\), \(\Delta_{Q_P}=Q_P-Q_P\).
+
+**Theorem I (exact survivor graph + dual packing characterization).** The individual reflected sites admissible after adding y are **exactly** V_P. Moreover the true future optimal batch capacity is
+
+$
+\boxed{
+C(P\cup\{y\},J_y)
+=
+\max\{|T|:\ T\subseteq V_P,\quad
+T\text{ is }B_3,\quad
+(T-T)\cap\Delta_{Q_P}=\{0\},\quad
+(Q_T-Q_T)\cap\Delta_P=\{0\},\quad
+P\cap T(T)=\varnothing
+\}.
+}\tag{DUAL-SIGNED-CODE}
+$
+
+Consequently the completely **shape-independent** graph bound is
+
+$
+\boxed{
+C(P\cup\{y\},J_y)\le\alpha(G_P[V_P]).
+}\tag{SURVIVOR-INDEPENDENCE}
+$
+
+**Proof.** Theorem F says a reflected T is admissible with the anchor iff T is B3, T∩T(P)=empty, P∩T(T)=empty, and the PP−T and P−TT maps are injective.
+
+The first shadow condition is exactly T subset V_P. Each nonzero collision of two PP−T words is an equality q−t=q'−u, equivalent to t−u=q−q' with t!=u, which is prohibited exactly by \((T-T)\cap(Q_P-Q_P)=\{0\}\); the internal uniqueness of q follows from B2. Similarly the P−TT map is injective precisely when the nonzero pair-sum differences from Q_T avoid the nonzero differences of P, namely \((Q_T-Q_T)\cap(P-P)=\{0\}\), because T is B2 and hence Q_T has distinct labelled unordered pair representations. If |T|=1, those maps are automatically injective and T(T)=T; since P subset T(P), each t∈V_P yields a legal singleton. This proves the claimed exact characterization and upper bound. QED.
+
+**The remaining decisive graph problem is now different from the old Stage B one.** It is the independence number of the graph induced by the **surviving reflected singleton sites** after deleting the actual cubic shadow, with *all* differences of the unordered inner pair-sum set forbidden, and a **reciprocal** difference-spectrum condition for Q_T against P-P. The older forbidden-distance graph used only the doubled outer differences and did not impose this coupled, bidirectional signed-code packing problem.
+
+**Concrete complete-batch decrement, without a near-saturation assumption.** Let P={1,2,5}, R=14, y=100, and D={0,11}. Both the old P and the intermediate genuine B3 prefix P union {100,111} are valid. The future reflected interval is J_y=[186,199]. Exact enumeration of **all** 2^14 reflected future sets yields
+
+$
+\boxed{
+C(P,J_y)=2,\qquad
+C(P\cup\{100,111\},J_y)=1.
+}\tag{REAL-MIDDLE-BATCH-TAX}
+$
+
+For the new middle prefix, the reflected **singleton** survivors are precisely T={7,10,11,14}. Any two of these have a difference in Q_P−Q_P, so they form a **clique** in the old pair-sum difference graph. This gives a human-checkable certificate of the upper bound one without rerunning the complete three-sum search. At least one of these singleton T's remains admissible, proving equality. The old prefix admits, for example, T={1,10} as a two-element batch, showing the before-bound of two is achieved. The full two-colour constraints and the direct B3 enumeration confirm both optima.
+
+**Limitation:** the example demonstrates a genuine *numerical* batch capacity loss caused by a populated middle cohort and the surviving-site graph. It does not show a positive capacity drop on **every** step (the earlier canonical counterexample shows the opposite), nor any uniform lower bound on the drop under infinite persistent density. At small critical density, V_P can remain a positive fraction of the old interval and its graph may have critical-order independent sets. The multiscale obstruction must bound the survival of these **coupled** signed-code independent sets across linked cohorts.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
