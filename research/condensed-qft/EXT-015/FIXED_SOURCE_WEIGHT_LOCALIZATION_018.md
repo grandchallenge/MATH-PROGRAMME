@@ -244,27 +244,27 @@ Indeed, Theorem 18.7 applies to $S_\infty$, and the universal free-measure prope
 
 The classical Valdivia–Vogt sequence-space representation of the **LF** space of test functions gives a (noncanonical) continuous linear topological isomorphism
 
-$
+$$
 \mathcal D(\mathbb R)\cong
 \bigoplus_{n\ge1}^{\mathrm{LF}}s.
 \tag{18.20}
-$
+$$
 
 See Valdivia–Vogt and Christian Bargetz, *Commutativity of the Valdivia–Vogt table of representations of function spaces*, Math. Nachr. 287 (2014), 10–22, DOI 10.1002/mana.201200258. For compact profinite plots, strict LF regularity identifies the condensed realization of the right-hand side with the liquid coproduct of the Fréchet realizations. Write $B_n=\underline s$ and fix one such isomorphism
 
-$
+$$
 G=\underline{\mathcal D(\mathbb R)}
 \cong\bigoplus_n B_n.
 \tag{18.21}
-$
+$$
 
 Define $P_G=\prod_n B_n$ and $Q_G=P_G/G$ in the liquid abelian category. The proof of Theorem 18.7 carries over **coordinate by coordinate**: given a profinite cover $T\to K$ and a local section into $P_G$, the descent defect lies in the finite-direct-sum subsheaf $G(T\times_K T)$ and hence vanishes outside a single finite set of output summands. Every remaining component is a continuous map $T\to s$ constant on the fibers and descends continuously to $K$ because $s$ is Hausdorff. Consequently
 
-$
+$$
 P_G(K)\twoheadrightarrow Q_G(K)
 \quad\text{for every profinite }K.
 \tag{18.22}
-$
+$$
 
 For every weight stage $T_r$ from (18.1), the free-measure retract (18.8) and (18.22) imply that every $T_r\to Q_G$ lifts to $P_G$.
 
@@ -272,22 +272,22 @@ For fixed $r,n$, the group $\mathrm{Hom}(T_r,B_n)$ embeds in $W_n=s^{\mathbb N}$
 
 Because each $T_r$ is compact, one has
 
-$
+$$
 \mathrm{Hom}(T_r,G)
 \cong\bigoplus_n\mathrm{Hom}(T_r,B_n).
-$
+$$
 
 Apply Lemma 18.1 to these nested subspaces and then the derived mapping edge (18.13), now for target $G$. Any class of $\mathrm{Ext}^1(\underline s,G)$ whose restriction to all $T_r$ vanishes therefore comes from **finitely many** $B_n$ summands.
 
 **Conclusion (phantom-free full output).** The map
 
-$
+$$
 \rho_G:
 \mathrm{Ext}^1_{\mathcal A_p}(\underline s,G)
 \longrightarrow
 \prod_{n\ge1}\mathrm{Ext}^1_{\mathcal A_p}(\underline s,B_n)
 \tag{18.23}
-$
+$$
 
 is **injective**. Indeed, if $\rho_G(\xi)=0$, exactness of $0\to G\to P_G\to Q_G\to0$ gives $\xi=\delta(f)$ for some $f:\underline s\to Q_G$. The sectionwise lift (18.22) makes every restriction $\delta(f)|_{T_r}$ vanish. The preceding finite-support lemma forces $\xi$ into a finite $B_n$ prefix. But the finite prefix embeds into $P_G$ with a coordinate retraction, so its Ext¹ class must be zero when $\rho_G(\xi)=0$. Thus $\xi=0$.
 
@@ -295,12 +295,12 @@ is **injective**. Indeed, if $\rho_G(\xi)=0$, exactness of $0\to G\to P_G\to Q_G
 
 Because (18.23) is injective, a liquid Ext¹ class comes from a finite output support stage **if and only if** only finitely many of its component classes $\rho_G(\xi)_n$ are nonzero. More exactly,
 
-$
+$$
 \mathrm{coker}(\theta^1)\cong
 \frac{\mathrm{im}(\rho_G)}
 {\bigoplus_n\mathrm{Ext}^1_{\mathcal A_p}(\underline s,B_n)}.
 \tag{18.24}
-$
+$$
 
 The direct sum in the denominator really is a subgroup of the image: finite-summand extension classes can be pushed to $G$ and are detected by their own components.
 
