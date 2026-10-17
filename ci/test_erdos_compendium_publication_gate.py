@@ -23,13 +23,20 @@ LEGACY25_ROWS = {
         .read_text(encoding="utf-8"))["entries"]
 }
 
+FOUR_DISPLAY_ROWS = {
+    e["problem_id"]: e for e in json.loads(
+        (ROOT / "governance/erdos_compendium/EDITORIAL_DISPLAY_MATH_AMENDMENTS_FOUR.json")
+        .read_text(encoding="utf-8"))["entries"]
+}
+
+
 def current_source_digest(n: int, historic_sha: str) -> str:
-    row = LEGACY25_ROWS.get(n)
-    if row is None:
-        return historic_sha
-    if row["previous_sha256"] != historic_sha:
-        raise AssertionError(f"Old source digest changed for #{n}")
-    return row["corrected_sha256"]
+    for row in (LEGACY25_ROWS.get(n), FOUR_DISPLAY_ROWS.get(n)):
+        if row is not None:
+            if row["previous_sha256"] != historic_sha:
+                raise AssertionError(f"Old source digest changed for #{n}")
+            historic_sha = row["corrected_sha256"]
+    return historic_sha
 
 
 class EditorialGateTests(unittest.TestCase):
@@ -94,6 +101,75 @@ class EditorialGateTests(unittest.TestCase):
             self.assertTrue(publication_state_matches(
                 {"reviewed": True, "draft": False, "notCertified": False},
                 admitted=protected_editorial_state(n)))
+
+    def test_four_admitted_display_math_repairs_fail_closed(self):
+        """Require exact immutable admission source and enforce valid display boundaries."""
+        import copy
+        from unittest.mock import patch
+        from erdos_compendium import FOUR_DISPLAY_AMENDMENTS
+        doc = json.loads(FOUR_DISPLAY_AMENDMENTS.read_text(encoding="utf-8"))
+        self.assertEqual(doc["protected_patch"], REPO + "/pull/2715")
+        self.assertEqual(doc["source_issue"], REPO + "/issues/2698")
+        self.assertEqual(doc["browser_receipt"],
+                         REPO + "/issues/2698#issuecomment-6227245766")
+        self.assertEqual(doc["base_main_sha"],
+                         "49d768ed15b2ab77742c34737e172ed53d1ff2db")
+        self.assertEqual(set(FOUR_DISPLAY_ROWS), {665, 669, 776, 777})
+        effective = load_batch_admissions(ACCEPTANCE)
+        ledger = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        original = {x["problem_id"]: {**x, "batch_id":b["batch_id"]}
+                    for b in ledger["batches"] for x in b["entries"]}
+        for n, row in FOUR_DISPLAY_ROWS.items():
+            with self.subTest(n=n):
+                current = (EDITORIAL / f"{n:04d}.md").read_bytes()
+                text = current.decode("utf-8")
+                self.assertEqual(original[n]["source_sha256"], row["previous_sha256"])
+                self.assertEqual(original[n]["source_check"], row["source_check"])
+                self.assertEqual(original[n]["batch_id"], row["batch_id"])
+                self.assertEqual(hashlib.sha256(current).hexdigest(),
+                                 row["corrected_raw_sha256"])
+                self.assertEqual(hashlib.sha256("".join(text.split()).encode()).hexdigest(),
+                                 row["corrected_nonwhitespace_sha256"])
+                self.assertEqual(row["notation_adjustment"],
+                                 {665:"WHITESPACE_ONLY",669:"CARDINALITY_AS_SET_SIZE",
+                                  776:"LINK_TITLE_LITERAL_R",777:"WHITESPACE_ONLY"}[n])
+                if n in (665,777):
+                    self.assertEqual(row["previous_nonwhitespace_sha256"],
+                                     row["corrected_nonwhitespace_sha256"])
+                else:
+                    self.assertNotEqual(row["previous_nonwhitespace_sha256"],
+                                        row["corrected_nonwhitespace_sha256"])
+                self.assertEqual(hashlib.sha256(manuscript(n).encode()).hexdigest(),
+                                 row["corrected_sha256"])
+                self.assertEqual(effective[n]["source_sha256"], row["corrected_sha256"])
+                self.assertEqual(effective[n]["four_display_amendment_id"],
+                                 doc["revision_id"])
+                lines = text.splitlines()
+                delimiters = [i for i, ln in enumerate(lines) if ln.strip() == "$$"]
+                self.assertEqual(len(delimiters) % 2, 0)
+                self.assertGreater(len(delimiters), 0)
+                for open_pos, close_pos in zip(delimiters[::2], delimiters[1::2]):
+                    self.assertGreater(close_pos, open_pos+1)
+                    self.assertTrue(lines[open_pos+1].strip())
+                    self.assertTrue(lines[close_pos-1].strip())
+        with tempfile.TemporaryDirectory() as directory:
+            from pathlib import Path
+            target = Path(directory) / "invalid.json"
+            for field, bad in [
+                ("previous_sha256", "0"*64),
+                ("corrected_sha256", "0"*64),
+                ("corrected_raw_sha256", "0"*64),
+                ("corrected_nonwhitespace_sha256", "0"*64),
+                ("previous_nonwhitespace_sha256", "NOT_A_DIGEST"),
+                ("source_check", "INVALID"),
+                ("batch_id", "INVALID"),
+            ]:
+                tampered = copy.deepcopy(doc)
+                tampered["entries"][0][field] = bad
+                target.write_text(json.dumps(tampered))
+                with patch("erdos_compendium.FOUR_DISPLAY_AMENDMENTS", target):
+                    with self.assertRaisesRegex(ValueError, "Invalid or stale"):
+                        load_batch_admissions(ACCEPTANCE)
 
     def test_legacy25_math_source_corrections_preserve_exact_history(self):
         import copy
@@ -623,7 +699,8 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(row["source_check"],x["source_return"])
             body=manuscript(n)
             self.assertIn(row["source_check"],body)
-            self.assertEqual(row["source_sha256"],hashlib.sha256(body.encode("utf-8")).hexdigest())
+            self.assertEqual(current_source_digest(n, row["source_sha256"]),
+                             hashlib.sha256(body.encode("utf-8")).hexdigest())
             self.assertNotEqual(x["original_raw_sha256"],x["admitted_raw_sha256"])
             self.assertEqual(len([h for h in body.splitlines() if h.startswith("## ")]),6)
             self.assertNotIn("UNACCEPTED",body)
