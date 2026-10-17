@@ -209,32 +209,32 @@ A related explicit control shows why checking point values cannot replace a sect
 
 For **every** profinite test space $K$, the canonical map
 
-$
+$$
 \mathsf P(K)\longrightarrow\mathsf Q(K)
 \tag{18.17}
-$
+$$
 
 is surjective. In particular, the map (18.15) for the convergent-sequence space $S_\infty$ is surjective.
 
 **Proof by effective descent.** Write $\mathsf S=\varinjlim_m\underline{\mathbb R^m}$ and $\mathsf P=\prod_n\underline{\mathbb R}$. Let $v\in\mathsf Q(K)$. Since $\mathsf Q$ is the sheaf cokernel of $\mathsf S\hookrightarrow\mathsf P$, there is a finite jointly surjective profinite covering, combined into a surjective map $\pi:T\to K$, and a section $a\in\mathsf P(T)$ whose image is $\pi^*v$. Consider $T\times_K T$, also profinite. The two pullbacks of $a$ have the same image in $\mathsf Q(T\times_K T)$, so their difference lies in the **sheaf kernel** $\mathsf S(T\times_K T)$. Filtered colimits of condensed sections are computed sectionwise. Consequently **one integer $m$** exists such that for all pairs $(t,t')$ with $\pi(t)=\pi(t')$ and every output coordinate $n>m$,
 
-$
+$$
 a_n(t)=a_n(t').
 \tag{18.18}
-$
+$$
 
 Every $a_n:T\to\mathbb R$ with $n>m$ therefore descends to a continuous function $b_n:K\to\mathbb R$, because the surjection $\pi$ from compact Hausdorff $T$ to Hausdorff $K$ is a topological quotient. Define $b_n=0$ for $n\le m$. All coordinates $b_n$ are continuous, hence $b=(b_n)_n$ defines a section in $\mathsf P(K)=\mathrm{Cont}(K,\mathbb R^{\mathbb N})$. Over $T$ the difference $a-\pi^*b$ has only its first $m$ coordinates possibly nonzero, so is an element of $\mathsf S(T)$. Thus $q(b)$ and $v$ have the same restriction to the jointly surjective cover $T\to K$; by sheaf descent they are equal on $K$. This proves (18.17). $\square$
 
 **Corollary 18.8 (fixed Fréchet phantom channel vanishes in ZFC).** For the source $\underline s\cong\underline{\mathcal D_{[-1,1]}(\mathbb R)}$,
 
-$
+$$
 \mathrm{Hom}(\underline s,\mathsf P)
 \twoheadrightarrow
 \mathrm{Hom}(\underline s,\mathsf Q),
 \qquad
 K(\underline s)=0.
 \tag{18.19}
-$
+$$
 
 Indeed, Theorem 18.7 applies to $S_\infty$, and the universal free-measure property lifts every morphism from $\mathcal M_{<p}(S_\infty)$ to $\mathsf Q$ through $\mathsf P$. The retract (18.8) lifts every stage morphism $T_r\to\mathsf Q$. Corollary 18.4 then lifts any morphism $\underline s\to\mathsf Q$. Therefore the entire **scalar-invisible phantom channel** of (17.14) is absent for this fixed Fréchet source.
 
