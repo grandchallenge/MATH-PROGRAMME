@@ -52,7 +52,7 @@ def distinct_circles(points):
     return circles
 
 
-def test_506_antipodal_circle_centre_exact_count_multiple_parities():
+def _check_test_506_antipodal_circle_centre_exact_count_multiple_parities():
     for n in range(4, 16):
         pts = rational_center_circle(n)
         circles = distinct_circles(pts)
@@ -64,14 +64,14 @@ def test_506_antipodal_circle_centre_exact_count_multiple_parities():
     assert len(distinct_circles(rational_center_circle(5))) == 5
 
 
-def test_506_collinear_sets_determine_no_circles():
+def _check_test_506_collinear_sets_determine_no_circles():
     for n in range(3, 14):
         pts = tuple((F(i), F(0)) for i in range(n))
         assert distinct_circles(pts) == set()
         # They are not all on a circle but violate necessary noncollinearity.
 
 
-def test_506_antipodal_triples_are_collinear():
+def _check_test_506_antipodal_triples_are_collinear():
     for n in range(4, 15):
         pts = rational_center_circle(n)
         centre = pts[0]
@@ -83,7 +83,7 @@ def test_506_antipodal_triples_are_collinear():
         # Generic off-circle point would not lose these antipodal-pair circles.
 
 
-def test_506_circle_normalization_independent_of_triple_order():
+def _check_test_506_circle_normalization_independent_of_triple_order():
     pts = rational_center_circle(7)
     for a, b, c in combinations(pts, 3):
         expected = normalized_circle(a, b, c)
@@ -93,3 +93,20 @@ def test_506_circle_normalization_independent_of_triple_order():
             D, E, C = expected
             for x, y in (a, b, c):
                 assert x * x + y * y + D * x + E * y + C == 0
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_506_antipodal_circle_centre_exact_count_multiple_parities(self):
+        _check_test_506_antipodal_circle_centre_exact_count_multiple_parities()
+
+    def test_506_collinear_sets_determine_no_circles(self):
+        _check_test_506_collinear_sets_determine_no_circles()
+
+    def test_506_antipodal_triples_are_collinear(self):
+        _check_test_506_antipodal_triples_are_collinear()
+
+    def test_506_circle_normalization_independent_of_triple_order(self):
+        _check_test_506_circle_normalization_independent_of_triple_order()

@@ -51,14 +51,14 @@ def brute_force_count(k, n):
     return count
 
 
-def test_528_exact_square_lattice_counts():
+def _check_test_528_exact_square_lattice_counts():
     counts, hist = count_and_endpoint_histograms(2, 8)
     assert counts == [1, 4, 12, 36, 100, 284, 780, 2172, 5916]
     for n, c in enumerate(counts):
         assert sum(hist[n].values()) == c
 
 
-def test_528_one_dimensional_and_three_dimensional_counts():
+def _check_test_528_one_dimensional_and_three_dimensional_counts():
     line, _ = count_and_endpoint_histograms(1, 8)
     assert line == [1] + [2] * 8
     cube, _ = count_and_endpoint_histograms(3, 7)
@@ -66,7 +66,7 @@ def test_528_one_dimensional_and_three_dimensional_counts():
     assert all(cube[n] >= 3**n for n in range(8))
 
 
-def test_528_submultiplicativity_exact_prefixes():
+def _check_test_528_submultiplicativity_exact_prefixes():
     for k in (1, 2, 3):
         counts, _ = count_and_endpoint_histograms(k, 7)
         for m in range(8):
@@ -77,8 +77,25 @@ def test_528_submultiplicativity_exact_prefixes():
     # Fekete gives mu=inf_n c_n^(1/n) for all n, and k<=mu<=2k-1.
 
 
-def test_528_independent_step_sequence_enumerator_cross_check():
+def _check_test_528_independent_step_sequence_enumerator_cross_check():
     for k in (1, 2, 3):
         counts, _ = count_and_endpoint_histograms(k, 4)
         for n in range(5):
             assert counts[n] == brute_force_count(k, n)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_528_exact_square_lattice_counts(self):
+        _check_test_528_exact_square_lattice_counts()
+
+    def test_528_one_dimensional_and_three_dimensional_counts(self):
+        _check_test_528_one_dimensional_and_three_dimensional_counts()
+
+    def test_528_submultiplicativity_exact_prefixes(self):
+        _check_test_528_submultiplicativity_exact_prefixes()
+
+    def test_528_independent_step_sequence_enumerator_cross_check(self):
+        _check_test_528_independent_step_sequence_enumerator_cross_check()

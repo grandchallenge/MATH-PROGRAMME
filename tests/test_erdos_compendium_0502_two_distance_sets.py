@@ -17,7 +17,7 @@ def squared_distance(x: tuple[int, ...], y: tuple[int, ...]) -> int:
     return sum((a - b) ** 2 for a, b in zip(x, y))
 
 
-def test_502_exact_two_distances_and_ambient_affine_dimension():
+def _check_test_502_exact_two_distances_and_ambient_affine_dimension():
     for d in range(3, 9):
         points = weight_two_points(d)
         assert len(points) == comb(d + 1, 2)
@@ -32,7 +32,7 @@ def test_502_exact_two_distances_and_ambient_affine_dimension():
         assert comb(d + 2, 2) - comb(d + 1, 2) == d + 1
 
 
-def test_502_polynomial_matrix_positive_scalar_identity():
+def _check_test_502_polynomial_matrix_positive_scalar_identity():
     for d in range(3, 8):
         points = weight_two_points(d)
         for i, a in enumerate(points):
@@ -43,10 +43,24 @@ def test_502_polynomial_matrix_positive_scalar_identity():
         # A diagonal 8I has every eigenvalue positive: r_+ = |A|.
 
 
-def test_502_small_d_not_valid_as_exact_two_distance_witness():
+def _check_test_502_small_d_not_valid_as_exact_two_distance_witness():
     for d in (1, 2):
         points = weight_two_points(d)
         ds = {squared_distance(a, b) for a, b in combinations(points, 2)}
         assert ds != {2, 4}
     assert len(weight_two_points(1)) == 1
     assert len(weight_two_points(2)) == 3
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_502_exact_two_distances_and_ambient_affine_dimension(self):
+        _check_test_502_exact_two_distances_and_ambient_affine_dimension()
+
+    def test_502_polynomial_matrix_positive_scalar_identity(self):
+        _check_test_502_polynomial_matrix_positive_scalar_identity()
+
+    def test_502_small_d_not_valid_as_exact_two_distance_witness(self):
+        _check_test_502_small_d_not_valid_as_exact_two_distance_witness()

@@ -25,7 +25,7 @@ def weight_two_with_centroid(d):
     return pts + (center,)
 
 
-def test_503_weight_two_centroid_all_triples_exact():
+def _check_test_503_weight_two_centroid_all_triples_exact():
     for d in range(3, 9):
         pts = weight_two_with_centroid(d)
         assert len(pts) == comb(d + 1, 2) + 1
@@ -45,7 +45,7 @@ def test_503_weight_two_centroid_all_triples_exact():
         }, (d, distances)
 
 
-def test_503_pentagon_with_center_combinatorial_chords():
+def _check_test_503_pentagon_with_center_combinatorial_chords():
     # 0..4 are regular pentagon vertices; 5 denotes the centre.
     # We only use exact CHORD CLASSES; numeric trigonometry is unnecessary.
     def chord_class(a, b):
@@ -65,7 +65,7 @@ def test_503_pentagon_with_center_combinatorial_chords():
         assert len(set(types)) <= 2, (a, b, c, types)
 
 
-def test_503_distinction_from_two_distance_set_502():
+def _check_test_503_distinction_from_two_distance_set_502():
     # In dimension 3 the all-isosceles centroid construction has 7 points
     # and exactly THREE global distances. Croft's known true maximum is 8.
     pts = weight_two_with_centroid(3)
@@ -74,3 +74,17 @@ def test_503_distinction_from_two_distance_set_502():
         squared_distance(a, b) for a, b in combinations(pts, 2)
     }) == 3
     # These fixtures DO NOT prove the Croft or Blokhuis upper bounds.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_503_weight_two_centroid_all_triples_exact(self):
+        _check_test_503_weight_two_centroid_all_triples_exact()
+
+    def test_503_pentagon_with_center_combinatorial_chords(self):
+        _check_test_503_pentagon_with_center_combinatorial_chords()
+
+    def test_503_distinction_from_two_distance_set_502(self):
+        _check_test_503_distinction_from_two_distance_set_502()

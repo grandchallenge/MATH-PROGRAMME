@@ -8,7 +8,7 @@ from fractions import Fraction
 from math import isqrt
 
 
-def test_465_equidistant_triangle_in_unit_disk() -> None:
+def _check_test_465_equidistant_triangle_in_unit_disk() -> None:
     # P1=(1,0), P2=(-1/2,sqrt(3)/2), P3=(-1/2,-sqrt(3)/2).
     # All three squared circumradii equal 1.
     assert Fraction(1, 4) + Fraction(3, 4) == 1
@@ -19,7 +19,7 @@ def test_465_equidistant_triangle_in_unit_disk() -> None:
     assert Fraction(3, 1) < Fraction(7, 4) ** 2
 
 
-def test_465_pairwise_separation_is_weaker_than_forbidden_distances() -> None:
+def _check_test_465_pairwise_separation_is_weaker_than_forbidden_distances() -> None:
     # |distance| >= delta does not imply that it avoids *all* integers.
     distance = Fraction(3, 1)
     delta = Fraction(1, 4)
@@ -27,7 +27,7 @@ def test_465_pairwise_separation_is_weaker_than_forbidden_distances() -> None:
     assert min(distance - 3, 4 - distance) == 0 < delta
 
 
-def test_465_sqrt_bound_implies_sublinear_in_exact_finite_examples() -> None:
+def _check_test_465_sqrt_bound_implies_sublinear_in_exact_finite_examples() -> None:
     # Pure inequality check for arbitrary chosen C=3. No finite test
     # establishes the analytic theorem or the existence of its C_delta.
     C = 3
@@ -38,3 +38,17 @@ def test_465_sqrt_bound_implies_sublinear_in_exact_finite_examples() -> None:
         if m > 100:
             assert upper < X
         assert upper < X * m
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_465_equidistant_triangle_in_unit_disk(self):
+        _check_test_465_equidistant_triangle_in_unit_disk()
+
+    def test_465_pairwise_separation_is_weaker_than_forbidden_distances(self):
+        _check_test_465_pairwise_separation_is_weaker_than_forbidden_distances()
+
+    def test_465_sqrt_bound_implies_sublinear_in_exact_finite_examples(self):
+        _check_test_465_sqrt_bound_implies_sublinear_in_exact_finite_examples()

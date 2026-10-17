@@ -9,7 +9,7 @@ from fractions import Fraction
 from itertools import combinations
 
 
-def test_466_exact_square_disk_and_pairwise_distances() -> None:
+def _check_test_466_exact_square_disk_and_pairwise_distances() -> None:
     a = Fraction(3, 4)
     points = [(-a, -a), (-a, a), (a, -a), (a, a)]
     radius_sq = Fraction(2)
@@ -25,7 +25,7 @@ def test_466_exact_square_disk_and_pairwise_distances() -> None:
     }
 
 
-def test_466_nearest_integer_exclusion_is_exact() -> None:
+def _check_test_466_nearest_integer_exclusion_is_exact() -> None:
     # Side distance 3/2 has nearest-integer gap 1/2.
     side = Fraction(3, 2)
     assert min(side - 1, 2 - side) == Fraction(1, 2)
@@ -39,10 +39,24 @@ def test_466_nearest_integer_exclusion_is_exact() -> None:
     # Hence all six pairs satisfy ||distance|| > 1/10.
 
 
-def test_466_fixed_delta_and_radius_monotonicity_fixture() -> None:
+def _check_test_466_fixed_delta_and_radius_monotonicity_fixture() -> None:
     # The *same* threshold is used for both radii: once a witness
     # fits a disk, it remains a witness in every larger disk.
     a = Fraction(3, 4)
     points = [(-a, -a), (-a, a), (a, -a), (a, a)]
     for radius in [Fraction(2), Fraction(3), Fraction(5), Fraction(101, 10)]:
         assert all(x * x + y * y <= radius * radius for x, y in points)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_466_exact_square_disk_and_pairwise_distances(self):
+        _check_test_466_exact_square_disk_and_pairwise_distances()
+
+    def test_466_nearest_integer_exclusion_is_exact(self):
+        _check_test_466_nearest_integer_exclusion_is_exact()
+
+    def test_466_fixed_delta_and_radius_monotonicity_fixture(self):
+        _check_test_466_fixed_delta_and_radius_monotonicity_fixture()

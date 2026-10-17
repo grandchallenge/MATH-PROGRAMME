@@ -51,13 +51,13 @@ def avoid_max_recursive(N):
     return best
 
 
-def test_536_all_short_triples_prime_valuation_equivalence():
+def _check_test_536_all_short_triples_prime_valuation_equivalence():
     for a,b,c in combinations(range(1,101),3):
         assert is_lcm_triangle(a,b,c)==via_prime_valuation(a,b,c)
         assert is_lcm_triangle(a,b,c)==via_gcd_formula(a,b,c)
 
 
-def test_536_bad_and_good_gcd_contrasting_triples():
+def _check_test_536_bad_and_good_gcd_contrasting_triples():
     assert is_lcm_triangle(6,10,15)
     assert not is_lcm_triangle(6,10,14)
     assert {gcd(a,b) for a,b in combinations((6,10,14),2)}=={2}
@@ -65,13 +65,13 @@ def test_536_bad_and_good_gcd_contrasting_triples():
     assert lcm(6,10)==lcm(6,15)==lcm(10,15)==30
 
 
-def test_536_independent_finite_extremal_computations():
+def _check_test_536_independent_finite_extremal_computations():
     for N in range(3,13):
         assert avoid_max_bitmask(N)==avoid_max_recursive(N)
         assert 1<=avoid_max_bitmask(N)<=N
 
 
-def test_536_disjoint_prime_bins_give_finite_avoiding_family():
+def _check_test_536_disjoint_prime_bins_give_finite_avoiding_family():
     bins=((2,3),(5,7),(11,13))
     for k in (1,2,3):
         values=tuple(sorted(set(__import__('math').prod(v) for v in product(*bins[:k]))))
@@ -79,3 +79,20 @@ def test_536_disjoint_prime_bins_give_finite_avoiding_family():
         assert all(not is_lcm_triangle(*triple)
                    for triple in combinations(values,3))
     # No claim of positive natural density is made for these finite bins.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_536_all_short_triples_prime_valuation_equivalence(self):
+        _check_test_536_all_short_triples_prime_valuation_equivalence()
+
+    def test_536_bad_and_good_gcd_contrasting_triples(self):
+        _check_test_536_bad_and_good_gcd_contrasting_triples()
+
+    def test_536_independent_finite_extremal_computations(self):
+        _check_test_536_independent_finite_extremal_computations()
+
+    def test_536_disjoint_prime_bins_give_finite_avoiding_family(self):
+        _check_test_536_disjoint_prime_bins_give_finite_avoiding_family()

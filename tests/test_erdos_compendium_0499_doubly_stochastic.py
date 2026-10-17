@@ -24,7 +24,7 @@ def products(a):
     ]
 
 
-def test_499_uniform_and_permutation_extremes_exact():
+def _check_test_499_uniform_and_permutation_extremes_exact():
     for n in range(1, 7):
         uniform = [[Fraction(1, n) for _ in range(n)] for _ in range(n)]
         diagonals = products(uniform)
@@ -38,7 +38,7 @@ def test_499_uniform_and_permutation_extremes_exact():
         assert max(terms) == 1
 
 
-def test_499_convex_combinations_of_permutations():
+def _check_test_499_convex_combinations_of_permutations():
     for n in range(1, 6):
         ps = list(permutations(range(n)))
         for offset in range(0, min(len(ps), 14)):
@@ -53,7 +53,7 @@ def test_499_convex_combinations_of_permutations():
             assert max(terms) >= sum(terms) / factorial(n)
 
 
-def test_499_n2_proof_special_and_nonstrict_inequality():
+def _check_test_499_n2_proof_special_and_nonstrict_inequality():
     for k in range(101):
         t = Fraction(k, 100)
         a = [[t, 1 - t], [1 - t, t]]
@@ -62,8 +62,25 @@ def test_499_n2_proof_special_and_nonstrict_inequality():
         assert max(terms) >= Fraction(1, 4)
 
 
-def test_499_missing_stochastic_hypothesis_invalidates_claim():
+def _check_test_499_missing_stochastic_hypothesis_invalidates_claim():
     # A zero matrix is NOT doubly stochastic, and has zero diagonal products.
     z = [[Fraction(0), Fraction(0)], [Fraction(0), Fraction(0)]]
     assert max(products(z)) < Fraction(1, 4)
     assert all(sum(row) != 1 for row in z)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_499_uniform_and_permutation_extremes_exact(self):
+        _check_test_499_uniform_and_permutation_extremes_exact()
+
+    def test_499_convex_combinations_of_permutations(self):
+        _check_test_499_convex_combinations_of_permutations()
+
+    def test_499_n2_proof_special_and_nonstrict_inequality(self):
+        _check_test_499_n2_proof_special_and_nonstrict_inequality()
+
+    def test_499_missing_stochastic_hypothesis_invalidates_claim(self):
+        _check_test_499_missing_stochastic_hypothesis_invalidates_claim()

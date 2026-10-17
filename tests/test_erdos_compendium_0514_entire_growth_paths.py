@@ -9,7 +9,7 @@ def log_power_comparison_coefficient(cos_mtheta, eps, m, radius):
     return (F(cos_mtheta) - eps) * radius**m
 
 
-def test_514_positive_ray_beats_every_fixed_polynomial_power():
+def _check_test_514_positive_ray_beats_every_fixed_polynomial_power():
     # log(|exp(R^m)|/R^n)=R^m-n log R -> +infinity.
     # Finite exact witness: exp(R^m) > R^n if R^m > n*log R.
     # For R>=2, log R <= R-1; choose R large depending on fixed n.
@@ -21,7 +21,7 @@ def test_514_positive_ray_beats_every_fixed_polynomial_power():
             # coarse bound, so no finite "proof" of limit is claimed.
 
 
-def test_514_exact_log_comparison_signs():
+def _check_test_514_exact_log_comparison_signs():
     for m in range(1, 6):
         for eps in (F(1, 4), F(1, 2), F(1), F(2)):
             for cos_value in (-1, 0, 1):
@@ -35,7 +35,7 @@ def test_514_exact_log_comparison_signs():
                         assert coeff < 0
 
 
-def test_514_power_at_least_one_never_forces_growing_ratio():
+def _check_test_514_power_at_least_one_never_forces_growing_ratio():
     for m in range(1, 6):
         for eps in (F(1), F(3, 2), F(2)):
             for cos_value in (-1, 0, 1):
@@ -44,7 +44,7 @@ def test_514_power_at_least_one_never_forces_growing_ratio():
     # cannot settle the interesting 0<eps<1 case for all entire f.
 
 
-def test_514_path_length_and_polynomial_counterexample():
+def _check_test_514_path_length_and_polynomial_counterexample():
     for R in range(1, 35):
         assert F(R) == F(R)  # radial segment length inside radius R
     for d in range(0, 12):
@@ -53,9 +53,29 @@ def test_514_path_length_and_polynomial_counterexample():
             assert F(R**d, R**n) == F(1, R)  # polynomial fails first part
 
 
-def test_514_quantifier_distinction_named():
+def _check_test_514_quantifier_distinction_named():
     # A single f=exp(z) exhibits a successful ray for eps<1.
     assert F(1) - F(1, 2) > 0
     # It does NOT imply a path exists with this property for all f;
     # the quantified universal negative is a separate published claim.
     assert F(0) - F(1, 2) < 0
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_514_positive_ray_beats_every_fixed_polynomial_power(self):
+        _check_test_514_positive_ray_beats_every_fixed_polynomial_power()
+
+    def test_514_exact_log_comparison_signs(self):
+        _check_test_514_exact_log_comparison_signs()
+
+    def test_514_power_at_least_one_never_forces_growing_ratio(self):
+        _check_test_514_power_at_least_one_never_forces_growing_ratio()
+
+    def test_514_path_length_and_polynomial_counterexample(self):
+        _check_test_514_path_length_and_polynomial_counterexample()
+
+    def test_514_quantifier_distinction_named(self):
+        _check_test_514_quantifier_distinction_named()

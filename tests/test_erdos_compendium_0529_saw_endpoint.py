@@ -57,7 +57,7 @@ def brute_force_histogram(k, n):
     return ans
 
 
-def test_529_square_lattice_two_step_exact_radicals():
+def _check_test_529_square_lattice_two_step_exact_radicals():
     hist = endpoint_histogram(2, 2)
     assert hist == Counter({2:8, 4:4})
     count, mean, mean_sq = moment_values(hist)
@@ -67,7 +67,7 @@ def test_529_square_lattice_two_step_exact_radicals():
     assert S.simplify(mean**2 - mean_sq) < 0
 
 
-def test_529_line_endpoint_distance_linear():
+def _check_test_529_line_endpoint_distance_linear():
     for n in range(1, 9):
         hist = endpoint_histogram(1,n)
         assert hist == Counter({n*n:2})
@@ -75,7 +75,7 @@ def test_529_line_endpoint_distance_linear():
         assert count==2 and mean==n and mean_sq==n*n
 
 
-def test_529_exact_histogram_reflection_parity_and_jensen():
+def _check_test_529_exact_histogram_reflection_parity_and_jensen():
     for k in (2,3):
         for n in range(1,7):
             hist = endpoint_histogram(k,n)
@@ -87,9 +87,26 @@ def test_529_exact_histogram_reflection_parity_and_jensen():
             assert S.simplify(mean_sq - mean**2) >= 0
 
 
-def test_529_independent_short_step_enumeration():
+def _check_test_529_independent_short_step_enumeration():
     for k in (1,2,3):
         for n in range(5):
             assert endpoint_histogram(k,n) == brute_force_histogram(k,n)
     # Neither finite n nor Duminil-Copin/Hammond sub-ballisticity
     # determines d2(n)/sqrt(n) or the 3D, 4D critical exponents.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_529_square_lattice_two_step_exact_radicals(self):
+        _check_test_529_square_lattice_two_step_exact_radicals()
+
+    def test_529_line_endpoint_distance_linear(self):
+        _check_test_529_line_endpoint_distance_linear()
+
+    def test_529_exact_histogram_reflection_parity_and_jensen(self):
+        _check_test_529_exact_histogram_reflection_parity_and_jensen()
+
+    def test_529_independent_short_step_enumeration(self):
+        _check_test_529_independent_short_step_enumeration()

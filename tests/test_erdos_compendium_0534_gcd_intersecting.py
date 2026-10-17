@@ -47,14 +47,14 @@ def independent_bounded_clique(N):
     return best
 
 
-def test_534_family_feasibility_and_contains_N():
+def _check_test_534_family_feasibility_and_contains_N():
     for N in SAMPLES:
         for A in candidates(N):
             assert N in A and A and max(A)<=N
             assert all(gcd(a,b)>1 for a,b in combinations(A,2))
 
 
-def test_534_two_independent_exact_optimality_algorithms():
+def _check_test_534_two_independent_exact_optimality_algorithms():
     for N in SAMPLES:
         G=gcd_graph(N)
         best=max(map(len,nx.find_cliques(G)))
@@ -63,7 +63,7 @@ def test_534_two_independent_exact_optimality_algorithms():
             assert best==independent_bounded_clique(N)
 
 
-def test_534_prime_and_even_edge_cases():
+def _check_test_534_prime_and_even_edge_cases():
     for N in (2,3,5,7,11,13,17,19):
         assert candidates(N)==[frozenset({N})]
         assert independent_bounded_clique(N)==1
@@ -72,7 +72,7 @@ def test_534_prime_and_even_edge_cases():
     assert max(len(A) for A in candidates(30))==15
 
 
-def test_534_original_gcd_one_typo_not_same_predicate():
+def _check_test_534_original_gcd_one_typo_not_same_predicate():
     # Including N=6, {2,3,6} is NOT pairwise noncoprime,
     # despite each of 2,3 individually sharing a gcd with N.
     assert gcd(2,3)==1 and gcd(2,6)>1 and gcd(3,6)>1
@@ -80,3 +80,20 @@ def test_534_original_gcd_one_typo_not_same_predicate():
     # the maintained (2t,N)>1 condition. E.g. N=6,t=2.
     assert gcd(2,6)>1 and gcd(2*2,6)>1
     assert gcd(1,6)==1 and gcd(2,6)>1
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_534_family_feasibility_and_contains_N(self):
+        _check_test_534_family_feasibility_and_contains_N()
+
+    def test_534_two_independent_exact_optimality_algorithms(self):
+        _check_test_534_two_independent_exact_optimality_algorithms()
+
+    def test_534_prime_and_even_edge_cases(self):
+        _check_test_534_prime_and_even_edge_cases()
+
+    def test_534_original_gcd_one_typo_not_same_predicate(self):
+        _check_test_534_original_gcd_one_typo_not_same_predicate()

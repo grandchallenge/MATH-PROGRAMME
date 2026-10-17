@@ -59,7 +59,7 @@ def alpha3_independent_bitmask(n,edges):
                if not any((mask&t)==t for t in triangles))
 
 
-def test_533_explicit_eight_vertex_K5_free_graph():
+def _check_test_533_explicit_eight_vertex_K5_free_graph():
     n,edges,parts=multipartite((2,2,2,2))
     assert n==8
     assert len(edges)==24
@@ -70,7 +70,7 @@ def test_533_explicit_eight_vertex_K5_free_graph():
     # alpha3=n/2 here, so NOT an asymptotic counterexample.
 
 
-def test_533_complete_multipartite_alpha3_is_two_largest_parts():
+def _check_test_533_complete_multipartite_alpha3_is_two_largest_parts():
     for sizes in ((1,1,1,1),(1,2,3,4),(2,1,2,2),(2,2,3)):
         n,edges,parts=multipartite(sizes)
         assert max_clique_size(n,edges)==len(parts)
@@ -79,7 +79,7 @@ def test_533_complete_multipartite_alpha3_is_two_largest_parts():
         assert len(edges)==(n*n-sum(x*x for x in sizes))//2
 
 
-def test_533_triangle_free_vs_independent_and_K5_free_distinct():
+def _check_test_533_triangle_free_vs_independent_and_K5_free_distinct():
     n,edges,_=multipartite((2,2,2,2))
     # Largest independent set is one part of size 2, while largest
     # induced triangle-free set consists of two parts and has size 4.
@@ -93,7 +93,7 @@ def test_533_triangle_free_vs_independent_and_K5_free_distinct():
     assert max_clique_size(5,set())==1
 
 
-def test_533_exact_density_denominator_factor_two():
+def _check_test_533_exact_density_denominator_factor_two():
     lower_balogh=F(1,64)
     sharp_in_n_squared=F(1,12)
     rho_in_n_choose_two=F(1,6)
@@ -105,3 +105,20 @@ def test_533_exact_density_denominator_factor_two():
         e=n*(n-1)//2
         assert F(e,n*n) == F(e,e)*F(n-1,2*n)
     # Actual asymptotic K5-free counterexamples require alpha3=o(n).
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_533_explicit_eight_vertex_K5_free_graph(self):
+        _check_test_533_explicit_eight_vertex_K5_free_graph()
+
+    def test_533_complete_multipartite_alpha3_is_two_largest_parts(self):
+        _check_test_533_complete_multipartite_alpha3_is_two_largest_parts()
+
+    def test_533_triangle_free_vs_independent_and_K5_free_distinct(self):
+        _check_test_533_triangle_free_vs_independent_and_K5_free_distinct()
+
+    def test_533_exact_density_denominator_factor_two(self):
+        _check_test_533_exact_density_denominator_factor_two()

@@ -65,7 +65,7 @@ def sharp_coloring(s):
     return n, coloring, A
 
 
-def test_518_every_two_coloring_K1_through_K5():
+def _check_test_518_every_two_coloring_K1_through_K5():
     for n in range(1, 6):
         maximum = 0
         for coloring in range(1 << comb(n, 2)):
@@ -75,7 +75,7 @@ def test_518_every_two_coloring_K1_through_K5():
         assert maximum == isqrt(n)
 
 
-def test_518_sharp_lower_bound_square_construction():
+def _check_test_518_sharp_lower_bound_square_construction():
     for s in range(2, 10):
         n = s * s
         B = s - 1
@@ -94,7 +94,7 @@ def test_518_sharp_lower_bound_square_construction():
             )
 
 
-def test_518_mixed_colors_not_automatically_same_color():
+def _check_test_518_mixed_colors_not_automatically_same_color():
     # In K4 sharp construction, min same-color cover=2.
     n, coloring, _ = sharp_coloring(2)
     assert same_color_cover_number(n, coloring) == 2
@@ -102,7 +102,24 @@ def test_518_mixed_colors_not_automatically_same_color():
     # a different assertion and not used as a same-color proof.
 
 
-def test_518_zero_edge_singletons_and_integer_rounding():
+def _check_test_518_zero_edge_singletons_and_integer_rounding():
     for n in range(1, 9):
         assert isqrt(n) ** 2 <= n < (isqrt(n) + 1) ** 2
         assert all(1 << v in realizable_path_masks(n, set()) for v in range(n))
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_518_every_two_coloring_K1_through_K5(self):
+        _check_test_518_every_two_coloring_K1_through_K5()
+
+    def test_518_sharp_lower_bound_square_construction(self):
+        _check_test_518_sharp_lower_bound_square_construction()
+
+    def test_518_mixed_colors_not_automatically_same_color(self):
+        _check_test_518_mixed_colors_not_automatically_same_color()
+
+    def test_518_zero_edge_singletons_and_integer_rounding(self):
+        _check_test_518_zero_edge_singletons_and_integer_rounding()

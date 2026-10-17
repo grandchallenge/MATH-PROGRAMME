@@ -22,7 +22,7 @@ def finite_period_density(residue_sets: dict[int, set[int]], strict: bool) -> Fr
     return Fraction(accepted, period)
 
 
-def test_486_two_modulus_example_and_threshold_boundary() -> None:
+def _check_test_486_two_modulus_example_and_threshold_boundary() -> None:
     x = {2: {0}, 3: {1}}
     assert finite_period_density(x, strict=True) == Fraction(1, 3)
     assert finite_period_density(x, strict=False) == Fraction(1, 3)
@@ -32,7 +32,7 @@ def test_486_two_modulus_example_and_threshold_boundary() -> None:
         assert is_allowed(m, x) == (m % 6 in {3, 5})
 
 
-def test_486_union_bound_all_subsets_small_moduli() -> None:
+def _check_test_486_union_bound_all_subsets_small_moduli() -> None:
     moduli = [2, 3, 4]
     # Exhaust all possible residue-set selections for these moduli.
     powersets = [
@@ -59,7 +59,7 @@ def test_486_union_bound_all_subsets_small_moduli() -> None:
                             assert Fraction(removed, upper) <= tail
 
 
-def test_486_infinite_summable_power_two_example() -> None:
+def _check_test_486_infinite_summable_power_two_example() -> None:
     # Every integer >2 is either odd and always allowed, or even
     # and excluded by the modulus 2. n=2 survives only in strict mode.
     moduli = {2**k: {0} for k in range(1, 12)}
@@ -69,3 +69,17 @@ def test_486_infinite_summable_power_two_example() -> None:
     # Sum_{k>K} 1/2^k = 1/2^K, including K=0.
     for k in range(0, 20):
         assert sum((Fraction(1, 2**j) for j in range(k + 1, 101)), Fraction(0)) < Fraction(1, 2**k)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_486_two_modulus_example_and_threshold_boundary(self):
+        _check_test_486_two_modulus_example_and_threshold_boundary()
+
+    def test_486_union_bound_all_subsets_small_moduli(self):
+        _check_test_486_union_bound_all_subsets_small_moduli()
+
+    def test_486_infinite_summable_power_two_example(self):
+        _check_test_486_infinite_summable_power_two_example()

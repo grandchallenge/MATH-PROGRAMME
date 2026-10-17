@@ -29,7 +29,7 @@ def count(p):
     return len(normalize(p))
 
 
-def test_485_cancellation_requires_collecting_coefficients() -> None:
+def _check_test_485_cancellation_requires_collecting_coefficients() -> None:
     p = {0: Fraction(1), 1: Fraction(1), 2: Fraction(-1, 2)}
     result = square(p)
     assert count(p) == 3
@@ -41,7 +41,7 @@ def test_485_cancellation_requires_collecting_coefficients() -> None:
     assert 2 not in result
 
 
-def test_485_one_and_two_term_exact_values() -> None:
+def _check_test_485_one_and_two_term_exact_values() -> None:
     for r in range(0, 8):
         p = {r: Fraction(-7, 3)}
         assert count(square(p)) == 1
@@ -51,7 +51,7 @@ def test_485_one_and_two_term_exact_values() -> None:
             assert set(square(q)) == {2 * r, r + s, 2 * s}
 
 
-def test_485_all_positive_dense_geometric_sum_has_two_k_minus_one_terms() -> None:
+def _check_test_485_all_positive_dense_geometric_sum_has_two_k_minus_one_terms() -> None:
     for k in range(1, 30):
         p = {j: Fraction(1) for j in range(k)}
         squared = square(p)
@@ -60,7 +60,7 @@ def test_485_all_positive_dense_geometric_sum_has_two_k_minus_one_terms() -> Non
         assert all(c > 0 for c in squared.values())
 
 
-def test_485_support_cardinality_invariant_under_monomial_dilation_and_scaling() -> None:
+def _check_test_485_support_cardinality_invariant_under_monomial_dilation_and_scaling() -> None:
     base = {0: Fraction(1), 4: Fraction(-3, 2), 11: Fraction(7, 4)}
     for d in (1, 2, 13, 97):
         for shift in (0, 1, 100):
@@ -70,7 +70,7 @@ def test_485_support_cardinality_invariant_under_monomial_dilation_and_scaling()
             # Counts remain the same at arbitrarily large degree.
 
 
-def test_485_published_logarithm_scope_in_finite_examples() -> None:
+def _check_test_485_published_logarithm_scope_in_finite_examples() -> None:
     # Schinzel-Zannier (2009) Theorem 1, l=2, characteristic 0:
     # t >= 2 + log(T - 1) / log(8), with T>=2.
     examples = [
@@ -86,3 +86,23 @@ def test_485_published_logarithm_scope_in_finite_examples() -> None:
         assert t >= 2
     # k=1 is outside the theorem's hypothesis.
     assert count(square({91: Fraction(2)})) == 1
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_485_cancellation_requires_collecting_coefficients(self):
+        _check_test_485_cancellation_requires_collecting_coefficients()
+
+    def test_485_one_and_two_term_exact_values(self):
+        _check_test_485_one_and_two_term_exact_values()
+
+    def test_485_all_positive_dense_geometric_sum_has_two_k_minus_one_terms(self):
+        _check_test_485_all_positive_dense_geometric_sum_has_two_k_minus_one_terms()
+
+    def test_485_support_cardinality_invariant_under_monomial_dilation_and_scaling(self):
+        _check_test_485_support_cardinality_invariant_under_monomial_dilation_and_scaling()
+
+    def test_485_published_logarithm_scope_in_finite_examples(self):
+        _check_test_485_published_logarithm_scope_in_finite_examples()

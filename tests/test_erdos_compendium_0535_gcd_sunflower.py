@@ -50,7 +50,7 @@ def f_incremental(N,r):
     return best
 
 
-def test_535_prime_power_layer_intersection_equals_gcd():
+def _check_test_535_prime_power_layer_intersection_equals_gcd():
     for a in range(1,101):
         for b in range(1,101):
             assert layers(a)&layers(b)==layers(gcd(a,b))
@@ -59,7 +59,7 @@ def test_535_prime_power_layer_intersection_equals_gcd():
     assert layers(4)&layers(8)==layers(4)
 
 
-def test_535_pairwise_equal_gcd_iff_sunflower():
+def _check_test_535_pairwise_equal_gcd_iff_sunflower():
     for N in (8,13,17):
         for r in (3,4):
             for seq in combinations(range(1,N+1),r):
@@ -68,7 +68,7 @@ def test_535_pairwise_equal_gcd_iff_sunflower():
     assert not constant_pairwise_gcd((6,10,15))
 
 
-def test_535_exact_small_extremal_counts_two_algorithms():
+def _check_test_535_exact_small_extremal_counts_two_algorithms():
     for r, Ns in ((3,(5,6,7,8,9,10,11,12,13)),(4,(6,7,8,9,10))):
         for N in Ns:
             a=f_direct(N,r)
@@ -80,9 +80,26 @@ def test_535_exact_small_extremal_counts_two_algorithms():
     # configuration. It is one more than modern MAX avoiding size.
 
 
-def test_535_squarefree_support_does_not_preserve_gcd():
+def _check_test_535_squarefree_support_does_not_preserve_gcd():
     assert set(factorint(2))==set(factorint(4))==set(factorint(8))
     assert gcd(2,8)==2 and gcd(4,8)==4
     assert layers(2)!=layers(4)!=layers(8)
     # The stronger 1973 Ω-version has extra gcd(a_i/d,d)=1
     # and is not merely the original sunflower statement.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_535_prime_power_layer_intersection_equals_gcd(self):
+        _check_test_535_prime_power_layer_intersection_equals_gcd()
+
+    def test_535_pairwise_equal_gcd_iff_sunflower(self):
+        _check_test_535_pairwise_equal_gcd_iff_sunflower()
+
+    def test_535_exact_small_extremal_counts_two_algorithms(self):
+        _check_test_535_exact_small_extremal_counts_two_algorithms()
+
+    def test_535_squarefree_support_does_not_preserve_gcd(self):
+        _check_test_535_squarefree_support_does_not_preserve_gcd()

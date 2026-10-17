@@ -37,7 +37,7 @@ def direct_strict_schur(bits,N):
     return None
 
 
-def test_531_exact_folkman_F1_F2():
+def _check_test_531_exact_folkman_F1_F2():
     assert candidates(1,1) == (((1,),frozenset({1})),)
     family8 = candidates(8,2)
     family9 = candidates(9,2)
@@ -53,7 +53,7 @@ def test_531_exact_folkman_F1_F2():
     # 8-colouring witnesses F(2)>8. Thus F(2)=9 exactly.
 
 
-def test_531_all_finite_sums_stay_inside_interval():
+def _check_test_531_all_finite_sums_stay_inside_interval():
     for N in range(1,13):
         for k in (1,2,3):
             for A,sums in candidates(N,k):
@@ -64,7 +64,7 @@ def test_531_all_finite_sums_stay_inside_interval():
                 assert all(v in range(1,N+1) for v in sums)
 
 
-def test_531_collision_changes_random_coloring_probability():
+def _check_test_531_collision_changes_random_coloring_probability():
     A=(1,2,3)
     sums=nonempty_subset_sums(A)
     assert len(sums)==6 < 2**len(A)-1  # 3=1+2 gives one collision.
@@ -75,7 +75,7 @@ def test_531_collision_changes_random_coloring_probability():
     # Probability 2^(1-|FS|), not 2^(2-2^k) when collisions occur.
 
 
-def test_531_doubling_chains_force_opposite_colours():
+def _check_test_531_doubling_chains_force_opposite_colours():
     def v2(x):
         return (x & -x).bit_length()-1
     for N in (8,16,32,64):
@@ -85,3 +85,20 @@ def test_531_doubling_chains_force_opposite_colours():
     # Published 2017 coloring randomises by odd-part chains,
     # while ensuring this deterministic parity rule.
     # The rule alone is not asserted to reproduce their full bound.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_531_exact_folkman_F1_F2(self):
+        _check_test_531_exact_folkman_F1_F2()
+
+    def test_531_all_finite_sums_stay_inside_interval(self):
+        _check_test_531_all_finite_sums_stay_inside_interval()
+
+    def test_531_collision_changes_random_coloring_probability(self):
+        _check_test_531_collision_changes_random_coloring_probability()
+
+    def test_531_doubling_chains_force_opposite_colours(self):
+        _check_test_531_doubling_chains_force_opposite_colours()

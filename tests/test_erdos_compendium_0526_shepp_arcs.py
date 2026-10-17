@@ -37,7 +37,7 @@ def circle_covered_length(arcs):
     return sum((hi-lo for lo,hi in merged),F(0))
 
 
-def test_526_finite_arc_union_order_does_not_matter():
+def _check_test_526_finite_arc_union_order_does_not_matter():
     arcs=((F(0),F(1,4)),(F(3,4),F(1,2)),(F(1,4),F(1,3)),
           (F(2,3),F(1,12)))
     reference=circle_covered_length(arcs)
@@ -48,7 +48,7 @@ def test_526_finite_arc_union_order_does_not_matter():
     # Assigning reordered lengths fresh iid uniform centres preserves its law.
 
 
-def test_526_rational_arc_wraparound_and_pointwise_hit_probability():
+def _check_test_526_rational_arc_wraparound_and_pointwise_hit_probability():
     assert circle_covered_length(((F(3,4),F(1,2)),))==F(1,2)
     assert circle_covered_length(((F(0),F(1,2)),(F(1,2),F(1,2))))==1
     lengths=(F(1,2),F(1,3),F(1,4),F(1,5))
@@ -61,7 +61,7 @@ def test_526_rational_arc_wraparound_and_pointwise_hit_probability():
     # The fact that each x is covered a.s. is not full-circle coverage a.s.
 
 
-def test_526_exact_harmonic_prefix_and_dyadic_block_controls():
+def _check_test_526_exact_harmonic_prefix_and_dyadic_block_controls():
     for n in range(1,200):
         assert harmonic(n+1)-harmonic(n)==F(1,n+1)
     for n in (1,2,4,8,16,32,64,128):
@@ -73,10 +73,27 @@ def test_526_exact_harmonic_prefix_and_dyadic_block_controls():
     # Divergence iff c>=1 follows from the p-series test.
 
 
-def test_526_constant_over_n_threshold_is_borderline():
+def _check_test_526_constant_over_n_threshold_is_borderline():
     for c in (F(1,2),F(1),F(3,2)):
         exponent=c-2
         assert (exponent>=-1)==(c>=1)
     # At c=1, only exact c/n or adequate partial-sum control suffices:
     # ell_n = 1/n - 2/(n log n) eventually yields a convergent
     # n^-1 (log n)^-2 Shepp series despite ell_n~1/n.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_526_finite_arc_union_order_does_not_matter(self):
+        _check_test_526_finite_arc_union_order_does_not_matter()
+
+    def test_526_rational_arc_wraparound_and_pointwise_hit_probability(self):
+        _check_test_526_rational_arc_wraparound_and_pointwise_hit_probability()
+
+    def test_526_exact_harmonic_prefix_and_dyadic_block_controls(self):
+        _check_test_526_exact_harmonic_prefix_and_dyadic_block_controls()
+
+    def test_526_constant_over_n_threshold_is_borderline(self):
+        _check_test_526_constant_over_n_threshold_is_borderline()

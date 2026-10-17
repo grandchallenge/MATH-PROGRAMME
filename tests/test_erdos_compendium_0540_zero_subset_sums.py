@@ -60,7 +60,7 @@ def k_prime_formula(p):
     return k
 
 
-def test_540_subset_sums_two_independent_oracles():
+def _check_test_540_subset_sums_two_independent_oracles():
     for N in range(2,11):
         for A in combinations(range(N),min(3,N)):
             assert recursive_nonempty_sums(A,N)==direct_nonempty_sums(A,N)
@@ -69,7 +69,7 @@ def test_540_subset_sums_two_independent_oracles():
     assert not is_zero_free((0,),11)
 
 
-def test_540_exact_small_composite_and_prime_maxima():
+def _check_test_540_exact_small_composite_and_prime_maxima():
     for N in range(2,13):
         best,witness=max_zero_free_branchbound(N)
         assert best==max_zero_free_mask(N)
@@ -78,7 +78,7 @@ def test_540_exact_small_composite_and_prime_maxima():
         assert all(0<a<N for a in witness)
 
 
-def test_540_sharp_prime_threshold_independent_enumeration():
+def _check_test_540_sharp_prime_threshold_independent_enumeration():
     for p in (2,3,5,7,11,13,17,19,23):
         k=k_prime_formula(p)
         assert k*(k+1)//2<p<=(k+1)*(k+2)//2
@@ -90,10 +90,27 @@ def test_540_sharp_prime_threshold_independent_enumeration():
     # theorem, not independently re-proved by this finite fixture.
 
 
-def test_540_zero_residue_and_strict_triangular_boundary():
+def _check_test_540_zero_residue_and_strict_triangular_boundary():
     for p in (2,3,5,7,11):
         assert not is_zero_free((0,),p)
         k=k_prime_formula(p)
         assert sum(range(1,k+1))<p
         assert 0 not in direct_nonempty_sums(range(1,k+1),p)
     assert not is_zero_free((1,2,4),7)  # 1+2+4=7
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_540_subset_sums_two_independent_oracles(self):
+        _check_test_540_subset_sums_two_independent_oracles()
+
+    def test_540_exact_small_composite_and_prime_maxima(self):
+        _check_test_540_exact_small_composite_and_prime_maxima()
+
+    def test_540_sharp_prime_threshold_independent_enumeration(self):
+        _check_test_540_sharp_prime_threshold_independent_enumeration()
+
+    def test_540_zero_residue_and_strict_triangular_boundary(self):
+        _check_test_540_zero_residue_and_strict_triangular_boundary()

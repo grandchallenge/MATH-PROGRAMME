@@ -26,7 +26,7 @@ def monochromatic(colouring, sums):
     return len({colouring[x] for x in sums})==1
 
 
-def test_532_two_independent_nonempty_finite_sums_implementations():
+def _check_test_532_two_independent_nonempty_finite_sums_implementations():
     for size in range(1,7):
         for generators in combinations(range(1,10), size):
             direct=all_finite_sums(generators)
@@ -36,7 +36,7 @@ def test_532_two_independent_nonempty_finite_sums_implementations():
             assert len(direct)<=2**size-1
 
 
-def test_532_distinct_subset_sums_versus_colliding_subset_sums():
+def _check_test_532_distinct_subset_sums_versus_colliding_subset_sums():
     for m in range(1,13):
         A=tuple(2**j for j in range(m))
         sums=recursive_finite_sums(A)
@@ -46,7 +46,7 @@ def test_532_distinct_subset_sums_versus_colliding_subset_sums():
     assert len(recursive_finite_sums((1,2,3)))==6
 
 
-def test_532_finite_folkman_shadow_F2_equals_nine():
+def _check_test_532_finite_folkman_shadow_F2_equals_nine():
     # This is a finite consequence of Hindman, already checked separately
     # under #531; it does not prove the infinite theorem.
     families=[
@@ -64,7 +64,7 @@ def test_532_finite_folkman_shadow_F2_equals_nine():
                for a,b in combinations(range(1,9),2) if a+b<=8)
 
 
-def test_532_all_finite_subset_sizes_have_same_colour_in_predicate():
+def _check_test_532_all_finite_subset_sizes_have_same_colour_in_predicate():
     A=(2,5,11)
     sums=recursive_finite_sums(A)
     assert len(sums)==7
@@ -79,3 +79,20 @@ def test_532_all_finite_subset_sizes_have_same_colour_in_predicate():
     by_size=[{sum(sub) for sub in combinations(B,j)} for j in (1,2,3)]
     assert set.union(*by_size)==all_finite_sums(B)
     assert {len(x) for x in by_size}=={1,3}
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_532_two_independent_nonempty_finite_sums_implementations(self):
+        _check_test_532_two_independent_nonempty_finite_sums_implementations()
+
+    def test_532_distinct_subset_sums_versus_colliding_subset_sums(self):
+        _check_test_532_distinct_subset_sums_versus_colliding_subset_sums()
+
+    def test_532_finite_folkman_shadow_F2_equals_nine(self):
+        _check_test_532_finite_folkman_shadow_F2_equals_nine()
+
+    def test_532_all_finite_subset_sizes_have_same_colour_in_predicate(self):
+        _check_test_532_all_finite_subset_sizes_have_same_colour_in_predicate()

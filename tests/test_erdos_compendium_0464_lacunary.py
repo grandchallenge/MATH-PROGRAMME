@@ -27,12 +27,12 @@ def frac_binary_prefix(start: int, bits: int = 28) -> Fraction:
     )
 
 
-def test_464_all_paired_digits_are_complements() -> None:
+def _check_test_464_all_paired_digits_are_complements() -> None:
     for j in range(0, 10001):
         assert binary_digit(2 * j) + binary_digit(2 * j + 1) == 1
 
 
-def test_464_exact_binary_shift_separation() -> None:
+def _check_test_464_exact_binary_shift_separation() -> None:
     # Every three-bit block includes an opposite-digit designated pair.
     # The infinite mathematical argument is uniform; this tests its fixture.
     for shift in range(0, 10001):
@@ -44,7 +44,7 @@ def test_464_exact_binary_shift_separation() -> None:
         assert Fraction(1, 8) <= x <= Fraction(7, 8)
 
 
-def test_464_fractional_part_vs_nearest_integer_distance() -> None:
+def _check_test_464_fractional_part_vs_nearest_integer_distance() -> None:
     # Norms are always <=1/2. Thus literal 'not dense in [0,1]'
     # for a set of such norms is vacuous and is not the original claim.
     for k in range(2, 100):
@@ -53,3 +53,17 @@ def test_464_fractional_part_vs_nearest_integer_distance() -> None:
         norm = min(fractional, 1 - fractional)
         assert 0 <= norm <= Fraction(1, 2)
     assert all(2 ** (k + 1) >= Fraction(6, 5) * 2 ** k for k in range(20))
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_464_all_paired_digits_are_complements(self):
+        _check_test_464_all_paired_digits_are_complements()
+
+    def test_464_exact_binary_shift_separation(self):
+        _check_test_464_exact_binary_shift_separation()
+
+    def test_464_fractional_part_vs_nearest_integer_distance(self):
+        _check_test_464_fractional_part_vs_nearest_integer_distance()

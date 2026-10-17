@@ -27,7 +27,7 @@ def norm_square_poly(eps):
     return S.Poly(n+1+sum(C[j]*W[j] for j in range(1,n+1)),U)
 
 
-def test_525_autocorrelation_chebyshev_identity_all_signs():
+def _check_test_525_autocorrelation_chebyshev_identity_all_signs():
     for n in range(1,8):
         for eps in product((-1,1),repeat=n+1):
             H=norm_square_poly(eps).as_expr()
@@ -39,7 +39,7 @@ def test_525_autocorrelation_chebyshev_identity_all_signs():
             assert all(c==int(c) for c in norm_square_poly(eps).all_coeffs())
 
 
-def test_525_exact_zero_circle_minimum_plus_polynomial():
+def _check_test_525_exact_zero_circle_minimum_plus_polynomial():
     H=norm_square_poly((1,1,1))
     assert S.factor(H.as_expr())==(U+1)**2
     assert H.eval(-1)==0
@@ -47,7 +47,7 @@ def test_525_exact_zero_circle_minimum_plus_polynomial():
     assert H.eval(-2)==1 # z=-1 gives |1-1+1|²=1.
 
 
-def test_525_exact_strictly_positive_example():
+def _check_test_525_exact_strictly_positive_example():
     H=norm_square_poly((1,1,-1))
     assert S.expand(H.as_expr())==5-U**2
     # On [-2,2], min H=1, so min |P| =1 and m<1 is FALSE.
@@ -55,7 +55,7 @@ def test_525_exact_strictly_positive_example():
     assert H.eval(0)==5
 
 
-def test_525_two_exponential_normalizations_are_not_identical():
+def _check_test_525_two_exponential_normalizations_are_not_identical():
     # Cook--Nguyen normalize a degree 2r polynomial by 1/sqrt(2r+1);
     # sqrt(N)*unscaled_min ~ 2r*normalized_min for N=2r.
     for r in range(1,20):
@@ -65,3 +65,20 @@ def test_525_two_exponential_normalizations_are_not_identical():
         assert factor_squared == 4+F(2,r)
     # If survival of r*normalized_min has rate lambda=2sqrt(pi/3),
     # survival of sqrt(N)*unscaled_min has rate lambda/2.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_525_autocorrelation_chebyshev_identity_all_signs(self):
+        _check_test_525_autocorrelation_chebyshev_identity_all_signs()
+
+    def test_525_exact_zero_circle_minimum_plus_polynomial(self):
+        _check_test_525_exact_zero_circle_minimum_plus_polynomial()
+
+    def test_525_exact_strictly_positive_example(self):
+        _check_test_525_exact_strictly_positive_example()
+
+    def test_525_two_exponential_normalizations_are_not_identical(self):
+        _check_test_525_two_exponential_normalizations_are_not_identical()

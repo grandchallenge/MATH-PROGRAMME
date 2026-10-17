@@ -26,7 +26,7 @@ def abel(signs, x):
     return (1-x)*sum((pre[j]*x**j for j in range(len(signs)-1)),F(0)) + pre[-1]*x**(len(signs)-1)
 
 
-def test_524_abel_identity_all_short_sign_patterns():
+def _check_test_524_abel_identity_all_short_sign_patterns():
     for n in range(0,10):
         for signs in product((-1,1),repeat=n+1):
             for x in SAMPLE:
@@ -37,7 +37,7 @@ def test_524_abel_identity_all_short_sign_patterns():
                     assert evaluation(signs,x)==abel(alternating,-x)
 
 
-def test_524_two_random_walk_sandwich_rational_points():
+def _check_test_524_two_random_walk_sandwich_rational_points():
     for n in range(1,10):
         for signs in product((-1,1),repeat=n+1):
             S=prefixes(signs)
@@ -48,15 +48,32 @@ def test_524_two_random_walk_sandwich_rational_points():
             assert endpoints <= max(samples) <= bound
 
 
-def test_524_endpoints_are_not_full_interval_maximum():
+def _check_test_524_endpoints_are_not_full_interval_maximum():
     signs=(1,1,-1)
     assert max(abs(evaluation(signs,F(-1))),abs(evaluation(signs,F(1))))==1
     assert evaluation(signs,F(1,2))==F(5,4)>1
 
 
-def test_524_abel_convex_weights_sum_to_one_exactly():
+def _check_test_524_abel_convex_weights_sum_to_one_exactly():
     for n in range(1,20):
         for x in (F(0),F(1,4),F(1,2),F(3,4),F(1)):
             weights=[(1-x)*x**j for j in range(n)]+[x**n]
             assert sum(weights,F(0))==1
             assert all(w>=0 for w in weights)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_524_abel_identity_all_short_sign_patterns(self):
+        _check_test_524_abel_identity_all_short_sign_patterns()
+
+    def test_524_two_random_walk_sandwich_rational_points(self):
+        _check_test_524_two_random_walk_sandwich_rational_points()
+
+    def test_524_endpoints_are_not_full_interval_maximum(self):
+        _check_test_524_endpoints_are_not_full_interval_maximum()
+
+    def test_524_abel_convex_weights_sum_to_one_exactly(self):
+        _check_test_524_abel_convex_weights_sum_to_one_exactly()

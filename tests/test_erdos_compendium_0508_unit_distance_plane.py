@@ -46,7 +46,7 @@ def chromatic_number(points):
     raise AssertionError("No coloring")
 
 
-def test_508_equilateral_triangle_exact_algebraic_coordinates():
+def _check_test_508_equilateral_triangle_exact_algebraic_coordinates():
     triangle = (
         point(0, 0),
         point(1, 0),
@@ -57,14 +57,14 @@ def test_508_equilateral_triangle_exact_algebraic_coordinates():
     assert chromatic_number(triangle) == 3
 
 
-def test_508_unit_square_is_cycle_and_two_colorable():
+def _check_test_508_unit_square_is_cycle_and_two_colorable():
     square = (point(0, 0), point(1, 0), point(1, 1), point(0, 1))
     assert unit_graph(square) == {(0, 1), (1, 2), (2, 3), (0, 3)}
     assert distance_squared(square[0], square[2]) == coord(2)
     assert chromatic_number(square) == 2
 
 
-def test_508_finite_inheritance_does_not_prove_global_upper_bound():
+def _check_test_508_finite_inheritance_does_not_prove_global_upper_bound():
     pts = (point(0, 0), point(1, 0), point(2, 0))
     assert unit_graph(pts) == {(0, 1), (1, 2)}
     assert chromatic_number(pts) == 2
@@ -72,8 +72,25 @@ def test_508_finite_inheritance_does_not_prove_global_upper_bound():
     # but a finite coloring cannot be extended to the plane automatically.
 
 
-def test_508_exact_unit_distance_not_at_most_one():
+def _check_test_508_exact_unit_distance_not_at_most_one():
     pts = (point(0, 0), point(F(1, 2), 0), point(1, 0))
     assert distance_squared(pts[0], pts[1]) == coord(F(1, 4))
     assert unit_graph(pts) == {(0, 2)}
     assert chromatic_number(pts) == 2
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_508_equilateral_triangle_exact_algebraic_coordinates(self):
+        _check_test_508_equilateral_triangle_exact_algebraic_coordinates()
+
+    def test_508_unit_square_is_cycle_and_two_colorable(self):
+        _check_test_508_unit_square_is_cycle_and_two_colorable()
+
+    def test_508_finite_inheritance_does_not_prove_global_upper_bound(self):
+        _check_test_508_finite_inheritance_does_not_prove_global_upper_bound()
+
+    def test_508_exact_unit_distance_not_at_most_one(self):
+        _check_test_508_exact_unit_distance_not_at_most_one()

@@ -23,7 +23,7 @@ def catalogue_first_branch(N, m):
     return Fraction(1) - Fraction(1, 2 * m - 1)
 
 
-def test_504_regular_polygon_exact_max_and_small_source_cases():
+def _check_test_504_regular_polygon_exact_max_and_small_source_cases():
     for N in range(3, 30):
         assert regular_polygon_largest_angle_over_pi(N) == Fraction(N - 2, N)
     assert regular_polygon_largest_angle_over_pi(3) == Fraction(1, 3)
@@ -32,7 +32,7 @@ def test_504_regular_polygon_exact_max_and_small_source_cases():
     assert regular_polygon_largest_angle_over_pi(6) == Fraction(2, 3)
 
 
-def test_504_catalogue_both_branches_false_at_small_N():
+def _check_test_504_catalogue_both_branches_false_at_small_N():
     # N=3 lies in the SECOND branch at m=2, not the first.
     assert Fraction(3) > Fraction(2) + Fraction(1, 2)
     catalogue_second_at_3 = Fraction(1) - Fraction(1, 2)
@@ -46,7 +46,7 @@ def test_504_catalogue_both_branches_false_at_small_N():
     # This would make alpha_5 > alpha_6, contrary to monotonicity.
 
 
-def test_504_source_verified_cases_and_hypothetical_numerator_two():
+def _check_test_504_source_verified_cases_and_hypothetical_numerator_two():
     source_cases = {
         3: Fraction(1, 3),
         4: Fraction(1, 2),
@@ -63,7 +63,7 @@ def test_504_source_verified_cases_and_hypothetical_numerator_two():
     assert Fraction(1) - Fraction(2, 2 * 3 - 1) == source_cases[5]
 
 
-def test_504_three_point_minimax_elementary_pigeonhole():
+def _check_test_504_three_point_minimax_elementary_pigeonhole():
     # Triangle angles sum pi, hence largest coefficient >=1/3.
     for denom in range(3, 22):
         for a in range(1, denom):
@@ -72,3 +72,20 @@ def test_504_three_point_minimax_elementary_pigeonhole():
                 if c > 0:
                     assert max(Fraction(a, denom), Fraction(b, denom), Fraction(c, denom)) >= Fraction(1, 3)
     assert max((Fraction(1, 3),) * 3) == Fraction(1, 3)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_504_regular_polygon_exact_max_and_small_source_cases(self):
+        _check_test_504_regular_polygon_exact_max_and_small_source_cases()
+
+    def test_504_catalogue_both_branches_false_at_small_N(self):
+        _check_test_504_catalogue_both_branches_false_at_small_N()
+
+    def test_504_source_verified_cases_and_hypothetical_numerator_two(self):
+        _check_test_504_source_verified_cases_and_hypothetical_numerator_two()
+
+    def test_504_three_point_minimax_elementary_pigeonhole(self):
+        _check_test_504_three_point_minimax_elementary_pigeonhole()

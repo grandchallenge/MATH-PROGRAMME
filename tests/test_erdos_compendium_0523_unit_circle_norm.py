@@ -15,7 +15,7 @@ def modular_autocorrelation(signs, m):
     return coeff
 
 
-def test_523_discrete_parseval_all_signs_up_to_degree_eight():
+def _check_test_523_discrete_parseval_all_signs_up_to_degree_eight():
     for n in range(1, 9):
         m = 2*n+1
         for signs in product((-1, 1), repeat=n+1):
@@ -26,7 +26,7 @@ def test_523_discrete_parseval_all_signs_up_to_degree_eight():
             # the GRID average of |P_n(omega_m^j)|^2 is n+1.
 
 
-def test_523_continuous_parseval_and_maximum_bounds():
+def _check_test_523_continuous_parseval_and_maximum_bounds():
     for n in range(1, 100):
         norm_squared = n+1
         L = n*(n+1)//2
@@ -36,7 +36,7 @@ def test_523_continuous_parseval_and_maximum_bounds():
         assert norm_squared <= (n+1)**2
 
 
-def test_523_mesh_lipschitz_error_is_small_at_asymptotic_scale():
+def _check_test_523_mesh_lipschitz_error_is_small_at_asymptotic_scale():
     for n in range(2, 120):
         m = n**4+1
         L = n*(n+1)//2
@@ -46,9 +46,26 @@ def test_523_mesh_lipschitz_error_is_small_at_asymptotic_scale():
         # Consequently error=o(sqrt(n log n)) (analytical argument).
 
 
-def test_523_exceptional_all_positive_configuration():
+def _check_test_523_exceptional_all_positive_configuration():
     for n in range(1, 30):
         signs = (1,)*(n+1)
         assert sum(signs) == n+1
         assert modular_autocorrelation(signs, 2*n+1)[0] == n+1
         # At z=1 all phases align, M_n=n+1, triangle inequality sharp.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_523_discrete_parseval_all_signs_up_to_degree_eight(self):
+        _check_test_523_discrete_parseval_all_signs_up_to_degree_eight()
+
+    def test_523_continuous_parseval_and_maximum_bounds(self):
+        _check_test_523_continuous_parseval_and_maximum_bounds()
+
+    def test_523_mesh_lipschitz_error_is_small_at_asymptotic_scale(self):
+        _check_test_523_mesh_lipschitz_error_is_small_at_asymptotic_scale()
+
+    def test_523_exceptional_all_positive_configuration(self):
+        _check_test_523_exceptional_all_positive_configuration()

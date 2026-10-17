@@ -19,7 +19,7 @@ def reciprocal_gaps(exponent, first, last):
                 for k in range(first, last+1)), F(0))
 
 
-def test_516_both_families_have_fabry_gaps_but_different_reciprocal_sums():
+def _check_test_516_both_families_have_fabry_gaps_but_different_reciprocal_sums():
     for k in range(1, 130):
         if k >= 4:
             assert F(geometric_exponents(k), k) >= k  # eventual 2^k >= k²
@@ -36,7 +36,7 @@ def test_516_both_families_have_fabry_gaps_but_different_reciprocal_sums():
         # Diverges as harmonic series, despite n_k/k = k -> infinity.
 
 
-def test_516_binomial_circle_minimum_maximum_and_maximum_term():
+def _check_test_516_binomial_circle_minimum_maximum_and_maximum_term():
     for q in range(1, 11):
         for r in (F(1, 2), F(3, 4), F(1), F(3, 2), F(2), F(7)):
             rq = r**q
@@ -54,7 +54,7 @@ def test_516_binomial_circle_minimum_maximum_and_maximum_term():
             assert mu != m_min or r == F(1, 2)
 
 
-def test_516_square_exponent_entire_series_has_finite_order_one():
+def _check_test_516_square_exponent_entire_series_has_finite_order_one():
     for K in range(1, 26):
         terms = [F(K**(k*k), factorial(k*k)) for k in range(1, 12)]
         e_trunc = sum((F(K**n, factorial(n)) for n in range(0, 122)), F(0))
@@ -65,7 +65,7 @@ def test_516_square_exponent_entire_series_has_finite_order_one():
     # subset of the Taylor series for exp(|z|).
 
 
-def test_516_logarithm_zero_and_maximum_term_guard():
+def _check_test_516_logarithm_zero_and_maximum_term_guard():
     # r=1: min_circle |1+z^q|=0, cannot evaluate ordinary log(min).
     for q in range(1, 20):
         r = F(1)
@@ -74,3 +74,20 @@ def test_516_logarithm_zero_and_maximum_term_guard():
         assert 1+r**q == 2
         # Ratio log minimum/log maximum is extended-real -infinity,
         # NOT the ratio of log largest term to log maximum.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_516_both_families_have_fabry_gaps_but_different_reciprocal_sums(self):
+        _check_test_516_both_families_have_fabry_gaps_but_different_reciprocal_sums()
+
+    def test_516_binomial_circle_minimum_maximum_and_maximum_term(self):
+        _check_test_516_binomial_circle_minimum_maximum_and_maximum_term()
+
+    def test_516_square_exponent_entire_series_has_finite_order_one(self):
+        _check_test_516_square_exponent_entire_series_has_finite_order_one()
+
+    def test_516_logarithm_zero_and_maximum_term_guard(self):
+        _check_test_516_logarithm_zero_and_maximum_term_guard()

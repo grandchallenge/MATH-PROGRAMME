@@ -55,7 +55,7 @@ def suspension(F,K):
             for j in range(K) for x in F for y in F}
 
 
-def test_539_integer_quotient_prime_projection_exact():
+def _check_test_539_integer_quotient_prime_projection_exact():
     examples=((6,10,15),(1,2,4),(4,6,9),(12,18,30),(2,3,5,7))
     for A in examples:
         assert all(a>0 for a in A)
@@ -64,7 +64,7 @@ def test_539_integer_quotient_prime_projection_exact():
     assert cofactors((6,10,15))=={1,2,3,5}
 
 
-def test_539_arbitrary_vector_configuration_prime_model():
+def _check_test_539_arbitrary_vector_configuration_prime_model():
     Fs=(
         {(0,0),(1,0),(0,1)},
         {(0,0),(2,-1),(-1,3)},
@@ -77,7 +77,7 @@ def test_539_arbitrary_vector_configuration_prime_model():
         assert len(cofactors(A))==len(proj_differences(F))
 
 
-def test_539_universal_refined_sqrt_lower_count():
+def _check_test_539_universal_refined_sqrt_lower_count():
     for N in range(1,10):
         for tup in combinations(range(1,13),N):
             q=len(cofactors(tup))
@@ -92,7 +92,7 @@ def test_539_universal_refined_sqrt_lower_count():
         assert 2*len(F)-1<=q*(q-1)+1
 
 
-def test_539_antidiagonal_strip_bounds():
+def _check_test_539_antidiagonal_strip_bounds():
     for W in (1,2,3):
         F=base_strip(W)
         D=proj_differences(F)
@@ -103,7 +103,7 @@ def test_539_antidiagonal_strip_bounds():
         assert all(0<=i<=W*W and 0<=j<=W*W for i,j in F)
 
 
-def test_539_separated_suspension_exact_lemma():
+def _check_test_539_separated_suspension_exact_lemma():
     families=(
         {(0,0),(1,0)},
         {(0,0),(1,0),(0,1)},
@@ -117,3 +117,23 @@ def test_539_separated_suspension_exact_lemma():
             assert len(proj_differences(S))<=q*q+2*(K-1)*t
             assert len(usual_differences(S))==(2*K-1)*t*t
     # These finite checks are not a full iteration or asymptotic proof.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_539_integer_quotient_prime_projection_exact(self):
+        _check_test_539_integer_quotient_prime_projection_exact()
+
+    def test_539_arbitrary_vector_configuration_prime_model(self):
+        _check_test_539_arbitrary_vector_configuration_prime_model()
+
+    def test_539_universal_refined_sqrt_lower_count(self):
+        _check_test_539_universal_refined_sqrt_lower_count()
+
+    def test_539_antidiagonal_strip_bounds(self):
+        _check_test_539_antidiagonal_strip_bounds()
+
+    def test_539_separated_suspension_exact_lemma(self):
+        _check_test_539_separated_suspension_exact_lemma()

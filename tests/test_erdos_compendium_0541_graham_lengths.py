@@ -35,7 +35,7 @@ def prefix_witness(a):
     raise AssertionError("Davenport prefix-pigeonhole failure")
 
 
-def test_541_exhaustive_all_moduli_through_six():
+def _check_test_541_exhaustive_all_moduli_through_six():
     for n in range(1,7):
         for a in product(range(n), repeat=n):
             lengths=lengths_by_masks(a)
@@ -45,7 +45,7 @@ def test_541_exhaustive_all_moduli_through_six():
                 assert len(set(a))<=2
 
 
-def test_541_prefix_zero_sum_certificate():
+def _check_test_541_prefix_zero_sum_certificate():
     for n in range(1,7):
         for a in product(range(n),repeat=n):
             positions=prefix_witness(a)
@@ -54,7 +54,7 @@ def test_541_prefix_zero_sum_certificate():
             assert 1<=len(positions)<=n
 
 
-def test_541_one_and_two_value_extremizers():
+def _check_test_541_one_and_two_value_extremizers():
     for n in range(2,22):
         a=(1,)*n
         assert lengths_by_dynamic(a)=={n}
@@ -63,7 +63,7 @@ def test_541_one_and_two_value_extremizers():
         assert len(set(b))==2
 
 
-def test_541_multiset_and_index_semantics():
+def _check_test_541_multiset_and_index_semantics():
     a=(1,1,2,2)
     assert len(set(a))==2
     assert lengths_by_masks(a)=={2,3}
@@ -71,3 +71,20 @@ def test_541_multiset_and_index_semantics():
     # Two equal values at different indices produce distinct subsets.
     # The original theorem forbids three distinct VALUES only when
     # all zero-sum index subsets have one common length.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_541_exhaustive_all_moduli_through_six(self):
+        _check_test_541_exhaustive_all_moduli_through_six()
+
+    def test_541_prefix_zero_sum_certificate(self):
+        _check_test_541_prefix_zero_sum_certificate()
+
+    def test_541_one_and_two_value_extremizers(self):
+        _check_test_541_one_and_two_value_extremizers()
+
+    def test_541_multiset_and_index_semantics(self):
+        _check_test_541_multiset_and_index_semantics()

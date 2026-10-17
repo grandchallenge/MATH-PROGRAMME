@@ -29,7 +29,7 @@ def large_prime_construction(N: int) -> tuple[tuple[int, ...], tuple[int, ...]]:
     )
 
 
-def test_490_cartesian_product_collision_and_correct_witness():
+def _check_test_490_cartesian_product_collision_and_correct_witness():
     assert not injective_products((2, 3), (4, 6))
     assert not injective_products((2, 3), (2, 3))
     assert injective_products((1, 2, 3), (5,))
@@ -37,14 +37,14 @@ def test_490_cartesian_product_collision_and_correct_witness():
     assert not unique_by_pairs((2, 3), (4, 6))
 
 
-def test_490_large_prime_witness_to_three_hundred():
+def _check_test_490_large_prime_witness_to_three_hundred():
     for N in range(2, 301):
         A, B = large_prime_construction(N)
         assert all(1 <= x <= N for x in A + B)
         assert injective_products(A, B), N
 
 
-def test_490_exhaustive_small_cartesian_pairs_and_exact_maximum():
+def _check_test_490_exhaustive_small_cartesian_pairs_and_exact_maximum():
     for N in range(1, 9):
         subsets = [
             tuple(x for x in range(1, N + 1) if mask & (1 << (x - 1)))
@@ -63,9 +63,26 @@ def test_490_exhaustive_small_cartesian_pairs_and_exact_maximum():
         assert N <= maximum_fast <= N * N
 
 
-def test_490_cardinality_cannot_ignore_collisions():
+def _check_test_490_cardinality_cannot_ignore_collisions():
     # These elements are individually distinct, but ordered cross-products are not.
     A, B = (2, 3, 4), (3, 4, 6)
     products = [a * b for a in A for b in B]
     assert len(products) == 9
     assert len(set(products)) < 9
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_490_cartesian_product_collision_and_correct_witness(self):
+        _check_test_490_cartesian_product_collision_and_correct_witness()
+
+    def test_490_large_prime_witness_to_three_hundred(self):
+        _check_test_490_large_prime_witness_to_three_hundred()
+
+    def test_490_exhaustive_small_cartesian_pairs_and_exact_maximum(self):
+        _check_test_490_exhaustive_small_cartesian_pairs_and_exact_maximum()
+
+    def test_490_cardinality_cannot_ignore_collisions(self):
+        _check_test_490_cardinality_cannot_ignore_collisions()

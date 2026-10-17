@@ -14,14 +14,14 @@ def product_exponents_mod_six(indices: tuple[int, ...], k: int) -> Counter[int]:
     return Counter(sum(choice) % 6 for choice in combinations(indices, k))
 
 
-def test_494_same_full_sum_does_not_determine_k_element_set():
+def _check_test_494_same_full_sum_does_not_determine_k_element_set():
     A = (0, 1, 4)
     B = (0, 2, 3)
     assert set(A) != set(B)
     assert multiset_sums(A, 3) == multiset_sums(B, 3) == Counter({5: 1})
 
 
-def test_494_zero_sum_half_set_ambiguity_and_multiplicity():
+def _check_test_494_zero_sum_half_set_ambiguity_and_multiplicity():
     A = (-7, -3, -2, 1, 5, 6)
     B = tuple(-x for x in A)
     assert sum(A) == 0 and len(set(A)) == 6
@@ -33,7 +33,7 @@ def test_494_zero_sum_half_set_ambiguity_and_multiplicity():
         assert sum(pair) == -sum(complement)
 
 
-def test_494_nonzero_sixth_roots_exact_exponent_counterexample():
+def _check_test_494_nonzero_sixth_roots_exact_exponent_counterexample():
     # All elements are distinct NONZERO sixth roots of unity.
     A = (0, 1, 2, 4)
     B = (0, 2, 3, 4)
@@ -44,7 +44,7 @@ def test_494_nonzero_sixth_roots_exact_exponent_counterexample():
     assert eA == Counter({0: 1, 1: 1, 3: 1, 5: 1})
 
 
-def test_494_multiset_is_not_set_and_known_k2_failure():
+def _check_test_494_multiset_is_not_set_and_known_k2_failure():
     A = (0, 1, 3, 4)
     B = (0, 2, 3, 3)  # repeated element invalid: don't use as distinct set
     # A product-proof cannot silently use multisets with repeated originals.
@@ -57,8 +57,28 @@ def test_494_multiset_is_not_set_and_known_k2_failure():
     assert multiset_sums(C, 2) == multiset_sums(D, 2)
 
 
-def test_494_necessary_power_sum_coefficient_at_k2():
+def _check_test_494_necessary_power_sum_coefficient_at_k2():
     # For two-sums, sum_{a<b}(a+b)^j has p_j coefficient n - 2^(j-1).
     # At n=4, j=3 the coefficient vanishes: the triangular recovery fails.
     assert 4 - 2**(3 - 1) == 0
     assert 3 - 2**(3 - 1) != 0
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_494_same_full_sum_does_not_determine_k_element_set(self):
+        _check_test_494_same_full_sum_does_not_determine_k_element_set()
+
+    def test_494_zero_sum_half_set_ambiguity_and_multiplicity(self):
+        _check_test_494_zero_sum_half_set_ambiguity_and_multiplicity()
+
+    def test_494_nonzero_sixth_roots_exact_exponent_counterexample(self):
+        _check_test_494_nonzero_sixth_roots_exact_exponent_counterexample()
+
+    def test_494_multiset_is_not_set_and_known_k2_failure(self):
+        _check_test_494_multiset_is_not_set_and_known_k2_failure()
+
+    def test_494_necessary_power_sum_coefficient_at_k2(self):
+        _check_test_494_necessary_power_sum_coefficient_at_k2()

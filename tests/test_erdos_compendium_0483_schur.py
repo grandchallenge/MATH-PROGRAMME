@@ -55,7 +55,7 @@ def canonical_witness(k: int, N: int) -> tuple[list[int] | None, int]:
     return search(0, 0), calls
 
 
-def test_483_exact_first_three_schur_thresholds() -> None:
+def _check_test_483_exact_first_three_schur_thresholds() -> None:
     for k, last_safe, first_forced in ((1, 1, 2), (2, 4, 5), (3, 13, 14)):
         coloring, _ = canonical_witness(k, last_safe)
         assert coloring is not None and schur_avoiding(coloring)
@@ -63,7 +63,7 @@ def test_483_exact_first_three_schur_thresholds() -> None:
         assert impossible is None
 
 
-def test_483_reproduce_explicit_colorings_and_dfs_coverage() -> None:
+def _check_test_483_reproduce_explicit_colorings_and_dfs_coverage() -> None:
     safe2 = [0, 1, 1, 0]
     safe3 = [0, 1, 1, 0, 2, 2, 0, 2, 2, 0, 1, 1, 0]
     assert schur_avoiding(safe2) and schur_avoiding(safe3)
@@ -72,7 +72,7 @@ def test_483_reproduce_explicit_colorings_and_dfs_coverage() -> None:
     assert canonical_witness(3, 13)[0] == safe3
 
 
-def test_483_equal_summands_not_weak_schur() -> None:
+def _check_test_483_equal_summands_not_weak_schur() -> None:
     assert schur_avoiding([0])
     assert not schur_avoiding([0, 0])  # 1+1=2
     assert schur_avoiding([0, 1])  # one-color forcing threshold is 2
@@ -84,7 +84,7 @@ def test_483_equal_summands_not_weak_schur() -> None:
     )
 
 
-def test_483_ramsey_edge_differences_exact_triangle_identity() -> None:
+def _check_test_483_ramsey_edge_differences_exact_triangle_identity() -> None:
     N = 13
     safe = [0, 1, 1, 0, 2, 2, 0, 2, 2, 0, 1, 1, 0]
     # For each triangle i<j<l on vertex set 0,...,N,
@@ -97,7 +97,7 @@ def test_483_ramsey_edge_differences_exact_triangle_identity() -> None:
                 assert not (safe[a - 1] == safe[b - 1] == safe[c - 1])
 
 
-def test_483_ageron_lower_bound_off_by_one_translation() -> None:
+def _check_test_483_ageron_lower_bound_off_by_one_translation() -> None:
     # S(k+5) >= 380 S(k) + 148 => f(k+5) >= 380 f(k)-231
     for f_k in (2, 5, 14, 45, 161):
         S_k = f_k - 1
@@ -105,3 +105,23 @@ def test_483_ageron_lower_bound_off_by_one_translation() -> None:
         lower_f = lower_S + 1
         assert lower_f == 380 * f_k - 231
     assert 380 * 14 - 231 == 5089
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_483_exact_first_three_schur_thresholds(self):
+        _check_test_483_exact_first_three_schur_thresholds()
+
+    def test_483_reproduce_explicit_colorings_and_dfs_coverage(self):
+        _check_test_483_reproduce_explicit_colorings_and_dfs_coverage()
+
+    def test_483_equal_summands_not_weak_schur(self):
+        _check_test_483_equal_summands_not_weak_schur()
+
+    def test_483_ramsey_edge_differences_exact_triangle_identity(self):
+        _check_test_483_ramsey_edge_differences_exact_triangle_identity()
+
+    def test_483_ageron_lower_bound_off_by_one_translation(self):
+        _check_test_483_ageron_lower_bound_off_by_one_translation()

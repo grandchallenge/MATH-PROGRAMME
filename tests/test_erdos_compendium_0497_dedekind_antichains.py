@@ -28,7 +28,7 @@ def upward_closure(family: tuple[int, ...], n: int) -> int:
     )
 
 
-def test_497_two_independent_exact_dedekind_counts():
+def _check_test_497_two_independent_exact_dedekind_counts():
     for n, expected in enumerate((2, 3, 6, 20, 168)):
         antichains = 0
         upsets = 0
@@ -44,7 +44,7 @@ def test_497_two_independent_exact_dedekind_counts():
         assert antichains == upsets == len(images) == expected, n
 
 
-def test_497_zero_universe_and_empty_antichain_are_distinct():
+def _check_test_497_zero_universe_and_empty_antichain_are_distinct():
     assert antichain(())
     assert antichain((0,))
     assert upward_closure((), 0) == 0
@@ -52,9 +52,23 @@ def test_497_zero_universe_and_empty_antichain_are_distinct():
     assert not antichain((0, 1))  # empty subset and a nonempty subset comparable
 
 
-def test_497_middle_layer_exact_lower_bound():
+def _check_test_497_middle_layer_exact_lower_bound():
     for n in range(1, 9):
         middle = tuple(a for a in range(1 << n) if a.bit_count() == n // 2)
         assert len(middle) == comb(n, n // 2)
         assert antichain(middle)
         assert antichain(tuple(middle[i] for i in range(len(middle)) if i % 2 == 0))
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_497_two_independent_exact_dedekind_counts(self):
+        _check_test_497_two_independent_exact_dedekind_counts()
+
+    def test_497_zero_universe_and_empty_antichain_are_distinct(self):
+        _check_test_497_zero_universe_and_empty_antichain_are_distinct()
+
+    def test_497_middle_layer_exact_lower_bound(self):
+        _check_test_497_middle_layer_exact_lower_bound()

@@ -25,7 +25,7 @@ def ulam_step(prefix: list[int]) -> int | None:
     return min(candidates) if candidates else None
 
 
-def test_471_named_seed_first_generations() -> None:
+def _check_test_471_named_seed_first_generations() -> None:
     q = {3, 5, 7, 11}
     assert closure_step(q) == {3, 5, 7, 11, 19, 23}
     sizes = [len(q)]
@@ -37,7 +37,7 @@ def test_471_named_seed_first_generations() -> None:
     assert all(prime(p) for p in q)
 
 
-def test_471_three_inputs_are_distinct() -> None:
+def _check_test_471_three_inputs_are_distinct() -> None:
     q = {3, 5, 7, 11}
     sums = {tuple(t): sum(t) for t in combinations(sorted(q), 3)}
     assert sums == {
@@ -49,7 +49,7 @@ def test_471_three_inputs_are_distinct() -> None:
     assert closure_step(q) - q == {19, 23}
 
 
-def test_472_exact_starting_prefix() -> None:
+def _check_test_472_exact_starting_prefix() -> None:
     expected = [
         3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
         53, 59, 61, 67, 71, 73, 79, 83, 89, 101, 103, 107, 109,
@@ -66,11 +66,31 @@ def test_472_exact_starting_prefix() -> None:
     assert q == expected
 
 
-def test_472_single_seed_can_terminate() -> None:
+def _check_test_472_single_seed_can_terminate() -> None:
     assert ulam_step([5]) is None  # 5+5-1=9 is composite
     assert ulam_step([3, 5]) == 7
 
 
-def test_471_is_not_472() -> None:
+def _check_test_471_is_not_472() -> None:
     assert closure_step({3, 5, 7, 11}) == {3, 5, 7, 11, 19, 23}
     assert ulam_step([3, 5]) == 7
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_471_named_seed_first_generations(self):
+        _check_test_471_named_seed_first_generations()
+
+    def test_471_three_inputs_are_distinct(self):
+        _check_test_471_three_inputs_are_distinct()
+
+    def test_472_exact_starting_prefix(self):
+        _check_test_472_exact_starting_prefix()
+
+    def test_472_single_seed_can_terminate(self):
+        _check_test_472_single_seed_can_terminate()
+
+    def test_471_is_not_472(self):
+        _check_test_471_is_not_472()

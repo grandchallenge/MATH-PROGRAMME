@@ -40,7 +40,7 @@ def chromatic_number(points):
     raise AssertionError("No valid coloring")
 
 
-def test_505_complete_simplex_in_affine_dimension_d_requires_dplus1():
+def _check_test_505_complete_simplex_in_affine_dimension_d_requires_dplus1():
     for d in range(1, 5):
         # Unit vectors e_i (0<=i<=d) lie in affine plane sum x_i=1, dimension d.
         points = tuple(tuple(int(i == j) for j in range(d + 1)) for i in range(d + 1))
@@ -50,7 +50,7 @@ def test_505_complete_simplex_in_affine_dimension_d_requires_dplus1():
         assert chromatic_number(points) == d + 1
 
 
-def test_505_square_diameter_graph_is_matching_not_complete():
+def _check_test_505_square_diameter_graph_is_matching_not_complete():
     points = ((0, 0), (1, 0), (0, 1), (1, 1))
     edges, diameter2 = diametral_edges(points)
     assert edges == {(0, 3), (1, 2)}
@@ -58,7 +58,7 @@ def test_505_square_diameter_graph_is_matching_not_complete():
     assert chromatic_number(points) == 2
 
 
-def test_505_coloring_vs_strict_diameter_for_every_small_assignment():
+def _check_test_505_coloring_vs_strict_diameter_for_every_small_assignment():
     for points in (
         ((0,), (1,)),
         ((0,), (1,), (2,)),
@@ -71,7 +71,24 @@ def test_505_coloring_vs_strict_diameter_for_every_small_assignment():
                 valid_partition_coloring(points, colors)
 
 
-def test_505_published_and_reported_pigeonhole_bounds():
+def _check_test_505_published_and_reported_pigeonhole_bounds():
     assert ceil(352 / 5) == 71 > 64 + 1  # Jenrich-Brouwer 2014
     assert ceil(321 / 5) == 65 > 63 + 1  # Grinsztajn 2026, external claim
     # Arithmetic does NOT verify either high-dimensional Euclidean construction.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_505_complete_simplex_in_affine_dimension_d_requires_dplus1(self):
+        _check_test_505_complete_simplex_in_affine_dimension_d_requires_dplus1()
+
+    def test_505_square_diameter_graph_is_matching_not_complete(self):
+        _check_test_505_square_diameter_graph_is_matching_not_complete()
+
+    def test_505_coloring_vs_strict_diameter_for_every_small_assignment(self):
+        _check_test_505_coloring_vs_strict_diameter_for_every_small_assignment()
+
+    def test_505_published_and_reported_pigeonhole_bounds(self):
+        _check_test_505_published_and_reported_pigeonhole_bounds()

@@ -43,29 +43,52 @@ def prefixes(M):
             if s not in first:first[s]=n;new+=1
     return first,new
 
-def test_0467_all_prime_endpoints_below_607():
+def _check_test_0467_all_prime_endpoints_below_607():
     assert all(deficit(p)<0 for p in primes(606))
 
-def test_0467_cutoff_is_not_a_solution():
+def _check_test_0467_cutoff_is_not_a_solution():
     assert deficit(601)==-1
     assert deficit(607)==1
 
-def test_0467_crt_pair_intersections():
+def _check_test_0467_crt_pair_intersections():
     for p,q in [(2,3),(3,5),(5,7),(7,11)]:
         N=601
         for a in range(p):
             for b in range(q):
                 assert sum(n%p==a and n%q==b for n in range(1,N+1))>=N//(p*q)
 
-def test_0468_first_1000():
+def _check_test_0468_first_1000():
     f,n=prefixes(1000)
     assert n==924 and f[17]==10
 
-def test_0468_first_10000():
+def _check_test_0468_first_10000():
     f,n=prefixes(10000)
     assert n==8697
     assert sum(f.get(N,10001)>10000 for N in range(1,10001))==2969
 
-def test_0468_undefined_small_values():
+def _check_test_0468_undefined_small_values():
     f,_=prefixes(10000)
     assert 1 not in f and 4 not in f and f[28]==102
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_0467_all_prime_endpoints_below_607(self):
+        _check_test_0467_all_prime_endpoints_below_607()
+
+    def test_0467_cutoff_is_not_a_solution(self):
+        _check_test_0467_cutoff_is_not_a_solution()
+
+    def test_0467_crt_pair_intersections(self):
+        _check_test_0467_crt_pair_intersections()
+
+    def test_0468_first_1000(self):
+        _check_test_0468_first_1000()
+
+    def test_0468_first_10000(self):
+        _check_test_0468_first_10000()
+
+    def test_0468_undefined_small_values(self):
+        _check_test_0468_undefined_small_values()

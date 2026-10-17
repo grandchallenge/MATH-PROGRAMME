@@ -23,7 +23,7 @@ def cos_two_pi_thirds(m):
     return F(1) if m % 3 == 0 else F(-1, 2)
 
 
-def test_510_powers_two_sidon_differences_unique():
+def _check_test_510_powers_two_sidon_differences_unique():
     for k in range(2, 13):
         b = sidon_powers(k)
         a = positive_differences(b)
@@ -32,7 +32,7 @@ def test_510_powers_two_sidon_differences_unique():
         assert min(a) > 0
 
 
-def test_510_laurent_square_coefficients_and_factor_two():
+def _check_test_510_laurent_square_coefficients_and_factor_two():
     for k in range(2, 12):
         b = sidon_powers(k)
         a = positive_differences(b)
@@ -46,7 +46,7 @@ def test_510_laurent_square_coefficients_and_factor_two():
         assert F(k, 2) > 0
 
 
-def test_510_exact_rational_cosine_at_special_angles():
+def _check_test_510_exact_rational_cosine_at_special_angles():
     for k in range(2, 12):
         b = sidon_powers(k)
         a = positive_differences(b)
@@ -58,7 +58,7 @@ def test_510_exact_rational_cosine_at_special_angles():
         assert sum((F(1) for _ in a), F(0)) == len(a)  # F_A(0)=N
 
 
-def test_510_padding_cardinality_and_exponent_half_obstruction():
+def _check_test_510_padding_cardinality_and_exponent_half_obstruction():
     for N in range(1, 240):
         # C(k,2) <= N < C(k+1,2), and r=N-C(k,2)<k.
         k = max(j for j in range(2, 30) if j * (j - 1) // 2 <= N)
@@ -75,8 +75,28 @@ def test_510_padding_cardinality_and_exponent_half_obstruction():
         assert F(k, 2) + r <= F(3 * k, 2)
 
 
-def test_510_zero_frequency_is_invalid_hypothesis():
+def _check_test_510_zero_frequency_is_invalid_hypothesis():
     b = sidon_powers(5)
     assert 0 in b  # phases may have zero exponent
     a = positive_differences(b)
     assert 0 not in a  # cosine FREQUENCIES may not
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_510_powers_two_sidon_differences_unique(self):
+        _check_test_510_powers_two_sidon_differences_unique()
+
+    def test_510_laurent_square_coefficients_and_factor_two(self):
+        _check_test_510_laurent_square_coefficients_and_factor_two()
+
+    def test_510_exact_rational_cosine_at_special_angles(self):
+        _check_test_510_exact_rational_cosine_at_special_angles()
+
+    def test_510_padding_cardinality_and_exponent_half_obstruction(self):
+        _check_test_510_padding_cardinality_and_exponent_half_obstruction()
+
+    def test_510_zero_frequency_is_invalid_hypothesis(self):
+        _check_test_510_zero_frequency_is_invalid_hypothesis()

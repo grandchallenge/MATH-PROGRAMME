@@ -37,7 +37,7 @@ def reciprocal_sum(rows):
     return sum((Fraction(1, x) for x, _ in rows), Fraction(0))
 
 
-def test_481_distinct_words_collide_at_third_generation() -> None:
+def _check_test_481_distinct_words_collide_at_third_generation() -> None:
     a, b = [2, 2, 3], [0, 1, 1]
     assert sum((Fraction(1, x) for x in a), Fraction(0)) == Fraction(4, 3)
     rows = generations(a, b, 3)
@@ -48,14 +48,14 @@ def test_481_distinct_words_collide_at_third_generation() -> None:
     assert rows[2][2][0] == 7 and rows[2][4][0] == 7
 
 
-def test_481_identity_is_a_minimum_growth_exception() -> None:
+def _check_test_481_identity_is_a_minimum_growth_exception() -> None:
     rows = generations([1, 2], [0, 0], 5)
     assert [min(x for x, _ in r) for r in rows] == [1, 1, 1, 1, 1]
     assert first_duplicate(rows[2]) == (2, (0, 1), (1, 0))
     assert len(rows[2]) == 4
 
 
-def test_481_nonidentity_minimum_growth_and_harmonic_bound() -> None:
+def _check_test_481_nonidentity_minimum_growth_and_harmonic_bound() -> None:
     a, b = [2, 2, 3], [0, 1, 1]
     rows = generations(a, b, 4)
     for k, row in enumerate(rows, 1):
@@ -73,16 +73,36 @@ def test_481_nonidentity_minimum_growth_and_harmonic_bound() -> None:
                         Fraction(0))
 
 
-def test_481_sufficient_not_necessary_reciprocal_threshold() -> None:
+def _check_test_481_sufficient_not_necessary_reciprocal_threshold() -> None:
     a, b = [2, 3, 6], [0, 1, 1]
     assert sum((Fraction(1, x) for x in a), Fraction(0)) == 1
     rows = generations(a, b, 3)
     assert first_duplicate(rows[-1]) is not None
 
 
-def test_481_labelled_maps_cannot_be_silently_deduplicated() -> None:
+def _check_test_481_labelled_maps_cannot_be_silently_deduplicated() -> None:
     rows = generations([2, 2], [0, 0], 2)
     assert [x for x, _ in rows[-1]] == [2, 2]
     assert first_duplicate(rows[-1]) == (2, (0,), (1,))
     assert len(rows[-1]) == 2
     assert len({x for x, _ in rows[-1]}) == 1
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_481_distinct_words_collide_at_third_generation(self):
+        _check_test_481_distinct_words_collide_at_third_generation()
+
+    def test_481_identity_is_a_minimum_growth_exception(self):
+        _check_test_481_identity_is_a_minimum_growth_exception()
+
+    def test_481_nonidentity_minimum_growth_and_harmonic_bound(self):
+        _check_test_481_nonidentity_minimum_growth_and_harmonic_bound()
+
+    def test_481_sufficient_not_necessary_reciprocal_threshold(self):
+        _check_test_481_sufficient_not_necessary_reciprocal_threshold()
+
+    def test_481_labelled_maps_cannot_be_silently_deduplicated(self):
+        _check_test_481_labelled_maps_cannot_be_silently_deduplicated()

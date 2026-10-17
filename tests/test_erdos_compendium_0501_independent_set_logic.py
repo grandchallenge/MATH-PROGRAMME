@@ -28,7 +28,7 @@ def all_subsets(n: int):
     )
 
 
-def test_501_empty_and_diagonal_only_are_fully_independent():
+def _check_test_501_empty_and_diagonal_only_are_fully_independent():
     for n in range(1, 9):
         empty = tuple(frozenset() for _ in range(n))
         diagonal = tuple(frozenset((i,)) for i in range(n))
@@ -40,7 +40,7 @@ def test_501_empty_and_diagonal_only_are_fully_independent():
         # The original independence condition does not ban x in A_x.
 
 
-def test_501_off_diagonal_blocks_pairs_and_order_matters():
+def _check_test_501_off_diagonal_blocks_pairs_and_order_matters():
     for n in range(2, 8):
         forbidden = tuple(frozenset(j for j in range(n) if j != i) for i in range(n))
         accepted = [x for x in all_subsets(n) if independent(x, forbidden)]
@@ -52,7 +52,7 @@ def test_501_off_diagonal_blocks_pairs_and_order_matters():
     assert independent(frozenset((0, 2)), asym)
 
 
-def test_501_all_small_directed_relations_match_independent_algorithm():
+def _check_test_501_all_small_directed_relations_match_independent_algorithm():
     for n in range(4):
         # Enumerate all directed relations, including self loops.
         for edges in range(1 << (n * n)):
@@ -62,3 +62,17 @@ def test_501_all_small_directed_relations_match_independent_algorithm():
             )
             for x in all_subsets(n):
                 assert independent(x, forbidden) == independent_alternate(x, forbidden)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_501_empty_and_diagonal_only_are_fully_independent(self):
+        _check_test_501_empty_and_diagonal_only_are_fully_independent()
+
+    def test_501_off_diagonal_blocks_pairs_and_order_matters(self):
+        _check_test_501_off_diagonal_blocks_pairs_and_order_matters()
+
+    def test_501_all_small_directed_relations_match_independent_algorithm(self):
+        _check_test_501_all_small_directed_relations_match_independent_algorithm()

@@ -25,7 +25,7 @@ def primitive_pseudoperfect(n: int) -> bool:
     )
 
 
-def test_469_exact_positive_membership_examples() -> None:
+def _check_test_469_exact_positive_membership_examples() -> None:
     assert primitive_pseudoperfect(6)  # 6 = 1+2+3
     assert primitive_pseudoperfect(20)  # 20 = 1+4+5+10
     assert primitive_pseudoperfect(28)  # 28 = 1+2+4+7+14
@@ -33,13 +33,13 @@ def test_469_exact_positive_membership_examples() -> None:
     assert not pseudoperfect(70)  # 70 is weird, not pseudoperfect
 
 
-def test_469_initial_primitive_pseudoperfect_sequence() -> None:
+def _check_test_469_initial_primitive_pseudoperfect_sequence() -> None:
     expected = [6, 20, 28, 88, 104, 272, 304, 350, 368, 464, 490, 496]
     actual = [n for n in range(1, 501) if primitive_pseudoperfect(n)]
     assert actual == expected
 
 
-def test_469_divisor_primitivity_not_enough_for_convergence() -> None:
+def _check_test_469_divisor_primitivity_not_enough_for_convergence() -> None:
     # The prime set is primitive under divisibility, yet its reciprocal
     # series diverges. The stronger pseudoperfect structure is essential.
     # This test checks only finite nondivisibility, not divergence.
@@ -49,3 +49,17 @@ def test_469_divisor_primitivity_not_enough_for_convergence() -> None:
     ]
     assert all(a != b and b % a for i, a in enumerate(primes)
                for b in primes[i+1:])
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_469_exact_positive_membership_examples(self):
+        _check_test_469_exact_positive_membership_examples()
+
+    def test_469_initial_primitive_pseudoperfect_sequence(self):
+        _check_test_469_initial_primitive_pseudoperfect_sequence()
+
+    def test_469_divisor_primitivity_not_enough_for_convergence(self):
+        _check_test_469_divisor_primitivity_not_enough_for_convergence()

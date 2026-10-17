@@ -46,7 +46,7 @@ def fibonacci(n: int) -> int:
     return a
 
 
-def test_484_repeated_summands_are_not_allowed() -> None:
+def _check_test_484_repeated_summands_are_not_allowed() -> None:
     assert target_set((0,)) == set()
     assert target_set((0, 0)) == set()  # 1+1=2 is prohibited
     assert target_set((0, 0, 0)) == {3}  # 1+2
@@ -56,13 +56,13 @@ def test_484_repeated_summands_are_not_allowed() -> None:
         assert target_set((0,) * N) == set(range(3, N + 1))
 
 
-def test_484_independent_target_enumerations_agree() -> None:
+def _check_test_484_independent_target_enumerations_agree() -> None:
     for k, N in ((1, 7), (2, 10), (3, 8)):
         for coloring in product(range(k), repeat=N):
             assert target_set(coloring) == reference_target_set(coloring)
 
 
-def test_484_two_color_odd_part_construction() -> None:
+def _check_test_484_two_color_odd_part_construction() -> None:
     N = 512
     colors = tuple(odd_part_mod_four_color(n) for n in range(1, N + 1))
     targets = target_set(colors)
@@ -72,7 +72,7 @@ def test_484_two_color_odd_part_construction() -> None:
     assert len(targets) > N // 4
 
 
-def test_484_missing_even_targets_grow_like_fibonacci() -> None:
+def _check_test_484_missing_even_targets_grow_like_fibonacci() -> None:
     # Source 1989 p.51: successive missing even b_j satisfy
     # b_(j+2) >= b_j+b_(j+1), since otherwise a forbidden
     # same-color distinct-summand representation is forced.
@@ -86,9 +86,29 @@ def test_484_missing_even_targets_grow_like_fibonacci() -> None:
                 assert bj >= 2 * fibonacci(j + 1)
 
 
-def test_484_even_targets_and_k_one_edge() -> None:
+def _check_test_484_even_targets_and_k_one_edge() -> None:
     for N in range(4, 60):
         good = target_set((0,) * N)
         assert all(s in good for s in range(4, N + 1, 2))
         assert len(good) == N - 2
         assert len(good) >= N / 4
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_484_repeated_summands_are_not_allowed(self):
+        _check_test_484_repeated_summands_are_not_allowed()
+
+    def test_484_independent_target_enumerations_agree(self):
+        _check_test_484_independent_target_enumerations_agree()
+
+    def test_484_two_color_odd_part_construction(self):
+        _check_test_484_two_color_odd_part_construction()
+
+    def test_484_missing_even_targets_grow_like_fibonacci(self):
+        _check_test_484_missing_even_targets_grow_like_fibonacci()
+
+    def test_484_even_targets_and_k_one_edge(self):
+        _check_test_484_even_targets_and_k_one_edge()

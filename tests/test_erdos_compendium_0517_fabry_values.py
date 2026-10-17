@@ -15,7 +15,7 @@ def exponent(k):
     return k * bitlen(k)
 
 
-def test_517_fabry_exponents_strict_and_unbounded_ratio():
+def _check_test_517_fabry_exponents_strict_and_unbounded_ratio():
     previous = 0
     for k in range(1, 1025):
         n = exponent(k)
@@ -27,7 +27,7 @@ def test_517_fabry_exponents_strict_and_unbounded_ratio():
     # Ratio tends to infinity as bit length tends to infinity.
 
 
-def test_517_dyadic_block_reciprocal_lower_bound():
+def _check_test_517_dyadic_block_reciprocal_lower_bound():
     for j in range(10):
         start, stop = 2 ** j, 2 ** (j + 1)
         block = sum((F(1, exponent(k)) for k in range(start, stop)), F(0))
@@ -37,7 +37,7 @@ def test_517_dyadic_block_reciprocal_lower_bound():
     # Thus the Fabry condition does not imply sum(1/n_k)<infinity.
 
 
-def test_517_factorial_coefficient_subseries_exact_domination():
+def _check_test_517_factorial_coefficient_subseries_exact_domination():
     for r in (F(0), F(1, 2), F(1), F(2), F(3)):
         # k<=12 is an exact SUBSUM of the exponential Taylor series.
         ks = range(1, 13)
@@ -48,7 +48,24 @@ def test_517_factorial_coefficient_subseries_exact_domination():
     # Infinite extension follows by termwise domination by exp(|z|).
 
 
-def test_517_an_omitted_value_example_is_not_fabry():
+def _check_test_517_an_omitted_value_example_is_not_fabry():
     for m in (1, 2, 3, 5, 13):
         assert all(F(m*k, k) == m for k in range(1, 100))
         # exp(z^m) omits zero but does not have n_k/k -> infinity.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_517_fabry_exponents_strict_and_unbounded_ratio(self):
+        _check_test_517_fabry_exponents_strict_and_unbounded_ratio()
+
+    def test_517_dyadic_block_reciprocal_lower_bound(self):
+        _check_test_517_dyadic_block_reciprocal_lower_bound()
+
+    def test_517_factorial_coefficient_subseries_exact_domination(self):
+        _check_test_517_factorial_coefficient_subseries_exact_domination()
+
+    def test_517_an_omitted_value_example_is_not_fabry(self):
+        _check_test_517_an_omitted_value_example_is_not_fabry()

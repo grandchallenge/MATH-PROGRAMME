@@ -28,7 +28,7 @@ def sidon_max(A):
     raise AssertionError("empty set is Sidon")
 
 
-def test_530_double_sums_and_affine_invariance():
+def _check_test_530_double_sums_and_affine_invariance():
     examples = [(1,2,3),(1,2,4),(0,1,3,7),(-3,0,3,5),
                 (F(1,2),F(2,3),F(5,4),F(8,7))]
     assert not sidon_pair_sums((1,2,3))
@@ -43,7 +43,7 @@ def test_530_double_sums_and_affine_invariance():
                     assert sidon_pair_sums(T) == direct
 
 
-def test_530_small_intervals_exact_maxima():
+def _check_test_530_small_intervals_exact_maxima():
     values = []
     for N in range(1,12):
         m,w = sidon_max(range(1,N+1))
@@ -55,7 +55,7 @@ def test_530_small_intervals_exact_maxima():
     assert values == [1,2,2,3,3,3,4,4,4,4,4]
 
 
-def test_530_every_maximal_sidon_obstructs_extension():
+def _check_test_530_every_maximal_sidon_obstructs_extension():
     for A in ((1,2,3,4,5,6),(-5,-2,0,1,4,8),(0,3,4,7,12,18)):
         m,S=sidon_max(A)
         triple={a+b-c for a in S for b in S for c in S}
@@ -67,9 +67,26 @@ def test_530_every_maximal_sidon_obstructs_extension():
     # This yields N<=m+m^3+m^2 and only a cube-root guarantee.
 
 
-def test_530_exact_pair_counting_with_repetition():
+def _check_test_530_exact_pair_counting_with_repetition():
     for m in range(1,20):
         S=tuple(2**k for k in range(m))
         assert sidon_pair_sums(S)  # Powers of two are Sidon (also doubles).
         sums={a+b for i,a in enumerate(S) for b in S[i:]}
         assert len(sums)==m*(m+1)//2
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_530_double_sums_and_affine_invariance(self):
+        _check_test_530_double_sums_and_affine_invariance()
+
+    def test_530_small_intervals_exact_maxima(self):
+        _check_test_530_small_intervals_exact_maxima()
+
+    def test_530_every_maximal_sidon_obstructs_extension(self):
+        _check_test_530_every_maximal_sidon_obstructs_extension()
+
+    def test_530_exact_pair_counting_with_repetition(self):
+        _check_test_530_exact_pair_counting_with_repetition()

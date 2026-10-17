@@ -38,7 +38,7 @@ def binary_digit_from_sqrt2(n: int) -> int:
     return isqrt(2 * p * p) % 2
 
 
-def test_482_original_sequence_and_digit_convention() -> None:
+def _check_test_482_original_sequence_and_digit_convention() -> None:
     a = recurrence(120)
     assert a[1:14] == [1, 2, 3, 4, 6, 9, 13, 19, 27, 38, 54, 77, 109]
     assert [a[2 * n + 1] - 2 * a[2 * n - 1]
@@ -49,13 +49,13 @@ def test_482_original_sequence_and_digit_convention() -> None:
     assert binary_digit_from_sqrt2(1) == 1
 
 
-def test_482_closed_form_matches_exact_recurrence() -> None:
+def _check_test_482_closed_form_matches_exact_recurrence() -> None:
     a = recurrence(260)
     for n in range(1, 261):
         assert a[n] == closed_form(n)
 
 
-def test_482_binary_digits_120_exact_steps() -> None:
+def _check_test_482_binary_digits_120_exact_steps() -> None:
     a = recurrence(2 * 120 + 1)
     for n in range(1, 121):
         d = a[2 * n + 1] - 2 * a[2 * n - 1]
@@ -69,7 +69,7 @@ def test_482_binary_digits_120_exact_steps() -> None:
                 2 * (1 << (n - 2))**2)
 
 
-def test_482_independent_high_precision_decimal_prefix() -> None:
+def _check_test_482_independent_high_precision_decimal_prefix() -> None:
     """A separate decimal square-root calculation reproduces 100 bits."""
     a = recurrence(2 * 100 + 1)
     with localcontext() as ctx:
@@ -87,7 +87,7 @@ def test_482_independent_high_precision_decimal_prefix() -> None:
             assert lo % 2 == a[2 * n + 1] - 2 * a[2 * n - 1]
 
 
-def test_482_reconstruction_of_prefix_of_sqrt2_over_two() -> None:
+def _check_test_482_reconstruction_of_prefix_of_sqrt2_over_two() -> None:
     a = recurrence(161)
     n = 70
     bits = [a[2*k + 1] - 2*a[2*k-1] for k in range(1, n+1)]
@@ -97,3 +97,23 @@ def test_482_reconstruction_of_prefix_of_sqrt2_over_two() -> None:
     # The first n bits of sqrt(2)/2 recover floor(2^n * sqrt(2)/2).
     assert prefix == isqrt(2 * (1 << (n - 1))**2)
     assert all(x in (0, 1) for x in bits)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_482_original_sequence_and_digit_convention(self):
+        _check_test_482_original_sequence_and_digit_convention()
+
+    def test_482_closed_form_matches_exact_recurrence(self):
+        _check_test_482_closed_form_matches_exact_recurrence()
+
+    def test_482_binary_digits_120_exact_steps(self):
+        _check_test_482_binary_digits_120_exact_steps()
+
+    def test_482_independent_high_precision_decimal_prefix(self):
+        _check_test_482_independent_high_precision_decimal_prefix()
+
+    def test_482_reconstruction_of_prefix_of_sqrt2_over_two(self):
+        _check_test_482_reconstruction_of_prefix_of_sqrt2_over_two()

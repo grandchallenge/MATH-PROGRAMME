@@ -25,7 +25,7 @@ def multiply_i_power(a,k):
     return (F(0),-a)
 
 
-def test_527_non_square_summable_dyadic_coefficient_example():
+def _check_test_527_non_square_summable_dyadic_coefficient_example():
     for j in range(0,10):
         start,stop=2**j,2**(j+1)
         block=sum((coefficient_squared(n) for n in range(start,stop)),F(0))
@@ -36,7 +36,7 @@ def test_527_non_square_summable_dyadic_coefficient_example():
     # Block energy lower bound diverges as harmonic series.
 
 
-def test_527_exact_complex_rademacher_variance():
+def _check_test_527_exact_complex_rademacher_variance():
     weights=[F(1,n+1) for n in range(1,9)]
     variance=sum((a*a for a in weights),F(0))
     for mode in ('one','minus_one','i'):
@@ -57,7 +57,7 @@ def test_527_exact_complex_rademacher_variance():
         assert average_norm==variance
 
 
-def test_527_existence_quantifiers_do_not_swap():
+def _check_test_527_existence_quantifiers_do_not_swap():
     # In the divergent-square-sum regime, any FIXED z diverges a.s.
     # Yet 2025 theorem asserts (almost surely) EXISTS z that converges.
     for j in range(1,20):
@@ -66,7 +66,7 @@ def test_527_existence_quantifiers_do_not_swap():
     # These exact bounded checks are deliberately not a stochastic proof.
 
 
-def test_527_monotonicity_not_part_of_main_theorem():
+def _check_test_527_monotonicity_not_part_of_main_theorem():
     # Coefficients can be zero on arbitrary indices, or oscillate in
     # magnitude, provided sqrt(n)*abs(a_n)->0.
     # Example squared magnitudes b_n = (1 or 2)/[n(1+floor(log2 n))]
@@ -78,3 +78,20 @@ def test_527_monotonicity_not_part_of_main_theorem():
         assert b_even>0 and b_next>0
         assert n*b_even==F(1,j+1)
         assert (n+1)*b_next==F(2,j+1)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_527_non_square_summable_dyadic_coefficient_example(self):
+        _check_test_527_non_square_summable_dyadic_coefficient_example()
+
+    def test_527_exact_complex_rademacher_variance(self):
+        _check_test_527_exact_complex_rademacher_variance()
+
+    def test_527_existence_quantifiers_do_not_swap(self):
+        _check_test_527_existence_quantifiers_do_not_swap()
+
+    def test_527_monotonicity_not_part_of_main_theorem(self):
+        _check_test_527_monotonicity_not_part_of_main_theorem()

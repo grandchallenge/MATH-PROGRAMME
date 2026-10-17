@@ -26,7 +26,7 @@ def triples_of_lcm(family: set[int]) -> set[tuple[int, int, int]]:
     }
 
 
-def test_487_cube_preserves_distinct_triples_for_every_family_up_to_three_primes():
+def _check_test_487_cube_preserves_distinct_triples_for_every_family_up_to_three_primes():
     primes = (2, 3, 5)
     for k in range(4):
         members = list(range(2 ** k))
@@ -42,7 +42,7 @@ def test_487_cube_preserves_distinct_triples_for_every_family_up_to_three_primes
                 }
 
 
-def test_487_concrete_witness_and_divisibility_chain_trap():
+def _check_test_487_concrete_witness_and_divisibility_chain_trap():
     family = {0b011, 0b101, 0b111}
     numbers = {lcm_cube(x, (2, 3, 5)) for x in family}
     assert numbers == {6, 10, 30}
@@ -53,7 +53,7 @@ def test_487_concrete_witness_and_divisibility_chain_trap():
     assert not triples_of_lcm(chain)
 
 
-def test_487_union_free_middle_level_and_exhaustive_small_cases():
+def _check_test_487_union_free_middle_level_and_exhaustive_small_cases():
     # Equal-cardinality subsets have no distinct union triple.
     for k in range(1, 8):
         family = {x for x in range(2 ** k) if x.bit_count() == k // 2}
@@ -69,3 +69,17 @@ def test_487_union_free_middle_level_and_exhaustive_small_cases():
                 maximum = max(maximum, len(f))
         maxima[k] = maximum
     assert maxima == {0: 1, 1: 2, 2: 3, 3: 5}
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_487_cube_preserves_distinct_triples_for_every_family_up_to_three_primes(self):
+        _check_test_487_cube_preserves_distinct_triples_for_every_family_up_to_three_primes()
+
+    def test_487_concrete_witness_and_divisibility_chain_trap(self):
+        _check_test_487_concrete_witness_and_divisibility_chain_trap()
+
+    def test_487_union_free_middle_level_and_exhaustive_small_cases(self):
+        _check_test_487_union_free_middle_level_and_exhaustive_small_cases()

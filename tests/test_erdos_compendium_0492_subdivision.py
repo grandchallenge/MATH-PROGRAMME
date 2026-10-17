@@ -14,14 +14,14 @@ def fractional_part(x: Fraction) -> Fraction:
     return x - (x.numerator // x.denominator)
 
 
-def test_492_arithmetic_progression_fractional_part_exact():
+def _check_test_492_arithmetic_progression_fractional_part_exact():
     for d in range(1, 11):
         for numerator in range(d * 6, d * 6 + 400):
             x = Fraction(numerator, 6)
             assert interpolation_for_progression(x, d) == fractional_part(x / d)
 
 
-def test_492_half_open_boundary_and_ratio_tends_one():
+def _check_test_492_half_open_boundary_and_ratio_tends_one():
     for d in range(1, 12):
         for k in range(1, 50):
             left = d * k
@@ -33,7 +33,7 @@ def test_492_half_open_boundary_and_ratio_tends_one():
     # but AT the boundary the half-open convention resets to zero.
 
 
-def test_492_rational_slope_is_a_special_failure_not_schmidt_example():
+def _check_test_492_rational_slope_is_a_special_failure_not_schmidt_example():
     # For rational alpha/d, n*alpha/d has a finite set of fractional parts,
     # hence is NOT uniformly distributed in the continuum.
     alpha = Fraction(4, 3)
@@ -41,3 +41,17 @@ def test_492_rational_slope_is_a_special_failure_not_schmidt_example():
     seen = {interpolation_for_progression(alpha * n, d) for n in range(3, 203)}
     assert seen == {Fraction(0), Fraction(1, 3), Fraction(2, 3)}
     # This countable exceptional family cannot refute an "almost every alpha" claim.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_492_arithmetic_progression_fractional_part_exact(self):
+        _check_test_492_arithmetic_progression_fractional_part_exact()
+
+    def test_492_half_open_boundary_and_ratio_tends_one(self):
+        _check_test_492_half_open_boundary_and_ratio_tends_one()
+
+    def test_492_rational_slope_is_a_special_failure_not_schmidt_example(self):
+        _check_test_492_rational_slope_is_a_special_failure_not_schmidt_example()

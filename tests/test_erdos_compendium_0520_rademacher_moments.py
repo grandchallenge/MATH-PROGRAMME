@@ -40,7 +40,7 @@ def assignments():
         yield dict(zip(PRIMES, picks))
 
 
-def test_520_probability_model_and_prime_squares():
+def _check_test_520_probability_model_and_prime_squares():
     models = tuple(assignments())
     assert len(models) == 2**len(PRIMES)
     for signs in models:
@@ -53,7 +53,7 @@ def test_520_probability_model_and_prime_squares():
         assert rademacher_value(12, signs) == 0
 
 
-def test_520_exact_orthogonality_and_expectation():
+def _check_test_520_exact_orthogonality_and_expectation():
     models = tuple(assignments())
     count = len(models)
     table = [[rademacher_value(m, a) for m in range(1,LIMIT+1)]
@@ -66,7 +66,7 @@ def test_520_exact_orthogonality_and_expectation():
             assert cross == (1 if m == n and is_squarefree(m) else 0)
 
 
-def test_520_exact_second_moment_and_variance():
+def _check_test_520_exact_second_moment_and_variance():
     models = tuple(assignments())
     count = len(models)
     for N in range(1,LIMIT+1):
@@ -78,7 +78,7 @@ def test_520_exact_second_moment_and_variance():
         assert F(sum((s-1)**2 for s in sums),count) == Q-1
 
 
-def test_520_2026_bound_implies_normalized_ratio_zero_conditionally():
+def _check_test_520_2026_bound_implies_normalized_ratio_zero_conditionally():
     # If almost surely |M_f(N)| <= C sqrt(N) (loglog N)^(1/4+eps),
     # choose eps=1/8 and divide by sqrt(N loglog N).
     exponent = F(1,4) + F(1,8) - F(1,2)
@@ -86,3 +86,20 @@ def test_520_2026_bound_implies_normalized_ratio_zero_conditionally():
     assert exponent < 0
     # Therefore (loglog N)^exponent -> 0 as N -> infinity.
     # This tests exponent bookkeeping, NOT Durkan–Pearce-Crump's proof.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_520_probability_model_and_prime_squares(self):
+        _check_test_520_probability_model_and_prime_squares()
+
+    def test_520_exact_orthogonality_and_expectation(self):
+        _check_test_520_exact_orthogonality_and_expectation()
+
+    def test_520_exact_second_moment_and_variance(self):
+        _check_test_520_exact_second_moment_and_variance()
+
+    def test_520_2026_bound_implies_normalized_ratio_zero_conditionally(self):
+        _check_test_520_2026_bound_implies_normalized_ratio_zero_conditionally()

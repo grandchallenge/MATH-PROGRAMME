@@ -9,7 +9,7 @@ def correlation(frequencies):
     return Counter(x - y for x in frequencies for y in frequencies)
 
 
-def test_512_laurent_constant_coefficient_is_cardinality():
+def _check_test_512_laurent_constant_coefficient_is_cardinality():
     for N in range(1, 17):
         for A in (
             tuple(range(N)),
@@ -24,7 +24,7 @@ def test_512_laurent_constant_coefficient_is_cardinality():
             assert correlation(shifted) == counts
 
 
-def test_512_consecutive_kernel_autocorrelation_coefficients():
+def _check_test_512_consecutive_kernel_autocorrelation_coefficients():
     for N in range(2, 31):
         coefficients = correlation(tuple(range(N)))
         assert set(coefficients) == set(range(-N+1, N))
@@ -34,7 +34,7 @@ def test_512_consecutive_kernel_autocorrelation_coefficients():
         assert coefficients[0] == N  # Parseval integral = N
 
 
-def test_512_exact_harmonic_band_lower_bound():
+def _check_test_512_exact_harmonic_band_lower_bound():
     for N in (16, 20, 32, 64, 128, 256, 512):
         jmax = N // 4 - 1
         intervals = [
@@ -56,7 +56,7 @@ def test_512_exact_harmonic_band_lower_bound():
         assert lower_times_pi >= harmonic_times_pi > 0
 
 
-def test_512_integration_of_sum_is_not_integral_of_absolute_value():
+def _check_test_512_integration_of_sum_is_not_integral_of_absolute_value():
     # For A={1,...,N} all Fourier integrals vanish exactly, while
     # the L2 integral of absolute-square equals N>0.
     for N in range(1, 16):
@@ -65,3 +65,20 @@ def test_512_integration_of_sum_is_not_integral_of_absolute_value():
         integral_of_sum = sum((int(m == 0) for m in A))
         assert integral_of_sum == 0
         assert correlation(A)[0] == N
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_512_laurent_constant_coefficient_is_cardinality(self):
+        _check_test_512_laurent_constant_coefficient_is_cardinality()
+
+    def test_512_consecutive_kernel_autocorrelation_coefficients(self):
+        _check_test_512_consecutive_kernel_autocorrelation_coefficients()
+
+    def test_512_exact_harmonic_band_lower_bound(self):
+        _check_test_512_exact_harmonic_band_lower_bound()
+
+    def test_512_integration_of_sum_is_not_integral_of_absolute_value(self):
+        _check_test_512_integration_of_sum_is_not_integral_of_absolute_value()

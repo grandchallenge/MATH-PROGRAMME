@@ -28,7 +28,7 @@ def greedy_prefix(length: int) -> list[int]:
     return q
 
 
-def test_473_initial_greedy_terms_and_minimality() -> None:
+def _check_test_473_initial_greedy_terms_and_minimality() -> None:
     q = greedy_prefix(100)
     assert q[:25] == [
         1, 2, 3, 4, 7, 6, 5, 8, 9, 10, 13, 16, 15,
@@ -43,7 +43,7 @@ def test_473_initial_greedy_terms_and_minimality() -> None:
     assert len(seen) == len(q)
 
 
-def test_473_197_and_199_never_occur_in_greedy_prime_sums() -> None:
+def _check_test_473_197_and_199_never_occur_in_greedy_prime_sums() -> None:
     # Complete finite obstruction: the 99th and 100th terms cross the
     # threshold beyond which all consecutive sums are >=200.
     q = greedy_prefix(100)
@@ -57,8 +57,22 @@ def test_473_197_and_199_never_occur_in_greedy_prime_sums() -> None:
     assert all(x >= 100 for x in q[99:])
 
 
-def test_473_small_finite_prime_sum_permutation_is_not_global() -> None:
+def _check_test_473_small_finite_prime_sum_permutation_is_not_global() -> None:
     # Example of a valid finite permutation; no claim for every n.
     q = [1, 4, 3, 2]
     assert set(q) == {1, 2, 3, 4}
     assert all(prime(a + b) for a, b in zip(q, q[1:]))
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_473_initial_greedy_terms_and_minimality(self):
+        _check_test_473_initial_greedy_terms_and_minimality()
+
+    def test_473_197_and_199_never_occur_in_greedy_prime_sums(self):
+        _check_test_473_197_and_199_never_occur_in_greedy_prime_sums()
+
+    def test_473_small_finite_prime_sum_permutation_is_not_global(self):
+        _check_test_473_small_finite_prime_sum_permutation_is_not_global()

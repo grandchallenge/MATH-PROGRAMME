@@ -16,7 +16,7 @@ def factorial_residues(p: int) -> set[int]:
     return {factorial(k) % p for k in range(1, p)}
 
 
-def test_478_factorial_residue_examples() -> None:
+def _check_test_478_factorial_residue_examples() -> None:
     expected = {
         2: {1}, 3: {1, 2}, 5: {1, 2, 4}, 7: {1, 2, 3, 6},
         11: {1, 2, 5, 6, 10}, 13: {1, 2, 3, 5, 6, 7, 9, 11, 12},
@@ -25,7 +25,7 @@ def test_478_factorial_residue_examples() -> None:
         assert factorial_residues(p) == result
 
 
-def test_478_quotient_set_is_every_nonzero_residue() -> None:
+def _check_test_478_quotient_set_is_every_nonzero_residue() -> None:
     for p in range(2, 102):
         if not prime(p):
             continue
@@ -39,7 +39,7 @@ def test_478_quotient_set_is_every_nonzero_residue() -> None:
             assert len(A) > p - 2  # The common blanket p-2 bound is false.
 
 
-def test_478_2026_author_transition_identity_only() -> None:
+def _check_test_478_2026_author_transition_identity_only() -> None:
     # Verifies an early arithmetic lemma, NOT the incidence-based exponent.
     for p in (3, 5, 7, 11, 13, 17, 19, 23, 29):
         A = factorial_residues(p)
@@ -53,3 +53,17 @@ def test_478_2026_author_transition_identity_only() -> None:
             assert x in A and a in A and z in A
             pairs.add((x, a))
         assert len(pairs) == p - 2
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_478_factorial_residue_examples(self):
+        _check_test_478_factorial_residue_examples()
+
+    def test_478_quotient_set_is_every_nonzero_residue(self):
+        _check_test_478_quotient_set_is_every_nonzero_residue()
+
+    def test_478_2026_author_transition_identity_only(self):
+        _check_test_478_2026_author_transition_identity_only()

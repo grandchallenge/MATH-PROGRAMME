@@ -24,7 +24,7 @@ def product(values):
     return result
 
 
-def test_519_newton_girard_all_integer_root_patterns():
+def _check_test_519_newton_girard_all_integer_root_patterns():
     for n in range(1, 8):
         cases = [(1,) + (0,) * (n-1), (1,) + (-1,) * (n-1),
                  (1,) * n, (1,) + tuple(range(2, n+1))]
@@ -38,7 +38,7 @@ def test_519_newton_girard_all_integer_root_patterns():
             assert any(p[k] != 0 for k in range(1,n+1))
 
 
-def test_519_all_first_n_sums_zero_implies_all_roots_zero():
+def _check_test_519_all_first_n_sums_zero_implies_all_roots_zero():
     # The recursive Newton identities prove this implication for
     # arbitrary roots, not just tested integer patterns.
     for n in range(1, 20):
@@ -51,7 +51,7 @@ def test_519_all_first_n_sums_zero_implies_all_roots_zero():
         # Then characteristic polynomial is X^n, so z1=1 impossible.
 
 
-def test_519_roots_of_unity_first_n_minus_one_vanish_exactly():
+def _check_test_519_roots_of_unity_first_n_minus_one_vanish_exactly():
     for n in range(2, 30):
         for k in range(1,n+1):
             exponents = [((j*k) % n) for j in range(n)]
@@ -68,8 +68,25 @@ def test_519_roots_of_unity_first_n_minus_one_vanish_exactly():
         # The kth complex moment is zero for k<n, and n for k=n.
 
 
-def test_519_two_roots_cancellation_requires_second_power():
+def _check_test_519_two_roots_cancellation_requires_second_power():
     roots = (1,-1)
     assert power_sums(roots) == [None,0,2]
     assert power_sums((1,))[1] == 1
     # No conclusion c>0 independent of n is inferred from these cases.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_519_newton_girard_all_integer_root_patterns(self):
+        _check_test_519_newton_girard_all_integer_root_patterns()
+
+    def test_519_all_first_n_sums_zero_implies_all_roots_zero(self):
+        _check_test_519_all_first_n_sums_zero_implies_all_roots_zero()
+
+    def test_519_roots_of_unity_first_n_minus_one_vanish_exactly(self):
+        _check_test_519_roots_of_unity_first_n_minus_one_vanish_exactly()
+
+    def test_519_two_roots_cancellation_requires_second_power(self):
+        _check_test_519_two_roots_cancellation_requires_second_power()

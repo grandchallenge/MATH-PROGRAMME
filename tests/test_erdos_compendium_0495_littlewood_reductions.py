@@ -14,7 +14,7 @@ def product(n: int, alpha: Fraction, beta: Fraction) -> Fraction:
     return n * nearest_integer_distance(n * alpha) * nearest_integer_distance(n * beta)
 
 
-def test_495_nearest_integer_distance_and_symmetry():
+def _check_test_495_nearest_integer_distance_and_symmetry():
     samples = [Fraction(i, q) for q in range(1, 25) for i in range(-80, 81)]
     for r in samples:
         v = nearest_integer_distance(r)
@@ -23,7 +23,7 @@ def test_495_nearest_integer_distance_and_symmetry():
         assert v == nearest_integer_distance(r + 13)
 
 
-def test_495_rational_coordinate_zero_on_shared_denominator():
+def _check_test_495_rational_coordinate_zero_on_shared_denominator():
     for q in range(1, 30):
         for a in range(-q, q + 1):
             alpha = Fraction(a, q)
@@ -33,7 +33,7 @@ def test_495_rational_coordinate_zero_on_shared_denominator():
                     assert product(k * q, beta, alpha) == 0
 
 
-def test_495_exact_one_coordinate_squeeze_and_common_denominators():
+def _check_test_495_exact_one_coordinate_squeeze_and_common_denominators():
     for q in range(1, 16):
         for r in range(1, 16):
             n = lcm(q, r)
@@ -43,3 +43,17 @@ def test_495_exact_one_coordinate_squeeze_and_common_denominators():
                 candidate = product(step, alpha, beta)
                 upper = Fraction(step, 2) * nearest_integer_distance(step * alpha)
                 assert 0 <= candidate <= upper
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_495_nearest_integer_distance_and_symmetry(self):
+        _check_test_495_nearest_integer_distance_and_symmetry()
+
+    def test_495_rational_coordinate_zero_on_shared_denominator(self):
+        _check_test_495_rational_coordinate_zero_on_shared_denominator()
+
+    def test_495_exact_one_coordinate_squeeze_and_common_denominators(self):
+        _check_test_495_exact_one_coordinate_squeeze_and_common_denominators()

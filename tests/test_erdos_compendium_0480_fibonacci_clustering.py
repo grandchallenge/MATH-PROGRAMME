@@ -22,7 +22,7 @@ def partial_denominator(k: int) -> Fraction:
     )
 
 
-def test_480_fibonacci_even_terms_and_constant_direction() -> None:
+def _check_test_480_fibonacci_even_terms_and_constant_direction() -> None:
     assert [fibonacci(2 * i) for i in range(1, 9)] == [
         1, 3, 8, 21, 55, 144, 377, 987,
     ]
@@ -35,7 +35,7 @@ def test_480_fibonacci_even_terms_and_constant_direction() -> None:
                for k in range(1, 12))
 
 
-def test_480_sharp_constant_certified_by_rational_tail_bounds() -> None:
+def _check_test_480_sharp_constant_certified_by_rational_tail_bounds() -> None:
     # Fibonacci even terms grow by a factor >2 at each step. Thus
     # sum_{j>k} 1/F_{2j} < 1/F_{2k}.
     c = partial_denominator(12)
@@ -50,7 +50,7 @@ def test_480_sharp_constant_certified_by_rational_tail_bounds() -> None:
         assert decimal_upper < Decimal(1) / Decimal(5).sqrt()
 
 
-def test_480_periodic_examples_have_zero_clustering_at_positive_shift() -> None:
+def _check_test_480_periodic_examples_have_zero_clustering_at_positive_shift() -> None:
     for q in (2, 3, 5, 7):
         x = [Fraction(m % q, q - 1) for m in range(12 * q)]
         assert all(x[m + q] == x[m] for m in range(11 * q))
@@ -58,7 +58,7 @@ def test_480_periodic_examples_have_zero_clustering_at_positive_shift() -> None:
     # This verifies examples, not a universal bound.
 
 
-def test_480_golden_rotation_not_the_published_extremizer() -> None:
+def _check_test_480_golden_rotation_not_the_published_extremizer() -> None:
     with localcontext() as context:
         context.prec = 40
         tau = (Decimal(5).sqrt() - 1) / 2
@@ -76,8 +76,28 @@ def test_480_golden_rotation_not_the_published_extremizer() -> None:
         assert smaller_adjacent_rotation_step < alpha_lower
 
 
-def test_480_zero_shift_is_not_allowed() -> None:
+def _check_test_480_zero_shift_is_not_allowed() -> None:
     # A repaired formal statement has n : ℕ+; n=0 would produce
     # 0 * abs(x_m - x_m)=0 for every sequence and every m.
     assert 0 * abs(Fraction(4, 5) - Fraction(4, 5)) == 0
     assert min((q for q in (1, 2, 3, 4) if q > 0)) == 1
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_480_fibonacci_even_terms_and_constant_direction(self):
+        _check_test_480_fibonacci_even_terms_and_constant_direction()
+
+    def test_480_sharp_constant_certified_by_rational_tail_bounds(self):
+        _check_test_480_sharp_constant_certified_by_rational_tail_bounds()
+
+    def test_480_periodic_examples_have_zero_clustering_at_positive_shift(self):
+        _check_test_480_periodic_examples_have_zero_clustering_at_positive_shift()
+
+    def test_480_golden_rotation_not_the_published_extremizer(self):
+        _check_test_480_golden_rotation_not_the_published_extremizer()
+
+    def test_480_zero_shift_is_not_allowed(self):
+        _check_test_480_zero_shift_is_not_allowed()

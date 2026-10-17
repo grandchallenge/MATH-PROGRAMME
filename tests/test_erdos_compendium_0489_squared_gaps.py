@@ -43,7 +43,7 @@ def exact_gap_square_sum(moduli: tuple[int, ...], x: int) -> int:
     )
 
 
-def test_489_exact_small_examples():
+def _check_test_489_exact_small_examples():
     assert predicted_limit(()) == 1
     assert predicted_limit((2,)) == 2
     assert predicted_limit((2, 3)) == Fraction(10, 3)
@@ -54,7 +54,7 @@ def test_489_exact_small_examples():
     assert exact_gap_square_sum((2, 3), 5) == 16
 
 
-def test_489_sieve_periodicity_exact_shift():
+def _check_test_489_sieve_periodicity_exact_shift():
     for n in range(0, 6):
         for moduli in combinations(range(2, 7), n):
             period, residues = periodic_residues(moduli)
@@ -66,7 +66,7 @@ def test_489_sieve_periodicity_exact_shift():
                 ) == block_energy
 
 
-def test_489_uniform_periodic_error_bounded_by_one_block():
+def _check_test_489_uniform_periodic_error_bounded_by_one_block():
     for mask in range(1 << 6):
         moduli = tuple(a for i, a in enumerate(range(2, 8)) if mask & (1 << i))
         period, residues = periodic_residues(moduli)
@@ -77,9 +77,26 @@ def test_489_uniform_periodic_error_bounded_by_one_block():
             assert abs(Fraction(actual) - limit * x) <= 2 * energy
 
 
-def test_489_squarefree_is_not_finite_periodicity():
+def _check_test_489_squarefree_is_not_finite_periodicity():
     # The first prime-square exclusion prefixes are strictly increasing,
     # so this test may NOT be used to infer a bound independent of the cutoff.
     assert predicted_limit((4,)) == Fraction(3, 2)
     assert predicted_limit((4, 9)) != predicted_limit((4,))
     assert predicted_limit((4, 9, 25)) != predicted_limit((4, 9))
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_489_exact_small_examples(self):
+        _check_test_489_exact_small_examples()
+
+    def test_489_sieve_periodicity_exact_shift(self):
+        _check_test_489_sieve_periodicity_exact_shift()
+
+    def test_489_uniform_periodic_error_bounded_by_one_block(self):
+        _check_test_489_uniform_periodic_error_bounded_by_one_block()
+
+    def test_489_squarefree_is_not_finite_periodicity(self):
+        _check_test_489_squarefree_is_not_finite_periodicity()

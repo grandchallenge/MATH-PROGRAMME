@@ -13,7 +13,7 @@ def finite_prime_correction(n: int, weights: dict[int, Fraction]) -> Fraction:
     return sum((weight for p, weight in weights.items() if n % p == 0), Fraction(0))
 
 
-def test_491_parity_indicator_is_coprime_additive_not_completely_additive():
+def _check_test_491_parity_indicator_is_coprime_additive_not_completely_additive():
     for a in range(1, 101):
         for b in range(1, 101):
             if gcd(a, b) == 1:
@@ -25,7 +25,7 @@ def test_491_parity_indicator_is_coprime_additive_not_completely_additive():
     assert prime_indicator(2, 4) != 2 * prime_indicator(2, 2)
 
 
-def test_491_finite_prime_support_coprime_additivity_and_boundedness():
+def _check_test_491_finite_prime_support_coprime_additivity_and_boundedness():
     primes = (2, 3, 5, 7, 11, 13)
     for subset_size in range(4):
         for selected in combinations(primes, subset_size):
@@ -48,7 +48,7 @@ def test_491_finite_prime_support_coprime_additivity_and_boundedness():
                         )
 
 
-def test_491_bounded_error_need_not_be_constant_or_zero():
+def _check_test_491_bounded_error_need_not_be_constant_or_zero():
     weights = {2: Fraction(3, 2)}
     values = [finite_prime_correction(n, weights) for n in range(1, 21)]
     assert set(values) == {Fraction(0), Fraction(3, 2)}
@@ -56,3 +56,17 @@ def test_491_bounded_error_need_not_be_constant_or_zero():
     assert values[1] == weights[2] and values[3] == weights[2]
     # A claim that all bounded-difference additive functions equal c*log n
     # EXACTLY is incompatible with this bounded nonzero parity correction.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_491_parity_indicator_is_coprime_additive_not_completely_additive(self):
+        _check_test_491_parity_indicator_is_coprime_additive_not_completely_additive()
+
+    def test_491_finite_prime_support_coprime_additivity_and_boundedness(self):
+        _check_test_491_finite_prime_support_coprime_additivity_and_boundedness()
+
+    def test_491_bounded_error_need_not_be_constant_or_zero(self):
+        _check_test_491_bounded_error_need_not_be_constant_or_zero()

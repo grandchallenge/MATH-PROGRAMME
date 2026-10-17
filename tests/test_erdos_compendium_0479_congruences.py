@@ -49,7 +49,7 @@ def tang_modulus(i: int) -> int:
     return m
 
 
-def test_479_historical_small_family_exact() -> None:
+def _check_test_479_historical_small_family_exact() -> None:
     # For each fixed i, pick several primes p ≡ 1 mod L_i, p∤2i.
     for i in (1, 2, 3, 5, 6, 10, 12, 15, 20, 21):
         L = tang_modulus(i)
@@ -64,7 +64,7 @@ def test_479_historical_small_family_exact() -> None:
     assert pow(2, 15, 15) == 8
 
 
-def test_479_k1_exception_and_zero_negative_families() -> None:
+def _check_test_479_k1_exception_and_zero_negative_families() -> None:
     assert all(pow(2, n, n) != 1 % n for n in range(2, 2500))
     for j in range(1, 12):
         n = 2**j
@@ -74,7 +74,7 @@ def test_479_k1_exception_and_zero_negative_families() -> None:
         assert pow(2, n, n) == (-1) % n
 
 
-def test_479_historical_huge_k3_exact_identity_not_minimality() -> None:
+def _check_test_479_historical_huge_k3_exact_identity_not_minimality() -> None:
     n = 4_700_063_497
     assert 19 * 47 * 5_263_229 == n
     assert pow(2, n, n) == 3
@@ -82,10 +82,27 @@ def test_479_historical_huge_k3_exact_identity_not_minimality() -> None:
     # No assertion here that all 4.7 billion earlier values were examined.
 
 
-def test_479_prime_extension_lemma_finite_certificates() -> None:
+def _check_test_479_prime_extension_lemma_finite_certificates() -> None:
     for k, n, p in [(-5, 7, 19), (7, 25, 1_342_177)]:
         assert prime(p) and n % p
         assert pow(2, n, n) == k % n
         assert pow(2, n, p) == k % p
         assert pow(k, p, n) == k % n
         assert pow(2, n * p, n * p) == k % (n * p)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_479_historical_small_family_exact(self):
+        _check_test_479_historical_small_family_exact()
+
+    def test_479_k1_exception_and_zero_negative_families(self):
+        _check_test_479_k1_exception_and_zero_negative_families()
+
+    def test_479_historical_huge_k3_exact_identity_not_minimality(self):
+        _check_test_479_historical_huge_k3_exact_identity_not_minimality()
+
+    def test_479_prime_extension_lemma_finite_certificates(self):
+        _check_test_479_prime_extension_lemma_finite_certificates()

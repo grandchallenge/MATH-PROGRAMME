@@ -37,7 +37,7 @@ def independent_bad_triple(A,pmax):
     return any(v>=3 for v in ct.values())
 
 
-def test_537_squarefree_gap_examples_and_interval():
+def _check_test_537_squarefree_gap_examples_and_interval():
     assert separated_squarefree(1)
     assert separated_squarefree(10)
     assert not separated_squarefree(6)
@@ -50,7 +50,7 @@ def test_537_squarefree_gap_examples_and_interval():
         assert all(separated_squarefree(a) for a in A)
 
 
-def test_537_no_three_prime_multiple_representations():
+def _check_test_537_no_three_prime_multiple_representations():
     for N in (50,100,200,400):
         A=upper_half(N)
         m=representations(A,500)
@@ -59,7 +59,7 @@ def test_537_no_three_prime_multiple_representations():
         assert not independent_bad_triple(A,500)
 
 
-def test_537_ratio_obstruction_exact_cross_multiplication():
+def _check_test_537_ratio_obstruction_exact_cross_multiplication():
     for N in (50,100,200,400):
         A=upper_half(N)
         for a in A:
@@ -73,7 +73,7 @@ def test_537_ratio_obstruction_exact_cross_multiplication():
     # forcing both >2 and <2, contradiction.
 
 
-def test_537_prime_quotient_stronger_than_equal_lcm():
+def _check_test_537_prime_quotient_stronger_than_equal_lcm():
     # Three prime quotients from lcm produce one form of lcm triangle.
     A=(6,10,15)
     assert 30//6==5 and 30//10==3 and 30//15==2
@@ -85,3 +85,20 @@ def test_537_prime_quotient_stronger_than_equal_lcm():
     assert lcm(C[0],C[1])==lcm(C[0],C[2])==lcm(C[1],C[2])==60
     assert {60//a for a in C}=={3,4,5}
     assert not all(isprime(60//a) for a in C)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_537_squarefree_gap_examples_and_interval(self):
+        _check_test_537_squarefree_gap_examples_and_interval()
+
+    def test_537_no_three_prime_multiple_representations(self):
+        _check_test_537_no_three_prime_multiple_representations()
+
+    def test_537_ratio_obstruction_exact_cross_multiplication(self):
+        _check_test_537_ratio_obstruction_exact_cross_multiplication()
+
+    def test_537_prime_quotient_stronger_than_equal_lcm(self):
+        _check_test_537_prime_quotient_stronger_than_equal_lcm()

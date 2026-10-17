@@ -22,7 +22,7 @@ def split_roots(p):
     return inclusive - at_boundary, total - inclusive, at_boundary
 
 
-def test_521_reversal_identity_and_exact_real_root_bijection():
+def _check_test_521_reversal_identity_and_exact_real_root_bijection():
     for n in range(1, 7):
         for signs in product((-1, 1), repeat=n+1):
             p, q = poly(signs), poly(signs[::-1])
@@ -35,7 +35,7 @@ def test_521_reversal_identity_and_exact_real_root_bijection():
             assert sum((inside_p, outside_p, boundary_p)) <= n
 
 
-def test_521_inner_outer_fixed_degree_distributions_match():
+def _check_test_521_inner_outer_fixed_degree_distributions_match():
     for n in range(1, 7):
         inner_hist = Counter()
         outer_hist = Counter()
@@ -47,17 +47,34 @@ def test_521_inner_outer_fixed_degree_distributions_match():
         assert sum(inner_hist.values()) == 2**(n+1)
 
 
-def test_521_example_roots_have_different_regions():
+def _check_test_521_example_roots_have_different_regions():
     p = S.Poly(1+X-X**2, X)
     assert split_roots(p) == (1, 1, 0)
     q = S.Poly(-1+X+X**2, X)
     assert split_roots(q) == (1, 1, 0)
 
 
-def test_521_reversed_arrays_are_not_nested_prefixes():
+def _check_test_521_reversed_arrays_are_not_nested_prefixes():
     coefficients = (1, -1, 1, -1, -1)
     q_2 = coefficients[:3][::-1]
     q_3 = coefficients[:4][::-1]
     assert q_3[:3] != q_2
     # Therefore reversal laws at individual n do not imply a
     # common-sample-space almost-sure limit as n increases.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_521_reversal_identity_and_exact_real_root_bijection(self):
+        _check_test_521_reversal_identity_and_exact_real_root_bijection()
+
+    def test_521_inner_outer_fixed_degree_distributions_match(self):
+        _check_test_521_inner_outer_fixed_degree_distributions_match()
+
+    def test_521_example_roots_have_different_regions(self):
+        _check_test_521_example_roots_have_different_regions()
+
+    def test_521_reversed_arrays_are_not_nested_prefixes(self):
+        _check_test_521_reversed_arrays_are_not_nested_prefixes()

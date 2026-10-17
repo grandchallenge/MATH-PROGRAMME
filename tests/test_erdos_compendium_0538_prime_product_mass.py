@@ -73,7 +73,7 @@ def independent_maximum(N,r):
     return best
 
 
-def test_538_weighted_double_count_exact_fraction():
+def _check_test_538_weighted_double_count_exact_fraction():
     for N in (5,8,12,20,30):
         p=primes_upto(N)
         for A in ((),(N,),(2,3,5),
@@ -87,7 +87,7 @@ def test_538_weighted_double_count_exact_fraction():
                 assert right<=2*harmonic(N*N)
 
 
-def test_538_exact_small_optimum_two_methods():
+def _check_test_538_exact_small_optimum_two_methods():
     for N in (3,4,5,6,7,8,9,10):
         for r in (2,3):
             best,witnesses=exact_maximum(N,r)
@@ -95,7 +95,7 @@ def test_538_exact_small_optimum_two_methods():
             assert witnesses and all(admissible(A,N,r) for A in witnesses)
 
 
-def test_538_two_distinct_representations_force_primes_upto_N():
+def _check_test_538_two_distinct_representations_force_primes_upto_N():
     for N in (6,12,18,30):
         ps=tuple(int(p) for p in primerange(2,2*N*N+1))
         for m in range(2,2*N*N+1):
@@ -107,7 +107,7 @@ def test_538_two_distinct_representations_force_primes_upto_N():
     # Thus any cap violation (at least r+1>=2 reps) is caught p<=N.
 
 
-def test_538_examples_and_harmonic_constraint():
+def _check_test_538_examples_and_harmonic_constraint():
     A=(2,3,5)
     assert mass(A)==F(31,30)
     assert admissible(A,6,2)
@@ -118,3 +118,20 @@ def test_538_examples_and_harmonic_constraint():
         for r in (2,3):
             best,_=exact_maximum(N,r)
             assert best*sum((F(1,p) for p in primes_upto(N)),F()) <= r*harmonic(N*N)
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_538_weighted_double_count_exact_fraction(self):
+        _check_test_538_weighted_double_count_exact_fraction()
+
+    def test_538_exact_small_optimum_two_methods(self):
+        _check_test_538_exact_small_optimum_two_methods()
+
+    def test_538_two_distinct_representations_force_primes_upto_N(self):
+        _check_test_538_two_distinct_representations_force_primes_upto_N()
+
+    def test_538_examples_and_harmonic_constraint(self):
+        _check_test_538_examples_and_harmonic_constraint()

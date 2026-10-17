@@ -25,7 +25,7 @@ def polynomial_integral_from_one(d, lam):
     return F(1) / (exponent - 1)
 
 
-def test_515_same_fixed_ray_satisfies_comparison_for_all_exponents():
+def _check_test_515_same_fixed_ray_satisfies_comparison_for_all_exponents():
     for m in range(1, 9):
         for t in (F(1), F(3, 2), F(2), F(7, 2), F(10)):
             assert exponential_ray_power(m, t) >= t
@@ -36,14 +36,14 @@ def test_515_same_fixed_ray_satisfies_comparison_for_all_exponents():
     # The ray Γ(t)=t is INDEPENDENT of m and lambda.
 
 
-def test_515_linear_exponential_has_exact_integral_one_over_lambda():
+def _check_test_515_linear_exponential_has_exact_integral_one_over_lambda():
     for lam in LAMBDAS:
         assert lam * (F(1) / lam) == 1
         # ∫_0^∞ exp(-lam t)dt = 1/lam exactly, by antiderivative.
         assert F(1) / lam > 0
 
 
-def test_515_polynomial_threshold_versus_all_lambda():
+def _check_test_515_polynomial_threshold_versus_all_lambda():
     for d in range(1, 13):
         for lam in LAMBDAS:
             finite = polynomial_integral_from_one(d, lam)
@@ -55,7 +55,7 @@ def test_515_polynomial_threshold_versus_all_lambda():
         assert polynomial_integral_from_one(d, F(2, d)) == F(1)
 
 
-def test_515_superpolynomial_growth_of_exp_t_power():
+def _check_test_515_superpolynomial_growth_of_exp_t_power():
     # For every fixed n, exponential e^(t^m) eventually beats t^n:
     # e^x >= x^k/k! for k>n/m, and then x=t^m.
     for m in range(1, 7):
@@ -64,3 +64,20 @@ def test_515_superpolynomial_growth_of_exp_t_power():
             assert m * k > n
             assert factorial(k) > 0
             # e^(t^m)/t^n >= t^(mk-n)/k! -> +infinity.
+
+
+import unittest
+
+
+class CompendiumFiniteQA(unittest.TestCase):
+    def test_515_same_fixed_ray_satisfies_comparison_for_all_exponents(self):
+        _check_test_515_same_fixed_ray_satisfies_comparison_for_all_exponents()
+
+    def test_515_linear_exponential_has_exact_integral_one_over_lambda(self):
+        _check_test_515_linear_exponential_has_exact_integral_one_over_lambda()
+
+    def test_515_polynomial_threshold_versus_all_lambda(self):
+        _check_test_515_polynomial_threshold_versus_all_lambda()
+
+    def test_515_superpolynomial_growth_of_exp_t_power(self):
+        _check_test_515_superpolynomial_growth_of_exp_t_power()
