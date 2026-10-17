@@ -433,6 +433,40 @@ $
 
 It also gives coupled quadratic bounds from the levels 2 and 4. These are stricter *joint cardinality restrictions* on a three-cohort extension than the ordinary separate cubic-shadow range count. In contrast with the single-anchor singleton loss, they cannot be evaded by rearranging future T without lowering its cardinality.
 
+### Localized Hall refinement (proved; no distribution hypothesis)
+
+The crude right sides 4R+1 can be reduced to the *actual geometric union* of the two competing word-type intervals. Let P,D,T have respective minimum and maximum values (p_-,p_+), (d_-,d_+), (t_-,t_+), with all three sets nonempty. Define
+
+$
+\begin{aligned}
+I_2^{(1)}&=[p_-+2d_-,\ p_++2d_+],&
+I_2^{(2)}&=[2p_--t_+,\ 2p_+-t_-],\\
+I_3^{(1)}&=[3d_-,\ 3d_+],&
+I_3^{(2)}&=[p_-+d_--t_+,\ p_++d_+-t_-],\\
+I_4^{(1)}&=[2d_--t_+,\ 2d_+-t_-],&
+I_4^{(2)}&=[p_--2t_+,\ p_+-2t_-].
+\end{aligned}
+$
+
+Every admissible reflected three-cohort extension satisfies
+
+$
+\boxed{
+\begin{aligned}
+n\binom{m+1}{2}+\ell\binom{n+1}{2}
+&\le|I_2^{(1)}\cup I_2^{(2)}|,\\
+\binom{m+2}{3}+nm\ell
+&\le|I_3^{(1)}\cup I_3^{(2)}|,\\
+\ell\binom{m+1}{2}+n\binom{\ell+1}{2}
+&\le|I_4^{(1)}\cup I_4^{(2)}|.
+\end{aligned}
+}\tag{LOCALIZED-THREE-COLOUR-HALL}
+$
+
+The proof is direct: distinct triple sums in the same level must fit into the union of the **two actual** integer ranges they occupy. The constraints become stronger when one cohort is narrowly located, and they retain their force even if every actual future batch changes shape.
+
+**Critical limitation about real persistent density.** To use these bounds with n,m,ell all of order R^(1/3), one must first prove that actual hypothetical c-persistent B3 sets provide **three appropriately located and sufficiently populated cohorts simultaneously**. A lower counting bound A(N)>=cN^(1/3) at all large N guarantees density in suitably chosen annuli, but not arbitrary prescribed triplets of short windows at positions y and 2y. It would be invalid to assert such localization without an additional extraction theorem.
+
 **Precise limitation.** In the critical regime n,m,ell all proportional to R^(1/3), every term in (SEVEN-LAYER-PACKING) is order R. With a sufficiently small hypothetical density coefficient c, all seven inequalities can have slack. No fixed collection of these inequalities forces a contradiction for **every** c>0, and there is no independently proved recurrence showing their costs become superlinear over growing numbers of scale-owned cohorts. Therefore Theorems G and H are a genuine finite-batch step towards the multiscale obligation, **not** its completion.
 
 **Next exact mathematical gate:** For a c-persistent B3 set, select a family of overlapping consecutive three-cohort windows at growing scales in which the *same actual elements* appear with consistent digit-level roles, then prove a comparison of the unused capacities in levels 2–4 that cannot be discharged by adjusting T. Such an inequality must count each actual sum once at its first owning window; simply repeating (SEVEN-LAYER-PACKING) over many windows cannot make the slack accumulate.
