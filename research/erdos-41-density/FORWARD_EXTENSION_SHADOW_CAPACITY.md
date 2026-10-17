@@ -107,7 +107,7 @@ $
 T(X_0+t)=T(X_0)+t.
 $
 
-Whenever t belongs to the integer difference set H(P,Y)-T(X_0), one of the forbidden early/middle shadow positions coincides with a shadow of X_0+t. Consequently P union Y union (X_0+t) **cannot** be B3 (including if some blocks overlap, because it is not an admissible disjoint extension).
+Whenever t belongs to the integer difference set H(P,Y)-T(X_0), one of the forbidden early/middle shadow positions coincides with a shadow of X_0+t. If X_0+t is disjoint from P union Y, the full union **cannot** be B3. If it overlaps P or Y, the translate is already inadmissible as a *disjoint future extension*; the shadow collision alone is not claimed to prove that the set-theoretic union fails B3.
 
 **Theorem B2 (fixed-shape extension-placement tax).** There are at least
 
