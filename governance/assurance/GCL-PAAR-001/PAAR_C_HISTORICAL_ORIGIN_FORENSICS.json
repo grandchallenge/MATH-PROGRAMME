@@ -1,0 +1,83 @@
+{
+  "assessment": "HISTORICAL_OUTPUT_HASH_MATCH_ORIGINAL_EXECUTION_ORIGIN_UNATTESTED",
+  "commander_receipt_scope": {
+    "command_bound_receipts": 0,
+    "evidence_limit": "scoped local receipt directory; not a complete all-time execution inventory",
+    "field_shapes": {
+      "applied,changes_applied,changes_needed,class_counts,final_class_counts,gcl_jobs,operation,project_id,readback_pass,sample_changes,total": 5,
+      "applied,changes_needed,class_counts,gcl_jobs,operation,project_id,sample_changes,total": 61,
+      "base_sha,blob_sha,branch,mutation,operation,operator,path,protected_main_modified,pull_number,pull_url,repository": 1,
+      "branch,head_sha,mutation,operator,repository": 93,
+      "expected,login": 18,
+      "mutation,operation,operator,project_id,readback,views": 13
+    },
+    "independent_original_execution_attested": false,
+    "metadata_receipts_examined": 191
+  },
+  "historical_native_source_approving_reviews": 0,
+  "independent_reviewer_system_authenticated": false,
+  "journal_scope": {
+    "entries_with_command_and_output_binding": 0,
+    "entries_with_embedded_receipt": 0,
+    "events": 27,
+    "execution_origin_attested": false,
+    "phases": {
+      "accepted": 13,
+      "completed": 14
+    },
+    "reason": "console row schema contains event hash/run-id/time, operation, phase, optional receipt and exit code; inspected window has no embedded receipts or command transcript",
+    "window_end_utc": "2026-10-15T08:12",
+    "window_start_utc": "2026-10-15T08:08"
+  },
+  "later_platform_replay_is_original_execution_proof": false,
+  "limitations": [
+    "Matching output hashes do not prove invocation or operator identity",
+    "Filesystem modification times are not independent attestation",
+    "Console events contain no command or raw output linkage",
+    "Commander metadata receipts contain no matched command invocation",
+    "No native review or separate runner authentication is inferred",
+    "Later GitHub hosted execution is a distinct, not historical, run",
+    "Other unexamined evidence sources cannot be ruled out"
+  ],
+  "next_required_origin_proof": "Independent contemporaneous exact-command, source, output, time, actor and run identity; otherwise retain historical UNATTESTED status",
+  "observed_utc": "2026-10-17T01:34:12+00:00",
+  "original_command_execution_authenticated": false,
+  "output_digests": [
+    {
+      "bytes": 121,
+      "dossier_declared_digest_matches": true,
+      "filename": "verifier.stderr",
+      "original_execution_service_attested": false,
+      "role": "VERIFIER",
+      "sha256": "6911b42399b43e37b097888660a5f386fc6294d23088649fcbc03dc453e5bb06"
+    },
+    {
+      "bytes": 113,
+      "dossier_declared_digest_matches": true,
+      "filename": "adversary.stderr",
+      "original_execution_service_attested": false,
+      "role": "ADVERSARY",
+      "sha256": "62e6bd3a77554540929dd26eab6204ab86056dc07bacce00a71e4482e9f4bcb8"
+    },
+    {
+      "bytes": 511,
+      "dossier_declared_digest_matches": true,
+      "filename": "referee.stdout",
+      "original_execution_service_attested": false,
+      "role": "REFEREE",
+      "sha256": "eb067ed4a0c2e2b16807e6a025d3537f65c45ed9c732c3650c3a3c1a70f77a85"
+    }
+  ],
+  "protected_dossier_authentic": true,
+  "record_type": "GCL_PAAR_C_HISTORICAL_ORIGIN_ASSESSMENT/1",
+  "requires_provenance_upgrade": true,
+  "scope_of_result": "Bounded forensic finding; not estate-wide certification",
+  "subject": {
+    "dossier_git_blob": "4b3d108922ed9cf345d6407d81a216a93da697c1",
+    "head_sha": "e577477b656c6865698d5dbc18962e2810f53a26",
+    "pr_number": 2624,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "source_pr": 121,
+    "source_repository": "grandchallenge/INTELLECT"
+  }
+}
