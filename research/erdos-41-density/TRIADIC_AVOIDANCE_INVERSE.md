@@ -246,72 +246,72 @@ The prime theorem can be strengthened, particularly when the allowed differences
 
 Fix the same actual ordered B3 outer bins Y<Z and integer threshold t>=1. For *any integer modulus* Q satisfying 1<=Q<=min(D_Y,D_Z), form the actual permitted residue set
 
-$
+$$
 E_{Q,t}=\{h\bmod Q:h\in J,\ r_U(h)<t\}.
-$
+$$
 
 Define a **finite difference-biclique capacity** depending only on the inner spectrum and candidate interval,
 
-$
+$$
 \boxed{
 \beta_Q(E)=
 \max_{\substack{S,T\subseteq\mathbb Z/Q\mathbb Z\\
 T-S\subseteq E}} |S||T|,
 }\tag{BICLIQUE}
-$
+$$
 
 where empty S or T are allowed, giving a valid maximum of zero when E is empty. For a fixed nonempty S, the largest possible T is the exact intersection of translates
 
-$
+$$
 T_{\max}(S)=\bigcap_{s\in S}(s+E).
-$
+$$
 
 Thus beta_Q is precisely and reproducibly computable by enumerating the 2^Q residue subsets S for modest Q, without optimizing over unknown actual outer points. Put
 
-$
+$$
 \boxed{
 B_{Q,t}^{\mathrm{comp}}=
 \left(\frac{144D_YD_Z}{Q^2}\right)^{1/3}
 \beta_Q(E_{Q,t}).
 }\tag{COMPOSITE-BUDGET}
-$
+$$
 
 **Theorem E (robust composite-modulus arithmetic inverse):**
 
-$
+$$
 \boxed{
 \mathcal M_{Y,Z}(U)\ge
 \frac{t}{\max(m_Y,m_Z)}
 \left[m_Ym_Z-B_{Q,t}^{\mathrm{comp}}\right]_+ .
 }\tag{COMPOSITE-INVERSE}
-$
+$$
 
-**Proof (elementary; no Cauchy–Davenport needed).** Remove one endpoint of each cross-bin edge with r_U(z-y)>=t, at most M/t deletions. If one bin disappears, the bound follows as in Theorem D. Otherwise the surviving actual B3 subsets Y',Z' have residue supports S=Y' mod Q and T=Z' mod Q satisfying T−S subset E_(Q,t). Hence |S||T|<=beta_Q(E). For either B3 subset X with enclosing diameter D_X>=Q, the cubic-shadow pigeonhole proof gives \(|X|^3 Q\le12D_Xt_Q(X)^3\). Multiply the inequalities for Y',Z' and take cube roots to obtain
+**Proof (elementary; no Cauchy–Davenport needed).** Remove one endpoint of each cross-bin edge with r_U(z-y)>=t, at most M/t deletions. If one bin disappears, the bound follows as in Theorem D. Otherwise the surviving actual B3 subsets Y',Z' have residue supports S=Y' mod Q and T=Z' mod Q satisfying T−S subset E_(Q,t). Hence |S||T|<=beta_Q(E). For either B3 subset X with enclosing diameter D_X>=Q, the cubic-shadow pigeonhole proof gives $|X|^3 Q\le12D_Xt_Q(X)^3$. Multiply the inequalities for Y',Z' and take cube roots to obtain
 
-$
+$$
 |Y'||Z'|\le
 \left(\frac{144D_YD_Z}{Q^2}\right)^{1/3}
 |S||T|\le B_{Q,t}^{\mathrm{comp}}.
-$
+$$
 
 As before the product of the surviving bin sizes is at least m_Y m_Z−(M/t) max(m_Y,m_Z). Rearranging proves (COMPOSITE-INVERSE). QED.
 
 **Prime CRT dominance.** When Q is a product of distinct primes p_j, every allowed-biclique pair S,T projects to allowed difference pairs modulo each p_j. The CRT and Cauchy–Davenport upper bounds give
 
-$
+$$
 \boxed{\beta_Q(E_{Q,t})\le\prod_j c_{p_j,t}^{\,2}.}\tag{DOMINATES}
-$
+$$
 
 Here the prime allowed sets E_(p,t) may be **larger** than the projections of E_(Q,t) if the candidate set is changed; in this theorem all are reductions of the same actual candidate interval J, so containment and the inequality are valid. Therefore Theorem E is at least as strong as Theorem D for the same product modulus.
 
 **Concrete B3-compatible structural witness.** Take an inner B3 block U={1,2,5,14}, and two B3 outer bins Y={100,106}, Z={108,115}. The separate sets are B3; the combined U union Y union Z is **not asserted to be B3**. The candidate positive differences range over J=[2,15]. The actual zero-weight differences of U in J are {10,14,15}, so their residues modulo 6 are {4,2,3}. They cover both residue classes modulo 2 and all three residue classes modulo 3, yet omit three of the six classes modulo 6. Exhaustive residue-subset enumeration gives
 
-$
+$$
 \boxed{
 \beta_6(\{2,3,4\})=4<36
 =\bigl(2\cdot3\bigr)^2.
 }\tag{COMPOSITE-STRICT}
-$
+$$
 
 The prime CRT upper bound of 36 sees no restriction, whereas the composite biclique bound is 4. This is a **strict improvement in the arithmetic structural certificate**, not a claim of a positive Stage B correlation bound in that particular fixture. The actual cross-bin weight there is 6, so both inequalities hold.
 
