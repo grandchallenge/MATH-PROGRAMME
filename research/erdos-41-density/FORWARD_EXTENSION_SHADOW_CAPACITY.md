@@ -186,6 +186,112 @@ of shifts are blocked by forward-shadow competition. At critical-scale n,m,ell o
 
 **Important limitation:** some shifts in the full arena may not place X_0 wholly into the predetermined future interval J; the fraction is a property of the full translate-support arena, **not** a lower bound on blocked admissible placements *inside J*. Different prospective future B3 batches may change shape, so this fixed-template exclusion does not imply a decrease in the optimum true capacity C(P,J). This theorem captures a rigorously quantified entropy tax, not the still-open universal batch tax.
 
+## 3B. Stronger one-anchor theorem: a cubic singleton loss needs no dense middle block
+
+The mixed shadow H(P,Y) is a **batch-shadow** obstruction. A stronger *singleton* obstruction arises from the reflected **internal** cubic shadow of the early prefix. Crucially, it requires only **one** new later B3 element, not a dense later block.
+
+Let P be a finite B3 set of n>=1 elements contained in [1,R], with p_min=min P, p_max=max P. Define its internal shadow
+
+$
+I(P)=T(P)\cap[p_{\min},p_{\max}].
+$
+
+**Theorem D (internal cubic shadow):**
+
+$
+\boxed{|I(P)|\ge n+\binom n3.}\tag{INTERNAL-CUBIC}
+$
+
+**Proof.** All n elements of P belong to I(P). For each **distinct** ordered triple a<b<c of P, the signed sum a+c-b lies strictly between a and c and hence in [p_min,p_max]. It cannot belong to P, for then a+c=b+z is a forbidden nontrivial two-term sum collision. These binom(n,3) signed sums are mutually distinct: they are nontrivial affine-shadow values of P, whose representations are unique by B3 (see section 2). Therefore the stated count holds.
+
+Now choose just **one** new anchor y>2R with P union {y} still B3. Define
+
+$
+\boxed{J_y=[2y-R,\ 2y-p_{\min}]\cap\mathbb Z.}\tag{ONE-ANCHOR-WINDOW}
+$
+
+**Theorem E (uniform cubic single-anchor tax):**
+
+$
+\boxed{
+S(P,J_y)=|J_y|,\qquad
+S(P,J_y)-S(P\cup\{y\},J_y)
+\ge |I(P)|\ge n+\binom n3.
+}\tag{CUBIC-SINGLETON-TAX}
+$
+
+**Proof.** Every z in J_y exceeds 3R (because y>2R), so adjoining z to P preserves B3 by separation of the three possible multiplicities of z in triple sums. For every t=a+b-c in I(P), the reflected future integer z=2y-t belongs to J_y, is greater than y, and satisfies the forbidden equality
+
+$
+z+a+b=2y+c.
+$
+
+The left triple contains one future z and two earlier P members, whereas the right triple contains two copies of y and one earlier P member; they cannot be the same unordered triple. Thus all the distinct reflected I(P) values are newly forbidden singleton sites. QED.
+
+**Density-sensitive corollary without annular pigeonhole.** If the hypothetical persistent B3 lower bound A(R)>=cR^(1/3) holds for all large R, take P=A intersect [1,R] and ANY actual later anchor y in A with y>2R. For n=|P|>=6 one has binom(n,3)>=n³/12. Hence for all sufficiently large R,
+
+$
+\boxed{
+S(P,J_y)-S(P\cup\{y\},J_y)
+\ge\frac{c^3}{12}R,
+\qquad
+\frac{S(P,J_y)-S(P\cup\{y\},J_y)}{|J_y|}
+\ge\frac{c^3}{12}.
+}\tag{ONE-ANCHOR-DENSITY-TAX}
+$
+
+The entire future interval has |J_y|=R-p_min+1<=R. No density of the chosen middle anchor is needed. It is always possible to select an actual later anchor in an infinite A, and it can be chosen at distance O_c(R) using the same standard prefix counting bounds as section 4.
+
+**A rigorous entropy bound on future candidate batches.** Let N_ell(P',J) count the true ell-element B3 extensions X subset J of prefix P'. Since every X after adjoining y must avoid the B=|I(P)| newly forbidden sites,
+
+$
+\boxed{
+N_{\ell}(P\cup\{y\},J_y)
+\le\binom{|J_y|-B}{\ell}
+\le e^{-B\ell/|J_y|}\binom{|J_y|}{\ell}.
+}\tag{RAW-EXTENSION-ENTROPY}
+$
+
+Under persistent density, a prospective future batch of ell>=eta R^(1/3) has a suppression factor at most exp(-c³ eta R^(1/3)/12) **relative to all raw ell-subsets**, not relative to the already much smaller collection of B3-compatible completions for P. The inequality is exact and follows by the product formula for binomial coefficients.
+
+**A robust within-window translation obstruction, not merely a full-arena claim.** Take an arbitrary finite B3 template X0 of diameter d, translated so min X0=0. Among all integer shifts t for which X0+t subset J_y (a range of |J_y|-d shifts), at least
+
+$
+\boxed{\bigl[|I(P)|-d\bigr]_+}\tag{INTERIOR-TRANSLATION-TAX}
+$
+
+are forbidden by the reflected internal shadow alone: each blocked future singleton site z=2y-h not in the last d positions of J_y is an eligible shift t=z, since 0 belongs to X0. In particular if d<=|I(P)|/2, at least |I(P)|/2 **genuinely eligible placements** of every fixed future template are lost. These are placements, not independent future batches; a shape-changing optimizer can still evade them.
+
+**Critical limitation (proved by the next hostile example):** Even an overwhelming cubic loss of legal singleton sites and exponentially fewer raw ell-subsets does **not** imply a strict loss of the *true* optimal future batch size C(P,J). The missing bridge remains a constraint on every rerouted complete batch, not just on its possible locations.
+
+### An exact counterexample in the canonical one-anchor window
+
+Let
+
+$
+P=\{1,2,5,14\},\quad R=14,\quad y=34,\quad J_y=[54,67].
+$
+
+P union {y} is genuinely B3. Exact enumeration gives
+
+$
+\boxed{
+|I(P)|=12,\quad |J_y|=14,\quad
+S(P,J_y)=14,\quad
+S(P\cup\{34\},J_y)=1,
+}\tag{CUBIC-HOSTILE}
+$
+
+so **13 of 14** individually legal sites disappear (12 already certified by the internal shadow). Nevertheless the true complete-B3 batch capacities are
+
+$
+\boxed{
+C(P,J_y)=1=C(P\cup\{34\},J_y).
+}\tag{CANONICAL-NO-BATCH-LOSS}
+$
+
+Thus no universal lemma can equate a large *fractional* loss of legal singleton positions with a positive *numerical* decline in true batch capacity, even for the canonical interval after a valid B3 one-anchor extension. This test directly refutes a natural but false proposed bridge. It is not a counterexample to the infinite Erdős problem.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
