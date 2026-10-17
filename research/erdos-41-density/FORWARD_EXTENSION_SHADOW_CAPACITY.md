@@ -44,6 +44,59 @@ $$
 
 Indeed y+y'-p=x+x'-x'' would give a collision y+y'+x''=x+x'+p; the left has two Y and one X members, the right two X and one P, so the unordered triples cannot be the same.
 
+## 2A. The right potential: exact remaining future *shadow capacity*
+
+The previously defined true batch capacity C(P,J) is difficult to compute directly. A **canonical monotone upper-budget potential** nevertheless exists without choosing a residue modulus or assuming mixing.
+
+For a nonempty integer interval J=[j0,j1] of diameter L, define its entire affine-shadow arena
+
+$
+K(J)=[2j_0-j_1,\ 2j_1-j_0]\cap\mathbb Z
+\quad\text{with }|K(J)|=3L+1.
+$
+
+For a B3 prefix P disjoint from J, set
+
+$
+\boxed{
+\Phi(P;J)=|K(J)\setminus T(P)|
+=(3L+1)-|T(P)\cap K(J)|.
+}\tag{EXACT-SHADOW-POTENTIAL}
+$
+
+**Theorem A2 (monotone extension potential, full strength).**
+
+1. Every actual B3 extension X subset J of P satisfies
+
+$
+\boxed{f(|X|)\le\Phi(P;J),\quad C(P,J)\le F(\Phi(P;J)).}\tag{SHADOW-ENVELOPE}
+$
+
+2. For any B3 prefix chain P_0 subset P_1 subset ... subset P_r with all prefixes disjoint from the **same** J,
+
+$
+\boxed{
+\Phi(P_0;J)-\Phi(P_r;J)
+=\sum_{i=1}^r
+|(T(P_i)\setminus T(P_{i-1}))\cap K(J)|.
+}\tag{EXACT-TELESCOPING}
+$
+
+Each new shadow position has exactly one owner, its **first** prefix appearance. Thus the tax is genuinely monotone, nonnegative, and neither duplicated across prefix stages nor dependent on an arbitrary block partition.
+
+**Proof.** For disjoint P,X with P union X B3, T(P) and T(X) cannot intersect: an equality a+b-c=x+y-z would give a+b+z=x+y+c, with two P and one X points on the left, and two X and one P points on the right, contradicting B3. Since T(X) is wholly within K(J) and has f(|X|) points, all its values are in K(J)\T(P), proving (1). Part (2) follows from the nestedness of T(P_i): the successive new shadow differences are disjoint and their union is T(P_r)\T(P_0). QED.
+
+**Forward-shadow strengthening.** Under the geometry of the next section, the exact mixed shadow H(P,Y) lies in K(J) but is disjoint from T(P) (otherwise y+y'-p=a+b-c yields a forbidden B3 triple equality with two Y elements versus none). Hence
+
+$
+\boxed{
+\Phi(P;J)-\Phi(P\cup Y;J)
+\ge|H(P,Y)|=n\binom{m+1}{2}.
+}\tag{POTENTIAL-TAX}
+$
+
+This is a **real lower bound on a bona fide monotone future-extension potential**, not merely an improvement obtained by comparing two unrelated upper bounds. The potential also controls **every** joint future B3 batch, via (SHADOW-ENVELOPE). It still does not imply an actual decrease in C(P,J), since the upper bound F(Phi) may be slack.
+
 ## 3. A genuine future charge and a bound on true batch capacity
 
 Suppose P subset [1,R], and Y subset [a,b], for integer endpoints a>2R and b<2a-R, with P union Y genuinely B3. Put p_min=min P and
