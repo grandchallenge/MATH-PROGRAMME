@@ -20,6 +20,7 @@
 | C+ | Every liquid extension eventually dies in $Q_b$ | Uniform cutoff theorem for all $\xi$ | OPEN | Test finitely many extensions only |
 | C- | Genuine class survives every target quotient | Liquid cocycle and nonvanishing modulo **all** boundaries for every $b$ | OPEN | Reuse algebraic toy Ext or escaping source stages |
 | C-aux | Real liquid escaping extension into actual test-function output, without Fréchet source | Explicit scalar-phantom quotient extension and retraction into $G$ | PROVED OUTSIDE FIXED-SOURCE SCOPE (017) | Present the non-Fréchet source as the desired $H$ |
+| C-018 | Fixed-source scalar phantom lifting and stagewise Ext localization | Profinite sheaf descent; countably directed limit proof; actual weight-stage presentation | PROVED: PHANTOM ZERO; STAGEWISE-SPLIT CLASSES FINITE-PREFIX | Treat finite global-point tests as enough for sheaf descent |
 | C-scalar | Fixed-Fréchet scalar-sum escape classification | Exact phantom/coordinate short sequence and injection into the full comparison cokernel | PROVED REDUCTION; BOTH EXPLICIT WITNESS CHANNELS OPEN (017) | Assume a nonzero liquid quotient automatically yields a nonliftable map from $H$ |
 | C1x | Degree-one Ext comparison verdict | Proved injection/surjection/cokernel as appropriate | PARTIAL: INJECTION PROVED; SURJECTION OPEN (016) | Conflate surjectivity and injectivity |
 | D1 | Derived comparison for actual stages | Explicit RHom chain model and higher Ext controls | OPEN | Upgrade only degree zero |
