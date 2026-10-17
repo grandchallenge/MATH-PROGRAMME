@@ -2,10 +2,14 @@
 """Public homepage source/visual status must reflect protected editorial state."""
 from __future__ import annotations
 import re
+import sys
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "ci"))
 
 from erdos_compendium import EDITORIAL, EXPECTED_COUNT, load_batch_admissions
 from erdos_compendium_hook import (
