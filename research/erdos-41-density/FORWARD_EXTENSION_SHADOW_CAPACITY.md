@@ -596,6 +596,62 @@ $
 
 Each selected actual triple has one unique unordered bin-index pattern and its sum belongs to the integer interval [sR,sR+3R−3]. Therefore the bound has neither multiplicity omissions nor double-counting across index patterns. This controls **any** family of equal-width bins, not only an aligned arithmetic run, though the set of coarse capacity inequalities is not by itself known to imply a critical-density dip.
 
+### A decisive negative test for count-only multiscale packing
+
+The exact coarse index-sum inequalities are **still not enough**, by themselves, to force the finite-window density dip. The following theorem gives explicit critical-density *integer occupancy profiles* meeting **all** of them at arbitrarily many coarse checkpoints. These are **not asserted to be realizable by any B3 set**.
+
+For an arbitrary integer M>=1, put
+
+$
+L=(20M)^3,\qquad
+m_i=\left\lfloor\frac{4M}{(i+1)^{2/3}}\right\rfloor
+\quad(0\le i<M).
+$
+
+**Theorem K (sharp limitation of scalar multiscale Hall capacity).**
+
+1. At **every** coarse prefix length 1<=h<=M, the vector has critical lower density:
+
+$
+\boxed{
+\sum_{i=0}^{h-1}m_i
+\ge\frac3{20}(hL)^{1/3}.
+}\tag{COARSE-CRITICAL-COUNTERMODEL}
+$
+
+2. The full, repetition-permitting scalar triple-pattern capacity (COARSE-TRIPLE-CAPACITY), with this occupancy vector, holds for **every** integer index sum s:
+
+$
+\boxed{
+\sum_{i\le j\le k,\ i+j+k=s}w(i,j,k)
+\le 3L-2.
+}\tag{COUNTERMODEL-PASSES-ALL-HALL}
+$
+
+**Proof.** Since each summand (i+1)^(-2/3)>=h^(-2/3) for i<h, the partial sum is at least h^(1/3). Using floor(x)>=x-1 gives \(\sum_{i<h}m_i\ge4Mh^{1/3}-h\ge3Mh^{1/3}=(3/20)(hL)^{1/3}\), because h<=M.
+
+For the triple-capacity statement let a_i=(i+1)^(-2/3) for i>=0, and set a_i=0 outside [0,M-1]. Splitting each convolution at its midpoint and comparing power sums with integrals proves
+
+$
+\sum_{i+j=s}a_ia_j\le10(s+1)^{-1/3},
+\qquad
+\boxed{\sum_{i+j+k=s}a_ia_ja_k\le100}\quad(s\ge0).
+$
+
+Each m_i>=floor(4M^(1/3))>=4, so m_i+2<=2m_i<=(2/5)L^(1/3)a_i. For every index pattern i<=j<=k, its actual multiset weight w(i,j,k) is at most 1 divided by the number of permutations of (i,j,k), times the corresponding product (m_i+2)(m_j+2)(m_k+2). Hence the sum of all pattern weights with fixed index sum s is at most one-sixth of the ordered triple convolution of the b_i=m_i+2, a bound verified separately for three distinct indices, two equal indices, and three equal indices. Thus
+
+$
+\sum_{i\le j\le k,\ i+j+k=s}w(i,j,k)
+\le\frac16\left(\frac25\right)^3 L\cdot100
+=\frac{16}{15}L<3L-2
+$
+
+for L>=8. The last inequality holds because L=(20M)^3>=8000. QED.
+
+**Interpretation.** At arbitrarily long but finite collections of coarse checkpoints, a numerical occupancy profile can remain at positive normalized critical density while respecting *every one* of the cubic bin-index sum-packing constraints. This rules out proving Erdős #41 from these **cardinality-only** inequalities plus prefix counts, without an additional position-sensitive arithmetic compatibility theorem. The profile is a hostile **scalar relaxation**, not an actual B3 construction; it does not disprove the conjecture or the exact seven-layer and reciprocal shadow conditions.
+
+This is why the preferred Stage B object remains **true future extension capacity and reciprocal signed-code compatibility**, rather than scalar block counts or unowned multiscale sums.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
