@@ -538,34 +538,34 @@ The seven-layer result is the three-cohort case of a stronger **multicoherence o
 
 Let r>=4, R>=1, and q>=R be integers, and choose B large enough that all positions below are positive. Suppose a B3 set contains **2r+1 pairwise disjoint blocks**
 
-$
+$$
 A_i\subseteq[B+iq,\ B+iq+R-1]\quad(-r\le i\le r),
-$
+$$
 
 each containing at least m>=1 elements.
 
 **Theorem J (arithmetic-run extension exhaustion).** With s=floor(r/2),
 
-$
+$$
 \boxed{
 \binom{s}{2}m^3\le3R-2.
 }\tag{ARITHMETIC-RUN}
-$
+$$
 
 In particular if m>=cR^(1/3), for a fixed c>0, then
 
-$
+$$
 \boxed{
 \binom{\lfloor r/2\rfloor}{2}<\frac{3}{c^3},
 \quad\text{hence}\quad r=O(c^{-3/2}).
 }\tag{NO-LONG-DENSE-AP-RUN}
-$
+$$
 
 **Proof.** For each pair of indices 1<=i<j<=s, the third index k=−i−j lies in [−r,−3]. These are all **three distinct indices** and their sum is zero. Choose one actual B3 element from each of A_i,A_j,A_k; each pattern creates at least m³ distinct unordered three-element triples. Patterns for different i,j use different block-index multisets and cannot select the same element triple. All resulting sums belong to
 
-$
+$$
 [3B,\ 3B+3(R-1)]\cap\mathbb Z,
-$
+$$
 
 which contains 3R−2 integers, since iq+jq+kq=0. The original B3 property makes every selected triple sum distinct. Thus binom(s,2)m³<=3R−2. Under the fixed critical block coefficient c, substitute m³>=c³R and rearrange. QED.
 
@@ -575,7 +575,7 @@ The bound is **independent of q**. Choosing farther-apart block centres cannot r
 
 **A stronger exact coarse-bin formulation.** For a partition into integer blocks I_i=[iR,(i+1)R−1] and occupancies m_i, define for each index-sum s the number of actual unordered three-element selections of each bin-index pattern:
 
-$
+$$
 w(i,j,k)=
 \begin{cases}
 m_im_jm_k,&i<j<k,\\
@@ -583,16 +583,16 @@ m_im_jm_k,&i<j<k,\\
 m_i\binom{m_j+1}{2},&i<j=k,\\
 \binom{m_i+2}{3},&i=j=k.
 \end{cases}
-$
+$$
 
 Then the full B3 property implies the exact **multiwindow sum-capacity inequality**
 
-$
+$$
 \boxed{
 \sum_{\substack{i\le j\le k\\i+j+k=s}}w(i,j,k)\le3R-2
 \qquad\text{for every integer }s.
 }\tag{COARSE-TRIPLE-CAPACITY}
-$
+$$
 
 Each selected actual triple has one unique unordered bin-index pattern and its sum belongs to the integer interval [sR,sR+3R−3]. Therefore the bound has neither multiplicity omissions nor double-counting across index patterns. This controls **any** family of equal-width bins, not only an aligned arithmetic run, though the set of coarse capacity inequalities is not by itself known to imply a critical-density dip.
 
@@ -602,49 +602,49 @@ The exact coarse index-sum inequalities are **still not enough**, by themselves,
 
 For an arbitrary integer M>=1, put
 
-$
+$$
 L=(20M)^3,\qquad
 m_i=\left\lfloor\frac{4M}{(i+1)^{2/3}}\right\rfloor
 \quad(0\le i<M).
-$
+$$
 
 **Theorem K (sharp limitation of scalar multiscale Hall capacity).**
 
 1. At **every** coarse prefix length 1<=h<=M, the vector has critical lower density:
 
-$
+$$
 \boxed{
 \sum_{i=0}^{h-1}m_i
 \ge\frac3{20}(hL)^{1/3}.
 }\tag{COARSE-CRITICAL-COUNTERMODEL}
-$
+$$
 
 2. The full, repetition-permitting scalar triple-pattern capacity (COARSE-TRIPLE-CAPACITY), with this occupancy vector, holds for **every** integer index sum s:
 
-$
+$$
 \boxed{
 \sum_{i\le j\le k,\ i+j+k=s}w(i,j,k)
 \le 3L-2.
 }\tag{COUNTERMODEL-PASSES-ALL-HALL}
-$
+$$
 
-**Proof.** Since each summand (i+1)^(-2/3)>=h^(-2/3) for i<h, the partial sum is at least h^(1/3). Using floor(x)>=x-1 gives \(\sum_{i<h}m_i\ge4Mh^{1/3}-h\ge3Mh^{1/3}=(3/20)(hL)^{1/3}\), because h<=M.
+**Proof.** Since each summand (i+1)^(-2/3)>=h^(-2/3) for i<h, the partial sum is at least h^(1/3). Using floor(x)>=x-1 gives $\sum_{i<h}m_i\ge4Mh^{1/3}-h\ge3Mh^{1/3}=(3/20)(hL)^{1/3}$, because h<=M.
 
 For the triple-capacity statement let a_i=(i+1)^(-2/3) for i>=0, and set a_i=0 outside [0,M-1]. Splitting each convolution at its midpoint and comparing power sums with integrals proves
 
-$
+$$
 \sum_{i+j=s}a_ia_j\le10(s+1)^{-1/3},
 \qquad
 \boxed{\sum_{i+j+k=s}a_ia_ja_k\le100}\quad(s\ge0).
-$
+$$
 
 Each m_i>=floor(4M^(1/3))>=4, so m_i+2<=2m_i<=(2/5)L^(1/3)a_i. For each index pattern i<=j<=k, write v for the number of distinct permutations of (i,j,k): respectively v=6,3,1 when all three indices are distinct, exactly two coincide, or all three coincide. Its multiset weight w(i,j,k) is at most (v/6)(m_i+2)(m_j+2)(m_k+2). Indeed the three cases reduce to m_i m_j m_k<=b_i b_j b_k, binom(m_i+1,2)m_k<=b_i²b_k/2, and binom(m_i+2,3)<=b_i³/6. Therefore the sum of pattern weights at index sum s is bounded by **one sixth of the full ordered triple convolution** of b_i=m_i+2. Thus
 
-$
+$$
 \sum_{i\le j\le k,\ i+j+k=s}w(i,j,k)
 \le\frac16\left(\frac25\right)^3 L\cdot100
 =\frac{16}{15}L<3L-2
-$
+$$
 
 for L>=8. The last inequality holds because L=(20M)^3>=8000. QED.
 
