@@ -368,7 +368,7 @@ class ForwardShadowCapacityTests(unittest.TestCase):
             self.assertTrue(is_b3(p+[y]))
             candidate=tuple(range(min(p),R+1))
             checked=0
-            for k in range(0,5):
+            for k in range(0,len(candidate)+1):
                 for t in combinations(candidate,k):
                     x=[2*y-v for v in t]
                     unanchored,anchored=reflected_signed_word_certificate(p,t)
@@ -376,7 +376,7 @@ class ForwardShadowCapacityTests(unittest.TestCase):
                         self.assertEqual(is_b3(p+x),unanchored)
                         self.assertEqual(is_b3(p+[y]+x),anchored)
                     checked+=1
-            self.assertEqual(checked,1471)
+            self.assertEqual(checked,1<<len(candidate))
 
     def test_reflected_true_batch_optimum_is_anchor_invariant(self):
         p=[1,2,5,14]
