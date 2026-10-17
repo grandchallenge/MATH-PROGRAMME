@@ -59,18 +59,20 @@ def erdos_showcase_status() -> str:
     """Reader-facing snapshot, sourced from the exact protected build head."""
     counts = protected_erdos_counts()
     return (
-        '<div class="showcase-declaration" aria-label="Erdős protected publication snapshot">\n'
-        '<span>Protected editorial snapshot · this site build</span>\n'
-        f'<p>{counts["reviewed"]:,} reviewed explainers out of '
-        f'{counts["registered"]:,} registered problems</p>\n</div>\n'
-        f'<p><strong>Still awaiting editorial admission:</strong> '
-        f'{counts["drafts"]:,} written drafts and '
-        f'{counts["reference_only"]:,} catalogue-only references. '
-        'These are separate publication states, not mathematical proof outcomes. '
-        'Counts are derived at build time from the '
+        '<div class="showcase-declaration" aria-label="Erdős Compendium progress">\n'
+        '<span>The collection today</span>\n'
+        f'<p>{counts["reviewed"]:,} reviewed articles among '
+        f'{counts["registered"]:,} listed problems</p>\n</div>\n'
+        f'<p>Another {counts["drafts"]:,} articles have been written '
+        f'but are awaiting review. The remaining '
+        f'{counts["reference_only"]:,} problems have catalogue entries '
+        'without a full article yet. '
+        'These figures are updated whenever the site is rebuilt, using the '
         '<a href="https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/'
         'governance/erdos_compendium/EDITORIAL_ADMISSIONS.json">'
-        'protected admissions ledger</a> and source-hash-validated manuscripts.</p>'
+        'record of reviewed articles</a> and the manuscripts themselves. '
+        'They measure the progress of the collection, not how many '
+        'mathematical questions have been solved.</p>'
     )
 
 
