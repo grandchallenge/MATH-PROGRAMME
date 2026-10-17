@@ -532,6 +532,70 @@ For the new middle prefix, the reflected **singleton** survivors are precisely T
 
 **Limitation:** the example demonstrates a genuine *numerical* batch capacity loss caused by a populated middle cohort and the surviving-site graph. It does not show a positive capacity drop on **every** step (the earlier canonical counterexample shows the opposite), nor any uniform lower bound on the drop under infinite persistent density. At small critical density, V_P can remain a positive fraction of the old interval and its graph may have critical-order independent sets. The multiscale obstruction must bound the survival of these **coupled** signed-code independent sets across linked cohorts.
 
+## 3F. A genuine many-cohort theorem: critical-density blocks cannot form arbitrarily long arithmetic runs
+
+The seven-layer result is the three-cohort case of a stronger **multicoherence obstruction**. The following theorem rules out long translated runs of dense B3 blocks **independently of the separation between their centres**.
+
+Let r>=4, R>=1, and q>=R be integers, and choose B large enough that all positions below are positive. Suppose a B3 set contains **2r+1 pairwise disjoint blocks**
+
+$
+A_i\subseteq[B+iq,\ B+iq+R-1]\quad(-r\le i\le r),
+$
+
+each containing at least m>=1 elements.
+
+**Theorem J (arithmetic-run extension exhaustion).** With s=floor(r/2),
+
+$
+\boxed{
+\binom{s}{2}m^3\le3R-2.
+}\tag{ARITHMETIC-RUN}
+$
+
+In particular if m>=cR^(1/3), for a fixed c>0, then
+
+$
+\boxed{
+\binom{\lfloor r/2\rfloor}{2}<\frac{3}{c^3},
+\quad\text{hence}\quad r=O(c^{-3/2}).
+}\tag{NO-LONG-DENSE-AP-RUN}
+$
+
+**Proof.** For each pair of indices 1<=i<j<=s, the third index k=−i−j lies in [−r,−3]. These are all **three distinct indices** and their sum is zero. Choose one actual B3 element from each of A_i,A_j,A_k; each pattern creates at least m³ distinct unordered three-element triples. Patterns for different i,j use different block-index multisets and cannot select the same element triple. All resulting sums belong to
+
+$
+[3B,\ 3B+3(R-1)]\cap\mathbb Z,
+$
+
+which contains 3R−2 integers, since iq+jq+kq=0. The original B3 property makes every selected triple sum distinct. Thus binom(s,2)m³<=3R−2. Under the fixed critical block coefficient c, substitute m³>=c³R and rearrange. QED.
+
+The bound is **independent of q**. Choosing farther-apart block centres cannot relieve the collision pressure once their centres have the same additive relation. The theorem is a genuinely multiblock and density-sensitive obstruction: after O(c^(-3/2)) equally spaced, critically populated cohorts, extension is impossible.
+
+**Essential limitation (no hidden density extraction).** Hypothetical persistent lower density A(N)>=cN^(1/3) does **not** imply the existence of 2r+1 populated, nearly equally spaced, short blocks of critical **local** density. Concentrating points into geometrically separated islands may satisfy cardinal lower bounds while avoiding these particular centre configurations; whether the full B3 property prohibits that avoidance is exactly the open arithmetic alignment/inverse question. Theorem J solves the aligned-run case, **not** the general Erdős #41 case.
+
+**A stronger exact coarse-bin formulation.** For a partition into integer blocks I_i=[iR,(i+1)R−1] and occupancies m_i, define for each index-sum s the number of actual unordered three-element selections of each bin-index pattern:
+
+$
+w(i,j,k)=
+\begin{cases}
+m_im_jm_k,&i<j<k,\\
+\binom{m_i+1}{2}m_k,&i=j<k,\\
+m_i\binom{m_j+1}{2},&i<j=k,\\
+\binom{m_i+2}{3},&i=j=k.
+\end{cases}
+$
+
+Then the full B3 property implies the exact **multiwindow sum-capacity inequality**
+
+$
+\boxed{
+\sum_{\substack{i\le j\le k\\i+j+k=s}}w(i,j,k)\le3R-2
+\qquad\text{for every integer }s.
+}\tag{COARSE-TRIPLE-CAPACITY}
+$
+
+Each selected actual triple has one unique unordered bin-index pattern and its sum belongs to the integer interval [sR,sR+3R−3]. Therefore the bound has neither multiplicity omissions nor double-counting across index patterns. This controls **any** family of equal-width bins, not only an aligned arithmetic run, though the set of coarse capacity inequalities is not by itself known to imply a critical-density dip.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
