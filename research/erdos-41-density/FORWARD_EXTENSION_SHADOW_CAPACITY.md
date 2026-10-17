@@ -50,37 +50,37 @@ The previously defined true batch capacity C(P,J) is difficult to compute direct
 
 For a nonempty integer interval J=[j0,j1] of diameter L, define its entire affine-shadow arena
 
-$
+$$
 K(J)=[2j_0-j_1,\ 2j_1-j_0]\cap\mathbb Z
 \quad\text{with }|K(J)|=3L+1.
-$
+$$
 
 For a B3 prefix P disjoint from J, set
 
-$
+$$
 \boxed{
 \Phi(P;J)=|K(J)\setminus T(P)|
 =(3L+1)-|T(P)\cap K(J)|.
 }\tag{EXACT-SHADOW-POTENTIAL}
-$
+$$
 
 **Theorem A2 (monotone extension potential, full strength).**
 
 1. Every actual B3 extension X subset J of P satisfies
 
-$
+$$
 \boxed{f(|X|)\le\Phi(P;J),\quad C(P,J)\le F(\Phi(P;J)).}\tag{SHADOW-ENVELOPE}
-$
+$$
 
 2. For any B3 prefix chain P_0 subset P_1 subset ... subset P_r with all prefixes disjoint from the **same** J,
 
-$
+$$
 \boxed{
 \Phi(P_0;J)-\Phi(P_r;J)
 =\sum_{i=1}^r
 |(T(P_i)\setminus T(P_{i-1}))\cap K(J)|.
 }\tag{EXACT-TELESCOPING}
-$
+$$
 
 Each new shadow position has exactly one owner, its **first** prefix appearance. Thus the tax is genuinely monotone, nonnegative, and neither duplicated across prefix stages nor dependent on an arbitrary block partition.
 
@@ -88,12 +88,12 @@ Each new shadow position has exactly one owner, its **first** prefix appearance.
 
 **Forward-shadow strengthening.** Under the geometry of the next section, the exact mixed shadow H(P,Y) lies in K(J) but is disjoint from T(P) (otherwise y+y'-p=a+b-c yields a forbidden B3 triple equality with two Y elements versus none). Hence
 
-$
+$$
 \boxed{
 \Phi(P;J)-\Phi(P\cup Y;J)
 \ge|H(P,Y)|=n\binom{m+1}{2}.
 }\tag{POTENTIAL-TAX}
-$
+$$
 
 This is a **real lower bound on a bona fide monotone future-extension potential**, not merely an improvement obtained by comparing two unrelated upper bounds. The potential also controls **every** joint future B3 batch, via (SHADOW-ENVELOPE). It still does not imply an actual decrease in C(P,J), since the upper bound F(Phi) may be slack.
 
