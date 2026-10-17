@@ -99,6 +99,40 @@ $$
 
 The right-hand side can vanish when C(P,J) is far below its ordinary shadow envelope. This failure cannot be suppressed: see the finite hostile example.
 
+## 3A. A second, nonredundant tax: blocked translations of any fixed future shape
+
+The forward shadow imposes a quantified restriction on **where a proposed future batch shape can be placed**, even without measuring its optimum cardinality. Let X_0 be any nonempty finite B3 *template*, of ell points, and let t range over all integer translations for which X_0+t would be disjoint from P union Y. Its centered shadow translates exactly:
+
+$
+T(X_0+t)=T(X_0)+t.
+$
+
+Whenever t belongs to the integer difference set H(P,Y)-T(X_0), one of the forbidden early/middle shadow positions coincides with a shadow of X_0+t. Consequently P union Y union (X_0+t) **cannot** be B3 (including if some blocks overlap, because it is not an admissible disjoint extension).
+
+**Theorem B2 (fixed-shape extension-placement tax).** There are at least
+
+$
+\boxed{
+|H(P,Y)-T(X_0)|
+\ge |H(P,Y)|+|T(X_0)|-1
+=n\binom{m+1}{2}+f(\ell)-1
+}\tag{BLOCKED-TRANSLATIONS}
+$
+
+different integer shifts prohibited by this particular shadow collision. The second inequality is the elementary sumset inequality |E-F|>=|E|+|F|-1 for finite nonempty integer sets: ordering their elements constructs |E|+|F|-1 distinct extreme differences.
+
+For a template X_0 supported in an interval of diameter d, the entire set of these excluded shifts lies inside an interval of length at most L+3d+1, because H subset J has span at most L and T(X_0) has span at most 3d. Hence in that **full translation arena**, at least the fraction
+
+$
+\boxed{
+\frac{n\binom{m+1}{2}+f(\ell)-1}{L+3d+1}
+}\tag{TRANSLATION-FRACTION}
+$
+
+of shifts are blocked by forward-shadow competition. At critical-scale n,m,ell of order R^(1/3), with L,d=O(R), this can be a fixed positive fraction of the possible translates.
+
+**Important limitation:** some shifts in the full arena may not place X_0 wholly into the predetermined future interval J; the fraction is a property of the full translate-support arena, **not** a lower bound on blocked admissible placements *inside J*. Different prospective future B3 batches may change shape, so this fixed-template exclusion does not imply a decrease in the optimum true capacity C(P,J). This theorem captures a rigorously quantified entropy tax, not the still-open universal batch tax.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
