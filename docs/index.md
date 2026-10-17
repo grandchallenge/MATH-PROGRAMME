@@ -13,6 +13,7 @@ hide:
     <div class="home-hero__actions">
       <a class="home-action home-action--primary" href="CURRENT_WORK/">Current work</a>
       <a class="home-action" href="SHOWCASE/">Results</a>
+      <a class="home-action" href="erdos/">Erdős Compendium</a>
     </div>
     <div class="home-pipeline" aria-label="Mathematical execution path">
       <a class="home-pipeline__stage" href="https://github.com/grandchallenge/MATHFORGE">
@@ -41,6 +42,12 @@ hide:
 Mathematical discovery, solving, and certification are different research states. The programme keeps those states separate so that evidence cannot acquire a stronger claim merely because it is well presented.
 
 **MATHFORGE** reconstructs the object, source, and candidate route. **MATHSOLVE** organizes and attacks the exact obligations that block progress. **MATHCERT** checks the precise claim and support surface presented to it. **MATH-PROGRAMME** preserves the integrated record, routing, governance, and continuation state; it does not certify mathematics by itself.
+
+## Erdős Compendium — the public reference
+
+The [Erdős Compendium](erdos/index.md) makes the complete numbered catalogue accessible, with problem statements, source references and — where the evidence has been editorially admitted — researched explanations. Readers can [browse all 1,221 registered problems](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/) or follow the admission record for individual articles.
+
+<!-- GCL_ERDOS_HOME_STATUS -->
 
 ## How a claim moves
 
@@ -95,6 +102,7 @@ Rows remain here only while the corresponding work is materially active. The [Cu
 - **[Results and Exemplars](SHOWCASE.md)** records bounded outputs that have crossed a declared checking, publication, or archival boundary. It is not a ranking of importance.
 - **[Programme Atlas](PROGRAMME_ATLAS.md)** explains how objects and claims change state across MATHFORGE, MATHSOLVE, MATHCERT, and programme integration.
 - **[Mathematical Estate](domains/index.md)** preserves the standing domain catalogue, routes, and archives. Presence there does not imply current priority.
+- **[Erdős Compendium](erdos/index.md)** opens the numbered mathematical reference, reviewed explainers, source evidence, and outstanding editorial work.
 
 ## Claim boundary
 
