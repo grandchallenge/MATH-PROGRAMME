@@ -196,10 +196,10 @@ This is an **agent-proved conditional lifting theorem**, with a named checkable 
 
 Let $S_\infty=\mathbb N\cup\{\infty\}$ as in (18.8). A sufficient condition for the global phantom channel to vanish is the **specific** surjectivity
 
-$
+$$
 \mathsf P(S_\infty)\longrightarrow\mathsf Q(S_\infty).
 \tag{18.15}
-$
+$$
 
 If every section of $\mathsf Q$ on this one profinite test space lifts to $\mathsf P$, the universal free-measure property and the retract $T_r\subset\mathcal M_{<p}(S_\infty)$ imply that every $T_r\to\mathsf Q$ lifts. Corollary 18.4 then gives a lift for every $\underline s\to\mathsf Q$. This is a **conditional** statement: the map in (18.15) has not been proved surjective. Surjectivity of the liquid quotient morphism as a sheaf is insufficient, since $S_\infty$ is not extremally disconnected.
 
