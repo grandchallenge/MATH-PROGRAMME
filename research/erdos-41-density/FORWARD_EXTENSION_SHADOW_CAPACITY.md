@@ -292,6 +292,87 @@ $
 
 Thus no universal lemma can equate a large *fractional* loss of legal singleton positions with a positive *numerical* decline in true batch capacity, even for the canonical interval after a valid B3 one-anchor extension. This test directly refutes a natural but false proposed bridge. It is not a counterexample to the infinite Erdős problem.
 
+## 3C. Exact reoptimization model: reflect the future batch back into the old prefix interval
+
+The remaining bridge concerns actual **optimal batches**, not individual future sites. A sufficiently distant one-anchor future window admits a surprisingly small and exact reformulation as a **two-colour signed-sum packing problem entirely inside the original scale**.
+
+Let P subset [1,R] be a finite repeated-summand B3 set, let y>6R, and define the canonical J_y=[2y-R,2y-p_min]. Every X subset J_y corresponds bijectively to a reflected finite set
+
+$
+\boxed{T=\{2y-x:x\in X\}\subseteq[p_{\min},R].}\tag{REFLECT}
+$
+
+For any two finite sets P,T define the two *coloured signed-word injectivity* properties
+
+$
+\begin{aligned}
+(\mathrm{PP-T}):&\quad
+(a,b,t)\longmapsto a+b-t
+&& (a,b\in P,\ a\le b,\ t\in T),\\
+(\mathrm{P-TT}):&\quad
+(p,t,u)\longmapsto p-t-u
+&& (p\in P,\ t,u\in T,\ t\le u).
+\end{aligned}
+$
+
+Here "injective" means no two **different** displayed unordered-positive word labels yield equal integers. It does not demand that either image avoid the other, because they are *different digit levels* in the original unanchored B3 problem.
+
+**Theorem F (complete, exact reflected capacity characterization).** For y>6R and X=2y−T,
+
+$
+\boxed{
+P\cup X\text{ is }B_3
+\Longleftrightarrow
+\begin{cases}
+T\text{ is }B_3,\\
+\mathrm{PP-T}\text{ is injective},\\
+\mathrm{P-TT}\text{ is injective}.
+\end{cases}
+}\tag{UNANCHORED-REFLECTION}
+$
+
+Furthermore,
+
+$
+\boxed{
+P\cup\{y\}\cup X\text{ is }B_3
+\Longleftrightarrow
+\begin{cases}
+T\text{ is }B_3,\\
+\mathrm{PP-T}\text{ and }\mathrm{P-TT}\text{ are injective},\\
+T\cap T(P)=\varnothing,\\
+P\cap T(T)=\varnothing.
+\end{cases}
+}\tag{ANCHORED-REFLECTION}
+$
+
+All statements include repeated summands. Here T(P)=P+P−P and T(T)=T+T−T are full cubic shadows, not their internal restrictions.
+
+**Proof.** Distinguish each selected value in P (digit level 0), the anchor y (level 1), and each future x=2y−t (level 2). In a three-term sum, the total digit level k lies in {0,...,6}, and the remaining offset is bounded in absolute value by 3R. As y>6R, sums from distinct levels cannot collide. Without the anchor the only available levels are 0,2,4,6. Their offsets are respectively sums PPP, values PP−T, values P−TT, and negatives of unordered triple sums TTT. Triple-sum uniqueness is therefore equivalent to the displayed three conditions.
+
+With the anchor, odd levels appear: level 1 gives ordinary unordered pair sums PP (unique by B3), level 3 gives offset 0 (yyy) and the differences P−T (y+x+p), and level 5 gives negatives of unordered pair sums TT (unique by T B3). Injectivity of P−T follows from PP−T injectivity by fixing any p0∈P and comparing p+p0−t; 0 is excluded exactly when T∩P is empty. That follows from T∩T(P)=empty since P subset T(P).
+
+At level 2 there is additionally the type yy+p, offset p. It cannot collide with PP−T precisely when P∩(P+P−T)=empty, equivalently T∩T(P)=empty. At level 4 there is additionally yy+x, offset −t. It cannot collide with P−TT precisely when (−T)∩(P−T−T)=empty, equivalently P∩T(T)=empty. Every other within-level uniqueness condition was already included. This proves both directions. QED.
+
+**Exact consequence for the true maximum capacities, independent of y once y>6R:**
+
+$
+\boxed{
+\begin{aligned}
+C(P,J_y)&=\max_{T\subseteq[p_{\min},R]}
+\{|T|:T\text{ satisfies UNANCHORED-REFLECTION}\},\\
+C(P\cup\{y\},J_y)&=\max_{T\subseteq[p_{\min},R]}
+\{|T|:T\text{ satisfies ANCHORED-REFLECTION}\}.
+\end{aligned}
+}\tag{REFLECTED-TRUE-CAPACITY}
+$
+
+The reoptimization loophole is now *completely specified*: future batches can change their reflected shape T to evade both mutual cubic-shadow exclusions. Merely deleting many eligible t values in T(P) does not control the maximum T that also satisfies the two signed-word injectivity conditions and reciprocal shadow avoidance. This reframes the remaining proof obstacle without residue assumptions and without any appeal to generic pseudorandom mixing.
+
+The two reciprocal exclusions are independently meaningful. The first is the strong cubic singleton tax already proved; the second is a genuinely **batch-dependent** obstruction that can only be seen after selecting the full reflected T, namely P∩T(T)=empty. This identifies a precise next gate: show that for critically dense P no T of the required critical size can satisfy *both* signed-word injectivities and the two reciprocal shadow exclusions across a sustained chain of scales.
+
+**Hostile control, even in the exact reflected setting.** With P={1,2,5,14}, R=14 and y=100, J_y=[186,199]. The anchored and unanchored true capacities both equal 1, despite more than half the future singleton positions being removed. Hence even the exact reciprocal-shadow characterization does not automatically yield a positive single-step batch decrement.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
