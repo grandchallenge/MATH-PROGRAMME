@@ -27,27 +27,28 @@ class ShowcasePublicationTests(unittest.TestCase):
             "reference_only": EXPECTED_COUNT - len(authored),
         })
         rendered = erdos_showcase_status()
-        self.assertIn(f'{len(admitted):,} reviewed explainers', rendered)
-        self.assertIn(f'{EXPECTED_COUNT:,} registered problems', rendered)
-        self.assertIn(f'{counts["drafts"]:,} written drafts', rendered)
-        self.assertIn(f'{counts["reference_only"]:,} catalogue-only references', rendered)
-        self.assertIn("protected admissions ledger", rendered)
-        self.assertIn("not mathematical proof outcomes", rendered)
+        self.assertIn(f'{len(admitted):,} reviewed articles', rendered)
+        self.assertIn(f'{EXPECTED_COUNT:,} listed problems', rendered)
+        self.assertIn(f'Another {counts["drafts"]:,} articles have been written', rendered)
+        self.assertIn(f'{counts["reference_only"]:,} problems have catalogue entries', rendered)
+        self.assertIn("record of reviewed articles", rendered)
+        self.assertIn("not how many mathematical questions have been solved", rendered)
 
     def test_showcase_marker_and_evidence_links(self):
         source = (ROOT / "docs/SHOWCASE.md").read_text(encoding="utf-8")
         self.assertEqual(source.count(ERDOS_SHOWCASE_MARKER), 1)
         for phrase in (
-            "OpenAI Ten Proofs", "Logarithmic GCD kernel",
-            "VGSE-001", "Erdős Compendium",
+            "OPENAI_TEN_PROOFS_VERIFICATION.md", "LOG_GCD_PUBLICATION.md",
+            "folding mechanisms", "Erdős Compendium",
             "issues/2690", "issues/2698", "pull/2701",
             "CURRENT_WORK.md#vgse-001--mechanical-semantics",
+            'id="fixture-003-the-logarithmic-gcd-kernel"',
         ):
             self.assertIn(phrase, source)
         rendered = on_page_markdown(source, SimpleNamespace(
             file=SimpleNamespace(src_uri="SHOWCASE.md")), None, None)
         self.assertNotIn(ERDOS_SHOWCASE_MARKER, rendered)
-        self.assertEqual(rendered.count('aria-label="Erdős protected publication snapshot"'), 1)
+        self.assertEqual(rendered.count('aria-label="Erdős Compendium progress"'), 1)
 
     def test_showcase_marker_fail_closed_and_other_pages_preserved(self):
         page = SimpleNamespace(file=SimpleNamespace(src_uri="SHOWCASE.md"))
