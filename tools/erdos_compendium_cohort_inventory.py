@@ -11,6 +11,10 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
+import sys
+
+# Operator-only, network-bound manual inventory: reuse verified CI source-identity helpers.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ci"))
 
 from erdos_compendium_source_reconcile import token, get_comments, valid_return
 
