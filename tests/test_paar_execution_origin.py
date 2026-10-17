@@ -60,6 +60,9 @@ class OriginWitnessTests(unittest.TestCase):
                   "path":WORKFLOW_PATH,"head_branch":"main","head_sha":RUN_SHA,
                   "run_attempt":1}
         self.main={"protected":True,"commit":{"sha":RUN_SHA}}
+        self.compare={"status":"ahead","ahead_by":2,"behind_by":0,
+                      "base_commit":{"sha":RUN_SHA},
+                      "merge_base_commit":{"sha":RUN_SHA}}
         self.job={"name":JOB_NAME,"head_sha":RUN_SHA,"conclusion":"success",
                   "status":"completed","runner_group_name":"GitHub Actions",
                   "steps":[{"name":x,"status":"completed","conclusion":"success"}
@@ -76,6 +79,7 @@ class OriginWitnessTests(unittest.TestCase):
         data={
           suffix+f"/actions/runs/{RUN_ID}":self.run,
           suffix+"/branches/main":self.main,
+          suffix+f"/compare/{RUN_SHA}...{self.main['commit']['sha']}":self.compare,
           suffix+f"/actions/runs/{RUN_ID}/jobs?per_page=100":
               {"total_count":1,"jobs":[self.job]},
           suffix+f"/actions/runs/{RUN_ID}/artifacts?per_page=100":
@@ -119,11 +123,39 @@ class OriginWitnessTests(unittest.TestCase):
 
     def test_source_ref_not_protected(self):
         self.main["protected"]=False
-        self.reject("no longer equals protected main")
+        self.reject("no longer protected")
 
-    def test_main_advance_fails_closed(self):
+    def test_protected_main_fast_forward_accepts_historical_run(self):
         self.main["commit"]["sha"]="f"*40
-        self.reject("no longer equals protected main")
+        result=self.verify()
+        self.assertEqual(result["protected_history_relation"], "VERIFIED_PROTECTED_ANCESTOR")
+        self.assertEqual(result["trusted_workflow_head"], RUN_SHA)
+        self.assertEqual(result["current_protected_main"], "f"*40)
+
+    def test_protected_main_diverged_fails_closed(self):
+        self.main["commit"]["sha"]="f"*40
+        self.compare["status"]="diverged"
+        self.reject("not ancestor")
+
+    def test_rebased_history_fails_closed(self):
+        self.main["commit"]["sha"]="f"*40
+        self.compare["merge_base_commit"]["sha"]="e"*40
+        self.reject("not ancestor")
+
+    def test_reversed_history_fails_closed(self):
+        self.main["commit"]["sha"]="f"*40
+        self.compare.update({"status":"behind","ahead_by":0,"behind_by":3})
+        self.reject("not ancestor")
+
+    def test_compare_wrong_base_commit_fails_closed(self):
+        self.main["commit"]["sha"]="f"*40
+        self.compare["base_commit"]["sha"]="d"*40
+        self.reject("not ancestor")
+
+    def test_compare_malformed_counters_fail_closed(self):
+        self.main["commit"]["sha"]="f"*40
+        self.compare["ahead_by"]=True
+        self.reject("not ancestor")
 
     def test_missing_upload_step(self):
         self.job["steps"].pop()

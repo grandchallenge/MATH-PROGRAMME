@@ -50,8 +50,13 @@ replay. Do not claim GCL-wide integrity certification.
    `python3 ci/paar_execution_origin.py verify-live --run-id <RUN_ID>`.
    The verifier downloads the artifact using authenticated GitHub and
    rejects stale/missing/failed/expired/altered runs, source, artifacts
-   or role output. The verifier intentionally rejects a trusted-main
-   advance, until a new qualified replay is taken.
+   or role output. When protected `main` advances, the historical run
+   remains admissible only if the authenticated GitHub compare API proves
+   the exact workflow commit is an ancestor of the current protected head
+   with zero divergent ancestry; the source files remain pinned to the
+   original workflow commit. Missing, divergent, rebased or nonprotected
+   history fails closed. This preserves replay after a later evidence PR
+   merges, without making the historical run attest later code.
 5. Persist the independently reviewed platform witness and its digest
    through normal protected governance if it will serve as durable evidence.
    Do not retroactively assert that this workflow authenticated
@@ -62,7 +67,7 @@ replay. Do not claim GCL-wide integrity certification.
 `python3 -m unittest -q tests.test_paar_execution_origin`
 
 Mocked negative controls reject non-dispatch events, failed platform jobs,
-private runner groups, missing runner steps, nonprotected/stale main,
+private runner groups, missing runner steps, nonprotected/divergent main or fabricated ancestry,
 expired or unrelated artifacts, wrong role, fabricated stdout digest,
 incorrect/refuted referee assertions, material drift, unmerged/forked
 sources and prohibited scope promotion. A mock positive is a unit test,
