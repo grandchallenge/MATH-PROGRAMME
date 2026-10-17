@@ -12,9 +12,12 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
 import tempfile
 import urllib.parse
 from pathlib import Path
+
+sys.path.insert(0,str(Path(__file__).resolve().parents[3]/"ci"))
 
 from agent_role_receipt import demand_native_source_review
 from paar_execution_origin import verify_witness, gh_api, OriginError

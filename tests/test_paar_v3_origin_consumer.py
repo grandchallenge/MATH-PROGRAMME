@@ -7,7 +7,7 @@ import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ci'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'governance'/'assurance'/'GCL-PAAR-001'))
 import paar_v3_origin_consumer as v3
 
 RUN_SHA='80f3b83d94795dba2acceef05f66b386ac6f735d'

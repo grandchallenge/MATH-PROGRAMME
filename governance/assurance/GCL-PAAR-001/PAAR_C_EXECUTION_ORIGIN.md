@@ -85,7 +85,7 @@ attestations. GCL-PAAR-001 and its estate-wide A/B/D/E audits remain open.
 
 INTELLECT #126 introduces source PR #127 with the original, real GitHub-hosted
 run #38988609732 witness and a V3 source dossier. MATH-PROGRAMME's
-`ci/paar_v3_origin_consumer.py` is a **new opt-in PROTECTION-origin verifier**.
+`governance/assurance/GCL-PAAR-001/paar_v3_origin_consumer.py` is a **new opt-in PROTECTION-origin verifier**.
 It does not change older V1/V2 receipt acceptance. The V3 success claim is
 restricted to the *later GitHub-hosted execution*; original October 15 CHAD
 execution origin remains UNATTESTED.
@@ -101,7 +101,7 @@ manifest readback. Review and production platform evidence are independent
 requirements. No local output hash alone is sufficient.
 
 Production invocation, **only after** a genuine protected V3 receipt PR exists:
-`python3 ci/paar_v3_origin_consumer.py --receipt-pr <actual-receipt-pr-number>`.
+`python3 governance/assurance/GCL-PAAR-001/paar_v3_origin_consumer.py --receipt-pr <actual-receipt-pr-number>`.
 An absent source, missing native approval, unmerged receipt, expired artifact,
 blob/content drift or failed hosted run aborts the check. Mock-positive unit
 tests do **not** certify that a real V3 receipt exists. PR #127 and its
