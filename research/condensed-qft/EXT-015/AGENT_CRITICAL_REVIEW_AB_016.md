@@ -25,39 +25,39 @@ Write $F_b=\mathcal D_{L_b}(V)$, $G_b=\underline{F_b}$, $G=\varinjlim_bG_b$ and 
 1. **Liquid quotient identification.** The map $F_c\to F_c/F_b$ is a continuous surjective linear map between Fréchet spaces with closed kernel. The Fréchet continuous-selection theorem provides a continuous, possibly nonlinear, right inverse. For a profinite plot into the quotient, composition with this section gives a continuous lift. Hence the sequence of underlying condensed modules is exact, and by extension closure the **liquid** categorical cokernel is $\underline{F_c/F_b}$. The applicable Fréchet generalization of Bartle–Graves is the Michael continuous-selection consequence; see for example the explicit Fréchet statement [Lemma 2.15 of this mathematical source](https://www.research-collection.ethz.ch/bitstreams/f7cbded6-369d-4036-80fc-a23dadb16a81/download), rather than attributing the general Fréchet version solely to the original Banach-space theorem.
 2. **Closed quotient stages.** The inclusion $F_c/F_b\hookrightarrow F_d/F_b$ is a closed topological embedding: its image has preimage $F_c$ under the quotient $F_d\twoheadrightarrow F_d/F_b$, and the quotient topology restricts to the Fréchet quotient topology by the open mapping theorem.
 3. **Colimit quotient.** Filtered colimits in liquid modules are exact and the inclusion into condensed modules preserves them. Taking cokernels yields
-$
+$$
 Q_b\cong\varinjlim_{c\ge b}\underline{F_c/F_b}.
-$
+$$
 4. **Scalar probes.** For $x\in V\setminus L_b$, evaluation at $x$ annihilates $F_b$ and descends to a compatible map $Q_b\to\underline{\mathbb R}$. If $f:\underline H\to Q_b$, each induced $\lambda_x:H\to\mathbb R$ is continuous linear by Fréchet condensed full faithfulness. For $c\ge b$, the closed linear subspace
-$
+$$
 H_c=\bigcap_{x\notin L_c}\ker(\lambda_x)
-$
+$$
 consists exactly of the global points mapped into the quotient stage $F_c/F_b$. Since $Q_b(*)=\bigcup_{c\ge b}(F_c/F_b)$, the $H_c$ cover $H$. By Baire category, one $H_{c_0}$ has interior, and a linear subspace with interior is all $H$.
 5. **Profinite upgrade.** Any profinite plot of $f$ factors at some stage of the filtered colimit. Its ordinary point images lie in the common smaller **closed** stage $F_{c_0}/F_b$; a continuous map to a Fréchet space whose image lies in a closed subspace is continuous to that subspace. These factorizations are unique and natural, giving a liquid map $H\to\underline{F_{c_0}/F_b}$. Stage monomorphisms give injectivity of the Hom comparison.
 
 Therefore
-$
+$$
 \varinjlim_{c\ge b}\mathrm{Hom}_{\mathcal A_p}
 (H,\underline{F_c/F_b})
 \ \cong\ \mathrm{Hom}_{\mathcal A_p}(H,Q_b).
 \tag{A-16.1}
-$
+$$
 
 The connecting morphisms for the natural short exact sequences
-$
+$$
 0\to G_b\to G_c\to\underline{F_c/F_b}\to0
 \qquad\text{and}\qquad
 0\to G_b\to G\to Q_b\to0
-$
+$$
 commute. If $\xi\in\mathrm{Ext}^1(H,G_b)$ becomes zero over $G$, then $\xi=\delta_b(f)$. By (A-16.1), $f$ comes from $F_c/F_b$ at some finite $c$, so the finite connecting diagram shows that $\xi$ becomes zero over $G_c$. This establishes the natural injection
-$
+$$
 \boxed{\quad
 \varinjlim_b\mathrm{Ext}^1_{\mathcal A_p}(H,G_b)
 \ \hookrightarrow\
 \mathrm{Ext}^1_{\mathcal A_p}(H,G).
 \quad}
 \tag{A-16.2}
-$
+$$
 
 **Scope guard:** No inverse system of *varying* source supports, positive degree-one **surjectivity**, or smooth nonlinear Costello–Gwilliam comparison is covered by (A-16.2).
 
@@ -66,44 +66,44 @@ $
 **Verdict:** The worker's submitted blanket claim that real scalar and finite-dimensional real liquid modules are *not* projective is **FALSE**, and its projective generator was imprecisely typed. The abstract non-Fréchet status of the syzygy was **not proved**. A usable projective presentation nevertheless follows by the corrected construction below.
 
 **Finite-dimensional control (decisive).** Since a singleton $*$ is extremally disconnected, Theorem 6.5 gives
-$
+$$
 \mathcal M_{<p}(*)\cong\underline{\mathbb R}
 \quad\text{projective in }\mathcal A_p.
-$
+$$
 Every finite direct sum $\underline{\mathbb R^m}$ is projective, and consequently
-$
+$$
 \mathrm{Ext}^1_{\mathcal A_p}(\underline{\mathbb R^m},T)=0
 \qquad (m<\infty).
 \tag{B-16.1}
-$
+$$
 This directly refutes the worker's contrary assertion. It is **not** an inference from ordinary algebraic vector-space semisimplicity.
 
 **Corrected cover construction.** Put $E=\mathcal D_{[-1,1]}(\mathbb R)$, a separable Fréchet space, and $H=\underline E$. Let $\mathscr S_H$ be a set of representatives of all pairs $(T,u)$ where $T$ is an extremally disconnected profinite compactum of weight at most $2^{\aleph_0}$ and $u:T\to E$ is continuous. Define
-$
+$$
 P_H=\bigoplus_{(T,u)\in\mathscr S_H}\mathcal M_{<p}(T),
 \qquad
 \varepsilon:P_H\longrightarrow H
 \tag{B-16.2}
-$
+$$
 where each summand maps to $H$ by the universal free-liquid extension of $u$.
 
 Why is $\varepsilon$ epic, rather than merely an arbitrary cover? For any extremally disconnected test compactum $S$, a plot $v:S\to E$ has **compact metrizable image** $K=v(S)$. Let $T\to K$ be its Gleason extremally disconnected projective cover. The clopen algebra of $T$ can be chosen from the regular-open algebra of the compact metrizable $K$, which has cardinal at most $2^{\aleph_0}$, so $w(T)\le 2^{\aleph_0}$. Because $S$ itself is projective among compact Hausdorff spaces, $v:S\to K$ lifts continuously to $S\to T$. The Dirac element of $\mathcal M_{<p}(T)(S)$ then maps under the corresponding summand of (B-16.2) to $v$. Thus $\varepsilon(S)$ is surjective for extremally disconnected tests, which detect epimorphisms in condensed, hence liquid, modules. This fixes the submitted proof's incorrect suggestion that **every** profinite test $S$ itself belongs to the continuum-bounded indexing set.
 
 Each $\mathcal M_{<p}(T)$ is projective by Theorem 6.5, and a set-indexed direct sum of projectives remains projective because Hom from that sum is a product of exact covariant-in-target functors, and products of surjective abelian-group maps are surjective. Therefore $P_H$ is projective and
-$
+$$
 0\longrightarrow R_H\overset{i}\longrightarrow
 P_H\overset{\varepsilon}\longrightarrow H\longrightarrow0,
 \qquad R_H=\ker\varepsilon
 \tag{B-16.3}
-$
+$$
 is a genuine exact sequence of liquid modules. The first-Ext long exact sequence gives
-$
+$$
 \mathrm{Ext}^1_{\mathcal A_p}(H,T)
 \cong
 \frac{\mathrm{Hom}_{\mathcal A_p}(R_H,T)}
 {\{\,\psi i:\psi\in\mathrm{Hom}_{\mathcal A_p}(P_H,T)\,\}}.
 \tag{B-16.4}
-$
+$$
 This is a **categorical presentation**, not an effective explicit description of all maps out of $R_H$. In particular, (B-16.3) alone cannot prove whether $R_H$ is Fréchet, so that worker assertion is **REJECTED**. Do not apply Baire to $R_H$ without additional proof.
 
 ## 4. Borel infinite-jet hostile control
@@ -111,26 +111,26 @@ This is a **categorical presentation**, not an effective explicit description of
 Let $J:\mathcal D_{[-1,1]}(\mathbb R)\twoheadrightarrow\mathbb R^{\mathbb N_0}$ take all derivatives at $0$. Borel's extension theorem gives surjectivity; the map is continuous between Fréchet spaces. The Fréchet continuous-selection result from Section 2 gives a **nonlinear continuous section**, ensuring surjectivity on profinite plots. The kernel and cokernel sequence therefore realizes to a genuine short exact sequence of liquid modules.
 
 Suppose this sequence had a *liquid-linear* section. Full faithfulness for metrizable topological linear realizations would give a **continuous linear** Fréchet section $t:\mathbb R^{\mathbb N_0}\to\mathcal D_{[-1,1]}(\mathbb R)$. The continuous seminorm $f\mapsto\sup_{|x|\le1/2}|f(x)|$, composed with $t$, is controlled by finitely many product coordinates. For every basis vector $e_k$ beyond those coordinates, $t(e_k)$ would be identically zero on a neighborhood of $0$, hence $J(t(e_k))=0$, contradicting $Jt(e_k)=e_k$. Thus the exact **liquid** extension is nonsplit:
-$
+$$
 0\ne[J]\in
 \mathrm{Ext}^1_{\mathcal A_p}
 \left(\underline{\mathbb R^{\mathbb N_0}},
 \underline{\ker J}\right).
 \tag{B-16.5}
-$
+$$
 
 The source of this extension is the **jet product**, not the fixed test-function $H$ in (A-16.2). It does **not** show failure of target-stage Ext surjectivity. The jet product is not projective, as (B-16.5) demonstrates. Scholze's projectivity assertion about $\mathbb R$ is fully consistent with this.
 
 ## 5. The actual research boundary, with no artificial handoff
 
 Take the corrected fixed projective cover (B-16.3) and $G=\varinjlim_bG_b$. By (B-16.4), the comparison's surjectivity is **equivalent** to
-$
+$$
 \forall\phi\in\mathrm{Hom}(R_H,G),\quad
 \exists b,\ \phi_b\in\mathrm{Hom}(R_H,G_b),\
 \psi\in\mathrm{Hom}(P_H,G):
 \quad \phi=\iota_b\phi_b+\psi i.
 \tag{C-16.1}
-$
+$$
 This is a meaningful **syzygy support modulo all boundaries** criterion; simply finding an escaping representative proves nothing. The orthogonal criterion for a counterexample is a genuine liquid class whose push-forwards to every $Q_b$ remain nonzero. Both C tracks operate on this **same fixed corrected category and cover**. Since (A-16.2) settles injection, the only question for the first-degree comparison is surjection.
 
 **Research next:** EXT-015C-P seeks a theorem establishing (C-16.1) for every syzygy map; EXT-015C-N constructs a $\phi$ violating it even after every allowed boundary, equivalently a persistently nonzero quotient extension class. These are GCL agent mathematical tasks, not Human Steward review assignments. The Costello–Gwilliam derived/smooth comparison D remains separate and dependent on a genuine result about this comparison.
