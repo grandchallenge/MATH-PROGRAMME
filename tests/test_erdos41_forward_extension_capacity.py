@@ -108,6 +108,21 @@ def shadow_potential(p,J):
     return len(arena-shadow(p))
 
 
+def reflected_signed_word_certificate(p, reflected):
+    """Exact two-colour B3 word conditions, with/without middle anchor."""
+    t=tuple(sorted(reflected))
+    p=tuple(sorted(p))
+    p_pairs=[a+b for a,b in combinations_with_replacement(p,2)]
+    t_pairs=[a+b for a,b in combinations_with_replacement(t,2)]
+    pp_minus_t=[s-x for s in p_pairs for x in t]
+    p_minus_tt=[x-s for x in p for s in t_pairs]
+    unanchored=(is_b3(t) and len(set(pp_minus_t))==len(pp_minus_t)
+                and len(set(p_minus_tt))==len(p_minus_tt))
+    anchored=(unanchored and not (set(t)&shadow(p))
+              and not (set(p)&shadow(t)))
+    return unanchored,anchored
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -343,6 +358,49 @@ class ForwardShadowCapacityTests(unittest.TestCase):
             self.assertGreaterEqual(len(definitely_blocked),max(0,len(internal)-d))
             for t in definitely_blocked:
                 self.assertFalse(is_b3(p+[y]+[t+v for v in template]))
+
+
+    def test_reflected_signed_word_equivalence_all_small_future_sets(self):
+        from itertools import combinations
+        p=[1,2,5,14];R=max(p)
+        for y in (100,101,250):
+            self.assertGreater(y,6*R)
+            self.assertTrue(is_b3(p+[y]))
+            candidate=tuple(range(min(p),R+1))
+            checked=0
+            for k in range(0,5):
+                for t in combinations(candidate,k):
+                    x=[2*y-v for v in t]
+                    unanchored,anchored=reflected_signed_word_certificate(p,t)
+                    with self.subTest(y=y,t=t):
+                        self.assertEqual(is_b3(p+x),unanchored)
+                        self.assertEqual(is_b3(p+[y]+x),anchored)
+                    checked+=1
+            self.assertEqual(checked,1471)
+
+    def test_reflected_true_batch_optimum_is_anchor_invariant(self):
+        p=[1,2,5,14]
+        before=[]
+        after=[]
+        for y in (100,101,250):
+            J=list(range(2*y-max(p),2*y-min(p)+1))
+            cb,ca=capacity(p,J),capacity(p+[y],J)
+            before.append(len(cb))
+            after.append(len(ca))
+        self.assertEqual(before,[1,1,1])
+        self.assertEqual(after,[1,1,1])
+
+    def test_reflection_conditions_are_not_naive_b3_of_color_union(self):
+        # The reflected colour T may share literal integers with old P.
+        # This is allowed before inserting y, but not afterward.
+        p=[1,2,5]
+        t=[1]
+        unanchored,anchored=reflected_signed_word_certificate(p,t)
+        self.assertTrue(unanchored)
+        self.assertFalse(anchored)
+        y=100
+        self.assertTrue(is_b3(p+[2*y-1]))
+        self.assertFalse(is_b3(p+[y,2*y-1]))
 
 
 if __name__=="__main__":
