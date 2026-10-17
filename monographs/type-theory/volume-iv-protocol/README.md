@@ -2,6 +2,10 @@
 
 Work set: `TYPE-THEORY-VOL-IV-001` (issue #877).
 
+**[Read the protected Gate-1 development PDF](./PROTOCOL-preview.pdf)**
+
+This PDF is a development/readability preview built from the protected Gate-1 source at Programme commit `823265684d0057e74fca267ce6b51cf1c12d191b`. It does not track the subsequent fourteen-chapter composition candidate and is not a Gate-8-qualified or published edition.
+
 Protected Gate 0 admission: `34cf03876486eed086f2b05c9b01d9d8887915e7`.
 
 Protected Gate 1 source head: `12d25fdc4a5fe7c682d224efd105d91854b5b93a`.
