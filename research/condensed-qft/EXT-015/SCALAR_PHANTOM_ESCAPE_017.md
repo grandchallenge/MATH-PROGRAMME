@@ -101,7 +101,7 @@ r:G\longrightarrow\mathsf S
 \tag{17.8}
 $$
 
-as follows: $\iota$ sends the $n$th scalar summand to its multiple of $\phi_n$; $r$ sends each test function $f$ to the finite sequence $(f(x_n))_n$. Every compact-support stage $G_b$ maps under $r$ into a **finite** scalar prefix, since only finitely many $x_n$ lie in $[-b,b]$. Its finite-stage maps are continuous linear maps of Fréchet spaces, hence liquid. The colimit property constructs $r$, and $r\iota=\mathrm{id}_{\mathsf S}$.
+as follows: $\iota$ sends the scalar summand indexed by $n$ to its multiple of $\phi_n$; $r$ sends each test function $f$ to the finite sequence $(f(x_n))_n$. Every compact-support stage $G_b$ maps under $r$ into a **finite** scalar prefix, since only finitely many $x_n$ lie in $[-b,b]$. Its finite-stage maps are continuous linear maps of Fréchet spaces, hence liquid. The colimit property constructs $r$, and $r\iota=\mathrm{id}_{\mathsf S}$.
 
 Let $C=\ker r$; then $G\cong\mathsf S\oplus C$. Push forward (17.2) along $\iota$. The resulting exact liquid sequence is explicitly isomorphic to
 
@@ -137,11 +137,11 @@ E_n=\mathrm{Ext}^1_{\mathcal A}(H,\underline{\mathbb R}),
 \quad
 E=\mathrm{Ext}^1_{\mathcal A}(H,\mathsf S),
 \quad
-P_H=\prod_{n\ge1}E_n.
+\mathscr E(H)=\prod_{n\ge1}E_n.
 \tag{17.11}
 $$
 
-The notation $P_H$ in (17.11) is **only a product of Ext groups**, not the projective cover $P_H$ from review 016; below write $\mathscr E(H)=\prod_nE_n$ to avoid that collision.
+The notation $\mathscr E(H)$ denotes the coordinate product of Ext groups and is **not** the projective cover of $H$ from review 016.
 
 Define the coordinate map
 
