@@ -1,39 +1,49 @@
 # The Erdős Compendium
 
-<p class="page-deck">A problem-by-problem guide to Paul Erdős's mathematical questions: what each asks, why it matters, what is known, what GCL has checked, and what remains open.</p>
+<p class="page-deck">A guide to 1,221 mathematical questions associated with Paul Erdős. Explore the problems, see what mathematicians have discovered, and find out which questions remain unanswered.</p>
 
-!!! info "Read an entry at the right evidence level"
-    This is a **reference compendium**, not a collection of certified discoveries. All **1,221** problems in GCL's protected registry have navigable source records. Only problems with separately authored and checked explanatory material receive a full layperson breakdown. A registered issue, source-reported "proved" label or AI-generated mathematical report is **not** proof of independent verification.
+## A collection of mathematical questions
 
-## Begin with three familiar problem examples
+Paul Erdős was one of the most prolific mathematicians of the twentieth century. His questions often begin with something easy to describe — a collection of numbers, a pattern, or a way of arranging objects — and lead to unexpectedly difficult mathematics.
 
-| Problem | The central question | Public result | GCL evidence |
-| --- | --- | --- | --- |
-| [Erdős #1](problems/0001/) | How efficiently can integers give every subset a different sum? | The original constant-factor conjecture has been disproved | Source/proof provenance audited; independent full replay outstanding |
-| [Erdős #2](problems/0002/) | Can congruence systems cover all integers using only enormous periods? | No; an upper bound exists, with a large numerical gap remaining | Registered source-audit task; no independent proof replay |
-| [Erdős #3](problems/0003/) | Does a divergent reciprocal sum force progressions of every length? | Open | Active dedicated GCL mathematics campaign; four-term frontier |
+This compendium brings those questions together in one place. You can look up a particular problem by number, read about what is known, and follow references to the original research. Some problems have been solved or disproved. Others are still open.
 
-## Browse every registered problem
+[**Browse all 1,221 problems**](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/)
 
-[Open the complete numbered catalogue](catalogue/)
+<!-- GCL_ERDOS_LANDING_STATUS -->
 
-The catalogue is divided into sets of roughly 100 problem numbers. Each entry links to the original problem, the exact corresponding GCL GitHub issue, the protected source snapshot and—when one exists—a developed mathematical explanation. The index is generated **deterministically** from the protected registry; no worker report is automatically promoted into public mathematics.
+A reviewed article means that its explanation and references have undergone editorial checks. It does **not** mean that Grand Challenge Labs has independently proved the mathematical result, or that an open problem has been solved.
 
-## What each fully reviewed explainer must contain
+## Three problems worth exploring
 
-1. **The question in plain language.** Identify the mathematical object and the quantifiers without replacing them with an attractive analogy.
-2. **A small example.** Demonstrate the definition, and preferably show a failure or boundary case.
-3. **What is known.** Name relevant dated theorems and distinguish a conjecture from a verified result.
-4. **GCL's current state.** Point to actual protected work and evidence, not just queue activity.
-5. **What remains.** Isolate the smallest missing mathematical step rather than saying only "more research is needed".
-6. **Sources and claim boundaries.** Link primary evidence, explicit assumptions, unresolved reviews and formal-check status.
+### Can repeating patterns made from odd numbers cover every integer?
 
-The first three entries illustrate the editorial standard; they are not the full published selection. Hundreds of further entries have now crossed protected editorial admission, while unadmitted manuscripts and catalogue-only references retain their distinct public labels. The [editorial production protocol](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/EDITORIAL_PROTOCOL.md) specifies how those references become evidence-checked explanations without duplicating research jobs. This is deliberate: automatically converting topic labels into 1,221 invented mathematical stories would be misleading.
+[Erdős problem 7](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/) asks whether it is possible to cover all integers with a finite collection of repeating patterns whose periods are different odd numbers greater than one. The question is still open. The article starts with a small example showing how a seemingly promising arrangement leaves some integers uncovered.
 
-## Authority and updates
+### How evenly can we arrange pairs of objects into groups?
 
-The registered problem IDs, frozen statuses, triage classes, topic metadata and issue references come from [the protected GCL catalogue](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_catalogue/REGISTRY.json). This catalogue's source was [teorth/erdosproblems at a pinned commit](https://github.com/teorth/erdosproblems/blob/536408716724a2402bdfa7c1d764bf83d64a8c89/data/problems.yaml).
+In [problem 665](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0665/), every pair of objects must belong to exactly one group. Can the groups always be made nearly the same size, even as the total number of objects grows? The article illustrates the question with a seven-point arrangement and explains why examples that work at particular sizes do not settle the general problem.
 
-**Frozen catalogue status is historical source metadata, not an automatically refreshed live result.** For current mathematical truth, consult the linked [Erdős Problems site](https://www.erdosproblems.com/), its original papers, and any independently reviewed GCL claim record. For execution state, use the live issues and the protected MATHSOLVE campaign ledger.
+### How much must overlapping groups have in common?
 
-The compendium is a **documentary reference annex**, not an admitted illustrated edition under the separate [Documentary Library release manifest](../documentaries/index.md). It claims no PDF or release artifact and leaves existing Forge → Solve → Cert authority unchanged.
+[Problem 836](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0836/) concerns collections of groups that all overlap one another. One proposed limit on the size of such collections has been disproved; a different question about how much two groups must overlap remains open. The article separates these two questions and explains the difference.
+
+## Other places to begin
+
+[Erdős problem 1](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0001/) concerns sets of numbers whose different selections always give different sums. Its original conjecture was disproved in work reported in 2026. [Problem 2](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0002/) asks how large the periods in a system of repeating patterns can be. [Problem 3](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0003/) connects sums of reciprocals with long arithmetic progressions and remains open.
+
+These articles also illustrate an important distinction: reporting an established result, explaining an unsolved question, and independently checking a complete proof are not the same thing.
+
+## What you will find in an article
+
+A developed explanation begins by stating the question in ordinary language and offering an example where possible. It then describes the results known so far, names the researchers or sources behind them, and identifies what remains unresolved. Links to research papers and records of GCL's work are provided for readers who want to examine the evidence in greater detail.
+
+Not every problem has a completed explanatory article yet. Some have articles awaiting review; others currently have a shorter catalogue entry with links to their sources. They remain available to browse without being presented as finished research.
+
+## How current is the information?
+
+The numbered catalogue is based on a recorded version of the [Erdős Problems collection](https://www.erdosproblems.com/). That gives the entries a consistent source, but it also means a status shown in a catalogue entry may reflect an earlier point in time. A problem marked *open* or *solved* should therefore be checked against the maintained [Erdős Problems website](https://www.erdosproblems.com/) and the original research if the latest status matters.
+
+The [catalogue records](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_catalogue/REGISTRY.json) and [article review records](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/EDITORIAL_ADMISSIONS.json) are available for inspection. You can also [read how articles are prepared](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/EDITORIAL_PROTOCOL.md).
+
+The aim is to make difficult mathematics easier to approach without claiming more than the available evidence supports.
