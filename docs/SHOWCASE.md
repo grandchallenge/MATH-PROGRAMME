@@ -30,6 +30,8 @@ This is evidence about the precise computer-readable proofs and the statements t
 
 [Read what was checked and see the supporting records](OPENAI_TEN_PROOFS_VERIFICATION.md)
 
+<a id="fixture-003-the-logarithmic-gcd-kernel"></a>
+
 ## A mathematical fact about greatest common divisors
 
 The greatest common divisor of two whole numbers is the largest positive integer that divides both. There is a useful relationship between greatest common divisors and a kind of mathematical structure called a **positive semidefinite matrix**.

@@ -42,6 +42,7 @@ class ShowcasePublicationTests(unittest.TestCase):
             "folding mechanisms", "Erdős Compendium",
             "issues/2690", "issues/2698", "pull/2701",
             "CURRENT_WORK.md#vgse-001--mechanical-semantics",
+            'id="fixture-003-the-logarithmic-gcd-kernel"',
         ):
             self.assertIn(phrase, source)
         rendered = on_page_markdown(source, SimpleNamespace(
