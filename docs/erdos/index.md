@@ -5,7 +5,7 @@
 !!! info "Read an entry at the right evidence level"
     This is a **reference compendium**, not a collection of certified discoveries. All **1,221** problems in GCL's protected registry have navigable source records. Only problems with separately authored and checked explanatory material receive a full layperson breakdown. A registered issue, source-reported "proved" label or AI-generated mathematical report is **not** proof of independent verification.
 
-## Begin with three explained problems
+## Begin with three familiar problem examples
 
 | Problem | The central question | Public result | GCL evidence |
 | --- | --- | --- | --- |
@@ -28,7 +28,7 @@ The catalogue is divided into sets of roughly 100 problem numbers. Each entry li
 5. **What remains.** Isolate the smallest missing mathematical step rather than saying only "more research is needed".
 6. **Sources and claim boundaries.** Link primary evidence, explicit assumptions, unresolved reviews and formal-check status.
 
-The first three entries establish the editorial standard. Other entries remain transparently designated **reference entries awaiting source review** until substantive material is admitted. The [editorial production protocol](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/EDITORIAL_PROTOCOL.md) specifies how those references become evidence-checked explanations without duplicating research jobs. This is deliberate: automatically converting topic labels into 1,221 invented mathematical stories would be misleading.
+The first three entries illustrate the editorial standard; they are not the full published selection. Hundreds of further entries have now crossed protected editorial admission, while unadmitted manuscripts and catalogue-only references retain their distinct public labels. The [editorial production protocol](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/erdos_compendium/EDITORIAL_PROTOCOL.md) specifies how those references become evidence-checked explanations without duplicating research jobs. This is deliberate: automatically converting topic labels into 1,221 invented mathematical stories would be misleading.
 
 ## Authority and updates
 
