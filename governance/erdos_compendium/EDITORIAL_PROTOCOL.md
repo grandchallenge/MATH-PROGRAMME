@@ -136,3 +136,25 @@ Escalate substantive mathematical contradictions, unresolved source ambiguity, p
 - Admit successful batches through existing protected repository policy. Group evidence in one batch dossier and keep each admitted article bound to its own exact manuscript SHA-256 and source references. An individual article need not have its own PR or independent reviewer.
 - The current admission schema and HTML gate stay effective until a separately tested, protected schema migration supports batch dossiers; no automatic promotion of draft content by this policy amendment.
 - Track source-ready, drafted, automatically checked, sampled, admitted and rendered totals separately, and report errors and batch exceptions so volume cannot mask declining quality.
+
+## Accepted article source-to-rendered publication parity (post-audit R2)
+
+After a newly admitted batch deploys successfully, the accountable editorial
+controller dispatches the EXISTING `erdos-compendium-public-html-readback.yml`
+workflow for each newly accepted or source-amended article, with
+`problem_id` from the protected admission register. The `accepted-parity` job
+checks out current protected main, checks the actual latest successful Pages
+deployment is from that exact commit, checks exact admitted manuscript digest,
+compares all six substantive editorial sections and every mathematical TeX
+expression against the published HTML, and verifies real MathJax-rendered
+nodes in Chromium. It uploads a bounded result with the protected source SHA,
+public HTML SHA, public URL, article identity and observed rendering count.
+
+If site deployment is stale, the accepted/draft state differs, prose or maths
+differs, or browser rendering fails, the job FAILS CLOSED. Retry only after
+protected source and public deployment agree. Do not promote an unverified
+result or treat a browser comparison as proof of the theorem. Unaccepted drafts
+remain drafts and do not require this accepted-only check. This is part of
+existing batch publication work, **not** a separate reviewer or admission
+authority. Its actual accepted-article job receipt belongs with that batch's
+existing editorial evidence.

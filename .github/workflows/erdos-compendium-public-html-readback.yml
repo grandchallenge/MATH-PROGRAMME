@@ -1,6 +1,12 @@
 name: Erdős Compendium public mathematical HTML readback
 
 on:
+  workflow_dispatch:
+    inputs:
+      problem_id:
+        description: "Accepted Erdős article number for exact source/rendered-page parity"
+        required: true
+        type: number
   workflow_run:
     workflows: ["Deploy documentation site"]
     types: [completed]
@@ -16,6 +22,7 @@ jobs:
   public-readback:
     name: Verify published #7 MathJax in Chromium
     if: >-
+      github.event_name == 'workflow_run' &&
       github.repository == 'grandchallenge/MATH-PROGRAMME' &&
       github.event.workflow_run.event == 'workflow_run' &&
       github.event.workflow_run.conclusion == 'success' &&
@@ -108,3 +115,41 @@ jobs:
             printf 'Site readback only: editorial_accepted=%s (protected source-bound ledger); mathematical_certified=false. Does NOT advance Project state.\n' "$admission_state"
           } > readback/receipt.md
           gh issue comment 2556 --repo "$GITHUB_REPOSITORY" --body-file readback/receipt.md
+
+  accepted-parity:
+    name: Verify one accepted article against deployed MathJax HTML
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'grandchallenge/MATH-PROGRAMME'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release-trust
+    steps:
+      - name: Checkout current protected main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install pinned read-only publication verifier
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/compendium_public_html.txt
+          python -m playwright install --with-deps chromium
+      - name: Test fail-closed article comparator
+        run: python -m unittest -q ci.test_erdos_accepted_publication_parity
+      - name: Verify actual protected admission, deployed source and rendered maths
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTICLE_ID: ${{ inputs.problem_id }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_accepted_publication_live.py --problem-id "$ARTICLE_ID" --repository-root . --output readback/accepted-parity.json
+      - name: Preserve bounded verified article evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: accepted-source-rendered-parity-${{ github.run_id }}
+          path: readback/accepted-parity.json
+          retention-days: 30
+          if-no-files-found: warn
