@@ -96,6 +96,18 @@ def check_future_window(p,y,R):
     return J,H
 
 
+def shadow_arena(J):
+    vals=tuple(J)
+    assert vals
+    j0,j1=min(vals),max(vals)
+    return set(range(2*j0-j1,2*j1-j0+1))
+
+
+def shadow_potential(p,J):
+    arena=shadow_arena(J)
+    return len(arena-shadow(p))
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -214,6 +226,55 @@ class ForwardShadowCapacityTests(unittest.TestCase):
                         x=[z+t for z in template]
                         if set(x).isdisjoint(set(p+y)):
                             self.assertFalse(is_b3(p+y+x))
+
+
+    def test_exact_shadow_potential_upper_bounds_true_batch(self):
+        for prefix,J in (([1,2,5],range(23,28)),
+                         ([1,2,5,14],range(23,28)),
+                         ([1,2,5],range(25,34)),
+                         ([1,2,5,14],range(25,34)),
+                         ([1,2,5,14,33],range(61,73))):
+            with self.subTest(prefix=prefix):
+                phi=shadow_potential(prefix,J)
+                x=capacity(prefix,J)
+                self.assertLessEqual(f(len(x)),phi)
+                self.assertLessEqual(len(x),F(phi))
+                self.assertEqual(phi,len(shadow_arena(J)-shadow(prefix)))
+
+    def test_exact_monotone_shadow_tax_telescopes_without_duplication(self):
+        prefixes=([1,2,5], [1,2,5,14], [1,2,5,14,33],
+                  [1,2,5,14,33,72])
+        self.assertTrue(all(is_b3(p) for p in prefixes))
+        J=range(160,301)
+        phi=[shadow_potential(p,J) for p in prefixes]
+        taxes=[phi[i]-phi[i+1] for i in range(len(phi)-1)]
+        self.assertTrue(all(t>=0 for t in taxes))
+        self.assertEqual(sum(taxes),phi[0]-phi[-1])
+        arena=shadow_arena(J)
+        new_sets=[(shadow(prefixes[i+1])-shadow(prefixes[i])) & arena
+                  for i in range(len(prefixes)-1)]
+        self.assertEqual(taxes,list(map(len,new_sets)))
+        self.assertEqual(sum(map(len,new_sets)),
+                         len(set().union(*new_sets)))
+        for i in range(len(new_sets)):
+            for j in range(i+1,len(new_sets)):
+                self.assertFalse(new_sets[i]&new_sets[j])
+
+    def test_forward_mixed_shadow_forces_potential_decrement(self):
+        for p,y,R in (([1,2,5],[14],5),
+                      ([1,2,5],[61,70,81],30)):
+            with self.subTest(p=p,y=y):
+                J,H=check_future_window(p,y,R)
+                phi_before=shadow_potential(p,J)
+                phi_after=shadow_potential(p+y,J)
+                self.assertGreaterEqual(phi_before-phi_after,len(H))
+                self.assertEqual(len(H),len(p)*len(y)*(len(y)+1)//2)
+                self.assertTrue(H.issubset(shadow_arena(J)))
+                self.assertFalse(H & shadow(p))
+                self.assertTrue(H.issubset(shadow(p+y)))
+                self.assertLessEqual(
+                    len(capacity(p+y,J)) if len(J)<=12 else 0,
+                    F(phi_after))
 
 
 if __name__=="__main__":
