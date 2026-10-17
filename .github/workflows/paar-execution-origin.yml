@@ -18,8 +18,6 @@ on:
 
 permissions:
   contents: read
-  actions: read
-  pull-requests: read
 
 concurrency:
   group: gcl-paar-c-origin-${{ inputs.candidate_sha }}
@@ -27,6 +25,9 @@ concurrency:
 
 jobs:
   origin:
+    permissions:
+      contents: read
+      pull-requests: read
     if: >-
       github.repository == 'grandchallenge/MATH-PROGRAMME' &&
       github.ref == 'refs/heads/main' &&
