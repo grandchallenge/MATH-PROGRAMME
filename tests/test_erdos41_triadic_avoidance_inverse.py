@@ -6,7 +6,8 @@ Run: python -m unittest discover -s tests -p 'test_erdos41_triadic_avoidance_inv
 """
 from collections import Counter, defaultdict
 from itertools import combinations, combinations_with_replacement
-from math import comb
+from math import comb, prod
+from fractions import Fraction
 import unittest
 
 A = [
@@ -103,6 +104,40 @@ def three_bin_certificate(u,Y,Z,V,Q):
     myv=sum(r[v-y] for y in Y for v in V)
     assert observed==len(V)*myz+len(Y)*mzv+len(Z)*myv
     return observed,bound,occupancy,zero_capacity,(myz,mzv,myv)
+
+
+def prime_residue_budget(u,Y,Z,primes,threshold=1):
+    """Exact-cube verification of the robust localized Cauchy-Davenport gate.
+
+    The budget B has an irrational cube root, so test (positive part)^3
+    <= B^3 using Fraction, without floating point.
+    """
+    assert min(Z)>max(Y) and is_b3(Y+Z)
+    dy=max(Y)-min(Y)
+    dz=max(Z)-min(Z)
+    Q=prod(primes)
+    assert Q<=min(dy,dz)
+    assert len(set(primes))==len(primes)
+    assert all(p>1 and all(p%d for d in range(2,int(p**.5)+1))
+               for p in primes)
+    lo=min(Z)-max(Y)
+    hi=max(Z)-min(Y)
+    r=half_difference_weights(u,hi)
+    observed=sum(r[z-y] for y in Y for z in Z)
+    prod_caps=Fraction(1,1)
+    evidence={}
+    for p in primes:
+        e=len({h%p for h in range(lo,hi+1) if r[h]<threshold})
+        c=Fraction(e+1,2) if e<p else Fraction(p,1)
+        evidence[p]=(e,p,c)
+        prod_caps*=c*c
+    # Cube of ((144 dy dz / Q²)^(1/3) prod c_p²).
+    Bcubed=Fraction(144*dy*dz,Q*Q)*prod_caps**3
+    m=len(Y)*len(Z)
+    x=max(Fraction(0),Fraction(m)-
+          Fraction(observed*max(len(Y),len(Z)),threshold))
+    assert x**3<=Bcubed
+    return observed,x,Bcubed,evidence
 
 
 class TriadicAvoidanceTests(unittest.TestCase):
@@ -215,6 +250,56 @@ class TriadicAvoidanceTests(unittest.TestCase):
                     r,observed,weighted,unscaled,_=triadic_certificate(
                         u,w,threshold)
                     self.assertGreaterEqual((len(w)-2)*observed,unscaled)
+
+
+    def test_robust_prime_crt_budget_on_actual_b3_bins(self):
+        # Explicitly distinguish a correct but often vacuous bound from
+        # the missing universal prime-residue deficiency lemma.
+        fixtures=(
+            (A[:3],A[3:5],A[5:7],(2,3)),
+            (A[:10],A[10:12],A[12:14],(2,3)),
+            (A[:14],A[14:16],A[16:18],(2,3,5)),
+            (A[:16],A[16:18],A[18:20],(2,3,5,7)),
+        )
+        for u,Y,Z,proposed in fixtures:
+            for threshold in (1,2,3):
+                for primes in ((2,), (3,), (2,3), proposed):
+                    if prod(primes)>min(Y[-1]-Y[0],Z[-1]-Z[0]):
+                        continue
+                    with self.subTest(n=len(u),Y=Y,Z=Z,
+                                      primes=primes,threshold=threshold):
+                        M,x,Bcube,e=prime_residue_budget(
+                            u,Y,Z,primes,threshold)
+                        self.assertGreaterEqual(M,0)
+                        self.assertGreaterEqual(Bcube,x**3)
+                        self.assertTrue(all(0<=v[0]<=v[1]
+                                            for v in e.values()))
+
+    def test_prime_residue_support_structural_control(self):
+        # With a dense enough allowed difference interval, every small
+        # prime is represented, explaining why the CRT bound can be
+        # vacuous despite genuine B3 persistent-window aspirations.
+        u=A[:3]
+        Y,Z=A[3:5],A[5:7]
+        M,x,Bcube,e=prime_residue_budget(u,Y,Z,(2,3),1)
+        self.assertEqual(M,0)
+        self.assertEqual(e[2][0],2)
+        self.assertEqual(e[3][0],3)
+        self.assertGreaterEqual(Bcube,Fraction(len(Y)*len(Z))**3)
+
+    def test_prime_residue_critical_density_cost_algebra(self):
+        # The CRT cube form comes directly from the cubic shadow
+        # and is independently replayed against genuine finite B3.
+        for n in (5,8,14,20):
+            x=A[:n]
+            D=x[-1]-x[0]
+            for primes in ((2,3),(2,3,5),(3,5,7)):
+                Q=prod(primes)
+                if Q>D:
+                    continue
+                tQ=len({v%Q for v in x})
+                with self.subTest(n=n,primes=primes):
+                    self.assertLessEqual(n**3*Q,12*D*tQ**3)
 
 
 if __name__ == "__main__":
