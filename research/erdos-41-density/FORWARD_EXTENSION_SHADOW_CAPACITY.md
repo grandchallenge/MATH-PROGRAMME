@@ -373,6 +373,70 @@ The two reciprocal exclusions are independently meaningful. The first is the str
 
 **Hostile control, even in the exact reflected setting.** With P={1,2,5,14}, R=14 and y=100, J_y=[186,199]. The anchored and unanchored true capacities both equal 1, despite more than half the future singleton positions being removed. Hence even the exact reciprocal-shadow characterization does not automatically yield a positive single-step batch decrement.
 
+## 3D. Three successive colours: an exact seven-layer survival theorem
+
+The one-anchor signed-code theorem extends to an **entire middle cohort**, and the resulting constraints bind the size of any reoptimized future batch without fixing its shape.
+
+Let R be a positive integer. Let P and T be subsets of [0,R] and D subset [0,R]. Write n=|P|, m=|D|, ell=|T|. For a sufficiently separated integer y>6R consider the *physical* set
+
+$
+\boxed{\mathcal A=P\ \cup\ (y+D)\ \cup\ (2y-T).}\tag{THREE-COLOUR}
+$
+
+The three sets are disjoint. The middle offsets D need not be nonnegative original A-elements; the formulation allows any translated actual middle cohort in a short interval, as long as the displayed offset windows have width at most R.
+
+Every unordered triple from mathcal A has a uniquely defined **digit level** in {0,1,...,6}, the sum of its three block levels 0,1,2. Its remaining integer offset lies in the following exact word families. Within each family the positive repeated pair is unordered and all multiplicities are retained.
+
+| Digit level | Required offset word families |
+| --- | --- |
+| 0 | PPP |
+| 1 | PP+D |
+| 2 | P+D+D **and** P+P−T |
+| 3 | D+D+D **and** P+D−T |
+| 4 | D+D−T **and** P−T−T |
+| 5 | D−T−T |
+| 6 | −T−T−T |
+
+**Theorem G (seven-layer exact survival):** If y>6R, the physical union mathcal A is B3 **if and only if** within each of the seven displayed levels, **all** the offset words (including the two different word types at levels 2, 3, and 4) yield mutually distinct integers. No comparison is required between *different* levels.
+
+**Proof.** All terms in P,D,T lie between 0 and R, so each three-term offset lies between −3R and 3R. Different digit levels produce sums differing by at least y−6R>0 and thus cannot collide. A collision of two distinct unordered physical triples with the same digit level is exactly an equality between two distinct offset words listed for that level. This includes repeated points, mixed blocks, and both cross-type comparisons. Thus uniqueness of all three-term sums is equivalent to injectivity within each level. QED.
+
+This theorem includes the one-anchor reflected characterization as the special case D={0}. It also completely characterizes the compatibility of an **arbitrarily structured middle B3 cohort** with an optimally selected future reflected batch.
+
+**Theorem H (shape-independent cardinality competition).** If mathcal A is B3 then
+
+$
+\boxed{
+\begin{aligned}
+\binom{n+2}{3}&\le 3R+1,\\
+m\binom{n+1}{2}&\le 3R+1,\\
+n\binom{m+1}{2}+\ell\binom{n+1}{2}&\le 4R+1,\\
+\binom{m+2}{3}+nm\ell&\le 4R+1,\\
+\ell\binom{m+1}{2}+n\binom{\ell+1}{2}&\le 4R+1,\\
+m\binom{\ell+1}{2}&\le 3R+1,\\
+\binom{\ell+2}{3}&\le 3R+1.
+\end{aligned}
+}\tag{SEVEN-LAYER-PACKING}
+$
+
+**Proof.** In each level count the number of distinct required unordered colour words; the counts are shown on the left. For levels 0,1,5,6 all offsets occupy an interval of at most 3R+1 integers. The union offset ranges at levels 2,3,4 occupy intervals of at most 4R+1 integers: respectively [−R,3R], [−R,3R], and [−2R,2R]. Exact injectivity from Theorem G forces the counts not to exceed the available integer positions. QED.
+
+Theorem H gives a **fully batch-shape-independent** upper bound, for example
+
+$
+\boxed{
+\ell\le
+\left\lfloor\frac{4R+1-\binom{m+2}{3}}{nm}\right\rfloor
+\quad(nm>0).
+}\tag{LEVEL-THREE-FUTURE-CAP}
+$
+
+It also gives coupled quadratic bounds from the levels 2 and 4. These are stricter *joint cardinality restrictions* on a three-cohort extension than the ordinary separate cubic-shadow range count. In contrast with the single-anchor singleton loss, they cannot be evaded by rearranging future T without lowering its cardinality.
+
+**Precise limitation.** In the critical regime n,m,ell all proportional to R^(1/3), every term in (SEVEN-LAYER-PACKING) is order R. With a sufficiently small hypothetical density coefficient c, all seven inequalities can have slack. No fixed collection of these inequalities forces a contradiction for **every** c>0, and there is no independently proved recurrence showing their costs become superlinear over growing numbers of scale-owned cohorts. Therefore Theorems G and H are a genuine finite-batch step towards the multiscale obligation, **not** its completion.
+
+**Next exact mathematical gate:** For a c-persistent B3 set, select a family of overlapping consecutive three-cohort windows at growing scales in which the *same actual elements* appear with consistent digit-level roles, then prove a comparison of the unused capacities in levels 2–4 that cannot be discharged by adjusting T. Such an inequality must count each actual sum once at its first owning window; simply repeating (SEVEN-LAYER-PACKING) over many windows cannot make the slack accumulate.
+
 ## 4. Conditional persistent density: O(R) forced future tax at every large scale
 
 Assume HYPOTHETICALLY an infinite B3 set A obeys A(N)>=c N^(1/3) for all sufficiently large N, where 0<c<=1. The ordinary three-sum bound gives A(t)^3<=18t.
