@@ -317,6 +317,37 @@ The prime CRT upper bound of 36 sees no restriction, whereas the composite bicli
 
 **Open universal step, explicitly:** for the long persistent-density windows in Erdős #41, prove that some Q<=min(D_Y,D_Z) has composite capacity beta_Q(E) small enough to force positive overlap, **or** show that consistently large beta_Q across a growing family of scale-owned windows creates a separately quantified density cost. The present theorem does not show this. An allowed spectrum may have E=all residues for every accessible modulus despite exact B3 avoidance.
 
+## 4C. A genuine B3 finite hostile example: why residue deficiency cannot be presumed
+
+The distinction between an available certificate and a *forced* certificate is essential. The original 29-point genuine B3 fixture contains a robust zero-correlation countercontrol even after considering the complete positive inner pair family.
+
+Let A=(a_0,...,a_28) denote that fixture in increasing order (see the executable test file). Use q=151 and four Sidon pair-type labels (0,11,42,43). Lift the first twelve elements (four disjoint three-point inner groups) by
+
+$
+U'=\{151a_i+e_{\lfloor i/3\rfloor}:0\le i<12\},
+\quad W'=\{151a_i:12\le i<29\}.
+$
+
+Because q exceeds three times the largest digit and the original A is B3, the entire lifted U' union W' remains B3. Exact enumeration gives
+
+$
+\boxed{
+\mathcal M(U',W')=0
+\quad\text{for the COMPLETE unordered inner pair-sum family.}
+}\tag{HOSTILE-B3}
+$
+
+Take Y as the first three elements of W' and Z as the next three. Their candidate positive difference interval contains **633,748 integer positions**, although the actual differences of outer W' are multiples of 151. The zero-weight inner differences in that interval represent **every** class modulo each Q in {2,3,6,12}. Hence
+
+$
+\boxed{
+E_{Q,1}=\mathbb Z/Q\mathbb Z,\qquad
+\beta_Q(E_{Q,1})=Q^2\quad(Q=2,3,6,12).
+}\tag{HOSTILE-SURJECTION}
+$
+
+The composite bound is correctly satisfied but uninformative for these moduli. This is a bona fide finite B3 configuration, *not* a hypothetical independent set that fails B2. It excludes any argument assuming that positive finite critical-scale cardinalities, B3 alone, or many popular inner differences automatically create a defect in one of these fixed small residue quotients. It does **not** construct an infinite positive-critical-lower-density B3 sequence or disprove Erdős #41. A successful asymptotic inverse theorem must force **growing/adaptive modulus complexity**, a stronger geometric restriction, or a genuine multiscale accumulation mechanism.
+
 ## 5. What was and was not proved about persistent density
 
 Under the **hypothetical** persistent critical bound A(N)>=cN^(1/3), existing GCL selection gives large actual outer cohorts. If a chosen m-element outer B3 subset has m>=kappa_c L^(1/3) in an interval of span L and M=0, Theorem A forces at least kappa_c^3 L/6−O_c(L^(2/3)) distinct nondegenerate additive triangles in the zero-weight distance set. This is a rigorous quantitative *structure-or-correlation* alternative.
