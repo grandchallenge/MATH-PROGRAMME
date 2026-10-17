@@ -192,45 +192,45 @@ The mixed shadow H(P,Y) is a **batch-shadow** obstruction. A stronger *singleton
 
 Let P be a finite B3 set of n>=1 elements contained in [1,R], with p_min=min P, p_max=max P. Define its internal shadow
 
-$
+$$
 I(P)=T(P)\cap[p_{\min},p_{\max}].
-$
+$$
 
 **Theorem D (internal cubic shadow):**
 
-$
+$$
 \boxed{|I(P)|\ge n+\binom n3.}\tag{INTERNAL-CUBIC}
-$
+$$
 
 **Proof.** All n elements of P belong to I(P). For each **distinct** ordered triple a<b<c of P, the signed sum a+c-b lies strictly between a and c and hence in [p_min,p_max]. It cannot belong to P, for then a+c=b+z is a forbidden nontrivial two-term sum collision. These binom(n,3) signed sums are mutually distinct: they are nontrivial affine-shadow values of P, whose representations are unique by B3 (see section 2). Therefore the stated count holds.
 
 Now choose just **one** new anchor y>2R with P union {y} still B3. Define
 
-$
+$$
 \boxed{J_y=[2y-R,\ 2y-p_{\min}]\cap\mathbb Z.}\tag{ONE-ANCHOR-WINDOW}
-$
+$$
 
 **Theorem E (uniform cubic single-anchor tax):**
 
-$
+$$
 \boxed{
 S(P,J_y)=|J_y|,\qquad
 S(P,J_y)-S(P\cup\{y\},J_y)
 \ge |I(P)|\ge n+\binom n3.
 }\tag{CUBIC-SINGLETON-TAX}
-$
+$$
 
 **Proof.** Every z in J_y exceeds 3R (because y>2R), so adjoining z to P preserves B3 by separation of the three possible multiplicities of z in triple sums. For every t=a+b-c in I(P), the reflected future integer z=2y-t belongs to J_y, is greater than y, and satisfies the forbidden equality
 
-$
+$$
 z+a+b=2y+c.
-$
+$$
 
 The left triple contains one future z and two earlier P members, whereas the right triple contains two copies of y and one earlier P member; they cannot be the same unordered triple. Thus all the distinct reflected I(P) values are newly forbidden singleton sites. QED.
 
 **Density-sensitive corollary without annular pigeonhole.** If the hypothetical persistent B3 lower bound A(R)>=cR^(1/3) holds for all large R, take P=A intersect [1,R] and ANY actual later anchor y in A with y>2R. For n=|P|>=6 one has binom(n,3)>=n³/12. Hence for all sufficiently large R,
 
-$
+$$
 \boxed{
 S(P,J_y)-S(P\cup\{y\},J_y)
 \ge\frac{c^3}{12}R,
@@ -238,27 +238,27 @@ S(P,J_y)-S(P\cup\{y\},J_y)
 \frac{S(P,J_y)-S(P\cup\{y\},J_y)}{|J_y|}
 \ge\frac{c^3}{12}.
 }\tag{ONE-ANCHOR-DENSITY-TAX}
-$
+$$
 
 The entire future interval has |J_y|=R-p_min+1<=R. No density of the chosen middle anchor is needed. It is always possible to select an actual later anchor in an infinite A, and it can be chosen at distance O_c(R) using the same standard prefix counting bounds as section 4.
 
 **A rigorous entropy bound on future candidate batches.** Let N_ell(P',J) count the true ell-element B3 extensions X subset J of prefix P'. Since every X after adjoining y must avoid the B=|I(P)| newly forbidden sites,
 
-$
+$$
 \boxed{
 N_{\ell}(P\cup\{y\},J_y)
 \le\binom{|J_y|-B}{\ell}
 \le e^{-B\ell/|J_y|}\binom{|J_y|}{\ell}.
 }\tag{RAW-EXTENSION-ENTROPY}
-$
+$$
 
 Under persistent density, a prospective future batch of ell>=eta R^(1/3) has a suppression factor at most exp(-c³ eta R^(1/3)/12) **relative to all raw ell-subsets**, not relative to the already much smaller collection of B3-compatible completions for P. The inequality is exact and follows by the product formula for binomial coefficients.
 
 **A robust within-window translation obstruction, not merely a full-arena claim.** Take an arbitrary finite B3 template X0 of diameter d, translated so min X0=0. Among all integer shifts t for which X0+t subset J_y (a range of |J_y|-d shifts), at least
 
-$
+$$
 \boxed{\bigl[|I(P)|-d\bigr]_+}\tag{INTERIOR-TRANSLATION-TAX}
-$
+$$
 
 are forbidden by the reflected internal shadow alone: each blocked future singleton site z=2y-h not in the last d positions of J_y is an eligible shift t=z, since 0 belongs to X0. In particular if d<=|I(P)|/2, at least |I(P)|/2 **genuinely eligible placements** of every fixed future template are lost. These are placements, not independent future batches; a shape-changing optimizer can still evade them.
 
@@ -268,27 +268,27 @@ are forbidden by the reflected internal shadow alone: each blocked future single
 
 Let
 
-$
+$$
 P=\{1,2,5,14\},\quad R=14,\quad y=34,\quad J_y=[54,67].
-$
+$$
 
 P union {y} is genuinely B3. Exact enumeration gives
 
-$
+$$
 \boxed{
 |I(P)|=12,\quad |J_y|=14,\quad
 S(P,J_y)=14,\quad
 S(P\cup\{34\},J_y)=1,
 }\tag{CUBIC-HOSTILE}
-$
+$$
 
 so **13 of 14** individually legal sites disappear (12 already certified by the internal shadow). Nevertheless the true complete-B3 batch capacities are
 
-$
+$$
 \boxed{
 C(P,J_y)=1=C(P\cup\{34\},J_y).
 }\tag{CANONICAL-NO-BATCH-LOSS}
-$
+$$
 
 Thus no universal lemma can equate a large *fractional* loss of legal singleton positions with a positive *numerical* decline in true batch capacity, even for the canonical interval after a valid B3 one-anchor extension. This test directly refutes a natural but false proposed bridge. It is not a counterexample to the infinite Erdős problem.
 
@@ -298,13 +298,13 @@ The remaining bridge concerns actual **optimal batches**, not individual future 
 
 Let P subset [1,R] be a finite repeated-summand B3 set, let y>6R, and define the canonical J_y=[2y-R,2y-p_min]. Every X subset J_y corresponds bijectively to a reflected finite set
 
-$
+$$
 \boxed{T=\{2y-x:x\in X\}\subseteq[p_{\min},R].}\tag{REFLECT}
-$
+$$
 
 For any two finite sets P,T define the two *coloured signed-word injectivity* properties
 
-$
+$$
 \begin{aligned}
 (\mathrm{PP-T}):&\quad
 (a,b,t)\longmapsto a+b-t
@@ -313,13 +313,13 @@ $
 (p,t,u)\longmapsto p-t-u
 && (p\in P,\ t,u\in T,\ t\le u).
 \end{aligned}
-$
+$$
 
 Here "injective" means no two **different** displayed unordered-positive word labels yield equal integers. It does not demand that either image avoid the other, because they are *different digit levels* in the original unanchored B3 problem.
 
 **Theorem F (complete, exact reflected capacity characterization).** For y>6R and X=2y−T,
 
-$
+$$
 \boxed{
 P\cup X\text{ is }B_3
 \Longleftrightarrow
@@ -329,11 +329,11 @@ T\text{ is }B_3,\\
 \mathrm{P-TT}\text{ is injective}.
 \end{cases}
 }\tag{UNANCHORED-REFLECTION}
-$
+$$
 
 Furthermore,
 
-$
+$$
 \boxed{
 P\cup\{y\}\cup X\text{ is }B_3
 \Longleftrightarrow
@@ -344,7 +344,7 @@ T\cap T(P)=\varnothing,\\
 P\cap T(T)=\varnothing.
 \end{cases}
 }\tag{ANCHORED-REFLECTION}
-$
+$$
 
 All statements include repeated summands. Here T(P)=P+P−P and T(T)=T+T−T are full cubic shadows, not their internal restrictions.
 
@@ -356,7 +356,7 @@ At level 2 there is additionally the type yy+p, offset p. It cannot collide with
 
 **Exact consequence for the true maximum capacities, independent of y once y>6R:**
 
-$
+$$
 \boxed{
 \begin{aligned}
 C(P,J_y)&=\max_{T\subseteq[p_{\min},R]}
@@ -365,7 +365,7 @@ C(P\cup\{y\},J_y)&=\max_{T\subseteq[p_{\min},R]}
 \{|T|:T\text{ satisfies ANCHORED-REFLECTION}\}.
 \end{aligned}
 }\tag{REFLECTED-TRUE-CAPACITY}
-$
+$$
 
 The reoptimization loophole is now *completely specified*: future batches can change their reflected shape T to evade both mutual cubic-shadow exclusions. Merely deleting many eligible t values in T(P) does not control the maximum T that also satisfies the two signed-word injectivity conditions and reciprocal shadow avoidance. This reframes the remaining proof obstacle without residue assumptions and without any appeal to generic pseudorandom mixing.
 
@@ -463,7 +463,7 @@ For larger geometrically separated genuine B3 blocks, tests verify shadow cardin
 
 ## 6. The sharply isolated remaining lemma
 
-**Unproved bridge:** show that a hypothetical c-persistent B3 chain repeatedly approaches its available future *batch* capacity closely enough that the proved cubic-shadow budget charges force a decreasing scale-normalized potential. One possible precise sufficient statement is an asymptotic lower bound on C(P,J) near F(3L+1) for appropriately selected windows, or a new full-hypergraph dual certificate that controls how the optimal future batch re-routes around blocked shadow sites.
+**Unproved bridge, after the stronger one-anchor and reflection audits:** show that a hypothetical c-persistent B3 chain cannot indefinitely sustain the four *simultaneous* reflected signed-code conditions (both signed-word injections and both reciprocal shadow avoidances) in the future windows that are required by its actual counting function. An adequate theorem must compare several successive, uniquely owned geometric windows or certify finite-horizon impossibility at every c>0. A one-window loss of the singleton or cubic-shadow ceiling is not enough: in a genuine B3 countercontrol 13 of 14 initially legal future sites vanish but the true batch capacity remains 1. Near-envelope rigidity can serve as a sufficient auxiliary hypothesis only if proved independently; it must not be assumed. A collision-hypergraph dual certificate with all optimally rerouted future batch shapes is another admissible route.
 
 This is the mathematically consequential difference from the old modular inverse programme: we HAVE proved a positive density-sensitive forward shadow consumption theorem, but we have NOT proved that the consumption is forced to accumulate against true critical-density extensions. New work must address that bridge, not restate the singleton tax or sum geometric windows as if they share one global capacity budget.
 
