@@ -215,6 +215,35 @@ def graph_survivors(p,R):
     return V,diffs
 
 
+def coarse_triple_count_by_index_sum(a,width):
+    """Count every unordered repeated-summand triple by its bin-index sum."""
+    from collections import Counter
+    counts=Counter()
+    for x,y,z in combinations_with_replacement(sorted(a),3):
+        counts[(x//width)+(y//width)+(z//width)]+=1
+    return counts
+
+
+def coarse_formula_from_occupancies(a,width):
+    """An independent multinomial combinatorial derivation of counts."""
+    from collections import Counter
+    from math import comb
+    m=Counter(x//width for x in a)
+    result=Counter()
+    indices=sorted(m)
+    for i,j,k in combinations_with_replacement(indices,3):
+        if i==j==k:
+            w=comb(m[i]+2,3)
+        elif i==j:
+            w=comb(m[i]+1,2)*m[k]
+        elif j==k:
+            w=m[i]*comb(m[j]+1,2)
+        else:
+            w=m[i]*m[j]*m[k]
+        result[i+j+k]+=w
+    return result
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -603,6 +632,71 @@ class ForwardShadowCapacityTests(unittest.TestCase):
                             for t,u in combinations(sorted(survivors),2)))
         for t,u in combinations(sorted(survivors),2):
             self.assertFalse(is_b3(p+middle+[2*y-t,2*y-u]))
+
+
+    def test_multicohort_arithmetic_run_with_genuine_b3_offsets(self):
+        from math import comb
+        r=4;m=2;R=7000;q=100000
+        B=(r+10)*q
+        blocks={}
+        source=A[:(2*r+1)*m]
+        self.assertEqual(len(source),(2*r+1)*m)
+        for i in range(-r,r+1):
+            j=(i+r)*m
+            offsets=source[j:j+m]
+            blocks[i]=[B+i*q+t for t in offsets]
+            self.assertEqual(len(blocks[i]),m)
+            self.assertTrue(all(B+i*q<=x<=B+i*q+R-1
+                                for x in blocks[i]))
+        full=sum((blocks[i] for i in range(-r,r+1)),[])
+        self.assertTrue(is_b3(full))
+        s=r//2
+        selected=[
+            x+y+z
+            for i in range(1,s+1)
+            for j in range(i+1,s+1)
+            for x in blocks[i]
+            for y in blocks[j]
+            for z in blocks[-i-j]
+        ]
+        self.assertEqual(len(selected),comb(s,2)*m**3)
+        self.assertEqual(len(selected),len(set(selected)))
+        self.assertTrue(all(3*B<=v<=3*B+3*(R-1)
+                            for v in selected))
+        self.assertLessEqual(len(selected),3*R-2)
+
+    def test_dense_arithmetic_run_impossibility_is_not_range_artifact(self):
+        from math import comb
+        r=8;m=1;R=1;q=100
+        B=(r+10)*q
+        a=[B+i*q for i in range(-r,r+1)]
+        self.assertFalse(is_b3(a))
+        self.assertGreater(comb(r//2,2)*m**3,3*R-2)
+        # The contradiction is independent of how large q is.
+        for spacing in (100,1000,100000):
+            centers=[B+i*spacing for i in range(-r,r+1)]
+            self.assertFalse(is_b3(centers))
+
+    def test_coarse_triple_capacity_exact_on_real_and_hostile_sets(self):
+        real=(A[:12],A[:18],A[:29])
+        for block in real:
+            self.assertTrue(is_b3(block))
+            for width in (2,5,10,100,1000,7000):
+                with self.subTest(n=len(block),width=width):
+                    direct=coarse_triple_count_by_index_sum(block,width)
+                    formula=coarse_formula_from_occupancies(block,width)
+                    self.assertEqual(formula,direct)
+                    self.assertTrue(all(v<=3*width-2
+                                        for v in direct.values()))
+                    self.assertEqual(sum(direct.values()),
+                                     len(triple_sums(block)))
+        # The formula is merely an exact count for non-B3 carriers,
+        # where a bin-index sum can exceed its integer slot budget.
+        bad=list(range(1,12))
+        self.assertFalse(is_b3(bad))
+        direct=coarse_triple_count_by_index_sum(bad,1)
+        self.assertEqual(direct,coarse_formula_from_occupancies(bad,1))
+        self.assertTrue(any(v>1 for v in direct.values()))
 
 
 if __name__=="__main__":
