@@ -14,7 +14,7 @@ Original authenticated return https://github.com/grandchallenge/MATH-PROGRAMME/i
 
 ## #500: primary arithmetic and bound provenance conflict
 
-Original Erdős (1961), printed p.243 Problem II.8, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=23, **visually inspected**. Defines f(n) as the least NUMBER of triples forcing four vertices with all four triples. It is exactly ex_3(n,K4^3)+1 (for n>=4); confusing exact ex with the forcing threshold is an off-by-one error. Open asymptotic density conjecture 5/9 is not resolved by small computational checks. $500 catalogue prize metadata is not a reward-authorization claim.
+Original Erdős (1961), printed p.243 Problem II.8, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=23, **visually inspected**. Defines f(n) as the least NUMBER of triples forcing four vertices with all four triples. It is exactly ex_3(n,K4^3)+1 (for n>=4); confusing exact ex with the forcing threshold is an off-by-one error. Open asymptotic density conjecture 5/9 is not resolved by small computational checks. USD 500 catalogue prize metadata is not a reward-authorization claim.
 
 Turán cyclic three-class template: edges are rainbow or have two in class i and one in successor class i+1 modulo three. Each of 81 ordered colour patterns on four vertices has <=3 selected triples; the template is K4-free. At n=3k edge count (5k³-3k²)/2 exactly, yielding asymptotic density 5/9. Exhaustive checks of every 3-graph on n=4 (2^4 cases) and n=5 (2^10 cases) establish ex_3(4,K4^3)=3 and ex_3(5,K4^3)=7. They also show the finite-n inequality ex<=0.5611666*binom(n,3) stated literally on the maintained catalogue page is FALSE: at n=4, 3>0.5611666*4.
 

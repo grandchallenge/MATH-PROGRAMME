@@ -22,8 +22,10 @@ Under assumed no collisions, S_k=Σ_{x∈A_k}1/x and m_k=min A_k. Let C=Σ1/a_i>
 The elementary identity
 
 $$
+
 \frac1{a_ix+b_i}=\frac1{a_i x}-
 \frac{b_i}{a_ix(a_ix+b_i)}
+
 $$
 
 implies S_{k+1}≥C S_k−DΣ 1/x²≥(C−D/k)S_k. For all sufficiently large k choose q>1 with C−D/k≥q. Thus S_k≥S_Kq^{k−K}. But if all r^{k−1} entries are distinct positive integers then S_k≤H_{r^{k−1}}≤1+(k−1)log r, contradiction. This proves the normalized problem independent of the external 2022 theorem but is **established mathematics** and not new GCL work.
@@ -41,7 +43,7 @@ The committed tests/test_erdos_compendium_0481_affine.py checks five cases exact
 
 Authenticated original issue RESULT/1 return: https://github.com/grandchallenge/MATH-PROGRAMME/issues/1751#issuecomment-6168823640; author fyremael, LF-normalized SHA-256 **2732492750767103ee0ada41e0947eda66a805d4ef77891f0ad0aad2878328ec**, PARTIAL (historical sign domain).
 
-Six-section manuscript: governance/erdos_compendium/editorial/0481.md, stripped UTF-8 SHA-256 **b2f51c5ddea6f57434ea67652923fef027c863b9aa5cad0e8699ef72c4a5d407**, raw bytes SHA-256 **f86a8cbecfdc43cb1aec64c164742dd054016999ddce30269d732888ba72b894**. All six required headings appear once; balanced $ delimiters.
+Six-section manuscript: governance/erdos_compendium/editorial/0481.md, stripped UTF-8 SHA-256 **b2f51c5ddea6f57434ea67652923fef027c863b9aa5cad0e8699ef72c4a5d407**, raw bytes SHA-256 **f86a8cbecfdc43cb1aec64c164742dd054016999ddce30269d732888ba72b894**. All six required headings appear once; balanced dollar-sign math delimiters.
 
 ## Formalization boundary and acceptance
 

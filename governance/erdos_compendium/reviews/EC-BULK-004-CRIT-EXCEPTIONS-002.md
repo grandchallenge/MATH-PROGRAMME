@@ -16,9 +16,9 @@ Disposition: **documentary draft pass with preserved mathematical/formal excepti
 
 ## 452: exact mathematical and status boundaries
 
-Primary Erdős–Graham (1980), printed p. 90, describes $\omega(n)$ as **distinct** prime factors and seeks a maximal *consecutive* run in $[x,2x]$. It states a density-$1/2$ theorem of Erdős (1937) and the classical CRT lower bound $L(x)\ge(1+o(1))\log x/(\log\log x)^2$. The manuscript accurately distinguishes this from the unknown growth beyond the classical bound.
+Primary Erdős–Graham (1980), printed p. 90, describes $\omega(n)$ as **distinct** prime factors and seeks a maximal *consecutive* run in $[x,2x]$. It states a density‑$1/2$ theorem of Erdős (1937) and the classical CRT lower bound $L(x)\ge(1+o(1))\log x/(\log\log x)^2$. The manuscript accurately distinguishes this from the unknown growth beyond the classical bound.
 
-The source return's finite CRT fixture uses pairwise coprime moduli $5005$, $215441$, $2022161$ and the exact residue representative $a=2099999228442114$. Integer arithmetic confirms that for $j=1,2,3$, $a+j$ is divisible by the four distinct assigned primes, and $4>\log\log(a+j)$. This does not establish an infinite theorem. The reconstructed asymptotic uses the prime number theorem as an external prerequisite and records all fixed-$\varepsilon$ dependencies rather than claiming a GCL proof of PNT.
+The source return's finite CRT fixture uses pairwise coprime moduli $5005$, $215441$, $2022161$ and the exact residue representative $a=2099999228442114$. Integer arithmetic confirms that for $j=1,2,3$, $a+j$ is divisible by the four distinct assigned primes, and $4>\log\log(a+j)$. This does not establish an infinite theorem. The reconstructed asymptotic uses the prime number theorem as an external prerequisite and records all fixed‑$\varepsilon$ dependencies rather than claiming a GCL proof of PNT.
 
 The maintained catalogue is OPEN; a formalization-metadata mismatch between pinned and later public snapshots is explicitly preserved. No Lean compilation, full site update, or proof certification.
 

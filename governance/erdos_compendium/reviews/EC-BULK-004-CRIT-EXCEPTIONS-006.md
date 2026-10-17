@@ -8,7 +8,7 @@ The 1980 Erdős–Graham monograph printed p.91 introduces $n+i=a_i b_i$ with pr
 
 ## Mathematical verification and limitation
 
-Verified the exact collision lemma for smooth components $\ge t$, the construction $n=\operatorname{lcm}(1,\ldots,t)^2$ giving $f(n,t)=t$ for composite $t$ and $t-1$ for prime $t$, and the exact residue-density identity $\Pr(s_t(m)=u)=u^{-1}\prod_{p<t}(1-1/p)$ for $u\le y<t$ over $Q=P_t\operatorname{lcm}(1,\ldots,y)$. Averaging yields $\inf_n f(n,t)\le y+t(1-H_y\prod_{p<t}(1-1/p))$ and, by Mertens with $y=\lfloor t/\log t\rfloor$, the upper obstruction $\limsup_t\inf_n f(n,t)/t\le1-e^{-\gamma}$. This argument is already noted in the public June 2026 discussion; **no novelty** is claimed. The argument does not negate existence of a smaller positive uniform lower bound.
+Verified the exact collision lemma for smooth components $\ge t$, the construction $n=\mathrm{lcm}(1,\ldots,t)^2$ giving $f(n,t)=t$ for composite $t$ and $t-1$ for prime $t$, and the exact residue-density identity $\Pr(s_t(m)=u)=u^{-1}\prod_{p<t}(1-1/p)$ for $u\le y<t$ over $Q=P_t\mathrm{lcm}(1,\ldots,y)$. Averaging yields $\inf_n f(n,t)\le y+t(1-H_y\prod_{p<t}(1-1/p))$ and, by Mertens with $y=\lfloor t/\log t\rfloor$, the upper obstruction $\limsup_t\inf_n f(n,t)/t\le1-e^{-\gamma}$. This argument is already noted in the public June 2026 discussion; **no novelty** is claimed. The argument does not negate existence of a smaller positive uniform lower bound.
 
 ## Adversarial finite checks
 

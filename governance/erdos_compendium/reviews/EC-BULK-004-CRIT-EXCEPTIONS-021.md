@@ -9,14 +9,18 @@ Decision: **CRITICAL_DRAFT_PASS_WITH_EXTERNAL_LEAN_REPLAY_PENDING**.
 
 The original source is P. Erdős, “Some unsolved problems” (1961), printed p.230, Problem I.16, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=10 , read directly from the scanned page. Its colored-class sums are described without an explicit $a\ne b$ restriction. Without distinct summands the problem would be trivial because every even $s\le N$ has $s=s/2+s/2$ in any coloring. The actual nontrivial statement attributed to Roth is exactly clarified in the resolving primary paper, P. Erdős, A. Sárközy and V. T. Sós, *On a conjecture of Roth and some related problems. I* (1989), *Irregularities of Partitions*, pp.47–59, full PDF https://real.mtak.hu/110587/1/1989-14.pdf : p.47 explicitly specifies **two different same-color summands** and p.48 remarks that repeated summands would trivialize it.
 
-For all $k\ge1$ the quantifier is $\exists c>0$ ABSOLUTE, $\forall k\ge1$, $\exists N_0(k)$, $\forall N\ge N_0(k)$, $\forall k$-colorings $f$, the set of DISTINCT representable targets $s\in[1,N]$ has cardinality at least $cN$. A per-$k$ constant, a single monochromatic triple, representations counted with multiplicity, and a statement valid for all small $N$ are non-equivalent readings.
+For all $k\ge1$ the quantifier is $\exists c>0$ ABSOLUTE, $\forall k\ge1$, $\exists N_0(k)$, $\forall N\ge N_0(k)$, $\forall k$‑colorings $f$, the set of DISTINCT representable targets $s\in[1,N]$ has cardinality at least $cN$. A per‑$k$ constant, a single monochromatic triple, representations counted with multiplicity, and a statement valid for all small $N$ are non-equivalent readings.
 
 ## Full primary theorem and source-proof critical audit
 
 The complete 13-page resolving primary is accessible in the Hungarian Academy's repository and was inspected, not merely cited. Theorem 1(i), p.48: for every fixed $k\ge2$ the count of even representable targets is
+
 $$
+
 |C_N^{\mathrm{even}}|>\frac N2-3N^{1-2^{-(k+1)}}
+
 $$
+
 for $N>N_0(k)$. This has error $o(N)$ for fixed $k$, so eventually exceeds $N/4$, giving a universal $c=1/4$. The theorem's formal $k\ge2$ range was **not** silently extended: for $k=1$ and all $N\ge3$ every target $s\in\{3,\ldots,N\}$ has distinct representation $1+(s-1)$, and $|C_N|=N-2\ge N/4$ for $N\ge4$.
 
 The 1989 proof p.49 Lemma 1 constructs a density Hilbert cube; pp.50–51 use its $k+1$ **distinct positive generators** $v_i$ and even base $u=2z$. Among distinct integers $z+v_i$, two share a color. Their sum $u+v_i+v_j$ belongs to the presumed *missing* even targets and is a representation with distinct same-color summands: contradiction. The full published lemma proves its own density threshold; GCL has inspected the proof but has not independently recreated a kernel-certified version.
@@ -27,7 +31,7 @@ The modern #484 source is **PROVED** mathematically; the adjacent #483 Schur for
 
 ## Independently replayed finite fixtures and important limitations
 
-Five source-specific tests in tests/test_erdos_compendium_0484_roth_sums.py passed at source commit 7222a21bca39081e976b6b67eb375cbd46a27529. Tests enumerate **distinct target sets** by two different algorithms, examine all $2^{10}$ two-colorings and all $3^8$ three-colorings (and small one-color), assert the exceptional $a=b$ prohibition ($N=2$ has zero valid targets), check $k=1$ all $N$ in 3..59, verify the 2-color odd-part $\pmod4$ construction through $N=512$ omits every power of two, and test missing-even Fibonacci inequalities over all 2-colorings for $3\le N\le11$. This is bounded finite support, not a proof of the all-$k$ 1989 density lemma.
+Five source-specific tests in tests/test_erdos_compendium_0484_roth_sums.py passed at source commit 7222a21bca39081e976b6b67eb375cbd46a27529. Tests enumerate **distinct target sets** by two different algorithms, examine all $2^{10}$ two-colorings and all $3^8$ three-colorings (and small one-color), assert the exceptional $a=b$ prohibition ($N=2$ has zero valid targets), check $k=1$ all $N$ in 3..59, verify the 2-color odd-part $\pmod4$ construction through $N=512$ omits every power of two, and test missing-even Fibonacci inequalities over all 2-colorings for $3\le N\le11$. This is bounded finite support, not a proof of the all‑$k$ 1989 density lemma.
 
 The local worktree already contained a substantial untracked 0484.md. Its original bytes were preserved at /tmp/EC004-0484-original-local-draft-20261014.md (original SHA-256 **7efe8f56e1b796ade6fffc7ac21f8d6ef1f71a0dc349bc518127edbd01445892**) before the article was completed, reorganized into six mandatory sections, hash-checked and committed by the authenticated CHAD git identity. No other untracked project evidence was overwritten.
 

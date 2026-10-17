@@ -10,8 +10,10 @@ Decision: **CRITICAL_DRAFT_PASS_WITH_PRIMARY_SOURCE_BLOCKER**. This is an editor
 The plane $\mathbb R^2$ has continuum cardinality $\mathfrak c$. The problem is coloring **two-element unordered subsets** of that vertex set, *not* individual points or geometric distances. The property P is:
 
 $$
+
 \exists c:[\mathbb R^2]^2\to 3\ \forall A\subseteq\mathbb R^2,\
 (|A|\geq\aleph_1\implies c[[A]^2]=3).
+
 $$
 
 Correct partition notation: P is $\mathfrak c\not\to[\aleph_1]^2_3$. The **positive** square-bracket arrow $\mathfrak c\to[\aleph_1]^2_3$ means that every three-coloring of unordered pairs has an uncountable set *omitting at least one color*, not necessarily a monochromatic set. Arrow negation, ZFC provability, logical independence, and truth inside a named model are different assertions. The special status NOT PROVABLE is not an ordinary unsolved number-theory inequality.
@@ -27,16 +29,20 @@ Correct partition notation: P is $\mathfrak c\not\to[\aleph_1]^2_3$. The **posit
 Saharon Shelah's arXiv:2601.02923v1 (Jan. 6, 2026), https://arxiv.org/html/2601.02923v1 , Theorem 0.1 asserts a ccc forcing extension of GCH with
 
 $$
+
 2^{\aleph_0}=\aleph_6,\qquad
 \forall n\ge3:\quad \aleph_5\to[\aleph_2]^2_{n,2}.
-$$
-
-Theorem 0.2 gives more general cardinal assumptions; Definition 0.3 defines this $(n,2)$ notation as an $\aleph_2$-subset using at most **two** colors in every n-coloring of unordered pairs.
-
-**Independent logical implication CHECKED:** Given a three-coloring of $[\aleph_6]^2$, choose an $\aleph_5$-subset and restrict. Theorem 0.1 at $n=3$ yields an $\aleph_2$-subset using no more than two colors. Choose any $\aleph_1$-subset. Thus
 
 $$
+
+Theorem 0.2 gives more general cardinal assumptions; Definition 0.3 defines this $(n,2)$ notation as an $\aleph_2$‑subset using at most **two** colors in every n-coloring of unordered pairs.
+
+**Independent logical implication CHECKED:** Given a three-coloring of $[\aleph_6]^2$, choose an $\aleph_5$‑subset and restrict. Theorem 0.1 at $n=3$ yields an $\aleph_2$‑subset using no more than two colors. Choose any $\aleph_1$‑subset. Thus
+
+$$
+
 \aleph_6\to[\aleph_1]^2_3.
+
 $$
 
 With continuum $\aleph_6$ in the extension, **P fails**. The 2026 preprint says no large-cardinal hypothesis is required for this example, materially superseding the old strength-of-assumption narrative in the maintained #474 entry. **The 14-page forcing proof itself was not independently referee-checked or Lean replayed.** This is an author-stated theorem and a checked logical reduction, not independent GCL certification. Also, continuum $\aleph_6$ does *not* resolve the separate $\aleph_2$ case.

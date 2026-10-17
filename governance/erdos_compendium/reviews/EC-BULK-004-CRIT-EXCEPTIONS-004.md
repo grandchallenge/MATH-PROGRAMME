@@ -4,7 +4,7 @@ Date: 2026-10-13. Scope: Erdős #458. Role: same accountable coordinator's adver
 
 ## Source and mathematical semantics
 
-Original Erdős–Graham 1980 printed p.91 was visually inspected. It asks for every $k\geq1$ whether $L(p_{k+1}-1)<p_kL(p_k)$, where $L(n)=\operatorname{lcm}(1,\ldots,n)$. The maintained special status **FALSIFIABLE** is interpreted correctly as OPEN with a finite-counterexample route, not as disproved, independent, or algorithmically decided in full. The source describes both prime-square clustering and small-prime obstructions.
+Original Erdős–Graham 1980 printed p.91 was visually inspected. It asks for every $k\geq1$ whether $L(p_{k+1}-1)<p_kL(p_k)$, where $L(n)=\mathrm{lcm}(1,\ldots,n)$. The maintained special status **FALSIFIABLE** is interpreted correctly as OPEN with a finite-counterexample route, not as disproved, independent, or algorithmically decided in full. The source describes both prime-square clustering and small-prime obstructions.
 
 The exact quotient identity follows from the prime-power decomposition of $L(n)$. Between consecutive primes $p<r$, every new prime-power factor is a proper power $q^a$ with $a\geq2$. Hence $L(r-1)/L(p)=\prod_{p<q^a<r}q$. Bertrand's theorem $r<2p$ ensures that a fixed base cannot appear twice: if $q^a>p$, its next power is at least $2q^a>2p>r$. The universal claim is therefore equivalent to the computable inequality $B(p,r)<p$ for every prime gap. The finite witness predicate is decidable; the universally quantified $\Pi^0_1$ assertion is **not** thereby known decidable or independent in PA.
 

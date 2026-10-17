@@ -14,9 +14,13 @@ The first solution is Schinzel, *Acta Arithmetica* 49 (1987), 55–70, DOI 10.40
 ## Complete inspected stronger primary
 
 DIRECTLY READ original publisher four-page PDF Schinzel–Zannier, *Rendiconti Lincei Matematica e Applicazioni* 20 (2009), 95–98, https://ems.press/content/serial-article-files/39657, downloaded PDF SHA256 **47a3272cd0575ff17900f7cb59e52037ebe6388532f6e36990e55ff3f6524f27**. Theorem 1 printed p.95 says for field F, P∈F[x] with T≥2 terms, integer l≥1, t=τ(P^l), assuming char F=0 OR char F>l·deg P:
+
 $$
+
 t\ge2+\frac{\log(T-1)}{\log(4l)}.
+
 $$
+
 For F=ℚ,l=2,T=k≥2, this gives f(k)≥2+log(k−1)/log8→∞. No restriction on degrees over ℚ. The 2009 Theorem 2 p.96 has separate positive-characteristic assumptions that cannot be silently dropped.
 
 The complete paper's p.96 Lemmas 1–2 and p.97 proof explicitly depend on Schinzel 1987 pp.60–63. The core 2009 argument assumes a minimal-degree counterexample, uses Diophantine approximation of exponent ratios, a two-variable polynomial decomposition and lower-degree substitution contradicting minimality. The mathematical theorem is publication-proven; an independent GCL proof reconstruction of the original 1987 auxiliary lemmas and all 2009 algebraic steps has NOT occurred. Its characteristic and degree hypotheses are visibly retained in the six-section manuscript.
@@ -35,7 +39,7 @@ GCL pinned google-deepmind/formal-conjectures@85f863718beeec7b58a3a1926ee92e3472
 
 The authenticated original issue research return https://github.com/grandchallenge/MATH-PROGRAMME/issues/1755#issuecomment-6180254764 has six substantive RESULT/1 sections, disposition SOURCE_LOCK_READY for original question and 2009 theorem, author fyremael, LF-normalized body SHA256 **29963f4dd3fcfeb08f9412dd81169969438e7ff8289b2b5195cfa9ea933abcd0**.
 
-Six-heading accessible article governance/erdos_compendium/editorial/0485.md has balanced $ delimiters, normalized stripped UTF-8 SHA256 **47d76e8b5e81fd7117873a6e2f344af480b3a19da7b863a6c5feca92ec325a42**, raw byte SHA256 **681be5bf46dc14130c62a7621468b62d48d626161c51afdca3baab362dd55f0b**.
+Six-heading accessible article governance/erdos_compendium/editorial/0485.md has balanced dollar-sign math delimiters, normalized stripped UTF-8 SHA256 **47d76e8b5e81fd7117873a6e2f344af480b3a19da7b863a6c5feca92ec325a42**, raw byte SHA256 **681be5bf46dc14130c62a7621468b62d48d626161c51afdca3baab362dd55f0b**.
 
 ## Result and bounded successor
 

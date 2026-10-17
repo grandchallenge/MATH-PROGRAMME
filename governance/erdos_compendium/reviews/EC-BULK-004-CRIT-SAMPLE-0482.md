@@ -20,26 +20,38 @@ Directly inspected Erdős–Graham, *Old and New Problems and Results in Combina
 ## 3. Independent finite and symbolic mathematical review
 
 For the original initial value, the 1970 explicit formula gives for $z=\sqrt2/2$:
+
 $$
+
 a_{2n+1}=2^n+\lfloor2^nz\rfloor,\qquad
 a_{2n-1}=2^{n-1}+\lfloor2^{n-1}z\rfloor.
+
 $$
+
 The second formula holds even at $n=1$, using $a_1=1$ and $\lfloor z\rfloor=0$. Therefore
+
 $$
+
 d_n=\lfloor2^nz\rfloor-2\lfloor2^{n-1}z\rfloor
 =\lfloor\sqrt2\,2^{n-1}\rfloor\bmod2.
+
 $$
+
 This is the nth bit of $\sqrt2/2=0.101101\ldots$ and the nth bit of $\sqrt2=1.01101\ldots$ **including the leading integer 1**, so $d_1=1$, $d_2=0$. If one instead calls the first digit after the binary point of $\sqrt2$ digit 1, that digit is 0 and the statement is off by one. This is a material edge-case tested both ways.
 
 The integer-only recurrence uses
+
 $$
+
 \lfloor\sqrt2(a+\tfrac12)\rfloor
-=\operatorname{isqrt}(\lfloor(2a+1)^2/2\rfloor),
+=\mathrm{isqrt}(\lfloor(2a+1)^2/2\rfloor),
+
 $$
+
 exact for all $a\in\mathbb N$. Five committed tests in tests/test_erdos_compendium_0482_binary_digits.py PASSED at source head **796452a810ffe6e579bc4d88c93dad443c4737ac**:
 1. Original first 13 exact terms, first eight digits [1,0,1,1,0,1,0,1] and first fractional-bit trap.
 2. Original 1970 closed-form versus independent integer recurrence for **260 terms**.
-3. Recovered first **120 binary digits** from recurrence and independent $\operatorname{isqrt}(2^{2n-1})\bmod2$.
+3. Recovered first **120 binary digits** from recurrence and independent $\mathrm{isqrt}(2^{2n-1})\bmod2$.
 4. A separate 320-/400-digit decimal square-root computation confirmed **100 digits**, with both precisions agreeing on each truncation.
 5. Prefix reconstruction of $\sqrt2/2$ with **70 bits**.
 

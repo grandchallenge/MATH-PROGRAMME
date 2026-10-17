@@ -7,7 +7,7 @@ TIMEBOX_OBSERVED: NO
 
 ## Exact statement and normalization
 
-Let $p_n$ denote the $n$th prime, $p_1=2$. Erdős and Straus asked whether there exists $N$ such that for every integer $n\ge N$ there is an integer $1\le i<n$ with $p_n^2<p_{n-i}p_{n+i}$. Pomerance proved the stronger negation: infinitely many $n$ satisfy $p_n^2>p_{n-i}p_{n+i}$ simultaneously for every $1\le i<n$. The strict inequality and the order of quantifiers are essential. An infinite set of such $n$ refutes the eventual-for-all claim.
+Let $p_n$ denote the $n$‑th prime, $p_1=2$. Erdős and Straus asked whether there exists $N$ such that for every integer $n\ge N$ there is an integer $1\le i<n$ with $p_n^2<p_{n-i}p_{n+i}$. Pomerance proved the stronger negation: infinitely many $n$ satisfy $p_n^2>p_{n-i}p_{n+i}$ simultaneously for every $1\le i<n$. The strict inequality and the order of quantifiers are essential. An infinite set of such $n$ refutes the eventual-for-all claim.
 
 ## Dated status and primary evidence
 

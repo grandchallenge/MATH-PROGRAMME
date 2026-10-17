@@ -34,7 +34,7 @@ The $Q_{k+1}$ set closure theorem of #471 has no direct bearing on the q_(n+1) g
 | 471 | https://github.com/grandchallenge/MATH-PROGRAMME/issues/1741#issuecomment-6166958720 | 83c602a9972bbc102a0b967d5e37db33f4f93f36d16218bf372caf1fe85310fc | 52bd5311bb678055174a22a252356ef90fafb004121f33b5dfdee401563dd908 | SOURCE_LOCK_READY documentary, proof external |
 | 472 | https://github.com/grandchallenge/MATH-PROGRAMME/issues/1742#issuecomment-6166998538 | 70c853bbd132e2552485d7003220d086afcff9c734777f728830ec3b4acc05fe | 445a7c4d06042fccf0ffde9b56cd500d9d49be193b23f5382096cd1496ae88f5 | BOUNDED_TASK_DESIGNED open problem |
 
-Original authenticated comment author is fyremael for both, read back with exact IDs and body hashes. Manuscripts: governance/erdos_compendium/editorial/0471.md and 0472.md; each has all six required sections exactly once and balanced $-delimited mathematics. Source-specific finite tests: tests/test_erdos_compendium_0471_0472_ulam.py, five tests passed at branch head cb69b1ec0879c96157f41d5b24485316f91a65ac.
+Original authenticated comment author is fyremael for both, read back with exact IDs and body hashes. Manuscripts: governance/erdos_compendium/editorial/0471.md and 0472.md; each has all six required sections exactly once and balanced dollar-delimited mathematics. Source-specific finite tests: tests/test_erdos_compendium_0471_0472_ulam.py, five tests passed at branch head cb69b1ec0879c96157f41d5b24485316f91a65ac.
 
 **Final full repository pytest, MkDocs, public browser MathJax and protected V2 admission are not attested by this receipt**. They are required separately and must be measured at the final reviewed head.
 

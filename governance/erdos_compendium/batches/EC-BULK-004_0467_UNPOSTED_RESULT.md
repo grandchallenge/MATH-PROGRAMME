@@ -13,9 +13,13 @@ Primary: P. Erdős and R. L. Graham, *Old and New Problems and Results in Combin
 
 ## Strongest verified interface
 Under the positive-integer interpretation let $N=p-1$ for prime cutoff $p$, and let $C(N)=\sum_{q\le p}\lceil N/q\rceil$ over primes $q$. Take the first at most ten primes $S$. For each two-colouring of $S$, put weight $w(q,r)=\lfloor N/(qr)\rfloor$ on each monochromatic prime pair and take a maximum-weight spanning forest in each colour. Let $L(N,S)$ be the MINIMUM total maximum-forest weight over all colourings. Any two-colour covering must satisfy
+
 $$
+
 C(N)\ge 2N+L(N,S).
+
 $$
+
 Proof: every covered integer has at least one hit of each colour; a forest on its active prime vertices has at most $k-1$ edges per nonempty colour, so the number of active forest edges is bounded by total hits minus two. CRT guarantees at least $\lfloor N/(qr)\rfloor$ common hits for each prime pair. Sum and optimize. Exact integer tests on authenticated CHAD exclude EVERY prime endpoint $p<607$: the deficit $C-2N-L$ is strictly negative. At $p=601$ it is $-1$; at $p=607$ it is $+1$ and the test is inconclusive, NOT a construction. Prime-endpoint reduction therefore excludes every real $2\le x<607$ under the positive-integer interpretation. This independent result is weaker than the unreplayed external 7012 report and has no asymptotic implication.
 
 ## Proposed bounded successor task

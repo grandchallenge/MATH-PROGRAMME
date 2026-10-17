@@ -19,7 +19,7 @@ Upstream `main` blob 77d7d378e7761aa771ff7e9af8a691047286610c instead writes `�
 
 ## Independent mathematical audit
 
-For each i≥1, factor i=2^s∏q_j^{e_j}. Define d_j=ord_{q_j^{e_j}}(2), $L=\operatorname{lcm}_j[d_j/\gcd(d_j,i)]$ (L=1 if no odd q). Choose odd primes p≡1 mod L with p∤i. Then Fermat shows p|$2^{ip}-2^i$, and the order conditions plus 2^s|2^i show i divides the same difference. Since gcd(i,p)=1, ip divides it. Dirichlet yields infinitely many such p. All steps were independently checked against Tang pp.4–5 and finite test implementations. This proves the historically established partial result, not the universal conjecture.
+For each i≥1, factor i=2^s∏q_j^{e_j}. Define d_j=ord_{q_j^{e_j}}(2), $L=\mathrm{lcm}_j[d_j/\gcd(d_j,i)]$ (L=1 if no odd q). Choose odd primes p≡1 mod L with p∤i. Then Fermat shows p|$2^{ip}-2^i$, and the order conditions plus 2^s|2^i show i divides the same difference. Since gcd(i,p)=1, ip divides it. Dirichlet yields infinitely many such p. All steps were independently checked against Tang pp.4–5 and finite test implementations. This proves the historically established partial result, not the universal conjecture.
 
 Independent elementary obstruction k=1: for even n>1, 2^n not congruent1 mod2. For odd n>1 let p be its smallest prime divisor. The multiplicative order of 2 modulo p divides n and p−1, hence if nontrivial would have a prime factor of n smaller than p, contradiction. Order 1 is impossible; therefore A(1)={1}.
 

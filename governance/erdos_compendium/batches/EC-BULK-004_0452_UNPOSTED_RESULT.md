@@ -7,7 +7,7 @@ TIMEBOX_OBSERVED: NO
 
 ## Exact statement and normalization
 
-Let $\omega(n)=|\{p\text{ prime}:p\mid n\}|$ count *distinct* prime divisors, without multiplicity. For real $x>e$ define $L(x)$ as the maximum cardinality of a consecutive block of integers $I\subseteq[x,2x]$ satisfying $\omega(n)>\log\log n$ for **every** $n\in I$ (natural logarithms). Erdős asks for the asymptotic size of $L(x)$, not merely whether such blocks exist. In particular, the 1980 source asks whether $L(x)$ could reach $(\log x)^k$ for arbitrarily large fixed $k$ (a speculation, not a theorem). The known CRT lower bound is $L(x)\ge(1+o(1))\log x/(\log\log x)^2$; the $o(1)$ is as $x\to\infty$. Neither the density-$1/2$ theorem nor finite examples settles the maximum-block growth question.
+Let $\omega(n)=|\{p\text{ prime}:p\mid n\}|$ count *distinct* prime divisors, without multiplicity. For real $x>e$ define $L(x)$ as the maximum cardinality of a consecutive block of integers $I\subseteq[x,2x]$ satisfying $\omega(n)>\log\log n$ for **every** $n\in I$ (natural logarithms). Erdős asks for the asymptotic size of $L(x)$, not merely whether such blocks exist. In particular, the 1980 source asks whether $L(x)$ could reach $(\log x)^k$ for arbitrarily large fixed $k$ (a speculation, not a theorem). The known CRT lower bound is $L(x)\ge(1+o(1))\log x/(\log\log x)^2$; the $o(1)$ is as $x\to\infty$. Neither the density‑$1/2$ theorem nor finite examples settles the maximum-block growth question.
 
 ## Dated status and primary evidence
 
@@ -21,7 +21,7 @@ Checked finite CRT fixture: choose $L=3$, and four primes for each offset: $[5,7
 
 ## Proposed bounded successor task
 
-EC004-0452-CRT-BOUND-REPLAY: independently check the above explicit CRT arithmetic and give a complete epsilon-quantified proof of the PNT prime-supply estimate and $Q\le x^{1-\varepsilon/2}$ for fixed $\varepsilon>0$. Input: $\omega$ counts distinct primes; $I$ is an integer interval in $[x,2x]$; natural logarithms; use a clearly stated prime number theorem. Acceptance: exact integer divisibility and $\omega(a+j)>\log\log(a+j)$ for $j=1,2,3$, plus a written proof with all $x$-dependent rounding terms bounded. Falsification: any failed modular congruence, a prime assigned to two offsets, or a quantifier gap in the uniform selection of $Lm$ primes. Stop at the classical lower bound and report the remaining gap to any superlogarithmic power; do not present a finite search as resolution.
+EC004-0452-CRT-BOUND-REPLAY: independently check the above explicit CRT arithmetic and give a complete epsilon-quantified proof of the PNT prime-supply estimate and $Q\le x^{1-\varepsilon/2}$ for fixed $\varepsilon>0$. Input: $\omega$ counts distinct primes; $I$ is an integer interval in $[x,2x]$; natural logarithms; use a clearly stated prime number theorem. Acceptance: exact integer divisibility and $\omega(a+j)>\log\log(a+j)$ for $j=1,2,3$, plus a written proof with all $x$‑dependent rounding terms bounded. Falsification: any failed modular congruence, a prime assigned to two offsets, or a quantifier gap in the uniform selection of $Lm$ primes. Stop at the classical lower bound and report the remaining gap to any superlogarithmic power; do not present a finite search as resolution.
 
 ## Prerequisites and blocker
 
