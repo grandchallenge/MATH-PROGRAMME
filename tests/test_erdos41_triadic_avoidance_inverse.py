@@ -302,5 +302,22 @@ class TriadicAvoidanceTests(unittest.TestCase):
                     self.assertLessEqual(n**3*Q,12*D*tQ**3)
 
 
+    def test_prime_residue_deficiency_gives_positive_finite_bound(self):
+        # Separate-carrier control: U and W are each exact B3, but their
+        # UNION is not B3. The theorem uses their separate B3 properties.
+        # This checks a genuinely positive numerical certificate.
+        u=[1,2,5,14,33]
+        Y,Z=[100,102],[105,114]
+        self.assertTrue(is_b3(u))
+        self.assertTrue(is_b3(Y+Z))
+        self.assertFalse(is_b3(u+Y+Z))
+        M,x,Bcube,e=prime_residue_budget(u,Y,Z,(2,),1)
+        self.assertEqual(M,12)
+        self.assertEqual(e[2][0],0)
+        self.assertEqual(Bcube,Fraction(81,8))
+        self.assertLess(Bcube,Fraction(len(Y)*len(Z))**3)
+        self.assertGreater(M,0)
+
+
 if __name__ == "__main__":
     unittest.main()
