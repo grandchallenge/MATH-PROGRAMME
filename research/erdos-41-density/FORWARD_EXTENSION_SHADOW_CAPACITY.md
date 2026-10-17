@@ -638,7 +638,7 @@ $
 \boxed{\sum_{i+j+k=s}a_ia_ja_k\le100}\quad(s\ge0).
 $
 
-Each m_i>=floor(4M^(1/3))>=4, so m_i+2<=2m_i<=(2/5)L^(1/3)a_i. For every index pattern i<=j<=k, its actual multiset weight w(i,j,k) is at most 1 divided by the number of permutations of (i,j,k), times the corresponding product (m_i+2)(m_j+2)(m_k+2). Hence the sum of all pattern weights with fixed index sum s is at most one-sixth of the ordered triple convolution of the b_i=m_i+2, a bound verified separately for three distinct indices, two equal indices, and three equal indices. Thus
+Each m_i>=floor(4M^(1/3))>=4, so m_i+2<=2m_i<=(2/5)L^(1/3)a_i. For each index pattern i<=j<=k, write v for the number of distinct permutations of (i,j,k): respectively v=6,3,1 when all three indices are distinct, exactly two coincide, or all three coincide. Its multiset weight w(i,j,k) is at most (v/6)(m_i+2)(m_j+2)(m_k+2). Indeed the three cases reduce to m_i m_j m_k<=b_i b_j b_k, binom(m_i+1,2)m_k<=b_i²b_k/2, and binom(m_i+2,3)<=b_i³/6. Therefore the sum of pattern weights at index sum s is bounded by **one sixth of the full ordered triple convolution** of b_i=m_i+2. Thus
 
 $
 \sum_{i\le j\le k,\ i+j+k=s}w(i,j,k)
