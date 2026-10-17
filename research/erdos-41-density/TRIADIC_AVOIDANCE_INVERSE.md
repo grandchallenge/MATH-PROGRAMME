@@ -240,6 +240,83 @@ Combine with e<=M/t and rearrange. This proves (LOCAL-CRT-INV). QED.
 
 **What is not achieved:** showing that *every* persistent-density configuration has such a prime/modulus family. If e_(p,t)=p for every usable small prime, the residue budget B_t is enormous and the inequality usually says only M>=0. Dense inner forbidden distances by themselves do not guarantee a missing allowed residue modulo any small prime: a relatively sparse zero-weight set can still hit every residue class. The need to prove *unavoidable prime-residue deficiency or another density-cost mechanism at arbitrarily many owned scales* is the remaining open Stage B boundary.
 
+## 4B. Composite-modulus inverse: a stronger, fully elementary theorem
+
+The prime theorem can be strengthened, particularly when the allowed differences cover **every** residue in each small prime projection but not every residue modulo their product.
+
+Fix the same actual ordered B3 outer bins Y<Z and integer threshold t>=1. For *any integer modulus* Q satisfying 1<=Q<=min(D_Y,D_Z), form the actual permitted residue set
+
+$
+E_{Q,t}=\{h\bmod Q:h\in J,\ r_U(h)<t\}.
+$
+
+Define a **finite difference-biclique capacity** depending only on the inner spectrum and candidate interval,
+
+$
+\boxed{
+\beta_Q(E)=
+\max_{\substack{S,T\subseteq\mathbb Z/Q\mathbb Z\\
+T-S\subseteq E}} |S||T|,
+}\tag{BICLIQUE}
+$
+
+where empty S or T are allowed, giving a valid maximum of zero when E is empty. For a fixed nonempty S, the largest possible T is the exact intersection of translates
+
+$
+T_{\max}(S)=\bigcap_{s\in S}(s+E).
+$
+
+Thus beta_Q is precisely and reproducibly computable by enumerating the 2^Q residue subsets S for modest Q, without optimizing over unknown actual outer points. Put
+
+$
+\boxed{
+B_{Q,t}^{\mathrm{comp}}=
+\left(\frac{144D_YD_Z}{Q^2}\right)^{1/3}
+\beta_Q(E_{Q,t}).
+}\tag{COMPOSITE-BUDGET}
+$
+
+**Theorem E (robust composite-modulus arithmetic inverse):**
+
+$
+\boxed{
+\mathcal M_{Y,Z}(U)\ge
+\frac{t}{\max(m_Y,m_Z)}
+\left[m_Ym_Z-B_{Q,t}^{\mathrm{comp}}\right]_+ .
+}\tag{COMPOSITE-INVERSE}
+$
+
+**Proof (elementary; no Cauchy–Davenport needed).** Remove one endpoint of each cross-bin edge with r_U(z-y)>=t, at most M/t deletions. If one bin disappears, the bound follows as in Theorem D. Otherwise the surviving actual B3 subsets Y',Z' have residue supports S=Y' mod Q and T=Z' mod Q satisfying T−S subset E_(Q,t). Hence |S||T|<=beta_Q(E). For either B3 subset X with enclosing diameter D_X>=Q, the cubic-shadow pigeonhole proof gives \(|X|^3 Q\le12D_Xt_Q(X)^3\). Multiply the inequalities for Y',Z' and take cube roots to obtain
+
+$
+|Y'||Z'|\le
+\left(\frac{144D_YD_Z}{Q^2}\right)^{1/3}
+|S||T|\le B_{Q,t}^{\mathrm{comp}}.
+$
+
+As before the product of the surviving bin sizes is at least m_Y m_Z−(M/t) max(m_Y,m_Z). Rearranging proves (COMPOSITE-INVERSE). QED.
+
+**Prime CRT dominance.** When Q is a product of distinct primes p_j, every allowed-biclique pair S,T projects to allowed difference pairs modulo each p_j. The CRT and Cauchy–Davenport upper bounds give
+
+$
+\boxed{\beta_Q(E_{Q,t})\le\prod_j c_{p_j,t}^{\,2}.}\tag{DOMINATES}
+$
+
+Here the prime allowed sets E_(p,t) may be **larger** than the projections of E_(Q,t) if the candidate set is changed; in this theorem all are reductions of the same actual candidate interval J, so containment and the inequality are valid. Therefore Theorem E is at least as strong as Theorem D for the same product modulus.
+
+**Concrete B3-compatible structural witness.** Take an inner B3 block U={1,2,5,14}, and two B3 outer bins Y={100,106}, Z={108,115}. The separate sets are B3; the combined U union Y union Z is **not asserted to be B3**. The candidate positive differences range over J=[2,15]. The actual zero-weight differences of U in J are {10,14,15}, so their residues modulo 6 are {4,2,3}. They cover both residue classes modulo 2 and all three residue classes modulo 3, yet omit three of the six classes modulo 6. Exhaustive residue-subset enumeration gives
+
+$
+\boxed{
+\beta_6(\{2,3,4\})=4<36
+=\bigl(2\cdot3\bigr)^2.
+}\tag{COMPOSITE-STRICT}
+$
+
+The prime CRT upper bound of 36 sees no restriction, whereas the composite biclique bound is 4. This is a **strict improvement in the arithmetic structural certificate**, not a claim of a positive Stage B correlation bound in that particular fixture. The actual cross-bin weight there is 6, so both inequalities hold.
+
+**Open universal step, explicitly:** for the long persistent-density windows in Erdős #41, prove that some Q<=min(D_Y,D_Z) has composite capacity beta_Q(E) small enough to force positive overlap, **or** show that consistently large beta_Q across a growing family of scale-owned windows creates a separately quantified density cost. The present theorem does not show this. An allowed spectrum may have E=all residues for every accessible modulus despite exact B3 avoidance.
+
 ## 5. What was and was not proved about persistent density
 
 Under the **hypothetical** persistent critical bound A(N)>=cN^(1/3), existing GCL selection gives large actual outer cohorts. If a chosen m-element outer B3 subset has m>=kappa_c L^(1/3) in an interval of span L and M=0, Theorem A forces at least kappa_c^3 L/6−O_c(L^(2/3)) distinct nondegenerate additive triangles in the zero-weight distance set. This is a rigorous quantitative *structure-or-correlation* alternative.
