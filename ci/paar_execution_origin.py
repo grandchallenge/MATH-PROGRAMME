@@ -193,9 +193,29 @@ def verify_witness(*, api_get, witness: dict, run_id: int) -> dict:
            and witness.get("producer_code") == "protected-main-workflow",
            "trusted workflow identity mismatch")
     main = api_get(f"/repos/{REPOSITORY}/branches/main")
-    demand(main.get("commit",{}).get("sha") == workflow_sha
-           and main.get("protected") is True,
-           "trusted workflow HEAD no longer equals protected main")
+    current_sha = main.get("commit", {}).get("sha") if isinstance(main, dict) else None
+    demand(main.get("protected") is True and isinstance(current_sha, str)
+           and SHA40.fullmatch(current_sha),
+           "protected main missing or no longer protected")
+    # A successful GitHub-hosted historical run survives subsequent protected
+    # admissions only if the workflow commit remains an actual ancestor of
+    # protected main. Compare authenticated GitHub history, not a claimed
+    # ancestor field inside the worker-uploaded witness.
+    if current_sha == workflow_sha:
+        historical_ancestry = "CURRENT_PROTECTED_HEAD"
+    else:
+        compare = api_get(
+            f"/repos/{REPOSITORY}/compare/{workflow_sha}...{current_sha}")
+        demand(isinstance(compare, dict)
+               and compare.get("status") == "ahead"
+               and type(compare.get("ahead_by")) is int
+               and compare["ahead_by"] > 0
+               and type(compare.get("behind_by")) is int
+               and compare["behind_by"] == 0
+               and (compare.get("base_commit") or {}).get("sha") == workflow_sha
+               and (compare.get("merge_base_commit") or {}).get("sha") == workflow_sha,
+               "workflow origin not ancestor of current protected main")
+        historical_ancestry = "VERIFIED_PROTECTED_ANCESTOR"
     response = api_get(f"/repos/{REPOSITORY}/actions/runs/{run_id}/jobs?per_page=100")
     jobs = response.get("jobs") if isinstance(response,dict) else None
     demand(isinstance(jobs,list) and response.get("total_count",101) <= 100,
@@ -271,7 +291,9 @@ def verify_witness(*, api_get, witness: dict, run_id: int) -> dict:
     return {"result":"PASS_BOUNDED_PLATFORM_ORIGIN_REPLAY",
             "run_id":run_id,"run_attempt":attempt,
             "artifact_id":found[0]["id"],"artifact_name":name,
-            "trusted_workflow_head":workflow_sha,"source":binding,
+            "trusted_workflow_head":workflow_sha,
+            "current_protected_main":current_sha,
+            "protected_history_relation":historical_ancestry,"source":binding,
             "roles_verified":[r for r,_ in ALLOWED_COMMANDS],
             "execution_service":"GitHub-hosted Actions",
             "historical_chad_execution_attested":False,
