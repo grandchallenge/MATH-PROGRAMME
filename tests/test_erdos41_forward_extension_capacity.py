@@ -174,6 +174,23 @@ def seven_layer_cardinal_bounds(n,m,ell,R):
     return sizes,limits
 
 
+def three_layer_interval_hall(p,d,t):
+    """Exact integer range capacities for levels 2, 3, 4."""
+    assert p and d and t
+    pm,pM=min(p),max(p)
+    dm,dM=min(d),max(d)
+    tm,tM=min(t),max(t)
+    windows=(
+        ((pm+2*dm,pM+2*dM),(2*pm-tM,2*pM-tm)),
+        ((3*dm,3*dM),(pm+dm-tM,pM+dM-tm)),
+        ((2*dm-tM,2*dM-tm),(pm-2*tM,pM-2*tm)),
+    )
+    sizes=[]
+    for (a,b),(c,e) in windows:
+        sizes.append((b-a+1)+(e-c+1)-max(0,min(b,e)-max(a,c)+1))
+    return tuple(sizes)
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -498,6 +515,28 @@ class ForwardShadowCapacityTests(unittest.TestCase):
             _,anchored=reflected_signed_word_certificate(p,t)
             self.assertEqual(three,anchored)
             self.assertEqual(three,is_b3(p+[y]+[2*y-x for x in t]))
+
+
+    def test_local_hall_word_intervals_contain_all_real_offsets(self):
+        p=[1,2,5];d=[0,11];R=14;y=100
+        from itertools import combinations
+        for k in (1,2,3,4):
+            for t in combinations(range(1,R+1),k):
+                h=three_layer_interval_hall(p,d,t)
+                offsets=seven_layer_offsets(p,d,t)
+                sizes=tuple(len(offsets[j]) for j in (2,3,4))
+                self.assertTrue(all(
+                    h[j-2]>=len(set(offsets[j]))
+                    for j in (2,3,4)))
+                self.assertTrue(all(s<=4*R+1 for s in h))
+                if seven_layer_exact(p,d,t):
+                    self.assertTrue(all(a<=b for a,b in zip(sizes,h)))
+
+    def test_local_hall_can_strictly_sharpen_global_range(self):
+        p=[1,2,5];d=[0,11];t=[1,4]
+        h=three_layer_interval_hall(p,d,t)
+        self.assertTrue(all(x<=4*14+1 for x in h))
+        self.assertTrue(any(x<4*14+1 for x in h))
 
 
 if __name__=="__main__":
