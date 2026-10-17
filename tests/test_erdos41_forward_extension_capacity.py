@@ -123,6 +123,57 @@ def reflected_signed_word_certificate(p, reflected):
     return unanchored,anchored
 
 
+def seven_layer_offsets(p, d, t):
+    """Enumerate every unordered three-term word by its digit level."""
+    result={j:[] for j in range(7)}
+    for a,b,c in combinations_with_replacement(sorted(p),3):
+        result[0].append(a+b+c)
+    for a,b in combinations_with_replacement(sorted(p),2):
+        for v in d:
+            result[1].append(a+b+v)
+    for v in p:
+        for a,b in combinations_with_replacement(sorted(d),2):
+            result[2].append(v+a+b)
+    for a,b in combinations_with_replacement(sorted(p),2):
+        for v in t:
+            result[2].append(a+b-v)
+    for a,b,c in combinations_with_replacement(sorted(d),3):
+        result[3].append(a+b+c)
+    for a in p:
+        for b in d:
+            for v in t:
+                result[3].append(a+b-v)
+    for a,b in combinations_with_replacement(sorted(d),2):
+        for v in t:
+            result[4].append(a+b-v)
+    for v in p:
+        for a,b in combinations_with_replacement(sorted(t),2):
+            result[4].append(v-a-b)
+    for v in d:
+        for a,b in combinations_with_replacement(sorted(t),2):
+            result[5].append(v-a-b)
+    for a,b,c in combinations_with_replacement(sorted(t),3):
+        result[6].append(-a-b-c)
+    return result
+
+
+def seven_layer_exact(p,d,t):
+    offsets=seven_layer_offsets(p,d,t)
+    return all(len(x)==len(set(x)) for x in offsets.values())
+
+
+def seven_layer_cardinal_bounds(n,m,ell,R):
+    from math import comb
+    sizes=(comb(n+2,3),m*comb(n+1,2),
+           n*comb(m+1,2)+ell*comb(n+1,2),
+           comb(m+2,3)+n*m*ell,
+           ell*comb(m+1,2)+n*comb(ell+1,2),
+           m*comb(ell+1,2),comb(ell+2,3))
+    limits=(3*R+1,3*R+1,4*R+1,4*R+1,
+            4*R+1,3*R+1,3*R+1)
+    return sizes,limits
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -401,6 +452,52 @@ class ForwardShadowCapacityTests(unittest.TestCase):
         y=100
         self.assertTrue(is_b3(p+[2*y-1]))
         self.assertFalse(is_b3(p+[y,2*y-1]))
+
+
+    def test_seven_layer_exact_equivalence_every_future_subset(self):
+        from itertools import combinations
+        p=[1,2,5]
+        d=[0,11]
+        R=14
+        y=100
+        self.assertTrue(is_b3(p+[y+x for x in d]))
+        checks=0
+        for k in range(R+1):
+            for t in combinations(range(1,R+1),k):
+                direct=is_b3(p+[y+x for x in d]+[2*y-x for x in t])
+                layers=seven_layer_exact(p,d,t)
+                self.assertEqual(direct,layers)
+                if direct:
+                    weights,budgets=seven_layer_cardinal_bounds(
+                        len(p),len(d),len(t),R)
+                    self.assertTrue(all(a<=b for a,b in zip(weights,budgets)))
+                    offsets=seven_layer_offsets(p,d,t)
+                    self.assertEqual(tuple(map(len, (offsets[i] for i in range(7)))),
+                                     weights)
+                checks+=1
+        self.assertEqual(checks,1<<R)
+
+    def test_three_colour_count_bound_captures_cross_type_collisions(self):
+        p=[1,2,5]
+        d=[0,11]
+        y=100
+        t=[1,2,3]
+        assert is_b3(p+[y+x for x in d])
+        offsets=seven_layer_offsets(p,d,t)
+        self.assertEqual(len(offsets[3]),
+                         len(d)*(len(d)+1)*(len(d)+2)//6+
+                         len(p)*len(d)*len(t))
+        self.assertTrue(any(len(v)!=len(set(v)) for v in offsets.values()))
+        self.assertFalse(is_b3(p+[y+x for x in d]+[2*y-x for x in t]))
+
+    def test_three_colour_degenerate_single_anchor_reconciles_reflection(self):
+        p=[1,2,5,14]
+        y=100
+        for t in ((),(1,),(6,),(1,6),(8,10),(2,9,13)):
+            three=seven_layer_exact(p,[0],t)
+            _,anchored=reflected_signed_word_certificate(p,t)
+            self.assertEqual(three,anchored)
+            self.assertEqual(three,is_b3(p+[y]+[2*y-x for x in t]))
 
 
 if __name__=="__main__":
