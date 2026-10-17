@@ -129,7 +129,16 @@ class EditorialGateTests(unittest.TestCase):
                 self.assertEqual(hashlib.sha256(current).hexdigest(),
                                  row["corrected_raw_sha256"])
                 self.assertEqual(hashlib.sha256("".join(text.split()).encode()).hexdigest(),
-                                 row["nonwhitespace_sha256"])
+                                 row["corrected_nonwhitespace_sha256"])
+                self.assertEqual(row["notation_adjustment"],
+                                 {665:"WHITESPACE_ONLY",669:"CARDINALITY_AS_SET_SIZE",
+                                  776:"LINK_TITLE_LITERAL_R",777:"WHITESPACE_ONLY"}[n])
+                if n in (665,777):
+                    self.assertEqual(row["previous_nonwhitespace_sha256"],
+                                     row["corrected_nonwhitespace_sha256"])
+                else:
+                    self.assertNotEqual(row["previous_nonwhitespace_sha256"],
+                                        row["corrected_nonwhitespace_sha256"])
                 self.assertEqual(hashlib.sha256(manuscript(n).encode()).hexdigest(),
                                  row["corrected_sha256"])
                 self.assertEqual(effective[n]["source_sha256"], row["corrected_sha256"])
@@ -150,7 +159,8 @@ class EditorialGateTests(unittest.TestCase):
                 ("previous_sha256", "0"*64),
                 ("corrected_sha256", "0"*64),
                 ("corrected_raw_sha256", "0"*64),
-                ("nonwhitespace_sha256", "0"*64),
+                ("corrected_nonwhitespace_sha256", "0"*64),
+                ("previous_nonwhitespace_sha256", "NOT_A_DIGEST"),
                 ("source_check", "INVALID"),
                 ("batch_id", "INVALID"),
             ]:

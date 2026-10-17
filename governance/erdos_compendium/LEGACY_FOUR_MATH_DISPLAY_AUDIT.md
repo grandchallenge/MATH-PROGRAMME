@@ -9,9 +9,14 @@ review documents are immutable.
 
 A source-only mathematical-typography amendment is required for their
 unrendered display blocks. Reposition empty Markdown lines from *inside*
-the existing $$ delimiters to outside, without modifying any nonwhitespace
-text or mathematical characters. Record old and new raw and normalized
-SHA-256 and the unchanged nonwhitespace fingerprint in a separate protected
+the existing $$ delimiters to outside. GitHub's TeX renderer also requires
+two notation-preserving adjustments: in #669, five hash-symbol expressions
+for set cardinality become vertical-bar set-cardinality expressions; in #776,
+a nonrendering math-delimited variable inside a bibliography link label
+becomes a plain variable. Neither adjustment changes a mathematical claim
+or its source evidence. Record old and new raw and normalized
+SHA-256, original and corrected nonwhitespace fingerprints and the
+declared per-article notation adjustment in a separate protected
 amendment; retain the original admission ledger. Scope is typography only,
 not mathematical certification.
 

@@ -340,7 +340,7 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
         if (not isinstance(doc, dict) or set(doc) != fields
                 or doc["record_type"] != "ERDOS_COMPENDIUM_ADMITTED_DISPLAY_MATH_AMENDMENTS/1"
                 or doc["revision_id"] != "EC-FOUR-DISPLAY-MATH-20261016"
-                or doc["scope"] != "DISPLAY_DELIMITER_WHITESPACE_ONLY_NO_MATHEMATICAL_CERTIFICATION"
+                or doc["scope"] != "DOCUMENTED_DISPLAY_MATH_AND_NOTATION_PORTABILITY_NO_CERTIFICATION"
                 or doc["source_issue"] != source_url + "issues/2698"
                 or doc["protected_patch"] != source_url + "pull/2715"
                 or doc["browser_receipt"] != source_url + "issues/2698#issuecomment-6227245766"
@@ -350,7 +350,8 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
             raise ValueError("Invalid four-display rendering amendment authority")
         required = {"problem_id", "batch_id", "source_check", "previous_sha256",
                     "corrected_sha256", "previous_raw_sha256", "corrected_raw_sha256",
-                    "nonwhitespace_sha256"}
+                    "previous_nonwhitespace_sha256",
+                    "corrected_nonwhitespace_sha256", "notation_adjustment"}
         seen = set()
         for row in doc["entries"]:
             if not isinstance(row, dict) or set(row) != required:
@@ -366,7 +367,8 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                            or not re.fullmatch(r"[a-f0-9]{64}", row[key])
                            for key in ("previous_sha256", "corrected_sha256",
                                        "previous_raw_sha256", "corrected_raw_sha256",
-                                       "nonwhitespace_sha256"))
+                                       "previous_nonwhitespace_sha256",
+                                       "corrected_nonwhitespace_sha256"))
                     or row["previous_sha256"] == row["corrected_sha256"]
                     or row["previous_raw_sha256"] == row["corrected_raw_sha256"]
                     or hashlib.sha256(src.read_bytes()).hexdigest()
@@ -375,7 +377,26 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                        != row["corrected_sha256"]
                     or hashlib.sha256(
                         "".join(src.read_text(encoding="utf-8").split()).encode("utf-8")
-                    ).hexdigest() != row["nonwhitespace_sha256"]):
+                    ).hexdigest() != row["corrected_nonwhitespace_sha256"]
+                    or row["notation_adjustment"] != {
+                        665: "WHITESPACE_ONLY",
+                        669: "CARDINALITY_AS_SET_SIZE",
+                        776: "LINK_TITLE_LITERAL_R",
+                        777: "WHITESPACE_ONLY",
+                    }[n]
+                    or (n in {665, 777} and row["previous_nonwhitespace_sha256"]
+                        != row["corrected_nonwhitespace_sha256"])
+                    or (n in {669, 776} and row["previous_nonwhitespace_sha256"]
+                        == row["corrected_nonwhitespace_sha256"])
+                    or (n == 669 and (
+                        src.read_text(encoding="utf-8").count(
+                            chr(92)+"lvert"+chr(92)+"{") != 5
+                        or chr(92)+"#"+chr(92)+"{" in src.read_text(encoding="utf-8")))
+                    or (n == 776 and (
+                        "multiplicity r on each occurring level" not in
+                            src.read_text(encoding="utf-8")
+                        or "multiplicity $r$ on each occurring level" in
+                            src.read_text(encoding="utf-8")))):
                 raise ValueError(f"Invalid or stale four-display correction #{n}")
             seen.add(n)
             accepted[n] = {**accepted[n],
