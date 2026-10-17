@@ -180,6 +180,18 @@ $$
 
 The charged future shadow positions form a positive c-dependent fraction of the full 3L+1 cubic-shadow arena. Because f(ell)~ell^3/2, this is a strict c-dependent reduction in the ordinary asymptotic critical-size **upper envelope**, of ratio at most (1-delta_c)^(1/3).
 
+**The capacity-envelope loss is genuinely of critical order, not merely nonzero.** The shadow formula gives f(n)>=n^3/4 for every integer n>=1. Since T(P) fits into an interval of 3 diam(P)+1 positions, 3L+1>=3 diam(P)+1>=n^3/4>=c^3 R/4. Hence L grows proportionally to R in this construction. As B tends to infinity, the explicitly invertible cubic satisfies F(B)=(2B)^(1/3)+O(1). Therefore
+
+$
+\boxed{
+F(3L+1)-F((1-\delta_c)(3L+1))
+=\bigl[1-(1-\delta_c)^{1/3}\bigr](2(3L+1))^{1/3}+O(1)
+=\Omega_c(R^{1/3}).
+}\tag{CRITICAL-ENVELOPE-TAX}
+$
+
+This lower-bounds the decrease of the **universal cubic-shadow capacity ceiling**, not the difference of the actual maxima C(P,J)-C(P',J). The independent finite no-batch-tax example shows why the distinction cannot be dropped.
+
 No modular residues or Fourier mixing were assumed. **However this still does not assert that C(P,J)-C(P',J)>0, or that normalized counting density decays across scales.** The ordinary and improved budgets are both order R, and even a linear site loss can coexist with no decrease in maximum future batch size.
 
 ## 5. Independently verifiable hostile and positive finite controls
