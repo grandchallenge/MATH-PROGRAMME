@@ -323,28 +323,28 @@ The distinction between an available certificate and a *forced* certificate is e
 
 Let A=(a_0,...,a_28) denote that fixture in increasing order (see the executable test file). Use q=151 and four Sidon pair-type labels (0,11,42,43). Lift the first twelve elements (four disjoint three-point inner groups) by
 
-$
+$$
 U'=\{151a_i+e_{\lfloor i/3\rfloor}:0\le i<12\},
 \quad W'=\{151a_i:12\le i<29\}.
-$
+$$
 
 Because q exceeds three times the largest digit and the original A is B3, the entire lifted U' union W' remains B3. Exact enumeration gives
 
-$
+$$
 \boxed{
 \mathcal M(U',W')=0
 \quad\text{for the COMPLETE unordered inner pair-sum family.}
 }\tag{HOSTILE-B3}
-$
+$$
 
 Take Y as the first three elements of W' and Z as the next three. Their candidate positive difference interval contains **633,748 integer positions**, although the actual differences of outer W' are multiples of 151. The zero-weight inner differences in that interval represent **every** class modulo each Q in {2,3,6,12}. Hence
 
-$
+$$
 \boxed{
 E_{Q,1}=\mathbb Z/Q\mathbb Z,\qquad
 \beta_Q(E_{Q,1})=Q^2\quad(Q=2,3,6,12).
 }\tag{HOSTILE-SURJECTION}
-$
+$$
 
 The composite bound is correctly satisfied but uninformative for these moduli. This is a bona fide finite B3 configuration, *not* a hypothetical independent set that fails B2. It excludes any argument assuming that positive finite critical-scale cardinalities, B3 alone, or many popular inner differences automatically create a defect in one of these fixed small residue quotients. It does **not** construct an infinite positive-critical-lower-density B3 sequence or disprove Erdős #41. A successful asymptotic inverse theorem must force **growing/adaptive modulus complexity**, a stronger geometric restriction, or a genuine multiscale accumulation mechanism.
 
@@ -354,32 +354,32 @@ The composite inverse implies an unconditional **quantitative structural alterna
 
 Suppose an actual pair of B3 outer bins Y<Z has
 
-$
+$$
 m_Y\ge c_Y D_Y^{1/3},\qquad
 m_Z\ge c_Z D_Z^{1/3}
-$
+$$
 
 for fixed positive coefficients c_Y,c_Z, and suppose its cross-correlation at all actual differences vanishes. For every modulus Q<=min(D_Y,D_Z), the composite theorem gives
 
-$
+$$
 \boxed{
 \beta_Q(E_{Q,1})\ge
 \frac{c_Yc_Z}{144^{1/3}}\,Q^{2/3}.
 }\tag{FORCED-BICLIQUE}
-$
+$$
 
 Thus the **allowed actual inner distance residues must contain a complete bipartite difference pattern involving at least order Q^(2/3) ordered pairs of occupied residue positions**. Moreover any nonempty biclique S,T satisfies |S|<=|E| and |T|<=|E| (fix an element of the opposite set, then translate). Hence
 
-$
+$$
 \boxed{
 |E_{Q,1}|\ge
 \left(\frac{c_Yc_Z}{144^{1/3}}\right)^{1/2}Q^{1/3}.
 }\tag{FORCED-ALLOWED-RESIDUES}
-$
+$$
 
 For small nonzero cross-correlation, the precise quantitative version is
 
-$
+$$
 \boxed{
 \beta_Q(E_{Q,t})\ge
 \left[
@@ -387,7 +387,7 @@ m_Ym_Z-\frac{\mathcal M_{Y,Z}(U)}{t}\max(m_Y,m_Z)
 \right]_+
 \left(\frac{Q^2}{144D_YD_Z}\right)^{1/3}.
 }\tag{ROBUST-BICLIQUE}
-$
+$$
 
 **Scope:** this is a proved **structure-or-correlation** theorem for every individual actual finite density window. It establishes *necessary growing structural complexity* in residue space when correlations are small. It is not yet a theorem that such complexity is *costly* for critical B3 density across scales: a full allowed residue set E=Z/Q has beta_Q=Q² and satisfies these conditions without strain. The genuine digit-lift hostile fixture above exhibits exactly that escape at fixed small Q. An Erdős #41 proof would have to show that realizing sufficiently many such large bicliques over adaptively growing Q and uniquely owned scales forces a **separate** density decrement. Nothing in (FORCED-BICLIQUE) alone supplies it.
 
