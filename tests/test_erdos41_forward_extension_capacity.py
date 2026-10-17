@@ -277,5 +277,73 @@ class ForwardShadowCapacityTests(unittest.TestCase):
                     F(phi_after))
 
 
+    def test_internal_shadow_contains_unique_median_triples(self):
+        from math import comb
+        for n in (3,4,5,8,12,17,29):
+            p=A[:n]
+            lo,hi=min(p),max(p)
+            median={a+c-b for a,b,c in __import__("itertools").combinations(p,3)}
+            with self.subTest(n=n):
+                self.assertEqual(len(median),comb(n,3))
+                self.assertFalse(median & set(p))
+                self.assertTrue(median.issubset(set(range(lo,hi+1))))
+                interior={v for v in shadow(p) if lo<=v<=hi}
+                self.assertGreaterEqual(len(interior),n+comb(n,3))
+                self.assertTrue(median.issubset(interior))
+
+    def test_one_anchor_cubic_tax_and_exponential_raw_batch_bound(self):
+        from math import comb, exp
+        for p,y in (([1,2,5],[14]),
+                    ([1,2,5,14],[34]),
+                    (list(A[:5]),90),
+                    (list(A[:8]),800)):
+            if not is_b3(p+[y]):
+                continue
+            R=max(p); assert y>2*R
+            j=range(2*y-R,2*y-min(p)+1)
+            interior={v for v in shadow(p) if min(p)<=v<=max(p)}
+            excluded={2*y-v for v in interior}
+            before=singleton_available(p,j)
+            after=singleton_available(p+[y],j)
+            with self.subTest(n=len(p),y=y):
+                self.assertEqual(before,set(j))
+                self.assertTrue(excluded.issubset(set(j)-after))
+                self.assertGreaterEqual(len(before)-len(after),len(interior))
+                for size in (1,2,3):
+                    remaining=len(j)-len(interior)
+                    raw=comb(len(j),size) if size<=len(j) else 0
+                    upper=comb(remaining,size) if size<=remaining else 0
+                    self.assertLessEqual(upper,raw*exp(-len(interior)*size/len(j))+1e-10)
+
+    def test_canonical_one_anchor_loss_without_true_batch_loss(self):
+        p=[1,2,5,14];y=34;R=14
+        self.assertTrue(is_b3(p+[y]))
+        j=list(range(2*y-R,2*y-min(p)+1))
+        self.assertEqual((j[0],j[-1]),(54,67))
+        internal={v for v in shadow(p) if min(p)<=v<=max(p)}
+        self.assertEqual(len(internal),12)
+        self.assertEqual(len(singleton_available(p,j)),14)
+        self.assertEqual(singleton_available(p+[y],j),{61})
+        c0,c1=capacity(p,j),capacity(p+[y],j)
+        self.assertEqual((len(c0),len(c1)),(1,1))
+        self.assertTrue(is_b3(p+c0))
+        self.assertTrue(is_b3(p+[y]+c1))
+
+    def test_short_template_translations_blocked_within_canonical_window(self):
+        p=[1,2,5,14];y=34;R=14
+        j=list(range(2*y-R,2*y-min(p)+1))
+        internal={v for v in shadow(p) if min(p)<=v<=max(p)}
+        forbidden={2*y-v for v in internal}
+        for template in ([0],[0,1],[0,1,4],[0,1,4,13]):
+            if not is_b3(template):
+                continue
+            d=max(template)
+            eligible=list(range(j[0],j[-1]-d+1))
+            definitely_blocked=[t for t in eligible if t in forbidden]
+            self.assertGreaterEqual(len(definitely_blocked),max(0,len(internal)-d))
+            for t in definitely_blocked:
+                self.assertFalse(is_b3(p+[y]+[t+v for v in template]))
+
+
 if __name__=="__main__":
     unittest.main()
