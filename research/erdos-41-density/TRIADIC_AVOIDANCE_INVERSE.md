@@ -164,57 +164,57 @@ There is a second, complementary inverse route that *does* convert **specific mi
 
 Let Y<Z be two nonempty actual B3 outer bins, of enclosing diameters D_Y,D_Z>=1, and put
 
-$
+$$
 J=[\min Z-\max Y,\max Z-\min Y]\cap\mathbb Z,
 \qquad m_Y=|Y|,\quad m_Z=|Z|.
-$
+$$
 
 Fix integer threshold t>=1. For each prime p, let
 
-$
+$$
 E_{p,t}=\{h\bmod p:h\in J,\ r_U(h)<t\},
 \qquad e_{p,t}=|E_{p,t}|,
-$
+$$
 
 and define the finite, **inner-spectrum-only** cap
 
-$
+$$
 c_{p,t}=
 \begin{cases}
 (e_{p,t}+1)/2,&e_{p,t}<p,\\
 p,&e_{p,t}=p.
 \end{cases}
-$
+$$
 
 The first value may be a half-integer; this only weakens an integer bound and is safe. Choose pairwise distinct primes p_1,...,p_s with product Q<=min(D_Y,D_Z), and define
 
-$
+$$
 \boxed{
 B_t(U;Y,Z,\mathbf p)
 =
 \left(\frac{144D_YD_Z}{Q^2}\right)^{1/3}
 \prod_{j=1}^s c_{p_j,t}^{\,2}.
 }\tag{BIN-CRT-BUDGET}
-$
+$$
 
 **Theorem D (prime-residue localized inverse; robust form).** With
-\(\mathcal M_{Y,Z}(U)=\sum_{y\in Y,z\in Z}r_U(z-y)\), one has
+$\mathcal M_{Y,Z}(U)=\sum_{y\in Y,z\in Z}r_U(z-y)$, one has
 
-$
+$$
 \boxed{
 \mathcal M_{Y,Z}(U)\ge
 \frac{t}{\max(m_Y,m_Z)}
 \left[m_Ym_Z-B_t(U;Y,Z,\mathbf p)\right]_+ .
 }\tag{LOCAL-CRT-INV}
-$
+$$
 
 In particular if the actual cross-bin correlation is zero,
 
-$
+$$
 \boxed{
 m_Ym_Z\le B_1(U;Y,Z,\mathbf p).
 }\tag{ZERO-CRT}
-$
+$$
 
 **Proof, including the exact B3/B2 dependency.** Count the heavy cross-bin edges (y,z) whose weight r_U(z-y)>=t. Their number e is at most M_(Y,Z)/t. Delete at most one endpoint for every heavy edge, obtaining nonempty B3 subsets Y' subset Y and Z' subset Z without heavy cross edges unless e>=min(m_Y,m_Z), in which case the desired bound follows immediately from M>=t min(m_Y,m_Z) and B_t>=0.
 
@@ -223,16 +223,16 @@ For every prime p, the residue-difference set (Z' mod p)−(Y' mod p) is contain
 
 The Chinese remainder theorem bounds the number of occupied classes modulo Q by the product of occupied classes modulo the individual primes. The elementary B3 cubic-shadow dispersion theorem (proved separately in PR #2714) bounds any B3 subset X of an enclosing integer span D>=Q by
 
-$
+$$
 |X|^3Q\le12D\,t_Q(X)^3.
-$
+$$
 
-This remains true for |X|<=1 by Q<=D. Apply it to Y',Z', multiply, and insert the prime residue-product bounds. We obtain \(|Y'||Z'|\le B_t\). If a elements of Y and b elements of Z were removed, a+b<=e, so
+This remains true for |X|<=1 by Q<=D. Apply it to Y',Z', multiply, and insert the prime residue-product bounds. We obtain $|Y'||Z'|\le B_t$. If a elements of Y and b elements of Z were removed, a+b<=e, so
 
-$
+$$
 |Y'||Z'|=(m_Y-a)(m_Z-b)
 \ge m_Ym_Z-e\,\max(m_Y,m_Z).
-$
+$$
 
 Combine with e<=M/t and rearrange. This proves (LOCAL-CRT-INV). QED.
 
