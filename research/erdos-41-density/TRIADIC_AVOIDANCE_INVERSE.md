@@ -395,19 +395,19 @@ $$
 
 **Theorem F (dilation escapes every fixed finite modulus panel).** Suppose U and W are nonempty disjoint subsets of a **genuine finite B3 carrier** A with the complete inner/outer correlation M(U,W)=0. Choose disjoint nonempty outer subbins Y<Z of W of positive diameters, and let H=diam(Y)+diam(Z)>=1. For an integer scaling factor k>=1, set
 
-$
+$$
 U_k=kU,\quad W_k=kW,\quad Y_k=kY,\quad Z_k=kZ.
-$
+$$
 
 Then U_k union W_k remains B3, and M(U_k,W_k)=0 **exactly**. For every fixed integer Q_0>=1, there exists an explicit finite k_0(U,Y,Z,Q_0) so that for every k>=k_0 and **every** modulus 1<=Q<=Q_0,
 
-$
+$$
 \boxed{
 E_{Q,1}(U_k;Y_k,Z_k)=\mathbb Z/Q\mathbb Z,
 \qquad
 \beta_Q(E_{Q,1})=Q^2.
 }\tag{FIXED-MODULUS-NOGO}
-$
+$$
 
 **Proof.** Multiplication by k is injective and scales all three-term sums, so preserves B3. It also scales all pair-sum differences and outer differences by k, hence preserves the exact vanishing of M.
 
@@ -415,9 +415,9 @@ There are q=|P_U| distinct inner unordered pair sums. For any k, the pair-sum se
 
 An explicit sufficient choice is any integer k such that
 
-$
+$$
 \boxed{kH+1\ge Q_0\left(\binom q2+1\right).}\tag{SCALE-REPLAY}
-$
+$$
 
 **Concrete carrier.** The genuine 29-element greedy-prefix fixture with U its first eight elements and W the remaining twenty-one has M(U,W)=0, as previously checked exactly. It contains multiple pairwise disjoint outer subbins with positive diameters. Thus Theorem F is not conditional on any conjectural infinite dense B3 carrier.
 
