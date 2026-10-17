@@ -33,11 +33,17 @@ def pair_sums(u):
 
 
 def half_difference_weights(u, L):
-    p = pair_sums(u)
-    return Counter({
-        h: sum(p0-2*h in p for p0 in p)
-        for h in range(1, L+1)
-    })
+    # Sparse exact pair-sum difference counting. Scaling the source by a
+    # large modulus must not create an O(L*|P|) verification bottleneck.
+    p=pair_sums(u)
+    result=Counter()
+    for a in p:
+        for b in p:
+            if a>b and (a-b)%2==0:
+                h=(a-b)//2
+                if h<=L:
+                    result[h]+=1
+    return result
 
 
 def weighted_correlation(r, w):
@@ -399,6 +405,27 @@ class TriadicAvoidanceTests(unittest.TestCase):
             self.assertEqual(exact_residue_biclique_capacity(Q,()),0)
         self.assertEqual(exact_residue_biclique_capacity(
             6,{2,3,4}),4)
+
+
+    def test_joint_b3_digit_lift_has_zero_overlap_and_full_small_residues(self):
+        # Genuine 29-point B3 countercontrol: all outer center differences
+        # are q-multiples, yet the zero-correlation distances meet EVERY
+        # residue mod 2,3,6,12 in long narrow-bin candidate intervals.
+        q=151
+        digits=[0,11,42,43]
+        u=[q*a+digits[i//3] for i,a in enumerate(A[:12])]
+        w=[q*a for a in A[12:]]
+        self.assertTrue(is_b3(u+w))
+        r=half_difference_weights(u,max(w)-min(w))
+        self.assertEqual(weighted_correlation(r,w),0)
+        Y,Z=w[:3],w[3:6]
+        for Q in (2,3,6,12):
+            with self.subTest(Q=Q):
+                M,x,Bcube,beta,E=composite_residue_budget(u,Y,Z,Q,1)
+                self.assertEqual(M,0)
+                self.assertEqual(E,set(range(Q)))
+                self.assertEqual(beta,Q*Q)
+                self.assertGreaterEqual(Bcube,Fraction(len(Y)*len(Z))**3)
 
 
 if __name__ == "__main__":
