@@ -45,7 +45,7 @@ class HomepageCompendiumTests(unittest.TestCase):
         self.assertNotIn(ERDOS_HOME_MARKER, rendered)
         self.assertEqual(rendered.count('class="home-erdos-status"'), 1)
         self.assertIn("Erdős Compendium — the public reference", rendered)
-        self.assertIn("(erdos/catalogue/index.md)", rendered)
+        self.assertIn("(https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/)", rendered)
         self.assertEqual(
             on_page_markdown(source, SimpleNamespace(
                 file=SimpleNamespace(src_uri="CURRENT_WORK.md")), None, None),

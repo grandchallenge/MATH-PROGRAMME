@@ -6,7 +6,7 @@ hide:
 
 <div class="home-hero">
   <div class="home-hero__inner">
-    <p class="home-hero__eyebrow">Grand Challenge Labs · Mathematics Programme · Edition 2026.10</p>
+    <p class="home-hero__eyebrow">Grand Challenge Labs · Mathematics Programme · Edition 2026.09</p>
     <h1>Mathematics Programme</h1>
     <p class="home-hero__thesis">A governed research programme for moving difficult mathematical claims from source reconstruction through proof work to independent certification.</p>
     <p class="home-hero__summary">The public record separates what is active, what is supported, what remains open, and what has crossed a declared checking boundary.</p>
@@ -45,7 +45,7 @@ Mathematical discovery, solving, and certification are different research states
 
 ## Erdős Compendium — the public reference
 
-The [Erdős Compendium](erdos/index.md) makes the complete numbered catalogue accessible, with problem statements, source references and — where the evidence has been editorially admitted — researched explanations. Readers can [browse all 1,221 registered problems](erdos/catalogue/index.md) or follow the admission record for individual articles.
+The [Erdős Compendium](erdos/index.md) makes the complete numbered catalogue accessible, with problem statements, source references and — where the evidence has been editorially admitted — researched explanations. Readers can [browse all 1,221 registered problems](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/) or follow the admission record for individual articles.
 
 <!-- GCL_ERDOS_HOME_STATUS -->
 
