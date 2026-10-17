@@ -379,9 +379,9 @@ The one-anchor signed-code theorem extends to an **entire middle cohort**, and t
 
 Let R be a positive integer. Let P and T be subsets of [0,R] and D subset [0,R]. Write n=|P|, m=|D|, ell=|T|. For a sufficiently separated integer y>6R consider the *physical* set
 
-$
+$$
 \boxed{\mathcal A=P\ \cup\ (y+D)\ \cup\ (2y-T).}\tag{THREE-COLOUR}
-$
+$$
 
 The three sets are disjoint. The middle offsets D need not be nonnegative original A-elements; the formulation allows any translated actual middle cohort in a short interval, as long as the displayed offset windows have width at most R.
 
@@ -405,7 +405,7 @@ This theorem includes the one-anchor reflected characterization as the special c
 
 **Theorem H (shape-independent cardinality competition).** If mathcal A is B3 then
 
-$
+$$
 \boxed{
 \begin{aligned}
 \binom{n+2}{3}&\le 3R+1,\\
@@ -417,19 +417,19 @@ m\binom{\ell+1}{2}&\le 3R+1,\\
 \binom{\ell+2}{3}&\le 3R+1.
 \end{aligned}
 }\tag{SEVEN-LAYER-PACKING}
-$
+$$
 
 **Proof.** In each level count the number of distinct required unordered colour words; the counts are shown on the left. For levels 0,1,5,6 all offsets occupy an interval of at most 3R+1 integers. The union offset ranges at levels 2,3,4 occupy intervals of at most 4R+1 integers: respectively [−R,3R], [−R,3R], and [−2R,2R]. Exact injectivity from Theorem G forces the counts not to exceed the available integer positions. QED.
 
 Theorem H gives a **fully batch-shape-independent** upper bound, for example
 
-$
+$$
 \boxed{
 \ell\le
 \left\lfloor\frac{4R+1-\binom{m+2}{3}}{nm}\right\rfloor
 \quad(nm>0).
 }\tag{LEVEL-THREE-FUTURE-CAP}
-$
+$$
 
 It also gives coupled quadratic bounds from the levels 2 and 4. These are stricter *joint cardinality restrictions* on a three-cohort extension than the ordinary separate cubic-shadow range count. In contrast with the single-anchor singleton loss, they cannot be evaded by rearranging future T without lowering its cardinality.
 
@@ -437,7 +437,7 @@ It also gives coupled quadratic bounds from the levels 2 and 4. These are strict
 
 The crude right sides 4R+1 can be reduced to the *actual geometric union* of the two competing word-type intervals. Let P,D,T have respective minimum and maximum values (p_-,p_+), (d_-,d_+), (t_-,t_+), with all three sets nonempty. Define
 
-$
+$$
 \begin{aligned}
 I_2^{(1)}&=[p_-+2d_-,\ p_++2d_+],&
 I_2^{(2)}&=[2p_--t_+,\ 2p_+-t_-],\\
@@ -446,11 +446,11 @@ I_3^{(2)}&=[p_-+d_--t_+,\ p_++d_+-t_-],\\
 I_4^{(1)}&=[2d_--t_+,\ 2d_+-t_-],&
 I_4^{(2)}&=[p_--2t_+,\ p_+-2t_-].
 \end{aligned}
-$
+$$
 
 Every admissible reflected three-cohort extension satisfies
 
-$
+$$
 \boxed{
 \begin{aligned}
 n\binom{m+1}{2}+\ell\binom{n+1}{2}
@@ -461,7 +461,7 @@ n\binom{m+1}{2}+\ell\binom{n+1}{2}
 &\le|I_4^{(1)}\cup I_4^{(2)}|.
 \end{aligned}
 }\tag{LOCALIZED-THREE-COLOUR-HALL}
-$
+$$
 
 The proof is direct: distinct triple sums in the same level must fit into the union of the **two actual** integer ranges they occupy. The constraints become stronger when one cohort is narrowly located, and they retain their force even if every actual future batch changes shape.
 
@@ -477,22 +477,22 @@ The complete reflected theorem has a compact formulation that **does** account f
 
 Let P be a finite B3 set in [1,R], y>6R, and
 
-$
+$$
 Q_P=\{p+p':p,p'\in P,\ p\le p'\},\quad
 V_P=([p_{\min},R]\cap\mathbb Z)\setminus T(P).
-$
+$$
 
 On the vertex set V_P, define the **complete pair-sum difference graph** G_P, joining distinct t,u precisely when
 
-$
+$$
 t-u\in Q_P-Q_P.
-$
+$$
 
-Differences are understood with both orientations, so the edge definition is symmetric. Let Q_T be the unordered pair-sum set of a proposed T and let \(\Delta_P=P-P\), \(\Delta_{Q_P}=Q_P-Q_P\).
+Differences are understood with both orientations, so the edge definition is symmetric. Let Q_T be the unordered pair-sum set of a proposed T and let $\Delta_P=P-P$, $\Delta_{Q_P}=Q_P-Q_P$.
 
 **Theorem I (exact survivor graph + dual packing characterization).** The individual reflected sites admissible after adding y are **exactly** V_P. Moreover the true future optimal batch capacity is
 
-$
+$$
 \boxed{
 C(P\cup\{y\},J_y)
 =
@@ -503,30 +503,30 @@ T\text{ is }B_3,\quad
 P\cap T(T)=\varnothing
 \}.
 }\tag{DUAL-SIGNED-CODE}
-$
+$$
 
 Consequently the completely **shape-independent** graph bound is
 
-$
+$$
 \boxed{
 C(P\cup\{y\},J_y)\le\alpha(G_P[V_P]).
 }\tag{SURVIVOR-INDEPENDENCE}
-$
+$$
 
 **Proof.** Theorem F says a reflected T is admissible with the anchor iff T is B3, T∩T(P)=empty, P∩T(T)=empty, and the PP−T and P−TT maps are injective.
 
-The first shadow condition is exactly T subset V_P. Each nonzero collision of two PP−T words is an equality q−t=q'−u, equivalent to t−u=q−q' with t!=u, which is prohibited exactly by \((T-T)\cap(Q_P-Q_P)=\{0\}\); the internal uniqueness of q follows from B2. Similarly the P−TT map is injective precisely when the nonzero pair-sum differences from Q_T avoid the nonzero differences of P, namely \((Q_T-Q_T)\cap(P-P)=\{0\}\), because T is B2 and hence Q_T has distinct labelled unordered pair representations. If |T|=1, those maps are automatically injective and T(T)=T; since P subset T(P), each t∈V_P yields a legal singleton. This proves the claimed exact characterization and upper bound. QED.
+The first shadow condition is exactly T subset V_P. Each nonzero collision of two PP−T words is an equality q−t=q'−u, equivalent to t−u=q−q' with t!=u, which is prohibited exactly by $(T-T)\cap(Q_P-Q_P)=\{0\}$; the internal uniqueness of q follows from B2. Similarly the P−TT map is injective precisely when the nonzero pair-sum differences from Q_T avoid the nonzero differences of P, namely $(Q_T-Q_T)\cap(P-P)=\{0\}$, because T is B2 and hence Q_T has distinct labelled unordered pair representations. If |T|=1, those maps are automatically injective and T(T)=T; since P subset T(P), each t∈V_P yields a legal singleton. This proves the claimed exact characterization and upper bound. QED.
 
 **The remaining decisive graph problem is now different from the old Stage B one.** It is the independence number of the graph induced by the **surviving reflected singleton sites** after deleting the actual cubic shadow, with *all* differences of the unordered inner pair-sum set forbidden, and a **reciprocal** difference-spectrum condition for Q_T against P-P. The older forbidden-distance graph used only the doubled outer differences and did not impose this coupled, bidirectional signed-code packing problem.
 
 **Concrete complete-batch decrement, without a near-saturation assumption.** Let P={1,2,5}, R=14, y=100, and D={0,11}. Both the old P and the intermediate genuine B3 prefix P union {100,111} are valid. The future reflected interval is J_y=[186,199]. Exact enumeration of **all** 2^14 reflected future sets yields
 
-$
+$$
 \boxed{
 C(P,J_y)=2,\qquad
 C(P\cup\{100,111\},J_y)=1.
 }\tag{REAL-MIDDLE-BATCH-TAX}
-$
+$$
 
 For the new middle prefix, the reflected **singleton** survivors are precisely T={7,10,11,14}. Any two of these have a difference in Q_P−Q_P, so they form a **clique** in the old pair-sum difference graph. This gives a human-checkable certificate of the upper bound one without rerunning the complete three-sum search. At least one of these singleton T's remains admissible, proving equality. The old prefix admits, for example, T={1,10} as a two-element batch, showing the before-bound of two is achieved. The full two-colour constraints and the direct B3 enumeration confirm both optima.
 
