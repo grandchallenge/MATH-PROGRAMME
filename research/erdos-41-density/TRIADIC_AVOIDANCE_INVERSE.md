@@ -348,6 +348,49 @@ $
 
 The composite bound is correctly satisfied but uninformative for these moduli. This is a bona fide finite B3 configuration, *not* a hypothetical independent set that fails B2. It excludes any argument assuming that positive finite critical-scale cardinalities, B3 alone, or many popular inner differences automatically create a defect in one of these fixed small residue quotients. It does **not** construct an infinite positive-critical-lower-density B3 sequence or disprove Erdős #41. A successful asymptotic inverse theorem must force **growing/adaptive modulus complexity**, a stronger geometric restriction, or a genuine multiscale accumulation mechanism.
 
+## 4D. Exact critical-density inverse threshold (proved, but not a deficit)
+
+The composite inverse implies an unconditional **quantitative structural alternative** at each fixed density coefficient; unlike an assumed inverse theorem, the statement is an immediate consequence of the proved inequality.
+
+Suppose an actual pair of B3 outer bins Y<Z has
+
+$
+m_Y\ge c_Y D_Y^{1/3},\qquad
+m_Z\ge c_Z D_Z^{1/3}
+$
+
+for fixed positive coefficients c_Y,c_Z, and suppose its cross-correlation at all actual differences vanishes. For every modulus Q<=min(D_Y,D_Z), the composite theorem gives
+
+$
+\boxed{
+\beta_Q(E_{Q,1})\ge
+\frac{c_Yc_Z}{144^{1/3}}\,Q^{2/3}.
+}\tag{FORCED-BICLIQUE}
+$
+
+Thus the **allowed actual inner distance residues must contain a complete bipartite difference pattern involving at least order Q^(2/3) ordered pairs of occupied residue positions**. Moreover any nonempty biclique S,T satisfies |S|<=|E| and |T|<=|E| (fix an element of the opposite set, then translate). Hence
+
+$
+\boxed{
+|E_{Q,1}|\ge
+\left(\frac{c_Yc_Z}{144^{1/3}}\right)^{1/2}Q^{1/3}.
+}\tag{FORCED-ALLOWED-RESIDUES}
+$
+
+For small nonzero cross-correlation, the precise quantitative version is
+
+$
+\boxed{
+\beta_Q(E_{Q,t})\ge
+\left[
+m_Ym_Z-\frac{\mathcal M_{Y,Z}(U)}{t}\max(m_Y,m_Z)
+\right]_+
+\left(\frac{Q^2}{144D_YD_Z}\right)^{1/3}.
+}\tag{ROBUST-BICLIQUE}
+$
+
+**Scope:** this is a proved **structure-or-correlation** theorem for every individual actual finite density window. It establishes *necessary growing structural complexity* in residue space when correlations are small. It is not yet a theorem that such complexity is *costly* for critical B3 density across scales: a full allowed residue set E=Z/Q has beta_Q=Q² and satisfies these conditions without strain. The genuine digit-lift hostile fixture above exhibits exactly that escape at fixed small Q. An Erdős #41 proof would have to show that realizing sufficiently many such large bicliques over adaptively growing Q and uniquely owned scales forces a **separate** density decrement. Nothing in (FORCED-BICLIQUE) alone supplies it.
+
 ## 5. What was and was not proved about persistent density
 
 Under the **hypothetical** persistent critical bound A(N)>=cN^(1/3), existing GCL selection gives large actual outer cohorts. If a chosen m-element outer B3 subset has m>=kappa_c L^(1/3) in an interval of span L and M=0, Theorem A forces at least kappa_c^3 L/6−O_c(L^(2/3)) distinct nondegenerate additive triangles in the zero-weight distance set. This is a rigorous quantitative *structure-or-correlation* alternative.
