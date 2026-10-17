@@ -205,6 +205,41 @@ If every section of $\mathsf Q$ on this one profinite test space lifts to $\math
 
 A related explicit control shows why checking point values cannot replace a sectionwise argument. The continuous map $u:S_\infty\to\mathbb R^{\mathbb N}$ given by $u(n)=e_n$ and $u(\infty)=0$ defines a section whose image in $\mathsf Q(S_\infty)$ is **nonzero**, although it vanishes on every singleton point: $e_n$ belongs to the finite-coordinate sum for each $n$, but no **uniform finite prefix** contains all $e_n$. This ghost section **does lift** (by $u$), so it is not a counterexample to (18.15). It is a proof that singleton tests alone cannot decide the missing lifting gate.
 
+### Theorem 18.7 — the local lifting gate actually holds
+
+For **every** profinite test space $K$, the canonical map
+
+$
+\mathsf P(K)\longrightarrow\mathsf Q(K)
+\tag{18.17}
+$
+
+is surjective. In particular, the map (18.15) for the convergent-sequence space $S_\infty$ is surjective.
+
+**Proof by effective descent.** Write $\mathsf S=\varinjlim_m\underline{\mathbb R^m}$ and $\mathsf P=\prod_n\underline{\mathbb R}$. Let $v\in\mathsf Q(K)$. Since $\mathsf Q$ is the sheaf cokernel of $\mathsf S\hookrightarrow\mathsf P$, there is a finite jointly surjective profinite covering, combined into a surjective map $\pi:T\to K$, and a section $a\in\mathsf P(T)$ whose image is $\pi^*v$. Consider $T\times_K T$, also profinite. The two pullbacks of $a$ have the same image in $\mathsf Q(T\times_K T)$, so their difference lies in the **sheaf kernel** $\mathsf S(T\times_K T)$. Filtered colimits of condensed sections are computed sectionwise. Consequently **one integer $m$** exists such that for all pairs $(t,t')$ with $\pi(t)=\pi(t')$ and every output coordinate $n>m$,
+
+$
+a_n(t)=a_n(t').
+\tag{18.18}
+$
+
+Every $a_n:T\to\mathbb R$ with $n>m$ therefore descends to a continuous function $b_n:K\to\mathbb R$, because the surjection $\pi$ from compact Hausdorff $T$ to Hausdorff $K$ is a topological quotient. Define $b_n=0$ for $n\le m$. All coordinates $b_n$ are continuous, hence $b=(b_n)_n$ defines a section in $\mathsf P(K)=\mathrm{Cont}(K,\mathbb R^{\mathbb N})$. Over $T$ the difference $a-\pi^*b$ has only its first $m$ coordinates possibly nonzero, so is an element of $\mathsf S(T)$. Thus $q(b)$ and $v$ have the same restriction to the jointly surjective cover $T\to K$; by sheaf descent they are equal on $K$. This proves (18.17). $\square$
+
+**Corollary 18.8 (fixed Fréchet phantom channel vanishes in ZFC).** For the source $\underline s\cong\underline{\mathcal D_{[-1,1]}(\mathbb R)}$,
+
+$
+\mathrm{Hom}(\underline s,\mathsf P)
+\twoheadrightarrow
+\mathrm{Hom}(\underline s,\mathsf Q),
+\qquad
+K(\underline s)=0.
+\tag{18.19}
+$
+
+Indeed, Theorem 18.7 applies to $S_\infty$, and the universal free-measure property lifts every morphism from $\mathcal M_{<p}(S_\infty)$ to $\mathsf Q$ through $\mathsf P$. The retract (18.8) lifts every stage morphism $T_r\to\mathsf Q$. Corollary 18.4 then lifts any morphism $\underline s\to\mathsf Q$. Therefore the entire **scalar-invisible phantom channel** of (17.14) is absent for this fixed Fréchet source.
+
+**Limits of the result.** The surjectivity (18.17) is for sections on profinite test objects, not a claim that the epimorphism $\mathsf P\to\mathsf Q$ admits a global **liquid-linear section** $\mathsf Q\to\mathsf P$. The non-split extension (17.2) for source $\mathsf Q$ remains valid. The ghost plot in (18.16) likewise remains nonzero but has a global lift. Equation (18.19) does not settle the infinitely coordinate-visible scalar Ext channel or the non-scalar part of the genuine test-function output.
+
 ## 4. What the 2026 scalar Ext literature does and does not yield
 
 Grisha Taroyan's [August 2026 MathOverflow argument](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces/514158) establishes, under **ZFC + the Continuum Hypothesis**, a nonzero class in $\mathrm{Ext}^1_{\mathcal A_p}(\underline s,\underline{\mathbb R})$ through a derived inverse limit of the weighted spaces $V_r$. Peter Scholze's [response and comments](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces) support the nature of this argument and caution that unconditional behaviour is subtle. Neither the Continuum Hypothesis nor the Open Colouring Axiom may be silently assumed for EXT-015.
@@ -239,8 +274,9 @@ The remaining two sharply bounded mathematical possibilities are:
 | Measure-stage compactness and scalar Hom direct-sum factorization (18.8–18.10) | PROVED from free-measure universal property and scalar projectivity, with source-stage presentation |
 | Stagewise-split classes in $\mathrm{Ext}^1(H,\mathsf S)$ have finite support (18.13) | PROVED conditional on the source-backed measure-stage presentation (18.2) |
 | CH implies existence of some scalar $\mathrm{Ext}^1(s,\mathbb R)$ classes | EXTERNAL CONDITIONAL RESULT, not GCL independent theorem, and not target escape |
-| Every $\mathrm{Hom}(T_r,\mathsf Q)$ map lifts to $\mathsf P$ | OPEN; explicit remaining scalar gate |
-| Every $\mathrm{Ext}^1(T_r,\mathsf S)$ vanishes | OPEN; stronger sufficient gate |
+| Every $\mathrm{Hom}(T_r,\mathsf Q)$ map lifts to $\mathsf P$ | PROVED (18.17), by finite-coordinate effective descent |
+| Every $\mathrm{Ext}^1(T_r,\mathsf S)$ vanishes | OPEN; stronger sufficient gate, requiring scalar stage acyclicity |
+| Fixed-source phantom group $K(\underline s)$ | ZERO: PROVED IN ZFC (18.19) |
 | Full fixed-source target-stage $\mathrm{Ext}^1$ comparison is surjective or not | OPEN |
 
 **Research discipline:** Preserve the full exact-category distinctions and original source hypotheses. Do not report an auxiliary non-Fréchet-source result or a set-theoretically conditional scalar result as a proof of the original comparison. GCL agents, not the Human Steward, own subsequent mathematical investigations and critical checks.
