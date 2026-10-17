@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Mint short-lived Release Trust token
         id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -90,7 +90,7 @@ jobs:
           fi
           python ci/release_trust_admin.py "${args[@]}"
       - name: Upload release-trust evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: release-trust-evidence
           path: release-trust-evidence.json
@@ -106,7 +106,7 @@ jobs:
     steps:
       - name: Mint short-lived Programme administration token
         id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -133,7 +133,7 @@ jobs:
             --mode "${ADMIN_MODE}" \
             --evidence programme-formal-context-migration-evidence.json
       - name: Upload Programme migration evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: programme-formal-context-migration-evidence
           path: programme-formal-context-migration-evidence.json
@@ -149,7 +149,7 @@ jobs:
     steps:
       - name: Mint short-lived Release Trust token
         id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -192,7 +192,7 @@ jobs:
             --evidence intellect-profile-admin-evidence.json \
             --digest intellect-profile-admin-evidence.json.sha256
       - name: Upload bounded INTELLECT Phase B evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: intellect-profile-admin-evidence
           path: |

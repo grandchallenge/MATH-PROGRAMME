@@ -110,7 +110,7 @@ jobs:
             python3 -m pip freeze
           } | tee environment.txt
       - name: Preserve normalized computation evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: oz-next-005-computation-replay
           path: |
@@ -155,7 +155,7 @@ jobs:
           PY
           cat prior-art-identities.json >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve content-addressed prior art
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: oz-next-005-prior-art
           path: |
