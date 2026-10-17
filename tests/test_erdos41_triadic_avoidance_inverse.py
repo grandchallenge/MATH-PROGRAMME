@@ -140,6 +140,43 @@ def prime_residue_budget(u,Y,Z,primes,threshold=1):
     return observed,x,Bcubed,evidence
 
 
+def exact_residue_biclique_capacity(Q, allowed):
+    """Brute exact maximum |S||T| when T-S is contained in allowed."""
+    assert Q>=1
+    E={e%Q for e in allowed}
+    shifts=[]
+    for s in range(Q):
+        shifts.append(sum(1<<((s+e)%Q) for e in E))
+    all_bits=(1<<Q)-1
+    common=[all_bits]*(1<<Q)
+    optimum=0
+    for mask in range(1,1<<Q):
+        bit=mask & -mask
+        i=bit.bit_length()-1
+        common[mask]=common[mask ^ bit] & shifts[i]
+        optimum=max(optimum,mask.bit_count()*common[mask].bit_count())
+    return optimum
+
+
+def composite_residue_budget(u,Y,Z,Q,threshold=1):
+    """Verify the exact cube form of the composite arithmetic gate."""
+    assert min(Z)>max(Y) and is_b3(Y+Z)
+    dy=max(Y)-min(Y)
+    dz=max(Z)-min(Z)
+    assert 1<=Q<=min(dy,dz)
+    lo=min(Z)-max(Y)
+    hi=max(Z)-min(Y)
+    r=half_difference_weights(u,hi)
+    E={h%Q for h in range(lo,hi+1) if r[h]<threshold}
+    beta=exact_residue_biclique_capacity(Q,E)
+    observed=sum(r[z-y] for y in Y for z in Z)
+    Bcube=Fraction(144*dy*dz,Q*Q)*beta**3
+    discrepancy=max(Fraction(0),Fraction(len(Y)*len(Z))
+                    -Fraction(observed*max(len(Y),len(Z)),threshold))
+    assert discrepancy**3<=Bcube
+    return observed,discrepancy,Bcube,beta,E
+
+
 class TriadicAvoidanceTests(unittest.TestCase):
     def test_b3_fixture(self):
         self.assertEqual(len(A),29)
@@ -317,6 +354,51 @@ class TriadicAvoidanceTests(unittest.TestCase):
         self.assertEqual(Bcube,Fraction(81,8))
         self.assertLess(Bcube,Fraction(len(Y)*len(Z))**3)
         self.assertGreater(M,0)
+
+
+    def test_composite_strictly_improves_prime_projection_capacity(self):
+        u=[1,2,5,14]
+        Y,Z=[100,106],[108,115]
+        self.assertTrue(is_b3(u))
+        self.assertTrue(is_b3(Y+Z))
+        self.assertFalse(is_b3(u+Y+Z))
+        M,x,Bcube,beta,E=composite_residue_budget(u,Y,Z,6,1)
+        self.assertEqual(E,{2,3,4})
+        self.assertEqual(beta,4)
+        self.assertEqual({d%2 for d in E},{0,1})
+        self.assertEqual({d%3 for d in E},{0,1,2})
+        self.assertLess(beta,6**2)
+        self.assertEqual(M,6)
+        self.assertEqual(Bcube,Fraction(144*6*7,6**2)*4**3)
+        self.assertLessEqual(x**3,Bcube)
+
+    def test_composite_gate_on_actual_joint_b3_carriers(self):
+        fixtures=(
+            (A[:3],A[3:5],A[5:7],(2,3,6)),
+            (A[:10],A[10:12],A[12:14],(2,3,6,10)),
+            (A[:14],A[14:16],A[16:18],(2,3,6,10,12)),
+        )
+        for u,Y,Z,moduli in fixtures:
+            self.assertTrue(is_b3(u+Y+Z))
+            for Q in moduli:
+                if Q>min(Y[-1]-Y[0],Z[-1]-Z[0]):
+                    continue
+                for threshold in (1,2,3):
+                    with self.subTest(n=len(u),Q=Q,t=threshold):
+                        M,x,Bcube,beta,E=composite_residue_budget(
+                            u,Y,Z,Q,threshold)
+                        self.assertGreaterEqual(M,0)
+                        self.assertGreaterEqual(Bcube,x**3)
+                        self.assertLessEqual(beta,Q**2)
+                        self.assertLessEqual(len(E),Q)
+
+    def test_composite_capacity_on_small_all_and_empty_difference_sets(self):
+        for Q in (1,2,3,4,5,6,7,8):
+            self.assertEqual(exact_residue_biclique_capacity(
+                Q,range(Q)),Q*Q)
+            self.assertEqual(exact_residue_biclique_capacity(Q,()),0)
+        self.assertEqual(exact_residue_biclique_capacity(
+            6,{2,3,4}),4)
 
 
 if __name__ == "__main__":
