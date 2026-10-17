@@ -254,7 +254,7 @@ $$
 G=\varinjlim_b\underline{\mathcal D_{[-b,b]}(\mathbb R)}
 $$
 
-and the scalar-sum comparison cokernel injects into the target-stage comparison cokernel. Theorem 18.2 implies: **any scalar-summand escaping extension for the prescribed fixed source must already be nonsplit over some weight stage $T_r$**. The same applies to a putative nonliftable $H\to\mathsf Q$ via its scalar phantom boundary.
+and the scalar-sum comparison cokernel injects into the target-stage comparison cokernel. Theorem 18.2 implies: **any scalar-summand escaping extension for the prescribed fixed source must already be nonsplit over some weight stage $T_r$**. The nonliftable scalar phantom route is ruled out entirely by Theorem 18.8; only stage-local coordinate-visible scalar classes could still escape.
 
 This is **not** a proof that no such local-stage obstruction exists. It also does **not** classify all classes in $\mathrm{Ext}^1(H,G)$; the complementary test-function output can carry other extensions.
 
