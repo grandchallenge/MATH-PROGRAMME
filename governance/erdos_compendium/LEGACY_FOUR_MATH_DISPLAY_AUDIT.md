@@ -9,7 +9,7 @@ review documents are immutable.
 
 A source-only mathematical-typography amendment is required for their
 unrendered display blocks. Reposition empty Markdown lines from *inside*
-the existing $$ delimiters to outside. GitHub's TeX renderer also requires
+the existing display-math delimiters to outside. GitHub's TeX renderer also requires
 two notation-preserving adjustments: in #669, five hash-symbol expressions
 for set cardinality become vertical-bar set-cardinality expressions; in #776,
 a nonrendering math-delimited variable inside a bibliography link label
