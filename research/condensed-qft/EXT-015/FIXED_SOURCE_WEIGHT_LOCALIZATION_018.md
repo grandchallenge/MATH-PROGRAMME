@@ -327,7 +327,7 @@ This is **not** a proof that no such local-stage obstruction exists. It also doe
 The remaining two sharply bounded mathematical possibilities are:
 
 1. **Scalar local-stage obstruction:** exhibit or rule out a nonzero image in $\mathrm{Ext}^1(T_r,\mathsf S)$ that can extend coherently to the full fixed Fréchet source, and survives every finite output prefix. Proving $\mathrm{Ext}^1(T_r,\mathsf S)=0$ for every $r$ is a sufficient, **not yet established**, scalar positive result. Do not confuse compactness of $T_r$ with projectivity or with derived compactness.
-2. **Full test-function obstruction:** even if scalar local-stage escape is excluded, determine whether the non-scalar complement of $G$ supports a genuine class not arising from any compact stage. Use the corrected first-syzygy quotient from [review 016](AGENT_CRITICAL_REVIEW_AB_016.md) and check all liquid boundaries.
+2. **Full test-function obstruction:** determine whether a genuine fixed-source extension class has infinitely many nonzero component images under the injective map (18.23). Theorem 18.9 eliminates all coordinate-invisible mechanisms, but does not exclude infinitely supported realized families. Use the corrected first-syzygy quotient from [review 016](AGENT_CRITICAL_REVIEW_AB_016.md) and check all liquid boundaries.
 
 **Finite-dimensional warning:** $\underline{\mathbb R^m}$ is projective in $\mathcal A_p$, so all degree-one liquid Ext classes restrict to zero on finite-dimensional coordinate truncations of the Fréchet source. Finite-dimensional computations cannot settle either possibility, even in principle.
 
@@ -343,6 +343,7 @@ The remaining two sharply bounded mathematical possibilities are:
 | Every $\mathrm{Hom}(T_r,\mathsf Q)$ map lifts to $\mathsf P$ | PROVED (18.17), by finite-coordinate effective descent |
 | Every $\mathrm{Ext}^1(T_r,\mathsf S)$ vanishes | OPEN; stronger sufficient gate, requiring scalar stage acyclicity |
 | Fixed-source phantom group $K(\underline s)$ | ZERO: PROVED IN ZFC (18.19) |
-| Full fixed-source target-stage $\mathrm{Ext}^1$ comparison is surjective or not | OPEN |
+| Full output coordinate-detection (18.23) and exact cokernel reduction (18.24) | PROVED under Valdivia–Vogt LF model; no phantom full-output class |
+| Full fixed-source target-stage $\mathrm{Ext}^1$ comparison is surjective or not | OPEN: infinite-coordinate realizability |
 
 **Research discipline:** Preserve the full exact-category distinctions and original source hypotheses. Do not report an auxiliary non-Fréchet-source result or a set-theoretically conditional scalar result as a proof of the original comparison. GCL agents, not the Human Steward, own subsequent mathematical investigations and critical checks.
