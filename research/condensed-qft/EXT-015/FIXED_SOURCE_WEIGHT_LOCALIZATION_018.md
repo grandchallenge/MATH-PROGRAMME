@@ -192,6 +192,19 @@ Thus a transfinite derived-limit obstruction built **only** from stagewise split
 
 This is an **agent-proved conditional lifting theorem**, with a named checkable local criterion, not a claim that the local criterion has already been proved.
 
+### Single-space local lifting gate
+
+Let $S_\infty=\mathbb N\cup\{\infty\}$ as in (18.8). A sufficient condition for the global phantom channel to vanish is the **specific** surjectivity
+
+$
+\mathsf P(S_\infty)\longrightarrow\mathsf Q(S_\infty).
+\tag{18.15}
+$
+
+If every section of $\mathsf Q$ on this one profinite test space lifts to $\mathsf P$, the universal free-measure property and the retract $T_r\subset\mathcal M_{<p}(S_\infty)$ imply that every $T_r\to\mathsf Q$ lifts. Corollary 18.4 then gives a lift for every $\underline s\to\mathsf Q$. This is a **conditional** statement: the map in (18.15) has not been proved surjective. Surjectivity of the liquid quotient morphism as a sheaf is insufficient, since $S_\infty$ is not extremally disconnected.
+
+A related explicit control shows why checking point values cannot replace a sectionwise argument. The continuous map $u:S_\infty\to\mathbb R^{\mathbb N}$ given by $u(n)=e_n$ and $u(\infty)=0$ defines a section whose image in $\mathsf Q(S_\infty)$ is **nonzero**, although it vanishes on every singleton point: $e_n$ belongs to the finite-coordinate sum for each $n$, but no **uniform finite prefix** contains all $e_n$. This ghost section **does lift** (by $u$), so it is not a counterexample to (18.15). It is a proof that singleton tests alone cannot decide the missing lifting gate.
+
 ## 4. What the 2026 scalar Ext literature does and does not yield
 
 Grisha Taroyan's [August 2026 MathOverflow argument](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces/514158) establishes, under **ZFC + the Continuum Hypothesis**, a nonzero class in $\mathrm{Ext}^1_{\mathcal A_p}(\underline s,\underline{\mathbb R})$ through a derived inverse limit of the weighted spaces $V_r$. Peter Scholze's [response and comments](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces) support the nature of this argument and caution that unconditional behaviour is subtle. Neither the Continuum Hypothesis nor the Open Colouring Axiom may be silently assumed for EXT-015.
