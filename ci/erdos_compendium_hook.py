@@ -36,6 +36,7 @@ def on_post_build(config, **kwargs):
 
 ERDOS_HOME_MARKER = "<!-- GCL_ERDOS_HOME_STATUS -->"
 ERDOS_SHOWCASE_MARKER = "<!-- GCL_ERDOS_SHOWCASE_STATUS -->"
+ERDOS_LANDING_MARKER = "<!-- GCL_ERDOS_LANDING_STATUS -->"
 
 
 def protected_erdos_counts() -> dict[str, int]:
@@ -53,6 +54,27 @@ def protected_erdos_counts() -> dict[str, int]:
         raise RuntimeError("Erdős homepage count disagrees with protected catalogue")
     return {"registered": total, "reviewed": reviewed,
             "drafts": drafted, "reference_only": reference_only}
+
+
+def erdos_landing_status() -> str:
+    """Explain the live publication stages without implying theorem certification."""
+    counts = protected_erdos_counts()
+    return (
+        '<div class="showcase-declaration" '
+        'aria-label="Erdős Compendium article progress">\n'
+        '<span>How the collection is coming along</span>\n'
+        f'<p>{counts["reviewed"]:,} reviewed articles about '
+        f'{counts["registered"]:,} listed problems</p>\n</div>\n'
+        f'<p>Another {counts["drafts"]:,} articles have been written '
+        f'but are not yet reviewed. For {counts["reference_only"]:,} '
+        'other problems, a catalogue entry is available but a full '
+        'explanation has not yet been written. These numbers are '
+        'updated whenever the website is published, using the '
+        '<a href="https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/'
+        'governance/erdos_compendium/EDITORIAL_ADMISSIONS.json">'
+        'reviewed-article records</a> and the manuscripts. '
+        'They count articles, not mathematical problems solved.</p>'
+    )
 
 
 def erdos_showcase_status() -> str:
@@ -133,4 +155,8 @@ def on_page_markdown(markdown: str, page, config, files, **kwargs) -> str:
         if markdown.count(ERDOS_SHOWCASE_MARKER) != 1:
             raise RuntimeError("Erdős Showcase requires exactly one status marker")
         return markdown.replace(ERDOS_SHOWCASE_MARKER, erdos_showcase_status())
+    if uri == "erdos/index.md":
+        if markdown.count(ERDOS_LANDING_MARKER) != 1:
+            raise RuntimeError("Erdős Compendium introduction requires exactly one status marker")
+        return markdown.replace(ERDOS_LANDING_MARKER, erdos_landing_status())
     return markdown
