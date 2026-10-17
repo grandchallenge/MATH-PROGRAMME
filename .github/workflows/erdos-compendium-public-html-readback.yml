@@ -137,7 +137,7 @@ jobs:
           python -m pip install --requirement requirements/compendium_public_html.txt
           python -m playwright install --with-deps chromium
       - name: Test fail-closed article comparator
-        run: python -m unittest -q ci.test_erdos_accepted_publication_parity
+        run: python ci/test_erdos_accepted_publication_parity.py
       - name: Verify actual protected admission, deployed source and rendered maths
         env:
           GH_TOKEN: ${{ github.token }}
