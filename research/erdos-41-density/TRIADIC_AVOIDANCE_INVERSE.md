@@ -391,6 +391,38 @@ $$
 
 **Scope:** this is a proved **structure-or-correlation** theorem for every individual actual finite density window. It establishes *necessary growing structural complexity* in residue space when correlations are small. It is not yet a theorem that such complexity is *costly* for critical B3 density across scales: a full allowed residue set E=Z/Q has beta_Q=Q² and satisfies these conditions without strain. The genuine digit-lift hostile fixture above exhibits exactly that escape at fixed small Q. An Erdős #41 proof would have to show that realizing sufficiently many such large bicliques over adaptively growing Q and uniquely owned scales forces a **separate** density decrement. Nothing in (FORCED-BICLIQUE) alone supplies it.
 
+## 4E. A fixed-modulus no-go theorem, proved on genuine finite B3 sets
+
+**Theorem F (dilation escapes every fixed finite modulus panel).** Suppose U and W are nonempty disjoint subsets of a **genuine finite B3 carrier** A with the complete inner/outer correlation M(U,W)=0. Choose disjoint nonempty outer subbins Y<Z of W of positive diameters, and let H=diam(Y)+diam(Z)>=1. For an integer scaling factor k>=1, set
+
+$
+U_k=kU,\quad W_k=kW,\quad Y_k=kY,\quad Z_k=kZ.
+$
+
+Then U_k union W_k remains B3, and M(U_k,W_k)=0 **exactly**. For every fixed integer Q_0>=1, there exists an explicit finite k_0(U,Y,Z,Q_0) so that for every k>=k_0 and **every** modulus 1<=Q<=Q_0,
+
+$
+\boxed{
+E_{Q,1}(U_k;Y_k,Z_k)=\mathbb Z/Q\mathbb Z,
+\qquad
+\beta_Q(E_{Q,1})=Q^2.
+}\tag{FIXED-MODULUS-NOGO}
+$
+
+**Proof.** Multiplication by k is injective and scales all three-term sums, so preserves B3. It also scales all pair-sum differences and outer differences by k, hence preserves the exact vanishing of M.
+
+There are q=|P_U| distinct inner unordered pair sums. For any k, the pair-sum set P_(U_k)=kP_U also has q elements. Thus the number of integer h>0 with r_(U_k)(h)>0 is at most binom(q,2), regardless of k (indeed each unordered pair of different pair sums can contribute to at most one positive half-difference). The candidate cross-bin interval J_k has kH+1 consecutive integer positions. For each modulus Q<=Q_0, **every residue class** occurs in J_k at least floor((kH+1)/Q_0) times. Choose k so that this exceeds binom(q,2). At least one candidate h of every residue class then has r_(U_k)(h)=0. Therefore E_(Q,1) contains every class, and its biclique capacity equals Q². QED.
+
+An explicit sufficient choice is any integer k such that
+
+$
+\boxed{kH+1\ge Q_0\left(\binom q2+1\right).}\tag{SCALE-REPLAY}
+$
+
+**Concrete carrier.** The genuine 29-element greedy-prefix fixture with U its first eight elements and W the remaining twenty-one has M(U,W)=0, as previously checked exactly. It contains multiple pairwise disjoint outer subbins with positive diameters. Thus Theorem F is not conditional on any conjectural infinite dense B3 carrier.
+
+**Sharp scope.** The normalized finite cardinality n/diam(U_k)^(1/3) decreases by k^(−1/3), so Theorem F does **not** refute a hypothetical lemma with a fixed prescribed persistent-density coefficient c and moduli allowed to grow with c or N. It *does* prove that no rule which checks only a predetermined finite modulus panel, independent of the density coefficient and scale, can force a missing-residue certificate from finite B3 and zero correlation alone. The inverse programme must use adaptive growing modulus complexity, genuinely global density data, or a different arithmetic cost mechanism.
+
 ## 5. What was and was not proved about persistent density
 
 Under the **hypothetical** persistent critical bound A(N)>=cN^(1/3), existing GCL selection gives large actual outer cohorts. If a chosen m-element outer B3 subset has m>=kappa_c L^(1/3) in an interval of span L and M=0, Theorem A forces at least kappa_c^3 L/6−O_c(L^(2/3)) distinct nondegenerate additive triangles in the zero-weight distance set. This is a rigorous quantitative *structure-or-correlation* alternative.
