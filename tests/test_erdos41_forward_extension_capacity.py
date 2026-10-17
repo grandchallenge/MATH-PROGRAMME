@@ -293,8 +293,8 @@ class ForwardShadowCapacityTests(unittest.TestCase):
 
     def test_one_anchor_cubic_tax_and_exponential_raw_batch_bound(self):
         from math import comb, exp
-        for p,y in (([1,2,5],[14]),
-                    ([1,2,5,14],[34]),
+        for p,y in (([1,2,5],14),
+                    ([1,2,5,14],34),
                     (list(A[:5]),90),
                     (list(A[:8]),800)):
             if not is_b3(p+[y]):
