@@ -1,0 +1,2172 @@
+{
+  "entries": [
+    {
+      "counts": {
+        "governance": 16,
+        "tests": 12,
+        "workflows": 15
+      },
+      "governance_sources": [
+        {
+          "blob": "a2fd7b82ac85c22c744af3d2df3e11f134991f3f",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        },
+        {
+          "blob": "bbd5dd57ec8ec1444a4c38466e96b90290a43b76",
+          "path": "governance/credentials/GCL-CEI-EVIDENCE-REVIEW-CLERK-001.json"
+        },
+        {
+          "blob": "7d4d588ee1678bdeef7396199f1a338824c0a408",
+          "path": "governance/credentials/GCL-CREDENTIAL-BOUNDARY-001.json"
+        },
+        {
+          "blob": "1cf1b433aea182a21bddf6e7a28682cf09cc2662",
+          "path": "governance/credentials/GCL-ERDOS-CLOSURE-REVIEW-CLERK-001.json"
+        },
+        {
+          "blob": "ab02cc01c3e6960d4322983cf15376e60d4bf97f",
+          "path": "governance/credentials/credential-boundary.schema.json"
+        },
+        {
+          "blob": "8f2691f139b05e3b99365cb28f52a643697058ee",
+          "path": "governance/gct/GCT_GCL_AUTHORITY_BOUNDARY.md"
+        },
+        {
+          "blob": "8c73adc6687f24b014e4b723a470522897d8f9b1",
+          "path": "governance/gct/PUBLIC_EXECUTIVE_MODEL.md"
+        },
+        {
+          "blob": "1811abe27fe21a56e706de02f8b0bd5212f64452",
+          "path": "governance/gct/PUBLIC_STATUS.json"
+        }
+      ],
+      "head": "a1de2065fd336212055d951473e7ed8e3a85558f",
+      "private": false,
+      "repository": "grandchallenge/.github",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "393a3ff2ae6fbc31bbde9772b92a2af36f96ff51",
+          "path": "tests/fixtures/weekly_optimality_snapshot.json"
+        },
+        {
+          "blob": "0710744a9d51d5c4162d74c15c59516c9471503f",
+          "path": "tests/test_cei_evidence_review_clerk.py"
+        },
+        {
+          "blob": "495fb00d0e68adfa4203b609ce43746c1ab378ed",
+          "path": "tests/test_constitutional_review_clerk.py"
+        },
+        {
+          "blob": "2aa166eedffae659418743e8ed3376506e3a87be",
+          "path": "tests/test_credential_boundary.py"
+        },
+        {
+          "blob": "154f18857922b610edf2ef98b00aa61ef8f1a528",
+          "path": "tests/test_erdos_cohort_closure_review_clerk.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "23de5cfef512d684d76d8a2005915a12c43caec3",
+          "command_count": 2,
+          "commands": [
+            {
+              "command": "python -m compileall -q scripts tests",
+              "job": "test"
+            },
+            {
+              "command": "python -m unittest discover -s tests -v",
+              "job": "test"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                ".github/workflows/constitutional-review-clerk.yml",
+                ".github/workflows/cei-evidence-review-clerk.yml",
+                "tests/test_erdos_cohort_closure_review_clerk.py",
+                "scripts/erdos_cohort_closure_review_clerk.py",
+                "governance/credentials/GCL-ERDOS-CLOSURE-REVIEW-CLERK-001.json",
+                ".github/workflows/erdos-cohort-closure-review-clerk.yml",
+                "governance/credentials/GCL-CEI-EVIDENCE-REVIEW-CLERK-001.json",
+                "scripts/cei_evidence_review_clerk.py",
+                "tests/test_cei_evidence_review_clerk.py",
+                ".github/workflows/constitutional-review-tests.yml",
+                "governance/review-campaigns/**",
+                "scripts/constitutional_review_clerk.py",
+                "tests/test_constitutional_review_clerk.py",
+                "tests/test_phase2_clerk_acceptance.py"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ],
+              "paths": [
+                ".github/workflows/constitutional-review-clerk.yml",
+                ".github/workflows/cei-evidence-review-clerk.yml",
+                "governance/credentials/GCL-CEI-EVIDENCE-REVIEW-CLERK-001.json",
+                "scripts/cei_evidence_review_clerk.py",
+                "tests/test_cei_evidence_review_clerk.py",
+                ".github/workflows/constitutional-review-tests.yml",
+                "governance/review-campaigns/**",
+                "scripts/constitutional_review_clerk.py",
+                "tests/test_constitutional_review_clerk.py",
+                "tests/test_phase2_clerk_acceptance.py"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "test"
+          ],
+          "path": ".github/workflows/constitutional-review-tests.yml"
+        },
+        {
+          "blob": "833e5c63b1e72b681f95a4dc232e817c986284fe",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "5 8 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "61360e0244a1138c3551d880ddf05f5aca28314c",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/scripts/ghos_execution_routing_gate.py \\\n  candidate/scripts/ghos_execution_routing_gate.py || {\n    echo \"shared GH-OS routing gate may only change through the governed digest-rotation route\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "echo \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  protected-base/scripts/ghos_execution_routing_gate.py\" | sha256sum --check --strict\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install PyYAML==6.0.3",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python protected-base/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement.yml"
+        },
+        {
+          "blob": "cc6e438d51e475c98296bf13815d61501e2cde0f",
+          "command_count": 1,
+          "commands": [
+            {
+              "command": "set -euo pipefail\npython scripts/cei_evidence_review_clerk.py \\\n  --programme-root programme \\\n  --apply \\\n  --report cei-evidence-review-clerk-report.json\n",
+              "job": "review"
+            }
+          ],
+          "events": {
+            "schedule": [
+              {
+                "cron": "3,13,23,33,43,53 * * * *"
+              }
+            ],
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "review"
+          ],
+          "path": ".github/workflows/cei-evidence-review-clerk.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 111,
+        "tests": 3,
+        "workflows": 3
+      },
+      "governance_sources": [
+        {
+          "blob": "7441bb9e61269f8ae57bb3d5814671f1a6331b2d",
+          "path": "governance/ACTIVE_TRANSACTION.yaml"
+        },
+        {
+          "blob": "90776ed556c95b3b0c3ac0a962bc3d375ed1ddb5",
+          "path": "governance/ATLAS_EDITORIAL_PROFILE.md"
+        },
+        {
+          "blob": "ea8891b4103be8192cc8e10aeecbcec91b495b40",
+          "path": "governance/ATLAS_MAP.md"
+        },
+        {
+          "blob": "d89a259550efe57a032b32ee16774a42b903edf2",
+          "path": "governance/BOOTSTRAP_RECEIPT.json"
+        },
+        {
+          "blob": "52f1d77e80e516cea179550f966383b0b06900af",
+          "path": "governance/CHAPTER_COMPOSITION_PROTOCOL.md"
+        },
+        {
+          "blob": "b438ab94e95e9a988989850df479a09aaba31d2b",
+          "path": "governance/CHAPTER_FAMILY_ROLLOUT.md"
+        },
+        {
+          "blob": "a41420a73721acbddcf2d77f93f9df553759d305",
+          "path": "governance/CHAPTER_LEDGER.yaml"
+        },
+        {
+          "blob": "1d9c71c5e720ebe421ebb4943f97541635a4bd76",
+          "path": "governance/COMPUTATIONAL_WITNESS_STANDARD.md"
+        }
+      ],
+      "head": "767017f5658a3d02783591146ad9ec9a5a26a4ed",
+      "private": false,
+      "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "path": "tests/.gitkeep"
+        },
+        {
+          "blob": "3926551d3fc3aa87d6f49ef36b79d9e7de06ff5b",
+          "path": "tests/test_atlas_direct_return_projector.py"
+        },
+        {
+          "blob": "4fa056f8bb9b98460b1e595429e60770fbed54ad",
+          "path": "tests/test_atlas_direct_return_reconcile.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "1952a4c140b71d686e3cd985d84ace729832714c",
+          "command_count": 8,
+          "commands": [
+            {
+              "command": "pip install -r requirements-dev.txt",
+              "job": "validate"
+            },
+            {
+              "command": "python tools/validate_atlas.py",
+              "job": "validate"
+            },
+            {
+              "command": "python -m unittest discover -s tests -p test_atlas_direct_return_projector.py",
+              "job": "validate"
+            },
+            {
+              "command": "python -m unittest discover -s tests -p test_atlas_direct_return_reconcile.py",
+              "job": "validate"
+            },
+            {
+              "command": "python tools/check_release_readiness.py",
+              "job": "validate"
+            },
+            {
+              "command": "python tools/check_release_candidate.py",
+              "job": "validate"
+            },
+            {
+              "command": "python tools/check_public_release.py",
+              "job": "validate"
+            },
+            {
+              "command": "python tools/assemble_manuscript.py --output /tmp/atlas-manuscript.md --manifest /tmp/atlas-manifest.json --check",
+              "job": "validate"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            }
+          },
+          "job_ids": [
+            "validate"
+          ],
+          "path": ".github/workflows/validate.yml"
+        },
+        {
+          "blob": "e998a7789e61f1da4d529f16a3646ba4d9c82f76",
+          "command_count": 1,
+          "commands": [
+            {
+              "command": "set -euo pipefail\nrepaired=0\n\ngh api --paginate \\\n  \"repos/$GITHUB_REPOSITORY/issues?state=open&labels=gcl-pickup%3Adirect-editorial&per_page=100\" \\\n  --jq '.[] | select(.pull_request == null) | .number' \\\n  > \"$RUNNER_TEMP/issues.txt\"\n\nwhile IFS= read -r issue_number; do\n  [ -n \"$issue_number\" ] || continue\n\n  issue_json=\"$RUNNER_TEMP/issue-$issue",
+              "job": "reconcile"
+            }
+          ],
+          "events": {
+            "schedule": [
+              {
+                "cron": "29 * * * *"
+              }
+            ],
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "reconcile"
+          ],
+          "path": ".github/workflows/atlas-direct-editorial-return-replay.yml"
+        },
+        {
+          "blob": "c973617fe4a6cb107f01a44f791b7b8309c2fdfe",
+          "command_count": 3,
+          "commands": [
+            {
+              "command": "gh api \"repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/issue-field-values\" \\\n  > \"$RUNNER_TEMP/issue-fields.json\"\n",
+              "job": "project-return"
+            },
+            {
+              "command": "python ci/atlas_direct_return_projector.py \\\n  --event \"$GITHUB_EVENT_PATH\" \\\n  --issue-fields \"$RUNNER_TEMP/issue-fields.json\" \\\n  --output \"$RUNNER_TEMP/projection.json\"\ncat \"$RUNNER_TEMP/projection.json\"\n",
+              "job": "project-return"
+            },
+            {
+              "command": "if [ \"$(jq -r '.project' \"$RUNNER_TEMP/projection.json\")\" != true ]; then\n  exit 0\nfi\n\n# Issue Fields are the authoritative Project #2 GCL State projection.\n# The comment is NOT reviewed, certified, or admitted by this step.\nprintf '%s\\n' '{\"issue_field_values\":[{\"field_id\":47953501,\"value\":\"RETURNED\"}]}' \\\n  > \"$RUNNER_TEMP/state-update.json\"\ngh a",
+              "job": "project-return"
+            }
+          ],
+          "events": {
+            "issue_comment": {
+              "types": [
+                "created"
+              ]
+            }
+          },
+          "job_ids": [
+            "project-return"
+          ],
+          "path": ".github/workflows/atlas-direct-editorial-returns.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 1,
+        "tests": 0,
+        "workflows": 14
+      },
+      "governance_sources": [
+        {
+          "blob": "b4daa74848788666ba2d2abad57086bd8d9a4cef",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        }
+      ],
+      "head": "c7ade9370da97a7aade4e4fdd893bcc7991c43b7",
+      "private": false,
+      "repository": "grandchallenge/AETHER",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [],
+      "workflows": [
+        {
+          "blob": "a8ff37b17abd9d7e1cc182699d25af1bd0530152",
+          "command_count": 31,
+          "commands": [
+            {
+              "command": "if [ \"$EVENT_NAME\" = \"pull_request\" ]; then\n  git diff --name-only \"$BASE_SHA\" \"$HEAD_SHA\" > changed-paths.txt\nelif [ \"$EVENT_NAME\" = \"push\" ] &&\n     [ -n \"$BEFORE_SHA\" ] &&\n     ! printf '%s' \"$BEFORE_SHA\" | grep -Eq '^0+$' &&\n     git cat-file -e \"$BEFORE_SHA^{commit}\" 2>/dev/null; then\n  git diff --name-only \"$BEFORE_SHA\" \"$CURRENT_SHA\" > chang",
+              "job": "scope"
+            },
+            {
+              "command": "rustup toolchain install stable --profile minimal --component rustfmt --component clippy\nrustup default stable\n",
+              "job": "rust-pr"
+            },
+            {
+              "command": "cargo fmt --all --check\ncargo clippy --workspace --all-targets -- -D warnings\ncargo test --workspace\n",
+              "job": "rust-pr"
+            },
+            {
+              "command": "go test ./...",
+              "job": "go-pr"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check -r requirements-release.txt",
+              "job": "python-pr"
+            },
+            {
+              "command": "python -m pytest python/tests -q",
+              "job": "python-pr"
+            },
+            {
+              "command": "rustup toolchain install ${{ matrix.toolchain }} --profile minimal --component rustfmt --component clippy\nrustup default ${{ matrix.toolchain }}\n",
+              "job": "rust-integration"
+            },
+            {
+              "command": "cargo fmt --all --check",
+              "job": "rust-integration"
+            },
+            {
+              "command": "cargo clippy --workspace --all-targets -- -D warnings",
+              "job": "rust-integration"
+            },
+            {
+              "command": "cargo test --workspace",
+              "job": "rust-integration"
+            },
+            {
+              "command": "go test ./...",
+              "job": "go-integration"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check -r requirements-release.txt",
+              "job": "python-integration"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "branches": [
+                "main"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "scope",
+            "rust-pr",
+            "go-pr",
+            "python-pr",
+            "rust-integration",
+            "go-integration",
+            "python-integration",
+            "postgres-journal",
+            "container-smoke",
+            "pilot-launch-gate",
+            "pilot-package",
+            "hardening-admin",
+            "hardening-operator",
+            "required-ci-gate"
+          ],
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "blob": "87e3079e7cad80af8495ac046f5231129714a902",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "53 7 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "blob": "8b1977096fb01201ee71435aa28e93097348252c",
+          "command_count": 3,
+          "commands": [
+            {
+              "command": "rustup toolchain install stable --profile minimal --component rustfmt\nrustup default stable\n",
+              "job": "disposable-probe"
+            },
+            {
+              "command": "cargo fmt --all -- --check",
+              "job": "disposable-probe"
+            },
+            {
+              "command": "set -o pipefail\ncargo test -p aether_http --test fabric_real_workload_probe -- --nocapture 2>&1 | tee fabric-real-workload-probe.log\n",
+              "job": "disposable-probe"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                "crates/aether_http/tests/fabric_real_workload_probe.rs",
+                ".github/workflows/aether-fabric-real-workload-probe.yml"
+              ]
+            }
+          },
+          "job_ids": [
+            "disposable-probe"
+          ],
+          "path": ".github/workflows/aether-fabric-real-workload-probe.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 8,
+        "tests": 10,
+        "workflows": 2
+      },
+      "governance_sources": [
+        {
+          "blob": "e315710178846c82ea18d794eb9f4623d0057a30",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        },
+        {
+          "blob": "753af002bfb1f4e3e48d9dd7ed8fb31476495371",
+          "path": "governance/example_agent_review.yaml"
+        },
+        {
+          "blob": "df7348283fe19742a415e13ae9d0eab41614f574",
+          "path": "governance/records/BFC-ADMISSION-001.json"
+        },
+        {
+          "blob": "81402b16ed59f14e0872b929ac8b61a1a4fbf65c",
+          "path": "governance/records/BFC-CLAIMS-001.json"
+        },
+        {
+          "blob": "da36bef2b847bf46170968db4b2a384c8a5cc478",
+          "path": "governance/records/BFC-EVIDENCE-001.json"
+        },
+        {
+          "blob": "887cb71abb332ba05a2511c6acc754a455fc7a37",
+          "path": "governance/records/BFC-NEGATIVE-001.json"
+        },
+        {
+          "blob": "9b8b05af23773c021fed9b61e9f203a4e3d593e9",
+          "path": "governance/records/BFC-PROGRAMME-001.json"
+        },
+        {
+          "blob": "3a8c9f1eb5a831abfab6bbd4782d8f9322ac50b9",
+          "path": "governance/records/BFC-WORK-PACKAGES-001.json"
+        }
+      ],
+      "head": "5fb8455860f3326cd1c482de83322d9932dd21ca",
+      "private": false,
+      "repository": "grandchallenge/BUTTERFLY",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "19dc7b0a7e2e548a08d12f9ecd9a7d5864c551fc",
+          "path": "tests/test_adjoint.py"
+        },
+        {
+          "blob": "1b21119149ce57880b8d39b1aafab83f6880297e",
+          "path": "tests/test_certification.py"
+        },
+        {
+          "blob": "d179ddcdb7727499f61ef26e11febfadb2c9b66f",
+          "path": "tests/test_config.py"
+        },
+        {
+          "blob": "5b9a2b66a90cf49329e59990d5569a8a743a51b2",
+          "path": "tests/test_factor_chain.py"
+        },
+        {
+          "blob": "295568617f30319904eae1e8d1473a70894136cb",
+          "path": "tests/test_governance.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "d774f0b0263050242cd1fc6c15f9606acc955bc3",
+          "command_count": 11,
+          "commands": [
+            {
+              "command": "python -m pip install --no-user --disable-pip-version-check -e '.[dev]'",
+              "job": "quality"
+            },
+            {
+              "command": "ruff check src tests ci",
+              "job": "quality"
+            },
+            {
+              "command": "mypy src",
+              "job": "quality"
+            },
+            {
+              "command": "python -m compileall -q src ci",
+              "job": "quality"
+            },
+            {
+              "command": "python -m pytest -q",
+              "job": "quality"
+            },
+            {
+              "command": "python -m pip install --no-user --disable-pip-version-check -e '.[dev]'",
+              "job": "governance"
+            },
+            {
+              "command": "python ci/validate_governance.py",
+              "job": "governance"
+            },
+            {
+              "command": "python scripts/build_manifest.py",
+              "job": "governance"
+            },
+            {
+              "command": "git diff --exit-code MANIFEST.json",
+              "job": "governance"
+            },
+            {
+              "command": "python -m pip install --no-user --disable-pip-version-check -e '.[dev]'",
+              "job": "smoke"
+            },
+            {
+              "command": "python scripts/run_all_smoke.py",
+              "job": "smoke"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "branches": [
+                "main"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ]
+            }
+          },
+          "job_ids": [
+            "quality",
+            "governance",
+            "smoke"
+          ],
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "blob": "0a0b32cb5fa043b0f652f1ac3a55cac6b0ab89ba",
+          "command_count": 3,
+          "commands": [
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install PyYAML==6.0.3",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "echo \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  policy-runtime/scripts/ghos_execution_routing_gate.py\" | sha256sum --check --strict\npython -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 11,
+        "tests": 15,
+        "workflows": 15
+      },
+      "governance_sources": [
+        {
+          "blob": "8acef7ef1e88fde6b5c4669031f7ae46b857b6ad",
+          "path": "governance/CDA_REVIEW_ADMISSION_002.json"
+        },
+        {
+          "blob": "3cf56a1a43a15af945283853c797415458236dc7",
+          "path": "governance/CDA_REVIEW_ADMISSION_003.json"
+        },
+        {
+          "blob": "ad1da6300d3f1340213182a38b70809ccd5ca5b0",
+          "path": "governance/CDA_REVIEW_ADMISSION_004.json"
+        },
+        {
+          "blob": "be31e8ebcacab52b249ad09957467430aacab0c5",
+          "path": "governance/CDA_REVIEW_ADMISSION_005.json"
+        },
+        {
+          "blob": "01924308096c615e526f81e29608a49b0a4f8d91",
+          "path": "governance/CDA_REVIEW_ADMISSION_006.json"
+        },
+        {
+          "blob": "591633e6c682f8d3967df3cc420ad1d92e74329e",
+          "path": "governance/CLAIM_STATUS_CONVENTIONS.md"
+        },
+        {
+          "blob": "bf2bf4a1b241c319a8a8f15691d0308d424a95bc",
+          "path": "governance/DIRECT_EDITORIAL_RETURN_PROTOCOL.md"
+        },
+        {
+          "blob": "185540553683a3507a0400664f3ecb204edae5c1",
+          "path": "governance/PEDAGOGICAL_CHARTER.md"
+        }
+      ],
+      "head": "7f7f561897981b329df8e40b5883d2a9d46fb664",
+      "private": false,
+      "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "3d649d49abc26c57dd73abc2a007d545afccffea",
+          "path": "tests/test_c06_reduction.py"
+        },
+        {
+          "blob": "30a06cb0ad277cf0772c6f10172d83e2807508d1",
+          "path": "tests/test_c07_conp.py"
+        },
+        {
+          "blob": "bcc4043259b1391020ed8518aa64dc6095c0e51b",
+          "path": "tests/test_c08_self_reduction.py"
+        },
+        {
+          "blob": "f58630dd51be63521f6c7f41a10be5acd920bfbb",
+          "path": "tests/test_c09_ph.py"
+        },
+        {
+          "blob": "92ee8d10e4465c29d9723dfe102c7fde9c66b304",
+          "path": "tests/test_cda_core_review_admission.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "2e4de045d1b61863eaa20dd8c75169c2bb86c925",
+          "command_count": 2,
+          "commands": [
+            {
+              "command": "python -m unittest tests.test_cda_direct_return_projector tests.test_cda_direct_return_reconcile tests.test_cda_return_replay_entrypoint -v\n",
+              "job": "direct-return-contract"
+            },
+            {
+              "command": "python ci/validate_review_provenance.py",
+              "job": "direct-return-contract"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                "ci/**",
+                "tests/**",
+                ".github/workflows/**",
+                "governance/DIRECT_EDITORIAL_RETURN_PROTOCOL.md",
+                "reviews/CDA_REV_001_*.md",
+                "reviews/CDA_REV_001_*.json",
+                "figures/F1_1_CAPTION.md",
+                "figures/metadata/F1_1.yaml"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ],
+              "paths": [
+                "ci/**",
+                "tests/**",
+                ".github/workflows/**",
+                "governance/DIRECT_EDITORIAL_RETURN_PROTOCOL.md",
+                "reviews/CDA_REV_001_*.md",
+                "reviews/CDA_REV_001_*.json",
+                "figures/F1_1_CAPTION.md",
+                "figures/metadata/F1_1.yaml"
+              ]
+            }
+          },
+          "job_ids": [
+            "direct-return-contract"
+          ],
+          "path": ".github/workflows/cda-ops-checks.yml"
+        },
+        {
+          "blob": "739d7b72d973d9f6872bb326febd504a0974da80",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python -m unittest tests.test_cda_review_admission tests.test_cda_core_review_admission -v",
+              "job": "read-only-preflight"
+            },
+            {
+              "command": "python -m ci.cda_core_review_admission",
+              "job": "read-only-preflight"
+            },
+            {
+              "command": "python -m unittest tests.test_cda_review_admission tests.test_cda_core_review_admission -v",
+              "job": "protected-activation"
+            },
+            {
+              "command": "python -m ci.cda_core_review_admission",
+              "job": "protected-activation"
+            },
+            {
+              "command": "python -m ci.cda_core_review_admission --execute",
+              "job": "protected-activation"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                "governance/CDA_REVIEW_ADMISSION_004.json",
+                "ci/cda_core_review_admission.py",
+                "tests/test_cda_core_review_admission.py",
+                ".github/workflows/cda-core-review-admission-004.yml"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ],
+              "paths": [
+                "governance/CDA_REVIEW_ADMISSION_004.json"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "read-only-preflight",
+            "protected-activation"
+          ],
+          "path": ".github/workflows/cda-core-review-admission-004.yml"
+        },
+        {
+          "blob": "023329fe327ee37d7d92012c212445abd1b4ac87",
+          "command_count": 1,
+          "commands": [
+            {
+              "command": "set -euo pipefail\nrepaired=0\n\ngh api --paginate \\\n  \"repos/$GITHUB_REPOSITORY/issues?state=open&labels=gcl-pickup%3Adirect-editorial&per_page=100\" \\\n  --jq '.[] | select(.pull_request == null) | .number' \\\n  > \"$RUNNER_TEMP/issues.txt\"\n\nwhile IFS= read -r issue_number; do\n  [ -n \"$issue_number\" ] || continue\n\n  issue_json=\"$RUNNER_TEMP/issue-$issue",
+              "job": "reconcile"
+            }
+          ],
+          "events": {
+            "schedule": [
+              {
+                "cron": "17 * * * *"
+              }
+            ],
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "reconcile"
+          ],
+          "path": ".github/workflows/cda-direct-editorial-return-replay.yml"
+        },
+        {
+          "blob": "782b44aa7b654b3aafb72aa9e95e71240a865f54",
+          "command_count": 3,
+          "commands": [
+            {
+              "command": "gh api \"repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/issue-field-values\" \\\n  > \"$RUNNER_TEMP/issue-fields.json\"\n",
+              "job": "project-return"
+            },
+            {
+              "command": "python ci/cda_direct_return_projector.py \\\n  --event \"$GITHUB_EVENT_PATH\" \\\n  --issue-fields \"$RUNNER_TEMP/issue-fields.json\" \\\n  --output \"$RUNNER_TEMP/projection.json\"\ncat \"$RUNNER_TEMP/projection.json\"\n",
+              "job": "project-return"
+            },
+            {
+              "command": "if [ \"$(jq -r '.project' \"$RUNNER_TEMP/projection.json\")\" != true ]; then\n  exit 0\nfi\n\n# Receipt projection only: RESULT/1 remains unadjudicated evidence.\nprintf '%s\\n' '{\"issue_field_values\":[{\"field_id\":47953501,\"value\":\"RETURNED\"}]}' \\\n  > \"$RUNNER_TEMP/state-update.json\"\ngh api --method POST \\\n  \"repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/is",
+              "job": "project-return"
+            }
+          ],
+          "events": {
+            "issue_comment": {
+              "types": [
+                "created"
+              ]
+            }
+          },
+          "job_ids": [
+            "project-return"
+          ],
+          "path": ".github/workflows/cda-direct-editorial-returns.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 0,
+        "tests": 22,
+        "workflows": 3
+      },
+      "governance_sources": [],
+      "head": "b89fc0ab807e69a255760c11ce85b1048d329c81",
+      "private": false,
+      "repository": "grandchallenge/gcl-standards",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "971892656dc894854d7410e65d37184cf0f30ede",
+          "path": "tests/test_agent_staffing.py"
+        },
+        {
+          "blob": "bc97c74b453969ed75773f485b7bd7c64386a535",
+          "path": "tests/test_gcl_cex.py"
+        },
+        {
+          "blob": "5a529eba9e8f2b50f91104a006fe387f24d57a94",
+          "path": "tests/test_gcl_id.py"
+        },
+        {
+          "blob": "9acecbb78313905bcf4a7636b0b8af758e670147",
+          "path": "tests/test_gcl_rc_chronology_cure.py"
+        },
+        {
+          "blob": "cb30419f41c2c53b70fb2b255adc43edc5b10a28",
+          "path": "tests/test_ghos_control_plane.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "813a8eed2305ceb0f666e257e56b13fa415bfee5",
+          "command_count": 3,
+          "commands": [
+            {
+              "command": "python -m pip install --requirement requirements.txt",
+              "job": "standards-policy"
+            },
+            {
+              "command": "python ci/validate.py",
+              "job": "standards-policy"
+            },
+            {
+              "command": "python -m unittest discover -s tests -p \"test_*.py\"",
+              "job": "standards-policy"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "standards-policy"
+          ],
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "blob": "0082cc0a60bf84074334e12acb36d10ccc3de955",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "59 7 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "9423de9164c28f3338b7a0a3fc6de19b83e2646d",
+          "command_count": 3,
+          "commands": [
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install PyYAML==6.0.3",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "echo \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  policy-runtime/scripts/ghos_execution_routing_gate.py\" | sha256sum --check --strict\npython policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 20,
+        "tests": 0,
+        "workflows": 2
+      },
+      "head": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+      "private": true,
+      "repository": "grandchallenge/GCT-EXECUTIVE",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT"
+    },
+    {
+      "counts": {
+        "governance": 7,
+        "tests": 0,
+        "workflows": 4
+      },
+      "governance_sources": [
+        {
+          "blob": "fab0ca231904a1bbcc711498322de0bb6064faf1",
+          "path": "governance/ADR_TEMPLATE.md"
+        },
+        {
+          "blob": "c8b470f499b50394ee337723835f83b53216c3a0",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        },
+        {
+          "blob": "2b4519200b0803a50b05bce32949bc9ab87f4800",
+          "path": "governance/PULL_REQUEST_TEMPLATE.md"
+        },
+        {
+          "blob": "96dd9e82efb7b562e80f2db37da4034493a6c19e",
+          "path": "governance/RELEASE_CHECKLIST.md"
+        },
+        {
+          "blob": "360095fbad3c370d2fbfa774a0db2fadbbd570cd",
+          "path": "governance/agent_review.template.yaml"
+        },
+        {
+          "blob": "38e3f322891f9b77d9d31025ffffef5d5394efc1",
+          "path": "governance/rule_proposal.template.yaml"
+        },
+        {
+          "blob": "77b9a5bd83a4c4caae21a971adfe0f966e8c2f6b",
+          "path": "governance/work_package.template.yaml"
+        }
+      ],
+      "head": "eddf3da976a123c7f114046774aee41f44d572d6",
+      "private": false,
+      "repository": "grandchallenge/GLOSS",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [],
+      "workflows": [
+        {
+          "blob": "7e8afdb9eaca659f537ead597d275d591e66e2e4",
+          "command_count": 4,
+          "commands": [
+            {
+              "command": "pip install -r scripts/requirements-dev.txt",
+              "job": "package-contracts"
+            },
+            {
+              "command": "python scripts/validate_package.py",
+              "job": "package-contracts"
+            },
+            {
+              "command": "set -o pipefail\n{\n  curl --proto '=https' --tlsv1.2 -sSf \\\n    https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \\\n    -o /tmp/elan-init.sh\n  sh /tmp/elan-init.sh -y --default-toolchain none\n  export PATH=\"$HOME/.elan/bin:$PATH\"\n  toolchain=\"$(cat scaffold/lean-toolchain)\"\n  elan toolchain install \"$toolchain\"\n  elan default \"$t",
+              "job": "lean-stable"
+            },
+            {
+              "command": "set -o pipefail\n{\n  echo '$ lake update'\n  lake update\n  echo '$ lake build'\n  lake build\n} 2>&1 | tee ../lean-build.log\n",
+              "job": "lean-stable"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            }
+          },
+          "job_ids": [
+            "package-contracts",
+            "lean-stable"
+          ],
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "blob": "7107b3133bf05c3f2862ec68780a2e738d169a47",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "53 7 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "blob": "ae418cdfcd94ec3865ec6697a572fe4574851ebc",
+          "command_count": 1,
+          "commands": [
+            {
+              "command": "echo \"This non-gating lane should replace scaffold/lean-toolchain and mathlib rev\"\necho \"with the selected release candidate, then execute lake update && lake build.\"\necho \"Do not silently rewrite committed stable pins.\"\n",
+              "job": "forward-compatibility"
+            }
+          ],
+          "events": {
+            "schedule": [
+              {
+                "cron": "31 6 * * 1"
+              }
+            ],
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "forward-compatibility"
+          ],
+          "path": ".github/workflows/nightly-compat.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 2,
+        "tests": 0,
+        "workflows": 1
+      },
+      "governance_sources": [
+        {
+          "blob": "6a898efbdbe23eb6e947cd1c12f4a4b8fcee631f",
+          "path": "governance/GSD-001_RESEARCH_PROGRAMME.md"
+        },
+        {
+          "blob": "c7af5b65f6496ff4a3c8533f4bb6ee8721467385",
+          "path": "governance/GSD-001_WORK_PACKAGE_INDEX.yaml"
+        }
+      ],
+      "head": "da7ddadc9743c14549e5132e8fc98b66d5223de6",
+      "private": false,
+      "repository": "grandchallenge/GSD",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [],
+      "workflows": [
+        {
+          "blob": "3d9e6d85e6d47962cde059c17b46c7d97c04bb4a",
+          "command_count": 4,
+          "commands": [
+            {
+              "command": "python -m pip install -r experiments/gsd-001/requirements-ci.txt",
+              "job": "unit"
+            },
+            {
+              "command": "python -m compileall -q experiments/gsd-001",
+              "job": "unit"
+            },
+            {
+              "command": "bash -n experiments/gsd-001/colab/run_wp01_colab.sh",
+              "job": "unit"
+            },
+            {
+              "command": "PYTHONPATH=experiments/gsd-001 pytest -q experiments/gsd-001/tests",
+              "job": "unit"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                "experiments/gsd-001/**",
+                ".github/workflows/gsd-ci.yml"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ],
+              "paths": [
+                "experiments/gsd-001/**",
+                ".github/workflows/gsd-ci.yml"
+              ]
+            }
+          },
+          "job_ids": [
+            "unit"
+          ],
+          "path": ".github/workflows/ci.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 1,
+        "tests": 0,
+        "workflows": 6
+      },
+      "governance_sources": [
+        {
+          "blob": "0df459ccfe267cd09d16bb94fcfee0ad629fb5dc",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        }
+      ],
+      "head": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+      "private": false,
+      "repository": "grandchallenge/lean-action",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [],
+      "workflows": [
+        {
+          "blob": "974d982fe0bc699918cf9850bd9f9dfc188abd31",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "11 8 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "blob": "cc427d27b207f4a3dc2843eb23eefc01f4d721b0",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "pull_request": {
+              "paths": [
+                ".github/**"
+              ]
+            },
+            "push": {
+              "branches": [
+                "main"
+              ],
+              "paths": [
+                ".github/**"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "actionlint"
+          ],
+          "path": ".github/workflows/actionlint.yml"
+        },
+        {
+          "blob": "339dc38f409dfc1e46c352a4dbdb2c9e6456c905",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "pull_request": {
+              "branches": [
+                "main"
+              ],
+              "paths": [
+                "scripts/**",
+                "action.yml",
+                ".github/workflows/functional_tests.yml",
+                ".github/functional_tests/**"
+              ]
+            },
+            "workflow_dispatch": {
+              "inputs": {
+                "toolchain": {
+                  "default": "leanprover/lean4:v4.26.0",
+                  "description": "The Lean toolchain to use when running the tests.",
+                  "required": "false"
+                }
+              }
+            }
+          },
+          "job_ids": [
+            "lake-init-success",
+            "lake-init-failure",
+            "auto-config-true",
+            "auto-config-false",
+            "auto-config-false-modern-leanchecker",
+            "lake-build-args",
+            "lake-test-args",
+            "detect-mathlib",
+            "lake-test-success",
+            "lake-test-failure",
+            "lake-lint-success",
+            "lake-lint-failure",
+            "lake-check-test-failure",
+            "subdirectory-lake-package",
+            "subdirectory-lake-package-lean-checker",
+            "reinstall-transient-toolchain",
+            "mk_all-check",
+            "macos-runner",
+            "windows-runner"
+          ],
+          "path": ".github/workflows/functional_tests.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 12,
+        "tests": 0,
+        "workflows": 3
+      },
+      "governance_sources": [
+        {
+          "blob": "2c9bf7982ee332cb92408eb030412db69f738cf9",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        },
+        {
+          "blob": "6aa6f2fe97659aaad01a21b65bd4c42cdf23bb2c",
+          "path": "governance/MODULUS-RC-MERGE-CURE-001.json"
+        },
+        {
+          "blob": "9d724940c755431471ebb700aed9c83cb86028df",
+          "path": "governance/regret_contract_authority.json"
+        },
+        {
+          "blob": "03707fb8f0ab0b77a55d996a9dbebec22bb11b45",
+          "path": "governance/settings-readback/GCL-GHOS-MODULUS-OWNER-CONTROLS-001.receipt.schema.json"
+        },
+        {
+          "blob": "de0adcce9eb0c7b757ca3a22269031e15b731898",
+          "path": "governance/settings-readback/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.schema.json"
+        },
+        {
+          "blob": "1a0a9815e5f748433f9aaf501bd482f36761f6e5",
+          "path": "governance/settings-readback/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-COLLECTOR-001.attestation.md"
+        },
+        {
+          "blob": "f1a8efd563c91810c6a661239a9987b59ba75900",
+          "path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-OWNER-CONTROLS-001.attestation.md"
+        },
+        {
+          "blob": "a66fdb72e2668760a2cb37eecf3775bf60a30463",
+          "path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-OWNER-CONTROLS-001.receipt.json"
+        }
+      ],
+      "head": "7ca4ffcdace32d5ff79c27ad557bfb690fac0af3",
+      "private": false,
+      "repository": "grandchallenge/MODULUS",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [],
+      "workflows": [
+        {
+          "blob": "0448d18e86bfd3aba9a803e2702e8b3b841af239",
+          "command_count": 7,
+          "commands": [
+            {
+              "command": "python -m pip install -e \".[dev]\"",
+              "job": "test-and-lint"
+            },
+            {
+              "command": "python -m ruff check modulus scripts",
+              "job": "test-and-lint"
+            },
+            {
+              "command": "if ! python scripts/generate_api_docs.py --check; then\n  python scripts/generate_api_docs.py\n  exit 1\nfi\n",
+              "job": "test-and-lint"
+            },
+            {
+              "command": "python -m pytest",
+              "job": "test-and-lint"
+            },
+            {
+              "command": "python -m pip install -e \".[dev,report]\"",
+              "job": "benchmark-report"
+            },
+            {
+              "command": "rm -rf artifacts/benchmarks/ci_run\npython scripts/run_benchmarks.py --steps 20 --warmup-steps 3 --batch-size 32 --width 64 --out-dir artifacts/benchmarks/ci_run\n",
+              "job": "benchmark-report"
+            },
+            {
+              "command": "python scripts/build_benchmark_report.py --run-dir artifacts/benchmarks/ci_run --with-plots",
+              "job": "benchmark-report"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "**"
+              ]
+            }
+          },
+          "job_ids": [
+            "test-and-lint",
+            "benchmark-report"
+          ],
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "blob": "515aa5f2a816b9ec9b956c225f8d789b092345e7",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "41 7 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 14,
+        "tests": 39,
+        "workflows": 13
+      },
+      "governance_sources": [
+        {
+          "blob": "5fb3e928b068c885d4cbc025bd319c70ac63958a",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        },
+        {
+          "blob": "5e8df299b30fab0fea65f3e7885c9c1e5cafe0f2",
+          "path": "governance/MP-EXTERNAL-EXECUTION-PLANE-001-BINDING.json"
+        },
+        {
+          "blob": "8b330c04167cbfbff5e2ff4e0d62a599bf68b5c5",
+          "path": "governance/settings-readback/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.receipt.schema.json"
+        },
+        {
+          "blob": "aec64a8bfe684e4a9ba2fe830dffd72fd7f9bc11",
+          "path": "governance/settings-readback/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.receipt.schema.json"
+        },
+        {
+          "blob": "708d7f079bec27017f21349f9f4a27972bcbaf58",
+          "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.attestation.md"
+        },
+        {
+          "blob": "22ec63fa14acf118cd44d641c49b269102614224",
+          "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.receipt.json"
+        },
+        {
+          "blob": "56dbcca7bc3998c88872aa12323ad1a6cd6bee6d",
+          "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.receipt.json.sha256"
+        },
+        {
+          "blob": "208a975c6486a7570f27a01ce236342799a22b61",
+          "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.attestation.md"
+        }
+      ],
+      "head": "a38c7928a46c5873cd7f38ff39d6e6ed306d2eb4",
+      "private": false,
+      "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "ed6d3dbfce7802602dde4b988f8ef091a678d900",
+          "path": "tests/test_downstream_atlas.py"
+        },
+        {
+          "blob": "f41e38c73000d972e277ac037b2382fd94047f86",
+          "path": "tests/test_gcl_ghos_quantum_owner_controls_receipt.py"
+        },
+        {
+          "blob": "445135eb8cfa1237b9dbf10e4895efae2353f9b0",
+          "path": "tests/test_gcl_ghos_quantum_post_repair_readback_receipt.py"
+        },
+        {
+          "blob": "2bed8955e8415afcd3891da3a01fef9ec2553239",
+          "path": "tests/test_qec_circuit_001.py"
+        },
+        {
+          "blob": "361ede287c31bbfb8f8ce316deaaf6f5526bf2c1",
+          "path": "tests/test_qec_circuit_001_evidence.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "d348ccb100ac78b475f2d6861f5ef0f81587268c",
+          "command_count": 4,
+          "commands": [
+            {
+              "command": "python ci/verify_migration.py --assert-head \"$SUBJECT_SHA\"",
+              "job": "policy"
+            },
+            {
+              "command": "python - <<'PY'\nimport re\nfrom pathlib import Path\nviolations = []\nfor path in sorted(Path('.github/workflows').glob('*.y*ml')):\n    for number, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):\n        match = re.search(r'\\buses:\\s*([^\\s#]+)', line)\n        if not match:\n            continue\n        reference = match.group(1)\n  ",
+              "job": "policy"
+            },
+            {
+              "command": "python ci/validate.py\npython ci/validate_downstream.py\npython - <<'PY'\nimport json\nfrom pathlib import Path\ncharter = Path('QTR-CHARTER-00.md').read_text(encoding='utf-8')\nwp00 = Path('work-packages/QTR-SIG-WP00.md').read_text(encoding='utf-8')\nadoption = json.loads(Path('reviews/QTR-ADOPT-001/adoption-record.json').read_text(encoding='utf-8'))\nint",
+              "job": "policy"
+            },
+            {
+              "command": "python - <<'PY'\nimport json\nimport subprocess\nfrom pathlib import Path\nsubject = '${{ env.SUBJECT_SHA }}'\nruntime = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()\nreceipt = {\n    'receipt_version': '0.2.0',\n    'docket_id': 'QTR-SIG-PIN-001',\n    'evaluated_commit': subject,\n    'runtime_head': runtime,\n    'exact_head_equ",
+              "job": "policy"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            }
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "blob": "3fe30828f74e11fad037ca185bfa216b1f52fbfb",
+          "command_count": 4,
+          "commands": [
+            {
+              "command": "test \"$(git rev-parse HEAD)\" = \"$EXPECTED_HEAD\"\n",
+              "job": "static-phase-m"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check pytest\npython -m pytest -q tests/test_qtr_c90_exact_requal_001.py --import-mode=importlib\n",
+              "job": "static-phase-m"
+            },
+            {
+              "command": "python reference/qtr_c90_exact_requal_001.py static \\\n  --output \"$RUNNER_TEMP/QTR-C90-EXACT-REQUAL-001-static.json\"\npython - \"$RUNNER_TEMP/QTR-C90-EXACT-REQUAL-001-static.json\" <<'PY'\nimport json,sys\nr=json.load(open(sys.argv[1]))\nassert r[\"engineering_resource_qualification\"][\"host_memory_calibration_performed\"] is False\nassert r[\"engineering_res",
+              "job": "static-phase-m"
+            },
+            {
+              "command": "python - \"$RUNNER_TEMP/QTR-C90-EXACT-REQUAL-001-static.json\" <<'PY'\nimport hashlib,json,sys\nstatic=json.load(open(sys.argv[1]))\nev=json.load(open(\"evidence/QTR-C90-EXACT-REQUAL-001-report.json\"))\nclaimed=ev.pop(\"payload_sha256\")\nraw=json.dumps(ev,sort_keys=True,separators=(\",\",\":\"),ensure_ascii=True,allow_nan=False).encode()\nassert hashlib.sha256(r",
+              "job": "static-phase-m"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                "registry/qtr-c90-exact-requal-001-manifest.json",
+                "registry/qtr-c90-exact-requal-001.json",
+                "evidence/QTR-C90-EXACT-REQUAL-001-report.json",
+                "configs/compute/qtr_c90_exact_requal_001_job.json",
+                "reference/qtr_c90_exact_requal_001.py",
+                "colab/qtr_c90_exact_remote_job.py",
+                "scripts/run_qtr_c90_exact_requal_colab.sh",
+                "tests/test_qtr_c90_exact_requal_001.py",
+                "work-packages/QTR-C90-EXACT-REQUAL-001.md",
+                ".github/workflows/qtr-c90-exact-requal-001.yml"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "static-phase-m"
+          ],
+          "path": ".github/workflows/qtr-c90-exact-requal-001.yml"
+        },
+        {
+          "blob": "bc1aac888f28deed61149170b33ebeaf5b047bd0",
+          "command_count": 4,
+          "commands": [
+            {
+              "command": "test \"$(git rev-parse HEAD)\" = \"$EXPECTED_HEAD\"\n",
+              "job": "calibration-static"
+            },
+            {
+              "command": "python -m unittest tests.test_qtr_c90_resource_envelope_001 -v\n",
+              "job": "calibration-static"
+            },
+            {
+              "command": "python reference/qtr_c90_resource_envelope_001.py static \\\n  --output \"$RUNNER_TEMP/QTR-C90-RESOURCE-ENVELOPE-001-static.json\"\n",
+              "job": "calibration-static"
+            },
+            {
+              "command": "python - \"$RUNNER_TEMP/QTR-C90-RESOURCE-ENVELOPE-001-static.json\" \"$EXPECTED_HEAD\" <<'PY'\nimport json,sys\npath,head=sys.argv[1:]\nr=json.load(open(path,encoding=\"utf-8\"))\nassert r[\"source_commit\"]==head\nassert r[\"status\"]==\"candidate_executable_not_promoted\"\nassert r[\"materialization_performed\"] is False\nassert r[\"physical_probe_performed\"] is False",
+              "job": "calibration-static"
+            }
+          ],
+          "events": {
+            "pull_request": {
+              "paths": [
+                "registry/qtr-c90-resource-envelope-001-manifest.json",
+                "registry/qtr-c90-resource-envelope-001.json",
+                "reference/qtr_c90_resource_envelope_001.py",
+                "colab/qtr_c90_resource_envelope_remote_job.py",
+                "configs/compute/qtr_c90_resource_envelope_001_job.json",
+                "scripts/run_qtr_c90_resource_envelope_colab.sh",
+                "tests/test_qtr_c90_resource_envelope_001.py",
+                "work-packages/QTR-C90-RESOURCE-ENVELOPE-001.md",
+                ".github/workflows/qtr-c90-resource-envelope-001.yml"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "calibration-static"
+          ],
+          "path": ".github/workflows/qtr-c90-resource-envelope-001.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 3,
+        "tests": 1,
+        "workflows": 4
+      },
+      "governance_sources": [
+        {
+          "blob": "7606652270620ccaed2db86204f7df8da1e3d0cf",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        },
+        {
+          "blob": "ebb2e6c470748bb58daed0eff0b9af1e553c9c1a",
+          "path": "governance/source/TC-BOOTSTRAP-CLOSE-001.json"
+        },
+        {
+          "blob": "154c00678696442ecd9e60ed5cd44d954434b6a4",
+          "path": "governance/trove_curata_repo_acceptance.json"
+        }
+      ],
+      "head": "2c5661f22e3b2d1ebf7ed0224f7cca9472b43068",
+      "private": false,
+      "repository": "grandchallenge/TROVE-CURATA",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [
+        {
+          "blob": "a84aa188f1d0897e73f0f769920d18ab6f3604aa",
+          "path": "tests/test_bootstrap_acceptance.py"
+        }
+      ],
+      "workflows": [
+        {
+          "blob": "a518a592ece0d2d4134564637920b401288c3277",
+          "command_count": 4,
+          "commands": [
+            {
+              "command": "python -m pip install -r requirements-ci.txt",
+              "job": "acceptance"
+            },
+            {
+              "command": "python -m compileall -q scripts tests",
+              "job": "acceptance"
+            },
+            {
+              "command": "python -m unittest discover -s tests -v",
+              "job": "acceptance"
+            },
+            {
+              "command": "python scripts/validate_bootstrap_acceptance.py governance/trove_curata_repo_acceptance.json > /tmp/accept-a.json\npython scripts/validate_bootstrap_acceptance.py governance/trove_curata_repo_acceptance.json > /tmp/accept-b.json\ncmp /tmp/accept-a.json /tmp/accept-b.json\n",
+              "job": "acceptance"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "acceptance"
+          ],
+          "path": ".github/workflows/ci.yml"
+        },
+        {
+          "blob": "89e236c69121c187c8c3e2d5e3b29633b53a9c33",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "17 8 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "blob": "d07c22c65e875f1314c59ac9dc31d6972d0bb842",
+          "command_count": 7,
+          "commands": [
+            {
+              "command": "python -m pip install -r \"$SNAPSHOT/requirements-trove-curata.txt\" -r \"$SNAPSHOT/requirements-trove-curata-pii.txt\" -r \"$SNAPSHOT/requirements-trove-curata-transform.txt\" -r \"$SNAPSHOT/requirements-trove-curata-duplicate.txt\"",
+              "job": "replay"
+            },
+            {
+              "command": "python scripts/validate_bootstrap_acceptance.py governance/trove_curata_repo_acceptance.json > /tmp/acceptance.json",
+              "job": "replay"
+            },
+            {
+              "command": "python -m compileall -q \"$SNAPSHOT/src\" \"$SNAPSHOT/tests\"",
+              "job": "replay"
+            },
+            {
+              "command": "python -m unittest discover -s \"$SNAPSHOT/tests\" -p \"test_trove_curata*.py\" -v",
+              "job": "replay"
+            },
+            {
+              "command": "python -m grand_intellect.trove_curata_fixture --manifest \"$TC001\" --output /tmp/tc001.json\npython -m grand_intellect.trove_curata_pii_fixture --manifest \"$TC002\" --output /tmp/tc002.json\npython -m grand_intellect.trove_curata_transform_fixture --manifest \"$TC003\" --output /tmp/tc003.json\npython -m grand_intellect.trove_curata_duplicate_fixture --m",
+              "job": "replay"
+            },
+            {
+              "command": "python -m grand_intellect.trove_curata_quality_fixture --manifest \"$TC005\" --output /tmp/tc005-a.json\npython -m grand_intellect.trove_curata_quality_fixture --manifest \"$TC005\" --output /tmp/tc005-b.json\ncmp /tmp/tc005-a.json /tmp/tc005-b.json\n",
+              "job": "replay"
+            },
+            {
+              "command": "echo \"796da735806ecdeb84e83481c9b0dfed187b1fc0d68054744284839e6180e091  /tmp/tc001.json\" | sha256sum -c -\necho \"e31946855b4c3f67e43277586adce337716642e5a9b6bd37244b63b678ca1d58  /tmp/tc002.json\" | sha256sum -c -\necho \"f3b52e9ffe77f27bf37355f31a441e7096c9bf2b4684db4aae5b440580aac4d5  /tmp/tc003.json\" | sha256sum -c -\necho \"e54958a4e09b536795dde27148",
+              "job": "replay"
+            }
+          ],
+          "events": {
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "job_ids": [
+            "replay"
+          ],
+          "path": ".github/workflows/bootstrap-replay.yml"
+        }
+      ]
+    },
+    {
+      "counts": {
+        "governance": 1,
+        "tests": 0,
+        "workflows": 6
+      },
+      "governance_sources": [
+        {
+          "blob": "0d0e49c0ae459c8d09b4ec7dfa053e5d0c19bf88",
+          "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+        }
+      ],
+      "head": "4934497e00858680775a65f544192e61e1b1b3cb",
+      "private": false,
+      "repository": "grandchallenge/upload-pages-artifact",
+      "status": "PINNED_SOURCE_ONLY_NOT_ENFORCEMENT",
+      "test_sources": [],
+      "workflows": [
+        {
+          "blob": "8c33d6385eccebf7e0d35c8510aa4cf2c404023b",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "merge_group": "",
+            "pull_request": "",
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "schedule": [
+              {
+                "cron": "17 8 * * 1"
+              }
+            ]
+          },
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "blob": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "command_count": 5,
+          "commands": [
+            {
+              "command": "python - <<'PY'\nimport io\nimport json\nimport os\nimport pathlib\nimport tarfile\nimport urllib.request\n\nevent = json.loads(pathlib.Path(os.environ[\"GITHUB_EVENT_PATH\"]).read_text(encoding=\"utf-8\"))\npull = event[\"pull_request\"]\nbase_repository = pull[\"base\"][\"repo\"][\"full_name\"]\nmerge_ref = f\"refs/pull/{pull['number']}/merge\"\nsnapshots = {\n    \"protect",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "cmp --silent \\\n  protected-base/.github/workflows/ghos-routing-enforcement-v2.yml \\\n  candidate/.github/workflows/ghos-routing-enforcement-v2.yml || {\n    echo \"GH-OS routing enforcement workflow may not be changed through an ordinary candidate PR\"\n    exit 1\n  }\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "mkdir -p policy-runtime/scripts\ncurl --fail --location --retry 3 \\\n  https://raw.githubusercontent.com/grandchallenge/.github/ef1cce6029233a68cf46063cea2384772fcae613/scripts/ghos_execution_routing_gate.py \\\n  --output policy-runtime/scripts/ghos_execution_routing_gate.py\necho \"fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  polic",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -m pip install --disable-pip-version-check --no-deps --only-binary=:all: PyYAML==6.0.3\n",
+              "job": "routing-enforcement"
+            },
+            {
+              "command": "python -c 'import runpy,sys; runpy.run_path(sys.argv.pop(1), run_name=\"__main__\")' policy-runtime/scripts/ghos_execution_routing_gate.py \\\n  --root candidate \\\n  --repository \"$GITHUB_REPOSITORY\"\n",
+              "job": "routing-enforcement"
+            }
+          ],
+          "events": {
+            "pull_request_target": {
+              "types": [
+                "opened",
+                "synchronize",
+                "reopened",
+                "ready_for_review"
+              ]
+            }
+          },
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "blob": "ebfa0d9e0b52b1e0be9bcf517d5500fdb1af7d8a",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "push": {
+              "branches": [
+                "main"
+              ]
+            }
+          },
+          "job_ids": [
+            "draft-release"
+          ],
+          "path": ".github/workflows/draft-release.yml"
+        },
+        {
+          "blob": "51ec4f778c5387392a511d593168269b4908daa0",
+          "command_count": 0,
+          "commands": [],
+          "events": {
+            "release": {
+              "types": [
+                "published"
+              ]
+            }
+          },
+          "job_ids": [
+            "publish"
+          ],
+          "path": ".github/workflows/publish-immutable-actions.yml"
+        }
+      ]
+    }
+  ],
+  "record_type": "GCL_PAAR_PINNED_SOURCE_MAP/1",
+  "scope_sha256": "3ea5671a638ebe1754ff6b16ae6abbcb11cc6ff4a1587d9236b4c19c815a77f0",
+  "semantic_assurance": false,
+  "source_count": 14
+}
