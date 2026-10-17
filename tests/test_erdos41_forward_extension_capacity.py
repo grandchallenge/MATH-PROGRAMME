@@ -191,6 +191,30 @@ def three_layer_interval_hall(p,d,t):
     return tuple(sizes)
 
 
+def dual_signed_code_certificate(p,t,R):
+    """Exact survivor-graph and reciprocal pair-sum difference constraints."""
+    assert is_b3(p)
+    qp=pair_sums(p)
+    qt=pair_sums(t)
+    forbidden_t=shadow(p)
+    V=set(range(min(p),R+1))-forbidden_t
+    delta_qp={a-b for a in qp for b in qp}
+    delta_p={a-b for a in p for b in p}
+    delta_t={a-b for a in t for b in t}
+    delta_qt={a-b for a in qt for b in qt}
+    return (is_b3(t) and set(t).issubset(V)
+            and not ((delta_t & delta_qp)-{0})
+            and not ((delta_qt & delta_p)-{0})
+            and not (set(p)&shadow(t)))
+
+
+def graph_survivors(p,R):
+    V=set(range(min(p),R+1))-shadow(p)
+    q=pair_sums(p)
+    diffs={a-b for a in q for b in q}
+    return V,diffs
+
+
 class ForwardShadowCapacityTests(unittest.TestCase):
     def test_actual_b3_fixture_and_shadow_formula(self):
         self.assertTrue(is_b3(A))
@@ -537,6 +561,48 @@ class ForwardShadowCapacityTests(unittest.TestCase):
         h=three_layer_interval_hall(p,d,t)
         self.assertTrue(all(x<=4*14+1 for x in h))
         self.assertTrue(any(x<4*14+1 for x in h))
+
+
+    def test_dual_graph_and_reciprocal_conditions_are_exact(self):
+        from itertools import combinations
+        p=[1,2,5,14];R=14;y=100
+        checked=0
+        for k in range(R+1):
+            for t in combinations(range(1,R+1),k):
+                dual=dual_signed_code_certificate(p,t,R)
+                _,anchored=reflected_signed_word_certificate(p,t)
+                self.assertEqual(dual,anchored)
+                self.assertEqual(dual,is_b3(p+[y]+[2*y-x for x in t]))
+                checked+=1
+        self.assertEqual(checked,1<<R)
+        V,diffs=graph_survivors(p,R)
+        self.assertEqual(V,{7,12})
+        self.assertTrue(all(t-u in diffs
+                            for t,u in combinations(sorted(V),2)))
+
+    def test_real_optimized_batch_loss_after_two_middle_anchors(self):
+        from itertools import combinations
+        p=[1,2,5];R=14;y=100;d=[0,11]
+        middle=[y+x for x in d]
+        self.assertTrue(is_b3(p+middle))
+        J=list(range(2*y-R,2*y-min(p)+1))
+        before=capacity(p,J)
+        after=capacity(p+middle,J)
+        self.assertEqual((len(before),len(after)),(2,1))
+        self.assertTrue(is_b3(p+[2*y-1,2*y-10]))
+        survivors={
+            t for t in range(1,R+1)
+            if is_b3(p+middle+[2*y-t])
+        }
+        self.assertEqual(survivors,{7,10,11,14})
+        qp=pair_sums(p)
+        diffs={a-b for a in qp for b in qp}
+        # A visible 4-clique proves no survivor pair is jointly legal
+        # even if the optimizer changes their locations.
+        self.assertTrue(all(t-u in diffs
+                            for t,u in combinations(sorted(survivors),2)))
+        for t,u in combinations(sorted(survivors),2):
+            self.assertFalse(is_b3(p+middle+[2*y-t,2*y-u]))
 
 
 if __name__=="__main__":
