@@ -80,3 +80,31 @@ Promote a new receipt/version requiring platform witness metadata only
 after a real positive replay and source-side independent review. Do not
 silently broaden existing V2 acceptance or fabricate historical execution
 attestations. GCL-PAAR-001 and its estate-wide A/B/D/E audits remain open.
+
+## V3 protected source and separately governed receipt — Pilot
+
+INTELLECT #126 introduces source PR #127 with the original, real GitHub-hosted
+run #38988609732 witness and a V3 source dossier. MATH-PROGRAMME's
+`governance/assurance/GCL-PAAR-001/paar_v3_origin_consumer.py` is a **new opt-in PROTECTION-origin verifier**.
+It does not change older V1/V2 receipt acceptance. The V3 success claim is
+restricted to the *later GitHub-hosted execution*; original October 15 CHAD
+execution origin remains UNATTESTED.
+
+A positive V3 claim requires **all** of the following: the independently
+reviewed and merged INTELLECT source PR #127 exact head; real original
+run-scoped witness/dossier bytes introduced by that source PR; a different,
+separately merged and independently approved INTELLECT V3 receipt PR that
+introduces its own exact receipt blob; current protected INTELLECT main and
+stable Git blobs; independent download of the original GitHub Actions
+artifact; and authenticated successful original run/job/step and source
+manifest readback. Review and production platform evidence are independent
+requirements. No local output hash alone is sufficient.
+
+Production invocation, **only after** a genuine protected V3 receipt PR exists:
+`python3 governance/assurance/GCL-PAAR-001/paar_v3_origin_consumer.py --receipt-pr <actual-receipt-pr-number>`.
+An absent source, missing native approval, unmerged receipt, expired artifact,
+blob/content drift or failed hosted run aborts the check. Mock-positive unit
+tests do **not** certify that a real V3 receipt exists. PR #127 and its
+subsequent receipt must be protected-admitted before a real live end-to-end
+V3 PASS can be asserted. Preserve the `original_chad_execution_attested=false`
+limit permanently until genuine contemporaneous evidence is recovered.
