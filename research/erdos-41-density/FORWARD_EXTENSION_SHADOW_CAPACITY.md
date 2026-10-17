@@ -598,7 +598,7 @@ Each selected actual triple has one unique unordered bin-index pattern and its s
 
 ### A decisive negative test for count-only multiscale packing
 
-The exact coarse index-sum inequalities are **still not enough**, by themselves, to force the finite-window density dip. The following theorem gives explicit critical-density *integer occupancy profiles* meeting **all** of them at arbitrarily many coarse checkpoints. These are **not asserted to be realizable by any B3 set**.
+The exact coarse index-sum inequalities are **still not enough**, by themselves, to force the finite-window density dip. The following theorem gives explicit critical-density *integer occupancy profiles* meeting **all** of them at arbitrarily many coarse checkpoints. These are **not asserted to be realizable by any B3 set**. Each vector satisfies the scalar constraints at **one chosen block width** L; consistency across different coarse-grainings is not claimed.
 
 For an arbitrary integer M>=1, put
 
@@ -648,7 +648,7 @@ $
 
 for L>=8. The last inequality holds because L=(20M)^3>=8000. QED.
 
-**Interpretation.** At arbitrarily long but finite collections of coarse checkpoints, a numerical occupancy profile can remain at positive normalized critical density while respecting *every one* of the cubic bin-index sum-packing constraints. This rules out proving Erdős #41 from these **cardinality-only** inequalities plus prefix counts, without an additional position-sensitive arithmetic compatibility theorem. The profile is a hostile **scalar relaxation**, not an actual B3 construction; it does not disprove the conjecture or the exact seven-layer and reciprocal shadow conditions.
+**Interpretation.** At arbitrarily long but finite collections of coarse checkpoints, a numerical occupancy profile can remain at positive normalized critical density while respecting *every one* of the cubic bin-index sum-packing constraints **at the selected resolution**. Thus the individual coarse-resolution count inequalities and their own prefix constraints do not force a uniform density dip. A proof combining **several compatible coarse resolutions simultaneously** might be stronger; this construction does not rule it out. Some position-sensitive arithmetic compatibility theorem or a genuinely cross-resolution counting principle remains necessary. The profile is a hostile **scalar relaxation**, not an actual B3 construction; it does not disprove the conjecture or the exact seven-layer and reciprocal shadow conditions.
 
 This is why the preferred Stage B object remains **true future extension capacity and reciprocal signed-code compatibility**, rather than scalar block counts or unowned multiscale sums.
 
