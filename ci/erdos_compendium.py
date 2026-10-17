@@ -21,6 +21,7 @@ RENDER_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_RENDER_AMENDME
 STATUS_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_STATUS_AMENDMENTS.json"
 EC005_TYPOGRAPHY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_EC005.json"
 LEGACY25_TYPOGRAPHY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_TYPOGRAPHY_AMENDMENTS_LEGACY25.json"
+FOUR_DISPLAY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_DISPLAY_MATH_AMENDMENTS_FOUR.json"
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
@@ -327,6 +328,63 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                            "legacy25_browser_receipt": doc["browser_receipt"]}
         if amended != expected_ids:
             raise ValueError("Incomplete legacy25 typography correction")
+    # A new typography-only correction layer applies AFTER all previous
+    # protected admissions, rendering repairs and status amendments.
+    # The historical protected digest remains immutable.
+    if Path(path).resolve() == ACCEPTANCE.resolve() and FOUR_DISPLAY_AMENDMENTS.exists():
+        doc = json.loads(FOUR_DISPLAY_AMENDMENTS.read_text(encoding="utf-8"))
+        fields = {"record_type", "revision_id", "scope", "source_issue",
+                  "protected_patch", "browser_receipt", "base_main_sha", "entries"}
+        source_url = "https://github.com/grandchallenge/MATH-PROGRAMME/"
+        wanted = {665, 669, 776, 777}
+        if (not isinstance(doc, dict) or set(doc) != fields
+                or doc["record_type"] != "ERDOS_COMPENDIUM_ADMITTED_DISPLAY_MATH_AMENDMENTS/1"
+                or doc["revision_id"] != "EC-FOUR-DISPLAY-MATH-20261016"
+                or doc["scope"] != "DISPLAY_DELIMITER_WHITESPACE_ONLY_NO_MATHEMATICAL_CERTIFICATION"
+                or doc["source_issue"] != source_url + "issues/2698"
+                or doc["protected_patch"] != source_url + "pull/2715"
+                or doc["browser_receipt"] != source_url + "issues/2698#issuecomment-6227245766"
+                or doc["base_main_sha"] != "49d768ed15b2ab77742c34737e172ed53d1ff2db"
+                or not isinstance(doc["entries"], list)
+                or len(doc["entries"]) != 4):
+            raise ValueError("Invalid four-display rendering amendment authority")
+        required = {"problem_id", "batch_id", "source_check", "previous_sha256",
+                    "corrected_sha256", "previous_raw_sha256", "corrected_raw_sha256",
+                    "nonwhitespace_sha256"}
+        seen = set()
+        for row in doc["entries"]:
+            if not isinstance(row, dict) or set(row) != required:
+                raise ValueError("Invalid four-display rendering amendment schema")
+            n = row["problem_id"]
+            src = EDITORIAL / f"{n:04d}.md" if type(n) is int else None
+            if (type(n) is not int or n not in wanted or n in seen
+                    or n not in accepted or src is None or not src.is_file()
+                    or row["batch_id"] != accepted[n]["batch_id"]
+                    or row["source_check"] != accepted[n]["source_check"]
+                    or row["previous_sha256"] != accepted[n]["source_sha256"]
+                    or any(not isinstance(row[key], str)
+                           or not re.fullmatch(r"[a-f0-9]{64}", row[key])
+                           for key in ("previous_sha256", "corrected_sha256",
+                                       "previous_raw_sha256", "corrected_raw_sha256",
+                                       "nonwhitespace_sha256"))
+                    or row["previous_sha256"] == row["corrected_sha256"]
+                    or row["previous_raw_sha256"] == row["corrected_raw_sha256"]
+                    or hashlib.sha256(src.read_bytes()).hexdigest()
+                       != row["corrected_raw_sha256"]
+                    or hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest()
+                       != row["corrected_sha256"]
+                    or hashlib.sha256(
+                        "".join(src.read_text(encoding="utf-8").split()).encode("utf-8")
+                    ).hexdigest() != row["nonwhitespace_sha256"]):
+                raise ValueError(f"Invalid or stale four-display correction #{n}")
+            seen.add(n)
+            accepted[n] = {**accepted[n],
+                           "source_sha256": row["corrected_sha256"],
+                           "four_display_amendment_id": doc["revision_id"],
+                           "four_display_authority": doc["protected_patch"],
+                           "four_display_browser_receipt": doc["browser_receipt"]}
+        if seen != wanted:
+            raise ValueError("Incomplete four-display typography correction")
     return accepted
 
 
