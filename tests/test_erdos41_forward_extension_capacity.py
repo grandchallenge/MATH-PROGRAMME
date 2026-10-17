@@ -195,5 +195,26 @@ class ForwardShadowCapacityTests(unittest.TestCase):
                         len(p)*len(y)*(len(y)+1)//2)
 
 
+    def test_fixed_shape_blocked_translation_tax(self):
+        for p,y in (([1,2,5],[14]),([1,2,5],[61,70,81])):
+            H=forward_shadow(p,y)
+            for template in ([0],[0,1],[0,1,4],[0,1,4,13]):
+                with self.subTest(p=p,y=y,x=template):
+                    self.assertTrue(is_b3(template))
+                    shadow_template=shadow(template)
+                    shifts={h-s for h in H for s in shadow_template}
+                    bound=len(H)+f(len(template))-1
+                    self.assertGreaterEqual(len(shifts),bound)
+                    full_span=max(H)-min(H)+(
+                        max(shadow_template)-min(shadow_template))+1
+                    self.assertLessEqual(len(shifts),full_span)
+                    # For every shift for which all three blocks are
+                    # genuinely disjoint, the full union cannot be B3.
+                    for t in sorted(shifts)[:15]:
+                        x=[z+t for z in template]
+                        if set(x).isdisjoint(set(p+y)):
+                            self.assertFalse(is_b3(p+y+x))
+
+
 if __name__=="__main__":
     unittest.main()
