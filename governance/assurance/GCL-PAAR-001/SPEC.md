@@ -21,7 +21,7 @@ PAAR-A: Inventory every active GCL assertion producer, consumer, authority, poli
 PAAR-B: Independently sample end-to-end lifecycles (unclaimed work, successful return, revise/rejection, protected admission, mathematical certification boundary, public status). Reconcile live GitHub Project/Issue state to protected ledgers and deployed representations.
 PAAR-C: Inject *in-memory or sandbox-only* adversarial negatives against EXISTING validators: stale exact heads, signature/source hash drift, duplicate returns, forged independent review, changed theorem scope, unverifiable computation, expired receipt and contradictory mirror. No production corruption.
 PAAR-D: Maintain difference register with exact reproduction, expected authority, real observed output, impact, owner and minimal correction. Govern any substantive fixes as separate protected PRs with regression tests. Avoid new machinery unless a reproduced enforcement gap cannot be closed with existing controls.
-PAAR-E: Produce independently reviewed exact-source assurance matrix, attest unresolved exceptions, and specify replay cadence through EXISTING scheduled controllers.
+PAAR-E: GCL accountable assurance agents independently assess the exact-source assurance matrix, record bounded exceptions, and specify replay cadence through EXISTING scheduled controllers. Separate publication certification applies only when a claim is submitted for certification.
 
 ## Required specialist outputs
 
@@ -30,11 +30,11 @@ PAAR-E: Produce independently reviewed exact-source assurance matrix, attest unr
 - Reproducible positive and negative tests with raw logs, code, toolchain, input, expected output hashes and limits.
 - Distinct PASS / PARTIAL / UNKNOWN / FAIL for each control and observed claim; never convert inaccessible evidence into a pass.
 - Scoped minimal remediation work items and protected PRs only when justified by reproduced nonconformance.
-- Final independently produced reviewer dossier and exact-head protected assurance receipt.
+- Final accountable GCL internal audit dossier and exact-head protected assurance receipt, with external certification review only when a publication claim requires it.
 
 ## Acceptance and authority boundary
 
-The workstream may be marked CLOSED only after the enumerated active estate is covered or a formally approved scope/exclusion is explicit; all material control mappings are evidenced at protected revisions; negative tests exercise genuine validators; discrepancies are corrected or retained as identified blocking exceptions; authority/mirror states reconcile; an independent nonauthor specialist reviews the audit; and the final receipt is protected and reproducible.
+The workstream may be marked CLOSED only after the enumerated active estate is covered or a formally approved scope/exclusion is explicit; all material control mappings are evidenced at protected revisions; negative tests exercise genuine validators; discrepancies are corrected or retained as identified blocking exceptions; authority/mirror states reconcile; GCL accountable independent audit roles review the factual evidence; and the final receipt is protected and reproducible. A second external independent integrity reviewer is not a general prerequisite; publishing certification has its own review rules.
 
 This is NOT a claim that GCL governance needs rewriting. It creates no certification authority, no source or worker status transition, no new credentials, and no V2 admission. Unfinished volunteer work remains truthfully AVAILABLE.
 
