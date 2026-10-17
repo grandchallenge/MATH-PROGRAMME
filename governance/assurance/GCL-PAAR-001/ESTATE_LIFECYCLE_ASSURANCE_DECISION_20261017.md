@@ -41,3 +41,11 @@ A protected tree, passing CI, a merged pull request, a logged nonmerge, or a rea
 - Keep GCL-wide integrity certified = false and existing parent #2705 OPEN until all missing controls are actually accepted through independent protected governance. No retrospective CHAD attestations and no new generic remediation programmes.
 
 **Independent reviewer decision requested:** Are the factual, scoped observations reproducible? What precise negative-path, publication, or private-case evidence is still missing before a certifying estate-wide final receipt could issue? The review must mark unknowns UNKNOWN or REVISE, not convert source trees or web reachability into global PASS.
+
+## Supplemental authenticated failure and deployment readback
+
+A follow-up authenticated GitHub check-run retrieval (including pagination for repositories with more than one hundred jobs) found **ten** sampled closed/unmerged pull requests with at least one actual failed CI check. Their exact source heads, failing check-run IDs and names are in ESTATE_ADVERSE_DEPLOYMENTS_20261017.json. This is stronger than the simple closed/unmerged signal, but is still not proof of the causal reason for the PR's closure or of the domain-specific correctness of the rejection.
+
+For both configured Pages publishers (MATH-PROGRAMME and AETHER), original GitHub deployment status APIs recorded a successful Pages deployment, with its Git SHA verified as the current protected main or a genuine protected ancestor and the HTTPS site returning 200. This establishes the *deployment provenance path* on a sampled source commit. It still does not prove all page contents faithfully display the correct accepted/revised claim or LaTeX. Those semantics remain PAAR-B/E unknown.
+
+The supplemental record is intentionally independent of the final-certification boundary: rejection_causality_certified=false, document_parity_certified=false, and gcl_wide_assurance_certified=false. The sole remaining parent is still #2705; no separate remediation umbrella is warranted.
