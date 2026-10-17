@@ -428,5 +428,34 @@ class TriadicAvoidanceTests(unittest.TestCase):
                 self.assertGreaterEqual(Bcube,Fraction(len(Y)*len(Z))**3)
 
 
+    def test_fixed_modulus_panel_escape_by_genuine_b3_dilation(self):
+        # Concrete finite universal no-go for any fixed residue panel.
+        # Scaling preserves B3 and zero complete correlation but dilutes
+        # normalized finite density by k^(-1/3).
+        u=A[:8]
+        w=A[8:]
+        Y,Z=w[:2],w[2:4]
+        self.assertTrue(is_b3(u+w))
+        q=len(pair_sums(u))
+        Q0=12
+        H=(max(Y)-min(Y))+(max(Z)-min(Z))
+        k=(Q0*(q*(q-1)//2+1)-1+H-1)//H
+        self.assertGreaterEqual(k*H+1,Q0*(q*(q-1)//2+1))
+        scaled_u=[k*x for x in u]
+        scaled_w=[k*x for x in w]
+        scaled_Y=[k*x for x in Y]
+        scaled_Z=[k*x for x in Z]
+        self.assertTrue(is_b3(scaled_u+scaled_w))
+        r=half_difference_weights(scaled_u,max(scaled_w)-min(scaled_w))
+        self.assertEqual(weighted_correlation(r,scaled_w),0)
+        for Q in range(1,Q0+1):
+            with self.subTest(Q=Q):
+                M,x,Bcube,beta,E=composite_residue_budget(
+                    scaled_u,scaled_Y,scaled_Z,Q,1)
+                self.assertEqual(M,0)
+                self.assertEqual(E,set(range(Q)))
+                self.assertEqual(beta,Q*Q)
+
+
 if __name__ == "__main__":
     unittest.main()
