@@ -240,6 +240,72 @@ Indeed, Theorem 18.7 applies to $S_\infty$, and the universal free-measure prope
 
 **Limits of the result.** The surjectivity (18.17) is for sections on profinite test objects, not a claim that the epimorphism $\mathsf P\to\mathsf Q$ admits a global **liquid-linear section** $\mathsf Q\to\mathsf P$. The non-split extension (17.2) for source $\mathsf Q$ remains valid. The ghost plot in (18.16) likewise remains nonzero but has a global lift. Equation (18.19) does not settle the infinitely coordinate-visible scalar Ext channel or the non-scalar part of the genuine test-function output.
 
+### Theorem 18.9 — eliminate phantoms for the full test-function output
+
+The classical Valdivia–Vogt sequence-space representation of the **LF** space of test functions gives a (noncanonical) continuous linear topological isomorphism
+
+$
+\mathcal D(\mathbb R)\cong
+\bigoplus_{n\ge1}^{\mathrm{LF}}s.
+\tag{18.20}
+$
+
+See Valdivia–Vogt and Christian Bargetz, *Commutativity of the Valdivia–Vogt table of representations of function spaces*, Math. Nachr. 287 (2014), 10–22, DOI 10.1002/mana.201200258. For compact profinite plots, strict LF regularity identifies the condensed realization of the right-hand side with the liquid coproduct of the Fréchet realizations. Write $B_n=\underline s$ and fix one such isomorphism
+
+$
+G=\underline{\mathcal D(\mathbb R)}
+\cong\bigoplus_n B_n.
+\tag{18.21}
+$
+
+Define $P_G=\prod_n B_n$ and $Q_G=P_G/G$ in the liquid abelian category. The proof of Theorem 18.7 carries over **coordinate by coordinate**: given a profinite cover $T\to K$ and a local section into $P_G$, the descent defect lies in the finite-direct-sum subsheaf $G(T\times_K T)$ and hence vanishes outside a single finite set of output summands. Every remaining component is a continuous map $T\to s$ constant on the fibers and descends continuously to $K$ because $s$ is Hausdorff. Consequently
+
+$
+P_G(K)\twoheadrightarrow Q_G(K)
+\quad\text{for every profinite }K.
+\tag{18.22}
+$
+
+For every weight stage $T_r$ from (18.1), the free-measure retract (18.8) and (18.22) imply that every $T_r\to Q_G$ lifts to $P_G$.
+
+For fixed $r,n$, the group $\mathrm{Hom}(T_r,B_n)$ embeds in $W_n=s^{\mathbb N}$ by evaluating at the finitely supported coordinate vectors. To see injectivity, compose a candidate morphism with every continuous scalar functional on the Fréchet target $s$. Its scalar composite is determined by these coordinate vectors by (18.10); hence vanishing on them forces every scalar composite, and then the morphism itself, to vanish. The inclusions of the scaled measure stages preserve these common coordinate vectors, so the groups $\mathrm{Hom}(T_r,B_n)$ form decreasing linear subspaces of $W_n$.
+
+Because each $T_r$ is compact, one has
+
+$
+\mathrm{Hom}(T_r,G)
+\cong\bigoplus_n\mathrm{Hom}(T_r,B_n).
+$
+
+Apply Lemma 18.1 to these nested subspaces and then the derived mapping edge (18.13), now for target $G$. Any class of $\mathrm{Ext}^1(\underline s,G)$ whose restriction to all $T_r$ vanishes therefore comes from **finitely many** $B_n$ summands.
+
+**Conclusion (phantom-free full output).** The map
+
+$
+\rho_G:
+\mathrm{Ext}^1_{\mathcal A_p}(\underline s,G)
+\longrightarrow
+\prod_{n\ge1}\mathrm{Ext}^1_{\mathcal A_p}(\underline s,B_n)
+\tag{18.23}
+$
+
+is **injective**. Indeed, if $\rho_G(\xi)=0$, exactness of $0\to G\to P_G\to Q_G\to0$ gives $\xi=\delta(f)$ for some $f:\underline s\to Q_G$. The sectionwise lift (18.22) makes every restriction $\delta(f)|_{T_r}$ vanish. The preceding finite-support lemma forces $\xi$ into a finite $B_n$ prefix. But the finite prefix embeds into $P_G$ with a coordinate retraction, so its Ext¹ class must be zero when $\rho_G(\xi)=0$. Thus $\xi=0$.
+
+**Exact residual for the original programme.** Under (18.21), a finite sum of output components maps into some compact-support stage $G_b$: the domain of that finite-sum inclusion is a Fréchet space, so the fixed-source LF factorization theorem LFO-013 gives a common support cutoff. Conversely the image of each actual compact-support Fréchet stage $G_b$ in the LF direct sum (18.21) lies in some finite sum of components by the same factorization. Hence the two filtrations are cofinal for their effects on $\mathrm{Ext}^1(\underline s,-)$.
+
+Because (18.23) is injective, a liquid Ext¹ class comes from a finite output support stage **if and only if** only finitely many of its component classes $\rho_G(\xi)_n$ are nonzero. More exactly,
+
+$
+\mathrm{coker}(\theta^1)\cong
+\frac{\mathrm{im}(\rho_G)}
+{\bigoplus_n\mathrm{Ext}^1_{\mathcal A_p}(\underline s,B_n)}.
+\tag{18.24}
+$
+
+The direct sum in the denominator really is a subgroup of the image: finite-summand extension classes can be pushed to $G$ and are detected by their own components.
+
+**The still-open single obstacle:** Is there a genuine liquid Ext¹ class with **infinitely many nonzero** component extension classes in (18.23), or must every realizable family have finite support? Theorem 18.9 excludes **all** phantom or coordinate-invisible mechanisms for the actual fixed-source, full-output problem. It does **not** establish the answer to this remaining realizability question.
+
 ## 4. What the 2026 scalar Ext literature does and does not yield
 
 Grisha Taroyan's [August 2026 MathOverflow argument](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces/514158) establishes, under **ZFC + the Continuum Hypothesis**, a nonzero class in $\mathrm{Ext}^1_{\mathcal A_p}(\underline s,\underline{\mathbb R})$ through a derived inverse limit of the weighted spaces $V_r$. Peter Scholze's [response and comments](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces) support the nature of this argument and caution that unconditional behaviour is subtle. Neither the Continuum Hypothesis nor the Open Colouring Axiom may be silently assumed for EXT-015.
