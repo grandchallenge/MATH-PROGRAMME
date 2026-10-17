@@ -14,6 +14,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import urllib.parse
 from pathlib import Path
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
@@ -95,7 +96,7 @@ def capture(*, api_get, candidate_dir: Path, output_file: Path,
             pr_number: int, candidate_sha: str, material_sha256: str,
             environment: dict[str, str]) -> dict:
     bind = source_binding(api_get, pr_number, candidate_sha, material_sha256)
-    demand(git_head(candidate_dir) == candidate_sha, "checkout not candidate head")
+    demand(git_head(candidate_dir) == environment.get("GITHUB_SHA"), "trusted checkout head mismatch")
     demand(environment.get("GITHUB_ACTIONS") == "true"
            and environment.get("GITHUB_REPOSITORY") == REPOSITORY
            and environment.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
@@ -110,6 +111,19 @@ def capture(*, api_get, candidate_dir: Path, output_file: Path,
     workflow_ref = environment.get("GITHUB_WORKFLOW_REF","")
     demand(workflow_ref == REPOSITORY+"/"+WORKFLOW_PATH+"@refs/heads/main",
            "untrusted workflow definition")
+    current = api_get(f"/repos/{REPOSITORY}/branches/main")
+    demand(current.get("protected") is True and
+           current.get("commit",{}).get("sha") == environment["GITHUB_SHA"],
+           "trusted checkout does not match protected main")
+    manifest = api_get(f"/repos/{REPOSITORY}/pulls/{pr_number}/files?per_page=100")
+    blobs = []
+    for entry in manifest:
+        demand(entry["status"] != "removed", "removed source file not replayable")
+        actual = subprocess.check_output(("git", "rev-parse", "HEAD:"+entry["filename"]),
+                                         cwd=candidate_dir,text=True,timeout=15).strip()
+        demand(actual == entry["sha"], "trusted source blob differs from reviewed candidate")
+        blobs.append({"path":entry["filename"], "sha":actual})
+    blobs.sort(key=lambda x:x["path"])
     child_env = {k: environment[k] for k in ("PATH","HOME","TMPDIR")
                  if k in environment}
     child_env.update({"PYTHONPATH":str(candidate_dir.resolve()),"CI":"true"})
@@ -137,7 +151,7 @@ def capture(*, api_get, candidate_dir: Path, output_file: Path,
                          "stderr":completed.stderr,
                          "selected_sha256":hashlib.sha256(data).hexdigest()})
     proof={"record_type":RECORD_TYPE,"source":bind,
-           "workflow_path":WORKFLOW_PATH,
+           "workflow_path":WORKFLOW_PATH,"protected_source_blobs":blobs,
            "workflow_sha":environment["GITHUB_SHA"],
            "run_id":int(environment["GITHUB_RUN_ID"]),
            "run_attempt":int(environment["GITHUB_RUN_ATTEMPT"]),
@@ -210,6 +224,16 @@ def verify_witness(*, api_get, witness: dict, run_id: int) -> dict:
     binding = source_binding(api_get, source.get("pr_number"),
                              source.get("head_sha"), source.get("material_sha256"))
     demand(source == binding, "artifact source binding drift")
+    manifest = api_get(f"/repos/{REPOSITORY}/pulls/{source['pr_number']}/files?per_page=100")
+    expected = sorted(({"path":e["filename"],"sha":e["sha"]} for e in manifest),
+                      key=lambda x:x["path"])
+    demand(witness.get("protected_source_blobs") == expected,
+           "runner source blob list not source-bound")
+    for entry in expected:
+        path = urllib.parse.quote(entry["path"],safe="/")
+        obj = api_get(f"/repos/{REPOSITORY}/contents/{path}?ref={workflow_sha}")
+        demand(obj.get("sha") == entry["sha"],
+               "protected workflow code differs from exact candidate blob")
     executions = witness.get("executions")
     demand(isinstance(executions,list) and len(executions) == len(ALLOWED_COMMANDS),
            "wrong role-execution count")

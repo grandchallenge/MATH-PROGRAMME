@@ -24,6 +24,7 @@ class OriginWitnessTests(unittest.TestCase):
         self.files=[{"filename":"ci/agent_role_receipt.py",
                      "status":"modified","sha":FILE_SHA}]
         self.material=fingerprint(self.files)
+        self.current_blob=FILE_SHA
         self.subject={"repository":REPOSITORY,"pr_number":2710,
                       "head_sha":SUBJECT_SHA,"material_sha256":self.material}
         self.outputs=[]
@@ -42,6 +43,8 @@ class OriginWitnessTests(unittest.TestCase):
                                  "selected_sha256":hashlib.sha256(
                                      (stderr if stderr else stdout).encode()).hexdigest()})
         self.witness={"record_type":RECORD_TYPE,"source":self.subject,
+                      "protected_source_blobs":[{"path":self.files[0]["filename"],
+                                                 "sha":FILE_SHA}],
                       "workflow_path":WORKFLOW_PATH,"workflow_sha":RUN_SHA,
                       "run_id":RUN_ID,"run_attempt":1,
                       "run_event":"workflow_dispatch",
@@ -79,6 +82,7 @@ class OriginWitnessTests(unittest.TestCase):
               {"total_count":1,"artifacts":[self.artifact]},
           suffix+"/pulls/2710":self.pr,
           suffix+"/pulls/2710/files?per_page=100":self.files,
+          suffix+"/contents/ci/agent_role_receipt.py?ref="+RUN_SHA:{"sha":self.current_blob},
         }
         if path not in data: raise AssertionError("untracked origin endpoint "+path)
         return data[path]
@@ -132,6 +136,14 @@ class OriginWitnessTests(unittest.TestCase):
     def test_artifact_other_run(self):
         self.artifact["workflow_run"]["id"]+=1
         self.reject("artifact missing or expired")
+
+    def test_protected_main_blob_differs_from_reviewed_source(self):
+        self.current_blob="f"*40
+        self.reject("protected workflow code differs")
+
+    def test_fake_source_blob_list(self):
+        self.witness["protected_source_blobs"][0]["sha"]="0"*40
+        self.reject("runner source blob list not source-bound")
 
     def test_output_digest_forgery(self):
         self.outputs[0]["selected_sha256"]="0"*64

@@ -11,7 +11,7 @@ This work package adds a **distinct GitHub-hosted Actions rerun** of the
 three permitted checks, using reviewed code from the protected MATH-PROGRAMME
 `main` branch. The workflow never approves a pull request and never writes
 to a protected repository. The workflow has read-only permissions, executes
-candidate tests with sanitized environment and no retained Git credentials,
+only code from protected main with sanitized environment and no retained Git credentials,
 and uploads a bounded JSON witness from the real runner.
 
 The authenticated GitHub API supplies independent evidence of the run
@@ -39,10 +39,12 @@ replay. Do not claim GCL-wide integrity certification.
    `candidate_sha=b380e583ca2c997c07a4b7f15cbf97728006a79e`,
    `material_sha256=b6b353decee67953b74c984a1c8856c3ea56debbae0599f759564f13bbe214b4`.
 3. A bounded Ubuntu GitHub-hosted runner checks protected workflow SHA,
-   candidate Git head, merged PR metadata, canonical changed-file hashes
-   and exact allowlisted commands. It runs VERIFIER (14 tests),
+   protected main Git head, merged PR metadata, canonical changed-file hashes
+   and exact per-file Git blob equivalence between the reviewed candidate and protected main,
+   then exact allowlisted commands. It runs VERIFIER (14 tests),
    ADVERSARY (36 tests), and REFEREE (offline PAAR replay, bounded only).
-   No arbitrary command is accepted from workflow inputs.
+   No arbitrary command is accepted from workflow inputs, and no user-selected
+   revision is checked out or executed.
 4. Record resulting GitHub run URL, ID, attempt, workflow SHA, artifact ID,
    exact candidate SHA, material digest, roles and result. Run
    `python3 ci/paar_execution_origin.py verify-live --run-id <RUN_ID>`.
