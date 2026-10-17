@@ -25,7 +25,7 @@ $$
 \tag{18.2}
 $$
 
-and the description of scalar morphisms as weighted $c_0$ spaces are worked out in Grisha Taroyan's [August 2026 construction](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces/514158). For the present use, (18.2) can also be checked on every profinite plot: the image is compact in $s$, so the supremum of the absolute value of its $n$th coordinates decreases faster than any polynomial; choosing a positive rapid weight larger than the square root of this supremum bounds the image in one measure stage and gives continuous factorization. The countable-direction property follows by diagonal domination of countably many rapid weights. Neither assertion requires the Continuum Hypothesis.
+and the description of scalar morphisms as weighted $c_0$-type spaces are worked out in Grisha Taroyan's [August 2026 construction](https://mathoverflow.net/questions/510488/operatornameext1s-mathbb-r-in-the-category-of-liquid-vector-spaces/514158). For the present use, (18.2) can also be checked on every profinite plot: the image is compact in $s$, so the supremum of the absolute value of its $n$th coordinates decreases faster than any polynomial; choosing a positive rapid weight larger than the square root of this supremum bounds the image in one measure stage and gives continuous factorization. The countable-direction property follows by diagonal domination of countably many rapid weights. Neither assertion requires the Continuum Hypothesis.
 
 A source precision: the free liquid measure objects $\mathcal M_{<p}(S)$ are **projective when $S$ is extremally disconnected** (Scholze, *Lectures on Analytic Geometry*, Theorem 6.5). The one-point compactification $\mathbb N\cup\{\infty\}$ is not extremally disconnected. **Do not assert its free measure object is projective.** What is needed below is only abelian-category compactness, not projectivity.
 
@@ -64,7 +64,7 @@ The middle inverse system is constant, hence its positive derived inverse limits
 $$
 \varprojlim\nolimits_i^{1}V_i
 \cong
-\operatorname{coker}
+\mathrm{coker}
 \left[
 W\longrightarrow
 \varprojlim_i\bigoplus_n(W_n/V_{i,n})
