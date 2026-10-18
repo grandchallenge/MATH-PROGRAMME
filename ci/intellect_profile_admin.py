@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import time
@@ -169,17 +170,41 @@ def normalize_property_values(rows: Any) -> dict[str, Any]:
 
 
 def writable_ruleset(detail: dict[str, Any], target_name: str) -> dict[str, Any]:
+    """Round-trip every writable field, including GitHub's extra review controls."""
     for field in ("target", "enforcement", "conditions", "rules"):
         if field not in detail:
             raise IntellectProfileAdminError(f"ruleset detail lacks {field}")
     return {
         "name": target_name,
-        "target": detail["target"],
-        "enforcement": detail["enforcement"],
-        "bypass_actors": detail.get("bypass_actors") or [],
-        "conditions": detail["conditions"],
-        "rules": detail["rules"],
+        "target": copy.deepcopy(detail["target"]),
+        "enforcement": copy.deepcopy(detail["enforcement"]),
+        "bypass_actors": copy.deepcopy(detail.get("bypass_actors") or []),
+        "conditions": copy.deepcopy(detail["conditions"]),
+        "rules": copy.deepcopy(detail["rules"]),
     }
+
+
+def target_ruleset_payload(detail: dict[str, Any], contract: dict[str, Any]) -> dict[str, Any]:
+    """Apply only the explicitly admitted, trailing fifth status context."""
+    policy = contract["ruleset"]
+    target = list(policy["required_checks"])
+    if len(target) != 5 or target[-1] != "routing-enforcement":
+        raise IntellectProfileAdminError("unrecognized required-check transition")
+    result = writable_ruleset(detail, policy["target_name"])
+    statuses = [rule for rule in result["rules"] if rule.get("type") == "required_status_checks"]
+    if len(statuses) != 1:
+        raise IntellectProfileAdminError("ambiguous required-status-check rules")
+    params = statuses[0]["parameters"]
+    checks = params["required_status_checks"]
+    contexts = [check.get("context") for check in checks]
+    if not all(isinstance(c, str) for c in contexts) or len(set(contexts)) != len(contexts):
+        raise IntellectProfileAdminError("malformed or duplicated status contexts")
+    if contexts == target:
+        return result
+    if contexts != target[:-1]:
+        raise IntellectProfileAdminError("unexpected required-status-check drift")
+    checks.append({"context": target[-1]})
+    return result
 
 
 def normalize_intellect_ruleset(detail: dict[str, Any]) -> dict[str, Any]:
@@ -195,7 +220,10 @@ def normalize_intellect_ruleset(detail: dict[str, Any]) -> dict[str, Any]:
     return normalized
 
 
-def validate_ruleset(normalized: dict[str, Any], contract: dict[str, Any]) -> None:
+def validate_ruleset(
+    normalized: dict[str, Any], contract: dict[str, Any], *,
+    allow_admitted_prestate: bool = False,
+) -> None:
     expected = contract["ruleset"]
     if normalized.get("name") not in expected["allowed_pre_names"]:
         raise IntellectProfileAdminError("unexpected INTELLECT ruleset name")
@@ -211,8 +239,14 @@ def validate_ruleset(normalized: dict[str, Any], contract: dict[str, Any]) -> No
         "allow_deletions": expected["allow_deletions"],
         "required_linear_history": expected["required_linear_history"],
     }
+    target = expected["required_checks"]
+    observed = normalized.get("required_checks")
+    # Admission explicitly permits four -> five, and only in apply preflight.
+    prestate = (len(target) == 5 and target[-1] == "routing-enforcement"
+                and observed == sorted(target[:-1]))
+    contexts = target[:-1] if allow_admitted_prestate and prestate else target
     current_errors = ruleset_errors(
-        normalized, policy, expected["required_checks"], str(normalized["name"])
+        normalized, policy, contexts, str(normalized["name"])
     )
     if sorted(normalized.get("allowed_merge_methods") or []) != sorted(
         expected["allowed_merge_methods"]
@@ -222,15 +256,10 @@ def validate_ruleset(normalized: dict[str, Any], contract: dict[str, Any]) -> No
         raise IntellectProfileAdminError("; ".join(current_errors))
 
 
-def ruleset_equal_except_name(before: dict[str, Any], after: dict[str, Any]) -> bool:
-    left = dict(before)
-    right = dict(after)
-    left.pop("name", None)
-    right.pop("name", None)
-    return left == right
-
-
-def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, Any]:
+def collect_state(
+    client: GitHubClient, contract: dict[str, Any], *,
+    allow_admitted_prestate: bool = False,
+) -> dict[str, Any]:
     org = contract["organization"]
     repo = contract["repository"]
     installation = normalize_installation_scope(
@@ -252,7 +281,7 @@ def collect_state(client: GitHubClient, contract: dict[str, Any]) -> dict[str, A
     )
     detail = branch_ruleset(client, repo)
     normalized = normalize_intellect_ruleset(detail)
-    validate_ruleset(normalized, contract)
+    validate_ruleset(normalized, contract, allow_admitted_prestate=allow_admitted_prestate)
     return {
         "actor": installation,
         "main_sha": main_sha,
@@ -280,6 +309,13 @@ def apply_contract(
                 **property_update_payload(current, extension["required_value"]),
             }
         )
+
+    # Fail closed before the *first* mutation, including schema edits.
+    validate_ruleset(before["ruleset"], contract, allow_admitted_prestate=True)
+    ruleset_payload = target_ruleset_payload(before["ruleset_detail"], contract)
+    ruleset_id = before["ruleset_detail"].get("id")
+    if not isinstance(ruleset_id, int):
+        raise IntellectProfileAdminError("ruleset detail lacks numeric id")
 
     mutations: list[dict[str, Any]] = []
     client.request(
@@ -317,20 +353,17 @@ def apply_contract(
     )
     time.sleep(MUTATION_PAUSE_SECONDS)
 
-    detail = before["ruleset_detail"]
-    ruleset_id = detail.get("id")
-    if not isinstance(ruleset_id, int):
-        raise IntellectProfileAdminError("ruleset detail lacks numeric id")
     client.request(
         "PUT",
         f"/repos/{repo}/rulesets/{ruleset_id}",
-        writable_ruleset(detail, contract["ruleset"]["target_name"]),
+        ruleset_payload,
     )
     mutations.append(
         {
-            "operation": "rename_ruleset",
+            "operation": "reconcile_ruleset_required_checks_and_name",
             "ruleset_id": ruleset_id,
             "target_name": contract["ruleset"]["target_name"],
+            "required_checks": contract["ruleset"]["required_checks"],
         }
     )
     time.sleep(MUTATION_PAUSE_SECONDS)
@@ -361,9 +394,13 @@ def verify_after(
         )
     if after["ruleset"]["name"] != contract["ruleset"]["target_name"]:
         raise IntellectProfileAdminError("ruleset target name missing after apply")
-    if not ruleset_equal_except_name(before["ruleset"], after["ruleset"]):
+    expected_payload = target_ruleset_payload(before["ruleset_detail"], contract)
+    actual_payload = writable_ruleset(
+        after["ruleset_detail"], contract["ruleset"]["target_name"]
+    )
+    if expected_payload != actual_payload:
         raise IntellectProfileAdminError(
-            "ruleset changed outside the authorized name field"
+            "ruleset changed outside the authorized name and required checks"
         )
     validate_ruleset(after["ruleset"], contract)
 
@@ -433,7 +470,7 @@ def main() -> int:
         client = GitHubClient(
             os.environ.get(args.token_env, ""), contract["api_version"]
         )
-        before = collect_state(client, contract)
+        before = collect_state(client, contract, allow_admitted_prestate=(args.mode == "apply"))
         mutations = (
             apply_contract(client, contract, before) if args.mode == "apply" else []
         )
