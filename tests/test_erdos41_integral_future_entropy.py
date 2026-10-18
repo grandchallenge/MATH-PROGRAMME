@@ -235,5 +235,34 @@ class IntegralFutureEntropyTests(unittest.TestCase):
             self.assertLessEqual(max(p),R)
 
 
+    def test_exact_survivor_clique_obstruction_to_size_four(self):
+        p=[1,2,5,14,33]
+        R=100
+        y=701
+        V,e=survivor_graph_edges(p,R)
+        self.assertEqual(len(V),65)
+        ds=set(pair_diff_profile(p))
+        independent_triples=[
+            t for t in combinations(sorted(V),3)
+            if all(abs(a-b) not in ds for a,b in combinations(t,2))
+        ]
+        self.assertEqual(len(independent_triples),31)
+        # Any independent four-set would contain an independent triple.
+        # Search extensions of ONLY these 31 triples rather than all C(65,4).
+        for t in independent_triples:
+            possible_extensions=[
+                z for z in V if z>t[-1] and
+                all(abs(z-a) not in ds for a in t)
+            ]
+            self.assertFalse(possible_extensions)
+        witness=(7,49,98)
+        self.assertTrue(is_b3(p+[y]+[2*y-t for t in witness]))
+        compatible_triples=sum(
+            is_b3(p+[y]+[2*y-t for t in T])
+            for T in independent_triples
+        )
+        self.assertEqual(compatible_triples,5)
+
+
 if __name__=="__main__":
     unittest.main()
