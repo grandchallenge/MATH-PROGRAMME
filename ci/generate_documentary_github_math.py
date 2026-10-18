@@ -115,6 +115,10 @@ def render(n,inline=False):
     if tag=="a":
         body="".join(render(c,True) for c in n.children)
         url=relink(n.get("href",""))
+        # GitHub does not typeset math inside Markdown link labels. Keep the
+        # exact source label as prose and attach the citation as a source link.
+        if url and ("$" in body or r"\(" in body or r"\[" in body):
+            return body+" ([source]("+url+"))"
         return "["+body+"]("+url+")" if url else body
     if tag in ("strong","b","em","i"):
         mark="**" if tag in ("strong","b") else "*"
@@ -164,6 +168,12 @@ def norm_math(t):
     # math-op with roman lettering, and the inverse transform is parity-tested.
     t=re.sub(r"\\operatorname\{([^{}]+)\}",
              lambda m:r"\mathop{\mathrm{"+m.group(1)+"}}",t)
+    # GitHub's GFM Markdown layer consumes TeX escapes for '#' and '|'.
+    # Protect literal cardinality marks and replace norm bars by an equivalent
+    # operator before markdown parsing, without changing the canonical source.
+    t=t.replace(r"\#",r"\\#").replace(r"\|",r"\Vert{}")
+    # Visible spaces (not zero-width separators) make GFM recognize inline
+    # TeX at compound boundaries such as codimension-$p$ and $L$-function.
     # Invisible word boundaries retain established mathematical compounds
     # (L-function, p-adic, codimension-p) while separating dollar delimiters
     # from adjacent letters/hyphens for GitHub and source preflight.
@@ -172,7 +182,7 @@ def norm_math(t):
     def boundary(m):
         left=old[m.start()-1] if m.start() else ""
         right=old[m.end()] if m.end()<len(old) else ""
-        return ("\u200b" if re.match(r"[\w-]",left) else "")+m.group(0)+( "\u200b" if re.match(r"[\w-]",right) else "")
+        return (" " if re.match(r"[\w-]",left) else "")+m.group(0)+( " " if re.match(r"[\w-]",right) else "")
     t=single.sub(boundary,old)
     # Indentation belongs to the source HTML template, not the article. In
     # Markdown, four accidental template spaces create code fences and suppress
@@ -201,7 +211,7 @@ def generate(n):
     expected=formula_bodies(art.get_text(" ",strip=False))
     actual=formula_bodies(txt)
     def compact(x):
-        x=x.replace("\u200b","")
+        x=x.replace("\u200b","").replace(r"\\#",r"\#").replace(r"\Vert{}",r"\|")
         x=re.sub(r"\\mathop\{\\mathrm\{([^{}]+)\}\}",
                  lambda m:r"\operatorname{"+m.group(1)+"}",x)
         return re.sub(r"\s+","",x)

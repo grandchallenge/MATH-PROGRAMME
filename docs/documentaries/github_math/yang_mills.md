@@ -30,7 +30,7 @@ Chapter I
 
 ## Symmetry That Changes from Point to Point
 
-A gauge field is geometrically a connection $A$ on a principal $G$​-bundle. Under a local transformation $g$,
+A gauge field is geometrically a connection $A$ on a principal $G$ -bundle. Under a local transformation $g$,
 
 $$
 A\longmapsto gAg^{-1}-(dg)g^{-1}.

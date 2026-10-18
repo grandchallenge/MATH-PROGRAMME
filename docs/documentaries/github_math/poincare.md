@@ -88,7 +88,7 @@ Chapter III
 
 Once a high-curvature neck is known to be close to a standard cylinder, the flow can be stopped just before catastrophe. One cuts across carefully chosen two-spheres, removes the most singular ends, attaches standard caps, and restarts the evolution on the surviving components.
 
-The word *surgery* can sound like an informal repair. Mathematically it is a theorem-bound operation with scale hierarchies, curvature thresholds, cap models, noncollapsing estimates, and a finite catalogue of topological transitions. A separating sphere cut records a connected-sum decomposition. A nonseparating cut records an $S^2\!\times S^1$​-type factor in the orientable setting. Discarded components must belong to permitted, source-certified classes.
+The word *surgery* can sound like an informal repair. Mathematically it is a theorem-bound operation with scale hierarchies, curvature thresholds, cap models, noncollapsing estimates, and a finite catalogue of topological transitions. A separating sphere cut records a connected-sum decomposition. A nonseparating cut records an $S^2\!\times S^1$ -type factor in the orientable setting. Discarded components must belong to permitted, source-certified classes.
 
 **Bookkeeping theorem**
 

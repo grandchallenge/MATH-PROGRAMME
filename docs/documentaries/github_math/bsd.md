@@ -10,7 +10,7 @@ A note to the reader
 
 ## Exact objects first; the open boundary always visible
 
-Birch and Swinnerton–Dyer links the rational-point structure of an elliptic curve to the behaviour of its $L$​-function at $s=1$. The conjecture remains open in general.
+Birch and Swinnerton–Dyer links the rational-point structure of an elliptic curve to the behaviour of its $L$ -function at $s=1$. The conjecture remains open in general.
 
 This browser edition is a derivative, source-normalized exposition. Its numbered plates render exact mathematical objects, exact finite computations, or quantified theorem structure whenever the adjacent concept permits it. Wolfram Language is the canonical semantic-master language for the revised plates; the committed web graphics are deterministic publication derivatives. The plates are pedagogical, not proof evidence. Definitions, equations, source links, campaign records, and trust labels govern the mathematics.
 
@@ -24,7 +24,7 @@ For every elliptic curve $E/\mathbb{Q}$, BSD predicts $\mathop{\mathrm{rank}}E(\
 
 **Claim boundary**
 
-Finite computation, parity, Selmer bounds, family averages, one-prime results, $p$​-adic formulas, and analytic-rank-zero-or-one theorems do not by themselves establish the universal complex conjecture.
+Finite computation, parity, Selmer bounds, family averages, one-prime results, $p$ -adic formulas, and analytic-rank-zero-or-one theorems do not by themselves establish the universal complex conjecture.
 
 Chapter I
 
@@ -95,7 +95,7 @@ Chapter III
 Reduce a suitable integral equation modulo a prime $p$. At a prime of good reduction define
 
 $$
-a_p=p+1-\#E(\mathbb{F}_p),
+a_p=p+1-\\#E(\mathbb{F}_p),
 $$
 
 and
@@ -107,7 +107,7 @@ $$
 For $E_5:y^2=x^3-25x$ at $p=13$, exact enumeration gives $19$ affine solutions. Including the point at infinity,
 
 $$
-\#E_5(\mathbb{F}_{13})=20,\qquad a_{13}=13+1-20=-6.
+\\#E_5(\mathbb{F}_{13})=20,\qquad a_{13}=13+1-20=-6.
 $$
 
 Hence
@@ -120,7 +120,7 @@ The finite sample in Plate III is exact for the displayed primes. It is not an e
 
 **Imported established result · modularity**
 
-Every elliptic curve over $\mathbb{Q}$ is modular. Its $L$​-function therefore has analytic continuation and a functional equation centred at $s=1$.
+Every elliptic curve over $\mathbb{Q}$ is modular. Its $L$ -function therefore has analytic continuation and a functional equation centred at $s=1$.
 
 > **Plate III.** Plate III From prime counts to the central point Fallback predecessor plate. With JavaScript enabled, the reviewed exact finite-field successor is activated at this stable source reference. [Illustration](../../assets/documentaries/bsd/plate_bridge.svg). *Alt text:* Prime-by-prime point counts are assembled into Euler factors and an L-function whose behaviour at the central point is compared with rank.
 
@@ -137,7 +137,7 @@ $$
 The strong form predicts the first nonzero Taylor coefficient as an arithmetic factorization. If $r=\mathop{\mathrm{rank}}E(\mathbb{Q})$ and $\mathop{\mathrm{Sha}}(E/\mathbb{Q})$ is finite, then under the displayed normalization,
 
 $$
-\frac{L^{(r)}(E,1)}{r!}=\frac{\Omega_E\,\mathop{\mathrm{Reg}}(E/\mathbb{Q})\,\#\mathop{\mathrm{Sha}}(E/\mathbb{Q})\,\prod_p c_p}{\#E(\mathbb{Q})_{\mathrm{tors}}^2}.
+\frac{L^{(r)}(E,1)}{r!}=\frac{\Omega_E\,\mathop{\mathrm{Reg}}(E/\mathbb{Q})\,\\#\mathop{\mathrm{Sha}}(E/\mathbb{Q})\,\prod_p c_p}{\\#E(\mathbb{Q})_{\mathrm{tors}}^2}.
 $$
 
 The factors have different jobs. $\Omega_E$ is an archimedean period; the regulator measures the Mordell–Weil lattice; $c_p$ records bad-prime component data; torsion contributes a finite denominator; and $\mathop{\mathrm{Sha}}$ measures locally soluble torsors that may fail globally.
@@ -190,9 +190,9 @@ with empty determinant $1$ when $r=0$.
 
 Technical appendix B
 
-## The $L$​-function and analytic rank
+## The $L$ -function and analytic rank
 
-The Euler product converges absolutely initially for $\mathop{\mathrm{Re}}(s)>3/2$. Modularity identifies it with the $L$​-series of a weight-two newform. A standard completed normalization is
+The Euler product converges absolutely initially for $\mathop{\mathrm{Re}}(s)>3/2$. Modularity identifies it with the $L$ -series of a weight-two newform. A standard completed normalization is
 
 $$
 \Lambda(E,s)=N^{s/2}(2\pi)^{-s}\Gamma(s)L(E,s),
@@ -216,7 +216,7 @@ Authors distribute real periods, archimedean factors, completed-function terms, 
 
 A missing period component, factorial, torsion square, bad-prime factor, or completed-function term can create a false disagreement—or a false proof. Symbol matching is not normalization matching.
 
-The phrase “BSD is true for this curve” must identify whether it means rank equality, finite $\mathop{\mathrm{Sha}}$, the full complex leading term, a $p$​-part, or a computational certificate for a fixed curve.
+The phrase “BSD is true for this curve” must identify whether it means rank equality, finite $\mathop{\mathrm{Sha}}$, the full complex leading term, a $p$ -part, or a computational certificate for a fixed curve.
 
 Technical appendix D
 
@@ -238,7 +238,7 @@ Descent converts an infinite search into finite covering and local-solubility pr
 
 **Selmer guardrail**
 
-Selmer corank is not automatically Mordell–Weil rank. A nontrivial $p$​-primary Tate–Shafarevich contribution may remain.
+Selmer corank is not automatically Mordell–Weil rank. A nontrivial $p$ -primary Tate–Shafarevich contribution may remain.
 
 Technical appendix E
 
@@ -253,7 +253,7 @@ Technical appendix E
 | Universal finiteness of $\mathop{\mathrm{Sha}}$ | open | separate from rank equality |
 | Universal complex leading-term formula | open | requires every normalization and arithmetic factor |
 | A fixed-curve rigorous computation | bounded evidence or certificate | does not imply the universal statement |
-| A $p$​-adic or one-prime theorem | hypothesis-sensitive theorem terrain | not identical to the global complex formula |
+| A $p$ -adic or one-prime theorem | hypothesis-sensitive theorem terrain | not identical to the global complex formula |
 | Exact-object documentary plates | pedagogical | reproducible representation; never proof evidence |
 
 **Final claim boundary**
@@ -268,9 +268,9 @@ Andrew Wiles, [The Birch and Swinnerton–Dyer Conjecture](https://www.claymath.
 
 B. J. Birch and H. P. F. Swinnerton-Dyer, [“Notes on elliptic curves II”](https://doi.org/10.1515/crll.1965.218.79) (1965).
 
-Christophe Breuil, Brian Conrad, Fred Diamond, and Richard Taylor, [“On the modularity of elliptic curves over $\mathbb{Q}$”](https://doi.org/10.1090/S0894-0347-01-00370-8) (2001).
+Christophe Breuil, Brian Conrad, Fred Diamond, and Richard Taylor, “On the modularity of elliptic curves over $\mathbb{Q}$” ([source](https://doi.org/10.1090/S0894-0347-01-00370-8)) (2001).
 
-Benedict Gross and Don Zagier, [“Heegner points and derivatives of $L$​-series”](https://doi.org/10.1007/BF01388809) (1986).
+Benedict Gross and Don Zagier, “Heegner points and derivatives of $L$ -series” ([source](https://doi.org/10.1007/BF01388809)) (1986).
 
 V. A. Kolyvagin and D. Yu. Logachev, [“Finiteness of the Shafarevich–Tate group and the group of rational points for some modular abelian varieties”](https://www.mathnet.ru/eng/aa47) (1989/1990).
 

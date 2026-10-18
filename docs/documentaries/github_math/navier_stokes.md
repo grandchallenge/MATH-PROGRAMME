@@ -56,7 +56,7 @@ Chapter II
 For smooth unforced flow,
 
 $$
-\frac12\|u(t)\|_{L^2}^2+\nu\int_0^t\|\nabla u(s)\|_{L^2}^2\,ds=\frac12\|u_0\|_{L^2}^2.
+\frac12\Vert{}u(t)\Vert{}_{L^2}^2+\nu\int_0^t\Vert{}\nabla u(s)\Vert{}_{L^2}^2\,ds=\frac12\Vert{}u_0\Vert{}_{L^2}^2.
 $$
 
 Leray–Hopf weak solutions satisfy the corresponding inequality. Kinetic energy cannot spontaneously increase in the unforced problem, and viscosity controls the time-integrated $H^1$ seminorm.
@@ -145,7 +145,7 @@ Technical appendix B
 
 ## Scaling and Critical Spaces
 
-For mixed norms, $\|u_\lambda\|_{L^q_tL^p_x}=\lambda^{1-3/p-2/q}\|u\|_{L^q_tL^p_x}$. Thus $2/q+3/p=1$ is the velocity-critical line. Energy-class information does not directly dominate it. Small-data critical theorems retain their smallness hypothesis.
+For mixed norms, $\Vert{}u_\lambda\Vert{}_{L^q_tL^p_x}=\lambda^{1-3/p-2/q}\Vert{}u\Vert{}_{L^q_tL^p_x}$. Thus $2/q+3/p=1$ is the velocity-critical line. Energy-class information does not directly dominate it. Small-data critical theorems retain their smallness hypothesis.
 
 Technical appendix C
 

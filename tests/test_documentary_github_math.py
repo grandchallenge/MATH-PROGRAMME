@@ -29,6 +29,25 @@ class GitHubDocumentaryMath(unittest.TestCase):
                 _,_,_,text,_=generate(name)
                 self.assertEqual(issues(text),[],name)
 
+    def test_github_parser_adversarial_tex_and_link_boundaries(self):
+        # GitHub's Markdown layer consumes cardinality escapes and norm bars;
+        # unsupported math inside links or at word boundaries renders as text.
+        bsd=generate("bsd")[3]
+        hodge=generate("hodge")[3]
+        ns=generate("navier_stokes")[3]
+        self.assertIn(r"\\#E(",bsd)
+        self.assertIn(r"\\#E_5(",bsd)
+        self.assertIn(r"\\#\mathop",bsd)
+        self.assertIn(r"\Vert{}u",ns)
+        self.assertNotIn(r"\|",ns)
+        self.assertIn("codimension- $p$",hodge)
+        self.assertNotIn("codimension-\u200b$p$",hodge)
+        self.assertIn("([source](https://doi.org/10.1007/BF01388809))",bsd)
+        for name in NAMES:
+            text=generate(name)[3]
+            self.assertNotIn("\u200b$",text)
+            self.assertNotIn("$\u200b",text)
+
     def test_every_public_documentary_links_to_its_reader(self):
         for name in NAMES:
             with self.subTest(documentary=name):
