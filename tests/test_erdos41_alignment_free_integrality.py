@@ -202,5 +202,47 @@ class AlignmentFreeIntegralityTests(unittest.TestCase):
         # No changing the profile to accommodate a different partition.
 
 
+    def test_alignment_free_critical_heavy_bin_mass_bound(self):
+        # The theorem applies to arbitrary actual B3 prefixes, not
+        # hypothetical regularly spaced or locally dense cohorts.
+        for n in (8,14,20,29):
+            x=A[:n]
+            N=x[-1]
+            for R in (3,10,30,100,300,1000,5000):
+                blocks=defaultdict(list)
+                for a in x:
+                    blocks[(a-1)//R].append(a)
+                for eps in (0.25,0.5,1.0,2.0):
+                    heavy=sum(
+                        len(block) for block in blocks.values()
+                        if len(block)>=2 and len(block)>=eps*R**(1/3)
+                    )
+                    exact_bound=(4*18**(1/3)/(eps*eps))*R**(2/3)
+                    with self.subTest(n=n,R=R,eps=eps):
+                        self.assertLessEqual(heavy,exact_bound+1e-9)
+                        self.assertLessEqual(
+                            sum(comb(len(v),2) for v in blocks.values()),
+                            R-1
+                        )
+                        self.assertTrue(all(len(v)**3 <=18*R
+                                            for v in blocks.values()))
+                        # Check normalized corollary using the actual
+                        # realized (finite) coefficient, not an asserted
+                        # asymptotic positive lower density.
+                        c=n/N**(1/3)
+                        frac=heavy/n
+                        relative=4*18**(1/3)/(c*eps*eps)*(R*R/N)**(1/3)
+                        self.assertLessEqual(frac,relative+1e-9)
+
+    def test_repeated_local_gap_destroys_global_b3(self):
+        first=[1,2,5]
+        second=[1000,1001,1004]
+        self.assertTrue(is_b3(first))
+        self.assertTrue(is_b3(second))
+        self.assertFalse(is_b3(first+second))
+        # The same difference 1 appears in both intervals, violating B2.
+        self.assertEqual(2-1,1001-1000)
+
+
 if __name__=="__main__":
     unittest.main()
