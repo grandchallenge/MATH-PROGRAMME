@@ -306,6 +306,54 @@ class FiveSourceFidelityTests(unittest.TestCase):
         self.assertFalse(bridge_json['solve_dispatch'])
         self.assertFalse(bridge_json['revision_clearance_authorized'])
 
+    def test_14_reconstructed_8432eac9_and_independent_kernel_replay(self):
+        import hashlib
+        root=ROOT/'governance/source_erdos_critical_005'
+        replay=json.loads((root/'ERDOS_014_KERNEL_REPLAY_RECEIPT.json').read_text(encoding='utf-8'))
+        parity_lean=(root/'Erdos14HistoricalTaskTargetParity.lean').read_bytes()
+        self.assertEqual(replay['record_type'],'GCL_ERDOS_014_EXACT_LEAN_REPLAY_V1')
+        self.assertEqual(replay['assignment_issue'],2702)
+        self.assertEqual(replay['parent_review_issue'],2522)
+        self.assertEqual(replay['catalogue_issue'],1283)
+        self.assertEqual(replay['credited_external_solver'],'JenW1N')
+        self.assertFalse(replay['gcl_discovered_proof'])
+        src_repo=replay['reconstructed_source_repository']
+        self.assertEqual(src_repo['base_commit'],'7d1a8c9912747679d0093f6d1216420c33ee5ffa')
+        self.assertEqual(src_repo['tasks_commit'],'275ef4824c41d41f97ac4e9fff95ca471de9341d')
+        self.assertEqual(src_repo['audit_patch_sha256'],'853372293b16a79ea495a28909e6077d41e2c6402165c3c6233ea0747c919814')
+        self.assertEqual(src_repo['derived_commit_sha1'],'8432eac998110a563e03df65a28c117e97c8c142')
+        self.assertEqual(src_repo['task_support_sha256'],'58a80a223dbd7383d92eb2a57b1ec207c0991131a1a1bf24585a4452777c257e')
+        self.assertTrue(src_repo['original_formal_provider_git_checkout_parity'])
+        subs={s['part']:s for s in replay['replayed_submissions']}
+        self.assertEqual(set(subs),{'i','ii'})
+        self.assertEqual(subs['i']['source_type_sha256_recomputed'],'01f4b21faa141073550ace4791e41bb283bad80fb700e8965387588dc9238029')
+        self.assertEqual(subs['ii']['source_type_sha256_recomputed'],'92676249a3598e8a654641b6d8078ed91bb3b00db116143e5a586cd63e1e6b20')
+        self.assertEqual(subs['ii']['generated_target_type_sha256_recomputed'],'f70369d772ff7a4ffb6b04dd772d2765f578571e039e13c26ef25d6ba92bd708')
+        for p,s in subs.items():
+            self.assertEqual(hashlib.sha256(s['canonical_target_type'].encode('utf-8')).hexdigest(),
+                             s['generated_target_type_sha256_expected'])
+            self.assertTrue(s['static_policy_valid'])
+            self.assertEqual(s['static_violations'],[])
+            self.assertEqual(s['kernel_trust_level'],0)
+            self.assertEqual(s['kernel_exit_code'],0)
+            self.assertTrue(s['defeq_intended_challenge_target'])
+            self.assertFalse(s['defeq_other_part_target'])
+            self.assertFalse(s['defeq_hostile_altered_target'])
+            self.assertEqual(s['transitive_axioms'],['propext','Classical.choice','Quot.sound'])
+            self.assertFalse(s['depends_on_sorryAx'])
+            self.assertFalse(s['value_has_sorry'])
+            self.assertFalse(s['type_has_sorry'])
+            self.assertFalse(s['depends_on_forbidden_source_theorem'])
+            self.assertTrue(s['independent_gcl_kernel_replay'])
+        self.assertIn(b'def allUniqueSums',parity_lean)
+        self.assertIn(b'theorem allUniqueSums_unordered_symm',parity_lean)
+        self.assertIn(b'theorem zero_singleton_allUniqueSums',parity_lean)
+        auth=replay['authority_effects']
+        for k in ('gcl_math_certification','solve_dispatch','owner_status_change',
+                  'prior_proof_credit_claimed_by_gcl','revision_clearance_authorized'):
+            self.assertFalse(auth[k],k)
+
 if __name__=="__main__":
     unittest.main(verbosity=2)
+
 
