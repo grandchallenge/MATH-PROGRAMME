@@ -1,0 +1,43 @@
+name: GCL recurring queue heartbeat watchdog
+
+on:
+  schedule:
+    - cron: '43 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: gcl-queue-heartbeat-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Replay hostile and positive tests
+        run: python3 -m unittest discover -s ci -p test_recurring_heartbeat_watch.py
+      - name: Audit the durable authenticated heartbeat stream
+        shell: bash
+        run: |
+          set +e
+          python3 ci/recurring_heartbeat_watch.py --alert --output "$RUNNER_TEMP/heartbeat-watch.json"
+          result=$?
+          if [ -f "$RUNNER_TEMP/heartbeat-watch.json" ]; then
+            cat "$RUNNER_TEMP/heartbeat-watch.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$result"
+      - name: Retain independent observation evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-recurring-heartbeat-observation
+          path: ${{ runner.temp }}/heartbeat-watch.json
+          if-no-files-found: ignore
+          retention-days: 30

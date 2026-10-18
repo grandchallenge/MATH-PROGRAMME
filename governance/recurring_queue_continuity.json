@@ -1,12 +1,25 @@
 {
-  "contract_id": "GCL-RECURRENT-EXECUTION-CONTINUITY-001",
-  "version": "1.0.0",
-  "task_key": "GCL-QUEUE-REDUCTION-HOURLY",
-  "owner": "grandchallenge/MATH-PROGRAMME",
-  "desired_state": "ENABLED",
   "cadence": "HOURLY",
-  "scheduler_kind": "ChatGPT-hosted",
-  "retirement_authority": ["EXPLICIT_USER_DIRECTIVE", "PROTECTED_GOVERNED_RETIREMENT"],
+  "contract_id": "GCL-RECURRENT-EXECUTION-CONTINUITY-001",
+  "desired_state": "ENABLED",
+  "external_missed_heartbeat_alert": "ISSUE_COMMENT_AND_ACTION_RUN_FAILURE",
+  "external_readback_required": true,
+  "heartbeat_activation_utc": "2026-10-18T23:45:00Z",
+  "heartbeat_authorized_actors": [
+    "fyremael"
+  ],
+  "heartbeat_grace_minutes": 180,
+  "heartbeat_issue": 2763,
+  "independent_observer": "GITHUB_ACTIONS_SCHEDULED_READBACK",
+  "observer_readback_scope": "GITHUB_ISSUE_HEARTBEAT_ONLY_NOT_CHATGPT_SCHEDULER_API",
+  "observer_workflow": ".github/workflows/recurring-queue-heartbeat-watch.yml",
+  "owner": "grandchallenge/MATH-PROGRAMME",
+  "retirement_authority": [
+    "EXPLICIT_USER_DIRECTIVE",
+    "PROTECTED_GOVERNED_RETIREMENT"
+  ],
   "scheduler_adapter_status": "NOT_CONNECTED",
-  "external_readback_required": true
+  "scheduler_kind": "ChatGPT-hosted",
+  "task_key": "GCL-QUEUE-REDUCTION-HOURLY",
+  "version": "1.0.0"
 }
