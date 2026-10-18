@@ -67,6 +67,19 @@ def independent_entropy_upper(L,k,epsilon):
     return 2*exp(-epsilon*(k-1)/4)*comb(L,k)
 
 
+def cubic_shadow(xs):
+    return {a+b-c for a,b in combinations_with_replacement(sorted(xs),2)
+                  for c in xs}
+
+
+def survivor_graph_edges(xs,R):
+    q=pair_sums(xs)
+    ds={abs(a-b) for a in q for b in q if a!=b}
+    survivors=set(range(1,R+1))-cubic_shadow(xs)
+    e=sum(1 for t in survivors for d in ds if t+d in survivors)
+    return survivors,e
+
+
 class IntegralFutureEntropyTests(unittest.TestCase):
     def test_fixture_genuine_b3(self):
         self.assertTrue(is_b3(A))
@@ -156,6 +169,70 @@ class IntegralFutureEntropyTests(unittest.TestCase):
         self.assertLessEqual(len(stage),R)
         self.assertTrue(all(min(t)>=15*R for t in stage))
         self.assertTrue(all(max(t)<16*R for t in stage))
+
+
+    def test_supersaturation_after_deleting_all_singleton_forbidden_sites(self):
+        for n,R in ((5,100),(8,500),(12,1209)):
+            p=A[:n]
+            q=len(pair_sums(p))
+            V,e=survivor_graph_edges(p,R)
+            v=len(V)
+            self.assertGreaterEqual(v,R//2)
+            self.assertGreaterEqual(v*q,6*R)
+            exact_lower=(v*v*q*q/(3*R)-v*q)/(2*n)
+            strengthened=v*v*q*q/(12*n*R)
+            with self.subTest(n=n,R=R):
+                self.assertGreaterEqual(e+1e-8,exact_lower)
+                self.assertGreaterEqual(e+1e-8,strengthened)
+                self.assertGreaterEqual(e+1e-8,n**3*v*v/(48*R))
+                self.assertLessEqual(e,comb(v,2))
+
+    def test_supersaturation_for_adversarial_survivor_subsets(self):
+        p=[1,2,5,14,33]
+        R=100
+        V,e=survivor_graph_edges(p,R)
+        for retain in (V, {x for x in V if x%2}, {x for x in V if x%3 !=1}):
+            m=len(retain)
+            if not m:
+                continue
+            ds=set(pair_diff_profile(p))
+            edges=sum(1 for t in retain for d in ds if t+d in retain)
+            q=len(pair_sums(p))
+            lower=(m*m*q*q/(3*R)-m*q)/(2*len(p))
+            self.assertGreaterEqual(edges+1e-8,lower)
+
+    def test_survivor_graph_penalty_beyond_singleton_deletions(self):
+        p=[1,2,5,14,33]
+        R=100
+        V,e=survivor_graph_edges(p,R)
+        v=len(V)
+        assert v>=R/2
+        eps=min(0.25,e/(v*v))
+        self.assertGreater(e,0)
+        # Exact count among already singleton-legal integral batches.
+        ds=set(pair_diff_profile(p))
+        for k in (2,3):
+            with self.subTest(k=k):
+                independent=sum(
+                    all(abs(a-b) not in ds for a,b in combinations(t,2))
+                    for t in combinations(sorted(V),k))
+                self.assertLessEqual(
+                    independent,independent_entropy_upper(v,k,eps)+1e-8)
+
+    def test_geometric_protocol_windows_are_disjoint_and_owned(self):
+        R=50
+        p=[1,2,5,14,33]
+        for _ in range(4):
+            y=8*R
+            J=(15*R,16*R-min(p))
+            self.assertGreater(J[0],y)
+            self.assertGreater(y,6*R)
+            self.assertLessEqual(J[1],16*R)
+            self.assertEqual(J[1]-J[0]+1,R-min(p)+1)
+            p=p+[y,J[0]]
+            self.assertTrue(is_b3(p))
+            R*=16
+            self.assertLessEqual(max(p),R)
 
 
 if __name__=="__main__":
