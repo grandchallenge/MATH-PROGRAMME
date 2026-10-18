@@ -18,6 +18,7 @@ from typing import Iterable
 import jsonschema
 
 import formal_validation as formal
+import math_markdown_gate as math_source
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROL_PATH = ROOT / "governance/policy_impact_gating.json"
@@ -136,6 +137,11 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
         lower = path.lower()
         matched = False
         if path in CONTROL_PLANE_PATHS:
+            active.add("contracts")
+            matched = True
+        if path == ".ghos-routing/workflows.json":
+            # The contracts shard validates exact controller capabilities and
+            # workflow routing. This metadata does not invalidate mathematics.
             active.add("contracts")
             matched = True
         if path.startswith("docs/") or path in {"mkdocs.yml", "requirements/docs.txt"}:
@@ -367,6 +373,24 @@ def main() -> int:
             return 0
         event = json.loads(Path(args.event_path).read_text(encoding="utf-8")) if args.event_path else {}
         paths = changed_paths_from_event(args.event_name, event)
+        # Apply the source-first rendering gate before classifying or admitting any
+        # Markdown transition. This uses the already-fetched exact PR/push base
+        # and head; no separate workflow or broader authority is introduced.
+        if args.event_name in {"pull_request", "push"} and paths:
+            if args.event_name == "pull_request":
+                entity = event["pull_request"]
+                base = entity["base"]["sha"]
+                head = entity["head"]["sha"]
+            else:
+                base = event["before"]
+                head = event.get("after") or os.environ.get("GITHUB_SHA")
+            defects = math_source.check_transition(ROOT, base, head, paths)
+            if defects:
+                raise ImpactError(
+                    "new mathematical Markdown rendering defects:\n"
+                    + "\n".join(defects[:50])
+                )
+            print("mathematical Markdown source gate: PASS")
         result = classify_paths(paths, event_name=args.event_name, schedule=args.schedule)
         write_output(args.github_output, result)
         print(json.dumps(result, sort_keys=True))

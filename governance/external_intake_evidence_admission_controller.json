@@ -1,8 +1,8 @@
 {
   "schema_version": "1.2.0",
   "control_id": "MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001",
-  "status": "ACTIVE_MERGE_TOKEN_CORRECTION_CANDIDATE",
-  "purpose": "Admit already-created, Release-Trust-validated CEI evidence pull requests through ordinary exact-head protected MATHSOLVE merge after repository rules are satisfied, without branch-protection bypass, campaign mutation, or mathematical adjudication.",
+  "status": "ACTIVE_STREAMLINED_DELEGATED_PROTECTED_ADMISSION",
+  "purpose": "Admit already-created, exact-head validated raw-plus-receipt evidence PRs through ordinary GitHub protected rules without a routine independent non-author Clerk gate. This is evidence custody, not mathematical adjudication, certification, or claim promotion.",
   "upstream_controller": "MP-EXTERNAL-INTAKE-PR-CONTROLLER-001",
   "authority_source": "existing GCL Release Trust GitHub App installation; short-lived per-run token only",
   "environment": "release-trust",
@@ -50,7 +50,8 @@
     "the pull request title exactly matches the registered profile and dispatch",
     "the pull request head SHA equals the live intake branch SHA",
     "the pull request is not draft and is not known unmergeable",
-    "repository protection requirements, including the unattributed-change documentary approval and required status checks, remain authoritative"
+    "all actual GitHub required checks and applicable protected repository rules are satisfied; no bypass actor or administrative merge",
+    "no routine Council Clerk/non-author approval is required for a fully validated raw-plus-receipt evidence custody PR under MP-STREAMLINED-EXECUTION-001; specialist review occurs only at a materially substantive claim/authority gate"
   ],
   "allowed_actions": [
     "read registered intake branches and their protected dispatch bindings",
@@ -69,7 +70,7 @@
     "claim certification or canonical mathematical effect",
     "use the merge token for repository contents endpoints, refs, commits, trees, blobs, branch mutation, or any endpoint other than the exact protected pull-request merge request"
   ],
-  "native_protection_rule": "The controller may request an ordinary exact-head squash merge only after revalidation. GitHub required checks, required documentary approval, review-thread policy, and repository rules remain authoritative; no bypass actor exists.",
+  "native_protection_rule": "Exact validated head, ordinary protected merge, required checks and repository rules apply; no administrator or ruleset bypass. Routine documentary Clerk approval is not a separate admission precondition. Mathematical adjudication remains outside this transport.",
   "wake": {
     "kind": "GitHub Actions",
     "workflow": ".github/workflows/ns-ci-intake-pr-controller.yml",
@@ -81,9 +82,9 @@
     "pull_request": 925,
     "dispatch_id": "ERDOS-241-R1-IA-001",
     "expected_head_sha": "d5a5da424fbdc512afd089778ed96fd1ae99312e",
-    "clerk_review_id": "5425217947",
     "pre_correction_failure": "HTTP 403 Resource not accessible by integration with contents-read merge token",
-    "required_result": "Release Trust merge token performs exact-head protected squash merge after Clerk approval, followed by protected-main raw-and-receipt identity readback"
+    "required_result": "Release Trust merge token performs exact-head protected squash merge of schema-valid raw-plus-receipt evidence without a separate Clerk approval, followed by protected-main identity readback. Mathematical review is separate.",
+    "historical_clerk_review_id": "5425217947"
   },
   "claim_boundaries": {
     "constitutional": false,
@@ -94,5 +95,23 @@
     "claim_promotion": false,
     "campaign_mutation": false,
     "protected_merge_only": true
+  },
+  "streamlined_review_policy": {
+    "authority": "MP-STREAMLINED-EXECUTION-001",
+    "routine_evidence_custody_independent_approval_required": false,
+    "preserves": [
+      "protected branch rules",
+      "exact validated raw/receipt binding",
+      "authenticated return and worker reservation provenance",
+      "bounded release-trust merge token",
+      "mathematical and certification nonpromotion"
+    ],
+    "substantive_specialist_review_scope": [
+      "mathematical certification",
+      "source-semantic adjudication",
+      "constitutional authority expansion",
+      "security-sensitive protection weakening",
+      "external claim promotion"
+    ]
   }
 }

@@ -171,7 +171,7 @@ Do not freeze unrelated campaigns because a timer expired, a repository head adv
 
 The original INTELLECT Phase A/Phase B adoption sequence is historical admission evidence. Current repository administration is governed by `governance/release_trust_admin_contract.json`, `ci/release_trust_admin.py`, and `docs/RELEASE_TRUST_ADMINISTRATION.md`.
 
-The current Release Trust contract uses repository-specific `strict_status_checks: false` so mergeable concurrent development does not require an update-branch synchronization solely for freshness. GitHub approval count is zero. Required checks remain exact per repository, and INTELLECT includes `routing-enforcement`.
+The current Release Trust contract uses repository-specific `strict_status_checks: false` so mergeable concurrent development does not require an update-branch synchronization solely for freshness. GitHub approval rules are repository-specific: one for MATHCERT and MATH-PROGRAMME with non-last-pusher enforcement, zero for MATHSOLVE and INTELLECT. Routine delegated work remains eligible for the admitted bounded non-human review path; the GitHub review is not mathematical certification. Required checks remain exact per repository, and INTELLECT includes `routing-enforcement`.
 
 Changing those protections is a control-plane change. Applying the already-admitted contract is routine administration.
 

@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "GCL-DELEGATED-MATERIAL-ADMISSION-001",
+  "status": "BOUNDED_ROUTINE_PROFILES_ONLY",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "base_branch": "main",
+  "paths": {
+    "kind": "TOP_LEVEL_DOCS_MARKDOWN",
+    "regex": "^docs/[A-Za-z0-9][A-Za-z0-9_-]*\\.md$",
+    "max_files": 1,
+    "max_file_bytes": 250000
+  },
+  "profiles": [
+    {
+      "id": "DOC-FINAL-NEWLINE-001",
+      "operation": "append_one_missing_final_newline",
+      "max_changed_lines": 1,
+      "review_roles": ["Verifier", "Adversary"],
+      "review_mode": "non_authoring_read_only"
+    },
+    {
+      "id": "DOC-TRAILING-SPACE-001",
+      "operation": "remove_single_nonsemantic_trailing_space",
+      "max_changed_lines": 12,
+      "review_roles": ["Verifier", "Adversary"],
+      "review_mode": "non_authoring_read_only"
+    },
+    {
+      "id": "DOC-REDUNDANT-BLANKS-001",
+      "operation": "collapse_runs_of_three_or_more_empty_lines",
+      "max_changed_lines": 12,
+      "review_roles": ["Verifier", "Adversary"],
+      "review_mode": "non_authoring_read_only"
+    }
+  ],
+  "boundaries": {
+    "claims_promoted": false,
+    "mathematical_certification": false,
+    "substantive_specialist_review_substituted": false,
+    "protected_bypass": false,
+    "merge_queue_bypass": false,
+    "security_policy_change": false,
+    "unknown_or_mixed_effect": "REJECT",
+    "unmodelled_operation": "REJECT"
+  },
+  "source_authority": [
+    "governance/agent_delegated_admission_profiles.json",
+    "ci/agent_material_profiles.py",
+    "ci/agent_routine_review.py"
+  ],
+  "successor": "GCL-AGENT-ADMISSION-SPECIALIST-001",
+  "issue": 1247
+}

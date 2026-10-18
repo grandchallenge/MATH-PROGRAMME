@@ -26,22 +26,22 @@
 <article class="monograph-body" aria-label="The Element in Half the Worlds manuscript">
 <section class="monograph-section" id="reader-note" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">A note to the reader</p>
-## Wonder first; the universal quantifier always visible
+<h2>Wonder first; the universal quantifier always visible</h2>
 
-A finite family of sets can obey one simple closure law and still resist a universal abundance theorem. Frankl’s conjecture says that some element belongs to at least half of the sets in every finite nonempty union-closed family. It is an **Open conjecture**.
+A finite family of sets can obey one simple closure law and still resist a universal abundance theorem. Frankl’s conjecture says that some element belongs to at least half of the sets in every <strong>nontrivial</strong> finite union-closed family, meaning here a finite union-closed family with nonempty support. The empty-only family $\mathcal F=\{\varnothing\}$ is an essential excluded edge case: its support is empty, so no such element exists. It is an <strong>Open conjecture</strong>.
 
 The plates are mnemonic maps, not proof diagrams. Definitions, exact quantifiers, theorem labels, finite-certificate scopes, source links, and the claim ledger govern the mathematics.
 
-**Edition status:** Open conjecture; full-tier documentary exposition; no proof claim.
+<strong>Edition status:</strong> Open conjecture; full-tier documentary exposition; no proof claim.
 
-<div class="conjecture-box"><strong>Open conjecture · Frankl</strong><p>Let $\mathcal F$ be a finite nonempty union-closed family. Then there is an element $x\in\operatorname{supp}(\mathcal F)$ such that $2\operatorname{freq}_{\mathcal F}(x)\ge |\mathcal F|$.</p></div>
+<div class="conjecture-box"><strong>Open conjecture · Frankl</strong><p>Let $\mathcal F$ be a finite union-closed family with $\operatorname{supp}(\mathcal F)\ne\varnothing$. Then there is an element $x\in\operatorname{supp}(\mathcal F)$ such that $2\operatorname{freq}_{\mathcal F}(x)\ge |\mathcal F|$.</p></div>
 <div class="warning-box"><strong>Claim boundary</strong><p>This is a source-normalized illustrated documentary. It does not prove Frankl's conjecture, establish a new universal frequency bound, certify unreviewed proof claims, or make a novelty, priority, or public-release claim.</p></div>
 </section>
 
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate I"><img src="../../assets/documentaries/union_closed/plate_garden.svg" width="1024" height="1536" loading="lazy" alt="A branching garden of finite sets flows upward to their pairwise unions, contrasting local closure with the global search for an abundant element."></button><figcaption><span class="plate-label">Plate I</span><strong>The Garden That Closes</strong><small>Pairwise union is local. The conjectured abundant element is a global witness.</small></figcaption></figure>
 <section class="monograph-section" id="garden" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter I</p>
-## The garden that closes under union
+<h2>The garden that closes under union</h2>
 
 A family $\mathcal F$ is union-closed when $A,B\in\mathcal F$ implies $A\cup B\in\mathcal F$.
 
@@ -53,7 +53,7 @@ Closure describes what happens after choosing two members. Frankl’s statement 
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate II"><img src="../../assets/documentaries/union_closed/plate_frequency.svg" width="1024" height="1536" loading="lazy" alt="A brass balance compares one element’s frequency with half the number of sets, above the incidence-counting identity linking all frequencies to total set size."></button><figcaption><span class="plate-label">Plate II</span><strong>The Half-Way Balance</strong><small>The threshold is sharp: powersets attain equality for every element.</small></figcaption></figure>
 <section class="monograph-section" id="half-way" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter II</p>
-## The half-way balance
+<h2>The half-way balance</h2>
 
 In the powerset $\mathcal P(U)$, each element occurs in exactly half the subsets. Thus no universal theorem can demand more than one half. Double-counting incidences gives
 
@@ -66,7 +66,7 @@ The identity controls an average. It does not force the maximum frequency to rea
 
 <section class="monograph-section" id="small-worlds" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter III</p>
-## Small worlds, exact ledgers
+<h2>Small worlds, exact ledgers</h2>
 
 For a universe of size $n$, exact enumeration can test union closure and every frequency profile. The programme’s independently replayed certificate finds no nontrivial counterexample for universes $n\le4$.
 
@@ -77,7 +77,7 @@ For a universe of size $n$, exact enumeration can test union closure and every f
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate IV"><img src="../../assets/documentaries/union_closed/plate_lattice.svg" width="1024" height="1536" loading="lazy" alt="A finite join-semilattice rises from bottom to top through atoms, joins, and irreducible elements, illustrating the lattice formulation and deletion routes."></button><figcaption><span class="plate-label">Plate IV</span><strong>The Lattice Cathedral</strong><small>Set-family and lattice formulations require an explicit correspondence.</small></figcaption></figure>
 <section class="monograph-section" id="mirrors-lattices" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter IV</p>
-## Mirrors, intersections, and lattices
+<h2>Mirrors, intersections, and lattices</h2>
 
 Taking complements turns unions into intersections. Inclusion turns a union-closed family into a finite join-semilattice with $A\vee B=A\cup B$. These viewpoints reveal atoms, irreducibles, upper cones, deletion operations, and minimal-counterexample constraints.
 
@@ -87,7 +87,7 @@ Taking complements turns unions into intersections. Inclusion turns a union-clos
 
 <section class="monograph-section" id="average-size" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter V</p>
-## The average-size door
+<h2>The average-size door</h2>
 
 Reimer’s theorem gives a lower bound on the average size of members of a union-closed family. Combined with incidence double-counting, it guarantees some element with nontrivial frequency, but the support-size denominator prevents the argument from reaching the universal half threshold.
 
@@ -97,7 +97,7 @@ Reimer’s theorem gives a lower bound on the average size of members of a union
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate III"><img src="../../assets/documentaries/union_closed/plate_entropy.svg" width="1024" height="1536" loading="lazy" alt="A uniform random set passes through coordinate entropies and coupled unions to a dimension-free constant lower bound that still falls short of one half."></button><figcaption><span class="plate-label">Plate III</span><strong>The Entropy Bridge</strong><small>Dimension-free positive constants are breakthroughs; they remain below one half.</small></figcaption></figure>
 <section class="monograph-section" id="entropy" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter VI</p>
-## Entropy enters the garden
+<h2>Entropy enters the garden</h2>
 
 Choose a uniform random member $A\in\mathcal F$ and write its membership indicators as coordinates. Entropy decomposes the uncertainty of the random set, while coupled copies and union closure create inequalities among the coordinate marginals.
 
@@ -108,11 +108,11 @@ Choose a uniform random member $A\in\mathcal F$ and write its membership indicat
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate VI"><img src="../../assets/documentaries/union_closed/plate_frontier.svg" width="1024" height="1536" loading="lazy" alt="Islands representing special families, rigorous constant bounds, and formal lattice results approach but do not reach the open one-half threshold."></button><figcaption><span class="plate-label">Plate VI</span><strong>Islands of Theorem</strong><small>The frontier advances without erasing the open boundary.</small></figcaption></figure>
 <section class="monograph-section" id="theorem-frontier" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter VII</p>
-## The theorem frontier
+<h2>The theorem frontier</h2>
 
 Known terrain includes elementary families, bounded exact verification, average-size inequalities, rigorous dimension-free constants, structural restrictions on minimal counterexamples, and formalized lattice results.
 
-<div class="conjecture-box"><strong>Still open universally</strong><p>No admitted result proves that every finite nonempty union-closed family has an element in at least half its sets.</p></div>
+<div class="conjecture-box"><strong>Still open universally</strong><p>No admitted result proves that every nontrivial finite union-closed family (one with nonempty support) has an element in at least half its sets.</p></div>
 
 Recent posted proof claims remain current-awareness entries until their theorem statements, dependencies, and complete proofs are independently audited. Repository merge, citation count, or public attention does not change mathematical status.
 </section>
@@ -120,7 +120,7 @@ Recent posted proof claims remain current-awareness entries until their theorem 
 <figure class="monograph-plate" data-plate><button type="button" data-plate-open aria-label="Enlarge Plate V"><img src="../../assets/documentaries/union_closed/plate_certificate.svg" width="1024" height="1536" loading="lazy" alt="A formal forge separates exact finite replay, Lean theorems, imported results, hybrid packages, source audits, and the universal conjecture’s claim boundary."></button><figcaption><span class="plate-label">Plate V</span><strong>The Certificate Forge</strong><small>A certificate proves only the claim encoded by its contract.</small></figcaption></figure>
 <section class="monograph-section" id="certificate-forge" data-reader-section markdown="1">
 <p class="monograph-section__eyebrow">Chapter VIII</p>
-## The certificate forge
+<h2>The certificate forge</h2>
 
 The programme separates human proof, imported theorem, Lean theorem, exact finite replay, numerical evidence, and hybrid certificate. A hybrid package may combine a formal transfer theorem with an independently replayed finite fact, but its public claim must expose both components.
 
@@ -129,60 +129,66 @@ The programme separates human proof, imported theorem, Lean theorem, exact finit
 </section>
 
 <section class="monograph-section" id="appendix-definitions" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix A</p>
-## Precise definitions and normalizations
+<h2>Precise definitions and normalizations</h2>
 
-For finite $\mathcal F\subseteq\mathcal P(U)$, define $\operatorname{supp}(\mathcal F)=\bigcup\mathcal F$ and $\operatorname{freq}_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|$. An element is abundant when $2\operatorname{freq}_{\mathcal F}(x)\ge|\mathcal F|$. The canonical target excludes the empty family and reduces the ground set to the support.
+For finite $\mathcal F\subseteq\mathcal P(U)$, define $\operatorname{supp}(\mathcal F)=\bigcup\mathcal F$ and $\operatorname{freq}_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|$. An element is abundant when $2\operatorname{freq}_{\mathcal F}(x)\ge|\mathcal F|$. The canonical target requires nonempty support and reduces the ground set to the support. It excludes both the empty family and the family $\{\varnothing\}$: in either case no support element exists.
 </section>
 <section class="monograph-section" id="appendix-elementary" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix B</p>
-## Elementary proof spine
+<h2>Elementary proof spine</h2>
 
 The top union belongs to the family by finite repeated closure. Powerset sharpness follows by toggling a chosen coordinate. The singleton theorem uses the injective map $A\mapsto A\cup\{x\}$. These are complete arguments within their scopes and suitable for direct formalization.
 </section>
 <section class="monograph-section" id="appendix-entropy" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix C</p>
-## Entropy method skeleton
+<h2>Entropy method skeleton</h2>
 
 For membership indicators $(X_x)_x$, $H(A)=H((X_x)_x)\le\sum_x H(X_x)$. Coupled copies are combined through union closure. Assuming all marginals lie below a selected threshold, one seeks an entropy contradiction. The coupling, concavity estimates, and optimization domain are theorem-bearing details.
 </section>
 <section class="monograph-section" id="appendix-lattice" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix D</p>
-## Lattice correspondence notes
+<h2>Lattice correspondence notes</h2>
 
 Inclusion supplies a finite join-semilattice. Upper cones and irreducible elements can encode frequency-like data. Translation obligations include separation, the ground-set representation, internal versus ambient lattices, and the exact relation between lattice elements and set coordinates.
 </section>
 <section class="monograph-section" id="appendix-formal" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix E</p>
-## Formal and computational inventory
+<h2>Formal and computational inventory</h2>
 
-| Artifact class | Supports | Does not support |
-|---|---|---|
-| Lean theorem | Encoded theorem under imports | Unencoded source correspondence |
-| Exact finite certificate | Declared finite search | Arbitrary universes |
-| Hybrid package | Explicit components and bridge | A stronger unstated theorem |
-| Numerical optimization | Candidates and diagnostics | Rigorous universal bounds |
+<table class="monograph-trust-table">
+  <thead><tr><th scope="col">Artifact class</th><th scope="col">Supports</th><th scope="col">Does not support</th></tr></thead>
+  <tbody>
+    <tr><td>Lean theorem</td><td>Encoded theorem under imports</td><td>Unencoded source correspondence</td></tr>
+    <tr><td>Exact finite certificate</td><td>Declared finite search</td><td>Arbitrary universes</td></tr>
+    <tr><td>Hybrid package</td><td>Explicit components and bridge</td><td>A stronger unstated theorem</td></tr>
+    <tr><td>Numerical optimization</td><td>Candidates and diagnostics</td><td>Rigorous universal bounds</td></tr>
+  </tbody>
+</table>
 </section>
 <section class="monograph-section" id="appendix-sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix F</p>
-## Source audit ledger
+<h2>Source audit ledger</h2>
 
-Reimer’s theorem and the post-2022 entropy results are literature-derived imports. Programme lattice claims are governed by Domain 01 and their individual formal or hybrid records. Recent proof claims remain `NEEDS_AUDIT` until complete independent review.
+Reimer’s theorem and the post-2022 entropy results are literature-derived imports. Programme lattice claims are governed by Domain 01 and their individual formal or hybrid records. Recent proof claims remain <code>NEEDS_AUDIT</code> until complete independent review.
 
 <div class="imported-box"><strong>Imported-source discipline</strong><p>A bibliography identifies provenance. It does not replace theorem-body verification, normalization checks, or proof.</p></div>
 </section>
 <section class="monograph-section" id="appendix-trust" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Technical appendix G</p>
-## Claim-level trust matrix
+<h2>Claim-level trust matrix</h2>
 
-| Claim | Trust class | Qualification |
-|---|---|---|
-| Frankl’s half-frequency statement | open | no admitted proof |
-| Top union, powerset, singleton injection | established | elementary proofs |
-| No nontrivial counterexample for $n\le4$ | exact finite verification | bounded universe |
-| Reimer average-size theorem | imported established | source statement governs |
-| Dimension-free constant bounds | imported established | constants and hypotheses are source-specific |
-| Programme lattice results | formal or hybrid bounded | individual records govern |
-| 2026 posted proof claims | needs audit | not promoted here |
-| SVG plates | pedagogical | never proof authority |
+<table class="monograph-trust-table">
+  <thead><tr><th scope="col">Claim</th><th scope="col">Trust class</th><th scope="col">Qualification</th></tr></thead>
+  <tbody>
+    <tr><td>Frankl’s half-frequency statement</td><td>open</td><td>no admitted proof</td></tr>
+    <tr><td>Top union, powerset, singleton injection</td><td>established</td><td>elementary proofs</td></tr>
+    <tr><td>No nontrivial counterexample for $n\le4$</td><td>exact finite verification</td><td>bounded universe</td></tr>
+    <tr><td>Reimer average-size theorem</td><td>imported established</td><td>source statement governs</td></tr>
+    <tr><td>Dimension-free constant bounds</td><td>imported established</td><td>constants and hypotheses are source-specific</td></tr>
+    <tr><td>Programme lattice results</td><td>formal or hybrid bounded</td><td>individual records govern</td></tr>
+    <tr><td>2026 posted proof claims</td><td>needs audit</td><td>not promoted here</td></tr>
+    <tr><td>SVG plates</td><td>pedagogical</td><td>never proof authority</td></tr>
+  </tbody>
+</table>
 
 <div class="warning-box"><strong>Final claim boundary</strong><p>This web edition changes presentation and collection membership, not theorem strength. Frankl’s conjecture remains open, and no interaction, plate, bounded replay, or formal special case supplies the missing universal proof.</p></div>
 </section>
 <section class="monograph-section" id="sources" data-reader-section markdown="1"><p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
-## Governing literature and campaign record
+<h2>Governing literature and campaign record</h2>
 
 <div class="bibliography">
 <p>David Reimer, <a href="https://doi.org/10.1017/S0963548302005230">“An Average Set Size Theorem”</a>.</p>

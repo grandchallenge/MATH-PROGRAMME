@@ -1,0 +1,96 @@
+{
+  "assertion_scope": "isolated consumer logic + observed real INTELLECT PR provenance/rules; NOT full-system exploit",
+  "boundary_replay": {
+    "actual_authenticated_github_approval_created": false,
+    "actual_protected_admission_created": false,
+    "gap_flags": {
+      "native_pr_review_not_queried_by_consumer": true,
+      "unreproduced_check_digest_accepted_by_consumer": true
+    },
+    "method": "pure sandbox mocking trusted protected source/API boundary",
+    "record_type": "GCL_PAAR_001_BOUNDARY_OBSERVATION_V1",
+    "results": {
+      "candidate_same_as_source_pr_author": {
+        "accepted": true,
+        "disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+        "queried_native_pr_reviews": false
+      },
+      "changed_source_branch": {
+        "accepted": false,
+        "queried_native_pr_reviews": false,
+        "reason": "source branch moved during readback"
+      },
+      "fabricated_unverifiable_check_digests": {
+        "accepted": true,
+        "disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+        "queried_native_pr_reviews": false
+      },
+      "failed_source_ci": {
+        "accepted": false,
+        "queried_native_pr_reviews": false,
+        "reason": "missing actual protected source check: security / action-policy"
+      },
+      "mismatched_blob": {
+        "accepted": false,
+        "queried_native_pr_reviews": false,
+        "reason": "dossier byte identity drift"
+      },
+      "no_source_pr_review_endpoint": {
+        "accepted": true,
+        "disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+        "queried_native_pr_reviews": false
+      },
+      "stale_pass_head": {
+        "accepted": false,
+        "queried_native_pr_reviews": false,
+        "reason": "review role, immutable source, or read-only gate failed"
+      },
+      "synthetic_baseline": {
+        "accepted": true,
+        "disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+        "queried_native_pr_reviews": false
+      }
+    },
+    "scope": "isolated consumer acceptance logic; not an end-to-end forged GitHub merge",
+    "source": "ci/agent_role_receipt.py at the caller's checkout"
+  },
+  "captured_utc": "2026-10-16T10:28:34.663268+00:00",
+  "commands": [
+    "python3 governance/assurance/GCL-PAAR-001/audit_role_boundary.py",
+    "python3 -m unittest -q ci.test_erdos_compendium_publication_gate ci.test_erdos_compendium_editorial_replay",
+    "python3 governance/assurance/GCL-PAAR-001/replay_baseline.py --live"
+  ],
+  "consumer_sha256": "1132c42031feec9c8d96e6970bbb9a9eb8bd9c063b8d798cae48f752d1713070",
+  "disposition": "PARTIAL_WITH_CONCRETE_CONSUMER_PROVENANCE_GAPS;NO_REAL_WORLD_FORGERY_DEMONSTRATED",
+  "editorial_tests": {
+    "head": "b28049b1969112d649d9e4b99a3cb900a1e6f6c0",
+    "passed": 40,
+    "total": 40
+  },
+  "governance_effects": {
+    "certifications": 0,
+    "review_approvals": 0,
+    "worker_state_changes": 0,
+    "writes_to_protected_branches": 0
+  },
+  "intellect_pr121": {
+    "branch_rules": "effective /rules/branches/main at capture",
+    "head_sha": "69f89aa56c373a5978e58740fb60a9a2e6b32a3d",
+    "merged_at": "2026-10-15T09:14:28Z",
+    "native_review_count": 0,
+    "required_approving_review_count": 0,
+    "source_author": "fyremael",
+    "source_role_dossier_commit": "a643dc472e2ae1201528de3a67632f8662000e20",
+    "url": "https://github.com/grandchallenge/INTELLECT/pull/121"
+  },
+  "live_pinned_blob_replay": {
+    "global_certified": false,
+    "result": "PASS_BOUNDED_ONLY",
+    "reverified": 14
+  },
+  "protected_intellect_head": "d43cdd1b478ad1816ee6c838f8e7500ca11c547f",
+  "protected_mprog_head": "b28049b1969112d649d9e4b99a3cb900a1e6f6c0",
+  "record_type": "GCL_PAAR_001_ROLE_BOUNDARY_REPLAY_RECEIPT_V1",
+  "replay_sha256": "0a84f83c1b28e39afc505a7194486ed5696799adb20c8923a984f9d84f43f2c0",
+  "workstream": "GCL-PAAR-001"
+}

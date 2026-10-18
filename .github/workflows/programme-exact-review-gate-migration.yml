@@ -1,0 +1,82 @@
+name: Programme exact review gate migration
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/programme-exact-review-gate-migration.yml"
+      - "ci/programme_review_gate_migration.py"
+      - "governance/programme_review_gate_migration.json"
+      - "tests/test_programme_review_gate_migration.py"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/programme-exact-review-gate-migration.yml"
+      - "ci/programme_review_gate_migration.py"
+      - "governance/programme_review_gate_migration.json"
+      - "tests/test_programme_review_gate_migration.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: programme-exact-review-gate-migration
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install pinned policy environment
+        run: python -m pip install --requirement requirements/policy.txt
+      - name: Validate exact migration contract and hostile tests
+        run: |
+          python ci/programme_review_gate_migration.py --mode validate
+          python -m unittest tests.test_programme_review_gate_migration -v
+
+  apply-on-protected-main:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: release-trust
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --requirement requirements/policy.txt
+      - name: Obtain bounded administration-only App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
+          private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-administration: write
+      - name: Change exactly two live review parameters; read back protection
+        env:
+          GCL_REPOSITORY_ADMIN_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python ci/programme_review_gate_migration.py --mode apply \
+            --receipt programme-review-gate-receipt.json
+      - name: Preserve narrow migration evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: programme-exact-review-gate-migration
+          path: programme-review-gate-receipt.json
+          if-no-files-found: ignore
+          retention-days: 90

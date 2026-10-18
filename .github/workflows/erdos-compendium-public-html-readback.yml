@@ -1,0 +1,155 @@
+name: Erdős Compendium public mathematical HTML readback
+
+on:
+  workflow_dispatch:
+    inputs:
+      problem_id:
+        description: "Accepted Erdős article number for exact source/rendered-page parity"
+        required: true
+        type: number
+  workflow_run:
+    workflows: ["Deploy documentation site"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-compendium-live-html-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  public-readback:
+    name: Verify published #7 MathJax in Chromium
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.repository == 'grandchallenge/MATH-PROGRAMME' &&
+      github.event.workflow_run.event == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.repository.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release-trust
+    steps:
+      - name: Checkout protected main, not workflow-run artifacts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Reject stale deploy and bind exact published main identity
+        env:
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$DEPLOYED_SHA"
+          test "$(gh api repos/$GITHUB_REPOSITORY/branches/main --jq '.commit.sha')" = "$DEPLOYED_SHA"
+          test -f governance/erdos_compendium/editorial/0007.md
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install pinned read-only real-browser probe
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/compendium_public_html.txt
+          python -m playwright install --with-deps chromium
+      - name: Read live deployed HTML and exact-head GitHub MathJax DOM
+        env:
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: python ci/erdos_compendium_public_html_readback.py
+
+      - name: Store screenshot and bounded DOM evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-compendium-live-html-${{ github.run_id }}
+          path: readback/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Mint bounded Council Clerk receipt credential
+        id: clerk-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+
+      - name: Record actual noncertifying public DOM readback once
+        env:
+          GH_TOKEN: ${{ steps.clerk-token.outputs.token }}
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(jq -r '.status' readback/readback.json)" = PASS
+          admission_state="$(jq -r '.editorial_accepted' readback/readback.json)"
+          case "$admission_state" in true|false) ;; *) echo "Invalid protected editorial state" >&2; exit 1;; esac
+          test "$(jq -r '.mathematical_certified' readback/readback.json)" = false
+          test "$(jq -r '.github_render.status' readback/readback.json)" = PASS
+          marker="ERDOS-COMPENDIUM-PUBLIC-HTML-READBACK/1 deployed_sha=$DEPLOYED_SHA"
+          if gh api --paginate "repos/$GITHUB_REPOSITORY/issues/2556/comments?per_page=100" \
+              --jq '.[].body' | grep -Fq "$marker"; then
+            echo "Receipt already recorded; replay is idempotent"
+            exit 0
+          fi
+          json_hash="$(sha256sum readback/readback.json | cut -d' ' -f1)"
+          dom_hash="$(jq -r '.dom_sha256' readback/readback.json)"
+          math_count="$(jq -r '.observed.mathOutputs' readback/readback.json)"
+          github_count="$(jq -r '.github_render.renderedMath' readback/readback.json)"
+          github_renderer="$(jq -r '.github_render.renderer' readback/readback.json)"
+          test "$github_count" -ge 7
+          {
+            printf '%s\n' "$marker"
+            printf 'Readback: PASS; HTML URL: https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0007/\n'
+            printf 'MkDocs MathJax CHTML nodes: %s; protected-ledger editorial state, theorem/example probes: PASS.\n' "$math_count"
+            printf 'Exact-head GitHub visible rendered mathematics: %s nodes, renderer %s; source/math probes: PASS.\n' "$github_count" "$github_renderer"
+            printf 'Browser DOM SHA-256: %s; evidence JSON SHA-256: %s\n' "$dom_hash" "$json_hash"
+            printf 'Protected controller: https://github.com/%s/actions/runs/%s\n' "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+            printf 'Review artifact: erdos-compendium-live-html-%s\n' "$GITHUB_RUN_ID"
+            printf 'Site readback only: editorial_accepted=%s (protected source-bound ledger); mathematical_certified=false. Does NOT advance Project state.\n' "$admission_state"
+          } > readback/receipt.md
+          gh issue comment 2556 --repo "$GITHUB_REPOSITORY" --body-file readback/receipt.md
+
+  accepted-parity:
+    name: Verify one accepted article against deployed MathJax HTML
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'grandchallenge/MATH-PROGRAMME'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release-trust
+    steps:
+      - name: Checkout current protected main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+      - name: Install pinned read-only publication verifier
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/compendium_public_html.txt
+          python -m playwright install --with-deps chromium
+      - name: Test fail-closed article comparator
+        run: python ci/test_erdos_accepted_publication_parity.py
+      - name: Verify actual protected admission, deployed source and rendered maths
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTICLE_ID: ${{ inputs.problem_id }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_accepted_publication_live.py --problem-id "$ARTICLE_ID" --repository-root . --output readback/accepted-parity.json
+      - name: Preserve bounded verified article evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: accepted-source-rendered-parity-${{ github.run_id }}
+          path: readback/accepted-parity.json
+          retention-days: 30
+          if-no-files-found: warn

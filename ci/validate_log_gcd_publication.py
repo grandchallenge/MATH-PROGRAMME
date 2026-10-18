@@ -179,12 +179,17 @@ def check_public_pages(root: Path, manifest: dict[str, Any]) -> None:
     require("This is the first Lean formalization" not in page_text, "publication page promotes priority")
 
     showcase_text = showcase.read_text(encoding="utf-8")
+    # The public page may use plain-language headings, but must preserve
+    # its long-standing published link and the underlying evidence boundaries.
+    # Publication identity and status are independently locked above by the
+    # exact manifest, certificate page, claim ledger, and prior-art audit.
     for fragment in (
-        "## Fixture 003: The logarithmic GCD kernel",
-        "PUB-LOG-GCD-001",
-        "Classical mathematics · certified formal artifact",
-        "Publication status: published",
-        "No novelty or priority claim",
+        '<a id="fixture-003-the-logarithmic-gcd-kernel"></a>',
+        "## A mathematical fact about greatest common divisors",
+        "produced and checked a Lean proof",
+        "The result is not a new theorem",
+        "(LOG_GCD_PUBLICATION.md)",
+        "(LOG_GCD_PRIOR_ART_AUDIT.md)",
     ):
         require(fragment in showcase_text, f"showcase entry missing: {fragment!r}")
     require("Publication candidate" not in showcase_text, "showcase retains candidate status")

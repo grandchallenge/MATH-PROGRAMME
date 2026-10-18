@@ -1,0 +1,133 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort_id": "EC-BULK-005",
+  "tranche": {
+    "first": 685,
+    "last": 693,
+    "exact_problem_count": 9
+  },
+  "authority": {
+    "registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+    "branch": "editorial/ec-bulk-005-200",
+    "authenticated_actor": "fyremael",
+    "scope": "Direct-editorial unaccepted source audit"
+  },
+  "source_issues": [
+    1956,
+    1957,
+    1958,
+    1959,
+    1960,
+    1961,
+    1962,
+    1963,
+    1964
+  ],
+  "source_comment_ids": [
+    6158363507,
+    6158364520,
+    6158365568,
+    6158366583,
+    6158382164,
+    6158383334,
+    6158384282,
+    6158385326,
+    6158393003
+  ],
+  "source_return_grammar": {
+    "unique_original_issue_returns": 9,
+    "exact_result1_grammar_pass": 9,
+    "original_issue_comment_duplicates": 0,
+    "actor": "fyremael",
+    "native_state_readback": "AVAILABLE SOURCE",
+    "native_chad_receipts": [
+      "GCL_CONTROL_BASH_RESULT/1:24ab2093c5974ed4ad34c46f0e6d1376",
+      "GCL_CONTROL_BASH_RESULT/1:74f091d6aee140c8a6fbd146c26e775d"
+    ]
+  },
+  "articles": {
+    "count": 9,
+    "numbered_files": "governance/erdos_compendium/editorial/0685.md through 0693.md",
+    "six_h2_sections_pass": 9,
+    "source_return_links_present": 9,
+    "no_unbalanced_display_math_delimiters": 9,
+    "typography": "FULL_RENDERABLE_LATEX_REVIEW_PENDING",
+    "source_primary_page_review": "PARTIAL",
+    "critical_editorial_review": "PENDING",
+    "published": "NO",
+    "v2_admitted": "NO"
+  },
+  "fixtures": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_685_693.py",
+    "source_commit": "7b515ab1fb8917c3b3528a9718b80a6a75fea9f7",
+    "runner": "CHAD authenticated Bash, exact GitHub branch content via gh api --method GET and Python3",
+    "receipt": "GCL_CONTROL_BASH_RESULT/1:5b6e9296a28245d7894f57ae710a49e9",
+    "exit_code": 0,
+    "passed": 9,
+    "total": 9,
+    "reported_seconds": 0.005,
+    "scope": "Only exact finite examples and boundaries, not asymptotic or source-theorem proof",
+    "note": "One initial gh api call omitted --method GET and failed 404; corrected command ran 9/9 PASS."
+  },
+  "status_boundaries": [
+    {
+      "id": 685,
+      "status": "OPEN",
+      "risk": "Kummer/Legendre valuation and uniform asymptotic distinguished; original Erdős primary not inspected"
+    },
+    {
+      "id": 686,
+      "status": "OPEN",
+      "risk": "Known N=9 witness; N=4 k=2 obstruction not all k; pinned formal file mixed sorry and non-sorry; compilation not replayed"
+    },
+    {
+      "id": 687,
+      "status": "OPEN",
+      "risk": "Iwaniec upper O(x^2) and FGKMT lower attributed; no claim of o(x^2)"
+    },
+    {
+      "id": 688,
+      "status": "OPEN",
+      "risk": "Fixed-n feasible residue set can be empty, as proved at n=10; epsilon supremum/maximum requires domain convention; pinned proof holes"
+    },
+    {
+      "id": 689,
+      "status": "OPEN",
+      "risk": "Unreviewed proposed solutions remain claims; no promotion of weighted GTZ argument to proof"
+    },
+    {
+      "id": 690,
+      "status": "SOLVED_GENERAL_QUESTION_NEGATIVE",
+      "risk": "Cambie publisher theorem confirms k=1..3 and counterexamples k=4..20; later all-k claims unverified"
+    },
+    {
+      "id": 691,
+      "status": "OPEN",
+      "risk": "Divergent reciprocal sum insufficient for arbitrary A; exact A={2p} obstruction"
+    },
+    {
+      "id": 692,
+      "status": "DISPROVED_EXTERNAL_LEAN_REPORTED",
+      "risk": "Exact δ1(3,6)=7/20, δ1(3,7)=1/3, δ1(3,8)=38/105; external Lean not GCL certified"
+    },
+    {
+      "id": 693,
+      "status": "OPEN",
+      "risk": "Divisor-rich consecutive gap polylog remains open; finite n,k checks nonasymptotic"
+    }
+  ],
+  "prior_issues_preserved": [
+    "#662 historical source-semantic hold",
+    "#678 false fixed-k formal target hold",
+    "#683 false strict-inequality formal target hold"
+  ],
+  "governance": {
+    "protected_branch_main_changed": false,
+    "production_pr": false,
+    "strict_mkdocs": "NOT_RUN",
+    "deployed_browser_math": "NOT_VERIFIED",
+    "full_math_primary_source_certification": false,
+    "minimum_twenty_article_critical_sample": "NOT_COMPLETE",
+    "v2_editorial_admission": "NONE"
+  }
+}

@@ -9,6 +9,8 @@ import validate_workflow_coverage_v3 as v3
 RECOVERY_FAILOVER_WORKFLOW = "administrative-maintenance-0813-recovery-failover.yml"
 QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualification.yml"
 CONSTRUCTION_GATE_WORKFLOW = "construction-gate-runtime.yml"
+ROLLING_REVIEW_DIRECT_WORKFLOW = "erdos-rolling-review-completion.yml"
+THREE_SOURCE_COUNCIL_WORKFLOW = "erdos-three-source-resolution.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -30,6 +32,8 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     RECOVERY_FAILOVER_WORKFLOW,
     QUALIFICATION_ONLY_WORKFLOW,
     CONSTRUCTION_GATE_WORKFLOW,
+    ROLLING_REVIEW_DIRECT_WORKFLOW,
+    THREE_SOURCE_COUNCIL_WORKFLOW,
     "ghos-routing-enforcement.yml",
 }
 
@@ -342,17 +346,302 @@ def remediation_envelope_errors(texts: dict[str, str]) -> list[str]:
             errors.append(f"{QUALIFICATION_ONLY_WORKFLOW}: forbidden remediation capability {forbidden}")
     return errors
 
+def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
+    """Explicit, claim-free, cost-bounded exception to generic read-only workflow rule.
+
+    This does NOT grant certification, source acceptance, or a Solve lease.
+    Only the named jobs in the existing registered persistent controller qualify.
+    """
+    key = "erdos-catalogue-queue-projection.yml"
+    source = texts.get(key)
+    if source is None:
+        return []
+    wf = v3.legacy.load_yaml_text(source)
+    jobs = wf.get("jobs", {})
+    expected = {"reconcile", "ledger", "canary",
+                "forge-pilot-review", "forge-pilot-evidence"}
+    if set(jobs) != expected:
+        return [f"{key}: Forge pilot requires exact five-job topology"]
+    agent = _job(wf, "forge-pilot-review")
+    publisher = _job(wf, "forge-pilot-evidence")
+    errors: list[str] = []
+    if agent.get("permissions") != {
+        "contents": "read", "issues": "read", "copilot-requests": "write"
+    }:
+        errors.append(f"{key}: AI model job must be repository-read and copilot-only")
+    if publisher.get("permissions") != {
+        "contents": "read", "issues": "write", "actions": "read"
+    }:
+        errors.append(f"{key}: trusted publisher must lack copilot-requests permission")
+    for name, job in (("forge-pilot-review", agent), ("forge-pilot-evidence", publisher)):
+        raw_timeout = str(job.get("timeout-minutes", ""))
+        bound = 12 if name == "forge-pilot-review" else 5
+        if not raw_timeout.isdecimal() or not (1 <= int(raw_timeout) <= bound):
+            errors.append(f"{key}: {name} exceeds bounded timeout")
+        condition = str(job.get("if", ""))
+        if "github.event_name == 'push'" not in condition:
+            errors.append(f"{key}: {name} cannot incur scheduled/repeated AI action")
+        if job.get("runs-on") != "ubuntu-24.04":
+            errors.append(f"{key}: {name} needs bounded approved runner")
+        steps = job.get("steps", [])
+        main_checkout = [z for z in steps if
+                         str(z.get("uses", "")).startswith("actions/checkout@") and
+                         z.get("with", {}).get("ref") == "main" and
+                         str(z.get("with", {}).get("persist-credentials", "")).lower() == "false"]
+        if len(main_checkout) != 1:
+            errors.append(f"{key}: {name} must checkout protected main without retained credential")
+    if agent.get("needs") != ["reconcile"]:
+        errors.append(f"{key}: Forge pilot must follow queue reconciler")
+    if publisher.get("needs") != ["forge-pilot-review"]:
+        errors.append(f"{key}: evidence publication must follow independent model run")
+    agent_text = str(agent)
+    publisher_text = str(publisher)
+    for required in (
+        "ci/erdos_forge_copilot_pilot.py prepare",
+        "steps.prep.outputs.ready",
+        "npm install -g @github/copilot@1.0.66",
+        "--model=gpt-5.4 --max-ai-credits=30 --no-auto-update",
+        "--available-tools=read",
+        "--deny-tool=shell",
+        "--deny-tool=write",
+        "--deny-tool=url",
+        "--disable-builtin-mcps",
+        "--no-ask-user",
+        "--no-auto-update",
+        "timeout 420s",
+        "copilot-requests",
+        "GITHUB_TOKEN",
+        "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+    ):
+        if required not in agent_text:
+            errors.append(f"{key}: missing protected read-only AI boundary {required}")
+    for forbidden in ("gh pr merge", "git push", "--allow-all", "permission-contents: write"):
+        if forbidden in agent_text or forbidden in publisher_text:
+            errors.append(f"{key}: forbidden pilot capability {forbidden}")
+    for required in (
+        "ci/erdos_forge_copilot_pilot.py publish",
+        "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+        "GH_TOKEN",
+    ):
+        if required not in publisher_text:
+            errors.append(f"{key}: missing separately-scoped evidence publisher {required}")
+    if "copilot" in str(publisher.get("permissions", {})) or "issues" not in str(publisher.get("permissions", {})):
+        errors.append(f"{key}: agent credentials may not appear in evidence publisher")
+    return errors
+
+
+def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
+    """Fail closed on any widened, unaudited direct Council Clerk entry point."""
+    key = ROLLING_REVIEW_DIRECT_WORKFLOW
+    source = texts.get(key)
+    if source is None:
+        return []
+    workflow = v3.legacy.load_yaml_text(source)
+    errors: list[str] = []
+    if _trigger(workflow) != {"workflow_dispatch": ""}:
+        errors.append(f"{key}: only explicit workflow_dispatch from main is permitted")
+    if workflow.get("permissions") != {"contents": "read"}:
+        errors.append(f"{key}: top-level GitHub token must be contents read only")
+    if set(workflow.get("jobs", {})) != {"council-clerk-complete-reviews"}:
+        errors.append(f"{key}: unexpected job topology")
+    job = _job(workflow, "council-clerk-complete-reviews")
+    if (job.get("environment") != "release-trust"
+            or job.get("permissions") != {"contents": "read"}
+            or "refs/heads/main" not in str(job.get("if", ""))
+            or "grandchallenge/MATH-PROGRAMME" not in str(job.get("if", ""))):
+        errors.append(f"{key}: missing protected-source/release-trust job envelope")
+    steps = job.get("steps") or []
+    if len(steps) != 6 or not all(isinstance(x, dict) for x in steps):
+        errors.append(f"{key}: expected exactly six protected transaction steps")
+        return errors
+    checkout, python, tests, credential, execute, receipt = steps
+    if (checkout.get("uses") !=
+            "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            or checkout.get("with") != {"ref": "main", "persist-credentials": "false"}):
+        errors.append(f"{key}: wrong immutable protected-main checkout")
+    if (python.get("uses") !=
+            "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            or python.get("with") != {"python-version": "3.12"}):
+        errors.append(f"{key}: unapproved Python bootstrap")
+    if "tests/test_erdos_catalogue_queue_projection.py" not in str(tests.get("run", "")):
+        errors.append(f"{key}: missing hostile exact-14 controller test")
+    token = credential.get("with") or {}
+    if (credential.get("uses") !=
+            "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
+            or token.get("owner") != "grandchallenge"
+            or token.get("repositories") != "MATH-PROGRAMME"
+            or token.get("permission-issues") != "write"
+            or token.get("permission-organization-projects") != "write"
+            or set(token) != {"app-id", "private-key", "owner", "repositories",
+                              "permission-issues", "permission-organization-projects"}
+            or "GCL_COUNCIL_CLERK_APP_ID" not in str(token["app-id"])
+            or "GCL_COUNCIL_CLERK_PRIVATE_KEY" not in str(token["private-key"])):
+        errors.append(f"{key}: Council Clerk token permission or identity drift")
+    run = str(execute.get("run", ""))
+    env = execute.get("env") or {}
+    if (env.get("GCL_CONTROLLER_ID") != "erdos-rolling-review-completion"
+            or "steps.council.outputs.token" not in str(env.get("GH_TOKEN", ""))
+            or "ci/erdos_catalogue_queue_projection.py" not in run
+            or "--review-completion --apply" not in run
+            or "--receipt rolling-critical-reviews/receipt.json" not in run
+            or "test -n" not in run):
+        errors.append(f"{key}: unrecognized exact-14 bounded controller invocation")
+    if (receipt.get("uses") !=
+            "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+            or receipt.get("if") != "always()"
+            or receipt.get("with", {}).get("path") !=
+               "rolling-critical-reviews/receipt.json"):
+        errors.append(f"{key}: controller completion/blocker receipt not retained")
+    for forbidden in ("gh pr merge", "gh project item-edit", "gh api --method PUT",
+                      "permission-administration", "secrets.GCL_RELEASE_TRUST"):
+        if forbidden in source:
+            errors.append(f"{key}: forbidden broad control-plane capability {forbidden}")
+    return errors
+
+
+def three_source_council_errors(texts: dict[str, str]) -> list[str]:
+    """Protect source remediation from widened authorities or manual bypass."""
+    key = THREE_SOURCE_COUNCIL_WORKFLOW
+    source = texts.get(key)
+    if source is None:
+        return []
+    workflow = v3.legacy.load_yaml_text(source)
+    errors: list[str] = []
+    if _trigger(workflow) != {'workflow_dispatch': ''}:
+        errors.append(f'{key}: only on-demand protected-main execution allowed')
+    if workflow.get('permissions') != {'contents': 'read'}:
+        errors.append(f'{key}: unscoped GitHub Actions permissions')
+    if set(workflow.get('jobs', {})) != {'council-clerk-source-remediation'}:
+        errors.append(f'{key}: unexpected job topology')
+    job = _job(workflow, 'council-clerk-source-remediation')
+    if (job.get('environment') != 'release-trust'
+            or job.get('permissions') != {'contents': 'read'}
+            or 'refs/heads/main' not in str(job.get('if',''))
+            or 'grandchallenge/MATH-PROGRAMME' not in str(job.get('if',''))):
+        errors.append(f'{key}: lost protected Council environment')
+    steps = job.get('steps') or []
+    if len(steps) != 7 or not all(isinstance(x,dict) for x in steps):
+        errors.append(f'{key}: expected exactly seven bounded steps')
+        return errors
+    checkout,python,tests,credential,preflight,apply,receipt=steps
+    if (checkout.get('uses') != 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+            or checkout.get('with') != {'ref':'main','persist-credentials':'false'}):
+        errors.append(f'{key}: checkout not protected and credential-free')
+    if (python.get('uses') != 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97'
+            or python.get('with') != {'python-version':'3.12'}):
+        errors.append(f'{key}: unpinned runtime bootstrap')
+    test=str(tests.get('run',''))
+    if ('governance/source_erdos_critical_005/validate.py' not in test
+            or 'tests/test_erdos_three_source_resolution.py' not in test):
+        errors.append(f'{key}: hostile controls or source hash checks missing')
+    token=credential.get('with') or {}
+    if (credential.get('uses') != 'actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1'
+            or token.get('owner')!='grandchallenge'
+            or token.get('repositories')!='MATH-PROGRAMME'
+            or token.get('permission-issues')!='write'
+            or token.get('permission-organization-projects')!='read'
+            or set(token)!={'app-id','private-key','owner','repositories','permission-issues','permission-organization-projects'}
+            or 'GCL_COUNCIL_CLERK_APP_ID' not in str(token.get('app-id',''))
+            or 'GCL_COUNCIL_CLERK_PRIVATE_KEY' not in str(token.get('private-key',''))):
+        errors.append(f'{key}: Council Clerk role or least privileges changed')
+    for step,needs_apply,path in ((preflight,False,'preflight.json'),(apply,True,'receipt.json')):
+        env=step.get('env') or {}
+        run=str(step.get('run',''))
+        if (env.get('GCL_CONTROLLER_ID')!='erdos-three-source-resolution'
+                or 'steps.council.outputs.token' not in str(env.get('GH_TOKEN',''))
+                or 'ci/erdos_three_source_resolution.py' not in run
+                or f'--receipt artifacts/erdos-three-source-resolution/{path}' not in run
+                or ('--apply' in run)!=needs_apply):
+            errors.append(f'{key}: missing exact bounded Council operation')
+    if (receipt.get('uses')!='actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a'
+            or receipt.get('if')!='always()'
+            or receipt.get('with',{}).get('path')!='artifacts/erdos-three-source-resolution'):
+        errors.append(f'{key}: source-adjudication receipt retention missing')
+    for forbidden in ('permission-administration','gh pr merge','gh project item-edit',
+                      'git push','pull_request_target','secrets.GCL_RELEASE_TRUST'):
+        if forbidden in source:
+            errors.append(f'{key}: forbidden control plane capability {forbidden}')
+    return errors
+
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
+    pilot_errors = erdos_forge_copilot_pilot_errors(texts)
     delegated_permission_errors = {
         f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:qualify: non-Pages job permissions may not exceed contents: read",
+        "erdos-catalogue-intake.yml:capture: non-Pages job permissions may not exceed contents: read",
+        "erdos-catalogue-queue-projection.yml:reconcile: non-Pages job permissions may not exceed contents: read",
     }
+    if not pilot_errors:
+        delegated_permission_errors |= {
+            "erdos-catalogue-queue-projection.yml:forge-pilot-review: non-Pages job permissions may not exceed contents: read",
+            "erdos-catalogue-queue-projection.yml:forge-pilot-evidence: non-Pages job permissions may not exceed contents: read",
+        }
     errors = [error for error in errors if error not in delegated_permission_errors]
+    errors.extend(pilot_errors)
     errors.extend(recovery_failover_errors(texts))
     errors.extend(remediation_envelope_errors(texts))
+    errors.extend(rolling_review_direct_errors(texts))
+    errors.extend(three_source_council_errors(texts))
+    queue_projection = texts.get("erdos-catalogue-queue-projection.yml")
+    if queue_projection is not None:
+        workflow = v3.legacy.load_yaml_text(queue_projection)
+        jobs = workflow.get("jobs", {})
+        projection = _job(workflow, "reconcile")
+        if (workflow.get("permissions") != {"contents": "read"} or
+                set(jobs) != {"reconcile", "ledger", "canary",
+                              "forge-pilot-review", "forge-pilot-evidence"}):
+            errors.append("erdos queue projection: unrecognized workflow or write scope")
+        ledger = _job(workflow, "ledger")
+        canary = _job(workflow, "canary")
+        if ledger.get("permissions") != {"contents": "read"} or canary.get("permissions") != {"contents": "read"}:
+            errors.append("erdos event custody: only base contents-read job permissions allowed")
+        ledger_text = str(ledger)
+        canary_text = str(canary)
+        for required in (
+            "ci/erdos_event_custody.py --mode ledger",
+            "steps.ledger-token.outputs.token",
+            "secrets.GCL_COUNCIL_CLERK_APP_ID",
+            "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY",
+            "permission-issues",
+        ):
+            if required not in ledger_text:
+                errors.append(f"erdos event custody: missing bounded ledger marker {required}")
+        for required in ("ci/erdos_event_custody.py --mode canary", "github.token", "2500"):
+            if required not in canary_text:
+                errors.append(f"erdos event canary: missing isolated acceptance marker {required}")
+        if "permission-organization-projects" in ledger_text or "steps.queue-token.outputs.token" in ledger_text:
+            errors.append("erdos event custody: ledger must not use Project mutation token")
+        if projection.get("permissions") != {"contents": "read", "issues": "write"}:
+            errors.append("erdos queue projection: exact job write permissions required")
+        steps = projection.get("steps", [])
+        runs = "\\n".join(str(step.get("run", "")) for step in steps)
+        if ("ci/erdos_catalogue_programme_intake.py --live-snapshot" not in runs
+                or "ci/erdos_catalogue_queue_projection.py --report" not in runs
+                or "steps.queue-token.outputs.token" not in queue_projection
+                or "permission-organization-projects: write" not in queue_projection
+                or "permission-issues: write" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_APP_ID" not in queue_projection
+                or "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY" not in queue_projection):
+            errors.append("erdos queue projection: evidence source / scoped credential binding drift")
+    catalogue = texts.get("erdos-catalogue-intake.yml")
+    if catalogue is not None:
+        workflow = v3.legacy.load_yaml_text(catalogue)
+        capture = _job(workflow, "capture")
+        if capture.get("permissions") != {"contents":"read","issues":"read"}:
+            errors.append("erdos-catalogue-intake.yml:capture: permissions must be contents-read and issues-read only")
+        if set(workflow.get("jobs", {})) != {"test", "capture"}:
+            errors.append("erdos-catalogue-intake.yml: unexpected capture topology")
+        checkouts = [step for step in capture.get("steps", []) if step.get("uses", "").startswith("actions/checkout@")]
+        if len(checkouts) != 1 or checkouts[0].get("with", {}).get("ref") != "main":
+            errors.append("erdos-catalogue-intake.yml:capture: trusted-main checkout required")
+        if "write" in json.dumps(capture.get("permissions", {})):
+            errors.append("erdos-catalogue-intake.yml:capture: repository mutation is forbidden")
+        if "secrets." in catalogue or "secrets[" in catalogue:
+            errors.append("erdos-catalogue-intake.yml: repository secrets are outside the read-only capture envelope")
 
     commands = _registry_commands(root=root, registry=registry)
     prefix = "ci.yml: missing workflow coverage marker "

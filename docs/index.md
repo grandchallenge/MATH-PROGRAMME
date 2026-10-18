@@ -13,6 +13,7 @@ hide:
     <div class="home-hero__actions">
       <a class="home-action home-action--primary" href="CURRENT_WORK/">Current work</a>
       <a class="home-action" href="SHOWCASE/">Results</a>
+      <a class="home-action" href="erdos/">Erdős Compendium</a>
     </div>
     <div class="home-pipeline" aria-label="Mathematical execution path">
       <a class="home-pipeline__stage" href="https://github.com/grandchallenge/MATHFORGE">
@@ -42,6 +43,12 @@ Mathematical discovery, solving, and certification are different research states
 
 **MATHFORGE** reconstructs the object, source, and candidate route. **MATHSOLVE** organizes and attacks the exact obligations that block progress. **MATHCERT** checks the precise claim and support surface presented to it. **MATH-PROGRAMME** preserves the integrated record, routing, governance, and continuation state; it does not certify mathematics by itself.
 
+## Erdős Compendium — the public reference
+
+The [Erdős Compendium](erdos/index.md) makes the complete numbered catalogue accessible, with problem statements, source references and — where the evidence has been editorially admitted — researched explanations. Readers can [browse all 1,221 registered problems](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/) or follow the admission record for individual articles.
+
+<!-- GCL_ERDOS_HOME_STATUS -->
+
 ## How a claim moves
 
 ![State transition from a question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT. Fail-closed exits record an obstruction, proof debt, or non-promotion.](assets/claim-state-transition.svg)
@@ -49,12 +56,6 @@ Mathematical discovery, solving, and certification are different research states
 The diagram is schematic. It teaches programme state transitions, not logical implication between mathematical statements. A route can stop in MATHFORGE with a recorded obstruction, in MATHSOLVE with proof debt, or in MATHCERT with non-promotion. Those exits remain part of the research record.
 
 [Read the Programme Atlas](PROGRAMME_ATLAS.md) for the full state model, support classes, and semantic-bridge requirements.
-
-## The GCL continuity fabric
-
-![GCL Agent Continuity fabric showing the relationship between the canonical governance layer, specialised repositories, and protected admission.](assets/gcl-agent-continuity-fabric.png)
-
-This public orientation diagram shows how the canonical policy and bounded-operation layers relate to the specialised MATHFORGE, MATHSOLVE, and MATHCERT repositories. The artwork is explanatory, not operative: repository-local policy, protected records, validators, and exact-head evidence remain authoritative. It does not grant authority, certify mathematics, or imply authority inheritance across repositories.
 
 ## External agents can now take bounded work directly
 
@@ -101,6 +102,7 @@ Rows remain here only while the corresponding work is materially active. The [Cu
 - **[Results and Exemplars](SHOWCASE.md)** records bounded outputs that have crossed a declared checking, publication, or archival boundary. It is not a ranking of importance.
 - **[Programme Atlas](PROGRAMME_ATLAS.md)** explains how objects and claims change state across MATHFORGE, MATHSOLVE, MATHCERT, and programme integration.
 - **[Mathematical Estate](domains/index.md)** preserves the standing domain catalogue, routes, and archives. Presence there does not imply current priority.
+- **[Erdős Compendium](erdos/index.md)** opens the numbered mathematical reference, reviewed explainers, source evidence, and outstanding editorial work.
 
 ## Claim boundary
 

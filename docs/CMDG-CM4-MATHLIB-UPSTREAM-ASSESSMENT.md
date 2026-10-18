@@ -102,6 +102,22 @@ This PR should delete or update the existing TODO in `Mathlib/Condensed/Solid.le
 
 Mathlib contributions are Apache-2.0. The GCL repository is separately licensed. Before moving code verbatim, ensure the contributor(s) submitting the port have authority to submit the relevant code under mathlib's contribution terms. Rewriting the proof into mathlib-native form is recommended regardless.
 
+## Upstream contributor integrity — required gate (October 2026)
+
+Mathlib's [current contribution policy](https://leanprover-community.github.io/contribute/) explicitly prohibits LLM-authored GitHub or Zulip comments, requires disclosure of AI assistance in PR descriptions, and expects an engaged human contributor who understands and can justify each part of the submitted Lean code. A substantial LLM-generated code submission also requires the community's `LLM-generated` labeling procedure. These are **external policy requirements** and take precedence over GCL's internal automation or submission preferences.
+
+Accordingly:
+
+- **No autonomous AI submission of an AI-written mathlib PR, Zulip discussion, or reviewer comment.** GCL may prepare research notes, candidate ports, replay scripts and private/draft technical analyses, but must not present generated language as a human contribution.
+- A qualified **human Lean subject expert** must personally inspect, understand, refactor and be prepared to defend the entire mathlib-bound code. The human writes the eventual upstream correspondence in their own words, including accurate AI-use disclosure.
+- Seek maintainers' advice on placement and scope *before* a large port series; reduce the stack into genuinely reusable incremental PRs and compare with current mathlib master, not just the pinned 2026 GCL snapshot.
+- Verify all authorship, provenance and license permissions before transferring source bytes. A verified formal proof does not waive software licensing or the community's human-supervision rules.
+- A GCL-created PR or Issue in `grandchallenge/MATH-PROGRAMME` is an **internal preparation and reproducibility surface**, not a mathlib upstream submission.
+
+**Current release gate:** independent specialist mathematical review [#1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222) **OPEN**; staged port [#1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223) **OPEN**; no representation that mathlib maintainers have accepted this port.
+
+**Recommended first upstream unit:** reusable lemmas about integral functionals on locally constant functions that can be stated without the terminal solid-module theorem. The exact unit must still be chosen with a human Lean expert and maintainer guidance, not inferred from a GCL work-package label.
+
 ## Community engagement
 
 Mathlib's current contribution guidance recommends discussing substantial projects with the community, commonly through the mathlib Zulip, before investing in a large PR series.

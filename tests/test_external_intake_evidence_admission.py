@@ -1,10 +1,11 @@
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from ci.external_intake_evidence_admission import (
     ControllerError,
-    exact_clerk_approval_exists,
     merge_protected,
+    run,
     validate_pr_binding,
 )
 
@@ -107,24 +108,57 @@ class ExternalIntakeEvidenceAdmissionTests(unittest.TestCase):
             )
 
 
-    def test_exact_head_clerk_approval_is_required_and_detected(self):
-        gh = FakeGithub()
-        self.assertTrue(
-            exact_clerk_approval_exists(
-                gh,
-                919,
-                "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
-            )
-        )
+    def test_raw_evidence_admission_needs_no_generic_clerk_review(self):
+        """Routine receipt preservation runs after exact candidate validation.
 
-    def test_wrong_head_clerk_approval_is_not_accepted(self):
+        A previous per-PR Clerk requirement was contrary to the already
+        binding MP-STREAMLINED-EXECUTION-001 administrative execution policy.
+        """
         gh = FakeGithub()
-        self.assertFalse(
-            exact_clerk_approval_exists(
-                gh,
-                919,
-                "0" * 40,
-            )
+        with (
+            patch.dict("os.environ", {
+                "MATHSOLVE_INTAKE_PR_TOKEN": "read-token",
+                "MATHSOLVE_EVIDENCE_MERGE_TOKEN": "merge-token",
+            }),
+            patch("ci.external_intake_evidence_admission.Github", return_value=gh),
+            patch(
+                "ci.external_intake_evidence_admission.list_intake_branches",
+                return_value=["intake/erdos-593-r1-ia-001"],
+            ),
+            patch(
+                "ci.external_intake_evidence_admission.find_open_pr",
+                return_value={"number": 919},
+            ),
+            patch(
+                "ci.external_intake_evidence_admission.validate_candidate",
+                return_value={
+                    "state": "OPEN_PR_EXISTS",
+                    "campaign": "ERDOS-OPEN-RECON",
+                    "dispatch_id": "ERDOS-593-R1-IA-001",
+                },
+            ),
+            patch(
+                "ci.external_intake_evidence_admission.validate_pr_binding",
+                return_value={
+                    "pr_number": 919,
+                    "head_sha": "d041809826dfb92a4baf15607e62d6b7b65d9ee3",
+                },
+            ),
+        ):
+            old_request = gh.request
+            def request(method, path, payload=None):
+                if method == "GET" and path.endswith("/pulls/919"):
+                    return pull_request()
+                return old_request(method, path, payload)
+            gh.request = request
+            report = run(False)
+        self.assertEqual(report["errors"], [])
+        self.assertEqual(len(report["candidates"]), 1)
+        self.assertEqual(report["candidates"][0]["state"], "VALIDATED_FOR_PROTECTED_MERGE")
+        self.assertEqual(report["candidates"][0]["routine_independent_review"], "NOT_REQUIRED")
+        self.assertNotIn(
+            "/pulls/919/reviews?per_page=100",
+            [path for _, path, _ in gh.calls],
         )
 
     def test_admission_script_has_only_the_exact_merge_write_surface(self):

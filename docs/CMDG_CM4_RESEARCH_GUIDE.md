@@ -7,6 +7,8 @@
     Mathlib upstreaming is tracked on [#1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).  
     This guide teaches the route; it does not replace those trackers.
 
+For an introductory path that does not assume condensed mathematics, first read [*Condensed Mathematics for the Perplexed*](CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md). The present guide starts from that framework and proceeds to the CM4 proof obligations.
+
 ## Status and intended reader
 
 | Field | Value |
@@ -141,6 +143,11 @@ It does not promote:
 - Liquid Tensor;
 - CM5;
 - global dependency-graph certification.
+
+## Independent proof and replay materials
+
+- [Mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md): a complete reader-facing argument map separating the finite heuristic from the general profinite theorem.
+- [Reproducibility protocol](CMDG_CM4_REPRODUCIBILITY.md): one exact immutable historical checkout, Lean/mathlib identity checks, two formal lanes, and adversarial failure tests.
 
 ## Where to go next
 

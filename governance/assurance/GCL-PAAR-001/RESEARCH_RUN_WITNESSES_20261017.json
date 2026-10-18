@@ -1,0 +1,163 @@
+{
+  "branch_protection_remediated": false,
+  "observed_utc": "2026-10-17T10:17:37.296584+00:00",
+  "record_type": "GCL_PAAR_RESEARCH_RUN_WITNESS/1",
+  "runs": [
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-17T05:56:44Z",
+      "event": "schedule",
+      "head": "767017f5658a3d02783591146ad9ec9a5a26a4ed",
+      "jobs": [
+        {
+          "conclusion": "success",
+          "id": 117324567148,
+          "name": "reconcile",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            },
+            {
+              "conclusion": "success",
+              "name": "Replay missed direct-editorial RESULT/1 returns"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        }
+      ],
+      "name": "Atlas direct editorial return replay",
+      "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS",
+      "run_attempt": 1,
+      "run_id": 39008087687,
+      "semantic_admission_verified": false
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-17T09:23:24Z",
+      "event": "schedule",
+      "head": "7f7f561897981b329df8e40b5883d2a9d46fb664",
+      "jobs": [
+        {
+          "conclusion": "success",
+          "id": 117362428808,
+          "name": "reconcile",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            },
+            {
+              "conclusion": "success",
+              "name": "Replay missed direct-editorial RESULT/1 returns"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        }
+      ],
+      "name": "CDA direct editorial return replay",
+      "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS",
+      "run_attempt": 1,
+      "run_id": 39020937362,
+      "semantic_admission_verified": false
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-08T22:58:35Z",
+      "event": "push",
+      "head": "da7ddadc9743c14549e5132e8fc98b66d5223de6",
+      "jobs": [
+        {
+          "conclusion": "success",
+          "id": 113582689277,
+          "name": "unit",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python -m pip install -r experiments/gsd-001/requirements-ci.txt"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python -m compileall -q experiments/gsd-001"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run bash -n experiments/gsd-001/colab/run_wp01_colab.sh"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run PYTHONPATH=experiments/gsd-001 pytest -q experiments/gsd-001/tests"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job"
+            }
+          ]
+        }
+      ],
+      "name": "GSD evaluator tests",
+      "repository": "grandchallenge/GSD",
+      "run_attempt": 1,
+      "run_id": 37856762182,
+      "semantic_admission_verified": false
+    }
+  ]
+}

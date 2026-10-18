@@ -23,6 +23,15 @@ The historical audit remains a historical record. Current execution semantics ar
 
 ## Global policy gate
 
+The catalogue source-intake controller is registered under the admitted GitHub
+Actions executor in `.ghos-routing/workflows.json`. Its PR job runs the bounded
+catalogue intake tests. Its trusted-main capture job has contents-read and
+issues-read permission only, with no repository secrets or mutation permission.
+It captures comment revisions/deletion events and performs a six-hour source
+return reconciliation, retaining unadjudicated artifacts for 90 days. Detailed
+processing and disposition boundaries are in
+[`ERDOS_CATALOGUE_PROCESSING.md`](campaigns/ERDOS_CATALOGUE_PROCESSING.md).
+
 `.github/workflows/ci.yml` is the global `Programme policy checks` workflow. It runs on pull requests, pushes to `main`, merge groups, explicit manual audits, and scheduled policy assurance according to the workflow definition.
 
 The workflow uses read-only repository permissions, bounded timeouts, non-persistent checkout credentials, immutable action references, fixed runner families, checked-in dependency pins, and concurrency cancellation.

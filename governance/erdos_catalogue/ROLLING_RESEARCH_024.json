@@ -1,0 +1,810 @@
+{
+  "record_type": "GCL_ERDOS_ROLLING_RESEARCH_COHORT",
+  "schema_version": "1.0.0",
+  "cohort_id": "ERDOS-ROLLING-024-001",
+  "state": "SELECTED_FOR_PREPARATION_NOT_SOLVE_DISPATCHED",
+  "selection_authority": "Human Steward request: initial 24 well-prepared problems (2026-10-10)",
+  "size_limit": 24,
+  "source_locks": {
+    "triage_file": "governance/erdos_open_triage.json",
+    "triage_git_blob_sha1": "ec867970360783a3fb9c3247df3bc3b5cfeb2e05",
+    "catalogue_registry_file": "governance/erdos_catalogue/REGISTRY.json",
+    "registry_git_blob_sha1": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+    "pilot_batch_file": "governance/erdos_catalogue/BATCH-001.json",
+    "pilot_batch_git_blob_sha1": "a7d024bc25270d6ca30bf4fd709186a721fef5c1"
+  },
+  "selection_rule": "reuse BATCH-001 existing_recon_reuse (8) plus protected_source_open (16), preserve protected FC statement locks and statuses; no duplicate Solve lease",
+  "snapshot": {
+    "date": "2026-10-10",
+    "worker_reported_bounded_design_returns": 24,
+    "existing_catalogue_source_audits_awaiting_return": 0,
+    "critical_source_dockets_already_open": 24,
+    "dockets_to_create_for_existing_returns": 0
+  },
+  "advance_rule": "A per-problem source-semantic review, primary-source pin, current-status check, exact bounded proof/counterexample/reduction target, positive and hostile tests, duplicate Solve dispatch check and protected MATHSOLVE authority are prerequisites to first /claim. Source-audit RESULT/1 alone is not source acceptance.",
+  "coordination_issue": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2503",
+  "preservation": [
+    "existing closed/reconciled cohorts",
+    "existing live Solve N1/N4/N5 successors",
+    "RESULT/1 original custody",
+    "current source locks",
+    "Forge/Solve/Cert separation"
+  ],
+  "continuous_rule": "Refill up to 24 only after a protected slot disposition; selection and refill require a new protected state transaction, not issue-label mutation.",
+  "authority_effects": {
+    "launch": false,
+    "mathematical_certification": false,
+    "canonical_solve_dispatch": false,
+    "publication": false
+  },
+  "items": [
+    {
+      "slot": 1,
+      "problem_id": 99,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1368,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/99.lean",
+        "git_blob_sha1": "85b244eee4c29defd38c93ab559de6d9e8d4cfa8"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098661023,
+      "source_critical_review_issue": 2506,
+      "proposed_target": {
+        "id": "ERDOS-99-UNIT-CONTACT-DEGREE-LEAN-001",
+        "summary": "Bound unit-contact degree by five under no unit equilateral triple",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 2,
+      "problem_id": 101,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1370,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/101.lean",
+        "git_blob_sha1": "313c56bacb6d86793269fa968542da35cfda2234"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098728078,
+      "source_critical_review_issue": 2507,
+      "proposed_target": {
+        "id": "ERDOS-101-RATIONAL-PROJECTION-CERT-001",
+        "summary": "Rational plane projection preserving finite triple collinearity",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 3,
+      "problem_id": 138,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1407,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/138.lean",
+        "git_blob_sha1": "061c7b62abe53b0db18a3d795b8e71ea4efc70c0"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098796505,
+      "source_critical_review_issue": 2508,
+      "proposed_target": {
+        "id": "ERDOS-138-THREE-TO-TWO-COLOUR-TRANSFER-001",
+        "summary": "Composition inequality and three-to-two-colour finite obstruction",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 4,
+      "problem_id": 241,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1510,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/241.lean",
+        "git_blob_sha1": "8e462d92fcd1e87cb8b211bc8ceaee42ae60a089"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098842021,
+      "source_critical_review_issue": 2509,
+      "proposed_target": {
+        "id": "ERDOS-241-B3-CYCLIC-NOWRAP-SEMANTICS-001",
+        "summary": "Strong B3 modular transfer at sharp no-wrap cutoff",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 5,
+      "problem_id": 470,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1740,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/470.lean",
+        "git_blob_sha1": "901267a999167143f9eb708ecda9adb9c64fe5dc"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098593447,
+      "source_critical_review_issue": 2510,
+      "proposed_target": {
+        "id": "ERDOS-470-FANG-BARRIER-LEMMA-AUDIT-001",
+        "summary": "Local prime-factor descendant exclusion inequality",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 6,
+      "problem_id": 593,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1864,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/593.lean",
+        "git_blob_sha1": "fe5872380f07a2989c8a25ba44f4b29bb5d65dd7"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098975477,
+      "source_critical_review_issue": 2512,
+      "proposed_target": {
+        "id": "ERDOS-593-FROZEN-TO-UPSTREAM-SEMANTIC-REGRESSION-001",
+        "summary": "Frozen-to-upstream semantics and finite T0 counterexample, not duplicate N5 kernel replay",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 7,
+      "problem_id": 595,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 1866,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/595.lean",
+        "git_blob_sha1": "c7ae92d69247ed107099978b9c7bce2cc319af76"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6098889544,
+      "source_critical_review_issue": 2511,
+      "proposed_target": {
+        "id": "ERDOS-595-CANTOR-CODED-BIPARTITE-COVER-001",
+        "summary": "Countable bipartite edge cover with Cantor coding and finite K_m threshold",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 8,
+      "problem_id": 1052,
+      "origin": "FIRST_RECONNAISSANCE_TRANCHE",
+      "catalogue_issue": 2323,
+      "triage_class": "FIRST_RECONNAISSANCE_TRANCHE",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/1052.lean",
+        "git_blob_sha1": "7cad758989e63bf21308e2738e2a1b2bd1730d70"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6099076202,
+      "source_critical_review_issue": 2518,
+      "proposed_target": {
+        "id": "ERDOS-1052-CANONICAL-FACTOR-LEAN-CERT-001",
+        "summary": "Canonical-component unitary perfect product identity and fixtures",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 9,
+      "problem_id": 9,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1278,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/9.lean",
+        "git_blob_sha1": "ebe49bcea9c1c40b445643287c25f90ca61ec8af"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6103585999,
+      "source_critical_review_issue": 2516,
+      "proposed_target": {
+        "id": "ERDOS-009-PARITY-EXACT-REP-CERT-001",
+        "summary": "Finite prime-plus-two-powers parity certificate, not asymptotic density",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 10,
+      "problem_id": 10,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1279,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/10.lean",
+        "git_blob_sha1": "b4e9dec76ce10c94946e97c92aeaf5e8d3e946fb"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6103628767,
+      "source_critical_review_issue": 2517,
+      "proposed_target": {
+        "id": "ERDOS-010-POPCOUNT-SEMANTIC-CERTIFICATE-001",
+        "summary": "Prime-plus-binary-powers/popcount equivalence and finite obstruction",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 11,
+      "problem_id": 11,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1280,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/11.lean",
+        "git_blob_sha1": "f0d8fa230850d0e0b7b8e7fa037e6f9ef47c0440"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6103789133,
+      "source_critical_review_issue": 2520,
+      "proposed_target": {
+        "id": "ERDOS-011-CRT-EXPONENT-BOUNDARY-001",
+        "summary": "CRT fixed-exponent obstruction with exact quantifier boundary",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 12,
+      "problem_id": 12,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1281,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/12.lean",
+        "git_blob_sha1": "29ce2d40361aba4e4a498f314f5dd60c62ded7d7"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6103838848,
+      "source_critical_review_issue": 2521,
+      "proposed_target": {
+        "id": "ERDOS-012-ISGOOD-SEMANTICS-DYADIC-001",
+        "summary": "Frozen versus historical IsGood predicate separation",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 13,
+      "problem_id": 14,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1283,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/14.lean",
+        "git_blob_sha1": "0993d4a8e8f6eddd3ca7818bdc1c9c942cda2797"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6103876225,
+      "source_critical_review_issue": 2522,
+      "proposed_target": {
+        "id": "ERDOS-014-UNIQUE-SUM-SEMANTICS-CERT-001",
+        "summary": "Unordered sum counts and shift identity",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 14,
+      "problem_id": 15,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1284,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/15.lean",
+        "git_blob_sha1": "20e1006e8c22aa73a3516592a6a7ff32f5a577a6"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6103934603,
+      "source_critical_review_issue": 2523,
+      "proposed_target": {
+        "id": "ERDOS-015-REAL-ORDERED-PAIR-SEMANTICS-001",
+        "summary": "Ordered-real prime-gap pair identities with growth premise",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 15,
+      "problem_id": 17,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1286,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/17.lean",
+        "git_blob_sha1": "afa0368f5ee99f900454cd0079bd1a2e3f2187d1"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104178003,
+      "source_critical_review_issue": 2529,
+      "proposed_target": {
+        "id": "ERDOS-017-CLUSTER-PRIME-DIFFERENCE-CERT-001",
+        "summary": "Cluster-prime finite difference equivalence and p=97 failure certificate",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 16,
+      "problem_id": 18,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1287,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/18.lean",
+        "git_blob_sha1": "053fb5458c8e51faf7dfd3a2c15c96125e5ad903"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104115714,
+      "source_critical_review_issue": 2525,
+      "proposed_target": {
+        "id": "ERDOS-018-BINARY-DIVISOR-SEMANTIC-LEAN-001",
+        "summary": "Kernel check h(2^k)=k for k≥1, exact endpoint normalization, finite hostile cases",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 17,
+      "problem_id": 25,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1294,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/25.lean",
+        "git_blob_sha1": "c0d694d14a5af690b125cfe37f5a520bc7f39c49"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104151067,
+      "source_critical_review_issue": 2527,
+      "proposed_target": {
+        "id": "ERDOS-025-SIZE-TRUNCATION-LOG-DENSITY-001",
+        "summary": "Kernel check finite cutoff and finite-prefix eventual periodicity/log-density with noncoprime moduli",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 18,
+      "problem_id": 30,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1299,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/30.lean",
+        "git_blob_sha1": "7cc8e9aab9f2e1f279b964bdb72c42aca9b1b2d2"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104178260,
+      "source_critical_review_issue": 2530,
+      "proposed_target": {
+        "id": "ERDOS-030-SIDON-PAIR-SUM-SEMANTIC-CERT-001",
+        "summary": "Strong Sidon finite pair sums and bounded optimality certificates",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 19,
+      "problem_id": 32,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1301,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/32.lean",
+        "git_blob_sha1": "ac1f7751d8feceeb3b07720de0373622fdfce3a2"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104178501,
+      "source_critical_review_issue": 2531,
+      "proposed_target": {
+        "id": "ERDOS-032-CRT-FINITE-COMPLEMENT-OBSTRUCTION-001",
+        "summary": "CRT obstruction: no finite set eventually complements primes",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 20,
+      "problem_id": 33,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1302,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/33.lean",
+        "git_blob_sha1": "d655efefd8d26a63bc44ac803da648377df91a75"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104178767,
+      "source_critical_review_issue": 2532,
+      "proposed_target": {
+        "id": "ERDOS-033-EVENTUAL-TO-TOTAL-SQUARE-BASIS-001",
+        "summary": "Finite augmentation repairs square-basis eventual-vs-all quantifiers",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 21,
+      "problem_id": 36,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1305,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/36.lean",
+        "git_blob_sha1": "bcc5e0a1e8f5393d85864e1578364605269fbced"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104193038,
+      "source_critical_review_issue": 2533,
+      "proposed_target": {
+        "id": "ERDOS-036-OVERLAP-COUNTING-FIDELITY-001",
+        "summary": "Finite cross-pair overlap identity and small exact minimum",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 22,
+      "problem_id": 39,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1308,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/39.lean",
+        "git_blob_sha1": "eeaf60ecc27814f718028a939e12f46740d6dab3"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104193314,
+      "source_critical_review_issue": 2534,
+      "proposed_target": {
+        "id": "ERDOS-039-SIDON-POSITIVE-DIFFERENCE-SEMANTICS-001",
+        "summary": "Sidon positive-difference injection and exact finite bound",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 23,
+      "problem_id": 40,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1309,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/40.lean",
+        "git_blob_sha1": "314ef828d588611fa33603e3c1cf0386e9ce9e54"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104193527,
+      "source_critical_review_issue": 2535,
+      "proposed_target": {
+        "id": "ERDOS-040-REPRESENTATION-MASS-BOUNDARY-001",
+        "summary": "Ordered convolution total-mass identity and asymptotic limit caveat",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    },
+    {
+      "slot": 24,
+      "problem_id": 41,
+      "origin": "PROTECTED_READY_BACKLOG",
+      "catalogue_issue": 1310,
+      "triage_class": "PROTECTED_READY_BACKLOG",
+      "protected_statement": {
+        "provider_repository": "google-deepmind/formal-conjectures",
+        "provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+        "path": "FormalConjectures/ErdosProblems/41.lean",
+        "git_blob_sha1": "5e9eeb26586d087f4b2ab3d82734ea5ed87ddf50"
+      },
+      "stage": "RETURNED_AWAITING_CRITICAL_SOURCE_REVIEW",
+      "worker_result_comment_id": 6104193801,
+      "source_critical_review_issue": 2536,
+      "proposed_target": {
+        "id": "ERDOS-041-FINSET-VERSUS-MULTISET-REGRESSION-001",
+        "summary": "Finite counterexample to weak Finset vs strong multiset B3 equivalence",
+        "status": "UNADJUDICATED_WORKER_PROPOSAL"
+      },
+      "next_step": "COMPLETE_EXISTING_REVIEW",
+      "launch_gates": {
+        "statement_fidelity": false,
+        "primary_sources_checked": false,
+        "prior_evidence_adjudicated": false,
+        "no_duplicate_solve_dispatch_verified": false,
+        "protected_dispatch_admitted": false
+      },
+      "solve_execution_authorized": false,
+      "claimable": false,
+      "certification_authorized": false
+    }
+  ]
+}

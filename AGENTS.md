@@ -10,6 +10,21 @@ One Codex system may staff multiple non-reserved roles through distinct,
 role-scoped logical audit passes. Identity, session, account, or generic human
 approval multiplication is not intrinsically required.
 
+## Governed Lean/Colab compute skill
+
+For source-locked Lean work, discover .agents/skills/gcl-lean-colab/SKILL.md.
+Use python3 ci/gcl_lean_colab_jobs.py list to select a protected job.
+Codex reasons and reviews; Colab runs compiler or computational experiments.
+Neither a receipt nor the skill confers mathematical certification.
+
+## Mathematical Markdown: source-first rendering gate
+
+**Mandatory authoring rule for new or modified mathematical Markdown:** Write renderer-safe mathematics before the first commit. Use paired single-dollar inline delimiters on one line, and paired double-dollar display delimiters alone on their own lines, separated from surrounding prose by blank lines. Never attach math delimiters directly to words or hyphens. Avoid legacy backslash-parenthesis/backslash-bracket math delimiters and GitHub-incompatible operator macros.
+
+Run the source preflight using the command `python3 ci/math_markdown_gate.py --file PATH.md` before submitting a mathematical Markdown PR. The required pull-request/push impact classifier checks all modified Markdown files against their exact protected-base versions and rejects any newly introduced structural rendering defect. Existing unchanged archival debt remains tracked but cannot justify new broken mathematics.
+
+Public MkDocs editions additionally require strict HTML/Arithmatex wrapper verification. Neither source nor HTML validation asserts a live browser-glyph result. Document admission and mathematical certification remain separate.
+
 ## Routine execution rule
 
 For bounded work within already-authorized scope:

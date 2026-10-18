@@ -87,10 +87,14 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             "1.0.0",
         )
 
-    def test_discovers_evidence_branch_before_any_pr_exists(self) -> None:
+    def test_discovers_registered_branch_before_first_pr(self) -> None:
         class FakeGithub:
+            def get_optional(self, path):
+                return None
+
             def request(self, method, path):
-                self.assert_method = method
+                if method != "GET":
+                    raise AssertionError(method)
                 if "/branches?" in path:
                     return [
                         {"name": "intake/gcl-e2e-canary-003-ia-001"},
@@ -106,8 +110,11 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             ["intake/gcl-e2e-canary-003-ia-001"],
         )
 
-    def test_branch_discovery_paginates_and_deduplicates(self) -> None:
+    def test_discovers_paginated_branch_and_deduplicates_pr(self) -> None:
         class FakeGithub:
+            def get_optional(self, path):
+                return None
+
             def request(self, method, path):
                 if "/branches?" in path:
                     if "&page=1" in path:
@@ -124,13 +131,60 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             ["intake/gcl-e2e-canary-003-ia-001"],
         )
 
-    def test_branch_discovery_fails_closed_on_malformed_listing(self) -> None:
+    def test_branch_listing_fails_closed_when_malformed(self) -> None:
         class FakeGithub:
+            def get_optional(self, path):
+                return None
+
             def request(self, method, path):
                 return {"unexpected": "value"} if "/branches?" in path else []
 
-        with self.assertRaises(ControllerError):
+        with self.assertRaisesRegex(ControllerError, "branches discovery"):
             list_intake_branches(FakeGithub())
+
+    def test_protected_queue_head_keeps_manifest_fallback(self) -> None:
+        import base64
+        import json
+
+        dispatch = "RH-001-TEST-IA-001"
+        binding = {
+            "dispatch_id": dispatch,
+            "dispatch_path": "contributions/RH-001/dispatches/" + dispatch + ".json",
+            "campaign": "RH-001",
+        }
+        manifest = {
+            "record_type": "GCL_QUEUE_INTAKE_BINDINGS",
+            "schema_version": "1.0.0",
+            "authority_effect": {
+                "queue_operation_only": True,
+                "mathematical": False,
+                "certification": False,
+            },
+            "bindings": [binding],
+        }
+
+        class FakeGithub:
+            def get_optional(self, path):
+                if path.endswith("INTAKE_BINDINGS.json?ref=main"):
+                    return {
+                        "encoding": "base64",
+                        "content": base64.b64encode(
+                            json.dumps(manifest).encode()
+                        ).decode(),
+                    }
+                return [{"name": "github-comment-17.json"}] if (
+                    "receipts/" + dispatch in path
+                ) else None
+
+            def request(self, method, path):
+                if "/branches?" in path or "/pulls?" in path:
+                    return []
+                raise AssertionError(path)
+
+        self.assertEqual(
+            list_intake_branches(FakeGithub()),
+            ["intake/" + dispatch.lower()],
+        )
 
     def test_dispatch_level_first_result_lock_detects_any_protected_raw(self) -> None:
         class FakeGithub:

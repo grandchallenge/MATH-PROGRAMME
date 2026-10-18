@@ -14,7 +14,7 @@ Each managed repository currently sets `strict_status_checks: false` in its repo
 
 Required status contexts in the **checked-in contract** remain exact and repository-specific. MATH-PROGRAMME's target Release Trust contract requires `validate-json`, `formal-validation / formal-validation`, `policy / policy`, and `security / action-policy`. The dedicated GH-OS routing rule remains separate. The Programme Release Trust profile also records the admitted Release Trust integration actor exactly as live state requires; it is not inferred from prose or silently deleted during migration.
 
-A checked-in contract is not proof that live GitHub state already matches it. Always read the live ruleset before asserting application. During `MP-CI-SCOPE-ISOLATION-001`, live Programme ruleset `17137629` continues to require the three legacy formal context names until the post-merge narrow migration succeeds and is read back.
+A checked-in contract is not proof that live GitHub state already matches it. Always read the live ruleset before asserting application. The October 2026 reconciliation retains the October 7 Programme review-gate repair: MATH-PROGRAMME and MATHCERT each require one approval from a non-last-pusher reviewer; MATHSOLVE and INTELLECT retain zero blanket approvals. MATHCERT and MATHSOLVE also require the separately admitted `routing-enforcement` status in their profiles. These are **repository-specific current live controls**, not a return to the pre-repair zero-approval ruleset.
 
 Do not infer the effective strictness or bypass state from the shared `branch_policy` template alone. `ci/release_trust_admin.py` derives the effective repository policy from the repository-specific entry, and the tests require the resulting strictness and bypass map to match that entry exactly.
 
@@ -42,7 +42,7 @@ For the formal-context migration after the routing repair is protected on `main`
 6. compare the preservation projection before and after; every writable ruleset field other than the required-context list must be unchanged;
 7. only after that readback may the legacy compatibility alias jobs be removed in a follow-up protected change.
 
-Applying the already-admitted contract is routine repository administration under standing delegation. Changing required contexts, strictness, bypass actors, review semantics, or another security-sensitive protection property is a separate control-plane change and receives the review/authority required by that material change.
+A broad general-contract `apply` now checks every live managed ruleset against the approved repository-specific policy **before any write**. If all settings match, it leaves rulesets untouched; only an incorrect repository homepage may be updated. If any ruleset differs, the general operation fails closed and requires a separately admitted, exact-scope ruleset migration. Non-destructive application is routine repository administration under standing delegation. Changing required contexts, strictness, bypass actors, review semantics, or another security-sensitive property is a control-plane change and receives the review/authority required by that material change.
 
 The narrow Programme migration is idempotent at its target state and fails closed if it sees any required-context state other than the exact legacy source or exact target. It does not mutate GH-OS protection, bypass actors, review rules, strictness, merge-queue configuration, or mathematical/certification state.
 
@@ -53,7 +53,8 @@ The effective admitted policy requires:
 - exact repository-specific required status contexts;
 - `strict_status_checks: false` for the currently managed repositories;
 - changes through pull requests;
-- zero mandatory GitHub approvals, avoiding routine single-operator approval deadlock;
+- repository-specific approval requirements: one approval for MATHCERT and MATH-PROGRAMME to preserve protected theorem-grade review guards; zero for MATHSOLVE and INTELLECT, as their separate material-boundary controls permit;
+- automated non-human routine disposition through a bounded App reviewer where protected and explicitly admitted (e.g., exact MkDocs image-removal canary #1246), without treating a GitHub review as mathematical certification;
 - stale-review dismissal and conversation resolution as admitted by the contract;
 - no force pushes or branch deletion;
 - the admitted bypass-actor state read back exactly rather than inferred from prose.
@@ -87,3 +88,11 @@ The original administration package discharged umbrella issue #6 through issues 
 ## Claim boundary
 
 This procedure governs repository administration and publication identity. It certifies no mathematical claim and does not alter any MATHCERT disposition.
+
+## October 2026 admission-liveness reconciliation
+
+The legacy Release Trust profile formerly set zero GitHub approvals across all four repositories. On 2026-10-07, a **deliberate** Programme review-gate repair (see `governance/mp_main_review_gate_repair_20261007_001.json`) protected against an unreviewed theorem-bearing PR. This reconciliation preserves the live protection instead of blindly reapplying the old profile. The snapshot also includes newer GH-OS required contexts.
+
+Under `GI-STEWARD-0003` and `MP-STREAMLINED-EXECUTION-001`, routine decisions may be discharged by an authorized agent with explicit scope and logical review provenance. Delegation does not waive materially required mathematical, security, constitutional or other specialist review, and an App approval is not independent scientific evidence. Protected [#1248](https://github.com/grandchallenge/MATH-PROGRAMME/pull/1248) demonstrates a real positive routine case and fail-closed negative out-of-scope case. Full generalized class-dependent review routing remains tracked by [#1247](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1247).
+
+Before any future Release Trust apply, compare the current ruleset identities, checks, approval policies, strictness and bypass actors for every repository. Drift outside the exact admitted contract demands an independently governed migration rather than resetting settings from historical documentation.

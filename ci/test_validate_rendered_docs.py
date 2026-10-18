@@ -5,7 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from validate_rendered_docs import admonition_render_errors, homepage_render_errors
+from validate_rendered_docs import admonition_render_errors, cm4_display_math_errors, homepage_render_errors
+from audit_math_typography import source_issues, source_math_count, rendered_issues
 
 
 def main() -> int:
@@ -73,6 +74,54 @@ def main() -> int:
             for error in admonition_render_errors(cm4_page, "Research surface authority")
         )
 
+        # Real pre-MathJax HTML wrapper witness, not merely source math counts.
+        cm4_page.write_text(
+            r'<html><body><div class="arithmatex">\['
+            r'\mathbb Z[S]^{\square}.\]</div></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page) == []
+
+        # The originally published error: raw square brackets and an undefined
+        # macro, with no div.arithmatex. Old generic wrapper counting missed it.
+        cm4_page.write_text(
+            r'<html><body><p>[ \mathbb Z[S]^{\solid}. ]</p></body></html>',
+            encoding="utf-8",
+        )
+        assert any(
+            "no Arithmatex display" in error
+            for error in cm4_display_math_errors(cm4_page)
+        )
+
+        # Supported TeX rendered as *plain text* is still a publication defect.
+        cm4_page.write_text(
+            r'<html><body><p>\mathbb Z[S]^{\square}.</p></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page)
+
+        # An inline Arithmatex wrapper is not a displayed formula.
+        cm4_page.write_text(
+            r'<html><body><span class="arithmatex">'
+            r'\(\mathbb Z[S]^{\square}\)</span></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page)
+
+        # A different display is not sufficient; require this exact witness.
+        cm4_page.write_text(
+            r'<html><body><div class="arithmatex">\[x^2\]</div>'
+            r'<p>\mathbb Z[S]^{\square}.</p></body></html>',
+            encoding="utf-8",
+        )
+        assert cm4_display_math_errors(cm4_page)
+
+        # Missing page fails closed rather than disappearing from the site.
+        cm4_page.unlink()
+        assert cm4_display_math_errors(cm4_page) == [
+            f"built CM4 result page is missing: {cm4_page}"
+        ]
+
         missing_admonition_page = root / "CMDG_CM4_RESEARCH_GUIDE" / "index.html"
         assert admonition_render_errors(
             missing_admonition_page, "Live work is issue-led"
@@ -80,6 +129,67 @@ def main() -> int:
 
         missing = root / "missing.html"
         assert homepage_render_errors(missing) == [f"built homepage is missing: {missing}"]
+
+    # Math source checks distinguish prose from code, and inspect built HTML.
+    with TemporaryDirectory() as directory:
+        root = Path(directory)
+        docs = root / "docs"
+        docs.mkdir()
+        note = docs / "note.md"
+        note.write_text(
+            "# Note\n\nInline $x^2$ and displayed:\n\n"
+            + chr(36) * 2 + "\n x^2+y^2=z^2\n" + chr(36) * 2 + "\n"
+            + "\n" + chr(96) * 3 + "tex\n"
+            + "\\operatorname{ThisIsCode}\n"
+            + chr(96) * 3 + "\n",
+            encoding="utf-8",
+        )
+        assert source_math_count(note) == 2
+        assert not source_issues(note, root)
+        note.write_text(
+            "original derived-$\\mathrm{RHom}$ and \\(x\\) "
+            "$\\operatorname{rank}$.\n",
+            encoding="utf-8",
+        )
+        kinds = {f["kind"] for f in source_issues(note, root)}
+        assert "math-prose-adjacency" in kinds
+        assert "legacy-inline-delimiter" in kinds
+        assert "github-unsupported-operatorname" in kinds
+
+        note.write_text("An equation $x$ and $y^2$.\n", encoding="utf-8")
+        site = root / "site"
+        built = site / "note" / "index.html"
+        built.parent.mkdir(parents=True)
+        built.write_text('<span class="arithmatex">x</span>', encoding="utf-8")
+        checked, failures = rendered_issues(root, site)
+        assert checked == 1
+        assert failures and failures[0]["kind"] == "arithmatex-wrapper-shortfall"
+        built.write_text(
+            '<span class="arithmatex">x</span><div class="arithmatex">y</div>',
+            encoding="utf-8",
+        )
+        assert rendered_issues(root, site) == (1, [])
+
+        custom = docs / "documentaries" / "sample.md"
+        custom.parent.mkdir()
+        custom.write_text(
+            '<div>$x^2$</div>\n'
+            '<script src="../../javascripts/documentary-mathjax.js"></script>'
+            '<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>',
+            encoding="utf-8",
+        )
+        custom_page = site / "documentaries" / "sample" / "index.html"
+        custom_page.parent.mkdir(parents=True)
+        custom_page.write_text(
+            '<script src="../../javascripts/documentary-mathjax.js"></script>'
+            '<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>',
+            encoding="utf-8",
+        )
+        assert rendered_issues(root, site) == (2, [])
+        custom_page.write_text("<p>Missing MathJax</p>", encoding="utf-8")
+        assert any(f["kind"] == "documentary-mathjax-loader-missing"
+                   for f in rendered_issues(root, site)[1])
+
 
     print("rendered documentation validator rejection tests passed")
     return 0

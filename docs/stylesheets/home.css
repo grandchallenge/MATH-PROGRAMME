@@ -166,6 +166,82 @@
   font-size: 1.15rem;
 }
 
+/* Protected-ledger Erdős publication snapshot, generated at each site build. */
+.home-erdos-status {
+  margin: 1.3rem 0 2rem;
+  padding: clamp(1rem, 2vw, 1.55rem);
+  border: 1px solid var(--gc-rule);
+  background: var(--gc-paper-deep);
+}
+
+.home-erdos-status__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.home-erdos-stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1rem 0.85rem 0.85rem;
+  border-top: 2px solid var(--gc-signal-dark);
+  background: color-mix(in srgb, var(--gc-ink) 3%, transparent);
+}
+
+.home-erdos-stat strong {
+  color: var(--gc-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.home-erdos-stat__label {
+  margin-top: 0.35rem;
+  color: var(--gc-ink);
+  font-size: 0.85rem;
+  font-weight: 760;
+}
+
+.home-erdos-stat__description {
+  margin-top: 0.3rem;
+  color: var(--gc-muted);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.home-erdos-status__provenance,
+.home-erdos-status__maintenance {
+  max-width: 62rem;
+  margin: 1rem 0 0 !important;
+  color: var(--gc-muted);
+  font-size: 0.78rem;
+  line-height: 1.6 !important;
+}
+
+.home-erdos-status__maintenance {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--gc-rule);
+}
+
+[data-md-color-scheme="slate"] .home-erdos-stat {
+  border-top-color: var(--gcl-gold-300);
+}
+
+@media (max-width: 980px) {
+  .home-erdos-status__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 490px) {
+  .home-erdos-status__stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 [data-md-color-scheme="slate"] .home-action {
   border-color: var(--gcl-gold-300);
   color: var(--gcl-parchment-50) !important;

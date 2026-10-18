@@ -1,0 +1,413 @@
+name: Erdős catalogue operational queue projection
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/erdos_catalogue_queue_projection.py'
+      - 'tests/test_erdos_catalogue_queue_projection.py'
+      - 'ci/erdos_compendium_editorial_activate.py'
+      - 'ci/test_erdos_compendium_editorial_activate.py'
+      - 'ci/gcl_queue_class_cutover.py'
+      - 'ci/test_gcl_queue_class_cutover.py'
+      - 'ci/erdos_forge_copilot_pilot.py'
+      - 'tests/test_erdos_forge_copilot_pilot.py'
+      - 'governance/erdos_catalogue/ROLLING_RESEARCH_024.json'
+      - '.github/workflows/erdos-catalogue-queue-projection.yml'
+  issue_comment:
+    types: [created, edited, deleted]
+  workflow_dispatch:
+  schedule:
+    - cron: '37 */6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-catalogue-queue-projection
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    permissions:
+      contents: read
+      issues: write
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (!github.event.issue.pull_request &&
+       startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
+       startsWith(github.event.comment.body, 'RESULT/1'))
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Rebuild unadjudicated catalogue custody snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python ci/erdos_catalogue_programme_intake.py --live-snapshot --output catalogue-intake
+      - name: Mint bounded Council Clerk Project projection token
+        id: queue-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+          permission-organization-projects: write
+      - name: Verify full Project Queue Class contract and protected semantic readback
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing Council Clerk Project token"; exit 1; }
+          python ci/test_gcl_queue_class_cutover.py
+          python ci/gcl_queue_class_cutover.py --apply --receipt queue-cutover/receipt.json
+      - name: Preserve Queue Class cutover receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: gcl-queue-semantic-cutover-${{ github.run_id }}-${{ github.run_attempt }}
+          path: queue-cutover/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Publish durable Project cutover success or blocker readback
+        if: always() && steps.queue-token.outputs.token != ''
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          python ci/gcl_queue_class_cutover.py --publish-issue 2563 --receipt queue-cutover/receipt.json
+
+      - name: Admit three bounded Editorial Compendium assignments from source evidence
+        id: editorial-admit
+        if: github.event_name != 'issue_comment'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          # Once the trusted Clerk has published VERIFIED, workers may have
+          # returned results. Never re-admit those issues on a scheduled run.
+          gh api --paginate "repos/grandchallenge/MATH-PROGRAMME/issues/2552/comments?per_page=100" \
+            | jq -s 'add' > "$RUNNER_TEMP/compendium-admission-history.json"
+          if jq -e 'any(.[]; .user.login == "gcl-council-clerk[bot]" and
+            ((.body // "") | startswith("ERDOS-COMPENDIUM-EDITORIAL-ADMISSION/1")
+            and contains("Three Editorial writing assignments #2556–#2558: **VERIFIED**.")))' \
+            "$RUNNER_TEMP/compendium-admission-history.json" >/dev/null; then
+            echo "already_admitted=true" >> "$GITHUB_OUTPUT"
+            echo "EDITORIAL_ALREADY_ADMITTED: verified protected receipt; no work-state replay"
+            exit 0
+          fi
+          python ci/test_erdos_compendium_editorial_activate.py
+          python ci/erdos_compendium_editorial_activate.py \
+            --apply --receipt editorial-admission/receipt.json
+
+      - name: Archive real three-item Editorial admission receipt
+        if: always() && github.event_name != 'issue_comment' && steps.editorial-admit.outputs.already_admitted != 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-compendium-editorial-admission-${{ github.run_id }}-${{ github.run_attempt }}
+          path: editorial-admission/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Publish factual Editorial staging-to-AVAILABLE receipt
+        if: always() && github.event_name != 'issue_comment' && steps.editorial-admit.outputs.already_admitted != 'true' && steps.queue-token.outputs.token != ''
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          src=Path("editorial-admission/receipt.json")
+          r=json.loads(src.read_text()) if src.is_file() else {}
+          verified=(r.get("verified") is True and r.get("applied") is True
+                    and [x.get("issue") for x in r.get("preflight",[])] == [2556,2557,2558])
+          status="VERIFIED" if verified else "BLOCKED / UNVERIFIED"
+          body=("ERDOS-COMPENDIUM-EDITORIAL-ADMISSION/1\n\n"
+                f"Three Editorial writing assignments #2556–#2558: **{status}**.\n"
+                "Only exact bound source packets for Erdős #7, #9, #10 are eligible; "
+                "review #2555 remains STAGED. "
+                "Direct issue-bound RESULT/1 remains the return route; no /claim.\n"
+                f"Protected Programme SHA: `{os.environ['GITHUB_SHA']}`\n"
+                f"Controller run: https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{os.environ['GITHUB_RUN_ID']}\n")
+          if verified:
+            body+=("Verified Issue Field GCL State=AVAILABLE, Editorial Project membership, "
+                   "identity, role, campaign, source-return provenance and labels for all three. "
+                   "No worker has been launched or declared successful.\n")
+          else:
+            body+=("Exact admission blocker: `"+str(r.get("blocker","no complete admission receipt"))[:3000].replace("`","'")+"`\n")
+          Path("editorial-admission/comment.md").parent.mkdir(parents=True,exist_ok=True)
+          Path("editorial-admission/comment.md").write_text(body,encoding="utf-8")
+          PY
+          gh issue comment 2552 --repo grandchallenge/MATH-PROGRAMME \
+            --body-file editorial-admission/comment.md
+
+      - name: Reconcile Project state and labels from verified receipts
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
+          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all
+      - name: Verify exact-14 review completion and replay invariants
+        if: github.event_name != 'issue_comment'
+        run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
+      - name: Reconcile 14 completed critical reviews with Council Clerk custody
+        if: github.event_name != 'issue_comment'
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+          GCL_CONTROLLER_ID: erdos-rolling-review-completion
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          python ci/erdos_catalogue_queue_projection.py --review-completion --apply             --receipt rolling-critical-reviews/receipt.json
+      - name: Preserve critical review completion or exact operational blocker
+        if: always() && github.event_name != 'issue_comment'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-rolling-review-completion-${{ github.run_id }}-${{ github.run_attempt }}
+          path: rolling-critical-reviews/receipt.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Checkout protected MATHSOLVE controller
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: grandchallenge/MATHSOLVE
+          ref: main
+          path: solve
+          persist-credentials: false
+      - name: Validate bounded controller and apply authorized queue transition
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08'))
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          mkdir -p "$GITHUB_WORKSPACE/typography-ed08"
+          cd solve
+          python "$PWD/ci/test_gcl_queue_class_contract.py"
+          python "$PWD/ci/test_reconcile_math_typography_editorial_queue.py"
+          python "$PWD/ci/reconcile_math_typography_editorial_queue.py" --apply \
+            | tee "$GITHUB_WORKSPACE/typography-ed08/controller.log"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path("../typography-ed08")
+          lines=(out/"controller.log").read_text().strip().splitlines()
+          assert lines, "controller emitted no receipt"
+          receipt=json.loads(lines[-1])
+          assert receipt.get("receipt")=="TYPO-ED08-ACTIVATION-READBACK/1"
+          assert receipt.get("complete") is True
+          assert receipt.get("available")==1263 and receipt.get("still_blocked")==1264
+          assert receipt.get("returned")==list(range(1256,1263))
+          (out/"receipt.json").write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n")
+          PY
+      - name: Preserve verifiable controller result or failure log
+        if: always() && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08')))
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: typography-ed08-project-readback-${{ github.run_id }}-${{ github.run_attempt }}
+          path: typography-ed08/
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Record exact ED08 activation receipt on campaign issue
+        if: success() && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'ED08')))
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path("typography-ed08/receipt.json").read_text())
+          run=f"https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/{os.environ['GITHUB_RUN_ID']}"
+          body=("TYPO-ED08-ACTIVATION-READBACK/1\n\n"+
+                "Actual Project #2 readback, performed by the existing Council Clerk release-trust workflow.\n"+
+                "Seven editor assignments ED01–ED07: RETURNED (not visually certified).\n"+
+                "ED08 #1263: AVAILABLE, role VERIFY, Queue Class Editorial.\n"+
+                "ED09 #1264: BLOCKED.\n"+
+                f"Controller protected MATHSOLVE commit: `{d['protected_controller']}`\n"+
+                f"Project ID: `{d['project']}`\n"+
+                f"Workflow evidence: {run}\n\n"+
+                "Actual browser rendering remains to be independently checked by ED08.\n")
+          Path("typography-ed08/comment.md").write_text(body,encoding="utf-8")
+          PY
+          gh issue comment 1255 --repo grandchallenge/MATH-PROGRAMME \
+            --body-file typography-ed08/comment.md
+
+      - name: Publish bound Erdős-024 source critic dockets in Project #2
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
+          python ci/erdos_rolling_review_queue.py --apply
+
+  ledger:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      !github.event.issue.pull_request &&
+      startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
+      (github.event.action != 'created' || startsWith(github.event.comment.body, 'RESULT/1'))
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Mint operational revision-custody token
+        id: ledger-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+      - name: Preserve exact historical comment-event payload in operational ledger
+        env:
+          GH_TOKEN: ${{ steps.ledger-token.outputs.token }}
+        run: |
+          PYTHONPATH=. python ci/erdos_event_custody.py --mode ledger --event "$GITHUB_EVENT_PATH"
+
+  canary:
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.issue.number == 2500 &&
+      github.event.issue.title == '[GCL-CANARY] RESULT/1 intake event acceptance' &&
+      startsWith(github.event.comment.body, 'RESULT/1')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Replay real GitHub canary comment through the production parser
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PYTHONPATH=. python ci/erdos_event_custody.py --mode canary --event "$GITHUB_EVENT_PATH"
+
+  forge-pilot-review:
+    name: One bounded Forge mathematical critique (Copilot, evidence only)
+    # Quarantined pending INTELLECT #118: a green queue repair never authorizes AI execution.
+    if: github.event_name == 'push' && needs.reconcile.result == 'success' && false
+    needs: [reconcile]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+      issues: read
+      copilot-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Preflight exact protected Forge candidate and queue state
+        id: prep
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_forge_copilot_pilot.py prepare --out forge-erdos-pilot
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          d=json.loads(Path("forge-erdos-pilot/status.json").read_text())
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("ready="+("true" if d["ready"] else "false")+"\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("Forge critique canary: "+d["state"]+". No mathematical authority effect.\n")
+          PY
+      - name: Provision fixed Node runtime
+        if: steps.prep.outputs.ready == 'true'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Install bounded Copilot CLI
+        if: steps.prep.outputs.ready == 'true'
+        run: npm install -g @github/copilot@1.0.66
+      - name: Run non-authoring mathematical critique with no mutation tools
+        if: steps.prep.outputs.ready == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          copilot --version > forge-erdos-pilot/copilot-version.txt
+          timeout 420s copilot -p "$(cat forge-erdos-pilot/prompt.txt)" -s \
+            --model=gpt-5.4 --max-ai-credits=30 --no-auto-update --no-ask-user \
+            --disable-builtin-mcps --available-tools=read \
+            --deny-tool=shell --deny-tool=write --deny-tool=url \
+            > forge-erdos-pilot/model-output.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from ci.erdos_forge_copilot_pilot import validate_model_output
+          d=Path("forge-erdos-pilot")
+          validate_model_output(json.loads((d/"model-output.json").read_text()),
+                                json.loads((d/"task.json").read_text()))
+          PY
+      - name: Preserve bounded pilot or exact blocker for readback
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-forge-copilot-pilot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: forge-erdos-pilot/
+          retention-days: 90
+          if-no-files-found: error
+
+  forge-pilot-evidence:
+    name: Publish unadjudicated Forge reviewer evidence (never an approval)
+    # Quarantined with model worker: no model evidence publishing during governance review.
+    if: github.event_name == 'push' && needs.forge-pilot-review.result == 'success' && false
+    needs: [forge-pilot-review]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: erdos-forge-copilot-pilot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: forge-erdos-pilot
+      - name: Bind and publish nonauthoritative critical evidence or recorded blocker
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python ci/erdos_forge_copilot_pilot.py publish --out forge-erdos-pilot \
+            | tee -a "$GITHUB_STEP_SUMMARY"

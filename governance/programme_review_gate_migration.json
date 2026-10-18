@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "MP-ROUTINE-REVIEW-GATE-REMOVAL-001",
+  "authority": "MP-STREAMLINED-EXECUTION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "ruleset_id": 17137629,
+  "ruleset_name": "Programme profile - main",
+  "from": {
+    "required_approving_review_count": 1,
+    "require_last_push_approval": true
+  },
+  "to": {
+    "required_approving_review_count": 0,
+    "require_last_push_approval": false
+  },
+  "retained_check_contexts": [
+    "validate-json",
+    "formal-validation / formal-validation",
+    "policy / policy",
+    "security / action-policy"
+  ],
+  "retained_merge_queue_ruleset_id": 21969152,
+  "retained_merge_queue_check": "routing-enforcement",
+  "preserve_every_other_writable_ruleset_field": true,
+  "enforce_no_new_bypass_actors": true,
+  "authorization_boundary": {
+    "generic_pr_approval": false,
+    "formal_mathematical_certification": false,
+    "domain_specialist_review": false,
+    "security_routing_bypass": false
+  },
+  "nonpromotion": "This only removes universal non-author review from operational Programme PRs. It never grants mathematical certification, domain-specialist authority, or any exemption from required checks and GH-OS merge queue."
+}

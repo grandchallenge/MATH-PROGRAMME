@@ -3,11 +3,24 @@
 <p class="page-deck">A human-facing account of GCL's protected CM4 result: what was proved, why the inherited route was difficult, how the Point-functional bypass works, what remains open, and where to follow the live external-review and mathlib-upstream work.</p>
 
 !!! info "Research surface authority"
-    **Canonical campaign tracker:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/355  
+    **Canonical campaign tracker:** [https://github.com/grandchallenge/MATH-PROGRAMME/issues/355](https://github.com/grandchallenge/MATH-PROGRAMME/issues/355)  
     **Protected mathematical claims** on this page are projections of protected repository records.  
     **Live external-review status** is tracked in [MATH-PROGRAMME #1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222).  
     **Live mathlib-upstream status** is tracked in [MATH-PROGRAMME #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).  
     If this page and an issue disagree about active work, the issue governs the active-work state. If either conflicts with a protected theorem receipt about an already-certified claim, the protected receipt governs the claim.
+
+## For readers new to condensed mathematics
+
+Begin with [*Condensed Mathematics for the Perplexed*](CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md), a foundational introduction from convergent sequences and profinite probes through sheaf descent and solid abelian groups. This page then explains GCL's restricted CM4 theorem and its exact evidentiary status.
+
+## For independent readers and contributors
+
+- [Self-contained mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md): the exact statement, a finite model, the proof spine, and falsification-oriented review questions.
+- [Independent reproducibility protocol](CMDG_CM4_REPRODUCIBILITY.md): immutable source hashes, pinned Lean/mathlib environment, executable verification, expected local evidence and failure gates.
+- [Specialist review packet](CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md) and [review issue #1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222).
+- [Mathlib integration assessment](CMDG-CM4-MATHLIB-UPSTREAM-ASSESSMENT.md) and [upstream issue #1223](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1223).
+
+No external expert-review conclusion or upstream mathlib acceptance is implied by the existence of these materials.
 
 ## 1. Status
 
@@ -31,9 +44,9 @@ Start with a profinite space (S): a compact, totally disconnected topological sp
 
 Condensed mathematics provides a way to form a free condensed abelian group on (S). Solid mathematics then asks for a stronger object, usually written informally as
 
-[
-\mathbb Z[S]^{\solid}.
-]
+$$
+\mathbb Z[S]^{\square}.
+$$
 
 The CM4 target asks whether this free solid object is actually **solid** in the precise sense encoded by mathlib's `CondensedMod.IsSolid` predicate.
 

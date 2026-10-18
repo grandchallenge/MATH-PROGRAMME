@@ -1,0 +1,1521 @@
+{
+  "branch_control_readbacks": 14,
+  "count": 14,
+  "entries": [
+    {
+      "assertion_class": "ORG_GOVERNANCE_REVIEW_AND_WORKER_CLERKS",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "test"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "23de5cfef512d684d76d8a2005915a12c43caec3",
+          "workflow_path": ".github/workflows/constitutional-review-tests.yml"
+        },
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "833e5c63b1e72b681f95a4dc232e817c986284fe",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "61360e0244a1138c3551d880ddf05f5aca28314c",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement.yml"
+        },
+        {
+          "dispatch_events": [
+            "schedule",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "review"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "cc6e438d51e475c98296bf13815d61501e2cde0f",
+          "workflow_path": ".github/workflows/cei-evidence-review-clerk.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "a1de2065fd336212055d951473e7ed8e3a85558f",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/.github",
+      "scope_pinned_main_sha": "a1de2065fd336212055d951473e7ed8e3a85558f",
+      "source_inventory": {
+        "governance_count": 16,
+        "source_governance_blobs": [
+          {
+            "blob": "a2fd7b82ac85c22c744af3d2df3e11f134991f3f",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          },
+          {
+            "blob": "bbd5dd57ec8ec1444a4c38466e96b90290a43b76",
+            "path": "governance/credentials/GCL-CEI-EVIDENCE-REVIEW-CLERK-001.json"
+          },
+          {
+            "blob": "7d4d588ee1678bdeef7396199f1a338824c0a408",
+            "path": "governance/credentials/GCL-CREDENTIAL-BOUNDARY-001.json"
+          },
+          {
+            "blob": "1cf1b433aea182a21bddf6e7a28682cf09cc2662",
+            "path": "governance/credentials/GCL-ERDOS-CLOSURE-REVIEW-CLERK-001.json"
+          },
+          {
+            "blob": "ab02cc01c3e6960d4322983cf15376e60d4bf97f",
+            "path": "governance/credentials/credential-boundary.schema.json"
+          },
+          {
+            "blob": "8f2691f139b05e3b99365cb28f52a643697058ee",
+            "path": "governance/gct/GCT_GCL_AUTHORITY_BOUNDARY.md"
+          },
+          {
+            "blob": "8c73adc6687f24b014e4b723a470522897d8f9b1",
+            "path": "governance/gct/PUBLIC_EXECUTIVE_MODEL.md"
+          },
+          {
+            "blob": "1811abe27fe21a56e706de02f8b0bd5212f64452",
+            "path": "governance/gct/PUBLIC_STATUS.json"
+          }
+        ],
+        "source_test_blobs": [
+          {
+            "blob": "393a3ff2ae6fbc31bbde9772b92a2af36f96ff51",
+            "path": "tests/fixtures/weekly_optimality_snapshot.json"
+          },
+          {
+            "blob": "0710744a9d51d5c4162d74c15c59516c9471503f",
+            "path": "tests/test_cei_evidence_review_clerk.py"
+          },
+          {
+            "blob": "495fb00d0e68adfa4203b609ce43746c1ab378ed",
+            "path": "tests/test_constitutional_review_clerk.py"
+          },
+          {
+            "blob": "2aa166eedffae659418743e8ed3376506e3a87be",
+            "path": "tests/test_credential_boundary.py"
+          },
+          {
+            "blob": "154f18857922b610edf2ef98b00aa61ef8f1a528",
+            "path": "tests/test_erdos_cohort_closure_review_clerk.py"
+          }
+        ],
+        "tests_count": 12,
+        "workflow_count": 15
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "RESEARCH_MANUSCRIPT_EDITORIAL",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "validate"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "validate"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "1952a4c140b71d686e3cd985d84ace729832714c",
+          "workflow_path": ".github/workflows/validate.yml"
+        },
+        {
+          "dispatch_events": [
+            "schedule",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "reconcile"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "e998a7789e61f1da4d529f16a3646ba4d9c82f76",
+          "workflow_path": ".github/workflows/atlas-direct-editorial-return-replay.yml"
+        },
+        {
+          "dispatch_events": [
+            "issue_comment"
+          ],
+          "job_ids": [
+            "project-return"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "c973617fe4a6cb107f01a44f791b7b8309c2fdfe",
+          "workflow_path": ".github/workflows/atlas-direct-editorial-returns.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "767017f5658a3d02783591146ad9ec9a5a26a4ed",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS",
+      "scope_pinned_main_sha": "767017f5658a3d02783591146ad9ec9a5a26a4ed",
+      "source_inventory": {
+        "governance_count": 111,
+        "source_governance_blobs": [
+          {
+            "blob": "7441bb9e61269f8ae57bb3d5814671f1a6331b2d",
+            "path": "governance/ACTIVE_TRANSACTION.yaml"
+          },
+          {
+            "blob": "90776ed556c95b3b0c3ac0a962bc3d375ed1ddb5",
+            "path": "governance/ATLAS_EDITORIAL_PROFILE.md"
+          },
+          {
+            "blob": "ea8891b4103be8192cc8e10aeecbcec91b495b40",
+            "path": "governance/ATLAS_MAP.md"
+          },
+          {
+            "blob": "d89a259550efe57a032b32ee16774a42b903edf2",
+            "path": "governance/BOOTSTRAP_RECEIPT.json"
+          },
+          {
+            "blob": "52f1d77e80e516cea179550f966383b0b06900af",
+            "path": "governance/CHAPTER_COMPOSITION_PROTOCOL.md"
+          },
+          {
+            "blob": "b438ab94e95e9a988989850df479a09aaba31d2b",
+            "path": "governance/CHAPTER_FAMILY_ROLLOUT.md"
+          },
+          {
+            "blob": "a41420a73721acbddcf2d77f93f9df553759d305",
+            "path": "governance/CHAPTER_LEDGER.yaml"
+          },
+          {
+            "blob": "1d9c71c5e720ebe421ebb4943f97541635a4bd76",
+            "path": "governance/COMPUTATIONAL_WITNESS_STANDARD.md"
+          }
+        ],
+        "source_test_blobs": [
+          {
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "path": "tests/.gitkeep"
+          },
+          {
+            "blob": "3926551d3fc3aa87d6f49ef36b79d9e7de06ff5b",
+            "path": "tests/test_atlas_direct_return_projector.py"
+          },
+          {
+            "blob": "4fa056f8bb9b98460b1e595429e60770fbed54ad",
+            "path": "tests/test_atlas_direct_return_reconcile.py"
+          }
+        ],
+        "tests_count": 3,
+        "workflow_count": 3
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "RESEARCH_SOFTWARE_VALIDATION",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "Required CI gate",
+          "Required Supply Chain gate",
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "scope",
+            "rust-pr",
+            "go-pr",
+            "python-pr",
+            "rust-integration",
+            "go-integration",
+            "python-integration",
+            "postgres-journal",
+            "container-smoke",
+            "pilot-launch-gate",
+            "pilot-package",
+            "hardening-admin",
+            "hardening-operator",
+            "required-ci-gate"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a8ff37b17abd9d7e1cc182699d25af1bd0530152",
+          "workflow_path": ".github/workflows/ci.yml"
+        },
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "87e3079e7cad80af8495ac046f5231129714a902",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request"
+          ],
+          "job_ids": [
+            "disposable-probe"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "8b1977096fb01201ee71435aa28e93097348252c",
+          "workflow_path": ".github/workflows/aether-fabric-real-workload-probe.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "c7ade9370da97a7aade4e4fdd893bcc7991c43b7",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/AETHER",
+      "scope_pinned_main_sha": "c7ade9370da97a7aade4e4fdd893bcc7991c43b7",
+      "source_inventory": {
+        "governance_count": 1,
+        "source_governance_blobs": [
+          {
+            "blob": "b4daa74848788666ba2d2abad57086bd8d9a4cef",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          }
+        ],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 14
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "RESEARCH_TOOLCHAIN_VALIDATION",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "governance",
+          "quality (3.10)",
+          "quality (3.12)",
+          "routing-enforcement",
+          "smoke"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "quality",
+            "governance",
+            "smoke"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "d774f0b0263050242cd1fc6c15f9606acc955bc3",
+          "workflow_path": ".github/workflows/ci.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "0a0b32cb5fa043b0f652f1ac3a55cac6b0ab89ba",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "5fb8455860f3326cd1c482de83322d9932dd21ca",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/BUTTERFLY",
+      "scope_pinned_main_sha": "5fb8455860f3326cd1c482de83322d9932dd21ca",
+      "source_inventory": {
+        "governance_count": 8,
+        "source_governance_blobs": [
+          {
+            "blob": "e315710178846c82ea18d794eb9f4623d0057a30",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          },
+          {
+            "blob": "753af002bfb1f4e3e48d9dd7ed8fb31476495371",
+            "path": "governance/example_agent_review.yaml"
+          },
+          {
+            "blob": "df7348283fe19742a415e13ae9d0eab41614f574",
+            "path": "governance/records/BFC-ADMISSION-001.json"
+          },
+          {
+            "blob": "81402b16ed59f14e0872b929ac8b61a1a4fbf65c",
+            "path": "governance/records/BFC-CLAIMS-001.json"
+          },
+          {
+            "blob": "da36bef2b847bf46170968db4b2a384c8a5cc478",
+            "path": "governance/records/BFC-EVIDENCE-001.json"
+          },
+          {
+            "blob": "887cb71abb332ba05a2511c6acc754a455fc7a37",
+            "path": "governance/records/BFC-NEGATIVE-001.json"
+          },
+          {
+            "blob": "9b8b05af23773c021fed9b61e9f203a4e3d593e9",
+            "path": "governance/records/BFC-PROGRAMME-001.json"
+          },
+          {
+            "blob": "3a8c9f1eb5a831abfab6bbd4782d8f9322ac50b9",
+            "path": "governance/records/BFC-WORK-PACKAGES-001.json"
+          }
+        ],
+        "source_test_blobs": [
+          {
+            "blob": "19dc7b0a7e2e548a08d12f9ecd9a7d5864c551fc",
+            "path": "tests/test_adjoint.py"
+          },
+          {
+            "blob": "1b21119149ce57880b8d39b1aafab83f6880297e",
+            "path": "tests/test_certification.py"
+          },
+          {
+            "blob": "d179ddcdb7727499f61ef26e11febfadb2c9b66f",
+            "path": "tests/test_config.py"
+          },
+          {
+            "blob": "5b9a2b66a90cf49329e59990d5569a8a743a51b2",
+            "path": "tests/test_factor_chain.py"
+          },
+          {
+            "blob": "295568617f30319904eae1e8d1473a70894136cb",
+            "path": "tests/test_governance.py"
+          }
+        ],
+        "tests_count": 10,
+        "workflow_count": 2
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "MATHEMATICAL_PUBLICATION_AND_EDITORIAL",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "direct-return-contract"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "direct-return-contract"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "2e4de045d1b61863eaa20dd8c75169c2bb86c925",
+          "workflow_path": ".github/workflows/cda-ops-checks.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "read-only-preflight",
+            "protected-activation"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "739d7b72d973d9f6872bb326febd504a0974da80",
+          "workflow_path": ".github/workflows/cda-core-review-admission-004.yml"
+        },
+        {
+          "dispatch_events": [
+            "schedule",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "reconcile"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "023329fe327ee37d7d92012c212445abd1b4ac87",
+          "workflow_path": ".github/workflows/cda-direct-editorial-return-replay.yml"
+        },
+        {
+          "dispatch_events": [
+            "issue_comment"
+          ],
+          "job_ids": [
+            "project-return"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "782b44aa7b654b3aafb72aa9e95e71240a865f54",
+          "workflow_path": ".github/workflows/cda-direct-editorial-returns.yml"
+        }
+      ],
+      "current_main_equals_pinned": false,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "d85c4bc1386d37434e1f297e7e5f3218d92e4460",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS",
+      "scope_pinned_main_sha": "7f7f561897981b329df8e40b5883d2a9d46fb664",
+      "source_inventory": {
+        "governance_count": 11,
+        "source_governance_blobs": [
+          {
+            "blob": "8acef7ef1e88fde6b5c4669031f7ae46b857b6ad",
+            "path": "governance/CDA_REVIEW_ADMISSION_002.json"
+          },
+          {
+            "blob": "3cf56a1a43a15af945283853c797415458236dc7",
+            "path": "governance/CDA_REVIEW_ADMISSION_003.json"
+          },
+          {
+            "blob": "ad1da6300d3f1340213182a38b70809ccd5ca5b0",
+            "path": "governance/CDA_REVIEW_ADMISSION_004.json"
+          },
+          {
+            "blob": "be31e8ebcacab52b249ad09957467430aacab0c5",
+            "path": "governance/CDA_REVIEW_ADMISSION_005.json"
+          },
+          {
+            "blob": "01924308096c615e526f81e29608a49b0a4f8d91",
+            "path": "governance/CDA_REVIEW_ADMISSION_006.json"
+          },
+          {
+            "blob": "591633e6c682f8d3967df3cc420ad1d92e74329e",
+            "path": "governance/CLAIM_STATUS_CONVENTIONS.md"
+          },
+          {
+            "blob": "bf2bf4a1b241c319a8a8f15691d0308d424a95bc",
+            "path": "governance/DIRECT_EDITORIAL_RETURN_PROTOCOL.md"
+          },
+          {
+            "blob": "185540553683a3507a0400664f3ecb204edae5c1",
+            "path": "governance/PEDAGOGICAL_CHARTER.md"
+          }
+        ],
+        "source_test_blobs": [
+          {
+            "blob": "3d649d49abc26c57dd73abc2a007d545afccffea",
+            "path": "tests/test_c06_reduction.py"
+          },
+          {
+            "blob": "30a06cb0ad277cf0772c6f10172d83e2807508d1",
+            "path": "tests/test_c07_conp.py"
+          },
+          {
+            "blob": "bcc4043259b1391020ed8518aa64dc6095c0e51b",
+            "path": "tests/test_c08_self_reduction.py"
+          },
+          {
+            "blob": "f58630dd51be63521f6c7f41a10be5acd920bfbb",
+            "path": "tests/test_c09_ph.py"
+          },
+          {
+            "blob": "92ee8d10e4465c29d9723dfe102c7fde9c66b304",
+            "path": "tests/test_cda_core_review_admission.py"
+          }
+        ],
+        "tests_count": 15,
+        "workflow_count": 15
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "GOVERNANCE_STANDARDS_AND_POLICY_TESTS",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy",
+          "standards-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "standards-policy"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "813a8eed2305ceb0f666e257e56b13fa415bfee5",
+          "workflow_path": ".github/workflows/ci.yml"
+        },
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "0082cc0a60bf84074334e12acb36d10ccc3de955",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "9423de9164c28f3338b7a0a3fc6de19b83e2646d",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "b89fc0ab807e69a255760c11ce85b1048d329c81",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/gcl-standards",
+      "scope_pinned_main_sha": "b89fc0ab807e69a255760c11ce85b1048d329c81",
+      "source_inventory": {
+        "governance_count": 0,
+        "source_governance_blobs": [],
+        "source_test_blobs": [
+          {
+            "blob": "971892656dc894854d7410e65d37184cf0f30ede",
+            "path": "tests/test_agent_staffing.py"
+          },
+          {
+            "blob": "bc97c74b453969ed75773f485b7bd7c64386a535",
+            "path": "tests/test_gcl_cex.py"
+          },
+          {
+            "blob": "5a529eba9e8f2b50f91104a006fe387f24d57a94",
+            "path": "tests/test_gcl_id.py"
+          },
+          {
+            "blob": "9acecbb78313905bcf4a7636b0b8af758e670147",
+            "path": "tests/test_gcl_rc_chronology_cure.py"
+          },
+          {
+            "blob": "cb30419f41c2c53b70fb2b255adc43edc5b10a28",
+            "path": "tests/test_ghos_control_plane.py"
+          }
+        ],
+        "tests_count": 22,
+        "workflow_count": 3
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "PRIVATE_EXECUTIVE_SOURCE_AND_GOVERNANCE",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+      "private_content_fully_inspected": false,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/GCT-EXECUTIVE",
+      "scope_pinned_main_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+      "source_inventory": {
+        "governance_count": 20,
+        "source_governance_blobs": [],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 2
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "FORMAL_SOFTWARE_LIBRARY",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "lean-stable",
+          "package-contracts",
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "package-contracts",
+            "lean-stable"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "7e8afdb9eaca659f537ead597d275d591e66e2e4",
+          "workflow_path": ".github/workflows/ci.yml"
+        },
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "7107b3133bf05c3f2862ec68780a2e738d169a47",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "dispatch_events": [
+            "schedule",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "forward-compatibility"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "ae418cdfcd94ec3865ec6697a572fe4574851ebc",
+          "workflow_path": ".github/workflows/nightly-compat.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "eddf3da976a123c7f114046774aee41f44d572d6",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/GLOSS",
+      "scope_pinned_main_sha": "eddf3da976a123c7f114046774aee41f44d572d6",
+      "source_inventory": {
+        "governance_count": 7,
+        "source_governance_blobs": [
+          {
+            "blob": "fab0ca231904a1bbcc711498322de0bb6064faf1",
+            "path": "governance/ADR_TEMPLATE.md"
+          },
+          {
+            "blob": "c8b470f499b50394ee337723835f83b53216c3a0",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          },
+          {
+            "blob": "2b4519200b0803a50b05bce32949bc9ab87f4800",
+            "path": "governance/PULL_REQUEST_TEMPLATE.md"
+          },
+          {
+            "blob": "96dd9e82efb7b562e80f2db37da4034493a6c19e",
+            "path": "governance/RELEASE_CHECKLIST.md"
+          },
+          {
+            "blob": "360095fbad3c370d2fbfa774a0db2fadbbd570cd",
+            "path": "governance/agent_review.template.yaml"
+          },
+          {
+            "blob": "38e3f322891f9b77d9d31025ffffef5d5394efc1",
+            "path": "governance/rule_proposal.template.yaml"
+          },
+          {
+            "blob": "77b9a5bd83a4c4caae21a971adfe0f966e8c2f6b",
+            "path": "governance/work_package.template.yaml"
+          }
+        ],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 4
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "RESEARCH_EXPERIMENT_AND_EVALUATOR",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "unit"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "unit"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "3d9e6d85e6d47962cde059c17b46c7d97c04bb4a",
+          "workflow_path": ".github/workflows/ci.yml"
+        }
+      ],
+      "current_main_equals_pinned": false,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "8cdb3377ab6686a0f192dd2346ba12442f3d3601",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/GSD",
+      "scope_pinned_main_sha": "da7ddadc9743c14549e5132e8fc98b66d5223de6",
+      "source_inventory": {
+        "governance_count": 2,
+        "source_governance_blobs": [
+          {
+            "blob": "6a898efbdbe23eb6e947cd1c12f4a4b8fcee631f",
+            "path": "governance/GSD-001_RESEARCH_PROGRAMME.md"
+          },
+          {
+            "blob": "c7af5b65f6496ff4a3c8533f4bb6ee8721467385",
+            "path": "governance/GSD-001_WORK_PACKAGE_INDEX.yaml"
+          }
+        ],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 1
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "REUSABLE_PROOF_BUILD_ACTION",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "974d982fe0bc699918cf9850bd9f9dfc188abd31",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "actionlint"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "cc427d27b207f4a3dc2843eb23eefc01f4d721b0",
+          "workflow_path": ".github/workflows/actionlint.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "lake-init-success",
+            "lake-init-failure",
+            "auto-config-true",
+            "auto-config-false",
+            "auto-config-false-modern-leanchecker",
+            "lake-build-args",
+            "lake-test-args",
+            "detect-mathlib",
+            "lake-test-success",
+            "lake-test-failure",
+            "lake-lint-success",
+            "lake-lint-failure",
+            "lake-check-test-failure",
+            "subdirectory-lake-package",
+            "subdirectory-lake-package-lean-checker",
+            "reinstall-transient-toolchain",
+            "mk_all-check",
+            "macos-runner",
+            "windows-runner"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "339dc38f409dfc1e46c352a4dbdb2c9e6456c905",
+          "workflow_path": ".github/workflows/functional_tests.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/lean-action",
+      "scope_pinned_main_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+      "source_inventory": {
+        "governance_count": 1,
+        "source_governance_blobs": [
+          {
+            "blob": "0df459ccfe267cd09d16bb94fcfee0ad629fb5dc",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          }
+        ],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 6
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "RESEARCH_SOFTWARE_TESTS",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "benchmark-report",
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy",
+          "test-and-lint (3.10)",
+          "test-and-lint (3.11)",
+          "test-and-lint (3.12)"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "test-and-lint",
+            "benchmark-report"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "0448d18e86bfd3aba9a803e2702e8b3b841af239",
+          "workflow_path": ".github/workflows/ci.yml"
+        },
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "515aa5f2a816b9ec9b956c225f8d789b092345e7",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "7ca4ffcdace32d5ff79c27ad557bfb690fac0af3",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/MODULUS",
+      "scope_pinned_main_sha": "7ca4ffcdace32d5ff79c27ad557bfb690fac0af3",
+      "source_inventory": {
+        "governance_count": 12,
+        "source_governance_blobs": [
+          {
+            "blob": "2c9bf7982ee332cb92408eb030412db69f738cf9",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          },
+          {
+            "blob": "6aa6f2fe97659aaad01a21b65bd4c42cdf23bb2c",
+            "path": "governance/MODULUS-RC-MERGE-CURE-001.json"
+          },
+          {
+            "blob": "9d724940c755431471ebb700aed9c83cb86028df",
+            "path": "governance/regret_contract_authority.json"
+          },
+          {
+            "blob": "03707fb8f0ab0b77a55d996a9dbebec22bb11b45",
+            "path": "governance/settings-readback/GCL-GHOS-MODULUS-OWNER-CONTROLS-001.receipt.schema.json"
+          },
+          {
+            "blob": "de0adcce9eb0c7b757ca3a22269031e15b731898",
+            "path": "governance/settings-readback/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.schema.json"
+          },
+          {
+            "blob": "1a0a9815e5f748433f9aaf501bd482f36761f6e5",
+            "path": "governance/settings-readback/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-COLLECTOR-001.attestation.md"
+          },
+          {
+            "blob": "f1a8efd563c91810c6a661239a9987b59ba75900",
+            "path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-OWNER-CONTROLS-001.attestation.md"
+          },
+          {
+            "blob": "a66fdb72e2668760a2cb37eecf3775bf60a30463",
+            "path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-OWNER-CONTROLS-001.receipt.json"
+          }
+        ],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 3
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "RESEARCH_SCIENTIFIC_PROGRAMMES",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "policy",
+          "routing-enforcement",
+          "security / action-policy",
+          "validate"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "d348ccb100ac78b475f2d6861f5ef0f81587268c",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "static-phase-m"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "3fe30828f74e11fad037ca185bfa216b1f52fbfb",
+          "workflow_path": ".github/workflows/qtr-c90-exact-requal-001.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "calibration-static"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "bc1aac888f28deed61149170b33ebeaf5b047bd0",
+          "workflow_path": ".github/workflows/qtr-c90-resource-envelope-001.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "a38c7928a46c5873cd7f38ff39d6e6ed306d2eb4",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+      "scope_pinned_main_sha": "a38c7928a46c5873cd7f38ff39d6e6ed306d2eb4",
+      "source_inventory": {
+        "governance_count": 14,
+        "source_governance_blobs": [
+          {
+            "blob": "5fb3e928b068c885d4cbc025bd319c70ac63958a",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          },
+          {
+            "blob": "5e8df299b30fab0fea65f3e7885c9c1e5cafe0f2",
+            "path": "governance/MP-EXTERNAL-EXECUTION-PLANE-001-BINDING.json"
+          },
+          {
+            "blob": "8b330c04167cbfbff5e2ff4e0d62a599bf68b5c5",
+            "path": "governance/settings-readback/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.receipt.schema.json"
+          },
+          {
+            "blob": "aec64a8bfe684e4a9ba2fe830dffd72fd7f9bc11",
+            "path": "governance/settings-readback/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.receipt.schema.json"
+          },
+          {
+            "blob": "708d7f079bec27017f21349f9f4a27972bcbaf58",
+            "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.attestation.md"
+          },
+          {
+            "blob": "22ec63fa14acf118cd44d641c49b269102614224",
+            "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.receipt.json"
+          },
+          {
+            "blob": "56dbcca7bc3998c88872aa12323ad1a6cd6bee6d",
+            "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-OWNER-CONTROLS-001.receipt.json.sha256"
+          },
+          {
+            "blob": "208a975c6486a7570f27a01ce236342799a22b61",
+            "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.attestation.md"
+          }
+        ],
+        "source_test_blobs": [
+          {
+            "blob": "ed6d3dbfce7802602dde4b988f8ef091a678d900",
+            "path": "tests/test_downstream_atlas.py"
+          },
+          {
+            "blob": "f41e38c73000d972e277ac037b2382fd94047f86",
+            "path": "tests/test_gcl_ghos_quantum_owner_controls_receipt.py"
+          },
+          {
+            "blob": "445135eb8cfa1237b9dbf10e4895efae2353f9b0",
+            "path": "tests/test_gcl_ghos_quantum_post_repair_readback_receipt.py"
+          },
+          {
+            "blob": "2bed8955e8415afcd3891da3a01fef9ec2553239",
+            "path": "tests/test_qec_circuit_001.py"
+          },
+          {
+            "blob": "361ede287c31bbfb8f8ce316deaaf6f5526bf2c1",
+            "path": "tests/test_qec_circuit_001_evidence.py"
+          }
+        ],
+        "tests_count": 39,
+        "workflow_count": 13
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "EDITORIAL_CURATION_AND_ACCEPTANCE",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "LEGACY_BRANCH_PROTECTION",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "acceptance (3.11.14)",
+          "acceptance (3.12.13)",
+          "policy / policy",
+          "replay",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "acceptance"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a518a592ece0d2d4134564637920b401288c3277",
+          "workflow_path": ".github/workflows/ci.yml"
+        },
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "89e236c69121c187c8c3e2d5e3b29633b53a9c33",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request",
+            "push",
+            "workflow_dispatch"
+          ],
+          "job_ids": [
+            "replay"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "d07c22c65e875f1314c59ac9dc31d6972d0bb842",
+          "workflow_path": ".github/workflows/bootstrap-replay.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "2c5661f22e3b2d1ebf7ed0224f7cca9472b43068",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/TROVE-CURATA",
+      "scope_pinned_main_sha": "2c5661f22e3b2d1ebf7ed0224f7cca9472b43068",
+      "source_inventory": {
+        "governance_count": 3,
+        "source_governance_blobs": [
+          {
+            "blob": "7606652270620ccaed2db86204f7df8da1e3d0cf",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          },
+          {
+            "blob": "ebb2e6c470748bb58daed0eff0b9af1e553c9c1a",
+            "path": "governance/source/TC-BOOTSTRAP-CLOSE-001.json"
+          },
+          {
+            "blob": "154c00678696442ecd9e60ed5cd44d954434b6a4",
+            "path": "governance/trove_curata_repo_acceptance.json"
+          }
+        ],
+        "source_test_blobs": [
+          {
+            "blob": "a84aa188f1d0897e73f0f769920d18ab6f3604aa",
+            "path": "tests/test_bootstrap_acceptance.py"
+          }
+        ],
+        "tests_count": 1,
+        "workflow_count": 4
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    },
+    {
+      "assertion_class": "REUSABLE_PUBLICATION_ACTION",
+      "branch_enforcement": {
+        "effective_rule_types": [
+          "deletion",
+          "non_fast_forward",
+          "pull_request",
+          "required_status_checks"
+        ],
+        "mechanism": "GITHUB_RULESETS",
+        "observed_class": "PROTECTED_WITH_PR_AND_REQUIRED_CI",
+        "protected": true,
+        "required_status_contexts": [
+          "policy / policy",
+          "routing-enforcement",
+          "security / action-policy"
+        ]
+      },
+      "controller_consumer_routes": [
+        {
+          "dispatch_events": [
+            "merge_group",
+            "pull_request",
+            "push",
+            "schedule"
+          ],
+          "job_ids": [
+            "policy",
+            "security"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "8c33d6385eccebf7e0d35c8510aa4cf2c404023b",
+          "workflow_path": ".github/workflows/gcl-conformance.yml"
+        },
+        {
+          "dispatch_events": [
+            "pull_request_target"
+          ],
+          "job_ids": [
+            "routing-enforcement"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "a0ce4332e41be37e87025da71533dec15160aa55",
+          "workflow_path": ".github/workflows/ghos-routing-enforcement-v2.yml"
+        },
+        {
+          "dispatch_events": [
+            "push"
+          ],
+          "job_ids": [
+            "draft-release"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "ebfa0d9e0b52b1e0be9bcf517d5500fdb1af7d8a",
+          "workflow_path": ".github/workflows/draft-release.yml"
+        },
+        {
+          "dispatch_events": [
+            "release"
+          ],
+          "job_ids": [
+            "publish"
+          ],
+          "observed_live_active": true,
+          "pinned_blob_sha": "51ec4f778c5387392a511d593168269b4908daa0",
+          "workflow_path": ".github/workflows/publish-immutable-actions.yml"
+        }
+      ],
+      "current_main_equals_pinned": true,
+      "end_to_end_claim_admission": "NOT_VERIFIED_IN_THIS_MAP",
+      "independent_specialist_semantic_review": "NOT_VERIFIED_IN_THIS_MAP",
+      "observed_current_main_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+      "private_content_fully_inspected": true,
+      "public_mirror_accuracy": "NOT_VERIFIED_IN_THIS_MAP",
+      "repository": "grandchallenge/upload-pages-artifact",
+      "scope_pinned_main_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+      "source_inventory": {
+        "governance_count": 1,
+        "source_governance_blobs": [
+          {
+            "blob": "0d0e49c0ae459c8d09b4ec7dfa053e5d0c19bf88",
+            "path": "governance/GCL-AGENT-STAFFING-001-ADOPTION.json"
+          }
+        ],
+        "source_test_blobs": [],
+        "tests_count": 0,
+        "workflow_count": 6
+      },
+      "source_map_state": "PINNED_PRODUCER_AND_WORKFLOW_CONSUMER_IDENTIFIED",
+      "specific_job_success_at_pinned_sha": "NOT_VERIFIED_IN_THIS_MAP"
+    }
+  ],
+  "known_workflow_routes": 44,
+  "observed_utc": "2026-10-17T10:52:12.049727+00:00",
+  "pinned_scope_sha256": "3ea5671a638ebe1754ff6b16ae6abbcb11cc6ff4a1587d9236b4c19c815a77f0",
+  "record_type": "GCL_PAAR_001_FOURTEEN_REPOSITORY_CONTROL_MAPPING/1",
+  "scientific_or_gcl_wide_assurance_certified": false,
+  "scope": "14 repositories outside original 6-repository sample",
+  "semantic_enforcement_established": false,
+  "source_map_sha256": "a6a2eaf7959a0fb185b467cb9839f9d4fdef2a70e5746484549e62dc9dc98589"
+}

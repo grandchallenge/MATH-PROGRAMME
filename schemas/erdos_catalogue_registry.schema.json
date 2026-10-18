@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bound catalogue source-audit issue registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "record_type", "schema_version", "registry_id", "repository", "pickup_mode", "comments_since", "source", "authority_effects", "issues"],
+  "properties": {
+    "$schema": {"const": "../../schemas/erdos_catalogue_registry.schema.json"},
+    "record_type": {"const": "ERDOS_CATALOGUE_REGISTRY"},
+    "schema_version": {"const": "1.0.0"},
+    "registry_id": {"const": "MP-ERDOS-FULL-CATALOGUE-001"},
+    "repository": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "pickup_mode": {"const": "direct_editorial"},
+    "comments_since": {"const": "2026-10-09T12:20:00Z"},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_repository", "source_commit", "source_path", "source_blob_sha1", "source_sha256"],
+      "properties": {
+        "source_repository": {"const": "teorth/erdosproblems"},
+        "source_commit": {"const": "536408716724a2402bdfa7c1d764bf83d64a8c89"},
+        "source_path": {"const": "data/problems.yaml"},
+        "source_blob_sha1": {"const": "4e60263a80af6207aca494d2e1388e44fa372889"},
+        "source_sha256": {"const": "be65b0db56fe13becec3178f2937685ee7e6a2f5df9325712474722c279c4182"}
+      }
+    },
+    "authority_effects": {"const": {"source_semantics_accepted": false, "solve_dispatch_authorized": false, "mathematical_claim_accepted": false, "certification": false, "publication": false, "canonical_repository_mutation": false}},
+    "issues": {
+      "type": "array", "minItems": 1221, "maxItems": 1221,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["problem_id", "issue_number", "issue_body_sha256", "catalogue_status", "triage_class", "protected_fc_present", "topics"],
+        "properties": {
+          "problem_id": {"type": "integer", "minimum": 1, "maximum": 1221},
+          "issue_number": {"type": "integer", "minimum": 1},
+          "issue_body_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "catalogue_status": {"enum": ["open", "proved", "disproved", "solved", "falsifiable", "decidable", "verifiable", "not disprovable", "not provable", "independent"]},
+          "triage_class": {"type": "string", "minLength": 1},
+          "protected_fc_present": {"type": "boolean"},
+          "topics": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort_id": "EC-BULK-005",
+  "tranche": {
+    "first_problem": 694,
+    "last_problem": 701,
+    "exact_count": 8
+  },
+  "authoritative_registry_git_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "original_issue_numbers": [
+    1965,
+    1966,
+    1967,
+    1968,
+    1969,
+    1970,
+    1971,
+    1972
+  ],
+  "original_issue_result_comment_ids": [
+    6158478480,
+    6158479634,
+    6158480660,
+    6158481827,
+    6158494960,
+    6158496102,
+    6158507959,
+    6158514447
+  ],
+  "source_readback": {
+    "original_issue_comments": 8,
+    "authenticated_actor": "fyremael",
+    "result1_grammar_pass": 8,
+    "duplicate_comments": 0,
+    "source_fields": "AVAILABLE SOURCE",
+    "chad_native_receipt": "GCL_CONTROL_BASH_RESULT/1:f74c0d4c44354505bdb861e28d3a13b5"
+  },
+  "editorial_file_readback": {
+    "six_heading_articles": 8,
+    "source_links_present": 8,
+    "math_display_delimiters_balanced": 8,
+    "renderable_latex_publication_review": "PENDING",
+    "historical_primary_page_review": "PARTIAL",
+    "independent_critical_review": "PENDING",
+    "unaccepted": 8
+  },
+  "fixture": {
+    "path": "ci/test_erdos_compendium_ec005_fixtures_694_701.py",
+    "committed_test_source": "8a3a1723c4b3ca1df97711e7a073c2c6d04cb627",
+    "runner": "Authenticated CHAD gh api --method GET exact editorial branch source piped to Python3",
+    "receipt": "GCL_CONTROL_BASH_RESULT/1:f38de4fed46146f8bf12c33bbc567597",
+    "exit_code": 0,
+    "tests_passed": 8,
+    "tests_total": 8,
+    "reported_execution_seconds": 0.014,
+    "scope": "Bounded deterministic arithmetic fixtures only; not theorem proof"
+  },
+  "source_boundaries": [
+    {
+      "problem": 694,
+      "source_status": "SOLVED_EXTERNAL_LEAN_REPORTED",
+      "risk": "GPT-5.5/Price Mertens-Linnik proof, pinned FC main sorry, Carmichael singleton open"
+    },
+    {
+      "problem": 695,
+      "source_status": "OPEN",
+      "risk": "Infinite prime chain growth and existence of slow chain distinct; pinned FC sorry"
+    },
+    {
+      "problem": 696,
+      "source_status": "SOLVED_EXTERNAL_LEAN_REPORTED",
+      "risk": "External AI-generated a.a. log_* bounds not independently re-proved or GCL kernel audited"
+    },
+    {
+      "problem": 697,
+      "source_status": "PROVED_BY_HALL_1992",
+      "risk": "MATERIAL_FALSE_PINNED_FORMAL_TARGET: the two limit conclusions and threshold hypotheses are reversed in both parts i and ii in GCL-pinned 697.lean; α=1/2 disproves erroneous part ii",
+      "admission_hold": true
+    },
+    {
+      "problem": 698,
+      "source_status": "PROVED_BERGMAN_2011_EXTERNAL_LEAN_REPORTED",
+      "risk": "Primary journal Theorem 2 verified publisher metadata, full proof and external Lean not independently replayed"
+    },
+    {
+      "problem": 699,
+      "source_status": "FALSIFIABLE",
+      "risk": "Weak p>=i remains open; known gcd(C(28,5),C(28,14))=1080 satisfies weak at p=i but defeats strict p>i"
+    },
+    {
+      "problem": 700,
+      "source_status": "OPEN_THREE_PARTS",
+      "risk": "prime square f(p²)=p=sqrt(n), not strict >; main formal questions have sorry"
+    },
+    {
+      "problem": 701,
+      "source_status": "OPEN_CHVATAL_DOWNSET",
+      "risk": "Special shifted/cover-two theorems do not prove arbitrary downset"
+    }
+  ],
+  "retained_prior_source_semantic_holds": [
+    662,
+    678,
+    683
+  ],
+  "governance": {
+    "no_protected_production_merge": true,
+    "critical_source_math_review": "PENDING",
+    "strict_MkDocs": "NOT_RUN",
+    "deployed_browser_mathjax": "NOT_VERIFIED",
+    "v2_admitted": false
+  }
+}

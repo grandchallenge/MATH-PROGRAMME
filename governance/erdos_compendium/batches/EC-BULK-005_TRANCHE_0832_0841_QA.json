@@ -1,0 +1,151 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 832,
+    "to": 841,
+    "count": 10,
+    "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "actor": "fyremael",
+  "original_issues": [
+    2103,
+    2104,
+    2105,
+    2106,
+    2107,
+    2108,
+    2109,
+    2110,
+    2111,
+    2112
+  ],
+  "authenticated_comment_ids": [
+    6180246452,
+    6180246877,
+    6180247255,
+    6180247628,
+    6180248085,
+    6180248562,
+    6180248952,
+    6180249365,
+    6180249800,
+    6180250181
+  ],
+  "source_dispositions": [
+    "STATUS_CONFLICT",
+    "SOURCE_LOCK_READY",
+    "STATUS_CONFLICT",
+    "STATUS_CONFLICT",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "SOURCE_LOCK_READY"
+  ],
+  "article_sha256": {
+    "832": "61525636415ca09d7490b0fd73d8cb515bcfa714f6ab4784a1760985e8a6fba9",
+    "833": "8aedf714581f3a998bfac543b6618274a8ba8a1539a9f92d651e5f1131862904",
+    "834": "aae35314ecb9a200593d950b7162b665bd7ec161a93222394da60d7739dad865",
+    "835": "04c274b94207f2c7df44ef0304bd032ce814449aa2b7370da2eec718e19de97c",
+    "836": "24d4520d6e94d35a42aac9541e5a6d19a1e1bbf4d85f4c198e69fd24e1299dd4",
+    "837": "6a26ce9ad3978d360b47eabfe951f805a08e3e88d2acfd5b1b55f18b9e1397f7",
+    "838": "9d065e7ae7f106bc195f9738b33e8aaeb4d481c2cac87550eb8e756363bb8559",
+    "839": "7b05dd63f48e5d6e34560401a59736de44baa1d3816f7545b6f18120017902d1",
+    "840": "92921cd8e039dc28a6d0c287192b79d15db7cb74b2748e7666d15641a2848b49",
+    "841": "ea4d5b6f411ff5b2405480df1830a5260418bc4ab1d3f4c000382f9e0a3d39f3"
+  },
+  "source_math_gate": "PASS_ALL_TEN",
+  "finite_fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_832_841.py",
+    "passed": 10,
+    "note": "Exact finite coloring, intersection, geometry, arithmetic and prime parity fixtures only, no new source-cited infinite theorem proof"
+  },
+  "exception_holds": [
+    {
+      "problem_id": 832,
+      "exceptions": [
+        "DISPROVED_GENERAL_R_GE4_BUT_THREE_UNIFORM_LARGE_K_OPEN"
+      ],
+      "blockers": [
+        "ORIGINAL_ALON1985_PROOF_PENDING",
+        "R3_LARGE_K_OPEN",
+        "STRICT_CHROMATIC_GT_K_VS_EQ_K_INDEX"
+      ]
+    },
+    {
+      "problem_id": 834,
+      "exceptions": [
+        "SOLVED_OPPOSITE_ANSWERS_TRANSVERSAL_VS_CHROMATIC_CRITICAL"
+      ],
+      "blockers": [
+        "LI2025_NINE_VERTEX_SEVEN_DEGREE_EXPLICIT_WITNESS_NOT_REPLAYED",
+        "TWO_DIFFERENT_CRITICAL_DEFINITIONS"
+      ]
+    },
+    {
+      "problem_id": 835,
+      "exceptions": [
+        "VERIFIABLE_JOHNSON_GRAPH_PRIME_MINUS_ONE_CANDIDATES_REMAIN"
+      ],
+      "blockers": [
+        "MA_TANG_PRIME_MINUS_ONE_NECESSITY_PRIMARY_SOURCE_PENDING",
+        "K3_TO_K8_CATALOGUE_COMPUTATIONS_SOURCE_LOCK_PENDING",
+        "INFINITE_PRIME_MINUS_ONE_FAMILY_OPEN"
+      ]
+    },
+    {
+      "problem_id": 836,
+      "exceptions": [
+        "DISPROVED_QUADRATIC_VERTEX_BOUND_INTERSECTION_LINEAR_QUESTION_OPEN"
+      ],
+      "blockers": [
+        "ALON_INTERSECTING_EXPONENTIAL_VERTEX_CONSTRUCTION_ORIGINAL_PROOF_PENDING",
+        "OMEGA_R_EDGE_OVERLAP_OPEN"
+      ]
+    },
+    {
+      "problem_id": 839,
+      "exceptions": [
+        "OPEN_CONSECUTIVE_SUM_SEQUENCE_DENSITY_SIDE_CONJECTURE_FALSE"
+      ],
+      "blockers": [
+        "FREUD1993_DENSITY_COUNTEREXAMPLE_PROOF_PENDING",
+        "MAIN_LIMSUP_AND_RECIPROCAL_SUM_QUESTIONS_OPEN"
+      ]
+    },
+    {
+      "problem_id": 840,
+      "exceptions": [
+        "OPEN_QUASI_SIDON_ASYMPTOTIC_FAMILY_LEADING_CONSTANT"
+      ],
+      "blockers": [
+        "ERDOS_FREUD_PIKHURKO_FULL_PROOFS_PENDING",
+        "F_N_ASYMPTOTIC_FAMILY_NOT_FINITE_BOOLEAN"
+      ]
+    },
+    {
+      "problem_id": 841,
+      "exceptions": [
+        "SOLVED_T_N_DISTRIBUTIONAL_COMPARISON_NOT_POINTWISE"
+      ],
+      "blockers": [
+        "BPZ2024_DISTRIBUTIONAL_PROOF_NOT_REPLAYED",
+        "SQUARE_N_EXCEPTION_T0",
+        "POINTWISE_EQUALITY_NOT_CLAIMED"
+      ]
+    }
+  ],
+  "qa_boundaries": {
+    "source_primary_full_proof": "PARTIAL_NOT_COMPLETE",
+    "independent_review": "PENDING",
+    "external_lean_replay": "NOT_DONE",
+    "local_mkdocs": "PASS_LOCAL_NOT_DEPLOYED",
+    "browser_mathematical_rendering": "NOT_VERIFIED",
+    "protected_merge": "NOT_MERGED",
+    "v2_editorial_admission": "NOT_ADMITTED",
+    "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:8702fbc4dc944564a779a3f7e0d574e0",
+    "cohort_test_suite": "226_PASSED_0_FAILED"
+  }
+}

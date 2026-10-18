@@ -62,7 +62,10 @@
     "receipt binds the protected dispatch, issue, bootstrap, handoff, and raw artifact identity required by that campaign profile",
     "receipt is schema-valid for the registered profile, current-for-dispatch, received_unadjudicated, and canonical_claim_effect=false",
     "no raw result for the dispatch is already present on protected main",
-    "no open intake PR already exists for the branch"
+    "no open intake PR already exists for the branch",
+    "new-generation queue candidates must be enumerated by protected-main intake bindings rather than a free-form branch prefix",
+    "new-generation receipt must preserve issue-body and pinned-task hashes, authenticated worker reservation, and no legacy-bootstrap substitution",
+    "candidate branch discovery cannot depend on an already-open pull request"
   ],
   "wake": {
     "kind": "GitHub Actions",
@@ -92,5 +95,18 @@
   ],
   "superseded_openmath_owner": "MP-OPENMATH-UNATTENDED-LIFECYCLE-001",
   "downstream_protected_admission_controller": "MP-EXTERNAL-INTAKE-EVIDENCE-ADMISSION-001",
-  "downstream_protected_admission_contract": "governance/external_intake_evidence_admission_controller.json"
+  "downstream_protected_admission_contract": "governance/external_intake_evidence_admission_controller.json",
+  "protected_queue_dispatch_support": {
+    "binding_repository": "grandchallenge/MATHSOLVE",
+    "binding_branch": "main",
+    "binding_path": ".gcl/worker_queue/INTAKE_BINDINGS.json",
+    "discovery": "exact bound intake heads by protected receipt-directory read; no PR prerequisite",
+    "profiles": "only fully bound protected queue jobs; unknown dispatches fail closed",
+    "receipt_identity": "task_path + task_commit + task_sha256 + issue_body_sha256; exact actor/reservation-owner match",
+    "authority_effect": {
+      "mathematical": false,
+      "certification": false,
+      "protected_merge": false
+    }
+  }
 }

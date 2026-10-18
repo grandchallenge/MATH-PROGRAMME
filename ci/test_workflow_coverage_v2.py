@@ -33,6 +33,36 @@ def main() -> int:
     baseline = workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
     assert not baseline, baseline
 
+    # A future model job is admitted ONLY as a read-only, cost-limited evidence
+    # canary. Deliberate privilege/cost drift must fail the standing policy test.
+    pilot_name = "erdos-catalogue-queue-projection.yml"
+    assert "--max-ai-credits=30" in texts[pilot_name]
+    excessive_credits = dict(texts)
+    excessive_credits[pilot_name] = excessive_credits[pilot_name].replace(
+        "--max-ai-credits=30", "--max-ai-credits=300", 1)
+    require_error(excessive_credits, evidence, "missing protected read-only AI boundary",
+                  registry=registry)
+
+    writable_model = dict(texts)
+    writable_model[pilot_name] = writable_model[pilot_name].replace(
+        "      copilot-requests: write", "      issues: write", 1)
+    require_error(writable_model, evidence, "AI model job must be repository-read",
+                  registry=registry)
+
+    scheduled_model = dict(texts)
+    scheduled_model[pilot_name] = scheduled_model[pilot_name].replace(
+        "github.event_name == 'push' && needs.reconcile.result == 'success'",
+        "github.event_name == 'schedule' && needs.reconcile.result == 'success'", 1)
+    require_error(scheduled_model, evidence, "cannot incur scheduled/repeated AI action",
+                  registry=registry)
+
+    unrestricted_tools = dict(texts)
+    unrestricted_tools[pilot_name] = unrestricted_tools[pilot_name].replace(
+        "--deny-tool=shell", "--allow-all", 1)
+    require_error(unrestricted_tools, evidence, "forbidden pilot capability",
+                  registry=registry)
+
+
     missing_qualification = dict(texts)
     missing_qualification.pop(QUALIFICATION_ONLY_WORKFLOW)
     require_error(
@@ -350,6 +380,33 @@ def main() -> int:
         nsci_repo_scope_drift,
         evidence,
         "exactly two MATHSOLVE-scoped App grants are required",
+        registry=registry,
+    )
+
+    # Added lease-expiry PR reconciliation must not borrow the protected-merge token.
+    nsci_lease_stage_removed = dict(texts)
+    nsci_lease_stage_removed[nsci_controller] = nsci_lease_stage_removed[nsci_controller].replace(
+        "      - name: Reconcile registered GCL-ERDOS3 lease-expiry branches to PRs",
+        "      - name: Removed GCL-ERDOS3 reconciliation",
+        1,
+    )
+    require_error(
+        nsci_lease_stage_removed,
+        evidence,
+        "exactly one lease-expiry PR controller step is required",
+        registry=registry,
+    )
+
+    nsci_lease_elevated = dict(texts)
+    nsci_lease_elevated[nsci_controller] = nsci_lease_elevated[nsci_controller].replace(
+        "          MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.intake-token.outputs.token }}",
+        "          MATHSOLVE_LEASE_EXPIRY_PR_TOKEN: ${{ steps.merge-token.outputs.token }}",
+        1,
+    )
+    require_error(
+        nsci_lease_elevated,
+        evidence,
+        "lease-expiry PR stage must use only the intake token",
         registry=registry,
     )
 

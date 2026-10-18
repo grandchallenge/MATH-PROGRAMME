@@ -35,13 +35,13 @@
     <article class="monograph-body" aria-label="The Hidden Music of Elliptic Curves manuscript">
       <section class="monograph-section" id="reader-note" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">A note to the reader</p>
-      ## Exact objects first; the open boundary always visible
+      <h2>Exact objects first; the open boundary always visible</h2>
 
       Birch and Swinnerton–Dyer links the rational-point structure of an elliptic curve to the behaviour of its $L$-function at $s=1$. The conjecture remains open in general.
 
       This browser edition is a derivative, source-normalized exposition. Its numbered plates render exact mathematical objects, exact finite computations, or quantified theorem structure whenever the adjacent concept permits it. Wolfram Language is the canonical semantic-master language for the revised plates; the committed web graphics are deterministic publication derivatives. The plates are pedagogical, not proof evidence. Definitions, equations, source links, campaign records, and trust labels govern the mathematics.
 
-      **Edition status:** Open Millennium Prize Problem; documentary exposition; no proof claim.
+      <strong>Edition status:</strong> Open Millennium Prize Problem; documentary exposition; no proof claim.
 
       <div class="conjecture-box"><strong>Open conjecture</strong><p>For every elliptic curve $E/\mathbb{Q}$, BSD predicts $\operatorname{rank}E(\mathbb{Q})=\operatorname{ord}_{s=1}L(E,s)$. The universal leading-term formula and general finiteness of $\operatorname{Sha}(E/\mathbb{Q})$ remain open.</p></div>
       <div class="warning-box"><strong>Claim boundary</strong><p>Finite computation, parity, Selmer bounds, family averages, one-prime results, $p$-adic formulas, and analytic-rank-zero-or-one theorems do not by themselves establish the universal complex conjecture.</p></div>
@@ -49,7 +49,7 @@
 
       <section class="monograph-section" id="rational-points" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter I</p>
-      ## Rational points: one exact doorway
+      <h2>Rational points: one exact doorway</h2>
 
       An elliptic curve over $\mathbb{Q}$ can be written in short Weierstrass form
 
@@ -76,7 +76,7 @@
 
       <section class="monograph-section" id="group-law" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter II</p>
-      ## The chord–tangent group law
+      <h2>The chord–tangent group law</h2>
 
       A nonsingular cubic carries an addition law. A line through two points meets the cubic a third time; reflecting that third intersection across the horizontal axis gives the sum. A tangent supplies doubling.
 
@@ -97,7 +97,7 @@
 
       <section class="monograph-section" id="local-counts" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter III</p>
-      ## Counting at a good prime
+      <h2>Counting at a good prime</h2>
 
       Reduce a suitable integral equation modulo a prime $p$. At a prime of good reduction define
 
@@ -124,7 +124,7 @@
 
       <section class="monograph-section" id="central-bridge" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter IV</p>
-      ## The strong BSD ledger
+      <h2>The strong BSD ledger</h2>
 
       The rank statement is
 
@@ -143,7 +143,7 @@
 
       <section class="monograph-section" id="theorem-frontier" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Chapter V</p>
-      ## The exact theorem frontier
+      <h2>The exact theorem frontier</h2>
 
       The frontier is governed by quantifiers and scope. Mordell–Weil finite generation and modularity hold for every elliptic curve over $\mathbb{Q}$. Through modularity, Gross–Zagier, and Kolyvagin, the established analytic rank zero or one terrain gives matching algebraic rank and finite $\operatorname{Sha}$.
 
@@ -157,7 +157,7 @@
 
       <section class="monograph-section" id="appendix-curves" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix A</p>
-      ## Elliptic curves and the Mordell–Weil group
+      <h2>Elliptic curves and the Mordell–Weil group</h2>
 
       For $E:y^2=x^3+Ax+B$, the discriminant is $\Delta=-16(4A^3+27B^2)\ne0$. The projective point $O=[0:1:0]$ is the identity.
 
@@ -176,7 +176,7 @@
 
       <section class="monograph-section" id="appendix-lfunction" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix B</p>
-      ## The $L$-function and analytic rank
+      <h2>The $L$-function and analytic rank</h2>
 
       The Euler product converges absolutely initially for $\operatorname{Re}(s)>3/2$. Modularity identifies it with the $L$-series of a weight-two newform. A standard completed normalization is
 
@@ -191,7 +191,7 @@
 
       <section class="monograph-section" id="appendix-strong" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix C</p>
-      ## The strong formula and normalization discipline
+      <h2>The strong formula and normalization discipline</h2>
 
       Authors distribute real periods, archimedean factors, completed-function terms, and local conventions differently. A comparison must reconcile those conventions before comparing symbols or numbers.
 
@@ -202,7 +202,7 @@
 
       <section class="monograph-section" id="appendix-selmer" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix D</p>
-      ## Selmer groups, descent, and the hidden term
+      <h2>Selmer groups, descent, and the hidden term</h2>
 
       Kummer theory yields
 
@@ -219,26 +219,29 @@
 
       <section class="monograph-section" id="appendix-trust" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Technical appendix E</p>
-      ## Known results and claim-level trust matrix
+      <h2>Known results and claim-level trust matrix</h2>
 
-      | Claim | Trust class | Qualification |
-      |---|---|---|
-      | $E(\mathbb{Q})$ is finitely generated | established | Mordell–Weil theorem |
-      | Every elliptic curve over $\mathbb{Q}$ is modular | imported established | supplies continuation and functional equation |
-      | Analytic rank $0$ or $1$ gives matching algebraic rank and finite $\operatorname{Sha}$ | imported established | exact low-rank terrain |
-      | Universal rank equality | open | no finite computation, parity theorem, or family result promotes it |
-      | Universal finiteness of $\operatorname{Sha}$ | open | separate from rank equality |
-      | Universal complex leading-term formula | open | requires every normalization and arithmetic factor |
-      | A fixed-curve rigorous computation | bounded evidence or certificate | does not imply the universal statement |
-      | A $p$-adic or one-prime theorem | hypothesis-sensitive theorem terrain | not identical to the global complex formula |
-      | Exact-object documentary plates | pedagogical | reproducible representation; never proof evidence |
+      <table class="monograph-trust-table">
+        <thead><tr><th scope="col">Claim</th><th scope="col">Trust class</th><th scope="col">Qualification</th></tr></thead>
+        <tbody>
+          <tr><td>$E(\mathbb{Q})$ is finitely generated</td><td>established</td><td>Mordell–Weil theorem</td></tr>
+          <tr><td>Every elliptic curve over $\mathbb{Q}$ is modular</td><td>imported established</td><td>supplies continuation and functional equation</td></tr>
+          <tr><td>Analytic rank $0$ or $1$ gives matching algebraic rank and finite $\operatorname{Sha}$</td><td>imported established</td><td>exact low-rank terrain</td></tr>
+          <tr><td>Universal rank equality</td><td>open</td><td>no finite computation, parity theorem, or family result promotes it</td></tr>
+          <tr><td>Universal finiteness of $\operatorname{Sha}$</td><td>open</td><td>separate from rank equality</td></tr>
+          <tr><td>Universal complex leading-term formula</td><td>open</td><td>requires every normalization and arithmetic factor</td></tr>
+          <tr><td>A fixed-curve rigorous computation</td><td>bounded evidence or certificate</td><td>does not imply the universal statement</td></tr>
+          <tr><td>A $p$-adic or one-prime theorem</td><td>hypothesis-sensitive theorem terrain</td><td>not identical to the global complex formula</td></tr>
+          <tr><td>Exact-object documentary plates</td><td>pedagogical</td><td>reproducible representation; never proof evidence</td></tr>
+        </tbody>
+      </table>
 
       <div class="warning-box"><strong>Final claim boundary</strong><p>This web edition changes presentation, not theorem strength. It does not prove BSD, provide a new reduction, independently verify the complete literature, or make a novelty or priority claim.</p></div>
       </section>
 
       <section class="monograph-section" id="sources" data-reader-section markdown="1">
       <p class="monograph-section__eyebrow">Sources and programme crosswalk</p>
-      ## Governing literature and campaign record
+      <h2>Governing literature and campaign record</h2>
 
       <div class="bibliography">
       <p>Andrew Wiles, <a href="https://www.claymath.org/wp-content/uploads/2022/05/birchswin.pdf">The Birch and Swinnerton–Dyer Conjecture</a>, official Millennium Problem description.</p>

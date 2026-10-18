@@ -1,0 +1,174 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "scope": {
+    "from": 782,
+    "to": 791,
+    "count": 10,
+    "pinned_registry_blob": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5"
+  },
+  "actor": "fyremael",
+  "original_issues": [
+    2053,
+    2054,
+    2055,
+    2056,
+    2057,
+    2058,
+    2059,
+    2060,
+    2061,
+    2062
+  ],
+  "authenticated_comment_ids": [
+    6168392764,
+    6168393353,
+    6168393957,
+    6168394675,
+    6168395747,
+    6168396402,
+    6168397117,
+    6168397829,
+    6168398557,
+    6168399120
+  ],
+  "source_dispositions": [
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT",
+    "BOUNDED_TASK_DESIGNED",
+    "STATUS_CONFLICT"
+  ],
+  "article_sha256": {
+    "782": "1d69c73607782ee3e85b468307f67f372196ba5d4fb479e65cc09b4f60dc8c61",
+    "783": "af447e4a4eae82ad661b97d75a1710fa47511d6a94c75102760352fed3fca20f",
+    "784": "7056f99bdab07234cc3dd989ac9a469fadd9556fe6e03fdc29da8044938ec2eb",
+    "785": "685407cf34974167b9990a1480ce2589cfca4f5355d2dd202599fcdc420efd14",
+    "786": "c3de5186926f19998729ceec6b870918dbd2f050a8e69887b95e99969a1b9b69",
+    "787": "38bddba54dec1a87786173d6cabcd496b69c57bddf35e9b42d638a8f8808e249",
+    "788": "651a2568f9fba231dfafb2402902e8acdbf57bb443bbf49235372cefba4a69a3",
+    "789": "c2a06cc31e43990c3c9ce695da5992cefb8ac935cc438b393678a7df9b8442dc",
+    "790": "55877c4e5254d0a28cd34f3e1b7eed0f2da444f18404bd168c25ff763bbfa022",
+    "791": "20bfd79bef4b69844051885f277898583464cbeb0bcbc415eaa6067fa40e0c8f"
+  },
+  "source_math_gate": "PASS_ALL_TEN",
+  "finite_fixture": {
+    "file": "ci/test_erdos_compendium_ec005_fixtures_782_791.py",
+    "passed": 10,
+    "note": "Finite arithmetic only, does not certify infinite theorems"
+  },
+  "exception_holds": [
+    {
+      "n": 782,
+      "exceptions": [
+        "OPEN_QUASI_PROGRESSIONS_AND_HILBERT_CUBES"
+      ],
+      "blockers": [
+        "BEF90_CIGR07_HISTORICAL_FULL_PRIMARY_PENDING"
+      ]
+    },
+    {
+      "n": 783,
+      "exceptions": [
+        "ASYMPTOTIC_TAO_VS_FINITE_PRIME_OPTIMALITY"
+      ],
+      "blockers": [
+        "TAO_ORIGINAL_PROOF_UNINSPECTED",
+        "EXACT_PRIME_TAIL_NOT_UNIVERSAL"
+      ]
+    },
+    {
+      "n": 784,
+      "exceptions": [
+        "LITERAL_1_DIVISOR_VACUITY_AND_CORRECTED_C_REGIMES"
+      ],
+      "blockers": [
+        "LITERAL_INCLUDES_ONE_MUST_NORMALIZE",
+        "WEINGARTNER_RUZSA_SAIAS_ORIGINAL_PROOFS_UNINSPECTED"
+      ]
+    },
+    {
+      "n": 785,
+      "exceptions": [
+        "EXACT_ADDITIVE_COMPLEMENTS_PROVED_EXTERNAL_LEAN_UNREPLAYED"
+      ],
+      "blockers": [
+        "SARKOZY_SZEMEREDI_PRIMARY_PROOF_PENDING",
+        "EXTERNAL_LEAN_GCL_REPLAY_PENDING"
+      ]
+    },
+    {
+      "n": 786,
+      "exceptions": [
+        "DISTINCT_FACTOR_VS_REPETITION_PRODUCT_SEMANTIC_HOLD"
+      ],
+      "blockers": [
+        "ER80_DISTINCT_FACTORS_VS_ERS73_REPETITION_HOLD",
+        "PRIMARY_HISTORICAL_SOURCE_NEEDED"
+      ]
+    },
+    {
+      "n": 787,
+      "exceptions": [
+        "AMBIENT_A_SCHUR_SUM_AVOIDANCE_OPEN"
+      ],
+      "blockers": [
+        "SANDERS_RUZSA_BEKER_PRIMARY_PROOF_PENDING"
+      ]
+    },
+    {
+      "n": 788,
+      "exceptions": [
+        "MINIMAX_B_C_GRAPH_REDUCTION_OPEN"
+      ],
+      "blockers": [
+        "ALON_PHAM_FULL_CAYLEY_PROOF_PENDING"
+      ]
+    },
+    {
+      "n": 789,
+      "exceptions": [
+        "UNRESTRICTED_REPETITION_TRIVIALIZES_HN_HOLD"
+      ],
+      "blockers": [
+        "UNRESTRICTED_REPETITION_CONTRADICTS_NONTRIVIAL_HN",
+        "ORIGINAL_ERS_STRAUS_CHOHI_SOURCE_NEEDED"
+      ]
+    },
+    {
+      "n": 790,
+      "exceptions": [
+        "ALL_DISTINCT_MULTI_TERM_SUM_FREE_PARTIAL"
+      ],
+      "blockers": [
+        "CHOI_KOMLOS_SZEMEREDI_FULL_PROOF_PENDING"
+      ]
+    },
+    {
+      "n": 791,
+      "exceptions": [
+        "GENERAL_BASIS_OPEN_2SQRT_SUBQUESTION_DISPROVED"
+      ],
+      "blockers": [
+        "YU_KOHONEN_MROSE_FULL_PROOFS_UNINSPECTED",
+        "GENERAL_VS_QUADRATIC_SUBQUESTION_DISTINGUISH"
+      ]
+    }
+  ],
+  "qa_boundaries": {
+    "source_primary_full_proof": "PARTIAL_NOT_COMPLETE",
+    "independent_review": "PENDING",
+    "external_lean_replay": "NOT_DONE",
+    "local_mkdocs": "PASS_LOCAL_NOT_DEPLOYED",
+    "browser_mathematical_rendering": "NOT_VERIFIED",
+    "protected_merge": "NOT_MERGED",
+    "v2_editorial_admission": "NOT_ADMITTED",
+    "mkdocs_chad_receipt": "GCL_CONTROL_BASH_RESULT/1:d6a9442459884cba83bec217359ec3cd",
+    "cohort_test_suite": "176_PASSED"
+  }
+}

@@ -13,10 +13,13 @@ nav:
   - Start Here: index.md
   - Current Work:
       - Current Work: CURRENT_WORK.md
+      - Prime Factorization and Information: PRIME_INFORMATION_GEOMETRY.md
+      - Prime Information Transition Problem: PRIME_INFORMATION_TRANSITION.md
       - OpenMath 2026 Current State: campaigns/OPENMATH_2026_STATUS.md
       - OpenMath 2026 Research Agenda: campaigns/OPENMATH_2026_RESEARCH_AGENDA.md
       - GCL-ERDOS3: campaigns/GCL_ERDOS3.md
       - ERDOS Open Triage: campaigns/ERDOS_OPEN_TRIAGE.md
+      - ERDOS Catalogue Processing: campaigns/ERDOS_CATALOGUE_PROCESSING.md
       - OpenMath 2026 Participant Trial: campaigns/OPENMATH_2026_PARTICIPANT_TRIAL.md
       - OpenMath 2026 Campaign Charter: campaigns/OPENMATH_2026_CHARTER.md
       - OpenMath 2026 Sprint Profile: campaigns/OPENMATH_2026_SPRINT_PROFILE.md
@@ -28,8 +31,11 @@ nav:
   - Results:
       - Results and Exemplars: SHOWCASE.md
       - CMDG Condensed Mathematics:
+          - Condensed Mathematics for the Perplexed: CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md
           - CM4 Result and Proof Route: CMDG_CM4.md
           - CM4 Accessible Research Guide: CMDG_CM4_RESEARCH_GUIDE.md
+          - CM4 Mathematical Note: CMDG_CM4_MATHEMATICAL_NOTE.md
+          - CM4 Independent Reproduction: CMDG_CM4_REPRODUCIBILITY.md
           - CM4 External Mathematical Review: CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md
           - CM4 Mathlib Upstream Assessment: CMDG-CM4-MATHLIB-UPSTREAM-ASSESSMENT.md
       - VGSE Predecessor Mandates:
@@ -51,10 +57,13 @@ nav:
   - How the Programme Works:
       - Programme Atlas: PROGRAMME_ATLAS.md
       - External Agent Work Queue: EXTERNAL_AGENT_WORK_QUEUE.md
+      - Lean Colab Computational Skill: lean-colab/SPEC.md
+      - Lean Colab Run Matrix: lean-colab/RUN_MATRIX.md
       - Reader Guide: GRAND_CHALLENGE_READER_GUIDE.md
       - Programme Charter: PROGRAMME_CHARTER.md
       - Doctrine:
           - Technical Writing Reference: TECHNICAL_WRITING_REFERENCE.md
+          - Mathematical Typography Audit: MATHEMATICAL_TYPOGRAPHY_AUDIT.md
           - Claim Boundary: CLAIM_BOUNDARY_DOCTRINE.md
           - Research Surface Contract: RESEARCH_SURFACE_CONTRACT.md
           - Programme Status Taxonomy: STATUS_TAXONOMY.md
@@ -106,6 +115,7 @@ nav:
           - "Resource Note: Project-Based Research": RESOURCE_NOTES/PROJECT_BASED_UNDERGRADUATE_RESEARCH.md
       - Documentary Library:
           - Collection and Authority Guide: documentaries/index.md
+          - Erdős Compendium — all registered problems: erdos/index.md
           - The Shape of a Sphere: documentaries/poincare.md
           - The Hidden Music of Elliptic Curves: documentaries/bsd.md
           - The Geometry of Hidden Harmony: documentaries/hodge.md
@@ -148,6 +158,8 @@ nav:
           - GCL Agent Continuity Phase D0: governance/GCL_AGENT_CONTINUITY_PHASE_D0_001.md
           - GCL Controlled Epistemic Interface: governance/GCL_CONTROLLED_EPISTEMIC_INTERFACE.md
           - GCL Worker Queue and Collaboration: governance/GCL_WORKER_QUEUE_COLLABORATION_OPERATING_DESIGN.md
+          - Erdős-024 Forge Copilot Critical Review Pilot: governance/ERDOS_024_FORGE_COPILOT_PILOT.md
+          - "Erdős #41 Authenticated Colab Route": governance/ERDOS_041_COPILOT_ACTIVATION_GATED_001.md
           - Frontier Advancement Gate: governance/FRONTIER_ADVANCEMENT_GATE.md
           - GCL CEX-01 Observational Validation: governance/GCL_CEX_01_OBSERVATIONAL_VALIDATION_001.md
           - GCL-ID-00 Programme Adoption Profile: governance/GCL_ID_00_ADOPTION_PROFILE.md
@@ -156,6 +168,8 @@ nav:
           - Administrative Maintenance Plan: governance/ADMINISTRATIVE_MAINTENANCE_PLAN.md
           - Agent-Cadence Operating Design: governance/AGENT_CADENCE_OPERATING_DESIGN.md
           - Streamlined Execution Amendment: governance/STREAMLINED_EXECUTION_AMENDMENT.md
+          - Delegated Material Admission: governance/DELEGATED_MATERIAL_ADMISSION.md
+          - Specialist Admission Shadow: governance/SPECIALIST_ADMISSION_SHADOW.md
           - Substance-First Execution Discipline: governance/SUBSTANCE_FIRST_EXECUTION_DISCIPLINE.md
           - GCL-TCS Pilot Evidence Index: governance/GCL_TCS_PILOT_EVIDENCE_INDEX.md
           - GCL-TCS Pilot Measurement: governance/GCL_TCS_PILOT_MEASUREMENT_001.md
@@ -244,9 +258,14 @@ theme:
         icon: material/weather-sunny
         name: Use light mode
 
+hooks:
+  - ci/erdos_compendium_hook.py
+
 # Enable the admonition syntax used for authority and status notices.
 markdown_extensions:
   - admonition
+  - pymdownx.arithmatex:
+      generic: true
 
 extra_css:
   - stylesheets/extra.css
@@ -259,3 +278,4 @@ extra_css:
 
 extra_javascript:
   - javascripts/semantic-catalog.js
+  - javascripts/mkdocs-math.js

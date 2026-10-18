@@ -1,0 +1,91 @@
+{
+  "record_type": "ERDOS_COMPENDIUM_COHORT_PREPRODUCTION_QA/1",
+  "cohort": "EC-BULK-005",
+  "tranche": {
+    "from": 677,
+    "to": 684,
+    "count": 8
+  },
+  "pinned_registry_sha1": "90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5",
+  "original_issue_numbers": [
+    1948,
+    1949,
+    1950,
+    1951,
+    1952,
+    1953,
+    1954,
+    1955
+  ],
+  "original_issue_comment_ids": [
+    6157157903,
+    6157169242,
+    6157178530,
+    6157186853,
+    6157193715,
+    6157202336,
+    6157212475,
+    6157222098
+  ],
+  "original_issue_actor": "fyremael",
+  "source_identity_readback": {
+    "eight_issue_bound_returns_checked": 8,
+    "duplicate_returns": 0,
+    "canonical_result_grammar_passed": 8
+  },
+  "article_readback": {
+    "articles_present": 8,
+    "six_section_headings_passed": 8,
+    "escaped_inline_code_detected": 0,
+    "unbalanced_display_math": 0,
+    "source_issue_links_passed": 8
+  },
+  "fixture": {
+    "committed_test_file": "ci/test_erdos_compendium_ec005_fixtures_677_684.py",
+    "source_git_commit": "a19cb4f3e12dd22fc1ec098f2416b8d0d1eb114f",
+    "exact_local_arithmetic_check_groups_passed": 8,
+    "verification_platform": "LOCAL_PYTHON_EXACT_RECONSTRUCTION",
+    "remote_chad_test_status": "UNAVAILABLE_RUNTIME_INVALID_ARGUMENT",
+    "remote_chad_was_attempted": true,
+    "github_actions_ci": "NOT_RUN",
+    "note": "Local Python reconstructed and verified eight bounded exact fixture groups matching committed tests; CHAD runner was unavailable. Do not claim CHAD execution, GitHub Actions or full-source test run."
+  },
+  "source_conflicts": [
+    {
+      "n": 678,
+      "severity": "MATERIAL_FALSE_FORMAL_STATEMENT",
+      "detail": "Pinned FC #678 asserts infinite qualifying (m,n) for each sufficiently large fixed k, but Cambie proves existence of at least one pair per large k; fixed-k pairs finite. Maintained source theorem PROVED; pinned formal target not equivalent.",
+      "hold_for_admission": true
+    },
+    {
+      "n": 683,
+      "severity": "MATERIAL_FALSE_FORMAL_STATEMENT",
+      "detail": "Pinned FC #683 replaces maintained >= by strict >; n=2^a,k=n-1 has largest prime factor=2 and rhs=2, refuting strict > for all c>0. Maintained weak inequality OPEN.",
+      "hold_for_admission": true
+    },
+    {
+      "n": 683,
+      "severity": "DEFINITIONAL_ENDPOINT",
+      "detail": "Maintained k=n gives binomial coefficient 1 and undefined largest prime factor unless P(1) convention specified; Lean restricts k<n.",
+      "hold_for_admission": true
+    },
+    {
+      "n": 684,
+      "severity": "FINITE_DOMAIN_CAVEAT",
+      "detail": "At n=20 no k has u(n,k)>n^2, so f(20) undefined; 2026 polylog theorem requires sufficiently large n.",
+      "hold_for_admission": false
+    }
+  ],
+  "mathematical_claims": [
+    "#677 equal-length collision remains open and finite tested examples have variable length",
+    "#679 additive-O(1) version refuted by prior comments; primary relative-epsilon remains open",
+    "#680 and #681 are different because #681 composite condition",
+    "#682 Gafni Tao Theorem 1.1 proved almost all, not infinite exceptions"
+  ],
+  "no_independent_math_certification": true,
+  "no_final_critical_review": true,
+  "strict_mkdocs": "NOT_RUN",
+  "deployed_browser_math": "NOT_VERIFIED",
+  "protected_batch_publication": "NONE",
+  "v2_editorial_admission": "NONE"
+}

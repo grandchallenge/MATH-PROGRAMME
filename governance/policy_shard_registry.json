@@ -219,6 +219,10 @@
         "test_*fixture*.py",
         "--report-json",
         "fixture-test-timing.json"
+      ],
+      [
+        "python3",
+        "ci/run_ec005_governed_qa.py"
       ]
     ],
     "cmdg": [
@@ -331,6 +335,14 @@
       [
         "python3",
         "ci/validate_erdos_open_recon_state.py"
+      ],
+      [
+        "python3",
+        "ci/validate_erdos_compendium_bulk_003.py"
+      ],
+      [
+        "python3",
+        "ci/test_erdos_compendium_bulk_003.py"
       ]
     ],
     "contracts": [
@@ -343,6 +355,34 @@
         "-m",
         "unittest",
         "tests.test_ghos_execution_routing"
+      ],
+      [
+        "python3",
+        "ci/agent_material_profiles.py"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_agent_material_profiles"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_agent_routine_review"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_specialist_admission_shadow"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_specialist_receipt_adapter"
       ],
       [
         "python",
@@ -459,6 +499,12 @@
       [
         "python3",
         "ci/validate_gcl_cc_adoption.py"
+      ],
+      [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_solve_specialist_admission"
       ]
     ],
     "docs": [
@@ -499,6 +545,14 @@
       [
         "python3",
         "ci/validate_rendered_docs.py"
+      ],
+      [
+        "python3",
+        "ci/test_exposition_integrity.py"
+      ],
+      [
+        "python3",
+        "ci/erdos_compendium_007_governed_replay.py"
       ]
     ],
     "repository-regression": [

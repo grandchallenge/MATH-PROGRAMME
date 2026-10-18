@@ -1,0 +1,137 @@
+name: Erdős catalogue source intake
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/erdos-catalogue-intake.yml'
+      - 'ci/erdos_catalogue_programme_intake.py'
+      - 'ci/erdos_rolling_review_queue.py'
+      - 'ci/erdos_forge_copilot_pilot.py'
+      - 'ci/erdos_colab_host_runner.py'
+      - 'ci/erdos_41_lean_colab_host.py'
+      - 'ci/gcl_lean_colab_jobs.py'
+      - 'governance/lean_colab/**'
+      - 'research/erdos-41-critique/**'
+      - '.agents/skills/gcl-lean-colab/**'
+      - 'docs/lean-colab/**'
+      - 'tests/test_gcl_lean_colab_jobs.py'
+      - 'tests/test_erdos41_infinite_fidelity.py'
+      - 'tests/test_erdos41_density_transfer.py'
+      - 'tests/test_erdos41_shell_hardy.py'
+      - 'tests/test_erdos41_cross_patterns.py'
+      - 'tests/test_erdos41_additive_shadow.py'
+      - 'tests/test_erdos41_multiscale_shadow_moments.py'
+      - 'tests/test_erdos41_shadow_correlation.py'
+      - 'tests/test_erdos41_off_spectrum_energy.py'
+      - 'tests/test_erdos41_spectral_matching.py'
+      - 'tests/test_erdos41_zero_sum_fibers.py'
+      - 'tests/test_erdos41_density_mixed_budget.py'
+      - 'tests/test_erdos41_mixed_ballistic_dispersion.py'
+      - 'tests/test_erdos41_cross_scale_overlap_energy.py'
+      - 'tests/test_erdos41_density_zero_overlap.py'
+      - 'tests/test_erdos41_local_outer_differences.py'
+      - 'research/erdos-41-density/**'
+      - 'research/erdos-41-critique/**'
+      - 'colab/erdos_41_lean_worker.py'
+      - 'experiments/erdos-024/lean/**'
+      - 'tests/test_erdos_41_lean_colab.py'
+      - 'tests/test_erdos_41_lean_colab_host.py'
+      - 'tests/test_erdos_41_lean_bootstrap.py'
+      - 'ci/erdos_41_queue_bridge.py'
+      - 'ci/erdos_41_colab_finite_replay.py'
+      - 'tests/test_erdos_41_queue_bridge.py'
+      - 'ci/erdos_41_colab_handoff.py'
+      - 'tests/test_erdos_41_colab_handoff.py'
+      - 'colab/erdos_024_remote_review.py'
+      - 'tests/test_erdos_colab_review.py'
+      - 'tests/test_erdos_forge_copilot_pilot.py'
+      - 'tests/test_erdos_rolling_review_queue.py'
+      - 'tests/test_administrative_erdos_catalogue_intake.py'
+      - 'tests/test_erdos_event_path_acceptance.py'
+      - 'tests/test_erdos_event_custody.py'
+      - 'ci/erdos_event_custody.py'
+      - '.github/workflows/erdos-catalogue-queue-projection.yml'
+      - 'governance/erdos_catalogue/**'
+      - 'schemas/erdos_catalogue_registry.schema.json'
+  issue_comment:
+    types: [created, edited, deleted]
+  workflow_dispatch:
+  schedule:
+    - cron: '19 */6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-catalogue-intake-${{ github.event.issue.number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --requirement requirements/policy.txt
+      - name: Governed Colab host entrypoint contract (no OAuth, no GPU, no cost)
+        run: PYTHONPATH=. python ci/erdos_colab_host_runner.py --selftest
+      - name: Governed Lean Colab host selftest (offline, no GitHub or Colab)
+        run: PYTHONPATH=. python ci/erdos_41_lean_colab_host.py --selftest
+      - name: Governed Lean Colab skill registry
+        run: |
+          python ci/gcl_lean_colab_jobs.py list
+          python ci/gcl_lean_colab_jobs.py verify
+      - name: Governed Erdős #41 helper reachability contracts
+        run: |
+          python ci/erdos_41_colab_finite_replay.py --help
+          python ci/erdos_41_queue_bridge.py --help
+          python ci/erdos_41_colab_handoff.py
+      - run: python -m unittest tests.test_administrative_erdos_catalogue_intake tests.test_erdos_event_path_acceptance tests.test_erdos_event_custody tests.test_erdos_rolling_review_queue tests.test_erdos_forge_copilot_pilot tests.test_erdos_colab_review tests.test_erdos_41_queue_bridge tests.test_erdos_41_colab_handoff tests.test_erdos_41_lean_colab tests.test_erdos_41_lean_colab_host tests.test_erdos_41_lean_bootstrap tests.test_gcl_lean_colab_jobs tests.test_erdos41_infinite_fidelity tests.test_erdos41_density_transfer tests.test_erdos41_shell_hardy tests.test_erdos41_cross_patterns tests.test_erdos41_additive_shadow tests.test_erdos41_multiscale_shadow_moments tests.test_erdos41_shadow_correlation tests.test_erdos41_off_spectrum_energy tests.test_erdos41_spectral_matching tests.test_erdos41_zero_sum_fibers tests.test_erdos41_density_mixed_budget tests.test_erdos41_mixed_ballistic_dispersion tests.test_erdos41_cross_scale_overlap_energy tests.test_erdos41_density_zero_overlap tests.test_erdos41_local_outer_differences
+      - run: python ci/erdos_catalogue_programme_intake.py --events governance/erdos_catalogue/EMPTY_EVENTS.json --output catalogue-validation
+
+  capture:
+    if: >-
+      github.event_name != 'pull_request' &&
+      (github.event_name != 'issue_comment' ||
+       (!github.event.issue.pull_request &&
+        startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
+        (github.event.action != 'created' || startsWith(github.event.comment.body, 'RESULT/1'))))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Preserve exact comment event or reconcile current catalogue returns
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "issue_comment" ]; then
+            python ci/erdos_catalogue_programme_intake.py --event "$GITHUB_EVENT_PATH" --output catalogue-intake
+          else
+            python ci/erdos_catalogue_programme_intake.py --live-snapshot --output catalogue-intake
+          fi
+          cat catalogue-intake/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain immutable captured versions and unadjudicated dispositions
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: erdos-catalogue-intake-${{ github.run_id }}-${{ github.run_attempt }}
+          path: catalogue-intake
+          if-no-files-found: error
+          retention-days: 90

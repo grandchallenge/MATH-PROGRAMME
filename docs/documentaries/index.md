@@ -13,6 +13,19 @@ The Documentary Library translates the programme's hardest mathematical terrain 
 
 CI rejects missing or orphaned edition records, pages, admitted source records, documentary source locks, asset files, asset directories, root static files, and shared reader CSS or JavaScript. It also rejects drift among the manifest, candidate registry, domain registry, source records, source locks, edition records, and rendered pages.
 
+## Erdős Compendium — reference annex
+
+[The Erdős Compendium](../erdos/index.md) offers a numbered, source-qualified
+entrance to all **1,221** registered problems, with individual issue/source
+links and a growing set of substantial layperson articles. The first developed
+articles explain Problems #1, #2 and #3, including mathematical examples,
+known results, GCL's verified work and unresolved proof obligations.
+
+This is a **reference annex**, not an admitted documentary volume. It is
+deliberately separate from the release-artifact manifest, illustrated-edition
+source bundles and PDF certification obligations. A reference-only entry must
+not be confused with a finished explanatory article or a certified result.
+
 ## Documentary tiers
 
 The tiers describe expository scope, not mathematical authority.

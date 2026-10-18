@@ -1,0 +1,98 @@
+{
+  "record_type": "EC_BULK_007_CRITIC_1200_INCLUSION_EXCLUSION_PRECHECK/1",
+  "problem_id": 1200,
+  "source_current_status": "OPEN",
+  "verification_method": "Exact integer inclusion-exclusion over 2^11 target subsets, 2^5 prime-subsets; independent of the original Cartesian-product assignment enumeration.",
+  "target_integers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "primes_below_x": [
+    2,
+    3,
+    5,
+    7,
+    11
+  ],
+  "x": 12,
+  "total_optional_residue_choices": 6912,
+  "full_cover_assignment_count": 14,
+  "prime_subsets_with_full_cover": [
+    {
+      "primes": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "covers": 14,
+      "mass": "2927/2310"
+    }
+  ],
+  "minimum_reciprocal_sum": "2927/2310",
+  "witness_residues": {
+    "2": 0,
+    "3": 0,
+    "5": 1,
+    "7": 0,
+    "11": 5
+  },
+  "per_integer_covering_primes": {
+    "1": [
+      5
+    ],
+    "2": [
+      2
+    ],
+    "3": [
+      3
+    ],
+    "4": [
+      2
+    ],
+    "5": [
+      11
+    ],
+    "6": [
+      2,
+      3,
+      5
+    ],
+    "7": [
+      7
+    ],
+    "8": [
+      2
+    ],
+    "9": [
+      3
+    ],
+    "10": [
+      2
+    ],
+    "11": [
+      5
+    ]
+  },
+  "source_refs": [
+    "https://www.erdosproblems.com/1200",
+    "https://combinatorica.hu/~p_erdos/1980-29.pdf"
+  ],
+  "primary_paper_page_inspection": "NOT_PERFORMED_IN_THIS_DETERMINISTIC_PRECHECK",
+  "what_this_proves": "Only exact covering counts for x=12; no universal constant, asymptotic or source theorem.",
+  "independent_mathematical_critic_approved": false,
+  "result": "FINITE_PRECHECK_PASS_NOT_EDITORIAL_APPROVAL",
+  "elementary_global_necessary_bound": "For N=x-1, any covering family of distinct primes p<x satisfies N <= sum_p ceil(N/p) <= N*sum_p(1/p)+number_of_primes_used <= N*sum_p(1/p)+pi(N); hence sum_p(1/p)>=1-pi(N)/N and a uniform covering budget strictly less than 1 is impossible for all sufficiently large x by the prime number theorem.",
+  "global_bound_scope": "Necessary C>=1 only, not sufficiency and not a resolution of Problem 1200.",
+  "independent_agent_candidate_run": "BOUNDED_READONLY_CODEX_RUN_TIMED_OUT_NO_COMPLETED_REVIEW_RESULT"
+}
