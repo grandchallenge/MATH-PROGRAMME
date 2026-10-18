@@ -29,6 +29,16 @@ class AcceptedParityTests(unittest.TestCase):
     def test_wrong_url(self):self.reject(public_url=URL.replace('0099','0100'))
     def test_unaccepted_draft(self):self.reject(html=page(status='UNACCEPTED DRAFT'))
     def test_uncertified_status_changed(self):self.reject(html=page(status='NOT received separate GCL editorial acceptance'))
+    def test_display_math_enters_source_fidelity_and_render_count(self):
+        # A top-level <div class="arithmatex"> must never be silently skipped.
+        revised=SOURCE.replace('This section 1', 'Display equation:\n\n$$\na^2+b^2=c^2\n$$\n\nThis section 1',1)
+        admission={'source_sha256':hashlib.sha256(revised.encode()).hexdigest()}
+        good=self.run_case(source=revised,admission=admission,html=page(source=revised))
+        self.assertEqual(good['verified_math_expressions'],7)
+        changed=revised.replace('a^2+b^2=c^2','a^2+b^2=c^3')
+        self.reject(source=revised,admission=admission,html=page(source=changed))
+        missing=revised.replace('$$\na^2+b^2=c^2\n$$','')
+        self.reject(source=revised,admission=admission,html=page(source=missing))
     def test_math_changed(self):self.reject(html=page(source=SOURCE.replace('n\\ge2','n\\ge3',1)))
     def test_math_removed(self):self.reject(html=page(source=SOURCE.replace('$n\\ge2$', 'n is at least 2',1)))
     def test_prose_changed(self):self.reject(html=page(source=SOURCE.replace('retains its source meaning','alters its meaning',1)))
