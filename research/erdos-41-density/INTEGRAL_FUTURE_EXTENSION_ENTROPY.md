@@ -146,6 +146,22 @@ $
 
 The last estimate improves the coarse full-graph coefficient from c³/2048 to c³/192, while explicitly identifying the two mechanisms. It is a strict, quantitatively certified **binary integrality/compatibility** penalty; it still does NOT imply that the true maximum admissible batch size is smaller than a critical k.
 
+### Finite genuine B3 capacity certificate: surviving singles versus actual batches
+
+The interaction can be strong enough to bound the actual maximum on a concrete finite carrier, not merely its entropy. Let
+
+$
+P=\{1,2,5,14,33\},\quad R=100,\quad y=701.
+$
+
+The reflected individually surviving site set V(P;100) contains **65** integers. Their induced pair-sum difference graph has **31 independent three-element sets but no independent four-element set**. This is exactly verifiable by enumerating the 31 independent triples and showing none has an admissible fourth vertex. Of those 31 graph-compatible triples, only **five** also satisfy the entire B3 condition with the anchor; for instance T={7,49,98} is compatible. Consequently the true future-batch capacity on J_y=[1302,1401] is **exactly three**:
+
+$
+\boxed{C(P\cup\{701\},[1302,1401])=3.}\tag{FINITE-TRUE-CAPACITY}
+$
+
+This gives an explicit *integral mutual-incompatibility* effect after singleton screening. It does not imply a c-uniform global batch-size deficit: finite B3 sets can be large at selected scales, and the asymptotic conjecture remains unresolved.
+
 **Multiscale strengthened corollary.** In the staged extension tree of Theorem 3, if n_j>=max(5,cR_j^(1/3)) and k_j<=c³R_j/96 at each stage, then the history bound strengthens to
 
 $
