@@ -31,4 +31,4 @@ The generator checks every mathematical TeX body in its original order. The only
 Initial protected source baseline: 32636637d87f6df70bbaaf256da1dad956cabfee (2026-10-18).
 Original [cross-render verifier #1263](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1263), [implementation issue #2757](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2757).
 
-The generator requires Beautiful Soup 4 in the documentation-review Python environment. This matrix records local browser acceptance, not a public deployment or independent mathematical certification.
+The generator uses Python standard-library HTMLParser and adds no third-party parser dependency. This matrix records local browser acceptance, not a public deployment or independent mathematical certification.

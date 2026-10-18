@@ -2,7 +2,95 @@
 """Create source-traceable GitHub equation readers from raw-HTML documentaries."""
 import argparse, hashlib, posixpath, re
 from pathlib import Path
-from bs4 import BeautifulSoup, NavigableString, Tag
+from html.parser import HTMLParser
+
+class NavigableString(str):
+    """Minimal immutable HTML text node."""
+
+class Tag:
+    def __init__(self,name,attrs=None):
+        self.name=name
+        self.attrs=dict(attrs or [])
+        if "class" in self.attrs and self.attrs["class"] is not None:
+            self.attrs["class"]=self.attrs["class"].split()
+        self.children=[]
+
+    def get(self,name,default=None):
+        return self.attrs.get(name,default)
+
+    def _descendants(self):
+        for item in self.children:
+            if isinstance(item,Tag):
+                yield item
+                yield from item._descendants()
+
+    def find_all(self,names,recursive=True):
+        if isinstance(names,str):names=(names,)
+        candidates=self._descendants() if recursive else (x for x in self.children if isinstance(x,Tag))
+        return [node for node in candidates if node.name in names]
+
+    def select(self,selector):
+        tokens=selector.split()
+        def match(node,tok):
+            if tok.startswith("."):return tok[1:] in node.get("class",[])
+            if "." in tok:
+                name,cls=tok.split(".",1)
+                return node.name==name and cls in node.get("class",[])
+            return node.name==tok
+        current=[self]
+        for tok in tokens:
+            current=[node for item in current for node in item._descendants() if match(node,tok)]
+        return current
+
+    def select_one(self,selector):
+        matches=self.select(selector)
+        return matches[0] if matches else None
+
+    def _strings(self):
+        for item in self.children:
+            if isinstance(item,NavigableString):yield str(item)
+            elif isinstance(item,Tag):yield from item._strings()
+
+    def get_text(self,separator="",strip=False):
+        pieces=self._strings()
+        if strip:
+            pieces=(x.strip() for x in pieces)
+            pieces=(x for x in pieces if x)
+        return separator.join(pieces)
+
+class HTMLFragmentParser(HTMLParser):
+    VOID={"area","base","br","col","embed","hr","img","input","link",
+          "meta","param","source","track","wbr"}
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.root=Tag("document")
+        self.stack=[self.root]
+    def handle_starttag(self,name,attrs):
+        node=Tag(name,attrs)
+        self.stack[-1].children.append(node)
+        if name not in self.VOID:self.stack.append(node)
+    def handle_startendtag(self,name,attrs):
+        self.stack[-1].children.append(Tag(name,attrs))
+    def handle_endtag(self,name):
+        for index in range(len(self.stack)-1,0,-1):
+            if self.stack[index].name==name:
+                del self.stack[index:]
+                return
+    def handle_data(self,data):
+        if not data:return
+        children=self.stack[-1].children
+        # HTMLParser may split text around a literal less-than sign. Preserve
+        # contiguous TeX such as 0<Re(s)<1 as ONE math-bearing text span.
+        if children and isinstance(children[-1],NavigableString):
+            children[-1]=NavigableString(str(children[-1])+data)
+        else:children.append(NavigableString(data))
+
+def BeautifulSoup(source,_parser):
+    parser=HTMLFragmentParser()
+    parser.feed(source)
+    parser.close()
+    return parser.root
+
 
 ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/"docs/documentaries"
