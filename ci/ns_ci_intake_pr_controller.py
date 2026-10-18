@@ -234,36 +234,57 @@ def fetch_text(gh: Github, path: str, ref: str) -> tuple[str, str]:
 
 
 def list_intake_branches(gh: Github) -> list[str]:
-    # Discover candidate heads from open PRs rather than Git matching-refs.
-    # Council Clerk/Release Trust app tokens have bounded pull-request access,
-    # while matching-refs can legitimately return no visible refs for those
-    # installations. Validation below still requires a registered branch
-    # prefix, exact dispatch syntax, exact protected dispatch, and exact diff.
-    names: list[str] = []
-    page = 1
-    while True:
-        pulls = gh.request(
-            "GET",
-            f"/repos/{OWNER}/{REPO}/pulls?state=open&base=main&per_page=100&page={page}",
-        )
-        if not isinstance(pulls, list):
-            raise ControllerError("open pull-request list response is not a list")
-        for item in pulls:
-            if not isinstance(item, dict):
-                continue
-            head = item.get("head")
-            ref = head.get("ref") if isinstance(head, dict) else None
-            if not isinstance(ref, str):
-                continue
-            if any(ref.startswith(profile.branch_prefix) for profile in PROFILES):
-                names.append(ref)
-        if len(pulls) < 100:
-            break
-        page += 1
-    # Previously this controller only inspected open PRs, which cannot
-    # discover a freshly captured evidence branch that has no PR yet.
-    # The queue manifest provides a bounded exact list of permitted heads.
-    for binding in protected_queue_bindings(gh):
+    """Discover exact registered intake heads, including branches without PRs.
+
+    A branch listing uses the already-scoped contents:read credential.
+    Preserve both open-PR compatibility and the protected-queue manifest
+    fallback (which also handles installations that hide some refs).
+    Discovery alone never admits a receipt; validate_candidate verifies the
+    protected dispatch, exact path set, raw bytes and source identity.
+    """
+    bindings = protected_queue_bindings(gh)
+    queue_heads = {
+        profile_for_queue_binding(binding).branch_prefix for binding in bindings
+    }
+    names: set[str] = set()
+    for source in ("branches", "pulls"):
+        page = 1
+        while True:
+            if source == "branches":
+                path = f"/repos/{OWNER}/{REPO}/branches?per_page=100&page={page}"
+            else:
+                path = (
+                    f"/repos/{OWNER}/{REPO}/pulls?"
+                    f"state=open&base=main&per_page=100&page={page}"
+                )
+            items = gh.request("GET", path)
+            if not isinstance(items, list):
+                raise ControllerError(f"{source} discovery response is not a list")
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                if source == "branches":
+                    ref = item.get("name")
+                else:
+                    head = item.get("head")
+                    ref = head.get("ref") if isinstance(head, dict) else None
+                if not isinstance(ref, str):
+                    continue
+                if ref in queue_heads:
+                    names.add(ref)
+                    continue
+                try:
+                    profile_for_branch(ref)
+                except ControllerError:
+                    continue
+                names.add(ref)
+            if len(items) < 100:
+                break
+            page += 1
+
+    # The protected queue manifest gives an exact fallback even where
+    # listing an installation's branch refs returns no visible heads.
+    for binding in bindings:
         profile = profile_for_queue_binding(binding)
         branch = profile.branch_prefix
         if branch in names:
@@ -272,8 +293,8 @@ def list_intake_branches(gh: Github) -> list[str]:
         encoded = urllib.parse.quote(receipt_directory, safe="/")
         ref = urllib.parse.quote(branch, safe="")
         if gh.get_optional(f"/repos/{OWNER}/{REPO}/contents/{encoded}?ref={ref}") is not None:
-            names.append(branch)
-    return sorted(set(names))
+            names.add(branch)
+    return sorted(names)
 
 
 def main_has_any_raw(gh: Github, dispatch_id: str) -> bool:
