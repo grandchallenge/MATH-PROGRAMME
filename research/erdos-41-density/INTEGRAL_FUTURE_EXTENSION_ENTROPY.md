@@ -81,42 +81,42 @@ This improves the previous estimate materially: it proves a **dependent batch pe
 
 For *any* subset V⊂[1,R] with m=|V|, let e_P(V) be the number of pairs {t,u}⊂V with t−u∈Q−Q. Define translated pair-sum loads
 
-$
+$$
 g(z)=|\{(q,t)\in Q\times V:q+t=z\}|.
-$
+$$
 
 All sums lie in [3,3R], at most 3R integer positions, and ∑_z g(z)=mq. By Cauchy–Schwarz,
 
-$
+$$
 \sum_z g(z)(g(z)-1)\ge\frac{m^2q^2}{3R}-mq.
-$
+$$
 
 Each ordered pair of *different* t,u∈V contributes r_Q(|t−u|) to the left sum, and Lemma 1 gives r_Q(d)<=n. Therefore
 
-$
+$$
 \boxed{
 e_P(V)\ge\frac{1}{2n}
 \left(\frac{m^2q^2}{3R}-mq\right).
 }\tag{EXACT-INDUCED-SUPERSATURATION}
-$
+$$
 
 This is the **missing after-deletion counting argument**: it does not rely on retaining some arbitrary fraction of the original graph edges.
 
 If n>=5 and m>=R/2, then q>=15 and mq>=6R, so the negative term is at most half of m²q²/(3R). Thus
 
-$
+$$
 \boxed{
 e_P(V)\ge\frac{m^2q^2}{12nR}
 \ge\frac{n^3}{48R}m^2.
 }\tag{SURVIVOR-GRAPH-DENSE}
-$
+$$
 
 Now let
 
-$
+$$
 V(P;R)=([1,R]\cap\mathbb Z)\setminus(P+P-P),
 \quad v=|V(P;R)|.
-$
+$$
 
 For any anchor y>6R, these are exactly the reflected sites for **individually** admissible future elements, apart from the harmless unused positions below min P (which lie in P+P−P anyway, since P itself is in its shadow, but additional values below min P may survive; only positions in [min P,R] are used). In particular, a genuinely admissible reflected batch lies in V.
 
@@ -125,24 +125,24 @@ Fix 0<c<=1, assume n>=max(5,cR^(1/3)), and put eta_c=c³/48. For 2<=k<=eta_c R/2
 - If v<R/2, at least half the R candidate positions have been deleted by the old cubic shadow. All compatible k-batches number at most binom(v,k)<=2^(−k)binom(R,k).
 - If v>=R/2, the **induced graph on the surviving sites themselves** has at least eta_c v² edges. By Lemma 2, the number of compatible complete k-batches is at most
 
-$
+$$
 \boxed{
 N_k(P,y)\le
 2e^{-\eta_c(k-1)/4}\binom vk.
 }\tag{ENTROPY-BEYOND-SINGLETON-LOSS}
-$
+$$
 
 This establishes an exponential reduction **among the individually legal sites**, without choosing a fixed future shape, whenever the singleton survivors remain numerous.
 
 Either way,
 
-$
+$$
 \boxed{
 N_k(P,y)\le
 2\exp\!\left[-\frac{c^3(k-1)}{192}\right]\binom Rk,
 \quad 2\le k\le c^3R/96.
 }\tag{SHARPENED-TRUE-BATCH-ENTROPY}
-$
+$$
 
 The last estimate improves the coarse full-graph coefficient from c³/2048 to c³/192, while explicitly identifying the two mechanisms. It is a strict, quantitatively certified **binary integrality/compatibility** penalty; it still does NOT imply that the true maximum admissible batch size is smaller than a critical k.
 
@@ -150,27 +150,27 @@ The last estimate improves the coarse full-graph coefficient from c³/2048 to c�
 
 The interaction can be strong enough to bound the actual maximum on a concrete finite carrier, not merely its entropy. Let
 
-$
+$$
 P=\{1,2,5,14,33\},\quad R=100,\quad y=701.
-$
+$$
 
 The reflected individually surviving site set V(P;100) contains **65** integers. Their induced pair-sum difference graph has **31 independent three-element sets but no independent four-element set**. This is exactly verifiable by enumerating the 31 independent triples and showing none has an admissible fourth vertex. Of those 31 graph-compatible triples, only **five** also satisfy the entire B3 condition with the anchor; for instance T={7,49,98} is compatible. Consequently the true future-batch capacity on J_y=[1302,1401] is **exactly three**:
 
-$
+$$
 \boxed{C(P\cup\{701\},[1302,1401])=3.}\tag{FINITE-TRUE-CAPACITY}
-$
+$$
 
 This gives an explicit *integral mutual-incompatibility* effect after singleton screening. It does not imply a c-uniform global batch-size deficit: finite B3 sets can be large at selected scales, and the asymptotic conjecture remains unresolved.
 
 **Multiscale strengthened corollary.** In the staged extension tree of Theorem 3, if n_j>=max(5,cR_j^(1/3)) and k_j<=c³R_j/96 at each stage, then the history bound strengthens to
 
-$
+$$
 \boxed{
 H_h\le\prod_{j<h}\binom{R_j}{k_j}
 \exp\left[-\frac{c^3}{192}
 \sum_{j<h}(k_j-1)+h\log2\right].
 }\tag{STRONGER-STAGED-DEFICIT}
-$
+$$
 
 This is an honest cumulative **extension-entropy** deficit, even when an adversary adaptively reoptimises every batch. It is not a full cardinality-capacity deficit or a proof of #41.
 
