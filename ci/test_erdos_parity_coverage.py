@@ -1,5 +1,7 @@
 """Safeguards for autonomous, exact-hash accepted parity coverage."""
 import copy,hashlib,json,unittest
+from unittest.mock import patch
+from erdos_parity_auto import verified_browser_render
 from erdos_parity_coverage import RECORD,verify_ledger,plan,apply_receipt
 SHA='a'*40;SHA2='b'*40;H1='1'*64;H2='2'*64
 
@@ -38,4 +40,18 @@ class CoverageTests(unittest.TestCase):
  def test_invalid_added_seed_rejected(self):
   l=base();l['bootstrap_ids']=[101]
   with self.assertRaises(ValueError):verify_ledger(l)
+class BrowserRetryTests(unittest.TestCase):
+ def test_transient_cdn_timeout_recovers_without_count_change(self):
+  proof={'visible_math_count':10,'mathjax_startup_complete':True}
+  with patch('erdos_parity_auto.assert_rendered_math',side_effect=[ValueError('cdn'),proof]) as v,patch('erdos_parity_auto.time.sleep') as pause:
+   self.assertEqual(verified_browser_render(object(),'https://example.test/',10),proof)
+   self.assertEqual(v.call_count,2)
+   self.assertEqual(v.call_args.args[-1],10)
+ def test_persistent_wrong_math_must_fail(self):
+  with patch('erdos_parity_auto.assert_rendered_math',side_effect=ValueError('missing_math')) as v,patch('erdos_parity_auto.time.sleep'):
+   with self.assertRaisesRegex(ValueError,'missing_math'):
+    verified_browser_render(object(),'https://example.test/',10)
+   self.assertEqual(v.call_count,3)
+ def test_unbounded_retry_is_rejected(self):
+  with self.assertRaises(ValueError):verified_browser_render(None,'https://example.test/',10,attempts=99)
 if __name__=='__main__':unittest.main()

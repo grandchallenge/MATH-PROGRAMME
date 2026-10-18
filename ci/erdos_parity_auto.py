@@ -13,6 +13,7 @@ import json
 import os
 import re
 import subprocess
+import time
 import sys
 import urllib.request
 from pathlib import Path
@@ -62,6 +63,20 @@ def context(root:Path):
     if not sts or sts[0]['state']!='success':refuse('PAGES_NOT_SUCCESSFUL')
     return deployed,deployments[0]['id']
 
+
+def verified_browser_render(browser,url:str,count:int,attempts:int=3):
+    """Retry CDN/browser startup, NEVER relax expected MathJax evidence."""
+    if type(attempts) is not int or attempts<1 or attempts>3:refuse('BROWSER_RETRY_LIMIT')
+    for attempt in range(attempts):
+        try:
+            return assert_rendered_math(browser,url,count)
+        except ValueError:
+            if attempt==attempts-1:
+                raise
+            print('TRANSIENT_MATHJAX_RENDER_RETRY',attempt+1,'OF',attempts,flush=True)
+            time.sleep(3*(attempt+1))
+    refuse('UNREACHABLE_RETRY_STATE')
+
 def check(root:Path,output:Path,run_id:int):
     if type(run_id) is not int or run_id<=0:refuse('RUN_ID')
     root=root.resolve();sha,deployment=context(root)
@@ -90,7 +105,7 @@ def check(root:Path,output:Path,run_id:int):
                     if len(body)>2_500_000:refuse('PAGE_TOO_LARGE_'+str(n))
                     item=compare_accepted_article(problem_id=n,source=source,admission=admission,
                         public_html=body,public_url=url,source_commit=sha,deploy_commit=sha)
-                    item.update(assert_rendered_math(browser,url,item['verified_math_expressions']))
+                    item.update(verified_browser_render(browser,url,item['verified_math_expressions']))
                     item['pages_deployment_id']=deployment
                     item['theorem_certified']=False
                     report['articles'].append(item)
