@@ -147,6 +147,12 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
         if path.startswith("docs/") or path in {"mkdocs.yml", "requirements/docs.txt"}:
             active.add("docs")
             matched = True
+        if path.startswith("governance/erdos_compendium/publication_parity/"):
+            # A protected receipt-only merge must build a validated site:
+            # that Pages deployment drives the next unfinished bounded batch.
+            # Retain the normal contracts shard for governance JSON below.
+            active.add("docs")
+            matched = True
         if path.startswith("handoffs/"):
             active.update({"administrative", "campaigns"})
             matched = True
