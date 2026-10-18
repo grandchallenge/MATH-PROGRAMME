@@ -279,6 +279,8 @@ $$
 
 Apply Lemma 18.1 to these nested subspaces and then the derived mapping edge (18.13), now for target $G$. Any class of $\mathrm{Ext}^1(\underline s,G)$ whose restriction to all $T_r$ vanishes therefore comes from **finitely many** $B_n$ summands.
 
+**Exactness of infinite products:** Liquid real modules have projective generators represented by evaluation on extremally disconnected profinite test spaces (Theorem 6.5). Evaluating a product of epimorphisms on each such generator yields a product of surjective maps of real vector spaces, hence a surjection. Thus products of liquid modules are exact; applying Ext¹ in the target to a product agrees with the product of the Ext¹ groups through the corrected projective presentation of the source. This is the category-specific justification for the codomain in (18.23), not an assumption that all Grothendieck abelian categories have exact products.
+
 **Conclusion (phantom-free full output).** The map
 
 $$
