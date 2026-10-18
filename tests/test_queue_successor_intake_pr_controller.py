@@ -87,6 +87,7 @@ class GH:
         if path.endswith("ref="+__import__("urllib.parse",fromlist=["quote"]).quote(BRANCH,safe="")):return [{"name":f"github-comment-{COMMENT_ID}.json"}] if self.has_branch else None
         return None
     def request(self,method,path):
+        if method=="GET" and "/branches?" in path:return []
         if method=="GET" and "/pulls?state=open" in path:return []
         raise AssertionError((method,path))
 
