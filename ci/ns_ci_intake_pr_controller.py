@@ -172,7 +172,7 @@ def profile_for_queue_binding(binding: dict[str, Any]) -> IntakeProfile:
     if parts.is_absolute() or ".." in parts.parts or parts.name != did + ".json":
         raise ControllerError("protected queue dispatch path is unsafe or unbound")
     campaign = binding.get("campaign")
-    if campaign not in {"RH-001","ERDOS-OPEN"}:
+    if campaign not in {"RH-001","ERDOS-OPEN","QFT-COND-005"}:
         raise ControllerError("queue intake campaign unregistered")
     return IntakeProfile(
         campaign=campaign,

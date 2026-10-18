@@ -186,6 +186,53 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             ["intake/" + dispatch.lower()],
         )
 
+    def test_qft_queue_branch_discovered_before_pr_and_unknown_denied(self) -> None:
+        import base64
+        import json
+
+        dispatch = "QFT-COND-005-EXT-015A-IA-001"
+        branch = "intake/" + dispatch.lower()
+        binding = {
+            "dispatch_id": dispatch,
+            "dispatch_path": (
+                "contributions/QFT-COND-005/EXT-015/dispatches/" + dispatch + ".json"
+            ),
+            "campaign": "QFT-COND-005",
+        }
+        manifest = {
+            "record_type": "GCL_QUEUE_INTAKE_BINDINGS",
+            "schema_version": "1.0.0",
+            "authority_effect": {
+                "queue_operation_only": True,
+                "mathematical": False,
+                "certification": False,
+            },
+            "bindings": [binding],
+        }
+
+        class FakeGithub:
+            def get_optional(self, path):
+                if path.endswith("INTAKE_BINDINGS.json?ref=main"):
+                    return {
+                        "encoding": "base64",
+                        "content": base64.b64encode(
+                            json.dumps(manifest).encode()
+                        ).decode(),
+                    }
+                return None
+
+            def request(self, method, path):
+                if method == "GET" and "/branches?" in path:
+                    return [{"name": branch}]
+                if method == "GET" and "/pulls?" in path:
+                    return []
+                raise AssertionError((method, path))
+
+        self.assertEqual(list_intake_branches(FakeGithub()), [branch])
+        manifest["bindings"] = [{**binding, "campaign": "UNKNOWN-CAMPAIGN"}]
+        with self.assertRaisesRegex(ControllerError, "campaign unregistered"):
+            list_intake_branches(FakeGithub())
+
     def test_dispatch_level_first_result_lock_detects_any_protected_raw(self) -> None:
         class FakeGithub:
             def get_optional(self, path):
