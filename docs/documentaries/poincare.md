@@ -1,3 +1,6 @@
+
+**GitHub equation reader:** [Read the mathematical text with typeset equations](github_math/poincare.md). The illustrated manuscript below remains canonical.
+
 <link rel="stylesheet" href="../../stylesheets/documentary.css">
 
 <div class="gcl-monograph" data-gcl-reader="poincare" data-edition="1.1.0">

@@ -1,3 +1,6 @@
+
+**GitHub equation reader:** [Read the mathematical text with typeset equations](github_math/p_vs_np.md). The illustrated manuscript below remains canonical.
+
 <link rel="stylesheet" href="../../stylesheets/documentary.css">
 <link rel="stylesheet" href="../../stylesheets/documentary-status.css">
 <div class="gcl-monograph" data-gcl-reader="p_vs_np" data-edition="1.1.0"><a class="monograph-skip" href="#monograph-start">Skip to the manuscript</a>
