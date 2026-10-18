@@ -23,6 +23,14 @@ class ExpositionMutationTests(unittest.TestCase):
         text = (ROOT / UC).read_text().replace("**Friendly example.**", "Example.")
         self.assertTrue(any("friendly worked" in x for x in validate_text(text, UC)))
 
+    def test_unsupported_mathjax_sha_rejected(self):
+        path = "docs/domains/BSD_001_RESEARCH_GUIDE.md"
+        source = (ROOT / path).read_text()
+        self.assertIn(r"\mathrm{Ш}", source)
+        broken = source.replace(r"\mathrm{Ш}", r"\Sha", 1)
+        self.assertTrue(any("unsupported MathJax" in x for x in validate_text(broken, path)))
+        self.assertEqual(validate_text(source, path), [])
+
     def test_missing_fixture_output_rejected(self):
         text = (ROOT / UC).read_text().replace("# Expected:", "# Omitted:", 1)
         self.assertTrue(any("expected output" in x for x in validate_text(text, UC)))

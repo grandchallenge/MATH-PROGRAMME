@@ -51,6 +51,11 @@ FENCE = re.compile(r"\x60\x60\x60python\s*\n(.*?)\n\x60\x60\x60", re.DOTALL)
 
 def validate_text(text: str, path: str) -> list[str]:
     problems: list[str] = []
+    # Live deployed MathJax 3.2.2 rejects \Sha as an undefined control sequence.
+    # Use the literal Cyrillic Sha with a supported TeX text/roman command.
+    # Reject reintroduction across all ten reader guides, not just BSD.
+    if re.search(r"\\Sha\b", text):
+        problems.append(f"{path}: unsupported MathJax \\Sha macro; use \\mathrm{{Ш}}")
     for name in REQUIRED_HEADINGS:
         if not re.search(r"^##\s+" + re.escape(name) + r"\s*$", text, re.MULTILINE):
             problems.append(f"{path}: missing pedagogical section {name}")

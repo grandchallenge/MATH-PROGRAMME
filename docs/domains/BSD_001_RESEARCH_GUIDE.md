@@ -21,7 +21,7 @@ The campaign keeps three obligations separate: Mordell–Weil rank equals analyt
 | --- | --- |
 | Required | Modular arithmetic, polynomial equations, rational numbers |
 | Helpful | Elliptic curves, group law, analytic functions |
-| Deferred | Heights, Selmer groups, $\Sha$, $L$ functions and leading-term normalizations |
+| Deferred | Heights, Selmer groups, $\mathrm{Ш}$, $L$ functions and leading-term normalizations |
 
 ## 3. Exact obstruction
 
@@ -35,7 +35,7 @@ Future theorem work is Solve-owned. The protected Programme stack supplies sourc
 
 **Friendly example:** the curve $y^2=x^3-x$ has rational point $(0,0)$, since both sides vanish. Its reduction modulo 5 can also be checked by finite enumeration.
 
-**Boundary example:** finding points modulo 5 does not determine the Mordell–Weil rank over $\mathbb Q$, the order of vanishing of a complex $L$ function, or finiteness of $\Sha$. Even a complete count over **one** finite field lacks the needed global-to-analytic bridge.
+**Boundary example:** finding points modulo 5 does not determine the Mordell–Weil rank over $\mathbb Q$, the order of vanishing of a complex $L$ function, or finiteness of $\mathrm{Ш}$. Even a complete count over **one** finite field lacks the needed global-to-analytic bridge.
 
 Bridge: rational curve equation → local finite-field points → arithmetic data → complex analytic rank → conjectural global rank equality.
 
@@ -89,7 +89,7 @@ Finite point enumeration is independently replayable. Any arithmetic/analytic ra
 
 ## Trust quartet
 
-**Proved:** elementary pairing under odd characteristic. **Checked:** one finite field point count. **Open:** BSD rank equality, $\Sha$ finiteness and leading term, including `BSD-R2-A1`. **External verification:** imported comparisons involving ranks and $L$ functions, and local/global bridges.
+**Proved:** elementary pairing under odd characteristic. **Checked:** one finite field point count. **Open:** BSD rank equality, $\mathrm{Ш}$ finiteness and leading term, including `BSD-R2-A1`. **External verification:** imported comparisons involving ranks and $L$ functions, and local/global bridges.
 
 ## Bibliography and source audit
 
