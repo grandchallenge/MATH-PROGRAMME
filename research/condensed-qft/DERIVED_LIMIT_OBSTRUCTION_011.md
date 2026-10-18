@@ -17,13 +17,13 @@ $$
 \Delta(y)_n=y_n-Sy_{n+1}.
 $$
 
-**Claim:** $\varprojlim V_n=0$, while $\varprojlim^1 V_n=\operatorname{coker}\Delta\neq0$, with $\varprojlim^1$ calculated in the category of real vector spaces.
+**Claim:** $\varprojlim V_n=0$, while $\varprojlim^1 V_n=\mathrm{coker}\Delta\neq0$, with $\varprojlim^1$ calculated in the category of real vector spaces.
 
 **Proof of the ordinary-limit assertion.** A compatible element obeys $y_0=S^ny_n$ for all $n$. Hence the first $n$ coordinates of $y_0$ vanish for all $n$, so $y_0=0$. The same reasoning applies to any $y_j$, proving the assertion.
 
-**Proof of nonvanishing.** Let $x_n=e_0=(1,0,0,\ldots)$ for every $n$. If $x=\Delta(y)$, then $y_n=e_0+Sy_{n+1}$. Thus $(y_n)_0=1$ and $(y_n)_k=(y_{n+1})_{k-1}$ for $k>0$. Iterating forces $(y_0)_k=1$ for every $k$. This sequence is not rapidly decreasing, a contradiction. Hence $[x]\neq0$ in $\operatorname{coker}\Delta$. $\square$
+**Proof of nonvanishing.** Let $x_n=e_0=(1,0,0,\ldots)$ for every $n$. If $x=\Delta(y)$, then $y_n=e_0+Sy_{n+1}$. Thus $(y_n)_0=1$ and $(y_n)_k=(y_{n+1})_{k-1}$ for $k>0$. Iterating forces $(y_0)_k=1$ for every $k$. This sequence is not rapidly decreasing, a contradiction. Hence $[x]\neq0$ in $\mathrm{coker}\Delta$. $\square$
 
-**Derived consequence with declared ambient category.** In $D(\mathrm{Vect}_{\mathbb R})$, the homotopy inverse limit of the tower of degree-zero underlying vector spaces is represented by $\operatorname{Cone}(\Delta)[-1]$ (cohomological conventions). It has $H^0=\ker\Delta=0$ and $H^1=\operatorname{coker}\Delta\neq0$. The ordinary inverse limit misses this class.
+**Derived consequence with declared ambient category.** In $D(\mathrm{Vect}_{\mathbb R})$, the homotopy inverse limit of the tower of degree-zero underlying vector spaces is represented by $\mathrm{Cone}(\Delta)[-1]$ (cohomological conventions). It has $H^0=\ker\Delta=0$ and $H^1=\mathrm{coker}\Delta\neq0$. The ordinary inverse limit misses this class.
 
 ## Theorem DLI-2: every fixed coordinate truncation loses the obstruction
 
@@ -41,7 +41,7 @@ Indeed, $y_n-S_Ny_{n+1}=x_n-S_N^Nx_{n+N}=x_n$. Consequently $\varprojlim^1(P_N,S
 
 The example makes one necessary gate explicit: stagewise nuclearity and vanishing higher cohomology do not imply that inverse-limit formation is underived. A derived comparison for quantum-weight towers or differentiable pro-cochains must specify the ambient stable category, the functor realizing these nuclear Fréchet spaces, and whether the relevant tower is derived-limit acyclic (for example, by an appropriately formulated Mittag–Leffler or fibrancy hypothesis).
 
-This result **does not establish** the relative target-support liquid Hom colimit property (LFO3). Nor does it prove that this nonzero vector-space $\varprojlim^1$ persists in derived $p$-liquid modules or in the exact category of strict nuclear Fréchet sequences. Both require a separate comparison theorem. A physical BV observable complex realizing this tower has not been constructed.
+This result **does not establish** the relative target-support liquid Hom colimit property (LFO3). Nor does it prove that this nonzero vector-space $\varprojlim^1$ persists in derived liquid modules at parameter $p$ or in the exact category of strict nuclear Fréchet sequences. Both require a separate comparison theorem. A physical BV observable complex realizing this tower has not been constructed.
 
 **Next mathematical gates:** (1) determine if $\underline{s}$ and $S$ preserve this Roos obstruction under the selected exact derived-liquid realization; (2) prove or refute LFO3 on the actual compact-support source stages; (3) implement a differentiable pro-cochain mapping-object comparison, including filtered differentials and Weiss descent.
 
