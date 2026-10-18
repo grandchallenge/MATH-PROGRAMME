@@ -411,7 +411,7 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
         "timeout 420s",
         "copilot-requests",
         "GITHUB_TOKEN",
-        "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+        "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
     ):
         if required not in agent_text:
             errors.append(f"{key}: missing protected read-only AI boundary {required}")
@@ -420,7 +420,7 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
             errors.append(f"{key}: forbidden pilot capability {forbidden}")
     for required in (
         "ci/erdos_forge_copilot_pilot.py publish",
-        "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+        "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
         "GH_TOKEN",
     ):
         if required not in publisher_text:
@@ -467,7 +467,7 @@ def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
         errors.append(f"{key}: missing hostile exact-14 controller test")
     token = credential.get("with") or {}
     if (credential.get("uses") !=
-            "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
+            "actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510"
             or token.get("owner") != "grandchallenge"
             or token.get("repositories") != "MATH-PROGRAMME"
             or token.get("permission-issues") != "write"
@@ -487,7 +487,7 @@ def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
             or "test -n" not in run):
         errors.append(f"{key}: unrecognized exact-14 bounded controller invocation")
     if (receipt.get("uses") !=
-            "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+            "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9"
             or receipt.get("if") != "always()"
             or receipt.get("with", {}).get("path") !=
                "rolling-critical-reviews/receipt.json"):
@@ -535,7 +535,7 @@ def three_source_council_errors(texts: dict[str, str]) -> list[str]:
             or 'tests/test_erdos_three_source_resolution.py' not in test):
         errors.append(f'{key}: hostile controls or source hash checks missing')
     token=credential.get('with') or {}
-    if (credential.get('uses') != 'actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1'
+    if (credential.get('uses') != 'actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510'
             or token.get('owner')!='grandchallenge'
             or token.get('repositories')!='MATH-PROGRAMME'
             or token.get('permission-issues')!='write'
@@ -553,7 +553,7 @@ def three_source_council_errors(texts: dict[str, str]) -> list[str]:
                 or f'--receipt artifacts/erdos-three-source-resolution/{path}' not in run
                 or ('--apply' in run)!=needs_apply):
             errors.append(f'{key}: missing exact bounded Council operation')
-    if (receipt.get('uses')!='actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a'
+    if (receipt.get('uses')!='actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9'
             or receipt.get('if')!='always()'
             or receipt.get('with',{}).get('path')!='artifacts/erdos-three-source-resolution'):
         errors.append(f'{key}: source-adjudication receipt retention missing')

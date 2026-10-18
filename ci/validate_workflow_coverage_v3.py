@@ -24,7 +24,7 @@ EXTRA_WORKFLOWS = MAINTENANCE_AUTOMATION_WORKFLOWS | {
 }
 legacy.EXPECTED_WORKFLOWS = set(legacy.EXPECTED_WORKFLOWS) | EXTRA_WORKFLOWS
 
-APP_ACTION = "actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1"
+APP_ACTION = "actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510"
 APP_ID = "app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}"
 APP_KEY = "private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}"
 PROTECTED_ENVIRONMENT = "release-trust"
