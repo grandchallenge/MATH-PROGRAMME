@@ -183,7 +183,7 @@ jobs:
       - name: Install same pinned verifier and real browser
         run: |
           set -euo pipefail
-          python -m pip install -r requirements/compendium_public_html.txt
+          python -m pip install --requirement requirements/compendium_public_html.txt
           python -m playwright install --with-deps chromium
       - name: Test permanent coverage accounting and article parity fail-closed
         run: |
