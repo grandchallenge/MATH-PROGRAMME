@@ -1,0 +1,94 @@
+{
+  "record_type": "GCL_ERDOS_041_HISTORICAL_MATHLIB_BRIDGE_V1",
+  "assignment_issue": 2703,
+  "parent_review_issue": 2536,
+  "catalogue_issue": 1310,
+  "programme_issue": 2503,
+  "source_file": "governance/source_erdos_critical_005/Erdos41HistoricalMathlibBridge.lean",
+  "source_sha256": "66f82861886a78102e49e02a2092dcc48729317acfdd0977a2cd42504bd0ec49",
+  "checked_toolchain": "leanprover/lean4:v4.33.0",
+  "checked_lean_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+  "checked_mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "provider_repository": "google-deepmind/formal-conjectures",
+  "provider_path": "FormalConjectures/ErdosProblems/41.lean",
+  "refreshed_provider_commit": "79eac378a26b46d30974cdb33962e0752591b79d",
+  "refreshed_provider_blob_sha1": "2a1bd1f521325e36aaaf50a3a3feffc9c426aaf6",
+  "frozen_provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+  "frozen_provider_blob_sha1": "5e9eeb26586d087f4b2ab3d82734ea5ed87ddf50",
+  "primary_1980_survey_pdf_sha256": "e2280c6cbba6bfecedb5c5134ce827c59695dccd7f3377d42658cbc30b8db3cf",
+  "verified_local_command": "lake env lean governance/source_erdos_critical_005/Erdos41HistoricalMathlibBridge.lean",
+  "exit_code": 0,
+  "stdout_sha256": "a84f43a364ad9ef0408ee4ffd5430ccc9bc25042a91cf845d742e22d4e0c6b9e",
+  "imported_mathlib_modules": [
+    "Mathlib.Data.Finset.Basic",
+    "Mathlib.Data.Finset.Card",
+    "Mathlib.Data.Finset.Max",
+    "Mathlib.Data.Multiset.Basic",
+    "Mathlib.Data.Set.Finite.Basic",
+    "Mathlib.Algebra.Order.BigOperators.Group.Finset",
+    "Mathlib.Order.Interval.Finset.Nat"
+  ],
+  "predicates": {
+    "HistoricalB3": "∀ (I J : Finset ℕ), ↑I ⊆ A → ↑J ⊆ A → I.Nonempty → J.Nonempty → I.card ≤ 3 → J.card ≤ 3 → (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J",
+    "ModernB3": "∀ I J : Multiset ℕ, (∀ i ∈ I, i ∈ A) → (∀ j ∈ J, j ∈ A) → I.card = 3 → J.card = 3 → I.sum = J.sum → I = J",
+    "WeakFixed3": "∀ (I : Finset ℕ) (J : Finset ℕ), ↑I ⊆ A ∧ ↑J ⊆ A ∧ I.card = 3 ∧ J.card = 3 ∧ (∑ i ∈ I, i = ∑ j ∈ J, j) → I = J"
+  },
+  "historical_theorem_specification": {
+    "historical_variant_name": "erdos_41.variants.historical_b3",
+    "historical_variant_signature": "theorem erdos_41.variants.historical_b3 (A : Set ℕ) (h_b3 : HistoricalBrCondition A 3) (h_infinite : A.Infinite) : Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0",
+    "refreshed_provider_name": "erdos_41",
+    "refreshed_provider_signature": "theorem erdos_41 (A : Set ℕ) (h_triple : NtupleCondition A 3) (h_infinite : A.Infinite) : Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0",
+    "frozen_provider_signature": "theorem erdos_41 (A : Set ℕ) (h_triple : FrozenFinsetNtupleCondition A 3) (h_infinite : A.Infinite) : Filter.atTop.liminf (fun N => (A ∩ Icc 1 N).ncard / (N : ℝ)^(1/3 : ℝ)) = 0"
+  },
+  "kernel_proved_theorems": {
+    "historical_implies_fixed": {
+      "signature": "∀ (A : Set ℕ), HistoricalB3 A → WeakFixed3 A",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "modern_implies_fixed": {
+      "signature": "∀ (A : Set ℕ), ModernB3 A → WeakFixed3 A",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "exists_infinite_historicalB3_not_modernB3": {
+      "signature": "∃ A : Set ℕ, A.Infinite ∧ HistoricalB3 A ∧ WeakFixed3 A ∧ ¬ ModernB3 A",
+      "witness": "{x : ℕ | x = 1 ∨ x = 2 ∨ x = 4 ∨ ∃ k ≥ 1, x = 10 ^ k}",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "exists_infinite_modernB3_not_historicalB3": {
+      "signature": "∃ A : Set ℕ, A.Infinite ∧ ModernB3 A ∧ WeakFixed3 A ∧ ¬ HistoricalB3 A",
+      "witness": "{x : ℕ | x = 1 ∨ x = 4 ∨ x = 5 ∨ ∃ k ≥ 1, x = 100 ^ k}",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "not_weakFixed3_implies_historicalB3": {
+      "signature": "¬ (∀ A : Set ℕ, WeakFixed3 A → HistoricalB3 A)",
+      "witness": "{1, 2, 3}",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "not_weakFixed3_implies_modernB3": {
+      "signature": "¬ (∀ A : Set ℕ, WeakFixed3 A → ModernB3 A)",
+      "witness": "{1, 2, 3}",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "historical_statement_not_implies_modern_statement": {
+      "signature": "¬ (∀ Q : Set ℕ → Prop, Erdos41HistoricalStatement Q → Erdos41ModernStatement Q)",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    },
+    "modern_statement_not_implies_historical_statement": {
+      "signature": "¬ (∀ Q : Set ℕ → Prop, Erdos41ModernStatement Q → Erdos41HistoricalStatement Q)",
+      "axioms": ["propext", "Classical.choice", "Quot.sound"]
+    }
+  },
+  "boundary_conventions_verified": {
+    "nat_and_zero": "zero_and_nonzero_not_historicalB3 proves 0 ∈ A ∧ a ∈ A ∧ a ≠ 0 → ¬ HistoricalB3 A",
+    "empty_set": "empty_historicalB3, empty_modernB3, empty_weakFixed3 prove ∅ satisfies all three predicates vacuously",
+    "permutation": "multiset_perm_trivial_coincidence proves List.Perm quotients to Multiset equality",
+    "diagonal_multiplicity": "diagonal_finset_dedup_vs_multiset_card proves ({a,a,a} : Finset ℕ).card = 1 ∧ (a::ₘa::ₘa::ₘ0 : Multiset ℕ).card = 3",
+    "cross_cardinality": "cross_cardinality_pair_eq_singleton_not_historicalB3 proves a,b,a+b ∈ A with a ≠ b, a,b > 0 violates HistoricalB3"
+  },
+  "sorry_count": 0,
+  "imported_mathlib_finset_multiset_comparison_complete": true,
+  "mathematical_conjecture_solved": false,
+  "mathcert_claimed": false,
+  "solve_dispatch": false,
+  "revision_clearance_authorized": false
+}

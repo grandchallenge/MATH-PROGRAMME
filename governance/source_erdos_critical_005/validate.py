@@ -254,5 +254,58 @@ class FiveSourceFidelityTests(unittest.TestCase):
         self.assertFalse(x['mathematical_conjecture_solved'])
         self.assertFalse(x['revision_clearance_authorized'])
 
+    def test_41_imported_mathlib_bridge_and_infinite_separating_models(self):
+        import hashlib
+        root=ROOT/'governance/source_erdos_critical_005'
+        bridge_json=json.loads((root/'ERDOS41_HISTORICAL_MATHLIB_BRIDGE.json').read_text(encoding='utf-8'))
+        lean_bytes=(root/'Erdos41HistoricalMathlibBridge.lean').read_bytes()
+        lean_text=lean_bytes.decode('utf-8')
+        self.assertEqual(bridge_json['record_type'],'GCL_ERDOS_041_HISTORICAL_MATHLIB_BRIDGE_V1')
+        self.assertEqual(bridge_json['assignment_issue'],2703)
+        self.assertEqual(bridge_json['parent_review_issue'],2536)
+        self.assertEqual(bridge_json['catalogue_issue'],1310)
+        self.assertEqual(hashlib.sha256(lean_bytes).hexdigest(),bridge_json['source_sha256'])
+        self.assertEqual(bridge_json['checked_toolchain'],'leanprover/lean4:v4.33.0')
+        self.assertEqual(bridge_json['checked_mathlib_commit'],'db584cd6d46c92f209a44c0f1c829460d327499d')
+        self.assertEqual(bridge_json['refreshed_provider_commit'],'79eac378a26b46d30974cdb33962e0752591b79d')
+        self.assertEqual(bridge_json['refreshed_provider_blob_sha1'],'2a1bd1f521325e36aaaf50a3a3feffc9c426aaf6')
+        self.assertEqual(bridge_json['frozen_provider_commit'],'85f863718beeec7b58a3a1926ee92e3472bc2020')
+        self.assertEqual(bridge_json['frozen_provider_blob_sha1'],OLD[41])
+        self.assertEqual(bridge_json['exit_code'],0)
+        self.assertEqual(bridge_json['sorry_count'],0)
+        self.assertNotIn('sorry',lean_text.split('open scoped BigOperators',1)[1])
+        for mod in ('import Mathlib.Data.Finset.Basic',
+                    'import Mathlib.Data.Finset.Card',
+                    'import Mathlib.Data.Multiset.Basic',
+                    'import Mathlib.Data.Set.Finite.Basic'):
+            self.assertIn(mod,lean_text)
+        for decl in ('def NtupleCondition (A : Set α) (n : ℕ) : Prop :=',
+                     'def FrozenFinsetNtupleCondition (A : Set α) (n : ℕ) : Prop :=',
+                     'def HistoricalBrCondition (A : Set α) (r : ℕ) : Prop :=',
+                     'def HistoricalB3 (A : Set ℕ) : Prop :=',
+                     'def ModernB3 (A : Set ℕ) : Prop :=',
+                     'def WeakFixed3 (A : Set ℕ) : Prop :=',
+                     'theorem historical_implies_fixed (A : Set ℕ) (h : HistoricalB3 A) : WeakFixed3 A := by',
+                     'theorem modern_implies_fixed (A : Set ℕ) (h : ModernB3 A) : WeakFixed3 A := by',
+                     'theorem exists_infinite_historicalB3_not_modernB3 :',
+                     'theorem exists_infinite_modernB3_not_historicalB3 :',
+                     'theorem not_weakFixed3_implies_historicalB3 :',
+                     'theorem not_weakFixed3_implies_modernB3 :',
+                     'theorem zero_and_nonzero_not_historicalB3',
+                     'theorem cross_cardinality_pair_eq_singleton_not_historicalB3',
+                     'theorem historical_statement_not_implies_modern_statement :',
+                     'theorem modern_statement_not_implies_historical_statement :'):
+            self.assertIn(decl,lean_text)
+        for thm_meta in bridge_json['kernel_proved_theorems'].values():
+            self.assertEqual(thm_meta['axioms'],['propext','Classical.choice','Quot.sound'])
+        self.assertEqual(bridge_json['historical_theorem_specification']['historical_variant_name'],
+                         'erdos_41.variants.historical_b3')
+        self.assertTrue(bridge_json['imported_mathlib_finset_multiset_comparison_complete'])
+        self.assertFalse(bridge_json['mathematical_conjecture_solved'])
+        self.assertFalse(bridge_json['mathcert_claimed'])
+        self.assertFalse(bridge_json['solve_dispatch'])
+        self.assertFalse(bridge_json['revision_clearance_authorized'])
+
 if __name__=="__main__":
     unittest.main(verbosity=2)
+
