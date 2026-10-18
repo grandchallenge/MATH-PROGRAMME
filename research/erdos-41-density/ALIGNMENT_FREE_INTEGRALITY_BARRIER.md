@@ -64,6 +64,43 @@ $$
 
 For each i, all positive differences between distinct points in A_i lie in [1,R-1]; B3 implies B2, so no nonzero positive difference may occur twice, even between different bins. This is true at ANY separation of the bins. If h bins have at least m>=2 points, then h<=2(R-1)/(m(m-1)). At critical local occupancy m>=c R^(1/3), this is order c^(-2)R^(1/3). These constraints must be respected simultaneously with the moving triple Hall inequalities. Neither establishes an absolute upper bound on the number of singly occupied bins.
 
+### Theorem A2: a density-sensitive *delocalization* consequence, regardless of block alignment
+
+The globally distinct within-bin B2 differences do more than restrict the number of heavy blocks. Combined with the local B3 upper bound, they prove that **a positive-critical-density B3 prefix cannot place a positive fraction of its elements into short blocks that are themselves critically dense**.
+
+Let A_N=A∩[1,N] be any finite B3 prefix. Partition [1,N] into disjoint consecutive length-R integer bins, extending the last bin beyond N if necessary. Fix an arbitrary real epsilon>0 and call a bin *heavy* when its occupancy m_i satisfies
+
+$
+m_i\ge \varepsilon R^{1/3}\quad\text{and}\quad m_i\ge2.
+$
+
+Write H_R(A_N) for the total number of actual elements in the union of those heavy bins.
+
+**Theorem A2 (unconditional alignment-free heavy-bin mass bound):**
+
+$
+\boxed{
+H_R(A_N)\le\frac{4\cdot18^{1/3}}{\varepsilon^2}R^{2/3}.
+}\tag{HEAVY-BIN-DELLOCALIZATION}
+$
+
+**Proof.** Every actual B3 subset of an integer interval of length R has at most (18R)^(1/3) elements: its binom(m+2,3) different triple sums lie in an interval of 3R-2 integers. For each heavy bin with m_i>=2 we have binom(m_i,2)>=m_i²/4>=epsilon² R^(2/3)/4. By global pair-difference uniqueness, the sum over ALL bins of binom(m_i,2) is at most R−1. Thus at most 4 epsilon^(−2) R^(1/3) bins can be heavy. Multiply by the local (18R)^(1/3) cap. QED.
+
+**Conditional persistent-density corollary.** If hypothetically \(A(N)\ge cN^{1/3}\) for some fixed c>0 at a sequence of N values, then, for any R=R(N) with R>=2 and R=o(N^(1/2)), the proportion of points in bins containing >=epsilon R^(1/3) elements tends to zero:
+
+$
+\boxed{
+\frac{H_R(A_N)}{A(N)}
+\le\frac{4\cdot18^{1/3}}{c\varepsilon^2}
+\left(\frac{R^2}{N}\right)^{1/3}
+\longrightarrow0.
+}\tag{FORCED-LOCAL-DISPERSION}
+$
+
+The maximum of each non-heavy bin need not be one; it is simply subcritical compared to epsilon R^(1/3). The result is about the **actual original integer points**, not the fractional profile of section 2.
+
+**Interpretation for the remaining proof.** The former plan to extract multiple densely populated short cohorts at every scale is not forced by critical *global* density; indeed this bound demonstrates that such cohorts must carry asymptotically **negligible** total mass whenever their width R is smaller than the square-root scale of the enclosing horizon N. Any putative critical-density B3 set must instead exhibit **strong local dispersion** over sub-square-root windows. The critical fractional profile n^(−2/3) provides a first-moment *model* of a similarly spread-out configuration, but not a genuine collision-free set. A proof of Erdős #41 must rule out this dispersed **integral** regime, not merely dense arithmetic runs of short blocks.
+
 ## 2. A simultaneous all-resolution fractional obstruction
 
 Let
