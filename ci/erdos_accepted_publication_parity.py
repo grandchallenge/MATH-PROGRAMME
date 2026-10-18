@@ -6,6 +6,7 @@ Caller MUST separately authenticate the protected deployment commit and admissio
 from __future__ import annotations
 import hashlib
 import json
+import json
 import re
 from bs4 import BeautifulSoup, NavigableString
 import markdown
@@ -92,7 +93,9 @@ def assert_rendered_math(browser, url: str, expected_count: int) -> dict:
         _fail('BROWSER_ARGUMENTS')
     page=browser.new_page(viewport={'width':1280,'height':850})
     errors=[]
+    network_failures=[]
     page.on('pageerror',lambda err:errors.append(str(err)[:200]))
+    page.on('requestfailed',lambda req:network_failures.append({'url':req.url[:180],'failure':str(req.failure)[:180]}))
     try:
         response=page.goto(url,wait_until='domcontentloaded',timeout=45000)
         if response is None or response.status!=200:_fail('HTTP_RESPONSE')
@@ -106,5 +109,23 @@ def assert_rendered_math(browser, url: str, expected_count: int) -> dict:
             _fail('MATH_RENDERING')
         return {'visible_math_count':output['rendered'],'mathjax_startup_complete':True,'page_script_errors':errors}
     except Exception as err:
+        # This is diagnostic evidence of an actual failure, not a substitute
+        # for an observed, correctly rendered mathematical expression.
+        try:
+            observed=page.evaluate("""() => ({
+              ready:document.readyState,
+              mathInputs:document.querySelectorAll('main .arithmatex').length,
+              mathOutputs:document.querySelectorAll('main .arithmatex mjx-container').length,
+              mathJaxPresent:typeof window.MathJax !== 'undefined',
+              mathJaxStartup:Boolean(window.MathJax && window.MathJax.startup),
+              externalMathScripts:Array.from(document.querySelectorAll('script[src]'))
+                .map(s=>s.src).filter(x=>x.includes('mathjax') || x.includes('mkdocs-math'))
+            })""")
+            print('ACCEPTED_PARITY_BROWSER_DIAGNOSTIC='+json.dumps({
+                'url':url,'expected_math':expected_count,'observed':observed,
+                'page_errors':errors,'network_failures':network_failures[:8],
+                'error_type':type(err).__name__},sort_keys=True),flush=True)
+        except Exception as diag_err:
+            print('ACCEPTED_PARITY_BROWSER_DIAGNOSTIC_UNAVAILABLE='+type(diag_err).__name__,flush=True)
         raise ValueError('ACCEPTED_PUBLICATION_PARITY_RENDER_FAILURE') from err
     finally:page.close()
