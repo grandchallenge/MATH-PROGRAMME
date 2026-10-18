@@ -1,7 +1,7 @@
 """Safeguards for autonomous, exact-hash accepted parity coverage."""
 import copy,hashlib,json,unittest
 from unittest.mock import patch
-from erdos_parity_auto import verified_browser_render
+from erdos_parity_auto import check
 from erdos_parity_coverage import RECORD,verify_ledger,plan,apply_receipt
 SHA='a'*40;SHA2='b'*40;H1='1'*64;H2='2'*64
 
@@ -40,18 +40,45 @@ class CoverageTests(unittest.TestCase):
  def test_invalid_added_seed_rejected(self):
   l=base();l['bootstrap_ids']=[101]
   with self.assertRaises(ValueError):verify_ledger(l)
-class BrowserRetryTests(unittest.TestCase):
- def test_transient_cdn_timeout_recovers_without_count_change(self):
-  proof={'visible_math_count':10,'mathjax_startup_complete':True}
-  with patch('erdos_parity_auto.assert_rendered_math',side_effect=[ValueError('cdn'),proof]) as v,patch('erdos_parity_auto.time.sleep') as pause:
-   self.assertEqual(verified_browser_render(object(),'https://example.test/',10),proof)
-   self.assertEqual(v.call_count,2)
-   self.assertEqual(v.call_args.args[-1],10)
- def test_persistent_wrong_math_must_fail(self):
-  with patch('erdos_parity_auto.assert_rendered_math',side_effect=ValueError('missing_math')) as v,patch('erdos_parity_auto.time.sleep'):
-   with self.assertRaisesRegex(ValueError,'missing_math'):
-    verified_browser_render(object(),'https://example.test/',10)
-   self.assertEqual(v.call_count,3)
- def test_unbounded_retry_is_rejected(self):
-  with self.assertRaises(ValueError):verified_browser_render(None,'https://example.test/',10,attempts=99)
+class ExistingVerifiedArticleReuseTests(unittest.TestCase):
+ def make_check(self,evidence=None):
+  import tempfile
+  from pathlib import Path
+  from unittest.mock import patch
+  sha=SHA
+  article_evidence=evidence or {
+    'problem_id':99,'status':'PASS_SOURCE_AND_RENDERED_HTML_PARITY',
+    'source_commit':sha,'deployed_source_commit':sha,
+    'verified_pages_deployment_id':7,
+    'source_sha256':H1,'public_html_sha256':H2,
+    'mathjax_startup_complete':True,'visible_math_count':10,
+    'verified_math_expressions':10,'verified_editorial_sections':6}
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td); ledger=root/'governance/erdos_compendium/publication_parity/COVERAGE.json'
+   ledger.parent.mkdir(parents=True); ledger.write_text(json.dumps(base()))
+   output=root/'readback/accepted-parity-batch.json'
+   with (patch('erdos_parity_auto.context',return_value=(sha,7)),
+         patch('erdos_parity_auto.load_batch_admissions',return_value={99:{'source_sha256':H1}}),
+         patch('erdos_parity_auto.verify_live',return_value=article_evidence) as verify):
+    result=check(root,output,999)
+   verify.assert_called_once_with(99,root)
+   return result, json.loads(output.read_text())
+ def test_real_verifier_result_drives_correct_ledger(self):
+  result,stored=self.make_check()
+  self.assertEqual(result['articles'][0]['verified_math_expressions'],10)
+  self.assertEqual(stored['selected_article_ids'],[99])
+  self.assertEqual(stored['coverage_until_protected_receipt_merged'],False)
+ def test_fake_mathematics_result_denied(self):
+  wrong=article(99);wrong.update({'verified_pages_deployment_id':7,'mathjax_startup_complete':True,
+    'visible_math_count':0,'verified_math_expressions':10,'verified_editorial_sections':6})
+  with self.assertRaises(ValueError):self.make_check(wrong)
+ def test_wrong_source_result_denied(self):
+  wrong=article(99);wrong.update({'verified_pages_deployment_id':7,'mathjax_startup_complete':True,
+     'visible_math_count':10,'verified_math_expressions':10,'verified_editorial_sections':6,
+     'source_commit':SHA2,'deployed_source_commit':SHA2})
+  with self.assertRaises(ValueError):self.make_check(wrong)
+ def test_wrong_deployment_result_denied(self):
+  wrong=article(99);wrong.update({'verified_pages_deployment_id':8,'mathjax_startup_complete':True,
+     'visible_math_count':10,'verified_math_expressions':10,'verified_editorial_sections':6})
+  with self.assertRaises(ValueError):self.make_check(wrong)
 if __name__=='__main__':unittest.main()
