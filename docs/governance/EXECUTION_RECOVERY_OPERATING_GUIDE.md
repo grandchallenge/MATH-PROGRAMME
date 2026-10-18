@@ -99,6 +99,10 @@ stores reconstructible transaction state only for an explicitly admitted
 multi-session campaign. A registry entry is therefore a deliberate governance
 decision, not a universal paperwork requirement.
 
+## Recovery of recurring task execution
+
+A recurring schedule and any one of its runs have separate lifecycles. Diagnosing a failed tool, blocked action, or missing work item does not authorize disabling the schedule. Preserve the configured recurrence; record the failure, precise permitted next action, and live-state rebind for the following run. Respect specifically rejected safety actions without attempting transport or payload circumvention. See `RECURRING_TASK_CONTINUITY_CONTRACT.md` for authorization/readback requirements and the current unconnected hosted-scheduler-adapter boundary.
+
 ## Diagnostic recovery ladder
 
 Use the narrowest available diagnostic surface that is bound to the failing material object. Advance to the next route when the prior route is unavailable, empty, truncated, inconclusive, or demonstrably broken.

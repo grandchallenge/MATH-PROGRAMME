@@ -10,6 +10,10 @@ One Codex system may staff multiple non-reserved roles through distinct,
 role-scoped logical audit passes. Identity, session, account, or generic human
 approval multiplication is not intrinsically required.
 
+## Recurring operations: run failure is not schedule retirement
+
+A failed, blocked, empty, or interrupted run must not unilaterally disable, delete, pause, or reschedule its recurring automation. Treat run status and desired schedule state separately. Retire only on an explicit authenticated user instruction or a protected governed terminal disposition with readback; preserve actor, reason, authority source, UTC transition and scheduler readback. A safety-denied action may not be retried or routed around without independently verified remediation; continue other permitted work on subsequent runs. Unknown disable actor or cause remains UNKNOWN, not an inferred fact. A drifted scheduler must be flagged and reconciled through real authority, not silently accepted. See `docs/governance/RECURRING_TASK_CONTINUITY_CONTRACT.md` and `governance/recurring_queue_continuity.json`. The repository guard is not itself a hosted-scheduler adapter.
+
 ## Governed Lean/Colab compute skill
 
 For source-locked Lean work, discover .agents/skills/gcl-lean-colab/SKILL.md.
