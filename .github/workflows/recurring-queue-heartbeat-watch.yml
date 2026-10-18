@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 concurrency:
   group: gcl-queue-heartbeat-watch
@@ -15,12 +14,17 @@ concurrency:
 
 jobs:
   watch:
+    permissions:
+      contents: read
+      issues: write
     runs-on: ubuntu-latest
     timeout-minutes: 6
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
       - name: Replay hostile and positive tests
         run: python3 -m unittest discover -s ci -p test_recurring_heartbeat_watch.py
       - name: Audit the durable authenticated heartbeat stream
