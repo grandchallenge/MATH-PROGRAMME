@@ -1,6 +1,6 @@
 # QFT-COND-005 / DLI-011: A derived inverse-limit obstruction in nuclear Fréchet spaces
 
-**Disposition:** Exact counterexample in the underlying algebraic category of real vector spaces; source-backed nuclearity of the example. This is **not** a calculation of derived liquid inverse limits, nor a counterexample to Costello–Gwilliam Appendix B.6. Tracker: https://github.com/grandchallenge/MATH-PROGRAMME/issues/2603.
+**Disposition:** Exact counterexample in the underlying algebraic category of real vector spaces; source-backed nuclearity of the example. This is **not** a calculation of derived liquid inverse limits, nor a counterexample to Costello–Gwilliam Appendix B.6. Tracker: https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617.
 
 ## Theorem DLI-1: nuclear Fréchet tower with a nonzero first derived limit
 
