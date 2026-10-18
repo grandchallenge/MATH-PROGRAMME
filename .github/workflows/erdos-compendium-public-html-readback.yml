@@ -153,3 +153,80 @@ jobs:
           path: readback/accepted-parity.json
           retention-days: 30
           if-no-files-found: warn
+
+  accepted-parity-auto:
+    name: Automatically verify and preserve changed accepted articles
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.repository == 'grandchallenge/MATH-PROGRAMME' &&
+      github.event.workflow_run.event == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.repository.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    environment: release-trust
+    permissions:
+      contents: read
+    concurrency:
+      group: erdos-accepted-parity-protected-receipts
+      cancel-in-progress: false
+    steps:
+      - name: Checkout exact successful Pages source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install same pinned verifier and real browser
+        run: |
+          set -euo pipefail
+          python -m pip install --requirement requirements/compendium_public_html.txt
+          python -m playwright install --with-deps chromium
+      - name: Test permanent coverage accounting and article parity fail-closed
+        run: |
+          python ci/test_erdos_parity_coverage.py
+          python ci/test_erdos_parity_workflow_integration.py
+          python ci/test_erdos_accepted_publication_parity.py
+      - name: Automatically inspect every newly accepted or amended article in bounded tranche
+        id: parity-check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+          SOURCE_RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_parity_auto.py --mode check --repository-root . --run-id "$SOURCE_RUN_ID" --output readback/accepted-parity-batch.json
+          count="$(jq '.articles | length' readback/accepted-parity-batch.json)"
+          test "$count" -ge 0
+          if test "$count" -gt 0; then echo 'has_articles=true' >> "$GITHUB_OUTPUT"; fi
+      - name: Retain original bounded observations for recovery
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: accepted-parity-batch-${{ github.run_id }}
+          path: readback/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Obtain existing Clerk's protected-PR transport credential
+        if: steps.parity-check.outputs.has_articles == 'true'
+        id: clerk-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-contents: write
+          permission-pull-requests: write
+      - name: Submit permanently retained receipt via protected GitHub PR
+        if: steps.parity-check.outputs.has_articles == 'true'
+        env:
+          GH_TOKEN: ${{ steps.clerk-token.outputs.token }}
+          DEPLOYED_SHA: ${{ github.event.workflow_run.head_sha }}
+          SOURCE_RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_parity_auto.py --mode publish --repository-root . --run-id "$SOURCE_RUN_ID" --output readback/accepted-parity-batch.json

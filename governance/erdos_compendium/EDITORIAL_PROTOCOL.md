@@ -158,3 +158,34 @@ remain drafts and do not require this accepted-only check. This is part of
 existing batch publication work, **not** a separate reviewer or admission
 authority. Its actual accepted-article job receipt belongs with that batch's
 existing editorial evidence.
+
+## Automatic acceptance/publication parity and permanent evidence (post-audit follow-through)
+
+The existing **successful Pages deployment** triggers `accepted-parity-auto` in
+`erdos-compendium-public-html-readback.yml`. No editor needs to remember a
+separate dispatch for newly admitted or source-amended accepted articles.
+The job compares the exact current protected admission SHA-256 hashes with
+`governance/erdos_compendium/publication_parity/COVERAGE.json`, checks up to
+25 still-uncovered articles per protected run (their full six editorial
+sections, mathematical TeX and live MathJax), and prepares a receipt.
+A receipt does **not** become covered merely because an Actions job passed,
+an upload-artifact was created, or a PR was opened: its source and HTML hashes
+become covered **only after the corresponding normal PR has merged into
+protected `main`**, with the individual evidence JSON stored under
+`governance/erdos_compendium/publication_parity/receipts/`. Another Pages
+build then follows; if more than 25 changed articles remain, the next batch
+is handled in the following deployment/receipt cycle. Invalid source,
+mislabelled acceptance, stale deployment, broken maths or failure to create
+an authorized protected evidence PR must fail visibly, never register a PASS.
+The existing Clerk application is used solely as the ordinary protected-PR
+transport, not to bypass the merge queue or to certify mathematics.
+
+The first ledger establishes a **prospective baseline** of the 650 previously
+accepted entries, with a real #99 canary; it does *not* certify those 650
+older pages. A historical acceptance may be re-checked by an ordinary
+source change or a separately governed backfill. The original 30-day Actions
+artifacts remain helpful for troubleshooting but are not the durable evidence.
+The protected JSON receipt includes the source revision, actual deployed
+revision, per-article source and rendered HTML digests, job ID, observed
+MathJax count and noncertifying scope. This is part of ordinary editorial
+publication assurance, not a new admission/review body.
