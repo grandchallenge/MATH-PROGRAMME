@@ -6,7 +6,7 @@
 
 The equally spaced-centre assumption **can be removed** from the block-interaction theorem: every family of actual occupied intervals obeys an exact *sliding-window* capacity inequality for all near-coincident sums of their arbitrary starting positions. Also, the within-block difference spectra are globally disjoint, regardless of the block locations.
 
-**However these two supplies of first-moment arithmetic capacity do not produce a universal critical-density dip by themselves.** A single explicit fractional Bernoulli profile, \(p_n=\tfrac14 n^{-2/3}\), has positive critical expected mass at every prefix, while satisfying **every individual pair-difference and repeated-summand triple-sum expected packing inequality simultaneously, at every scale**. This gives a rigorous all-resolution obstruction to any argument that only rearranges those first-moment inequalities. It is NOT a genuine B3 construction.
+**However these two supplies of first-moment arithmetic capacity do not produce a universal critical-density dip by themselves.** A single explicit fractional Bernoulli profile, $p_n=\tfrac14 n^{-2/3}$, has positive critical expected mass at every prefix, while satisfying **every individual pair-difference and repeated-summand triple-sum expected packing inequality simultaneously, at every scale**. This gives a rigorous all-resolution obstruction to any argument that only rearranges those first-moment inequalities. It is NOT a genuine B3 construction.
 
 The remaining mathematical target is an **integral collision/rounding loss** on actual 0-1 sets or a genuinely stronger, dependent-cohort condition (e.g. reciprocal signed-code incompatibility), not another equality of coarse sum indices.
 
@@ -42,7 +42,7 @@ $$
 
 **Proof.** Distinct index patterns cannot represent the same unordered triple of actual elements, because the intervals are disjoint. Within each pattern, the stated combinatorial weight counts exactly the distinct selected unordered triples, including repetitions. The B3 property assigns distinct integer sums to ALL of them. Every counted sum is inside [S,S+D+3R-3], which has D+3R-2 integer positions. Thus the inequality follows without assumptions on the starts or on the locations of points within their bins. QED.
 
-**Corollary (robust approximate B3[g] centres).** Suppose a subfamily of bins is m-heavy, meaning each has at least m>=c R^(1/3) genuine points for some c>0. Let \(\mathcal N_{S,D}\) count **distinct three-bin patterns i<j<k** from the heavy subfamily whose base-sum starts belong to [S,S+D]. Then
+**Corollary (robust approximate B3[g] centres).** Suppose a subfamily of bins is m-heavy, meaning each has at least m>=c R^(1/3) genuine points for some c>0. Let $\mathcal N_{S,D}$ count **distinct three-bin patterns i<j<k** from the heavy subfamily whose base-sum starts belong to [S,S+D]. Then
 
 $$
 \boxed{
@@ -70,32 +70,32 @@ The globally distinct within-bin B2 differences do more than restrict the number
 
 Let A_N=A∩[1,N] be any finite B3 prefix. Partition [1,N] into disjoint consecutive length-R integer bins, extending the last bin beyond N if necessary. Fix an arbitrary real epsilon>0 and call a bin *heavy* when its occupancy m_i satisfies
 
-$
+$$
 m_i\ge \varepsilon R^{1/3}\quad\text{and}\quad m_i\ge2.
-$
+$$
 
 Write H_R(A_N) for the total number of actual elements in the union of those heavy bins.
 
 **Theorem A2 (unconditional alignment-free heavy-bin mass bound):**
 
-$
+$$
 \boxed{
 H_R(A_N)\le\frac{4\cdot18^{1/3}}{\varepsilon^2}R^{2/3}.
 }\tag{HEAVY-BIN-DELLOCALIZATION}
-$
+$$
 
 **Proof.** Every actual B3 subset of an integer interval of length R has at most (18R)^(1/3) elements: its binom(m+2,3) different triple sums lie in an interval of 3R-2 integers. For each heavy bin with m_i>=2 we have binom(m_i,2)>=m_i²/4>=epsilon² R^(2/3)/4. By global pair-difference uniqueness, the sum over ALL bins of binom(m_i,2) is at most R−1. Thus at most 4 epsilon^(−2) R^(1/3) bins can be heavy. Multiply by the local (18R)^(1/3) cap. QED.
 
-**Conditional persistent-density corollary.** If hypothetically \(A(N)\ge cN^{1/3}\) for some fixed c>0 at a sequence of N values, then, for any R=R(N) with R>=2 and R=o(N^(1/2)), the proportion of points in bins containing >=epsilon R^(1/3) elements tends to zero:
+**Conditional persistent-density corollary.** If hypothetically $A(N)\ge cN^{1/3}$ for some fixed c>0 at a sequence of N values, then, for any R=R(N) with R>=2 and R=o(N^(1/2)), the proportion of points in bins containing >=epsilon R^(1/3) elements tends to zero:
 
-$
+$$
 \boxed{
 \frac{H_R(A_N)}{A(N)}
 \le\frac{4\cdot18^{1/3}}{c\varepsilon^2}
 \left(\frac{R^2}{N}\right)^{1/3}
 \longrightarrow0.
 }\tag{FORCED-LOCAL-DISPERSION}
-$
+$$
 
 The maximum of each non-heavy bin need not be one; it is simply subcritical compared to epsilon R^(1/3). The result is about the **actual original integer points**, not the fractional profile of section 2.
 
@@ -135,7 +135,7 @@ U_p(s)=
 \prod_{v\in\{a,b,c\}}p_v.
 $$
 
-IMPORTANT: when a vertex repeats in a triple, it is selected only ONCE by a Bernoulli variable. Its contribution is p_a rather than p_a^3 for a=a=a, and p_a p_b rather than p_a²p_b for a=a!=b. This definition is stronger/more faithful than merely evaluating the cubic convolution \((p*p*p)(s)\).
+IMPORTANT: when a vertex repeats in a triple, it is selected only ONCE by a Bernoulli variable. Its contribution is p_a rather than p_a^3 for a=a=a, and p_a p_b rather than p_a²p_b for a=a!=b. This definition is stronger/more faithful than merely evaluating the cubic convolution $(p*p*p)(s)$.
 
 **Theorem B (all-sum fractional capacity including repetitions).** For every s>=3,
 
@@ -147,7 +147,7 @@ U_p(s)\le
 }\tag{FRACTIONAL-TRIPLE-SUMS}
 $$
 
-**Proof with explicit constants.** Write a_n=n^(-2/3). The elementary integral comparison \(\sum_{j=1}^M j^{-\beta}\le M^{1-\beta}/(1-\beta)\) for 0<beta<1 yields
+**Proof with explicit constants.** Write a_n=n^(-2/3). The elementary integral comparison $\sum_{j=1}^M j^{-\beta}\le M^{1-\beta}/(1-\beta)$ for 0<beta<1 yields
 
 $$
 (a*a)(s)=\sum_{i=1}^{s-1}i^{-2/3}(s-i)^{-2/3}
@@ -170,13 +170,13 @@ $$
 \le\frac4{16}.
 $$
 
-The middle bound is Cauchy--Schwarz on the sequences i^(-2/3) and (s-2i)^(-2/3), each square-sum bounded by \(\sum_{i\ge1}i^{-4/3}\le1+\int_1^\infty x^{-4/3}dx=4\). All-equal triples contribute at most 1/4. Add the three mutually exclusive types and obtain the displayed uniform bound. QED.
+The middle bound is Cauchy--Schwarz on the sequences i^(-2/3) and (s-2i)^(-2/3), each square-sum bounded by $\sum_{i\ge1}i^{-4/3}\le1+\int_1^\infty x^{-4/3}dx=4$. All-equal triples contribute at most 1/4. Add the three mutually exclusive types and obtain the displayed uniform bound. QED.
 
 Theorem B and (FRACTIONAL-DIFFERENCES) hold **at every exact integer sum and difference**, hence for all sliding sum windows, arbitrary coarse block intervals, and ALL simultaneous resolutions by summing the individual inequalities. A single fractional assignment sustains order N^(1/3) prefix mass while leaving slack in all of these *first-moment* packing constraints. It does not satisfy the actual binary collision clauses, nor does it define a B3 set.
 
 ### The continuum fixed point explaining the obstruction
 
-For real x>0, the locally integrable density \(f_\kappa(x)=\kappa x^{-2/3}\) has a scale-invariant third additive convolution:
+For real x>0, the locally integrable density $f_\kappa(x)=\kappa x^{-2/3}$ has a scale-invariant third additive convolution:
 
 $$
 (f_\kappa*f_\kappa*f_\kappa)(x)
@@ -200,7 +200,7 @@ $$
 $$
 
 **Proof.** Among the N integers in (N,2N], there are T=N(N-1)(N-2) ordered triples of pairwise distinct entries. Their sums lie in at most 3N integer values. If r(s) counts these ordered triples with sum s, Cauchy gives
-\(\sum_s r(s)(r(s)-1)\ge T^2/(3N)-T\).
+$\sum_s r(s)(r(s)-1)\ge T^2/(3N)-T$.
 At most 9N^4 ordered pairs of ordered triples share an entry (choose the two positions of a coincident vertex and the four remaining entries). For N>=200 the remaining number is at least N^5/4. Each unordered pair of disjoint unordered triples is represented exactly 2·(3!)²=72 times, so there are at least N^5/288 such collisions, in particular N^5/400. Each of the six distinct vertices is selected with probability >=(1/4)(2N)^(-2/3); multiply to obtain the bound. QED.
 
 The selection still has expected N^(1/3)-order cardinality, but its expected collision count grows like N. Theorem C is **not** an almost-sure lower bound on deletions or a universal bound for adversarial deterministic rounding. It clarifies the missing input: a density-preserving **collision-hypergraph integrality/repair obstruction**, or some comparably strong dependence-sensitive condition.
