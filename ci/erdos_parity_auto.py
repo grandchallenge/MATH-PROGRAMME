@@ -13,14 +13,12 @@ import json
 import os
 import re
 import subprocess
-import time
 import sys
-import urllib.request
 from pathlib import Path
 
 from erdos_parity_coverage import plan,apply_receipt,verify_ledger
-from erdos_accepted_publication_parity import compare_accepted_article,assert_rendered_math
-from erdos_compendium import load_batch_admissions,manuscript
+from erdos_accepted_publication_live import verify_live
+from erdos_compendium import load_batch_admissions
 
 REPO='grandchallenge/MATH-PROGRAMME'
 COVERAGE='governance/erdos_compendium/publication_parity/COVERAGE.json'
@@ -64,19 +62,6 @@ def context(root:Path):
     return deployed,deployments[0]['id']
 
 
-def verified_browser_render(browser,url:str,count:int,attempts:int=3):
-    """Retry CDN/browser startup, NEVER relax expected MathJax evidence."""
-    if type(attempts) is not int or attempts<1 or attempts>3:refuse('BROWSER_RETRY_LIMIT')
-    for attempt in range(attempts):
-        try:
-            return assert_rendered_math(browser,url,count)
-        except ValueError:
-            if attempt==attempts-1:
-                raise
-            print('TRANSIENT_MATHJAX_RENDER_RETRY',attempt+1,'OF',attempts,flush=True)
-            time.sleep(3*(attempt+1))
-    refuse('UNREACHABLE_RETRY_STATE')
-
 def check(root:Path,output:Path,run_id:int):
     if type(run_id) is not int or run_id<=0:refuse('RUN_ID')
     root=root.resolve();sha,deployment=context(root)
@@ -90,27 +75,26 @@ def check(root:Path,output:Path,run_id:int):
         'selected_article_ids':candidates,'remaining_after_this_batch':remaining,
         'articles':[], 'mathematical_certification':False,'coverage_until_protected_receipt_merged':False}
     if candidates:
-        from playwright.sync_api import sync_playwright
-        with sync_playwright() as pw:
-            browser=pw.chromium.launch(headless=True)
-            try:
-                for n in candidates:
-                    source=manuscript(n)
-                    admission=current[n]
-                    if source is None:refuse('MISSING_MANUSCRIPT_'+str(n))
-                    url=f'https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/{n:04d}/'
-                    with urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'GCL-automatic-accepted-parity/1'}),timeout=35) as resp:
-                        if resp.status!=200 or resp.geturl()!=url:refuse('PAGE_URL_'+str(n))
-                        body=resp.read(2_500_001)
-                    if len(body)>2_500_000:refuse('PAGE_TOO_LARGE_'+str(n))
-                    item=compare_accepted_article(problem_id=n,source=source,admission=admission,
-                        public_html=body,public_url=url,source_commit=sha,deploy_commit=sha)
-                    item.update(verified_browser_render(browser,url,item['verified_math_expressions']))
-                    item['pages_deployment_id']=deployment
-                    item['theorem_certified']=False
-                    report['articles'].append(item)
-                    print('PASS_ACCEPTED_SOURCE_AND_MATH',n,item['verified_math_expressions'],flush=True)
-            finally:browser.close()
+        # Reuse the already-hosted verified single-article entry point.
+        # The former duplicate browser implementation repeatedly timed out
+        # while the identical-commit dedicated verifier passed. Every item
+        # still checks protected main, exact Pages deployment, complete
+        # article text and equations, and live MathJax independently.
+        for n in candidates:
+            item=verify_live(n,root)
+            if (item.get('problem_id')!=n or
+                    item.get('status')!='PASS_SOURCE_AND_RENDERED_HTML_PARITY' or
+                    item.get('source_commit')!=sha or
+                    item.get('deployed_source_commit')!=sha or
+                    item.get('verified_pages_deployment_id')!=deployment or
+                    item.get('mathjax_startup_complete') is not True or
+                    item.get('visible_math_count')!=item.get('verified_math_expressions') or
+                    current[n]['source_sha256']!=item.get('source_sha256')):
+                refuse('REUSED_VERIFIER_EVIDENCE_MISMATCH_'+str(n))
+            item['pages_deployment_id']=deployment
+            item['theorem_certified']=False
+            report['articles'].append(item)
+            print('PASS_ACCEPTED_SOURCE_AND_MATH',n,item['verified_math_expressions'],flush=True)
         updated=apply_receipt(ledger,report)
     else:updated=ledger
     output.parent.mkdir(parents=True,exist_ok=True)
