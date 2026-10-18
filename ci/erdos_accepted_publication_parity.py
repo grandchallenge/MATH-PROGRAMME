@@ -6,7 +6,6 @@ Caller MUST separately authenticate the protected deployment commit and admissio
 from __future__ import annotations
 import hashlib
 import json
-import json
 import re
 from bs4 import BeautifulSoup, NavigableString
 import markdown
@@ -36,7 +35,8 @@ def _sections(soup):
         blocks=[]
         for node in h.next_siblings:
             if getattr(node,'name',None)=='h2':break
-            if getattr(node,'name',None) not in ('p','ul','ol','pre','blockquote','table'):continue
+            if getattr(node,'name',None) not in ('p','ul','ol','pre','blockquote','table','div'):continue
+            if node.name=='div' and 'arithmatex' not in node.get('class',[]):continue
             frag=BeautifulSoup(str(node),'html.parser')
             for elem in frag.select('.arithmatex'):
                 script=elem.find('script',attrs={'type':re.compile('^math/tex')})
