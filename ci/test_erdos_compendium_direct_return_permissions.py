@@ -10,7 +10,7 @@ class DirectReturnWorkflowTests(unittest.TestCase):
     def test_existing_protected_clerk_is_the_only_writer(self):
         text = FLOW.read_text(encoding="utf-8")
         self.assertIn("    permissions:\n      contents: read\n    environment: release-trust", text)
-        self.assertIn("actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1", text)
+        self.assertIn("actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510", text)
         self.assertEqual(text.count("permission-issues: write"), 1)
         self.assertIn("GCL_COUNCIL_CLERK_APP_ID", text)
         self.assertIn("GCL_COUNCIL_CLERK_PRIVATE_KEY", text)
