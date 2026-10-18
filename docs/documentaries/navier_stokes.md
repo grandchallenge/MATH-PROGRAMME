@@ -1,3 +1,6 @@
+
+**GitHub equation reader:** [Read the mathematical text with typeset equations](github_math/navier_stokes.md). The illustrated manuscript below remains canonical.
+
 <link rel="stylesheet" href="../../stylesheets/documentary.css">
 <link rel="stylesheet" href="../../stylesheets/documentary-status.css">
 
