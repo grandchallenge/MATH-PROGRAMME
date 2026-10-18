@@ -425,7 +425,7 @@ jobs:
             git -C source rev-parse HEAD^{tree}
           } > "$OUTPUT_DIR/environment.txt"
       - name: Preserve content-addressed lex-pivot evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: oz-t3-016-a-lex-pivot-${{ needs.validate-request.outputs.request_id }}-chunk-${{ matrix.chunk }}
           path: ${{ env.OUTPUT_DIR }}/
@@ -533,7 +533,7 @@ jobs:
             git -C source rev-parse HEAD^{tree}
           } > "$OUTPUT_DIR/environment.txt"
       - name: Preserve content-addressed multiprime lex-pivot evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: oz-t3-016-a-lex-pivot-${{ needs.validate-request.outputs.multiprime_request_id }}-p${{ matrix.prime }}-chunk-${{ matrix.chunk }}
           path: ${{ env.OUTPUT_DIR }}/
