@@ -98,7 +98,7 @@ $$
 \tag{18.7}
 $$
 
-**Compactness of the weight stages.** Let $S_\infty=\mathbb N\cup\{\infty\}$ with its convergent-sequence profinite topology. The standard split exact sequence
+**Target-specific finite-prefix factorization, not absolute compactness.** Let $S_\infty=\mathbb N\cup\{\infty\}$ with its convergent-sequence profinite topology. The standard split exact sequence
 
 $$
 0\longrightarrow
@@ -110,7 +110,7 @@ $$
 \tag{18.8}
 $$
 
-has a section induced by the point $\infty$, so $\mathcal M_{<p}(\mathbb N)$ is a direct summand of $\mathcal M_{<p}(S_\infty)$. The latter is a **compact object** in the liquid abelian category: its Hom functor represents evaluation on the profinite $S_\infty$, and filtered colimits of liquid modules are computed sectionwise. Hence each abstractly isomorphic scaled object $T_r$ is compact. This is **not** a proof that $T_r$ is projective.
+has a section induced by the point $\infty$, so $\mathcal M_{<p}(\mathbb N)$ is a direct summand of $\mathcal M_{<p}(S_\infty)$. The free measure object represents evaluation on $S_\infty$, but this **does not make it compact in the whole liquid category**: filtered colimits on non-extremally disconnected profinite sets are not sectionwise in general. The needed statement is more specific. For the strict LF direct sum $\mathsf S=\bigoplus_n\underline{\mathbb R}$, every compact profinite plot has image in one finite-dimensional output prefix, so $\mathsf S(S_\infty)$ is the union of the finite-prefix section groups. Any map $T_r\to\mathsf S$ extends along the split projection $\mathcal M_{<p}(S_\infty)\to T_r$ to a map from the free liquid object. The corresponding section of $\mathsf S(S_\infty)$ factors through a finite prefix, and restricting back gives the same factorization for the original map. This proves the required **relative Hom factorization** without claiming $T_r$ is compact or projective.
 
 Consequently, for each $r$ the canonical comparison is an isomorphism
 
@@ -216,7 +216,7 @@ $$
 
 is surjective. In particular, the map (18.15) for the convergent-sequence space $S_\infty$ is surjective.
 
-**Proof by effective descent.** Write $\mathsf S=\varinjlim_m\underline{\mathbb R^m}$ and $\mathsf P=\prod_n\underline{\mathbb R}$. Let $v\in\mathsf Q(K)$. Since $\mathsf Q$ is the sheaf cokernel of $\mathsf S\hookrightarrow\mathsf P$, there is a finite jointly surjective profinite covering, combined into a surjective map $\pi:T\to K$, and a section $a\in\mathsf P(T)$ whose image is $\pi^*v$. Consider $T\times_K T$, also profinite. The two pullbacks of $a$ have the same image in $\mathsf Q(T\times_K T)$, so their difference lies in the **sheaf kernel** $\mathsf S(T\times_K T)$. Filtered colimits of condensed sections are computed sectionwise. Consequently **one integer $m$** exists such that for all pairs $(t,t')$ with $\pi(t)=\pi(t')$ and every output coordinate $n>m$,
+**Proof by effective descent.** Write $\mathsf S=\varinjlim_m\underline{\mathbb R^m}$ and $\mathsf P=\prod_n\underline{\mathbb R}$. Let $v\in\mathsf Q(K)$. Since $\mathsf Q$ is the sheaf cokernel of $\mathsf S\hookrightarrow\mathsf P$, there is a finite jointly surjective profinite covering, combined into a surjective map $\pi:T\to K$, and a section $a\in\mathsf P(T)$ whose image is $\pi^*v$. Consider $T\times_K T$, also profinite. The two pullbacks of $a$ have the same image in $\mathsf Q(T\times_K T)$, so their difference lies in the **sheaf kernel** $\mathsf S(T\times_K T)$. For this **particular** finite-prefix strict LF direct sum, every profinite section of $\mathsf S$ lies in one finite prefix: compact-image factorization identifies the liquid coproduct with its classical strict LF realization on these test spaces. Consequently **one integer $m$** exists such that for all pairs $(t,t')$ with $\pi(t)=\pi(t')$ and every output coordinate $n>m$,
 
 $$
 a_n(t)=a_n(t').
@@ -270,7 +270,7 @@ For every weight stage $T_r$ from (18.1), the free-measure retract (18.8) and (1
 
 For fixed $r,n$, the group $\mathrm{Hom}(T_r,B_n)$ embeds in $W_n=s^{\mathbb N}$ by evaluating at the finitely supported coordinate vectors. To see injectivity, compose a candidate morphism with every continuous scalar functional on the Fréchet target $s$. Its scalar composite is determined by these coordinate vectors by (18.10); hence vanishing on them forces every scalar composite, and then the morphism itself, to vanish. The inclusions of the scaled measure stages preserve these common coordinate vectors, so the groups $\mathrm{Hom}(T_r,B_n)$ form decreasing linear subspaces of $W_n$.
 
-Because each $T_r$ is compact, one has
+By the preceding strict-LF finite-prefix argument (applied to the Fréchet target summands $B_n$), one has
 
 $$
 \mathrm{Hom}(T_r,G)
@@ -328,7 +328,7 @@ This is **not** a proof that no such local-stage obstruction exists. It also doe
 
 The remaining two sharply bounded mathematical possibilities are:
 
-1. **Scalar local-stage obstruction:** exhibit or rule out a nonzero image in $\mathrm{Ext}^1(T_r,\mathsf S)$ that can extend coherently to the full fixed Fréchet source, and survives every finite output prefix. Proving $\mathrm{Ext}^1(T_r,\mathsf S)=0$ for every $r$ is a sufficient, **not yet established**, scalar positive result. Do not confuse compactness of $T_r$ with projectivity or with derived compactness.
+1. **Scalar local-stage obstruction:** exhibit or rule out a nonzero image in $\mathrm{Ext}^1(T_r,\mathsf S)$ that can extend coherently to the full fixed Fréchet source, and survives every finite output prefix. Proving $\mathrm{Ext}^1(T_r,\mathsf S)=0$ for every $r$ is a sufficient, **not yet established**, scalar positive result. Do not confuse target-specific finite-prefix factorization with projectivity or derived compactness.
 2. **Full test-function obstruction:** determine whether a genuine fixed-source extension class has infinitely many nonzero component images under the injective map (18.23). Theorem 18.9 eliminates all coordinate-invisible mechanisms, but does not exclude infinitely supported realized families. Use the corrected first-syzygy quotient from [review 016](AGENT_CRITICAL_REVIEW_AB_016.md) and check all liquid boundaries.
 
 **Finite-dimensional warning:** $\underline{\mathbb R^m}$ is projective in $\mathcal A_p$, so all degree-one liquid Ext classes restrict to zero on finite-dimensional coordinate truncations of the Fréchet source. Finite-dimensional computations cannot settle either possibility, even in principle.
@@ -339,7 +339,7 @@ The remaining two sharply bounded mathematical possibilities are:
 | --- | --- |
 | Valdivia–Vogt source identification $H\cong\underline s$ | SOURCE GROUNDED for $K=[-1,1]$ |
 | Countably directed inverse-system lemma (18.3) | PROVED in ZFC |
-| Measure-stage compactness and scalar Hom direct-sum factorization (18.8–18.10) | PROVED from free-measure universal property and scalar projectivity, with source-stage presentation |
+| Measure-stage relative Hom factorization for strict LF targets (18.8–18.10) | PROVED for the indicated strict LF output using the split free-measure retract; no absolute compactness claim |
 | Stagewise-split classes in $\mathrm{Ext}^1(H,\mathsf S)$ have finite support (18.13) | PROVED conditional on the source-backed measure-stage presentation (18.2) |
 | CH implies existence of some scalar $\mathrm{Ext}^1(s,\mathbb R)$ classes | EXTERNAL CONDITIONAL RESULT, not GCL independent theorem, and not target escape |
 | Every $\mathrm{Hom}(T_r,\mathsf Q)$ map lifts to $\mathsf P$ | PROVED (18.17), by finite-coordinate effective descent |
