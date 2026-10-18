@@ -184,6 +184,11 @@ def norm_math(t):
         right=old[m.end()] if m.end()<len(old) else ""
         return (" " if re.match(r"[\w-]",left) else "")+m.group(0)+( " " if re.match(r"[\w-]",right) else "")
     t=single.sub(boundary,old)
+    # GitHub's inline GFM parser treats paired underscores in the mixed-norm
+    # scaling identity as Markdown emphasis *before* its math renderer runs.
+    # Render that same TeX body as display math, retaining exact source parity.
+    t=re.sub(r"(For mixed norms,) \$([^$\n]+)\$\. Thus ",
+             lambda m:m.group(1)+"\n\n$$\n"+m.group(2)+"\n$$\n\nThus ",t)
     # Indentation belongs to the source HTML template, not the article. In
     # Markdown, four accidental template spaces create code fences and suppress
     # mathematical typesetting. Do not retain that presentation whitespace.

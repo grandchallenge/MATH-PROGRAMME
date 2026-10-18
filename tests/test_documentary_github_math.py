@@ -39,6 +39,7 @@ class GitHubDocumentaryMath(unittest.TestCase):
         self.assertIn(r"\\#E_5(",bsd)
         self.assertIn(r"\\#\mathop",bsd)
         self.assertIn(r"\Vert{}u",ns)
+        self.assertIn("For mixed norms,\n\n$$\n",ns)
         self.assertNotIn(r"\|",ns)
         self.assertIn("codimension- $p$",hodge)
         self.assertNotIn("codimension-\u200b$p$",hodge)

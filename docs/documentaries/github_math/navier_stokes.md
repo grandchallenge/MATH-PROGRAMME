@@ -145,7 +145,13 @@ Technical appendix B
 
 ## Scaling and Critical Spaces
 
-For mixed norms, $\Vert{}u_\lambda\Vert{}_{L^q_tL^p_x}=\lambda^{1-3/p-2/q}\Vert{}u\Vert{}_{L^q_tL^p_x}$. Thus $2/q+3/p=1$ is the velocity-critical line. Energy-class information does not directly dominate it. Small-data critical theorems retain their smallness hypothesis.
+For mixed norms,
+
+$$
+\Vert{}u_\lambda\Vert{}_{L^q_tL^p_x}=\lambda^{1-3/p-2/q}\Vert{}u\Vert{}_{L^q_tL^p_x}
+$$
+
+Thus $2/q+3/p=1$ is the velocity-critical line. Energy-class information does not directly dominate it. Small-data critical theorems retain their smallness hypothesis.
 
 Technical appendix C
 
