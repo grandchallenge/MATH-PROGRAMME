@@ -12,6 +12,19 @@ def main() -> int:
     docs = impact.classify_paths(["docs/governance/example.md"])
     assert docs["policy_shards"] == ["core", "docs"]
 
+    # A receipt-only merge must NOT be treated as a non-publishing change.
+    # Otherwise 25-article batches cannot finish themselves.
+    for receipt_path in (
+        "governance/erdos_compendium/publication_parity/COVERAGE.json",
+        "governance/erdos_compendium/publication_parity/receipts/verified.json",
+    ):
+        receipt = impact.classify_paths([receipt_path], event_name="push")
+        assert receipt["policy_shards"] == ["core", "contracts", "docs"]
+        assert not receipt["unknown_paths"]
+
+    non_parity = impact.classify_paths(["governance/other/ordinary_evidence.json"], event_name="push")
+    assert non_parity["policy_shards"] == ["core", "contracts"]
+
     handoff = impact.classify_paths(["handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md"])
     assert handoff["policy_shards"] == ["core", "administrative", "campaigns", "docs"]
     assert not handoff["unknown_paths"]
