@@ -188,6 +188,7 @@ jobs:
       - name: Test permanent coverage accounting and article parity fail-closed
         run: |
           python ci/test_erdos_parity_coverage.py
+          python ci/test_erdos_parity_workflow_integration.py
           python ci/test_erdos_accepted_publication_parity.py
       - name: Automatically inspect every newly accepted or amended article in bounded tranche
         id: parity-check
