@@ -65,3 +65,18 @@ The initial October 19, 2026 snapshot held 232 rejected comments. A bounded
 loss-preservation replay accepted 190 for mechanical repair. The remaining 40
 invalid-only issues require source-specialist review; issue #2491 already had a
 valid return alongside two rejected comments. These counts are time-bound.
+
+## Interrupted writes and transient GitHub responses
+
+The production run 39340523540 preserved 219 exact per-issue readbacks and
+blocked on the POST to issue #1502. Its first-generation receipt contained
+only the CLI exit code; it did not record the GitHub response. Recovery adds
+bounded retry for explicitly transient HTTP/network errors, with the original
+error retained in any blocker. Critically, a failed or timed-out comment POST
+is treated as *uncertain*, not as proof that GitHub did not create the comment.
+Before a repeat write, the controller reads the original issue's comments and
+matches the exact derived body and source issue URL. If a unique match exists,
+it reuses that ID and verifies it; if the comment history cannot be inspected
+unambiguously, it refuses the retry. Persistent permission or validation
+errors fail closed instead of being presented as completed. Routine replay
+continues to preserve both original research and already published copies.

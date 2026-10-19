@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import time
 
 try:
     from ci import erdos_catalogue_programme_intake as intake
@@ -149,15 +150,84 @@ def normalize(text, problem, cid, original_sha, issue):
     return derived
 
 
+def _posted_comment_readback(endpoint, post):
+    # GitHub may commit an issue comment before the response is lost. Never
+    # retry a write until the source issue has been checked for that exact body.
+    match = re.fullmatch(r"repos/([^/]+/[^/]+)/issues/(\d+)/comments", endpoint)
+    if match is None:
+        raise ValueError("unrecognized write endpoint; refuse ambiguous retry")
+    p = subprocess.run(["gh", "api", endpoint + "?per_page=100"],
+                       capture_output=True, text=True, timeout=90, check=False)
+    if p.returncode:
+        raise ValueError("cannot inspect existing comments before write retry: "
+                         + _api_error(p))
+    comments = json.loads(p.stdout)
+    if not isinstance(comments, list) or len(comments) >= 100:
+        raise ValueError("full comment pagination unavailable; refuse unsafe retry")
+    body = json.loads(post)["body"]
+    matches = [r for r in comments if r.get("body") == body
+               and r.get("issue_url") ==
+               f"https://api.github.com/{endpoint.rsplit('/comments', 1)[0]}"]
+    if len(matches) > 1:
+        raise ValueError("multiple identical issued comments; refuse duplicate replay")
+    return matches[0] if matches else None
+
+
+def _api_error(result):
+    raw = ((result.stderr or "") + "\\n" + (result.stdout or "")).strip()
+    token = os.environ.get("GH_TOKEN", "")
+    if token:
+        raw = raw.replace(token, "<redacted>")
+    return raw[-1500:]
+
+
+def _temporary_api_failure(message):
+    lower = message.lower()
+    # Explicit transient status or request-layer problems only; permission
+    # failures, invalid identities and content validation stay fail-closed.
+    return any(term in lower for term in (
+        "http 429", "http 500", "http 502", "http 503", "http 504",
+        "secondary rate limit", "abuse detection", "rate limit exceeded",
+        "retry-after", "timeout", "timed out", "connection reset",
+        "connection refused", "could not resolve host", "tls handshake",
+        "service unavailable", "bad gateway",
+    ))
+
+
 def gh(endpoint, *, post=None):
     command = ["gh", "api"]
-    if post is None:
-        command += [endpoint]
-    else:
-        command += ["--method", "POST", endpoint, "--input", "-"]
-    p = subprocess.run(command, input=post, check=True, capture_output=True,
-                       text=True, timeout=90)
-    return json.loads(p.stdout)
+    command += ([endpoint] if post is None else
+                ["--method", "POST", endpoint, "--input", "-"])
+    for attempt in range(4):
+        try:
+            result = subprocess.run(command, input=post, check=False,
+                                    capture_output=True, text=True, timeout=90)
+        except subprocess.TimeoutExpired as error:
+            message = f"TimeoutExpired: {error}"
+            result = None
+        else:
+            if result.returncode == 0:
+                return json.loads(result.stdout)
+            message = _api_error(result)
+        if post is not None:
+            # Even a non-transient failure could conceal an accepted write.
+            # Reconcile by exact authenticated source readback.
+            try:
+                existing = _posted_comment_readback(endpoint, post)
+            except (subprocess.TimeoutExpired, ValueError) as error:
+                if attempt == 3:
+                    raise ValueError(
+                        f"{endpoint}: write response uncertain; duplicate-safe probe "
+                        f"failed ({type(error).__name__}: {error}); "
+                        f"source API error: {message}") from error
+                time.sleep((4, 12, 30)[min(attempt, 2)])
+                continue
+            if existing is not None:
+                return existing
+        if attempt == 3 or not _temporary_api_failure(message):
+            raise ValueError(f"{endpoint}: GitHub API rejected operation: {message}")
+        time.sleep((4, 12, 30)[attempt])
+    raise AssertionError("bounded attempts exhausted")
 
 
 def process_issue(report, issue, *, apply):
