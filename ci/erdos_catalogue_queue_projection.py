@@ -147,12 +147,29 @@ def validate_receipt(report: dict, issue: int) -> dict:
     return row
 
 
+def source_issue_gcl_state(issue: int) -> str:
+    """Read one exact persisted GCL State field, independent of Project Status."""
+    fields=gh("api",f"repos/{OWNER}/{REPO}/issues/{issue}/issue-field-values")
+    if not isinstance(fields,list):
+        raise ValueError("source GCL State API payload malformed")
+    rows=[x for x in fields if isinstance(x,dict)
+          and x.get("issue_field_name")=="GCL State"
+          and x.get("issue_field_id")==GCL_STATE_FIELD]
+    if len(rows)!=1:
+        raise ValueError(f"#{issue}: missing/ambiguous GCL State Issue Field")
+    state=(rows[0].get("single_select_option") or {}).get("name")
+    if state not in ("AVAILABLE","RETURNED"):
+        raise ValueError(f"#{issue}: unexpected source GCL State {state}")
+    return state
+
+
 def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     receipt = validate_receipt(report, issue)
     issue_json = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
     assert isinstance(issue_json, dict)
     labels = {l["name"] for l in issue_json.get("labels", [])}
-    if issue_json.get("state") != "open" or not {"gcl-job", "gcl-pickup:direct-editorial", "gcl-role:source-audit"} <= labels:
+    if (issue_json.get("state") not in ("open","closed")
+            or not {"gcl-job", "gcl-pickup:direct-editorial", "gcl-role:source-audit"} <= labels):
         raise ValueError("issue state/pickup binding failed")
     comment = gh("api", f"repos/{OWNER}/{REPO}/issues/comments/{receipt['comment_id']}")
     if not isinstance(comment, dict) or comment.get("issue_url") != f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue}":
@@ -167,12 +184,31 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     item = issue_project_item(issue, project_id)
     before = {"issue": issue, "comment_id": receipt["comment_id"], "project_item": item["id"],
               "status_before": item.get("status"), "target": "RETURNED", "dry_run": dry_run}
+    if issue_json.get("state")=="closed":
+        # Existing accepted historical returns (e.g. #1270/#1273) have
+        # already been closed and their Worker Queue item is Done. The
+        # return's exact source-bound comment was just reverified above.
+        # Do not demote a completed item to RETURNED or rewrite its labels.
+        if item.get("status")!="Done" or "gcl-state:available" in labels:
+            raise ValueError("closed source return lacks terminal Done custody")
+        before.update({"target":"PRESERVE_DONE","historical_terminal":True,
+                       "verified_status":"Done","available_removed":False})
+        return before
+    issue_state=source_issue_gcl_state(issue)
+    before["gcl_state_before"]=issue_state
     if dry_run:
         return before
     if str(item.get("status", "")).upper() != "RETURNED":
         subprocess.run(["gh", "project", "item-edit", "--project-id", project_id,
                         "--id", item["id"], "--field-id", field_id,
                         "--single-select-option-id", option_id], check=True)
+    if issue_state!="RETURNED":
+        payload=json.dumps({"issue_field_values":[
+            {"field_id":GCL_STATE_FIELD,"value":"RETURNED"}]})
+        subprocess.run(["gh","api","--method","POST",
+                        f"repos/{OWNER}/{REPO}/issues/{issue}/issue-field-values",
+                        "--input","-"],input=payload,text=True,
+                       capture_output=True,check=True,timeout=60)
     if "gcl-state:available" in labels:
         subprocess.run(["gh", "api", "--method", "DELETE",
                         f"repos/{OWNER}/{REPO}/issues/{issue}/labels/gcl-state%3Aavailable"],
@@ -181,9 +217,12 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     if final["id"] != item["id"] or str(final["status"]).upper() != "RETURNED":
         raise RuntimeError("Targeted Project readback does not confirm returned state")
     refreshed = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
-    if "gcl-state:available" in {l["name"] for l in refreshed["labels"]}:
-        raise RuntimeError("issue availability label persists")
+    if (refreshed.get("state")!="open"
+            or "gcl-state:available" in {l["name"] for l in refreshed["labels"]}
+            or source_issue_gcl_state(issue)!="RETURNED"):
+        raise RuntimeError("source return Issue Field, label or open custody readback mismatch")
     before["verified_status"] = final.get("status")
+    before["verified_gcl_state"]="RETURNED"
     before["available_removed"] = True
     return before
 
