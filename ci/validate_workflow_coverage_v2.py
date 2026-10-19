@@ -359,9 +359,10 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
     wf = v3.legacy.load_yaml_text(source)
     jobs = wf.get("jobs", {})
     expected = {"reconcile", "ledger", "canary",
-                "forge-pilot-review", "forge-pilot-evidence"}
+                "forge-pilot-review", "forge-pilot-evidence",
+                "source_return_batches", "source_return_verify"}
     if set(jobs) != expected:
-        return [f"{key}: Forge pilot requires exact five-job topology"]
+        return [f"{key}: only the exact seven-job bounded projection topology is permitted"]
     agent = _job(wf, "forge-pilot-review")
     publisher = _job(wf, "forge-pilot-evidence")
     errors: list[str] = []
@@ -657,6 +658,7 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         delegated_permission_errors |= {
             "erdos-catalogue-queue-projection.yml:forge-pilot-review: non-Pages job permissions may not exceed contents: read",
             "erdos-catalogue-queue-projection.yml:forge-pilot-evidence: non-Pages job permissions may not exceed contents: read",
+            "erdos-catalogue-queue-projection.yml:source_return_batches: non-Pages job permissions may not exceed contents: read",
         }
     errors = [error for error in errors if error not in delegated_permission_errors]
     errors.extend(pilot_errors)
@@ -671,12 +673,64 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         projection = _job(workflow, "reconcile")
         if (workflow.get("permissions") != {"contents": "read"} or
                 set(jobs) != {"reconcile", "ledger", "canary",
-                              "forge-pilot-review", "forge-pilot-evidence"}):
+                              "forge-pilot-review", "forge-pilot-evidence",
+                              "source_return_batches", "source_return_verify"}):
             errors.append("erdos queue projection: unrecognized workflow or write scope")
         ledger = _job(workflow, "ledger")
         canary = _job(workflow, "canary")
         if ledger.get("permissions") != {"contents": "read"} or canary.get("permissions") != {"contents": "read"}:
             errors.append("erdos event custody: only base contents-read job permissions allowed")
+        shard = _job(workflow, "source_return_batches")
+        aggregate = _job(workflow, "source_return_verify")
+        shard_text = str(shard)
+        aggregate_text = str(aggregate)
+        if (shard.get("needs") != "reconcile"
+                or shard.get("permissions") != {"contents": "read", "issues": "write"}
+                or shard.get("environment") != v3.PROTECTED_ENVIRONMENT
+                or shard.get("runs-on") != "ubuntu-24.04"
+                or str(shard.get("timeout-minutes")) != "25"
+                or str(shard.get("strategy", {}).get("fail-fast")).lower() != "false"
+                or str(shard.get("strategy", {}).get("max-parallel")) != "2"
+                or "fromJSON(needs.reconcile.outputs.source_return_batches)" not in str(shard.get("strategy", {}).get("matrix", ""))):
+            errors.append("erdos source-return batches: exact bounded execution and permission contract drift")
+        for required in (
+            "ref': '$"+"{{ github.sha }}",
+            "steps.queue-token.outputs.token",
+            "secrets.GCL_COUNCIL_CLERK_APP_ID",
+            "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY",
+            "permission-organization-projects",
+            "permission-issues",
+            "ci/erdos_catalogue_queue_projection.py",
+            "--batch-index",
+            "--batch-size 64",
+            "--expected-report-sha256",
+            "--expected-total",
+            "--receipt source-returns/projection.json",
+            "gcl-source-return-batch-",
+        ):
+            if required not in shard_text:
+                errors.append(f"erdos source-return batches: missing bound marker {required}")
+        if (aggregate.get("needs") != ["reconcile", "source_return_batches"]
+                or aggregate.get("permissions") != {"contents": "read"}
+                or aggregate.get("runs-on") != "ubuntu-24.04"
+                or str(aggregate.get("timeout-minutes")) != "10"
+                or "always()" not in str(aggregate.get("if", ""))
+                or "needs.reconcile.result == 'success'" not in str(aggregate.get("if", ""))):
+            errors.append("erdos source-return aggregate: exact read-only completeness verifier contract drift")
+        for required in (
+            "ci/verify_erdos_source_return_batches.py",
+            "gcl-source-return-aggregate-",
+            "gcl-source-return-batch-",
+            "BATCH_MANIFEST.json",
+            "source-return-aggregate/receipt.json",
+        ):
+            if required not in aggregate_text:
+                errors.append(f"erdos source-return aggregate: missing coverage marker {required}")
+        for forbidden in ("permission-organization-projects", "permission-issues: write",
+                          "secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY", "gh project",
+                          "gh issue", "gh api --method"):
+            if forbidden in aggregate_text:
+                errors.append(f"erdos source-return aggregate: unauthorized write or token {forbidden}")
         ledger_text = str(ledger)
         canary_text = str(canary)
         for required in (
@@ -698,7 +752,7 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         steps = projection.get("steps", [])
         runs = "\\n".join(str(step.get("run", "")) for step in steps)
         if ("ci/erdos_catalogue_programme_intake.py --live-snapshot" not in runs
-                or "ci/erdos_catalogue_queue_projection.py --report" not in runs
+                or "ci/erdos_catalogue_queue_projection.py --report" not in queue_projection
                 or "steps.queue-token.outputs.token" not in queue_projection
                 or "permission-organization-projects: write" not in queue_projection
                 or "permission-issues: write" not in queue_projection
