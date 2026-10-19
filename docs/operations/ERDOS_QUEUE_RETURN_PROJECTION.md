@@ -23,28 +23,31 @@ A **closed**, genuinely Done task is source- and Project-readback-verified
 without changing terminal custody. Source comment content is re-read and
 checked against the snapshot's SHA-256 before either outcome.
 
-The replay is idempotent. Its 55-minute job ceiling is deliberately below the
-installation token's one-hour lifetime, unlike the former 15-minute ceiling
-which cancelled the 769-return batch. If a run cannot complete, another
-authorized controller run may safely retry; prior write attempts do not imply
-successful completion.
+The replay is idempotent. A protected controller captures one source snapshot
+and immutable batch manifest. It runs at most **64 source issues per job** and
+**two jobs concurrently**, each with a 25-minute limit and its own short-lived
+Council Clerk credential. Monolithic bulk runs are forbidden.
+
+The read-only whole-snapshot verifier rejects missing, duplicate, incomplete
+or contradictory batch receipts, changed snapshot identity and changed
+protected source head. Only the verifier can emit a manifest-wide VERIFIED
+result; an isolated green batch cannot prove that the queue is reconciled.
 
 ## Inspect a run, not an assurance
 
 1. Open the [queue projection workflow](https://github.com/grandchallenge/MATH-PROGRAMME/actions/workflows/erdos-catalogue-queue-projection.yml).
-2. Select the specific run, check its **final** conclusion, and download
-   `gcl-source-return-projection-<run-id>-<attempt>` from its Artifacts.
-3. Inspect `projection.json`. The exact schema is
-   `GCL-ERDOS-SOURCE-RETURN-PROJECTION/1`; the receipt includes the report
-   SHA-256, protected source SHA, run URL, eligible count, processed count,
-   current in-flight issue, per-issue result and authenticated readback,
-   and any blocker.
-4. Only `status=VERIFIED`, `verified=true`, `complete=true`,
-   `applied=true`, and `processed_count=expected_issue_count`
-   certify this *bounded source-return projection*. They do **not**
-   certify that later workflow steps, the entire compendium, or the complete
-   GCL queue succeeded. Check the full workflow's terminal conclusion and
-   subsequent governing issue/Project state separately.
+2. Check the **terminal conclusion** of the entire workflow, including
+   source_return_batches and source_return_verify.
+3. Download gcl-source-return-input-<run-id>-<attempt>, containing REPORT.json
+   and BATCH_MANIFEST.json from the same captured intake.
+4. For every batch, examine gcl-source-return-batch-<index>-<run-id>-<attempt>
+   and projection.json. Each verified shard must have VERIFIED_BATCH,
+   verified=true, complete=true, processed_count=expected_issue_count.
+5. Check gcl-source-return-aggregate-<run-id>-<attempt> / receipt.json.
+   Only manifest-wide VERIFIED, verified=true, complete=true, applied=true,
+   and verified_issue_count=eligible_issue_count demonstrate full projection
+   of single-valid-return tasks. They do not certify mathematics, editorial
+   acceptance, or total GCL queue closure.
 
 `RUNNING` is an **interrupted or still-in-progress checkpoint**, never a
 completion claim. `BLOCKED` records failure and, where known, the precise
@@ -67,6 +70,7 @@ or a missing/partial artifact. To reproduce the local contract tests:
 
 ```sh
 PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py -q
+PYTHONPATH=. python3 tests/test_erdos_source_return_batches.py -q
 PYTHONPATH=. python3 ci/test_gcl_queue_class_cutover.py -q
 ```
 
