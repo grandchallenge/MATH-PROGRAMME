@@ -59,8 +59,22 @@ def exceptions(report):
         rows = current(report, issue)
         good = [r for r in rows if r["validation"] == "STRUCTURALLY_VALID_UNADJUDICATED"]
         bad = [r for r in rows if r["validation"] != "STRUCTURALLY_VALID_UNADJUDICATED"]
-        if (bad and not good) or len(good) > 1:
+        if bad and not good:
             result.append(issue)
+        elif len(good) > 1:
+            # Once a protected specialist has settled the exact candidate
+            # set, do not keep issuing an already satisfied review request.
+            try:
+                try:
+                    from ci.erdos_return_arbitration import choose
+                except ModuleNotFoundError:
+                    from erdos_return_arbitration import choose
+                choose(issue, good)
+            except ValueError as error:
+                if ("arbitration missing" not in str(error)
+                        and "stale, or incomplete" not in str(error)):
+                    raise
+                result.append(issue)
     return sorted(result)
 
 
