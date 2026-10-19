@@ -1,6 +1,6 @@
 # QFT-COND-005 / EXT-015 — SPEC
 
-**Status:** PLAN PROTECTED-ADMITTED in [PR #2652](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2652), exact protected head dabaeff025eaffdd1295563bc4d6be589031adb3. EXT-015A/B handoffs are being prepared separately; mathematical conclusions remain open.
+**Status:** The original plan was protected-admitted in [PR #2652](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2652). **Fixed-source degree-one comparison resolved positively**, via [A/B critical review 016](AGENT_CRITICAL_REVIEW_AB_016.md), [profinite-relations proof 019](FIXED_SOURCE_EXT1_ISOMORPHISM_019.md), and [mathematical critical review 020](AGENT_CRITICAL_REVIEW_019_020.md). **Higher derived/smooth comparison EXT-015D remains OPEN.**
 
 **Canonical guiding question**
 
@@ -159,7 +159,7 @@ See [WORK_PACKAGES.md](WORK_PACKAGES.md) for queue-ready instructions, [EXTENSIO
 
 The transaction is mathematically complete only upon a genuine liquid Ext conclusion as in Section 1 with exact evidence and the formal consequences for the restricted derived comparison recorded. A verified positive theorem gives a conditional route toward the differentiable pro-cochain bridge; a negative liquid example establishes the first genuine analytical boundary. Neither by itself proves a complete quantum BV factorization equivalence.
 
-**First executable action after admission:** EXT-015A, verification of quotient object (EXT-015.2) and proof or refutation of (EXT-015.4). EXT-015B can be independently prepared while A proceeds. Start C only with the agreed Ext presentation model; start D only after A–C provide actual mathematical outputs.
+**Current next research obligation:** follow through on EXT-015D, using the positively resolved *fixed-source degree-one* theorem while separately checking higher Ext, the smooth nonlinear mapping model of Costello–Gwilliam B.6, completed quantum-weight filtrations and Weiss descent. These are mathematical agent obligations, not Human Steward routine review tasks.
 
 ## Primary literature
 
