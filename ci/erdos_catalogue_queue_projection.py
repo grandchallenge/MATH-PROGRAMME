@@ -139,7 +139,7 @@ def validate_receipt(report: dict, issue: int) -> dict:
             if r.get("validation") == "STRUCTURALLY_VALID_UNADJUDICATED"
             and r.get("event_action") != "deleted"]
     if len(rows) == 0:
-        raise ValueError("no current structurally valid return")
+        raise ValueError("expected exactly one current structurally valid return, got 0")
     if len(rows) == 1:
         row = rows[0]
     else:
