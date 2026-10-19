@@ -1,6 +1,6 @@
 # GCL recurring-task continuity contract
 
-**Status:** implementation candidate for protected admission. This is a bounded MATH-PROGRAMME operating specialization of `GCL-AGENT-CONTINUITY-001`, not a new authority layer, repository controller, or certification requirement.
+**Status:** protected operating policy; downstream independent heartbeat-watch admission is separate. This is a bounded MATH-PROGRAMME operating specialization of `GCL-AGENT-CONTINUITY-001`, not a new authority layer, repository controller, or certification requirement.
 
 ## Failure cannot retire the recurrence
 
@@ -21,3 +21,13 @@ A scheduler observation that differs from protected desired state is **DRIFT**, 
 **Present limitation:** the ChatGPT-hosted scheduler is not connected to the GCL persistent controller by a supported readback/administration adapter. Until such an adapter is legitimately available, CI can test policy and event decisions but **cannot detect or repair changes to hosted task state in real time**. Do not label the watchdog operational, durable scheduler enforcement complete, or historical attribution verified on the strength of this policy alone.
 
 A future admitted controller integration must (a) read the actual hosted schedule, (b) emit signed or authenticated immutable transition receipts, (c) detect a missed hourly heartbeat and unexpected disablement, (d) reconcile only with explicit authority, and (e) expose the last successful material queue reduction separately from mere runs and comments. Register any new direct workflow in GH-OS routing before admission. Reuse existing bounded-operation checkpoints for enrolled long-horizon campaigns; do not create a parallel checkpoint registry.
+
+## Independent GitHub missed-heartbeat observer
+
+The ChatGPT hourly worker posts an authenticated `GCL-SCHEDULER-RUN/1` comment to the existing [operational receipt issue](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2763) at the end of every attempt, whether that attempt succeeded, was partially completed, or was blocked. The receipt records `TASK_KEY`, `RUN_AT_UTC`, `OUTCOME`, and `NEXT_ACTION`. It must never claim a queue reduction without independent issue and Project readback.
+
+The separate GitHub Actions workflow `recurring-queue-heartbeat-watch.yml` runs hourly, independently of the ChatGPT task. It checks the latest authenticated receipt against the protected desired-state contract and allows a three-hour delay to avoid ordinary scheduling jitter. Absence of a valid heartbeat is a **missed-execution alert**, not proof that the hosted schedule is disabled or that a particular actor changed it. The read-only watchdog records a failed GitHub Actions run and a JSON observation artifact. The ChatGPT integrity-watch task independently checks hosted task state and can notify the operator. The repository workflow cannot write issue comments under current CI permission rules. It has no ChatGPT scheduler credentials or admin actions.
+
+A legitimate explicit user disable request must still be honoured and cannot be overridden by the monitor. The protected desired-state contract must be reconciled through governance if retirement is requested. A GitHub issue comment is actor-authenticated by GitHub but not independent proof that the ChatGPT scheduler actually launched the worker. The external observer monitors **missing reports** and is not the still-unavailable hosted-scheduler readback/administration adapter.
+
+Adversarial acceptance: `python3 -m unittest discover -s ci -p test_recurring_heartbeat_watch.py`. Live acceptance additionally requires protected workflow admission, a real worker-origin authenticated heartbeat, and GitHub-hosted scheduled or manually dispatched readback.
