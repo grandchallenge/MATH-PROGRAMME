@@ -1,6 +1,6 @@
 # Erdős #41 — Uniform future containers and forced occupied windows
 
-**19 October 2026. Disposition:** rigorous, alignment-free **order-$k\log R$ entropy loss** for all future B3 batches and a proved **forced populated-window extraction** under hypothetical persistent critical density. The results **do not** force a true maximum-cardinality deficit, exclude a critically populated batch, or settle Erdős #41. Mathematical originality and protected admission remain separate.
+**19 October 2026. Disposition:** rigorous, alignment-free **order $k\log R$ entropy loss** for all future B3 batches and a proved **forced populated-window extraction** under hypothetical persistent critical density. The results **do not** force a true maximum-cardinality deficit, exclude a critically populated batch, or settle Erdős #41. Mathematical originality and protected admission remain separate.
 
 ## 1. Old-pair-sum constraints apply to *any* future interval
 
@@ -75,7 +75,7 @@ $$
 
 Given the set of iteration indices corresponding to selected vertices, the entire deterministic procedure—including its stopping state, chosen vertices, and final U—is reproducible without knowing I. The residual I∩U is then a subset of at most s vertices. Thus the encoding is injective, and counting fingerprints and residual choices gives the formulas. This argument controls the number of **complete integral independent sets** of *every size*, not merely their random expected collisions. QED.
 
-**Theorem B (order-$k\log R$ future entropy penalty).** For any P⊂[1,R] satisfying the B3 and density hypotheses, and *any future interval J of exactly R integers disjoint from P*, let $\mathcal E_k(P,J)$ denote all k-subsets X⊂J for which P∪X remains B3. With q,s,t,δ above,
+**Theorem B (order $k\log R$ future entropy penalty).** For any P⊂[1,R] satisfying the B3 and density hypotheses, and *any future interval J of exactly R integers disjoint from P*, let $\mathcal E_k(P,J)$ denote all k-subsets X⊂J for which P∪X remains B3. With q,s,t,δ above,
 
 $$
 \boxed{
@@ -181,7 +181,7 @@ $$
 
 More precisely, this is a uniform product bound on **the stagewise tree of compatible choices at the chosen windows**, with previous full prefixes fixed. No claim is made that these partial batches alone specify the entire underlying B3 set: elements in skipped locations may vary, and summing over them may increase the number of full histories. Indices and possible batch sizes add at most O_c(h log R_h) bits, but no global counting theorem about all B3 prefix histories follows without tracking these other elements.
 
-**Limit of the new achievement:** the forced windows can be counted with an order-$k\log R$ entropy discount, but positive entropy exp(O_c(k)) remains. The potential conjectural remedy is **cross-window incompatibility among the remaining fingerprints or reciprocal signed-code survivors**, not stronger first-moment packing.
+**Limit of the new achievement:** the forced windows can be counted with an order $k\log R$ entropy discount, but positive entropy exp(O_c(k)) remains. The potential conjectural remedy is **cross-window incompatibility among the remaining fingerprints or reciprocal signed-code survivors**, not stronger first-moment packing.
 
 ## 5. Next precise gap
 
