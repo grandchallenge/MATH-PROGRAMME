@@ -227,26 +227,145 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     return before
 
 
+
+def persist_projection_receipt(path: Path | None, record: dict) -> None:
+    """Atomic, progressively updated local evidence; Actions archives it even on failure."""
+    if path is None:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    partial = path.with_name(path.name + ".partial")
+    with partial.open("w", encoding="utf-8") as handle:
+        json.dump(record, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(partial, path)
+
+
+def project_source_returns(
+    report: dict, issues: list[int], *, dry_run: bool, receipt_path: Path | None,
+    report_digest: str,
+) -> tuple[dict, int]:
+    """Fail closed, preserving exact verified results and current in-flight issue.
+
+    A protected merge, successful exit, or partially applied mutation is not a
+    completed projection. Only a full per-issue authenticated readback is VERIFIED.
+    """
+    run_id = os.environ.get("GITHUB_RUN_ID", "")
+    record = {
+        "schema": "GCL-ERDOS-SOURCE-RETURN-PROJECTION/1",
+        "status": "RUNNING",
+        "verified": False,
+        "complete": False,
+        "applied": False,
+        "dry_run": dry_run,
+        "claim_scope": "Project Status, exact GCL State Issue Field and available label only; not mathematical certification or editorial acceptance",
+        "report_sha256": report_digest,
+        "protected_head": os.environ.get("GITHUB_SHA", ""),
+        "workflow_run": (f"https://github.com/{OWNER}/{REPO}/actions/runs/{run_id}" if run_id else None),
+        "expected_issue_count": len(issues),
+        "processed_count": 0,
+        "verified_returned": 0,
+        "preserved_done": 0,
+        "in_flight_issue": None,
+        "results": [],
+        "blocker": None,
+    }
+    persist_projection_receipt(receipt_path, record)
+    try:
+        if len(set(issues)) != len(issues):
+            raise ValueError("duplicate source issue IDs in captured report")
+        for issue in issues:
+            record["in_flight_issue"] = issue
+            persist_projection_receipt(receipt_path, record)
+            result = reconcile(report, issue, dry_run)
+            # Reconcile performs the protected live issue, comment, field and
+            # Project readback before returning. Never count a mere write.
+            if not dry_run:
+                if result.get("target") == "PRESERVE_DONE":
+                    if result.get("verified_status") != "Done" or not result.get("historical_terminal"):
+                        raise ValueError(f"#{issue}: terminal custody not reverified")
+                    record["preserved_done"] += 1
+                elif result.get("target") == "RETURNED":
+                    if (result.get("verified_status") != "RETURNED"
+                            or result.get("verified_gcl_state") != "RETURNED"
+                            or result.get("available_removed") is not True):
+                        raise ValueError(f"#{issue}: incomplete returned-state readback")
+                    record["verified_returned"] += 1
+                else:
+                    raise ValueError(f"#{issue}: unknown projection target")
+            record["results"].append(result)
+            record["processed_count"] += 1
+            record["in_flight_issue"] = None
+            persist_projection_receipt(receipt_path, record)
+            if record["processed_count"] % 25 == 0 or record["processed_count"] == len(issues):
+                print(
+                    "SOURCE_RETURN_PROGRESS "
+                    f"{record['processed_count']}/{len(issues)} "
+                    f"returned={record['verified_returned']} "
+                    f"preserved_done={record['preserved_done']}",
+                    flush=True,
+                )
+        if dry_run:
+            record["status"] = "DRY_RUN_ONLY"
+        else:
+            record["status"] = "VERIFIED"
+            record["verified"] = True
+            record["complete"] = True
+            record["applied"] = True
+        persist_projection_receipt(receipt_path, record)
+        return record, 0
+    except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError,
+            subprocess.TimeoutExpired, KeyError, TypeError) as exc:
+        record["status"] = "BLOCKED"
+        record["blocker"] = f"{type(exc).__name__}: {exc}"
+        persist_projection_receipt(receipt_path, record)
+        return record, 1
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--report", required=True)
     p.add_argument("--issue", type=int)
     p.add_argument("--all", action="store_true")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--receipt", type=Path,
+                   help="durable progress and exact terminal readback evidence")
     args = p.parse_args()
     try:
-        with open(args.report, encoding="utf-8") as f:
-            report = json.load(f)
         if (args.issue is None) == (not args.all):
             raise ValueError("specify exactly one of --issue or --all")
-        issues = [args.issue] if args.issue is not None else [t["issue_number"] for t in report.get("tasks", []) if t.get("structurally_valid_returns") == 1]
-        results = []
-        for issue in issues:
-            results.append(reconcile(report, issue, args.dry_run))
-        print(json.dumps(results, sort_keys=True))
-        return 0
-    except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError, KeyError) as exc:
-        print(f"QUEUE_RECONCILIATION_BLOCKED: {exc}", file=sys.stderr)
+        if args.all and not args.dry_run and args.receipt is None:
+            raise ValueError("--all requires --receipt: unjournaled bulk writes forbidden")
+        raw = Path(args.report).read_bytes()
+        report = json.loads(raw)
+        if not isinstance(report, dict):
+            raise ValueError("captured report must be an object")
+        issues = ([args.issue] if args.issue is not None else
+                  [t["issue_number"] for t in report.get("tasks", [])
+                   if t.get("structurally_valid_returns") == 1])
+        record, code = project_source_returns(
+            report, issues, dry_run=args.dry_run, receipt_path=args.receipt,
+            report_digest=hashlib.sha256(raw).hexdigest(),
+        )
+        print(json.dumps({
+            "status": record["status"], "verified": record["verified"],
+            "processed": record["processed_count"],
+            "expected": record["expected_issue_count"],
+            "receipt": str(args.receipt) if args.receipt else None,
+            "blocker": record["blocker"],
+        }, sort_keys=True), flush=True)
+        return code
+    except (OSError, ValueError, RuntimeError, subprocess.CalledProcessError,
+            subprocess.TimeoutExpired, KeyError, TypeError) as exc:
+        if args.receipt is not None:
+            persist_projection_receipt(args.receipt, {
+                "schema": "GCL-ERDOS-SOURCE-RETURN-PROJECTION/1",
+                "status": "BLOCKED", "verified": False, "complete": False,
+                "applied": False, "processed_count": 0,
+                "blocker": f"{type(exc).__name__}: {exc}",
+            })
+        print(f"QUEUE_RECONCILIATION_BLOCKED: {exc}", file=sys.stderr, flush=True)
         return 1
 
 

@@ -162,6 +162,103 @@ class QueueProjectionTests(unittest.TestCase):
 
 
 
+
+class DurableProjectionReceiptTests(unittest.TestCase):
+    def setUp(self):
+        self.report = {"tasks": [], "receipts": []}
+
+    def test_full_readback_is_only_verified_terminal_state(self):
+        with tempfile.TemporaryDirectory() as temp, patch.object(mod, "reconcile", side_effect=[
+            {"issue": 1, "target": "PRESERVE_DONE", "historical_terminal": True,
+             "verified_status": "Done"},
+            {"issue": 2, "target": "RETURNED", "verified_status": "RETURNED",
+             "verified_gcl_state": "RETURNED", "available_removed": True},
+        ]) as source:
+            path = Path(temp, "projector.json")
+            record, code = mod.project_source_returns(self.report, [1, 2],
+                dry_run=False, receipt_path=path, report_digest="f" * 64)
+            self.assertEqual(code, 0)
+            self.assertEqual(record["status"], "VERIFIED")
+            self.assertTrue(record["verified"] and record["complete"] and record["applied"])
+            self.assertEqual(record["processed_count"], 2)
+            self.assertEqual(record["preserved_done"], 1)
+            self.assertEqual(record["verified_returned"], 1)
+            self.assertIsNone(record["in_flight_issue"])
+            self.assertEqual(json.loads(path.read_text()), record)
+            source.assert_any_call(self.report, 1, False)
+            source.assert_any_call(self.report, 2, False)
+
+    def test_partial_then_failure_is_blocked_with_exact_progress(self):
+        with tempfile.TemporaryDirectory() as temp, patch.object(mod, "reconcile", side_effect=[
+            {"issue": 1, "target": "RETURNED", "verified_status": "RETURNED",
+             "verified_gcl_state": "RETURNED", "available_removed": True},
+            RuntimeError("authoritative Project status differs"),
+        ]):
+            path = Path(temp, "projector.json")
+            record, code = mod.project_source_returns(self.report, [1, 2, 3],
+                dry_run=False, receipt_path=path, report_digest="e" * 64)
+            self.assertEqual(code, 1)
+            self.assertEqual(record["status"], "BLOCKED")
+            self.assertFalse(record["verified"] or record["complete"] or record["applied"])
+            self.assertEqual(record["expected_issue_count"], 3)
+            self.assertEqual(record["processed_count"], 1)
+            self.assertEqual(record["in_flight_issue"], 2)
+            self.assertIn("Project status differs", record["blocker"])
+            self.assertEqual(json.loads(path.read_text()), record)
+
+    def test_missing_postwrite_readback_blocks_instead_of_claiming_success(self):
+        with tempfile.TemporaryDirectory() as temp, patch.object(mod, "reconcile",
+            return_value={"issue": 1, "target": "RETURNED", "status_before": "Todo"}):
+            path = Path(temp, "projector.json")
+            record, code = mod.project_source_returns(self.report, [1],
+                dry_run=False, receipt_path=path, report_digest="c" * 64)
+            self.assertEqual(code, 1)
+            self.assertEqual(record["status"], "BLOCKED")
+            self.assertEqual(record["processed_count"], 0)
+            self.assertEqual(record["in_flight_issue"], 1)
+            self.assertFalse(record["verified"])
+            self.assertIn("incomplete returned-state readback", record["blocker"])
+
+    def test_dry_run_never_claims_operational_verification(self):
+        with tempfile.TemporaryDirectory() as temp, patch.object(mod, "reconcile",
+            return_value={"issue": 1, "target": "RETURNED", "dry_run": True}):
+            path = Path(temp, "projector.json")
+            record, code = mod.project_source_returns(self.report, [1],
+                dry_run=True, receipt_path=path, report_digest="b" * 64)
+            self.assertEqual(code, 0)
+            self.assertEqual(record["status"], "DRY_RUN_ONLY")
+            self.assertFalse(record["verified"] or record["complete"] or record["applied"])
+            self.assertEqual(json.loads(path.read_text()), record)
+
+    def test_duplicate_issues_fail_closed_before_mutation(self):
+        with tempfile.TemporaryDirectory() as temp, patch.object(mod, "reconcile") as source:
+            record, code = mod.project_source_returns(self.report, [1, 1],
+                dry_run=False, receipt_path=Path(temp, "projector.json"),
+                report_digest="a" * 64)
+            self.assertEqual(code, 1)
+            self.assertEqual(record["status"], "BLOCKED")
+            self.assertIn("duplicate source issue IDs", record["blocker"])
+            source.assert_not_called()
+
+    def test_running_checkpoint_is_false_until_all_readbacks_finish(self):
+        seen = []
+        def snapshot(path, record):
+            seen.append((record["status"], record["verified"],
+                         record["processed_count"], record["in_flight_issue"]))
+        with patch.object(mod, "persist_projection_receipt", side_effect=snapshot), \
+             patch.object(mod, "reconcile", return_value={
+                "issue": 5, "target": "PRESERVE_DONE",
+                "verified_status": "Done", "historical_terminal": True,
+             }):
+            record, code = mod.project_source_returns(self.report, [5],
+                dry_run=False, receipt_path=Path("/tmp/projection-no-write.json"),
+                report_digest="a" * 64)
+        self.assertEqual(code, 0)
+        self.assertEqual(seen[0], ("RUNNING", False, 0, None))
+        self.assertIn(("RUNNING", False, 0, 5), seen)
+        self.assertEqual(seen[-1], ("VERIFIED", True, 1, None))
+
+
 # The protected catalogue projector also reconciles completed critic returns.
 c = mod
 ROSTER = json.loads(c.ROSTER.read_text())
