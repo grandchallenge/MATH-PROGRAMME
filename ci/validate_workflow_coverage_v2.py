@@ -499,6 +499,82 @@ def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def final_two_council_errors(workflow: dict[str, Any], source: str) -> list[str]:
+    """Pin both Council modes, exact steps, and restricted App credential scope."""
+    key=THREE_SOURCE_COUNCIL_WORKFLOW
+    errors: list[str]=[]
+    trigger=_trigger(workflow)
+    dispatch=trigger.get('workflow_dispatch')
+    expected={'inputs':{'source_scope':{
+        'description':'Select exact admitted Council source-correction cohort',
+        'type':'choice','required':'true','default':'original_three',
+        'options':['original_three','final_two']}}}
+    if trigger!={'workflow_dispatch':expected}:
+        errors.append(f'{key}: unapproved Council dispatch mode/trigger')
+    if workflow.get('permissions')!={'contents':'read'}:
+        errors.append(f'{key}: unscoped top-level permissions')
+    if set(workflow.get('jobs',{}))!={'council-clerk-source-remediation'}:
+        errors.append(f'{key}: unexpected job topology')
+    job=_job(workflow,'council-clerk-source-remediation')
+    if (job.get('environment')!='release-trust' or
+        job.get('permissions')!={'contents':'read'} or
+        'refs/heads/main' not in str(job.get('if','')) or
+        'grandchallenge/MATH-PROGRAMME' not in str(job.get('if',''))):
+        errors.append(f'{key}: lost protected Council environment')
+    steps=job.get('steps') or []
+    if len(steps)!=11 or not all(isinstance(x,dict) for x in steps):
+        return errors+[f'{key}: expected exactly eleven bounded mode-scoped steps']
+    checkout,python,oldtests,newtests,credential,scope,oldpre,oldapply,newpre,newapply,receipt=steps
+    if (checkout.get('uses')!='actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' or
+        checkout.get('with')!={'ref':'main','persist-credentials':'false'}):
+        errors.append(f'{key}: checkout not pinned to protected main')
+    if (python.get('uses')!='actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' or
+        python.get('with')!={'python-version':'3.12'}):
+        errors.append(f'{key}: unpinned interpreter')
+    for step,mode,contains in (
+        (oldtests,'original_three',('governance/source_erdos_critical_005/validate.py','tests/test_erdos_three_source_resolution.py')),
+        (newtests,'final_two',('governance/source_erdos_critical_005/validate.py','tests/test_erdos_final_two_source_resolution.py'))):
+        if step.get('if')!=f"inputs.source_scope == '{mode}'" or any(x not in str(step.get('run','')) for x in contains):
+            errors.append(f'{key}: missing mode-scoped source tests {mode}')
+    token=credential.get('with') or {}
+    if (credential.get('uses')!='actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510' or
+        token.get('owner')!='grandchallenge' or token.get('repositories')!='MATH-PROGRAMME' or
+        token.get('permission-issues')!='write' or token.get('permission-organization-projects')!='read' or
+        set(token)!={'app-id','private-key','owner','repositories','permission-issues','permission-organization-projects'} or
+        'GCL_COUNCIL_CLERK_APP_ID' not in str(token.get('app-id','')) or
+        'GCL_COUNCIL_CLERK_PRIVATE_KEY' not in str(token.get('private-key',''))):
+        errors.append(f'{key}: Council Clerk scope/credential changed')
+    if (scope.get('if') is not None or
+        'steps.council.outputs.token' not in str((scope.get('env') or {}).get('GH_TOKEN','')) or
+        'gh api /installation/repositories' not in str(scope.get('run','')) or
+        'grep -x 1' not in str(scope.get('run',''))):
+        errors.append(f'{key}: scoped installation identity check missing')
+    for step,mode,controller,script,basename,doapply in (
+        (oldpre,'original_three','erdos-three-source-resolution','erdos_three_source_resolution.py','preflight.json',False),
+        (oldapply,'original_three','erdos-three-source-resolution','erdos_three_source_resolution.py','receipt.json',True),
+        (newpre,'final_two','erdos-final-two-source-resolution','erdos_final_two_source_resolution.py','preflight.json',False),
+        (newapply,'final_two','erdos-final-two-source-resolution','erdos_final_two_source_resolution.py','receipt.json',True)):
+        env=step.get('env') or {};run=str(step.get('run',''))
+        folder='erdos-three-source-resolution' if mode=='original_three' else 'erdos-final-two-source-resolution'
+        if (step.get('if')!=f"inputs.source_scope == '{mode}'" or
+            env.get('GCL_CONTROLLER_ID')!=controller or
+            'steps.council.outputs.token' not in str(env.get('GH_TOKEN','')) or
+            f'ci/{script}' not in run or
+            f'--receipt artifacts/{folder}/{basename}' not in run or
+            ('--apply' in run)!=doapply):
+            errors.append(f'{key}: operation or mode binding changed for {script}/{basename}')
+    retention=str((receipt.get('with') or {}).get('path',''))
+    if (receipt.get('uses')!='actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' or
+        receipt.get('if')!='always()' or
+        set(retention.split())!={'artifacts/erdos-three-source-resolution','artifacts/erdos-final-two-source-resolution'}):
+        errors.append(f'{key}: both source receipt paths must be retained')
+    for forbidden in ('permission-administration','gh pr merge','gh project item-edit',
+                      'git push','pull_request_target','secrets.GCL_RELEASE_TRUST'):
+        if forbidden in source:
+            errors.append(f'{key}: forbidden broad controller action {forbidden}')
+    return errors
+
+
 def three_source_council_errors(texts: dict[str, str]) -> list[str]:
     """Protect source remediation from widened authorities or manual bypass."""
     key = THREE_SOURCE_COUNCIL_WORKFLOW
@@ -507,6 +583,8 @@ def three_source_council_errors(texts: dict[str, str]) -> list[str]:
         return []
     workflow = v3.legacy.load_yaml_text(source)
     errors: list[str] = []
+    if _trigger(workflow).get('workflow_dispatch') == {'inputs': {'source_scope': {'description': 'Select exact admitted Council source-correction cohort', 'type': 'choice', 'required': 'true', 'default': 'original_three', 'options': ['original_three', 'final_two']}}} and set(_trigger(workflow)) == {'workflow_dispatch'}:
+        return final_two_council_errors(workflow, source)
     if _trigger(workflow) != {'workflow_dispatch': ''}:
         errors.append(f'{key}: only on-demand protected-main execution allowed')
     if workflow.get('permissions') != {'contents': 'read'}:

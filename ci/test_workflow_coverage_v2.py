@@ -410,6 +410,25 @@ def main() -> int:
         registry=registry,
     )
 
+    # The expanded Council workflow must accept only the two frozen input
+    # selections, one protected App, both receipts and exact mode-scoped runs.
+    council_path="erdos-three-source-resolution.yml"
+    council=texts[council_path]
+    for old,new,expected in (
+        ("          - final_two","          - unrestricted","only on-demand protected-main execution allowed"),
+        ("permission-issues: write","permission-issues: admin","Council Clerk scope/credential changed"),
+        ("GCL_CONTROLLER_ID: erdos-final-two-source-resolution",
+         "GCL_CONTROLLER_ID: erdos-three-source-resolution","operation or mode binding changed"),
+        ("--apply --receipt artifacts/erdos-final-two-source-resolution/receipt.json",
+         "--receipt artifacts/erdos-final-two-source-resolution/receipt.json","operation or mode binding changed"),
+        ("            artifacts/erdos-final-two-source-resolution",
+         "            artifacts/other-artifacts","both source receipt paths must be retained"),
+    ):
+        assert old in council,old
+        altered=dict(texts)
+        altered[council_path]=council.replace(old,new,1)
+        require_error(altered,evidence,expected,registry=registry)
+
     print("workflow coverage v3 adversarial tests passed")
     return 0
 
