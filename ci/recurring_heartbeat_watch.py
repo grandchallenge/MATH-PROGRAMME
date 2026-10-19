@@ -72,21 +72,6 @@ def recent_comments():
     data=gh(['graphql','-f','query='+q])
     return data['data']['repository']['issue']['comments']['nodes']
 
-def post_alert(policy,observations,result):
-    if result['state'] != 'ALERT_MISSED_HEARTBEAT':return 'NO_ALERT_NEEDED'
-    token = result['episode_id']
-    # Do not spam repeatedly while the same last known receipt remains missing.
-    for c in observations:
-        f=fields(c.get('body'), ALERT_HEADER)
-        if f and f.get('EPISODE_ID')==token:return 'EXISTING_ALERT'
-    body=(f'{ALERT_HEADER}\nEPISODE_ID: {token}\nTASK_KEY: {policy["task_key"]}\n'
-          f'LAST_VALID_UTC: {result["last_valid_utc"]}\nCHECKED_AT_UTC: {result["now_utc"]}\n'
-          f'AGE_MINUTES: {result["age_minutes"]}\n'
-          'REASON: Missing authenticated run heartbeat beyond protected grace window.\n'
-          'AUTHORITY: Observation only; scheduler enablement and disable-actor remain UNKNOWN.\n'
-          'NEXT_ACTION: Inspect hosted task state and authorized platform execution record; do not auto-overwrite a deliberate user disable.\n')
-    subprocess.run(['gh','api',f'repos/grandchallenge/MATH-PROGRAMME/issues/{policy["heartbeat_issue"]}/comments','-f','body='+body],check=True,capture_output=True,text=True,timeout=30)
-    return 'ALERT_POSTED'
 
 def main():
     p=argparse.ArgumentParser()
@@ -94,13 +79,11 @@ def main():
     p.add_argument('--output')
     p.add_argument('--now')
     p.add_argument('--fixture-comments')
-    p.add_argument('--alert',action='store_true')
     a=p.parse_args()
     policy=json.loads(Path(a.policy).read_text())
     observations=json.loads(Path(a.fixture_comments).read_text()) if a.fixture_comments else recent_comments()
     now=a.now or datetime.now(timezone.utc).isoformat()
     result=evaluate(policy,observations,now)
-    if a.alert:result['alert_disposition']=post_alert(policy,observations,result)
     payload=json.dumps(result,indent=2,sort_keys=True)+'\n'
     if a.output:Path(a.output).write_text(payload)
     sys.stdout.write(payload)

@@ -16,7 +16,6 @@ jobs:
   watch:
     permissions:
       contents: read
-      issues: write
     runs-on: ubuntu-latest
     timeout-minutes: 6
     env:
@@ -31,7 +30,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python3 ci/recurring_heartbeat_watch.py --alert --output "$RUNNER_TEMP/heartbeat-watch.json"
+          python3 ci/recurring_heartbeat_watch.py --output "$RUNNER_TEMP/heartbeat-watch.json"
           result=$?
           if [ -f "$RUNNER_TEMP/heartbeat-watch.json" ]; then
             cat "$RUNNER_TEMP/heartbeat-watch.json" >> "$GITHUB_STEP_SUMMARY"
