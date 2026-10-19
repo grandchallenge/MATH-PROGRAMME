@@ -360,9 +360,10 @@ def erdos_forge_copilot_pilot_errors(texts: dict[str, str]) -> list[str]:
     jobs = wf.get("jobs", {})
     expected = {"reconcile", "ledger", "canary",
                 "forge-pilot-review", "forge-pilot-evidence",
-                "source_return_batches", "source_return_verify"}
+                "source_return_batches", "source_return_verify",
+                "exception_batches", "exception_verify"}
     if set(jobs) != expected:
-        return [f"{key}: only the exact seven-job bounded projection topology is permitted"]
+        return [f"{key}: only the exact nine-job bounded projection topology is permitted"]
     agent = _job(wf, "forge-pilot-review")
     publisher = _job(wf, "forge-pilot-evidence")
     errors: list[str] = []
@@ -659,6 +660,7 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
             "erdos-catalogue-queue-projection.yml:forge-pilot-review: non-Pages job permissions may not exceed contents: read",
             "erdos-catalogue-queue-projection.yml:forge-pilot-evidence: non-Pages job permissions may not exceed contents: read",
             "erdos-catalogue-queue-projection.yml:source_return_batches: non-Pages job permissions may not exceed contents: read",
+            "erdos-catalogue-queue-projection.yml:exception_batches: non-Pages job permissions may not exceed contents: read",
         }
     errors = [error for error in errors if error not in delegated_permission_errors]
     errors.extend(pilot_errors)
@@ -674,7 +676,8 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
         if (workflow.get("permissions") != {"contents": "read"} or
                 set(jobs) != {"reconcile", "ledger", "canary",
                               "forge-pilot-review", "forge-pilot-evidence",
-                              "source_return_batches", "source_return_verify"}):
+                              "source_return_batches", "source_return_verify",
+                "exception_batches", "exception_verify"}):
             errors.append("erdos queue projection: unrecognized workflow or write scope")
         ledger = _job(workflow, "ledger")
         canary = _job(workflow, "canary")
@@ -731,6 +734,48 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
                           "gh issue", "gh api --method"):
             if forbidden in aggregate_text:
                 errors.append(f"erdos source-return aggregate: unauthorized write or token {forbidden}")
+        exception_job = _job(workflow, "exception_batches")
+        exception_verify = _job(workflow, "exception_verify")
+        etext, vtext = str(exception_job), str(exception_verify)
+        if (exception_job.get("needs") != ["reconcile", "source_return_verify"]
+                or exception_job.get("permissions") != {"contents": "read", "issues": "write"}
+                or exception_job.get("environment") != v3.PROTECTED_ENVIRONMENT
+                or exception_job.get("runs-on") != "ubuntu-24.04"
+                or str(exception_job.get("timeout-minutes")) != "25"
+                or str(exception_job.get("strategy", {}).get("fail-fast")).lower() != "false"
+                or str(exception_job.get("strategy", {}).get("max-parallel")) != "2"
+                or "fromJSON(needs.reconcile.outputs.exception_batches)" not in
+                   str(exception_job.get("strategy", {}).get("matrix", ""))
+                or "needs.source_return_verify.result == 'success'" not in
+                   str(exception_job.get("if", ""))):
+            errors.append("erdos exception batches: exact bounded issue-only controller drift")
+        for required in (
+            "ci/erdos_return_exceptions.py", "--batch-size 16",
+            "--expected-sha", "--batch-index",
+            "GCL_RETURN_EXCEPTION_CONTROL", "protected-main",
+            "permission-issues", "secrets.GCL_COUNCIL_CLERK_APP_ID",
+            "steps.exception-token.outputs.token", "gcl-return-exception-batch-",
+            "ref': '$"+"{{ github.sha }}"):
+            if required not in etext:
+                errors.append(f"erdos exception batches: missing bounded marker {required}")
+        for forbidden in ("permission-organization-projects", "copilot-requests",
+                          "permission-contents: write", "gh pr merge", "git push"):
+            if forbidden in etext:
+                errors.append(f"erdos exception batches: forbidden mutation {forbidden}")
+        if (exception_verify.get("needs") != ["reconcile", "exception_batches"]
+                or exception_verify.get("permissions") != {"contents": "read"}
+                or exception_verify.get("runs-on") != "ubuntu-24.04"
+                or str(exception_verify.get("timeout-minutes")) != "10"
+                or "always()" not in str(exception_verify.get("if", ""))):
+            errors.append("erdos exception verifier: exact read-only disposition boundary drift")
+        for required in ("ci/verify_erdos_return_exceptions.py", "EXCEPTION_MANIFEST.json",
+                         "gcl-return-exception-aggregate-", "gcl-return-exception-batch-"):
+            if required not in vtext:
+                errors.append(f"erdos exception verifier: missing evidence marker {required}")
+        for forbidden in ("permission-issues: write", "permission-organization-projects",
+                          "GCL_COUNCIL_CLERK_PRIVATE_KEY", "gh project", "gh issue"):
+            if forbidden in vtext:
+                errors.append(f"erdos exception verifier: forbidden capability {forbidden}")
         ledger_text = str(ledger)
         canary_text = str(canary)
         for required in (

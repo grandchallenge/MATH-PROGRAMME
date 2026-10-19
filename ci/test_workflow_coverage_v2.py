@@ -55,6 +55,30 @@ def main() -> int:
     require_error(widened_aggregate, evidence,
                   "source-return aggregate: exact read-only", registry=registry)
 
+    # Exception jobs must not expand the issue-only repair envelope.
+    name = "erdos-catalogue-queue-projection.yml"
+    assert "\n  exception_batches:\n" in texts[name]
+    left, right = texts[name].split("\n  exception_batches:\n", 1)
+    for before, after, expected in (
+        ("max-parallel: 2", "max-parallel: 20",
+         "erdos exception batches: exact bounded issue-only"),
+        ("--expected-sha", "--unbound-snapshot",
+         "erdos exception batches: missing bounded marker"),
+        ("permission-issues: write", "permission-organization-projects: write",
+         "erdos exception batches: missing bounded marker"),
+    ):
+        assert before in right
+        changed = dict(texts)
+        changed[name] = left + "\n  exception_batches:\n" + right.replace(before, after, 1)
+        require_error(changed, evidence, expected, registry=registry)
+    before, right = texts[name].split("\n  exception_verify:\n", 1)
+    assert "      contents: read" in right
+    changed = dict(texts)
+    changed[name] = before + "\n  exception_verify:\n" + right.replace(
+        "      contents: read", "      contents: read\n      issues: write", 1)
+    require_error(changed, evidence, "erdos exception verifier: exact read-only",
+                  registry=registry)
+
     # A future model job is admitted ONLY as a read-only, cost-limited evidence
     # canary. Deliberate privilege/cost drift must fail the standing policy test.
     pilot_name = "erdos-catalogue-queue-projection.yml"

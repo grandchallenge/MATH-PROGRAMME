@@ -8,6 +8,11 @@ on:
       - 'ci/erdos_catalogue_queue_projection.py'
       - 'tests/test_erdos_catalogue_queue_projection.py'
       - 'ci/verify_erdos_source_return_batches.py'
+      - 'ci/erdos_return_exceptions.py'
+      - 'ci/verify_erdos_return_exceptions.py'
+      - 'ci/erdos_return_arbitration.py'
+      - 'governance/erdos_catalogue/RETURN_ARBITRATIONS.json'
+      - 'tests/test_erdos_return_exceptions.py'
       - 'tests/test_erdos_source_return_batches.py'
       - 'ci/erdos_compendium_editorial_activate.py'
       - 'ci/test_erdos_compendium_editorial_activate.py'
@@ -34,6 +39,7 @@ jobs:
   reconcile:
     outputs:
       source_return_batches: ${{ steps.source-batches.outputs.matrix }}
+      exception_batches: ${{ steps.exception-batches.outputs.matrix }}
     permissions:
       contents: read
       issues: write
@@ -64,6 +70,12 @@ jobs:
           set -euo pipefail
           python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json             --batch-manifest --batch-size 64 > catalogue-intake/BATCH_MANIFEST.json
           echo "matrix=$(cat catalogue-intake/BATCH_MANIFEST.json)" >> "$GITHUB_OUTPUT"
+      - name: Derive immutable exception remediation batches
+        id: exception-batches
+        run: |
+          set -euo pipefail
+          python ci/erdos_return_exceptions.py --report catalogue-intake/REPORT.json --manifest             --batch-size 16 > catalogue-intake/EXCEPTION_MANIFEST.json
+          echo "matrix=$(cat catalogue-intake/EXCEPTION_MANIFEST.json)" >> "$GITHUB_OUTPUT"
       - name: Archive immutable source snapshot and batch manifest
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
@@ -71,6 +83,7 @@ jobs:
           path: |
             catalogue-intake/REPORT.json
             catalogue-intake/BATCH_MANIFEST.json
+            catalogue-intake/EXCEPTION_MANIFEST.json
           retention-days: 90
           if-no-files-found: error
       - name: Mint bounded Council Clerk Project projection token
@@ -176,6 +189,7 @@ jobs:
         run: |
           PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
           PYTHONPATH=. python3 tests/test_erdos_source_return_batches.py
+          PYTHONPATH=. python3 tests/test_erdos_return_exceptions.py
       - name: Reconcile 14 completed critical reviews with Council Clerk custody
         if: github.event_name != 'issue_comment'
         env:
@@ -525,5 +539,105 @@ jobs:
         with:
           name: gcl-source-return-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
           path: source-return-aggregate/receipt.json
+          retention-days: 90
+          if-no-files-found: error
+
+  exception_batches:
+    name: Return exception batch ${{ matrix.index }}
+    needs: [reconcile, source_return_verify]
+    if: needs.reconcile.result == 'success' && needs.source_return_verify.result == 'success'
+    permissions:
+      contents: read
+      issues: write
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix: ${{ fromJSON(needs.reconcile.outputs.exception_batches) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Restore protected source snapshot and exact exception manifest
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: gcl-source-return-input-${{ github.run_id }}-${{ github.run_attempt }}
+          path: catalogue-intake
+      - name: Mint per-batch issue-only Council Clerk publishing credential
+        id: exception-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+      - name: Repair formatting only; route nonmechanical exceptions on original issues
+        env:
+          GH_TOKEN: ${{ steps.exception-token.outputs.token }}
+          GCL_RETURN_EXCEPTION_CONTROL: protected-main
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN" || { echo "Missing issue-scoped App credential"; exit 1; }
+          python -u ci/erdos_return_exceptions.py \
+            --report catalogue-intake/REPORT.json --apply \
+            --batch-index ${{ matrix.index }} --batch-size 16 \
+            --expected-sha ${{ matrix.report_sha256 }} \
+            --receipt exception-batches/receipt.json
+      - name: Archive exact repair or review-routing evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-return-exception-batch-${{ matrix.index }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: exception-batches/receipt.json
+          retention-days: 90
+          if-no-files-found: error
+
+  exception_verify:
+    name: Verify exception repairs and unresolved specialist routing
+    needs: [reconcile, exception_batches]
+    if: always() && needs.reconcile.result == 'success'
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Restore protected intake and manifest
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: gcl-source-return-input-${{ github.run_id }}-${{ github.run_attempt }}
+          path: catalogue-intake
+      - name: Retrieve all bounded exception receipts
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: gcl-return-exception-batch-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: exception-batch-receipts
+          merge-multiple: false
+      - name: Verify complete partition, content binding and durable review routing
+        run: |
+          python ci/verify_erdos_return_exceptions.py \
+            --report catalogue-intake/REPORT.json \
+            --manifest catalogue-intake/EXCEPTION_MANIFEST.json \
+            --root exception-batch-receipts \
+            --receipt exception-aggregate/receipt.json
+      - name: Archive unambiguous exception disposition outcome
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-return-exception-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: exception-aggregate/receipt.json
           retention-days: 90
           if-no-files-found: error
