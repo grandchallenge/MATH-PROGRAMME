@@ -37,6 +37,98 @@ class QueueProjectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.validate_receipt({**self.report, "receipts": [bad]}, self.issue)
 
+    def test_already_closed_done_return_is_terminal_and_never_demoted(self):
+        def gh(*args):
+            if args[1].endswith("/issues/2491"):
+                return {"state":"closed","labels":[{"name":x} for x in
+                        ("gcl-job","gcl-pickup:direct-editorial","gcl-role:source-audit")]}
+            if args[1].endswith("/issues/comments/77"):
+                return {"issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                        "body":self.body}
+            raise AssertionError(f"unexpected API: {args}")
+        with patch.object(mod,"gh",side_effect=gh), \
+             patch.object(mod,"project_metadata",return_value=("PROJECT","FIELD","RETURNED")), \
+             patch.object(mod,"issue_project_item",return_value={"id":"ITEM","status":"Done"}), \
+             patch.object(mod.subprocess,"run") as mutation:
+            for dry in (False,True):
+                receipt=mod.reconcile(self.report,self.issue,dry)
+                self.assertEqual(receipt["target"],"PRESERVE_DONE")
+                self.assertEqual(receipt["verified_status"],"Done")
+                self.assertTrue(receipt["historical_terminal"])
+                self.assertFalse(receipt["available_removed"])
+            mutation.assert_not_called()
+
+    def test_closed_nonterminal_project_is_rejected_without_write(self):
+        def gh(*args):
+            if args[1].endswith("/issues/2491"):
+                return {"state":"closed","labels":[{"name":x} for x in
+                        ("gcl-job","gcl-pickup:direct-editorial","gcl-role:source-audit")]}
+            if args[1].endswith("/issues/comments/77"):
+                return {"issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                        "body":self.body}
+            raise AssertionError("unrecognized API")
+        with patch.object(mod,"gh",side_effect=gh), \
+             patch.object(mod,"project_metadata",return_value=("PROJECT","FIELD","RETURNED")), \
+             patch.object(mod,"issue_project_item",return_value={"id":"ITEM","status":"Todo"}), \
+             patch.object(mod.subprocess,"run") as mutation:
+            with self.assertRaisesRegex(ValueError,"closed source return lacks terminal Done custody"):
+                mod.reconcile(self.report,self.issue,False)
+            mutation.assert_not_called()
+
+    def test_issue_field_requires_exact_bound_identity(self):
+        valid=[{"issue_field_name":"GCL State","issue_field_id":mod.GCL_STATE_FIELD,
+                "single_select_option":{"name":"AVAILABLE"}}]
+        with patch.object(mod,"gh",return_value=valid):
+            self.assertEqual(mod.source_issue_gcl_state(self.issue),"AVAILABLE")
+        for bad in ([],valid+valid,[{**valid[0],"issue_field_id":99}],
+                    [{**valid[0],"single_select_option":{"name":"CANCELLED"}}]):
+            with self.subTest(bad=bad), patch.object(mod,"gh",return_value=bad):
+                with self.assertRaises(ValueError):
+                    mod.source_issue_gcl_state(self.issue)
+
+    def test_open_return_converges_project_issuefield_and_label(self):
+        state={"project":"Todo","field":"AVAILABLE","labels":{
+               "gcl-job","gcl-pickup:direct-editorial","gcl-role:source-audit",
+               "gcl-state:available"}}
+        writes=[]
+        def gh(*args):
+            path=args[1]
+            if path.endswith("/issues/2491"):
+                return {"state":"open","labels":[{"name":x} for x in state["labels"]]}
+            if path.endswith("/issues/comments/77"):
+                return {"issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                        "body":self.body}
+            if path.endswith("/issue-field-values"):
+                return [{"issue_field_name":"GCL State",
+                         "issue_field_id":mod.GCL_STATE_FIELD,
+                         "single_select_option":{"name":state["field"]}}]
+            raise AssertionError(path)
+        def write(argv,**kw):
+            writes.append((argv,kw))
+            if argv[1]=="project":
+                state["project"]="RETURNED"
+            elif argv[3]=="POST":
+                self.assertIn(str(mod.GCL_STATE_FIELD),kw["input"])
+                state["field"]="RETURNED"
+            elif argv[3]=="DELETE":
+                state["labels"].remove("gcl-state:available")
+            else:
+                raise AssertionError(argv)
+        with patch.object(mod,"gh",side_effect=gh), \
+             patch.object(mod,"project_metadata",return_value=("PROJECT","FIELD","OPTION")), \
+             patch.object(mod,"issue_project_item",
+                side_effect=lambda n,p:{"id":"ITEM","status":state["project"]}), \
+             patch.object(mod.subprocess,"run",side_effect=write):
+            receipt=mod.reconcile(self.report,self.issue,False)
+            self.assertEqual(receipt["verified_status"],"RETURNED")
+            self.assertEqual(receipt["verified_gcl_state"],"RETURNED")
+            self.assertTrue(receipt["available_removed"])
+            self.assertEqual(len(writes),3)
+            writes.clear()
+            replay=mod.reconcile(self.report,self.issue,False)
+            self.assertEqual(replay["verified_gcl_state"],"RETURNED")
+            self.assertEqual(writes,[])
+
     @patch.object(mod, "graph")
     def test_missing_project_state_no_mutation(self, graphql):
         graphql.return_value = {"organization": {"projectV2": {
