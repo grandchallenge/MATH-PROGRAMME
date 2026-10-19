@@ -5,7 +5,7 @@ import json
 from unittest.mock import patch, Mock
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, protected_rolling_critics, update_class_batch, guard_project_api_budget, BATCH_SIZE, execute
+from gcl_queue_class_cutover import classify, prepare, VIEW_FILTERS, PROJECT_ID, QUEUE_FIELD_ID, AVAILABLE_VIEW_ID, receipt_message, publish_readback, protected_rolling_critics, update_class_batch, guard_project_api_budget, BATCH_SIZE, execute
 
 DIRECT = "gcl-pickup:direct-editorial"
 
@@ -30,6 +30,49 @@ def project():
     }
 
 class Contract(unittest.TestCase):
+    def test_exact_closed_documentary_is_editorial_without_forged_pickup(self):
+        title="Seven-documentary GitHub math rendering parity"
+        good=make_item(2757,"grandchallenge/MATH-PROGRAMME",title,
+                       ["gcl-job","gcl-collab:cooperative"],"Editorial")
+        good["content"]["state"]="CLOSED"
+        self.assertEqual(classify(good),("Editorial","historical_closed_no_pickup"))
+        corrections,summary=prepare(project(),[good])
+        self.assertEqual(corrections,[])
+        self.assertEqual(summary["classes_expected"],{"Editorial":1})
+        for change in ("state","title","labels","number"):
+            bad=json.loads(json.dumps(good))
+            if change=="state":bad["content"]["state"]="OPEN"
+            elif change=="title":bad["content"]["title"]="Unrelated completed editorial task"
+            elif change=="number":bad["content"]["number"]=2758
+            else:
+                bad["content"]["labels"]["nodes"].append({"name":"gcl-pickup:direct-editorial"})
+                bad["content"]["labels"]["totalCount"]+=1
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError,"(closed editorial source identity drift|missing/contradictory direct pickup)"):
+                classify(bad)
+        unexpected=make_item(2758,"grandchallenge/MATH-PROGRAMME",title,
+                              ["gcl-job","gcl-collab:cooperative"],"Editorial")
+        unexpected["content"]["state"]="CLOSED"
+        with self.assertRaisesRegex(ValueError,"missing/contradictory direct pickup"):
+            classify(unexpected)
+
+    def test_closed_receipt_is_archived_only_after_verified_terminal_comment(self):
+        terminal={"id":6243549467,"body":"GCL-QUEUE-CLASS-CUTOVER-RECEIPT/FINAL-VERIFICATION — 2026-10-17\nScoped result: COMPLETE for this *receipt/readback* issue only"}
+        responses=[{"state":"closed","comments":3},[terminal]]
+        def run(argv,**kwargs):
+            self.assertNotIn("--method",argv)
+            if any("issues/2563/comments" in arg for arg in argv):
+                return Mock(returncode=0,stdout=json.dumps(responses[1]))
+            return Mock(returncode=0,stdout=json.dumps(responses[0]))
+        from os import environ
+        with patch.dict(environ,{"GH_TOKEN":"fake-app-test-token","GITHUB_RUN_ID":"39203531728",
+                                 "GITHUB_SHA":"a"*40}),patch("gcl_queue_class_cutover.subprocess.run",side_effect=run) as subprocess_run:
+            with TemporaryDirectory() as d:
+                self.assertEqual(publish_readback(Path(d)/"no-current-receipt.json",2563),0)
+                self.assertEqual(subprocess_run.call_count,2)
+                responses[1]=[{"id":6243549467,"body":"INCOMPLETE"}]
+                with self.assertRaisesRegex(RuntimeError,"closed receipt lacks exact terminal verification"):
+                    publish_readback(Path(d)/"no-current-receipt.json",2563)
+
     def test_graphql_alias_batch_verifies_all_exact_item_ids(self):
         rows=[{"item_id":"PVTI_001","option":"a1"},
               {"item_id":"PVTI_002","option":"b2"}]

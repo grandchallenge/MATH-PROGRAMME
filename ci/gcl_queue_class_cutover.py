@@ -187,6 +187,18 @@ def classify(item: dict) -> tuple[str,str]:
         if pickup:
             raise ValueError(f"{repo}#{number}: conflicting reservation/direct pickup")
         return "Mathematics",mode
+    # Exactly one completed editorial documentation job was registered as
+    # STAGED (not available for direct pickup), then closed after a protected
+    # implementation and RESULT/1. Its Project item is Done. Do not falsify
+    # pickup history by adding gcl-pickup:direct-editorial after completion.
+    # This strictly historical classification exception is not a worker lease.
+    if repo=="grandchallenge/MATH-PROGRAMME" and number==2757:
+        if (issue.get("state")=="CLOSED"
+                and title=="Seven-documentary GitHub math rendering parity"
+                and names=={"gcl-job","gcl-collab:cooperative"}
+                and not pickup):
+            return "Editorial","historical_closed_no_pickup"
+        raise ValueError(f"{repo}#{number}: closed editorial source identity drift")
     if pickup!={DIRECT}:
         raise ValueError(f"{repo}#{number}: missing/contradictory direct pickup label")
     source=SOURCE_ROLE in names
@@ -467,9 +479,24 @@ def publish_readback(report: Path, issue: int) -> int:
         return json.loads(result.stdout)
 
     issue_data = api(f"repos/{OWNER}/MATH-PROGRAMME/issues/{issue}")
-    if issue_data.get("state") != "open" or issue_data.get("comments", 0) >= 100:
-        raise RuntimeError("receipt issue closed or comment list pagination unsafe")
+    if issue_data.get("comments", 0) >= 100:
+        raise RuntimeError("receipt issue comment pagination unsafe")
     comments = api(f"repos/{OWNER}/MATH-PROGRAMME/issues/{issue}/comments?per_page=100")
+    if issue_data.get("state")=="closed":
+        # #2563 was deliberately closed after independently verified terminal
+        # receipt #6243549467. Scheduled assurance now retains each run's
+        # own Actions artifact; never reopen or overwrite the closed record.
+        terminal=[c for c in comments if c.get("id")==6243549467 and
+                  (c.get("body") or "").startswith(
+                      "GCL-QUEUE-CLASS-CUTOVER-RECEIPT/FINAL-VERIFICATION")]
+        if len(terminal)!=1 or "COMPLETE for this *receipt/readback* issue only" not in terminal[0]["body"]:
+            raise RuntimeError("closed receipt lacks exact terminal verification")
+        state="VERIFIED" if "**Project classification:** VERIFIED" in body else "BLOCKED"
+        print("RECEIPT_ARCHIVED_ONLY",state,
+              "terminal_issue_2563_unmodified",flush=True)
+        return 0
+    if issue_data.get("state")!="open":
+        raise RuntimeError("unexpected receipt issue state")
     matches = [entry for entry in comments
                if RECEIPT_MARKER in str(entry.get("body", ""))]
     if len(matches) > 1:
