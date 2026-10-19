@@ -33,6 +33,28 @@ def main() -> int:
     baseline = workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
     assert not baseline, baseline
 
+    # Bounded source-return jobs must not silently expand execution or
+    # permissions, and the whole-snapshot verifier must remain read-only.
+    bounded_source = "erdos-catalogue-queue-projection.yml"
+    for old, new, message in (
+        ("      max-parallel: 2", "      max-parallel: 20",
+         "source-return batches: exact bounded execution"),
+        ("    timeout-minutes: 25", "    timeout-minutes: 75",
+         "source-return batches: exact bounded execution"),
+    ):
+        altered = dict(texts)
+        assert old in altered[bounded_source]
+        altered[bounded_source] = altered[bounded_source].replace(old, new, 1)
+        require_error(altered, evidence, message, registry=registry)
+    widened_aggregate = dict(texts)
+    assert "  source_return_verify:" in widened_aggregate[bounded_source]
+    assert "    timeout-minutes: 10" in widened_aggregate[bounded_source]
+    widened_aggregate[bounded_source] = widened_aggregate[bounded_source].replace(
+        "    permissions:\n      contents: read\n    runs-on: ubuntu-24.04\n    timeout-minutes: 10",
+        "    permissions:\n      contents: read\n      issues: write\n    runs-on: ubuntu-24.04\n    timeout-minutes: 10", 1)
+    require_error(widened_aggregate, evidence,
+                  "source-return aggregate: exact read-only", registry=registry)
+
     # A future model job is admitted ONLY as a read-only, cost-limited evidence
     # canary. Deliberate privilege/cost drift must fail the standing policy test.
     pilot_name = "erdos-catalogue-queue-projection.yml"

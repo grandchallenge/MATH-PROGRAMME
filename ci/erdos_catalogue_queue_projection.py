@@ -228,6 +228,64 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
 
 
 
+
+# Bounded sources are selected from the captured, content-addressed report.
+# No job is allowed to traverse the entire live catalogue mutating one item
+# at a time: past production runs timed out after 671/769 verified readbacks.
+MAX_BATCH_SIZE = 64
+
+
+def eligible_issue_ids(report: dict) -> list[int]:
+    tasks = report.get("tasks")
+    if not isinstance(tasks, list):
+        raise ValueError("captured report tasks are missing")
+    seen: set[int] = set()
+    eligible: list[int] = []
+    for task in tasks:
+        if not isinstance(task, dict):
+            raise ValueError("malformed captured task")
+        issue = task.get("issue_number")
+        if type(issue) is not int or issue < 1 or issue in seen:
+            raise ValueError("duplicate or invalid captured task issue")
+        seen.add(issue)
+        count = task.get("structurally_valid_returns")
+        if type(count) is not int or count < 0:
+            raise ValueError(f"#{issue}: invalid return count")
+        if count == 1:
+            eligible.append(issue)
+    return sorted(eligible)
+
+
+def batch_count(total: int, size: int) -> int:
+    if type(size) is not int or not 1 <= size <= MAX_BATCH_SIZE:
+        raise ValueError(f"batch size must be 1..{MAX_BATCH_SIZE}")
+    return max(1, (total + size - 1) // size)
+
+
+def select_source_batch(report: dict, *, size: int, index: int) -> tuple[list[int], dict]:
+    eligible = eligible_issue_ids(report)
+    count = batch_count(len(eligible), size)
+    if type(index) is not int or not 0 <= index < count:
+        raise ValueError(f"batch index {index} outside [0,{count})")
+    first = index * size
+    selected = eligible[first:first + size]
+    return selected, {
+        "index": index, "count": count, "size_limit": size,
+        "total_eligible": len(eligible), "start_offset": first,
+        "selected_issue_numbers": selected,
+    }
+
+
+def source_batch_manifest(report: dict, size: int, digest: str) -> dict:
+    total = len(eligible_issue_ids(report))
+    count = batch_count(total, size)
+    return {"include": [
+        {"index": index, "total_eligible": total, "batch_count": count,
+         "report_sha256": digest}
+        for index in range(count)
+    ]}
+
+
 def persist_projection_receipt(path: Path | None, record: dict) -> None:
     """Atomic, progressively updated local evidence; Actions archives it even on failure."""
     if path is None:
@@ -244,7 +302,7 @@ def persist_projection_receipt(path: Path | None, record: dict) -> None:
 
 def project_source_returns(
     report: dict, issues: list[int], *, dry_run: bool, receipt_path: Path | None,
-    report_digest: str,
+    report_digest: str, batch_scope: dict | None = None,
 ) -> tuple[dict, int]:
     """Fail closed, preserving exact verified results and current in-flight issue.
 
@@ -261,6 +319,7 @@ def project_source_returns(
         "dry_run": dry_run,
         "claim_scope": "Project Status, exact GCL State Issue Field and available label only; not mathematical certification or editorial acceptance",
         "report_sha256": report_digest,
+        "batch": batch_scope,
         "protected_head": os.environ.get("GITHUB_SHA", ""),
         "workflow_run": (f"https://github.com/{OWNER}/{REPO}/actions/runs/{run_id}" if run_id else None),
         "expected_issue_count": len(issues),
@@ -309,7 +368,7 @@ def project_source_returns(
         if dry_run:
             record["status"] = "DRY_RUN_ONLY"
         else:
-            record["status"] = "VERIFIED"
+            record["status"] = "VERIFIED_BATCH" if batch_scope is not None else "VERIFIED"
             record["verified"] = True
             record["complete"] = True
             record["applied"] = True
@@ -329,29 +388,60 @@ def main() -> int:
     p.add_argument("--issue", type=int)
     p.add_argument("--all", action="store_true")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--batch-manifest", action="store_true",
+                   help="output deterministic, content-bound GitHub matrix (read only)")
+    p.add_argument("--batch-index", type=int)
+    p.add_argument("--batch-size", type=int)
+    p.add_argument("--expected-report-sha256")
+    p.add_argument("--expected-total", type=int)
     p.add_argument("--receipt", type=Path,
                    help="durable progress and exact terminal readback evidence")
     args = p.parse_args()
     try:
-        if (args.issue is None) == (not args.all):
-            raise ValueError("specify exactly one of --issue or --all")
-        if args.all and not args.dry_run and args.receipt is None:
-            raise ValueError("--all requires --receipt: unjournaled bulk writes forbidden")
         raw = Path(args.report).read_bytes()
+        digest = hashlib.sha256(raw).hexdigest()
         report = json.loads(raw)
         if not isinstance(report, dict):
             raise ValueError("captured report must be an object")
-        issues = ([args.issue] if args.issue is not None else
-                  [t["issue_number"] for t in report.get("tasks", [])
-                   if t.get("structurally_valid_returns") == 1])
+        if args.batch_manifest:
+            if (args.issue is not None or args.all or args.dry_run
+                    or args.batch_index is not None or args.receipt is not None
+                    or args.expected_total is not None or args.expected_report_sha256):
+                raise ValueError("batch manifest must be read-only and unscoped")
+            print(json.dumps(source_batch_manifest(report, args.batch_size, digest),
+                             separators=(",", ":"), sort_keys=True))
+            return 0
+        if (args.issue is None) == (not args.all):
+            raise ValueError("specify exactly one of --issue or --all")
+        if args.expected_report_sha256 and digest != args.expected_report_sha256:
+            raise ValueError("snapshot SHA256 differs from manifest; no mutation")
+        if args.all and (args.batch_index is None or args.batch_size is None):
+            raise ValueError("--all requires exact batch-index and batch-size")
+        if args.issue is not None and (args.batch_index is not None or args.batch_size is not None):
+            raise ValueError("single issue cannot carry a bulk batch selection")
+        if args.all and not args.dry_run and args.receipt is None:
+            raise ValueError("bulk mutation requires receipt")
+        scope = None
+        if args.all:
+            issues, scope = select_source_batch(report, size=args.batch_size,
+                                                index=args.batch_index)
+            if args.expected_total is not None and scope["total_eligible"] != args.expected_total:
+                raise ValueError("snapshot eligible count differs from manifest")
+        else:
+            if type(args.issue) is not int or args.issue < 1:
+                raise ValueError("invalid source issue number")
+            if args.expected_total is not None:
+                raise ValueError("single-issue mode does not accept bulk manifest total")
+            issues = [args.issue]
         record, code = project_source_returns(
             report, issues, dry_run=args.dry_run, receipt_path=args.receipt,
-            report_digest=hashlib.sha256(raw).hexdigest(),
+            report_digest=digest, batch_scope=scope,
         )
         print(json.dumps({
             "status": record["status"], "verified": record["verified"],
             "processed": record["processed_count"],
             "expected": record["expected_issue_count"],
+            "batch": scope,
             "receipt": str(args.receipt) if args.receipt else None,
             "blocker": record["blocker"],
         }, sort_keys=True), flush=True)

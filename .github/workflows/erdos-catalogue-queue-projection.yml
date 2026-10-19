@@ -7,6 +7,8 @@ on:
       - 'ci/erdos_rolling_review_queue.py'
       - 'ci/erdos_catalogue_queue_projection.py'
       - 'tests/test_erdos_catalogue_queue_projection.py'
+      - 'ci/verify_erdos_source_return_batches.py'
+      - 'tests/test_erdos_source_return_batches.py'
       - 'ci/erdos_compendium_editorial_activate.py'
       - 'ci/test_erdos_compendium_editorial_activate.py'
       - 'ci/gcl_queue_class_cutover.py'
@@ -30,6 +32,8 @@ concurrency:
 
 jobs:
   reconcile:
+    outputs:
+      source_return_batches: ${{ steps.source-batches.outputs.matrix }}
     permissions:
       contents: read
       issues: write
@@ -54,6 +58,21 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python ci/erdos_catalogue_programme_intake.py --live-snapshot --output catalogue-intake
+      - name: Derive exact source-return batch manifest
+        id: source-batches
+        run: |
+          set -euo pipefail
+          python ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json             --batch-manifest --batch-size 64 > catalogue-intake/BATCH_MANIFEST.json
+          echo "matrix=$(cat catalogue-intake/BATCH_MANIFEST.json)" >> "$GITHUB_OUTPUT"
+      - name: Archive immutable source snapshot and batch manifest
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-source-return-input-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            catalogue-intake/REPORT.json
+            catalogue-intake/BATCH_MANIFEST.json
+          retention-days: 90
+          if-no-files-found: error
       - name: Mint bounded Council Clerk Project projection token
         id: queue-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
@@ -152,24 +171,11 @@ jobs:
           gh issue comment 2552 --repo grandchallenge/MATH-PROGRAMME \
             --body-file editorial-admission/comment.md
 
-      - name: Reconcile Project state and labels from verified receipts
-        env:
-          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
-        run: |
-          test -n "$GH_TOKEN" || { echo "Missing short-lived Project write token"; exit 1; }
-          python -u ci/erdos_catalogue_queue_projection.py --report catalogue-intake/REPORT.json --all \
-            --receipt source-returns/projection.json
-      - name: Archive exact source-return progress and terminal readback
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-        with:
-          name: gcl-source-return-projection-${{ github.run_id }}-${{ github.run_attempt }}
-          path: source-returns/projection.json
-          retention-days: 90
-          if-no-files-found: error
-      - name: Verify exact-14 review completion and replay invariants
+      - name: Verify critical reviews and source-return batch invariants
         if: github.event_name != 'issue_comment'
-        run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
+        run: |
+          PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
+          PYTHONPATH=. python3 tests/test_erdos_source_return_batches.py
       - name: Reconcile 14 completed critical reviews with Council Clerk custody
         if: github.event_name != 'issue_comment'
         env:
@@ -420,3 +426,104 @@ jobs:
         run: |
           python ci/erdos_forge_copilot_pilot.py publish --out forge-erdos-pilot \
             | tee -a "$GITHUB_STEP_SUMMARY"
+
+  source_return_batches:
+    name: Source-return batch ${{ matrix.index }}
+    needs: reconcile
+    if: needs.reconcile.result == 'success'
+    permissions:
+      contents: read
+      issues: write
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix: ${{ fromJSON(needs.reconcile.outputs.source_return_batches) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Restore exact captured source snapshot
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: gcl-source-return-input-${{ github.run_id }}-${{ github.run_attempt }}
+          path: catalogue-intake
+      - name: Mint per-batch Council Clerk Project token
+        id: queue-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+          permission-organization-projects: write
+      - name: Project only this exact bounded batch with per-issue readback
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN" || { echo "Missing protected Council Clerk token"; exit 1; }
+          python -u ci/erdos_catalogue_queue_projection.py \
+            --report catalogue-intake/REPORT.json --all \
+            --batch-index ${{ matrix.index }} --batch-size 64 \
+            --expected-report-sha256 ${{ matrix.report_sha256 }} \
+            --expected-total ${{ matrix.total_eligible }} \
+            --receipt source-returns/projection.json
+      - name: Archive exact per-batch receipt, including incomplete runs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-source-return-batch-${{ matrix.index }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: source-returns/projection.json
+          retention-days: 90
+          if-no-files-found: error
+
+  source_return_verify:
+    name: Verify complete source-return batch partition
+    needs: [reconcile, source_return_batches]
+    if: always() && needs.reconcile.result == 'success'
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Restore exact source snapshot
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: gcl-source-return-input-${{ github.run_id }}-${{ github.run_attempt }}
+          path: catalogue-intake
+      - name: Restore all individual batch evidence
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          pattern: gcl-source-return-batch-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: source-batch-receipts
+          merge-multiple: false
+      - name: Verify partition, head, snapshot, and every bounded receipt
+        run: |
+          python ci/verify_erdos_source_return_batches.py \
+            --report catalogue-intake/REPORT.json \
+            --manifest catalogue-intake/BATCH_MANIFEST.json \
+            --receipts-root source-batch-receipts \
+            --receipt source-return-aggregate/receipt.json
+      - name: Archive protected whole-snapshot receipt or exact blocker
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-source-return-aggregate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: source-return-aggregate/receipt.json
+          retention-days: 90
+          if-no-files-found: error
