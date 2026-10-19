@@ -25,7 +25,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Replay hostile and positive tests
-        run: python3 -m unittest discover -s ci -p test_recurring_heartbeat_watch.py
+        run: python3 ci/test_recurring_heartbeat_watch.py
       - name: Audit the durable authenticated heartbeat stream
         shell: bash
         run: |
