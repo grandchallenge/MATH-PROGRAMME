@@ -1,6 +1,6 @@
 # EXT-015C / 019 — positive degree-one comparison for fixed test-function source
 
-**Mathematical disposition:** A complete *candidate proof*, subject to the explicitly identified source-presentation and strict-LF realization hypotheses. The proof addresses the original \(\mathrm{Ext}^1\) target-stage comparison, not merely its phantom subgroup. The protected verification matrix must not mark it as admitted until its categorical relations argument and change-of-filtration steps have passed critical review.
+**Mathematical disposition:** A complete *candidate proof*, subject to the explicitly identified source-presentation and strict-LF realization hypotheses. The proof addresses the original $\mathrm{Ext}^1$ target-stage comparison, not merely its phantom subgroup. The protected verification matrix must not mark it as admitted until its categorical relations argument and change-of-filtration steps have passed critical review.
 
 **Question:** Can an extension carry genuinely global analytic information that no compact-support stage can capture?
 
@@ -50,7 +50,7 @@ $$
 \tag{19.3}
 $$
 
-Set $L=\operatorname{im}(d)=\ker\varepsilon$. The source $\mathcal M(T)$ is projective by Scholze, *Lectures on Analytic Geometry*, Theorem 6.5, because $T$ is extremally disconnected. The image presentation gives an epimorphism $\mathcal M(R)\twoheadrightarrow L$. Hence the exact projective presentation
+Set $L=\mathrm{im}(d)=\ker\varepsilon$. The source $\mathcal M(T)$ is projective by Scholze, *Lectures on Analytic Geometry*, Theorem 6.5, because $T$ is extremally disconnected. The image presentation gives an epimorphism $\mathcal M(R)\twoheadrightarrow L$. Hence the exact projective presentation
 
 $$
 0\longrightarrow L\longrightarrow\mathcal M(T)
