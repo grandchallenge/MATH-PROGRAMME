@@ -42,6 +42,14 @@ This definition concerns extension classes modulo liquid boundaries; it is not e
 
 **Status:** PROVED as an auxiliary liquid-category counterexample with the actual output $G$. **Explicit limitation:** $\mathsf Q$ is not a Fréchet source. It is **not** a counterexample with the prescribed fixed test-function $H$. The remaining fixed-source scalar obstruction for $H$ consists of two separately auditable channels: a nonliftable liquid morphism $H\to\mathsf Q$, or genuinely infinitely many coordinate-visible extension classes; a simple diagonal of continuous scalar functionals always lifts and gives zero phantom class.
 
+### E7 — fixed-source degree-one positive theorem (candidate for critical admission)
+
+**Source:** [019: profinite relations and countably directed weight stages](FIXED_SOURCE_EXT1_ISOMORPHISM_019.md). For the actual nuclear Fréchet $H=\underline{\mathcal D_{[-1,1]}(\mathbb R)}$ and regular strict LF output $G=\underline{\mathcal D(\mathbb R)}$, the proof identifies the target-stage first Ext comparison with that for finite prefixes in the Valdivia–Vogt direct-sum model. An extremally disconnected cover of an arbitrary profinite set gives a projective free-liquid cover; its **profinite kernel pair** generates the relation module. Maps from that relation module into the strict LF output become finite-stage, yielding the previously missing local Ext continuity. Countably directed source weight scales then force every global class into a finite output prefix.
+
+**Audit requirement:** Verify the free-liquid coequalizer induced by an effective profinite cover, the weight-stage retract of the convergent-sequence free measure object, and the full-output filtration cofinality. The proof does **not** assert projectivity of arbitrary free liquid measures, does not assume all compact source objects are derived compact, and does not apply to varying source support or higher Ext degrees.
+
+**Status:** POSITIVE DEGREE-ONE PROOF SUBMITTED FOR PROTECTED CI AND CRITICAL REVIEW. The previously proved non-Fréchet-source escaping example E6 remains a valid hostile control and is not contradicted.
+
 ## Adversarial proof checklist
 
 For any proposed counterexample record:
