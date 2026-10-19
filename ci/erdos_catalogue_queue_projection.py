@@ -138,9 +138,16 @@ def validate_receipt(report: dict, issue: int) -> dict:
     rows = [r for r in by_comment.values()
             if r.get("validation") == "STRUCTURALLY_VALID_UNADJUDICATED"
             and r.get("event_action") != "deleted"]
-    if len(rows) != 1:
-        raise ValueError(f"expected exactly one current structurally valid return, got {len(rows)}")
-    row = rows[0]
+    if len(rows) == 0:
+        raise ValueError("no current structurally valid return")
+    if len(rows) == 1:
+        row = rows[0]
+    else:
+        try:
+            from ci.erdos_return_arbitration import choose
+        except ModuleNotFoundError:
+            from erdos_return_arbitration import choose
+        row = choose(issue, rows)
     expected = f"ERDOS-CATALOGUE-{row['problem_id']:04d}-S01"
     if row.get("task_id") != expected or tasks[0].get("task_id") != expected or not row.get("comment_id"):
         raise ValueError("return binding mismatch")
@@ -165,6 +172,18 @@ def source_issue_gcl_state(issue: int) -> str:
 
 def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     receipt = validate_receipt(report, issue)
+    # For multi-return adjudication, the protected comparison binds *all*
+    # candidate comment digests, not merely its selected queue source.
+    current = [r for r in report.get("receipts", []) if
+               r.get("issue_number") == issue and
+               r.get("validation") == "STRUCTURALLY_VALID_UNADJUDICATED"]
+    if len({r["comment_id"] for r in current}) > 1:
+        for candidate in current:
+            live = gh("api", f"repos/{OWNER}/{REPO}/issues/comments/{candidate['comment_id']}")
+            if (live.get("issue_url") != f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue}"
+                or hashlib.sha256((live.get("body") or "").encode()).hexdigest()
+                != candidate["comment_body_sha256"]):
+                raise ValueError(f"#{issue}: competing source comment changed since arbitration")
     issue_json = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
     assert isinstance(issue_json, dict)
     labels = {l["name"] for l in issue_json.get("labels", [])}
@@ -252,6 +271,16 @@ def eligible_issue_ids(report: dict) -> list[int]:
         if type(count) is not int or count < 0:
             raise ValueError(f"#{issue}: invalid return count")
         if count == 1:
+            eligible.append(issue)
+        elif count > 1:
+            # A genuinely independent protected specialist decision can
+            # authorize one bounded queue source without erasing dissent.
+            try:
+                validate_receipt(report, issue)
+            except ValueError as error:
+                if "arbitration missing" in str(error):
+                    continue
+                raise
             eligible.append(issue)
     return sorted(eligible)
 
