@@ -125,7 +125,9 @@ class ReviewCompletionTests(unittest.TestCase):
             nr=task["issue"]
             return {"labels":[{"name":v} for v in
                  ["gcl-state:available","gcl-job","gcl-pickup:direct-editorial",
-                  "gcl-role:source-audit"]+([c.REVISE_LABEL] if review_labels else [])]}
+                  "gcl-role:source-audit"]+
+                 ([c.CORRECTED_LABEL] if nr in c.COUNCIL_CORRECTIONS else [])+
+                 ([c.REVISE_LABEL] if review_labels else [])]}
         def status(item):
             return {"name":states.get("project","Todo"),
                     "optionId":"option1" if states.get("project")=="RETURNED" else "option0"}
@@ -134,6 +136,9 @@ class ReviewCompletionTests(unittest.TestCase):
             patch.object(c,"roster_rows",return_value=c.roster_rows(ROSTER)),
             patch.object(c,"status_options",return_value={"Todo":"option0","RETURNED":"option1"}),
             patch.object(c,"review_comment",return_value={"comment_id":1,"comment_sha256":"sha"}),
+            patch.object(c,"council_correction",side_effect=lambda issue,problem:
+                         {"comment_id":c.COUNCIL_CORRECTIONS[issue][1],"comment_sha256":"council-locked"}
+                         if issue in c.COUNCIL_CORRECTIONS else None),
             patch.object(c.old,"issue_fields",return_value={"GCL State":states.get("issue","AVAILABLE")}),
             patch.object(c.old,"project_item_for_issue",return_value="item1"),
             patch.object(c.old,"project_status",side_effect=status),
@@ -152,7 +157,7 @@ class ReviewCompletionTests(unittest.TestCase):
         from contextlib import ExitStack
         with ExitStack() as st:
             for p in self.mock_preflight(review_labels=True):st.enter_context(p)
-            with self.assertRaisesRegex(ValueError,"inappropriate"):c.preflight()
+            with self.assertRaisesRegex(ValueError,"(Council correction|source-accepted)"):c.preflight()
 
     def test_preflight_rejects_invalid_project_status(self):
         from contextlib import ExitStack
@@ -172,12 +177,16 @@ class ReviewCompletionTests(unittest.TestCase):
         rows=[]
         for n,(issue,disposition) in c.TARGET.items():
             state[issue]={"project":"Todo","field":"AVAILABLE",
-                          "labels":{"gcl-state:available"}}
+                          "labels":{"gcl-state:available"} |
+                              ({c.CORRECTED_LABEL} if issue in c.COUNCIL_CORRECTIONS else set())}
             rows.append({"problem":n,"issue":issue,"disposition":disposition,
                          "comment":{"comment_id":issue,"comment_sha256":"stable"},
                          "project_item":"item"+str(issue),"project_status":"Todo",
                          "gcl_state":"AVAILABLE","available_label":True,
-                         "revise_label":False})
+                         "revise_label":False,
+                         "council_correction":({"comment_id":c.COUNCIL_CORRECTIONS[issue][1],
+                                                "comment_sha256":"council-locked"}
+                                               if issue in c.COUNCIL_CORRECTIONS else None)})
         snap={"rows":rows,"returned_option":"optionRETURNED"}
         writes=[]
         def fake_mutation(*args,data=None):
@@ -206,20 +215,47 @@ class ReviewCompletionTests(unittest.TestCase):
              patch.object(c.old,"project_status",side_effect=status), \
              patch.object(c.old,"issue_fields",side_effect=lambda issue:{"GCL State":state[issue]["field"]}), \
              patch.object(c.old,"issue",side_effect=label_issue), \
-             patch.object(c,"review_comment",side_effect=lambda issue,d:{"comment_id":issue,"comment_sha256":"stable"}):
+             patch.object(c,"review_comment",side_effect=lambda issue,d:{"comment_id":issue,"comment_sha256":"stable"}), \
+             patch.object(c,"council_correction",side_effect=lambda issue,problem:
+                          {"comment_id":c.COUNCIL_CORRECTIONS[issue][1],"comment_sha256":"council-locked"}
+                          if issue in c.COUNCIL_CORRECTIONS else None):
             result=c.apply(snap)
             self.assertEqual(len(result),14)
-            self.assertEqual(sum(x["source_correction_open"] for x in result),5)
-            self.assertEqual(len(writes),14*3+5)
+            self.assertEqual(sum(x["source_correction_accepted"] for x in result),5)
+            self.assertEqual(sum(x["source_correction_open"] for x in result),0)
+            self.assertEqual(len(writes),14*3)
             for r in rows:
                 r["project_status"]="RETURNED"
                 r["gcl_state"]="RETURNED"
                 r["available_label"]=False
-                r["revise_label"]=r["disposition"]=="REVISE"
+                r["revise_label"]=False
             writes.clear()
             result2=c.apply(snap)
             self.assertEqual(len(result2),14)
             self.assertEqual(writes,[])
+
+    def test_protected_council_corrections_accept_only_bot_exact_sources(self):
+        for issue,(problem,comment_id,prefix,material,pr) in c.COUNCIL_CORRECTIONS.items():
+            lines=[prefix,f"ERDOS_PROBLEM: {problem}",f"REVIEW_ISSUE: #{issue}",
+                   "DISPOSITION: SOURCE_CORRECTION_ACCEPTED",
+                   f"PROTECTED_SOURCE_LOCK_PR: https://github.com/grandchallenge/MATH-PROGRAMME/pull/{pr}",
+                   material,"MATHEMATICAL_CERTIFICATION: FALSE",
+                   "OPEN_PROBLEM_STATUS: UNCHANGED"]
+            good={"id":comment_id,"body":"\n".join(lines)+"\n",
+                  "html_url":f"https://github.com/grandchallenge/MATH-PROGRAMME/issues/{issue}#issuecomment-{comment_id}",
+                  "user":{"login":"gcl-council-clerk[bot]"}}
+            with self.subTest(issue=issue),patch.object(c.old,"gh",return_value=[good]):
+                self.assertEqual(c.council_correction(issue,problem)["comment_id"],comment_id)
+            for bad in (
+                {**good,"user":{"login":"fyremael"}},
+                {**good,"body":good["body"].replace(material,"SHA_CHANGED")},
+                {**good,"id":comment_id+1},
+            ):
+                with self.subTest(issue=issue,mutation=str(bad.get("id"))), patch.object(c.old,"gh",return_value=[bad]):
+                    with self.assertRaises(ValueError):
+                        c.council_correction(issue,problem)
+        with self.assertRaises(ValueError):
+            c.council_correction(2522,41)
 
     def test_apply_guards_untrusted_environment_without_preflight(self):
         with tempfile.TemporaryDirectory() as tmp:

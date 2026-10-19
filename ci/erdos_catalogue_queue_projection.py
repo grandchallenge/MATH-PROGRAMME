@@ -229,6 +229,23 @@ TARGET = {11:(2520,"REVISE"),12:(2521,"REVISE"),14:(2522,"REVISE"),
           39:(2534,"SOURCE_ACCEPTED"),40:(2535,"SOURCE_ACCEPTED"),
           41:(2536,"REVISE")}
 REVISE_LABEL = "gcl-review:revise"
+CORRECTED_LABEL = "gcl-review:source-corrected"
+# Immutable Council Clerk source-correction overlays on the five original
+# REVISE critical reviews. The REVIEW/1 comments remain historically REVISE;
+# these later authenticated Clerk receipts control the *current* label.
+# Scope is exact; no catalogue result becomes mathematical certification.
+COUNCIL_CORRECTIONS = {
+    2520:(11,6215166656,"GCL-CRITICAL-SOURCE-RESOLUTION/1",
+          "NEW_GIT_BLOB_SHA1: 16aec61d2da71e38d2891540a78d3ce2cdba1051",2695),
+    2521:(12,6215167768,"GCL-CRITICAL-SOURCE-RESOLUTION/1",
+          "NEW_GIT_BLOB_SHA1: a14ad253fea0fda4ac4191e3a6747d6939e528ac",2695),
+    2523:(15,6215168942,"GCL-CRITICAL-SOURCE-RESOLUTION/1",
+          "NEW_GIT_BLOB_SHA1: a6e6fbe3d39a8982daad15d70f6f458a8c801ac4",2695),
+    2522:(14,6257398101,"GCL-CRITICAL-SOURCE-RESOLUTION/FINAL-TWO/1",
+          "LEAN_SOURCE_SHA256: 2dc6778835adb8c2052d183f7ce98b79a93630e42dfdb968d9435bbfcce7d47d",2760),
+    2536:(41,6257398962,"GCL-CRITICAL-SOURCE-RESOLUTION/FINAL-TWO/1",
+          "LEAN_SOURCE_SHA256: 66f82861886a78102e49e02a2092dcc48729317acfdd0977a2cd42504bd0ec49",2759),
+}
 GCL_STATE_FIELD = 47953501
 
 def mutation(*args, data=None):
@@ -263,6 +280,39 @@ def review_comment(issue, expected):
         raise ValueError(f"#{issue}: review provenance drift")
     return {"comment_id":c["id"],"comment_sha256":hashlib.sha256(c["body"].encode()).hexdigest()}
 
+def council_correction(issue: int, problem: int) -> dict | None:
+    """Verify current, exact protected Council disposition, not original REVIEW/1.
+
+    The Clerk comments are immutable sources of corrected-source status;
+    ordinary worker comments and review labels are never admission evidence.
+    """
+    lock=COUNCIL_CORRECTIONS.get(issue)
+    if lock is None:
+        return None
+    expected_problem, cid, prefix, material, pr=lock
+    if expected_problem!=problem:
+        raise ValueError(f"#{issue}: Council problem source identity drift")
+    comments=old.gh("api",f"repos/grandchallenge/MATH-PROGRAMME/issues/{issue}/comments?per_page=100")
+    if not isinstance(comments,list) or len(comments)>=100:
+        raise ValueError(f"#{issue}: Council correction comment pagination incomplete")
+    notes=[c for c in comments if c.get("id")==cid]
+    if len(notes)!=1:
+        raise ValueError(f"#{issue}: missing protected Council correction receipt")
+    note=notes[0]
+    body=note.get("body") or ""
+    expected_lines=(prefix, f"ERDOS_PROBLEM: {problem}",f"REVIEW_ISSUE: #{issue}",
+                    "DISPOSITION: SOURCE_CORRECTION_ACCEPTED",
+                    f"PROTECTED_SOURCE_LOCK_PR: https://github.com/grandchallenge/MATH-PROGRAMME/pull/{pr}",
+                    material, "MATHEMATICAL_CERTIFICATION: FALSE",
+                    "OPEN_PROBLEM_STATUS: UNCHANGED")
+    if (note.get("user",{}).get("login")!="gcl-council-clerk[bot]"
+            or not body.startswith(prefix+"\n")
+            or any(line not in body.splitlines() for line in expected_lines)
+            or not note.get("html_url","").endswith(f"#issuecomment-{cid}")):
+        raise ValueError(f"#{issue}: Council Clerk authority or source receipt drift")
+    return {"comment_id":cid,"comment_sha256":hashlib.sha256(body.encode()).hexdigest()}
+
+
 def status_options():
     data=old.gh("project","field-list","2","--owner","grandchallenge","--format","json")
     fields=[f for f in data["fields"] if f["name"]=="Status"]
@@ -292,10 +342,15 @@ def preflight():
             raise ValueError(f"#{issue}: unexpected Project status {project}")
         if project["optionId"]!=opts[project["name"]]:
             raise ValueError(f"#{issue}: Project option ID drift")
-        if disposition=="SOURCE_ACCEPTED" and REVISE_LABEL in labels:
-            raise ValueError(f"#{issue}: inappropriate revision label")
+        correction=council_correction(issue,problem)
+        if disposition=="REVISE":
+            if correction is None or CORRECTED_LABEL not in labels or REVISE_LABEL in labels:
+                raise ValueError(f"#{issue}: Council correction must remain authoritative")
+        elif REVISE_LABEL in labels or CORRECTED_LABEL in labels or correction is not None:
+            raise ValueError(f"#{issue}: source-accepted label/correction inconsistency")
         rows.append({"problem":problem,"issue":issue,"disposition":disposition,
-                     "comment":comments,"project_item":item,"project_status":project["name"],
+                     "comment":comments,"council_correction":correction,
+                     "project_item":item,"project_status":project["name"],
                      "gcl_state":state,"available_label":"gcl-state:available" in labels,
                      "revise_label":REVISE_LABEL in labels})
     if len(rows)!=14 or sum(r["disposition"]=="REVISE" for r in rows)!=5:
@@ -332,10 +387,10 @@ def apply(data):
         if row["available_label"]:
             mutation("api",f"repos/grandchallenge/MATH-PROGRAMME/issues/{n}/labels/gcl-state%3Aavailable",
                      "--method","DELETE")
-        if row["disposition"]=="REVISE" and not row["revise_label"]:
-            mutation("api",f"repos/grandchallenge/MATH-PROGRAMME/issues/{n}/labels",
-                     "--method","POST","--input","-",
-                     data={"labels":[REVISE_LABEL]})
+        # Never restore a historical REVISE label after protected Council
+        # source-correction acceptance. Preflight verifies all five receipts.
+        if row["disposition"]=="REVISE" and not row["council_correction"]:
+            raise ValueError(f"#{n}: unresolved historical revision cannot be projected")
         item=old.project_item_for_issue(n)
         status=old.project_status(item)
         field=old.issue_fields(n)
@@ -343,18 +398,23 @@ def apply(data):
         lbl={x["name"] for x in obj["labels"]}
         # Confirm review content has not changed during reconciliation.
         comment=review_comment(n,row["disposition"])
+        correction=council_correction(n,row["problem"])
         if (item!=row["project_item"] or
             status!={"name":"RETURNED","optionId":data["returned_option"]} or
             field.get("GCL State")!="RETURNED" or
             "gcl-state:available" in lbl or
-            (REVISE_LABEL in lbl)!=(row["disposition"]=="REVISE") or
-            obj["state"]!="open" or comment!=row["comment"]):
+            REVISE_LABEL in lbl or
+            (CORRECTED_LABEL in lbl)!=(row["disposition"]=="REVISE") or
+            obj["state"]!="open" or comment!=row["comment"] or
+            correction!=row["council_correction"]):
             raise ValueError(f"#{n}: post-write authenticated readback failed")
         out.append({"issue":n,"disposition":row["disposition"],"comment_id":comment["comment_id"],
                     "project_status":"RETURNED","gcl_state":"RETURNED",
-                    "source_correction_open":row["disposition"]=="REVISE"})
-    if len(out)!=14 or sum(x["source_correction_open"] for x in out)!=5:
-        raise ValueError("final 14/5 verified census failed")
+                    "source_correction_open":False,
+                    "source_correction_accepted":bool(row["council_correction"])})
+    if (len(out)!=14 or any(x["source_correction_open"] for x in out)
+            or sum(x["source_correction_accepted"] for x in out)!=5):
+        raise ValueError("final 14 reviews / five protected Council corrections mismatch")
     return out
 
 def review_completion_main():
