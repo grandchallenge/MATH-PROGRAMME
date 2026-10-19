@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 import tempfile
 import unittest
@@ -137,6 +138,67 @@ class ReturnExceptions(unittest.TestCase):
             with self.assertRaises(OSError):
                 aggregate.verify(self.report,ex.manifest(self.report,16,digest),
                                  digest,root,"123","1","a"*40)
+
+    def test_transient_lost_post_response_does_not_duplicate(self):
+        path=f"repos/{intake.REPOSITORY}/issues/{self.issue}/comments"
+        body=json.dumps({"body":"exact payload"})
+        existing={"id":9003,"body":"exact payload",
+                  "issue_url":f"https://api.github.com/repos/{intake.REPOSITORY}/issues/{self.issue}"}
+        calls=[]
+        def fake_run(command,**kwargs):
+            calls.append(command)
+            if len(calls)==1:
+                return subprocess.CompletedProcess(command,1,"","HTTP 503 service unavailable")
+            return subprocess.CompletedProcess(command,0,json.dumps([existing]),"")
+        with patch.object(ex.subprocess,"run",side_effect=fake_run):
+            result=ex.gh(path,post=body)
+        self.assertEqual(result["id"],9003)
+        self.assertEqual(len(calls),2)
+        self.assertIn("--method",calls[0])
+        self.assertNotIn("--method",calls[1])
+
+    def test_transient_post_retry_after_exact_negative_probe(self):
+        path=f"repos/{intake.REPOSITORY}/issues/{self.issue}/comments"
+        body=json.dumps({"body":"exact payload"})
+        posted={"id":9005,"body":"exact payload"}
+        calls=[]
+        def fake_run(command,**kwargs):
+            calls.append(command)
+            if len(calls)==1:
+                return subprocess.CompletedProcess(command,1,"","HTTP 429 secondary rate limit")
+            if len(calls)==2:
+                return subprocess.CompletedProcess(command,0,"[]","")
+            return subprocess.CompletedProcess(command,0,json.dumps(posted),"")
+        with patch.object(ex.subprocess,"run",side_effect=fake_run),patch.object(ex.time,"sleep") as pause:
+            actual=ex.gh(path,post=body)
+        self.assertEqual(actual["id"],9005)
+        self.assertEqual(len(calls),3)
+        pause.assert_called_once_with(4)
+
+    def test_permanent_error_fails_with_actual_api_reason(self):
+        path=f"repos/{intake.REPOSITORY}/issues/{self.issue}/comments"
+        calls=[]
+        def fake_run(command,**kwargs):
+            calls.append(command)
+            if len(calls)==1:
+                return subprocess.CompletedProcess(command,1,"","HTTP 422 Validation Failed: body invalid")
+            return subprocess.CompletedProcess(command,0,"[]","")
+        with patch.object(ex.subprocess,"run",side_effect=fake_run):
+            with self.assertRaisesRegex(ValueError,"HTTP 422 Validation Failed"):
+                ex.gh(path,post=json.dumps({"body":"bad body"}))
+        self.assertEqual(len(calls),2)
+
+    def test_unreadable_probe_blocks_an_uncertain_write(self):
+        path=f"repos/{intake.REPOSITORY}/issues/{self.issue}/comments"
+        post=json.dumps({"body":"source report"})
+        calls=[]
+        def fake_run(command,**kwargs):
+            calls.append(command)
+            return subprocess.CompletedProcess(command,1,"","HTTP 503 unavailable")
+        with patch.object(ex.subprocess,"run",side_effect=fake_run),patch.object(ex.time,"sleep"):
+            with self.assertRaisesRegex(ValueError,"duplicate-safe probe failed"):
+                ex.gh(path,post=post)
+        self.assertEqual(sum("--method" in x for x in calls),4)
 
 
 if __name__=="__main__":
