@@ -99,6 +99,28 @@ def test_tensor_differential_and_dual():
     print(f"FIELD_COMPLEX_DUAL_TRANSPOSE_AND_KOSZUL_PASS tensor_basis={visited}")
 
 
+def test_continuous_field_contraction_polynomial_controls():
+    # Finite polynomial restrictions of the actual second-antiderivative homotopy.
+    checked = 0
+    for cap in range(2, 9):
+        for coefficients in product(range(-1, 2), repeat=min(cap + 1, 4)):
+            polynomial = tuple(map(Fraction, coefficients)) + (Fraction(0),) * (
+                cap + 1 - len(coefficients))
+            d2 = tuple(
+                Fraction(k * (k - 1)) * polynomial[k]
+                for k in range(2, cap + 1)
+            )
+            t_d2 = (Fraction(0), Fraction(0)) + tuple(
+                d2[j] / Fraction((j + 1) * (j + 2))
+                for j in range(len(d2))
+            )
+            assert t_d2 == (Fraction(0), Fraction(0)) + polynomial[2:]
+            affine = tuple(polynomial[j] - t_d2[j] for j in range(cap + 1))
+            assert affine == polynomial[:2] + (Fraction(0),) * (cap - 1)
+            checked += 1
+    print(f"FIELD_INTEGRATION_RETRACTION_PASS polynomial_cases={checked}")
+
+
 def test_covariant_extension_by_zero():
     # Inclusion of field coordinates of smaller interval V into U has dual
     # extension-by-zero from finite-mode distributions of V to those of U.
@@ -116,4 +138,5 @@ if __name__ == "__main__":
     test_variance_obstruction()
     test_tensor_differential_and_dual()
     test_covariant_extension_by_zero()
+    test_continuous_field_contraction_polynomial_controls()
     print("EXT-015D-026 EXACT FINITE REGRESSIONS PASS (not infinite analytic proof)")
