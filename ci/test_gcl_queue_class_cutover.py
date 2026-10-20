@@ -26,7 +26,7 @@ def project():
       "fields":{"nodes":[{"id":QUEUE_FIELD_ID,"name":"Queue Class",
         "options":[{"id":"optE","name":"Editorial"},{"id":"optM","name":"Mathematics"}]}]},
       "views":{"nodes":[{"id":AVAILABLE_VIEW_ID,"name":"AVAILABLE",
-                            "filter":'is:open "GCL State":AVAILABLE'}]}
+                            "filter":'is:open label:gcl-state:available'}]}
     }
 
 class Contract(unittest.TestCase):
@@ -132,6 +132,35 @@ class Contract(unittest.TestCase):
             run.return_value=Mock(returncode=1,stderr="rate limited",stdout="")
             with self.assertRaisesRegex(RuntimeError,"preflight unavailable"):
                 guard_project_api_budget(200)
+
+    def test_erdos41_exact_math_direct_route_and_legacy_view_rejection(self):
+        tracks=[
+            (2790, "ERDOS-041-R41-A — fourth-order overlap propagation or counterexample", "gcl-role:constructive"),
+            (2791, "ERDOS-041-R41-B — prove or refute a scale-owned capacity invariant", "gcl-role:constructive"),
+            (2792, "ERDOS-041-R41-C — independent Pauli-level proof audit and falsification", "gcl-role:verify"),
+            (2793, "ERDOS-041-R41-D — spectral moment-flow renormalization experiment", "gcl-role:constructive"),
+        ]
+        for n,title,role in tracks:
+            with self.subTest(n=n):
+                labels=["gcl-job",DIRECT,"gcl-collab:cooperative",role,"gcl-state:available"]
+                good=make_item(n,"grandchallenge/MATH-PROGRAMME",title,labels,"Mathematics")
+                self.assertEqual(classify(good),("Mathematics","direct_editorial"))
+                self.assertEqual(prepare(project(),[good])[0],[])
+                for bad_change in ("number","title","role","pickup","collab"):
+                    bad=json.loads(json.dumps(good))
+                    if bad_change=="number":bad["content"]["number"]=n+100
+                    elif bad_change=="title":bad["content"]["title"]=title+" FALSE"
+                    elif bad_change in ("role","pickup","collab"):
+                        drop={"role":role,"pickup":DIRECT,"collab":"gcl-collab:cooperative"}[bad_change]
+                        nodes=[x for x in bad["content"]["labels"]["nodes"] if x["name"]!=drop]
+                        bad["content"]["labels"]["nodes"]=nodes
+                        bad["content"]["labels"]["totalCount"]=len(nodes)
+                    with self.assertRaises(ValueError):
+                        classify(bad)
+        stale=project()
+        stale["views"]["nodes"][0]["filter"]='is:open "GCL State":AVAILABLE'
+        with self.assertRaisesRegex(ValueError,"global AVAILABLE filter drift"):
+            prepare(stale,[])
 
     def test_cross_class_same_pickup(self):
         src=make_item(1273,"grandchallenge/MATH-PROGRAMME",

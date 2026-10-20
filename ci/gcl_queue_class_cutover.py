@@ -24,10 +24,18 @@ OWNER, NUMBER = "grandchallenge", 2
 PROJECT_ID = "PVT_kwDOB9Ao_c4Blwur"
 QUEUE_FIELD_ID = "PVTSSF_lADOB9Ao_c4BlwurzhlJkjI"
 AVAILABLE_VIEW_ID = "PVTV_lADOB9Ao_c4BlwurzgL64bo"
+AVAILABLE_FILTER = "is:open label:gcl-state:available"
 DIRECT = "gcl-pickup:direct-editorial"
 SOURCE_ROLE = "gcl-role:source-audit"
 ERDOS = re.compile(r"^(?:\[GCL-ERDOS\]\s+)?ERDOS-CATALOGUE-\d{4}-S\d{2}\b")
 ROLLING_ROSTER = Path(__file__).resolve().parents[1] / "governance/erdos_catalogue/ROLLING_RESEARCH_024.json"
+R41_TRACKS = {
+    2790: ("ERDOS-041-R41-A — fourth-order overlap propagation or counterexample", "gcl-role:constructive"),
+    2791: ("ERDOS-041-R41-B — prove or refute a scale-owned capacity invariant", "gcl-role:constructive"),
+    2792: ("ERDOS-041-R41-C — independent Pauli-level proof audit and falsification", "gcl-role:verify"),
+    2793: ("ERDOS-041-R41-D — spectral moment-flow renormalization experiment", "gcl-role:constructive"),
+}
+
 
 def protected_rolling_critics() -> dict[int,int]:
     """Exact protected source-semantic critic docket mapping: issue -> Erdős ID."""
@@ -201,6 +209,13 @@ def classify(item: dict) -> tuple[str,str]:
         raise ValueError(f"{repo}#{number}: closed editorial source identity drift")
     if pickup!={DIRECT}:
         raise ValueError(f"{repo}#{number}: missing/contradictory direct pickup label")
+    if repo=="grandchallenge/MATH-PROGRAMME" and (
+            number in R41_TRACKS or title.startswith("ERDOS-041-R41-")):
+        bound=R41_TRACKS.get(number)
+        if (not bound or title!=bound[0] or bound[1] not in names
+                or "gcl-collab:cooperative" not in names):
+            raise ValueError(f"{repo}#{number}: protected ERDOS-041 research specialist identity drift")
+        return "Mathematics",mode
     source=SOURCE_ROLE in names
     tagged=bool(ERDOS.match(title))
     # Exact protected editorial typography inventories, despite source role.
@@ -241,7 +256,7 @@ def prepare(project:dict, items:list[dict]) -> tuple[list[dict],dict]:
     views={v["name"]:v for v in project["views"]["nodes"] if v}
     if "AVAILABLE" not in views or views["AVAILABLE"]["id"]!=AVAILABLE_VIEW_ID:
         raise ValueError("global AVAILABLE view changed; no mutation")
-    if views["AVAILABLE"].get("filter")!='is:open "GCL State":AVAILABLE':
+    if views["AVAILABLE"].get("filter")!=AVAILABLE_FILTER:
         raise ValueError("global AVAILABLE filter drift")
     for name in VIEW_FILTERS:
         if [v["name"] for v in project["views"]["nodes"] if v].count(name)>1:
