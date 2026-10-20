@@ -36,7 +36,7 @@ C_{\mathrm{completed}}
 \tag{21.3}
 $$
 
-The canonical map $C_{\mathrm{naive}}\to C_{\mathrm{completed}}$ is injective. Its image consists exactly of families $(x_w)_w$ for which **one common support stage $b$** contains every $x_w$ (and a cochain representative of each of its finitely many nonzero cohomological-degree components). It induces an isomorphism modulo $F^N$ for **every** finite $N$, so its image is dense in the filtration topology. It is surjective exactly when all families admit a common support stage.
+The canonical map $C_{\mathrm{naive}}\to C_{\mathrm{completed}}$ is injective. Its image consists exactly of families $(x_w)_w$ for which **one common support stage $b$** contains every $x_w$ (with coordinatewise representatives). It induces an isomorphism modulo $F^N$ for **every** finite $N$, so its image is dense in the filtration topology. It is surjective exactly when all families admit a common support stage.
 
 **Proof.** Filtered colimits commute with finite direct sums of complexes of real vector spaces. Thus for each finite $N$,
 
@@ -82,6 +82,61 @@ $$
 **Proof.** $C_b$ consists of the first $b+1$ coordinates, so the union has finite coordinate support. The finite $N$ truncation at sufficiently large $b$ is $\mathbb R^N$, and inverse limit over $N$ is the full product. The constant sequence $(1,1,\ldots)$ is a concrete element of the product not belonging to any $C_b$. With zero differential the failure occurs already in $H^0$. $\square$
 
 **Scope:** This is **not** a counterexample to the completed-colimit construction of Costello–Gwilliam; it demonstrates precisely why their Definition B.6.0.8 completes it. It is not a refutation of EXT-015C's finite-support first-Ext theorem, which concerns each *individual* extension class without a simultaneous unbounded weight family.
+
+### Theorem 21.2a — the failure occurs for the actual liquid test-function output and fixed source
+
+The preceding phenomenon is **not** limited to the toy scalar model. In the actual real liquid category take the admitted compact-support filtration
+
+$
+G_b=\underline{\mathcal D_{[-b,b]}(\mathbb R)},
+\qquad G=\varinjlim_bG_b
+=\underline{\mathcal D(\mathbb R)}.
+$
+
+Consider weight-complete *degree-zero* coefficient objects $W_b=\prod_{w\ge0}G_b$, with the usual tail weight filtration. The canonical map of real liquid modules
+
+$
+\alpha:\varinjlim_b\prod_{w\ge0}G_b
+\longrightarrow
+\prod_{w\ge0}\varinjlim_bG_b
+=\prod_{w\ge0}G
+\tag{21.6a}
+$
+
+is monic but **not epic**. Indeed, choose mutually separated nonzero test functions $\phi_w$ supported in intervals near $3w$. Their tuple $(\phi_w)_w$ defines a global section of the right-hand product. A global section of the left-hand filtered colimit is represented at a **single** cutoff $b$, and all its components have support in $[-b,b]$. The displayed tuple has no such bound. Evaluation on the singleton is an exact functor on real liquid modules, since $\underline{\mathbb R}$ is a compact projective generator on that test object. If $\alpha$ were epic, its map on singleton sections would be surjective; hence it is not epic.
+
+This remains an obstruction for the **same fixed source** as EXT-015C. Choose a nonzero continuous real linear functional $\lambda:\mathcal D_{[-1,1]}(\mathbb R)\to\mathbb R$, for example evaluation at $0$. Define the liquid morphism
+
+$
+f:H\longrightarrow\prod_{w\ge0}G,
+\qquad
+f(h)=(\lambda(h)\phi_w)_{w\ge0}.
+\tag{21.6b}
+$
+
+It is a genuine liquid morphism by the product universal property. If it factored through $\prod_wG_b$ for some $b$, evaluating at a test function $h$ with $\lambda(h)=1$ would give the forbidden uniform support bound on all $\phi_w$. Therefore
+
+$
+\varinjlim_b\mathrm{Hom}_{\mathcal A_p}
+\left(H,\prod_wG_b\right)
+\longrightarrow
+\mathrm{Hom}_{\mathcal A_p}
+\left(H,\prod_wG\right)
+\tag{21.6c}
+$
+
+is **not surjective**, although every finite-weight truncation of this comparison **is an isomorphism** by [LFO-013](../LFO3_SURJECTIVITY_THEOREM_013.md), finite products, and the exact finite-stage support argument.
+
+The correct completed finite-weight support colimit is instead
+
+$
+\varprojlim_N\varinjlim_b
+\left(\prod_{w<N}G_b\right)
+\cong\prod_wG.
+\tag{21.6d}
+$
+
+Thus the **actual GCL source and output** already demonstrate that uncompleted support colimit and weight completion cannot be interchanged at **degree zero**. This is not a contradiction of theorem 019: the new coefficient object is an infinite weight product rather than one copy of $G$. The mathematical lesson is mandatory completion **after** taking the support colimit, not an assertion that Costello–Gwilliam's completed construction fails.
 
 ## 3. A separate higher-derived limit obstruction
 
