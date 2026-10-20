@@ -253,5 +253,37 @@ class ReciprocalMulticontainerEscapeTests(unittest.TestCase):
                         annulus_bins)
 
 
+    def test_shared_alphabet_density_decreases_with_tag_count(self):
+        # A REAL B3 construction from one common finite B3 dictionary.
+        # Validate the proved O(1/h) upper bound on its normalized
+        # density at the right edge; no infinite B3 carrier is claimed.
+        for h in range(2,13):
+            p=next_prime_at_least(2*h)
+            R,tags,groups,A=many_tagged_cohorts(h,p)
+            last=max(A)
+            T=tags[-1]
+            lower_tag_span=(comb(h+2,3)-1)
+            with self.subTest(h=h,p=p):
+                self.assertTrue(is_b3(A))
+                self.assertGreaterEqual(3*T+1,comb(h+2,3))
+                self.assertGreaterEqual(last,4*R*T+1)
+                self.assertLessEqual(len(A)**3,18*R)
+                self.assertLessEqual(
+                    2*len(A)**3*lower_tag_span,27*last)
+                minimum=min(map(len,groups))
+                self.assertLessEqual((h*minimum)**3,18*R)
+
+    def test_same_alphabet_fixed_density_forces_finite_tag_count(self):
+        # This is a conditional theorem for common-alphabet factorized
+        # B3 constructions, not for arbitrary infinite B3 sets.
+        for h in range(2,10):
+            p=next_prime_at_least(3*h)
+            R,tags,groups,A=many_tagged_cohorts(h,p)
+            m=min(map(len,groups))
+            # If c = m / R^(1/3), then h <=18^(1/3)/c.
+            self.assertLessEqual(h**3*m**3,18*R)
+            self.assertEqual(sum(map(len,groups)),len(A))
+
+
 if __name__=="__main__":
     unittest.main()
