@@ -5,7 +5,7 @@ hide:
 
 # OpenAI Ten Proofs
 
-<p class="page-deck">An independent, protected-main verification of the exact supplied Lean formalizations for all ten advertised results.</p>
+<p class="page-deck">Ten supplied mathematical proof files were checked with Lean, software that verifies formal reasoning. Here is what passed, and why that is different from independently re-proving every claim in the accompanying written explanations.</p>
 
 <div class="showcase-declaration">
   <span>Public disposition</span>
@@ -17,6 +17,18 @@ hide:
   <span class="claim-status claim-status--certified">Independently reviewed</span>
   <span class="claim-status claim-status--certified">Protected replay passed</span>
 </div>
+
+## What was checked?
+
+The [OpenAI Ten Proofs project](https://github.com/openai/ten-proofs) includes mathematical results expressed in **Lean**, a proof assistant. In Lean, a mathematical statement and its proof are written in a form that a small trusted checker can examine.
+
+GCL independently rebuilt **all ten supplied proof files** and confirmed that **twelve principal declarations** were accepted by the Lean checker. This is stronger than merely running examples or observing that an argument looks plausible: the formal system checked the statements against their declared assumptions and dependencies.
+
+It is also narrower than saying that GCL discovered ten new theorems or reverified every sentence of the project's written explanation. The check applies to the **exact formal statements** in a recorded version of the software and mathematical libraries. Substantially different wording or stronger claims require their own evidence.
+
+### Why keep the exact record?
+
+Software and mathematical libraries can change. Recording the source version, Lean version and dependencies lets another researcher repeat the check on the same material. The technical tables below preserve that information for specialists.
 
 ## The exact subject
 

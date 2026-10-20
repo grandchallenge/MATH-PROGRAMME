@@ -1,5 +1,15 @@
 # Domain 07 · P versus NP
 
+## The question in everyday language
+
+Some problems have answers that are easy to check even though finding an answer appears difficult. The P versus NP question asks whether every problem with efficiently checkable answers can also be solved efficiently.
+
+A successful answer must apply to a carefully defined class of problems and to the way computational time grows with input length. A fast program for a handful of examples would not resolve the question.
+
+GCL has organized precise definitions, useful equivalences and common mistakes in proposed proofs. **What remains uncertain:** no proof of P = NP or P ≠ NP has emerged from this work.
+
+## Detailed research record
+
 **Accessible research guide:** [PNP-001 Research Guide](PNP_001_RESEARCH_GUIDE.md)
 
 

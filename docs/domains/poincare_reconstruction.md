@@ -1,5 +1,15 @@
 # Domain 05 · Poincaré Reconstruction Archive
 
+## The question in everyday language
+
+Imagine a three-dimensional space that is finite and has no boundary. What properties would tell us that its underlying shape is that of a three-dimensional sphere? The Poincaré conjecture answered this question, and the theorem was established through work associated with Richard Hamilton and Grigori Perelman.
+
+This archive retraces that already-solved achievement. Its purpose is to make the reasoning and original sources easier to examine, not to announce a new solution.
+
+**What remains uncertain about this archive:** a reconstruction of sources and selected checked steps is not the same as an independent, machine-checked proof of the entire theorem.
+
+## Detailed research record
+
 **Campaign ID:** `PC-001`  
 **Mathematical status:** solved classical theorem  
 **Programme state:** qualified archival maintenance  

@@ -1,5 +1,15 @@
 # Domain 08 · Riemann Hypothesis
 
+## The question in everyday language
+
+Prime numbers seem irregular, yet their distribution is connected to a remarkable mathematical function called the Riemann zeta function. The Riemann Hypothesis predicts where certain zeros of this function must lie. It is one of the most important unsolved questions in mathematics.
+
+GCL has assembled the definitions, historical results and common weaknesses in attempted proofs. Checking many zeros by computer cannot settle a claim about every zero.
+
+**What remains uncertain:** the conjecture is open. Completed software or documentary checks do not mean that a proof has been accepted; the exact limits of the earlier work are stated in the technical record below.
+
+## Detailed research record
+
 
 !!! info "Research surface authority"
     **LIVE:** [RH-001 canonical tracker #163](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), with route trackers in MATHSOLVE.  

@@ -1,4 +1,28 @@
-# OPENMATH-2026 — Current Campaign State
+# OpenMath 2026: What Happened and What Comes Next
+
+<p class="page-deck">Seven difficult mathematical questions, one short research competition, and several lines of inquiry that continue after the event ended.</p>
+
+## What happened?
+
+GCL took part in the OpenMath 2026 research effort, investigating questions about geometry, computer programs, graph theory, number sequences, inequalities, matrix multiplication and a problem posed by Paul Erdős.
+
+The competition closed on **2 October 2026** with **no official submissions and no official acceptances from GCL**. That does not erase the value of the research, but it sets an important limit: a calculation, a submitted research note or a promising partial argument is not a successful competition entry or a proof of the original problem.
+
+Seven research directions were retained. In some, the next mathematical question is clear; in others, the original source or an essential assumption still needs to be established before more work would be justified.
+
+## What was learned?
+
+- An arrangement of lines or graphs can satisfy many examples without proving the general case.
+- Exploring the behavior of small computer programs is useful, but an exhausted search cannot be repeated indefinitely as though it provided new evidence.
+- A mathematical question with unresolved source definitions, such as the fourth topic, must remain blocked until its statement is clear.
+- The seventh topic, **Erdős Problem 3**, became the separate **GCL-ERDOS3** research programme. A decisive connection between reciprocal sums and arithmetic progressions remains unproved.
+
+The [research agenda](OPENMATH_2026_RESEARCH_AGENDA.md) explains the questions that survived and why they remain difficult.
+
+## Historical research record
+
+The original competition and subsequent work are documented below. The numbered topics **H1–H7** identify those seven lines of inquiry, not seven solved theorems. Administrative terms describe how contributions were received and checked; they are not claims about mathematical truth.
+
 
 
 !!! info "Research surface authority"
