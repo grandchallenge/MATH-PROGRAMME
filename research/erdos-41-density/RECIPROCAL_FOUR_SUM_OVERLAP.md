@@ -134,9 +134,9 @@ The short, reciprocal and far distance bands have 112, 194 and 97 distinct posit
 
 A concrete nontrivial witness is
 
-$
+$$
 1+1+1033+1125=2+14+1072+1072=2160.
-$
+$$
 
 The two four-term multisets have no common element, so no term can be cancelled to obtain a forbidden three-term equality.
 
