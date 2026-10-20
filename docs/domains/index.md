@@ -39,4 +39,6 @@ To understand what GCL has actually established, consult the linked research and
 
 For specialists, the [domain registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_REGISTRY.yaml) preserves the established list of domains and their source references. The registry records classification and continuity; the mathematical standing of each claim rests with its proofs and sources.
 
+**Riemann Hypothesis verification note.** The original technical record states: `WP01/WP02 implemented, merged, and CI-passed, with formal promotion withheld`. This means those preliminary checks were completed, **not** that the Riemann Hypothesis has been proved or that the relevant results have been formally accepted.
+
 For readers matching these subjects to internal research records, the established campaign identifiers are `UC`, `NS-CI-001`, `HC-001`, `BSD-001`, `PC-001`, `YM-001`, `PNP-001` and `RH-001`, in the same order as the table above. They are reference codes, not mathematical results.
