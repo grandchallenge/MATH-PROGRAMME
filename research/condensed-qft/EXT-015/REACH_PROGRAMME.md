@@ -100,6 +100,17 @@ $$
 
 **Immediate executable order:** (1) critique PR #2788 on exact bytes; (2) in parallel prove the singular extension and inspect actual K0 projective relations; (3) establish the normal-topology DVS after the audit; (4) proceed to multi-diagonal renormalization, B.6 completion and liquid degree-two conclusion; (5) integrate only admitted mathematical results.
 
+
+## Exact planned queue inventory
+
+- **R0:** [Issue #2795, independent hostile D21 audit](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2795); first mathematical certification gate.
+- **R1:** [Issue #2796, normal-topology DVS and B.6 Weiss](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796); analytic foundation after R0.
+- **R2:** [Issue #2797, singular renormalization and BV counterterms](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797); the elementary extension may begin immediately.
+- **R3:** [Issue #2798, genuine first liquid syzygy Ext comparison](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798); independent of D21 and R2.
+- **R4 integration:** remains with [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), and is **not** an additional prematurely issued work item.
+
+All four new issues are **PLANNED** until legitimate worker/Project dispatch through existing authenticated GCL control; issue creation alone changes no Project status, lease or certification.
+
 ## Primary literature
 
 - [Scholze, Lectures on Analytic Geometry, Theorem 6.5](https://people.mpim-bonn.mpg.de/scholze/Analytic.pdf) (real liquid projectives and derived framework).
