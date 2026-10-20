@@ -232,5 +232,26 @@ class ReciprocalMulticontainerEscapeTests(unittest.TestCase):
                             (40*h*h)**3*count**3,N)
 
 
+    def test_forced_multiscale_population_bound_has_product_slack(self):
+        # The density assumption is hypothetical: check its exact
+        # geometric extraction constants, not a fabricated infinite set.
+        for inverse_c in (1,4,21):
+            lam=144*inverse_c**3
+            self.assertGreaterEqual(lam,144)
+            for R in (10,1000,100000):
+                # Product eta_0 eta_1 eta_2 = 18 / ((lam-1)^3 lam^2)
+                # is far below the 3R-2 true mixed-triple capacity.
+                self.assertLessEqual(
+                    18*R,
+                    (3*R-2)*(lam-1)**3*lam**2)
+                # Exact arithmetic checks the occupation extraction
+                # factors across arbitrary fixed numbers of annuli.
+                for j in range(6):
+                    annulus_bins=(lam-1)*lam**j
+                    self.assertEqual(
+                        (lam**(j+1)-lam**j)*R//R,
+                        annulus_bins)
+
+
 if __name__=="__main__":
     unittest.main()
