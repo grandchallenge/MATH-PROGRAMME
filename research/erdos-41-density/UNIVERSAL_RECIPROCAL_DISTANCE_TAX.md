@@ -53,12 +53,12 @@ Every old pair sum lies in [2,2R], whence D(P) subset [1,2R−2]. Since T(P) sub
 
 **Exhaustiveness audit (strengthens Theorem A from a lower bound to equality).** Every pair of unordered sums in the enlarged set $Q(P')=Q(P)\,\dot\cup\,(y+P)\,\dot\cup\,\{2y\}$ falls into exactly one of six type pairs. Differences within $Q(P)$ are $D(P)$; differences within $y+P$ are positive differences $P-P\subset D(P)$, because for fixed $t\in P$, $(p+t)-(p'+t)=p-p'$. Differences between $y+P$ and $Q(P)$ are exactly $y-T(P)$. Differences between $\{2y\}$ and $Q(P)$ are exactly $2y-Q(P)$. Finally differences between $\{2y\}$ and $y+P$ are $y-P\subseteq y-T(P)$ because $P\subseteq T(P)$. Thus there are **no other types of new difference** and
 
-$
+$$
 \boxed{
 D(P\cup\{y\})=
 D(P)\;\dot\cup\;(y-T(P))\;\dot\cup\;(2y-Q(P)).
 }\tag{COMPLETE-DIFFERENCE-DECOMPOSITION}
-$
+$$
 
 The three pieces are pairwise disjoint for $y>4R$. This exact identity establishes that the cubic increment $(n^3+3n)/2$ is **the whole one-anchor contribution**, not a conservative estimate with missing hidden differences.
 
@@ -153,40 +153,40 @@ The universal distance increment can now be audited against its entire scalar am
 
 **Proposition C (critical-order occupancy and all charged distance volumes remain compatible).** Fix any $0<c\le 1/2$ and integer $R_0\ge\max(10,\lceil c^{-3}\rceil)$. For all $j\ge0$ define the abstract numerical sequences
 
-$
+$$
 R_j=5^j R_0,\qquad
 n_j=\lceil cR_j^{1/3}\rceil,\qquad
 d_0=0,\qquad
 d_h=\frac12\sum_{j<h}(n_j^3+3n_j).
-$
+$$
 
 Then, for **every** $h\ge1$ simultaneously,
 
-$
+$$
 \boxed{
 n_j\ge cR_j^{1/3},\qquad
 4R_j<R_{j+1}\le K_cR_j,\qquad
 d_h<2R_h-2.
 }\tag{SCALAR-NO-OVERLOAD}
-$
+$$
 
 Moreover $d_{j+1}-d_j=(n_j^3+3n_j)/2$ is precisely the **exact** charge from one distant anchor. Thus the numerical inequalities in Theorem B, the persistent-density lower bound, the bounded-ratio requirement, and the $O(R_h)$ capacity upper bound are all jointly feasible indefinitely at the scalar level.
 
 **Proof.** Since $R_j\ge c^{-3}$, the ceiling gives $n_j\le2cR_j^{1/3}$. Then
 
-$
+$$
 \frac{n_j^3+3n_j}{2}
 \le 4c^3R_j+3cR_j^{1/3}
 \le7c^3R_j.
-$
+$$
 
 The last bound follows from $R_j^{2/3}\ge c^{-2}$. Summing a geometric series,
 
-$
+$$
 d_h\le7c^3\sum_{j<h}R_j
 <\frac{7c^3}{4}R_h
 \le\frac7{32}R_h<2R_h-2.
-$
+$$
 
 Here $R_h\ge50$, so the final inequality is immediate. Also $R_{j+1}=5R_j$ and $K_c=\lceil(5/c)^3\rceil\ge125>5$. QED.
 
