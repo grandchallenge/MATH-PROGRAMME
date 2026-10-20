@@ -33,7 +33,7 @@ def check_roos_witnesses() -> None:
             diff = tuple(u - v for u, v in zip(a[n], a[n + 1]))
             unit = tuple(1 if j == n else 0 for j in range(cutoff))
             assert diff == unit
-            assert all(a[n][j] == 0 for j < n)
+            assert all(a[n][j] == 0 for j in range(n))
         assert sum(bool(x) for x in a[0]) == cutoff
     print("ROOS_TAIL_WITNESS_PASS: support cost grows with truncation")
 
