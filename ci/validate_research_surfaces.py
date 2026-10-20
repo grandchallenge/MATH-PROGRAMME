@@ -42,6 +42,29 @@ def _nav_paths(node: Any) -> set[str]:
     return out
 
 
+def _published_reference_paths(nav: set[str]) -> set[str]:
+    """Allow research guides indexed by a visible, governed reference page.
+
+    Primary research surfaces remain mandatory public pages. Their supporting
+    guides may appear in one of the reference indexes rather than the menu.
+    """
+    indexed: set[str] = set()
+    for catalogue in (
+        "archives/research.md", "archives/results.md",
+        "archives/methods.md", "archives/publications.md",
+        "archives/governance.md",
+    ):
+        if catalogue not in nav:
+            continue
+        file = ROOT / "docs" / catalogue
+        if not file.is_file():
+            continue
+        for path in re.findall(r"\]\(\.\./([A-Za-z0-9_./-]+\.md)\)", file.read_text(encoding="utf-8")):
+            if (ROOT / "docs" / path).is_file():
+                indexed.add(path)
+    return nav | indexed
+
+
 def _mature_exposition_relation_errors(row: dict[str, Any], primary_text: str, guide_text: str) -> list[str]:
     """Fail closed on machine-checkable drift for surfaces with a PRESENT reader handoff.
 
@@ -105,6 +128,7 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
         errors.append(f"registry: active governed campaign missing research surface: {campaign_id}")
 
     nav = _nav_paths(yaml.safe_load(MKDOCS.read_text(encoding="utf-8")).get("nav", []))
+    public_paths = _published_reference_paths(nav)
 
     for row in data.get("surfaces", []):
         cid = row.get("campaign_id", "<unknown>")
@@ -121,7 +145,7 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
                 errors.append(f"{cid}: exposition page missing: {page}")
                 continue
             nav_ref = page.removeprefix("docs/")
-            if nav_ref not in nav:
+            if nav_ref not in public_paths:
                 errors.append(f"{cid}: exposition page missing from mkdocs nav: {nav_ref}")
             text = p.read_text(encoding="utf-8")
             if "Research surface authority" not in text:
@@ -144,7 +168,7 @@ def validate(registry: dict[str, Any] | None = None) -> list[str]:
             gp = ROOT / guide
             if not gp.is_file():
                 errors.append(f"{cid}: research guide missing: {guide}")
-            elif guide.removeprefix("docs/") not in nav:
+            elif guide.removeprefix("docs/") not in public_paths:
                 errors.append(f"{cid}: research guide missing from mkdocs nav: {guide}")
             else:
                 gtext = gp.read_text(encoding="utf-8")
