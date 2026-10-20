@@ -166,7 +166,7 @@ W_{\epsilon,V}
 \tag{28.13}
 $$
 
-Then the collection $(A_{\mathrm{dist}}(U)[[\hbar]],d_\epsilon,\mu^{(\epsilon)})$ is a genuine **smooth formal prefactorization algebra, complete in** $\hbar$ differentiable prefactorization algebra** at every fixed $\epsilon>0$. Its structure maps are chain maps, associative and equivariant under permutations, compatible with open inclusions and smoothly multilinear on the DVS parameter plots. Reduction modulo $\hbar$ is the original classical distributional prefactorization algebra.
+Then the collection $(A_{\mathrm{dist}}(U)[[\hbar]],d_\epsilon,\mu^{(\epsilon)})$ is a genuine **smooth differentiable prefactorization algebra, formally complete in powers of** $\hbar$, at every fixed $\epsilon>0$. Its structure maps are chain maps, associative and equivariant under permutations, compatible with open inclusions and smoothly multilinear on the DVS parameter plots. Reduction modulo $\hbar$ is the original classical distributional prefactorization algebra.
 
 **Proof.** The Baker–Campbell–Hausdorff series truncates after the first commutator because of (28.9):
 
@@ -239,7 +239,7 @@ This result does **not** claim that UV renormalization is impossible. It proves 
 | D14-H: higher original target-valued liquid Ext stage comparison | REDUCED EXACTLY to syzygy first-Ext stage comparison in each degree; NOT SOLVED for syzygies |
 | D14-BV: positive-scale BV on arbitrary compact distributional polynomial kernels | CONSTRUCTED and PROVED for every $\epsilon>0$ |
 | D14-LOC: ordinary disjoint-open multiplication is a quantum cochain map for every smoothing kernel | **REFUTED** for every nonzero smooth kernel |
-| D14-WICK: corrected smooth distributional prefactorization complete in $\hbar$ and scale-change isomorphisms | CONSTRUCTED and PROVED, including exact cocycle |
+| D14-WICK: corrected smooth distributional prefactorization complete in $\hbar$ and scale-change isomorphisms | CONSTRUCTED and PROVED, including exact cocycle and positive-scale Weiss descent |
 | D14-UV: unrestricted zero-scale limit exists | **REFUTED**, explicit diagonal divergence |
 | D14-Q: interacting renormalized quantum theory; zero-scale extension with counterterms; higher Ext for original syzygies | OPEN |
 
