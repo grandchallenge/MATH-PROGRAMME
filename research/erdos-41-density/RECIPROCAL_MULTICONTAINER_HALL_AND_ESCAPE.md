@@ -152,34 +152,34 @@ Its last element lies before (4·96h³+1)R<=385h³R. At every N>=R, the first bl
 
 ### Forced multiple future windows under hypothetical persistence
 
-**Theorem D (genuinely populated windows; quantitative weakening).** Assume, hypothetically, an infinite B3 set satisfies \(A(N)\ge cN^{1/3}\) for all sufficiently large N, where \(0<c\le1\). Write \(C_0=18^{1/3}\), and choose an integer \(\Lambda\) satisfying \(c\Lambda^{1/3}\ge2C_0\). For every fixed h and sufficiently large integer R, there exist h disjoint **actual occupied** windows \(J_j\) of exactly R integers, one in each annulus
+**Theorem D (genuinely populated windows; quantitative weakening).** Assume, hypothetically, an infinite B3 set satisfies $A(N)\ge cN^{1/3}$ for all sufficiently large N, where $0<c\le1$. Write $C_0=18^{1/3}$, and choose an integer $\Lambda$ satisfying $c\Lambda^{1/3}\ge2C_0$. For every fixed h and sufficiently large integer R, there exist h disjoint **actual occupied** windows $J_j$ of exactly R integers, one in each annulus
 
-$
+$$
 (\Lambda^jR,\Lambda^{j+1}R],\qquad 0\le j<h,
-$
+$$
 
 whose populations obey
 
-$
+$$
 \boxed{
 |A\cap J_j|\ge
 \frac{C_0}{\Lambda-1}\,
 \Lambda^{-2j/3}R^{1/3}.}
 \tag{FORCED-H-WINDOWS}
-$
+$$
 
-**Proof.** The B3 triple count gives \(A(x)\le C_0x^{1/3}\). Therefore annulus j contains at least \((c\Lambda^{1/3}-C_0)\Lambda^{j/3}R^{1/3}\ge C_0\Lambda^{j/3}R^{1/3}\) points. It consists of precisely \((\Lambda-1)\Lambda^j\) disjoint length-R intervals; pigeonhole proves the displayed population lower bound. QED.
+**Proof.** The B3 triple count gives $A(x)\le C_0x^{1/3}$. Therefore annulus j contains at least $(c\Lambda^{1/3}-C_0)\Lambda^{j/3}R^{1/3}\ge C_0\Lambda^{j/3}R^{1/3}$ points. It consists of precisely $(\Lambda-1)\Lambda^j$ disjoint length-R intervals; pigeonhole proves the displayed population lower bound. QED.
 
-This supplies h **actual** successive occupied containers without positioning assumptions. But their guaranteed **local density coefficients** decline by \(\Lambda^{-2j/3}\). For the first three, the lower bound on their product is only
+This supplies h **actual** successive occupied containers without positioning assumptions. But their guaranteed **local density coefficients** decline by $\Lambda^{-2j/3}$. For the first three, the lower bound on their product is only
 
-$
+$$
 \left(\frac{C_0}{\Lambda-1}\right)^3
 \Lambda^{-2}\,R
 =
 \frac{18R}{\Lambda^2(\Lambda-1)^3},
-$
+$$
 
-whereas the universal reciprocal upper capacity is \(3R-2\). As \(\Lambda\ge144\) for c<=1, these bounds have enormous slack. This calculation does **not** prove the actual blocks cannot be denser or rule out a stronger geometric selection theorem. It shows why combining mere existence of populated windows with the three-container product inequality is insufficient for a contradiction.
+whereas the universal reciprocal upper capacity is $3R-2$. As $\Lambda\ge144$ for c<=1, these bounds have enormous slack. This calculation does **not** prove the actual blocks cannot be denser or rule out a stronger geometric selection theorem. It shows why combining mere existence of populated windows with the three-container product inequality is insufficient for a contradiction.
 
 ## 3. The precise unavoidable multiscale difficulty
 
