@@ -221,10 +221,10 @@ $$
 
 Therefore
 
-$
+$$
 \frac{|A|^3}{N_*}\le\frac{18R}{4RT}
 \le \frac{27/2}{\binom{h+2}{3}-1}
-$
+$$
 
 proving the first bound. If every block has at least $cR^{1/3}$ elements, then $h cR^{1/3}\le |S|\le (18R)^{1/3}$, proving the second. QED.
 
