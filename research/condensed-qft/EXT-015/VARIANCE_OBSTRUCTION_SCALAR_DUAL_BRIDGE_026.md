@@ -1,6 +1,6 @@
 # EXT-015D / 026 — an exact D10 variance obstruction and corrected scalar-valued liquid kernel bridge
 
-**Mathematical disposition:** **PROVED NO-GO** for a weight-preserving quasi-isomorphism between the originally proposed liquid derived mapping objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md) and the actual free-scalar observables of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md). **CONSTRUCTED AND PROVED** a correctly typed, natural identification of their *replacement* underived scalar-valued liquid dual **underlying cochain complexes** with compactly supported distributional polynomial kernels in **all cohomological degrees and finite polynomial weights**. This extends to the product completion as an isomorphism of underlying cochain complexes. It is **not** a derived liquid equivalence or a theorem identifying liquid plots with Costello–Gwilliam DVS smooth plots.
+**Mathematical disposition:** **PROVED NO-GO** for a weight-preserving quasi-isomorphism between the originally proposed liquid derived mapping objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md) and the actual free-scalar observables of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md). **CONSTRUCTED AND PROVED** a correctly typed, natural identification of their *replacement* underived scalar-valued liquid dual **underlying cochain complexes** with compactly supported distributional polynomial kernels in **all cohomological degrees and finite polynomial weights**. This extends to the product completion as an isomorphism of underlying cochain complexes. **Further proved on connected intervals:** the corrected field-source complex has an explicit continuous contraction onto two affine modes; its finite symmetric powers are homotopy equivalent to finite-dimensional projective liquid objects, so their **underived scalar Hom computes genuine derived scalar RHom in every degree**. This is **not** a theorem identifying liquid plots with Costello–Gwilliam DVS smooth plots.
 
 **GCL inputs:** [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md), [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md), [025](AGENT_CRITICAL_REVIEW_FREE_SCALAR_025.md). Source anchors: Costello–Gwilliam, *Factorization Algebras in Quantum Field Theory*, Volume I, §4.2.1, especially **Lemma 4.2.1.1** (printed page 62), and Appendix B.6 (printed pages 469–471), [primary PDF](https://ncatlab.org/nlab/files/CostelloGwilliam-FactorizationAlgebras.pdf). The topological input is the classical nuclear Schwartz kernel theorem for $C^\infty(U)$, with strong continuous dual $\mathcal E'(U)$.
 
@@ -157,7 +157,7 @@ $$
 
 The comparison from Theorem 26.2 is an isomorphism at every weight, natural in $U$, hence their product is an **isomorphism of underlying completed real cochain complexes**, compatible with the decreasing arity-tail filtration. It respects the underlying prefactorization maps at each fixed output arity.
 
-The product comparison is not being promoted to a morphism of complete differentiable **pro**-cochain complexes without an actual natural liquid-to-DVS plot functor. Nonetheless all ordinary cohomological degrees of this **underived** scalar-liquid complex are identified with those of the distributional classical polynomial observables. In particular, for a connected interval, [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md) implies zero cohomology outside degree zero, and the completed cohomology is the formal two-variable series space $\mathbb R[[a,b]]$ in degree zero.
+The product comparison is not being promoted to a morphism of complete differentiable **pro**-cochain complexes without an actual natural liquid-to-DVS plot functor. Nonetheless all ordinary cohomological degrees of this scalar-liquid complex are identified with those of the distributional classical polynomial observables. In particular, for a connected interval, [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md) implies zero cohomology outside degree zero, and the completed cohomology is the formal two-variable series space $\mathbb R[[a,b]]$ in degree zero.
 
 This degreewise exact comparison is stronger than a hypothetical degree-zero numerical analogy, but fundamentally **different** from the degree-zero/degree-one target-support Ext continuity result in [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md).
 
@@ -260,7 +260,7 @@ Additional separate obligations are:
 
 The no-go in Theorem 26.1 and the corrected all-degree scalar-derived result in Theorem 26.4 are compatible: **different, correctly typed objects** support different conclusions.
 
-## 6. Verification ledger
+## 7. Verification ledger
 
 | Question | Verdict |
 | --- | --- |
@@ -268,8 +268,10 @@ The no-go in Theorem 26.1 and the corrected all-degree scalar-derived result in 
 | Correct scalar liquid Hom on completed smooth **field** tensors equals distributional polynomial kernels | **PROVED AS UNDERLYING COMPLEXES**, all finite weights and cochain degrees (26.10) |
 | Natural extension-by-zero, signed permutations and underlying disjoint-open polynomial multiplication | PROVED COMPATIBLE on underlying complexes |
 | Arity-complete products of these underlying cochain complexes | PROVED IDENTICAL by product of the isomorphisms (26.11) |
+| Smooth field complex and finite graded symmetric tensors contract to finite projective liquid objects on connected intervals | PROVED by exact integration homotopy (26.12–26.15) |
 | Canonical identification of their Costello–Gwilliam DVS plots with liquid internal Hom plots | **OPEN; NOT IMPLIED** |
 | Correct field-source scalar liquid Hom versus derived scalar RHom on connected intervals | **PROVED ALL DEGREES** by continuous two-term contraction to finite-dimensional projectives (26.16) |
-| Genuine quantum distributional BV comparison and higher derived Weiss bridge | **OPEN** |
+| Genuinely enriched scalar liquid-to-DVS comparison respecting smooth plots and Weiss operations | **OPEN** |
+| General old-source higher liquid Ext and quantum distributional BV comparison | **OPEN** |
 
 **Next GCL research obligation:** Critically audit the explicit continuous homotopy contraction (26.12–26.16) and its finite symmetric tensor powers. Then construct a **natural plot-preserving enriched liquid scalar mapping functor**, checking DVS smoothness and filtered/Weiss compatibility rather than renaming ordinary liquid Hom as a differentiable mapping object. General old-source Ext and interacting/renormalized quantum observables remain independent open problems. No Human Steward routine approval or extra GitHub account is needed.
