@@ -133,6 +133,23 @@ For R<=N<=5R, all of P_p is already counted, so \(A_p(N)\ge R^{1/3}/12\ge N^{1/3
 
 As p runs through arbitrarily large primes, R tends to infinity. Consequently **no theorem deducing a subcritical future batch solely from three occupied width-R containers of positive critical-order population and their full pairwise reciprocal B3 compatibility can be correct in general**. The construction even supplies a finite factor-17 horizon of genuine positive normalized lower density with c=1/21. A theorem about infinitely many consecutive checkpoints, or a fixed coefficient c over arbitrarily long horizons, is **not refuted**: each constructed set is finite and its normalized counting function becomes zero beyond its last point.
 
+### Arbitrarily many finite compatible containers
+
+**Theorem C (finite-depth escape).** For every integer h>=2, there exist arbitrarily large R and actual finite B3 sets with h disjoint length-R containers, each holding at least \(R^{1/3}/(5h)\) members. If N_* is the end of the last container, then
+
+$
+\boxed{N_*\le385h^3R,\qquad
+A(N)\ge\frac{N^{1/3}}{40h^2}\quad(R\le N\le N_*).}
+$
+
+**Proof.** Choose arbitrarily large primes p>=2h and the p-point B3 moment code S_p in [1,R], with R<12p³. Split its p indices into h nearly equal groups. Each group contains at least floor(p/h)>=p/(2h)>R^(1/3)/(5h) values.
+
+Choose h increasing, nonnegative integer *tags* forming a B3 set, starting at zero, with largest tag below 96h³. For h>=5, use the same moment-code construction at a prime t with h<=t<2h (Bertrand's theorem), retain h tags and subtract their minimum; the resulting span is below 12t³<96h³. For h=2,3,4 simply use the first h entries of {0,1,4,16}. Translate group j by 4R times its tag. Different tag triple sums are separated by at least 4R, whereas sums of three original baseline values vary by less than 3R. Consequently different colour types cannot collide; within a fixed type the global B3 moment code S_p prevents collisions. The entire union is therefore B3.
+
+Its last element lies before (4·96h³+1)R<=385h³R. At every N>=R, the first block already contributes R^(1/3)/(5h) points. Throughout the stated horizon, N^(1/3)<=385^(1/3)hR^(1/3), and 5·385^(1/3)<40. This proves the finite normalized lower bound. QED.
+
+**Critical limitation:** the certified density coefficient decreases like h^(-2). This DOES NOT refute a theorem asserting impossibility at sufficiently large h for each fixed c>0. It proves that no argument using only a fixed finite number of reciprocal compatibility layers can assume an automatic local shortage without tracking the coefficient and the geometric cost of extending the history.
+
 ## 3. The precise unavoidable multiscale difficulty
 
 Theorem A proves that fully reciprocal three-container signed sums impose a **true cardinality cap**, with no alignment assumption. Theorem B shows this cap is of **optimal critical exponent** on arbitrarily large true B3 configurations, even with a substantial finite period of persistent density. Adding container entropy compression cannot turn it into emptiness merely by treating rare choices as impossible.
