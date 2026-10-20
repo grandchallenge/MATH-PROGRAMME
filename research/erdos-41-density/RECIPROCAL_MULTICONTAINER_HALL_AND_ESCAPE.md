@@ -10,7 +10,7 @@ $$
 I_i=[b_i,b_i+R-1]\cap\mathbb Z,\qquad i=0,1,2,
 $$
 
-with arbitrary integer starts and length R. Let \(m_0=|P|=n\), \(m_1=|X|=k\), and \(m_2=|Y|=\ell\). A **triple colour type** is \(\alpha=(\alpha_0,\alpha_1,\alpha_2)\in\mathbb Z_{\ge0}^3\) with \(\alpha_0+\alpha_1+\alpha_2=3\). There are ten types.
+with arbitrary integer starts and length R. Let $m_0=|P|=n$, $m_1=|X|=k$, and $m_2=|Y|=\ell$. A **triple colour type** is $\alpha=(\alpha_0,\alpha_1,\alpha_2)\in\mathbb Z_{\ge0}^3$ with $\alpha_0+\alpha_1+\alpha_2=3$. There are ten types.
 
 For each type define the *exact repeated-summand cardinality*
 
@@ -19,7 +19,7 @@ w_\alpha=\prod_{i=0}^2
 \binom{m_i+\alpha_i-1}{\alpha_i},
 $$
 
-with the standard convention that the factor for \(\alpha_i=0\) is 1. Every selected triple of type \(\alpha\) has sum in
+with the standard convention that the factor for $\alpha_i=0$ is 1. Every selected triple of type $\alpha$ has sum in
 
 $$
 J_\alpha=
@@ -29,7 +29,7 @@ J_\alpha=
 \right]\cap\mathbb Z.
 $$
 
-**Theorem A (complete family of three-container interval-Hall constraints).** For every nonempty subset \(\mathcal F\) of the ten colour types,
+**Theorem A (complete family of three-container interval-Hall constraints).** For every nonempty subset $\mathcal F$ of the ten colour types,
 
 $$
 \boxed{
@@ -39,7 +39,7 @@ $$
 }\tag{THREE-CONTAINER-HALL}
 $$
 
-**Proof.** Each type contains precisely \(w_\alpha\) distinct unordered element triples, including repetitions. Distinct colour types have disjoint underlying triple families. All their three-term sums must be distinct because the **whole** P union X union Y is B3. Their integer values belong to the union of the corresponding \(J_\alpha\). Comparing counts proves the inequality. QED.
+**Proof.** Each type contains precisely $w_\alpha$ distinct unordered element triples, including repetitions. Distinct colour types have disjoint underlying triple families. All their three-term sums must be distinct because the **whole** P union X union Y is B3. Their integer values belong to the union of the corresponding $J_\alpha$. Comparing counts proves the inequality. QED.
 
 This is the full collection of support-only Hall inequalities at the level of **three colour types**. It is *not* sufficient for B3: internal arithmetic collisions can exist even when every interval-capacity inequality holds. Nor is it a global asymptotic criterion; it is a finite necessary condition.
 
@@ -47,9 +47,9 @@ Choosing the three singleton families PPY, XXY, and PXY gives three separate, **
 
 $$
 \begin{aligned}
-\ell\binom{n+1}{2}&\le 2\operatorname{diam}(P)+\operatorname{diam}(Y)+1,\\
-\ell\binom{k+1}{2}&\le 2\operatorname{diam}(X)+\operatorname{diam}(Y)+1,\\
-nk\ell&\le\operatorname{diam}(P)+\operatorname{diam}(X)+\operatorname{diam}(Y)+1.
+\ell\binom{n+1}{2}&\le 2\mathrm{diam}(P)+\mathrm{diam}(Y)+1,\\
+\ell\binom{k+1}{2}&\le 2\mathrm{diam}(X)+\mathrm{diam}(Y)+1,\\
+nk\ell&\le\mathrm{diam}(P)+\mathrm{diam}(X)+\mathrm{diam}(Y)+1.
 \end{aligned}
 $$
 
@@ -65,7 +65,7 @@ $$
 }\tag{RECIPROCAL-TRUE-CARDINALITY-CAP}
 $$
 
-This is an **actual upper bound on the maximum possible future batch cardinality**, valid for every possible arrangement of the future points and every relative spacing of the three occupied windows. If n,k>=c R^(1/3), it implies at most \((3/c^2)R^{1/3}\) future points; the coefficient tightens as the two earlier populations grow. It **does not** improve the *exponent*: the bound remains at precisely the critical order.
+This is an **actual upper bound on the maximum possible future batch cardinality**, valid for every possible arrangement of the future points and every relative spacing of the three occupied windows. If n,k>=c R^(1/3), it implies at most $(3/c^2)R^{1/3}$ future points; the coefficient tightens as the two earlier populations grow. It **does not** improve the *exponent*: the bound remains at precisely the critical order.
 
 For nonuniform widths, the same three inequalities hold with the actual diameters and without the simplifying common-R envelope.
 
@@ -86,9 +86,9 @@ $$
 e_i=1+i+B(i^2\bmod p)+B^2(i^3\bmod p)\in[1,R].
 $$
 
-**Lemma B1 (explicit finite B3 moment code).** \(S_p=\{e_i:0\le i<p\}\) is B3 with repeated summands.
+**Lemma B1 (explicit finite B3 moment code).** $S_p=\{e_i:0\le i<p\}$ is B3 with repeated summands.
 
-**Proof.** Each base-B digit of the sum of ANY three \(e_i-1\) values is smaller than B, so there are no carries. An equality of three e-sums implies equality, modulo p, of the first, second and third power sums of the respective three indices in \(\mathbb F_p\). Since p>3, Newton's identities recover all three elementary symmetric polynomials, hence the monic cubic polynomial with exactly those three roots including multiplicities. The two index multisets coincide, so the original triples coincide. QED.
+**Proof.** Each base-B digit of the sum of ANY three $e_i-1$ values is smaller than B, so there are no carries. An equality of three e-sums implies equality, modulo p, of the first, second and third power sums of the respective three indices in $\mathbb F_p$. Since p>3, Newton's identities recover all three elementary symmetric polynomials, hence the monic cubic polynomial with exactly those three roots including multiplicities. The two index multisets coincide, so the original triples coincide. QED.
 
 Partition the p indices into three consecutive, nonempty groups of sizes
 
@@ -108,7 +108,7 @@ Y_p&=\{4M+e_i:i\text{ in group 2}\}\subseteq[16R+1,17R].
 \end{aligned}
 $$
 
-**Theorem B (three genuine critically populated B3 containers).** The entire \(P_p\cup X_p\cup Y_p\) is B3, and for every sufficiently large (indeed every p>=5) prime p each group satisfies
+**Theorem B (three genuine critically populated B3 containers).** The entire $P_p\cup X_p\cup Y_p$ is B3, and for every sufficiently large (indeed every p>=5) prime p each group satisfies
 
 $$
 \boxed{m_i\ge\tfrac1{12}R^{1/3}\quad(i=0,1,2).}\tag{CRITICAL-THREE-BLOCKS}
@@ -123,24 +123,24 @@ A_p(N)\ge\tfrac1{21}N^{1/3}
 }\tag{FINITE-CRITICAL-HORIZON}
 $$
 
-**Proof.** The tag set {0,1,4} is itself B3. Any triple's physical sum is \(M\) times its tag triple sum, plus a sum of three original e-values. Because the original e-values occupy an interval of diameter below R, two different tag sums differ by at least M=4R>3R, so they cannot collide. With the same tag multiset, equality reduces to a triple-sum equality in the original global B3 set S_p, so the underlying index multisets, and hence the tagged actual triples, coincide. Thus the union is genuinely B3.
+**Proof.** The tag set {0,1,4} is itself B3. Any triple's physical sum is $M$ times its tag triple sum, plus a sum of three original e-values. Because the original e-values occupy an interval of diameter below R, two different tag sums differ by at least M=4R>3R, so they cannot collide. With the same tag multiset, equality reduces to a triple-sum equality in the original global B3 set S_p, so the underlying index multisets, and hence the tagged actual triples, coincide. Thus the union is genuinely B3.
 
-For p>=5, R<12p³ and m_i>=p/5; therefore \(m_i>R^{1/3}/(5\cdot12^{1/3})>R^{1/3}/12\). In fact the latter inequality follows from 5³·12=1500<12³=1728.
+For p>=5, R<12p³ and m_i>=p/5; therefore $m_i>R^{1/3}/(5\cdot12^{1/3})>R^{1/3}/12$. In fact the latter inequality follows from 5³·12=1500<12³=1728.
 
-For R<=N<=5R, all of P_p is already counted, so \(A_p(N)\ge R^{1/3}/12\ge N^{1/3}/(12\cdot5^{1/3})>N^{1/3}/21\). For 5R<=N<=17R, P_p and X_p are both already counted, so \(A_p(N)\ge R^{1/3}/6\ge N^{1/3}/(6\cdot17^{1/3})>N^{1/3}/21\). The strict inequalities follow from \(21^3>12^3\cdot5\) and \(21^3>6^3\cdot17\). QED.
+For R<=N<=5R, all of P_p is already counted, so $A_p(N)\ge R^{1/3}/12\ge N^{1/3}/(12\cdot5^{1/3})>N^{1/3}/21$. For 5R<=N<=17R, P_p and X_p are both already counted, so $A_p(N)\ge R^{1/3}/6\ge N^{1/3}/(6\cdot17^{1/3})>N^{1/3}/21$. The strict inequalities follow from $21^3>12^3\cdot5$ and $21^3>6^3\cdot17$. QED.
 
-**Why the type-Hall constraints do not couple these blocks further.** Every colour-tag triple sum from {0,1,4} is different. Thus the ten intervals \(J_\alpha\) of ALL three-block triple types are **pairwise disjoint** because their starts differ by at least 4R, while each interval has diameter only 3R−3. The full type-Hall system therefore splits into ten independent per-type range constraints. The original moment-code uniqueness satisfies the *internal* arithmetic restrictions as well. These are complete, unabridged \(B_3\) examples: no violated reciprocal signed-sum condition is being concealed.
+**Why the type-Hall constraints do not couple these blocks further.** Every colour-tag triple sum from {0,1,4} is different. Thus the ten intervals $J_\alpha$ of ALL three-block triple types are **pairwise disjoint** because their starts differ by at least 4R, while each interval has diameter only 3R−3. The full type-Hall system therefore splits into ten independent per-type range constraints. The original moment-code uniqueness satisfies the *internal* arithmetic restrictions as well. These are complete, unabridged $B_3$ examples: no violated reciprocal signed-sum condition is being concealed.
 
 As p runs through arbitrarily large primes, R tends to infinity. Consequently **no theorem deducing a subcritical future batch solely from three occupied width-R containers of positive critical-order population and their full pairwise reciprocal B3 compatibility can be correct in general**. The construction even supplies a finite factor-17 horizon of genuine positive normalized lower density with c=1/21. A theorem about infinitely many consecutive checkpoints, or a fixed coefficient c over arbitrarily long horizons, is **not refuted**: each constructed set is finite and its normalized counting function becomes zero beyond its last point.
 
 ### Arbitrarily many finite compatible containers
 
-**Theorem C (finite-depth escape).** For every integer h>=2, there exist arbitrarily large R and actual finite B3 sets with h disjoint length-R containers, each holding at least \(R^{1/3}/(5h)\) members. If N_* is the end of the last container, then
+**Theorem C (finite-depth escape).** For every integer h>=2, there exist arbitrarily large R and actual finite B3 sets with h disjoint length-R containers, each holding at least $R^{1/3}/(5h)$ members. If N_* is the end of the last container, then
 
-$
+$$
 \boxed{N_*\le385h^3R,\qquad
 A(N)\ge\frac{N^{1/3}}{40h^2}\quad(R\le N\le N_*).}
-$
+$$
 
 **Proof.** Choose arbitrarily large primes p>=2h and the p-point B3 moment code S_p in [1,R], with R<12p³. Split its p indices into h nearly equal groups. Each group contains at least floor(p/h)>=p/(2h)>R^(1/3)/(5h) values.
 
