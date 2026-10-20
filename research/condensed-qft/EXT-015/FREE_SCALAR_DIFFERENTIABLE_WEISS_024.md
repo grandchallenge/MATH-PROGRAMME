@@ -38,10 +38,10 @@ For each $n\ge0$, define **graded symmetric powers in convenient differentiable 
 
 $$
 \mathcal O_{\mathrm{sm},n}(U)=
-\operatorname{Sym}^{n}_{\mathrm{ConVS}}L_{\mathrm{sm}}(U),
+\mathrm{Sym}^{n}_{\mathrm{ConVS}}L_{\mathrm{sm}}(U),
 \qquad
 \mathcal P_{\mathrm{dist},n}(U)=
-\operatorname{Sym}^{n}_{\mathrm{DVS}}L_{\mathrm{dist}}(U).
+\mathrm{Sym}^{n}_{\mathrm{DVS}}L_{\mathrm{dist}}(U).
 \tag{24.3}
 $$
 
@@ -58,7 +58,7 @@ $$
 \tag{24.4}
 $$
 
-A plot from a finite-dimensional smooth manifold $M$ into the regular degree-$n$ kernel space means a **convenient-smooth family** of compactly supported smooth kernels. Explicitly, locally on $M$ the kernels have a common compact support in $U^n$, and their joint function on $M\times U^n$ is smooth. The distributional plots are the smooth families of distributions from Costello–Gwilliam's DVS structure. Products, smooth kernel extension by zero, symmetrization and multiplication are smooth multilinear maps in this structure.
+A plot from a finite-dimensional smooth manifold $M$ into the regular kernel of degree $n$ space means a **convenient-smooth family** of compactly supported smooth kernels. Explicitly, locally on $M$ the kernels have a common compact support in $U^n$, and their joint function on $M\times U^n$ is smooth. The distributional plots are the smooth families of distributions from Costello–Gwilliam's DVS structure. Products, smooth kernel extension by zero, symmetrization and multiplication are smooth multilinear maps in this structure.
 
 **Theorem 24.1 (actual differentiable polynomial comparison).** The maps
 
@@ -87,7 +87,7 @@ $$
 
 with decreasing **arity-tail** filtration $F^N=\prod_{n\ge N}(-)_n$ and product differentiable plots. Each quotient is the finite direct sum of weights $n<N$ and the projections are smoothly split by inserting zeros. Therefore (i) $F^0$ is the full object, (ii) every tail inclusion is a **differentiable cofibration** with induced plots, and (iii) the objects are complete and separated. These verify **B.6.0.7**, not merely the ordinary algebraic filtration axioms.
 
-The finite quotient towers have smoothly split fibrations. For each fixed $k$, the quotient of the $N$th tower element by $F^k$ becomes constant once $N\ge k$. Its successive kernel is the individual weight-$N$ differentiable complex. The comparison on each kernel is $j_{U,N}$, a smooth homotopy equivalence by Theorem 24.1. Thus **all three** hypotheses of **B.6.0.11** hold.
+The finite quotient towers have smoothly split fibrations. For each fixed $k$, the quotient of the tower element indexed by $N$ by $F^k$ becomes constant once $N\ge k$. Its successive kernel is the individual differentiable weight $N$ complex. The comparison on each kernel is $j_{U,N}$, a smooth homotopy equivalence by Theorem 24.1. Thus **all three** hypotheses of **B.6.0.11** hold.
 
 **Theorem 24.2 (completed classical comparison, all cohomological degrees).**
 
@@ -151,7 +151,7 @@ and for the **arity completion** of (24.6),
 
 $$
 H^0\bigl(\widehat{\mathcal O}_{\mathrm{sm}}^{\mathrm{cl}}(I)\bigr)
-\cong\prod_{n\ge0}\operatorname{Sym}^n(\mathbb R^2)
+\cong\prod_{n\ge0}\mathrm{Sym}^n(\mathbb R^2)
 \cong\mathbb R[[a,b]],
 \qquad H^{q\ne0}=0.
 \tag{24.12}
@@ -163,7 +163,7 @@ The distributional polynomial model has the same cohomology in **every degree** 
 
 Let $\mathfrak U=\{U_i\}$ be a Weiss cover of $U$: every finite subset of $U$ belongs to some $U_i$. For fixed $n\ge1$, the opens $\{U_i^n\}$ cover $U^n$ in the **ordinary** topology. Moreover finite intersections are $(\bigcap U_i)^n$.
 
-The graded tensor-kernel description identifies the weight-$n$ part of the augmented Weiss Čech complex for $\mathcal O_{\mathrm{sm}}^{\mathrm{cl}}$ with the augmented Čech complex of compactly supported smooth sections of a finite-rank graded bundle on $U^n$, followed by finite symmetric-group coinvariants. A locally finite partition of unity subordinate to the cover $\{U_i^n\}$ gives a contracting homotopy of the augmented Čech complex. Multiplication by each fixed partition function preserves compact support and is continuous linear (hence differentiable-smooth). On a compact kernel support only finitely many partition functions occur. The homotopy commutes with the internal $\partial_x^2$-complex **only up to the total Čech differential**, but the double-complex spectral sequence suffices: each coefficient-degree Čech resolution is exact, and the cochain complexes are degreewise bounded at each fixed arity. Equivalently use the corresponding acyclic-assembly lemma. Averaging over the finite symmetric group preserves this property.
+The graded tensor-kernel description identifies the weight $n$ part of the augmented Weiss Čech complex for $\mathcal O_{\mathrm{sm}}^{\mathrm{cl}}$ with the augmented Čech complex of compactly supported smooth sections of a finite-rank graded bundle on $U^n$, followed by finite symmetric-group coinvariants. A locally finite partition of unity subordinate to the cover $\{U_i^n\}$ gives a contracting homotopy of the augmented Čech complex. Multiplication by each fixed partition function preserves compact support and is continuous linear (hence differentiable-smooth). On a compact kernel support only finitely many partition functions occur. The homotopy commutes with the internal complex with differential $\partial_x^2$ **only up to the total Čech differential**, but the double-complex spectral sequence suffices: each coefficient-degree Čech resolution is exact, and the cochain complexes are degreewise bounded at each fixed arity. Equivalently use the corresponding acyclic-assembly lemma. Averaging over the finite symmetric group preserves this property.
 
 The weight-zero summand is the constant unit and its augmented Čech complex is exact for a nonempty Weiss cover with the usual unital conventions.
 
@@ -178,7 +178,7 @@ $$
 
 is a weak equivalence in differentiable cochain complexes in **all cohomological degrees**. For the completed objects (24.6), use **B.6.0.8** to complete the Čech direct sums after arity truncation; then B.6.0.11 and the split-arity tower give a weak equivalence of complete differentiable pro-cochain complexes. The distributional model has the same descent result by the smooth homotopy equivalences (24.5) and two-out-of-three.
 
-**Smooth multicategory verification.** For pairwise disjoint $U_1,\ldots,U_r\subset V$, the structure map is the product of extension-by-zero images in the graded symmetric algebra. At each finite output arity its component is a **finite sum of completed external tensor products** of smooth kernels, followed by graded symmetrization. It is a smooth $r$-linear cochain map. Total polynomial arity is additive; the completed product therefore preserves the B.6.1.1 filtration inequality exactly. These are the actual maps, not an unsupported claim that ordinary continuous algebraic maps are smooth.
+**Smooth multicategory verification.** For pairwise disjoint $U_1,\ldots,U_r\subset V$, the structure map is the product of extension-by-zero images in the graded symmetric algebra. At each finite output arity its component is a **finite sum of completed external tensor products** of smooth kernels, followed by graded symmetrization. It is a smooth cochain map multilinear in $r$ arguments. Total polynomial arity is additive; the completed product therefore preserves the B.6.1.1 filtration inequality exactly. These are the actual maps, not an unsupported claim that ordinary continuous algebraic maps are smooth.
 
 ## 5. A concrete formal free BV quantization and its Weiss descent
 
@@ -211,7 +211,7 @@ F^N=\hbar^N A(U)[[\hbar]].
 \tag{24.16}
 $$
 
-This is a complete differentiable pro-cochain complex with smoothly split **graded** filtration quotients. Its finite $\hbar$-quotients are $\bigoplus_{k<N}\hbar^kA(U)$ as graded differentiable spaces; their projections are smoothly split surjective and the tails carry the induced smooth plots. Thus B.6.0.7 is satisfied. Equation (24.15) makes $d_q^2=0$ and makes every $F^N$ a subcomplex.
+This is a complete differentiable pro-cochain complex with smoothly split **graded** filtration quotients. Its finite quotients modulo powers of $\hbar$ are $\bigoplus_{k<N}\hbar^kA(U)$ as graded differentiable spaces; their projections are smoothly split surjective and the tails carry the induced smooth plots. Thus B.6.0.7 is satisfied. Equation (24.15) makes $d_q^2=0$ and makes every $F^N$ a subcomplex.
 
 For disjoint opens, the BV pairing between images vanishes because the supports are disjoint. Therefore the *same graded symmetric multiplication* defines smooth filtration-preserving multilinear **cochain** maps
 
@@ -233,11 +233,11 @@ $$
 
 is an **identity** of differentiable cochain complexes and prefactorization structure maps, not an asserted map on quantum distributional products. There is **no** canonical unrestricted $\Delta_{\mathrm{BV}}$ on arbitrary distributional diagonal kernels, so do not upgrade (24.5) to a quantum distributional chain map without renormalization.
 
-**Theorem 24.5 (formal free quantum Weiss descent).** With the $\hbar$-adic completion in (24.16), the augmented completed Weiss Čech morphism for $\mathcal O_{\mathrm{free}}^{\mathrm q}$ is a weak equivalence of differentiable pro-cochain complexes in **every cohomological degree**.
+**Theorem 24.5 (formal free quantum Weiss descent).** With the completion with respect to powers of $\hbar$ in (24.16), the augmented completed Weiss Čech morphism for $\mathcal O_{\mathrm{free}}^{\mathrm q}$ is a weak equivalence of differentiable pro-cochain complexes in **every cohomological degree**.
 
-**Proof.** Fix a Weiss cover. At the level of $\hbar^N$ truncations, form the completed Čech complex as prescribed by B.6.0.8. The transition to the $(N-1)$st quotient is a smooth split surjection on graded spaces, hence a differentiable fibration, with kernel $\hbar^{N-1}$ times the **classical** Čech complex. The corresponding target kernel is $\hbar^{N-1}A(U)$ with differential $d_{\mathrm{cl}}$, because the $\hbar\Delta_{\mathrm{BV}}$ part vanishes on the associated graded. The kernel augmentation is a differentiable quasi-isomorphism by Theorem 24.4. For each fixed $k$, the tower modulo $\hbar^k$ is constant for $N\ge k$. These are exactly the three requirements of B.6.0.11. Therefore the inverse-limit augmented Čech map is a weak equivalence of differentiable pro-cochain complexes. No unjustified assertion that cohomology commutes with inverse limits has been used: the proof uses *kernelwise equivalences and fibrations*, the properties missing from the hostile Roos tower in [021](DERIVED_WEIGHT_COMPLETION_BOUNDARY_021.md). $\square$
+**Proof.** Fix a Weiss cover. At truncation order $\hbar^N$, form the completed Čech complex as prescribed by B.6.0.8. The transition to the $(N-1)$st quotient is a smooth split surjection on graded spaces, hence a differentiable fibration, with kernel $\hbar^{N-1}$ times the **classical** Čech complex. The corresponding target kernel is $\hbar^{N-1}A(U)$ with differential $d_{\mathrm{cl}}$, because the $\hbar\Delta_{\mathrm{BV}}$ part vanishes on the associated graded. The kernel augmentation is a differentiable quasi-isomorphism by Theorem 24.4. For each fixed $k$, the tower modulo $\hbar^k$ is constant for $N\ge k$. These are exactly the three requirements of B.6.0.11. Therefore the inverse-limit augmented Čech map is a weak equivalence of differentiable pro-cochain complexes. No unjustified assertion that cohomology commutes with inverse limits has been used: the proof uses *kernelwise equivalences and fibrations*, the properties missing from the hostile Roos tower in [021](DERIVED_WEIGHT_COMPLETION_BOUNDARY_021.md). $\square$
 
-There is also a direct induction on $N$ using the short exact sequences of the $\hbar$-adic quotients. The B.6 argument is stronger because it certifies the **actual differentiable filtration**, not only an algebraic quasi-isomorphism.
+There is also a direct induction on $N$ using the short exact sequences of the quotients in powers of $\hbar$. The B.6 argument is stronger because it certifies the **actual differentiable filtration**, not only an algebraic quasi-isomorphism.
 
 ## 6. Checkable additional higher-degree information on intervals
 
@@ -249,7 +249,7 @@ H^q(\mathcal O_{\mathrm{free}}^{\mathrm q}(I)/\hbar^N)=0
 \tag{24.19}
 $$
 
-The maps on degree-zero cohomology in the finite $\hbar$ tower are surjective by the long exact sequences, because the classical $H^1$ vanishes. Therefore the degree-zero cohomology tower is Mittag–Leffler and its derived first inverse limit vanishes. Passing to the $\hbar$-adically complete limit gives
+The maps on degree-zero cohomology in the finite tower indexed by powers of $\hbar$ are surjective by the long exact sequences, because the classical $H^1$ vanishes. Therefore the degree-zero cohomology tower is Mittag–Leffler and its derived first inverse limit vanishes. Passing to the complete limit with respect to powers of $\hbar$ gives
 
 $$
 H^q(\mathcal O_{\mathrm{free}}^{\mathrm q}(I))=0
@@ -257,7 +257,7 @@ H^q(\mathcal O_{\mathrm{free}}^{\mathrm q}(I))=0
 \tag{24.20}
 $$
 
-Its degree-zero cohomology is a complete filtered deformation of the **polynomial** space $\mathrm{Sym}(\mathbb R^2)$, with associated graded $\mathrm{Sym}(\mathbb R^2)[\hbar]$ for the $\hbar$ filtration. As a module it is a formal $\hbar$-adic deformation; we do not identify its same-open multiplication with the classical commutative polynomial product, because the BV differential is second-order and the quantum factorization multiplication is defined on disjoint opens.
+Its degree-zero cohomology is a complete filtered deformation of the **polynomial** space $\mathrm{Sym}(\mathbb R^2)$, with associated graded $\mathrm{Sym}(\mathbb R^2)[\hbar]$ for the filtration by powers of $\hbar$. As a module it is a formal deformation in $\hbar$; we do not identify its same-open multiplication with the classical commutative polynomial product, because the BV differential is second-order and the quantum factorization multiplication is defined on disjoint opens.
 
 **Important:** This is an all-cohomological-degrees result for the free BV observable complex itself, not a proof that arbitrary *higher liquid Ext* groups of test-function sources commute with support colimits.
 
@@ -277,4 +277,4 @@ Its degree-zero cohomology is a complete filtered deformation of the **polynomia
 | General higher real-liquid Ext support comparison and completed interacting BV/renormalized theories | **OPEN** |
 | Natural quantization of *all* distributional polynomial kernels | **NOT CLAIMED**; diagonal products obstruct it |
 
-**Mathematical conclusion:** For the explicitly defined *one-dimensional free scalar* model, the smooth classical comparison and Weiss descent are verified at the actual differentiable-pro-cochain level. The formal smeared free BV quantization satisfies smooth $\hbar$-adic B.6 compatibility and Weiss descent in all cohomological degrees. The true remaining programme gap is a **typed and naturally defined bridge from this B.6 theory to the earlier liquid derived mapping objects**, followed by higher real-liquid Ext support comparison and any genuinely interacting/renormalized extension. Nothing in 024 silently provides that bridge.
+**Mathematical conclusion:** For the explicitly defined *one-dimensional free scalar* model, the smooth classical comparison and Weiss descent are verified at the actual differentiable-pro-cochain level. The formal smeared free BV quantization satisfies smooth B.6 compatibility for completion in $\hbar$ and Weiss descent in all cohomological degrees. The true remaining programme gap is a **typed and naturally defined bridge from this B.6 theory to the earlier liquid derived mapping objects**, followed by higher real-liquid Ext support comparison and any genuinely interacting/renormalized extension. Nothing in 024 silently provides that bridge.
