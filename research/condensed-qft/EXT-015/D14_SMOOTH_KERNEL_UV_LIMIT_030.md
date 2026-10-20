@@ -15,7 +15,7 @@ C_{P_0}F(z)=\frac12\int_{U^2}|s-t|F(s,t,z)\,ds\,dt.
 \tag{30.1}
 $$
 
-Both integrals give **smooth compactly supported functions of $z$**. Derivatives commute with integration and all outputs are supported in the compact projection of $\operatorname{supp}F$. On each fixed compact-support Fréchet stage they are continuous, and on the regular LF union they are differentiably smooth. Summing graded even–odd contractions $C_\delta$ defines the local BV operator $\Delta_0$; summing even–even contractions $C_{P_0}$ defines the Wick propagator operator $B_0$. Both lower polynomial arity by two, so their exponentials are finite on each polynomial input.
+Both integrals give **smooth compactly supported functions of the remaining variables**. Derivatives commute with integration and all outputs are supported in the compact projection of $\operatorname{supp}F$. On each fixed compact-support Fréchet stage they are continuous, and on the regular LF union they are differentiably smooth. Summing graded even–odd contractions $C_\delta$ defines the local BV operator $\Delta_0$; summing even–even contractions $C_{P_0}$ defines the Wick propagator operator $B_0$. Both lower polynomial arity by two, so their exponentials are finite on each polynomial input.
 
 ## 2. Strong positive-scale convergence
 
@@ -72,7 +72,7 @@ $$
 \tag{30.5}
 $$
 
-These maps define a **smooth formal $\hbar$-complete differentiable quantum prefactorization algebra** on $A_{\mathrm{sm}}(U)[[\hbar]]$. It is the coefficientwise limit, on this specified domain, of the positive-scale Wick operations of 028; the **completed differentiable Weiss map is an equivalence in every cohomological degree**.
+These maps define a **smooth formal differentiable quantum prefactorization algebra, complete in $\hbar$** on $A_{\mathrm{sm}}(U)[[\hbar]]$. It is the coefficientwise limit, on this specified domain, of the positive-scale Wick operations of 028; the **completed differentiable Weiss map is an equivalence in every cohomological degree**.
 
 **Proof.** Distributionally $(|t|/2)''=\delta_0$. On smooth compact-support kernels integration by parts has no boundary terms; therefore $[B_0,d]$ is exactly the mixed diagonal BV contraction. The graded constant-kernel contractions commute in the requisite sense, giving the remaining relations. Formal conjugation proves the differential has square zero.
 
