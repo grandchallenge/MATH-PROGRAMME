@@ -52,18 +52,18 @@ Work in the actual real p-liquid category of Scholze Theorem 6.5, for 0 < p <= 1
 
 $$
 \varinjlim_b
-\operatorname{Ext}^1_{\mathrm{Liq}_p}(K_0,G_b)
+\mathrm{Ext}^1_{\mathrm{Liq}_p}(K_0,G_b)
 \longrightarrow
-\operatorname{Ext}^1_{\mathrm{Liq}_p}(K_0,G).
+\mathrm{Ext}^1_{\mathrm{Liq}_p}(K_0,G).
 $$
 
 Its source term is calculated by the genuine projective presentation of K0:
 
 $$
-\operatorname{Ext}^1(K_0,T)=
-\operatorname{coker}
-\bigl(\operatorname{Hom}(P_1,T)
-\longrightarrow\operatorname{Hom}(K_1,T)\bigr).
+\mathrm{Ext}^1(K_0,T)=
+\mathrm{coker}
+\bigl(\mathrm{Hom}(P_1,T)
+\longrightarrow\mathrm{Hom}(K_1,T)\bigr).
 $$
 
 **C1, actual relations:** bind the objects and morphisms to the existing exact source, construct a concrete free-measure kernel-pair model, and show whether the relation module has a countably directed support-localization presentation, not merely whether P0 does.
