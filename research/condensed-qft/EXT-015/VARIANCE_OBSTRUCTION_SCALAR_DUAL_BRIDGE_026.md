@@ -252,7 +252,7 @@ The previous underlying-complex result admits a **further exact enrichment theor
 
 For each finite weight $w$, cohomological degree $q$, and finite-dimensional smooth manifold $M$, define the following **smooth-parameter test functor** on the corrected scalar liquid dual:
 
-$
+$$
 \mathrm{Plots}_{M}\bigl(\mathscr B_w^q(U)\bigr)
 =
 \mathrm{Hom}_{\mathrm{Liq}_p(\mathbb R)}
@@ -261,33 +261,33 @@ $
 \underline{C^\infty(M)}
 \right)^{\mathfrak S_w}.
 \tag{26.18}
-$
+$$
 
-The right side is a *different liquid Hom target* for each test manifold, not an invented intrinsic DVS structure on every liquid object. For a smooth map $f:M'\to M$, pullback of smooth functions $f^*:C^\infty(M)\to C^\infty(M')$ induces the required plot restriction. Constant plots arise by composing scalar-valued morphisms with constant-function inclusion; local-to-global smooth-plot gluing follows from gluing $C^\infty(M)$-valued maps.
+The right side is a *different liquid Hom target* for each test manifold, not an invented intrinsic DVS structure on every liquid object. For each smooth parameter map between manifolds, the pullback of smooth functions induces the required plot restriction. Constant plots arise by composing scalar-valued morphisms with constant-function inclusion; local-to-global smooth-plot gluing follows from gluing $C^\infty(M)$-valued maps.
 
 **Theorem 26.5 (natural DVS enrichment in the compact-distributional free sector).** The functors (26.18), equipped with the flat connection obtained by differentiating their smooth parameter outputs, define differentiable cochain complexes. For every open interval $U$ and every polynomial arity $w$ there is a **natural isomorphism of actual Costello–Gwilliam DVS cochain complexes**
 
-$
+$$
 \boxed{\quad
 \mathscr B_w^{\mathrm{DVS}}(U)
-\ \cong\
+\cong
 P_w^{\mathrm{DVS}}(U),
 \quad}
 \tag{26.19}
-$
+$$
 
 where the left side is the corrected scalar liquid dual *with the explicitly constructed parameter-target enrichment* and the right side is the compactly supported distributional homogeneous observable complex of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md). This holds **in every cohomological degree**, not merely on cohomology.
 
-**Proof.** In each degree, $\mathcal T_w(U)^{-q}$ is a finite direct sum of $C^\infty(U^w)$, acted on by graded permutations. For every finite-dimensional $M$, both its Fréchet source and the target $C^\infty(M)$ are complete Fréchet real spaces. Full faithfulness of their liquid realizations identifies (26.18) with continuous linear operators from each $C^\infty(U^w)$ to $C^\infty(M)$, followed by the finite graded symmetric projector. By the **literal DVS definition B.2.1.1**, these are exactly the smooth $M$-parametrized plots of compactly supported distributional kernels on $U^w$. The identification is natural in $M$ because the same smooth-function pullbacks occur on both sides. The parameter differential/flat connection is differentiation in $M$ on both sides, as specified in B.2.1.2, and the field differential is the transpose of the smooth $\partial_x^2$ operator on the $U$ coordinates. The two commute. Hence (26.19) is an isomorphism **including smooth plots, flat connections and cochain differentials**, not just of vector spaces. $\square$
+**Proof.** In each degree, $\mathcal T_w(U)^{-q}$ is a finite direct sum of $C^\infty(U^w)$, acted on by graded permutations. For every finite-dimensional $M$, both its Fréchet source and the target $C^\infty(M)$ are complete Fréchet real spaces. Full faithfulness of their liquid realizations identifies (26.18) with continuous linear operators from each $C^\infty(U^w)$ to $C^\infty(M)$, followed by the finite graded symmetric projector. By the **literal DVS definition B.2.1.1**, these are exactly the smooth plots parametrized by $M$ of compactly supported distributional kernels on $U^w$. The identification is natural in $M$ because the same smooth-function pullbacks occur on both sides. The parameter differential/flat connection is differentiation in $M$ on both sides, as specified in B.2.1.2, and the field differential is the transpose of the smooth $\partial_x^2$ operator on the $U$ coordinates. The two commute. Hence (26.19) is an isomorphism **including smooth plots, flat connections and cochain differentials**, not just of vector spaces. $\square$
 
 **Theorem 26.6 (completed classical DVS and Weiss bridge).** Give $\prod_{w\ge0}\mathscr B_w^{\mathrm{DVS}}(U)$ the product plots and decreasing polynomial-arity tail filtration. The product of (26.19) is an isomorphism of **complete differentiable pro-cochain complexes**
 
-$
+$$
 \widehat{\mathscr B}^{\mathrm{DVS}}(U)
 \cong
 \widehat{\mathcal P}_{\mathrm{dist}}^{\mathrm{cl}}(U).
 \tag{26.20}
-$
+$$
 
 It is compatible with smooth disjoint-open multilinear prefactorization structure maps and the **classical** completed Weiss Čech maps. On connected intervals, the scalar-valued liquid dual model also computes the genuine liquid-derived scalar Hom by Theorem 26.4. Therefore its completed classical Weiss comparison is a weak equivalence of differentiable pro-cochain complexes **in every cohomological degree**.
 
