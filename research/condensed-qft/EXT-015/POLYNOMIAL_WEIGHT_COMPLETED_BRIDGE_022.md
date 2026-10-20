@@ -2,7 +2,7 @@
 
 **Disposition:** PROVED, for real-liquid linear derived mapping complexes with sources given by *classical completed projective symmetric tensor powers* of the fixed nuclear Fréchet test-function space, that the **completed weight-by-weight support comparison** induces isomorphisms on $H^0$ and $H^1$. This supplies a bounded **positive** complement to the completion and Milnor hostile controls in [021](DERIVED_WEIGHT_COMPLETION_BOUNDARY_021.md). **NOT PROVED:** equivalence of Costello–Gwilliam B.6 smooth multilinear cochain objects, higher liquid Ext, or Weiss descent.
 
-**Inherited mathematical inputs:** [LFO-013 degree-zero factorization](../LFO3_SURJECTIVITY_THEOREM_013.md), [positive degree-one Ext comparison 019](FIXED_SOURCE_EXT1_ISOMORPHISM_019.md), and [critical audit 020](AGENT_CRITICAL_REVIEW_019_020.md). Nuclear sequence-space tensor reference: Dietmar Vogt, [*The Tensor Algebra of the Space s*](https://popups.ulg.ac.be/0037-9565/index.php?id=2298), *Bull. Soc. R. Sci. Liège* 70 (2001), 435–440; Zinaida Lykova, [*Cyclic cohomology of certain nuclear Fréchet and DF algebras*](https://arxiv.org/abs/0704.1019), Example 6.7, records the completed $s$-tensor-square as the rapid-decay matrix space.
+**Inherited mathematical inputs:** [LFO-013 degree-zero factorization](../LFO3_SURJECTIVITY_THEOREM_013.md), [positive degree-one Ext comparison 019](FIXED_SOURCE_EXT1_ISOMORPHISM_019.md), and [critical audit 020](AGENT_CRITICAL_REVIEW_019_020.md). Nuclear sequence-space tensor reference: Dietmar Vogt, [*The Tensor Algebra of the Space s*](https://popups.ulg.ac.be/0037-9565/index.php?id=2298), *Bull. Soc. R. Sci. Liège* 70 (2001), 435–440; Zinaida Lykova, [*Cyclic cohomology of certain nuclear Fréchet and DF algebras*](https://arxiv.org/abs/0704.1019), Example 6.7, records the completed tensor square of $s$ as the rapid-decay matrix space.
 
 ## 1. The actual homogeneous Fréchet sources
 
@@ -133,7 +133,7 @@ Products of real vector spaces are exact; hence the cohomology of a product of c
 
 ## 4. What this does, and does not, give Costello–Gwilliam
 
-The sources $E_w$ encode continuous **symmetric $w$-linear** maps on $H$ through the completed projective tensor universal property. That makes (22.6) a rigorous algebraic bridge for a natural **linearized homogeneous polynomial sector**. The target cochains in (22.4) are *real-liquid derived Hom complexes*. They have not been identified with the complete, smoothly enriched cochains in Costello–Gwilliam Appendix B.6.
+The sources $E_w$ encode continuous **symmetric multilinear maps of degree** $w$ on $H$ through the completed projective tensor universal property. That makes (22.6) a rigorous algebraic bridge for a natural **linearized homogeneous polynomial sector**. The target cochains in (22.4) are *real-liquid derived Hom complexes*. They have not been identified with the complete, smoothly enriched cochains in Costello–Gwilliam Appendix B.6.
 
 In particular, the following are **not** consequences of Theorem 22.3:
 
