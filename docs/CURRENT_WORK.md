@@ -1,166 +1,75 @@
 # Current Work
 
-<p class="page-deck">Time-sensitive navigation for material work now in motion. This page does not create mathematical authority; the linked protected records remain authoritative.</p>
+<p class="page-deck">The mathematical questions GCL is investigating, what recent work has clarified and what researchers still need to establish. This is a selected overview, not a list of every active task.</p>
 
-## Reading rule
+Some projects aim to prove long-standing conjectures. Others try to understand exactly why an attempted proof is incomplete, or to find out what a mathematical model can reliably predict. A careful negative result or a precisely identified gap can be useful progress even when the central problem remains unsolved.
 
-Each highlighted front is described through the same six fields:
-
-1. **Status** — the present support and lifecycle boundary.
-2. **Object** — the mathematical or engineering object under study.
-3. **Obstruction** — the smallest known reason the next promotion is not yet justified.
-4. **Supported state** — what protected work has already established.
-5. **Claim boundary** — what the current work does not establish.
-6. **Next bounded move** — the next finite action with a completion test.
-
-This structure follows the programme pedagogy standard: status before suspense, object before method, obstruction before optimism, and one executable next move.
-
-The detailed profiles below are a curated public orientation surface, not a complete inventory of active development. Additional active fronts are listed compactly after the highlighted profiles.
+Research changes quickly. The links below lead to the original work and its latest recorded status. A completed work package is not necessarily a solved mathematical problem.
 
 <a id="bsd-001--literal-p2-inverse-limit-replay"></a>
 
-## BSD-001 · literal-`p=2` inverse-limit replay
+## Elliptic curves: the Birch–Swinnerton-Dyer conjecture
 
-**Live tracker:** [MATHSOLVE #245](https://github.com/grandchallenge/MATHSOLVE/issues/245)  
-**Programme owner:** [MATHSOLVE #215](https://github.com/grandchallenge/MATHSOLVE/issues/215)  
-**Status:** active solving campaign; MATHCERT certification is not claimed.
+One of the great open problems in number theory asks how much can be learned about the rational solutions of an elliptic curve from a function associated with that curve. The full Birch–Swinnerton-Dyer conjecture has not been proved.
 
-### Object
+GCL has been examining a technically difficult case involving the prime number **2**. The challenge is to connect results that hold at individual, finite stages to the stronger statement needed when those stages are brought together. This connection requires additional assumptions; it cannot be declared valid simply because the finite calculations succeed.
 
-The current object is the inverse-limit passage in Burns–Sakamoto–Sano Theorem 5.25 on the selected literal-`2` lane.
+An earlier study of this particular transition, known internally as *WP60S*, is **closed**. The larger [BSD research programme](https://github.com/grandchallenge/MATHSOLVE/issues/215) remains open. Its continuing work concerns the parts of the argument that are not yet adequately justified, including delicate questions of nonvanishing and compatibility.
 
-The preceding WP60R replay established the protected finite-level interfaces used for the literal-`2` replacement of Theorem 5.2. The current work asks whether those finite-level interfaces are sufficient for the inverse-limit theorem.
+**What is established:** selected finite-stage arguments and bounded investigations have been recorded and reviewed. **What remains:** a complete proof of the relevant broader conclusions without relying on assumptions that have not been established. Closing an intermediate study does not solve the BSD conjecture.
 
-### Obstruction
+[Follow the overall research](https://github.com/grandchallenge/MATHSOLVE/issues/215) · [Read the completed inverse-limit study](https://github.com/grandchallenge/MATHSOLVE/issues/245)
 
-The published source imposes full Hypothesis 4.7. The protected campaign retains failure of the relevant infinite auxiliary-field H3 / Hypothesis-4.7(iii)-type vanishing condition.
+## The odd zeta values: can a large calculation become an exact proof?
 
-The programme must therefore identify the exact uses of Hypothesis 4.7 in:
+At odd positive integers, values of the Riemann zeta function have properties that are still difficult to understand. One line of work examines intricate algebraic identities related to these values.
 
-- transition maps between finite coefficient levels;
-- regulator compatibility;
-- the inverse-limit Kolyvagin system;
-- compatibility of the ideals `I_i`;
-- passage to `Fitt^i_{Z_2}` of the inverse-limit dual Selmer module;
-- rank-one freeness and the regulator isomorphism.
+Researchers have identified a **576-dimensional space of allowable changes** in one order-seven calculation. This is a genuine structural result: it greatly narrows what a successful calculation could look like. It is not yet the final mathematical certificate being sought.
 
-### Supported state
+The next obstacle is to find a simpler expression that satisfies all the required identities, then check that expression exactly. A pattern that works in many numerical tests is not enough to prove that it works in general.
 
-WP60R is protected and complete at the finite-level replay boundary. Its replacement stack may be used where admitted. The failed infinite auxiliary-field condition remains failed.
+**What is established:** the restricted calculation's underlying structure has been identified. **What remains:** a complete, independently checked certificate for the intended broader claim. No proof or refutation of the larger T3 target is claimed.
 
-### Claim boundary
-
-This work does not establish Corollary 6.15, R5-LIFT, R5-PRIM, D2d, `BSD-R2-A1`, the failed infinite H3 condition, novelty, priority, or certification.
-
-### Next bounded move
-
-Complete WP60S by one of two admissible outcomes:
-
-- prove a selected literal-`2` replacement of Theorem 5.25 with every inverse-limit compatibility stated; or
-- identify the first unrepaired inverse-limit dependency and record it as a named boundary with a proof witness.
-
-The completion test is theorem-level: the replay either closes at the declared boundary or produces the first exact unrepaired dependency.
-
-## OZ-001 · order-7 certificate compression
-
-**Live tracker:** [MATH-PROGRAMME #964](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964)  
-**Status:** active certificate-construction route; T3 is neither proved nor refuted.
-
-### Object
-
-The current object is the boundary-forced order-7 E1 residual-cofactor system in the Brown–Zudilin route.
-
-Its homogeneous kernel has dimension `576`. Programme reconstruction identifies that kernel exactly with a discrete-curl image parameterized by a polynomial `H(k,l)` of bidegree at most `(23,23)`.
-
-![Order-7 residual-kernel geometry. The exploratory ansatz has 1682 columns and rank 1106; the boundary-forced ansatz has 1624 columns and rank 1048. Both have nullity 576, matching the discrete-curl parameterization.](assets/order7-kernel-geometry.svg)
-
-The visual is an exact structural summary of the two declared ansatz dimensions and the shared nullity. It is not itself a certificate.
-
-### Obstruction
-
-The kernel dimension is no longer the active obstruction. The remaining problem is to construct a degree-reduced affine section over `Q[n]` and then replay it independently in characteristic zero.
-
-The earlier value `518` is not a competing kernel dimension. It came from subtracting the exploratory rank `1106` from the boundary-forced column count `1624`. Those quantities belong to different ansatz regimes.
-
-### Supported state
-
-The current intermediate terminal is:
-
-`ORDER7_E1_KERNEL_IDENTIFIED_AS_DISCRETE_CURL__POTENTIAL_SECTION_REDUCTION_REQUIRED`
-
-Exact denominator clearing, boundary compatibility, and the characteristic-zero kernel inclusion support the `576`-dimensional description. Modular nonzero-minor witnesses supply rank lower bounds. They do not replace characteristic-zero replay of a positive certificate.
-
-### Claim boundary
-
-No global order-7 certificate has yet crossed the declared replay boundary. `t3_proved = false`, `t3_refuted = false`, and the work does not create irrationality, infinitude, novelty, publication, product, or commercial authority.
-
-### Next bounded move
-
-Construct a shifted Popov, minimal-approximant, order-basis, or equivalent completeness-backed affine reduction for the seven standalone residual blocks.
-
-A constructive completion must produce an explicit degree-reduced section. A positive route then requires independent exact replay over `Q(n,k,l)` before the certificate state can advance.
+[Examine the current order-seven investigation](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964)
 
 <a id="vgse-001--mechanical-semantics"></a>
 
-## VGSE-001 · identifiability-aware infinitesimal inverse design
+## Folding mechanisms: can a desired movement determine a design?
 
-**Live campaign tracker:** [MATH-PROGRAMME #1084](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)  
-**Live M2 tracker:** [MATH-PROGRAMME #1179](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1179)  
-**Status:** M0 and M1 are terminal. M2 D0/D1 is the next separately governed tranche.
+Imagine a network of rigid panels joined by hinges. If we specify how strongly each hinge should participate in a small movement, can we work backwards to find a suitable arrangement of panels and hinges?
 
-### Object
+Earlier research isolated **four independent ways** in which a restricted mathematical model of such a mechanism can move. The current study investigates whether desired patterns of hinge participation can be realized by one or more designs.
 
-M2 works with the four-dimensional labeled hinge-rate mechanism subspace from M1.
+A central difficulty is that different arrangements may produce the same reported pattern. The question is therefore not necessarily to recover *the one correct design*, but to identify suitable examples while keeping track of genuine alternatives.
 
-For an admissible TE3 realization `g`, let `P_H(g)` be the M1 orthogonal projector onto that subspace. The first inverse-design observable is the basis-invariant hinge-participation profile
+**What is established:** the four-dimensional motion space and certain distinctions between geometric arrangements in the restricted model. **What remains:** a dependable method for finding designs with chosen movement profiles and understanding when the information is insufficient to distinguish them.
 
-`d(g) = diag(P_H(g)) in [0,1]^10`.
+The model concerns tiny motions around a flat configuration. It does **not** establish that a physical structure can fold through a large movement without collision, withstand loads or be manufactured successfully.
 
-On the retained mobility-four class, the entries sum to `4`.
+[Read the continuing design study](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1179) · [Explore the broader mechanical-semantics research](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)
 
-### Identifiability boundary
+## Other investigations worth following
 
-The required GCL-ID-00 preflight is `governance/identifiability_preflights/VGSE-MS-M2-ID-001.json`.
+### Condensed mathematics
 
-Its representative-level disposition is `UNRESOLVED`.
+This area studies ways of organizing topological and algebraic objects so that difficult operations behave more reliably. GCL has formalized particular mathematical steps and is working on further claims and independent review. A previously highlighted finite-stage assignment, [#662](https://github.com/grandchallenge/MATH-PROGRAMME/issues/662), is **complete**; it should not be mistaken for an unfinished task.
 
-M1 already shows that one quotient point can have several geometric representatives with distinct mechanism subspaces. M2 additionally compresses the full projector to its diagonal. Therefore the current inverse target is deliberately set-valued:
+The current questions include [separation at a one-point component](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1162) and [independent mathematical review](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222). These concern particular results and their assumptions, not the resolution of every problem in condensed mathematics.
 
-> construct one or more admissible design witnesses matching a target participation profile.
+[Introduction for new readers](CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md) · [Published mathematical result and qualifications](CMDG_CM4.md)
 
-M2 does not claim recovery of a unique quotient or geometry.
+### The mathematics of fluid flow
 
-### Next bounded move
+The Navier–Stokes equations describe fluid motion. A major unresolved question is whether their three-dimensional solutions can develop singularities from smooth starting conditions.
 
-Execute D0/D1 only:
+GCL is examining a narrower question involving how certain measures of a solution's size behave over time. Establishing an estimate for that restricted setting would be useful, but it would not by itself prove smoothness for all three-dimensional flows.
 
-1. generate the positive-control profile from the protected `BASELINE-B1` branch using the exact M1 projector code;
-2. replay profile invariants and side-information boundaries;
-3. build a deterministic witness-synthesis baseline;
-4. attempt a local branch-conditioned synthesis while preserving multiplicity;
-5. distinguish search/selector failure from structural non-identifiability.
+[Follow the Navier–Stokes investigation](https://github.com/grandchallenge/MATH-PROGRAMME/issues/55) · [Explore the research area](domains/navier_stokes.md)
 
-D2 off-grid/interpolated targets are not pre-authorized by activation.
+## Following the evidence
 
-### Claim boundary
+These summaries explain selected research directions; the linked studies provide precise definitions, calculations, assumptions and unresolved steps. Their dates and task statuses may change as work advances.
 
-M2 remains flat-state infinitesimal kinematic design under the GCL-defined model. It does not establish unique design recovery, finite rigid foldability, collision-free deployment, finite thickness, stiffness, force, energy, material/constitutive behaviour, actuation, manufacturing, product performance, source correspondence, novelty, patentability, or commercial value.
+A numerical check proves only the cases actually checked. A computer-verified formal proof establishes the exact statement submitted to its checker, including its assumptions. Neither automatically settles a stronger question written in ordinary language.
 
-[Read the M2 work contract](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/vgse-ms-m2/README.md)
-
-## Additional active development
-
-The programme's active development surface is broader than the three detailed profiles above. Two additional governed fronts currently in motion are:
-
-| Front | Current state | Next bounded boundary |
-| --- | --- | --- |
-| **CMDG CM4 P3-M** | Authorized research execution on finite-stage recovery from protected finite-coordinate dependence. | Prove or precisely block the finite-basis-set to common discrete-quotient bridge before attempting broader coefficient-morphism recovery. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/662) |
-| **NS-CI-001** | Active L5 direct critical-integral lane for the critical `L^4_t L^6_x` Navier–Stokes target; interface qualification only. | Produce a genuinely equation-specific estimate that survives the existing false-proof controls. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/55) |
-
-This compact list is also not a substitute for protected campaign registries and live trackers. It exists to prevent the public orientation surface from implying that active development has cardinality three.
-
-## When a front leaves this page
-
-A front should be removed or rewritten when its live obligation is closed, superseded, or transferred to another programme surface. Historical records remain available through the estate, results, issues, and protected repository state.
-
-This page should not preserve a closed issue as though it were still current. That rule is deliberate: current work and standing history are different axes.
+For established results and accessible examples, visit [Research and Results](SHOWCASE.md). For the broader landscape of mathematical questions, see the [Mathematical Estate](domains/index.md).

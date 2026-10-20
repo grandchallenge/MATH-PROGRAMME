@@ -1,97 +1,62 @@
-# Programme Atlas
+# How GCL Studies a Mathematical Question
 
-<p class="page-deck">The canonical public map of how a mathematical question changes state as it moves through discovery, solving, certification, and programme integration.</p>
+<p class="page-deck">A guide to the journey from a difficult question to a possible proof: finding the right formulation, investigating it, testing the reasoning and recording what the evidence really shows.</p>
 
-## What the Atlas represents
+## A proof begins with a clear question
 
-The Atlas describes programme transitions. It does not certify any theorem.
+Mathematical discoveries rarely arrive as finished proofs. A question may first appear in an old paper, a numerical experiment or a conversation between researchers. Before attempting to solve it, we need to understand exactly what it asks and which assumptions it makes.
 
-A mathematical object can move through several support states without reaching certification. The programme preserves each transition so that a later reader can recover what changed and why.
+GCL organizes this process so that useful findings, failed approaches and unresolved difficulties are recorded rather than lost. Not every investigation ends in a proof. Discovering that a proposed argument does not work can be an important result in its own right.
 
-![State transition from a question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT. Fail-closed exits record an obstruction, proof debt, or non-promotion.](assets/claim-state-transition.svg)
+![The path from a mathematical question through investigation and proof checking, with opportunities to record unresolved difficulties or failed approaches.](assets/claim-state-transition.svg)
 
-The diagram is schematic. The arrows represent allowed research-state transitions, not logical implication between mathematical statements.
+The diagram illustrates the research process; its arrows are not mathematical implications or guarantees of success.
 
-## Three mathematical execution pillars
+## Three parts of the work
 
-| Pillar | Governing question | Typical artifacts | Boundary preserved |
-| --- | --- | --- | --- |
-| **MATHFORGE** | What object, source, obstruction, or candidate route is actually available? | source records, problem cards, reconnaissance, finite screens, route suggestions | discovery evidence does not become a mathematical result by presentation alone |
-| **MATHSOLVE** | Which exact obligations must close before the target can advance? | theorem spines, work packages, proof-debt registers, local lemmas, handoffs | active work does not become a completed result |
-| **MATHCERT** | Which exact claim survives the declared checks? | formal statements, exact replays, certificate checks, adjudications, claim dispositions | evidence and exposition do not become certified truth without the required gate |
-
-`MATH-PROGRAMME` is the integration layer. It preserves programme state, routing, terminology, decisions, publication surfaces, and archives. It is not a fourth mathematical support route.
-
-## State changes
-
-| Research state | Main question | Minimum reader-visible result |
+| Stage | What happens | What readers should expect |
 | --- | --- | --- |
-| Question or source signal | What is worth reconstructing? | object and source identity |
-| Reconstructed object | What was actually stated or observed? | normalized statement, provenance, and imported assumptions |
-| Solving campaign | What finite obligation can be attacked? | theorem-spine location, dependencies, and completion test |
-| Local evidence | What proof, computation, certificate, or obstruction exists? | classified support route and limitations |
-| Certification handoff | What exact claim is ready to be checked? | immutable statement, dependencies, evidence, and replay contract |
-| Checked claim | What survived the declared gate? | bounded disposition and retained exclusions |
-| Integrated record | What is the authoritative current account? | protected record with review, provenance, and continuation state |
+| **Understand the problem (MATHFORGE)** | Find reliable sources, define the objects, check examples and identify possible approaches. | A clear statement of the question and a defensible starting point, not a new theorem. |
+| **Develop the argument (MATHSOLVE)** | Prove smaller claims, test ideas, look for counterexamples and identify the exact step that still needs justification. | Partial results and carefully stated remaining difficulties, not necessarily a complete proof. |
+| **Check the claim (MATHCERT)** | Examine the proposed proof or certificate, compare it with the intended theorem and establish exactly what has passed the required checks. | A conclusion limited to the statement and assumptions actually checked. |
 
-Not every object reaches the last row. A failed route can be a complete programme result when it records the exact obstruction and narrows the remaining search space.
+These names are GCL's way of organizing research, not new kinds of mathematics. The Mathematics Programme website brings the accounts together and preserves the links to the detailed records.
 
-## Fail-closed exits
+## How progress can unfold
 
-### MATHFORGE exit · recorded obstruction
+Consider an unsolved question about whether every object of a certain kind has a particular property.
 
-A source may be incomplete, inconsistent, unavailable, or insufficient for the intended claim. MATHFORGE records that obstruction instead of inventing the missing bridge.
+First, we reconstruct the original question. We may discover that two sources use slightly different definitions; that difference must be resolved before claiming a proof.
 
-### MATHSOLVE exit · proof debt
+Next, we explore small examples and attempt general arguments. A computer may check thousands of finite cases, but those cases alone do not establish a statement about infinitely many objects.
 
-A campaign may isolate a theorem-level dependency that is not yet proved. MATHSOLVE records the dependency, its role, and the conditions that would discharge it.
+Suppose a promising argument works only if an additional assumption is true. We can publish that restricted finding and identify the missing assumption. The broader theorem remains open until the missing step is proved or another valid argument is found.
 
-### MATHCERT exit · non-promotion
+Finally, if a complete proof or independently checkable certificate is available, it can be reviewed against the exact statement it is meant to establish. The [Research and Results](SHOWCASE.md) page shows examples of work that has reached a stated publication or checking milestone.
 
-A certificate, formalization, or replay may fail, or it may support only a narrower claim than the proposed output. MATHCERT preserves the narrower boundary and refuses the unsupported promotion.
+## What different kinds of evidence tell us
 
-## Support-route classes
+Evidence is valuable when its limits are clear.
 
-The public explanation should identify which class supports a consequential statement.
+- **Examples and experiments** help discover patterns, but a pattern may fail outside the cases examined.
+- **Exact calculations** can settle a specified finite question. They do not automatically settle a claim about all cases.
+- **A checked certificate** verifies the precise result represented by that certificate, within its conditions.
+- **A computer-checked formal proof** establishes the statement encoded for the checker, subject to its assumptions and trusted foundations.
+- **A mathematical proof** establishes its stated conclusion when the reasoning and hypotheses are sound.
+- **A counterexample** can refute a general claim by showing one case in which it fails.
 
-| Support class | What it can establish |
-| --- | --- |
-| Exploratory evidence | patterns and candidate hypotheses |
-| Regression audit | continued agreement among definitions, examples, and code paths |
-| Exact finite verification | the explicitly bounded finite claim |
-| Certificate replay | the local claim represented by the replayable certificate |
-| Formal proof | the formal statement accepted by the declared trusted environment |
-| Continuum proof | the full mathematical statement over the stated domain |
-| Negative result | a bounded obstruction that rules out a declared route or claim |
+A formal proof and the ordinary-language claim it is supposed to support must still mean the same thing. For example, proving a theorem for a restricted class of objects does not prove it for every object of that type.
 
-The classes are not interchangeable. Exact finite verification is not continuum proof. A visualization is not mathematical evidence by itself. A formal proof of the wrong statement does not establish the intended human claim.
+## When an investigation does not succeed
 
-## Semantic bridge
+A research effort may find that a source is incomplete, a necessary lemma cannot be proved, an example contradicts a conjecture or a verification step fails. We record these findings rather than silently upgrading an incomplete argument into a result.
 
-Every formal or computational route must preserve the bridge between the human claim and the checked object.
+The useful question is then: **what exactly remains missing?** Sometimes the next step is a new proof. Sometimes it is a better definition, an additional source or a clearer account of why a particular approach cannot work.
 
-A reader should be able to recover:
+This approach also prevents a completed administrative task from being mistaken for a solved mathematical problem.
 
-1. the human statement;
-2. the formal or computational statement;
-3. assumptions added or removed in translation;
-4. model-class or foundational restrictions;
-5. the evidence that supports the bridge;
-6. what would falsify or downgrade the bridge.
+## Where to go next
 
-If the bridge remains unaudited, the formal or computational artifact can still be useful. The broader human claim remains below certification.
+If you want to see **what is being investigated**, read [Current Work](CURRENT_WORK.md). For **published explanations and checked results**, begin with [Research and Results](SHOWCASE.md). To explore the enduring mathematical questions behind the research, visit the [Mathematical Estate](domains/index.md).
 
-## How to route a new item
-
-Use the smallest pillar that matches the present state.
-
-- Send an unclear source, object, or candidate route to **MATHFORGE**.
-- Send a normalized target with unresolved mathematics to **MATHSOLVE**.
-- Send an exact claim with a declared replay or proof surface to **MATHCERT**.
-- Use **MATH-PROGRAMME** to preserve cross-pillar routing, public state, governance, and archival continuity.
-
-Do not route by prestige. Route by the support state of the object.
-
-## Reader continuation
-
-For live work, use [Current Work](CURRENT_WORK.md). For bounded checked outputs, use [Results and Exemplars](SHOWCASE.md). For standing domains, use the [Mathematical Estate](domains/index.md). For review posture, use the [Grand Challenge Reader Guide](GRAND_CHALLENGE_READER_GUIDE.md).
+Readers interested in reviewing a particular argument can use the [Reader Guide](GRAND_CHALLENGE_READER_GUIDE.md), which explains how to examine sources, assumptions, proofs and remaining uncertainties in more detail.

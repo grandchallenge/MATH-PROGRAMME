@@ -1,82 +1,61 @@
-# MATH-PROGRAMME Documentary Library
+# Documentary Library
 
-The Documentary Library translates the programme's hardest mathematical terrain into illuminated, source-conscious monographs for the enjoyment and enlightenment of the lay reader. Each volume follows the **GCL–Chaidez** pattern: wonder first, definitions before claims, proof spines before conclusions, adversarial guardrails against attractive errors, and a technical appendix for readers who wish to descend beneath the imagery.
+<p class="page-deck">Nine illustrated introductions to important mathematical ideas. Begin with a question that interests you; each volume offers a story, examples and a route to the mathematics behind it.</p>
 
-!!! info "Authority and claim boundary"
-    The plates are pedagogical artworks, not proof diagrams. The cited literature, campaign ledgers, governing claim-authority artifacts, and claim-level trust matrices govern mathematical assertions. Open problems remain open; the Poincaré volume is a reconstruction of a solved theorem and makes no new-proof claim.
+## Choose a book
 
-## Discovery authority
+| Volume | What you will explore |
+| --- | --- |
+| [The Shape of a Sphere](poincare.md) | How mathematicians learned to recognize the shape of three-dimensional spaces. The Poincaré conjecture is **solved**; this book retraces the established achievement rather than offering a new proof. |
+| [The Hidden Music of Elliptic Curves](bsd.md) | How the arithmetic of elliptic curves relates to solutions of equations, and why the Birch–Swinnerton-Dyer conjecture remains open. |
+| [The Geometry of Hidden Harmony](hodge.md) | How geometric shapes, algebraic equations and the Hodge conjecture fit together. The central conjecture remains open. |
+| [The River and the Storm](navier_stokes.md) | What equations tell us about moving fluids, and why mathematicians still struggle to prove that their solutions always remain smooth. |
+| [The Geometry of Force and Silence](yang_mills.md) | How the mathematics of quantum fields leads to the unresolved Yang–Mills existence and mass-gap problem. |
+| [The Shape of Computational Truth](p_vs_np.md) | What separates problems whose answers can be checked quickly from those we know how to solve quickly; the P versus NP question remains open. |
+| [The Music of the Primes](riemann.md) | What prime numbers reveal through the Riemann zeta function, and why the Riemann Hypothesis continues to matter. |
+| [The Element in Half the Worlds](union_closed.md) | A deceptively simple question about families of sets: must some element appear in at least half of them? |
+| [Measure, Common Measure, and the Road to gcd](euclid_book_vii_micro.md) | A short historical study of Euclid's language of measurement and common divisors, connecting ancient reasoning with familiar arithmetic. |
 
-[`ARTIFACT_MANIFEST.json`](ARTIFACT_MANIFEST.json) is the sole machine discovery authority for **admitted public editions**. Every admitted volume names exactly one source record, web page, web-edition record, claim authority, scope relation, documentary tier, claim status, problem class, and display status.
+There is no required reading order. If you enjoy geometry, start with *The Shape of a Sphere* or *The Geometry of Hidden Harmony*. For numbers, try *The Hidden Music of Elliptic Curves* or *The Music of the Primes*. For physical questions, choose the volumes on fluids or quantum fields. For a shorter introduction, begin with Euclid.
 
-[`DOCUMENTARY_CANDIDATES.json`](DOCUMENTARY_CANDIDATES.json) is the separate public metadata authority for **pre-admission source locks**. Candidate metadata confer no collection membership. The registry remains authoritative when empty. Candidate source pointers remain repository-only until a page, edition record, native assets, public source record, collection entry, navigation entry, and manifest volume are admitted atomically.
+## How to read the collection
 
-CI rejects missing or orphaned edition records, pages, admitted source records, documentary source locks, asset files, asset directories, root static files, and shared reader CSS or JavaScript. It also rejects drift among the manifest, candidate registry, domain registry, source records, source locks, edition records, and rendered pages.
+These are explanations for curious readers, not announcements that Grand Challenge Labs has solved the problems described. Some volumes concern celebrated **open questions**; the Poincaré volume looks back at an **established theorem**. Each aims to make the ideas approachable without blurring that distinction.
 
-## Erdős Compendium — reference annex
+Illustrations help readers imagine difficult concepts, but they are not mathematical proofs. The books cite original work and include further technical material for readers who want to examine the underlying arguments. A beautifully drawn image, a plausible calculation or a computer experiment cannot take the place of a proof.
 
-[The Erdős Compendium](../erdos/index.md) offers a numbered, source-qualified
-entrance to all **1,221** registered problems, with individual issue/source
-links and a growing set of substantial layperson articles. The first developed
-articles explain Problems #1, #2 and #3, including mathematical examples,
-known results, GCL's verified work and unresolved proof obligations.
+The volumes vary in length and depth. Some offer a sustained study; others are first introductions designed to help you navigate a demanding subject. Each starts with the problem itself, so you need not read the others first.
 
-This is a **reference annex**, not an admitted documentary volume. It is
-deliberately separate from the release-artifact manifest, illustrated-edition
-source bundles and PDF certification obligations. A reference-only entry must
-not be confused with a finished explanatory article or a certified result.
+## Looking for Erdős's questions?
 
-## Documentary tiers
+The [Erdős Compendium](../erdos/index.md) is a separate, growing reference collection covering **1,221 numbered mathematical problems**. It provides problem statements, sources and, where editorial review has been completed, explanatory articles. It is not one of the nine illustrated books listed above.
 
-The tiers describe expository scope, not mathematical authority.
+[Browse the Erdős Compendium](../erdos/index.md) or [explore its numbered catalogue](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/).
 
-- **Reference** — the canonical browser-reader implementation and most complete substrate exemplar. The Poincaré reconstruction occupies this tier.
-- **Full** — a sustained documentary treatment comparable in narrative and technical depth to the reference while retaining its own problem-specific structure. The BSD and Union-Closed volumes occupy this tier.
-- **Orientation** — a complete, claim-safe first-principles map of the problem, theorem terrain, guardrails, and technical vocabulary. Orientation editions are intentionally more compressed and may later be expanded without changing theorem strength.
+## About the editions and their sources
 
-All tiers obey the same artifact-authority, accessibility, source, release-identity, and claim-boundary contracts.
+The books are available here as web pages. Their original sources, historical references and edition descriptions are documented separately. The records also distinguish a work's identity from the availability of a complete downloadable edition: a recorded PDF checksum, for example, does **not** mean that a public PDF download exists.
 
-## The admitted collection
+For readers and researchers who want the publication details, the following table preserves the source and edition references. The internal categories (*Reference*, *Full*, *Orientation* and *Micro*) describe how extensive an explanation is, **not** how strongly the mathematics has been proved.
 
-| Volume | Tier | Domain / campaign | Subject | Status | Length | Source record | Edition record |
-|---|---|---|---|---|---:|---|---|
-| [The Shape of a Sphere](poincare.md) | Reference | `PC` / `PC-001` | Poincaré theorem reconstruction | Archival reconstruction | 33 pages | [Record](sources/the_shape_of_a_sphere.tex) | [Edition](poincare.edition.json) |
-| [The Hidden Music of Elliptic Curves](bsd.md) | Full | `BSD` / `BSD-001` | Birch and Swinnerton–Dyer Conjecture | Open Millennium Prize Problem | 37 pages | [Record](sources/the_hidden_music_of_elliptic_curves.tex) | [Edition](bsd.edition.json) |
-| [The Geometry of Hidden Harmony](hodge.md) | Orientation | `HC` / `HC-001` | Hodge Conjecture | Open Millennium Prize Problem | 41 pages | [Record](sources/the_geometry_of_hidden_harmony.tex) | [Edition](hodge.edition.json) |
-| [The River and the Storm](navier_stokes.md) | Orientation | `NSCI` / `NS-CI-001` | Navier–Stokes existence and smoothness | Open Millennium Prize Problem | 47 pages | [Record](sources/the_river_and_the_storm.tex) | [Edition](navier_stokes.edition.json) |
-| [The Geometry of Force and Silence](yang_mills.md) | Orientation | `YM` / `YM-001` | Yang–Mills existence and mass gap | Open Millennium Prize Problem | 58 pages | [Record](sources/the_geometry_of_force_and_silence.tex) | [Edition](yang_mills.edition.json) |
-| [The Shape of Computational Truth](p_vs_np.md) | Orientation | `PNP` / `PNP-001` | P versus NP | Open Millennium Prize Problem | 50 pages | [Record](sources/the_shape_of_computational_truth.tex) | [Edition](p_vs_np.edition.json) |
-| [The Music of the Primes](riemann.md) | Orientation | `RH` / `RH-001` | Riemann Hypothesis | Open Millennium Prize Problem | 49 pages | [Record](sources/the_music_of_the_primes.tex) | [Edition](riemann.edition.json) |
-| [The Element in Half the Worlds](union_closed.md) | Full | `UC` / `UC` | Frankl's Union-Closed Sets Conjecture | Open conjecture | 48 pages | [Record](sources/the_element_in_half_the_worlds.tex) | [Edition](union_closed.edition.json) |
+### Collection records
 
-The Navier–Stokes volume orients the full Millennium problem. Its programme crosswalk points to the narrower `NS-CI-001` critical-integrability campaign and must not be read as an identity between those scopes.
+| Volume | Editorial form | Subject | Mathematical standing | Length | Source record | Edition record |
+| --- | --- | --- | --- | ---: | --- | --- |
+| [The Shape of a Sphere](poincare.md) | Reference | Poincaré theorem reconstruction | Archival reconstruction | 33 pages | [Source](sources/the_shape_of_a_sphere.tex) | [Edition](poincare.edition.json) |
+| [The Hidden Music of Elliptic Curves](bsd.md) | Full | Birch and Swinnerton–Dyer Conjecture | Open Millennium Prize Problem | 37 pages | [Source](sources/the_hidden_music_of_elliptic_curves.tex) | [Edition](bsd.edition.json) |
+| [The Geometry of Hidden Harmony](hodge.md) | Orientation | Hodge Conjecture | Open Millennium Prize Problem | 41 pages | [Source](sources/the_geometry_of_hidden_harmony.tex) | [Edition](hodge.edition.json) |
+| [The River and the Storm](navier_stokes.md) | Orientation | Navier–Stokes existence and smoothness | Open Millennium Prize Problem | 47 pages | [Source](sources/the_river_and_the_storm.tex) | [Edition](navier_stokes.edition.json) |
+| [The Geometry of Force and Silence](yang_mills.md) | Orientation | Yang–Mills existence and mass gap | Open Millennium Prize Problem | 58 pages | [Source](sources/the_geometry_of_force_and_silence.tex) | [Edition](yang_mills.edition.json) |
+| [The Shape of Computational Truth](p_vs_np.md) | Orientation | P versus NP | Open Millennium Prize Problem | 50 pages | [Source](sources/the_shape_of_computational_truth.tex) | [Edition](p_vs_np.edition.json) |
+| [The Music of the Primes](riemann.md) | Orientation | Riemann Hypothesis | Open Millennium Prize Problem | 49 pages | [Source](sources/the_music_of_the_primes.tex) | [Edition](riemann.edition.json) |
+| [The Element in Half the Worlds](union_closed.md) | Full | Frankl's Union-Closed Sets Conjecture | Open conjecture | 48 pages | [Source](sources/the_element_in_half_the_worlds.tex) | [Edition](union_closed.edition.json) |
+| [Measure, Common Measure, and the Road to gcd](euclid_book_vii_micro.md) | Micro | Euclid, Elements, Book VII: measuring, common measure, and bounded modern gcd concordance | Source-locked historical micro-edition | 1 page | [Source](sources/euclid_book_vii_micro.source.json) | [Edition](euclid_book_vii_micro.edition.json) |
 
-## Pre-admission candidates
+### Publication and preservation records
 
-The candidate registry is currently empty. Union-Closed completed atomic admission through UC-DOC-WP01; its historical UC-DOC-WP00 source lock remains governed through the admitted manifest volume's `source_lock` provenance field.
+The [collection manifest](ARTIFACT_MANIFEST.json) lists the nine admitted web editions and identifies the corresponding source materials, recorded checksums and publication status. The separate [candidate list](DOCUMENTARY_CANDIDATES.json) covers works not yet admitted to the collection. A candidate's presence on that list does not make it a published volume.
 
-## Editorial form
+The [web-edition specification](documentary_web.schema.json) describes the presentation and accessibility requirements shared by the illustrated books. The recorded source bundles and PDFs have their own identities; the web pages are reading editions, not replacements for the complete source material. Release-class artifacts may be documented as **metadata only**, without a stable public download link.
 
-The series uses cream parchment, deep navy, restrained gold, classical serif typography, ornamental framing, luminous mathematical imagery, explanatory prose, explicit theorem boundaries, and technical appendices that deepen rather than merely repeat the lay account.
-
-## Artifact authority and preservation
-
-Git stores admitted web records, admitted source-record pointers, edition records, candidate metadata, schemas, and validation contracts. Pre-admission source pointers remain under their governing campaign until admission; admitted volumes may retain those historical source-lock paths as provenance.
-
-For each admitted volume:
-
-- the checksum-locked complete illustrated source bundle is the **authoritative source artifact**;
-- the checksum-locked PDF is the **rendered edition**;
-- the Markdown page is a derivative **web edition**;
-- the `*.edition.json` file is the machine-readable browser-edition contract;
-- byte lengths, SHA-256 digests, programme crosswalks, release availability, documentary tier, status class, and discovery identity are fixed in [`ARTIFACT_MANIFEST.json`](ARTIFACT_MANIFEST.json).
-
-All release-class artifacts are currently recorded as `metadata_only`: their identities are governed, but no stable public release locator is asserted. A checksum proves identity after a file is obtained; it does not itself establish publication or availability.
-
-## Web-edition policy
-
-The Poincaré page is the reference browser-native implementation. Its reusable content contract is defined by [`documentary_web.schema.json`](documentary_web.schema.json). Every manifest-discovered edition is validated against that schema and against shared semantic, accessibility, source, release, section, plate, and mathematics-rendering contracts. MathJax is a version-pinned network enhancement; source TeX remains in the document when JavaScript is unavailable, and archival identity belongs to the PDF and complete source bundle.
-
-## Reading order
-
-There is no required order. A reader seeking geometry may begin with Poincaré or Hodge; arithmetic with BSD or Riemann; physical law with Navier–Stokes or Yang–Mills; computation with P versus NP; finite combinatorics with Union-Closed. Each volume begins again from first principles.
+Each mathematical claim ultimately depends on its cited sources or proof, not on the book's visual treatment or inclusion in the library. Readers who need the exact checking and publication records can follow the source and edition links above.
