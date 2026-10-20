@@ -147,6 +147,61 @@ Also all positive pair-sum differences of P_h lie below 2R_h; therefore the **av
 
 The bounded-gap property K_c is necessary for hypothetical persistent density, but it does not fix the difficulty: a fixed fraction of each newly enlarged arithmetic arena can pay for these nonduplicated distance constraints indefinitely, so long as no additional *superlinear* or *mutually competing* shadow deficit is proved.
 
+## 4A. A rigorous scalar non-overload model: why the exact charge cannot prove a valley by itself
+
+The universal distance increment can now be audited against its entire scalar ambient capacity, rather than extrapolated. The following is a **countermodel to a proposed inference from inequalities**, not a new B3 construction.
+
+**Proposition C (critical-order occupancy and all charged distance volumes remain compatible).** Fix any $0<c\le 1/2$ and integer $R_0\ge\max(10,\lceil c^{-3}\rceil)$. For all $j\ge0$ define the abstract numerical sequences
+
+$
+R_j=5^j R_0,\qquad
+n_j=\lceil cR_j^{1/3}\rceil,\qquad
+d_0=0,\qquad
+d_h=\frac12\sum_{j<h}(n_j^3+3n_j).
+$
+
+Then, for **every** $h\ge1$ simultaneously,
+
+$
+\boxed{
+n_j\ge cR_j^{1/3},\qquad
+4R_j<R_{j+1}\le K_cR_j,\qquad
+d_h<2R_h-2.
+}\tag{SCALAR-NO-OVERLOAD}
+$
+
+Moreover $d_{j+1}-d_j=(n_j^3+3n_j)/2$ is precisely the **exact** charge from one distant anchor. Thus the numerical inequalities in Theorem B, the persistent-density lower bound, the bounded-ratio requirement, and the $O(R_h)$ capacity upper bound are all jointly feasible indefinitely at the scalar level.
+
+**Proof.** Since $R_j\ge c^{-3}$, the ceiling gives $n_j\le2cR_j^{1/3}$. Then
+
+$
+\frac{n_j^3+3n_j}{2}
+\le 4c^3R_j+3cR_j^{1/3}
+\le7c^3R_j.
+$
+
+The last bound follows from $R_j^{2/3}\ge c^{-2}$. Summing a geometric series,
+
+$
+d_h\le7c^3\sum_{j<h}R_j
+<\frac{7c^3}{4}R_h
+\le\frac7{32}R_h<2R_h-2.
+$
+
+Here $R_h\ge50$, so the final inequality is immediate. Also $R_{j+1}=5R_j$ and $K_c=\lceil(5/c)^3\rceil\ge125>5$. QED.
+
+**Logical scope is essential.** The sequences $(R_j,n_j,d_j)$ are **numbers**, not the counting function and difference spectra of one actual infinite B3 set. In particular the growth of $n_j$ requires many actual intermediate elements, which might create **additional coupled differences** not included in the one-anchor charge. Those uncounted joint contributions are precisely where a real density contradiction could arise. The proposition proves only that the *universal one-anchor charges plus scalar ambient capacity* are not enough to deduce such a contradiction. It does NOT rule out a stronger theorem exploiting all actual intermediate elements and their cross-scale signed-sum compatibility.
+
+### Concrete missing interaction
+
+Let $Y$ be any later B3 block jointly compatible with P. Its pair differences $Y-Y$ must avoid $D(P)\setminus\{0\}$ by PPY triple uniqueness. This statement is independent of the position of $Y$, but it does not guarantee $Y-Y$ meets any of the newly created long-distance bands of $D(P\cup\{y\})$. In fact the two exact new bands from Theorem A cannot themselves intersect differences internal to a length-R interval. Their **cross-window** interaction, including the forced occupation of several future windows under hypothetical persistence, must therefore be quantified before a cardinality deficit can be inferred.
+
+This is a narrow, testable research target: find a c-dependent lower bound for conflict *between actual differently positioned future cohorts*, not just for the total number of forbidden distances. A viable bound must detect the many intermediate elements omitted by the scalar relaxation.
+
+### Relation to known conditional progress
+
+The full odd-order B3 density-valley conjecture remains open. Táfula's 2026 work on zero-sum linear forms proves substantial density restrictions under explicit gap-regularity hypotheses (published in *Monatshefte für Mathematik*, DOI: https://doi.org/10.1007/s00605-026-02211-4). Helm's *On the Distribution of B3-Sequences* (1996, DOI: https://doi.org/10.1006/jnth.1996.0069) rules out the regular asymptotic law $A(N)\sim\alpha N^{1/3}$. These are **external established conditional results**, not achievements of the present note. Their existence reinforces the need to control genuinely irregular multiscale reconfigurations rather than presuppose smooth growth.
+
 ## 4. An explicit reason not to infer the conjecture
 
 Every finite B3 prefix can be extended indefinitely by adjoining sufficiently rapidly growing new elements: choose each y_j>4 max P_j. Theorem B proves that such a resulting infinite B3 set incurs a **strictly growing cubic reciprocal distance tax at each stage**, even as its normalized counting density has arbitrarily deep valleys. Thus 'indefinitely extendible' by itself does not demand positive normalized density. Conversely the exact distance-tax lower bound does not eliminate a hypothetical positive critical lower density.
