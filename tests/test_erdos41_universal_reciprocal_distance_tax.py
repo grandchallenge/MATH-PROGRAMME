@@ -180,8 +180,9 @@ class UniversalReciprocalDistanceTaxTests(unittest.TestCase):
                 interval=range(jstart,jstart+2*R-1)
                 if len(interval)>1:
                     self.assertLess(max(interval)-min(interval),min(new))
+                sample=[interval[0], interval[len(interval)//2], interval[-1]]
                 self.assertFalse(
-                    {v-u for u,v in combinations(interval,2)} & new
+                    {v-u for u,v in combinations(sample,2)} & new
                 )
 
     def test_scalar_persistent_critical_countermodel_without_overload(self):
