@@ -2,6 +2,8 @@
 
 **Disposition:** ACCEPT the **bounded** classical and formal free BV results of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md), with corrections to overinterpretation explicitly rejected. This is an auditable critical mathematical **function** within GCL, not a fictitious external referee, additional credential, human approval or formal proof-assistant certification.
 
+**Protected research proof:** [result 024, PR #2779](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2779), merged commit `c7707ead006cbd5fbdd29b0c5dfbad4145806c7f`. Its mathematical Markdown gate and exact bounded BV/Weiss fixture passed. This audit reviews that immutable result, not an unmerged return.
+
 **Primary mathematical text:** Costello and Gwilliam, [*Factorization Algebras in Quantum Field Theory*, Vol. I](https://ncatlab.org/nlab/files/CostelloGwilliam-FactorizationAlgebras.pdf): §§4.2.1, 4.2.6; Lemma **4.2.1.1** and Appendix **B.10** for smooth compact-support versus distributional elliptic complexes; B.6.0.7–B.6.1.1 (printed 469–471) for filtered differentiable categories; §6.1 for Weiss covers. This audit makes no claim that these source-backed statements are newly invented mathematical theorems.
 
 ## I. The actual category and field model
