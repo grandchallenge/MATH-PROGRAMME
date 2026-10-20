@@ -180,6 +180,14 @@ The reference classical multiplication $\mu^{\mathrm{cl}}$ is a smooth cochain m
 
 The key difference from the false construction ruled out in Theorem 28.3 is that $\mu^{(\epsilon)}$ is generally **not ordinary multiplication**: it contains cross-propagator Wick contractions. This is how smooth regularization and genuine factorization coexist.
 
+### Corollary 28.5a (completed differentiable Weiss descent at each positive scale)
+
+For any Weiss cover of an interval, the regulated distributional quantum prefactorization algebra of Theorem 28.5 satisfies **completed differentiable Weiss descent in all cohomological degrees**, at every fixed $\epsilon>0$.
+
+**Proof.** At every open $U$, the Wick map $W_{\epsilon,U}$ is an invertible **smooth filtered chain map** from the formal classical observable complex $(A_{\mathrm{dist}}(U)[[\hbar]],d)$ to $(A_{\mathrm{dist}}(U)[[\hbar]],d_\epsilon)$. The twisted multiplication (28.13) was defined precisely so that these maps form a natural **isomorphism of differentiable prefactorization diagrams**, not merely an objectwise quasi-isomorphism. The classical distributional polynomial observables satisfy differentiable Weiss descent by the kernel-support Cech proof [024–025](AGENT_CRITICAL_REVIEW_FREE_SCALAR_025.md). Tensoring that classical diagram with formal power series in $\hbar$ is the inverse limit of its **smoothly split finite $\hbar$-quotients**. Each finite quotient is a finite extension of copies of the classical Weiss comparison, so it is a differentiable quasi-isomorphism; the inverse towers satisfy the explicit smooth fibrations and finite-quotient stabilization of Costello–Gwilliam B.6.0.11. Conjugating the completed Cech diagram by the natural family $W_{\epsilon,U}$ preserves all these properties. Thus the regulated model satisfies completed differentiable Weiss descent in all degrees. $\square$
+
+**Important distinction:** The corollary is valid **at positive regulator scale** using the corrected Wick structure maps. It is **not** a theorem about a well-defined $\epsilon=0$ operator on arbitrary distributional diagonals.
+
 ## 6. Exact scale transport, and the UV limit that still fails
 
 For any two scales $\epsilon,\eta>0$, define
