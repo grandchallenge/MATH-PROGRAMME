@@ -2,7 +2,7 @@
 
 <p class="page-deck">Where the seven famous problems stand, including the September Navier–Stokes announcement and new partial advances reported in October. Last checked against primary sources: 20 October 2026.</p>
 
-In 2000, the Clay Mathematics Institute (CMI) named seven mathematical problems, each carrying a $1 million prize. One, the **Poincaré conjecture**, is officially solved. An announced Navier–Stokes breakthrough is receiving special attention, but its status has **not** yet changed to “Solved” on Clay's public list. Five other problems remain formally listed as unsolved.
+In 2000, the Clay Mathematics Institute (CMI) named seven mathematical problems, each carrying a one million US dollars prize. One, the **Poincaré conjecture**, is officially solved. An announced Navier–Stokes breakthrough is receiving special attention, but its status has **not** yet changed to “Solved” on Clay's public list. Five other problems remain formally listed as unsolved.
 
 These are **Clay's problem statuses**, not assessments of who deserves prize credit, and not labels for GCL's separate research projects.
 
