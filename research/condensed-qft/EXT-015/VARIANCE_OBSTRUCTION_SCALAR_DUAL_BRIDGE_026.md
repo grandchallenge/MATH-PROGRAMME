@@ -248,7 +248,7 @@ The arity-completed product of these complexes has cohomology $\mathbb R[[a,b]]$
 
 ## 6. The remaining genuine enrichment and quantization boundary
 
-Theorems 26.2 and 26.4 eliminate the higher-scalar-liquid-$\mathrm{Ext}$ ambiguity **for these corrected field-source symmetric powers on connected intervals**. They do **not** give a universal higher Ext target-support theorem for the originally different source and coefficient objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md).
+Theorems 26.2 and 26.4 eliminate the ambiguity concerning higher scalar liquid $\mathrm{Ext}$ **for these corrected field-source symmetric powers on connected intervals**. They do **not** give a universal higher Ext target-support theorem for the originally different source and coefficient objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md).
 
 The next specific missing comparison is **enriched**: (26.9) gives the *set/vector-space* of liquid scalar morphisms, but the Costello–Gwilliam DVS polynomial kernels carry a specified **smooth plot structure**. Merely transporting this structure along the vector-space isomorphism is not a proof that it is canonically recovered from a liquid internal Hom construction.
 
