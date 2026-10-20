@@ -263,7 +263,7 @@ $$
 \tag{26.18}
 $$
 
-The right side is a *different liquid Hom target* for each test manifold, not an invented intrinsic DVS structure on every liquid object. For each smooth parameter map between manifolds, the pullback of smooth functions induces the required plot restriction. Constant plots arise by composing scalar-valued morphisms with constant-function inclusion; local-to-global smooth-plot gluing follows from gluing $C^\infty(M)$-valued maps.
+The right side is a *different liquid Hom target* for each test manifold, not an invented intrinsic DVS structure on every liquid object. For each smooth parameter map between manifolds, the pullback of smooth functions induces the required plot restriction. Constant plots arise by composing scalar-valued morphisms with constant-function inclusion; local-to-global smooth-plot gluing follows from gluing maps valued in $C^\infty(M)$.
 
 **Theorem 26.5 (natural DVS enrichment in the compact-distributional free sector).** The functors (26.18), equipped with the flat connection obtained by differentiating their smooth parameter outputs, define differentiable cochain complexes. For every open interval $U$ and every polynomial arity $w$ there is a **natural isomorphism of actual Costello–Gwilliam DVS cochain complexes**
 
