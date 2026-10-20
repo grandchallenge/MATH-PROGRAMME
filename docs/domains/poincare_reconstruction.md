@@ -1,5 +1,7 @@
 # Domain 05 · Poincaré Reconstruction Archive
 
+**Millennium status, 20 October 2026:** The Poincaré conjecture remains **Solved**, through Perelman’s earlier proof, with Clay’s prize awarded in 2010. GCL’s work is a reconstruction of the established theorem, not a new proof. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 Imagine a three-dimensional space that is finite and has no boundary. What properties would tell us that its underlying shape is that of a three-dimensional sphere? The Poincaré conjecture answered this question, and the theorem was established through work associated with Richard Hamilton and Grigori Perelman.

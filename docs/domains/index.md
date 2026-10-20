@@ -4,12 +4,14 @@
 
 ## The questions we study
 
+**20 October 2026:** [Millennium Prize Problems status](../MILLENNIUM_PRIZE_STATUS.md) distinguishes Clay’s seven public classifications from GCL’s separately bounded research. Clay lists Navier–Stokes as **Active** following an announced result under evaluation; GCL’s narrower unforced critical-integrability question remains open.
+
 These subjects are part of GCL's long-term research collection. Some have active projects at the moment; others are maintained as reference material. A place in this collection does **not** mean that GCL has solved the problem or is currently working on every aspect of it.
 
 | Area | The question at its heart | Standing |
 | --- | --- | --- |
 | [Union-Closed Sets](union_closed.md) | If a family of sets contains the union of any two of its members, must some element occur in at least half the sets? | Open conjecture |
-| [Navier–Stokes Equations](navier_stokes.md) | Can smooth fluid motion in three dimensions always be described by smooth solutions, or might singularities develop? | Open problem |
+| [Navier–Stokes Equations](navier_stokes.md) | Can smooth fluid motion in three dimensions always be described by smooth solutions, or might singularities develop? | **Clay Active; announced proof under evaluation.** GCL restricted study remains open |
 | [Hodge Conjecture](hodge.md) | Which geometric features of a complex algebraic shape can be explained by algebraic equations? | Open conjecture |
 | [Birch–Swinnerton-Dyer Conjecture](birch_swinnerton_dyer.md) | How does a function associated with an elliptic curve reveal the number of independent rational solutions? | Open conjecture |
 | [Poincaré Conjecture](poincare_reconstruction.md) | How can we recognize when a three-dimensional space has the essential shape of a sphere? | **Solved**; historical reconstruction |

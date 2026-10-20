@@ -4,6 +4,8 @@
 
 ## A proof begins with a clear question
 
+[Millennium Prize Problems: October 2026 update](MILLENNIUM_PRIZE_STATUS.md) describes Clay’s current classifications, reported new results and the narrower scope of GCL’s own investigations.
+
 Mathematical discoveries rarely arrive as finished proofs. A question may first appear in an old paper, a numerical experiment or a conversation between researchers. Before attempting to solve it, we need to understand exactly what it asks and which assumptions it makes.
 
 GCL organizes this process so that useful findings, failed approaches and unresolved difficulties are recorded rather than lost. Not every investigation ends in a proof. Discovering that a proposed argument does not work can be an important result in its own right.

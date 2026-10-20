@@ -1,5 +1,7 @@
 # Domain 08 · Riemann Hypothesis
 
+**Millennium status, 20 October 2026:** Clay continues to classify the Riemann Hypothesis as **Unsolved**. An [October release](https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/README.md) reports a zero-free region **Re(s) > 7/8**, with an accompanying Lean formalization. This is strictly weaker than proving that **all nontrivial zeros lie on Re(s) = 1/2**. The announcement does not discharge GCL’s retained review blockers. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 Prime numbers seem irregular, yet their distribution is connected to a remarkable mathematical function called the Riemann zeta function. The Riemann Hypothesis predicts where certain zeros of this function must lie. It is one of the most important unsolved questions in mathematics.

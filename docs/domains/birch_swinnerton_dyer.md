@@ -1,5 +1,7 @@
 # Domain 04 · Birch–Swinnerton-Dyer
 
+**Millennium status, 20 October 2026:** Clay still lists the general Birch–Swinnerton-Dyer conjecture as **Unsolved**. Verified special cases, conditional arguments and GCL’s bounded research do not establish its universal claim. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 An elliptic curve is a smooth algebraic curve described by an equation that often has rational-number solutions. The Birch–Swinnerton-Dyer conjecture proposes a remarkable connection between those solutions and the behavior of a related mathematical function.

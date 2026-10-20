@@ -1,5 +1,7 @@
 # Domain 07 · P versus NP
 
+**Millennium status, 20 October 2026:** Clay continues to list P versus NP as **Unsolved**. Advances about related complexity conjectures do not establish either P = NP or P ≠ NP. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 Some problems have answers that are easy to check even though finding an answer appears difficult. The P versus NP question asks whether every problem with efficiently checkable answers can also be solved efficiently.

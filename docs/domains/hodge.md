@@ -1,5 +1,7 @@
 # Domain 03 · Hodge Conjecture
 
+**Millennium status, 20 October 2026:** Clay still lists the general Hodge conjecture as **Unsolved**. An [October 2026 manuscript](https://github.com/openai/math/blob/main/preprints/The-rational-Hodge-conjecture-for-CM-abelian-varieties-October-6-2026/README.md) reports a proof for **CM abelian varieties**, an important but restricted class. This is a research claim subject to assessment, not a proof of the general conjecture or a GCL-certified result. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 Many geometric shapes can be described using algebraic equations. The Hodge conjecture asks whether certain features discovered through more general geometric methods can always be explained using algebraic pieces of the shape.
