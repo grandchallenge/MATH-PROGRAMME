@@ -1,6 +1,6 @@
 # EXT-015D / 026 — an exact D10 variance obstruction and corrected scalar-valued liquid kernel bridge
 
-**Mathematical disposition:** **PROVED NO-GO** for a weight-preserving quasi-isomorphism between the originally proposed liquid derived mapping objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md) and the actual free-scalar observables of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md). **CONSTRUCTED AND PROVED** a correctly typed, natural identification of their *replacement* underived scalar-valued liquid dual **underlying cochain complexes** with compactly supported distributional polynomial kernels in **all cohomological degrees and finite polynomial weights**. This extends to the product completion as an isomorphism of underlying cochain complexes. **Further proved on connected intervals:** the corrected field-source complex has an explicit continuous contraction onto two affine modes; its finite symmetric powers are homotopy equivalent to finite-dimensional projective liquid objects, so their **underived scalar Hom computes genuine derived scalar RHom in every degree**. This is **not** a theorem identifying liquid plots with Costello–Gwilliam DVS smooth plots.
+**Mathematical disposition:** **PROVED NO-GO** for a weight-preserving quasi-isomorphism between the originally proposed liquid derived mapping objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md) and the actual free-scalar observables of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md). **CONSTRUCTED AND PROVED** a correctly typed, natural identification of their *replacement* underived scalar-valued liquid dual **underlying cochain complexes** with compactly supported distributional polynomial kernels in **all cohomological degrees and finite polynomial weights**. This extends to the product completion as an isomorphism of underlying cochain complexes. **Further proved on connected intervals:** the corrected field-source complex has an explicit continuous contraction onto two affine modes; its finite symmetric powers are homotopy equivalent to finite-dimensional projective liquid objects, so their **underived scalar Hom computes genuine derived scalar RHom in every degree**. The additional **restricted** manifold-valued liquid Hom construction below **does** identify the actual Costello–Gwilliam smooth distributional plots in this free classical sector; it does not define a universal enrichment of all liquid modules.
 
 **GCL inputs:** [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md), [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md), [025](AGENT_CRITICAL_REVIEW_FREE_SCALAR_025.md). Source anchors: Costello–Gwilliam, *Factorization Algebras in Quantum Field Theory*, Volume I, §4.2.1, especially **Lemma 4.2.1.1** (printed page 62), and Appendix B.6 (printed pages 469–471), [primary PDF](https://ncatlab.org/nlab/files/CostelloGwilliam-FactorizationAlgebras.pdf). The topological input is the classical nuclear Schwartz kernel theorem for $C^\infty(U)$, with strong continuous dual $\mathcal E'(U)$.
 
@@ -246,32 +246,81 @@ The arity-completed product of these complexes has cohomology $\mathbb R[[a,b]]$
 
 **Naturality caveat:** The auxiliary homotopy $T$ and projector $p$ depend on the chosen $x_0$. The canonical **identification of liquid Hom with compact distributional kernels** is natural for interval inclusions, and the statement of K-projectivity is objectwise independent of any chosen contraction; no naturally chosen base point across all interval inclusions is being claimed.
 
-## 6. The remaining genuine enrichment and quantization boundary
+## 6. Explicit liquid-derived reconstruction of the *actual* DVS plot structure
+
+The previous underlying-complex result admits a **further exact enrichment theorem**, not merely a proposed way to transport plots. The key primary-source definition is Costello–Gwilliam, Vol. I, **Definition B.2.1.1**, printed p. 462 (PDF page 469): a smooth map from a finite-dimensional parameter manifold $M$ to the space of compactly supported distributions on $V$ **is, by definition, a continuous linear map** $C^\infty(V)\to C^\infty(M)$. **Definition B.2.1.2** (printed p. 463) supplies the flat parameter-space connection by differentiating in $M$.
+
+For each finite weight $w$, cohomological degree $q$, and finite-dimensional smooth manifold $M$, define the following **smooth-parameter test functor** on the corrected scalar liquid dual:
+
+$
+\mathrm{Plots}_{M}\bigl(\mathscr B_w^q(U)\bigr)
+=
+\mathrm{Hom}_{\mathrm{Liq}_p(\mathbb R)}
+\left(
+\underline{\mathcal T_w(U)^{-q}},
+\underline{C^\infty(M)}
+\right)^{\mathfrak S_w}.
+\tag{26.18}
+$
+
+The right side is a *different liquid Hom target* for each test manifold, not an invented intrinsic DVS structure on every liquid object. For a smooth map $f:M'\to M$, pullback of smooth functions $f^*:C^\infty(M)\to C^\infty(M')$ induces the required plot restriction. Constant plots arise by composing scalar-valued morphisms with constant-function inclusion; local-to-global smooth-plot gluing follows from gluing $C^\infty(M)$-valued maps.
+
+**Theorem 26.5 (natural DVS enrichment in the compact-distributional free sector).** The functors (26.18), equipped with the flat connection obtained by differentiating their smooth parameter outputs, define differentiable cochain complexes. For every open interval $U$ and every polynomial arity $w$ there is a **natural isomorphism of actual Costello–Gwilliam DVS cochain complexes**
+
+$
+\boxed{\quad
+\mathscr B_w^{\mathrm{DVS}}(U)
+\ \cong\
+P_w^{\mathrm{DVS}}(U),
+\quad}
+\tag{26.19}
+$
+
+where the left side is the corrected scalar liquid dual *with the explicitly constructed parameter-target enrichment* and the right side is the compactly supported distributional homogeneous observable complex of [024](FREE_SCALAR_DIFFERENTIABLE_WEISS_024.md). This holds **in every cohomological degree**, not merely on cohomology.
+
+**Proof.** In each degree, $\mathcal T_w(U)^{-q}$ is a finite direct sum of $C^\infty(U^w)$, acted on by graded permutations. For every finite-dimensional $M$, both its Fréchet source and the target $C^\infty(M)$ are complete Fréchet real spaces. Full faithfulness of their liquid realizations identifies (26.18) with continuous linear operators from each $C^\infty(U^w)$ to $C^\infty(M)$, followed by the finite graded symmetric projector. By the **literal DVS definition B.2.1.1**, these are exactly the smooth $M$-parametrized plots of compactly supported distributional kernels on $U^w$. The identification is natural in $M$ because the same smooth-function pullbacks occur on both sides. The parameter differential/flat connection is differentiation in $M$ on both sides, as specified in B.2.1.2, and the field differential is the transpose of the smooth $\partial_x^2$ operator on the $U$ coordinates. The two commute. Hence (26.19) is an isomorphism **including smooth plots, flat connections and cochain differentials**, not just of vector spaces. $\square$
+
+**Theorem 26.6 (completed classical DVS and Weiss bridge).** Give $\prod_{w\ge0}\mathscr B_w^{\mathrm{DVS}}(U)$ the product plots and decreasing polynomial-arity tail filtration. The product of (26.19) is an isomorphism of **complete differentiable pro-cochain complexes**
+
+$
+\widehat{\mathscr B}^{\mathrm{DVS}}(U)
+\cong
+\widehat{\mathcal P}_{\mathrm{dist}}^{\mathrm{cl}}(U).
+\tag{26.20}
+$
+
+It is compatible with smooth disjoint-open multilinear prefactorization structure maps and the **classical** completed Weiss Čech maps. On connected intervals, the scalar-valued liquid dual model also computes the genuine liquid-derived scalar Hom by Theorem 26.4. Therefore its completed classical Weiss comparison is a weak equivalence of differentiable pro-cochain complexes **in every cohomological degree**.
+
+**Proof.** At each arity (26.19) is a natural isomorphism of DVS complexes. Multiplication by external tensor product of compactly supported distributional kernels, followed by extension by zero and graded symmetrization, has identical definitions under the scalar-pairing identifications and is smooth by the DVS kernel construction. Finite arity quotients are finite direct sums with split smooth projections; their kernels and filtrations match under (26.19). The product is therefore an isomorphism of complete filtered DVS pro-cochain complexes, not merely a quasi-isomorphism. The finite-stage and completed Weiss Čech diagrams match term by term, so the classical smooth distributional Weiss theorem already established in [024–025](AGENT_CRITICAL_REVIEW_FREE_SCALAR_025.md) transfers across this actual DVS isomorphism. Finally, the explicit liquid homotopy of Theorem 26.4 supplies a projective model for the corrected source on connected intervals, computing all scalar-derived degrees. $\square$
+
+**Precise qualification:** This theorem constructs a **restricted functorial enriched bridge** for the scalar duals of nuclear smooth-field tensor complexes, using smooth-manifold-valued liquid targets. It does **not** assert a general enrichment functor from every liquid module to every DVS object. Its compatibility with the **classical distributional** prefactorization structure does **not** give a quantum BV contraction on arbitrary distributional diagonal kernels.
+
+## 7. The remaining genuine enrichment and quantization boundary
 
 Theorems 26.2 and 26.4 eliminate the ambiguity concerning higher scalar liquid $\mathrm{Ext}$ **for these corrected field-source symmetric powers on connected intervals**. They do **not** give a universal higher Ext target-support theorem for the originally different source and coefficient objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md).
 
-The next specific missing comparison is **enriched**: (26.9) gives the *set/vector-space* of liquid scalar morphisms, but the Costello–Gwilliam DVS polynomial kernels carry a specified **smooth plot structure**. Merely transporting this structure along the vector-space isomorphism is not a proof that it is canonically recovered from a liquid internal Hom construction.
+**The classical free-field DVS enrichment is now constructed**, by Theorems 26.5–26.6: plots are liquid morphisms into the parameter-target smooth-function objects $\underline{C^\infty(M)}$, exactly as in Costello–Gwilliam B.2.1.1. The remaining restriction is that this is a **specific enriched scalar-dual construction**, not a universal DVS realization functor on the entire liquid category.
 
 Additional separate obligations are:
 
-1. Define a natural liquid-to-DVS scalar mapping-object enrichment and verify that its plots agree with smooth families of compactly supported distributional kernels, including locally uniform compact supports.
-2. Verify B.6 differentiable cofibrations/fibrations and filtration-compatible disjoint-support operations in that enriched comparison, not just on underlying real complexes.
-3. Treat interacting/renormalized BV contractions and general higher liquid Ext with their actual, and different, source/coefficient objects. Arbitrary distributional diagonal contractions are still not defined by the classical comparison.
+1. Determine how far the constructed scalar-dual plot enrichment can be extended beyond **nuclear Fréchet smooth field tensors** while retaining the full B.6 structure.
+2. Treat **quantum BV** compatibility with a **regularized** or restricted distributional subspace; the classical distributional kernels alone do not admit unrestricted diagonal BV contractions.
+3. Prove or refute general higher-liquid-Ext support comparisons for the **original test-function-valued source/coefficient objects**; they differ from the now resolved corrected scalar field dual.
 
 The no-go in Theorem 26.1 and the corrected all-degree scalar-derived result in Theorem 26.4 are compatible: **different, correctly typed objects** support different conclusions.
 
-## 7. Verification ledger
+## 8. Verification ledger
 
 | Question | Verdict |
 | --- | --- |
 | Original 022 polynomial-source, test-function-target $R\mathrm{Hom}$ is equivalent weightwise to free-scalar observables | **REFUTED** by arity-zero dimension mismatch (26.3) |
 | Correct scalar liquid Hom on completed smooth **field** tensors equals distributional polynomial kernels | **PROVED AS UNDERLYING COMPLEXES**, all finite weights and cochain degrees (26.10) |
-| Natural extension-by-zero, signed permutations and underlying disjoint-open polynomial multiplication | PROVED COMPATIBLE on underlying complexes |
+| Natural extension-by-zero, signed permutations and underlying disjoint-open polynomial multiplication | PROVED COMPATIBLE on underlying complexes and DVS smooth maps (26.19–26.20) |
 | Arity-complete products of these underlying cochain complexes | PROVED IDENTICAL by product of the isomorphisms (26.11) |
 | Smooth field complex and finite graded symmetric tensors contract to finite projective liquid objects on connected intervals | PROVED by exact integration homotopy (26.12–26.15) |
 | Canonical identification of their Costello–Gwilliam DVS plots with liquid internal Hom plots | **OPEN; NOT IMPLIED** |
 | Correct field-source scalar liquid Hom versus derived scalar RHom on connected intervals | **PROVED ALL DEGREES** by continuous two-term contraction to finite-dimensional projectives (26.16) |
-| Genuinely enriched scalar liquid-to-DVS comparison respecting smooth plots and Weiss operations | **OPEN** |
+| Restricted scalar liquid-to-DVS plot enrichment and classical completed Weiss descent | **PROVED ALL CLASSICAL WEIGHTS/DEGREES** from the explicit manifold-valued liquid Hom functor (26.18–26.20) |
 | General old-source higher liquid Ext and quantum distributional BV comparison | **OPEN** |
 
-**Next GCL research obligation:** Critically audit the explicit continuous homotopy contraction (26.12–26.16) and its finite symmetric tensor powers. Then construct a **natural plot-preserving enriched liquid scalar mapping functor**, checking DVS smoothness and filtered/Weiss compatibility rather than renaming ordinary liquid Hom as a differentiable mapping object. General old-source Ext and interacting/renormalized quantum observables remain independent open problems. No Human Steward routine approval or extra GitHub account is needed.
+**Next GCL research obligation:** Critically audit the continuous field contraction, finite symmetric tensor derived comparison, and **explicit manifold-parameter liquid-to-DVS plot identification from Costello–Gwilliam B.2.1.1**. The corrected classical scalar field bridge now includes genuine all-degree derived scalar Hom, exact DVS smooth plots, complete arity filtration and classical Weiss descent on connected intervals. Further mathematical research is needed for **quantum regularized distributional BV**, extensions of the enriched bridge to broader liquid objects, and general old-source liquid Ext with the original test-function-valued coefficients. No Human Steward routine approval or extra GitHub account is needed.
