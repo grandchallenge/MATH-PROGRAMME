@@ -36,7 +36,7 @@ e_i=1+i+B(i^2\bmod p)+B^2(i^3\bmod p)
 \quad(0\le i<p).
 $$
 
-The $p$-element set $T_p=\{e_i\}$ is B3: triple sums have no base-$B$ carries; equality of the first three power sums modulo $p$ identifies the underlying triple multiset by Newton identities (division by 2 and 3 is allowed for $p>3$). Since $W_p<12p^3$, its size satisfies $p>(W_p/12)^{1/3}$.
+The set $T_p=\{e_i\}$ of $p$ elements is B3: triple sums have no carries in base $B$; equality of the first three power sums modulo $p$ identifies the underlying triple multiset by Newton identities (division by 2 and 3 is allowed for $p>3$). Since $W_p<12p^3$, its size satisfies $p>(W_p/12)^{1/3}$.
 
 Apply Lemma A1 to **any fixed** finite B3 $S\subseteq[1,U]$ and $T=T_p$, with the same $M=8U+1$ for every p. It produces an interval $J_p$ of $L_p=MW_p$ consecutive integer positions, with $L_p\to\infty$ and
 
@@ -83,7 +83,7 @@ If E is not B3, the same moment is **strictly larger**, because different unorde
 
 ### D2. Weak-limit nonidentifiability despite critical endpoint populations
 
-For each prime $p\ge5$ let $T_p$ be the genuine $p$-point B3 moment alphabet above. Define a second set
+For each prime $p\ge5$, let $T_p$ be the genuine B3 moment alphabet of $p$ points defined above. Define a second set
 
 $$
 T'_p=\{1,2,3\}\cup\{e_i:3\le i<p\}\subseteq[1,W_p].
