@@ -10,7 +10,7 @@ A note to the reader
 
 ## How to Read the River
 
-A fluid is not a single travelling object. It is a velocity attached to every point of space, changing in time and constrained by pressure, viscosity, and incompressibility. The governing equation is classical. The unresolved question is whether smooth three-dimensional data can ever drive the solution beyond smooth existence in finite time.
+A fluid is not a single travelling object. It is a velocity attached to every point of space, changing in time and constrained by pressure, viscosity, and incompressibility. The governing equation is classical. The historic question is whether smooth three-dimensional data can drive a solution beyond smooth existence in finite time; see the October 2026 update above for the newly announced breakdown construction.
 
 This web edition is a derivative, source-normalized exposition. Its streamlines, vortices, and cascades are orientation devices rather than computational evidence. The whole-space and periodic formulations, solution classes, imported theorems, and claim labels govern the mathematics.
 
@@ -18,7 +18,7 @@ This web edition is a derivative, source-normalized exposition. Its streamlines,
 
 Open Millennium Prize Problem; parent-challenge documentary; no smoothness proof claim.
 
-**Open problem**
+**Original Millennium question · announced result under evaluation**
 
 For smooth divergence-free initial data in three dimensions, prove global smooth existence with the required decay or periodicity, or construct an admissible finite-time breakdown example in one of the official settings.
 
