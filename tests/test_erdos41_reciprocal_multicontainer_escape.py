@@ -105,10 +105,13 @@ def next_prime_at_least(n):
 def many_tagged_cohorts(h,p):
     assert h>=2 and p>=2*h
     R,baseline=moment_code(p)
-    tagprime=next_prime_at_least(h)
-    _,raw_tags=moment_code(tagprime)
-    tags=sorted(raw_tags)[:h]
-    tags=[z-tags[0] for z in tags]
+    if h<=4:
+        tags=[0,1,4,16][:h]
+    else:
+        tagprime=next_prime_at_least(h)
+        _,raw_tags=moment_code(tagprime)
+        tags=sorted(raw_tags)[:h]
+        tags=[z-tags[0] for z in tags]
     assert tags[0]==0 and is_b3(tags)
     A=[]
     blocks=[]
