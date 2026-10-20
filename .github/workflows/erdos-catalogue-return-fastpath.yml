@@ -1,0 +1,71 @@
+name: Erdős catalogue one-issue return fast path
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: read
+
+# Different issues reconcile independently; retries on the same issue serialize.
+concurrency:
+  group: erdos-return-fastpath-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  project_one:
+    if: >-
+      !github.event.issue.pull_request &&
+      startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
+      startsWith(github.event.comment.body, 'RESULT/1')
+    runs-on: ubuntu-24.04
+    environment: release-trust
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Capture and validate only the authenticated source issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python ci/erdos_return_fastpath.py capture \
+            --event "$GITHUB_EVENT_PATH" --out fastpath
+      - name: Mint bounded Council Clerk issue and Project token
+        id: queue-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-issues: write
+          permission-organization-projects: write
+      - name: Reconcile exactly one return and read back Project/Issue Field/labels
+        env:
+          GH_TOKEN: ${{ steps.queue-token.outputs.token }}
+          GCL_RETURN_FASTPATH_CONTROL: protected-main
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN" || { echo "Missing Clerk credential"; exit 1; }
+          python ci/erdos_return_fastpath.py apply \
+            --event "$GITHUB_EVENT_PATH" --out fastpath
+      - name: Preserve exact verified return or fail-closed blocker
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-return-fastpath-${{ github.event.issue.number }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            fastpath/BINDING.json
+            fastpath/REPORT.json
+            fastpath/PROJECTION.json
+            fastpath/BLOCKER.json
+          retention-days: 90
+          if-no-files-found: error

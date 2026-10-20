@@ -11,6 +11,7 @@ QUALIFICATION_ONLY_WORKFLOW = "administrative-protected-receipt-live-qualificati
 CONSTRUCTION_GATE_WORKFLOW = "construction-gate-runtime.yml"
 ROLLING_REVIEW_DIRECT_WORKFLOW = "erdos-rolling-review-completion.yml"
 THREE_SOURCE_COUNCIL_WORKFLOW = "erdos-three-source-resolution.yml"
+ERDOS_RETURN_FASTPATH = "erdos-catalogue-return-fastpath.yml"
 
 v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     "aether-controls-admin.yml",
@@ -34,6 +35,7 @@ v3.legacy.EXPECTED_WORKFLOWS = set(v3.legacy.EXPECTED_WORKFLOWS) | {
     CONSTRUCTION_GATE_WORKFLOW,
     ROLLING_REVIEW_DIRECT_WORKFLOW,
     THREE_SOURCE_COUNCIL_WORKFLOW,
+    ERDOS_RETURN_FASTPATH,
     "ghos-routing-enforcement.yml",
 }
 
@@ -644,10 +646,66 @@ def three_source_council_errors(texts: dict[str, str]) -> list[str]:
     return errors
 
 
+def fastpath_workflow_errors(texts):
+    source = texts.get(ERDOS_RETURN_FASTPATH)
+    if source is None:
+        return []
+    wf = v3.legacy.load_yaml_text(source)
+    job = _job(wf, "project_one")
+    errors = []
+    if (set(wf.get("on", {})) != {"issue_comment"}
+        or wf["on"]["issue_comment"].get("types") != ["created", "edited"]
+        or wf.get("permissions") != {"contents": "read"}
+        or set(wf.get("jobs", {})) != {"project_one"}):
+        errors.append("fastpath: unexpected trigger or topology")
+    group = wf.get("concurrency", {})
+    if (group.get("group") != "erdos-return-fastpath-" + chr(36) + "{{ github.event.issue.number }}"
+        or str(group.get("cancel-in-progress")).lower() != "false"
+        or job.get("environment") != "release-trust"
+        or job.get("runs-on") != "ubuntu-24.04"
+        or str(job.get("timeout-minutes")) != "10"
+        or job.get("permissions") != {"contents": "read"}):
+        errors.append("fastpath: bounded issue-scoped execution drift")
+    if any(x not in str(job.get("if", "")) for x in (
+        "!github.event.issue.pull_request",
+        "startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-')",
+        "startsWith(github.event.comment.body, 'RESULT/1')")):
+        errors.append("fastpath: missing source event binding")
+    steps = job.get("steps", [])
+    if len(steps) != 6:
+        return errors + ["fastpath: exact source capture and mutation sequence missing"]
+    checkout, setup, capture, token, apply, receipt = steps
+    if (checkout.get("with", {}).get("ref") != "main"
+        or str(checkout.get("with", {}).get("persist-credentials")).lower() != "false"
+        or capture.get("env", {}).get("GH_TOKEN") != chr(36) + "{{ github.token }}"
+        or "ci/erdos_return_fastpath.py capture" not in str(capture.get("run"))
+        or token.get("id") != "queue-token"
+        or token.get("uses") != v3.APP_ACTION
+        or set(token.get("with", {})) != {"app-id", "private-key", "owner",
+               "repositories", "permission-issues", "permission-organization-projects"}
+        or token.get("with", {}).get("permission-issues") != "write"
+        or token.get("with", {}).get("permission-organization-projects") != "write"
+        or token.get("with", {}).get("repositories") != "MATH-PROGRAMME"
+        or "GCL_COUNCIL_CLERK_APP_ID" not in str(token.get("with", {}).get("app-id", ""))
+        or "GCL_COUNCIL_CLERK_PRIVATE_KEY" not in str(token.get("with", {}).get("private-key", ""))
+        or apply.get("env", {}).get("GH_TOKEN") != chr(36) + "{{ steps.queue-token.outputs.token }}"
+        or apply.get("env", {}).get("GCL_RETURN_FASTPATH_CONTROL") != "protected-main"
+        or "ci/erdos_return_fastpath.py apply" not in str(apply.get("run"))
+        or receipt.get("if") != "always()"
+        or "fastpath/PROJECTION.json" not in str(receipt.get("with", {}).get("path", ""))):
+        errors.append("fastpath: authenticated source/projection/evidence contract drift")
+    if any(x in source for x in ("pull_request_target:", "permission-contents: write",
+          "permission-administration:", "git push ", "gh pr merge",
+          "schedule:", "workflow_dispatch:")):
+        errors.append("fastpath: unauthorized control-plane capability")
+    return errors
+
+
 def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None):
     texts = v3.legacy.workflow_texts(root) if texts is None else texts
     errors = v3.workflow_coverage_errors(root=root, texts=texts, evidence=evidence)
     pilot_errors = erdos_forge_copilot_pilot_errors(texts)
+    fast_errors = fastpath_workflow_errors(texts)
     delegated_permission_errors = {
         f"{RECOVERY_FAILOVER_WORKFLOW}:recover: non-Pages job permissions may not exceed contents: read",
         f"{QUALIFICATION_ONLY_WORKFLOW}:admit: non-Pages job permissions may not exceed contents: read",
@@ -668,11 +726,14 @@ def workflow_coverage_errors(root=ROOT, texts=None, evidence=None, registry=None
     errors.extend(remediation_envelope_errors(texts))
     errors.extend(rolling_review_direct_errors(texts))
     errors.extend(three_source_council_errors(texts))
+    errors.extend(fast_errors)
     queue_projection = texts.get("erdos-catalogue-queue-projection.yml")
     if queue_projection is not None:
         workflow = v3.legacy.load_yaml_text(queue_projection)
         jobs = workflow.get("jobs", {})
         projection = _job(workflow, "reconcile")
+        if projection.get("if") != "github.event_name != 'issue_comment'":
+            errors.append("fastpath: comment events must not invoke bulk reconciliation")
         if (workflow.get("permissions") != {"contents": "read"} or
                 set(jobs) != {"reconcile", "ledger", "canary",
                               "forge-pilot-review", "forge-pilot-evidence",
