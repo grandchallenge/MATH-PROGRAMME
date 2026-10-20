@@ -87,54 +87,54 @@ $$
 
 The preceding phenomenon is **not** limited to the toy scalar model. In the actual real liquid category take the admitted compact-support filtration
 
-$
+$$
 G_b=\underline{\mathcal D_{[-b,b]}(\mathbb R)},
 \qquad G=\varinjlim_bG_b
 =\underline{\mathcal D(\mathbb R)}.
-$
+$$
 
 Consider weight-complete *degree-zero* coefficient objects $W_b=\prod_{w\ge0}G_b$, with the usual tail weight filtration. The canonical map of real liquid modules
 
-$
+$$
 \alpha:\varinjlim_b\prod_{w\ge0}G_b
 \longrightarrow
 \prod_{w\ge0}\varinjlim_bG_b
 =\prod_{w\ge0}G
 \tag{21.6a}
-$
+$$
 
 is monic but **not epic**. Indeed, choose mutually separated nonzero test functions $\phi_w$ supported in intervals near $3w$. Their tuple $(\phi_w)_w$ defines a global section of the right-hand product. A global section of the left-hand filtered colimit is represented at a **single** cutoff $b$, and all its components have support in $[-b,b]$. The displayed tuple has no such bound. Evaluation on the singleton is an exact functor on real liquid modules, since $\underline{\mathbb R}$ is a compact projective generator on that test object. If $\alpha$ were epic, its map on singleton sections would be surjective; hence it is not epic.
 
 This remains an obstruction for the **same fixed source** as EXT-015C. Choose a nonzero continuous real linear functional $\lambda:\mathcal D_{[-1,1]}(\mathbb R)\to\mathbb R$, for example evaluation at $0$. Define the liquid morphism
 
-$
+$$
 f:H\longrightarrow\prod_{w\ge0}G,
 \qquad
 f(h)=(\lambda(h)\phi_w)_{w\ge0}.
 \tag{21.6b}
-$
+$$
 
 It is a genuine liquid morphism by the product universal property. If it factored through $\prod_wG_b$ for some $b$, evaluating at a test function $h$ with $\lambda(h)=1$ would give the forbidden uniform support bound on all $\phi_w$. Therefore
 
-$
+$$
 \varinjlim_b\mathrm{Hom}_{\mathcal A_p}
 \left(H,\prod_wG_b\right)
 \longrightarrow
 \mathrm{Hom}_{\mathcal A_p}
 \left(H,\prod_wG\right)
 \tag{21.6c}
-$
+$$
 
 is **not surjective**, although every finite-weight truncation of this comparison **is an isomorphism** by [LFO-013](../LFO3_SURJECTIVITY_THEOREM_013.md), finite products, and the exact finite-stage support argument.
 
 The correct completed finite-weight support colimit is instead
 
-$
+$$
 \varprojlim_N\varinjlim_b
 \left(\prod_{w<N}G_b\right)
 \cong\prod_wG.
 \tag{21.6d}
-$
+$$
 
 Thus the **actual GCL source and output** already demonstrate that uncompleted support colimit and weight completion cannot be interchanged at **degree zero**. This is not a contradiction of theorem 019: the new coefficient object is an infinite weight product rather than one copy of $G$. The mathematical lesson is mandatory completion **after** taking the support colimit, not an assertion that Costello–Gwilliam's completed construction fails.
 
