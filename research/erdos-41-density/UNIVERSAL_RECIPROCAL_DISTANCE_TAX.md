@@ -27,12 +27,12 @@ $$
 
 The first is B2 uniqueness (which follows from B3). To prove the second, note that the n original members of P belong to T(P). Every triple consisting of a denominator c in P and an unordered positive pair a<=b from P excluding c produces a+b−c outside P, by B2 uniqueness. Two such signed words cannot coincide: equality a+b−c=a'+b'−c' would give a+b+c'=a'+b'+c, and B3 uniqueness forces c=c' and identical unordered positive pairs. Each denominator has binom(n,2) eligible repeated-positive unordered pairs. Therefore |T(P)|=n+n*binom(n,2).
 
-**Theorem A (exact cubic lower bound on genuinely NEW pair-sum distances).** If y>4R is an integer, then P'=P union {y} is B3 and
+**Theorem A (exact decomposition of ALL new pair-sum distances).** If y>4R is an integer, then P'=P union {y} is B3 and
 
 $$
 \boxed{
 |D(P')\setminus D(P)|
-\ \ge\
+\ =\
 \frac{n^3+3n}{2}.
 }\tag{UNIVERSAL-CUBIC-DISTANCE-TAX}
 $$
@@ -50,6 +50,19 @@ These bands have respective sizes (n^3−n^2+2n)/2 and n(n+1)/2 and lie strictly
 **Proof.** The three classes of new unordered pair sums are Q(P), y+P, and {2y}; by B2 they are disjoint. For any p,a,b in P, the difference (y+p)−(a+b)=y−(a+b−p) belongs to D(P'), so B1 subset D(P'). Similarly 2y−(a+b) belongs to D(P'), so B2 subset D(P').
 
 Every old pair sum lies in [2,2R], whence D(P) subset [1,2R−2]. Since T(P) subset [2−R,2R−1], the first band satisfies B1 subset [y−2R+1,y+R−2], which is above 2R−2 when y>4R. The second band lies in [2y−2R,2y−2], and its minimum exceeds the maximum of the first when y>3R−2. Thus B1,B2 are mutually disjoint and avoid D(P). Their exact cardinalities add to (n^3+3n)/2, as claimed. The separation y>4R also makes P' B3 by separating triple-sum classes with zero, one, two or three copies of y. QED.
+
+**Exhaustiveness audit (strengthens Theorem A from a lower bound to equality).** Every pair of unordered sums in the enlarged set $Q(P')=Q(P)\,\dot\cup\,(y+P)\,\dot\cup\,\{2y\}$ falls into exactly one of six type pairs. Differences within $Q(P)$ are $D(P)$; differences within $y+P$ are positive differences $P-P\subset D(P)$, because for fixed $t\in P$, $(p+t)-(p'+t)=p-p'$. Differences between $y+P$ and $Q(P)$ are exactly $y-T(P)$. Differences between $\{2y\}$ and $Q(P)$ are exactly $2y-Q(P)$. Finally differences between $\{2y\}$ and $y+P$ are $y-P\subseteq y-T(P)$ because $P\subseteq T(P)$. Thus there are **no other types of new difference** and
+
+$
+\boxed{
+D(P\cup\{y\})=
+D(P)\;\dot\cup\;(y-T(P))\;\dot\cup\;(2y-Q(P)).
+}\tag{COMPLETE-DIFFERENCE-DECOMPOSITION}
+$
+
+The three pieces are pairwise disjoint for $y>4R$. This exact identity establishes that the cubic increment $(n^3+3n)/2$ is **the whole one-anchor contribution**, not a conservative estimate with missing hidden differences.
+
+**Short-window invisibility.** Both new bands consist of distances strictly greater than $2R-2$. Therefore **neither new band prohibits two points lying in the same interval of at most $2R-1$ consecutive integers**: their mutual difference is at most $2R-2$. These distances can still obstruct pairs drawn from *different* future intervals; no claim of global independence is made. This locates the genuinely missing interaction: an already charged band must be proved to hit cross-window differences of the actual populated future elements.
 
 **Interpretation.** D(P') is the forbidden-distance spectrum for every later batch: any two later elements whose difference belongs to D(P') cannot jointly extend P' to a B3 set, because the distinct PPX triple sums collide. Therefore the new bands are **new reciprocal constraints**, not just numerical representations. They cannot be avoided by changing the structure of P or the placement of subsequent elements.
 
