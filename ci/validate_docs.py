@@ -81,9 +81,92 @@ def without_fenced_blocks(text: str) -> str:
     return "\n".join(output)
 
 
+# A compact menu is paired with explicit, validated reference indexes.
+REFERENCE_INDEXES = (
+    "archives/research.md",
+    "archives/results.md",
+    "archives/methods.md",
+    "archives/publications.md",
+    "archives/governance.md",
+)
+
+REQUIRED_PUBLIC_ENTRIES = {
+    "index.md", "CURRENT_WORK.md", "SHOWCASE.md", "MILLENNIUM_PRIZE_STATUS.md",
+    "PROGRAMME_ATLAS.md", "GRAND_CHALLENGE_READER_GUIDE.md",
+    "documentaries/index.md", "domains/index.md", "erdos/index.md",
+    "REFERENCE_LIBRARY.md", *REFERENCE_INDEXES,
+}
+
+
+def nav_leaves(value: Any) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, list):
+        return [path for entry in value for path in nav_leaves(entry)]
+    if isinstance(value, dict):
+        return [path for entry in value.values() for path in nav_leaves(entry)]
+    return []
+
+
 def nav_documents() -> set[str]:
-    text = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
-    return set(re.findall(r"(?<![\w/-])([A-Za-z0-9_./-]+\.md)", text))
+    config = yaml.safe_load((ROOT / "mkdocs.yml").read_text(encoding="utf-8"))
+    return set(nav_leaves(config["nav"]))
+
+
+def curated_navigation_errors(nav: set[str], docs: set[str]) -> list[str]:
+    errors: list[str] = []
+    config = yaml.safe_load((ROOT / "mkdocs.yml").read_text(encoding="utf-8"))
+    sections = config["nav"]
+    pages = nav_leaves(sections)
+    if len(sections) != 7:
+        errors.append("mkdocs.yml: curated reader navigation must contain seven main sections")
+    if len(pages) != len(nav):
+        errors.append("mkdocs.yml: duplicate menu entries")
+    if len(pages) > 55:
+        errors.append("mkdocs.yml: more than 55 direct menu pages; use the reference indexes")
+    for section in sections:
+        if isinstance(section, dict):
+            title, subtree = next(iter(section.items()))
+            if len(nav_leaves(subtree)) > 12:
+                errors.append(f"mkdocs.yml: {title} has too many direct pages")
+    for path in sorted(REQUIRED_PUBLIC_ENTRIES - nav):
+        errors.append(f"mkdocs.yml: essential reader entry missing from navigation: {path}")
+
+    # Only links from the five governed reference indexes count as archival
+    # discovery. A filename mentioned in prose or an unrelated page does not.
+    archived_by: dict[str, list[str]] = {}
+    for index in REFERENCE_INDEXES:
+        file = DOCS / index
+        if not file.is_file():
+            errors.append(f"docs/{index}: missing reference index")
+            continue
+        for link in local_link_targets(file.read_text(encoding="utf-8")):
+            target = link.split("#", 1)[0]
+            resolved = (file.parent / target).resolve()
+            try:
+                relative = resolved.relative_to(DOCS.resolve()).as_posix()
+            except ValueError:
+                errors.append(f"docs/{index}: reference escapes documentation root: {target}")
+                continue
+            if relative == "REFERENCE_LIBRARY.md":
+                continue
+            if relative in nav:
+                errors.append(f"docs/{index}: reference target already in main menu: {relative}")
+            archived_by.setdefault(relative, []).append(index)
+
+    for path in sorted(docs - nav - set(archived_by)):
+        errors.append(f"docs/{path}: neither in curated menu nor linked from a reference index")
+    for path in sorted(set(archived_by) - docs):
+        errors.append(f"reference index links a missing document: docs/{path}")
+    for path, indices in sorted(archived_by.items()):
+        if len(indices) != 1:
+            errors.append(f"docs/{path}: appears in multiple reference indexes: {indices}")
+    # The archive is reachable from the visible Reference Library page.
+    hub = (DOCS / "REFERENCE_LIBRARY.md").read_text(encoding="utf-8")
+    for index in REFERENCE_INDEXES:
+        if f"]({index})" not in hub:
+            errors.append(f"Reference Library: missing route to {index}")
+    return errors
 
 
 def docs_documents() -> set[str]:
@@ -257,8 +340,7 @@ def validate_documents() -> list[str]:
     errors: list[str] = []
     nav = nav_documents()
     docs = docs_documents()
-    for document in sorted(docs - nav):
-        errors.append(f"docs/{document}: missing from mkdocs nav")
+    errors.extend(curated_navigation_errors(nav, docs))
     for document in sorted(nav - docs):
         errors.append(f"mkdocs.yml: nav target missing from docs: {document}")
 

@@ -322,7 +322,18 @@ def collection_discovery_errors(
     if "DOCUMENTARY_CANDIDATES.json" not in index_text:
         errors.append("documentary candidates: collection index is missing candidate-registry link")
     if "documentaries/DOCUMENTARY_CANDIDATES.json" not in mkdocs_text:
-        errors.append("documentary candidates: MkDocs navigation is missing candidate registry")
+        # A compact reader menu may send technical metadata through a visible
+        # reference catalogue. Preserve discoverability rather than requiring
+        # a machine-readable registry to be a prominent navigation item.
+        archive_file = root / "docs/archives/publications.md"
+        archived = (
+            "archives/publications.md" in mkdocs_text
+            and archive_file.is_file()
+            and "(../documentaries/DOCUMENTARY_CANDIDATES.json)"
+            in archive_file.read_text(encoding="utf-8")
+        )
+        if not archived:
+            errors.append("documentary candidates: neither in sidebar nor linked from the published source index")
     for volume in volumes:
         slug = str(volume.get("slug", "<unknown>"))
         page = str(volume.get("web_page", ""))

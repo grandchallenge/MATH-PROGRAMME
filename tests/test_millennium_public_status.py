@@ -55,7 +55,7 @@ class MillenniumPublicStatusTests(unittest.TestCase):
 
     def test_public_entry_points_and_navier_historical_reading_edition(self):
         nav = (ROOT / "mkdocs.yml").read_text()
-        self.assertIn("Millennium Prize Problems (October 2026): MILLENNIUM_PRIZE_STATUS.md", nav)
+        self.assertIn("Millennium Prize Problems: MILLENNIUM_PRIZE_STATUS.md", nav)
         for p in ("index.md", "SHOWCASE.md", "PROGRAMME_ATLAS.md"):
             self.assertIn("MILLENNIUM_PRIZE_STATUS", (DOCS / p).read_text())
         for p in ("domains/index.md", "documentaries/index.md"):
