@@ -181,6 +181,51 @@ $$
 
 whereas the universal reciprocal upper capacity is $3R-2$. As $\Lambda\ge144$ for c<=1, these bounds have enormous slack. This calculation does **not** prove the actual blocks cannot be denser or rule out a stronger geometric selection theorem. It shows why combining mere existence of populated windows with the three-container product inequality is insufficient for a contradiction.
 
+### An exact obstruction to indefinitely reusing one finite additive alphabet
+
+The preceding escape example exposes a broader **mechanism-specific** theorem. It gives a rigorous density loss for one class of reciprocal-compatible constructions, without claiming the same loss for arbitrary B3 sets.
+
+**Theorem E (common-alphabet separation has an unavoidable density cost).** Let \(h\ge2\). Let \(S\subseteq[1,R]\) be a single genuine B3 **base alphabet**. Partition any subset of \(S\) into \(h\) disjoint nonempty sets \(S_0,\dots,S_{h-1}\). Let distinct nonnegative integer tags \(0=\tau_0<\dots<\tau_{h-1}=T\) themselves form a B3 set, and let \(M\ge4R\). Define the translated union
+
+$
+A=\bigcup_{j<h}(M\tau_j+S_j),\qquad
+N_*=\max A .
+$
+
+Then \(A\) is B3, and its final normalized counting coefficient satisfies
+
+$
+\boxed{
+\frac{|A|}{N_*^{1/3}}
+\le
+\left(\frac{27/2}{\binom{h+2}{3}-1}\right)^{1/3}
+=O(h^{-1}).
+}\tag{TAGGED-ALPHABET-DECAY}
+$
+
+Moreover, if every one of the \(h\) blocks has at least \(cR^{1/3}\) points, then
+
+$
+\boxed{h\le\frac{18^{1/3}}{c}.}\tag{NO-FIXED-COEFFICIENT-TAGGED-CHAIN}
+$
+
+**Proof.** Every triple-sum equality of A decomposes into a tag triple sum multiplied by M and a base triple sum. Different tag triples have distinct integer sums, separated by at least M. Base triple-sum differences are at most \(3R-3<M\); hence no two different tag multisets collide. For the same tag multiset, the B3 property of S forces equality of the underlying base element triples. Since the base groups partition disjoint subsets of S, the physical triples coincide. Thus A is B3.
+
+By cubic sum packing in [1,R], \( |S|^3\le18R\), and by disjointness of base groups \(|A|\le|S|\). Since \(h\) distinct B3 tags have \(\binom{h+2}{3}\) distinct triple sums in [0,3T],
+
+$
+3T+1\ge\binom{h+2}{3},
+\qquad
+N_*\ge MT+1\ge4RT.
+$
+
+Therefore
+\(\frac{|A|^3}{N_*}\le\frac{18R}{4RT}
+\le \frac{27/2}{\binom{h+2}{3}-1}\),
+proving the first bound. If every block has at least \(cR^{1/3}\) elements, then \(h cR^{1/3}\le |S|\le (18R)^{1/3}\), proving the second. QED.
+
+**Precise significance:** the finite construction in Theorem C does not offer a method of maintaining any *fixed* critical lower-density coefficient over indefinitely many stages by reusing one common B3 alphabet. Its density loss is mathematically unavoidable for that factorized construction class. **This is not a universal inverse theorem**: a general B3 set need not separate into one reusable base alphabet and B3 tags. Showing that every hypothesized c-persistent B3 chain pays a comparable cost without the factorization assumption remains the open problem.
+
 ## 3. The precise unavoidable multiscale difficulty
 
 Theorem A proves that fully reciprocal three-container signed sums impose a **true cardinality cap**, with no alignment assumption. Theorem B shows this cap is of **optimal critical exponent** on arbitrarily large true B3 configurations, even with a substantial finite period of persistent density. Adding container entropy compression cannot turn it into emptiness merely by treating rare choices as impossible.
