@@ -2,7 +2,7 @@
 
 **Disposition:** ACCEPT the bounded mathematical statements in [021](DERIVED_WEIGHT_COMPLETION_BOUNDARY_021.md) and [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md), with the exact category and degree restrictions below. This is a separately written critical argument by GCL's mathematical specialist function; it is not a different authenticated GitHub reviewer, formal certificate, or external peer review.
 
-**Protected provenance:** [EXT-015D result 021, PR #2775](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2775) (protected merge commit 1ddcc677f3a4c90152ae638b3350ff0f7859d443); [homogeneous polynomial result 022, PR #2776](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2776) (separate protected review PR). Existing first-Ext result [019](FIXED_SOURCE_EXT1_ISOMORPHISM_019.md) and [audit 020](AGENT_CRITICAL_REVIEW_019_020.md).
+**Protected provenance:** [EXT-015D result 021, PR #2775](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2775) (protected merge commit 1ddcc677f3a4c90152ae638b3350ff0f7859d443); [homogeneous polynomial result 022, PR #2776](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2776) (protected merge commit 6185696f7d7273677d9fea489c1756781d7c52ea). Existing first-Ext result [019](FIXED_SOURCE_EXT1_ISOMORPHISM_019.md) and [audit 020](AGENT_CRITICAL_REVIEW_019_020.md).
 
 ## 1. Hostile check of the actual real-liquid counterexample
 
