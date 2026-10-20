@@ -32,6 +32,8 @@ The [Erdős Compendium](../erdos/index.md) is a separate, growing reference coll
 
 [Browse the Erdős Compendium](../erdos/index.md) or [explore its numbered catalogue](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/).
 
+**Recent development:** The Navier–Stokes book was written before the September 2026 announced proof. The [current Millennium Prize status](../MILLENNIUM_PRIZE_STATUS.md) supersedes the original description of its official standing; no claim is made that GCL independently certified the announced proof.
+
 ## About the editions and their sources
 
 The books are available here as web pages. Their original sources, historical references and edition descriptions are documented separately. The records also distinguish a work's identity from the availability of a complete downloadable edition: a recorded PDF checksum, for example, does **not** mean that a public PDF download exists.
@@ -45,7 +47,7 @@ For readers and researchers who want the publication details, the following tabl
 | [The Shape of a Sphere](poincare.md) | Reference | Poincaré theorem reconstruction | Archival reconstruction | 33 pages | [Source](sources/the_shape_of_a_sphere.tex) | [Edition](poincare.edition.json) |
 | [The Hidden Music of Elliptic Curves](bsd.md) | Full | Birch and Swinnerton–Dyer Conjecture | Open Millennium Prize Problem | 37 pages | [Source](sources/the_hidden_music_of_elliptic_curves.tex) | [Edition](bsd.edition.json) |
 | [The Geometry of Hidden Harmony](hodge.md) | Orientation | Hodge Conjecture | Open Millennium Prize Problem | 41 pages | [Source](sources/the_geometry_of_hidden_harmony.tex) | [Edition](hodge.edition.json) |
-| [The River and the Storm](navier_stokes.md) | Orientation | Navier–Stokes existence and smoothness | Open Millennium Prize Problem | 47 pages | [Source](sources/the_river_and_the_storm.tex) | [Edition](navier_stokes.edition.json) |
+| [The River and the Storm](navier_stokes.md) | Orientation | Navier–Stokes existence and smoothness | **Clay Active:** announced resolution under evaluation (September 2026) | 47 pages | [Source](sources/the_river_and_the_storm.tex) | [Edition](navier_stokes.edition.json) |
 | [The Geometry of Force and Silence](yang_mills.md) | Orientation | Yang–Mills existence and mass gap | Open Millennium Prize Problem | 58 pages | [Source](sources/the_geometry_of_force_and_silence.tex) | [Edition](yang_mills.edition.json) |
 | [The Shape of Computational Truth](p_vs_np.md) | Orientation | P versus NP | Open Millennium Prize Problem | 50 pages | [Source](sources/the_shape_of_computational_truth.tex) | [Edition](p_vs_np.edition.json) |
 | [The Music of the Primes](riemann.md) | Orientation | Riemann Hypothesis | Open Millennium Prize Problem | 49 pages | [Source](sources/the_music_of_the_primes.tex) | [Edition](riemann.edition.json) |

@@ -1,5 +1,7 @@
 # Domain 02 · Navier–Stokes Critical Integrability
 
+**Millennium status, 20 October 2026:** Clay lists the *parent* Navier–Stokes problem as **Active** after the [8 September announced finite-time breakdown proof](https://openai.com/index/navier-stokes-solution/). Its [11 September statement](https://www.claymath.org/news/navier-stokes-announcement/) says the problem had *apparently been settled*, but the evaluation process continues. GCL does not independently certify that proof. Importantly, the distinct **unforced NS-CI-001 critical-integrability question** below remains open. [See the seven-problem status](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 The Navier–Stokes equations describe the movement of fluids, including water and air. A central open question asks whether smooth three-dimensional flows can develop a mathematical singularity, a point at which the usual smooth description fails.

@@ -1,5 +1,7 @@
 # Domain 06 · Yang–Mills Existence and Mass Gap
 
+**Millennium status, 20 October 2026:** Clay continues to list Yang–Mills existence and mass gap as **Unsolved**. Progress in restricted or regularized settings does not establish both the complete four-dimensional construction and the physical mass gap. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+
 ## The question in everyday language
 
 Yang–Mills theory provides the mathematical language for important forces in particle physics. Its famous unsolved problem asks for a rigorous construction of the relevant four-dimensional quantum theory and a proof that it has a positive *mass gap*, a minimum nonzero excitation energy.

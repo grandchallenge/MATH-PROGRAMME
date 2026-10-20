@@ -4,6 +4,8 @@
 
 ## What you will find here
 
+**October 2026:** [Millennium Prize Problems: updated status](MILLENNIUM_PRIZE_STATUS.md), including the September Navier–Stokes announcement and significant reported advances related to Riemann and Hodge. These are distinguished from GCL’s independent mathematical results.
+
 Our work ranges from explaining well-known mathematical questions to checking proofs with computer software and studying problems that are not yet solved. These are different kinds of achievements, and we identify them accordingly.
 
 An article that explains a theorem is not the same as a new proof of that theorem. Likewise, a computer-checked proof confirms a precisely stated mathematical result; it does not, by itself, establish that the result is new.

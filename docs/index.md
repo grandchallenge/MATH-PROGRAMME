@@ -39,6 +39,8 @@ hide:
 
 ## What the programme is
 
+[**Millennium Prize Problems: status updated 20 October 2026**](MILLENNIUM_PRIZE_STATUS.md). Clay still lists Navier–Stokes as **Active** after an announced proof that remains under evaluation; the other five unsolved problems and solved Poincaré conjecture have distinct official standings. GCL’s research programmes retain their own, narrower proof boundaries.
+
 Mathematical discovery, solving, and certification are different research states. The programme keeps those states separate so that evidence cannot acquire a stronger claim merely because it is well presented.
 
 **MATHFORGE** reconstructs the object, source, and candidate route. **MATHSOLVE** organizes and attacks the exact obligations that block progress. **MATHCERT** checks the precise claim and support surface presented to it. **MATH-PROGRAMME** preserves the integrated record, routing, governance, and continuation state; it does not certify mathematics by itself.
