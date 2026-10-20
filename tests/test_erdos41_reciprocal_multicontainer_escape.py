@@ -94,6 +94,32 @@ def check_finite_critical_density(R,blocks):
         assert 21**3*count**3 >= N,(R,N,count)
     return len(candidates)
 
+def next_prime_at_least(n):
+    def prime(x):
+        return x>=2 and all(x%d for d in range(2,int(x**.5)+1))
+    while not prime(n):
+        n+=1
+    return n
+
+
+def many_tagged_cohorts(h,p):
+    assert h>=2 and p>=2*h
+    R,baseline=moment_code(p)
+    tagprime=next_prime_at_least(h)
+    _,raw_tags=moment_code(tagprime)
+    tags=sorted(raw_tags)[:h]
+    tags=[z-tags[0] for z in tags]
+    assert tags[0]==0 and is_b3(tags)
+    A=[]
+    blocks=[]
+    for j in range(h):
+        start=j*p//h
+        stop=(j+1)*p//h
+        group=[a+4*R*tags[j] for a in baseline[start:stop]]
+        blocks.append(group)
+        A+=group
+    return R,tags,blocks,A
+
 
 class ReciprocalMulticontainerEscapeTests(unittest.TestCase):
     def test_tag_labels_are_repetition_allowed_b3(self):
@@ -179,6 +205,28 @@ class ReciprocalMulticontainerEscapeTests(unittest.TestCase):
             N=(21*len(A))**3+1
             self.assertGreater(N,17*R)
             self.assertLess(21**3*(sum(x<=N for x in A))**3,N)
+
+
+    def test_arbitrarily_many_finite_reciprocal_critical_cohorts(self):
+        for h in range(2,9):
+            p=next_prime_at_least(2*h)
+            R,tags,blocks,A=many_tagged_cohorts(h,p)
+            with self.subTest(h=h,p=p):
+                self.assertTrue(is_b3(A))
+                self.assertEqual(len(A),p)
+                self.assertLess(max(tags),96*h**3)
+                Nlast=4*R*max(tags)+R
+                self.assertLessEqual(Nlast,385*h**3*R)
+                self.assertTrue(all(len(g)>0 for g in blocks))
+                for g in blocks:
+                    self.assertGreaterEqual((5*h)**3*len(g)**3,R)
+                samples={R,Nlast}
+                samples.update(x-1 for x in A if x>R)
+                for N in samples:
+                    if R<=N<=Nlast:
+                        count=sum(x<=N for x in A)
+                        self.assertGreaterEqual(
+                            (40*h*h)**3*count**3,N)
 
 
 if __name__=="__main__":
