@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import yaml
 import sys
 from pathlib import Path
 from typing import Any
@@ -195,8 +196,19 @@ def check_public_pages(root: Path, manifest: dict[str, Any]) -> None:
     require("Publication candidate" not in showcase_text, "showcase retains candidate status")
 
     nav_text = nav.read_text(encoding="utf-8")
+    # Verify the published page is still a featured navigation destination;
+    # its exact display title is editorial, not part of proof authority.
+    def _has_page(value: Any) -> bool:
+        if isinstance(value, str):
+            return value == "LOG_GCD_PUBLICATION.md"
+        if isinstance(value, list):
+            return any(_has_page(item) for item in value)
+        if isinstance(value, dict):
+            return any(_has_page(item) for item in value.values())
+        return False
+
     require(
-        '"Published Result: Logarithmic GCD Kernel": LOG_GCD_PUBLICATION.md' in nav_text,
+        _has_page(yaml.safe_load(nav_text).get("nav", [])),
         "publication page missing from site navigation",
     )
 
