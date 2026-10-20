@@ -1,6 +1,22 @@
 # Fixture Ledger
 
-<p class="page-deck">The fixture ledger is the programme heartbeat. It records what the system has actually made executable, what each fixture demonstrates, what it refuses to claim, and which boundary remains open.</p>
+<p class="page-deck">Small, inspectable mathematical examples used to test whether a proposed result can really be reproduced and checked. Some succeed; others show where a claim fails.</p>
+
+## Why begin with small examples?
+
+Before trusting a system with a difficult proof, it helps to see how it handles questions whose answers can be checked exactly. For instance, a calculation may show that a polynomial belongs to a particular algebraic collection. That does **not** automatically establish a broader theorem about every object satisfying a related condition.
+
+GCL calls each of these controlled test cases a **fixture**. A fixture gives the checker a precisely described problem, a result to inspect and a way to decide whether the proposed conclusion follows. It also records limitations: a test that works over a field may fail over a more general ring, and a verified finite example may tell us little about an infinite family.
+
+### Examples from the collection
+
+| Example | What it helps check | What it does not establish |
+| --- | --- | --- |
+| **Polynomial membership** (`UF-INV-001`) | Whether an exact algebraic identity is valid | That every broader interpretation of the identity has been proved |
+| **Radical membership** (`RAD-NIL-002`) | Whether a related algebraic claim holds under its stated assumptions | That a result about fields remains true for all rings |
+| **Greatest common divisors** (`LOG-GCD-001`) | Whether a classical identity can be expressed and checked in Lean | That GCL discovered the original mathematical theorem |
+
+Other entries examine imported mathematical questions, geometric constructions and computational routes. Some are only planned; others have passed restricted checks. The detailed record below distinguishes those states.
 
 ## Ledger rule
 

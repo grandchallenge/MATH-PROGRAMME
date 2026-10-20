@@ -1,5 +1,15 @@
 # Domain 06 · Yang–Mills Existence and Mass Gap
 
+## The question in everyday language
+
+Yang–Mills theory provides the mathematical language for important forces in particle physics. Its famous unsolved problem asks for a rigorous construction of the relevant four-dimensional quantum theory and a proof that it has a positive *mass gap*, a minimum nonzero excitation energy.
+
+GCL has documented the exact claim and analyzed approaches that fall short. Mathematical models on finite lattices, numerical experiments and partial estimates can offer insight, but they do not automatically establish the complete theory.
+
+**What remains uncertain:** neither the required existence theorem nor the mass-gap theorem has been proved by this programme.
+
+## Detailed research record
+
 **Accessible research guide:** [YM-001 Research Guide](YM_001_RESEARCH_GUIDE.md)
 
 

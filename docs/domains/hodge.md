@@ -1,5 +1,15 @@
 # Domain 03 · Hodge Conjecture
 
+## The question in everyday language
+
+Many geometric shapes can be described using algebraic equations. The Hodge conjecture asks whether certain features discovered through more general geometric methods can always be explained using algebraic pieces of the shape.
+
+This is a question about a precise class of complex algebraic varieties and rational-number coefficients. Changing those conditions can turn the conjecture into a different statement.
+
+GCL has focused on identifying the exact mathematical formulation and comparing sources. **What remains uncertain:** no new case of the Hodge conjecture has been proved by this programme.
+
+## Detailed research record
+
 **Accessible research guide:** [HC-001 Research Guide](HC_001_RESEARCH_GUIDE.md)
 
 

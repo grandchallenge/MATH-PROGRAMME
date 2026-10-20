@@ -1,5 +1,15 @@
 # Domain 02 · Navier–Stokes Critical Integrability
 
+## The question in everyday language
+
+The Navier–Stokes equations describe the movement of fluids, including water and air. A central open question asks whether smooth three-dimensional flows can develop a mathematical singularity, a point at which the usual smooth description fails.
+
+GCL studies a narrower test involving the size of a solution over time. Even a successful estimate for that test would need further reasoning before it settled the general smoothness problem.
+
+**What remains uncertain:** the central three-dimensional problem is unsolved. Results about related equations or computer simulations cannot automatically be transferred to the exact Navier–Stokes equations.
+
+## Detailed research record
+
 **Accessible research guide:** [NS-CI-001 Research Guide](NS_CI_001_RESEARCH_GUIDE.md)
 
 

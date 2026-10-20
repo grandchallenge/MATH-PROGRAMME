@@ -1,5 +1,15 @@
 # Domain 01 · Union-Closed Sets
 
+## The question in everyday language
+
+If you gather a collection of sets and require it to contain the union of any two sets already in the collection, must there be an element appearing in at least half of those sets? This is Frankl's union-closed sets conjecture. Its statement requires little advanced mathematics, but the general proof remains unknown.
+
+GCL has checked restricted finite cases and recorded local mathematical observations. Those do not bridge the gap to a statement about **all** such families. Readers can also begin with the illustrated [*Element in Half the Worlds*](../documentaries/union_closed.md), now part of the published Documentary Library.
+
+**What remains uncertain:** the full conjecture is open; neither finite verification nor publication of an explanatory book is a proof.
+
+## Detailed research record
+
 **Accessible research guide:** [UC-001 Research Guide](UC_001_RESEARCH_GUIDE.md)
 
 

@@ -1,4 +1,19 @@
-# OPENMATH-2026 — Post-event research agenda
+# OpenMath 2026: Questions Still Worth Pursuing
+
+<p class="page-deck">The mathematical questions left unfinished when the competition closed, and what a meaningful advance would require.</p>
+
+The competition ended on **2 October 2026**, without a GCL submission or acceptance. Research could continue, but each new attempt would need to address a genuine missing mathematical step.
+
+**Seven subjects remain on the research map:** H1 concerns triangles formed by lines; H2 the behavior of small programs; H3 graph coloring; H4 descending patterns in number sequences; H5 Grothendieck inequalities; H6 efficient matrix multiplication; and H7 Erdős Problem 3.
+
+For readers unfamiliar with these subjects, the [campaign account](OPENMATH_2026_STATUS.md) explains why the competition ended without a declared solution. Below is the more detailed research agenda, with the original topic identifiers preserved.
+
+## What would count as progress?
+
+For the first six subjects, progress would mean proving a previously missing case, constructing a genuine counterexample, replacing an exhausted search with a new method, or resolving a source-definition problem. In H7, the central challenge is to prove the missing connection between information about reciprocal sums and the existence of arithmetic progressions.
+
+A computer experiment that supports a conjecture is not, by itself, a proof. Nor does completing an administrative task resolve the mathematical question.
+
 
 The competition event window closed on 2 October 2026 with **0 official submissions and 0 official acceptances**. This document now records the surviving mathematical backlog. OPENMATH itself does not issue new replay-successor work.
 

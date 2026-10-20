@@ -1,5 +1,15 @@
 # Domain 04 · Birch–Swinnerton-Dyer
 
+## The question in everyday language
+
+An elliptic curve is a smooth algebraic curve described by an equation that often has rational-number solutions. The Birch–Swinnerton-Dyer conjecture proposes a remarkable connection between those solutions and the behavior of a related mathematical function.
+
+GCL's investigations study selected pieces of that connection, including difficulties around the prime number two. A result in one special case cannot by itself establish the conjecture for every elliptic curve.
+
+**What remains uncertain:** the full conjecture is open. Its predictions about ranks, associated groups and precise leading terms require their own proofs.
+
+## Detailed research record
+
 **Accessible research guide:** [BSD-001 Research Guide](BSD_001_RESEARCH_GUIDE.md)
 
 
