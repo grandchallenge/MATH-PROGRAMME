@@ -33,6 +33,30 @@ def main() -> int:
     baseline = workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
     assert not baseline, baseline
 
+    # Event-scoped return projection may not widen into a global workflow.
+    fast = "erdos-catalogue-return-fastpath.yml"
+    for before, after, expected in (
+        ("erdos-return-fastpath-", "erdos-return-bulk-", "fastpath: bounded issue-scoped"),
+        ("cancel-in-progress: false", "cancel-in-progress: true", "fastpath: bounded issue-scoped"),
+        ("    permissions:\n      contents: read", "    permissions:\n      contents: read\n      issues: write", "fastpath: bounded issue-scoped"),
+        ("permission-organization-projects: write", "permission-administration: write",
+         "fastpath: authenticated source"),
+        ("ci/erdos_return_fastpath.py apply", "ci/erdos_return_fastpath.py noop",
+         "fastpath: authenticated source"),
+        ("ref: main", "ref: worker-branch", "fastpath: authenticated source"),
+    ):
+        assert before in texts[fast], before
+        changed = dict(texts)
+        changed[fast] = changed[fast].replace(before, after, 1)
+        require_error(changed, evidence, expected, registry=registry)
+    bulk = "erdos-catalogue-queue-projection.yml"
+    assert "if: github.event_name != 'issue_comment'" in texts[bulk]
+    changed = dict(texts)
+    changed[bulk] = changed[bulk].replace(
+        "if: github.event_name != 'issue_comment'", "if: always()", 1)
+    require_error(changed, evidence, "fastpath: comment events must not invoke bulk",
+                  registry=registry)
+
     # Bounded source-return jobs must not silently expand execution or
     # permissions, and the whole-snapshot verifier must remain read-only.
     bounded_source = "erdos-catalogue-queue-projection.yml"

@@ -6,6 +6,9 @@ on:
     paths:
       - 'ci/erdos_rolling_review_queue.py'
       - 'ci/erdos_catalogue_queue_projection.py'
+      - 'ci/erdos_return_fastpath.py'
+      - 'tests/test_erdos_return_fastpath.py'
+      - '.github/workflows/erdos-catalogue-return-fastpath.yml'
       - 'tests/test_erdos_catalogue_queue_projection.py'
       - 'ci/verify_erdos_source_return_batches.py'
       - 'ci/erdos_return_exceptions.py'
@@ -43,11 +46,9 @@ jobs:
     permissions:
       contents: read
       issues: write
-    if: >-
-      github.event_name != 'issue_comment' ||
-      (!github.event.issue.pull_request &&
-       startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
-       startsWith(github.event.comment.body, 'RESULT/1'))
+    # Per-comment returns use the separate one-issue fast path. Never trigger
+    # a full catalogue sweep from a single worker comment.
+    if: github.event_name != 'issue_comment'
     runs-on: ubuntu-24.04
     environment: release-trust
     timeout-minutes: 55

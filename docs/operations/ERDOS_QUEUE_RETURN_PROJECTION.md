@@ -10,11 +10,21 @@ certificate. A merged source repair does not establish successful operation.
 
 ## Operating path
 
-The existing GitHub Actions controller runs from protected `main` on
-scheduled, qualifying source-comment, push, and manual triggers. It obtains a
-short-lived Council Clerk installation token, rebuilds a live unadjudicated
-catalogue snapshot, verifies Project #2's queue-class contract, and projects
-each eligible **single structurally valid** `RESULT/1` return.
+Two **separate protected GitHub Actions paths** now operate:
+
+- **One-issue fast path:** `.github/workflows/erdos-catalogue-return-fastpath.yml`
+  handles new or edited `RESULT/1` comments. It reads only the target
+  issue and its current comment census, validates the exact pinned source and
+  GitHub actor, mints a bounded Clerk token, reconciles that one issue, and
+  archives authenticated Project/Issue Field/label readback. Concurrency is
+  scoped per issue rather than the complete catalogue.
+- **Full catalogue sweep:** `.github/workflows/erdos-catalogue-queue-projection.yml`
+  runs on protected push, schedule or manual dispatch, not individual worker
+  comments. It retains the complete source/exception batch aggregates.
+
+Invalid or competing returns fail closed. Edited/deleted return history remains
+in the event-custody ledger and scheduled full snapshot; no result is promoted
+to mathematical acceptance merely because its status becomes RETURNED.
 
 For an **open** source task, each successful projection confirms all three
 authoritative surfaces: Project #2 Status `RETURNED`, exact organization
@@ -23,7 +33,14 @@ A **closed**, genuinely Done task is source- and Project-readback-verified
 without changing terminal custody. Source comment content is re-read and
 checked against the snapshot's SHA-256 before either outcome.
 
-The replay is idempotent. A protected controller captures one source snapshot
+The one-issue projector is idempotent. Its fast-path artifact is named
+`gcl-return-fastpath-<issue>-<run>-<attempt>`. The terminal
+`PROJECTION.json` must show `VERIFIED`, the exact
+comment binding and complete three-surface readback. A BLOCKED or missing
+artifact does not count as success. The separate fast path is
+[viewable here](https://github.com/grandchallenge/MATH-PROGRAMME/actions/workflows/erdos-catalogue-return-fastpath.yml).
+
+The scheduled replay remains idempotent. A protected controller captures one source snapshot
 and immutable batch manifest. It runs at most **64 source issues per job** and
 **two jobs concurrently**, each with a 25-minute limit and its own short-lived
 Council Clerk credential. Monolithic bulk runs are forbidden.
@@ -69,6 +86,7 @@ completion from a PR merge, a job start, a green preflight, a progress counter,
 or a missing/partial artifact. To reproduce the local contract tests:
 
 ```sh
+PYTHONPATH=. python3 tests/test_erdos_return_fastpath.py -q
 PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py -q
 PYTHONPATH=. python3 tests/test_erdos_source_return_batches.py -q
 PYTHONPATH=. python3 ci/test_gcl_queue_class_cutover.py -q
