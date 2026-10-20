@@ -220,10 +220,10 @@ N_*\ge MT+1\ge4RT.
 $$
 
 Therefore
-$
+$$
 \frac{|A|^3}{N_*}\le\frac{18R}{4RT}
 \le \frac{27/2}{\binom{h+2}{3}-1}
-$,
+$$
 proving the first bound. If every block has at least $cR^{1/3}$ elements, then $h cR^{1/3}\le |S|\le (18R)^{1/3}$, proving the second. QED.
 
 **Precise significance:** the finite construction in Theorem C does not offer a method of maintaining any *fixed* critical lower-density coefficient over indefinitely many stages by reusing one common B3 alphabet. Its density loss is mathematically unavoidable for that factorized construction class. **This is not a universal inverse theorem**: a general B3 set need not separate into one reusable base alphabet and B3 tags. Showing that every hypothesized c-persistent B3 chain pays a comparable cost without the factorization assumption remains the open problem.
