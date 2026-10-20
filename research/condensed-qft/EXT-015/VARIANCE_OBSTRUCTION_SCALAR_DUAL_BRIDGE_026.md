@@ -20,7 +20,7 @@ B_w(U)=R\mathrm{Hom}_{\mathrm{Liq}_p(\mathbb R)}
 \tag{26.1}
 $$
 
-The **actual classical free-field polynomial observables** of 024 have weight-$w$ part
+The **actual classical free-field polynomial observables** of 024 have the component of weight $w$
 
 $$
 P_w(U)=\mathrm{Sym}^{w}_{\mathrm{DVS}}
@@ -174,7 +174,7 @@ R\mathrm{Hom}_{\mathrm{Liq}_p}
 \tag{26.12}
 $$
 
-as a comparison of cochain complexes, with the left side interpreted as the termwise Hom complex (26.9), followed by graded invariants. This is **not** automatically a quasi-isomorphism: it requires suitable projectivity/K-projectivity or an acyclicity theorem for the **Fréchet smooth field-source complex** $\mathcal T_w$. Establishing the higher-liquid-$\mathrm{Ext}$ obstructions, with the exact coefficient $\underline{\mathbb R}$, is a meaningful independent next mathematical question.
+as a comparison of cochain complexes, with the left side interpreted as the termwise Hom complex (26.9), followed by graded invariants. This is **not** automatically a quasi-isomorphism: it requires suitable projectivity/K-projectivity or an acyclicity theorem for the **Fréchet smooth field-source complex** $\mathcal T_w$. Establishing the obstructions from higher liquid $\mathrm{Ext}$, with the exact coefficient $\underline{\mathbb R}$, is a meaningful independent next mathematical question.
 
 Even if (26.12) were a quasi-isomorphism, a genuine **enriched** comparison to Costello–Gwilliam would still require:
 
