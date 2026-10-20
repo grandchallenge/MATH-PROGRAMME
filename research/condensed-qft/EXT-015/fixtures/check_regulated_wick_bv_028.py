@@ -174,7 +174,7 @@ def check_locality_and_twisted_factorization():
         l = single((e0, 0), m0)
         r = single((0, e1), m1 << 1)
         degree_l = -(m0.bit_count())
-        sign = (-1) ** degree_l
+        sign = -1 if degree_l % 2 else 1
         lhs = dq(twisted_product(l, r))
         rhs = add(twisted_product(dq(l), r),
                   scale(twisted_product(l, dq(r)), sign))
