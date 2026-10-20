@@ -132,6 +132,14 @@ $$
 
 The short, reciprocal and far distance bands have 112, 194 and 97 distinct positive values, respectively, for a complete spectrum of 403 values; the independent complete difference enumeration gives the same 403. The eleven extra reciprocal coincidences are not a violation of B3: they correspond to admissible equal **four-term** sums.
 
+A concrete nontrivial witness is
+
+$
+1+1+1033+1125=2+14+1072+1072=2160.
+$
+
+The two four-term multisets have no common element, so no term can be cancelled to obtain a forbidden three-term equality.
+
 The defect is invariant under any additional translation of Y that keeps the blocks separated, so it cannot be dismissed as an accidental choice of absolute position.
 
 ## 4. Consequence for the sought density deficit
