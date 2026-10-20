@@ -161,28 +161,104 @@ The product comparison is not being promoted to a morphism of complete different
 
 This degreewise exact comparison is stronger than a hypothetical degree-zero numerical analogy, but fundamentally **different** from the degree-zero/degree-one target-support Ext continuity result in [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md).
 
-## 5. Where the next genuine higher-derived obstruction lives
+## 5. All-degree derived scalar bridge on a connected interval
 
-The next desired comparison would be
+There is a stronger and **fully proved** conclusion for the actual one-dimensional free scalar. Its smooth **field** complex, unlike the originally proposed test-function source of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md), has an explicit continuous contraction onto a finite-dimensional **projective liquid** object.
+
+Fix a nonempty connected open interval $U$, and choose any base point $x_0\in U$. Define the continuous linear operators on the nuclear Fréchet space $C^\infty(U)$
 
 $$
-\mathrm{Hom}_{\mathrm{Liq}_p}
-\left(\underline{\mathcal T_w(U)},\underline{\mathbb R}\right)
-\longrightarrow
-R\mathrm{Hom}_{\mathrm{Liq}_p}
-\left(\underline{\mathcal T_w(U)},\underline{\mathbb R}\right)
+p(f)=\bigl(f(x_0),f'(x_0)\bigr),
+\quad
+i(a,b)(x)=a+b(x-x_0),
+\quad
+(Tg)(x)=\int_{x_0}^{x}(x-t)g(t)\,dt.
 \tag{26.12}
 $$
 
-as a comparison of cochain complexes, with the left side interpreted as the termwise Hom complex (26.9), followed by graded invariants. This is **not** automatically a quasi-isomorphism: it requires suitable projectivity/K-projectivity or an acyclicity theorem for the **Fréchet smooth field-source complex** $\mathcal T_w$. Establishing the obstructions from higher liquid $\mathrm{Ext}$, with the exact coefficient $\underline{\mathbb R}$, is a meaningful independent next mathematical question.
+All three maps are continuous: the first two are evaluations/finite-dimensional inclusion, and for every compact $K\subset U$ the derivatives and suprema of $Tg$ on $K$ are controlled by a finite set of seminorms of $g$ on the compact interval joining $K$ to $x_0$. They are morphisms of real liquid modules by Fréchet realization.
 
-Even if (26.12) were a quasi-isomorphism, a genuine **enriched** comparison to Costello–Gwilliam would still require:
+**Lemma 26.3 (explicit liquid homotopy contraction).** For the cochain complex $\mathcal F(U)=[C^\infty(U)^0\xrightarrow{D}C^\infty(U)^1]$, $D=\partial_x^2$, the operators above satisfy
 
-1. A natural construction of smooth plots on liquid-derived scalar mapping complexes (or a restricted differentiable realization functor), proving its compatibility with the convenient/DVS kernel plots.
-2. Fibration, cofibration, and inverse-tower conditions at every finite arity and quantum-weight quotient.
-3. Preservation of the precise disjoint-support multilinear operations, BV contractions and Weiss Čech diagrams. The unrestricted distributional BV contraction remains undefined in general, as noted in [024–025](AGENT_CRITICAL_REVIEW_FREE_SCALAR_025.md).
+$$
+p\,i=\mathrm{id}_{\mathbb R^2},
+\qquad
+D T=\mathrm{id}_{C^\infty(U)},
+\qquad
+T D=\mathrm{id}_{C^\infty(U)}-i p.
+\tag{26.13}
+$$
 
-The **proved no-go** from Theorem 26.1 and the **corrected underived kernel bridge** from Theorem 26.2 are therefore complementary: the original D10 formulation is refuted, and the mathematically appropriate scalar-valued replacement has been constructed with exact remaining obligations.
+Thus $T:\mathcal F^1\to\mathcal F^0$ is a continuous linear cochain homotopy between $\mathrm{id}_{\mathcal F}$ and the projection $i p$, and
+
+$$
+\underline{\mathcal F(U)}
+\simeq_{\mathrm{chain\ homotopy}}
+\underline{\mathbb R^2}[0].
+\tag{26.14}
+$$
+
+**Proof.** The fundamental theorem of calculus gives $(Tg)''=g$. For any $f$, $f-Tf''$ is affine with the value and first derivative of $f$ at $x_0$, hence equals $i p(f)$. All operators are continuous and liquid-linear as noted. Therefore the identities hold as maps in $\mathrm{Liq}_p(\mathbb R)$, not merely at global points. $\square$
+
+**Theorem 26.4 (corrected scalar liquid derived Hom is computed by the underived cochain dual).** For each finite polynomial arity $w\ge0$, form the graded symmetric **field-source** complex
+
+$$
+\mathcal S_w(U)=
+\left(\underline{\mathcal F(U)}^{\widehat\otimes_{\pi}w}\right)_{\mathfrak S_w},
+\tag{26.15}
+$$
+
+where the tensor product is first taken **classically on nuclear Fréchet cochain terms** and then realized in liquid modules; the finite graded symmetric-group coinvariant is the image of its averaging projector. Then $\mathcal S_w(U)$ is liquid-chain-homotopy equivalent to $\underline{\mathrm{Sym}^w(\mathbb R^2)}[0]$, a finite-dimensional projective object. It is therefore **K-projective** as a complex of liquid modules, although its individual Fréchet field terms need not be projective.
+
+Consequently, for every $0<p\le1$, the natural underived-to-derived scalar comparison
+
+$$
+\boxed{\quad
+\mathrm{Hom}^{\bullet}_{\mathrm{Liq}_p}
+\left(\mathcal S_w(U),\underline{\mathbb R}\right)
+\xrightarrow{\ \simeq\ }
+R\mathrm{Hom}_{\mathrm{Liq}_p}
+\left(\mathcal S_w(U),\underline{\mathbb R}\right)
+\quad}
+\tag{26.16}
+$$
+
+is a quasi-isomorphism in **all cohomological degrees**.
+
+**Proof.** The continuous cochain maps and homotopies of Lemma 26.3 can be tensor-multiplied finitely using completed projective tensors. On nuclear Fréchet spaces, the tensor extensions of these continuous maps exist, and the standard tensor homotopy identity yields an explicit homotopy equivalence of the finite tensor power of $\mathcal F$ with $(\mathbb R^2)^{\otimes w}[0]$. Averaging this homotopy equivalence and its homotopies over the finite group $\mathfrak S_w$ gives the same conclusion for graded symmetric coinvariants and $\mathrm{Sym}^w(\mathbb R^2)[0]$.
+
+A singleton free real-liquid measure object $\underline{\mathbb R}$ is projective; its finite direct sums, including $\underline{\mathrm{Sym}^w(\mathbb R^2)}$, are projective. A complex chain-homotopy equivalent to a bounded projective complex is K-projective: applying $\mathrm{Hom}$ to any acyclic target complex yields a contractible/acyclic result, since it does for the finite projective representative. Hence the naive Hom complex already computes the right-derived Hom of $\mathcal S_w(U)$, proving (26.16). $\square$
+
+Combining (26.10) and (26.16), the **correctly typed** liquid derived scalar Hom has the same underlying cochain-level observable model and, objectwise on connected intervals, the same cohomology in every degree as the distributional free-scalar polynomial observables:
+
+$$
+H^qR\mathrm{Hom}_{\mathrm{Liq}_p}
+\left(\mathcal S_w(U),\underline{\mathbb R}\right)
+\cong
+\begin{cases}
+\mathrm{Sym}^w(\mathbb R^2),&q=0,\\
+0,&q\ne0.
+\end{cases}
+\tag{26.17}
+$$
+
+The arity-completed product of these complexes has cohomology $\mathbb R[[a,b]]$ in degree zero and zero otherwise, because products of real vector spaces are exact. This result does **not** require asserting that Fréchet spaces $C^\infty(U)$ are projective individually. It uses the much stronger **explicit homotopy equivalence** to a finite projective object.
+
+**Naturality caveat:** The auxiliary homotopy $T$ and projector $p$ depend on the chosen $x_0$. The canonical **identification of liquid Hom with compact distributional kernels** is natural for interval inclusions, and the statement of K-projectivity is objectwise independent of any chosen contraction; no naturally chosen base point across all interval inclusions is being claimed.
+
+## 6. The remaining genuine enrichment and quantization boundary
+
+Theorems 26.2 and 26.4 eliminate the higher-scalar-liquid-$\mathrm{Ext}$ ambiguity **for these corrected field-source symmetric powers on connected intervals**. They do **not** give a universal higher Ext target-support theorem for the originally different source and coefficient objects of [022](POLYNOMIAL_WEIGHT_COMPLETED_BRIDGE_022.md).
+
+The next specific missing comparison is **enriched**: (26.9) gives the *set/vector-space* of liquid scalar morphisms, but the Costello–Gwilliam DVS polynomial kernels carry a specified **smooth plot structure**. Merely transporting this structure along the vector-space isomorphism is not a proof that it is canonically recovered from a liquid internal Hom construction.
+
+Additional separate obligations are:
+
+1. Define a natural liquid-to-DVS scalar mapping-object enrichment and verify that its plots agree with smooth families of compactly supported distributional kernels, including locally uniform compact supports.
+2. Verify B.6 differentiable cofibrations/fibrations and filtration-compatible disjoint-support operations in that enriched comparison, not just on underlying real complexes.
+3. Treat interacting/renormalized BV contractions and general higher liquid Ext with their actual, and different, source/coefficient objects. Arbitrary distributional diagonal contractions are still not defined by the classical comparison.
+
+The no-go in Theorem 26.1 and the corrected all-degree scalar-derived result in Theorem 26.4 are compatible: **different, correctly typed objects** support different conclusions.
 
 ## 6. Verification ledger
 
@@ -193,7 +269,7 @@ The **proved no-go** from Theorem 26.1 and the **corrected underived kernel brid
 | Natural extension-by-zero, signed permutations and underlying disjoint-open polynomial multiplication | PROVED COMPATIBLE on underlying complexes |
 | Arity-complete products of these underlying cochain complexes | PROVED IDENTICAL by product of the isomorphisms (26.11) |
 | Canonical identification of their Costello–Gwilliam DVS plots with liquid internal Hom plots | **OPEN; NOT IMPLIED** |
-| Comparison of termwise liquid Hom with derived liquid RHom in all degrees (26.12) | **OPEN; REQUIRES ACYCLICITY/PROJECTIVITY** |
+| Correct field-source scalar liquid Hom versus derived scalar RHom on connected intervals | **PROVED ALL DEGREES** by continuous two-term contraction to finite-dimensional projectives (26.16) |
 | Genuine quantum distributional BV comparison and higher derived Weiss bridge | **OPEN** |
 
-**Next GCL research obligation:** Apply a critical categorical and analytical review to the nuclear Fréchet dual-kernel step. Then attack (26.12) directly using the exact projective generator model of real liquid modules; separately build a plot-preserving restricted enrichment for test kernels, rather than renaming ordinary liquid Hom as a differentiable mapping object. No Human Steward routine approval or extra GitHub account is needed.
+**Next GCL research obligation:** Critically audit the explicit continuous homotopy contraction (26.12–26.16) and its finite symmetric tensor powers. Then construct a **natural plot-preserving enriched liquid scalar mapping functor**, checking DVS smoothness and filtered/Weiss compatibility rather than renaming ordinary liquid Hom as a differentiable mapping object. General old-source Ext and interacting/renormalized quantum observables remain independent open problems. No Human Steward routine approval or extra GitHub account is needed.
