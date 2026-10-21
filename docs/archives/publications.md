@@ -45,3 +45,17 @@ The following machine-readable records remain public even though they are not si
 - [Reviewer Delivery Standard](../monographs/type-theory-series/REVIEWER_DELIVERY_STANDARD.md)
 - [Publication State Model](../monographs/type-theory-series/PUBLICATION_STATE_MODEL.md)
 - [Artifact Record](../monographs/type-theory-series/ARTIFACT_RECORD.md)
+\n
+## Original experimental web editions
+
+The illustrated web recreations are retained for provenance and rebuilding, not promoted as preferred reading editions. The original compiled PDFs are available through the Documentary Library in the main Books navigation.
+
+- [The Shape of a Sphere (archived web edition)](../documentaries/poincare.md)
+- [The Hidden Music of Elliptic Curves (archived web edition)](../documentaries/bsd.md)
+- [The Geometry of Hidden Harmony (archived web edition)](../documentaries/hodge.md)
+- [The River and the Storm (archived web edition)](../documentaries/navier_stokes.md)
+- [The Geometry of Force and Silence (archived web edition)](../documentaries/yang_mills.md)
+- [The Shape of Computational Truth (archived web edition)](../documentaries/p_vs_np.md)
+- [The Music of the Primes (archived web edition)](../documentaries/riemann.md)
+- [The Element in Half the Worlds (archived web edition)](../documentaries/union_closed.md)
+- [Measure, Common Measure, and the Road to gcd (archived web edition)](../documentaries/euclid_book_vii_micro.md)

@@ -192,8 +192,16 @@ def _micro_semantic_errors(
     mkdocs_path = root / "mkdocs.yml"
     if mkdocs_path.is_file():
         mkdocs_text = mkdocs_path.read_text(encoding="utf-8")
-        if f"documentaries/{volume.get('web_page', '')}" not in mkdocs_text:
-            errors.append(f"{slug}: MkDocs navigation is missing micro-edition page")
+        page = str(volume.get("web_page", ""))
+        if f"documentaries/{page}" not in mkdocs_text:
+            archive = root / "docs/archives/publications.md"
+            archived = (
+                "archives/publications.md" in mkdocs_text
+                and archive.is_file()
+                and f"(../documentaries/{page})" in archive.read_text(encoding="utf-8")
+            )
+            if not archived:
+                errors.append(f"{slug}: micro-edition page is missing from menu and documentary archive")
 
     return errors
 
