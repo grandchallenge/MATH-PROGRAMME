@@ -85,7 +85,7 @@ class SpectralFiniteEditAudit(unittest.TestCase):
                 self.assertGreater(defect,0)
                 self.assertLessEqual(defect,finite_edit_ceiling(p,3))
                 self.assertLessEqual(defect/p**3,1512/p)
-                self.assertEqual(len(set(good)&set(bad)),p-3)
+                self.assertEqual(len(set(good)&set(bad)),p-2)
 
     def test_sixth_moment_minimum_exact_for_all_small_b3_subsets(self):
         for p in (5,7,11):
