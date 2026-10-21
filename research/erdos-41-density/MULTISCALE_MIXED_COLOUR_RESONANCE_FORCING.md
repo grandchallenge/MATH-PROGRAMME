@@ -9,7 +9,7 @@ Let $X,Y,Z$ be pairwise disjoint nonempty finite subsets of the integers. They a
 $$
 a=|X|,\qquad b=|Y|,\qquad c=|Z|,
 \qquad
-S_{XYZ}=\operatorname{diam}(X)+\operatorname{diam}(Y)+\operatorname{diam}(Z)+1.
+S_{XYZ}=\mathrm{diam}(X)+\mathrm{diam}(Y)+\mathrm{diam}(Z)+1.
 $$
 
 Define the tripartite representation function
