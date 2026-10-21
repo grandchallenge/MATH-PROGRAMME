@@ -101,6 +101,53 @@ def release_identity_strings(volume: dict[str, Any]) -> list[str]:
     return values
 
 
+def pdf_release_contract_errors(manifest: dict[str, Any], register: dict[str, Any], index: str) -> list[str]:
+    """Validate publication links against the original, unchanged PDF identities."""
+    errors: list[str] = []
+    tag = register.get("release_tag")
+    if not isinstance(tag, str) or not re.fullmatch(r"gcl-documentary-pdf-originals-[0-9]{4}-[0-9]{2}-[0-9]{2}", tag):
+        return ["documentary PDF register: invalid public release tag"]
+    url_base = f"https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/{tag}/"
+    release_page = f"https://github.com/grandchallenge/MATH-PROGRAMME/releases/tag/{tag}"
+    if register.get("release_url") != release_page or release_page not in index:
+        errors.append("documentary PDF register: missing public release link")
+    admitted = {v["slug"]: v for v in manifest["volumes"] if v.get("rendered_pdf", {}).get("sha256")}
+    pdfs = register.get("pdfs", [])
+    if not isinstance(pdfs, list) or len(pdfs) != len(admitted):
+        return errors + ["documentary PDF register: expected exactly the manifest's compiled PDFs"]
+    visited: set[str] = set()
+    for entry in pdfs:
+        slug = entry.get("slug")
+        if slug not in admitted or slug in visited:
+            errors.append(f"documentary PDF register: missing/duplicate/unknown slug {slug!r}")
+            continue
+        visited.add(slug)
+        original = admitted[slug]
+        artifact = original["rendered_pdf"]
+        filename = Path(original["source_record"]).stem + ".pdf"
+        expected_url = url_base + filename
+        for field, expected in (
+            ("title", original["title"]),
+            ("filename", filename),
+            ("download_url", expected_url),
+            ("bytes", artifact["bytes"]),
+            ("sha256", artifact["sha256"]),
+            ("pages", original["pages"]),
+        ):
+            if entry.get(field) != expected:
+                errors.append(f"documentary PDF register: {slug} has wrong {field}")
+        if f"]({expected_url})" not in index:
+            errors.append(f"documentary PDF library: missing download link for {slug}")
+    if visited != set(admitted):
+        errors.append("documentary PDF register: not all compiled volumes are listed")
+    if index.count("[Download PDF (") != len(admitted):
+        errors.append("documentary PDF library: download count does not equal published PDF count")
+    no_pdf = register.get("no_pdf", {})
+    if no_pdf.get("slug") != "euclid_book_vii_micro" or no_pdf.get("availability") != "awaiting_new_pdf_edition":
+        errors.append("documentary PDF register: web-only microedition must remain explicitly unavailable")
+    return errors
+
+
 def discovered_edition_records(root: Path = ROOT) -> set[str]:
     return {path.name for path in (root / "docs/documentaries").glob("*.edition.json")}
 
@@ -182,6 +229,7 @@ def _static_documentary_errors(
     expected_json = {
         "ARTIFACT_MANIFEST.json",
         "DOCUMENTARY_CANDIDATES.json",
+        "PDF_RELEASES.json",
         "documentary_web.schema.json",
         *(str(volume.get("edition_record", "")) for volume in manifest.get("volumes", [])),
     }
@@ -334,16 +382,39 @@ def collection_discovery_errors(
         )
         if not archived:
             errors.append("documentary candidates: neither in sidebar nor linked from the published source index")
+    pdf_first = "PDF_RELEASES.json" in index_text
+    if pdf_first:
+        register_path = root / "docs/documentaries/PDF_RELEASES.json"
+        try:
+            register = json.loads(register_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            errors.append(f"documentary PDF register: cannot read: {exc}")
+        else:
+            errors.extend(pdf_release_contract_errors(manifest, register, index_text))
+    archive_file = root / "docs/archives/publications.md"
+    archive_text = archive_file.read_text(encoding="utf-8") if archive_file.is_file() else ""
+    if pdf_first and "documentaries/index.md" not in mkdocs_text:
+        errors.append("documentary PDF library: main Books menu is missing the PDF catalogue")
     for volume in volumes:
         slug = str(volume.get("slug", "<unknown>"))
         page = str(volume.get("web_page", ""))
         edition = str(volume.get("edition_record", ""))
-        if f"({page})" not in index_text:
-            errors.append(f"{slug}: collection index is missing web page {page}")
+        archived = (
+            "archives/publications.md" in mkdocs_text
+            and f"(../documentaries/{page})" in archive_text
+        )
+        if pdf_first:
+            if not archived:
+                errors.append(f"{slug}: archived web edition is not discoverable: {page}")
+            if f"documentaries/{page}" in mkdocs_text:
+                errors.append(f"{slug}: experimental web edition must leave the main Books menu: {page}")
+        else:
+            if f"({page})" not in index_text:
+                errors.append(f"{slug}: collection index is missing web page {page}")
+            if f"documentaries/{page}" not in mkdocs_text:
+                errors.append(f"{slug}: MkDocs navigation is missing web page {page}")
         if f"({edition})" not in index_text:
             errors.append(f"{slug}: collection index is missing edition record {edition}")
-        if f"documentaries/{page}" not in mkdocs_text:
-            errors.append(f"{slug}: MkDocs navigation is missing web page {page}")
     return errors
 
 

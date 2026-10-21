@@ -9,27 +9,25 @@ DOCS=ROOT/"docs"
 
 
 class PublicExplanatoryPagesTests(unittest.TestCase):
-    def test_documentary_library_complete_and_browse_first(self):
+    def test_documentary_library_complete_and_pdf_first(self):
         text=(DOCS/"documentaries/index.md").read_text(encoding="utf8")
         manifest=json.loads((DOCS/"documentaries/ARTIFACT_MANIFEST.json").read_text())
         published=manifest["volumes"]
         self.assertEqual(len(published),9)
-        self.assertIn("## Choose a book",text)
-        self.assertLess(text.index("## Choose a book"),text.index("### Collection records"))
-        table=text.split("### Collection records",1)[1].split("### Publication and preservation records",1)[0]
-        self.assertEqual(len(re.findall(r"^\| \[",table,re.M)),len(published))
+        self.assertIn("## Read the books",text)
+        self.assertLess(text.index("## Read the books"),text.index("## Sources and publication records"))
+        self.assertEqual(text.count("[Download PDF ("),8)
+        self.assertIn("PDF_RELEASES.json",text)
+        self.assertIn("no compiled original PDF exists",text)
         for volume in published:
             with self.subTest(volume=volume["slug"]):
-                self.assertIn(f'[{volume["title"]}]({volume["web_page"]})',table)
-                self.assertIn(f'[Source]({volume["source_record"]})',table)
-                self.assertIn(f'[Edition]({volume["edition_record"]})',table)
+                self.assertIn(f'[Source]({volume["source_record"]})',text)
+                self.assertIn(f'[Edition]({volume["edition_record"]})',text)
                 self.assertTrue((DOCS/"documentaries"/volume["web_page"]).is_file())
                 self.assertTrue((DOCS/"documentaries"/volume["edition_record"]).is_file())
-        self.assertIn("The Poincaré conjecture is **solved**",text)
-        self.assertIn("not mathematical proofs",text)
-        self.assertIn("does **not** mean that a public PDF download exists",text)
-        self.assertIn("1,221 numbered mathematical problems",text)
-        self.assertNotIn("The first developed articles explain Problems #1",text)
+        self.assertIn("The Poincaré volume reconstructs an established theorem",text)
+        self.assertIn("do **not** announce solutions",text)
+        self.assertIn("The web editions and their illustrated plates are under reconstruction",text)
 
     def test_current_work_links_and_closed_tasks_not_misrepresented(self):
         text=(DOCS/"CURRENT_WORK.md").read_text()
