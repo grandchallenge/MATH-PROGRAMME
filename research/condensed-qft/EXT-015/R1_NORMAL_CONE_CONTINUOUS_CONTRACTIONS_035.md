@@ -39,7 +39,7 @@ C^{K_0}_{ij}(T)=q_*(\iota_{ij}^*T),
 \tag{35.3}
 $$
 
-with $K_0(x_i,x_j)=\delta(x_i-x_j)$. The Jacobian of the change of variables from $(x_i,x_j)$ to $(u=x_i,v=x_j-x_i)$ has absolute value one, so (35.3) agrees exactly with D21's $\delta$-multiplication and contraction, **not** with an extra volume normalization.
+with $K_0(x_i,x_j)=\delta(x_i-x_j)$. The Jacobian of the change of variables from $(x_i,x_j)$ to $(u=x_i,v=x_j-x_i)$ has absolute value one, so (35.3) agrees exactly with D21's multiplication by the diagonal delta and contraction, **not** with an extra volume normalization.
 
 **Theorem 35.1 (fixed-sector normal continuity of singular BV contraction).** For every $K,\Gamma$ satisfying (35.1), there exist a compact $K'\Subset U^{n-2}$ and a closed output cone $\Gamma'\subset T^*U^{n-2}\setminus0$ disjoint from $\mathfrak N_{n-2}(U)$ such that the linear map
 
