@@ -89,43 +89,57 @@ If the two sets are placed in any common integer interval of width W_n, their no
 
 This does NOT say the exact sixth moment is insensitive. The exact nonnegative integer defect \(\mathcal E_6(B)-(6n^3-9n^2+4n)\) detects all B3 violations and must be retained if this particular spectral route is pursued.
 
-## 3. Explicit arbitrary-size critical-order hostile witnesses
+## 3. An explicit **one-point edit** at arbitrarily large critical endpoints
 
-For each prime p>3 take the p-point finite-field moment-code B3 set
+For each prime $p\ge59$, let $B=3p+1$ and take the finite-field moment-code B3 set
 
 $$
 T_p=\left\{
-1+i+(3p+1)(i^2\bmod p)+(3p+1)^2(i^3\bmod p)
+e_i=1+i+B(i^2\bmod p)+B^2(i^3\bmod p)
 :0\le i<p\right\}
-\subseteq[1,W_p]
+\subseteq[1,W_p],
+\qquad W_p=p(1+B+B^2)+1<12p^3.
 $$
 
-with \(W_p=p(1+(3p+1)+(3p+1)^2)+1<12p^3\). No-carry base expansion and Newton's identities establish that \(T_p\) is B3 including repeated summands.
+The $p$ elements are B3 including repeated summands, by the no-carry three-digit proof and Newton's identities.
 
-Let
+Define a **single replacement point**
 
 $$
-T'_p=\{1,2,3\}\cup\{e_i:3\le i<p\}.
+x_p=2e_3-e_0=7+18B+54B^2,
+\qquad
+T'_p=(T_p\setminus\{e_1\})\cup\{x_p\}.
 $$
 
-Both sets have exactly p distinct elements and meet the same critical endpoint-order lower count
+For $p\ge59$, the base-$B$ digits 7,18,54 are each below p, so $1\le x_p\le W_p$. It is not any existing $e_i$: the lowest digit forces $i=6$, but the next digit of $e_6$ is 36, not 18. Thus $T'_p$ has **exactly p distinct integers** within the same original interval, differs from $T_p$ by precisely one removal and one insertion, and retains the critical-order endpoint count
 
 $$
 |T_p|=|T'_p|=p>(W_p/12)^{1/3}.
 $$
 
-But \(T'_p\) is **not B3**, because the distinct unordered triples (1,1,3) and (1,2,2) both sum to 5. The two sets differ at no more than three points each way (r≤3). Theorem A gives
+Yet $T'_p$ is **not B3**. The two distinct unordered triples
 
 $$
+(e_0,e_0,x_p),\qquad(e_0,e_3,e_3)
+$$
+
+have the same sum because $x_p+e_0=2e_3$. This is already a B2 collision, which implies failure of B3.
+
+Here $r=1$ in Theorem A, so $M_1=10$ and the stronger exact bound is
+
+$$
+\boxed{
 0<
 \frac{\mathcal E_6(T'_p)-(6p^3-9p^2+4p)}{p^3}
-\le\frac{1512}{p}
-\longrightarrow0.
+\le\frac{132}{p}\longrightarrow0.
+}\tag{ONE-EDIT-ENERGY-ERASURE}
 $$
 
-Every empirical Fourier mode on the rescaled width simultaneously differs by at most \(6/p\). Thus the hostile example persists even when the state includes the weak rescaled empirical measure AND the leading sixth-energy coefficient.
+The total variation of their rescaled empirical probability measures is $1/p$, and **all rescaled Fourier modes**, uniformly over real frequency t, differ in amplitude by at most $2/p$.
 
-**Logical limits.** These are finite sets whose *endpoint populations* have critical order; neither family satisfies a positive normalized lower bound for all large N as a single infinite set. The theorem does not rule out exact unnormalized spectral defects, full integer-frequency Fourier data, or a nonstationary transfer inequality that amplifies the subleading O(n²) discrepancy across infinitely many scales.
+This strengthens the earlier three-point-replacement witness in the protected first tranche: **even ONE changed integer can violate B3 without changing the weak empirical spectral state or the leading normalized sixth energy asymptotically**.
+
+**Logical limits.** These are finite sets with critical-order endpoint populations, not a single infinite c-persistent B3 set. The theorem does not rule out unnormalized integer-frequency spectral defects or a nonstationary transfer inequality that amplifies subleading differences across infinitely many scales.
 
 ## 4. Mathematical research next step for Track D
 
