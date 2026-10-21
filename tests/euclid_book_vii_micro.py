@@ -18,6 +18,7 @@ SCHEMA = DOCS / "documentaries" / "euclid_book_vii_micro.edition.schema.json"
 MANIFEST = DOCS / "documentaries" / "ARTIFACT_MANIFEST.json"
 ADMISSION = ROOT / "governance" / "euclid_book_vii_micro_edition_admission.json"
 MKDOCS = ROOT / "mkdocs.yml"
+ARCHIVE = DOCS / "archives" / "publications.md"
 CSS = DOCS / "stylesheets" / "euclid-book-vii.css"
 PLATES = [
     DOCS / "assets" / "documentaries" / "euclid_book_vii" / "plate_anthyphairesis.svg",
@@ -183,11 +184,18 @@ def semantic_errors() -> list[str]:
         if v.get("plates_authority") != "pedagogical_orientation_only":
             errors.append("documentary manifest plate authority inflation")
 
-    if not nav_contains(
-        mkdocs_config.get("nav", []) if isinstance(mkdocs_config, dict) else [],
-        "documentaries/euclid_book_vii_micro.md",
-    ):
-        errors.append("MkDocs navigation admission missing")
+    nav = mkdocs_config.get("nav", []) if isinstance(mkdocs_config, dict) else []
+    if not nav_contains(nav, "documentaries/euclid_book_vii_micro.md"):
+        # The original microedition remains a protected admitted document; a
+        # PDF-first bookshelf links to it from the reference archive instead.
+        archived = (
+            nav_contains(nav, "archives/publications.md")
+            and ARCHIVE.is_file()
+            and "(../documentaries/euclid_book_vii_micro.md)"
+            in ARCHIVE.read_text(encoding="utf-8")
+        )
+        if not archived:
+            errors.append("MkDocs navigation admission missing")
     if "stylesheets/euclid-book-vii.css" not in mkdocs:
         errors.append("Euclid documentary stylesheet not registered")
     for css_token in ("#071A36", "#FAF5E8", "#B78935", "@media print", "max-width: 640px"):
