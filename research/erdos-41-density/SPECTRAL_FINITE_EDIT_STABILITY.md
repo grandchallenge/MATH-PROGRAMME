@@ -39,7 +39,7 @@ $$
 
 The lower bound is valid for every B because the B3 sixth-energy value is the minimum for an n-point set. The upper bound depends only on the number of edited elements, not their magnitudes, the ambient interval, or the location of integer sums.
 
-**Proof.** Let \(r_C\) be the ordered triple-sum representation function of C, and write
+**Proof.** Let $r_C$ be the ordered triple-sum representation function of C, and write
 
 $$
 r_A=r_C+u,\qquad r_B=r_C+v.
@@ -51,13 +51,13 @@ $$
 \sum_s u(s)=\sum_s v(s)=n^3-(n-r)^3\le3rn^2.
 $$
 
-Because C⊂A is B3, its **unordered pair sums are all distinct**, including equal summands. For any prescribed integer sum s, the ordered triples with exactly one special element have at most \(3\cdot r\cdot2=6r\) possibilities: choose its position and value; at most one unordered pair from C has the required complementary sum, with at most two orders. Those with exactly two special elements contribute at most \(3r^2\) possibilities: choose the position of the single C value and the two ordered special values, which uniquely determine it. Those with all three special contribute at most \(r^3\). Therefore, for all s,
+Because C⊂A is B3, its **unordered pair sums are all distinct**, including equal summands. For any prescribed integer sum s, the ordered triples with exactly one special element have at most $3\cdot r\cdot2=6r$ possibilities: choose its position and value; at most one unordered pair from C has the required complementary sum, with at most two orders. Those with exactly two special elements contribute at most $3r^2$ possibilities: choose the position of the single C value and the two ordered special values, which uniquely determine it. Those with all three special contribute at most $r^3$. Therefore, for all s,
 
 $$
 0\le u(s),v(s)\le M_r:=6r+3r^2+r^3.
 $$
 
-Also B3 uniqueness yields \(0\le r_C(s)\le6\). Subtracting the energies gives
+Also B3 uniqueness yields $0\le r_C(s)\le6$. Subtracting the energies gives
 
 $$
 \begin{aligned}
@@ -87,7 +87,7 @@ $$
 
 If the two sets are placed in any common integer interval of width W_n, their normalized empirical probability measures differ in total variation by at most r/n, and all their rescaled Fourier modes by at most 2r/n. Hence **weak empirical measures together with normalized sixth energies still cannot distinguish B3 from non-B3**.
 
-This does NOT say the exact sixth moment is insensitive. The exact nonnegative integer defect \(\mathcal E_6(B)-(6n^3-9n^2+4n)\) detects all B3 violations and must be retained if this particular spectral route is pursued.
+This does NOT say the exact sixth moment is insensitive. The exact nonnegative integer defect $\mathcal E_6(B)-(6n^3-9n^2+4n)$ detects all B3 violations and must be retained if this particular spectral route is pursued.
 
 ## 3. An explicit **one-point edit** at arbitrarily large critical endpoints
 
@@ -111,7 +111,7 @@ x_p=2e_3-e_0=7+18B+54B^2,
 T'_p=(T_p\setminus\{e_1\})\cup\{x_p\}.
 $$
 
-For $p\ge59$, the base-$B$ digits 7,18,54 are each below p, so $1\le x_p\le W_p$. It is not any existing $e_i$: the lowest digit forces $i=6$, but the next digit of $e_6$ is 36, not 18. Thus $T'_p$ has **exactly p distinct integers** within the same original interval, differs from $T_p$ by precisely one removal and one insertion, and retains the critical-order endpoint count
+For $p\ge59$, the base $B$ digits 7,18,54 are each below p, so $1\le x_p\le W_p$. It is not any existing $e_i$: the lowest digit forces $i=6$, but the next digit of $e_6$ is 36, not 18. Thus $T'_p$ has **exactly p distinct integers** within the same original interval, differs from $T_p$ by precisely one removal and one insertion, and retains the critical-order endpoint count
 
 $$
 |T_p|=|T'_p|=p>(W_p/12)^{1/3}.
@@ -143,7 +143,7 @@ This strengthens the earlier three-point-replacement witness in the protected fi
 
 ## 4. Mathematical research next step for Track D
 
-The mathematical observable cannot simply be a weak limit of \(\mu_n\) plus \(\mathcal E_6(E_n)/n^3\). The following exact integer defect remains faithful for finite configurations:
+The mathematical observable cannot simply be a weak limit of $\mu_n$ plus $\mathcal E_6(E_n)/n^3$. The following exact integer defect remains faithful for finite configurations:
 
 $$
 \boxed{
@@ -153,6 +153,6 @@ $$
 }
 $$
 
-For an actual B3 prefix, \(\mathfrak d_6=0\) at EVERY stage, while all cross-scale shell choices must preserve that exact zero. A useful new Fourier approach needs a *transfer obstruction* showing that maintaining these infinitely many exact zero conditions together with positive critical density is impossible. Merely enforcing a limiting density and limiting sixth moment is insufficient.
+For an actual B3 prefix, $\mathfrak d_6=0$ at EVERY stage, while all cross-scale shell choices must preserve that exact zero. A useful new Fourier approach needs a *transfer obstruction* showing that maintaining these infinitely many exact zero conditions together with positive critical density is impossible. Merely enforcing a limiting density and limiting sixth moment is insufficient.
 
 The source programme remains issue #2789; Track D #2793 and critical audit Track C #2792. No independent role has yet submitted authenticated RESULT/1 for this candidate.
