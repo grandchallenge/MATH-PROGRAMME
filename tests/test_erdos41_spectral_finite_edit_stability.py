@@ -122,5 +122,42 @@ class SpectralFiniteEditAudit(unittest.TestCase):
             self.assertEqual(sum(difference_B.values()),p**3-(p-3)**3)
 
 
+    def test_one_point_replacement_witness_is_critical_and_spectrally_invisible(self):
+        for p in (59,61,67,71,73,79,83):
+            W,good=moment_code(p)
+            x=2*good[3]-good[0]
+            bad=[good[0]]+good[2:]+[x]
+            with self.subTest(p=p):
+                self.assertEqual(good[0],1)
+                self.assertEqual(x,7+18*(3*p+1)+54*(3*p+1)**2)
+                self.assertGreaterEqual(x,1)
+                self.assertLessEqual(x,W)
+                self.assertNotIn(x,good)
+                self.assertEqual(len(set(good)&set(bad)),p-1)
+                self.assertEqual(len(set(bad)),p)
+                self.assertTrue(b3(good))
+                self.assertFalse(b3(bad))
+                self.assertEqual(good[0]+good[0]+x,
+                                 good[0]+good[3]+good[3])
+                self.assertLess(W,12*p**3)
+                exact=predicted_sixth_energy(p)
+                self.assertEqual(sixth_energy(good),exact)
+                difference=sixth_energy(bad)-exact
+                self.assertGreater(difference,0)
+                self.assertLessEqual(difference,132*p*p)
+                self.assertLessEqual(difference/p**3,132/p)
+
+    def test_single_edit_uniform_mode_bound(self):
+        for p in (59,61,67):
+            W,good=moment_code(p)
+            x=2*good[3]-good[0]
+            bad=[good[0]]+good[2:]+[x]
+            for freq in (-1e6,-11.3,-1,0,1,55.3,1e6):
+                with self.subTest(p=p,freq=freq):
+                    self.assertLessEqual(
+                        abs(empirical_mode(good,W,freq)-empirical_mode(bad,W,freq)),
+                        2/p+1e-10)
+
+
 if __name__=="__main__":
     unittest.main()
