@@ -18,7 +18,7 @@ where $\mathfrak N_n$ is the finite union of nonzero conormals of **all partial 
 $$
 \mathscr C_{n;K,\Gamma}^{\,N}(U)=
 \{T\in\mathcal E'(U^n):
-\operatorname{supp}T\subset K,\quad \mathrm{WF}(T)\subset\Gamma\},
+\mathrm{supp}T\subset K,\quad \mathrm{WF}(T)\subset\Gamma\},
 \tag{35.2}
 $$
 
