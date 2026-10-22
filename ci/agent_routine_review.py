@@ -22,7 +22,7 @@ from agent_material_profiles import (
 from specialist_receipt_adapter import (
     ReceiptError, protected_specialist_receipt,
 )
-from specialist_domains import domain_for_paths
+from specialist_domains import domain_for_paths, protected_path
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 APP_REVIEWER = "gcl-release-trust[bot]"
@@ -223,6 +223,103 @@ def delegated_classification(pr: dict, files: list[dict], head: str,
 
 
 
+def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> bool:
+    """Recognize research-only candidates that this App MUST NOT approve.
+
+    An expected negative delegated-review eligibility verdict is not a
+    failed mathematical proof or failed independent-review validation.
+    Strictly scoped to Erdős #41 research prose and its regression tests.
+    No reviewer token is used; branch protection and separate specialist
+    review remain authoritative. Mixed/protected materials still fail.
+    """
+    verify_specialist_envelope(pr, files, head)
+    seen: set[str] = set()
+    has_proof_note = False
+    for entry in files:
+        path = entry.get("filename")
+        if (not isinstance(path, str) or path in seen or
+                path.startswith("/") or ".." in path.split("/") or
+                chr(0) in path or protected_path(path) or
+                entry.get("status") not in ("added", "modified") or
+                entry.get("previous_filename")):
+            return False
+        seen.add(path)
+        if path.startswith("research/erdos-41-density/") and path.endswith(".md"):
+            has_proof_note = True
+        elif path.startswith("tests/test_erdos41_") and path.endswith(".py"):
+            pass
+        else:
+            return False
+    return has_proof_note
+
+
+def exact_head_nonauthor_review(
+    pr: dict, number: int, head: str, *, token: str, prefix: str,
+) -> str:
+    """Require real GitHub non-author APPROVED provenance before abstaining.
+
+    This proves only GitHub source-review custody, NEVER mathematical
+    certification or delegated App authority. A dismissed, stale-head,
+    author, or unreviewed PR must remain blocked.
+    """
+    reviews = api("GET", f"{prefix}/pulls/{number}/reviews?per_page=100",
+                  token=token)
+    if not isinstance(reviews, list) or len(reviews) >= 100:
+        raise RoutineReviewError("research review inventory incomplete")
+    author = ((pr.get("user") or {}).get("login") or "").casefold()
+    if not author:
+        raise RoutineReviewError("unattributable research candidate author")
+    by_reviewer: dict[str, dict] = {}
+    for row in reviews:
+        if not isinstance(row, dict):
+            raise RoutineReviewError("invalid GitHub review entry")
+        login = ((row.get("user") or {}).get("login") or "").casefold()
+        if not login:
+            raise RoutineReviewError("unattributed GitHub review entry")
+        previous = by_reviewer.get(login)
+        if previous is None or (
+            (row.get("submitted_at") or "", row.get("id") or 0)
+            > (previous.get("submitted_at") or "", previous.get("id") or 0)
+        ):
+            by_reviewer[login] = row
+    for login, review in by_reviewer.items():
+        if (login != author and login != APP_REVIEWER.casefold()
+                and review.get("state") == "APPROVED"
+                and review.get("commit_id") == head):
+            return login
+    raise RoutineReviewError(
+        "research-only candidate lacks current-head non-author APPROVED review"
+    )
+
+
+def report_delegated_review_not_applicable(
+    head: str, files: list[dict], reviewer: str,
+) -> None:
+    """Report non-approval explicitly; a green job is NOT an App review."""
+    message = (
+        "NOT_APPLICABLE: mathematical research/test material is not "
+        "eligible for automatic delegated App review. "
+        "No approval or mathematical certification was issued; "
+        "protected main checks and independent review remain separate."
+    )
+    print("::notice title=Delegated review not applicable::" + message)
+    print(message)
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as out:
+            out.write(
+                "### Delegated-review applicability: NOT_APPLICABLE\n\n"
+                "This candidate contains bounded Erdős #41 research and tests. "
+                "**No automated approval or mathematical certification was "
+                "issued.** Its exact head is \`" + head + "\` and it changes "
+                + str(len(files)) + " files. A distinct authenticated "
+                "GitHub non-author APPROVED review exists at this exact head "
+                "(reviewer: " + reviewer + "). This is source-review provenance "
+                "only, **not mathematical certification**. Protected branch "
+                "rules and required CI are unchanged.\n"
+            )
+
+
 def specialist_domain_for_file_manifest(files: list[dict]) -> str:
     """Use protected four-domain routing, retaining mainline operational exceptions."""
     if not files or len(files) > 100:
@@ -329,6 +426,17 @@ def main() -> int:
         )
         disposition = "ROUTINE_BOUNDED"
     except (MaterialAdmissionError, RoutineReviewError):
+        # Research-only content has no protected automated approval class.
+        # An expected abstention is a truthful NOT_APPLICABLE job result,
+        # rather than a misleading test failure; it never posts a review.
+        # Mixed, malformed, or protected-path edits still fail closed or
+        # require an independently protected specialist receipt.
+        if bounded_research_not_applicable(pr, files, head):
+            reviewer = exact_head_nonauthor_review(
+                pr, number, head, token=read_token, prefix=prefix,
+            )
+            report_delegated_review_not_applicable(head, files, reviewer)
+            return 0
         evidence = exact_specialist_disposition(
             pr, files, head, read_token=read_token,
         )
