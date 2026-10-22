@@ -98,9 +98,12 @@ NAMES=("bsd","riemann","hodge","navier_stokes","poincare","p_vs_np","yang_mills"
 DEST=DOCS/"github_math"
 
 def relink(url):
-    # Original URLs are relative to the public /documentaries/<name>/ HTML
-    # pages. The generated Markdown file lives at /documentaries/github_math/
-    # and its rendered URL has the same nesting depth as the originals.
+    # Keep existing manuscript URLs by default. A retained status notice uses
+    # a Markdown file target so both GitHub and MkDocs resolve the same page.
+    if url == "../MILLENNIUM_PRIZE_STATUS/":
+        # Preserve the source notice's status-comparison destination from the
+        # reader's deeper source directory; MkDocs rewrites this Markdown link.
+        return "../../MILLENNIUM_PRIZE_STATUS.md"
     return url
 
 def render(n,inline=False):
@@ -200,6 +203,14 @@ def formula_bodies(t):
     regex=r"(?<!\$)\$\$(?!\$)(.*?)(?<!\$)\$\$(?!\$)|(?<!\\)\$(?!\$)(.*?)(?<!\\)\$(?!\$)|\\\((.*?)\\\)|\\\[(.*?)\\\]"
     return ["".join(x for x in m.groups() if x is not None).strip() for m in re.finditer(regex,t,flags=re.S)]
 
+def pre_article_notices(dom,article):
+    """Retain source status notes that precede the canonical article."""
+    notices=[]
+    for node in dom._descendants():
+        if node is article:break
+        if node.get("role")=="note":notices.append(node)
+    return notices
+
 def generate(n):
     src=DOCS/(n+".md")
     s=src.read_text(encoding="utf-8")
@@ -212,8 +223,10 @@ def generate(n):
     header+="> **GitHub equation reader; automatically generated from the original manuscript.**\n"
     header+="> The [illustrated documentary](../"+n+".md) has the canonical layout, figures and reader controls.\n"
     header+="> This is not independent mathematical or publication certification.\n\n"
-    txt=norm_math(header+render(art))
-    expected=formula_bodies(art.get_text(" ",strip=False))
+    notices=pre_article_notices(dom,art)
+    txt=norm_math(header+"".join(render(note) for note in notices)+render(art))
+    expected=formula_bodies(" ".join(node.get_text(" ",strip=False)
+                                     for node in [*notices,art]))
     actual=formula_bodies(txt)
     def compact(x):
         x=x.replace("\u200b","").replace(r"\\#",r"\#").replace(r"\Vert{}",r"\|")

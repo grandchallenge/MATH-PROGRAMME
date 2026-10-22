@@ -6,6 +6,10 @@
 > The [illustrated documentary](../navier_stokes.md) has the canonical layout, figures and reader controls.
 > This is not independent mathematical or publication certification.
 
+**Important update · 20 October 2026**
+
+This illustrated book was written before a major September 2026 development. [OpenAI announced a proof of finite-time breakdown under smooth forcing](https://openai.com/index/navier-stokes-solution/), accompanied by a Lean formalization. On [11 September](https://www.claymath.org/news/navier-stokes-announcement/), Clay said the Millennium problem had *apparently been settled*. Its current list still places Navier–Stokes under **Active** while its evaluation proceeds. Older references to an “open problem” in this original edition reflect the time at which it was written. GCL has not independently certified the announced proof, and its separate unforced critical-integrability investigation remains open. [Read the dated status comparison.](../../MILLENNIUM_PRIZE_STATUS.md)
+
 A note to the reader
 
 ## How to Read the River
