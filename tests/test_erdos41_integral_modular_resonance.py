@@ -169,6 +169,24 @@ class IntegralModularResonanceTests(unittest.TestCase):
         self.assertEqual(modular_lower_bound(
             self.Q,self.Z,self.J,3),48)
 
+    def test_fractional_occupancy_can_fake_two_points_but_integrality_cannot(self):
+        # Actual window histogram is (1,2,2); the fractional choice
+        # (2/3,2/3,2/3) fits every linear modular capacity.
+        # Nonetheless every INTEGER occupancy vector of mass two fails.
+        h=3
+        a=residue_histogram(self.Q,h)
+        C=residue_interval_capacity(support_intervals(self.Q,self.J),h)
+        Jcap=residue_interval_capacity([self.J],h)
+        v=(Fraction(2,3),)*3
+        self.assertEqual(Jcap,(1,2,2))
+        self.assertEqual(sum(v),2)
+        self.assertTrue(all(v[t]<=Jcap[t] for t in range(h)))
+        loads=[sum(a[r]*v[(t-r)%h] for r in range(h))
+               for t in range(h)]
+        self.assertEqual(loads,[Fraction(8,3)]*3)
+        self.assertTrue(all(loads[t]<=C[t] for t in range(h)))
+        self.assertEqual(integral_capacity(self.Q,self.J,h),1)
+
     def test_every_two_element_window_batch_is_incompatible(self):
         for Z in combinations(range(self.J[0],self.J[1]+1),2):
             self.assertFalse(is_b3(self.X+self.Y+list(Z)))
@@ -192,10 +210,6 @@ class IntegralModularResonanceTests(unittest.TestCase):
                 N=modular_demand(Q,Z,h)
                 self.assertTrue(all(n<=c for n,c in zip(N,C)))
                 self.assertEqual(modular_lower_bound(Q,Z,J,h),0)
-                if h<=5:
-                    # Restrict to a tiny subset; full Q/J capacities
-                    # are otherwise infeasible to enumerate directly.
-                    pass
 
     def test_exact_modular_lower_bounds_cannot_exceed_collision_ledger(self):
         random.seed(20261022)
