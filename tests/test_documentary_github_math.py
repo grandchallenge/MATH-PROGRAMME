@@ -6,7 +6,9 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from ci.generate_documentary_github_math import NAMES, generate
+from ci.generate_documentary_github_math import (
+    NAMES, BeautifulSoup, generate, pre_article_notices,
+)
 from ci.math_markdown_gate import issues
 
 class GitHubDocumentaryMath(unittest.TestCase):
@@ -57,6 +59,27 @@ class GitHubDocumentaryMath(unittest.TestCase):
                 self.assertEqual(source.count(f"github_math/{name}.md"),1)
                 self.assertIn("gcl-monograph",source)
                 self.assertIn("data-reader-section",source)
+
+    def test_navier_status_notice_precedes_update_above_reference(self):
+        text=generate("navier_stokes")[3]
+        notice="Important update · 20 October 2026"
+        reference="see the October 2026 update above"
+        self.assertEqual(text.count(notice),1)
+        self.assertLess(text.index(notice),text.index(reference))
+        self.assertIn("GCL has not independently certified the announced proof",text)
+        self.assertIn("https://openai.com/index/navier-stokes-solution/",text)
+        self.assertIn("https://www.claymath.org/news/navier-stokes-announcement/",text)
+        self.assertIn("[Read the dated status comparison.](../../MILLENNIUM_PRIZE_STATUS.md)",text)
+        self.assertTrue((ROOT/"docs/MILLENNIUM_PRIZE_STATUS.md").is_file())
+
+    def test_only_pre_article_notices_are_promoted(self):
+        dom=BeautifulSoup('<div role="note">Before</div>'
+                          '<article class="monograph-body">'
+                          '<div role="note">Inside</div></article>'
+                          '<div role="note">After</div>',"html.parser")
+        article=dom.select_one("article.monograph-body")
+        notices=pre_article_notices(dom,article)
+        self.assertEqual([n.get_text() for n in notices],["Before"])
 
     def test_math_reader_has_all_sections_and_figures(self):
         for name in NAMES:
