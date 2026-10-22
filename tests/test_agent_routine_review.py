@@ -471,12 +471,81 @@ class ResearchOnlyDelegatedReviewAbstentionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             path = os.path.join(d, "summary.md")
             with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": path}):
-                report_delegated_review_not_applicable(self.head, self.files)
+                report_delegated_review_not_applicable(self.head, self.files, "jimsteeg")
             with open(path, encoding="utf-8") as src:
                 message = src.read()
             self.assertIn("NOT_APPLICABLE", message)
             self.assertIn("No automated approval", message)
             self.assertIn(self.head, message)
+
+    def test_nonauthor_provenance_is_exact_head_and_latest_state(self):
+        from unittest.mock import patch
+        import agent_routine_review as mod
+        reviews = [
+            {"id": 1, "user": {"login": "jimsteeg"},
+             "state": "APPROVED", "commit_id": self.head,
+             "submitted_at": "2026-10-21T12:00:00Z"},
+        ]
+        with patch.object(mod, "api", return_value=reviews):
+            self.assertEqual(mod.exact_head_nonauthor_review(
+                self.pr, 2808, self.head, token="read",
+                prefix="/repos/grandchallenge/MATH-PROGRAMME"), "jimsteeg")
+        hostile = [
+            [{"id": 1, "user": {"login": "fyremael"},
+              "state": "APPROVED", "commit_id": self.head}],
+            [{"id": 1, "user": {"login": "jimsteeg"},
+              "state": "APPROVED", "commit_id": "f" * 40}],
+            [{"id": 1, "user": {"login": "jimsteeg"},
+              "state": "COMMENTED", "commit_id": self.head}],
+            [{"id": 1, "user": {"login": "gcl-release-trust[bot]"},
+              "state": "APPROVED", "commit_id": self.head}],
+            [],
+            [reviews[0], {"id": 2, "user": {"login": "jimsteeg"},
+                          "state": "DISMISSED", "commit_id": self.head,
+                          "submitted_at": "2026-10-21T14:00:00Z"}],
+        ]
+        for returned in hostile:
+            with self.subTest(reviews=returned):
+                with patch.object(mod, "api", return_value=returned):
+                    with self.assertRaises(mod.RoutineReviewError):
+                        mod.exact_head_nonauthor_review(
+                            self.pr, 2808, self.head, token="read",
+                            prefix="/repos/grandchallenge/MATH-PROGRAMME")
+
+    def test_research_not_applicable_without_review_is_failure_not_green(self):
+        import json
+        import os
+        import tempfile
+        from unittest.mock import patch
+        import agent_routine_review as mod
+        with tempfile.TemporaryDirectory() as d:
+            event = os.path.join(d, "event.json")
+            with open(event, "w", encoding="utf-8") as out:
+                json.dump({"inputs": {"pr_number": 2808}}, out)
+            def fake_api(method, path, *, token, payload=None):
+                self.assertEqual(method, "GET")
+                if path.endswith("/pulls/2808"):
+                    return self.pr
+                if path.endswith("/pulls/2808/files?per_page=100"):
+                    return self.files
+                if path.endswith("/pulls/2808/reviews?per_page=100"):
+                    return []
+                raise AssertionError("unexpected request")
+            with patch.dict(os.environ, {
+                "GITHUB_EVENT_PATH": event,
+                "GITHUB_EVENT_NAME": "workflow_dispatch",
+                "GITHUB_TOKEN": "read-token",
+            }):
+                with patch.object(mod, "api", side_effect=fake_api):
+                    with patch.object(mod, "delegated_classification",
+                                      side_effect=mod.RoutineReviewError(
+                                          "unknown or multifile material closure")):
+                        with patch.object(mod, "exact_specialist_disposition") as sp:
+                            with self.assertRaisesRegex(
+                                    mod.RoutineReviewError,
+                                    "lacks current-head non-author"):
+                                mod.main()
+                            sp.assert_not_called()
 
     def test_research_only_runtime_stops_before_domain_call_or_review_post(self):
         import json
@@ -495,6 +564,12 @@ class ResearchOnlyDelegatedReviewAbstentionTests(unittest.TestCase):
                     return self.pr
                 if path.endswith("/pulls/2808/files?per_page=100"):
                     return self.files
+                if path.endswith("/pulls/2808/reviews?per_page=100"):
+                    return [{
+                        "id": 3, "user": {"login": "jimsteeg"},
+                        "state": "APPROVED", "commit_id": self.head,
+                        "submitted_at": "2026-10-21T23:28:04Z",
+                    }]
                 raise AssertionError("unexpected GitHub request: " + path)
             with patch.dict(os.environ, {
                 "GITHUB_EVENT_PATH": path,
@@ -509,6 +584,6 @@ class ResearchOnlyDelegatedReviewAbstentionTests(unittest.TestCase):
                         with patch.object(mod, "exact_specialist_disposition") as specialist:
                             self.assertEqual(mod.main(), 0)
                             specialist.assert_not_called()
-                    self.assertEqual(api_mock.call_count, 2)
+                    self.assertEqual(api_mock.call_count, 3)
             with open(summary, encoding="utf-8") as src:
                 self.assertIn("NOT_APPLICABLE", src.read())
