@@ -253,7 +253,48 @@ def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> b
     return has_proof_note
 
 
-def report_delegated_review_not_applicable(head: str, files: list[dict]) -> None:
+def exact_head_nonauthor_review(
+    pr: dict, number: int, head: str, *, token: str, prefix: str,
+) -> str:
+    """Require real GitHub non-author APPROVED provenance before abstaining.
+
+    This proves only GitHub source-review custody, NEVER mathematical
+    certification or delegated App authority. A dismissed, stale-head,
+    author, or unreviewed PR must remain blocked.
+    """
+    reviews = api("GET", f"{prefix}/pulls/{number}/reviews?per_page=100",
+                  token=token)
+    if not isinstance(reviews, list) or len(reviews) >= 100:
+        raise RoutineReviewError("research review inventory incomplete")
+    author = ((pr.get("user") or {}).get("login") or "").casefold()
+    if not author:
+        raise RoutineReviewError("unattributable research candidate author")
+    by_reviewer: dict[str, dict] = {}
+    for row in reviews:
+        if not isinstance(row, dict):
+            raise RoutineReviewError("invalid GitHub review entry")
+        login = ((row.get("user") or {}).get("login") or "").casefold()
+        if not login:
+            raise RoutineReviewError("unattributed GitHub review entry")
+        previous = by_reviewer.get(login)
+        if previous is None or (
+            (row.get("submitted_at") or "", row.get("id") or 0)
+            > (previous.get("submitted_at") or "", previous.get("id") or 0)
+        ):
+            by_reviewer[login] = row
+    for login, review in by_reviewer.items():
+        if (login != author and login != APP_REVIEWER.casefold()
+                and review.get("state") == "APPROVED"
+                and review.get("commit_id") == head):
+            return login
+    raise RoutineReviewError(
+        "research-only candidate lacks current-head non-author APPROVED review"
+    )
+
+
+def report_delegated_review_not_applicable(
+    head: str, files: list[dict], reviewer: str,
+) -> None:
     """Report non-approval explicitly; a green job is NOT an App review."""
     message = (
         "NOT_APPLICABLE: mathematical research/test material is not "
@@ -271,8 +312,11 @@ def report_delegated_review_not_applicable(head: str, files: list[dict]) -> None
                 "This candidate contains bounded Erdős #41 research and tests. "
                 "**No automated approval or mathematical certification was "
                 "issued.** Its exact head is \`" + head + "\` and it changes "
-                + str(len(files)) + " files. Protected branch rules, existing "
-                "CI, and independent mathematical review are unchanged.\n"
+                + str(len(files)) + " files. A distinct authenticated "
+                "GitHub non-author APPROVED review exists at this exact head "
+                "(reviewer: " + reviewer + "). This is source-review provenance "
+                "only, **not mathematical certification**. Protected branch "
+                "rules and required CI are unchanged.\n"
             )
 
 
@@ -388,7 +432,10 @@ def main() -> int:
         # Mixed, malformed, or protected-path edits still fail closed or
         # require an independently protected specialist receipt.
         if bounded_research_not_applicable(pr, files, head):
-            report_delegated_review_not_applicable(head, files)
+            reviewer = exact_head_nonauthor_review(
+                pr, number, head, token=read_token, prefix=prefix,
+            )
+            report_delegated_review_not_applicable(head, files, reviewer)
             return 0
         evidence = exact_specialist_disposition(
             pr, files, head, read_token=read_token,
