@@ -125,6 +125,13 @@ def verify(strict: bool = False) -> dict:
         assert effective[440]["exposition_review_receipt"] == proof_revision["critical_review"]
         assert effective[440]["exposition_protected_patch"] == proof_revision["protected_patch"]
 
+    revised_436_file = ROOT / "governance/erdos_compendium/EDITORIAL_EXPOSITION_AMENDMENT_0436.json"
+    revised_436 = load(revised_436_file) if revised_436_file.exists() else None
+    if revised_436 is not None:
+        from erdos_compendium import load_batch_admissions
+        current = load_batch_admissions()
+        assert current[436]["source_sha256"] == revised_436["entry"]["corrected_sha256"]
+        assert current[436]["exposition_review_receipt"] == revised_436["critical_review"]
     returns = 0
     articles = 0
     exceptions = []
@@ -164,7 +171,13 @@ def verify(strict: bool = False) -> dict:
             assert len(text.split()) >= 350, f"Insufficient substantive article #{n}"
             digest = hashlib.sha256(text.strip().encode("utf-8")).hexdigest()
             raw_digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            if n == 440 and proof_revision is not None:
+            if n == 436 and revised_436 is not None:
+                entry = revised_436["entry"]
+                assert entry["previous_sha256"] == x["manuscript_sha256_pre_admission"]
+                assert entry["source_check"] == url
+                assert x["manuscript_raw_file_sha256_pre_admission"] != raw_digest
+                assert digest == entry["corrected_sha256"]
+            elif n == 440 and proof_revision is not None:
                 entry = proof_revision["entry"]
                 # Preserve the immutable historical hashes in the intake.
                 assert entry["previous_sha256"] == x["manuscript_sha256_pre_admission"]
