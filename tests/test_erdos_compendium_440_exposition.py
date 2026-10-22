@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT / "ci"))
 import erdos_compendium as ec
 
 PREVIOUS_SHA = "6fafe0c23867bf146b2ee77bcf6383fcd7b9c01e66aaed75ecfc3451c97fb9d8"
-REVISED_SHA = "77911c999a60eded855e0fb964752dcc718c5c65569ba797d2bde52c899ad05f"
+REVISED_SHA = "176ad78bcb5a9daf23c28b776839ee9acd2551d1629519b6a190fef094c8c2a9"
 
 
 class RecoveredErdos440Admission(unittest.TestCase):

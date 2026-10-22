@@ -109,6 +109,22 @@ def verify(strict: bool = False) -> dict:
         assert 399 not in render_amendments
         render_amendments[399] = row
 
+    # A subsequent source-bound exposition revision does not rewrite the
+    # historical EC-BULK-003 intake or its pre-admission manuscript hashes.
+    proof_revision_file = ROOT / (
+        "governance/erdos_compendium/EDITORIAL_EXPOSITION_AMENDMENT_0440.json"
+    )
+    proof_revision = load(proof_revision_file) if proof_revision_file.exists() else None
+    if proof_revision is not None:
+        from erdos_compendium import load_batch_admissions
+        entry = proof_revision["entry"]
+        effective = load_batch_admissions()
+        assert entry["problem_id"] == 440
+        assert entry["batch_id"] == "EC-BULK-003"
+        assert effective[440]["source_sha256"] == entry["corrected_sha256"]
+        assert effective[440]["exposition_review_receipt"] == proof_revision["critical_review"]
+        assert effective[440]["exposition_protected_patch"] == proof_revision["protected_patch"]
+
     returns = 0
     articles = 0
     exceptions = []
@@ -148,7 +164,14 @@ def verify(strict: bool = False) -> dict:
             assert len(text.split()) >= 350, f"Insufficient substantive article #{n}"
             digest = hashlib.sha256(text.strip().encode("utf-8")).hexdigest()
             raw_digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            if n in render_amendments:
+            if n == 440 and proof_revision is not None:
+                entry = proof_revision["entry"]
+                # Preserve the immutable historical hashes in the intake.
+                assert entry["previous_sha256"] == x["manuscript_sha256_pre_admission"]
+                assert entry["source_check"] == url
+                assert x["manuscript_raw_file_sha256_pre_admission"] != raw_digest
+                assert digest == entry["corrected_sha256"]
+            elif n in render_amendments:
                 correction = render_amendments[n]
                 assert correction["previous_sha256"] == x["manuscript_sha256_pre_admission"], n
                 if n == 399:
