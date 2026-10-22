@@ -406,6 +406,52 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
                            "four_display_browser_receipt": doc["browser_receipt"]}
         if seen != wanted:
             raise ValueError("Incomplete four-display typography correction")
+    # Source-bound explanatory recovery; preserve the historical admission.
+    # This role-scoped mathematical review does not confer theorem certification.
+    amendment = ROOT / "governance/erdos_compendium/EDITORIAL_EXPOSITION_AMENDMENT_0440.json"
+    if Path(path).resolve() == ACCEPTANCE.resolve() and amendment.exists():
+        doc = json.loads(amendment.read_text(encoding="utf-8"))
+        required = {
+            "record_type", "revision_id", "scope", "source_issue",
+            "critical_review", "protected_patch", "recovered_source_sha256", "entry"
+        }
+        root_url = "https://github.com/grandchallenge/MATH-PROGRAMME/"
+        if (not isinstance(doc, dict) or set(doc) != required
+                or doc["record_type"] != "ERDOS_COMPENDIUM_EDITORIAL_EXPOSITION_AMENDMENT/1"
+                or doc["revision_id"] != "EC-440-DYADIC-20261022"
+                or doc["scope"] != "ELEMENTARY_BOUNDED_EXPOSITION_NO_THEOREM_CERTIFICATION"
+                or doc["source_issue"] != root_url + "issues/1710"
+                or doc["critical_review"] != root_url + "issues/1710#issuecomment-6338608455"
+                or doc["protected_patch"] != root_url + "pull/2819"
+                or doc["recovered_source_sha256"]
+                    != "37b93ae66b4791cb15281c3f8b14e89cd22153ea81a59b9ce3caba21a7771159"):
+            raise ValueError("Invalid #440 exposition amendment authority or provenance")
+        entry = doc["entry"]
+        entry_fields = {
+            "problem_id", "batch_id", "source_check",
+            "previous_sha256", "corrected_sha256"
+        }
+        old = accepted.get(440)
+        if (not isinstance(entry, dict) or set(entry) != entry_fields
+                or old is None
+                or entry["problem_id"] != 440
+                or entry["batch_id"] != "EC-BULK-003"
+                or old["batch_id"] != entry["batch_id"]
+                or old["source_check"] != entry["source_check"]
+                or old["source_sha256"] != entry["previous_sha256"]
+                or not isinstance(entry["corrected_sha256"], str)
+                or not re.fullmatch(r"[0-9a-f]{64}", entry["corrected_sha256"])
+                or entry["previous_sha256"] == entry["corrected_sha256"]
+                or hashlib.sha256(manuscript(440).encode("utf-8")).hexdigest()
+                    != entry["corrected_sha256"]):
+            raise ValueError("Invalid or unreviewed #440 exposition correction")
+        accepted[440] = {
+            **old,
+            "source_sha256": entry["corrected_sha256"],
+            "exposition_amendment_id": doc["revision_id"],
+            "exposition_review_receipt": doc["critical_review"],
+            "exposition_protected_patch": doc["protected_patch"],
+        }
     return accepted
 
 
