@@ -126,7 +126,7 @@ $$
 \boxed{K_3(Q,J)=1<2=\left\lfloor|U|/|Q|\right\rfloor.}
 $$
 
-This is a rigorous **arrangement-independent** obstruction to a two-point future batch in J. Indeed take $Z=\{10000,10004\}$. All THREE pairwise unions X∪Y, X∪Z, Y∪Z are repetition-permitted B3, but
+The *fractional relaxation* falsely allows two points: assign $v_0=v_1=v_2=2/3$. This meets the true window residue capacities $(J_0,J_1,J_2)=(1,2,2)$ and all three inequalities $N_t=8/3\le3$, with $\sum_rv_r=2$. There is nevertheless **no integer** allocation of total two. The example is an explicit integrality gap between a continuous Fourier/residue linear relaxation and the correct finite arithmetic population constraint.\n\nThis is a rigorous **arrangement-independent** obstruction to a two-point future batch in J. Indeed take $Z=\{10000,10004\}$. All THREE pairwise unions X∪Y, X∪Z, Y∪Z are repetition-permitted B3, but
 
 $$
 1+1000+10004=2+1003+10000=11005.
