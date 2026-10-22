@@ -239,7 +239,7 @@ def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> b
         path = entry.get("filename")
         if (not isinstance(path, str) or path in seen or
                 path.startswith("/") or ".." in path.split("/") or
-                "\\x00" in path or protected_path(path) or
+                chr(0) in path or protected_path(path) or
                 entry.get("status") not in ("added", "modified") or
                 entry.get("previous_filename")):
             return False
