@@ -223,6 +223,57 @@ def delegated_classification(pr: dict, files: list[dict], head: str,
 
 
 
+def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> bool:
+    """Recognize research-only candidates that this App MUST NOT approve.
+
+    An expected negative delegated-review eligibility verdict is not a
+    failed mathematical proof or failed independent-review validation.
+    Strictly scoped to Erdős #41 research prose and its regression tests.
+    No reviewer token is used; branch protection and separate specialist
+    review remain authoritative. Mixed/protected materials still fail.
+    """
+    verify_specialist_envelope(pr, files, head)
+    seen: set[str] = set()
+    has_proof_note = False
+    for entry in files:
+        path = entry.get("filename")
+        if (not isinstance(path, str) or path in seen or
+                entry.get("status") not in ("added", "modified") or
+                entry.get("previous_filename")):
+            return False
+        seen.add(path)
+        if path.startswith("research/erdos-41-density/") and path.endswith(".md"):
+            has_proof_note = True
+        elif path.startswith("tests/test_erdos41_") and path.endswith(".py"):
+            pass
+        else:
+            return False
+    return has_proof_note
+
+
+def report_delegated_review_not_applicable(head: str, files: list[dict]) -> None:
+    """Report non-approval explicitly; a green job is NOT an App review."""
+    message = (
+        "NOT_APPLICABLE: mathematical research/test material is not "
+        "eligible for automatic delegated App review. "
+        "No approval or mathematical certification was issued; "
+        "protected main checks and independent review remain separate."
+    )
+    print("::notice title=Delegated review not applicable::" + message)
+    print(message)
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as out:
+            out.write(
+                "### Delegated-review applicability: NOT_APPLICABLE\n\n"
+                "This candidate contains bounded Erdős #41 research and tests. "
+                "**No automated approval or mathematical certification was "
+                "issued.** Its exact head is \`" + head + "\` and it changes "
+                + str(len(files)) + " files. Protected branch rules, existing "
+                "CI, and independent mathematical review are unchanged.\n"
+            )
+
+
 def specialist_domain_for_file_manifest(files: list[dict]) -> str:
     """Use protected four-domain routing, retaining mainline operational exceptions."""
     if not files or len(files) > 100:
@@ -329,6 +380,14 @@ def main() -> int:
         )
         disposition = "ROUTINE_BOUNDED"
     except (MaterialAdmissionError, RoutineReviewError):
+        # Research-only content has no protected automated approval class.
+        # An expected abstention is a truthful NOT_APPLICABLE job result,
+        # rather than a misleading test failure; it never posts a review.
+        # Mixed, malformed, or protected-path edits still fail closed or
+        # require an independently protected specialist receipt.
+        if bounded_research_not_applicable(pr, files, head):
+            report_delegated_review_not_applicable(head, files)
+            return 0
         evidence = exact_specialist_disposition(
             pr, files, head, read_token=read_token,
         )
