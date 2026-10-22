@@ -15,7 +15,7 @@ E(G)=\{12,23,13,24,34\}.
 \tag{42.1}
 $$
 
-It has cyclomatic number $5-(4-1)=2$. Critically, there are **three** proper cyclic subgraphs: triangles $A=(12,23,13)$ and $B=(23,24,34)$ and the square $C=(12,24,34,13)$. Every pair of these cycles overlaps in edges and/or vertices; they must **not** be combined in a product of simultaneous counterterms.
+It has cyclomatic number $5-(4-1)=2$. Critically, there are **three proper connected one-particle-irreducible (1PI) cyclic edge subgraphs** (equivalently, the three simple cycles): triangles $A=(12,23,13)$ and $B=(23,24,34)$ and the square $C=(12,24,34,13)$. Every pair of these three cycles shares an edge, so they must **not** be combined in a product of simultaneous counterterms. Additional proper edge subsets obtained by attaching a pendant tree to a cycle are cyclic but contain a bridge and are **not** additional 1PI subgraphs in this bounded subtraction inventory.
 
 Introduce an oriented tree coordinate system of Jacobian one:
 
@@ -297,7 +297,7 @@ By the Leibniz rule, the left side contains genuine sums of differentiated edge 
 
 ## 6. Locality and exact remaining boundary
 
-- **Achieved:** Complete proper-cycle inventory (three, not two) for the first overlapping theta graph; explicit individual proper-subgraph counterterms, an overall subtraction, a finite local limit, exact coefficients and parity control; a nested attached-tree check; a whole-graph extension for arbitrary finite connected delta-jet graphs; differentiation and translation covariance of distribution-valued renormalized limits.
+- **Achieved:** Complete proper 1PI simple-cycle inventory (three, not two) for the first overlapping theta graph; explicit individual proper-subgraph counterterms, an overall subtraction, a finite local limit, exact coefficients and parity control; a nested attached-tree check; a whole-graph extension for arbitrary finite connected delta-jet graphs; differentiation and translation covariance of distribution-valued renormalized limits.
 - **Not established:** A universal recursive forest formula compatible with arbitrary nested and overlapping subgraph insertion; independence of graph presentation/counterterm scheme under arbitrary edge contractions; a complete second-order BV bracket/master equation for a domain containing all renormalized graphs; normal-topology multilinear plots and completed B.6 descent; liquid higher-Ext comparison.
 - **Hostile control:** Treating the two overlapping triangle counterterms as commuting multiplicative operations would require $\delta(v)^2$, which is undefined. The correct graphwise sum avoids this. This specific impossibility is not a proof that a properly constructed forest formula cannot exist.
 - **Provenance:** The mathematical source is a new GCL research branch, not protected-admitted or externally certified. The earlier SAFETY_HOLD on attempting to create a PR for 041 remains separate and cannot be bypassed by this material.
