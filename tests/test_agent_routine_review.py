@@ -395,3 +395,120 @@ class ProtectedAgentRoleReceiptTests(unittest.TestCase):
     def test_claim_certification_rejected(self):
         self.dossier["claimed_effects"]["mathematical_certification"] = True
         with self.assertRaises(AgentRoleError): self.evaluate()
+
+
+class ResearchOnlyDelegatedReviewAbstentionTests(unittest.TestCase):
+    """No App approval is invented when a mathematical PR is not routine."""
+
+    def setUp(self):
+        self.head = "e" * 40
+        self.pr = {
+            "state": "open", "draft": False, "changed_files": 4,
+            "head": {"sha": self.head,
+                     "repo": {"full_name": "grandchallenge/MATH-PROGRAMME"}},
+            "base": {"ref": "main", "sha": "f" * 40},
+            "user": {"login": "fyremael"},
+        }
+        self.files = [
+            {"filename": "research/erdos-41-density/ONE.md",
+             "status": "added"},
+            {"filename": "research/erdos-41-density/TWO.md",
+             "status": "added"},
+            {"filename": "tests/test_erdos41_one.py",
+             "status": "added"},
+            {"filename": "tests/test_erdos41_two.py",
+             "status": "added"},
+        ]
+
+    def test_exact_research_with_tests_is_non_delegable_not_approval(self):
+        from agent_routine_review import bounded_research_not_applicable
+        self.assertTrue(bounded_research_not_applicable(
+            self.pr, self.files, self.head))
+
+    def test_nonresearch_and_mixed_are_not_marked_not_applicable(self):
+        from agent_routine_review import bounded_research_not_applicable
+        for bad in (
+            {"filename": "ci/agent_routine_review.py", "status": "modified"},
+            {"filename": "docs/index.md", "status": "modified"},
+            {"filename": "fixtures/formal/demo.lean", "status": "added"},
+            {"filename": ".github/workflows/agent-routine-review.yml",
+             "status": "modified"},
+            {"filename": "tests/test_agent_routine_review.py",
+             "status": "modified"},
+            {"filename": "research/erdos-41-density/PATH.md",
+             "status": "removed"},
+            {"filename": "research/erdos-41-density/PATH.md",
+             "status": "renamed", "previous_filename": "old.md"},
+        ):
+            with self.subTest(filename=bad["filename"]):
+                self.pr["changed_files"] = 5
+                self.assertFalse(bounded_research_not_applicable(
+                    self.pr, self.files + [bad], self.head))
+        self.pr["changed_files"] = 4
+
+    def test_tests_alone_are_not_a_proof_packet(self):
+        from agent_routine_review import bounded_research_not_applicable
+        self.pr["changed_files"] = 1
+        self.assertFalse(bounded_research_not_applicable(
+            self.pr, [self.files[2]], self.head))
+
+    def test_malformed_manifest_and_stale_head_still_fail_closed(self):
+        from agent_routine_review import (
+            bounded_research_not_applicable, RoutineReviewError,
+        )
+        self.pr["changed_files"] = 7
+        with self.assertRaisesRegex(RoutineReviewError, "inventory"):
+            bounded_research_not_applicable(self.pr, self.files, self.head)
+        self.pr["changed_files"] = 4
+        with self.assertRaisesRegex(RoutineReviewError, "head mismatch"):
+            bounded_research_not_applicable(self.pr, self.files, "9" * 40)
+
+    def test_explicit_not_applicable_summary_never_claims_review(self):
+        import os
+        import tempfile
+        from unittest.mock import patch
+        from agent_routine_review import report_delegated_review_not_applicable
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "summary.md")
+            with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": path}):
+                report_delegated_review_not_applicable(self.head, self.files)
+            with open(path, encoding="utf-8") as src:
+                message = src.read()
+            self.assertIn("NOT_APPLICABLE", message)
+            self.assertIn("No automated approval", message)
+            self.assertIn(self.head, message)
+
+    def test_research_only_runtime_stops_before_domain_call_or_review_post(self):
+        import json
+        import os
+        import tempfile
+        from unittest.mock import patch
+        import agent_routine_review as mod
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "event.json")
+            summary = os.path.join(d, "summary.md")
+            with open(path, "w", encoding="utf-8") as out:
+                json.dump({"inputs": {"pr_number": 2808}}, out)
+            def fake_api(method, path, *, token, payload=None):
+                self.assertEqual(method, "GET", "No GitHub POST may occur")
+                if path.endswith("/pulls/2808"):
+                    return self.pr
+                if path.endswith("/pulls/2808/files?per_page=100"):
+                    return self.files
+                raise AssertionError("unexpected GitHub request: " + path)
+            with patch.dict(os.environ, {
+                "GITHUB_EVENT_PATH": path,
+                "GITHUB_EVENT_NAME": "workflow_dispatch",
+                "GITHUB_TOKEN": "test-read-token",
+                "GITHUB_STEP_SUMMARY": summary,
+            }):
+                with patch.object(mod, "api", side_effect=fake_api) as api_mock:
+                    with patch.object(mod, "delegated_classification",
+                                      side_effect=mod.RoutineReviewError(
+                                          "unknown or multifile material closure")):
+                        with patch.object(mod, "exact_specialist_disposition") as specialist:
+                            self.assertEqual(mod.main(), 0)
+                            specialist.assert_not_called()
+                    self.assertEqual(api_mock.call_count, 2)
+            with open(summary, encoding="utf-8") as src:
+                self.assertIn("NOT_APPLICABLE", src.read())
