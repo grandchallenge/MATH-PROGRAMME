@@ -22,7 +22,7 @@ from agent_material_profiles import (
 from specialist_receipt_adapter import (
     ReceiptError, protected_specialist_receipt,
 )
-from specialist_domains import domain_for_paths
+from specialist_domains import domain_for_paths, protected_path
 
 REPOSITORY = "grandchallenge/MATH-PROGRAMME"
 APP_REVIEWER = "gcl-release-trust[bot]"
@@ -238,6 +238,8 @@ def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> b
     for entry in files:
         path = entry.get("filename")
         if (not isinstance(path, str) or path in seen or
+                path.startswith("/") or ".." in path.split("/") or
+                "\\x00" in path or protected_path(path) or
                 entry.get("status") not in ("added", "modified") or
                 entry.get("previous_filename")):
             return False
