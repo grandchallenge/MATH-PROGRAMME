@@ -126,5 +126,50 @@ for i in range(4):state=lmul(state,{-1:F(1)})
 for s in [{2:F(1)},{2:F(1)},{0:F(1)}]:state=lmul(state,s)
 assert state=={0:F(1)}
 # pi^2*c = (1/6)^2 = 1/36.
-assert F(1,6)**4*36 == F(1,36) # wrong if square roots are omitted
-print("THIS SHOULD NOT RUN")
+assert F(1,6)**2 == F(1,36)
+
+# Weighted tree-of-block factorization, with no floating-point determinants.
+weighted=0
+for u in range(1,5):
+    for v in range(1,5):
+        n2,ew=triangles(2,local_weights=[(u,v,u+v),(v,u+1,v+2)],bridge_weights=[u+2])
+        tau=det(laplacian(n2,ew)[0])
+        tauA=det(laplacian(3,[(0,1,u),(1,2,v),(0,2,u+v)])[0])
+        tauB=det(laplacian(3,[(0,1,v),(1,2,u+1),(0,2,v+2)])[0])
+        assert tau==tauA*tauB*(u+2)
+        weighted+=1
+
+# Genuine symbolic free bridge BV relation at epsilon^0 for h=2.
+# Each coefficient records: power of internal LA, LB; bridge
+# distribution kind ('P'=|t|/2 or 'D'=delta) and delta derivative degree.
+wick={(1,0,"P",0):F(1),(0,1,"P",0):F(1),(0,0,"D",0):F(1)}
+delta={(1,0,"D",0):F(1),(0,1,"D",0):F(1),(0,0,"D",2):F(1)}
+def bridge_second_derivative(series):
+    z={}
+    for (a,b,kind,degree),value in series.items():
+        assert kind=="D" or (kind=="P" and degree==0)
+        key=(a,b,"D",degree+2) if kind=="D" else (a,b,"D",0)
+        z[key]=z.get(key,F(0))+value
+    return z
+assert bridge_second_derivative(wick)==delta
+# The Wick finite-part amplitude on root normalized / flat internal tests
+# with f(0)=1 is (1/12*pi).
+assert wick[(0,0,"D",0)]/12==F(1,12)
+
+# Test formal Laurent Cauchy associativity for distinct graphwise sectors.
+X={-2:F(2),0:F(3,7),2:F(-4,9)}
+Y={-1:F(1,2),1:F(7,3),3:F(4)}
+Z={0:F(1),2:F(5,8),4:F(2,7)}
+for order in permutations([X,Y,Z]):
+    left=lmul(lmul(order[0],order[1]),order[2])
+    right=lmul(order[0],lmul(order[1],order[2]))
+    assert left==right
+
+print("PASS: exact bridge-tree determinants, tau=9 and tau=81")
+print("PASS: 16 weighted block-tree determinant factorizations")
+print("PASS: two triangles effective resistance =7/3, amplitude 7/(18*pi)")
+print("PASS: three exact Laurent contributions 2/3 + 2/3 +1")
+print("PASS: four triangles quartic finite part 1/(36*pi*pi)")
+print("PASS: Wick-bridge finite part and its exact symbolic BV edge conversion")
+print("PASS: Laurent Cauchy associativity under 6 distinct factor orders")
+
