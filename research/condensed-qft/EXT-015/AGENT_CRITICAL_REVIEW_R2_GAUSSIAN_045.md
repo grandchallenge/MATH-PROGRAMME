@@ -4,7 +4,7 @@
 
 ## 1. Independent Gaussian normalization and locality audit
 
-For any connected positive-weight graph, a reduced incidence matrix has full column rank. Thus $Q=B^{\mathsf T}WB$ is positive definite. The product of $m$ unit-mass Gaussian edge approximants is proportional to the normalized $(n-1)$-dimensional Gaussian with precision $Q/\epsilon^2$. The proportionality factor is
+For any connected positive-weight graph, a reduced incidence matrix has full column rank. Thus $Q=B^{\mathsf T}WB$ is positive definite. The product of $m$ unit-mass Gaussian edge approximants is proportional to the normalized Gaussian of dimension $n-1$ Gaussian with precision $Q/\epsilon^2$. The proportionality factor is
 
 $$
 (2\pi)^{-(m-n+1)/2}\,
@@ -58,7 +58,7 @@ has determinant $8$ and inverse with diagonal $(1,5/8,5/8)$; elimination of coor
 
 ## 4. Mixed Wick/BV kernel and its nonzero example
 
-Let the delta edges include a connected spanning subgraph. Their Gaussian product forces all relative positions to scale as $\epsilon$. Each additional $t$th derivative of $P_{\epsilon,w}$ scales as $\epsilon^{1-t}$, while each $r$th Gaussian delta derivative scales as $\epsilon^{-1-r}$. Relative integration has $\epsilon^{n-1}$ volume factor. Hence the resulting pole degree is exactly
+Let the delta edges include a connected spanning subgraph. Their Gaussian product forces all relative positions to scale as $\epsilon$. Each additional Wick derivative of order $t$ of $P_{\epsilon,w}$ scales as $\epsilon^{1-t}$, while each Gaussian delta derivative of order $r$ scales as $\epsilon^{-1-r}$. Relative integration has $\epsilon^{n-1}$ volume factor. Hence the resulting pole degree is exactly
 
 $$
 \Omega=h_D+R_D+R_P-|E_P|.
