@@ -19,6 +19,21 @@ class WatchTests(unittest.TestCase):
                 r=evaluate(POLICY,[receipt(kind=kind)],'2026-10-19T01:00:00Z')
                 self.assertEqual(r['state'],'HEALTHY_HEARTBEAT')
                 self.assertEqual(r['valid_count_in_window'],1)
+    def test_retrospective_recovery_cannot_certify_worker_origin(self):
+        manual=receipt('2026-10-19T03:50:00Z',comment_id=300,kind='BLOCKED')
+        manual['body']+='RECOVERY_MODE: STEWARD_AUTHORIZED_RETROSPECTIVE_HEARTBEAT\n'
+        result=evaluate(POLICY,[manual],'2026-10-19T04:00:00Z')
+        self.assertEqual(result['state'],'ALERT_MISSED_HEARTBEAT')
+        self.assertEqual(result['valid_count_in_window'],0)
+        self.assertEqual(result['retrospective_recovery_count'],1)
+        self.assertEqual(result['rejected_marker_count'],0)
+        actual=receipt('2026-10-19T03:55:00Z',comment_id=301,kind='PARTIAL')
+        actual['body']+='REPORT_STAGE: EARLY_RUN_LIVENESS_ONLY\n'
+        accepted=evaluate(POLICY,[manual,actual],'2026-10-19T04:00:00Z')
+        self.assertEqual(accepted['state'],'HEALTHY_HEARTBEAT')
+        self.assertEqual(accepted['valid_count_in_window'],1)
+        self.assertEqual(accepted['retrospective_recovery_count'],1)
+        self.assertEqual(accepted['last_valid_comment'],actual['url'])
     def test_absence_triggers_alert_only_after_grace(self):
         self.assertEqual(evaluate(POLICY,[],'2026-10-19T02:44:00Z')['state'],'AWAITING_FIRST_HEARTBEAT')
         self.assertEqual(evaluate(POLICY,[],'2026-10-19T02:46:00Z')['state'],'ALERT_MISSED_HEARTBEAT')
