@@ -154,13 +154,13 @@ This creates a genuine hierarchy of rigorous collision lower bounds. It is NOT a
 
 **Theorem E (exactness threshold for one selected mixed-colour family).** Put
 
-$
+$$
 D=\max\mathcal U-\min\mathcal U,\qquad H>D.
-$
+$$
 
 For this finite candidate-window problem, every nonzero residue class modulo H contains **at most one integer of** $\mathcal U$, and each admissible window position is also uniquely specified by its residue modulo H. Consequently,
 
-$
+$$
 \boxed{
 \Gamma_H
 =
@@ -170,7 +170,7 @@ $
 \min_{\substack{Z_i\subseteq J_i\\|Z_i|=k_i}}
 \mathfrak d_{XYZ}.
 }\tag{FINITE-ARITHMETIC-COMPLETENESS}
-$
+$$
 
 Here $r_{Q,Z}(s)=|\{(q,z)\in Q\times\bigcup_iZ_i:q+z=s\}|$ and $\mathfrak d_{XYZ}$ denotes the **selected mixed-colour contribution only**. In particular, $\Gamma_H=0$ if and only if there is an actual selection meeting every required window population whose selected mixed three-colour sums $Q+Z$ are all different.
 
