@@ -49,7 +49,10 @@ def evaluate(policy, comments, now):
                    and abs((posted-reported).total_seconds())<=1200
                    and posted<=now and posted>=iso(policy['heartbeat_activation_utc']))
         except (KeyError, ValueError, TypeError):valid=False
-        if valid and f.get('RECOVERY_MODE'):\n            recovery_only+=1\n            continue\n        if valid:accepted.append((posted,c))
+        if valid and f.get('RECOVERY_MODE'):
+            recovery_only+=1
+            continue
+        if valid:accepted.append((posted,c))
         else:ignored+=1
     accepted.sort(key=lambda row:row[0])
     last_time = accepted[-1][0] if accepted else iso(policy['heartbeat_activation_utc'])
