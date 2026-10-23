@@ -151,6 +151,36 @@ def cumulative_capacity(Q,windows,h,minimums):
     return best,witness
 
 
+def old_pair_sum_weights(P):
+    """Q(P), with the exact 1/2 ordered-old-pair multiplicities."""
+    out={}
+    for p,q in combinations_with_replacement(sorted(P),2):
+        assert p+q not in out, "P must be B2, hence B3"
+        out[p+q]=1 if p==q else 2
+    return out
+
+
+def full_prefix_mixed_defect(P,Z):
+    """Exact positive sixth-defect contribution of old-old-new triples."""
+    qweights=old_pair_sum_weights(P)
+    weighted=Counter()
+    for q,w in qweights.items():
+        for z in Z:
+            weighted[q+z]+=w
+    n=len(P)
+    return 9*(sum(v*v for v in weighted.values())
+              -(2*n*n-n)*len(Z))
+
+
+def full_prefix_integer_bound(P,Z,windows,h):
+    """Sound unweighted residue lower bound with repeated old pairs."""
+    Q=set(old_pair_sum_weights(P))
+    U=support(Q,windows)
+    cap=hist(U,h)
+    load=loads(Q,Z,h)
+    return 9*sum(phi(n,c) for n,c in zip(load,cap))
+
+
 def brute_integer_collision_min(N,C):
     best=None
     for cells in product(range(N+1),repeat=C):
@@ -380,6 +410,66 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
             self.assertEqual(
                 cumulative_capacity(Q,windows,h,[1,2])[0],0)
 
+
+    def test_complete_old_pair_sum_weighted_ledger_matches_triple_enumeration(self):
+        P=[1,2,5,14]
+        self.assertTrue(b3(P))
+        Q=old_pair_sum_weights(P)
+        self.assertEqual(len(Q),10)
+        self.assertEqual(sum(Q.values()),len(P)**2)
+        self.assertEqual(sum(w*w for w in Q.values()),2*len(P)**2-len(P))
+        for Z in ([1000],[1000,1002],[1001,1003],[1000,1001,1003]):
+            with self.subTest(Z=Z):
+                weighted=Counter()
+                words=list(combinations_with_replacement(P,2))
+                for p,q in words:
+                    for z in Z:
+                        weighted[p+q+z]+=3*(1 if p==q else 2)
+                exact=(sum(v*v for v in weighted.values())
+                       -sum((3*(1 if p==q else 2))**2
+                            for p,q in words for z in Z))
+                self.assertEqual(full_prefix_mixed_defect(P,Z),exact)
+                self.assertLessEqual(exact,d6(P+Z))
+                self.assertEqual(exact==0,
+                                 len({q+z for q in Q for z in Z})
+                                 ==len(Q)*len(Z))
+
+    def test_full_prefix_cumulative_modular_cut_improves_selected_cross_pair(self):
+        P=[1,2,5,14]
+        windows=[(1000,1001),(1002,1003)]
+        Q=set(old_pair_sum_weights(P))
+        U=support(Q,windows)
+        self.assertTrue(b3(P))
+        self.assertEqual(len(Q),10)
+        self.assertEqual(len(U),24)
+        self.assertGreaterEqual(len(U),2*len(Q))
+        self.assertEqual(hist(U,6),(3,4,5,4,4,4))
+        # Cumulative total two; neither window individually required.
+        self.assertEqual(cumulative_capacity(Q,windows,1,[0,2])[0],0)
+        self.assertGreater(cumulative_capacity(Q,windows,6,[0,2])[0],0)
+        for z0 in (1000,1001):
+            for z1 in (1002,1003):
+                with self.subTest(z0=z0,z1=z1):
+                    Z=[z0,z1]
+                    self.assertTrue(all(b3(P+[z]) for z in Z))
+                    self.assertGreater(full_prefix_mixed_defect(P,Z),0)
+                    self.assertGreater(full_prefix_integer_bound(
+                        P,Z,windows,6),0)
+                    self.assertLessEqual(full_prefix_integer_bound(
+                        P,Z,windows,6),full_prefix_mixed_defect(P,Z))
+                    self.assertFalse(b3(P+Z))
+        X=[1,2];Y=[5,14];Z=[1000,1002]
+        self.assertEqual(mixed_energy(qxy(X,Y),Z),0)
+        self.assertGreater(full_prefix_mixed_defect(P,Z),0)
+
+    def test_full_prefix_residue_charge_safe_on_genuine_critical_code(self):
+        code=moment_code(17)
+        self.assertTrue(b3(code))
+        P=code[:8];Z=code[8:10]
+        windows=[(Z[0],Z[0]),(Z[1],Z[1])]
+        self.assertEqual(full_prefix_mixed_defect(P,Z),0)
+        for h in (1,2,3,6,9,17,50):
+            self.assertEqual(full_prefix_integer_bound(P,Z,windows,h),0)
     def test_cauchy_fractional_pressure_is_strictly_weaker_on_hostile_case(self):
         Z=[10000,10004]
         C=hist(support(self.Q,self.windows),3)
