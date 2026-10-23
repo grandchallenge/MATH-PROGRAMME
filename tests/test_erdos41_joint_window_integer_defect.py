@@ -252,6 +252,46 @@ def weighted_cumulative_capacity(P,windows,h,minimums):
     return best
 
 
+def positive_differences(values):
+    seq=sorted(values)
+    return {b-a for a,b in combinations(seq,2)}
+
+
+def weighted_pair_distance_correlation(P):
+    Q=old_pair_sum_weights(P)
+    weights=Counter()
+    for q,w in Q.items():
+        for qq,ww in Q.items():
+            if q>qq:
+                weights[q-qq]+=w*ww
+    return weights
+
+
+def PPZ_graph_edges(P,J):
+    forbidden=set(weighted_pair_distance_correlation(P))
+    return {(a,b) for a,b in combinations(sorted(J),2)
+            if b-a in forbidden}
+
+
+def exact_PPZ_graph_energy(P,Z):
+    H=weighted_pair_distance_correlation(P)
+    gaps=Counter(b-a for a,b in combinations(sorted(Z),2))
+    return 18*sum(H[d]*multiplicity for d,multiplicity in gaps.items())
+
+
+def independent(P,Z):
+    return not any((b-a) in weighted_pair_distance_correlation(P)
+                   for a,b in combinations(sorted(Z),2))
+
+
+def two_sided_far_criterion(P,T):
+    Dp=positive_differences(P)
+    Dt=positive_differences(T)
+    Dqp=set(weighted_pair_distance_correlation(P))
+    Dqt=set(weighted_pair_distance_correlation(T))
+    return Dqp.isdisjoint(Dt) and Dp.isdisjoint(Dqt)
+
+
 def brute_integer_collision_min(N,C):
     best=None
     for cells in product(range(N+1),repeat=C):
@@ -621,6 +661,76 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
         for h in (1,2,3,5,6,11,31,101):
             self.assertEqual(full_prefix_weighted_modular_bound(
                 P,Z,windows,h),0)
+
+    def test_weighted_graph_identity_for_every_future_subset(self):
+        P=[1,2,5,14]
+        J=range(1000,1008)
+        H=weighted_pair_distance_correlation(P)
+        self.assertEqual(max(H),2*(max(P)-min(P)))
+        for k in range(0,5):
+            for Z in combinations(J,k):
+                with self.subTest(Z=Z):
+                    self.assertEqual(
+                        exact_PPZ_graph_energy(P,Z),
+                        full_prefix_mixed_defect(P,Z))
+                    self.assertEqual(
+                        independent(P,Z),
+                        full_prefix_mixed_defect(P,Z)==0)
+        # The graph is not a proof of full B3 compatibility.
+        self.assertEqual(len(PPZ_graph_edges(P,range(1000,1004))),6)
+
+    def test_two_sided_farfield_B3_equivalence_not_just_graph(self):
+        P=[1,2,5,14]
+        templates=[
+            [1,20,40],
+            [1,2],
+            [1,3],
+            [1,6],
+            [1,60],
+            [1,20,40,101],
+        ]
+        for T in templates:
+            if not b3(T):
+                continue
+            L=3*max(max(P),max(T))+10
+            with self.subTest(T=T):
+                self.assertEqual(
+                    b3(P+[L+t for t in T]),
+                    two_sided_far_criterion(P,T))
+        T=[1,20,40]
+        Z=[201,220,240]
+        self.assertTrue(b3(P) and b3(T))
+        self.assertTrue(independent(P,Z))
+        self.assertEqual(full_prefix_mixed_defect(P,Z),0)
+        self.assertEqual(d6(P+Z),36)
+        self.assertFalse(two_sided_far_criterion(P,T))
+        self.assertEqual(1+1+40,2+20+20)
+
+    def test_scaled_genuine_B3_templates_escape_any_fixed_prefix(self):
+        P=[1,2,5,14]
+        M=2*(max(P)-min(P))+1
+        self.assertEqual(M,27)
+        template=[1,20,40]
+        self.assertTrue(b3(P) and b3(template))
+        T=[M*t for t in template]
+        self.assertTrue(two_sided_far_criterion(P,T))
+        for L in (3*max(P+T)+1,10_000):
+            with self.subTest(L=L):
+                Z=[L+t for t in T]
+                self.assertTrue(independent(P,Z))
+                self.assertTrue(b3(P+Z))
+
+    def test_residue_exactness_is_not_full_extension_certification(self):
+        P=[1,2,5,14]
+        Z=[201,220,240]
+        Q=set(old_pair_sum_weights(P))
+        windows=[(z,z) for z in Z]
+        U=support(Q,windows)
+        H=max(U)-min(U)+1
+        self.assertEqual(
+            full_prefix_weighted_modular_bound(P,Z,windows,H),0)
+        self.assertEqual(full_prefix_mixed_defect(P,Z),0)
+        self.assertGreater(d6(P+Z),0)
     def test_cauchy_fractional_pressure_is_strictly_weaker_on_hostile_case(self):
         Z=[10000,10004]
         C=hist(support(self.Q,self.windows),3)
