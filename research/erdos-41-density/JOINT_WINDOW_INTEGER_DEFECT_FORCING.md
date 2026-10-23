@@ -339,6 +339,77 @@ Optimizing this weighted expression over the **integer** future-window histogram
 
 **Corrected numeric calibration.** For $P=\{1,2,5,14\}$ and two future elements anywhere in $J_1=\{1000,1001\}, J_2=\{1002,1003\}$, the minimum exact weighted PPZ defect is $54$. The earlier unweighted factor-nine fine-modulus relaxation yields only $36$; the new weighted fine-modulus functional gives exactly $54$. This calibrates the difference between a rigorous positive certificate and full **selected-type** completeness, without suggesting that either forces universal critical-density loss.
 
+## 4E. The complete PPZ obstruction is a forbidden-distance graph; PZZ is a separate four-variable constraint
+
+The full-prefix weighted modular hierarchy becomes exact at a sufficiently fine modulus, but that exactness is confined to a **single collision type**. The resulting combinatorial state has a direct and useful representation.
+
+Let P be a finite B3 set and define the *positive old pair-sum difference support*
+
+$
+\Delta_2(P)=
+\{q-q':q,q'\in Q(P),\ q>q'\}.
+$
+
+For any finite candidate future set of integer positions J disjoint from P, define a simple graph $G_{P,J}$ with vertex set J and an edge between distinct u,v exactly when $|u-v|\in\Delta_2(P)$.
+
+**Theorem J (exact PPZ graph and energy).** Any actual future selection $Z\subseteq J$ has
+
+$
+\boxed{
+\mathfrak d_{PPZ}
+=
+18\sum_{d>0}H_P(d)\,G_Z(d),
+\qquad
+H_P(d)=\sum_{q-q'=d}\omega(q)\omega(q'),
+\qquad
+G_Z(d)=|\{(z,z')\in Z^2:z-z'=d\}|.
+}\tag{PPZ-WEIGHTED-EXCLUSION-GRAPH}
+$
+
+In particular,
+
+$
+\boxed{
+\mathfrak d_{PPZ}=0
+\iff Z\text{ is an independent set of }G_{P,J}.
+}\tag{PPZ-GRAPH-EXACTNESS}
+$
+
+For any finite family of future windows partitioning J and any genuine **cumulative checkpoint** population requirements, the existence of a PPZ-collision-free future selection is therefore **equivalent** to the existence of an independent set in this graph satisfying those checkpoint cardinalities. A sufficiently fine weighted residue modulus gives exactly the same yes/no answer; the modular relaxation cannot reveal a stronger *PPZ-only* obstruction than the graph itself.
+
+**Proof.** Distinct representations $q+z=q'+z'$ necessarily have $q\ne q'$ and $z\ne z'$. Every unordered colliding pair is uniquely oriented by its positive difference $d=q-q'=z'-z>0$. Its squared-energy off-diagonal contribution is $2(3\omega(q))(3\omega(q'))=18\omega(q)\omega(q')$. Summing independently over orientations gives the identity. Since all weights are positive, zero defect is equivalent to the absence of a pair of selected future points at a distance in $\Delta_2(P)$. The cumulative demand equivalence follows because those demands concern only the selected vertices, not their ordering within a residue class. Fine-modulus exactness was established in Theorem I. QED.
+
+**Corollary (fixed-prefix PPZ escape and exact scaling).** If P has diameter $R$, then $\max\Delta_2(P)=2R$. Set $M=2R+1$. Any subset of a single congruence class modulo M is independent in $G_{P,J}$. Therefore every consecutive interval J of W integer positions contains **at least** $\lceil W/M\rceil$ PPZ-compatible candidate points. Those points need **not** themselves be B3; this lower bound cannot certify a full extension.
+
+A stronger genuine finite-block escape is possible. For **any** finite B3 template T, set $\widetilde T=\{Mt:t\in T\}$; both T and $\widetilde T$ are B3. For sufficiently large L such that the four possible counts of shifted-new entries in a triple occupy separated integer sum ranges, $P\cup(L+\widetilde T)$ is B3: both reciprocal difference intersections vanish because every positive difference of $\widetilde T$ and of its unordered pair sums is a positive multiple of M, exceeding all positive differences of P and Q(P). This recovers the fixed-prefix remote-escape theorem with the sharper universal sufficient scale factor $2R+1$, while retaining the crucial caveat that the density coefficient of the remote template can deteriorate with the growing prefix.
+
+**Theorem K (exact two-sided far-field criterion).** Let P and T be two finite B3 sets in positive integer intervals, and take L greater than three times the maximum element of P or T. Then
+
+$
+\boxed{
+P\cup(L+T)\text{ is B3}
+\iff
+\begin{cases}
+\Delta_2(P)\cap\Delta_1(T)=\varnothing,\\
+\Delta_1(P)\cap\Delta_2(T)=\varnothing,
+\end{cases}
+}\tag{TWO-SIDED-FAR-FIELD}
+$
+
+where $\Delta_1(S)$ denotes positive element differences. The first condition is precisely PPZ graph-independence; the second controls collisions between **one old and two new** entries (PZZ). If the blocks are insufficiently separated, mixed collisions between *different triple colour counts* can also occur and the equivalence need not hold.
+
+**Proof.** For sufficiently large L, the four classes of triples containing 0, 1, 2 or 3 elements of $L+T$ have disjoint sum ranges. The all-old and all-new classes are collision-free because P,T are B3. The class with two old entries and one new entry is collision-free exactly when $\Delta_2(P)\cap\Delta_1(T)=\varnothing$ by Theorem J. Interchanging old and new gives the second condition. QED.
+
+**Hostile separation of the two constraints.** Take $P=\{1,2,5,14\}$ and $T=\{1,20,40\}$. Both are genuine B3. The selected future shape T satisfies $\Delta_2(P)\cap\Delta_1(T)=\varnothing$, so **PPZ is perfectly compatible** at every translation. Nevertheless
+
+$
+1+1+40=2+20+20=42,
+$
+
+so the shifted union is *never* B3 at far separation: the two triples have one old and two new entries, and $\Delta_1(P)\cap\Delta_2(T)$ contains 1. The true sixth defect for $P\cup(200+T)$ is 36 while its PPZ contribution is **zero**. Exhaustive refinement of PPZ residue constraints cannot detect this independent PZZ obstruction.
+
+**Implication for Erdős #41.** Further refinement of *only* the current old-old-new residue inequalities is not a new mathematical route beyond the exact independence graph. A universal contradiction must couple its independent-set occupancy across moving scales to the PZZ four-variable constraints, the future block's own B3 property, and where necessary cross-colour-count collisions. In particular, a PPZ-only universal forcing theorem cannot be inferred from the availability of a finite exact modular optimizer. This is a bounded strategy-level limitation, not a no-go theorem for genuinely coupled multiscale arithmetic dynamics.
+
 ## 5. Concrete simultaneous-window obstruction missed by separate windows and total capacity
 
 Take
