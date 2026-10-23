@@ -186,25 +186,25 @@ Let $P=A\cap[1,R]$ be a complete prefix of a hypothetical infinite B3 set, with 
 
 Write $z_{i,r}$ for integer future populations in residue class r modulo h and $z_i=\sum_rz_{i,r}$. At every chosen endpoint the *necessary* demand is
 
-$
+$$
 \boxed{
 \sum_{i=1}^{j}z_i\ge
 K_j(c):=\max\{0,\lceil cN_j^{1/3}\rceil-|P|\}
 \qquad (1\le j\le b).
 }\tag{TRUE-CUMULATIVE-DEMAND}
-$
+$$
 
 Here no individual window is assigned an artificial positive lower bound, and no uncounted gaps may be omitted from the partition. Define $\widetilde\Gamma_h$ by minimizing the same integral fibre-pressure functional of §3 over **all integer** allocations obeying these cumulative demands and the literal capacity $0\le z_{i,r}\le j_{i,r}$.
 
 **Theorem F (sound cumulative-density defect certificate).** For any genuine B3 extension meeting the stated lower counting hypothesis,
 
-$
+$$
 \boxed{
 0=\mathfrak d_6(A\cap[1,N_b])
 \ge
 \widetilde\Gamma_h(Q;J_1,\ldots,J_b;K_1(c),\ldots,K_b(c)).
 }\tag{CUMULATIVE-DENSITY-CERTIFICATE}
-$
+$$
 
 In particular, $\widetilde\Gamma_h>0$ is an exact contradiction. The modulus-refinement inequality from Theorem D holds for these cumulative constraints too. At any modulus exceeding $\mathrm{diam}(\mathcal U)$ the optimized value equals the true minimum **selected mixed-colour** collision defect under these cumulative demands.
 
