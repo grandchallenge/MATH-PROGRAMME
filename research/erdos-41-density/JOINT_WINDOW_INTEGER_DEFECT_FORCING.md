@@ -283,6 +283,8 @@ All singleton extensions of P using any point of these windows are B3 (the new e
 
 However, modulo 6 the actual-support capacity vector is $(3,4,5,4,4,4)$ and the four possible future choices all overload some residue; thus the full-prefix cumulative integer system with combined required population 2 is impossible. The selected earlier old colour partition $X=\{1,2\}$, $Y=\{5,14\}$ **misses** the collision for $Z=\{1000,1002\}$, because the four sums in $X+Y=\{6,7,15,16\}$ have no difference 2. The full Q(P) certificate detects it.
 
+For the cumulative total-two demand in this example, the **correct all-old-pair lower-bound factor is 9**. The modulus-6 optimized unweighted bound is $18$, and the sufficiently fine modulus-50 unweighted bound is $36$, while the exact minimum **weighted** PPZ sixth defect over all six two-element future subsets is $54$. Thus a fine modulus recovers the full unweighted pair-sum collision count, but not the diagonal/offdiagonal pair multiplicity weights unless those weights are explicitly retained in the integer optimization. The earlier factor 36 applies ONLY to triples with three distinct old/new colours, not to all old-old-new triples. The all-prefix certificate is nonetheless sound and forces a positive collision for every selection.
+
 The family is a genuine finite illustration of why **retaining the entire evolving prefix** matters. It is neither a proof that critical lower density forces such windows nor a construction of an infinite B3 set.
 
 ## 5. Concrete simultaneous-window obstruction missed by separate windows and total capacity
