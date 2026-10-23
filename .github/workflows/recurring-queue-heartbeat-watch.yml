@@ -2,7 +2,13 @@ name: GCL recurring queue heartbeat watchdog
 
 on:
   schedule:
+    # Two staggered opportunities; GitHub cron dispatches may be delayed or dropped.
+    - cron: '17 * * * *'
     - cron: '43 * * * *'
+  # A valid worker comment supplies an independent event-driven wakeup.
+  # This does not replace the absence detector's scheduled checks.
+  issue_comment:
+    types: [created]
   workflow_dispatch:
 
 permissions:
@@ -14,6 +20,8 @@ concurrency:
 
 jobs:
   watch:
+    # Avoid a costly audit for unrelated issue/PR comments.
+    if: ${{ github.event_name != 'issue_comment' || github.event.issue.number == 2763 }}
     permissions:
       contents: read
     runs-on: ubuntu-24.04
