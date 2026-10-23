@@ -224,21 +224,21 @@ The identity $P_{\epsilon,w}^{(t+2)}=\kappa_{\epsilon,w}^{(t)}$ is an equality o
 
 **Example 44.9 (a nonzero mixed Wick/BV collision).** Give a triangle three unit-weight delta edges and add one unit-weight Wick edge parallel to one triangle edge. The delta backbone has $h_D=1$ and the Wick edge lowers the exponent to $\Omega=0$. Its reduced Gaussian covariance gives variance $2/3$ to the difference along the selected edge. Using the independent unit-variance Gaussian in the convolution $p_1$, the expected smooth cusp value is
 
-$
+$$
 \mathbb E[p_1(Z_1-Z_2)]
 =
 \frac12\,\mathbb E\left|N(0,5/3)\right|
 =\sqrt{\frac{5}{6\pi}}.
 \tag{44.19}
-$
+$$
 
 Since the triangle normalization is $c_\triangle=1/\sqrt{6\pi}$, this graph has the **nonzero** finite local amplitude
 
-$
+$$
 \mathrm{FP}(T_{\triangle+P})=
 \frac{\sqrt5}{6\pi}\,\delta_\triangle.
 \tag{44.20}
-$
+$$
 
 Applying two edge derivatives to the Wick factor converts it into a fourth delta edge exactly. The four-delta graph has reduced precision matrix $\left(\begin{smallmatrix}3&-2\\-2&3\end{smallmatrix}\right)$, determinant $5$ and cycle rank two; its finite-part amplitude is $(4\pi\sqrt5)^{-1}\mathcal L_{4\delta}\delta_\triangle$, visibly nonzero. Thus Theorem 44.8 has nontrivial model instances on both sides of its edge conversion.
 
