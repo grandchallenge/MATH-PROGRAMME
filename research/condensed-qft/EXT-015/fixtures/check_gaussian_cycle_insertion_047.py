@@ -98,7 +98,7 @@ for n in range(2,7):
                   if j>i+1 and (i+j+shift)%3==0)
         Q=lap(n,ed); tau=det(Q)
         assert tau==trees(n,ed) and tau>0
-        additions=[(0,1,F(2)),(0,n-1,F(3,2)),(min(1,n-1),n-1,F(5,3))]
+        additions=[(0,1,F(2)),(0,n-1,F(3,2)),(1,n-1,F(5,3)) if n>2 else (0,1,F(5,3))]
         final=None
         for perm in permutations(additions):
             cur=[row[:] for row in Q]
