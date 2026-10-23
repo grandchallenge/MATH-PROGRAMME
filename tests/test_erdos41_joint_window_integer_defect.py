@@ -188,6 +188,70 @@ def full_prefix_cumulative_bound(P,windows,h,checkpoint_minimums):
     return (value//4 if value is not None else None),witness
 
 
+def minimum_integer_squares(W,C):
+    """Sharp square-sum lower bound for W integer units and C slots."""
+    assert W>=0 and C>=0
+    if C==0:
+        if W==0:
+            return 0
+        raise ValueError("nonzero load with no actual support")
+    v,w=divmod(W,C)
+    return (C-w)*v*v+w*(v+1)*(v+1)
+
+
+def full_prefix_weighted_modular_bound(P,Z,windows,h):
+    """Rigorous weighted old-old-new defect bound, exact at fine modulus."""
+    qw=old_pair_sum_weights(P)
+    capacities=hist(support(qw,windows),h)
+    masses=Counter()
+    squares=Counter()
+    counts=Counter()
+    for q,w in qw.items():
+        for z in Z:
+            t=(q+z)%h
+            masses[t]+=w
+            squares[t]+=w*w
+            counts[t]+=1
+    total=0
+    for t in range(h):
+        c=capacities[t]
+        n=counts[t]
+        w=masses[t]
+        b=squares[t]
+        if not c:
+            assert n==w==b==0
+            continue
+        total+=max(phi(n,c),minimum_integer_squares(w,c)-b,0)
+    return 9*total
+
+
+def weighted_cumulative_capacity(P,windows,h,minimums):
+    """Exact finite enumeration, deduplicated by residues where possible."""
+    assert len(windows)==len(minimums)
+    best=None
+    for batches in product(*[
+        [
+            selected
+            for count in range(U-L+2)
+            for selected in combinations(range(L,U+1),count)
+        ]
+        for L,U in windows
+    ]):
+        count=0
+        legal=True
+        for j,selected in enumerate(batches):
+            count+=len(selected)
+            if count<minimums[j]:
+                legal=False
+                break
+        if not legal:
+            continue
+        z=tuple(v for selected in batches for v in selected)
+        val=full_prefix_weighted_modular_bound(P,z,windows,h)
+        best=val if best is None else min(best,val)
+    return best
+
+
 def brute_integer_collision_min(N,C):
     best=None
     for cells in product(range(N+1),repeat=C):
@@ -494,6 +558,69 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
         self.assertEqual(full_prefix_mixed_defect(P,Z),0)
         for h in (1,2,3,6,9,17,50):
             self.assertEqual(full_prefix_integer_bound(P,Z,windows,h),0)
+
+    def test_weighted_full_prefix_exactness_at_fine_modulus(self):
+        P=[1,2,5,14]
+        windows=[(1000,1001),(1002,1003)]
+        Q=set(old_pair_sum_weights(P))
+        U=support(Q,windows)
+        H=max(U)-min(U)+1
+        self.assertEqual(H,30)
+        expected=min(full_prefix_mixed_defect(P,Z)
+                     for Z in combinations(range(1000,1004),2))
+        self.assertEqual(expected,54)
+        self.assertEqual(weighted_cumulative_capacity(
+            P,windows,50,[0,2]),54)
+        self.assertEqual(weighted_cumulative_capacity(
+            P,windows,H,[0,2]),54)
+        self.assertEqual(full_prefix_cumulative_bound(
+            P,windows,H,[0,2])[0],36)
+        self.assertEqual(weighted_cumulative_capacity(
+            P,windows,1,[0,2]),0)
+        for Z in combinations(range(1000,1004),2):
+            with self.subTest(Z=Z):
+                self.assertEqual(
+                    full_prefix_weighted_modular_bound(P,Z,windows,H),
+                    full_prefix_mixed_defect(P,Z))
+                self.assertLessEqual(
+                    full_prefix_integer_bound(P,Z,windows,H),
+                    full_prefix_weighted_modular_bound(P,Z,windows,H))
+                self.assertLessEqual(
+                    full_prefix_weighted_modular_bound(P,Z,windows,H),
+                    d6(P+list(Z)))
+
+    def test_weighted_pressure_is_sound_at_all_resolutions(self):
+        import random
+        rng=random.Random(20261023)
+        P=[1,2,5,14]
+        for _ in range(45):
+            base=1000+rng.randint(0,15)
+            J0=(base,base+2)
+            J1=(base+4,base+6)
+            windows=[J0,J1]
+            Z=[rng.randint(*J0),rng.randint(*J1)]
+            exact=full_prefix_mixed_defect(P,Z)
+            for h in (1,2,3,4,5,6,8,12,20,32,64):
+                val=full_prefix_weighted_modular_bound(P,Z,windows,h)
+                with self.subTest(Z=Z,h=h):
+                    self.assertGreaterEqual(val,0)
+                    self.assertLessEqual(val,exact)
+                    self.assertLessEqual(exact,d6(P+Z))
+            for h,H in ((1,2),(1,3),(2,4),(3,6),(4,12),(8,32)):
+                self.assertLessEqual(
+                    full_prefix_weighted_modular_bound(P,Z,windows,h),
+                    full_prefix_weighted_modular_bound(P,Z,windows,H))
+
+    def test_weighted_certificate_zero_for_genuine_b3_carrier(self):
+        carrier=moment_code(17)
+        self.assertTrue(b3(carrier))
+        P=carrier[:8]
+        Z=carrier[8:10]
+        windows=[(Z[0],Z[0]),(Z[1],Z[1])]
+        self.assertEqual(full_prefix_mixed_defect(P,Z),0)
+        for h in (1,2,3,5,6,11,31,101):
+            self.assertEqual(full_prefix_weighted_modular_bound(
+                P,Z,windows,h),0)
     def test_cauchy_fractional_pressure_is_strictly_weaker_on_hostile_case(self):
         Z=[10000,10004]
         C=hist(support(self.Q,self.windows),3)
