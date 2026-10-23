@@ -345,16 +345,16 @@ The full-prefix weighted modular hierarchy becomes exact at a sufficiently fine 
 
 Let P be a finite B3 set and define the *positive old pair-sum difference support*
 
-$
+$$
 \Delta_2(P)=
 \{q-q':q,q'\in Q(P),\ q>q'\}.
-$
+$$
 
 For any finite candidate future set of integer positions J disjoint from P, define a simple graph $G_{P,J}$ with vertex set J and an edge between distinct u,v exactly when $|u-v|\in\Delta_2(P)$.
 
 **Theorem J (exact PPZ graph and energy).** Any actual future selection $Z\subseteq J$ has
 
-$
+$$
 \boxed{
 \mathfrak d_{PPZ}
 =
@@ -364,16 +364,16 @@ H_P(d)=\sum_{q-q'=d}\omega(q)\omega(q'),
 \qquad
 G_Z(d)=|\{(z,z')\in Z^2:z-z'=d\}|.
 }\tag{PPZ-WEIGHTED-EXCLUSION-GRAPH}
-$
+$$
 
 In particular,
 
-$
+$$
 \boxed{
 \mathfrak d_{PPZ}=0
 \iff Z\text{ is an independent set of }G_{P,J}.
 }\tag{PPZ-GRAPH-EXACTNESS}
-$
+$$
 
 For any finite family of future windows partitioning J and any genuine **cumulative checkpoint** population requirements, the existence of a PPZ-collision-free future selection is therefore **equivalent** to the existence of an independent set in this graph satisfying those checkpoint cardinalities. A sufficiently fine weighted residue modulus gives exactly the same yes/no answer; the modular relaxation cannot reveal a stronger *PPZ-only* obstruction than the graph itself.
 
@@ -385,7 +385,7 @@ A stronger genuine finite-block escape is possible. For **any** finite B3 templa
 
 **Theorem K (exact two-sided far-field criterion).** Let P and T be two finite B3 sets in positive integer intervals, and take L greater than three times the maximum element of P or T. Then
 
-$
+$$
 \boxed{
 P\cup(L+T)\text{ is B3}
 \iff
@@ -394,7 +394,7 @@ P\cup(L+T)\text{ is B3}
 \Delta_1(P)\cap\Delta_2(T)=\varnothing,
 \end{cases}
 }\tag{TWO-SIDED-FAR-FIELD}
-$
+$$
 
 where $\Delta_1(S)$ denotes positive element differences. The first condition is precisely PPZ graph-independence; the second controls collisions between **one old and two new** entries (PZZ). If the blocks are insufficiently separated, mixed collisions between *different triple colour counts* can also occur and the equivalence need not hold.
 
@@ -402,9 +402,9 @@ where $\Delta_1(S)$ denotes positive element differences. The first condition is
 
 **Hostile separation of the two constraints.** Take $P=\{1,2,5,14\}$ and $T=\{1,20,40\}$. Both are genuine B3. The selected future shape T satisfies $\Delta_2(P)\cap\Delta_1(T)=\varnothing$, so **PPZ is perfectly compatible** at every translation. Nevertheless
 
-$
+$$
 1+1+40=2+20+20=42,
-$
+$$
 
 so the shifted union is *never* B3 at far separation: the two triples have one old and two new entries, and $\Delta_1(P)\cap\Delta_2(T)$ contains 1. The true sixth defect for $P\cup(200+T)$ is 36 while its PPZ contribution is **zero**. Exhaustive refinement of PPZ residue constraints cannot detect this independent PZZ obstruction.
 
