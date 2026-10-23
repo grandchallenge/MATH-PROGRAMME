@@ -220,24 +220,24 @@ The selected old-colour cross pair sums $X+Y$ may omit the very old-old pair-sum
 
 Let $P$ be an arbitrary finite repetition-permitted B3 set of size $n$, and let $Z$ be disjoint from P. Define
 
-$
+$$
 Q(P)=\{p+p':p,p'\in P,\ p\le p'\},
 \qquad
 \omega(p+p')=
 \begin{cases}1,&p=p',\\2,&p<p'.\end{cases}
-$
+$$
 
 The B3 condition on P implies its unordered pair sums are all distinct, so the weights are well-defined. Write
 
-$
+$$
 r_{PPZ}(s)=\sum_{\substack{q\in Q(P),z\in Z\\q+z=s}}\omega(q),
 \qquad
 u_{PPZ}(s)=|\{(q,z)\in Q(P)\times Z:q+z=s\}|.
-$
+$$
 
 **Theorem G (complete old-pair/future collision ledger).** The contribution of collisions between distinct unordered triples containing **two old entries and one new entry** to the global sixth-moment defect is exactly
 
-$
+$$
 \boxed{
 \mathfrak d_{PPZ}
 =
@@ -250,7 +250,7 @@ $
 9\sum_su_{PPZ}(s)\bigl(u_{PPZ}(s)-1\bigr)
 \ge0.
 }\tag{FULL-PREFIX-RESONANCE}
-$
+$$
 
 It vanishes if and only if the map $(q,z)\mapsto q+z$ on $Q(P)\times Z$ is injective.
 
@@ -258,14 +258,14 @@ It vanishes if and only if the map $(q,z)\mapsto q+z$ on $Q(P)\times Z$ is injec
 
 **Theorem H (full-prefix joint modular integer bound).** Use the future windows and cumulative checkpoint constraints of Theorem F, but replace the selected old mixed pair sums $X+Y$ by $Q(P)$. Let $a_r$ count the **unweighted** $Q(P)$ residues modulo h, $c_t$ the exact support $(Q(P)+\bigcup_iJ_i)$ residue capacities, and $N_t$ their convolutions with the integer future histogram allocations. Then every B3 extension satisfies the same necessary integer system $N_t\le c_t$. Moreover,
 
-$
+$$
 \boxed{
 \mathfrak d_6(P\cup Z)
 \ge
 \mathfrak d_{PPZ}
 \ge9\sum_{t\bmod h}\Phi(N_t,c_t).
 }\tag{FULL-PREFIX-INTEGER-DEFECT}
-$
+$$
 
 Minimizing the rightmost expression over the literal future-window integer allocations, with either per-window or cumulative checkpoint population demands, produces a universal finite B3 impossibility certificate. This is **strictly more comprehensive** than checking one selected $X+Y$ because it includes all old repeated and mixed pair sums. Its numerical lower-bound coefficient is 9 rather than 36 because diagonally repeated old pairs have only three permutations.
 
@@ -273,11 +273,11 @@ Minimizing the rightmost expression over the literal future-window integer alloc
 
 **Exact hostile witness of the difference from selected cohorts.** Take
 
-$
+$$
 P=\{1,2,5,14\},\qquad
 J_1=\{1000,1001\},\qquad
 J_2=\{1002,1003\}.
-$
+$$
 
 All singleton extensions of P using any point of these windows are B3 (the new element is greater than four times the old maximum). Every choice of **two** future elements, one from each window, creates a PPZ collision because their difference is 1, 2 or 3 and the actual full pair-sum set Q(P) has each of these differences. The scalar full-prefix count does **not** detect the forced collision: $|Q(P)|=10$ and the union $Q(P)+(J_1\cup J_2)$ has 24 positions, enough for the twenty mixed sums of two future points.
 
