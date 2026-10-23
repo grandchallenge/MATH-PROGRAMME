@@ -287,6 +287,58 @@ For the cumulative total-two demand in this example, the **correct all-old-pair 
 
 The family is a genuine finite illustration of why **retaining the entire evolving prefix** matters. It is neither a proof that critical lower density forces such windows nor a construction of an infinite B3 set.
 
+## 4D. Weighted integral pressure: recovering the **exact** old-old-new defect
+
+The full-prefix bound in Theorem H is deliberately conservative: each unordered old pair has a weight $\omega(q)\in\{1,2\}$, and counting all old pairs as weight one preserves positivity but loses the multiplicity of colliding off-diagonal pairs. The weights can be retained without abandoning integer residue optimization.
+
+For a fixed modulus h and actual future selections Z, and for each residue class t, define the **number**, **weighted mass**, and **diagonal squared mass** of labelled $(q,z)$ inputs:
+
+$
+N_t=\sum_{q,z:\,q+z\equiv t\pmod h}1,\qquad
+W_t=\sum_{q,z:\,q+z\equiv t\pmod h}\omega(q),\qquad
+B_t=\sum_{q,z:\,q+z\equiv t\pmod h}\omega(q)^2.
+$
+
+Here q ranges over $Q(P)$ and z over Z. These are exact integer convolutions of the old-pair residue histograms (separated into diagonal and off-diagonal weights) against the future-window integer residue populations.
+
+For $C>0$ and $W=Cv+w$, $0\le w<C$, put
+
+$
+\Psi(W,C)=(C-w)v^2+w(v+1)^2.
+$
+
+This is the minimum $\sum_{j=1}^C a_j^2$ over all **nonnegative integers** $a_j$ totalling W. It allows the weight-two contributions to split into separate unit masses, so it is a relaxation, never an overestimate of the actual weighted squared energy. Let $c_t$ be the number of available integer sums in $(Q(P)+\bigcup_iJ_i)$ congruent to t modulo h.
+
+**Theorem I (weighted full-prefix modular collision certificate).** For every genuine old B3 prefix P and arbitrary future set Z contained in the declared windows,
+
+$
+\boxed{
+\mathfrak d_6(P\cup Z)
+\ge \mathfrak d_{PPZ}
+\ge 9\sum_{t\bmod h}
+\max\!\left\{
+\Phi(N_t,c_t),\
+\Psi(W_t,c_t)-B_t,\
+0
+\right\}.
+}\tag{WEIGHTED-INTEGER-DEFECT}
+$
+
+A term with $c_t=0$ necessarily has $N_t=W_t=B_t=0$ for a correctly formed support. The bound is exact for every actual Z when
+
+$
+h>\max(Q(P)+\textstyle\bigcup_iJ_i)
+-\min(Q(P)+\textstyle\bigcup_iJ_i).
+$
+
+Under that finite-modulus condition each occupied residue contains at most one actual integer sum, so $c_t\in\{0,1\}$ and $\Psi(W_t,1)=W_t^2$. Thus the rightmost sum **equals the full weighted** $\mathfrak d_{PPZ}$, rather than just the weaker unweighted collision count.
+
+**Proof.** In residue t, the actual weighted representation $R(s)=\sum_{q+z=s}\omega(q)$ is a nonnegative integer, with total mass $W_t$ on at most $c_t$ sites. By integer convexity $\sum_{s\equiv t}R(s)^2\ge\Psi(W_t,c_t)$. Subtracting the exact diagonal $\sum_{s\equiv t}\sum_{q+z=s}\omega(q)^2=B_t$ yields the second lower bound. Separately, each pair of distinct inputs $(q,z)$ and $(q',z')$ whose sums collide has weight product at least one, so the weighted collision contribution is at least $\Phi(N_t,c_t)$. Both inequalities hold for each nonnegative fibre contribution, hence their maximum remains a lower bound. Summing fibres and multiplying by the exact factor 9 proves the formula. At the stated fine modulus every possible integer sum occupies its own residue, and its weighted squared contribution is exactly $W_t^2$; equality follows. QED.
+
+Optimizing this weighted expression over the **integer** future-window histograms subject to Theorem F's cumulative checkpoint requirements gives a stronger finite forcing functional $\Gamma_h^{\mathrm{weighted}}$. It is nondecreasing on any divisibility chain of moduli, by the same refinement argument for the two convex lower bounds, and is exactly the minimum actual $\mathfrak d_{PPZ}$ over future selections when the modulus exceeds the full mixed-sum span. The optimization does **not** certify the absence of PZZ, ZZZ or other types of B3 collisions; it concerns PPZ only.
+
+**Corrected numeric calibration.** For $P=\{1,2,5,14\}$ and two future elements anywhere in $J_1=\{1000,1001\}, J_2=\{1002,1003\}$, the minimum exact weighted PPZ defect is $54$. The earlier unweighted factor-nine fine-modulus relaxation yields only $36$; the new weighted fine-modulus functional gives exactly $54$. This calibrates the difference between a rigorous positive certificate and full **selected-type** completeness, without suggesting that either forces universal critical-density loss.
+
 ## 5. Concrete simultaneous-window obstruction missed by separate windows and total capacity
 
 Take
