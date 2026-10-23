@@ -188,7 +188,7 @@ a_{-3}
 &=c_G-4c_3b_3-3c_4\kappa(0)^2-6g_\Theta\kappa(0)\\
 &=\frac1{\pi^{3/2}}\left(
 \sqrt3-\frac34+\frac5{24\sqrt2}
-\right),\\[2mm]
+\right),\\
 a_{-1}
 &=\frac{c_G}{2}-2c_3b_{3,2}
 =-\frac7{144\sqrt2\,\pi^{3/2}}.
