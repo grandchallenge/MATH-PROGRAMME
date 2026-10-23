@@ -75,12 +75,12 @@ Consequently every singular counterterm and finite local distribution for $G^+$ 
 
 $$
 \begin{aligned}
-\operatorname{Sing}(G^+)
+\mathrm{Sing}(G^+)
 &=
 c^+\sum_{2k<h+1}
 \frac{\epsilon^{2k-h-1}}{2^k k!}
 \mathcal L_{Q^+}^{\,k}\delta,\\
-\operatorname{FP}(G^+)
+\mathrm{FP}(G^+)
 &=
 \begin{cases}
 \displaystyle
@@ -143,7 +143,7 @@ $$
 The moments vanish when $|\alpha|$ is odd. After subtracting all negative Laurent powers, its finite part is zero when $h$ is even. For **odd** $h$, the finite part is given by the coefficient at $k=h-1$, a local derivative of the full-vertex collision delta. In particular when $h=1$,
 
 $$
-\operatorname{FP}(G+P_e)
+\mathrm{FP}(G+P_e)
 =c\sqrt{\frac{R+w^{-1}}{2\pi}}\,\delta,
 \tag{47.11}
 $$
@@ -153,15 +153,15 @@ which is strictly nonzero.
 For each positive $\epsilon$, applying two **factor-local** derivatives to the selected Wick edge, while keeping every other graph edge factor unchanged, produces exactly the delta-edge graph. Taking coefficients of the two identical regulated products gives the edge-conversion identity
 
 $$
-\operatorname{CT}_{\epsilon^0}
+\mathrm{CT}_{\epsilon^0}
 \left[T_{G,\epsilon}\,
 P_{\epsilon,w}''(v^{\mathsf T}y)\right]
 =
-\operatorname{CT}_{\epsilon^0}
+\mathrm{CT}_{\epsilon^0}
 \left[T_{G,\epsilon}\,
 \kappa_{\epsilon,w}(v^{\mathsf T}y)\right]
 =
-\operatorname{FP}(G^+).
+\mathrm{FP}(G^+).
 \tag{47.12}
 $$
 
@@ -194,7 +194,7 @@ $$
 The graph has two cycles. Its nonzero renormalized finite part is
 
 $$
-\operatorname{FP}(G^+)=
+\mathrm{FP}(G^+)=
 \frac{1}{4\pi\sqrt5}\mathcal L_{Q^+}\delta.
 \tag{47.15}
 $$
@@ -204,14 +204,14 @@ On a compact test agreeing with $y_1^2$ near the collision diagonal, with an ind
 The **Wick** edge along the same displacement instead gives the nonzero finite part
 
 $$
-\operatorname{FP}(G+P_e)
+\mathrm{FP}(G+P_e)
 =\frac{\sqrt5}{6\pi}\,\delta.
 \tag{47.16}
 $$
 
 These are two concrete, different outputs of the same cycle-creating edge operation, satisfying the regulated edge-conversion identity (47.12) **before** final projection.
 
-**Theorem 47.5 (no cycle insertion linearized on finite parts alone).** There is no linear map on the vector space of finite-part distributions that implements cycle creation for all connected Gaussian delta graphs by acting **only** on $\operatorname{FP}(G)$ and discarding the other Laurent coefficients. In fact, for the triangle in Example 47.4, the source finite part is zero (since $h=1$), while the target of a unit parallel delta-edge insertion is the nonzero distribution (47.15). Every linear map sends zero to zero, a contradiction.
+**Theorem 47.5 (no cycle insertion linearized on finite parts alone).** There is no linear map on the vector space of finite-part distributions that implements cycle creation for all connected Gaussian delta graphs by acting **only** on $\mathrm{FP}(G)$ and discarding the other Laurent coefficients. In fact, for the triangle in Example 47.4, the source finite part is zero (since $h=1$), while the target of a unit parallel delta-edge insertion is the nonzero distribution (47.15). Every linear map sends zero to zero, a contradiction.
 
 The theorem excludes this **premature projection** rule only. A graph-dependent reconstruction that retains $Q,c,h$, or a richer graph-indexed state, is perfectly valid; (47.4) gives such a construction. It does not refute the existence of a true subgraph-local BPHZ forest formula.
 
