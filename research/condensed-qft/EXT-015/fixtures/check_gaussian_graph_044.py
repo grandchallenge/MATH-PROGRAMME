@@ -101,17 +101,28 @@ Qinv = inverse(qg)
 theta_jet = F(1,2)*(2*Qinv[0][0]+4*Qinv[1][1]+6*Qinv[2][2])
 assert theta_jet == F(33,8)
 
-# Mixed triangle + one Wick edge: E[p(Z1-Z2)]^2 = 5/(6*pi),
-# c_triangle^2 = 1/(6*pi), so (pi*FP_amplitude)^2 = 5/36.
-triangle_wick_pi_coeff_squared = F(5,36)
+# Nontrivial mixed Wick witness, derived from the exact triangle covariance.
+# Variance of one edge difference and the independent unit regulator noise.
+covt = inverse(qt)
+var_edge = covt[0][0] + covt[1][1] - 2 * covt[0][1]
+assert var_edge == F(2,3)
+# E p_1(X)^2 * pi = (Var(X)+1)/2; c_triangle^2*pi = 1/6.
+gauss_c_triangle_squared_times_pi = F(1,6)
+expect_p_squared_times_pi = (var_edge + 1)/2
+triangle_wick_pi_coeff_squared = gauss_c_triangle_squared_times_pi * expect_p_squared_times_pi
 assert triangle_wick_pi_coeff_squared == F(5,36)
-# Two edge derivatives convert the Wick edge into a fourth delta edge.
-# Precision determinant is five and the even cycle-rank finite jet is nonzero.
+
+# Differentiating the Wick edge twice gives a fourth delta edge exactly.
 triangle_plus_delta = triangle + [(0,1,1)]
 q4 = mat(3,triangle_plus_delta)
 assert q4 == [[F(3),-F(2)],[-F(2),F(3)]]
 assert det(q4)==5
-assert inverse(q4)==[[F(3,5),F(2,5)],[F(2,5),F(3,5)]]
+cov4=inverse(q4)
+assert cov4==[[F(3,5),F(2,5)],[F(2,5),F(3,5)]]
+L_on_y0_sq_plus_y1_sq = 2*(cov4[0][0]+cov4[1][1])
+# c4=(2*pi*sqrt(tau))^-1; finite part = c4/2 * L.
+pi_squared_four_delta_fp_squared = L_on_y0_sq_plus_y1_sq**2 / (16*det(q4))
+assert pi_squared_four_delta_fp_squared == F(9,125)
 
 cases = 0
 for n in range(2,6):
