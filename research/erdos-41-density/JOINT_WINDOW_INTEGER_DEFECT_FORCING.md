@@ -178,6 +178,42 @@ Here $r_{Q,Z}(s)=|\{(q,z)\in Q\times\bigcup_iZ_i:q+z=s\}|$ and $\mathfrak d_{XYZ
 
 **Limits and complexity.** This theorem is a finite **completeness result for a chosen collision type**, not for all possible B3 triple-colour types. Avoidance of mixed collisions of type $(X,Y,\bigcup Z_i)$ may coexist with illegal $(X,X,Z)$, $(X,Z,Z)$ or other triple equalities. The exactness modulus H can grow with the full window span; it does NOT give a bounded or uniformly efficient modular certificate, nor establish eventual overload in a c-persistent infinite B3 configuration. For a useful density theorem the challenge is obtaining a forcing statement at a controlled collection of windows/moduli without merely exhaustively restating finite extension feasibility.
 
+## 4B. Cumulative-prefix constraints: the exact form supplied by persistent lower density
+
+A cumulative lower-density hypothesis does **not** prescribe a positive cardinality for every individual future window. The finite forcing formalism admits exactly the weaker constraints it actually supplies.
+
+Let $P=A\cap[1,R]$ be a complete prefix of a hypothetical infinite B3 set, with older disjoint cohorts $X,Y\subseteq P$. Let consecutive integer windows $J_1,\ldots,J_b$ **partition** $(R,N_b]\cap\mathbb Z$, with endpoints $N_j=\max J_j$. Fix $c>0$ and suppose $A(N)\ge cN^{1/3}$ for every $N\ge R$.
+
+Write $z_{i,r}$ for integer future populations in residue class r modulo h and $z_i=\sum_rz_{i,r}$. At every chosen endpoint the *necessary* demand is
+
+$
+\boxed{
+\sum_{i=1}^{j}z_i\ge
+K_j(c):=\max\{0,\lceil cN_j^{1/3}\rceil-|P|\}
+\qquad (1\le j\le b).
+}\tag{TRUE-CUMULATIVE-DEMAND}
+$
+
+Here no individual window is assigned an artificial positive lower bound, and no uncounted gaps may be omitted from the partition. Define $\widetilde\Gamma_h$ by minimizing the same integral fibre-pressure functional of §3 over **all integer** allocations obeying these cumulative demands and the literal capacity $0\le z_{i,r}\le j_{i,r}$.
+
+**Theorem F (sound cumulative-density defect certificate).** For any genuine B3 extension meeting the stated lower counting hypothesis,
+
+$
+\boxed{
+0=\mathfrak d_6(A\cap[1,N_b])
+\ge
+\widetilde\Gamma_h(Q;J_1,\ldots,J_b;K_1(c),\ldots,K_b(c)).
+}\tag{CUMULATIVE-DENSITY-CERTIFICATE}
+$
+
+In particular, $\widetilde\Gamma_h>0$ is an exact contradiction. The modulus-refinement inequality from Theorem D holds for these cumulative constraints too. At any modulus exceeding $\mathrm{diam}(\mathcal U)$ the optimized value equals the true minimum **selected mixed-colour** collision defect under these cumulative demands.
+
+**Proof.** All elements of $A$ above R and at most $N_b$ belong to precisely one of the partition windows. The assumed counting lower bound therefore yields the displayed cumulative inequalities with no additional population hypothesis. Their actual residue allocations form an admissible integer vector for the minimization; by Theorem C its objective cannot exceed the true global defect. For refinement and finite exactness, use the same projection and injectivity arguments as Theorems D and E; the prefix cumulative sums are invariant under residue coarsening, and at sufficiently large modulus every permitted integer position has its own residue. QED.
+
+**Illustration, not a critical-density instance:** In §5, neither window needs to be individually forced if the only constraint is the *combined* demand $z_1+z_2\ge2$. Its integer modular minimum still obeys $\widetilde\Gamma_1=0$ and $\widetilde\Gamma_3=72$. This distinguishes logically sound cumulative forcing from unwarranted claims of local population. The arbitrary demand two in this small example is not asserted to follow from a particular $cN^{1/3}$ inequality.
+
+**Remaining unsolved problem.** A hypothetical positive lower critical density gives real cumulative demands but places no simple independent lower bound on the size or residue distribution of each narrow window. The central missing step is to prove that for *every* such globally compatible evolving B3 prefix P, some finite downstream partition and modulus force $\widetilde\Gamma_h>0$. No such universal theorem has been established. The prefix inequalities and exactness of the finite optimizer alone are not a proof of Erdős #41.
+
 ## 5. Concrete simultaneous-window obstruction missed by separate windows and total capacity
 
 Take
