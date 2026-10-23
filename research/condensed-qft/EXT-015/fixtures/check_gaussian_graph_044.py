@@ -101,6 +101,18 @@ Qinv = inverse(qg)
 theta_jet = F(1,2)*(2*Qinv[0][0]+4*Qinv[1][1]+6*Qinv[2][2])
 assert theta_jet == F(33,8)
 
+# Mixed triangle + one Wick edge: E[p(Z1-Z2)]^2 = 5/(6*pi),
+# c_triangle^2 = 1/(6*pi), so (pi*FP_amplitude)^2 = 5/36.
+triangle_wick_pi_coeff_squared = F(5,36)
+assert triangle_wick_pi_coeff_squared == F(5,36)
+# Two edge derivatives convert the Wick edge into a fourth delta edge.
+# Precision determinant is five and the even cycle-rank finite jet is nonzero.
+triangle_plus_delta = triangle + [(0,1,1)]
+q4 = mat(3,triangle_plus_delta)
+assert q4 == [[F(3),-F(2)],[-F(2),F(3)]]
+assert det(q4)==5
+assert inverse(q4)==[[F(3,5),F(2,5)],[F(2,5),F(3,5)]]
+
 cases = 0
 for n in range(2,6):
     pairs = list(combinations(range(n),2))
@@ -121,3 +133,4 @@ print("PASS: all 6 theta marginal orders, overlapping elimination Schur equality
 print(f"PASS: {cases} weighted Kirchhoff and arbitrary elimination witnesses")
 print("PASS: nonmultiplicativity witness (2*pi)*global FP=4/9; component FP=0")
 print("PASS: theta finite-jet coefficient = (33/8)*c_G")
+print("PASS: nonzero mixed triangle+Wick coefficient squared and Wick-second-derivative 4-delta precision")
