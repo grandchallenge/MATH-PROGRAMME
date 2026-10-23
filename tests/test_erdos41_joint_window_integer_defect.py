@@ -72,28 +72,41 @@ def mixed_energy(Q,Z):
 
 
 def joint_capacity(Q,windows,h,required):
+    """Exact bounded integer optimization using sparse residue allocations.
+
+    Enumerate only occupied residues of actual candidate positions;
+    never iterate over an exponential product of empty modulus classes.
+    Equal residue histograms are deduplicated. This is an exact
+    combinatorial reference implementation, not a scalable ILP solver.
+    """
     assert len(windows)==len(required)
+    assert h>=1
     capacities=hist(support(Q,windows),h)
-    aq=hist(Q,h)
+    aq=Counter(q%h for q in Q)
     possible=[]
     for (L,U),k in zip(windows,required):
-        window_counts=hist(range(L,U+1),h)
-        distributions=[]
-        for z in product(*(range(n+1) for n in window_counts)):
-            if sum(z)==k:
-                distributions.append(z)
-        possible.append(distributions)
-    result=None
+        if k<0 or k>U-L+1:
+            return None,None
+        distributions=set()
+        for picked in combinations(range(L,U+1),k):
+            distribution=Counter(v%h for v in picked)
+            distributions.add(tuple(sorted(distribution.items())))
+        possible.append(sorted(distributions))
+    best=None
     witness=None
     for choice in product(*possible):
-        total_z=tuple(sum(v[r] for v in choice) for r in range(h))
-        N=tuple(sum(aq[r]*total_z[(t-r)%h] for r in range(h))
-                for t in range(h))
-        val=integer_energy_bound(N,capacities)
-        if result is None or val<result:
-            result,witness=val,choice
-    return result,witness
-
+        z=Counter()
+        for distribution in choice:
+            for r,count in distribution:
+                z[r]+=count
+        load=Counter()
+        for q_r,q_count in aq.items():
+            for z_r,z_count in z.items():
+                load[(q_r+z_r)%h]+=q_count*z_count
+        val=36*sum(phi(n,capacities[t]) for t,n in load.items())
+        if best is None or val<best:
+            best,witness=val,choice
+    return best,witness
 
 def brute_integer_collision_min(N,C):
     best=None
