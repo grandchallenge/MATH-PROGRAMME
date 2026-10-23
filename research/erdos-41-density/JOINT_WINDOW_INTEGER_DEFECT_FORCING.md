@@ -214,6 +214,77 @@ In particular, $\widetilde\Gamma_h>0$ is an exact contradiction. The modulus-ref
 
 **Remaining unsolved problem.** A hypothetical positive lower critical density gives real cumulative demands but places no simple independent lower bound on the size or residue distribution of each narrow window. The central missing step is to prove that for *every* such globally compatible evolving B3 prefix P, some finite downstream partition and modulus force $\widetilde\Gamma_h>0$. No such universal theorem has been established. The prefix inequalities and exactness of the finite optimizer alone are not a proof of Erdős #41.
 
+## 4C. All old pair sums: a full-prefix necessary condition stronger than selected old colour pairs
+
+The selected old-colour cross pair sums $X+Y$ may omit the very old-old pair-sum difference that forbids a new batch. One can preserve **all** the old prefix's two-summand structure without assuming any regular distribution of its elements.
+
+Let $P$ be an arbitrary finite repetition-permitted B3 set of size $n$, and let $Z$ be disjoint from P. Define
+
+$
+Q(P)=\{p+p':p,p'\in P,\ p\le p'\},
+\qquad
+\omega(p+p')=
+\begin{cases}1,&p=p',\\2,&p<p'.\end{cases}
+$
+
+The B3 condition on P implies its unordered pair sums are all distinct, so the weights are well-defined. Write
+
+$
+r_{PPZ}(s)=\sum_{\substack{q\in Q(P),z\in Z\\q+z=s}}\omega(q),
+\qquad
+u_{PPZ}(s)=|\{(q,z)\in Q(P)\times Z:q+z=s\}|.
+$
+
+**Theorem G (complete old-pair/future collision ledger).** The contribution of collisions between distinct unordered triples containing **two old entries and one new entry** to the global sixth-moment defect is exactly
+
+$
+\boxed{
+\mathfrak d_{PPZ}
+=
+9\left[
+\sum_s r_{PPZ}(s)^2
+-
+(2n^2-n)|Z|
+\right]
+\ge
+9\sum_su_{PPZ}(s)\bigl(u_{PPZ}(s)-1\bigr)
+\ge0.
+}\tag{FULL-PREFIX-RESONANCE}
+$
+
+It vanishes if and only if the map $(q,z)\mapsto q+z$ on $Q(P)\times Z$ is injective.
+
+**Proof.** Each unordered triple $(p,p',z)$ has exactly $3\omega(p+p')$ orderings. Squaring the weighted representation counts and subtracting its diagonal contributions yields the first equality, since $\sum_{q\in Q(P)}\omega(q)^2=n+4\binom n2=2n^2-n$. Every collision between *distinct* unordered triples has exact defect contribution $2(3\omega(q))(3\omega(q'))\ge18$, while every colliding unordered pair of $(q,z)$ inputs contributes two units to $\sum_s u(s)(u(s)-1)$. Both vanish precisely under injectivity. These triples belong to a single distinguished colour type (old,old,new), so their positive contributions are included in the full defect without cancellation. QED.
+
+**Theorem H (full-prefix joint modular integer bound).** Use the future windows and cumulative checkpoint constraints of Theorem F, but replace the selected old mixed pair sums $X+Y$ by $Q(P)$. Let $a_r$ count the **unweighted** $Q(P)$ residues modulo h, $c_t$ the exact support $(Q(P)+\bigcup_iJ_i)$ residue capacities, and $N_t$ their convolutions with the integer future histogram allocations. Then every B3 extension satisfies the same necessary integer system $N_t\le c_t$. Moreover,
+
+$
+\boxed{
+\mathfrak d_6(P\cup Z)
+\ge
+\mathfrak d_{PPZ}
+\ge9\sum_{t\bmod h}\Phi(N_t,c_t).
+}\tag{FULL-PREFIX-INTEGER-DEFECT}
+$
+
+Minimizing the rightmost expression over the literal future-window integer allocations, with either per-window or cumulative checkpoint population demands, produces a universal finite B3 impossibility certificate. This is **strictly more comprehensive** than checking one selected $X+Y$ because it includes all old repeated and mixed pair sums. Its numerical lower-bound coefficient is 9 rather than 36 because diagonally repeated old pairs have only three permutations.
+
+**Proof.** Theorem G gives a lower bound of nine times the unweighted collision-pair count among $Q(P)+Z$. Split those unweighted representations into residues and apply the sharp integer fibre Lemma B, then minimize as in Theorems C and F. No assumption about the older arithmetic organization is made beyond the actual B3 property of P. QED.
+
+**Exact hostile witness of the difference from selected cohorts.** Take
+
+$
+P=\{1,2,5,14\},\qquad
+J_1=\{1000,1001\},\qquad
+J_2=\{1002,1003\}.
+$
+
+All singleton extensions of P using any point of these windows are B3 (the new element is greater than four times the old maximum). Every choice of **two** future elements, one from each window, creates a PPZ collision because their difference is 1, 2 or 3 and the actual full pair-sum set Q(P) has each of these differences. The scalar full-prefix count does **not** detect the forced collision: $|Q(P)|=10$ and the union $Q(P)+(J_1\cup J_2)$ has 24 positions, enough for the twenty mixed sums of two future points.
+
+However, modulo 6 the actual-support capacity vector is $(3,4,5,4,4,4)$ and the four possible future choices all overload some residue; thus the full-prefix cumulative integer system with combined required population 2 is impossible. The selected earlier old colour partition $X=\{1,2\}$, $Y=\{5,14\}$ **misses** the collision for $Z=\{1000,1002\}$, because the four sums in $X+Y=\{6,7,15,16\}$ have no difference 2. The full Q(P) certificate detects it.
+
+The family is a genuine finite illustration of why **retaining the entire evolving prefix** matters. It is neither a proof that critical lower density forces such windows nor a construction of an infinite B3 set.
+
 ## 5. Concrete simultaneous-window obstruction missed by separate windows and total capacity
 
 Take
