@@ -64,4 +64,22 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(evaluate(POLICY,[invalid],'2026-10-19T04:00:00Z')['valid_count_in_window'],0)
         self.assertIsNone(fields('GCL-SCHEDULER-RUN/1\nNO_SEP','GCL-SCHEDULER-RUN/1'))
         self.assertEqual(fields(ALERT_HEADER+'\nEPISODE_ID: abc\n',ALERT_HEADER),{'EPISODE_ID':'abc'})
+    def test_independent_wake_paths_configured(self):
+        from pathlib import Path
+        workflow = (Path(__file__).resolve().parents[1] /
+                    '.github/workflows/recurring-queue-heartbeat-watch.yml').read_text()
+        self.assertIn("cron: '17 * * * *'", workflow)
+        self.assertIn("cron: '43 * * * *'", workflow)
+        self.assertIn("issue_comment:\n    types: [created]", workflow)
+        self.assertIn("workflow_dispatch:", workflow)
+
+    def test_issue_comment_wakeup_cannot_expand_to_other_issues(self):
+        from pathlib import Path
+        workflow = (Path(__file__).resolve().parents[1] /
+                    '.github/workflows/recurring-queue-heartbeat-watch.yml').read_text()
+        self.assertIn("github.event_name != 'issue_comment' || github.event.issue.number == 2763", workflow)
+        self.assertIn('contents: read', workflow)
+        self.assertNotIn('issues: write', workflow)
+        self.assertIn('cancel-in-progress: false', workflow)
+
 if __name__=='__main__':unittest.main()
