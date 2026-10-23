@@ -250,11 +250,11 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
             self.Q,self.windows,9,[1,1])[0],72)
 
     def test_fine_modulus_zero_only_asserts_one_mixed_type(self):
-        code=moment_code(17)
-        self.assertTrue(b3(code))
-        X,Y=code[:3],code[3:6]
+        carrier=[1,2,5,14,33,72]
+        self.assertTrue(b3(carrier))
+        X,Y=carrier[:2],carrier[2:4]
         Q=qxy(X,Y)
-        z0,z1=code[6],code[7]
+        z0,z1=carrier[4],carrier[5]
         windows=[(z0,z0),(z1,z1)]
         U=support(Q,windows)
         H=max(U)-min(U)+1
