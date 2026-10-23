@@ -111,7 +111,7 @@ For the asymptotic claim, expand each heat kernel in its parameter $\epsilon^2$ 
 **Corollary 46.2 (finite local/partial-diagonal renormalization).** Subtract precisely the terms of (46.6) with $2k<H$; the remaining family converges strongly to
 
 $$
-\operatorname{FP}(T_G)=
+\mathrm{FP}(T_G)=
 \begin{cases}
 \displaystyle
 \frac{C}{2^{H/2}(H/2)!}\mathcal D_G^{H/2}S_G,
@@ -137,7 +137,7 @@ $$
 
 A bridge contributes the corresponding independent-variable Gaussian heat germ applied to $q_e$, beginning in order $\epsilon^0$. Glue by taking the exterior tensor product of the Laurent germs, adding the bridge germ, and applying the unimodular coordinate change. **Do not project to degree zero at an intermediate gluing stage.**
 
-**Theorem 46.3 (associative bridge-tree Laurent gluing).** For any fixed labeled bridge tree as above, this retained-state gluing is associative and symmetric under reordering disjoint subassemblies, up to the canonical permutation and change-of-root coordinate isomorphisms. For any root and any parenthesization, it produces the same full Laurent coefficients as (46.6). A final projection $\operatorname{CT}$ to the $\epsilon^0$ coefficient therefore gives the same renormalized distribution under any order of gluing. Vertex differential operators with constant coefficients commute with this final projection.
+**Theorem 46.3 (associative bridge-tree Laurent gluing).** For any fixed labeled bridge tree as above, this retained-state gluing is associative and symmetric under reordering disjoint subassemblies, up to the canonical permutation and change-of-root coordinate isomorphisms. For any root and any parenthesization, it produces the same full Laurent coefficients as (46.6). A final projection $\mathrm{CT}$ to the $\epsilon^0$ coefficient therefore gives the same renormalized distribution under any order of gluing. Vertex differential operators with constant coefficients commute with this final projection.
 
 **Proof.** A Laurent germ has a finite lower exponent and a well-defined coefficient at every exponent. Its exterior tensor product with independent-variable germs has a coefficientwise **finite** Cauchy product. The Cauchy product is associative; the exterior tensor product of distributions on disjoint variables is associative and symmetric. In a bridge tree, any gluing order introduces one previously unused bridge coordinate and the same final set of independent variables. Distinct root/parenthesis coordinate choices are related by unit-determinant linear diffeomorphisms, whose pullback commutes with the original regulated amplitude. Uniqueness of asymptotic coefficients implies the same transformed Laurent germ. Constant-coefficient differential operators commute with the distributional Laurent coefficient extraction. This gives the claim. $\square$
 
@@ -148,9 +148,9 @@ A bridge contributes the corresponding independent-variable Gaussian heat germ a
 **Theorem 46.4 (free BV identity despite disconnected delta backbone).** Suppose an edge $e$ is a **Wick bridge**. Replace its propagator by a **delta bridge** of the same weight and retain every other edge. The finite parts satisfy
 
 $$
-\partial_{t_e}^2\operatorname{FP}(T_G^{P_e})
+\partial_{t_e}^2\mathrm{FP}(T_G^{P_e})
 =
-\operatorname{FP}(T_G^{K_e}).
+\mathrm{FP}(T_G^{K_e}).
 \tag{46.10}
 $$
 
@@ -165,9 +165,9 @@ The identity holds coefficientwise for the entire Laurent germs and after any se
 Take two unit-weight triangle blocks $A$ and $B$ on vertices $(0,1,2)$ and $(3,4,5)$, joined by a bridge between vertices $2$ and $3$. Take $a=x_0-x_2$, $e=x_5-x_3$ and $t=x_2-x_3$ as three of the independent relative coordinates. Their Gaussian variances are
 
 $$
-\operatorname{Var}(a)=\frac23,\quad
-\operatorname{Var}(e)=\frac23,\quad
-\operatorname{Var}(t)=1,
+\mathrm{Var}(a)=\frac23,\quad
+\mathrm{Var}(e)=\frac23,\quad
+\mathrm{Var}(t)=1,
 \quad
 c_A=c_B=\frac1{\sqrt{6\pi}},\quad H=2.
 \tag{46.11}
@@ -176,7 +176,7 @@ $$
 For a **delta bridge**, (46.8) yields
 
 $$
-\operatorname{FP}(T_{A-K-B})
+\mathrm{FP}(T_{A-K-B})
 =
 \frac{1}{12\pi}
 (\mathcal L_A+\mathcal L_B+\partial_t^2)
@@ -187,7 +187,7 @@ $$
 Pair it with a compact test that equals $(x_0-x_5)^2=(a+t-e)^2$ near the full collision diagonal, with an independently normalized root-coordinate cutoff. The result is exactly
 
 $$
-\left\langle\operatorname{FP}(T_{A-K-B}),\phi\right\rangle
+\left\langle\mathrm{FP}(T_{A-K-B}),\phi\right\rangle
 =
 \frac{1}{6\pi}
 \left(\frac23+1+\frac23\right)
@@ -201,7 +201,7 @@ Each triangle individually has odd cycle rank one and **zero finite part**. Naiv
 For a **Wick bridge** at the same location, the full finite part is
 
 $$
-\operatorname{FP}(T_{A-P-B})=
+\mathrm{FP}(T_{A-P-B})=
 \frac{1}{12\pi}\left[
 (\mathcal L_A+\mathcal L_B)
 (\delta_A\boxtimes\delta_B)\boxtimes P_0(t)
@@ -211,7 +211,7 @@ $$
 \tag{46.14}
 $$
 
-This is nonzero and is **not** confined to the full six-point diagonal. It is a valid distribution-valued gluing operation for freely moving component positions. In particular, a test that is constant in the internal relative coordinates near their origin and has a Wick-separation factor $f(t)$ satisfying $f(0)=1$ gives $\langle\operatorname{FP}(T_{A-P-B}),\phi\rangle=1/(12\pi)$ after normalizing the root cutoff. Differentiating (46.14) twice in $t$ gives **exactly** (46.12), not merely equality of divergent leading coefficients.
+This is nonzero and is **not** confined to the full six-point diagonal. It is a valid distribution-valued gluing operation for freely moving component positions. In particular, a test that is constant in the internal relative coordinates near their origin and has a Wick-separation factor $f(t)$ satisfying $f(0)=1$ gives $\langle\mathrm{FP}(T_{A-P-B}),\phi\rangle=1/(12\pi)$ after normalizing the root cutoff. Differentiating (46.14) twice in $t$ gives **exactly** (46.12), not merely equality of divergent leading coefficients.
 
 **Second independent gluing witness:** Connect four unit triangles in a bridge chain with unit delta edges $t_1,t_2,t_3$. The total cycle rank is four, $C=(6\pi)^{-2}$. On a test that agrees near the total diagonal with $t_1^2t_2^2$, the finite-part pairing is
 
