@@ -146,7 +146,7 @@ $$
 
 Consequently the jointly optimized forced lower bounds also satisfy $\Gamma_H\ge\Gamma_h$.
 
-**Proof.** The $H$-residue fibres partition every $h$-residue fibre. The minimum possible integer collision count subject to the finer prescribed loads cannot be below the unconstrained optimum obtained by aggregating all positions and loads in their common coarser fibre, by Lemma B. For the optimized statement, every integer H-residue allocation projects to an h-residue allocation with the same per-window totals; the finer cost is at least that projected coarser cost, which is in turn at least the coarser minimum. QED.
+**Proof.** The residue fibres modulo $H$ partition every residue fibre modulo $h$. The minimum possible integer collision count subject to the finer prescribed loads cannot be below the unconstrained optimum obtained by aggregating all positions and loads in their common coarser fibre, by Lemma B. For the optimized statement, every integer H-residue allocation projects to an h-residue allocation with the same per-window totals; the finer cost is at least that projected coarser cost, which is in turn at least the coarser minimum. QED.
 
 This creates a genuine hierarchy of rigorous collision lower bounds. It is NOT a monotone-in-time potential for legal B3 prefixes: every such prefix has zero exact defect, and there is still no theorem that some modulus must eventually force $\Gamma_h>0$ under persistent critical density.
 
