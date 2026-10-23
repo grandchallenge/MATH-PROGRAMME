@@ -71,7 +71,7 @@ $$
 \begin{cases}
 \displaystyle
 \frac{c_G}{2^{h/2}(h/2)!}
-\mathcal L_G^{h/2}\delta_G,&h\text{ even},\\[2mm]
+\mathcal L_G^{h/2}\delta_G,&h\text{ even},\\
 0,&h\text{ odd}.
 \end{cases}
 \tag{44.6}
@@ -117,7 +117,7 @@ $$
 
 Subtracting all terms $k<d$ yields the finite local term at $k=d$. In particular the finite part **vanishes for every odd cycle rank $h$**, regardless of edge-jet orders; for even $h$, it is a local derivative-delta distribution of total order at most $h+R$ with explicit Gaussian polynomial moments.
 
-**Proof.** The $r$th derivative of (44.2) is $(-\sqrt w/\epsilon)^r\mathrm{He}_r(\sqrt w z/\epsilon)\kappa_{\epsilon,w}(z)$. Multiplication gives (44.8). Taylor-expand $\phi(s,\epsilon Z)$ by total multi-index degree and integrate the compact test against the Gaussian polynomial weight; the moments of $H_{\mathbf r}$ bound every remainder. The delta derivative pairing introduces the sign in (44.9). Since $H_{\mathbf r}(-z)=(-1)^R H_{\mathbf r}(z)$ and $Z^\alpha$ has parity $|\alpha|$, $\mu_\alpha=0$ if $R+|\alpha|$ is odd. At finite-part degree $|\alpha|=h+R$, the parity becomes $h+2R$, odd exactly when $h$ is odd. $\square$
+**Proof.** The derivative of order $r$ of (44.2) is $(-\sqrt w/\epsilon)^r\mathrm{He}_r(\sqrt w z/\epsilon)\kappa_{\epsilon,w}(z)$. Multiplication gives (44.8). Taylor-expand $\phi(s,\epsilon Z)$ by total multi-index degree and integrate the compact test against the Gaussian polynomial weight; the moments of $H_{\mathbf r}$ bound every remainder. The delta derivative pairing introduces the sign in (44.9). Since $H_{\mathbf r}(-z)=(-1)^R H_{\mathbf r}(z)$ and $Z^\alpha$ has parity $|\alpha|$, $\mu_\alpha=0$ if $R+|\alpha|$ is odd. At finite-part degree $|\alpha|=h+R$, the parity becomes $h+2R$, odd exactly when $h$ is odd. $\square$
 
 Unlike arbitrary formal point values on singular diagonals, these are distributions in all **moving vertex-position variables**. Independent smooth translations of the positions act smoothly into the ordinary strong distribution topology, as does the dependence on positive edge weights. These statements do not assert the stronger normal-cone multilinear topology or a BV master equation.
 
@@ -178,23 +178,23 @@ The preceding graph class consists only of delta propagators and their jets. The
 
 Write the edges of a connected labeled multigraph as the disjoint union $E_D\sqcup E_P$, with $E_D$ a connected spanning subgraph. For each delta edge use a Gaussian kernel derivative $\kappa_{\epsilon,w}^{(r)}$ as above. For each even Wick edge use
 
-$
+$$
 P_{\epsilon,w}(z)=\left(\frac{|\cdot|}{2}*\kappa_{\epsilon,w}\right)(z)
 =\epsilon p_w(z/\epsilon),
 \qquad p_w''=\kappa_{1,w}.
 \tag{44.15}
-$
+$$
 
 Allow a derivative order $t_f\ge0$ on each Wick edge. Let $R_D=\sum_{e\in E_D}r_e$, $R_P=\sum_{f\in E_P}t_f$, and $h_D=|E_D|-(n-1)$. The regulated amplitude is the product of all edge kernels evaluated on their differences, and put
 
-$
+$$
 \Omega=h_D+R_D+R_P-|E_P|.
 \tag{44.16}
-$
+$$
 
 **Theorem 44.8 (mixed Gaussian-backed collision extension and exact free edge identity).** For any such finite connected graph, the regulated amplitude admits a full Laurent-asymptotic expansion in integer powers of $\epsilon$ with coefficients that are finite-order distributions supported on the **full vertex collision diagonal**. Its nonnegative-power finite part after local subtraction of negative powers exists strongly in distributions. Moreover the finite-part assignment obeys, for any selected Wick edge $f$ and any $t\ge0$, the exact edge substitution identity
 
-$
+$$
 \mathrm{FP}\left[
 P_{\epsilon,w_f}^{(t+2)}(d_f)
 \prod_{e\ne f} K_{e,\epsilon}(d_e)
@@ -205,18 +205,18 @@ P_{\epsilon,w_f}^{(t+2)}(d_f)
 \prod_{e\ne f} K_{e,\epsilon}(d_e)
 \right].
 \tag{44.17}
-$
+$$
 
 The differentiated-Wick-to-delta replacement preserves the connected delta-backbone hypothesis. The same identity holds after any finite sequence of such edge conversions and after any fixed vertex differentiation. The result is a **nontrivial class of renormalized free graphwise BV edge relations**, not a complete BV differential on a domain closed under all graph insertions.
 
-**Proof.** The positive-weight delta backbone has a positive definite reduced Laplacian $Q_D$. With $Z\sim N(0,Q_D^{-1})$, the scaling of the delta jets is $\epsilon^{-1-r}$ per edge, while the scaling of a $t$th Wick jet is $\epsilon^{1-t}$. Hence the amplitude has the exact form
+**Proof.** The positive-weight delta backbone has a positive definite reduced Laplacian $Q_D$. With $Z\sim N(0,Q_D^{-1})$, the scaling of the delta jets is $\epsilon^{-1-r}$ per edge, while the scaling of a Wick jet of order $t$ is $\epsilon^{1-t}$. Hence the amplitude has the exact form
 
-$
+$$
 c_D\,\epsilon^{-\Omega}\,
 \rho_{\epsilon,Q_D}(y)\,
 F(y/\epsilon),
 \tag{44.18}
-$
+$$
 
 where $F$ is the product of finitely many Hermite polynomials evaluated on linear forms and finitely many functions $p_w^{(t)}$ evaluated on linear forms. Each $p_w$ grows at most linearly and all its derivatives grow at most polynomially; $F$ thus has at most polynomial growth. Every mixed Gaussian moment $\mathbb E[F(Z)Z^\alpha]$ is finite. Taylor expansion of a test function in the relative coordinates proves the full local Laurent expansion, with subtraction through degree $\Omega-1$ when $\Omega>0$ and finite term at degree $\Omega$ when $\Omega\ge0$; if $\Omega<0$, the limit is zero. Gaussian decay provides bounds on every Taylor remainder and strong convergence.
 
