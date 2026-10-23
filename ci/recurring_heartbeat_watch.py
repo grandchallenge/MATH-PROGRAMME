@@ -38,7 +38,7 @@ def evaluate(policy, comments, now):
         return {'state':'CONTRACT_NOT_ENABLED','reason':'protected desired state is not enabled'}
     issue = policy['heartbeat_issue']
     actors = set(policy['heartbeat_authorized_actors'])
-    accepted=[];ignored=0
+    accepted=[];ignored=0;recovery_only=0
     for c in comments:
         f=fields(c.get('body'), HEADER)
         if f is None:continue
@@ -49,7 +49,7 @@ def evaluate(policy, comments, now):
                    and abs((posted-reported).total_seconds())<=1200
                    and posted<=now and posted>=iso(policy['heartbeat_activation_utc']))
         except (KeyError, ValueError, TypeError):valid=False
-        if valid:accepted.append((posted,c))
+        if valid and f.get('RECOVERY_MODE'):\n            recovery_only+=1\n            continue\n        if valid:accepted.append((posted,c))
         else:ignored+=1
     accepted.sort(key=lambda row:row[0])
     last_time = accepted[-1][0] if accepted else iso(policy['heartbeat_activation_utc'])
@@ -58,7 +58,7 @@ def evaluate(policy, comments, now):
     state='ALERT_MISSED_HEARTBEAT' if age_minutes>policy['heartbeat_grace_minutes'] else ('HEALTHY_HEARTBEAT' if accepted else 'AWAITING_FIRST_HEARTBEAT')
     return {'state':state,'task_key':policy['task_key'],'issue':issue,'now_utc':now.isoformat(),
             'last_valid_utc':last_time.isoformat(),'last_valid_comment':accepted[-1][1]['url'] if accepted else None,
-            'age_minutes':age_minutes,'valid_count_in_window':len(accepted),'rejected_marker_count':ignored,
+            'age_minutes':age_minutes,'valid_count_in_window':len(accepted),'rejected_marker_count':ignored,'retrospective_recovery_count':recovery_only,
             'episode_id':hashlib.sha256((policy['task_key']+'|'+episode).encode()).hexdigest()[:24],
             'authority_boundary':'OBSERVATION_ONLY_NO_CHATGPT_SCHEDULER_API'}
 
