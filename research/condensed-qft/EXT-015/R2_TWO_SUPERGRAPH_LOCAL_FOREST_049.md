@@ -241,7 +241,7 @@ The differences of leading coefficients are (49.13), and subtracting them cancel
 
 ## 5. Exact hostile quadratic tests
 
-Let each compact test be a smooth cutoff times the indicated quadratic polynomial, with the cutoff identically one on an $\epsilon$-independent neighborhood of the full collision and a separately normalized compact root-coordinate factor.
+Let each compact test be a smooth cutoff times the indicated quadratic polynomial, with the cutoff identically one on a fixed neighborhood independent of the regulator of the full collision and a separately normalized compact root-coordinate factor.
 
 For the theta graph choose $\phi_\Theta=u^2$. The finite pairing is
 
