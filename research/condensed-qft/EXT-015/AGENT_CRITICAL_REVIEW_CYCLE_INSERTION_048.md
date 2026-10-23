@@ -4,7 +4,7 @@
 
 ## 1. Adversarial verification of the state update
 
-Start with a connected $n$-vertex graph, reduced incidence matrix $B$ and positive edge weights. Its reduced precision matrix $Q=B^{\mathsf T}WB$ is strictly positive. A proposed edge between two already connected vertices has reduced incidence vector $v\ne0$; adding the edge multiplies the regulated graph amplitude by
+Start with a connected graph with $n$ vertices, reduced incidence matrix $B$ and positive edge weights. Its reduced precision matrix $Q=B^{\mathsf T}WB$ is strictly positive. A proposed edge between two already connected vertices has reduced incidence vector $v\ne0$; adding the edge multiplies the regulated graph amplitude by
 
 $$
 \frac{\sqrt w}{\sqrt{2\pi}\epsilon}
