@@ -217,6 +217,51 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
                 self.assertEqual(charge(Q,Z0+Z1,windows,h),0)
                 self.assertEqual(joint_capacity(Q,windows,h,[1,1])[0],0)
 
+    def test_fine_modulus_is_complete_for_actual_mixed_triple_avoidance(self):
+        rng=random.Random(4159)
+        examples=[
+            (self.windows,[1,1]),
+            ([(10000,10002),(10004,10006)],[1,1]),
+            ([(10000,10002),(10004,10006)],[2,1]),
+        ]
+        for _ in range(30):
+            start=9995+rng.randrange(10)
+            J0=(start,start+rng.randrange(1,4))
+            J1=(J0[1]+2,J0[1]+2+rng.randrange(1,4))
+            ks=[rng.randint(0,J0[1]-J0[0]+1),
+                rng.randint(0,J1[1]-J1[0]+1)]
+            examples.append(([J0,J1],ks))
+        for windows,ks in examples:
+            U=support(self.Q,windows)
+            H=max(U)-min(U)+1
+            value,_=joint_capacity(self.Q,windows,H,ks)
+            from itertools import combinations as choose
+            selections=[
+                list(choose(range(L,U+1),k))
+                for (L,U),k in zip(windows,ks)
+            ]
+            brute=min(
+                mixed_energy(self.Q,[x for cohort in picked for x in cohort])
+                for picked in product(*selections)
+            )
+            with self.subTest(windows=windows,ks=ks,H=H):
+                self.assertEqual(value,brute)
+        self.assertEqual(joint_capacity(
+            self.Q,self.windows,9,[1,1])[0],72)
+
+    def test_fine_modulus_zero_only_asserts_one_mixed_type(self):
+        code=moment_code(17)
+        self.assertTrue(b3(code))
+        X,Y=code[:3],code[3:6]
+        Q=qxy(X,Y)
+        z0,z1=code[6],code[7]
+        windows=[(z0,z0),(z1,z1)]
+        U=support(Q,windows)
+        H=max(U)-min(U)+1
+        exact,_=joint_capacity(Q,windows,H,[1,1])
+        self.assertEqual(exact,0)
+        self.assertEqual(mixed_energy(Q,[z0,z1]),0)
+
     def test_cauchy_fractional_pressure_is_strictly_weaker_on_hostile_case(self):
         Z=[10000,10004]
         C=hist(support(self.Q,self.windows),3)
