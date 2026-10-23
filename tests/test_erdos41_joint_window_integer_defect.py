@@ -108,6 +108,49 @@ def joint_capacity(Q,windows,h,required):
             best,witness=val,choice
     return best,witness
 
+def cumulative_capacity(Q,windows,h,minimums):
+    """Exact joint energy minimum under PREFIX rather than local demands.
+
+    minimums[j] is the required total count through window j
+    (zero-based). No window is artificially required to be populated.
+    """
+    assert len(minimums)==len(windows)
+    assert h>=1
+    C=hist(support(Q,windows),h)
+    aq=Counter(q%h for q in Q)
+    options=[]
+    for L,U in windows:
+        unique=set()
+        for k in range(U-L+2):
+            for picked in combinations(range(L,U+1),k):
+                unique.add((k,tuple(sorted(Counter(v%h for v in picked).items()))))
+        options.append(sorted(unique))
+    best=None
+    witness=None
+    for chosen in product(*options):
+        subtotal=0
+        valid=True
+        for j,(count,_) in enumerate(chosen):
+            subtotal+=count
+            if subtotal<minimums[j]:
+                valid=False
+                break
+        if not valid:
+            continue
+        z=Counter()
+        for _,allocation in chosen:
+            for r,count in allocation:
+                z[r]+=count
+        demand=Counter()
+        for r,a in aq.items():
+            for t,n in z.items():
+                demand[(r+t)%h]+=a*n
+        value=36*sum(phi(n,C[t]) for t,n in demand.items())
+        if best is None or value<best:
+            best,witness=value,chosen
+    return best,witness
+
+
 def brute_integer_collision_min(N,C):
     best=None
     for cells in product(range(N+1),repeat=C):
@@ -274,6 +317,68 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
         exact,_=joint_capacity(Q,windows,H,[1,1])
         self.assertEqual(exact,0)
         self.assertEqual(mixed_energy(Q,[z0,z1]),0)
+
+    def test_cumulative_requirement_forces_without_each_window_lower_bound(self):
+        # Total two across two windows is the only population demand;
+        # no separate window has a prescribed positive cardinality.
+        for h in (1,3,9):
+            direct,choice=cumulative_capacity(
+                self.Q,self.windows,h,[0,2])
+            separate,_=joint_capacity(
+                self.Q,self.windows,h,[1,1])
+            with self.subTest(h=h):
+                self.assertEqual(direct,separate)
+                self.assertIsNotNone(choice)
+        self.assertEqual(
+            cumulative_capacity(self.Q,self.windows,1,[0,2])[0],0)
+        self.assertEqual(
+            cumulative_capacity(self.Q,self.windows,3,[0,2])[0],72)
+        self.assertEqual(
+            cumulative_capacity(self.Q,self.windows,3,[0,1])[0],0)
+
+    def test_cumulative_modulus_refinement_and_fine_exactness(self):
+        from itertools import combinations as choose
+        rng=random.Random(10123)
+        examples=[(self.windows,[0,2])]
+        for _ in range(15):
+            a=9998+rng.randrange(5)
+            J0=(a,a+rng.randrange(1,3))
+            J1=(J0[1]+2,J0[1]+2+rng.randrange(1,3))
+            total=(J0[1]-J0[0]+1)+(J1[1]-J1[0]+1)
+            first=rng.randrange(0,J0[1]-J0[0]+2)
+            bound=rng.randrange(first,total+1)
+            examples.append(([J0,J1],[first,bound]))
+        for windows,thresholds in examples:
+            U=support(self.Q,windows)
+            H=max(U)-min(U)+1
+            fine=cumulative_capacity(self.Q,windows,H,thresholds)[0]
+            coarse=cumulative_capacity(self.Q,windows,1,thresholds)[0]
+            self.assertLessEqual(coarse,fine)
+            choices=[]
+            for L,R in windows:
+                choices.append([
+                    selected
+                    for n in range(R-L+2)
+                    for selected in choose(range(L,R+1),n)
+                ])
+            brute=min(
+                mixed_energy(self.Q,[v for cohort in selection for v in cohort])
+                for selection in product(*choices)
+                if len(selection[0])>=thresholds[0]
+                and sum(map(len,selection))>=thresholds[1]
+            )
+            with self.subTest(windows=windows,thresholds=thresholds):
+                self.assertEqual(fine,brute)
+
+    def test_cumulative_bounds_safe_for_genuine_b3_prefix(self):
+        carrier=[1,2,5,14,33,72]
+        X,Y=carrier[:2],carrier[2:4]
+        Q=qxy(X,Y)
+        windows=[(carrier[4],carrier[4]),(carrier[5],carrier[5])]
+        self.assertTrue(b3(carrier))
+        for h in (1,3,9,101):
+            self.assertEqual(
+                cumulative_capacity(Q,windows,h,[1,2])[0],0)
 
     def test_cauchy_fractional_pressure_is_strictly_weaker_on_hostile_case(self):
         Z=[10000,10004]
