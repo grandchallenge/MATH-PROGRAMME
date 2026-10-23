@@ -181,6 +181,13 @@ def full_prefix_integer_bound(P,Z,windows,h):
     return 9*sum(phi(n,c) for n,c in zip(load,cap))
 
 
+def full_prefix_cumulative_bound(P,windows,h,checkpoint_minimums):
+    """All-old-pair PPZ bound: factor NINE, not distinct-colour 36."""
+    Q=set(old_pair_sum_weights(P))
+    value,witness=cumulative_capacity(Q,windows,h,checkpoint_minimums)
+    return (value//4 if value is not None else None),witness
+
+
 def brute_integer_collision_min(N,C):
     best=None
     for cells in product(range(N+1),repeat=C):
@@ -446,7 +453,7 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
         self.assertEqual(hist(U,6),(3,4,5,4,4,4))
         # Cumulative total two; neither window individually required.
         self.assertEqual(cumulative_capacity(Q,windows,1,[0,2])[0],0)
-        self.assertGreater(cumulative_capacity(Q,windows,6,[0,2])[0],0)
+        self.assertEqual(full_prefix_cumulative_bound(P,windows,6,[0,2])[0],18)
         for z0 in (1000,1001):
             for z1 in (1002,1003):
                 with self.subTest(z0=z0,z1=z1):
@@ -462,6 +469,23 @@ class JointWindowIntegerDefectTests(unittest.TestCase):
         self.assertEqual(mixed_energy(qxy(X,Y),Z),0)
         self.assertGreater(full_prefix_mixed_defect(P,Z),0)
 
+
+    def test_full_prefix_minimum_uses_nine_not_three_colour_thirty_six(self):
+        P=[1,2,5,14]
+        windows=[(1000,1001),(1002,1003)]
+        self.assertEqual(
+            full_prefix_cumulative_bound(P,windows,1,[0,2])[0],0)
+        self.assertEqual(
+            full_prefix_cumulative_bound(P,windows,6,[0,2])[0],18)
+        self.assertEqual(
+            full_prefix_cumulative_bound(P,windows,50,[0,2])[0],36)
+        best_exact=min(
+            full_prefix_mixed_defect(P,list(selected))
+            for selected in combinations(range(1000,1004),2))
+        self.assertEqual(best_exact,54)
+        self.assertLessEqual(
+            full_prefix_cumulative_bound(P,windows,50,[0,2])[0],
+            best_exact)
     def test_full_prefix_residue_charge_safe_on_genuine_critical_code(self):
         code=moment_code(17)
         self.assertTrue(b3(code))
