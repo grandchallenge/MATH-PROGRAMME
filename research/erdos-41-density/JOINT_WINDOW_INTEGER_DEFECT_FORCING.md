@@ -293,25 +293,25 @@ The full-prefix bound in Theorem H is deliberately conservative: each unordered 
 
 For a fixed modulus h and actual future selections Z, and for each residue class t, define the **number**, **weighted mass**, and **diagonal squared mass** of labelled $(q,z)$ inputs:
 
-$
+$$
 N_t=\sum_{q,z:\,q+z\equiv t\pmod h}1,\qquad
 W_t=\sum_{q,z:\,q+z\equiv t\pmod h}\omega(q),\qquad
 B_t=\sum_{q,z:\,q+z\equiv t\pmod h}\omega(q)^2.
-$
+$$
 
 Here q ranges over $Q(P)$ and z over Z. These are exact integer convolutions of the old-pair residue histograms (separated into diagonal and off-diagonal weights) against the future-window integer residue populations.
 
 For $C>0$ and $W=Cv+w$, $0\le w<C$, put
 
-$
+$$
 \Psi(W,C)=(C-w)v^2+w(v+1)^2.
-$
+$$
 
 This is the minimum $\sum_{j=1}^C a_j^2$ over all **nonnegative integers** $a_j$ totalling W. It allows the weight-two contributions to split into separate unit masses, so it is a relaxation, never an overestimate of the actual weighted squared energy. Let $c_t$ be the number of available integer sums in $(Q(P)+\bigcup_iJ_i)$ congruent to t modulo h.
 
 **Theorem I (weighted full-prefix modular collision certificate).** For every genuine old B3 prefix P and arbitrary future set Z contained in the declared windows,
 
-$
+$$
 \boxed{
 \mathfrak d_6(P\cup Z)
 \ge \mathfrak d_{PPZ}
@@ -322,14 +322,14 @@ $
 0
 \right\}.
 }\tag{WEIGHTED-INTEGER-DEFECT}
-$
+$$
 
 A term with $c_t=0$ necessarily has $N_t=W_t=B_t=0$ for a correctly formed support. The bound is exact for every actual Z when
 
-$
+$$
 h>\max(Q(P)+\textstyle\bigcup_iJ_i)
 -\min(Q(P)+\textstyle\bigcup_iJ_i).
-$
+$$
 
 Under that finite-modulus condition each occupied residue contains at most one actual integer sum, so $c_t\in\{0,1\}$ and $\Psi(W_t,1)=W_t^2$. Thus the rightmost sum **equals the full weighted** $\mathfrak d_{PPZ}$, rather than just the weaker unweighted collision count.
 
