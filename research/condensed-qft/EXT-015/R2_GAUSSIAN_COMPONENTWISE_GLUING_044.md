@@ -172,6 +172,58 @@ Eliminating the first two coordinates in either order has determinant prefactor 
 
 This **does not** establish the full renormalized subgraph forest formula: Schur elimination of graph **variables** generates effective interactions between remaining vertices, and is not the same as assigning universal counterterms to edge subgraphs. It is an exact, reusable compatibility lemma for a Gaussian sector of that larger programme.
 
+## 3A. A mixed Wick/BV edge sector with a Gaussian collision backbone
+
+The preceding graph class consists only of delta propagators and their jets. There is a larger **domain-closed edge-replacement sector** that also contains the free cusp propagator, but only when a connected spanning set of Gaussian delta edges already controls all relative positions.
+
+Write the edges of a connected labeled multigraph as the disjoint union $E_D\sqcup E_P$, with $E_D$ a connected spanning subgraph. For each delta edge use a Gaussian kernel derivative $\kappa_{\epsilon,w}^{(r)}$ as above. For each even Wick edge use
+
+$
+P_{\epsilon,w}(z)=\left(\frac{|\cdot|}{2}*\kappa_{\epsilon,w}\right)(z)
+=\epsilon p_w(z/\epsilon),
+\qquad p_w''=\kappa_{1,w}.
+\tag{44.15}
+$
+
+Allow a derivative order $t_f\ge0$ on each Wick edge. Let $R_D=\sum_{e\in E_D}r_e$, $R_P=\sum_{f\in E_P}t_f$, and $h_D=|E_D|-(n-1)$. The regulated amplitude is the product of all edge kernels evaluated on their differences, and put
+
+$
+\Omega=h_D+R_D+R_P-|E_P|.
+\tag{44.16}
+$
+
+**Theorem 44.8 (mixed Gaussian-backed collision extension and exact free edge identity).** For any such finite connected graph, the regulated amplitude admits a full Laurent-asymptotic expansion in integer powers of $\epsilon$ with coefficients that are finite-order distributions supported on the **full vertex collision diagonal**. Its nonnegative-power finite part after local subtraction of negative powers exists strongly in distributions. Moreover the finite-part assignment obeys, for any selected Wick edge $f$ and any $t\ge0$, the exact edge substitution identity
+
+$
+\mathrm{FP}\left[
+P_{\epsilon,w_f}^{(t+2)}(d_f)
+\prod_{e\ne f} K_{e,\epsilon}(d_e)
+\right]
+=
+\mathrm{FP}\left[
+\kappa_{\epsilon,w_f}^{(t)}(d_f)
+\prod_{e\ne f} K_{e,\epsilon}(d_e)
+\right].
+\tag{44.17}
+$
+
+The differentiated-Wick-to-delta replacement preserves the connected delta-backbone hypothesis. The same identity holds after any finite sequence of such edge conversions and after any fixed vertex differentiation. The result is a **nontrivial class of renormalized free graphwise BV edge relations**, not a complete BV differential on a domain closed under all graph insertions.
+
+**Proof.** The positive-weight delta backbone has a positive definite reduced Laplacian $Q_D$. With $Z\sim N(0,Q_D^{-1})$, the scaling of the delta jets is $\epsilon^{-1-r}$ per edge, while the scaling of a $t$th Wick jet is $\epsilon^{1-t}$. Hence the amplitude has the exact form
+
+$
+c_D\,\epsilon^{-\Omega}\,
+\rho_{\epsilon,Q_D}(y)\,
+F(y/\epsilon),
+\tag{44.18}
+$
+
+where $F$ is the product of finitely many Hermite polynomials evaluated on linear forms and finitely many functions $p_w^{(t)}$ evaluated on linear forms. Each $p_w$ grows at most linearly and all its derivatives grow at most polynomially; $F$ thus has at most polynomial growth. Every mixed Gaussian moment $\mathbb E[F(Z)Z^\alpha]$ is finite. Taylor expansion of a test function in the relative coordinates proves the full local Laurent expansion, with subtraction through degree $\Omega-1$ when $\Omega>0$ and finite term at degree $\Omega$ when $\Omega\ge0$; if $\Omega<0$, the limit is zero. Gaussian decay provides bounds on every Taylor remainder and strong convergence.
+
+The identity $P_{\epsilon,w}^{(t+2)}=\kappa_{\epsilon,w}^{(t)}$ is an equality of smooth functions for **each positive regulator**. Multiplying either side by all other edge factors preserves equality. Both sides have Laurent expansions, whose coefficients, and in particular finite parts, must therefore agree. Converting the selected Wick edge to a delta edge adds an edge to the delta backbone and does not destroy its connectivity. Iteration gives the repeated conversion statement. Vertex differentiation is a fixed continuous linear map on distributions and therefore commutes with the extraction of the $\epsilon^0$ coefficient. $\square$
+
+**Boundary:** This establishes the free relation $P_\epsilon''=K_\epsilon$ after local renormalization at the level of a specified connected Gaussian-backed **graph amplitude**. The second-order BV operator identity on arbitrary products additionally needs closure under gluing that can remove the delta backbone, plus a coherent counterterm assignment across proper overlapping subgraphs. Neither follows from Theorem 44.8.
+
 ## 4. A real factorization obstruction and its exact correction
 
 Let $G_1$ and $G_2$ be **two disjoint triangles**, with identical unit weights. For each connected triangle $h=1$, so $\mathrm{FP}(T_{G_i})=0$ by (44.6). But the regularized tensor product has expansion
