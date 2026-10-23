@@ -222,6 +222,26 @@ where $F$ is the product of finitely many Hermite polynomials evaluated on linea
 
 The identity $P_{\epsilon,w}^{(t+2)}=\kappa_{\epsilon,w}^{(t)}$ is an equality of smooth functions for **each positive regulator**. Multiplying either side by all other edge factors preserves equality. Both sides have Laurent expansions, whose coefficients, and in particular finite parts, must therefore agree. Converting the selected Wick edge to a delta edge adds an edge to the delta backbone and does not destroy its connectivity. Iteration gives the repeated conversion statement. Vertex differentiation is a fixed continuous linear map on distributions and therefore commutes with the extraction of the $\epsilon^0$ coefficient. $\square$
 
+**Example 44.9 (a nonzero mixed Wick/BV collision).** Give a triangle three unit-weight delta edges and add one unit-weight Wick edge parallel to one triangle edge. The delta backbone has $h_D=1$ and the Wick edge lowers the exponent to $\Omega=0$. Its reduced Gaussian covariance gives variance $2/3$ to the difference along the selected edge. Using the independent unit-variance Gaussian in the convolution $p_1$, the expected smooth cusp value is
+
+$
+\mathbb E[p_1(Z_1-Z_2)]
+=
+\frac12\,\mathbb E\left|N(0,5/3)\right|
+=\sqrt{\frac{5}{6\pi}}.
+\tag{44.19}
+$
+
+Since the triangle normalization is $c_\triangle=1/\sqrt{6\pi}$, this graph has the **nonzero** finite local amplitude
+
+$
+\mathrm{FP}(T_{\triangle+P})=
+\frac{\sqrt5}{6\pi}\,\delta_\triangle.
+\tag{44.20}
+$
+
+Applying two edge derivatives to the Wick factor converts it into a fourth delta edge exactly. The four-delta graph has reduced precision matrix $\left(\begin{smallmatrix}3&-2\\-2&3\end{smallmatrix}\right)$, determinant $5$ and cycle rank two; its finite-part amplitude is $(4\pi\sqrt5)^{-1}\mathcal L_{4\delta}\delta_\triangle$, visibly nonzero. Thus Theorem 44.8 has nontrivial model instances on both sides of its edge conversion.
+
 **Boundary:** This establishes the free relation $P_\epsilon''=K_\epsilon$ after local renormalization at the level of a specified connected Gaussian-backed **graph amplitude**. The second-order BV operator identity on arbitrary products additionally needs closure under gluing that can remove the delta backbone, plus a coherent counterterm assignment across proper overlapping subgraphs. Neither follows from Theorem 44.8.
 
 ## 4. A real factorization obstruction and its exact correction
