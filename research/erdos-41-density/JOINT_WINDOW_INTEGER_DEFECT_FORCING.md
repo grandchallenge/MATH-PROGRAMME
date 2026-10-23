@@ -150,6 +150,34 @@ Consequently the jointly optimized forced lower bounds also satisfy $\Gamma_H\ge
 
 This creates a genuine hierarchy of rigorous collision lower bounds. It is NOT a monotone-in-time potential for legal B3 prefixes: every such prefix has zero exact defect, and there is still no theorem that some modulus must eventually force $\Gamma_h>0$ under persistent critical density.
 
+## 4A. Finite completeness at a sufficiently fine modulus
+
+**Theorem E (exactness threshold for one selected mixed-colour family).** Put
+
+$
+D=\max\mathcal U-\min\mathcal U,\qquad H>D.
+$
+
+For this finite candidate-window problem, every nonzero residue class modulo H contains **at most one integer of** $\mathcal U$, and each admissible window position is also uniquely specified by its residue modulo H. Consequently,
+
+$
+\boxed{
+\Gamma_H
+=
+\min_{\substack{Z_i\subseteq J_i\\|Z_i|\ge k_i}}
+36\sum_s r_{Q,Z}(s)(r_{Q,Z}(s)-1)
+=
+\min_{\substack{Z_i\subseteq J_i\\|Z_i|=k_i}}
+\mathfrak d_{XYZ}.
+}\tag{FINITE-ARITHMETIC-COMPLETENESS}
+$
+
+Here $r_{Q,Z}(s)=|\{(q,z)\in Q\times\bigcup_iZ_i:q+z=s\}|$ and $\mathfrak d_{XYZ}$ denotes the **selected mixed-colour contribution only**. In particular, $\Gamma_H=0$ if and only if there is an actual selection meeting every required window population whose selected mixed three-colour sums $Q+Z$ are all different.
+
+**Proof.** Fix some $q_0\in Q$. The translated subset $q_0+\bigcup_iJ_i$ lies inside $\mathcal U$, so the map from all candidate future positions to residues modulo H is injective: any two distinct such positions have integer separation at most D, less than H. The same holds for Q by fixing an arbitrary future candidate position. Every integer vector $z_{i,r}$ satisfying the literal per-window capacity constraints is therefore exactly the residue description of a unique collection of selected actual integers $Z_i$. Moreover, distinct positions $s\in\mathcal U$ occupy distinct H-residues and their capacities $c_t$ are either zero or one. For $c_t=1$, the integer-fibre minimum is identically $\Phi(N_t,1)=N_t(N_t-1)$; $N_t$ is exactly the representation multiplicity at its unique actual integer sum. Thus the modular lower bound is equality for EVERY candidate collection. Minimizing over the equal-population allocations gives the rightmost expression. The minimum under $\ge k_i$ agrees because removal of any surplus future element cannot create a collision and the chosen minima are feasible whenever the population lower bounds are. QED.
+
+**Limits and complexity.** This theorem is a finite **completeness result for a chosen collision type**, not for all possible B3 triple-colour types. Avoidance of $(X,Y,\bigcup Z_i)$-mixed collisions may coexist with illegal $(X,X,Z)$, $(X,Z,Z)$ or other triple equalities. The exactness modulus H can grow with the full window span; it does NOT give a bounded or uniformly efficient modular certificate, nor establish eventual overload in a c-persistent infinite B3 configuration. For a useful density theorem the challenge is obtaining a forcing statement at a controlled collection of windows/moduli without merely exhaustively restating finite extension feasibility.
+
 ## 5. Concrete simultaneous-window obstruction missed by separate windows and total capacity
 
 Take
