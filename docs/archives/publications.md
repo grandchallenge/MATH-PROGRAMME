@@ -20,6 +20,7 @@ The following machine-readable records remain public even though they are not si
 - [Hodge Conjecture](../documentaries/github_math/hodge.md)
 - [Navier–Stokes](../documentaries/github_math/navier_stokes.md)
 - [Poincaré Conjecture](../documentaries/github_math/poincare.md)
+- [Union-Closed Conjecture](../documentaries/github_math/union_closed.md)
 - [P versus NP](../documentaries/github_math/p_vs_np.md)
 - [Yang–Mills](../documentaries/github_math/yang_mills.md)
 

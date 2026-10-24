@@ -94,7 +94,7 @@ def BeautifulSoup(source,_parser):
 
 ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/"docs/documentaries"
-NAMES=("bsd","riemann","hodge","navier_stokes","poincare","p_vs_np","yang_mills")
+NAMES=("bsd","riemann","hodge","navier_stokes","poincare","p_vs_np","yang_mills","union_closed")
 DEST=DOCS/"github_math"
 
 def relink(url):
