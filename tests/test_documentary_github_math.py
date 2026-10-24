@@ -30,6 +30,11 @@ class GitHubDocumentaryMath(unittest.TestCase):
         self.assertEqual(n,31)
         self.assertIn(r"\mathop{\mathrm{supp}}",text)
         self.assertIn(r"\mathop{\mathrm{freq}}",text)
+        # Exact TeX preserved; isolate GitHub-sensitive appendix spans.
+        self.assertIn("\\n\\nThe frequency is $",text)
+        self.assertIn("\\n\\nAn element is abundant when $",text)
+        self.assertIn(r"=|\{A\in\mathcal F:x\in A\}|$",text)
+        self.assertIn(r"\ge|\mathcal F|$",text)
 
     def test_strict_github_math_source_syntax(self):
         for name in NAMES:
