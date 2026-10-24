@@ -156,7 +156,11 @@ Technical appendix A
 
 ## Precise definitions and normalizations
 
-For finite $\mathcal F\subseteq\mathcal P(U)$, define $\mathop{\mathrm{supp}}(\mathcal F)=\bigcup\mathcal F$ and $\mathop{\mathrm{freq}}_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|$. An element is abundant when $2\mathop{\mathrm{freq}}_{\mathcal F}(x)\ge|\mathcal F|$. The canonical target requires nonempty support and reduces the ground set to the support. It excludes both the empty family and the family $\{\varnothing\}$: in either case no support element exists.
+For finite $\mathcal F\subseteq\mathcal P(U)$, define $\mathop{\mathrm{supp}}(\mathcal F)=\bigcup\mathcal F$.
+
+The frequency is $\mathop{\mathrm{freq}}_{\mathcal F}(x)=|\{A\in\mathcal F:x\in A\}|$.
+
+An element is abundant when $2\mathop{\mathrm{freq}}_{\mathcal F}(x)\ge|\mathcal F|$. The canonical target requires nonempty support and reduces the ground set to the support. It excludes both the empty family and the family $\{\varnothing\}$: in either case no support element exists.
 
 Technical appendix B
 
