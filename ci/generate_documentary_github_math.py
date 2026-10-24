@@ -225,25 +225,27 @@ def generate(n):
     header+="> This is not independent mathematical or publication certification.\n\n"
     notices=pre_article_notices(dom,art)
     txt=norm_math(header+"".join(render(note) for note in notices)+render(art))
-    # GFM can consume raw cardinality pipes before inline math is typeset.
-    # Preserve the mathematical bodies by using equivalent TeX delimiters;
-    # source parity is enforced through the explicit inverse below.
+    # GitHub's live Markdown view failed to typeset the third and fourth
+    # inline formulas of the long Technical appendix A paragraph, although
+    # identical TeX typesets earlier in the document. Split that generated
+    # paragraph at sentence boundaries; preserve every TeX formula byte and
+    # leave the authoritative illustrated source untouched.
     if n == "union_closed":
-        fixes = (
-            (r"=|\{A\in\mathcal F:x\in A\}|",
-             r"=\lvert\{A\in\mathcal F:x\in A\}\rvert"),
-            (r"\ge|\mathcal F|", r"\ge\lvert\mathcal F\rvert"),
+        splits = (
+            (" and $\\mathop{\\mathrm{freq}}_{\\mathcal F}(x)="
+             "|\\{A\\in\\mathcal F:x\\in A\\}|$. An element is abundant",
+             ".\n\nThe frequency is $\\mathop{\\mathrm{freq}}_{\\mathcal F}(x)="
+             "|\\{A\\in\\mathcal F:x\\in A\\}|$.\n\nAn element is abundant"),
         )
-        for old, new in fixes:
+        for old, new in splits:
             if txt.count(old) != 1:
-                raise ValueError(f"union_closed cardinality normalization: expected one {old!r}")
+                raise ValueError("union_closed appendix paragraph boundary drift")
             txt = txt.replace(old, new)
     expected=formula_bodies(" ".join(node.get_text(" ",strip=False)
                                      for node in [*notices,art]))
     actual=formula_bodies(txt)
     def compact(x):
         x=x.replace("\u200b","").replace(r"\\#",r"\#").replace(r"\Vert{}",r"\|")
-        x=x.replace(r"\lvert", "|").replace(r"\rvert", "|")
         x=re.sub(r"\\mathop\{\\mathrm\{([^{}]+)\}\}",
                  lambda m:r"\operatorname{"+m.group(1)+"}",x)
         return re.sub(r"\s+","",x)
