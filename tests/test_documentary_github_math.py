@@ -1,4 +1,4 @@
-"""Source-locked seven-documentary GitHub mathematics reader regression."""
+"""Source-locked eight-documentary GitHub mathematics reader regression."""
 import subprocess
 import sys
 import unittest
@@ -24,6 +24,12 @@ class GitHubDocumentaryMath(unittest.TestCase):
                 self.assertIn("No solution claimed" if name=="riemann" else "Source status:",text)
                 self.assertNotIn("<div",text)
                 self.assertNotIn("<script",text)
+
+    def test_union_closed_31_formula_parity(self):
+        _,_,_,text,n=generate("union_closed")
+        self.assertEqual(n,31)
+        self.assertIn(r"\mathop{\mathrm{supp}}",text)
+        self.assertIn(r"\mathop{\mathrm{freq}}",text)
 
     def test_strict_github_math_source_syntax(self):
         for name in NAMES:

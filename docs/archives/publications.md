@@ -21,6 +21,7 @@ The following machine-readable records remain public even though they are not si
 - [Navier–Stokes](../documentaries/github_math/navier_stokes.md)
 - [Poincaré Conjecture](../documentaries/github_math/poincare.md)
 - [P versus NP](../documentaries/github_math/p_vs_np.md)
+- [Union-Closed Sets](../documentaries/github_math/union_closed.md)
 - [Yang–Mills](../documentaries/github_math/yang_mills.md)
 
 ## Source records and edition metadata

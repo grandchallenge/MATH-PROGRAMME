@@ -1,6 +1,6 @@
 # GitHub mathematical source readers
 
-These seven text-first pages are deterministically generated from the **canonical HTML documentary manuscripts**. They allow GitHub's Markdown renderer to typeset equations that GitHub does not parse inside the original elaborate HTML monographs. They are not separate authorships, theorem corrections, replacements for illustrated editions, mathematical certification or final publication approval.
+These eight text-first pages are deterministically generated from the **canonical HTML documentary manuscripts**. They allow GitHub's Markdown renderer to typeset equations that GitHub does not parse inside the original elaborate HTML monographs. They are not separate authorships, theorem corrections, replacements for illustrated editions, mathematical certification or final publication approval.
 
 The original files remain canonical. Each original links to its corresponding GitHub reader outside the HTML wrapper; the reader links back to the original.
 
@@ -13,7 +13,8 @@ The original files remain canonical. Each original links to its corresponding Gi
 | Poincaré Conjecture | 12 | 12 | 24 | 24 |
 | P versus NP | 23 | 23 | 46 | 46 |
 | Yang–Mills | 14 | 14 | 28 | 28 |
-| **Total** | **206** | **206** | **412** | **412** |
+| **Seven previously browser-reviewed readers** | **206** | **206** | **412** | **412** |
+| Union-Closed (new; browser review pending) | 31 | 31 | 62 | UNVERIFIED |
 
 ## Reproduction
 
@@ -32,3 +33,7 @@ Initial protected source baseline: 32636637d87f6df70bbaaf256da1dad956cabfee (202
 Original [cross-render verifier #1263](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1263), [implementation issue #2757](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2757).
 
 The generator uses Python standard-library HTMLParser and adds no third-party parser dependency. This matrix records local browser acceptance, not a public deployment or independent mathematical certification.
+
+## Union-Closed extension
+
+The Union-Closed GitHub reader is generated from the canonical illustrated manuscript without changing its 31 mathematical TeX bodies or claim status. The 31-source/31-reader count is checked by the generator and tests; the live GitHub browser MathML count is **not yet accepted**. ED06 issue #1261 tracks the scoped acceptance; ED08 issue #1263 retains programme-wide cross-render acceptance.
