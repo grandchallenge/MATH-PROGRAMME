@@ -25,6 +25,16 @@ class GitHubDocumentaryMath(unittest.TestCase):
                 self.assertNotIn("<div",text)
                 self.assertNotIn("<script",text)
 
+    def test_union_closed_source_coverage(self):
+        # Nine mathematical expressions were absent from the raw GitHub view.
+        # Source-order parity in generate() is the controlling regression.
+        src, canonical, dest, reader, count = generate("union_closed")
+        self.assertEqual(count, 31)
+        self.assertEqual(canonical.count("github_math/union_closed.md"), 1)
+        self.assertIn("Open conjecture", reader)
+        self.assertIn("No proof claimed", reader)
+        self.assertNotEqual(src.read_text(encoding="utf-8"), reader)
+
     def test_strict_github_math_source_syntax(self):
         for name in NAMES:
             with self.subTest(documentary=name):
