@@ -14,6 +14,8 @@ Existing authenticated issue research return and six-section unaccepted mathemat
 
 The condition forbids an element dividing two distinct others in A, not ordinary primitive sets. Finite enumeration shows f(15)=10 and the interval (n/3,n] provides a 2n/3 lower construction. The limit f(n)/n and whether it is irrational require independent verification from primary Erdős sources.
 
+Publisher-source metadata resolved: Kenneth Lebensold, *A Divisibility Problem*, *Studies in Applied Mathematics* **56**(3), pp. 291–294, first published **June 1977**, DOI [10.1002/sapm1977563291](https://doi.org/10.1002/sapm1977563291). The publisher abstract supports the reported numerical asymptotic bounds, but its four full proof pages have **not** been obtained, hashed, or independently proof-audited. This resolves only the publication-date ambiguity, not the critical-review obligation.
+
 Additional relevant original literature/formal evidence to verify: https://www.erdosproblems.com/1062
 
 ## Required nonauthor critical-review tasks
