@@ -31,8 +31,8 @@ class GitHubDocumentaryMath(unittest.TestCase):
         self.assertIn(r"\mathop{\mathrm{supp}}",text)
         self.assertIn(r"\mathop{\mathrm{freq}}",text)
         # Exact TeX preserved; isolate GitHub-sensitive appendix spans.
-        self.assertIn("\\n\\nThe frequency is $",text)
-        self.assertIn("\\n\\nAn element is abundant when $",text)
+        self.assertIn("\n\nThe frequency is $",text)
+        self.assertIn("\n\nAn element is abundant when $",text)
         self.assertIn(r"=|\{A\in\mathcal F:x\in A\}|$",text)
         self.assertIn(r"\ge|\mathcal F|$",text)
 
