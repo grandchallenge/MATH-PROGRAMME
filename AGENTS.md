@@ -10,6 +10,12 @@ One Codex system may staff multiple non-reserved roles through distinct,
 role-scoped logical audit passes. Identity, session, account, or generic human
 approval multiplication is not intrinsically required.
 
+## CHAD Python deployment and Controlled Folder Access
+
+When a work package runs Python on the shared CHAD CONTROL host, use the protected [CONTROL agent instructions](https://github.com/grandchallenge/CONTROL/blob/fe3c2feb4cefaf99531daeac5739f0d85ff04d24/AGENTS.md) and [uv deployment contract](https://github.com/grandchallenge/CONTROL/blob/fe3c2feb4cefaf99531daeac5739f0d85ff04d24/docs/UV_DEPLOYMENT.md), admitted at CONTROL commit `fe3c2feb4cefaf99531daeac5739f0d85ff04d24`.
+
+Use the pinned interpreter and committed `uv.lock`; install in a new inactive release using a locked sync, and keep Python caches outside Windows Defender Controlled Folder Access protected `Documents\Codex` paths. CHAD WSL caches are private directories on ext4; Windows Python bytecode caches use `%LOCALAPPDATA%\GCL\PythonBytecodeCache`. Do not disable Defender, bypass upstream platform safety denials, or start a second authenticated CONTROL tunnel. A successfully built source package is not proof of a deployed service, completed Colab job, or released GPU lease. These requirements are for CHAD/CONTROL-backed execution; they do not impose one Python version or lockfile on every unrelated research repository.
+
 ## Recurring operations: run failure is not schedule retirement
 
 A failed, blocked, empty, or interrupted run must not unilaterally disable, delete, pause, or reschedule its recurring automation. Treat run status and desired schedule state separately. Retire only on an explicit authenticated user instruction or a protected governed terminal disposition with readback; preserve actor, reason, authority source, UTC transition and scheduler readback. A safety-denied action may not be retried or routed around without independently verified remediation; continue other permitted work on subsequent runs. Unknown disable actor or cause remains UNKNOWN, not an inferred fact. A drifted scheduler must be flagged and reconciled through real authority, not silently accepted. See `docs/governance/RECURRING_TASK_CONTINUITY_CONTRACT.md` and `governance/recurring_queue_continuity.json`. The repository guard is not itself a hosted-scheduler adapter.
