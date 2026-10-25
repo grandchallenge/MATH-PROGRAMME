@@ -14,6 +14,10 @@ approval multiplication is not intrinsically required.
 
 A failed, blocked, empty, or interrupted run must not unilaterally disable, delete, pause, or reschedule its recurring automation. Treat run status and desired schedule state separately. Retire only on an explicit authenticated user instruction or a protected governed terminal disposition with readback; preserve actor, reason, authority source, UTC transition and scheduler readback. A safety-denied action may not be retried or routed around without independently verified remediation; continue other permitted work on subsequent runs. Unknown disable actor or cause remains UNKNOWN, not an inferred fact. A drifted scheduler must be flagged and reconciled through real authority, not silently accepted. See `docs/governance/RECURRING_TASK_CONTINUITY_CONTRACT.md` and `governance/recurring_queue_continuity.json`. The repository guard is not itself a hosted-scheduler adapter.
 
+## Exact-operation recovery and research continuity
+
+Follow [operation-scoped recovery](docs/governance/OPERATION_SCOPED_RECOVERY_POLICY.md). A failed or explicitly denied mutation affects the exact invocation, not the entire research programme. Maintain the hold on a specifically denied operation without replaying or rerouting it; continue other genuinely independent authorized work, mathematical validation and read-only evidence gathering. Do not impose routine support escalation or renewed Human Steward approval on such independent work. Report mathematical checking, specialist review and protected admission as distinct states.
+
 ## Governed Lean/Colab compute skill
 
 For source-locked Lean work, discover .agents/skills/gcl-lean-colab/SKILL.md.
