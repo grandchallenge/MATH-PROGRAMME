@@ -14,6 +14,14 @@ MATH-PROGRAMME owns mathematics-specific operating policy subject to the INTELLE
 
 `GCL-GHOS-00` `0.2.0` is current authority for the bounded MATH-PROGRAMME pilot. Its standards-layer and programme adoption records remain protected evidence. This guide stands on existing authority and must remain compatible with superior controls.
 
+## Operation-scoped classification
+
+Apply [Operation-scoped recovery](OPERATION_SCOPED_RECOVERY_POLICY.md) to each execution failure. An explicit denial applies to the exact rejected operation; it does not, by itself, stop separate authorized research, exact-arithmetic validation, independent critical examination or protected operations on genuinely different material. Never treat an opaque provider denial as proof of a mathematical defect.
+
+Keep the rejected mutation on hold; do not replay, disguise, change transport, or repackage it to evade the restriction. Reconcile uncertain GitHub mutations read-only. A service request is an exception rather than a mandatory gate on otherwise independent operations.
+
+Use precise and minimal arguments that truthfully describe the actual operation. Do not add unrelated historical failures or broad safety/governance narratives to routine repository requests. This communication discipline does not authorize changes to the substance of a previously rejected action.
+
 ## Continuity rule
 
 For an already authorized bounded MATH operation, a recoverable infrastructure, connector, logging, check-surface, compiler-diagnostic, environment, CI, or tooling failure is not by itself a stopping condition.
