@@ -94,7 +94,7 @@ def BeautifulSoup(source,_parser):
 
 ROOT=Path(__file__).resolve().parents[1]
 DOCS=ROOT/"docs/documentaries"
-NAMES=("bsd","riemann","hodge","navier_stokes","poincare","p_vs_np","yang_mills")
+NAMES=("bsd","riemann","hodge","navier_stokes","poincare","p_vs_np","union_closed","yang_mills")
 DEST=DOCS/"github_math"
 
 def relink(url):
@@ -225,6 +225,22 @@ def generate(n):
     header+="> This is not independent mathematical or publication certification.\n\n"
     notices=pre_article_notices(dom,art)
     txt=norm_math(header+"".join(render(note) for note in notices)+render(art))
+    # GitHub's live Markdown view failed to typeset the third and fourth
+    # inline formulas of the long Technical appendix A paragraph, although
+    # identical TeX typesets earlier in the document. Split that generated
+    # paragraph at sentence boundaries; preserve every TeX formula byte and
+    # leave the authoritative illustrated source untouched.
+    if n == "union_closed":
+        splits = (
+            (" and $\\mathop{\\mathrm{freq}}_{\\mathcal F}(x)="
+             "|\\{A\\in\\mathcal F:x\\in A\\}|$. An element is abundant",
+             ".\n\nThe frequency is $\\mathop{\\mathrm{freq}}_{\\mathcal F}(x)="
+             "|\\{A\\in\\mathcal F:x\\in A\\}|$.\n\nAn element is abundant"),
+        )
+        for old, new in splits:
+            if txt.count(old) != 1:
+                raise ValueError("union_closed appendix paragraph boundary drift")
+            txt = txt.replace(old, new)
     expected=formula_bodies(" ".join(node.get_text(" ",strip=False)
                                      for node in [*notices,art]))
     actual=formula_bodies(txt)
