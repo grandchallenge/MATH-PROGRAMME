@@ -154,7 +154,7 @@ $$
 By Lemma 59.1, the coefficient in $f_{e,\epsilon}C_{K_4,\epsilon}$ is
 
 $$
-S=\frac{\kappa_0(A-B/2)}{1}
+S=\kappa_0(A-B/2)
 =\frac1{\pi^2}\left(
 \frac{67}{576}-\frac{3\sqrt2}8+\frac{\sqrt6}2\right).
 \tag{59.13}
@@ -162,7 +162,7 @@ $$
 
 Subtracting $S$ from $P$ gives exactly the right side of (59.10). The constant is nonzero because the rational numbers $1,\sqrt3,\sqrt6$ are linearly independent over $\mathbb Q$; its negativity can also be checked with rational enclosing bounds for the square roots. The support of each Gaussian term is exponentially concentrated near the full collision diagonal, so replacing the constant test by a compact test equal to one there incurs exponentially small Gaussian tails, even after the displayed negative powers. For delta derivatives, the product-with-test identity (59.7) is exact. Therefore the limit in (59.10) holds.
 
-There is no contradiction with the source limit (59.9): multiplying by $f_{e,\epsilon}$ evaluates the source remainder against an $\epsilon$-dependent test whose derivatives grow as negative powers of $\epsilon$; such tests are not a bounded subset of $\mathcal D$. $\square$
+There is no contradiction with the source limit (59.9): multiplying by $f_{e,\epsilon}$ evaluates the source remainder against a test depending on $\epsilon$ whose derivatives grow as negative powers of $\epsilon$; such tests are not a bounded subset of $\mathcal D$. $\square$
 
 **Warning on vocabulary:** The term in (59.6) is a contact correction to an *incorrect frozen-complement rule*. The term in (59.10) is a demonstrated continuity obstruction for *one renormalized graph multiplied by a new same-scale edge*. Neither is by itself a BV cohomological anomaly or a proof that no full-graph BPHZ forest recursion exists.
 
