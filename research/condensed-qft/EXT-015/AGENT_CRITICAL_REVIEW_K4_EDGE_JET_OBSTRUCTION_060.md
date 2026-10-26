@@ -8,7 +8,7 @@ Previous R2/051–052 establish the full K4 forest preparation with **both** its
 
 Potential false arguments excluded:
 
-1. An $O(\epsilon)$ distribution remainder on fixed tests does **not** imply that its pairing with $\epsilon$-varying Gaussian tests is small; those tests are not bounded in $\mathcal D$.
+1. An $O(\epsilon)$ distribution remainder on fixed tests does **not** imply that its pairing with Gaussian tests that vary with $\epsilon$ is small; those tests are not bounded in $\mathcal D$.
 2. The derivative-of-delta is **not** a scalar delta and its product with a smooth factor cannot be computed solely from the factor's value at the origin.
 3. The K4 theta source is already prepared; substituting its primitive five-edge Gaussian would erase nested forest terms and alter every constant.
 4. Renormalizing the *entire* new seven-edge graph is a different operation from multiplying a renormalized K4 source by the new positive-regulator edge. R2/059 proves a failure of the latter, not a no-go theorem for full seven-edge forests.
