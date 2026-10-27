@@ -53,7 +53,7 @@ Define the reduced quotient form and normalization
 $$
 S=D-CM^{-1}C^T,\qquad
 Z=(2\pi)^{-(k-m)/2}\det(M)^{-1/2},\qquad
-\Theta=\operatorname{tr}(HS).
+\Theta=\mathrm{tr}(HS).
 \tag{63.5}
 $$
 
@@ -106,7 +106,7 @@ $$
 
 Apply the distributional Leibniz action of [Theorem 61.1](R2_FILTERED_NORMAL_JET_INSERTION_061.md) to $G_\epsilon\delta_y$ and $G_\epsilon L\delta_y$, retaining both the Hessian contact and the original normal second jet. This gives (63.7) and the difference (63.8). All products of singular distributions are avoided because $F_\epsilon$ is smooth for each $\epsilon>0$; its rapid Gaussian decay in $q$ permits fiberwise integration of the delta-jet coefficients against compact tests.
 
-For any permutation of quotient coordinates, iterative Gaussian integration applies a succession of Schur complements. Both their determinant products and final reduced matrix equal $\det M$ and $S$ by elementary block Gaussian elimination. Equivalently, Fubini's theorem for the rapidly decaying smooth complement commutes with differentiation of its finite $y$-jet. Thus the intermediate expressions can differ, but the full jet and final contact are independent of elimination order. $\square$
+For any permutation of quotient coordinates, iterative Gaussian integration applies a succession of Schur complements. Both their determinant products and final reduced matrix equal $\det M$ and $S$ by elementary block Gaussian elimination. Equivalently, Fubini's theorem for the rapidly decaying smooth complement commutes with differentiation of its finite normal jets in $y$. Thus the intermediate expressions can differ, but the full jet and final contact are independent of elimination order. $\square$
 
 ## 3. Sharp geometric zero-contact criterion
 
@@ -114,7 +114,7 @@ For any permutation of quotient coordinates, iterative Gaussian integration appl
 
 $$
 S\succeq0,\qquad
-\Theta=\operatorname{tr}(HS)\ge0,
+\Theta=\mathrm{tr}(HS)\ge0,
 \tag{63.11}
 $$
 
@@ -130,7 +130,7 @@ $$
 
 If any external connected component attaches to two or more distinct original K4 vertices, then $\Theta>0$. Because the inherited $B<0$, its omitted scalar contact (63.8) then has a strictly **positive coefficient**.
 
-**Proof.** The full block quadratic energy is the sum of squares of edge differences between source or external coordinates. For fixed source $y$, minimizing over external coordinates $q$ yields $y^TSy$ by (63.9), so $S$ is positive semidefinite. The positive definite $H$ implies $\operatorname{tr}(HS)=0$ exactly when $S=0$. If an external component attaches to only one source vertex, set every external coordinate in that component equal to its attached source coordinate; this makes every edge difference vanish *for arbitrary source positions* and proves that this component contributes no reduced energy. If a component attaches to distinct source vertices $i,j$, choose source positions with $y_i\ne y_j$. Any path through that external component between the two attachments has strictly positive total squared-difference energy under every choice of external coordinates (a finite path cannot have all differences zero when its endpoints disagree); consequently $S\ne0$. This proves (63.12). $\square$
+**Proof.** The full block quadratic energy is the sum of squares of edge differences between source or external coordinates. For fixed source $y$, minimizing over external coordinates $q$ yields $y^TSy$ by (63.9), so $S$ is positive semidefinite. The positive definite $H$ implies $\mathrm{tr}(HS)=0$ exactly when $S=0$. If an external component attaches to only one source vertex, set every external coordinate in that component equal to its attached source coordinate; this makes every edge difference vanish *for arbitrary source positions* and proves that this component contributes no reduced energy. If a component attaches to distinct source vertices $i,j$, choose source positions with $y_i\ne y_j$. Any path through that external component between the two attachments has strictly positive total squared-difference energy under every choice of external coordinates (a finite path cannot have all differences zero when its endpoints disagree); consequently $S\ne0$. This proves (63.12). $\square$
 
 This strengthens the single-fifth-vertex resistance criterion of R2/061 to **arbitrary anchored external networks**. The criterion is geometric; neither $A$ nor $B$ has been refitted to the containing graph.
 
@@ -162,7 +162,7 @@ S=\frac15\begin{pmatrix}
 -2&3&-1\\
 -1&-1&2
 \end{pmatrix},\qquad
-\boxed{\Theta=\operatorname{tr}(HS)=\frac25},
+\boxed{\Theta=\mathrm{tr}(HS)=\frac25},
 \quad Z=\frac{1}{2\pi\sqrt5}.
 \tag{63.15}
 $$
@@ -170,8 +170,8 @@ $$
 **Theorem 63.3 (two legal quotient orders, one differentiated source).** Eliminating $t$ first and then $s$ produces an intermediate K4-covariance trace loss of $1/2$ followed by $3/5$. Eliminating $s$ first and then $t$ produces respective losses of $1/4$ and $17/20$. Both result in
 
 $$
-\operatorname{tr}(HD)-\left(\frac12+\frac35\right)
-=\operatorname{tr}(HD)-\left(\frac14+\frac{17}{20}\right)
+\mathrm{tr}(HD)-\left(\frac12+\frac35\right)
+=\mathrm{tr}(HD)-\left(\frac14+\frac{17}{20}\right)
 =\frac25,
 \qquad \det M=5.
 \tag{63.16}
@@ -212,7 +212,7 @@ For compactly supported tests equal near the full diagonal to the displayed poly
 
 The two **mixed** probes are nonzero and unequal. They detect the normal first-derivative jet *before* quotient integration and prevent a scalar-only approximation from accidentally passing a constant test.
 
-**Proof.** The two elimination decompositions are exact applications of the scalar Schur complement; the loss terms in (63.16) arise respectively from the squared $H$-norms of the source-to-external incidence columns divided by the corresponding conditional external precisions. Then (63.17)–(63.18) follow from (63.7)–(63.8). For the mixed probes pair $L\delta_y$ with $F_\epsilon(y,q)y_1q_a$ before quotient integration. Only the first derivative of the test and the first normal derivative of the complement contribute. Under the quotient Gaussian at the source collision, $\mathbb E[q_aq_b]=\epsilon^2(M^{-1})_{ab}$. Consequently the mixed coefficient is $2KB(HCM^{-1})_{1a}\epsilon^{-3}$; direct rational matrix multiplication gives $2(HCM^{-1})_{1t}=7/10$ and $2(HCM^{-1})_{1s}=3/5$. The quadratic normal test has $L(y_1^2)(0)=1$. Gaussian concentration makes cutoff errors exponentially small compared with each displayed power. $\square$
+**Proof.** The two elimination decompositions are exact applications of the scalar Schur complement; the loss terms in (63.16) arise respectively from the squared norms induced by $H$ of the source-to-external incidence columns divided by the corresponding conditional external precisions. Then (63.17)–(63.18) follow from (63.7)–(63.8). For the mixed probes pair $L\delta_y$ with $F_\epsilon(y,q)y_1q_a$ before quotient integration. Only the first derivative of the test and the first normal derivative of the complement contribute. Under the quotient Gaussian at the source collision, $\mathbb E[q_aq_b]=\epsilon^2(M^{-1})_{ab}$. Consequently the mixed coefficient is $2KB(HCM^{-1})_{1a}\epsilon^{-3}$; direct rational matrix multiplication gives $2(HCM^{-1})_{1t}=7/10$ and $2(HCM^{-1})_{1s}=3/5$. The quadratic normal test has $L(y_1^2)(0)=1$. Gaussian concentration makes cutoff errors exponentially small compared with each displayed power. $\square$
 
 ## 5. Exact controls, meaning and next mathematical gate
 
