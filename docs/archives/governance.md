@@ -26,6 +26,7 @@ These are supporting records, not necessarily current research instructions or c
 - [GCL Worker Queue and Collaboration](../governance/GCL_WORKER_QUEUE_COLLABORATION_OPERATING_DESIGN.md)
 - [Erdős Source-Return Queue Projection Runbook](../operations/ERDOS_QUEUE_RETURN_PROJECTION.md)
 - [Erdős Return Exceptions and Arbitration](../operations/ERDOS_RETURN_EXCEPTION_HANDLING.md)
+- [Source-integrity 46-case adjudication handoff (2026-10-21)](../handoffs/SOURCE_INTEGRITY_46_ADJUDICATION_20261021.md)
 - [Erdős-024 Forge Copilot Critical Review Pilot](../governance/ERDOS_024_FORGE_COPILOT_PILOT.md)
 - [Erdős #41 Authenticated Colab Route](../governance/ERDOS_041_COPILOT_ACTIVATION_GATED_001.md)
 - [Frontier Advancement Gate](../governance/FRONTIER_ADVANCEMENT_GATE.md)
