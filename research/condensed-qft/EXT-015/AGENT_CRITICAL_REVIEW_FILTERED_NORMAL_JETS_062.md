@@ -59,7 +59,7 @@ $$
 
 The result agrees with applying the partial-diagonal identity **before** Gaussian integration. This order-of-operations check is stronger than comparing one numerical coefficient.
 
-**Verdict:** ACCEPT the partial-diagonal and quotient-integrated formulas, including the first-derivative term away from the locus where $t=0$ and its cancellation when paired with $t$-independent tests.
+**Verdict:** ACCEPT the partial-diagonal and quotient-integrated formulas, including the first-derivative term away from the locus where $t=0$ and its cancellation when paired with tests independent of $t$.
 
 ## 3. Weighted resistance and precise zero set
 
