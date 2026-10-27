@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP003",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP004",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,31 +15,30 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "R3 bounded cover/injectivity return admitted; proceed to R1 locally normal differentiable model",
+  "phase": "R1 locally normal free Weiss source frozen and logically audited; complete protected admission",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "4f8d43213dca16537dbd6085bd77b0f6249083f8",
-    "candidate_head_sha": "ed02a2a998d93049fac73bcb18bbe2d474da2cf6",
+    "protected_base_sha": "a82eeb424f828f0402cb0d2d05fe565b350fc380",
+    "candidate_head_sha": "0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/ext015-r3-067-relation-cover-source",
+    "branch": "research/ext015-r1-069-locally-normal-source",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "construct-r1-normal-plot-model",
-      "description": "Verify admitted 030/033/035/038 and primary normal-tensor/CG definitions; construct and critically audit the locally normal plot model, its smooth disjoint operations and explicitly filtered completed Weiss comparison. Keep the global LCS identification, uniform regulator endpoint and R3 surjectivity open unless actually proved."
+      "id": "verify-r1-069-admission",
+      "description": "Inspect the unique PR on research/ext015-r1-069-admission-20261027, verify frozen source 0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb and critic 070, complete protected checks and merge/readback, record its bounded R1 result without closing unproved topology/regulator obligations, then rebind before the next R2 transition."
     }
   ],
   "next_action": {
-    "id": "construct-r1-normal-plot-model",
-    "description": "Verify admitted 030/033/035/038 and primary normal-tensor/CG definitions; construct and critically audit the locally normal plot model, its smooth disjoint operations and explicitly filtered completed Weiss comparison. Keep the global LCS identification, uniform regulator endpoint and R3 surjectivity open unless actually proved.",
+    "id": "verify-r1-069-admission",
+    "description": "Inspect the unique PR on research/ext015-r1-069-admission-20261027, verify frozen source 0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb and critic 070, complete protected checks and merge/readback, record its bounded R1 result without closing unproved topology/regulator obligations, then rebind before the next R2 transition.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/R1_NORMAL_CONE_CONTINUOUS_CONTRACTIONS_035.md",
-      "grandchallenge/MATH-PROGRAMME#2796",
-      "https://arxiv.org/abs/1409.7662",
-      "https://ncatlab.org/nlab/files/CostelloGwilliam-FactorizationAlgebras.pdf"
+      "branch research/ext015-r1-069-admission-20261027",
+      "research/condensed-qft/EXT-015/R1_LOCALLY_NORMAL_COMPLETED_WEISS_069.md",
+      "grandchallenge/MATH-PROGRAMME#2796"
     ]
   },
   "external_evidence": {
@@ -48,20 +47,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "protected-admit and read back R3/067–068",
-    "result": "PR #2869 merged at 4f8d43213dca16537dbd6085bd77b0f6249083f8. Exact proof/fixture/audit blobs matched; fixture replay and required checks passed. R3 and parent dockets updated. R3 injection is settled in the stated scope; degree-two surjectivity still requires (67.14). Continue independent R1 work.",
+    "action": "construct and logically audit the locally normal free Weiss model",
+    "result": "Source 069 supplies a refined DVS plot class with flat connection, smooth disjoint operations from hypocontinuity, explicit total-weight lifting and completed free zero-scale Weiss descent. Exact fixture and source gate PASS. Critic 070 supports only that scope; global LCS identification, uniform regulator endpoint, R3 surjectivity and global GB2 remain open. Candidate not yet protected-admitted.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#2869",
-      "protected 4f8d43213dca16537dbd6085bd77b0f6249083f8",
-      "research/condensed-qft/EXT-015/R3_EVALUATED_RELATION_COVER_067.md",
-      "grandchallenge/MATH-PROGRAMME#2798"
+      "source 0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb",
+      "proof blob 43d05f2b41cd5fd115a0294f85596a8b8e31cab0",
+      "fixture blob 90be2ccdbd212fee5b0da2e8fd88100d6a845387"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-27T11:23:45Z"
+    "observed_at": "2026-10-27T11:32:44Z"
   },
   "resume": {
     "fresh_session_safe": true,
