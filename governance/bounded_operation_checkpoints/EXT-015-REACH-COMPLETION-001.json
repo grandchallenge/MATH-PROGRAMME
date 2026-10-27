@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP005",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP006",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,30 +15,32 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "R1 locally normal free Weiss return admitted; proceed to exact R2 insertion contract",
+  "phase": "R2 finite Laurent insertion contract refuted on exact source; admit and integrate typed scopes",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "709556bbb4b042d7691bb69a5209983c2a87deba",
-    "candidate_head_sha": "0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb",
+    "protected_base_sha": "5672f083cc2071564eab0bbdaed74d561eab60c1",
+    "candidate_head_sha": "4b4137e4022d00c6fa9a0d8730d1382d4fde6eac",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/ext015-r1-069-locally-normal-source",
+    "branch": "research/ext015-r2-071-finite-state-source",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "settle-r2-finite-state-contract",
-      "description": "State the positive-regulator Gaussian insertion module and its finite Laurent-state compatibility diagram; prove or refute factorization through a fixed cutoff, with exact contact and remainder bounds. Keep the whole-amplitude contract separate from proper forests and do not claim global BV/QME from that result."
+      "id": "verify-r2-return-and-build-typed-integration-map",
+      "description": "Verify protected admission and exact source/fixture/audit readback of R2/071–072; then integrate the admitted R1, R2 and R3 scopes into one typed R4 comparison/failure map with a source-bound logical critical audit. Preserve all genuinely unresolved global topology, regulator, BV and degree-two surjectivity gates."
     }
   ],
   "next_action": {
-    "id": "settle-r2-finite-state-contract",
-    "description": "State the positive-regulator Gaussian insertion module and its finite Laurent-state compatibility diagram; prove or refute factorization through a fixed cutoff, with exact contact and remainder bounds. Keep the whole-amplitude contract separate from proper forests and do not claim global BV/QME from that result.",
+    "id": "verify-r2-return-and-build-typed-integration-map",
+    "description": "Verify protected admission and exact source/fixture/audit readback of R2/071–072; then integrate the admitted R1, R2 and R3 scopes into one typed R4 comparison/failure map with a source-bound logical critical audit. Preserve all genuinely unresolved global topology, regulator, BV and degree-two surjectivity gates.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#2797",
-      "research/condensed-qft/EXT-015/R2_BRIDGE_TREE_LAURENT_BV_046.md",
-      "research/condensed-qft/EXT-015/R2_NESTED_GAUSSIAN_JET_FOREST_065.md"
+      "grandchallenge/MATH-PROGRAMME#2657",
+      "research/condensed-qft/EXT-015/R2_FINITE_LAURENT_INSERTION_OBSTRUCTION_071.md",
+      "research/condensed-qft/EXT-015/R3_EVALUATED_RELATION_COVER_067.md",
+      "research/condensed-qft/EXT-015/R1_LOCALLY_NORMAL_COMPLETED_WEISS_069.md"
     ]
   },
   "external_evidence": {
@@ -47,20 +49,20 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "protected-admit and replay R1/069–070",
-    "result": "PR #2871 merged at 709556bbb4b042d7691bb69a5209983c2a87deba. Source, fixture and audit blobs matched; exact fixture and protected required contexts passed. This supplies a completed free Weiss model on locally normal plots, while the ordinary global LCS identification and uniform regulator comparison remain unproved. Continue independent R2 work.",
+    "action": "freeze R2/071 source and distinct logical audit 072",
+    "result": "The exact positive-regulator Gaussian module refutes factorization through any finite Laurent source cutoff, even for a fixed nonzero insertion when polynomial degree is unbounded. This is a whole-amplitude finite-part contract, not an overlapping proper-forest/BV theorem. Candidate requires protected admission and readback before it is used as admitted integration input.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#2871",
-      "709556bbb4b042d7691bb69a5209983c2a87deba",
-      "proof blob 43d05f2b41cd5fd115a0294f85596a8b8e31cab0",
-      "fixture blob 90be2ccdbd212fee5b0da2e8fd88100d6a845387"
+      "4b4137e4022d00c6fa9a0d8730d1382d4fde6eac",
+      "proof blob 13d1441dd5a745f7726d6b01843b2129331e4b2d",
+      "fixture blob 126b28d742ff4d115faa0d6f952cf4ec50b46460",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R2_FINITE_STATE_072.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-27T11:42:03Z"
+    "observed_at": "2026-10-27T11:51:23Z"
   },
   "resume": {
     "fresh_session_safe": true,
