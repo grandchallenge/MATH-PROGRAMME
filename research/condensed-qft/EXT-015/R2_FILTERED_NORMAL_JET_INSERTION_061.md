@@ -97,7 +97,7 @@ F_{n,\epsilon}(y,t)
 \tag{61.8}
 $$
 
-Write $v=(n_1,n_2,n_3)^T$ and $D=\operatorname{diag}(n_1,n_2,n_3)$. The exact normal jets at the partial source collision are
+Write $v=(n_1,n_2,n_3)^T$ and $D=\mathrm{diag}(n_1,n_2,n_3)$. The exact normal jets at the partial source collision are
 
 $$
 \begin{aligned}
@@ -120,7 +120,7 @@ F_{n,\epsilon}C_{K4,\epsilon}
 \left[A\epsilon^{-3}
 +B\epsilon^{-1}\left(
 \frac{t^2}{\epsilon^4}v^THv
--\frac1{\epsilon^2}\operatorname{tr}(HD)
+-\frac1{\epsilon^2}\mathrm{tr}(HD)
 \right)\right]\delta_y\\
 &\hspace{1em}-\frac{2Bt}{\epsilon^3}(Hv)\cdot\nabla_y\delta_y
 +\frac B\epsilon L\delta_y
@@ -164,7 +164,7 @@ $$
 (A-B\Theta_n)\epsilon^{-(k+2)}\delta_y
 +B\epsilon^{-k}L\delta_y
 \right],
-\quad \Theta_n=\operatorname{tr}(HS_n).
+\quad \Theta_n=\mathrm{tr}(HS_n).
 }
 \tag{61.13}
 $$
@@ -223,7 +223,7 @@ $$
 v=(1,1,0),\quad
 Hv=(3/4,3/4,1/2),\quad
 v^THv=3/2,\quad
-\operatorname{tr}(HD)=1,\quad
+\mathrm{tr}(HD)=1,\quad
 \Theta_n=1/4,\quad K_2=1/(2\sqrt\pi).
 \tag{61.18}
 $$
