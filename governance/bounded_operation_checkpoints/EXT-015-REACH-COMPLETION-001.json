@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP001",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP002",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,29 +15,30 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Authorized remaining REACH execution; begin exact reduced liquid relation cover",
-  "state": "AUTHORIZED_READY",
+  "phase": "R3/067 source frozen and logically audited; complete protected admission/readback",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "028c54adfc740bb93a30be55194b45c449a867ac",
-    "candidate_head_sha": "028c54adfc740bb93a30be55194b45c449a867ac",
+    "protected_base_sha": "97ee2fe187c4222028b19a670b7d2c4ad7470cdb",
+    "candidate_head_sha": "ed02a2a998d93049fac73bcb18bbe2d474da2cf6",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-execution-anchor-20261027",
+    "branch": "research/ext015-r3-067-relation-cover-source",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "construct-r3-relation-cover",
-      "description": "Construct the actual projective cover of K_red and its kernel in the fixed real-liquid category, retaining the unsolved target-stage cocycle/boundary comparison."
+      "id": "verify-r3-067-admission",
+      "description": "Inspect the unique PR on branch research/ext015-r3-067-admission-20261027, verify source commit ed02a2a998d93049fac73bcb18bbe2d474da2cf6 and exact review provenance, finish its protected checks/queue admission, read back source/fixture/audit, update R3 evidence without closing its unsolved surjectivity gate, then rebind this checkpoint before the next R1 mathematical transition."
     }
   ],
   "next_action": {
-    "id": "construct-r3-relation-cover",
-    "description": "Read protected 016/037/038 and primary Theorem 6.5; construct the evaluated-generator relation cover of K_red with explicit kernel and cocycle/boundary maps. Prove what it achieves and isolate any remaining support lemma without claiming the degree-two verdict.",
+    "id": "verify-r3-067-admission",
+    "description": "Inspect the unique PR on branch research/ext015-r3-067-admission-20261027, verify source commit ed02a2a998d93049fac73bcb18bbe2d474da2cf6 and exact review provenance, finish its protected checks/queue admission, read back source/fixture/audit, update R3 evidence without closing its unsolved surjectivity gate, then rebind this checkpoint before the next R1 mathematical transition.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/R3_ALL_SINGLETON_LINEAR_RELATIONS_037.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_AB_016.md",
+      "branch research/ext015-r3-067-admission-20261027",
+      "source ed02a2a998d93049fac73bcb18bbe2d474da2cf6",
+      "research/condensed-qft/EXT-015/R3_EVALUATED_RELATION_COVER_067.md",
       "grandchallenge/MATH-PROGRAMME#2798"
     ]
   },
@@ -47,19 +48,20 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "authorize remaining REACH execution and register continuity",
-    "result": "Human user requested Proceed to completion after protected triage PR #2867. R0 audit is closed; R3/R1/R2 and parent issues remain open. No theorem or certification is supplied by this checkpoint.",
+    "action": "construct and audit the actual reduced relation cover",
+    "result": "Source 067 supplies the evaluated projective cover, its kernel, all-source/all-degree stage injectivity and an exact two-channel residual. Source and fixture were frozen and separately logically critiqued in 068 within the same session/account. Degree-two surjectivity remains unproved; candidate is not yet protected-admitted.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#2867",
-      "research/condensed-qft/EXT-015/REACH_TRIAGE_2026_10_27.md",
-      "grandchallenge/MATH-PROGRAMME#2657"
+      "source ed02a2a998d93049fac73bcb18bbe2d474da2cf6",
+      "proof blob 7069938ce1e75f946e2f4ff70fcabb2f073065e9",
+      "fixture blob 7d77ae56a6655b82cbc8357a68903037ce6d3bac",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R3_RELATION_COVER_068.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-27T11:00:15Z"
+    "observed_at": "2026-10-27T11:13:15Z"
   },
   "resume": {
     "fresh_session_safe": true,
