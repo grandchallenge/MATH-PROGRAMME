@@ -110,7 +110,7 @@ C_{\gamma,\epsilon}
 \tag{65.8}
 $$
 
-Every coefficient in (65.8) depends only on the corresponding source graph, not the containing supergraph. The recursion implements every compatible proper forest **exactly once**, including chains of up to four proper sources in $G$. No multiplication of overlapping singular delta distributions is formed. After all proper source insertions and subtraction of (65.8), the remainder tends strongly to zero, uniformly on bounded compact smooth test families, with $O(\epsilon)$ remainder.
+Every coefficient in (65.8) depends only on the corresponding source graph, not the containing supergraph. The recursion implements every compatible proper forest **exactly once**, including chains of up to four proper sources in $G$. No multiplication of overlapping singular delta distributions is formed. After all proper source insertions and subtraction of (65.8), the remainder tends strongly to zero with $O(\epsilon)$ remainder **when $h_\gamma$ is odd**, including the full five-loop host $G$. For even $h_\gamma$, pole-only subtraction instead gives a generally nonzero finite local limit, with $O(\epsilon^2)$ error. Both estimates are uniform on bounded compact smooth test families. No finite counterterm is inserted into a containing graph by this pole-only convention.
 
 **Proof.** A connected Gaussian graph of cycle rank $h$ has the exact normalized amplitude
 
@@ -123,7 +123,38 @@ $$
 
 where $\rho_{\gamma,\epsilon}$ is a centered probability Gaussian with covariance $\epsilon^2H_\gamma$ in relative coordinates. Its Taylor expansion on smooth compact tests is an even-power local delta-jet series with remainder controlled by all Gaussian moments. For a proper prepared source, the coefficient of $\partial^\eta\delta$ is $m_{\beta,\eta}/\eta!$, so pairing with the smooth complement and a polynomial test produces **exactly** the coefficient extraction in (65.6), with the quotient Gaussian normalized by $(\det D)^{-1/2}$. The sign for every derivative order here is positive because only even total derivative degrees occur; mixed odd derivatives at intermediate stages are retained through the $u^TBq$ exponential. The Gaussian powers combine to the common overall scale $\epsilon^{-h_\gamma+|\alpha|}$.
 
-All proper singular source pairs intersect in vertices, so each proper forest is a chain. By induction on edge number, the prepared counterterm of each source incorporates its own shorter nested chains. Consequently the immediate-subgraph subtraction in (65.7) incorporates **all** nested forest chains once, and adds none twice. For rank $h\le5$, the negative Laurent orders are exactly those with even $|\alpha|<h$; the next term after subtracting all these orders is $O(\epsilon)$ in the strong distribution topology on bounded compact test families. Gaussian tail bounds control the cutoff outside a neighborhood of the full diagonal. This proves (65.8) and the limit. $\square$
+All proper singular source pairs intersect in vertices, so each proper forest is a chain. By induction on edge number, the prepared counterterm of each source incorporates its own shorter nested chains. Consequently the immediate-subgraph subtraction in (65.7) incorporates **all** nested forest chains once, and adds none twice. For rank $h\le5$, the negative Laurent orders are exactly those with even $|\alpha|<h$. If $h$ is odd, the next even degree is $h+1$, yielding an $O(\epsilon)$ remainder. If $h$ is even, the next even degree is $h$ and contributes at order $\epsilon^0$; the subsequent degree $h+2$ gives $O(\epsilon^2)$ error. Gaussian tail bounds control the cutoff outside a neighborhood of the full diagonal. This proves (65.8) and the parity-qualified limits. $\square$
+
+**Even-rank finite limit (post-admission correction, 2026-10-27).** Extend the moment definition (65.4)–(65.7) to test degree $|\alpha|=h_\gamma$ for even-rank $\gamma$, still inserting **only** the previously defined pole counterterms of each proper source. The strong limit of the pole-subtracted amplitude is
+
+$$
+L_\gamma
+=(2\pi)^{-h_\gamma/2}
+\sum_{|\alpha|=h_\gamma}
+\frac{m_{\gamma,\alpha}}{\alpha!}
+\partial_y^\alpha\delta_\gamma,
+\qquad
+R_{\gamma,\epsilon}=L_\gamma+O_{\mathcal D'}(\epsilon^2).
+\tag{65.8a}
+$$
+
+It need not vanish. For the proper two-loop diamond $D=\{01,02,03,12,13\}$, the reduced determinant is 8 and $(H_D)_{11}=1/2$. Its three proper 1PI sources are the cycles $012$, $013$ and $0213$. Each has only a scalar pole counterterm supported where $y_1=x_1-x_0=0$, so every proper insertion vanishes on a test equal near the collision to $y_1^2$. The remaining normalized second moment is therefore
+
+$$
+m_{D,(1,1)}=\frac{1}{\sqrt8}\frac12
+=\frac{\sqrt2}{8}\ne0.
+\tag{65.8b}
+$$
+
+For the four-loop five-vertex source $F$, the same full preparation gives the nonzero finite quartic moment
+
+$$
+m_{F,(1,1,1,1)}
+=\frac{3\sqrt{10}}{125}-\frac{8\sqrt{21}}{343}\ne0.
+\tag{65.8c}
+$$
+
+The two positive summands have unequal rational squares, so their difference cannot vanish. These finite terms do not alter the negative-power source counterterms, the nested contacts below, or the full odd-rank host's zero limit. Subtracting them from proper sources would change the stated pole-only scheme and would require a new containing-graph calculation.
 
 **Scope of the proof:** This is an **exhaustive finite-graph and Gaussian-specific construction** with rational Wick moments and algebraic determinant factors, not a theorem that the same recursive subtraction commutes with arbitrary graph operations.
 
@@ -227,7 +258,7 @@ Hence a scalar-plus-second-derivative subtraction **cannot** renormalize this co
 
 ## 5. Exact regression and remaining frontier
 
-The accompanying [standard-library regression](fixtures/check_nested_gaussian_jet_forest_065.py) is an executable finite proof certificate for the algebraic assertions. It exhaustively enumerates 1PI edge subsets, 2542 nested forests and all 86 pole moments; independently rebuilds their reduced Laplacians, computes rational Wick moments and source-quotient Taylor jets, and carries all coefficients in an **exact squarefree-radical rational basis** with no floating point. It checks the protected K4 moments, the exact K4 derivative insertion into the five-vertex graph F, equation (65.11), the new five-vertex source derivative (65.12) and its strict sign, the fourth-order pole (65.16), all 86 tensor moments under two graph automorphisms, and the positive nested-source contact (65.14). The analytic strong-distribution estimate is proved above; the finite fixture checks the exact algebra and exhaustive combinatorics.
+The accompanying [standard-library regression](fixtures/check_nested_gaussian_jet_forest_065.py) is an executable finite proof certificate for the algebraic assertions. It exhaustively enumerates 1PI edge subsets, 2542 nested forests and all 86 pole moments; independently rebuilds their reduced Laplacians, computes rational Wick moments and source-quotient Taylor jets, and carries all coefficients in an **exact squarefree-radical rational basis** with no floating point. It also checks the rank-two diamond and rank-four source finite moments (65.8b)–(65.8c), which refute an unqualified zero-limit statement for even-rank proper sources. It checks the protected K4 moments, the exact K4 derivative insertion into the five-vertex graph F, equation (65.11), the new five-vertex source derivative (65.12) and its strict sign, the fourth-order pole (65.16), all 86 tensor moments under two graph automorphisms, and the positive nested-source contact (65.14). The analytic strong-distribution estimate is proved above; the finite fixture checks the exact algebra and exhaustive combinatorics.
 
 **Achieved:** A complete six-vertex, ten-edge, five-loop Gaussian proper 1PI forest with **two levels of genuinely singular derivative-bearing source corrections** and the first explicitly nonzero **fourth-derivative** overall pole in this thread.
 

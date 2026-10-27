@@ -227,6 +227,34 @@ assert enclosing_interval(memo[G6][(0,0,0,0)])[1]<0
 # (2 sqrt(pi) eps)^-1 exp[-y1^2/(4 eps^2)], giving the exact
 # additional scalar contact -b5/(32 pi^(5/2)) eps^-5 delta_G5.
 assert inserted(G6,G5,(0,0,0,0))=={}
+# Pole-only subtraction has a finite local limit in even cycle rank.
+# Evaluate the first nonnegative degree without inserting finite source terms.
+def prepared_test_moment(ids, alpha):
+    _, _, coords, det, cov = graph(ids)
+    exponents = [0] * len(coords)
+    for index in alpha:
+        exponents[index] += 1
+    value = scale(rinv(det), wick(tuple(exponents), cov))
+    for beta in sources:
+        if set(beta) < set(ids):
+            value = plus(value, negate(inserted(ids, beta, alpha)))
+    return value
+
+diamond = (0, 1, 2, 3, 4)  # 01,02,03,12,13; cycle rank two.
+assert rank(diamond) == 2
+assert graph(diamond)[3] == 8
+assert graph(diamond)[4][0][0] == F(1, 2)
+diamond_sources = [beta for beta in sources if set(beta) < set(diamond)]
+assert len(diamond_sources) == 3
+assert all(rank(beta) == 1 for beta in diamond_sources)
+assert all(not inserted(diamond, beta, (0, 0)) for beta in diamond_sources)
+assert prepared_test_moment(diamond, (0, 0)) == {2: F(1, 8)}
+assert rank(G5) == 4
+assert len([beta for beta in sources if set(beta) < set(G5)]) == 36
+finite_quartic = {10: F(3, 125), 21: -F(8, 343)}
+assert prepared_test_moment(G5, (0, 0, 0, 0)) == finite_quartic
+assert F(3, 125)**2 * 10 != F(8, 343)**2 * 21
+print("PASS: even-rank finite limits: diamond sqrt(2)/8 and G5 nonzero quartic")
 print("PASS: K4/G5/G6 determinants 16/40/96")
 print("PASS: 85 proper 1PI sources, ranks 18/35/24/8")
 print("PASS: complete 2542 nested forests, lengths 0/1/2/3/4 = 1/85/605/1179/672")
