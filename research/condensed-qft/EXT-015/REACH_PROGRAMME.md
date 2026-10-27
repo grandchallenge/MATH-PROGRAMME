@@ -4,7 +4,7 @@
 
 **Parent trackers:** [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657); [QFT-COND-005 #2617](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617). **Protected mathematical premise:** [D14 Result 028](D14_REGULATED_BV_SYZYGY_028.md) and [critical audit 029](AGENT_CRITICAL_REVIEW_D14_029.md). **D21 source:** [PR #2788](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2788), exact author head 85fcf808582ee6bc505f19b5ce2ca739657dcd4b, is protected-admitted with the bounded fixed-fiber verdicts and smooth-family obstruction of [R0 audit 033](R0_CRITICAL_AUDIT_D21_033.md). **Plan branch initial protected base:** 153d4c80372d219919168073cde5d166731f4eb2. Recheck the materially relevant commits before every operation.
 
-**Current frontier:** [Remaining-work triage, 2026-10-27](REACH_TRIAGE_2026_10_27.md) records admitted results, exact evidence, R0 audit closeout and the next R3/R1/R2 obligations. The objectives below remain specifications; historical starting heads are not current queue status.
+**Current frontier:** [Typed comparison/failure map 073](R4_TYPED_COMPARISON_FAILURE_MAP_073.md) and [updated triage](REACH_TRIAGE_2026_10_27.md) record the protected returns 067–072. R3 has an actual evaluated relation cover and all-degree stage injectivity; R1 has a specified locally normal completed free Weiss model; R2 refutes a finite Laurent-state insertion contract. The original degree-two surjectivity, global R1 topology/uniform endpoint and coherent renormalized BV domain remain open. The objectives below remain specifications; historical starting heads are not current queue status.
 
 ## The objective
 
@@ -90,27 +90,25 @@ $$
 
 ## Dependencies, priority, and agent execution
 
-| Priority | Package | Inputs | Exact next deliverable |
+| Priority | Package | Current admitted result | Exact remaining deliverable |
 | --- | --- | --- | --- |
-| Audit complete | R0 | D21/030 and protected 033 | Reconcile bounded audit issue closeout; no repeated D21 audit prerequisite |
-| P0 | R3 reduced syzygy | 016, 031/034, 037/038 | Genuine projective relation cover of the remaining profinite-plot kernel, then degree-two stage verdict |
-| P1 | R1 multilinear normal plots | 033, 035/038 | Exact support/cone plot functor and smooth disjoint-product/Wick maps or failed plot |
-| P1 | R2 renormalized compatibility | GB1, fixed-atom BV, finite forests through corrected 065 | One defined overlap/renormalized BV compatibility diagram with a proof or exact defect |
-| P2 | R1 completed B.6 | Multilinear plots, completeness, lifting and uniformity hypotheses | Actual completed differentiable Weiss theorem or obstruction |
-| P2 | R4 typed integration | Relevant reviewed R1/R2/R3 results | Typed comparison/failure map; positive synthesis only where dependencies are satisfied |
+| Audit complete | R0 | Bounded D21 audit 033; issue #2795 closed after protected ledger readback | No repeated D21 audit prerequisite |
+| P0 | R3 degree-two surjectivity | Actual evaluated relation cover and all-source/all-degree stage injectivity 067/068 | Prove (67.14) for every cocycle modulo all projective boundaries, or give an actual violating liquid cocycle |
+| P1 | R1 global topology and regulator | Locally normal plot DVS, smooth multimorphisms and specified total-weight completed free Weiss model 069/070 | Identify or sharply obstruct the ordinary global LCS union; prove the locally uniform regulator endpoint |
+| P1 | R2 renormalized compatibility | Corrected finite forests and exact finite-state insertion no-go 071/072 | A common operator domain with actual overlapping-source BV/factorization/scale identities, beyond the refuted truncation contract |
+| Integrated within stated scope | R4 typed failure map | Object and arrow types, ambient-plot failure and collision-domain failure 073/074 | Positive derived/renormalized synthesis only after its relevant hypotheses are proved |
 
 **Worker return discipline:** One bounded theorem, counterexample or exact computation per work package and PR; supply source version, categories, domain, definitions, complete proof, hostile tests, fixture and replay, limitations and independent critical audit. Codex/Lean/Colab optional; no invented separate GitHub accounts. Use the existing GCL authenticated controller and governed protected PR lifecycle. Queue issue creation is **PLANNED**, not an ACTIVE worker lease or certified RESULT/1. If this becomes a long-horizon autonomously executed workset, bind it to the existing governed continuity/checkpoint registry before the next material multi-stage transition; do not establish a competing registry.
 
-**Immediate executable order:** Use the admitted R0 audit and GB1 benchmark rather than repeating them. Prioritize the remaining R3 reduced profinite relation cover; R1 multilinear normal plots and R2 renormalized compatibility can be investigated independently. Advance to B.6 completion and typed integration only after their actual hypotheses are proved. Exact next-return contracts and exclusions are in the [current triage](REACH_TRIAGE_2026_10_27.md).
-
+**Immediate executable order:** The next decisive R3 action is the cocycle/boundary support equation (67.14), not another construction of its now-admitted relation cover. R1's global support/cone topology and uniform regulator endpoint and R2's common renormalized operator contract remain independent research actions. The [typed map 073](R4_TYPED_COMPARISON_FAILURE_MAP_073.md) integrates existing scopes and explicit failed identities; it does not establish the missing positive synthesis. The registered continuation checkpoint is the authoritative deterministic resume point.
 
 ## Issue inventory and current triage
 
-- **R0:** [#2795](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2795), bounded audit fulfilled by protected 033; documentary closeout follows protected triage readback.
-- **R1:** [#2796](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796), OPEN beyond admitted fixed-sector linear continuity 035/038.
-- **R2:** [#2797](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797), OPEN for remaining GB2 identities beyond GB1, fixed-atom BV and corrected finite Gaussian forests.
-- **R3:** [#2798](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798), OPEN after the singleton-relation reduction 037/038; independent P0 liquid relation task.
-- **R4:** existing [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), OPEN; no duplicate integration ticket.
+- **R0:** [#2795](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2795), bounded audit fulfilled by protected 033; closed after protected triage/ledger readback.
+- **R1:** [#2796](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796), OPEN beyond the specified locally normal completed free Weiss model 069/070, for global topology identification and uniform regulator comparison.
+- **R2:** [#2797](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797), OPEN for remaining GB2 identities beyond GB1, fixed-atom BV, corrected finite Gaussian forests and the bounded finite-state insertion obstruction 071/072.
+- **R3:** [#2798](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798), OPEN after the evaluated relation cover and all-degree injectivity of 067/068; degree-two surjectivity (67.14) remains the independent P0 task.
+- **R4:** existing [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), OPEN beyond the typed failure/dependency map 073/074; no duplicate integration ticket.
 
 Admitted mathematics, issue bookkeeping and an actual authenticated worker dispatch are distinct. This inventory creates no active lease, Project progression or certified RESULT/1. Keep the larger parent #2617 open.
 
