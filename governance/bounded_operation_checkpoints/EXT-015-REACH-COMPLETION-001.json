@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP010",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP011",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,31 +15,32 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "R1 global topology obstruction frozen and critically checked; uniform regulator endpoint next",
+  "phase": "R1 topology obstruction admitted; uniform endpoint frozen and critically checked; exact R1 acceptance closeout next",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "df7fb56e319e790b2d8354e34ae2e3dcf11a802f",
-    "candidate_head_sha": "b286ef54238a41c3866a8e71640d8796617dcbb1",
+    "protected_base_sha": "9f8f62dc0683bb9ca888a3252881c5c22a5b667c",
+    "candidate_head_sha": "907df5ecc330d49d92f28553d800fc7fd251580a",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/ext015-r1-075-global-cone-source",
+    "branch": "research/ext015-r1-077-uniform-endpoint-source",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "settle-r1-uniform-normal-regulator-endpoint",
-      "description": "Verify protected admission/readback of R1/075–076, then prove or refute the positive-to-zero regulator endpoint on the specified locally normal sectors. Establish smooth kernel curves in the normal topology, operator control uniform on bounded sector inputs, and the actual completed Wick transport/cochain connection; fixed-kernel convergence alone is insufficient."
+      "id": "verify-r1-endpoint-and-adjudicate-r1-acceptance",
+      "description": "Verify protected source/fixture/audit readback and replay for R1/077–078. Match the original R1 acceptance against 069–070, the exact negative global topology/plot result 075–076 and the uniform endpoint 077–078; prepare a source-locked acceptance ledger and reconcile programme/matrix/map/issue custody. Close only the fulfilled R1 obligation after that ledger is protected; retain the incomplete R2/R3/R4 programme."
     }
   ],
   "next_action": {
-    "id": "settle-r1-uniform-normal-regulator-endpoint",
-    "description": "Verify protected admission/readback of R1/075–076, then prove or refute the positive-to-zero regulator endpoint on the specified locally normal sectors. Establish smooth kernel curves in the normal topology, operator control uniform on bounded sector inputs, and the actual completed Wick transport/cochain connection; fixed-kernel convergence alone is insufficient.",
+    "id": "verify-r1-endpoint-and-adjudicate-r1-acceptance",
+    "description": "Verify protected source/fixture/audit readback and replay for R1/077–078. Match the original R1 acceptance against 069–070, the exact negative global topology/plot result 075–076 and the uniform endpoint 077–078; prepare a source-locked acceptance ledger and reconcile programme/matrix/map/issue custody. Close only the fulfilled R1 obligation after that ledger is protected; retain the incomplete R2/R3/R4 programme.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#2796",
-      "research/condensed-qft/EXT-015/R1_GLOBAL_CONE_PLOT_OBSTRUCTION_075.md",
       "research/condensed-qft/EXT-015/R1_LOCALLY_NORMAL_COMPLETED_WEISS_069.md",
-      "research/condensed-qft/EXT-015/D14_REGULATED_BV_SYZYGY_028.md"
+      "research/condensed-qft/EXT-015/R1_GLOBAL_CONE_PLOT_OBSTRUCTION_075.md",
+      "research/condensed-qft/EXT-015/R1_UNIFORM_NORMAL_REGULATOR_ENDPOINT_077.md",
+      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md"
     ]
   },
   "external_evidence": {
@@ -48,21 +49,22 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "source-lock and critically check the ordinary R1 topology obstruction",
-    "result": "The D21 open cone is nonclosed, so the ordinary normal-sector support/cone union is not sequentially complete or regular by the verified published theorem. A real symmetric flat Bastiani curve gives an actual failed lift to the locally normal plot model. Source and fixture are frozen with a separate logical critic; protected admission/readback remains required. The uniform regulator theorem is not yet claimed.",
+    "action": "protected R1/075–076 readback and source-locked uniform endpoint candidate",
+    "result": "PR #2877 merged at 9f8f62dc0683bb9ca888a3252881c5c22a5b667c. Exact source, fixture and critic matched protected readback, and exact fixture replay passed. The ordinary complete regular global union and inverse identity plot lift are refuted. The endpoint source and critic now prove normal-topology smooth kernel curves, bounded-input operator control, completed Wick transport and the transported cochain connection, subject to protected admission/readback. No R1 closeout or full REACH completion is yet claimed.",
     "evidence_refs": [
-      "b286ef54238a41c3866a8e71640d8796617dcbb1",
-      "proof blob fa4e57a5f8f8e27e68815cf873ebb26e94982991",
-      "fixture blob 2cb30f30c58ba8e8677e70885fc38bed0b1c0175",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R1_GLOBAL_CONE_076.md",
-      "https://arxiv.org/pdf/1308.1061 Theorem 34 and Corollary 36"
+      "grandchallenge/MATH-PROGRAMME#2877",
+      "9f8f62dc0683bb9ca888a3252881c5c22a5b667c",
+      "907df5ecc330d49d92f28553d800fc7fd251580a",
+      "endpoint proof blob f2c2460a9d13efc2604a061f171538aeb22aba4f",
+      "endpoint fixture blob accd24bc6030ad142e12492b195302216c89ea20",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R1_ENDPOINT_078.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-27T22:12:05Z"
+    "observed_at": "2026-10-27T22:21:36Z"
   },
   "resume": {
     "fresh_session_safe": true,
