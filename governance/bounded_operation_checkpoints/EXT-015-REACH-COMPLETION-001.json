@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
+  "schema_version": "1.0.0",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP001",
+  "governed_work_id": "EXT-015-REACH-COMPLETION-001",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "admission": {
+    "topology": "MULTI_SESSION_RESUMABLE",
+    "admission_ref": "grandchallenge/MATH-PROGRAMME#2657; user instruction 2026-10-27 Proceed to completion",
+    "routine_work_excluded": true
+  },
+  "authority": {
+    "ghos_standard": "GCL-GHOS-00",
+    "ghos_version": "0.2.0",
+    "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
+  },
+  "phase": "Authorized remaining REACH execution; begin exact reduced liquid relation cover",
+  "state": "AUTHORIZED_READY",
+  "identities": {
+    "protected_base_sha": "028c54adfc740bb93a30be55194b45c449a867ac",
+    "candidate_head_sha": "028c54adfc740bb93a30be55194b45c449a867ac",
+    "issue_number": 2657,
+    "pr_number": null,
+    "branch": "research/reach-execution-anchor-20261027",
+    "workflow_runs": []
+  },
+  "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
+  "permitted_next_actions": [
+    {
+      "id": "construct-r3-relation-cover",
+      "description": "Construct the actual projective cover of K_red and its kernel in the fixed real-liquid category, retaining the unsolved target-stage cocycle/boundary comparison."
+    }
+  ],
+  "next_action": {
+    "id": "construct-r3-relation-cover",
+    "description": "Read protected 016/037/038 and primary Theorem 6.5; construct the evaluated-generator relation cover of K_red with explicit kernel and cocycle/boundary maps. Prove what it achieves and isolate any remaining support lemma without claiming the degree-two verdict.",
+    "evidence_targets": [
+      "research/condensed-qft/EXT-015/R3_ALL_SINGLETON_LINEAR_RELATIONS_037.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_AB_016.md",
+      "grandchallenge/MATH-PROGRAMME#2798"
+    ]
+  },
+  "external_evidence": {
+    "waiting": false,
+    "objects": []
+  },
+  "blocking_boundary": null,
+  "last_transition": {
+    "action": "authorize remaining REACH execution and register continuity",
+    "result": "Human user requested Proceed to completion after protected triage PR #2867. R0 audit is closed; R3/R1/R2 and parent issues remain open. No theorem or certification is supplied by this checkpoint.",
+    "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#2867",
+      "research/condensed-qft/EXT-015/REACH_TRIAGE_2026_10_27.md",
+      "grandchallenge/MATH-PROGRAMME#2657"
+    ]
+  },
+  "freshness": {
+    "required_before_transition": true,
+    "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
+    "on_mismatch": "REBIND_BEFORE_MUTATION",
+    "observed_at": "2026-10-27T11:00:15Z"
+  },
+  "resume": {
+    "fresh_session_safe": true,
+    "requires_chat_history": false,
+    "authoritative_sources": [
+      "grandchallenge/MATH-PROGRAMME#2657",
+      "grandchallenge/MATH-PROGRAMME#2798",
+      "grandchallenge/MATH-PROGRAMME#2796",
+      "grandchallenge/MATH-PROGRAMME#2797",
+      "research/condensed-qft/EXT-015/REACH_PROGRAMME.md",
+      "research/condensed-qft/EXT-015/REACH_TRIAGE_2026_10_27.md",
+      "governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json"
+    ],
+    "instructions": "Verify this exact branch/issue binding before any transition. Execute the single recorded next action. Rebind to an immutable source branch for each new mathematical candidate, update this checkpoint after material phase/source/evidence changes, and retain exact source-locked logical critic provenance. Continue independent R1 and R2 work if a precisely typed R3 proof gap remains. Admit every mathematical result through protected review/readback. Never mark the campaign terminal merely for producing a cover, another finite graph, an administrative record or a missing lemma. Bounded conversational work does not create an unattended persistent-controller dispatch."
+  },
+  "terminal_evidence": [],
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "merge_authorized": false,
+    "publication_authorized": false,
+    "protected_bypass_authorized": false
+  }
+}
