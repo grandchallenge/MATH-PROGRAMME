@@ -156,3 +156,8 @@ Once the three negative orders are subtracted, the next even Gaussian moment sca
 Still **not proved**: a *pair of overlapping nonnested* derivative-bearing source diagonals, arbitrary all-graph BPHZ forest naturality, BV nilpotence, interacting QME, normal-topology Weiss descent, or liquid higher Ext. Keep [REACH-R2 #2797](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797) OPEN.
 
 Protected admission requires [author PR #2864](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2864) to pass and merge first, followed by this exact-head logical critic PR, then independent protected-main readback of the source proof, fixture and review. The logical critic is not self-certifying a GitHub merge by writing this file.
+
+
+## Post-admission erratum — 2026-10-27
+
+The historical audit above did not flag an overbroad statement in source Theorem 65.2: pole-only subtraction yields a strong zero limit for odd cycle rank, but even-rank proper sources can retain a nonzero finite local delta jet. The [source-locked parity correction audit](AGENT_CRITICAL_REVIEW_R2_065_PARITY_ERRATUM.md) exhibits exact two-loop and four-loop counterexamples and reviews the corrected claim. The full five-loop host result and its negative-power coefficients are unchanged. Read the earlier bounded acceptance subject to this explicit correction; the original source identity and admission history remain preserved.
