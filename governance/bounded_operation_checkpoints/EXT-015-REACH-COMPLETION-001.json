@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP009",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP010",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,31 +15,31 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Completion resumed; R3 equation remains unproved; independent R1 global topology obstruction next",
+  "phase": "R1 global topology obstruction frozen and critically checked; uniform regulator endpoint next",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "1fbe30e00be86a7612f65b70f135758b609436d6",
-    "candidate_head_sha": "aea395736ef94fe116a791932fc8344fdb6468a6",
+    "protected_base_sha": "df7fb56e319e790b2d8354e34ae2e3dcf11a802f",
+    "candidate_head_sha": "b286ef54238a41c3866a8e71640d8796617dcbb1",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/ext015-r4-073-typed-map-source-v2",
+    "branch": "research/ext015-r1-075-global-cone-source",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "settle-r1-global-support-cone-topology",
-      "description": "Identify the ordinary compact-support/closed-admissible-normal-cone inductive union with E'_Lambda for the exact D21 open cone. Verify the hypotheses of Dabrowski–Brouder Theorem 34 and Corollary 36, and construct an actual smooth global-LCS curve with no local lift to the refined normal-sector plots. Admit a proof or refutation with exact source-locked critical review; do not call the remaining REACH programme complete."
+      "id": "settle-r1-uniform-normal-regulator-endpoint",
+      "description": "Verify protected admission/readback of R1/075–076, then prove or refute the positive-to-zero regulator endpoint on the specified locally normal sectors. Establish smooth kernel curves in the normal topology, operator control uniform on bounded sector inputs, and the actual completed Wick transport/cochain connection; fixed-kernel convergence alone is insufficient."
     }
   ],
   "next_action": {
-    "id": "settle-r1-global-support-cone-topology",
-    "description": "Identify the ordinary compact-support/closed-admissible-normal-cone inductive union with E'_Lambda for the exact D21 open cone. Verify the hypotheses of Dabrowski–Brouder Theorem 34 and Corollary 36, and construct an actual smooth global-LCS curve with no local lift to the refined normal-sector plots. Admit a proof or refutation with exact source-locked critical review; do not call the remaining REACH programme complete.",
+    "id": "settle-r1-uniform-normal-regulator-endpoint",
+    "description": "Verify protected admission/readback of R1/075–076, then prove or refute the positive-to-zero regulator endpoint on the specified locally normal sectors. Establish smooth kernel curves in the normal topology, operator control uniform on bounded sector inputs, and the actual completed Wick transport/cochain connection; fixed-kernel convergence alone is insufficient.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#2796",
+      "research/condensed-qft/EXT-015/R1_GLOBAL_CONE_PLOT_OBSTRUCTION_075.md",
       "research/condensed-qft/EXT-015/R1_LOCALLY_NORMAL_COMPLETED_WEISS_069.md",
-      "research/condensed-qft/EXT-015/R0_CRITICAL_AUDIT_D21_033.md",
-      "https://arxiv.org/pdf/1308.1061 Theorem 34, Corollary 36, section 3.1"
+      "research/condensed-qft/EXT-015/D14_REGULATED_BV_SYZYGY_028.md"
     ]
   },
   "external_evidence": {
@@ -48,22 +48,21 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "resume full completion instruction and investigate R3 higher-syzygy route",
-    "result": "CP008 remains exact and live; intervening main changes only unrelated governance archive/handoff files. The user correctly rejected completion language for the incomplete programme. Rechecked R3/067 and the degree-one weight/profinite arguments against Scholze Analytic Theorem 6.5 and Proposition 10.1. A local profinite resolution does not by itself establish the original global degree-two support equation; no R3 verdict is claimed. Continue independent R1 work through the exact published non-completeness/non-regularity obstruction and a concrete failed plot lift.",
+    "action": "source-lock and critically check the ordinary R1 topology obstruction",
+    "result": "The D21 open cone is nonclosed, so the ordinary normal-sector support/cone union is not sequentially complete or regular by the verified published theorem. A real symmetric flat Bastiani curve gives an actual failed lift to the locally normal plot model. Source and fixture are frozen with a separate logical critic; protected admission/readback remains required. The uniform regulator theorem is not yet claimed.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#2798",
-      "research/condensed-qft/EXT-015/R3_EVALUATED_RELATION_COVER_067.md equation (67.14)",
-      "https://people.mpim-bonn.mpg.de/scholze/Analytic.pdf Theorem 6.5 and Proposition 10.1",
-      "https://arxiv.org/pdf/1308.1061 Theorem 34 and Corollary 36",
-      "667d1ce6b01c949b4cbb602dcd65f48f08a67765",
-      "1fbe30e00be86a7612f65b70f135758b609436d6"
+      "b286ef54238a41c3866a8e71640d8796617dcbb1",
+      "proof blob fa4e57a5f8f8e27e68815cf873ebb26e94982991",
+      "fixture blob 2cb30f30c58ba8e8677e70885fc38bed0b1c0175",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R1_GLOBAL_CONE_076.md",
+      "https://arxiv.org/pdf/1308.1061 Theorem 34 and Corollary 36"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-27T22:02:12Z"
+    "observed_at": "2026-10-27T22:12:05Z"
   },
   "resume": {
     "fresh_session_safe": true,
