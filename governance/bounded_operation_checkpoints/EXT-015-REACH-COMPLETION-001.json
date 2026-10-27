@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP004",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP005",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,10 +15,10 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "R1 locally normal free Weiss source frozen and logically audited; complete protected admission",
+  "phase": "R1 locally normal free Weiss return admitted; proceed to exact R2 insertion contract",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "a82eeb424f828f0402cb0d2d05fe565b350fc380",
+    "protected_base_sha": "709556bbb4b042d7691bb69a5209983c2a87deba",
     "candidate_head_sha": "0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb",
     "issue_number": 2657,
     "pr_number": null,
@@ -28,17 +28,17 @@
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "verify-r1-069-admission",
-      "description": "Inspect the unique PR on research/ext015-r1-069-admission-20261027, verify frozen source 0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb and critic 070, complete protected checks and merge/readback, record its bounded R1 result without closing unproved topology/regulator obligations, then rebind before the next R2 transition."
+      "id": "settle-r2-finite-state-contract",
+      "description": "State the positive-regulator Gaussian insertion module and its finite Laurent-state compatibility diagram; prove or refute factorization through a fixed cutoff, with exact contact and remainder bounds. Keep the whole-amplitude contract separate from proper forests and do not claim global BV/QME from that result."
     }
   ],
   "next_action": {
-    "id": "verify-r1-069-admission",
-    "description": "Inspect the unique PR on research/ext015-r1-069-admission-20261027, verify frozen source 0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb and critic 070, complete protected checks and merge/readback, record its bounded R1 result without closing unproved topology/regulator obligations, then rebind before the next R2 transition.",
+    "id": "settle-r2-finite-state-contract",
+    "description": "State the positive-regulator Gaussian insertion module and its finite Laurent-state compatibility diagram; prove or refute factorization through a fixed cutoff, with exact contact and remainder bounds. Keep the whole-amplitude contract separate from proper forests and do not claim global BV/QME from that result.",
     "evidence_targets": [
-      "branch research/ext015-r1-069-admission-20261027",
-      "research/condensed-qft/EXT-015/R1_LOCALLY_NORMAL_COMPLETED_WEISS_069.md",
-      "grandchallenge/MATH-PROGRAMME#2796"
+      "grandchallenge/MATH-PROGRAMME#2797",
+      "research/condensed-qft/EXT-015/R2_BRIDGE_TREE_LAURENT_BV_046.md",
+      "research/condensed-qft/EXT-015/R2_NESTED_GAUSSIAN_JET_FOREST_065.md"
     ]
   },
   "external_evidence": {
@@ -47,10 +47,11 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "construct and logically audit the locally normal free Weiss model",
-    "result": "Source 069 supplies a refined DVS plot class with flat connection, smooth disjoint operations from hypocontinuity, explicit total-weight lifting and completed free zero-scale Weiss descent. Exact fixture and source gate PASS. Critic 070 supports only that scope; global LCS identification, uniform regulator endpoint, R3 surjectivity and global GB2 remain open. Candidate not yet protected-admitted.",
+    "action": "protected-admit and replay R1/069–070",
+    "result": "PR #2871 merged at 709556bbb4b042d7691bb69a5209983c2a87deba. Source, fixture and audit blobs matched; exact fixture and protected required contexts passed. This supplies a completed free Weiss model on locally normal plots, while the ordinary global LCS identification and uniform regulator comparison remain unproved. Continue independent R2 work.",
     "evidence_refs": [
-      "source 0aa90c634a1c74fbf2dfbd9e419c11aab9f01ddb",
+      "grandchallenge/MATH-PROGRAMME#2871",
+      "709556bbb4b042d7691bb69a5209983c2a87deba",
       "proof blob 43d05f2b41cd5fd115a0294f85596a8b8e31cab0",
       "fixture blob 90be2ccdbd212fee5b0da2e8fd88100d6a845387"
     ]
@@ -59,7 +60,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-27T11:32:44Z"
+    "observed_at": "2026-10-27T11:42:03Z"
   },
   "resume": {
     "fresh_session_safe": true,
