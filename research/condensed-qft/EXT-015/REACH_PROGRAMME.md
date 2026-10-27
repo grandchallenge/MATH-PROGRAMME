@@ -1,8 +1,10 @@
 # EXT-015 / REACH — Differentiable, renormalized and derived QFT research programme
 
-**Disposition: PROPOSED PLAN, NOT MATHEMATICAL CERTIFICATION.** Establish three separately falsifiable results; synthesize only after exact review. This file does not issue an ACTIVE worker lease, declare mathematical independence, authorize public release or close any tracker.
+**Disposition: PROTECTED RESEARCH PLAN, NOT MATHEMATICAL CERTIFICATION.** Establish three separately falsifiable results; synthesize only after exact review. This file does not issue an ACTIVE worker lease, declare mathematical independence, authorize public release or close any tracker.
 
-**Parent trackers:** [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657); [QFT-COND-005 #2617](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617). **Protected mathematical premise:** [D14 Result 028](D14_REGULATED_BV_SYZYGY_028.md) and [critical audit 029](AGENT_CRITICAL_REVIEW_D14_029.md). **Unreviewed starting candidate:** [D21/030 PR #2788](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2788), exact candidate head 85fcf808582ee6bc505f19b5ce2ca739657dcd4b. **Plan branch initial protected base:** 153d4c80372d219919168073cde5d166731f4eb2. Recheck the materially relevant commits before every operation.
+**Parent trackers:** [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657); [QFT-COND-005 #2617](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617). **Protected mathematical premise:** [D14 Result 028](D14_REGULATED_BV_SYZYGY_028.md) and [critical audit 029](AGENT_CRITICAL_REVIEW_D14_029.md). **D21 source:** [PR #2788](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2788), exact author head 85fcf808582ee6bc505f19b5ce2ca739657dcd4b, is protected-admitted with the bounded fixed-fiber verdicts and smooth-family obstruction of [R0 audit 033](R0_CRITICAL_AUDIT_D21_033.md). **Plan branch initial protected base:** 153d4c80372d219919168073cde5d166731f4eb2. Recheck the materially relevant commits before every operation.
+
+**Current frontier:** [Remaining-work triage, 2026-10-27](REACH_TRIAGE_2026_10_27.md) records admitted results, exact evidence, R0 audit closeout and the next R3/R1/R2 obligations. The objectives below remain specifications; historical starting heads are not current queue status.
 
 ## The objective
 
@@ -13,6 +15,8 @@ Develop a nontrivial, precisely delimited **free zero-scale quantum prefactoriza
 ## R0 — independent hostile audit of the zero-scale candidate (priority P0)
 
 **Deliverable:** a source-locked distinct GCL mathematical critical review of D21 Theorems 30.1–30.3 and the algebraic Weiss corollary. Verify the full partial-diagonal conormal exclusion, wavefront products, proper pushforward, stability under *iterated* contraction, disjoint-open tensor products and graded permutations. Check signs in Wick conjugation, pointwise distributional regulator limit, and Cech exactness/quantum inverse limits. Attack the proposed theorem with four hostile controls: same-point Dirac products, simultaneous disjoint collisions, a singular kernel supported away from all diagonals, and moving-support/moving-cone parameter families.
+
+**Current R0 disposition:** Audit 033 is protected-admitted through [PR #2804](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2804). It supplies an explicit verdict for each D21 claim and a counterexample to naive ambient-strong smooth plots. The bounded audit is complete; the remaining analytic upgrade is R1.
 
 **Gate G0:** distinct auditable ACCEPT / REVISE / REJECT for each theorem, including correction/counterexample and exact head. Independent logical review can use the same authenticated GitHub account, but must be a separate source-blind critical pass with independent reasoning and provenance. D21 is **not yet certified**. If refuted, repair/narrow its domain before any track relies on it; B and C can run without G0.
 
@@ -86,30 +90,29 @@ $$
 
 ## Dependencies, priority, and agent execution
 
-| Priority | Package | Inputs | Exact deliverable |
+| Priority | Package | Inputs | Exact next deliverable |
 | --- | --- | --- | --- |
-| P0 | R0: independent D21 hostile audit | PR #2788 exact candidate head | ACCEPT/REVISE/REJECT per mathematical claim |
-| P0 | R2-B1: singular extension benchmark | admitted D14 | explicit extension, scaling degree, local ambiguity and adversarial checks |
-| P0 | R3-C1/C2: original K0 syzygy | admitted 016, 019 and 028 | actual liquid projective maps, cocycles, boundaries and degree-two verdict |
-| P1 | R1-A1/A2: microlocal topology and plots | G0 verdict or corrected D21 | cone/support topology, smooth plots and operator bounds |
-| P1 | R2-B2/B3: counterterm BV coherence | B1 and relevant D21 audit | genuine operator, two-diagonal test, renormalized identities |
-| P2 | R1-A3: completed B.6 Weiss | A1/A2 | true filtered cofibration/fibration proof or obstruction |
-| P2 | R4: cross-framework integration | reviewed results of A, B and C | comparison diagram, preserved structures, obstruction ledger |
+| Audit complete | R0 | D21/030 and protected 033 | Reconcile bounded audit issue closeout; no repeated D21 audit prerequisite |
+| P0 | R3 reduced syzygy | 016, 031/034, 037/038 | Genuine projective relation cover of the remaining profinite-plot kernel, then degree-two stage verdict |
+| P1 | R1 multilinear normal plots | 033, 035/038 | Exact support/cone plot functor and smooth disjoint-product/Wick maps or failed plot |
+| P1 | R2 renormalized compatibility | GB1, fixed-atom BV, finite forests through corrected 065 | One defined overlap/renormalized BV compatibility diagram with a proof or exact defect |
+| P2 | R1 completed B.6 | Multilinear plots, completeness, lifting and uniformity hypotheses | Actual completed differentiable Weiss theorem or obstruction |
+| P2 | R4 typed integration | Relevant reviewed R1/R2/R3 results | Typed comparison/failure map; positive synthesis only where dependencies are satisfied |
 
 **Worker return discipline:** One bounded theorem, counterexample or exact computation per work package and PR; supply source version, categories, domain, definitions, complete proof, hostile tests, fixture and replay, limitations and independent critical audit. Codex/Lean/Colab optional; no invented separate GitHub accounts. Use the existing GCL authenticated controller and governed protected PR lifecycle. Queue issue creation is **PLANNED**, not an ACTIVE worker lease or certified RESULT/1. If this becomes a long-horizon autonomously executed workset, bind it to the existing governed continuity/checkpoint registry before the next material multi-stage transition; do not establish a competing registry.
 
-**Immediate executable order:** (1) critique PR #2788 on exact bytes; (2) in parallel prove the singular extension and inspect actual K0 projective relations; (3) establish the normal-topology DVS after the audit; (4) proceed to multi-diagonal renormalization, B.6 completion and liquid degree-two conclusion; (5) integrate only admitted mathematical results.
+**Immediate executable order:** Use the admitted R0 audit and GB1 benchmark rather than repeating them. Prioritize the remaining R3 reduced profinite relation cover; R1 multilinear normal plots and R2 renormalized compatibility can be investigated independently. Advance to B.6 completion and typed integration only after their actual hypotheses are proved. Exact next-return contracts and exclusions are in the [current triage](REACH_TRIAGE_2026_10_27.md).
 
 
-## Exact planned queue inventory
+## Issue inventory and current triage
 
-- **R0:** [Issue #2795, independent hostile D21 audit](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2795); first mathematical certification gate.
-- **R1:** [Issue #2796, normal-topology DVS and B.6 Weiss](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796); analytic foundation after R0.
-- **R2:** [Issue #2797, singular renormalization and BV counterterms](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797); the elementary extension may begin immediately.
-- **R3:** [Issue #2798, genuine first liquid syzygy Ext comparison](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798); independent of D21 and R2.
-- **R4 integration:** remains with [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), and is **not** an additional prematurely issued work item.
+- **R0:** [#2795](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2795), bounded audit fulfilled by protected 033; documentary closeout follows protected triage readback.
+- **R1:** [#2796](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796), OPEN beyond admitted fixed-sector linear continuity 035/038.
+- **R2:** [#2797](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797), OPEN for remaining GB2 identities beyond GB1, fixed-atom BV and corrected finite Gaussian forests.
+- **R3:** [#2798](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798), OPEN after the singleton-relation reduction 037/038; independent P0 liquid relation task.
+- **R4:** existing [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), OPEN; no duplicate integration ticket.
 
-All four new issues are **PLANNED** until legitimate worker/Project dispatch through existing authenticated GCL control; issue creation alone changes no Project status, lease or certification.
+Admitted mathematics, issue bookkeeping and an actual authenticated worker dispatch are distinct. This inventory creates no active lease, Project progression or certified RESULT/1. Keep the larger parent #2617 open.
 
 ## Primary literature
 
