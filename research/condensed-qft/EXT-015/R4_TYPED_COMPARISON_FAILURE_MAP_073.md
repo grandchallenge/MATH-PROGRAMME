@@ -1,4 +1,4 @@
-# EXT-015 REACH / 073 — typed comparison and failure map after 067–072
+# EXT-015 REACH / 073 — typed comparison and failure map through R1/078
 
 **Disposition:** source-locked integration map, not a claim that the remaining REACH programme is complete. Every positive arrow below is limited to the category and domain already established by its named source. A missing arrow is retained as a mathematical obligation; a finite fixture, checkpoint or protected merge does not construct it.
 
@@ -10,10 +10,12 @@ The source custody ledger for the named new results is in the governing issues a
 | --- | --- | --- |
 | $L_{\mathrm{field}}$ | Corrected scalar-valued liquid dual of completed smooth free-field tensors, 026/027 | Restricted classical liquid-derived/DVS comparison, with the stated field source and scalar target |
 | $C_{\mathrm{sm}}$ | Compact smooth polynomial observable kernels | Classical differentiable cochain model and completed free-field controls |
-| $C_{\mu,N}$ | D21 microlocally admissible compact distribution kernels with the locally normal plots of 069 | Differentiable classical/free Wick model, total-weight completion and Weiss descent on that plot class |
+| $C_{\mu,N}$ | D21 microlocally admissible compact distribution kernels with locally normal plots, 069 | Completed free Weiss model and uniform restricted regulator endpoint, 069/077 |
+| $C_{\mu,\mathrm{ind}}$ | The same fibers with the ordinary normal-sector inductive LCS and its Bastiani plots | Nonregular and not sequentially complete; its plots strictly contain the refined ones, 075 |
 | $C_{\mu,\mathrm{amb}}$ | The same admissible fibers as a diffeological vector space with ambient-strong distribution plots | No closed differentiable cochain structure is asserted; zero-scale singular BV contraction is not smooth on all these plots, by 033 |
 | $C_{\mathrm{dist}}^{\mathrm{cl}}$ | All compact distributional classical polynomial kernels with the standard distributional differentiable structure | Classical target in the restricted comparison 026/027 |
 | $C_{\epsilon,\mathrm{dist}}$ | All compact distributional polynomial kernels at a fixed positive regulator | Smooth regulated BV and Wick prefactorization of 028/029 |
+| $C_{\epsilon,\mu,N}^{q}$ | The positive-regulator model restricted to the same admissible fibers and locally normal plots | Smooth completed Wick transport to zero with the transported regulator cochain connection, 077/078 |
 | $R_{\mathrm{G}}$ | The explicitly specified Gaussian regulated amplitude/forest sectors of 044–071 | Bounded source-local subtraction, Laurent/normal-jet data and particular compatibility/obstruction results; no global closed BV domain has been established |
 | $H,G_b,G$ | Original fixed test-function source and compact-support liquid coefficient stages | Degree-one comparison 019 and all-source/all-degree stage injectivity 067; original degree-two surjectivity remains open |
 
@@ -26,15 +28,17 @@ The scalar target of the first row is not the test-function coefficient $G$ in t
 | $L_{\mathrm{field}}\to C_{\mathrm{dist}}^{\mathrm{cl}}$ | Corrected restricted classical comparison from 026/027 | Do not silently replace the full distributional target by the refined microlocal DVS target |
 | $C_{\mathrm{sm}}\to C_{\mu,N}$ | Smooth classical inclusion on locally support-controlled smooth plots; a smooth plot lifts to the normal sector with empty wavefront cone | No inverse or quasi-isomorphism with this refined DVS target is asserted here |
 | $C_{\mu,N}\to C_{\mu,\mathrm{amb}}$ | Smooth forgetful identity of underlying diffeological vector spaces; no differentiable cochain target structure is assumed | Its inverse identity is not smooth by the oscillatory family of 033 |
+| $C_{\mu,N}\to C_{\mu,\mathrm{ind}}$ | Smooth identity from local sector plots into the ordinary inductive LCS Bastiani plots | The inverse identity fails on an actual real symmetric flat smooth curve, 075/076 |
 | $W_0:C_{\mu,N}^{q}\to C_{\mu,N}^{\mathrm{cl}}$ | Exact smooth Wick cochain isomorphism for the specified Wick-conjugated structure maps, completed by the total weight of 069 | This does not identify every choice of quantum factorization prescription or a physically canonical interacting theory |
-| $C_{\epsilon,\mathrm{dist}}\to C_{\mu,N}$ as $\epsilon\to0$ | No unrestricted endpoint arrow exists on all distributional kernels: the coincident delta divergence of 028 is an explicit obstruction | A uniformly controlled endpoint on appropriate normal sectors is a separate comparison theorem |
+| $C_{\epsilon,\mathrm{dist}}\to C_{\mu,N}$ as $\epsilon\to0$ | No unrestricted endpoint arrow exists on all distributional kernels: the coincident delta divergence of 028 is an explicit obstruction | The uniform endpoint is now proved for the restricted refined model in 077; the unrestricted all-distributional endpoint still fails |
+| $T_{\epsilon,0}:C_{\epsilon,\mu,N}^{q}\to C_{0,\mu,N}^{q}$ | Smooth completed filtered cochain isomorphism, natural for inclusions, disjoint factorization and Weiss comparison; 077/078 | This is the restricted admissible family and does not identify the original liquid mapping problem or all distributional kernels |
 | $R_{\mathrm{G}}\to C_{\mu,N}$ by treating every renormalized output as an unchanged admissible kernel | Not defined on nonzero collision-delta outputs | A new common renormalized domain and its operators/plots are required |
 | $\varinjlim_b\mathrm{Ext}^2(H,G_b)\to\mathrm{Ext}^2(H,G)$ | Injective by 067, naturally equivalent to the reduced-syzygy first-Ext comparison | Surjectivity is precisely the remaining cocycle/boundary support equation |
 | One fixed finite Laurent state $\to$ inserted finite amplitudes | Refuted for the exact whole-amplitude contract in 071; even a fixed nonzero insertion fails on its unbounded polynomial module | This does not refute every richer forest or BV renormalization prescription |
 
 For the smooth inclusion, locally support-controlled smooth plots are smooth in a sector with empty wavefront cone because that normal topology is the smooth-function topology on the fixed compact support. For the forgetful map, each normal-sector inclusion into compact distributions is continuous linear, so locally normal plots are ambient distributional plots. The forgetful map to the full standard distributional DVS preserves parameter derivatives; no closed flat connection on the ambient admissible subdiffeology is assumed.
 
-## 3. Two concrete integration obstructions
+## 3. Concrete integration obstructions
 
 ### 3.1 The refined and ambient plot structures are not interchangeable
 
@@ -50,11 +54,15 @@ Consequently a Gaussian renormalized sector containing such outputs does not emb
 
 The finite-state obstruction in 071 further shows that the stated insertion finite-part contract cannot be recovered from one fixed Laurent cutoff, even for a fixed nonzero insertion on its full polynomial module. It does not choose the required richer domain or prove global BV/QME.
 
-## 4. Exact unresolved gates
+### 3.3 The ordinary global LCS has extra smooth plots
+
+Source 075 applies the published open-cone topology theorem to the actual D21 cone and constructs a real symmetric Bastiani-smooth curve in the ordinary inductive LCS with no local normal-sector lift. The ordinary union is not regular or sequentially complete. This refutes the proposed identity with the refined DVS; it does not invalidate the latter's formal filtration completeness or completed Weiss proof.
+
+## 4. Completed R1 and exact unresolved programme gates
 
 **R3:** with the actual cover of 067, prove (67.14) for every liquid $f:K_1\to G$ or construct a genuine counterexample modulo every projective boundary. The injected image is known; its cokernel is separated by (67.13) into invisible and infinitely coordinate-visible mechanisms. No current admitted argument settles either residual channel.
 
-**R1:** distinguish the completed free differentiable Weiss model already constructed on the locally normal plots from the unproved ordinary global LCS identification/regularity and uniform positive-regulator endpoint comparison.
+**R1:** the original assignment is fulfilled: 069/070 construct the refined completed free model; 075/076 refute the proposed ordinary complete/regular union and identity plot lift; 077/078 prove the uniform restricted regulator endpoint and its actual cochain connection. [Acceptance ledger 079](R1_ACCEPTANCE_CLOSEOUT_079.md) governs completed tracker closeout after protected record/readback. The all-distributional positive domain and excluded-collision renormalization are not included in that verdict.
 
 **R2:** supply a common renormalized operator domain beyond the existing fixed-label and finite Gaussian sectors, with its actual overlap, BV/factorization and scale identities, or a precise obstruction to that stated contract. The negative finite-state contract of 071 is only one such bounded obstruction and is not the full GB2 verdict.
 
@@ -83,6 +91,19 @@ All input identities below were read back on protected main `09f59d3887c30500b6c
 | [071 insertion obstruction](R2_FINITE_LAURENT_INSERTION_OBSTRUCTION_071.md) | `13d1441dd5a745f7726d6b01843b2129331e4b2d` |
 | [072 insertion critic](AGENT_CRITICAL_REVIEW_R2_FINITE_STATE_072.md) | `c92a20b5930eefc56e9834ff4a4e8004c9c07fac` |
 
-New-result custody: [R3 PR #2869](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2869) merged at `4f8d43213dca16537dbd6085bd77b0f6249083f8`; [R1 PR #2871](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2871) at `709556bbb4b042d7691bb69a5209983c2a87deba`; [R2 PR #2873](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2873) at `09f59d3887c30500b6c7336663149318f1d19ab3`. Each had source/fixture/audit readback and replay. Their critic passes are separately reasoned logical roles within the author's session/account, not external certification. The separate map critic must bind this map's actual frozen source and the reconciled programme, run matrix and triage before admission.
+New-result custody: [R3 PR #2869](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2869) merged at `4f8d43213dca16537dbd6085bd77b0f6249083f8`; [R1 PR #2871](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2871) at `709556bbb4b042d7691bb69a5209983c2a87deba`; [R2 PR #2873](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2873) at `09f59d3887c30500b6c7336663149318f1d19ab3`. Each had source/fixture/audit readback and replay. Their critic passes are separately reasoned logical roles within the author's session/account, not external certification. The historical map critic 074 binds its original source. Updated integration critic 080 binds this revised map, the R1 acceptance ledger and the reconciled programme/matrix/triage.
 
-**Exit status:** the strong REACH exit is not met. The bounded typed map and its explicit failed identities are completed deliverables; the substantive gates in section 4 remain open. No checkpoint or editorial integration turns those missing proofs into completion.
+**Exit status:** the strong REACH exit is not met. The bounded typed map and its explicit failed identities are completed deliverables; the R2/R3 and corresponding positive R4 gates in section 4 remain open. No checkpoint or editorial integration turns those missing proofs into completion.
+
+## 7. R1 endpoint and topology update custody
+
+Protected R1 input cut: `482554aa53e20d8655f6ba79e1eff616cabddec2`. Source/audit/fixture readback and the new exact replays are recorded in [079](R1_ACCEPTANCE_CLOSEOUT_079.md).
+
+| New R1 source or logical critic | Exact protected blob |
+| --- | --- |
+| [075 ordinary topology and plot obstruction](R1_GLOBAL_CONE_PLOT_OBSTRUCTION_075.md) | `fa4e57a5f8f8e27e68815cf873ebb26e94982991` |
+| [076 topology critic](AGENT_CRITICAL_REVIEW_R1_GLOBAL_CONE_076.md) | `6bf5e77cb53abee0155d0763958b6ee85061383c` |
+| [077 uniform normal regulator endpoint](R1_UNIFORM_NORMAL_REGULATOR_ENDPOINT_077.md) | `f2c2460a9d13efc2604a061f171538aeb22aba4f` |
+| [078 endpoint critic](AGENT_CRITICAL_REVIEW_R1_ENDPOINT_078.md) | `bbd598c8d9f1622f24c30978cc42ecc912b6ed23` |
+
+The R1 result removes those two previously unproved R1 gates by an actual negative topology verdict and a positive uniform endpoint theorem. It leaves the R2/R3 and corresponding positive R4 hypotheses in section 4 open. Full REACH completion is not asserted.

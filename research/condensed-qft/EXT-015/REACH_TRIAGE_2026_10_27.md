@@ -1,20 +1,20 @@
 # REACH remainder — execution return and current triage, 2026-10-27
 
-**Current evidence cut:** protected main `09f59d3887c30500b6c7336663149318f1d19ab3`, after source-locked R3/067–068, R1/069–070 and R2/071–072 admission/readback. This section supersedes the earlier next-action list preserved below. The [typed map 073](R4_TYPED_COMPARISON_FAILURE_MAP_073.md) contains categories, exact failed identities and the integration input ledger.
+**Current evidence cut:** protected main `482554aa53e20d8655f6ba79e1eff616cabddec2`, after R1/075–078 topology and uniform endpoint admission/readback. [R1 acceptance ledger 079](R1_ACCEPTANCE_CLOSEOUT_079.md) matches the original assignment; the updated [typed map 073](R4_TYPED_COMPARISON_FAILURE_MAP_073.md) preserves the restricted endpoint domain. This current section supersedes the historical next-action snapshots below.
 
 | Track | Verified current result | Remaining disposition |
 | --- | --- | --- |
 | R0 #2795 | Bounded D21 audit 033 and protected closeout ledger | CLOSED; no repeated audit prerequisite |
 | R3 #2798 | Actual evaluated relation cover; resolution-independent cocycle formula; all-source/all-degree stage injectivity, 067/068 | OPEN: degree-two surjectivity is exactly (67.14), modulo all projective boundaries |
-| R1 #2796 | Locally normal plot DVS, smooth multilinear operations and specified total-weight completed free Weiss model, 069/070 | OPEN: ordinary global LCS identification and uniform regulator endpoint |
+| R1 #2796 | Refined completed free model 069/070; ordinary topology/plot identity refuted 075/076; uniform restricted endpoint proved 077/078 | ORIGINAL ASSIGNMENT FULFILLED; completed issue closeout follows protected ledger 079/080 readback |
 | R2 #2797 | Corrected finite Gaussian forests; exact finite Laurent-state insertion obstruction, 071/072, even for fixed insertion on the full polynomial module | OPEN: common renormalized operator domain and genuine overlap/BV/factorization/scale identities |
-| R4 #2657 | Typed comparison/failure map 073 and source-bound logical audit 074 | Bounded map supplied; positive liquid-derived/renormalized synthesis remains OPEN |
+| R4 #2657 | Updated typed map 073 with the new restricted R1 endpoint; original audit 074 and updated integration audit 080 | Positive original-source liquid/renormalized synthesis remains OPEN for R2/R3 hypotheses |
 
-**Deterministic next mathematical action:** use the actual evaluated cover of 067 to prove equation (67.14) for every liquid cocycle, or produce a violating cocycle modulo every projective boundary. Repeating the relation cover or an escaping boundary is not the next result. R1 topology/regulator and R2 richer-domain work remain independent substantive research.
+**Deterministic next mathematical action:** use the actual evaluated cover of 067 to prove equation (67.14) for every liquid cocycle, or produce a violating cocycle modulo every projective boundary. Repeating the relation cover or an escaping boundary is not the next result. R1 is adjudicated in ledger 079; R2 richer-domain work remains independent substantive research.
 
 The multi-stage completion work is now registered as `EXT-015-REACH-COMPLETION-001` in the existing bounded-operation checkpoint registry. The protected checkpoint owns the exact resume action and source binding. This is distinct from the earlier session-bounded triage transaction, whose unregistered snapshot is retained below. No authenticated worker lease, persistent-controller dispatch, external mathematical certification or full-programme completion is asserted.
 
-Keep R1/R2/R3, EXT-015D #2657 and QFT-COND-005 #2617 open. Source-locked critics and finite fixtures support only their stated scopes; none settles the missing global or infinite-dimensional hypotheses.
+Close only the fulfilled R1 assignment after ledger 079/080 protected readback. Keep R2/R3, EXT-015D #2657 and QFT-COND-005 #2617 open for their remaining renormalized-domain and original degree-two liquid hypotheses. The registered REACH continuation record stays nonterminal.
 
 ---
 
