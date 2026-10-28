@@ -1,20 +1,20 @@
 # REACH remainder — execution return and current triage, 2026-10-27
 
-**Current evidence cut:** protected main `482554aa53e20d8655f6ba79e1eff616cabddec2`, after R1/075–078 topology and uniform endpoint admission/readback. [R1 acceptance ledger 079](R1_ACCEPTANCE_CLOSEOUT_079.md) matches the original assignment; the updated [typed map 073](R4_TYPED_COMPARISON_FAILURE_MAP_073.md) preserves the restricted endpoint domain. This current section supersedes the historical next-action snapshots below.
+**Current reassessment return:** [Decision/ledger 081](REACH_REASSESSMENT_081.md) records the frozen input `9cc483334648d94ea6226a76874151a3eabd33b1`, fresh audit 082, targeted R2 study 083, opposed R3 attempts 084/085 and separate critical review 086. The protocol was protected-admitted at `6e5a83f80b470d49687eafdac0df155646e65a3c`; result admission/readback belongs to the existing continuation record and issue headers. This section supersedes the historical next-action snapshots below without rewriting their evidence cuts.
 
 | Track | Verified current result | Remaining disposition |
 | --- | --- | --- |
 | R0 #2795 | Bounded D21 audit 033 and protected closeout ledger | CLOSED; no repeated audit prerequisite |
-| R3 #2798 | Actual evaluated relation cover; resolution-independent cocycle formula; all-source/all-degree stage injectivity, 067/068 | OPEN: degree-two surjectivity is exactly (67.14), modulo all projective boundaries |
-| R1 #2796 | Refined completed free model 069/070; ordinary topology/plot identity refuted 075/076; uniform restricted endpoint proved 077/078 | ORIGINAL ASSIGNMENT FULFILLED; completed issue closeout follows protected ledger 079/080 readback |
-| R2 #2797 | Corrected finite Gaussian forests; exact finite Laurent-state insertion obstruction, 071/072, even for fixed insertion on the full polynomial module | OPEN: common renormalized operator domain and genuine overlap/BV/factorization/scale identities |
-| R4 #2657 | Updated typed map 073 with the new restricted R1 endpoint; original audit 074 and updated integration audit 080 | Positive original-source liquid/renormalized synthesis remains OPEN for R2/R3 hypotheses |
+| R3 #2798 | Actual cover/injectivity 067; local/higher-limit reduction 084; explicit boundary-killed negative constructions 085 | OPEN: (67.14), with the missing normalization (84.19), remains unproved and unrefuted |
+| R1 #2796 | Refined completed model/topology obstruction/endpoint; fresh audit 082 found and checked the inherited Wick-sign correction | CLOSED/completed assignment preserved; exact erroneous historical formulas are not retained as correct |
+| R2 #2797 | Complete eleven-edge forest and nonzero finite control; identical full regulated inputs with different pole-only forest outputs, 083 | OPEN: the specified allocation quotient contract fails, but no universal BV/renormalization verdict is inferred |
+| R4 #2657 | Typed map 073 uses the corrected R1 arrow and bounded new R2/R3 facts | Positive original-source liquid/renormalized synthesis remains OPEN |
 
-**Deterministic next mathematical action:** use the actual evaluated cover of 067 to prove equation (67.14) for every liquid cocycle, or produce a violating cocycle modulo every projective boundary. Repeating the relation cover or an escaping boundary is not the next result. R1 is adjudicated in ledger 079; R2 richer-domain work remains independent substantive research.
+**Bounded-cycle decision:** propose the separately defined narrower compatibility objective in 081; do not silently launch it or substitute it for REACH. The combined feasibility verdict is inconclusive. One primary attempt and one correction pass per branch are exhausted. The registered checkpoint owns the exact remaining authorized action. The original R3 equation and common renormalized BV obligations are unchanged.
 
 The multi-stage completion work is now registered as `EXT-015-REACH-COMPLETION-001` in the existing bounded-operation checkpoint registry. The protected checkpoint owns the exact resume action and source binding. This is distinct from the earlier session-bounded triage transaction, whose unregistered snapshot is retained below. No authenticated worker lease, persistent-controller dispatch, external mathematical certification or full-programme completion is asserted.
 
-Close only the fulfilled R1 assignment after ledger 079/080 protected readback. Keep R2/R3, EXT-015D #2657 and QFT-COND-005 #2617 open for their remaining renormalized-domain and original degree-two liquid hypotheses. The registered REACH continuation record stays nonterminal.
+Preserve the fulfilled R1 assignment and its transparent correction custody in 079/081/082. Keep R2/R3, EXT-015D #2657 and QFT-COND-005 #2617 open for their remaining original obligations. The registered REACH continuation record stays nonterminal.
 
 ---
 
