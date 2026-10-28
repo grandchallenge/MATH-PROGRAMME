@@ -1,4 +1,4 @@
-# EXT-015 REACH / 073 — typed comparison and failure map through reassessment 081–086
+# EXT-015 REACH / 073 — typed comparison and failure map through consistent-host construction 087–089
 
 **Disposition:** source-locked integration map, not a claim that the remaining REACH programme is complete. Every positive arrow below is limited to the category and domain already established by its named source. A missing arrow is retained as a mathematical obligation; a finite fixture, checkpoint or protected merge does not construct it.
 
@@ -118,3 +118,15 @@ The R1 result removes those two previously unproved R1 gates by an actual negati
 The preceding input tables are historical protected evidence cuts. Fresh audit 082 found that the original 069/077 Wick conjugation direction had the wrong sign relative to 028/030. The corrected current arrow is $W_0^{-1}:C_{\mu,N}^{q}\to C_{\mu,N}^{\mathrm{cl}}$, with $d^q=W d W^{-1}$; the restricted endpoint transport and connection are corrected consistently. The analytic domain and original R1 assignment survive.
 
 Current source identities, mathematical returns 082–085, source-bound critique 086 and final editorial integration are bound in [decision/ledger 081](REACH_REASSESSMENT_081.md). Original critics 070/078/080 remain historical records; they did not detect this normalization error. New review is a distinct fresh-agent role in the same Codex system, not external certification. No missing R2/R3 arrow is inferred from the reassessment recommendation.
+
+## 9. Separate consistent-host construction
+
+The user explicitly selected the narrower objective [#2890](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2890). Its contract and acceptance ledger are [089](CONSISTENT_HOST_ACCEPTANCE_089.md); the construction is [087](R2_CONSISTENT_SUBTRACTION_RECORDS_087.md), with source-bound review [088](AGENT_CRITICAL_REVIEW_CONSISTENT_HOST_088.md). This is a separate objective and does not replace original GB2 or original REACH acceptance.
+
+| New bounded arrow | Actual domain and result | Boundary |
+| --- | --- | --- |
+| $\mathcal Z:\mathscr F_d\to\mathscr Z_d$ | Actual concentrated regulated families to principal-part/remainder records, with the explicit inverse $C+R$ before any product | Full actual remainder retained; no graph-label quotient or finite cutoff |
+| $\mathrm{ev}_0:\mathscr Z_d\to\mathcal D'(\mathbb R^d)$ | Strong finite limit, compatible with actual vertex derivatives and the marked identity including all mixed terms | Not multiplicative on finite outputs; no closed finite-output BV algebra is asserted |
+| Normalized source-channel forest $\to\mathrm{CT}T_\gamma$ | Source-intrinsic pole-plus-finite recursion, with all proper finite normalizations recomputed and both disjoint spinneys included | Only the finite limit is representation-independent; auxiliary channel counterterms are not declared canonical actual-family operators |
+
+The construction changes the finite normalization of 083 and gives identical finite outputs for its two scalar allocations. It also defines coherent insertion/disjoint composition on retained actual records. The resulting collision delta jets still lie outside the unchanged refined microlocal domain, so no new identity inclusion into $C_{\mu,N}$ is created. Original common zero-scale BV/QME and liquid degree-two obligations remain open. Exact source custody and final protected admission/readback of this bounded addition belong to ledger 089 and its separate continuation record.
