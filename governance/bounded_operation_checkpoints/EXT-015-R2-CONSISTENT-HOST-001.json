@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-R2-CONSISTENT-HOST-001.CP004",
+  "checkpoint_id": "EXT-015-R2-CONSISTENT-HOST-001.CP005",
   "governed_work_id": "EXT-015-R2-CONSISTENT-HOST-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,64 +15,70 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2890"
   },
-  "phase": "Mathematical and final editorial acceptance complete; protected admission and readback next",
-  "state": "IN_PROGRESS",
+  "phase": "Exact PR2892 under required checks and protected queue admission",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "f348dcccbc6b8d2ffd89551afa7dea1d27c06e11",
-    "candidate_head_sha": "a2837994aad771ab5ee4e17604b6ee1b98111c98",
+    "candidate_head_sha": "0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
     "issue_number": 2890,
-    "pr_number": null,
-    "branch": "research/consistent-host-admission-frozen-20261028",
+    "pr_number": 2892,
+    "branch": "research/ext015-consistent-host-20261028",
     "workflow_runs": []
   },
   "terminal_condition": "The separate acceptance contract in089 is met by an actual scoped construction or a counterexample resolving that full contract, with source087, exact evidence, source-bound critical review088, complete ledger089, protected admission/readback and accurate disposition of issue2890. A failed candidate scheme or principal-part notation alone is not a positive construction. Original REACH and its original issue/Project dispositions are not closed or redefined by this objective.",
   "permitted_next_actions": [
     {
-      "id": "admit-reviewed-consistent-host-package",
-      "description": "Submit reviewed087/088/089, all three fixtures and bounded programme/map integration through required exact-head checks and native protected merge. Read back every changed blob and merge parent; only afterward reconcile the separate issue2890 and its checkpoint."
+      "id": "verify-and-admit-exact-pr2892",
+      "description": "Refresh PR2892 exact head/base/rules/checks/reviews and relevant material identities. After required checks pass, admit through native merge queue, verify merge parents and all11 changed blobs. Then reconcile separate issue2890 and original open-status links."
     }
   ],
   "next_action": {
-    "id": "admit-reviewed-consistent-host-package",
-    "description": "Submit reviewed087/088/089, all three fixtures and bounded programme/map integration through required exact-head checks and native protected merge. Read back every changed blob and merge parent; only afterward reconcile the separate issue2890 and its checkpoint.",
+    "id": "verify-and-admit-exact-pr2892",
+    "description": "Refresh PR2892 exact head/base/rules/checks/reviews and relevant material identities. After required checks pass, admit through native merge queue, verify merge parents and all11 changed blobs. Then reconcile separate issue2890 and original open-status links.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/CONSISTENT_HOST_ACCEPTANCE_089.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_CONSISTENT_HOST_088.md",
-      "grandchallenge/MATH-PROGRAMME#2890"
+      "grandchallenge/MATH-PROGRAMME#2892",
+      "grandchallenge/MATH-PROGRAMME#2890",
+      "research/condensed-qft/EXT-015/CONSISTENT_HOST_ACCEPTANCE_089.md"
     ]
   },
   "external_evidence": {
-    "waiting": false,
-    "objects": []
+    "waiting": true,
+    "objects": [
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATH-PROGRAMME#2892 at0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
+        "status": "Required checks running; native queue and protected readback pending"
+      }
+    ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "source-bound critical replay and final editorial acceptance",
-    "result": "Reviewer088 accepts087 within frozen089 contract, no substantive repair required. Final exact087 replay passes all10 complete277-source recursions in410.938s; separate operator checker and independent Taylor/cusp088 verifier pass. Parent read all verdicts and proof/ledger/map/three programme additions and accepts their scoped mathematical/editorial integration. Independent verifier imports neither087 nor086. Reviewer dependency authorship and same-system limits are disclosed. Accepted package frozen ata2837994aad771ab5ee4e17604b6ee1b98111c98. Protected custody and tracker closure remain pending; original REACH unchanged.",
+    "action": "publish reviewed exact package PR2892",
+    "result": "PR2892 is open and mergeable at0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997 against protectedf348dcccbc6b8d2ffd89551afa7dea1d27c06e11. Its11 changed paths contain only reviewed scientific/editorial artifacts and the separate continuation record. This live checkpoint is published on a separate continuity branch so the candidate PR head remains immutable. Original checkpoint19 remains b6d252b5081648981bb99d3637edb05e226ab324.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#2892",
+      "0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
       "a2837994aad771ab5ee4e17604b6ee1b98111c98",
-      "review088 blob c1cebf1a5c846097ca8f80724c4ea62638d1a404",
-      "independent verifier088 blob f6a9f70a254a3986260d9938e01804b2079f9f2d",
-      "source087 blob452c494bcdc94ba94e52ae50c7b4d1eb3240ca83",
-      "ledger089 blob600a269ffd47b84b1bc9c671125aea3bf61a2f80"
+      "review088 c1cebf1a5c846097ca8f80724c4ea62638d1a404"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-R2-CONSISTENT-HOST-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-28T23:58:50Z"
+    "observed_at": "2026-10-28T23:59:34Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
       "grandchallenge/MATH-PROGRAMME#2890",
-      "research/condensed-qft/EXT-015/R2_CONSISTENT_SUBTRACTION_RECORDS_087.md",
+      "grandchallenge/MATH-PROGRAMME#2892",
       "research/condensed-qft/EXT-015/CONSISTENT_HOST_ACCEPTANCE_089.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_CONSISTENT_HOST_088.md",
       "governance/bounded_operation_checkpoints/EXT-015-R2-CONSISTENT-HOST-001.json"
     ],
-    "instructions": "Verify admission-frozen brancha2837994aad771ab5ee4e17604b6ee1b98111c98 and open issue2890. Source087 and all three fixture outputs have passed source-bound non-author review088; parent final editorial integration accepted. Submit this exact material package through required checks and native merge queue. Requery actual PR head/base/rules/checks/reviews immediately before queue admission. Read back all changed blobs, reviewed head as merge second parent, first-parent protected state, and unchanged original REACH checkpoint19. Only then close separate issue2890 and record terminal evidence; original2797/2798/2657/2617 remain open. No external certification or full BV/liquid comparison is asserted."
+    "instructions": "Verify exact PR2892 head0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997 and current base/check failure set before transition. This checkpoint is on research/consistent-host-continuity-20261028, distinct from the frozen scientific PR branch; do not push continuity-only changes into the reviewed PR. Required-context checks and native queue must pass, then read all11 changed blob identities and merge parentage. Refresh before exact queue action. If PR has settled, rebind this checkpoint to the actual protected merge before tracker mutation. Issue2890 closes only after exact protected source/readback and documentary acceptance; retain original R2/R3 and parent open states and original checkpoint19 unchanged."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
