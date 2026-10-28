@@ -1,4 +1,4 @@
-# EXT-015 REACH / 073 — typed comparison and failure map through R1/078
+# EXT-015 REACH / 073 — typed comparison and failure map through reassessment 081–086
 
 **Disposition:** source-locked integration map, not a claim that the remaining REACH programme is complete. Every positive arrow below is limited to the category and domain already established by its named source. A missing arrow is retained as a mathematical obligation; a finite fixture, checkpoint or protected merge does not construct it.
 
@@ -16,7 +16,7 @@ The source custody ledger for the named new results is in the governing issues a
 | $C_{\mathrm{dist}}^{\mathrm{cl}}$ | All compact distributional classical polynomial kernels with the standard distributional differentiable structure | Classical target in the restricted comparison 026/027 |
 | $C_{\epsilon,\mathrm{dist}}$ | All compact distributional polynomial kernels at a fixed positive regulator | Smooth regulated BV and Wick prefactorization of 028/029 |
 | $C_{\epsilon,\mu,N}^{q}$ | The positive-regulator model restricted to the same admissible fibers and locally normal plots | Smooth completed Wick transport to zero with the transported regulator cochain connection, 077/078 |
-| $R_{\mathrm{G}}$ | The explicitly specified Gaussian regulated amplitude/forest sectors of 044–071 | Bounded source-local subtraction, Laurent/normal-jet data and particular compatibility/obstruction results; no global closed BV domain has been established |
+| $R_{\mathrm{G}}$ | The explicitly specified Gaussian regulated amplitude/forest sectors of 044–083 | Bounded source-local subtraction and full eleven-edge forest calculations; the pole-only allocation scheme does not descend the stated evaluated-family quotient |
 | $H,G_b,G$ | Original fixed test-function source and compact-support liquid coefficient stages | Degree-one comparison 019 and all-source/all-degree stage injectivity 067; original degree-two surjectivity remains open |
 
 The scalar target of the first row is not the test-function coefficient $G$ in the last row. The original wrong unit/arity-zero mapping in 022 was already refuted in 026/027 and is not reopened here.
@@ -35,6 +35,7 @@ The scalar target of the first row is not the test-function coefficient $G$ in t
 | $R_{\mathrm{G}}\to C_{\mu,N}$ by treating every renormalized output as an unchanged admissible kernel | Not defined on nonzero collision-delta outputs | A new common renormalized domain and its operators/plots are required |
 | $\varinjlim_b\mathrm{Ext}^2(H,G_b)\to\mathrm{Ext}^2(H,G)$ | Injective by 067, naturally equivalent to the reduced-syzygy first-Ext comparison | Surjectivity is precisely the remaining cocycle/boundary support equation |
 | One fixed finite Laurent state $\to$ inserted finite amplitudes | Refuted for the exact whole-amplitude contract in 071; even a fixed nonzero insertion fails on its unbounded polynomial module | This does not refute every richer forest or BV renormalization prescription |
+| Evaluated full regulated amplitude $\to$ the edge-factor pole-only forest finite part of 083 | Refuted on the fixed eleven-edge host: reallocating the same scalar $\epsilon^2$ between edges `01` and `45` preserves the entire input but changes the finite output | The failure concerns this precise scheme and quotient, not every enriched domain or consistent prescription |
 
 For the smooth inclusion, locally support-controlled smooth plots are smooth in a sector with empty wavefront cone because that normal topology is the smooth-function topology on the fixed compact support. For the forgetful map, each normal-sector inclusion into compact distributions is continuous linear, so locally normal plots are ambient distributional plots. The forgetful map to the full standard distributional DVS preserves parameter derivatives; no closed flat connection on the ambient admissible subdiffeology is assumed.
 
@@ -62,9 +63,13 @@ Source 075 applies the published open-cone topology theorem to the actual D21 co
 
 **R3:** with the actual cover of 067, prove (67.14) for every liquid $f:K_1\to G$ or construct a genuine counterexample modulo every projective boundary. The injected image is known; its cokernel is separated by (67.13) into invisible and infinitely coordinate-visible mechanisms. No current admitted argument settles either residual channel.
 
+The positive reassessment 084 supplies controlled local acyclicity and an explicit higher-limit/actual-cover reduction, but its global normalization (84.19) remains unproved. The negative constructions of 085 are killed by explicit projective boundaries or product lifts. Neither is a degree-two verdict or a new positive arrow.
+
 **R1:** the original assignment is fulfilled: 069/070 construct the refined completed free model; 075/076 refute the proposed ordinary complete/regular union and identity plot lift; 077/078 prove the uniform restricted regulator endpoint and its actual cochain connection. [Acceptance ledger 079](R1_ACCEPTANCE_CLOSEOUT_079.md) governs completed tracker closeout after protected record/readback. The all-distributional positive domain and excluded-collision renormalization are not included in that verdict.
 
 **R2:** supply a common renormalized operator domain beyond the existing fixed-label and finite Gaussian sectors, with its actual overlap, BV/factorization and scale identities, or a precise obstruction to that stated contract. The negative finite-state contract of 071 is only one such bounded obstruction and is not the full GB2 verdict.
+
+Study 083 adds a full-forest counterexample to the stated pole-only regulator-allocation descent contract. Its tangent derivative correction, nonzero even-rank finite terms and raw dilation/disjoint-state controls do not create a common renormalized quantum transport or BV operator on that quotient. Ledger 081 recommends a separately defined narrower compatibility objective while leaving original GB2 open.
 
 **R4:** until those hypotheses are supplied, the table is a typed failure/dependency map. It is not a liquid-derived equivalence of the original $H,G$ problem with the refined zero-scale or renormalized observable theory.
 
@@ -107,3 +112,9 @@ Protected R1 input cut: `482554aa53e20d8655f6ba79e1eff616cabddec2`. Source/audit
 | [078 endpoint critic](AGENT_CRITICAL_REVIEW_R1_ENDPOINT_078.md) | `bbd598c8d9f1622f24c30978cc42ecc912b6ed23` |
 
 The R1 result removes those two previously unproved R1 gates by an actual negative topology verdict and a positive uniform endpoint theorem. It leaves the R2/R3 and corresponding positive R4 hypotheses in section 4 open. Full REACH completion is not asserted.
+
+## 8. Reassessment and correction custody
+
+The preceding input tables are historical protected evidence cuts. Fresh audit 082 found that the original 069/077 Wick conjugation direction had the wrong sign relative to 028/030. The corrected current arrow is $W_0^{-1}:C_{\mu,N}^{q}\to C_{\mu,N}^{\mathrm{cl}}$, with $d^q=W d W^{-1}$; the restricted endpoint transport and connection are corrected consistently. The analytic domain and original R1 assignment survive.
+
+Current source identities, mathematical returns 082–085, source-bound critique 086 and final editorial integration are bound in [decision/ledger 081](REACH_REASSESSMENT_081.md). Original critics 070/078/080 remain historical records; they did not detect this normalization error. New review is a distinct fresh-agent role in the same Codex system, not external certification. No missing R2/R3 arrow is inferred from the reassessment recommendation.
