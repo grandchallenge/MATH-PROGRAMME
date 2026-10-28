@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP014",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP015",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,30 +15,31 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "User-authorized bounded reassessment: fresh audit before R2 and opposed R3 attempts; original REACH remains incomplete",
+  "phase": "Fresh audit reconciled and R1 positive-sign repair frozen; execute one R2 study and opposed R3 attempts",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "9cc483334648d94ea6226a76874151a3eabd33b1",
-    "candidate_head_sha": "9cc483334648d94ea6226a76874151a3eabd33b1",
+    "protected_base_sha": "6e5a83f80b470d49687eafdac0df155646e65a3c",
+    "candidate_head_sha": "afb5a6873562a9050b8a1fb65dee42f399db9967",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-reassessment-frozen-base-20261027",
+    "branch": "research/reach-reassessment-audit-frozen-20261027",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "fresh-source-audit-before-reassessment",
-      "description": "Execute protocol 081: fresh-context audit of frozen sources 046/061/065/067/069/071/075/077/079, initially without prior critical reviews; classify each critical inference, then reconcile prior reviews before separate R2 and opposed R3 attempts."
+      "id": "execute-three-bounded-mathematical-attempts",
+      "description": "After audited source 082, use three separate fresh contexts for R2 host compatibility, R3 positive support equation, and R3 genuine counterexample; keep R3 arguments separate until written. One primary attempt and one correction pass per branch. Freeze results 083/084/085 for separate critical review and decision report 081."
     }
   ],
   "next_action": {
-    "id": "fresh-source-audit-before-reassessment",
-    "description": "Execute protocol 081: fresh-context audit of frozen sources 046/061/065/067/069/071/075/077/079, initially without prior critical reviews; classify each critical inference, then reconcile prior reviews before separate R2 and opposed R3 attempts.",
+    "id": "execute-three-bounded-mathematical-attempts",
+    "description": "After audited source 082, use three separate fresh contexts for R2 host compatibility, R3 positive support equation, and R3 genuine counterexample; keep R3 arguments separate until written. One primary attempt and one correction pass per branch. Freeze results 083/084/085 for separate critical review and decision report 081.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md",
       "research/condensed-qft/EXT-015/REASSESSMENT_FRESH_AUDIT_082.md",
-      "grandchallenge/MATH-PROGRAMME#2657"
+      "research/condensed-qft/EXT-015/R2_COMMON_DOMAIN_COMPATIBILITY_083.md",
+      "research/condensed-qft/EXT-015/R3_POSITIVE_SUPPORT_ATTEMPT_084.md",
+      "research/condensed-qft/EXT-015/R3_COUNTEREXAMPLE_ATTEMPT_085.md"
     ]
   },
   "external_evidence": {
@@ -47,19 +48,20 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "bind user-authorized reassessment cycle before research",
-    "result": "User selected fresh agent contexts and one audit-plus-targeted-attempt cycle. Protected mathematical input remains 9cc483334648d94ea6226a76874151a3eabd33b1. R1 remains completed; R2/R3/R4 and full REACH remain incomplete. No research result or external certification is claimed.",
+    "action": "freeze reconciled fresh audit and reviewed R1 normalization repair before separate attempts",
+    "result": "Audit 082 initial assessment preceded prior-critic comparison. Actual inherited Wick-sign inconsistency was proved and repaired in 069/077/073/079 and endpoint fixture; R1 original assignment survives. Eight original fixtures, new sign fixture and repaired endpoint fixture passed. Remaining bounded R2 results and R3 presentation/injectivity survive stated hypotheses; no full R2 operator or degree-two verdict is claimed. Source repair is a frozen candidate awaiting final source-bound review/protected admission.",
     "evidence_refs": [
-      "user instruction 2026-10-27 PLEASE IMPLEMENT THIS PLAN",
-      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md",
-      "9cc483334648d94ea6226a76874151a3eabd33b1"
+      "grandchallenge/MATH-PROGRAMME#2881 protected merge 6e5a83f80b470d49687eafdac0df155646e65a3c",
+      "afb5a6873562a9050b8a1fb65dee42f399db9967",
+      "audit 082 blob b596a671ec62ec1dfed4343a834d5ac7343e19cb",
+      "sign fixture blob f2893eefabc28f2191222e4ff71d5450501eeaad"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-28T05:18:30Z"
+    "observed_at": "2026-10-28T05:30:11Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -80,9 +82,10 @@
       "research/condensed-qft/EXT-015/R1_UNIFORM_NORMAL_REGULATOR_ENDPOINT_077.md",
       "research/condensed-qft/EXT-015/R1_ACCEPTANCE_CLOSEOUT_079.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R1_CLOSEOUT_080.md",
-      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md"
+      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md",
+      "research/condensed-qft/EXT-015/REASSESSMENT_FRESH_AUDIT_082.md"
     ],
-    "instructions": "Verify the immutable input branch and open governing issue, then execute protocol 081. Start with fresh-source audit 082 without prior critic conclusions; compare prior reviews after the first assessment. Suspend only work affected by demonstrated errors. Then use separate R2 construction and R3 positive/negative contexts, one primary attempt plus one correction pass each, followed by frozen-source review and the decision report in 081. Rebind this checkpoint after each material phase/source/action change. Preserve R1 completed and remaining REACH open unless actual proof and protected documentary acceptance justify a disposition. No unattended controller is created."
+    "instructions": "Verify the frozen audit-source branch and open governing issue, read protocol/report 081 and reconciled audit 082, then execute the three named attempts independently. Use corrected positive quantum convention dq=W d W^-1, classical trivialization W^-1, transport W_eta W_eps^-1 and connection W partial(W^-1 a). Preserve original 9cc input and prior critic history. Do not repeat the audit or reopen R1 merely because its transparent normalization repair is pending protected admission. R2 must use the actual marked even-rank host and representation-independent domain; R3 must use actual equation (67.14) modulo all boundaries. Keep opposed R3 attempts separate until written, use one correction pass, then freeze for fresh non-author review. Rebind after the next material phase/source change. Original REACH remains incomplete."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
