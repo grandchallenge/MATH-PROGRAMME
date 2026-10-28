@@ -36,9 +36,9 @@ def W(t,sign=1):
         out[offset][offset+2]=c*c/2
     return out
 
-def Wprime(t):
+def Wprime(t,sign=1):
     a,b,ap,bp=coeffs(t);out=zero()
-    for offset,c,cp in ((0,a,ap),(3,b,bp)):
+    for offset,c,cp in ((0,sign*a,sign*ap),(3,sign*b,sign*bp)):
         out[offset][offset+1]=cp
         out[offset+1][offset+2]=cp
         out[offset][offset+2]=c*cp
@@ -47,15 +47,15 @@ def Wprime(t):
 d0=zero()
 for i in range(3):d0[3+i][i]=F(1)
 
-# Independent explicit lower-left block exp((a-b)N), rather than differentiating
+# Independent explicit lower-left block exp((b-a)N), rather than differentiating
 # the conjugation identity that the connection check is intended to verify.
 def dq_explicit(t):
-    a,b,_,_=coeffs(t);g=a-b;out=zero()
+    a,b,_,_=coeffs(t);g=b-a;out=zero()
     for i in range(3):out[3+i][i]=F(1)
     out[3][1]=g;out[4][2]=g;out[3][2]=g*g/2
     return out
 def dqprime_explicit(t):
-    a,b,ap,bp=coeffs(t);g=a-b;gp=ap-bp;out=zero()
+    a,b,ap,bp=coeffs(t);g=b-a;gp=bp-ap;out=zero()
     out[3][1]=gp;out[4][2]=gp;out[3][2]=g*gp
     return out
 
@@ -63,14 +63,14 @@ scales=[F(-2),F(-1),F(-1,2),F(0),F(1,3),F(1),F(2)]
 for t in scales:
     wt=W(t);wi=W(t,-1)
     assert mul(wi,wt)==eye()==mul(wt,wi)
-    dq=mul(mul(wi,d0),wt)
+    dq=mul(mul(wt,d0),wi)
     assert dq==dq_explicit(t)
     assert mul(dq,dq)==zero()
-    A=mul(wi,Wprime(t))
+    A=mul(wt,Wprime(t,-1))
     assert add(dqprime_explicit(t),sub(mul(A,dq),mul(dq,A)))==zero()
     assert W(-t)==wt and dq_explicit(-t)==dq
 
-def transport(s,t):return mul(W(t,-1),W(s))
+def transport(s,t):return mul(W(t),W(s,-1))
 for s in scales:
     for t in scales:
         T=transport(s,t)

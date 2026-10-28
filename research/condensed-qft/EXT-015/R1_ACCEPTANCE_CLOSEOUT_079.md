@@ -1,6 +1,6 @@
 # EXT-015 REACH-R1 / 079 — original-assignment acceptance and closeout ledger
 
-**Disposition:** the mathematical R1 assignment is fulfilled in its stated free microlocal scope by the positive refined model/endpoint and the exact negative ordinary-topology comparison. This ledger is a candidate for protected admission; close issue #2796 completed only after this record and its source-bound editorial critic are protected-merged and read back. The full REACH programme remains incomplete.
+**Disposition:** the mathematical R1 assignment is fulfilled in its stated free microlocal scope by the positive refined model/endpoint and the exact negative ordinary-topology comparison, with the quantum normalization correction recorded in section 5. The original ledger and critic were protected-admitted before issue #2796 was closed completed. The full REACH programme remains incomplete.
 
 **Original assignment:** [REACH-R1 #2796](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796). Its acceptance permits a bounded completed differentiable equivalence with every map typed, or an actual failed lifting/comparison condition. It asks for proof or refutation of completeness and regular support/cone limits; it does not require a false positive regularity theorem.
 
@@ -62,3 +62,11 @@ This is the artifact-ledger entry for the R1 issue. The programme, run matrix, c
 R2 still needs its actual common renormalized domain and overlap/BV/factorization/scale identities. R3 still needs original degree-two surjectivity, precisely equation (67.14), modulo all projective boundaries. R4's positive original-source liquid/renormalized integration remains open for those hypotheses.
 
 R1 closeout must not close #2797, #2798, #2657 or #2617. Neither this ledger, a green workflow nor the new endpoint theorem completes REACH.
+
+## 5. Fresh-audit correction to the quantum arrows
+
+The fresh source audit [082](REASSESSMENT_FRESH_AUDIT_082.md) found a literal sign error missed by the original logical reviews. Sources 028/030 fix $[B,d]=\Delta$ with $W=\exp(\hbar B)$. The earlier 069/077 reversed conjugation while keeping the positive quantum differential. On a smooth even/odd pair the mismatch is nonzero, so this was an actual error, not an optional convention change.
+
+The corrected formulas are $d^q=W d W^{-1}$, classical trivialization $W^{-1}$, transport $T_{\epsilon,\eta}=W_\eta W_\epsilon^{-1}$, and regulator connection $W_\epsilon\partial_\epsilon(W_\epsilon^{-1}a)$. Sources 069/077, the typed arrow in 073 and the endpoint fixture are corrected together. The direct sign fixture of 082 tests the inherited nonzero commutator and rejects the old sign.
+
+The original source/review table in section 2 remains a historical custody record; it is not a claim that those original bytes already contained the correction. Current corrected source identities and their separate critical review are recorded in [reassessment ledger 081](REACH_REASSESSMENT_081.md). The repair preserves the actual analytic sectors, smoothness estimates, formal filtration and Weiss arguments, so it preserves the original R1 assignment. It does not extend its domain or complete the remaining REACH objectives. Corrected sources require protected admission/readback before their current identities are described as protected.

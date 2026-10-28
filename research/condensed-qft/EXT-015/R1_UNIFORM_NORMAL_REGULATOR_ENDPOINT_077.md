@@ -114,17 +114,19 @@ B_\epsilon=\sum_{\text{even pairs}}C^{P_\epsilon}_{ij},
 \qquad
 W_\epsilon=\exp(\hbar B_\epsilon),
 \qquad
-d_\epsilon^q=W_\epsilon^{-1}d_{\mathrm{cl}}W_\epsilon
+d_\epsilon^q=W_\epsilon d_{\mathrm{cl}}W_\epsilon^{-1}
 =d_{\mathrm{cl}}+\hbar\Delta_\epsilon.
 \tag{77.7}
 $$
+
+The inherited convention is $[B_\epsilon,d_{\mathrm{cl}}]=\Delta_\epsilon$ and $[B_\epsilon,\Delta_\epsilon]=0$, as in 028/030. Consequently $W_\epsilon$ maps classical to quantum and $W_\epsilon^{-1}$ is the classical trivialization. The fresh audit [082](REASSESSMENT_FRESH_AUDIT_082.md) corrects the previously reversed conjugation, transport and connection formulas together; it does not change the analytic domains or estimates.
 
 At each total weight, every exponential and composition is finite. Theorem 77.2 gives finitely many compatible output sectors independent of $\epsilon$ for those finite compositions; their finite unions remain admissible. Thus $W_\epsilon$, its inverse and $d_\epsilon^q$ vary smoothly on every weight quotient, including zero. The distribution identity $P_\epsilon''=k_\epsilon$ holds for every real regulator in (77.2), so the admitted conjugation identity applies at zero as well.
 
 For any two sufficiently small regulator values, including zero, put
 
 $$
-T_{\epsilon,\eta}=W_\eta^{-1}W_\epsilon.
+T_{\epsilon,\eta}=W_\eta W_\epsilon^{-1}.
 \tag{77.8}
 $$
 
@@ -155,14 +157,14 @@ The differential in (77.7) varies with the regulator. The compatible connection 
 $$
 \nabla_\epsilon^q a
 =
-W_\epsilon^{-1}\partial_\epsilon(W_\epsilon a)
+W_\epsilon\partial_\epsilon(W_\epsilon^{-1}a)
 =
 \partial_\epsilon a+
-W_\epsilon^{-1}(\partial_\epsilon W_\epsilon)a.
+W_\epsilon(\partial_\epsilon W_\epsilon^{-1})a.
 \tag{77.10}
 $$
 
-Conjugation by $W_\epsilon$ identifies it with ordinary differentiation on the constant classical cochain family. Hence it is flat, commutes with the quantum differential, is compatible with the disjoint structure maps and has horizontal transport (77.8). In additional input parameters it commutes with the ordinary parameter connection. All operations are well-defined smoothly per finite weight and hence in the formal completion.
+The classical trivialization $W_\epsilon^{-1}$ identifies it with ordinary differentiation on the constant classical cochain family. Hence it is flat, commutes with the quantum differential, is compatible with the disjoint structure maps and has horizontal transport (77.8). In additional input parameters it commutes with the ordinary parameter connection. All operations are well-defined smoothly per finite weight and hence in the formal completion.
 
 Ordinary regulator differentiation by itself need not commute with a varying quantum differential. Formula (77.10) is the cochain connection used in the endpoint statement; the ordinary DVS connections at each fixed regulator remain those of 069.
 
