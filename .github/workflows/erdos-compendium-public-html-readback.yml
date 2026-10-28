@@ -48,7 +48,7 @@ jobs:
           test "$(gh api repos/$GITHUB_REPOSITORY/branches/main --jq '.commit.sha')" = "$DEPLOYED_SHA"
           test -f governance/erdos_compendium/editorial/0007.md
 
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
       - name: Install pinned read-only real-browser probe
@@ -128,7 +128,7 @@ jobs:
         with:
           ref: main
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
       - name: Install pinned read-only publication verifier
@@ -177,7 +177,7 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: false
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: '3.12'
       - name: Install same pinned verifier and real browser
