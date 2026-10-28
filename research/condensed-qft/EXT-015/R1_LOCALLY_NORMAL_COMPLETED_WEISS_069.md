@@ -90,12 +90,12 @@ Let $C_n^\bullet(U)$ denote the graded-symmetric classical kernel complex of ari
 $$
 W_0=\exp(\hbar B_0),
 \qquad
-d_q=W_0^{-1}d_{\mathrm{cl}}W_0
+d_q=W_0d_{\mathrm{cl}}W_0^{-1}
 =d_{\mathrm{cl}}+\hbar\Delta_0.
 \tag{69.6}
 $$
 
-The normalization of $B_0$ is the one fixed by this identity in 030. Give $\hbar^k C_n$ total weight $w=n+2k$ and define
+The normalization of 028/030 is $[B_0,d_{\mathrm{cl}}]=\Delta_0$ and $[B_0,\Delta_0]=0$. Thus $W_0$ maps the classical model to the positive-sign quantum model, and $W_0^{-1}$ maps it back. The earlier version of (69.6) reversed the conjugation while retaining the plus sign; the fresh audit [082](REASSESSMENT_FRESH_AUDIT_082.md) identifies and tests that error. The correction changes no normal sector, plot class or completion. Give $\hbar^k C_n$ total weight $w=n+2k$ and define
 
 $$
 A_w^\bullet(U)=
