@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP014",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP018",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,29 +15,30 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "User-authorized bounded reassessment: fresh audit before R2 and opposed R3 attempts; original REACH remains incomplete",
+  "phase": "Four reviewed mathematical returns protected-merged with exact readback; final reassessment integration and tracker reconciliation",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "9cc483334648d94ea6226a76874151a3eabd33b1",
-    "candidate_head_sha": "9cc483334648d94ea6226a76874151a3eabd33b1",
+    "protected_base_sha": "d9a897c029d61b54b9977b6d89d4ce2fcf0a7ad5",
+    "candidate_head_sha": "2557dcd46dd86769bae38db324ca1b38d04e6ab3",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-reassessment-frozen-base-20261027",
+    "branch": "research/reach-reassessment-reviewed-frozen-20261027",
     "workflow_runs": []
   },
   "terminal_condition": "Remaining R3, R1, R2 and relevant R4 gates have exact mathematical proof or actual scoped counterexample, distinct source-locked critical review, protected admission/readback and accurate issue dispositions. A typed missing lemma or admitted plan alone does not complete this campaign; unresolved mathematics remains nonterminal.",
   "permitted_next_actions": [
     {
-      "id": "fresh-source-audit-before-reassessment",
-      "description": "Execute protocol 081: fresh-context audit of frozen sources 046/061/065/067/069/071/075/077/079, initially without prior critical reviews; classify each critical inference, then reconcile prior reviews before separate R2 and opposed R3 attempts."
+      "id": "protect-decision-ledger-and-reconcile-trackers",
+      "description": "Build final integration on protected d9a897c029d61b54b9977b6d89d4ce2fcf0a7ad5 with exact reviewed081/086/full073/programme/matrix/triage/Schurverifier and this checkpoint only. Run affected checks, native protected queue and exact seventeen-source blob/parent readback. Then update current headers2796/2797/2798/2657/2617 and verify unchanged Project1 dispositions; record final nonterminal campaign checkpoint."
     }
   ],
   "next_action": {
-    "id": "fresh-source-audit-before-reassessment",
-    "description": "Execute protocol 081: fresh-context audit of frozen sources 046/061/065/067/069/071/075/077/079, initially without prior critical reviews; classify each critical inference, then reconcile prior reviews before separate R2 and opposed R3 attempts.",
+    "id": "protect-decision-ledger-and-reconcile-trackers",
+    "description": "Build final integration on protected d9a897c029d61b54b9977b6d89d4ce2fcf0a7ad5 with exact reviewed081/086/full073/programme/matrix/triage/Schurverifier and this checkpoint only. Run affected checks, native protected queue and exact seventeen-source blob/parent readback. Then update current headers2796/2797/2798/2657/2617 and verify unchanged Project1 dispositions; record final nonterminal campaign checkpoint.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md",
-      "research/condensed-qft/EXT-015/REASSESSMENT_FRESH_AUDIT_082.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REASSESSMENT_086.md",
+      "research/ext015-reassessment-integration-20261027",
       "grandchallenge/MATH-PROGRAMME#2657"
     ]
   },
@@ -47,19 +48,26 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "bind user-authorized reassessment cycle before research",
-    "result": "User selected fresh agent contexts and one audit-plus-targeted-attempt cycle. Protected mathematical input remains 9cc483334648d94ea6226a76874151a3eabd33b1. R1 remains completed; R2/R3/R4 and full REACH remain incomplete. No research result or external certification is claimed.",
+    "action": "protected admission and exact source readback of four bounded mathematical returns",
+    "result": "PR2882 merged3a7f5e4c6f3cc2026bb439efd9300c58831b6103 with seven exact blobs; PR2883 mergedd1e2fe9eb5eeeb9e33e58824bc86165b93684921 with two exact blobs; PR2884 mergedc5178489d715d219544763a4f66180c2ec0bf39c with one exact blob; PR2885 mergedd9a897c029d61b54b9977b6d89d4ce2fcf0a7ad5 with one exact blob. Native queue required contexts passed, exact reviewed heads were second merge parents, and source/fixture blobs matched protected readback. The bounded research is reviewed; final decision/editorial integration, source-bound critic/verifier protected admission and issue header reconciliation remain outstanding. Full REACH remains incomplete.",
     "evidence_refs": [
-      "user instruction 2026-10-27 PLEASE IMPLEMENT THIS PLAN",
-      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md",
-      "9cc483334648d94ea6226a76874151a3eabd33b1"
+      "grandchallenge/MATH-PROGRAMME#2882",
+      "3a7f5e4c6f3cc2026bb439efd9300c58831b6103",
+      "grandchallenge/MATH-PROGRAMME#2883",
+      "d1e2fe9eb5eeeb9e33e58824bc86165b93684921",
+      "grandchallenge/MATH-PROGRAMME#2884",
+      "c5178489d715d219544763a4f66180c2ec0bf39c",
+      "grandchallenge/MATH-PROGRAMME#2885",
+      "d9a897c029d61b54b9977b6d89d4ce2fcf0a7ad5",
+      "frozen critic086 blob8934ec118e2b6a62a7d4ff5730dc815d7b9f66f8",
+      "portable Schur verifier9c452602fc0337002b6125114dbc84345057e2b3"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-28T05:18:30Z"
+    "observed_at": "2026-10-28T21:49:28Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -80,9 +88,14 @@
       "research/condensed-qft/EXT-015/R1_UNIFORM_NORMAL_REGULATOR_ENDPOINT_077.md",
       "research/condensed-qft/EXT-015/R1_ACCEPTANCE_CLOSEOUT_079.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R1_CLOSEOUT_080.md",
-      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md"
+      "research/condensed-qft/EXT-015/REACH_REASSESSMENT_081.md",
+      "research/condensed-qft/EXT-015/REASSESSMENT_FRESH_AUDIT_082.md",
+      "research/condensed-qft/EXT-015/R2_COMMON_DOMAIN_COMPATIBILITY_083.md",
+      "research/condensed-qft/EXT-015/R3_POSITIVE_SUPPORT_ATTEMPT_084.md",
+      "research/condensed-qft/EXT-015/R3_COUNTEREXAMPLE_ATTEMPT_085.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REASSESSMENT_086.md"
     ],
-    "instructions": "Verify the immutable input branch and open governing issue, then execute protocol 081. Start with fresh-source audit 082 without prior critic conclusions; compare prior reviews after the first assessment. Suspend only work affected by demonstrated errors. Then use separate R2 construction and R3 positive/negative contexts, one primary attempt plus one correction pass each, followed by frozen-source review and the decision report in 081. Rebind this checkpoint after each material phase/source/action change. Preserve R1 completed and remaining REACH open unless actual proof and protected documentary acceptance justify a disposition. No unattended controller is created."
+    "instructions": "The four substantive returns are already protected and their exact blobs/parents were read back; do not reopen the research or repeat its attempts. Verify frozen reviewed-source2557dcd46dd86769bae38db324ca1b38d04e6ab3 and open governing issue. Complete only final integration on latest protected main using the seven exact reviewed scientific/editorial files and this checkpoint. Source08158db3455fdd221f07401cb12182386731144a54c and critic0868934ec118e2b6a62a7d4ff5730dc815d7b9f66f8 preserve original objectives; verifier9c452602fc0337002b6125114dbc84345057e2b3 replays independently by Schur complements. After native protected merge, verify all17 relevant blobs against reviewed2557 and update current issue headers with exact admission evidence while preserving historical bodies. Keep2796 CLOSED/completed/Done,2797/2798/2657/2617 OPEN/In Progress; R0 stays closed. Then durably record completed bounded-cycle readback while original campaign remains nonterminal. No new narrower objective, mathematical certificate or unattended controller is created."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
