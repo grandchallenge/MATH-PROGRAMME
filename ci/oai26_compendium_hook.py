@@ -21,7 +21,7 @@ def on_post_build(config, **kwargs):
         site / "oai26/families/001/index.html",
         site / "oai26/families/003/index.html",
         site / "oai26/families/342/index.html",
-        site / "oai26/families/372/index.html",
+        site / "oai26/families/377/index.html",
     ]
     missing = [str(path) for path in required if not path.is_file()]
     clean()
