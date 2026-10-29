@@ -2,7 +2,7 @@
 
 <p class="page-deck">A source-linked guide to 372 mathematical problem families in OpenAI's 2026 collection. Read the questions, examine the original manuscripts, and distinguish what formal tools have replayed from what the mathematics actually establishes.</p>
 
-[**Browse all 372 families**](catalogue.md)
+[**Browse all 372 families**](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/catalogue/)
 
 ## What this collection contains
 
@@ -23,9 +23,9 @@ Four distinctions matter:
 
 ## First explanatory drafts
 
-- [Family 003: Quasi-Riemann hypothesis](families/003.md) — the zero-free region and why it is not the full Riemann hypothesis.
-- [Family 342: Taming and compatibility](families/342.md) — a geometric compatibility question and a known manuscript-edition discrepancy.
-- [Family 376: Box transport and quantitative estimates](families/376.md) — a simple periodic projection example and an unresolved formal-scope question.
+- [Family 003: Quasi-Riemann hypothesis](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/003/) — the zero-free region and why it is not the full Riemann hypothesis.
+- [Family 342: Taming and compatibility](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/342/) — a geometric compatibility question and a known manuscript-edition discrepancy.
+- [Family 376: Box transport and quantitative estimates](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/376/) — a simple periodic projection example and an unresolved formal-scope question.
 
 **These articles are currently unadmitted editorial drafts.** Their inclusion is not an assertion that the proposed mathematical results are true.
 
