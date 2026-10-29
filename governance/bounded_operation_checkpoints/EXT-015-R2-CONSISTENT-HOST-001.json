@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-R2-CONSISTENT-HOST-001.CP006",
+  "checkpoint_id": "EXT-015-R2-CONSISTENT-HOST-001.CP007",
   "governed_work_id": "EXT-015-R2-CONSISTENT-HOST-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,57 +15,54 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2890"
   },
-  "phase": "All required candidate checks passed; native queue pending protected merge/readback",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "Protected scientific package read back; separate-objective tracker reconciliation next",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "f348dcccbc6b8d2ffd89551afa7dea1d27c06e11",
-    "candidate_head_sha": "0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
+    "protected_base_sha": "8156fcfd095ccdc6c255d4c036468ac0895c63c1",
+    "candidate_head_sha": "a2837994aad771ab5ee4e17604b6ee1b98111c98",
     "issue_number": 2890,
-    "pr_number": 2892,
-    "branch": "research/ext015-consistent-host-20261028",
+    "pr_number": null,
+    "branch": "research/consistent-host-admission-frozen-20261028",
     "workflow_runs": []
   },
   "terminal_condition": "The separate acceptance contract in089 is met by an actual scoped construction or a counterexample resolving that full contract, with source087, exact evidence, source-bound critical review088, complete ledger089, protected admission/readback and accurate disposition of issue2890. A failed candidate scheme or principal-part notation alone is not a positive construction. Original REACH and its original issue/Project dispositions are not closed or redefined by this objective.",
   "permitted_next_actions": [
     {
-      "id": "read-native-merge-and-protected-source",
-      "description": "Read native PR2892 queue outcome. On merge, verify actual merge second parent equals reviewed0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997, first parent is protected predecessor, all11 expected blobs match and original checkpoint19 is unchanged. Rebind to protected result before tracker mutations."
+      "id": "close-separate-objective-and-preserve-reach",
+      "description": "Refresh issue2890 and original R2/parent tracker bodies. Record protected087/088/089 and all-source readback, close only separate objective2890 as completed, preserve original open statuses/Project fields, and write/protect terminal checkpoint for the separate objective."
     }
   ],
   "next_action": {
-    "id": "read-native-merge-and-protected-source",
-    "description": "Read native PR2892 queue outcome. On merge, verify actual merge second parent equals reviewed0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997, first parent is protected predecessor, all11 expected blobs match and original checkpoint19 is unchanged. Rebind to protected result before tracker mutations.",
+    "id": "close-separate-objective-and-preserve-reach",
+    "description": "Refresh issue2890 and original R2/parent tracker bodies. Record protected087/088/089 and all-source readback, close only separate objective2890 as completed, preserve original open statuses/Project fields, and write/protect terminal checkpoint for the separate objective.",
     "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME#2892",
       "grandchallenge/MATH-PROGRAMME#2890",
-      "research/condensed-qft/EXT-015/CONSISTENT_HOST_ACCEPTANCE_089.md"
+      "grandchallenge/MATH-PROGRAMME#2797",
+      "grandchallenge/MATH-PROGRAMME#2657",
+      "governance/bounded_operation_checkpoints/EXT-015-R2-CONSISTENT-HOST-001.json"
     ]
   },
   "external_evidence": {
-    "waiting": true,
-    "objects": [
-      {
-        "kind": "artifact",
-        "identity": "grandchallenge/MATH-PROGRAMME#2892 at0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
-        "status": "All five required contexts pass; exact head admitted to native merge queue; final merge/readback pending"
-      }
-    ]
+    "waiting": false,
+    "objects": []
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "admit exact scientific candidate to native merge queue",
-    "result": "Immediately refreshed head/base/rules/checks/reviews, immutable material manifest and live PR-bound continuity. All five required contexts passed; no required GitHub approval and no changes-requested review. Exact0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997 submitted by native auto-merge. Queue completion and protected readback remain pending.",
+    "action": "native protected scientific merge and exact source readback",
+    "result": "PR2892 merged at8156fcfd095ccdc6c255d4c036468ac0895c63c1. Parents are prior protectedf348dcccbc6b8d2ffd89551afa7dea1d27c06e11 and reviewed candidate0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997. All11 changed blobs exactly matched protected content identities; source087, review088, ledger089, all three fixtures and programme/map integration are admitted. Native merge-group runs40791330537/588/168/387 passed. Original REACH checkpoint remainsb6d252b5081648981bb99d3637edb05e226ab324. Separate tracker closure and terminal metadata remain. The ordinary PR branch was automatically deleted after merge, so post-merge live freshness binds the preserved admission-frozen scientific brancha2837994aad771ab5ee4e17604b6ee1b98111c98; original PR head remains in merge parent custody. GitHub interpreted the negated auto-close wording in the PR body as a closing keyword and auto-closed2890 at00:04:59Z. After protected source readback, the PR wording was corrected and2890 reopened for the explicit documented closeout sequence. No mathematical bytes changed.",
     "evidence_refs": [
       "grandchallenge/MATH-PROGRAMME#2892",
-      "0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
-      "required candidate runs40791010807,40791010884,40791011684,40791010837"
+      "8156fcfd095ccdc6c255d4c036468ac0895c63c1",
+      "source087 452c494bcdc94ba94e52ae50c7b4d1eb3240ca83",
+      "review088 c1cebf1a5c846097ca8f80724c4ea62638d1a404",
+      "ledger089 600a269ffd47b84b1bc9c671125aea3bf61a2f80"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-R2-CONSISTENT-HOST-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-29T00:01:51Z"
+    "observed_at": "2026-10-29T00:07:10Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -77,7 +74,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_CONSISTENT_HOST_088.md",
       "governance/bounded_operation_checkpoints/EXT-015-R2-CONSISTENT-HOST-001.json"
     ],
-    "instructions": "Verify exact PR2892 head0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997 and current base/check failure set before transition. This checkpoint is on research/consistent-host-continuity-20261028, distinct from the frozen scientific PR branch; do not push continuity-only changes into the reviewed PR. Required-context checks and native queue must pass, then read all11 changed blob identities and merge parentage. Refresh before exact queue action. If PR has settled, rebind this checkpoint to the actual protected merge before tracker mutation. Issue2890 closes only after exact protected source/readback and documentary acceptance; retain original R2/R3 and parent open states and original checkpoint19 unchanged."
+    "instructions": "Scientific PR2892 is protected-merged at8156fcfd095ccdc6c255d4c036468ac0895c63c1 with exact11-blob and parent readback complete. The ordinary PR branch was automatically deleted; branch-mode freshness now binds preserved admission-frozena2837994aad771ab5ee4e17604b6ee1b98111c98 plus open issue2890. Do not expect merged PR2892 or its deleted branch to be open/present. Verify live before tracker mutations. Record this bounded result in2890 and current original R2/parent headers, close only2890, verify original R0/R1 closed and original R2/R3/parents open with Project status unchanged. Then set this separate checkpoint TERMINAL and protect/read back its final metadata-only PR. Do not change original REACH checkpoint19 or claim external certification/full REACH completion."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
