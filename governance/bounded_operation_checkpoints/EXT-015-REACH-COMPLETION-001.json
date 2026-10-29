@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP021",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP022",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,57 +15,53 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Full protocol090 in exact PR2896; protected checks and queue/readback pending",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "Full protocol090 protected and read back; construct first liquid profile/record bridge",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "c534d2dc31e877590e0bea05237ab320883ffefe",
-    "candidate_head_sha": "eac5ab8e89088e170c09658031672aa593ac7584",
+    "protected_base_sha": "e06b00010c080663461488f23fea819a24d91063",
+    "candidate_head_sha": "bc42deaa211934986840cd79a9d739eb0d669d69",
     "issue_number": 2657,
-    "pr_number": 2896,
-    "branch": "research/reach-liquid-route-20261029",
+    "pr_number": null,
+    "branch": "research/reach-liquid-protocol-frozen-20261029",
     "workflow_runs": []
   },
   "terminal_condition": "Original REACH completion still requires the remaining original R2 and R3 gates and dependent positive R4 integration, with actual proofs or counterexamples satisfying those original assignments, source-bound critical review, protected admission/readback and accurate tracker dispositions. R1 is fulfilled after its explicit reviewed normalization repair. A failed chosen subtraction scheme, an unresolved lemma, or completion of the bounded reassessment does not complete the original campaign.",
   "permitted_next_actions": [
     {
-      "id": "admit-liquid-route-protocol-090",
-      "description": "Admit frozen full plan090 and prospective programme/map links through current protected checks and native queue; read back exact changed blobs and merge parents. Then bind the next action to construct-and-freeze M1. No mathematical construction before protocol readback; all new targets remain unproved."
+      "id": "construct-and-freeze-liquid-profile-record-bridge",
+      "description": "Construct M1 source091 and exact finite controls under090: actual finite-profile relations on profinite tests, explicit internal-Hom envelope, strong family-uniform moment/PP/CT maps and record inverse, A-flat completed shared-regulator tensor, reprojected scalar action, semilinear rescaling, unit and hostile topology/moment controls. Freeze source before non-author review; begin independent R3 new-input audit only after initial categorical audit."
     }
   ],
   "next_action": {
-    "id": "admit-liquid-route-protocol-090",
-    "description": "Admit frozen full plan090 and prospective programme/map links through current protected checks and native queue; read back exact changed blobs and merge parents. Then bind the next action to construct-and-freeze M1. No mathematical construction before protocol readback; all new targets remain unproved.",
+    "id": "construct-and-freeze-liquid-profile-record-bridge",
+    "description": "Construct M1 source091 and exact finite controls under090: actual finite-profile relations on profinite tests, explicit internal-Hom envelope, strong family-uniform moment/PP/CT maps and record inverse, A-flat completed shared-regulator tensor, reprojected scalar action, semilinear rescaling, unit and hostile topology/moment controls. Freeze source before non-author review; begin independent R3 new-input audit only after initial categorical audit.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/REACH_CONDENSED_RENORMALIZATION_PLAN_090.md",
-      "grandchallenge/MATH-PROGRAMME#2657",
-      "governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json"
+      "research/condensed-qft/EXT-015/LIQUID_PROFILE_RECORD_BRIDGE_091.md",
+      "research/condensed-qft/EXT-015/fixtures/check_liquid_record_maps_091.py",
+      "research/condensed-qft/EXT-015/REACH_CONDENSED_RENORMALIZATION_PLAN_090.md"
     ]
   },
   "external_evidence": {
-    "waiting": true,
-    "objects": [
-      {
-        "kind": "artifact",
-        "identity": "grandchallenge/MATH-PROGRAMME#2896 at eac5ab8e89088e170c09658031672aa593ac7584",
-        "status": "Required checks pending; no mathematical construction yet"
-      }
-    ]
+    "waiting": false,
+    "objects": []
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "submit frozen full protocol to protected admission",
-    "result": "PR2896 publishes090, four prospective programme/map links and CP020, exactly six paths. Current scientific targets remain unproved. This live PR-bound CP021 is published on a separate progress branch, leaving PR head immutable. Required checks, native queue and readback precede M1 construction.",
+    "action": "protect full090 protocol and read back before mathematical construction",
+    "result": "PR2896 merged ate06b00010c080663461488f23fea819a24d91063 from exactheadeac5ab8e89088e170c09658031672aa593ac7584, firstparentc534d2dc31e877590e0bea05237ab320883ffefe. All6 changed blobs matched protected readback; separate terminalCP008 remains ea0fd8ec27dfdd56631518e6cc8a1723386472f9. All five candidate and native queue required contexts passed. Protected protocol now authorizes M1 construction. New theorem targets remain unproved and original REACH incomplete.",
     "evidence_refs": [
       "grandchallenge/MATH-PROGRAMME#2896",
+      "e06b00010c080663461488f23fea819a24d91063",
       "eac5ab8e89088e170c09658031672aa593ac7584",
-      "bc42deaa211934986840cd79a9d739eb0d669d69"
+      "bc42deaa211934986840cd79a9d739eb0d669d69",
+      "research/condensed-qft/EXT-015/REACH_CONDENSED_RENORMALIZATION_PLAN_090.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-29T10:02:38Z"
+    "observed_at": "2026-10-29T10:07:49Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -83,7 +79,7 @@
       "research/condensed-qft/EXT-015/R3_COUNTEREXAMPLE_ATTEMPT_085.md",
       "research/condensed-qft/EXT-015/VARIANCE_OBSTRUCTION_SCALAR_DUAL_BRIDGE_026.md"
     ],
-    "instructions": "Refresh exact protocolPR2896 head eac5ab8e89088e170c09658031672aa593ac7584, base, current rules/checks/reviews and six-file material manifest. This live checkpoint is on research/reach-liquid-progress-20261029, separate from immutable PR head. Admit only after required checks through native queue, verify parents and all six changed blobs. Rebind to preserved protocol source ref after merged PR branch deletion, then construct/freeze M1 under090. Keep separate consistent-host terminal checkpoint and original acceptance unchanged; originalR2/R3/R4/parents remain incomplete."
+    "instructions": "Protocol090 is protected and exactly read back inPR2896/e06b00010c080663461488f23fea819a24d91063. Verify preserved protocol-frozenbranchbc42deaa211934986840cd79a9d739eb0d669d69 and open parent2657; PR branch may be automatically deleted. Construct M1 source091 with actual liquid profile/evaluated-record maps, family-uniform strong proof, completed shared-regulator derived tensor, scalar reprojection and semilinearity, all under090. Use one primary construction and one correction, freeze candidate, then non-author review092 and ledger093 before protected admission. Initial categorical audit permits independent M4 new-input audit; do not repeat084/085 or infer degree2 from flatness. Later M2/M3 require actual new zero-scale/domain proofs. Original R0/R1 and separate087-089 completed; originalR2/R3/R4/parents remain open."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
