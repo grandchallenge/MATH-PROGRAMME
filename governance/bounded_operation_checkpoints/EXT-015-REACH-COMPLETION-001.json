@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP025",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP026",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "M1 accepted after correction and non-author review; protected admission next",
+  "phase": "Reviewed M1 and separate R3 audit awaiting protected admission",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "e06b00010c080663461488f23fea819a24d91063",
-    "candidate_head_sha": "03c02dcb7b1ca0170c01482ab6c5a1ff9dd70b30",
+    "candidate_head_sha": "b9864215af965399112f0116b43bf5019506bc95",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-m1-corrected-frozen-20261029",
+    "pr_number": 2897,
+    "branch": "research/reach-m1-liquid-bridge-20261029",
     "workflow_runs": []
   },
   "terminal_condition": "Original REACH completion still requires the remaining original R2 and R3 gates and dependent positive R4 integration, with actual proofs or counterexamples satisfying those original assignments, source-bound critical review, protected admission/readback and accurate tracker dispositions. R1 is fulfilled after its explicit reviewed normalization repair. A failed chosen subtraction scheme, an unresolved lemma, or completion of the bounded reassessment does not complete the original campaign.",
@@ -47,15 +47,15 @@
     "objects": [
       {
         "kind": "artifact",
-        "identity": "independent R3 audit da67693ed2fc75068949ad724661fa456fe0f88c on research/reach-r3-audit-source-frozen-20261029",
-        "status": "Frozen094 structural candidates; no sufficient mechanism for originalR3; separate non-author review required"
+        "identity": "PR2898; research/reach-r3-audit-admission-frozen-20261029",
+        "status": "Exact reviewed094/095 structural audit; five required checks/native merge/readback pending; originalR3 open"
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "final editorial acceptance after the single correction pass",
-    "result": "Parent accepts corrected finite-profile liquid bridge091 after critic092. Independent verifier092 and producer091 pass exact finite controls; infinite claims have reviewed proofs. Corrected018 assertion is narrowly repaired; accepted old conclusions survive. Independent094/095 structural audit accepted with originalR3 unresolved and no sufficient new mechanism. Protected admission/readback is next; M2 construction not begun.",
+    "action": "submit reviewed claims as separate protected returns",
+    "result": "M1 PR2897 exact head preserved by research/reach-m1-admission-frozen-20261029. Independent094/095 audit PR2898 preserves its separate admission head. Their scientific scopes are editorially accepted; required checks/native merges/exact source readbacks remain pending. No M2 construction before protectedM1.",
     "evidence_refs": [
       "03c02dcb7b1ca0170c01482ab6c5a1ff9dd70b30",
       "091 c517fe1ae46bcaa9f4a3fc0e64381ae8096bfe27",
@@ -70,7 +70,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-29T10:36:13Z"
+    "observed_at": "2026-10-29T10:37:30Z"
   },
   "resume": {
     "fresh_session_safe": true,
