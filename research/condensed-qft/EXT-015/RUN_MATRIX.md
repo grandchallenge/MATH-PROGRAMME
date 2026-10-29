@@ -2,6 +2,8 @@
 
 > Can an extension carry genuinely global analytic information that no compact-support stage can capture?
 
+**Current execution route (2026-10-29):** [Plan/protocol 090](REACH_CONDENSED_RENORMALIZATION_PLAN_090.md) is the user-authorized full REACH route. M1 liquid profile/record realization and completed shared-regulator composition is the first UNPROVED target; M2 zero-scale extension, M3 quantum structure, independent M4/original R3 and M5 integration retain separate acceptance gates. The existing REACH checkpoint governs execution and source binding. R0/R1 and the separate087–089 objective remain completed; original R2/R3/R4 and both parents remain open. These prospective targets add no accepted theorem or comparison arrow.
+
 **Canonical mathematical specification:** [SPEC.md](SPEC.md). **Worker tasks:** [WORK_PACKAGES.md](WORK_PACKAGES.md). **Adversarial controls:** [EXTENSION_DOCKET.md](EXTENSION_DOCKET.md). **Parent:** [issue #2617](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617).
 
 **Review update:** The source-checked GCL agent [mathematical critical review 016](AGENT_CRITICAL_REVIEW_AB_016.md) separately adjudicates the workers' protected returns. It corrects the erroneous scalar projectivity assertion in B. A row cannot become PROVED by workflow success, a numerical fixture, an unreviewed claim, or a citation to a related but different exact category.

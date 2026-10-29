@@ -1,5 +1,7 @@
 # EXT-015 REACH / 073 — typed comparison and failure map through consistent-host construction 087–089
 
+**Prospective route (2026-10-29):** [Full plan090](REACH_CONDENSED_RENORMALIZATION_PLAN_090.md) proposes M1 liquid realization and shared-regulator derived composition, M2 an enriched zero-scale extension, M3 quantum structure and M5 integration. These are UNPROVED targets, not new arrows in the established tables. Original R3 remains its own fixed-source support comparison. Protocol admission and future mathematical returns must be distinguished.
+
 **Disposition:** source-locked integration map, not a claim that the remaining REACH programme is complete. Every positive arrow below is limited to the category and domain already established by its named source. A missing arrow is retained as a mathematical obligation; a finite fixture, checkpoint or protected merge does not construct it.
 
 The source custody ledger for the named new results is in the governing issues and the registered continuation checkpoint. The exact source and review identities must be read back before this map is admitted.
