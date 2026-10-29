@@ -464,7 +464,7 @@ def rolling_review_direct_errors(texts: dict[str, str]) -> list[str]:
             or checkout.get("with") != {"ref": "main", "persist-credentials": "false"}):
         errors.append(f"{key}: wrong immutable protected-main checkout")
     if (python.get("uses") !=
-            "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97"
+            "actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0"
             or python.get("with") != {"python-version": "3.12"}):
         errors.append(f"{key}: unapproved Python bootstrap")
     if "tests/test_erdos_catalogue_queue_projection.py" not in str(tests.get("run", "")):
@@ -532,7 +532,7 @@ def final_two_council_errors(workflow: dict[str, Any], source: str) -> list[str]
     if (checkout.get('uses')!='actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' or
         checkout.get('with')!={'ref':'main','persist-credentials':'false'}):
         errors.append(f'{key}: checkout not pinned to protected main')
-    if (python.get('uses')!='actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' or
+    if (python.get('uses')!='actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0' or
         python.get('with')!={'python-version':'3.12'}):
         errors.append(f'{key}: unpinned interpreter')
     for step,mode,contains in (
@@ -609,7 +609,7 @@ def three_source_council_errors(texts: dict[str, str]) -> list[str]:
     if (checkout.get('uses') != 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
             or checkout.get('with') != {'ref':'main','persist-credentials':'false'}):
         errors.append(f'{key}: checkout not protected and credential-free')
-    if (python.get('uses') != 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97'
+    if (python.get('uses') != 'actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0'
             or python.get('with') != {'python-version':'3.12'}):
         errors.append(f'{key}: unpinned runtime bootstrap')
     test=str(tests.get('run',''))
