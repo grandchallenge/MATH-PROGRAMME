@@ -1,4 +1,4 @@
-# Family 215: Canonical $`O(3)`$ continuum limit and exact $`O(4)`$ mass asymptotics.
+# Family 215: Canonical &#36;`O(3)`&#36; continuum limit and exact &#36;`O(4)`&#36; mass asymptotics.
 
 **REFERENCE ONLY — not independently verified.**
 

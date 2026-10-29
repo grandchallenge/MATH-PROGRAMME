@@ -1,4 +1,4 @@
-# Family 313: Finite generation for the $`K(n)`$-local sphere.
+# Family 313: Finite generation for the &#36;`K(n)`&#36;-local sphere.
 
 **REFERENCE ONLY — not independently verified.**
 

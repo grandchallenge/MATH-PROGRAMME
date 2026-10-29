@@ -1,4 +1,4 @@
-# Family 103: Exact derandomization of logarithmic space: $`\mathsf L=\mathsf{RL}=\mathsf{BPL}`$.
+# Family 103: Exact derandomization of logarithmic space: &#36;`\mathsf L=\mathsf{RL}=\mathsf{BPL}`&#36;.
 
 **REFERENCE ONLY — not independently verified.**
 

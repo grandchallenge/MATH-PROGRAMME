@@ -1,4 +1,4 @@
-# Family 292: Kirchberg's $`\mathcal O_2`$ norm-ultrapower embedding problem.
+# Family 292: Kirchberg's &#36;`\mathcal O_2`&#36; norm-ultrapower embedding problem.
 
 **REFERENCE ONLY — not independently verified.**
 

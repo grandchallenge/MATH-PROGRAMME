@@ -1,4 +1,4 @@
-# Family 075: The $`L\log L`$ Fourier-convergence conjecture.
+# Family 075: The &#36;`L\log L`&#36; Fourier-convergence conjecture.
 
 **REFERENCE ONLY — not independently verified.**
 

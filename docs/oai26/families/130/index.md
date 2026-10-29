@@ -1,4 +1,4 @@
-# Family 130: Exact Fourier transforms below $`n\log n`$.
+# Family 130: Exact Fourier transforms below &#36;`n\log n`&#36;.
 
 **REFERENCE ONLY — not independently verified.**
 

@@ -1,10 +1,10 @@
-# Family 377: Interior $`C^{1,\alpha}`$ regularity for infinity-harmonic functions.
+# Family 377: Interior &#36;`C^{1,\alpha}`&#36; regularity for infinity-harmonic functions.
 
 **REFERENCE ONLY — not independently verified.**
 
 ## Original manuscripts
 
-- [Uniform Interior $`C^{1,\alpha}`$ Estimates for Infinity-Harmonic Functions](https://github.com/openai/math/blob/1581d4cbdd69a0faf34b2089614fe2a814316a6a/preprints/Uniform-Interior-C1alpha-Estimates-for-Infinity-Harmonic-Functions-October-4-2026/interior-c1-infinity-harmonic.pdf)
+- [Uniform Interior &#36;`C^{1,\alpha}`&#36; Estimates for Infinity-Harmonic Functions](https://github.com/openai/math/blob/1581d4cbdd69a0faf34b2089614fe2a814316a6a/preprints/Uniform-Interior-C1alpha-Estimates-for-Infinity-Harmonic-Functions-October-4-2026/interior-c1-infinity-harmonic.pdf)
 
 ## Verification and editorial status
 

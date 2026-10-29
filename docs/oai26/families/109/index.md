@@ -1,4 +1,4 @@
-# Family 109: Integer multiplication below $`n\log n`$.
+# Family 109: Integer multiplication below &#36;`n\log n`&#36;.
 
 **REFERENCE ONLY — not independently verified.**
 

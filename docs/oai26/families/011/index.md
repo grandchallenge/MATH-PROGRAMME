@@ -1,4 +1,4 @@
-# Family 011: Prime-factor statistics of $`p-1`$.
+# Family 011: Prime-factor statistics of &#36;`p-1`&#36;.
 
 **REFERENCE ONLY — not independently verified.**
 

@@ -17,7 +17,7 @@ def generate():
   for m in f['manuscripts']:
    p.append('- ['+m['title'].replace('$$','[formula in manuscript]')+'](https://github.com/openai/math/blob/1581d4cbdd69a0faf34b2089614fe2a814316a6a/'+m['pdf_path']+')')
   p+=['','## Verification and editorial status','','Lean replay, Comparator acceptance, manuscript-semantic equivalence, criticism and MATHCERT are distinct. No family-wide assertion is made here.','','[GCL evidence programme](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2850)','','## Full explanation pending','','No reviewed six-section documentary article has been admitted.']
-  (d/'index.md').write_text('\n'.join(p)+'\n')
+  (d/'index.md').write_text(('\n'.join(p)+'\n').replace(chr(36),'&#36;'))
   lines.append('| ['+n+'](../families/'+n+'/) | '+f['headline'].replace('|','/').replace('$$','[formula in manuscript]')+' | '+str(len(f['manuscripts']))+' | REFERENCE_ONLY |')
- (root/'catalogue'/'index.md').write_text('\n'.join(lines)+'\n')
+ (root/'catalogue'/'index.md').write_text(('\n'.join(lines)+'\n').replace(chr(36),'&#36;'))
  return {'families':372,'pdfs':719,'reference_only':372}

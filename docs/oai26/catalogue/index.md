@@ -14,7 +14,7 @@
 | [008](../families/008/) | The Deligne–Drinfeld conjecture. | 1 | REFERENCE_ONLY |
 | [009](../families/009/) | Function-field reconstruction from Milnor K-theory and Galois data. | 3 | REFERENCE_ONLY |
 | [010](../families/010/) | Unrestricted pro-modularity at the prime two. | 3 | REFERENCE_ONLY |
-| [011](../families/011/) | Prime-factor statistics of $`p-1`$. | 3 | REFERENCE_ONLY |
+| [011](../families/011/) | Prime-factor statistics of &#36;`p-1`&#36;. | 3 | REFERENCE_ONLY |
 | [012](../families/012/) | Independent largest prime factors of consecutive integers. | 1 | REFERENCE_ONLY |
 | [013](../families/013/) | Ostmann’s inverse Goldbach conjecture. | 1 | REFERENCE_ONLY |
 | [014](../families/014/) | Restricted geometric Langlands, global Arthur enhancements, and generic Ramanujan. | 8 | REFERENCE_ONLY |
@@ -75,7 +75,7 @@
 | [072](../families/072/) | Brennan's conjecture and the integral-means spectrum. | 2 | REFERENCE_ONLY |
 | [073](../families/073/) | The Falconer distance conjecture. | 1 | REFERENCE_ONLY |
 | [074](../families/074/) | Kakeya in three and four dimensions. | 2 | REFERENCE_ONLY |
-| [075](../families/075/) | The $`L\log L`$ Fourier-convergence conjecture. | 1 | REFERENCE_ONLY |
+| [075](../families/075/) | The &#36;`L\log L`&#36; Fourier-convergence conjecture. | 1 | REFERENCE_ONLY |
 | [076](../families/076/) | Real ultraflat Littlewood polynomials and unbounded binary merit factors. | 3 | REFERENCE_ONLY |
 | [077](../families/077/) | Fourier restriction for positively curved surfaces. | 2 | REFERENCE_ONLY |
 | [078](../families/078/) | The three-dimensional Bochner–Riesz conjecture. | 1 | REFERENCE_ONLY |
@@ -103,13 +103,13 @@
 | [100](../families/100/) | Cylinder coverings below the half-area bound. | 4 | REFERENCE_ONLY |
 | [101](../families/101/) | The sharp simplex conjecture for isotropic constants. | 1 | REFERENCE_ONLY |
 | [102](../families/102/) | The Unique Games Conjecture and optimal approximation thresholds. | 5 | REFERENCE_ONLY |
-| [103](../families/103/) | Exact derandomization of logarithmic space: $`\mathsf L=\mathsf{RL}=\mathsf{BPL}`$. | 1 | REFERENCE_ONLY |
+| [103](../families/103/) | Exact derandomization of logarithmic space: &#36;`\mathsf L=\mathsf{RL}=\mathsf{BPL}`&#36;. | 1 | REFERENCE_ONLY |
 | [104](../families/104/) | Quasipolynomial algorithms for mean-payoff, stochastic and parity games. | 4 | REFERENCE_ONLY |
 | [105](../families/105/) | Perfect completeness for 2-to-1 games. | 1 | REFERENCE_ONLY |
 | [106](../families/106/) | Hardness of coloring three-colorable graphs. | 1 | REFERENCE_ONLY |
 | [107](../families/107/) | Matrix multiplication with exponent at most 9/4. | 3 | REFERENCE_ONLY |
 | [108](../families/108/) | A cubic permanent–determinant lower bound. | 1 | REFERENCE_ONLY |
-| [109](../families/109/) | Integer multiplication below $`n\log n`$. | 1 | REFERENCE_ONLY |
+| [109](../families/109/) | Integer multiplication below &#36;`n\log n`&#36;. | 1 | REFERENCE_ONLY |
 | [110](../families/110/) | Optimal-order randomized k-server on arbitrary metrics. | 2 | REFERENCE_ONLY |
 | [111](../families/111/) | One-sample matroid prophet inequalities against an almighty adversary. | 1 | REFERENCE_ONLY |
 | [112](../families/112/) | Beyond the square-root exponent for depth-three circuits. | 1 | REFERENCE_ONLY |
@@ -129,7 +129,7 @@
 | [127](../families/127/) | Average sensitivity of polynomial threshold functions. | 1 | REFERENCE_ONLY |
 | [128](../families/128/) | A factor-two approximation for shortest common superstring. | 1 | REFERENCE_ONLY |
 | [129](../families/129/) | Exponential state costs for two-way automata. | 2 | REFERENCE_ONLY |
-| [130](../families/130/) | Exact Fourier transforms below $`n\log n`$. | 2 | REFERENCE_ONLY |
+| [130](../families/130/) | Exact Fourier transforms below &#36;`n\log n`&#36;. | 2 | REFERENCE_ONLY |
 | [131](../families/131/) | Rapid mixing of graph switches for every degree sequence. | 1 | REFERENCE_ONLY |
 | [132](../families/132/) | A superquadratic separation of sensitivity and block sensitivity. | 1 | REFERENCE_ONLY |
 | [133](../families/133/) | The computational complexity of Weisfeiler–Leman refinement. | 4 | REFERENCE_ONLY |
@@ -137,7 +137,7 @@
 | [135](../families/135/) | Homogeneous depth-five lower bounds for iterated matrix multiplication. | 1 | REFERENCE_ONLY |
 | [136](../families/136/) | A quasilinear PCP theorem for PPAD. | 1 | REFERENCE_ONLY |
 | [137](../families/137/) | One-tape time simulation in two-fifths-power space. | 1 | REFERENCE_ONLY |
-| [138](../families/138/) | Subset Sum in $`O(2^{0.49n})`$ time. | 2 | REFERENCE_ONLY |
+| [138](../families/138/) | Subset Sum in &#36;`O(2^{0.49n})`&#36; time. | 2 | REFERENCE_ONLY |
 | [139](../families/139/) | Subpolynomial query complexity for log-concave sampling. | 1 | REFERENCE_ONLY |
 | [140](../families/140/) | Memory–sample lower bounds for noiseless Gaussian regression. | 6 | REFERENCE_ONLY |
 | [141](../families/141/) | Existential–universal real sentences in the counting hierarchy. | 1 | REFERENCE_ONLY |
@@ -213,7 +213,7 @@
 | [212](../families/212/) | Planar first-passage geometry and the absence of bigeodesics. | 2 | REFERENCE_ONLY |
 | [213](../families/213/) | Critical percolation on every quasi-transitive graph. | 2 | REFERENCE_ONLY |
 | [214](../families/214/) | The Benjamini–Schramm nonuniqueness conjecture. | 1 | REFERENCE_ONLY |
-| [215](../families/215/) | Canonical $`O(3)`$ continuum limit and exact $`O(4)`$ mass asymptotics. | 5 | REFERENCE_ONLY |
+| [215](../families/215/) | Canonical &#36;`O(3)`&#36; continuum limit and exact &#36;`O(4)`&#36; mass asymptotics. | 5 | REFERENCE_ONLY |
 | [216](../families/216/) | Critical and near-critical XY scaling and BKT universality. | 6 | REFERENCE_ONLY |
 | [217](../families/217/) | The low-temperature Sherrington–Kirkpatrick fluctuation law. | 2 | REFERENCE_ONLY |
 | [218](../families/218/) | Conformal universality for weakly interacting and random-bond Ising models. | 6 | REFERENCE_ONLY |
@@ -290,7 +290,7 @@
 | [289](../families/289/) | Strong Kadison–Kastler stability and its spatial boundaries. | 3 | REFERENCE_ONLY |
 | [290](../families/290/) | Relative bicentralizers and modular spectral recovery. | 2 | REFERENCE_ONLY |
 | [291](../families/291/) | Cuntz comparison, nuclear dimension, and equivariant Jiang–Su stability. | 4 | REFERENCE_ONLY |
-| [292](../families/292/) | Kirchberg's $`\mathcal O_2`$ norm-ultrapower embedding problem. | 1 | REFERENCE_ONLY |
+| [292](../families/292/) | Kirchberg's &#36;`\mathcal O_2`&#36; norm-ultrapower embedding problem. | 1 | REFERENCE_ONLY |
 | [293](../families/293/) | Invariant projections, hyperinvariant subspaces, and transitive algebras. | 2 | REFERENCE_ONLY |
 | [294](../families/294/) | Kaplansky's quasitrace conjecture and failure of tensor-product stable finiteness. | 1 | REFERENCE_ONLY |
 | [295](../families/295/) | The Kadison–Ringrose cohomology conjecture. | 1 | REFERENCE_ONLY |
@@ -311,7 +311,7 @@
 | [310](../families/310/) | Quillen's conjecture in rational homology. | 1 | REFERENCE_ONLY |
 | [311](../families/311/) | The Hovey–Strickland and Chai conjectures. | 1 | REFERENCE_ONLY |
 | [312](../families/312/) | The Grothendieck homotopy hypothesis. | 1 | REFERENCE_ONLY |
-| [313](../families/313/) | Finite generation for the $`K(n)`$-local sphere. | 1 | REFERENCE_ONLY |
+| [313](../families/313/) | Finite generation for the &#36;`K(n)`&#36;-local sphere. | 1 | REFERENCE_ONLY |
 | [314](../families/314/) | Cyclic length and chromatic fixed-point loss. | 1 | REFERENCE_ONLY |
 | [315](../families/315/) | The four-dimensional Singer conjecture. | 1 | REFERENCE_ONLY |
 | [316](../families/316/) | Curtis’s conjecture. | 1 | REFERENCE_ONLY |
@@ -375,4 +375,4 @@
 | [374](../families/374/) | Sharp one-third stability of Brenier maps. | 1 | REFERENCE_ONLY |
 | [375](../families/375/) | De Giorgi's conjecture in dimension eight. | 1 | REFERENCE_ONLY |
 | [376](../families/376/) | Universal computation in forced Navier–Stokes flows. | 9 | REFERENCE_ONLY |
-| [377](../families/377/) | Interior $`C^{1,\alpha}`$ regularity for infinity-harmonic functions. | 1 | REFERENCE_ONLY |
+| [377](../families/377/) | Interior &#36;`C^{1,\alpha}`&#36; regularity for infinity-harmonic functions. | 1 | REFERENCE_ONLY |
