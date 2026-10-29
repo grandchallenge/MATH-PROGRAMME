@@ -97,6 +97,11 @@ def protected_path(path: str) -> bool:
         "tests/test_erdos_event_custody.py",
         "ci/validate_workflow_coverage_v2.py",
         "tests/test_agent_routine_review.py",
+        # Exact action-pin registry/schema/test files accompany protected
+        # workflow pin changes. Route to PROTECTION review; never auto-approve.
+        "governance/administrative_maintenance_trigger_registry.json",
+        "schemas/administrative_maintenance_trigger_registry.schema.json",
+        "tests/test_release_trust_admin.py",
     )
 
 
