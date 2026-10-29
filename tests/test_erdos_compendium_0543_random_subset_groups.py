@@ -92,3 +92,21 @@ def test_543_uniform_probability_not_iid_and_prime_witness():
     assert P[7]==1
     assert subset_sums_rec(((1,),(2,),(4,)),(7,))==set(elements((7,)))
     assert all(2**k < 7 for k in (0,1,2))
+
+
+# CI uses unittest discovery. Preserve the original bounded witness functions
+# while explicitly exposing each as a standard unittest test method.
+import unittest
+
+class CompendiumWitnessTests(unittest.TestCase):
+    def test_543_uniform_cyclic_exact_probabilities_and_monotonicity(self):
+        test_543_uniform_cyclic_exact_probabilities_and_monotonicity()
+
+    def test_543_independent_mask_vs_subset_recursion(self):
+        test_543_independent_mask_vs_subset_recursion()
+
+    def test_543_cyclic_vs_elementary_two_groups(self):
+        test_543_cyclic_vs_elementary_two_groups()
+
+    def test_543_uniform_probability_not_iid_and_prime_witness(self):
+        test_543_uniform_probability_not_iid_and_prime_witness()
