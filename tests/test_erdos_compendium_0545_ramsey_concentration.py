@@ -93,3 +93,24 @@ def test_545_2_uniform_intersecting_family_upper_on_five_vertices():
             assert any(not a.intersection(b) for a,b in combinations(family,2))
     # In particular each color class avoiding 2K2 has <=4 edges;
     # two such classes cannot partition 10 K5 edges.
+
+
+# CI uses unittest discovery. Preserve the original bounded witness functions
+# while explicitly exposing each as a standard unittest test method.
+import unittest
+
+class CompendiumWitnessTests(unittest.TestCase):
+    def test_545_exact_ramsey_p3_is_three(self):
+        test_545_exact_ramsey_p3_is_three()
+
+    def test_545_exact_ramsey_matching_two_is_five(self):
+        test_545_exact_ramsey_matching_two_is_five()
+
+    def test_545_small_literal_counterexample_and_not_eventual_resolution(self):
+        test_545_small_literal_counterexample_and_not_eventual_resolution()
+
+    def test_545_colex_edge_count_no_isolates_and_remainder(self):
+        test_545_colex_edge_count_no_isolates_and_remainder()
+
+    def test_545_2_uniform_intersecting_family_upper_on_five_vertices(self):
+        test_545_2_uniform_intersecting_family_upper_on_five_vertices()
