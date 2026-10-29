@@ -98,7 +98,7 @@ $$
 \tag{18.7}
 $$
 
-**Target-specific finite-prefix factorization, not absolute compactness.** Let $S_\infty=\mathbb N\cup\{\infty\}$ with its convergent-sequence profinite topology. The standard split exact sequence
+**Target-specific finite-prefix factorization and corrected abelian compactness.** Let $S_\infty=\mathbb N\cup\{\infty\}$ with its convergent-sequence profinite topology. The standard split exact sequence
 
 $$
 0\longrightarrow
@@ -110,7 +110,11 @@ $$
 \tag{18.8}
 $$
 
-has a section induced by the point $\infty$, so $\mathcal M_{<p}(\mathbb N)$ is a direct summand of $\mathcal M_{<p}(S_\infty)$. The free measure object represents evaluation on $S_\infty$, but this **does not make it compact in the whole liquid category**: filtered colimits on non-extremally disconnected profinite sets are not sectionwise in general. The needed statement is more specific. For the strict LF direct sum $\mathsf S=\bigoplus_n\underline{\mathbb R}$, every compact profinite plot has image in one finite-dimensional output prefix, so $\mathsf S(S_\infty)$ is the union of the finite-prefix section groups. Any map $T_r\to\mathsf S$ extends along the split projection $\mathcal M_{<p}(S_\infty)\to T_r$ to a map from the free liquid object. The corresponding section of $\mathsf S(S_\infty)$ factors through a finite prefix, and restricting back gives the same factorization for the original map. This proves the required **relative Hom factorization** without claiming $T_r$ is compact or projective.
+has a section induced by the point $\infty$, so $\mathcal M_{<p}(\mathbb N)$ is a direct summand of $\mathcal M_{<p}(S_\infty)$.
+
+**Correction custody (091/092):** the earlier assertion here that this free measure object is not compact in the whole liquid heart was incorrect. [Lemma91.2](LIQUID_PROFILE_RECORD_BRIDGE_091.md) presents the free object on any profinite set as a cokernel of a map between two compact projectives using extremally disconnected covers and their kernel pair. Hom from that cokernel commutes with filtered colimits. Thus $\mathcal M_{<p}(S_\infty)$ and its retract $T_r$ are compact in the abelian heart. Evaluation on a general profinite set need not be exact; that does not imply failure to preserve filtered colimits. No projectivity or compactness in the unbounded derived category is inferred. Source-bound correction review belongs to092. This corrects that negative sentence, not the relative proof or conclusions below.
+
+The original needed statement is the weaker target-specific one. For the strict LF direct sum $\mathsf S=\bigoplus_n\underline{\mathbb R}$, every compact profinite plot has image in one finite-dimensional output prefix, so $\mathsf S(S_\infty)$ is the union of the finite-prefix section groups. Any map $T_r\to\mathsf S$ extends along the split projection $\mathcal M_{<p}(S_\infty)\to T_r$ to a map from the free liquid object. The corresponding section factors through a finite prefix, and restricting back gives the same factorization. This proves the required **relative Hom factorization** without using projectivity or derived compactness. The stronger abelian compactness just proved is compatible with this argument.
 
 Consequently, for each $r$ the canonical comparison is an isomorphism
 

@@ -21,12 +21,16 @@ The input protocol was protected in PR2896 at e06b00010c080663461488f23fea819a24
 
 | Artifact | Git blob before critical review |
 | --- | --- |
-| [091, proof](LIQUID_PROFILE_RECORD_BRIDGE_091.md) | e573ee08ce8dc9bba2947008c0291949f6ee8d5b |
+| [091, proof](LIQUID_PROFILE_RECORD_BRIDGE_091.md) | c517fe1ae46bcaa9f4a3fc0e64381ae8096bfe27 |
 | [091, exact finite controls](fixtures/check_liquid_record_maps_091.py) | 939b41aea4a1df06bac097d993de23f2b836b0df |
 
 The author replay passes108 signed moment/profile cases,1764 homogeneous dimension/allocation pairs, inverse regulator shifts, exact semilinearity, the odd first-jet sign, scalar-unit reprojection and the nonzero disjoint second-jet cross term. The fixture imports no087 producer. It does not prove profinite compactness, strong topology, liquid flatness or the completed kernel theorem; those are the arguments in091.
 
 Old277-source algorithms and numerical values are unchanged and not consumed by a new numerical producer here. Their source-locked accepted evidence remains087–089. Expensive old replay is not duplicated simply because a new candidate commit exists.
+
+## Narrow correction of an inherited assertion
+
+The first critical pass identified the false old018 denial of compactness in the liquid heart. The proof of Lemma91.2 corrects that exact sentence via an extremally disconnected cover/kernel-pair presentation; the old relative factorization proof and accepted conclusions remain valid. Current018 blob 81018f669afc062127877a3984e915f1fbea6f39 records the correction. Source091 now states its scope explicitly. This is the one correction pass; it asserts neither projectivity nor unbounded derived compactness and does not settleR3.
 
 ## Review, custody and downstream obligations
 

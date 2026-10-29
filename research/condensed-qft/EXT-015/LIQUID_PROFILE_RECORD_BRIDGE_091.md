@@ -91,6 +91,8 @@ $$
 
 Both left terms are compact projective by Theorem 6.5. Applying Hom identifies Hom out of the cokernel with a kernel of two Hom functors. Filtered colimits of real vector spaces are exact and commute with this finite kernel. The two compact terms thus prove the assertion. The first arrow need not be injective; this is not a bound on projective dimension. $\square$
 
+**Correction of an inherited negative assertion.** Old018 section3 denied abelian compactness of the free object on the convergent-sequence profinite set. Lemma91.2 shows that denial was incorrect: an extremally disconnected cover/kernel-pair presentation suffices. The old relative factorization proof used a weaker true assertion and is retained. This is not a projectivity claim, a statement of unbounded derived compactness, or a solution of original R3. Current018 records the narrow correction; review092 binds the revised bytes.
+
 As a liquid module,
 
 $$
