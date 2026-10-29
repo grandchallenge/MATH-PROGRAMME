@@ -6,6 +6,8 @@
 
 **Review update:** The source-checked GCL agent [mathematical critical review 016](AGENT_CRITICAL_REVIEW_AB_016.md) separately adjudicates the workers' protected returns. It corrects the erroneous scalar projectivity assertion in B. A row cannot become PROVED by workflow success, a numerical fixture, an unreviewed claim, or a citation to a related but different exact category.
 
+**Separate consistent-host objective (2026-10-28):** User-authorized [#2890](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2890) is tracked by [construction 087](R2_CONSISTENT_SUBTRACTION_RECORDS_087.md), [source-bound check 088](AGENT_CRITICAL_REVIEW_CONSISTENT_HOST_088.md) and [acceptance ledger 089](CONSISTENT_HOST_ACCEPTANCE_089.md), with its own registered continuation record. The positive procedure retains actual principal-part/remainder records, composes after reconstructing the smooth regulated family, and realizes invariant finite values through recomputed source-intrinsic finite forest normalizations. The two old scalar allocations agree. Finite evaluation is not multiplicative; individual auxiliary channel counterterms are not canonical actual-family maps. This row-independent bounded result does not mark original GB2, liquid degree-two or REACH complete; the original checkpoint remains nonterminal. The separate checkpoint records actual protected admission/readback and issue closure.
+
 | ID | Obligation | Accepted evidence | Current status | Fatal invalid shortcut |
 | --- | --- | --- | --- | --- |
 | C0 | Real liquid extension closure and derived inclusion | Exact theorem statement and specialized real-module proof or reference | REVIEWED: SOURCE VERIFIED (Theorem 6.5) | Import strict Fréchet Ext without comparison |
