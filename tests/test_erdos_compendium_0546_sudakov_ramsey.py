@@ -89,3 +89,21 @@ def test_546_isolated_vertices_make_fixed_m_unbounded():
         assert G.number_of_nodes()==q+2
         # Any (non-induced) G embedding needs at least q+2 vertices.
         # R(G) is thus unbounded as q grows with m fixed.
+
+
+# CI uses unittest discovery. Preserve the original bounded witness functions
+# while explicitly exposing each as a standard unittest test method.
+import unittest
+
+class CompendiumWitnessTests(unittest.TestCase):
+    def test_546_small_exact_ramsey_direct_and_matcher(self):
+        test_546_small_exact_ramsey_direct_and_matcher()
+
+    def test_546_finite_subgraph_embedding_algorithms_agree(self):
+        test_546_finite_subgraph_embedding_algorithms_agree()
+
+    def test_546_no_isolates_implies_n_le_twom(self):
+        test_546_no_isolates_implies_n_le_twom()
+
+    def test_546_isolated_vertices_make_fixed_m_unbounded(self):
+        test_546_isolated_vertices_make_fixed_m_unbounded()
