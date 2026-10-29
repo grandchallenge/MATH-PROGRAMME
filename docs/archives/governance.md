@@ -14,6 +14,7 @@ These are supporting records, not necessarily current research instructions or c
 - [Construction Gate Operating Guide](../governance/CONSTRUCTION_GATE_OPERATING_GUIDE.md)
 - [Execution Recovery Operating Guide](../governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md)
 - [Operation-scoped Recovery Policy](../governance/OPERATION_SCOPED_RECOVERY_POLICY.md)
+- [Cross-project Authenticated Operation Recovery](../governance/CROSS_PROJECT_OPERATION_RECOVERY.md)
 - [ED09 Historical Typography Successor Route](../governance/ED09_HISTORICAL_TYPOGRAPHY_SUCCESSOR_ROUTE.md)
 - [CHAD Five-State Offline Artifact Inventory (2026-10-21)](../handoffs/CHAD_ARTIFACT_INVENTORY_20261021.md)
 - [Recurring Task Continuity Contract](../governance/RECURRING_TASK_CONTINUITY_CONTRACT.md)
