@@ -84,3 +84,24 @@ def test_547_one_vertex_boundary_and_multi_color_count():
             assert N-1>q*(t-2)
             # Sum of q T-free color class edge bounds would be
             # at most q*(t-2)*N/2 < binom(N,2).
+
+
+# CI uses unittest discovery. Preserve the original bounded witness functions
+# while explicitly exposing each as a standard unittest test method.
+import unittest
+
+class CompendiumWitnessTests(unittest.TestCase):
+    def test_547_every_tree_free_small_graph_has_sharp_edge_bound(self):
+        test_547_every_tree_free_small_graph_has_sharp_edge_bound()
+
+    def test_547_small_ramsey_corollary_exhaustive_unlabeled_graphs(self):
+        test_547_small_ramsey_corollary_exhaustive_unlabeled_graphs()
+
+    def test_547_odd_order_integrality_refinement(self):
+        test_547_odd_order_integrality_refinement()
+
+    def test_547_even_star_sharp_example_t4(self):
+        test_547_even_star_sharp_example_t4()
+
+    def test_547_one_vertex_boundary_and_multi_color_count(self):
+        test_547_one_vertex_boundary_and_multi_color_count()
