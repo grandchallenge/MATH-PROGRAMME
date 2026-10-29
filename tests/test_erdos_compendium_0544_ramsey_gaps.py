@@ -63,3 +63,21 @@ def test_544_finite_documented_ramsey_differences():
     assert known[3]==6 and known[4]==9
     # R(3,k) values k>=4 are SOURCE-ATTRIBUTED numerical facts,
     # not all independently re-proved by this fixture.
+
+
+# CI uses unittest discovery. Preserve the original bounded witness functions
+# while explicitly exposing each as a standard unittest test method.
+import unittest
+
+class CompendiumWitnessTests(unittest.TestCase):
+    def test_544_independence_methods_graph_atlas(self):
+        test_544_independence_methods_graph_atlas()
+
+    def test_544_classical_r33_six_vertices_exact(self):
+        test_544_classical_r33_six_vertices_exact()
+
+    def test_544_eight_vertex_lower_witness_r34(self):
+        test_544_eight_vertex_lower_witness_r34()
+
+    def test_544_finite_documented_ramsey_differences(self):
+        test_544_finite_documented_ramsey_differences()
