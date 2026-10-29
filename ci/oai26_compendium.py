@@ -45,7 +45,7 @@ def load_catalogue(path: Path = CATALOGUE) -> dict:
         raise ValueError("family coverage is not 372")
     identifiers = [f.get("family_id") for f in families]
     if (len(set(identifiers)) != 372 or
-            any(not isinstance(n, str) or not re.fullmatch(r"\\d{3}", n) for n in identifiers) or
+            any(not isinstance(n, str) or not re.fullmatch(r"\d{3}", n) for n in identifiers) or
             identifiers != sorted(identifiers)):
         raise ValueError("family identities are duplicated, malformed or unordered")
     pdfs = []
@@ -183,7 +183,7 @@ def build(output_dir: Path = DOCS, catalogue_path: Path = CATALOGUE,
     for i, family in enumerate(record["families"]):
         n = family["family_id"]
         if i % 50 == 0:
-            indices.extend([f"## Families {i+1:03d}–{min(i+50,372):03d}", ""])
+            indices.extend([f"## Families {n}–{record['families'][min(i+49,371)]['family_id']}", ""])
         draft_path = EDITORIAL / f"{n}.md"
         if draft_path.is_file():
             draft = draft_path.read_text(encoding="utf-8")
