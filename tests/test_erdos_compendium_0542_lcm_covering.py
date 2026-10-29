@@ -105,3 +105,21 @@ def test_542_catalogue_direction_reversal_has_all_N_counterexample():
             a=m*(N//m)
             assert N/2<a<=N and a%m==0
     assert reversed_uncovered((2,3,5),5) != original_uncovered((2,3,5),5)
+
+
+# CI uses unittest discovery. Preserve the original bounded witness functions
+# while explicitly exposing each as a standard unittest test method.
+import unittest
+
+class CompendiumWitnessTests(unittest.TestCase):
+    def test_542_exact_sharp_small_optima_by_two_algorithms(self):
+        test_542_exact_sharp_small_optima_by_two_algorithms()
+
+    def test_542_unique_equality_and_other_large_reciprocal(self):
+        test_542_unique_equality_and_other_large_reciprocal()
+
+    def test_542_disjoint_multiples_and_original_uncovered(self):
+        test_542_disjoint_multiples_and_original_uncovered()
+
+    def test_542_catalogue_direction_reversal_has_all_N_counterexample(self):
+        test_542_catalogue_direction_reversal_has_all_N_counterexample()
