@@ -13,11 +13,11 @@ def generate():
  lines=['# OAI-26 catalogue','','372 source-indexed mathematical families; no certification inferred.','','| ID | Headline | PDFs | Status |','| --- | --- | ---: | --- |']
  for f in fs:
   n=f['family_id']; d=root/'families'/n; d.mkdir(parents=True,exist_ok=True)
-  p=['# Family '+n+': '+f['headline'],'','**REFERENCE ONLY — not independently verified.**','','## Original manuscripts','']
+  p=['# Family '+n+': '+f['headline'].replace('$$','[formula in manuscript]'),'','**REFERENCE ONLY — not independently verified.**','','## Original manuscripts','']
   for m in f['manuscripts']:
-   p.append('- ['+m['title']+'](https://github.com/openai/math/blob/1581d4cbdd69a0faf34b2089614fe2a814316a6a/'+m['pdf_path']+')')
+   p.append('- ['+m['title'].replace('$$','[formula in manuscript]')+'](https://github.com/openai/math/blob/1581d4cbdd69a0faf34b2089614fe2a814316a6a/'+m['pdf_path']+')')
   p+=['','## Verification and editorial status','','Lean replay, Comparator acceptance, manuscript-semantic equivalence, criticism and MATHCERT are distinct. No family-wide assertion is made here.','','[GCL evidence programme](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2850)','','## Full explanation pending','','No reviewed six-section documentary article has been admitted.']
   (d/'index.md').write_text('\n'.join(p)+'\n')
-  lines.append('| ['+n+'](../families/'+n+'/) | '+f['headline'].replace('|','/')+' | '+str(len(f['manuscripts']))+' | REFERENCE_ONLY |')
+  lines.append('| ['+n+'](../families/'+n+'/) | '+f['headline'].replace('|','/').replace('$$','[formula in manuscript]')+' | '+str(len(f['manuscripts']))+' | REFERENCE_ONLY |')
  (root/'catalogue'/'index.md').write_text('\n'.join(lines)+'\n')
  return {'families':372,'pdfs':719,'reference_only':372}
