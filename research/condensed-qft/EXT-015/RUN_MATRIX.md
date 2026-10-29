@@ -2,7 +2,7 @@
 
 > Can an extension carry genuinely global analytic information that no compact-support stage can capture?
 
-**Current execution route (2026-10-29):** [Plan/protocol 090](REACH_CONDENSED_RENORMALIZATION_PLAN_090.md) is the user-authorized full REACH route. M1 liquid profile/record realization and completed shared-regulator composition is the first UNPROVED target; M2 zero-scale extension, M3 quantum structure, independent M4/original R3 and M5 integration retain separate acceptance gates. The existing REACH checkpoint governs execution and source binding. R0/R1 and the separate087–089 objective remain completed; original R2/R3/R4 and both parents remain open. These prospective targets add no accepted theorem or comparison arrow.
+**Current execution route (2026-10-29):** Protocol090 is protected in PR2896. Parent editorial acceptance of the corrected M1 theorem091 follows critique092 and ledger093; protected mathematical admission/readback is recorded separately by the original checkpoint. Its scope is finite-profile liquid realization and completed shared-regulator composition. M2 zero-scale extension, M3 quantum structure, original R3 and M5 integration retain separate unproved gates. Audit094/095 does not supply sufficient new input to restart an opposed R3 cycle. R0/R1 and the separate087–089 objective remain completed; original R2/R3/R4 and both parents remain open.
 
 **Canonical mathematical specification:** [SPEC.md](SPEC.md). **Worker tasks:** [WORK_PACKAGES.md](WORK_PACKAGES.md). **Adversarial controls:** [EXTENSION_DOCKET.md](EXTENSION_DOCKET.md). **Parent:** [issue #2617](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617).
 
