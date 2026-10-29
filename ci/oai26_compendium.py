@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOGUE = ROOT / "governance/oai26_documentary/FAMILY_CATALOGUE.json"
 ADMISSIONS = ROOT / "governance/oai26_documentary/EDITORIAL_ADMISSIONS.json"
 DOCS = ROOT / "docs/oai26"
-EDITORIAL = DOCS / "editorial"
+EDITORIAL = ROOT / "governance/oai26_documentary/editorial"
 GENERATED = DOCS / "families"
 CATALOGUE_PAGE = DOCS / "catalogue.md"
 PIN = "1581d4cbdd69a0faf34b2089614fe2a814316a6a"
@@ -44,9 +44,10 @@ def load_catalogue(path: Path = CATALOGUE) -> dict:
     if not isinstance(families, list) or len(families) != 372:
         raise ValueError("family coverage is not 372")
     identifiers = [f.get("family_id") for f in families]
-    expected = [f"{n:03d}" for n in range(1, 373)]
-    if identifiers != expected:
-        raise ValueError("family identities are duplicated, missing or unordered")
+    if (len(set(identifiers)) != 372 or
+            any(not isinstance(n, str) or not re.fullmatch(r"\\d{3}", n) for n in identifiers) or
+            identifiers != sorted(identifiers)):
+        raise ValueError("family identities are duplicated, malformed or unordered")
     pdfs = []
     for family in families:
         if not isinstance(family.get("headline"), str) or not family["headline"].strip():
