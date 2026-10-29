@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-R2-CONSISTENT-HOST-001.CP005",
+  "checkpoint_id": "EXT-015-R2-CONSISTENT-HOST-001.CP006",
   "governed_work_id": "EXT-015-R2-CONSISTENT-HOST-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2890"
   },
-  "phase": "Exact PR2892 under required checks and protected queue admission",
+  "phase": "All required candidate checks passed; native queue pending protected merge/readback",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "f348dcccbc6b8d2ffd89551afa7dea1d27c06e11",
@@ -28,13 +28,13 @@
   "terminal_condition": "The separate acceptance contract in089 is met by an actual scoped construction or a counterexample resolving that full contract, with source087, exact evidence, source-bound critical review088, complete ledger089, protected admission/readback and accurate disposition of issue2890. A failed candidate scheme or principal-part notation alone is not a positive construction. Original REACH and its original issue/Project dispositions are not closed or redefined by this objective.",
   "permitted_next_actions": [
     {
-      "id": "verify-and-admit-exact-pr2892",
-      "description": "Refresh PR2892 exact head/base/rules/checks/reviews and relevant material identities. After required checks pass, admit through native merge queue, verify merge parents and all11 changed blobs. Then reconcile separate issue2890 and original open-status links."
+      "id": "read-native-merge-and-protected-source",
+      "description": "Read native PR2892 queue outcome. On merge, verify actual merge second parent equals reviewed0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997, first parent is protected predecessor, all11 expected blobs match and original checkpoint19 is unchanged. Rebind to protected result before tracker mutations."
     }
   ],
   "next_action": {
-    "id": "verify-and-admit-exact-pr2892",
-    "description": "Refresh PR2892 exact head/base/rules/checks/reviews and relevant material identities. After required checks pass, admit through native merge queue, verify merge parents and all11 changed blobs. Then reconcile separate issue2890 and original open-status links.",
+    "id": "read-native-merge-and-protected-source",
+    "description": "Read native PR2892 queue outcome. On merge, verify actual merge second parent equals reviewed0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997, first parent is protected predecessor, all11 expected blobs match and original checkpoint19 is unchanged. Rebind to protected result before tracker mutations.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#2892",
       "grandchallenge/MATH-PROGRAMME#2890",
@@ -47,26 +47,25 @@
       {
         "kind": "artifact",
         "identity": "grandchallenge/MATH-PROGRAMME#2892 at0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
-        "status": "Required checks running; native queue and protected readback pending"
+        "status": "All five required contexts pass; exact head admitted to native merge queue; final merge/readback pending"
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "publish reviewed exact package PR2892",
-    "result": "PR2892 is open and mergeable at0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997 against protectedf348dcccbc6b8d2ffd89551afa7dea1d27c06e11. Its11 changed paths contain only reviewed scientific/editorial artifacts and the separate continuation record. This live checkpoint is published on a separate continuity branch so the candidate PR head remains immutable. Original checkpoint19 remains b6d252b5081648981bb99d3637edb05e226ab324.",
+    "action": "admit exact scientific candidate to native merge queue",
+    "result": "Immediately refreshed head/base/rules/checks/reviews, immutable material manifest and live PR-bound continuity. All five required contexts passed; no required GitHub approval and no changes-requested review. Exact0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997 submitted by native auto-merge. Queue completion and protected readback remain pending.",
     "evidence_refs": [
       "grandchallenge/MATH-PROGRAMME#2892",
       "0eb5c8dc1ddf6cf6e603f8ce6a84937f15667997",
-      "a2837994aad771ab5ee4e17604b6ee1b98111c98",
-      "review088 c1cebf1a5c846097ca8f80724c4ea62638d1a404"
+      "required candidate runs40791010807,40791010884,40791011684,40791010837"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-R2-CONSISTENT-HOST-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-28T23:59:34Z"
+    "observed_at": "2026-10-29T00:01:51Z"
   },
   "resume": {
     "fresh_session_safe": true,
