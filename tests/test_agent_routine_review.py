@@ -49,6 +49,24 @@ class RoutineAgentReviewTests(unittest.TestCase):
                 {"filename": "ci/other_unclassified_controller.py"},
             ])
 
+    def test_action_pin_support_files_require_protection_review(self) -> None:
+        files = [{"filename": name} for name in (
+            ".github/workflows/ci.yml",
+            ".github/workflows/erdos-rolling-review-completion.yml",
+            "ci/validate_workflow_coverage_v2.py",
+            "governance/administrative_maintenance_trigger_registry.json",
+            "schemas/administrative_maintenance_trigger_registry.schema.json",
+            "tests/test_release_trust_admin.py",
+        )]
+        self.assertEqual(specialist_domain_for_file_manifest(files), "PROTECTION")
+
+    def test_unlisted_action_pin_auxiliary_file_still_fails_closed(self) -> None:
+        with self.assertRaisesRegex(RoutineReviewError, "unresolved or mixed"):
+            specialist_domain_for_file_manifest([
+                {"filename": ".github/workflows/ci.yml"},
+                {"filename": "ci/unregistered_action_pin_assertions.py"},
+            ])
+
     def test_exact_image_removal_is_routine(self) -> None:
         eligible_image_removal(self.pr, self.files, self.head)
         self.assertEqual(removed_patch_text(self.files[0]["patch"]), REMOVE_EXACTLY)
