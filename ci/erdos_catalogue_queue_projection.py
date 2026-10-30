@@ -192,6 +192,34 @@ def apply_returned_project_status(issue: int, project_id: str, item: dict,
             raise
 
 
+def apply_returned_issue_field(issue: int, current_state: str) -> None:
+    if current_state == "RETURNED":
+        return
+    payload = json.dumps({"issue_field_values": [
+        {"field_id": GCL_STATE_FIELD, "value": "RETURNED"}]})
+    try:
+        subprocess.run(["gh", "api", "--method", "POST",
+                        f"repos/{OWNER}/{REPO}/issues/{issue}/issue-field-values",
+                        "--input", "-"], input=payload, text=True,
+                       capture_output=True, check=True, timeout=60)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        if source_issue_gcl_state(issue) != "RETURNED":
+            raise
+
+
+def remove_available_label(issue: int, labels: set[str]) -> None:
+    if "gcl-state:available" not in labels:
+        return
+    try:
+        subprocess.run(["gh", "api", "--method", "DELETE",
+                        f"repos/{OWNER}/{REPO}/issues/{issue}/labels/gcl-state%3Aavailable"],
+                       check=True, stdout=subprocess.DEVNULL)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        refreshed = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
+        if "gcl-state:available" in {x["name"] for x in refreshed["labels"]}:
+            raise
+
+
 def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     receipt = validate_receipt(report, issue)
     # For multi-return adjudication, the protected comparison binds *all*
@@ -240,29 +268,8 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     if dry_run:
         return before
     apply_returned_project_status(issue, project_id, item, field_id, option_id)
-    if issue_state != "RETURNED":
-        payload = json.dumps({"issue_field_values": [
-            {"field_id": GCL_STATE_FIELD, "value": "RETURNED"}]})
-        try:
-            subprocess.run(["gh", "api", "--method", "POST",
-                            f"repos/{OWNER}/{REPO}/issues/{issue}/issue-field-values",
-                            "--input", "-"], input=payload, text=True,
-                           capture_output=True, check=True, timeout=60)
-        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
-            # A lost acknowledgment does not establish the POST failed.
-            # Read back the exact field; never blindly repeat the mutation.
-            if source_issue_gcl_state(issue) != "RETURNED":
-                raise
-    if "gcl-state:available" in labels:
-        try:
-            subprocess.run(["gh", "api", "--method", "DELETE",
-                            f"repos/{OWNER}/{REPO}/issues/{issue}/labels/gcl-state%3Aavailable"],
-                           check=True, stdout=subprocess.DEVNULL)
-        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
-            # Confirm removal through authoritative issue readback.
-            refreshed_labels = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
-            if "gcl-state:available" in {x["name"] for x in refreshed_labels["labels"]}:
-                raise
+    apply_returned_issue_field(issue, issue_state)
+    remove_available_label(issue, labels)
     final = issue_project_item(issue, project_id)
     if final["id"] != item["id"] or str(final["status"]).upper() != "RETURNED":
         raise RuntimeError("Targeted Project readback does not confirm returned state")

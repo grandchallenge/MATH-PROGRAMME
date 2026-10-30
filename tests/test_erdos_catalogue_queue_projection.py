@@ -52,6 +52,58 @@ class QueueProjectionTests(unittest.TestCase):
             mod.apply_returned_project_status(self.issue, "PROJECT", {"id": "ITEM", "status": "RETURNED"}, "FIELD", "OPTION")
         run.assert_not_called()
 
+    def test_issue_field_lost_ack_applied_once(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.TimeoutExpired("gh", 60)) as write, patch.object(mod, "source_issue_gcl_state", return_value="RETURNED") as read:
+            mod.apply_returned_issue_field(self.issue, "AVAILABLE")
+        write.assert_called_once()
+        read.assert_called_once_with(self.issue)
+
+    def test_issue_field_lost_ack_without_effect_raises(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as write, patch.object(mod, "source_issue_gcl_state", return_value="AVAILABLE"):
+            with self.assertRaises(subprocess.CalledProcessError):
+                mod.apply_returned_issue_field(self.issue, "AVAILABLE")
+        write.assert_called_once()
+
+    def test_issue_field_readback_unavailable_no_retry(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as write, patch.object(mod, "source_issue_gcl_state", side_effect=ConnectionError("offline")):
+            with self.assertRaises(ConnectionError):
+                mod.apply_returned_issue_field(self.issue, "AVAILABLE")
+        write.assert_called_once()
+
+    def test_issue_field_already_returned_no_write(self):
+        with patch.object(mod.subprocess, "run") as write:
+            mod.apply_returned_issue_field(self.issue, "RETURNED")
+        write.assert_not_called()
+
+    def test_label_delete_lost_ack_already_removed(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.TimeoutExpired("gh", 60)) as write, patch.object(mod, "gh", return_value={"labels": []}) as read:
+            mod.remove_available_label(self.issue, {"gcl-state:available"})
+        write.assert_called_once()
+        read.assert_called_once()
+
+    def test_label_delete_lost_ack_label_still_present(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as write, patch.object(mod, "gh", return_value={"labels": [{"name": "gcl-state:available"}]}):
+            with self.assertRaises(subprocess.CalledProcessError):
+                mod.remove_available_label(self.issue, {"gcl-state:available"})
+        write.assert_called_once()
+
+    def test_label_delete_readback_unavailable_no_retry(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as write, patch.object(mod, "gh", side_effect=ConnectionError("offline")):
+            with self.assertRaises(ConnectionError):
+                mod.remove_available_label(self.issue, {"gcl-state:available"})
+        write.assert_called_once()
+
+    def test_label_already_absent_no_write(self):
+        with patch.object(mod.subprocess, "run") as write:
+            mod.remove_available_label(self.issue, set())
+        write.assert_not_called()
+
     def test_registry_bound_valid_receipt(self):
         self.assertEqual(mod.validate_receipt(self.report, self.issue)["comment_id"], 77)
 
