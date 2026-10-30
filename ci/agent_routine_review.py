@@ -267,7 +267,7 @@ def bounded_oai26_editorial_not_applicable(pr: dict, files: list[dict], head: st
     path = row.get("filename")
     return (
         isinstance(path, str)
-        and re.fullmatch(r"governance/oai26_compendium/editorial/[0-9]{3}\\.md", path) is not None
+        and re.fullmatch(r"governance/oai26_compendium/editorial/[0-9]{3}\.md", path) is not None
         and row.get("status") in ("added", "modified")
         and not row.get("previous_filename")
     )
@@ -317,7 +317,7 @@ def report_delegated_review_not_applicable(
 ) -> None:
     """Report non-approval explicitly; a green job is NOT an App review."""
     message = (
-        "NOT_APPLICABLE: mathematical research/test material is not "
+        "NOT_APPLICABLE: source-critical material is not "
         "eligible for automatic delegated App review. "
         "No approval or mathematical certification was issued; "
         "protected main checks and independent review remain separate."
