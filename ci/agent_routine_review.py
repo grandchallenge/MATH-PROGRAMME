@@ -253,6 +253,26 @@ def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> b
     return has_proof_note
 
 
+
+def bounded_oai26_editorial_not_applicable(pr: dict, files: list[dict], head: str) -> bool:
+    """Allow truthful non-automatic review of source-bound editorial prose.
+
+    This never issues delegated approval: an exact-head non-author GitHub
+    approval is separately required, and protected merge checks still apply.
+    """
+    verify_specialist_envelope(pr, files, head)
+    if len(files) != 1:
+        return False
+    row = files[0]
+    path = row.get("filename")
+    return (
+        isinstance(path, str)
+        and re.fullmatch(r"governance/oai26_compendium/editorial/[0-9]{3}\\.md", path) is not None
+        and row.get("status") in ("added", "modified")
+        and not row.get("previous_filename")
+    )
+
+
 def exact_head_nonauthor_review(
     pr: dict, number: int, head: str, *, token: str, prefix: str,
 ) -> str:
@@ -431,7 +451,8 @@ def main() -> int:
         # rather than a misleading test failure; it never posts a review.
         # Mixed, malformed, or protected-path edits still fail closed or
         # require an independently protected specialist receipt.
-        if bounded_research_not_applicable(pr, files, head):
+        if (bounded_research_not_applicable(pr, files, head) or
+                bounded_oai26_editorial_not_applicable(pr, files, head)):
             reviewer = exact_head_nonauthor_review(
                 pr, number, head, token=read_token, prefix=prefix,
             )
