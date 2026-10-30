@@ -24,11 +24,23 @@ def sha(data):
 
 
 def api(url):
-    p = subprocess.run(["gh", "api", url], capture_output=True,
-                       text=True, timeout=60)
-    if p.returncode:
-        raise RuntimeError(f"GitHub source read {url}: {p.stderr[-900:]}")
-    return json.loads(p.stdout)
+    """Bounded retry of read-only source queries on transport timeout only.
+
+    Never retry explicit nonzero responses (including permission/policy denial).
+    No mutations occur in this helper; source identities are checked by capture.
+    """
+    for attempt in range(2):
+        try:
+            p = subprocess.run(["gh", "api", url], capture_output=True,
+                               text=True, timeout=60)
+        except subprocess.TimeoutExpired:
+            if attempt == 0:
+                continue
+            raise
+        if p.returncode:
+            raise RuntimeError(f"GitHub source read {url}: {p.stderr[-900:]}")
+        return json.loads(p.stdout)
+    raise AssertionError("unreachable read retry state")
 
 
 def source_event(path):
