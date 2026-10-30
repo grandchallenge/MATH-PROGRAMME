@@ -21,6 +21,37 @@ class QueueProjectionTests(unittest.TestCase):
         self.report = {"tasks": [{"issue_number": self.issue, "task_id": self.receipt["task_id"]}],
                        "receipts": [self.receipt]}
 
+    def test_project_edit_lost_ack_but_remote_applied_no_retry(self):
+        import subprocess
+        initial = {"id": "ITEM", "status": "Todo"}
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \
+             patch.object(mod, "issue_project_item", return_value={"id": "ITEM", "status": "RETURNED"}) as read:
+            mod.apply_returned_project_status(self.issue, "PROJECT", initial, "FIELD", "RETURNED_OPTION")
+        self.assertEqual(run.call_count, 1)
+        read.assert_called_once_with(self.issue, "PROJECT")
+
+    def test_project_edit_failure_without_remote_effect_propagates(self):
+        import subprocess
+        initial = {"id": "ITEM", "status": "Todo"}
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \
+             patch.object(mod, "issue_project_item", return_value={"id": "ITEM", "status": "Todo"}):
+            with self.assertRaises(subprocess.CalledProcessError):
+                mod.apply_returned_project_status(self.issue, "PROJECT", initial, "FIELD", "RETURNED_OPTION")
+        self.assertEqual(run.call_count, 1)
+
+    def test_project_edit_readback_failure_preserves_uncertainty(self):
+        import subprocess
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \
+             patch.object(mod, "issue_project_item", side_effect=ConnectionError("read unavailable")):
+            with self.assertRaises(ConnectionError):
+                mod.apply_returned_project_status(self.issue, "PROJECT", {"id": "ITEM", "status": "Todo"}, "FIELD", "OPTION")
+        self.assertEqual(run.call_count, 1)
+
+    def test_project_edit_idempotent_when_already_returned(self):
+        with patch.object(mod.subprocess, "run") as run:
+            mod.apply_returned_project_status(self.issue, "PROJECT", {"id": "ITEM", "status": "RETURNED"}, "FIELD", "OPTION")
+        run.assert_not_called()
+
     def test_registry_bound_valid_receipt(self):
         self.assertEqual(mod.validate_receipt(self.report, self.issue)["comment_id"], 77)
 

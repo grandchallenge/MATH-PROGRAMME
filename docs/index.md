@@ -111,3 +111,7 @@ Rows remain here only while the corresponding work is materially active. The [Cu
 This page is a public orientation surface. It does not create or raise mathematical authority. The linked protected records control claim scope, support class, exclusions, and certification state.
 
 [Read the status taxonomy](STATUS_TAXONOMY.md) and [claim-boundary doctrine](CLAIM_BOUNDARY_DOCTRINE.md) when the distinction between evidence, lifecycle state, campaign disposition, and certification matters.
+
+## Operational resilience reference
+
+The [GCL cross-project authenticated operation recovery contract](governance/CROSS_PROJECT_OPERATION_RECOVERY.md) governs technical transport failure handling, idempotent mutation reconciliation, authorized fallback, and protected readback across programmes. Explicitly denied operations remain held under the existing operation-scoped policy.
