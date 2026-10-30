@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP040",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP041",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Frozen candidate105: distinct critical review106 and one correction pass",
+  "phase": "Corrected scalar closure105 accepted after106; prepare protected admission",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "e7caf6bce90b6c2ae49b2154149be5b5a6706cdd",
-    "candidate_head_sha": "ce8b79e7f7e9f0acb0462b18495954dcf49d6992",
+    "candidate_head_sha": "51fa1395e9ea00cec81dea5b351d61a741d38c3d",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-gaussian-wick-candidate-frozen-20261030",
+    "branch": "research/reach-gaussian-wick-corrected-frozen-20261030",
     "workflow_runs": []
   },
   "terminal_condition": "Original REACH completion still requires the remaining original R2 and R3 gates and dependent positive R4 integration, with actual proofs or counterexamples satisfying those original assignments, source-bound critical review, protected admission/readback and accurate tracker dispositions. R1 is fulfilled after its explicit reviewed normalization repair. A failed chosen subtraction scheme, an unresolved lemma, or completion of the bounded reassessment does not complete the original campaign.",
   "permitted_next_actions": [
     {
-      "id": "review-correct-frozen-gaussian-wick-closure",
-      "description": "Read source-bound nonauthor106 for frozen105 blob0fcc10c9937fa461cb76bd50b34185207f0b02f9, perform at most one correction pass, and adjudicate scalar/finite-jet closure separately from the still-unproved general R1 mixed-coefficient extension. Freeze the accepted final source and run current protected admission checks; no full M2/GB2 claim."
+      "id": "admit-reviewed-scalar-closure-return",
+      "description": "Run affected current checks on105/106/107 and canonical integration; freeze the final admission head, create and attach a protected PR, use native merge queue with exact live head controls, read back every changed blob and required native checks, then reconcile originalOPENtrackers. Scalar/finite-jet closure is accepted; full distributional R1 mixed closure is not."
     }
   ],
   "next_action": {
-    "id": "review-correct-frozen-gaussian-wick-closure",
-    "description": "Read source-bound nonauthor106 for frozen105 blob0fcc10c9937fa461cb76bd50b34185207f0b02f9, perform at most one correction pass, and adjudicate scalar/finite-jet closure separately from the still-unproved general R1 mixed-coefficient extension. Freeze the accepted final source and run current protected admission checks; no full M2/GB2 claim.",
+    "id": "admit-reviewed-scalar-closure-return",
+    "description": "Run affected current checks on105/106/107 and canonical integration; freeze the final admission head, create and attach a protected PR, use native merge queue with exact live head controls, read back every changed blob and required native checks, then reconcile originalOPENtrackers. Scalar/finite-jet closure is accepted; full distributional R1 mixed closure is not.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/GAUSSIAN_WICK_COLLISION_NORMAL_FORM_105.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_GENERATED_NORMAL_FORM_106.md",
@@ -68,20 +68,20 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "freeze explicit normal form and projective heat-map mechanism for nonauthor review",
-    "result": "Primary105/107 frozen atce8b79e7f7e9f0acb0462b18495954dcf49d6992. Parent proves an explicit projective heat/infinity comparison and proposes scalar log-polyhomogeneous/finite-jet closure, extending delegated positive-scale normal form. General distributional R1 coefficient closure remains unproved, with actual mixed contraction105.12 retained as a hostile control rather than an unproved counterexample. Current main movement to684ccf9b5 affects unrelated editorial/tests only; no scientific dependency changed.",
+    "action": "single correction and final source-bound critical readback",
+    "result": "Corrected105 a8ce66ff0edec33e2aff299550fca2089d671033 at51fa1395e9ea00cec81dea5b351d61a741d38c3d incorporates fixed remainder weights, model complement scope, all-corner canonical jet cancellation and heat-map flatness scope. Distinct same-system critic106 d1d64802076b033218f3c93ac11af96f4c683e6a verifies exact file/tree hashes and accepts bounded scalar/finite-jet closure, geometry and positive normal forms. Parent editorial acceptance107 preserves all original incomplete dispositions. Full mixed R1/noise asymptotic closure remains an exact mathematical gap, not an alleged counterexample.",
     "evidence_refs": [
-      "ce8b79e7f7e9f0acb0462b18495954dcf49d6992",
-      "0fcc10c9937fa461cb76bd50b34185207f0b02f9",
-      "research/reach-gaussian-wick-candidate-frozen-20261030",
-      "same-system distinct nonauthor review106 assigned"
+      "51fa1395e9ea00cec81dea5b351d61a741d38c3d",
+      "a8ce66ff0edec33e2aff299550fca2089d671033",
+      "d1d64802076b033218f3c93ac11af96f4c683e6a",
+      "research/reach-gaussian-wick-corrected-frozen-20261030"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-30T22:51:25.7878795Z"
+    "observed_at": "2026-10-30T22:57:59.0708215Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -113,9 +113,10 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_PUSHFORWARD_LOGARITHM_103.md",
       "research/condensed-qft/EXT-015/PUSHFORWARD_LOGARITHM_ACCEPTANCE_104.md",
       "research/condensed-qft/EXT-015/GAUSSIAN_WICK_COLLISION_NORMAL_FORM_105.md",
-      "research/condensed-qft/EXT-015/GENERATED_NORMAL_FORM_ACCEPTANCE_107.md"
+      "research/condensed-qft/EXT-015/GENERATED_NORMAL_FORM_ACCEPTANCE_107.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_GENERATED_NORMAL_FORM_106.md"
     ],
-    "instructions": "Verify frozen candidate branch ce8b79e7f7e9f0acb0462b18495954dcf49d6992 and105 blob0fcc10c9937fa461cb76bd50b34185207f0b02f9, source-bound106 and governingOPENissues before next mutation. The primary now contains actual positive normal forms, exact projective heat b-map/b-fibration proof, and a proposed scalar power/logarithmic plus finite-jet closure theorem. Full mixed distributional R1 and arbitrary completed noise coefficient zero-scale closure remain unproved;105.12 is an exact hostile contraction, not a proved nonmembership result. Perform only the reserved correction pass after106, retain demonstrated gaps and preserve original incomplete dispositions, then protected admission/readback and tracker reconciliation. No expensive unchanged277-source replay. Separate consistent-host terminal checkpoint untouched. R3 still needs genuinely new input beyond094/095."
+    "instructions": "Verify exact corrected frozen source51fa1395e9ea00cec81dea5b351d61a741d38c3d,105 a8ce66ff0edec33e2aff299550fca2089d671033 and106 d1d64802076b033218f3c93ac11af96f4c683e6a. Scalar/finite-jet power/logarithmic closure is reviewed accepted after one correction, with exact projective heat b-fibration proof and complete fixed-index stages. General R1 mixed-coefficient and arbitrary complete noise amplitude zero-scale closure remain unproved. Finish current protected admission/readback and explicit tracker reconciliation; do not reopen completed R0/R1 or087–089. The documented new mechanism for the next bounded mathematical attempt is the proved heat-map theorem plus strong distribution-valued normal profiles; its required control is105.12, uniform fixed spatial output cones, full relative-normal data and all-profinite boundary kernel. M3/M5 remain suspended until full M2. R3 has no new sufficient input beyond094/095. Preserve all frozen branches and the terminal consistent-host checkpoint."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
