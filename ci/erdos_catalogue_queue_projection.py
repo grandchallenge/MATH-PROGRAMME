@@ -240,17 +240,29 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     if dry_run:
         return before
     apply_returned_project_status(issue, project_id, item, field_id, option_id)
-    if issue_state!="RETURNED":
-        payload=json.dumps({"issue_field_values":[
-            {"field_id":GCL_STATE_FIELD,"value":"RETURNED"}]})
-        subprocess.run(["gh","api","--method","POST",
-                        f"repos/{OWNER}/{REPO}/issues/{issue}/issue-field-values",
-                        "--input","-"],input=payload,text=True,
-                       capture_output=True,check=True,timeout=60)
+    if issue_state != "RETURNED":
+        payload = json.dumps({"issue_field_values": [
+            {"field_id": GCL_STATE_FIELD, "value": "RETURNED"}]})
+        try:
+            subprocess.run(["gh", "api", "--method", "POST",
+                            f"repos/{OWNER}/{REPO}/issues/{issue}/issue-field-values",
+                            "--input", "-"], input=payload, text=True,
+                           capture_output=True, check=True, timeout=60)
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            # A lost acknowledgment does not establish the POST failed.
+            # Read back the exact field; never blindly repeat the mutation.
+            if source_issue_gcl_state(issue) != "RETURNED":
+                raise
     if "gcl-state:available" in labels:
-        subprocess.run(["gh", "api", "--method", "DELETE",
-                        f"repos/{OWNER}/{REPO}/issues/{issue}/labels/gcl-state%3Aavailable"],
-                       check=True, stdout=subprocess.DEVNULL)
+        try:
+            subprocess.run(["gh", "api", "--method", "DELETE",
+                            f"repos/{OWNER}/{REPO}/issues/{issue}/labels/gcl-state%3Aavailable"],
+                           check=True, stdout=subprocess.DEVNULL)
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            # Confirm removal through authoritative issue readback.
+            refreshed_labels = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}")
+            if "gcl-state:available" in {x["name"] for x in refreshed_labels["labels"]}:
+                raise
     final = issue_project_item(issue, project_id)
     if final["id"] != item["id"] or str(final["status"]).upper() != "RETURNED":
         raise RuntimeError("Targeted Project readback does not confirm returned state")
