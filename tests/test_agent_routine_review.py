@@ -68,8 +68,10 @@ class RoutineAgentReviewTests(unittest.TestCase):
             ])
 
     def test_oai26_single_editorial_is_not_automatic_review(self) -> None:
+        pr = copy.deepcopy(self.pr)
+        pr["base"] = {"ref": "main", "sha": "b" * 40}
         self.assertTrue(bounded_oai26_editorial_not_applicable(
-            self.pr,
+            pr,
             [{"filename": "governance/oai26_compendium/editorial/001.md",
               "status": "added"}],
             self.head,
@@ -78,15 +80,15 @@ class RoutineAgentReviewTests(unittest.TestCase):
                      "governance/oai26_compendium/editorial/001.json",
                      "governance/oai26_compendium/editorial/001.md/evil"):
             self.assertFalse(bounded_oai26_editorial_not_applicable(
-                self.pr, [{"filename": path, "status": "added"}], self.head,
+                pr, [{"filename": path, "status": "added"}], self.head,
             ))
         self.assertFalse(bounded_oai26_editorial_not_applicable(
-            self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
+            pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
                        "status": "added", "previous_filename": "x.md"}], self.head,
         ))
         with self.assertRaises(RoutineReviewError):
             bounded_oai26_editorial_not_applicable(
-                self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
+                pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
                            "status": "added"}, {"filename": "docs/index.md",
                            "status": "modified"}], self.head,
             )
