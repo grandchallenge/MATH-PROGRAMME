@@ -6,7 +6,7 @@
 
 | Artifact | Frozen-input Git blob |
 | --- | --- |
-| [096, primary report](FILTERED_NORMAL_ZERO_SCALE_EXTENSION_096.md) | dccdffa5a011c7b36942225c1271b25a0ed3f1a4 |
+| [096, primary report](FILTERED_NORMAL_ZERO_SCALE_EXTENSION_096.md) | ee15ed47d90123bdd958dcb4a93cd51b428c1702 |
 | [096, exact finite control](fixtures/check_normal_profile_boundary_096.py) | 582e504c0640ae853e6e9ffc16c29750bd73f704 |
 | Governing090 | 6b642bf10c3328bb64d37474e290810fb45cbca1 |
 | Protected091 | c517fe1ae46bcaa9f4a3fc0e64381ae8096bfe27 |

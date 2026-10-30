@@ -14,6 +14,9 @@ Work in real liquid modules with parameter $p$ for fixed $0<p\le1$, in the admit
 | Bridge ledger093 | ee6d1c089847f3d5b482e1624d9923a6277ddbe0 |
 | Actual subtraction087 | 452c494bcdc94ba94e52ae50c7b4d1eb3240ca83 |
 | Consistent-host ledger089 | 600a269ffd47b84b1bc9c671125aea3bf61a2f80 |
+| Fixed-cone normal pullback035 | 3b0e102e39327b75a41f125340a90e915f136288 |
+| Actual locally normal R1 domain069 | b3f6fe6651cc1ea59dfdf5f52990576c4f7018c2 |
+| Reviewed R1 endpoint scope077 | 4fb34ef83a822f80b4bf107a6964f98345fd0b63 |
 
 M1 was protected in PR2897 at 48e07f1fe64084c9200b1ca8cadcea895c944811; its eleven changed blobs, exact reviewed second parent and five native required checks were read back before M2 construction. Independent R3 audit094/095 was protected in PR2898 at 7d8b396beef5aa21452c60d21d9337964ebb8ce4 and did not solve its equation. Current protected policy cut for this attempt is 4e2a362ffb7b679fe91815fddbe90561cb1541ae. Its intervening changes affect recovery policy and unrelated documentary/ERDOS machinery, not the scientific inputs above. The existing checkpoint owns operational custody.
 
