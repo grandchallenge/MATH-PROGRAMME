@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP041",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP042",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Corrected scalar closure105 accepted after106; prepare protected admission",
-  "state": "IN_PROGRESS",
+  "phase": "PR2941 required check failure: demonstrated base/head formatting comparison; native update required",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
-    "protected_base_sha": "e7caf6bce90b6c2ae49b2154149be5b5a6706cdd",
-    "candidate_head_sha": "51fa1395e9ea00cec81dea5b351d61a741d38c3d",
+    "protected_base_sha": "73cac49c368e43ba09f566e68d1ee7a1929d485e",
+    "candidate_head_sha": "af8e9e0647a30d9e83176d7d11616944909f6b1a",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-gaussian-wick-corrected-frozen-20261030",
-    "workflow_runs": []
+    "pr_number": 2941,
+    "branch": "research/reach-gaussian-wick-closure-20261030",
+    "workflow_runs": [
+      {
+        "run_id": 41141575995,
+        "name": "Classify policy impact",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_id": 124356852616
+      },
+      {
+        "run_id": 41141575995,
+        "name": "validate-json",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_id": 124356980296
+      }
+    ]
   },
   "terminal_condition": "Original REACH completion still requires the remaining original R2 and R3 gates and dependent positive R4 integration, with actual proofs or counterexamples satisfying those original assignments, source-bound critical review, protected admission/readback and accurate tracker dispositions. R1 is fulfilled after its explicit reviewed normalization repair. A failed chosen subtraction scheme, an unresolved lemma, or completion of the bounded reassessment does not complete the original campaign.",
   "permitted_next_actions": [
     {
-      "id": "admit-reviewed-scalar-closure-return",
-      "description": "Run affected current checks on105/106/107 and canonical integration; freeze the final admission head, create and attach a protected PR, use native merge queue with exact live head controls, read back every changed blob and required native checks, then reconcile originalOPENtrackers. Scalar/finite-jet closure is accepted; full distributional R1 mixed closure is not."
+      "id": "repair-demonstrated-protected-base-comparison",
+      "description": "Refresh PR2941 exact head/base and failed logs41141575995. Use native update-branch with expected head af8e9e0647a30d9e83176d7d11616944909f6b1a to integrate protected main, justified by required formatting comparison failure rather than main movement alone. Verify105/106/107 scientific blobs unchanged, preserve new immutable admission ref, rebind live checkpoint and required checks. Do not hand-edit unrelated editorial sources."
     }
   ],
   "next_action": {
-    "id": "admit-reviewed-scalar-closure-return",
-    "description": "Run affected current checks on105/106/107 and canonical integration; freeze the final admission head, create and attach a protected PR, use native merge queue with exact live head controls, read back every changed blob and required native checks, then reconcile originalOPENtrackers. Scalar/finite-jet closure is accepted; full distributional R1 mixed closure is not.",
+    "id": "repair-demonstrated-protected-base-comparison",
+    "description": "Refresh PR2941 exact head/base and failed logs41141575995. Use native update-branch with expected head af8e9e0647a30d9e83176d7d11616944909f6b1a to integrate protected main, justified by required formatting comparison failure rather than main movement alone. Verify105/106/107 scientific blobs unchanged, preserve new immutable admission ref, rebind live checkpoint and required checks. Do not hand-edit unrelated editorial sources.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/GAUSSIAN_WICK_COLLISION_NORMAL_FORM_105.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_GENERATED_NORMAL_FORM_106.md",
@@ -42,8 +57,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATH-PROGRAMME#2941 ataf8e9e0647a30d9e83176d7d11616944909f6b1a",
+        "status": "OPEN at exactaf8 head; autoMergeRequest MERGE enabled. Required validate-json fails because Classify policy impact compares newer base73cac to old head and detects old unrelated erdos editorial delimiters. Exact logs41141575995 bind diagnosis."
+      },
       {
         "kind": "artifact",
         "identity": "PR2933 merge19937fee3eda2fcee9a263b71f168d73fbdd0383",
@@ -68,20 +88,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "single correction and final source-bound critical readback",
-    "result": "Corrected105 a8ce66ff0edec33e2aff299550fca2089d671033 at51fa1395e9ea00cec81dea5b351d61a741d38c3d incorporates fixed remainder weights, model complement scope, all-corner canonical jet cancellation and heat-map flatness scope. Distinct same-system critic106 d1d64802076b033218f3c93ac11af96f4c683e6a verifies exact file/tree hashes and accepts bounded scalar/finite-jet closure, geometry and positive normal forms. Parent editorial acceptance107 preserves all original incomplete dispositions. Full mixed R1/noise asymptotic closure remains an exact mathematical gap, not an alleged counterexample.",
+    "action": "create attached PR2941 and request native exact-head merge queue",
+    "result": "Final reviewed admission head af8e9e0647a30d9e83176d7d11616944909f6b1a preserved on admission-frozen branch; PR2941 attached. Live rules require four main checks plus routing-enforcement and native MERGE queue, zero approving reviews, no open changes-requested review. Native auto-merge requested while checks pending. Checkpoint advances on separate progress branch so the PR head remains immutable. This is admission pending, not protected success. Required Classify policy impact and validate-json failed at41141575995 because direct base/head comparison reintroduces already-repaired unrelated erdos editorial0003 delimiters from the older head. Exact logs identify this required-check cause. Native base synchronization is now justified; no unrelated source edits or mathematical correction is needed.",
     "evidence_refs": [
-      "51fa1395e9ea00cec81dea5b351d61a741d38c3d",
-      "a8ce66ff0edec33e2aff299550fca2089d671033",
-      "d1d64802076b033218f3c93ac11af96f4c683e6a",
-      "research/reach-gaussian-wick-corrected-frozen-20261030"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2941",
+      "af8e9e0647a30d9e83176d7d11616944909f6b1a",
+      "research/reach-gaussian-wick-admission-frozen-20261030"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-10-30T22:57:59.0708215Z"
+    "observed_at": "2026-10-30T23:00:01.1916458Z"
   },
   "resume": {
     "fresh_session_safe": true,
