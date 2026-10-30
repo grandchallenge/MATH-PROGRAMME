@@ -84,11 +84,12 @@ class RoutineAgentReviewTests(unittest.TestCase):
             self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
                        "status": "added", "previous_filename": "x.md"}], self.head,
         ))
-        self.assertFalse(bounded_oai26_editorial_not_applicable(
-            self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
-                       "status": "added"}, {"filename": "docs/index.md",
-                       "status": "modified"}], self.head,
-        ))
+        with self.assertRaises(RoutineReviewError):
+            bounded_oai26_editorial_not_applicable(
+                self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
+                           "status": "added"}, {"filename": "docs/index.md",
+                           "status": "modified"}], self.head,
+            )
 
     def test_exact_image_removal_is_routine(self) -> None:
         eligible_image_removal(self.pr, self.files, self.head)
