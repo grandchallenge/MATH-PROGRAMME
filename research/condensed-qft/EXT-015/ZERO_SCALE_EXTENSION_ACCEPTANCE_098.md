@@ -6,7 +6,7 @@
 
 | Artifact | Frozen-input Git blob |
 | --- | --- |
-| [096, primary report](FILTERED_NORMAL_ZERO_SCALE_EXTENSION_096.md) | 9958ecdc0980cba8780cf8c8a35cc1b67e85d72e |
+| [096, primary report](FILTERED_NORMAL_ZERO_SCALE_EXTENSION_096.md) | dccdffa5a011c7b36942225c1271b25a0ed3f1a4 |
 | [096, exact finite control](fixtures/check_normal_profile_boundary_096.py) | 582e504c0640ae853e6e9ffc16c29750bd73f704 |
 | Governing090 | 6b642bf10c3328bb64d37474e290810fb45cbca1 |
 | Protected091 | c517fe1ae46bcaa9f4a3fc0e64381ae8096bfe27 |
@@ -45,7 +45,7 @@ Execution uses the existing isolated CHAD Windows CPython3.12.12 evidence enviro
 
 Freeze096, this ledger and the fixture on a permanent source reference before the distinct non-author critic097. Disclose that the parent authored096 using the R2 role's preliminary observations; the interrupted draft is not independent evidence. The critic must independently check the liquid profile families, Borel parameter lift, normalization and finite evaluation, full-arrangement geometry, R1 pullback and every asserted limitation. Independent numerical verification must not share producer memoization or recurrence state.
 
-The parent owns final source-semantic editorial integration and exact protected admission/readback. A protected bounded partial return may be accepted without treating the missing M2 contract as completed. Tracker reconciliation occurs after readback; original R2/R3/R4 and both parents remain open.
+Critic097 identified a literal local-interval typing issue: evaluation of $P_d$ uses the envelope with scalar target $C^\infty((0,e_0))$, not a canonical extension to all positive regulators. Source096 now narrows that codomain explicitly. This is a source-semantic narrowing, not a further construction mechanism or reset of the single correction budget. The original frozen cut remains preserved. The parent owns final source-semantic editorial integration and exact protected admission/readback. A protected bounded partial return may be accepted without treating the missing M2 contract as completed. Tracker reconciliation occurs after readback; original R2/R3/R4 and both parents remain open.
 
 **Next mathematical obligation:** prove the mixed liquid evaluation/jet descent096.13 and flat-kernel-preserving source pushforward096.14 on explicitly specified fixed stages and actual resolved projection maps. The many-body normal-front-face route is a documented mechanism to examine, not an already verified global theorem. Without that proof, M2, GB2 and full REACH remain incomplete.
 

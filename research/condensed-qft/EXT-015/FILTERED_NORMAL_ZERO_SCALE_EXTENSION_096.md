@@ -52,7 +52,7 @@ L_{d,h}(\underline P_d).
 \tag{96.3}
 $$
 
-This is an actual evaluated-family image with finite pole order, not a new presentation label. As proved in Lemma91.2, the free liquid object on every profinite test is compact in the abelian heart. Consequently every section of this filtered union lifts to one $h$ with continuous $P_d$ coefficients. Evaluation into the ordinary internal-Hom envelope of091 remains monic: every tested section has such a lift. No ambient subspace topology is substituted.
+This is an actual evaluated-family image with finite pole order, not a new presentation label. As proved in Lemma91.2, the free liquid object on every profinite test is compact in the abelian heart. Consequently every section of this filtered union lifts to one $h$ with continuous $P_d$ coefficients. Evaluation into the interval-local ordinary internal Hom $E_{d,e_0}=\underline{\mathrm{Hom}}(V_d,\underline{C^\infty((0,e_0))})$ remains monic: every tested section has such a lift. The old M1 evaluation is restricted to this interval; no canonical extension of a general $F\in P_d$ to all positive regulators is claimed. The initial frozen phrase referring to the envelope of091 is narrowed here to this actual local codomain, as identified by critic097. No ambient subspace topology is substituted.
 
 The old finite-homogeneity module $\Phi_d$ maps monically into (96.3): for a finite sum $\sum_m\epsilon^m f_m$ choose $h$ with $h+m\ge0$ and use $F(\epsilon)=\sum_m\epsilon^{h+m}f_m$. Changing $h$ is exactly the specified transition. A nonzero scalar-unit family is included at $d=0$.
 
