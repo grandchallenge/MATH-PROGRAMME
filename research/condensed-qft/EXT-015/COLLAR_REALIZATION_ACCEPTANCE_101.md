@@ -4,7 +4,7 @@
 
 | Artifact or input | Git blob / exact identity |
 | --- | --- |
-| [099, primary construction](COLLAR_STAGE_LIQUID_REALIZATION_099.md) | a43f9e335c341fdffe3a2a52f4680543dd03552b |
+| [099, primary construction](COLLAR_STAGE_LIQUID_REALIZATION_099.md) | bcdd5328c52361403b54c24c662c336bff4ce7ae |
 | Admitted096 | ee15ed47d90123bdd958dcb4a93cd51b428c1702 |
 | Admitted097 | a3e56b7dcd6964d302f17fd6c729cf57072875c4 |
 | Admitted098 | ffd103c5caeebfae6f8d86755daa09ba38cfcd90 |
@@ -34,7 +34,7 @@ The construction chooses extension-admitted plots. It does not prove equality wi
 
 The scalar smooth extension theorem is used only for smooth functions. It is not used to claim preservation of arbitrary wavefront cones for distribution-valued families. The R1 and jet sectors instead have actual geometric collar extensions with fixed transverse cones.
 
-The author is the parent role. The new primary input and complete-source image argument are the documented new mechanism after096; this is one primary construction attempt with at most one correction pass. Fresh context alone is not offered as justification. Critic100 must disclose shared dependencies and prior role advice; same-system non-author review is not external certification.
+The author is the parent role. The new primary input and complete-source image argument are the documented new mechanism after096; this is one primary construction attempt and its single correction pass. Critic100 found that nonincident boundary weights require their full normal Taylor unit. The constant-family control with $\sigma=1+r$ refutes using only the value at the stratum; corrected099 expands the product of that full unit with the normalized source. The original source cut is preserved. No further construction pass is authorized by this ledger. Fresh context alone is not offered as justification. Critic100 must disclose shared dependencies and prior role advice; same-system non-author review is not external certification.
 
 ## Validation and remaining acceptance
 

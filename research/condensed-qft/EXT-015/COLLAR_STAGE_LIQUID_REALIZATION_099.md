@@ -60,18 +60,18 @@ Evaluation gives liquid maps $e_\lambda:\underline E_\lambda\to\mathscr E_n$. Fo
 
 ## 3. Full formal face jets, with all weights retained
 
-For a face stratum $F_I^\circ$ with vanishing boundary coordinates indexed by $I$, take every normal derivative of the normalized $v_i$ and restrict it to that stratum. The full corner-conormal exclusion makes each restriction noncharacteristic. The derivatives and restrictions are continuous in the fixed normal topologies. Encode them as
+For a face stratum $F_I^\circ$ with vanishing boundary coordinates indexed by $I$, first set $w_{i,I}=(\prod_{H\notin I}\rho_H^{-a_H})v_i$ on a neighborhood where all the nonincident factors are units, then take every incident normal derivative of $w_{i,I}$ and restrict it to that stratum. The full corner-conormal exclusion makes each restriction noncharacteristic. The derivatives and restrictions are continuous in the fixed normal topologies. Encode them as
 
 $$
 z_I^{-\mathbf a_I}
 \sum_{\alpha\in\mathbb N^I}
 \frac{1}{\alpha!}
-\left.\partial_{\rho_I}^{\alpha}v_i\right|_{F_I^\circ}
+\left.\partial_{\rho_I}^{\alpha}w_{i,I}\right|_{F_I^\circ}
 z_I^\alpha .
 \tag{99.2}
 $$
 
-Boundary factors not in $I$ are invertible smooth functions on the stratum; their actual factors are included in the coefficients. Coefficients are distributions on the open stratum, not presumed smooth or Schwartz. Use all strata, including corners, rather than only the open faces.
+Boundary factors not in $I$ are invertible near the open stratum; their full normal Taylor series, including every normal derivative, enters (99.2). Restricting such a factor to its constant value would be incorrect. Critic100 supplied the exact control: near $r=0$ with nonincident defining function $\sigma=1+r$, the actual family $1$ has presentations $(a_\sigma=0,v=1)$ and $(a_\sigma=1,v=1+r)$. Using only $\sigma(0)^{-1}$ would give records $1$ and $1+z$. The corrected rule first multiplies by the full unit $(1+r)^{-1}$ and gives record $1$ in both cases. This is the single correction pass for the new099 construction; its original cut remains preserved. Coefficients are distributions on the open stratum, not presumed smooth or Schwartz. Use all strata, including corners, rather than only the open faces.
 
 These records form a liquid target $\mathfrak J_n$. Concretely, on each stratum chart use the product of complete distribution spaces for the Taylor coefficients, then the filtered union over componentwise finite Laurent pole bounds. Changes of boundary defining functions have the form $\rho'_H=u_H\rho_H$ with $u_H$ a smooth nonvanishing unit. Taylor substitution and the chain rule implement the change of normal frame: every individual coefficient depends on finitely many coefficients, tangent distributional derivatives and pullback by a stratum diffeomorphism. These are continuous linear maps. Compatibility on overlaps is an equalizer of those maps. Thus it defines a liquid module. Laurent transitions are monic; the formal parameters are retained and are not set to zero.
 
