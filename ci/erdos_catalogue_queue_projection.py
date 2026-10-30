@@ -170,6 +170,28 @@ def source_issue_gcl_state(issue: int) -> str:
     return state
 
 
+def apply_returned_project_status(issue: int, project_id: str, item: dict,
+                                  field_id: str, option_id: str) -> None:
+    """Reconcile a lost mutation acknowledgment without replaying the write.
+
+    A failed CLI call may already have changed GitHub. Never treat a transport
+    exception as proof the remote operation did not execute. A readback failure
+    preserves uncertainty and propagates the original error.
+    """
+    if str(item.get("status", "")).upper() == "RETURNED":
+        return
+    try:
+        subprocess.run(["gh", "project", "item-edit", "--project-id", project_id,
+                        "--id", item["id"], "--field-id", field_id,
+                        "--single-select-option-id", option_id], check=True)
+    except subprocess.CalledProcessError:
+        # This is an uncertain transport/CLI failure, NOT an explicit denial.
+        # The only permissible recovery is read-only remote reconciliation.
+        actual = issue_project_item(issue, project_id)
+        if actual["id"] != item["id"] or str(actual.get("status", "")).upper() != "RETURNED":
+            raise
+
+
 def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     receipt = validate_receipt(report, issue)
     # For multi-return adjudication, the protected comparison binds *all*
@@ -217,10 +239,7 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     before["gcl_state_before"]=issue_state
     if dry_run:
         return before
-    if str(item.get("status", "")).upper() != "RETURNED":
-        subprocess.run(["gh", "project", "item-edit", "--project-id", project_id,
-                        "--id", item["id"], "--field-id", field_id,
-                        "--single-select-option-id", option_id], check=True)
+    apply_returned_project_status(issue, project_id, item, field_id, option_id)
     if issue_state!="RETURNED":
         payload=json.dumps({"issue_field_values":[
             {"field_id":GCL_STATE_FIELD,"value":"RETURNED"}]})
