@@ -24,7 +24,7 @@ class QueueProjectionTests(unittest.TestCase):
     def test_project_edit_lost_ack_but_remote_applied_no_retry(self):
         import subprocess
         initial = {"id": "ITEM", "status": "Todo"}
-        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \\
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \
              patch.object(mod, "issue_project_item", return_value={"id": "ITEM", "status": "RETURNED"}) as read:
             mod.apply_returned_project_status(self.issue, "PROJECT", initial, "FIELD", "RETURNED_OPTION")
         self.assertEqual(run.call_count, 1)
@@ -33,7 +33,7 @@ class QueueProjectionTests(unittest.TestCase):
     def test_project_edit_failure_without_remote_effect_propagates(self):
         import subprocess
         initial = {"id": "ITEM", "status": "Todo"}
-        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \\
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \
              patch.object(mod, "issue_project_item", return_value={"id": "ITEM", "status": "Todo"}):
             with self.assertRaises(subprocess.CalledProcessError):
                 mod.apply_returned_project_status(self.issue, "PROJECT", initial, "FIELD", "RETURNED_OPTION")
@@ -41,7 +41,7 @@ class QueueProjectionTests(unittest.TestCase):
 
     def test_project_edit_readback_failure_preserves_uncertainty(self):
         import subprocess
-        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \\
+        with patch.object(mod.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "gh")) as run, \
              patch.object(mod, "issue_project_item", side_effect=ConnectionError("read unavailable")):
             with self.assertRaises(ConnectionError):
                 mod.apply_returned_project_status(self.issue, "PROJECT", {"id": "ITEM", "status": "Todo"}, "FIELD", "OPTION")
