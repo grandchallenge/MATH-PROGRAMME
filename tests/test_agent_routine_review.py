@@ -10,7 +10,7 @@ from agent_routine_review import (  # noqa: E402
     APP_REVIEWER, REMOVE_EXACTLY, REQUIRED_HEAD_CONTEXTS, REPOSITORY,
     RoutineReviewError, candidate_number, eligible_image_removal,
     removed_patch_text, required_contexts_green,
-    specialist_domain_for_file_manifest,
+    specialist_domain_for_file_manifest, bounded_oai26_editorial_not_applicable,
 )
 
 
@@ -66,6 +66,29 @@ class RoutineAgentReviewTests(unittest.TestCase):
                 {"filename": ".github/workflows/ci.yml"},
                 {"filename": "ci/unregistered_action_pin_assertions.py"},
             ])
+
+    def test_oai26_single_editorial_is_not_automatic_review(self) -> None:
+        self.assertTrue(bounded_oai26_editorial_not_applicable(
+            self.pr,
+            [{"filename": "governance/oai26_compendium/editorial/001.md",
+              "status": "added"}],
+            self.head,
+        ))
+        for path in ("governance/oai26_compendium/editorial/../../x.md",
+                     "governance/oai26_compendium/editorial/001.json",
+                     "governance/oai26_compendium/editorial/001.md/evil"):
+            self.assertFalse(bounded_oai26_editorial_not_applicable(
+                self.pr, [{"filename": path, "status": "added"}], self.head,
+            ))
+        self.assertFalse(bounded_oai26_editorial_not_applicable(
+            self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
+                       "status": "added", "previous_filename": "x.md"}], self.head,
+        ))
+        self.assertFalse(bounded_oai26_editorial_not_applicable(
+            self.pr, [{"filename": "governance/oai26_compendium/editorial/001.md",
+                       "status": "added"}, {"filename": "docs/index.md",
+                       "status": "modified"}], self.head,
+        ))
 
     def test_exact_image_removal_is_routine(self) -> None:
         eligible_image_removal(self.pr, self.files, self.head)
