@@ -1,5 +1,7 @@
 # QFT-COND-005 / EXT-015 — RUN MATRIX
 
+**M2 bounded return (2026-10-30):** The parent accepts [096](FILTERED_NORMAL_ZERO_SCALE_EXTENSION_096.md) after non-author [097](AGENT_CRITICAL_REVIEW_ZERO_SCALE_097.md), with custody in [098](ZERO_SCALE_EXTENSION_ACCEPTANCE_098.md). This proves a local liquid full-profile boundary, its physical finite evaluation and the stated geometric controls. M1 is protected/read back in PR2897; the separate R3 audit is protected/read back in PR2898. M2 remains incomplete at the global liquid kernel containment096.13 and mixed-corner source pushforward096.14. M3 and dependent M5 are suspended. Protected admission/readback of this partial return is recorded separately by the existing checkpoint. No original obligation is closed.
+
 > Can an extension carry genuinely global analytic information that no compact-support stage can capture?
 
 **Current execution route (2026-10-29):** Protocol090 is protected in PR2896. Parent editorial acceptance of the corrected M1 theorem091 follows critique092 and ledger093; protected mathematical admission/readback is recorded separately by the original checkpoint. Its scope is finite-profile liquid realization and completed shared-regulator composition. M2 zero-scale extension, M3 quantum structure, original R3 and M5 integration retain separate unproved gates. Audit094/095 does not supply sufficient new input to restart an opposed R3 cycle. R0/R1 and the separate087–089 objective remain completed; original R2/R3/R4 and both parents remain open.
