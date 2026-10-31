@@ -1,0 +1,201 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+      "name": "formal-validation / formal-validation",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "5 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-10-31T23:56:14Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-10-31T23:56:28Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+    "exact_head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+    "pr_number": 2957,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26 ED-01: Family 003 exact-hash editorial admission"
+  },
+  "integration": {
+    "merge_commit_sha": "3139330aa0a2af248da710ca09d4041d9f0e71b2",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 4,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 124694914595,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "Analyze (actions)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124694914402,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "Analyze (c-cpp)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124694914675,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "Analyze (javascript-typescript)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124694914593,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "Analyze (python)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124694917512,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "Observe material closure (no admission authority)",
+          "status": "waiting"
+        },
+        {
+          "check_run_id": 124694916508,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "Protected material-profile delegated review",
+          "status": "waiting"
+        },
+        {
+          "check_run_id": 124694916609,
+          "conclusion": null,
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "admit",
+          "status": "waiting"
+        },
+        {
+          "check_run_id": 124694917444,
+          "conclusion": "skipped",
+          "head_sha": "136a8ade17c3dfd101b77a3a9b298224ffc70cef",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-10-31T23:56:29Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "f75933e72a7ed4824f57faf7ffe94eafead9c0da373ffb6fd98b5c354c225d96"
+  },
+  "report_id": "PRVSR-LIVE-PR2957-136a8ade17c3-20261031235629",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "source_or_claim_classification"
+    ]
+  }
+}
