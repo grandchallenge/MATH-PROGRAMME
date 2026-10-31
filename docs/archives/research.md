@@ -17,6 +17,7 @@ These are supporting records, not necessarily current research instructions or c
 - [VGSE Mechanical Semantics Mandate](../VGSE_MECHANICAL_SEMANTICS_MANDATE.md)
 - [OZ-001 Research Guide](../campaigns/OZ_001_RESEARCH_GUIDE.md)
 - [VGSE-001 Research Guide](../campaigns/VGSE_001_RESEARCH_GUIDE.md)
+- [P versus NP from Above — lay research manuscript](../research/pnp_above_lay_manuscript.md)
 
 ## Individual research guides
 
