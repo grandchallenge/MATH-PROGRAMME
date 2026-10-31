@@ -1,6 +1,6 @@
 # EXT-015 REACH / 110 — mixed pushdown acceptance ledger
 
-**Disposition: DRAFT / UNREVIEWED.** Source108 is a positive construction candidate for the mixed operator-domain closure gap. No review, protected admission or original-obligation closure is represented by this draft.
+**Disposition: parent accepts corrected108 after source-bound nonauthor109; protected admission/readback remains separate.** The M2 domain/comparison exit is met on the declared mixed analytic class. This is neither a quantum theorem nor original REACH completion.
 
 ## 1. Candidate and exact scope
 
@@ -10,21 +10,34 @@ Candidate108 constructs an actual mixed coefficient image with physical power/lo
 
 | Inference | Candidate status | Required hostile review |
 | --- | --- | --- |
-| Complete Sobolev/microlocal graph stages and profinite R1 lifts | Proof proposed108 sections2–3 | Check compact-order/Rellich lift and derivative-order sequences |
-| Rapid ideal saturation and noncharacteristic stability | Proof proposed108.1 | Check finite-order trace estimates, interpolation and all legal jet maps |
-| Completed mixed coefficient stages | Proof proposed108 section4 | Check joint fixed-stage estimates and extension to completed tensors |
-| Strong power/logarithmic coefficients | Proof proposed108.2 | Check tangential scalarization, density monomial and uniform remainders |
-| Nonzero full-profile boundary | Proof proposed108.3 | Check Fourier-annulus lower bound and profinite kernel descent |
-| Mixed actual operations descend to boundary | Proof proposed108.4 | Check admissible cones, negligible sums and fixed-order operator estimates |
-| Physical finite normalization recovers087 | Proof proposed108.2–108.3 | Check coefficient uniqueness and vanishing on rapid ideal |
+| Complete Sobolev/microlocal graph stages and profinite R1 lifts | Accepted in scope |109 checks compact-order/Rellich lift and derivative-order sequences |
+| Rapid ideal saturation and noncharacteristic stability | Accepted |109 checks fixed-order trace estimates, interpolation and whole-curve ideal preservation |
+| Completed mixed coefficient stages | Accepted |109 checks Baire finite-order bounds and completed projective tensor estimates |
+| Strong power/logarithmic coefficients | Accepted |109 checks tangential scalarization, actual density and uniform strong remainders |
+| Nonzero full-profile boundary | Accepted |109 checks annulus lower bound, full scalar comparison and all-profinite descent |
+| Mixed actual operations descend to boundary | Accepted under declared hypotheses |109 checks mandatory R1/forest coverage, intrinsic cone domains and summed negligible curves |
+| Physical finite normalization recovers087 | Accepted | Intrinsic coefficient uniqueness, rapid-ideal vanishing and actual record reconstruction |
+| Explicit local profile targets and retained filtration | Accepted after correction |108.12–108.13 and source/quotient image filtrations, read back by109 |
 | Quantum BV/factorization identities | Unproved | M3 after accepted domain theorem |
 
 ## 2. Custody, correction and evidence
 
-Exact108 candidate/final blobs, immutable freeze, distinct109 review and the single correction disposition are pending. The construction was prepared in a delegated same-system context with substantive analytic input from the parent. A distinct non-author review remains same-system scrutiny, not external independent certification.
+| Artifact | Exact identity |
+| --- | --- |
+| Primary108 blob |480b1fa84325a0ea8c1451e2d4fd0c9ad7a66dae |
+| Primary frozen commit |c97a201461d56724e2bf54c126350512a28b5b83 |
+| Primary frozen branch | `research/reach-mixed-r1-candidate-frozen-20261031` |
+| Corrected108 blob |587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
+| Corrected frozen commit |3c9922f86081c472a299a05fbebaf0e9732d0701 |
+| Corrected frozen branch | `research/reach-mixed-r1-corrected-frozen-20261031` |
+| Final nonauthor109 blob |5a18d43990fdc20fd67384ad74fb7ff2651ec181 |
 
-No expensive unchanged277-source fixture was replayed. No Python dependency installation, host-Python shortcut or hosted compute was used to prepare this draft. The new claims require analytic proof and hostile review; finite algebra is unchanged. Local mathematical Markdown preflight, continuity checks, current protected controls, merge/readback and explicit tracker reconciliation remain required.
+The construction was prepared in a delegated same-system context with substantive analytic input from the parent. The parent added explicit finite-order Baire bounds, record and marked-edge typing, full scalar comparison and rescaling details before the primary freeze. Distinct109 then audited the frozen source and required one correction: separate rapid-ideal notation from the historical normal-profile object, specify the compatible local profile quotient targets, and retain explicit source/quotient image filtrations. The correction and its M2 clause table are frozen.109 checks the corrected file hash against its immutable tree and accepts the actual text. The parent accepts those bounded claims and final editorial scope. This review is same-system nonauthor scrutiny, not external independent certification.
+
+No expensive unchanged277-source fixture was replayed. The new claims require analytic proof and hostile review; finite algebra is unchanged. Local gates use the existing isolated Windows CPython3.12.12 environment and explicit external GCL caches. There is no admitted root lockfile; the evidence environment remains unpinned. No dependency installation, host-Python shortcut or hosted compute is used. Mathematical Markdown preflight and live continuity pass; affected current checks, native protected merge, exact readback and explicit tracker reconciliation remain separate admission requirements.
 
 ## 3. Programme dispositions
 
-R0/R1 retain their completed reviewed scopes and separate087–089 remains completed. Original R2, R3, R4 and both parent objectives remain incomplete. If108 is accepted, its operator-domain theorem enables the original M3 quantum track; it does not supply its identities. Original R3 still requires genuinely new input beyond094/095. No original obligation is closed by admitting this bounded candidate alone.
+R0/R1 retain their completed reviewed scopes and separate087–089 remains completed. Original R2, R3, R4 and both parent objectives remain incomplete. The accepted M2 operator-domain theorem enables M3 on the specified enriched boundary; it does not supply a renormalized contraction, its identities, quantum factorization or extended Weiss descent. The physical finite map is not asserted multiplicative or a quantum chain map. Original R3 still requires genuinely new input beyond094/095. No original obligation is closed by admitting this bounded result alone.
+
+The deterministic next mathematical return is M3: define the actual renormalized contraction and differential on this domain, prove the graded commutator and square-zero identities, and establish locality, legal overlapping-source coherence, disjoint factorization and full scale/scheme transport with total quantum weight $w=n+2k$. Positive-scale record identities alone are insufficient: the boundary operators, their domain and the identities must be proved on this enriched zero-scale object. Preserve087's finite normalization unless a complete computed local scheme change forces recomputation of all affected proper counterterms.
