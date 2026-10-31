@@ -19,7 +19,7 @@ Work in real liquid modules for fixed $0<p\le1$, in ZFC, on the same one-dimensi
 
 The mandatory singular inputs remain the eleven-edge host of087, all277 proper sources, both legal disjoint spinneys and arbitrary fixed finite decorations. The original R1 sectors remain admitted. Products and restrictions below are the typed operations of105: disjoint factorization, noncharacteristic coefficient maps, and finite collision jets against actual model complements smooth at positive regulator. Overlapping source counterterms are not multiplied. Unrestricted products of two singular R1 kernels with overlapping supports are not asserted.
 
-The new mechanism separates three objects: an actual mixed analytic image $\mathcal P_n$, an enriched boundary $\mathcal P_n/(\mathcal P_n\cap\mathcal N_n)$, and its weaker physical power/logarithmic coefficient map. The finite-order rapid subobject $\mathcal N_n$ is essential. A strong distributional expansion alone would lose a spatial moment-flat normal profile and need not survive multiplication by a scale-dependent kernel.
+The new mechanism separates three objects: an actual mixed analytic image $\mathcal P_n$, an enriched boundary $\mathcal P_n/(\mathcal P_n\cap\mathcal I_n^{\mathrm{rap}})$, and its weaker physical power/logarithmic coefficient map. The finite-order rapid subobject $\mathcal I_n^{\mathrm{rap}}$ is essential. A strong distributional expansion alone would lose a spatial moment-flat normal profile and need not survive multiplication by a scale-dependent kernel.
 
 The moderate/rapid design has a precedent in generalized-function constructions, for example [Garetto, math/0407015](https://arxiv.org/abs/math/0407015). That precedent supplies terminology, not the theorem here. The sources below are complete real locally convex graph spaces; their evaluated images, intersections and quotients are formed in the fixed real liquid heart. No generalized-number topology, arbitrary product of distributions, or liquid realization of a Colombeau algebra is imported by analogy. The analytic mixed source class, its physical finite map and its full-profile comparison still require the proofs below.
 
@@ -63,9 +63,9 @@ $$
 \tag{108.3}
 $$
 
-The orders may depend on $k$; they may not increase with the requested rapidness $L$. These complete graph stages define a liquid subobject $\mathcal N_n\subset\mathcal M_n$. Intersections and images are taken in the liquid heart. On arbitrary profinite tests the statement means a lift locally on an extremally disconnected cover through finitely many such fixed stages, followed by actual-family descent. It does not use arbitrary-profinite projectivity.
+The orders may depend on $k$; they may not increase with the requested rapidness $L$. These complete graph stages define a liquid subobject $\mathcal I_n^{\mathrm{rap}}\subset\mathcal M_n$. The symbol $\mathcal I^{\mathrm{rap}}$ denotes only this rapid subobject; it is different from096's historical full normal-profile object $\mathcal N_d$. Intersections and images are taken in the liquid heart. On arbitrary profinite tests the statement means a lift locally on an extremally disconnected cover through finitely many such fixed stages, followed by actual-family descent. It does not use arbitrary-profinite projectivity.
 
-**Lemma108.1 (microlocal saturation).** Suppose a curve is moderate in a stage(108.2) and rapid in the sense(108.3). After a finite loss of Sobolev order for each derivative it is rapid in every seminorm of an admissible fixed spatial cone stage. Consequently polynomially regulator-bounded, noncharacteristic spatial operations preserve $\mathcal N$.
+**Lemma108.1 (microlocal saturation).** Suppose a curve is moderate in a stage(108.2) and rapid in the sense(108.3). After a finite loss of Sobolev order for each derivative it is rapid in every seminorm of an admissible fixed spatial cone stage. Consequently polynomially regulator-bounded, noncharacteristic spatial operations preserve $\mathcal I^{\mathrm{rap}}$.
 
 **Proof.** Fix one regulator derivative. Write $u=u_\epsilon$, with $H^{-s}$ moderate and $H^{-t}$ rapid. Increase $t$ if needed. For $\delta>0$, interpolation between these two norms gives rapidness in $H^{-s-\delta}$; if $t\le s+\delta$ this follows simply by continuous Sobolev inclusion. Otherwise the interpolation exponent of the rapid factor is positive, while the other factor loses only one fixed regulator power. Given any desired output power, increase the input rapid power before applying the estimate. Thus that output norm is rapid with one order independent of the desired power.
 
@@ -142,6 +142,8 @@ This definition includes every mandatory Gaussian/Wick family, all finite normal
 
 It does not identify $\mathcal P$ with105's entire auxiliary-noise image. That positive-scale envelope admitted arbitrary completed Schwartz-noise amplitudes with a joint noise cone, without an accepted zero-scale contract for all of them. The present analytic sources, their mandatory input maps and their operator closure specify the common class here; no arbitrary auxiliary amplitude is declared asymptotic solely from its membership in that larger envelope.
 
+The filtration is constructed before passing to a boundary. Let $\Lambda$ run over finite collections of the just-defined weighted source stages, including their fixed scalar index families, auxiliary weights, Sobolev orders, normal homogeneities, compact supports, cone bounds and finite insertion/derivative data. Put $F_\Lambda\mathcal P$ equal to the actual evaluated image of their finite direct sum. Enlarge $\Lambda$ by finite joins, including stages with relaxed bounds when needed. These are increasing image subobjects, their filtered union is $\mathcal P$, and equal evaluated families are not distinguished by which stage supplied them. Every declared operation has a finite output collection $\Lambda'$ from the source pullback, density, index and derivative estimates; multilinear operations use a finite join of the input collections. Thus it has a bounded shift in this filtration. This is not convergence in the weaker ambient positive-family topology.
+
 ## 5. Strong physical power/logarithmic coefficients
 
 **Lemma108.2 (scalarization before all-vertex pushforward).** Each source(108.7), including its completed coefficient stage, has an intrinsic bounded-below physical power/logarithmic expansion with distributional coefficients. The remainder estimates are strong, uniform on bounded physical test families and bounded coefficient sets. Each fixed derivative of the regulator has the differentiated expansion.
@@ -187,12 +189,14 @@ Define in the liquid heart
 
 $$
 \mathcal Z_n
-=\mathcal P_n/(\mathcal P_n\cap\mathcal N_n)
-\hookrightarrow\mathcal M_n/\mathcal N_n.
+=\mathcal P_n/(\mathcal P_n\cap\mathcal I_n^{\mathrm{rap}})
+\hookrightarrow\mathcal M_n/\mathcal I_n^{\mathrm{rap}}.
 \tag{108.10}
 $$
 
 It is an enriched asymptotic boundary, not the fibre of a localized module at an invertible regulator. It retains regulator powers and the distributional normal-profile germ. It is also not the quotient by all families with zero physical power/logarithmic coefficients. The latter quotient would be weaker.
+
+Give it the quotient-image filtration $F_\Lambda\mathcal Z=\mathrm{im}(F_\Lambda\mathcal P\to\mathcal Z)$. Equivalently each level is the image of its weighted actual source modulo its intersection with the rapid subobject. The normal homogeneity and scalar face-index filtrations are retained as these image filtrations, rather than discarded by an unfiltered localization. Their bounded operation shifts descend because the rapid subobject is stable, as proved below. No single homogeneity is assigned to every possible mixed distribution by choosing a presentation.
 
 **Lemma108.3 (full local profile survives).** The map from096's local profile domain to(108.10) kills exactly its regulator-flat Schwartz profiles. Consequently the full formal normal-profile boundary $\mathcal N_d$ of096 maps monically into this enriched boundary after the same compact physical localization. The R1 constant-family map is monic. Both statements hold on every profinite test.
 
@@ -209,15 +213,42 @@ At a continuous profinite source plot, zero means zero of every actual coefficie
 
 In particular a nonzero moment-flat Schwartz profile is not discarded as a zero physical Laurent series. The exact mixed control105.12 is admitted as $\chi(x)\chi_3(x)\kappa_\epsilon(x)$. Gaussian test Taylor estimates give its strong power expansion and(108.9) is $\delta_0$ with the stated cutoffs. Its negative Sobolev norms have only finite scaling decay, so its enriched boundary is nonzero. No joint regulator-wavefront conclusion, or failure of every signed collar extension, is inferred from that observation.
 
-The comparison also retains the full scalar and finite-jet boundary of105. A scalar family flat at every resolved face is rapid in a fixed finite negative Sobolev order: arbitrarily high face weights absorb each physical derivative, blowdown Jacobian and finite jet loss, because $\epsilon$ is a positive unit times the product of the face defining monomials. Conversely a nonzero scalar face record has a first nonzero power/logarithmic coefficient on some open face stratum. A nonzero corner record cannot arise from an actual coefficient function identically zero on that face's interior. Use105's canonical normal-jet grouping to isolate a maximal support stratum off its smaller intersections and choose a compact angular test, with prescribed finite normal test jets, detecting that coefficient. Near this open face, $\epsilon=b\rho_H^{a_H}$ with $a_H>0$. For each positive regulator the blowdown is a diffeomorphism. Pulling the chosen chart test back to physical variables gives a regulator-dependent physical test whose Sobolev norm of any fixed finite order grows by only a finite power of $\epsilon^{-1}$. The pairing isolates a nonzero leading power/logarithmic term, also with a finite density power. If the family were rapid in any fixed $H^{-t}$, the same pairing would be rapid after that finite test-norm loss, a contradiction. Thus the intersection of the scalar105 image with $\mathcal N$ is exactly its all-face-flat kernel, and its full scalar boundary maps monically to(108.10). This argument is for scalar105 coefficients and finite jets; it does not assume bounded coefficient extraction for arbitrary mixed jet sums.
+The comparison also retains the full scalar and finite-jet boundary of105. A scalar family flat at every resolved face is rapid in a fixed finite negative Sobolev order: arbitrarily high face weights absorb each physical derivative, blowdown Jacobian and finite jet loss, because $\epsilon$ is a positive unit times the product of the face defining monomials. Conversely a nonzero scalar face record has a first nonzero power/logarithmic coefficient on some open face stratum. A nonzero corner record cannot arise from an actual coefficient function identically zero on that face's interior. Use105's canonical normal-jet grouping to isolate a maximal support stratum off its smaller intersections and choose a compact angular test, with prescribed finite normal test jets, detecting that coefficient. Near this open face, $\epsilon=b\rho_H^{a_H}$ with $a_H>0$. For each positive regulator the blowdown is a diffeomorphism. Pulling the chosen chart test back to physical variables gives a regulator-dependent physical test whose Sobolev norm of any fixed finite order grows by only a finite power of $\epsilon^{-1}$. The pairing isolates a nonzero leading power/logarithmic term, also with a finite density power. If the family were rapid in any fixed $H^{-t}$, the same pairing would be rapid after that finite test-norm loss, a contradiction. Thus the intersection of the scalar105 image with $\mathcal I^{\mathrm{rap}}$ is exactly its all-face-flat kernel, and its full scalar boundary maps monically to(108.10). This argument is for scalar105 coefficients and finite jets; it does not assume bounded coefficient extraction for arbitrary mixed jet sums.
 
-Normal-rescaling data are explicit, rather than replaced by physical finite outputs. For every partition with normal dimension $d$, use its adapted linear chart $\Theta_{D,\epsilon}(c,u)=(c,\epsilon u)$ and the normalized profile $\epsilon^{d+h}\Theta_{D,\epsilon}^*u_\epsilon$, on fixed compact normal-coordinate tests. Dilation, its regulator derivatives and the actual density factors have finite Sobolev power bounds, so preserve moderation and the rapid ideal. They therefore give compatible actual profile maps from(108.10). Joined-partition changes and further legal restrictions agree before taking the quotient and hence afterwards. The integer $h$ and all scalar105 face-index filtrations are retained through these maps; multiplication by a regulator power shifts them before boundary passage. The comparison is constructed from weighted actual stages and their rapid quotients. It never first takes an unfiltered localization and then sets an invertible regulator to zero.
+Normal-rescaling data are explicit, rather than replaced by physical finite outputs. For a partition of normal dimension $d$, use its adapted linear chart $\Theta_{D,\epsilon}(c,u)=(c,\epsilon u)$. Extend the original compact physical kernel by zero before using the linear chart; this introduces no boundary singularity because its physical support is compactly contained in the interval configuration. The rescaled distribution can have expanding support in $u$ and is not claimed to be a global compact-support or Schwartz analytic source.
+
+Here is its precise local codomain. Choose compact cutoffs $\chi_j(c,u)$ exhausting the auxiliary chart, with $\chi_{j+1}=1$ on $K_j=\mathrm{supp}(\chi_j)$. Form the ambient graph stages of section2, with the off-cone part omitted, on each compact $K_j$ and form their rapid quotient. Set
+
+$$
+\mathcal G_D=
+\varprojlim_j
+\left(\mathcal M_{K_j}^{\mathrm{amb}}/
+\mathcal I_{K_j}^{\mathrm{rap}}\right).
+\tag{108.12}
+$$
+
+Transition to level $j$ is multiplication by $\chi_j$. Compatibility follows from $\chi_j\chi_{j+1}=\chi_j$. The objects are liquid images and cokernels as before, and this inverse limit is taken in the liquid heart. Different exhaustions give the same compatible local classes by common refinement; an arbitrary member of the limit is not asserted to be realized by one analytic source. The variables $(c,u)$ are auxiliary relative-coordinate variables of the same model, not a different physical spacetime.
+
+There is now an actual typed map
+
+$$
+\mathcal R_{D,h}:\mathcal Z_n\longrightarrow\mathcal G_D,
+\qquad
+[u]\longmapsto
+\left[\chi_j\epsilon^{d+h}
+\Theta_{D,\epsilon}^*u_\epsilon\right]_j.
+\tag{108.13}
+$$
+
+Dilation on each fixed $K_j$, its regulator derivatives and the actual density factors have finite Sobolev power bounds. They preserve moderation and the rapid ideal, and therefore prove(108.13). General heat-corner chart changes are the actual pullback equalities on their overlaps. In resolved charts they have smooth units and finitely many radial monomials in their derivatives; the relation between the regulator and those monomials bounds each requested loss by a finite inverse-regulator power on a compact patch. The same estimates give local quotient maps there. Actual overlap equalities hence persist in these local targets. Joined-partition changes and legal restrictions commute before the quotient and afterwards; no arbitrary distributional trace is being added.
+
+On homogeneous normal-profile stages, the integer $h$ gives the prescribed normalization. Physical normal differentiation shifts $h$ to $h+1$, multiplication by a normal monomial of degree $r$ shifts it to $h-r$, exterior composition adds homogeneities, and same-normal-variable multiplication has the additional dimension shift $d$, as in096. Physical normal integration has its actual dimension/density shift from096; general source projections use105's finite Jacobian and scalar index shifts. These are shifts of the specified image stages and their quotient images. Full scalar face filtrations are retained likewise. The construction never first takes an unfiltered localization and then sets an invertible regulator to zero.
 
 Every curve satisfying(108.3) has zero weak physical power/logarithmic coefficients: pairing a fixed test is bounded by its fixed Sobolev norm times an arbitrary rapid power. Uniqueness in Lemma108.2 therefore makes(108.9), and the entire physical coefficient record, descend to(108.10). The enriched boundary is stronger than that record, as the moment-flat control proves.
 
 ## 7. Closed actual operations and boundary descent
 
-**Theorem108.4 (mixed operator-domain closure).** The actual image $\mathcal P$ is closed under the typed Gaussian/Wick operations of105, with all fixed finite decorations, legal partition-jet insertions, proper physical vertex projections, legal disjoint composition and semilinear scale transport. Each operation preserves $\mathcal P\cap\mathcal N$ and hence induces an operation on the enriched boundary(108.10). Its physical coefficient comparison is intrinsic and agrees with087 on that historical subdomain. The theorem does not assert BV identities or quantum factorization identities on this boundary.
+**Theorem108.4 (mixed operator-domain closure).** The actual image $\mathcal P$ is closed under the typed Gaussian/Wick operations of105, with all fixed finite decorations, legal partition-jet insertions, proper physical vertex projections, legal disjoint composition and semilinear scale transport. Each operation preserves $\mathcal P\cap\mathcal I^{\mathrm{rap}}$ and hence induces an operation on the enriched boundary(108.10). Its physical coefficient comparison is intrinsic and agrees with087 on that historical subdomain. The theorem does not assert BV identities or quantum factorization identities on this boundary.
 
 **Proof.** At positive regulator use the exact integral normal-form operations105.3. A scalar output multiplier pulls back along $q$ to the input scalar stage. The heat map is an interior b-map by105.4, so scalar power/logarithmic pullback has the accepted finite stage and remainder bounds. A physical projection composes $q$. For a legal output partition restriction, its preimage under a vertex-forgetting map is again a partition subspace; the corresponding base change restricts the original R1 coefficient noncharacteristically. Finite normal derivatives produce a finite full Leibniz sum. A source jet factors through its smaller partition configuration and target diagonal inclusion, retaining finite normal order and every derivative of the complement. This is exactly the typed finite-jet factorization of105.6. Self-restrictions and overlapping counterterm products are excluded.
 
@@ -247,4 +278,19 @@ The following controls are structural parts of the proof:
 
 The submitted theorem is closure and comparison for this declared mixed domain. Establishing $Q_{\mathrm{ren}}$, $[d,\Delta_{\mathrm{ren}}]=0$, $\Delta_{\mathrm{ren}}^2=0$, quantum locality/coherence, scheme compatibility and the full original GB2 acceptance conditions remains M3. R3 is independent and unresolved; no degree-two inference follows from this construction. Extended Weiss descent and the typed final integration remain M5. Original R2, R3, R4 and both parents are not closed by this candidate.
 
-This is one primary attempt. The saturation lemma and the all-vertex scalarization proof are the new mechanisms beyond105. A distinct non-author109 must test their hypotheses, completed-stage estimates and actual-equality descent before acceptance. No numerical fixture is supplied: finite algebra has not changed, and the new statements are infinite-dimensional analytic and categorical assertions requiring proof. Local gates, source freeze, critical correction, protected merge/readback and explicit tracker reconciliation remain separate obligations.
+The precise M2 clause adjudication is therefore as follows, subject to final corrected-source review and protected admission.
+
+| M2 requirement from090 | Construction and exact boundary |
+| --- | --- |
+| Compact-localized normal profiles with regulator bounds |105 scalar stages and108.3 full local normal-profile injection; actual cutoff and derivative estimates |
+| Separate regular R1 sector | Constant-family liquid map into $\mathcal P$ and monic map into $\mathcal Z$, preserving the declared original plots |
+| Collision jets, sources and legal forest operations |108.4 typed operators, full complement derivatives, all277 sources and both legal spinneys; no overlapping counterterm products |
+| Full collision arrangement and corner compatibility |105 heat geometry, actual source pullback identities and local quotient targets(108.12)–(108.13) |
+| Filtration before boundary specialization | Source images $F_\Lambda\mathcal P$, quotient images $F_\Lambda\mathcal Z$ and prescribed normal homogeneity/index shifts |
+| Nonzero enriched boundary retaining normal data |108.3 and the full scalar105 boundary injection, including moment-flat profiles and arity-zero unit |
+| Separate physical finite evaluation recovering087 |108.2–108.9, vanishing on the rapid ideal and actual subtraction record108.9a; no finite-output multiplicativity or regulator-linear extraction |
+| Actual operator descent on liquid parameter families | Fixed-order saturation and finite operator estimates, completed source bounds and all-profinite actual-equality descent |
+
+These clauses meet the M2 domain/comparison exit on the declared mixed analytic class. They do not identify that class with the whole arbitrary-noise envelope105 or the whole broader collar image099. Neither a quantum structure nor a derived comparison is a clause of this M2 conclusion.
+
+This is one primary attempt. The saturation lemma and the all-vertex scalarization proof are the new mechanisms beyond105. The single correction after distinct non-author109 renames the rapid subobject, specifies the local normal-profile codomains and actual corner maps, and records source/quotient image filtrations and the M2 clause table. Its primary source remains preserved. Final exact-source readback and protected admission are separate obligations. No numerical fixture is supplied: finite algebra has not changed, and the new statements are infinite-dimensional analytic and categorical assertions requiring proof. Local gates, source freeze, protected merge/readback and explicit tracker reconciliation remain separate obligations.
