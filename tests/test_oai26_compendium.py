@@ -72,12 +72,14 @@ class DocumentaryCatalogueTest(unittest.TestCase):
     def test_admission_fail_closed(self):
         j = json.loads(c.ADMISSIONS.read_text(encoding="utf-8"))
         admitted = c.load_admissions()
-        self.assertEqual(set(admitted), {"001", "002"})
+        self.assertEqual(set(admitted), {"001", "002", "003"})
         self.assertEqual(admitted["001"]["manuscript_sha256"],
                          "fead8152dee7a70a702fb217166f27d1c7e5cea40183f5580e3a47bfd21092a8")
         self.assertEqual(admitted["002"]["manuscript_sha256"],
                          "30cb8d56240dcaf234cdfe3e05cfc21fda94f65bf53e0d4e55ddaa551161b5c2")
-        row = dict(family_id="003", manuscript_sha256="0"*64,
+        self.assertEqual(admitted["003"]["manuscript_sha256"],
+                         "6db924e9084e5a6df2ef2fca34438c87178cd348de8aefbcdf017b35f9e27b2b")
+        row = dict(family_id="004", manuscript_sha256="0"*64,
                    source_audit_url="https://github.com/grandchallenge/MATHFORGE/issues/332",
                    critic_evidence_url="https://github.com/grandchallenge/MATHFORGE/issues/333",
                    protected_admission_url="https://github.com/grandchallenge/MATH-PROGRAMME/issues/2850")
@@ -93,7 +95,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=4, editorially_admitted=2,
+                                         editorial_drafts=3, editorially_admitted=3,
                                          reference_only=366, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
@@ -103,7 +105,10 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             second_page = (out / "families/002.md").read_text(encoding="utf-8")
             self.assertIn("EDITORIALLY_ADMITTED", second_page)
             self.assertIn("NO_CERTIFICATION", second_page)
-            for n in ("003", "005", "342", "376"):
+            third_page = (out / "families/003.md").read_text(encoding="utf-8")
+            self.assertIn("EDITORIALLY_ADMITTED", third_page)
+            self.assertIn("NO_CERTIFICATION", third_page)
+            for n in ("005", "342", "376"):
                 page = (out / "families" / (n+".md")).read_text(encoding="utf-8")
                 self.assertIn("DRAFT_UNACCEPTED", page)
                 self.assertIn("NO_CERTIFICATION", page)
