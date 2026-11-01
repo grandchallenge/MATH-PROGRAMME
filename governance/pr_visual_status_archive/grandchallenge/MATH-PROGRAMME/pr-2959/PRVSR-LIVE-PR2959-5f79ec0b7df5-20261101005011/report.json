@@ -1,0 +1,176 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-01T00:48:29Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-01T00:50:06Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+    "exact_head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+    "pr_number": 2959,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26 ED-01: Family 004 source-qualified editorial article"
+  },
+  "integration": {
+    "merge_commit_sha": "f4841bbe02e6d098cb1eab8d2a227a924f2b6bc7",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 4,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 3C07:244AC0:24E389D:7A1976F:6AE68CC5 and timestamp 2026-11-01 00:50:13 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 124706602365,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124706602209,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "Analyze (c-cpp)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124706602330,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124706602356,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124706617560,
+          "conclusion": "skipped",
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124706616758,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124706617599,
+          "conclusion": "skipped",
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124706605995,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "Protected material-profile delegated review",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124706607223,
+          "conclusion": null,
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "admit",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 124706608374,
+          "conclusion": "skipped",
+          "head_sha": "5f79ec0b7df54955022c071f42dcca5cac8ab592",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-01T00:50:11Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "b01d8416f352ca1158123e7c98f9bd3bafe14cc8c33d00b4a8811a664cb90a2b"
+  },
+  "report_id": "PRVSR-LIVE-PR2959-5f79ec0b7df5-20261101005011",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "source_or_claim_classification"
+    ]
+  }
+}
