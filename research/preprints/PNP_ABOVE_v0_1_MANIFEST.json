@@ -14,16 +14,22 @@
     "repository": "grandchallenge/MATH-PROGRAMME",
     "path": "research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex",
     "git_blob_sha1": "35fc295563d2f67b3b994e2a43c3daf9dfb1401e",
-    "sha256": "c2a6bacd7c5b0325982678a242715f797bac1b51ceedc245116503be97a53f63",
-    "bytes": 23712
+    "sha256": "ec20a5a881f87df7f86c7b9026db868186f7c1947c7350d315983bf43fa61141",
+    "bytes": 23711
   },
   "rendered_pdf": {
-    "filename": "PNP_ABOVE_Verification_Compression_Preprint.pdf",
-    "sha256": "0b6805dc7109abdadc64eac7a455ebdf086e95f7d6cd9f4d2e2a0c4bd8850d61",
-    "bytes": 396627,
+    "filename": "PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf",
+    "sha256": "c642a756a686cb9ea4c3e016e8c891b5be0bad8bfd26ef1c2574aee7d977410f",
+    "bytes": 347551,
     "pages": 7,
-    "verified_local_render": true,
-    "public_release_url": null
+    "build": "pdflatex, two passes, on CHAD WSL from exact protected-main TeX; dependencies include locally retrieved CTAN enumitem.sty and titlesec.sty",
+    "public_release_url": "https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf",
+    "release_tag": "pnp-above-preprint-v0.1.0-binary-2026-11-01",
+    "last_confirmed_release_state": "DRAFT_WITH_ASSETS",
+    "publication_transition": "UNCONFIRMED_AFTER_TOOL_ERROR",
+    "public_download_verified": true,
+    "rebuild_from_protected_source": true,
+    "released_source_git_blob_sha1": "35fc295563d2f67b3b994e2a43c3daf9dfb1401e"
   },
   "source_bibliography": {
     "external_mip_star_re": "https://arxiv.org/pdf/2001.04383v4"
@@ -33,8 +39,32 @@
     "editorial_pr": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2970"
   },
   "outstanding": [
-    "Publish exact PDF as versioned binary release; bind and read back URL and checksum",
-    "Verify strict MkDocs and rendered mathematics",
-    "No arXiv upload has occurred"
-  ]
+    "No arXiv submission has occurred; no mathematical certification or P-vs-NP claim change.",
+    "Machine-encoding and classical-transfer research obligations remain in MATHSOLVE #1136."
+  ],
+  "earlier_local_pdf": {
+    "filename": "PNP_ABOVE_Verification_Compression_Preprint.pdf",
+    "sha256": "0b6805dc7109abdadc64eac7a455ebdf086e95f7d6cd9f4d2e2a0c4bd8850d61",
+    "bytes": 396627,
+    "note": "Earlier locally generated seven-page PDF supplied in the conversation; not identical to the rebuilt release candidate"
+  },
+  "distribution": {
+    "draft_release_tag": "pnp-above-preprint-v0.1.0-binary-2026-11-01",
+    "previous_immutable_metadata_only_release_tag": "pnp-above-preprint-v0.1.0-2026-11-01",
+    "assets": [
+      "PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf",
+      "PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex",
+      "SHA256SUMS.txt"
+    ],
+    "draft_asset_download_readback": "SHA256SUMS.txt verified OK for PDF and TeX; source byte-identical to source retrieved from protected main",
+    "status": "DRAFT_READBACK_VERIFIED; PUBLIC_PUBLISHING_NOT_YET_CONFIRMED"
+  },
+  "binary_distribution": {
+    "tag": "pnp-above-preprint-v0.1.0-binary-2026-11-01",
+    "release_url": "https://github.com/grandchallenge/MATH-PROGRAMME/releases/tag/pnp-above-preprint-v0.1.0-binary-2026-11-01",
+    "status": "PUBLISHED_PRERELEASE",
+    "tex_url": "https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex",
+    "checksums_url": "https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/SHA256SUMS.txt",
+    "checksum_readback": "PASS: direct unauthenticated downloads; SHA-256 match; TeX byte-identical to protected source"
+  }
 }

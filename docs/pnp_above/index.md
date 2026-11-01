@@ -33,7 +33,11 @@ Our research question is narrower: can a finite *structural invariant* of this v
 | Contributor or reviewer | [Evidence and status](evidence.md) | Exact source versions, finite tests, protected artifacts, pending mathematical obligations |
 | Preprint reader | [Preprint record](preprint.md) | Abstract, scholarly structure, PDF/source edition status and citation policy |
 
+**Preprint now available:** [Download the seven-page version 0.1 PDF](https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf) or consult the [versioned release and checksum record](preprint.md). This remains a working, uncertified research exposition, not an arXiv deposit.
+
 The original exploratory [lay manuscript](../research/pnp_above_lay_manuscript.md) remains preserved. This documentary edition incorporates work completed afterward.
+
+**November 2026 research update:** A classical-sampler randomness bound and a constructive SAT-to-perfect-classical-strategy transfer for **explicit finite game tables** have been proved and tested in a bounded WP01 candidate. This does not transfer to succinct quantum compression or P versus NP. A [source erratum and technical update](wp01_erratum.md) also records a factor-of-two discrepancy between the printed Theorem 12.1 and its displayed proof.
 
 ## The missing classical bridge
 
