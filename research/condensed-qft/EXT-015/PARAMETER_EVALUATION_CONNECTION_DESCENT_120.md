@@ -89,12 +89,13 @@ $$
 \tag{120.5}
 $$
 
-The scalar normal kernel $\epsilon^{-1}\phi(t/\epsilon)$ is in the admitted full Schwartz-profile sector. After compact physical localization it lies in one scalar105 power/logarithmic stage: in the chart $t=\epsilon u$ its normalized front coefficient is $\phi(u)$; at the adjoining old regulator face its Schwartz tails are flat. All derivatives have the computed finite weight shifts. This is the nonzero all-moments-zero profile explicitly retained in090/096/108, not an arbitrary auxiliary-noise amplitude. The scalar stage is independent of $a$.
+Choose a fixed $\zeta\in C_c^\infty(U^2)$ equal to one on a neighborhood of the common source support $K$, and set $A_\epsilon(c,t)=\zeta(c,t)\epsilon^{-1}\phi(t/\epsilon)$. This compactly localized scalar normal kernel is in one scalar105 power/logarithmic stage of the admitted full Schwartz-profile sector. In the chart $t=\epsilon u$ its normalized front coefficient is $\zeta(c,0)\phi(u)$; at the adjoining old regulator face its Schwartz tails are flat. All derivatives have the computed finite weight shifts. This is the nonzero all-moments-zero profile explicitly retained in090/096/108, not an arbitrary auxiliary-noise amplitude. The scalar stage is independent of $a$. Since $\zeta T_a=T_a$, also for every parameter derivative, the cutoff can be suppressed in all subsequent output formulas.
 
 Let $q(x,y)=x$ and define the actual family
 
 $$
 u_{a,\epsilon}
+=q_*\bigl[A_\epsilon(c,t)T_a(c,t)\bigr]
 =q_*\bigl[\epsilon^{-1}\phi(t/\epsilon)T_a(c,t)\bigr].
 \tag{120.6}
 $$
@@ -205,6 +206,6 @@ R0/R1/R2 and separate087–089 retain their completed reviewed scopes. Original 
 
 ## 8. Provenance and admission boundary
 
-This is one primary construction jointly reasoned by the parent and a delegated same-system construction context. Both identified the bandpass/mollifier mechanism; the parent supplied the one-fixed-stage flat-width strengthening, exact norm and quotient checks, and wrote this artifact after the construction role ended with a service-usage-limit error before writing files. No completed artifact or review is inferred from that failed role return. The parent is an author. Distinct nonauthor121 must inspect the frozen actual source and its hypotheses before acceptance. One correction pass remains available after that review.
+This is one primary construction jointly reasoned by the parent and a delegated same-system construction context. Both identified the bandpass/mollifier mechanism; the parent supplied the one-fixed-stage flat-width strengthening, exact norm and quotient checks, and wrote this artifact after the construction role ended with a service-usage-limit error before writing files. No completed artifact or review is inferred from that failed role return. The parent is an author. Distinct nonauthor121 inspected the frozen primary and accepted its core inferences subject to an explicit compact scalar cutoff. The single correction names that fixed cutoff and its suppression on the common support; it changes no analytic mechanism or negative diagram. Exact corrected-source readback remains required before final acceptance.
 
 No numerical fixture is supplied: fixed Fréchet estimates, exact moments, a Fourier norm lower bound and a commuting-square contradiction prove the claim. Unchanged277-source calculations are not replayed. Source preflight, frozen custody, critical review, final editorial integration, current checks, native protected admission/readback and explicit tracker reconciliation remain separate requirements. This candidate alone grants no external certification, protected bypass or programme closure.
