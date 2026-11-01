@@ -1,6 +1,6 @@
 # EXT-015 REACH / 125 — retained-family categorical acceptance ledger
 
-**Disposition: DRAFT / UNREVIEWED.** Candidate123 audits two precise differentiable conventions, constructs the retained object under the module-sheaf convention and records a scoped concrete obstruction. It does not close M5/R4 or the parent programme. Distinct124 review, one correction, protected admission and exact readback remain pending.
+**Disposition: unchanged primary123 accepted by distinct124; protected admission/readback pending.**123 constructs the retained object under the explicitly checked module-sheaf convention and its smooth cochain comparisons. It records a scoped obstruction under the older concrete convention and explicit quantum primitives for the displayed ghosts. The all-manifold liquid realization, current homotopical pro-category and extended Weiss gates remain open. Full M5/R4, original R3 and both parents are not closed.
 
 ## 1. Frozen contract and proposed result
 
@@ -8,7 +8,17 @@ CP090 binds this attempt frome3740471310f7dd34197b13b02543fb1fb415cad on `resear
 
 The candidate distinguishes the inherited concrete B.1.0.1 contract from the module-sheaf/flat-connection contract5.1.2. It proves the actual retained quotient is a differentiable vector space under the latter, while120 refutes the former for that same object. Concrete R1 sources remain compatible with both conventions; no equivalence of the target categories is presumed.
 
-| Inference | Candidate result | Required critical control |
+| Artifact | Exact identity |
+| --- | --- |
+| Primary freeze |37c11b3031e8f2abf778265103a1169c386f188d on `research/reach-retained-family-primary-frozen-20261101` |
+| Accepted unchanged123 |c5195a38414e3b45dbf75bb89b0db055ce01a5a2 |
+| Primary125 draft |a031c0d546c2349dc55854d1e5e7bbf75ba6e866 |
+| First written124 |e2943b20e3d0f6d0dab175d20d4e784cd6488953 |
+| Final source-bound124 |e68ed185d489cf75c97207e8f28e136f098078b8 |
+
+CP091 binds the frozen primary. No scientific correction was requested or made; the accepted source is exactly the preserved primary. The reviewer independently checked its actual source bytes, all twenty inputs and both primary definition contracts. The point and full joint quantum primitives are hostile controls against a derived no-go, not proofs of general kernel acyclicity.
+
+| Inference | Accepted result | Critical control and limit |
 | --- | --- | --- |
 | Point value of retained sheaf | Canonically equals accepted enriched point object | Actual cover lifts and point pullback; no blanket projectivity assertion |
 | Module-sheaf structure | Actual scalar action and all smooth pullbacks preserve the uniform mixed-jet quotient | Source-stage chain rule, sheafification and actual equality |
@@ -23,11 +33,11 @@ The candidate distinguishes the inherited concrete B.1.0.1 contract from the mod
 
 ## 2. Custody and limits
 
-Exact123 candidate/final blobs, frozen reference, distinct124 review and the one correction disposition are pending. The parent and construction role supplied substantive mathematical input. Same-system non-author scrutiny is not external independent certification.
+The parent and construction role supplied substantive mathematical input. Distinct nonauthor124 discloses shared earlier critics106/109/112/115/118/121. Same-system scrutiny is not external independent certification. The primary source transport limits remain explicit: the inherited PDF has retained byte custody; the author-hosted definition was read in primary indexed text without a raw PDF hash or uninspected Appendix C theorem. The exact denied MPIM retrieval remains on hold and was not retried or proxied. No access workaround or automatic certification is inferred. Final editorial integration of this ledger and the four canonical records is a separate step before protected admission.
 
 No source relation or full normal profile was silently discarded. The declared target retains the nonzero evaluation kernel. No claim identifies all manifold sections with an internal liquid Hom or supplies a universal real-liquid realization functor. The old concrete target gate and broader module-sheaf target are explicitly different statements.
 
-No numerical fixture, Python, Git, tracker or external mutation was used while preparing this draft. Required mathematical Markdown checks, continuity validation, final editorial integration, current protected admission, exact source readback and tracker reconciliation remain separate.
+There is no new numerical fixture: these are analytic and categorical arguments. Mathematical Markdown preflights, current policy/formal controls, exact live continuity and staged diff checks pass. Final integrated source gates, native protected admission/readback and explicit tracker reconciliation remain required. CHAD execution uses the isolated Windows CPython3.12.12 evidence environment and explicit external GCL caches. No admitted root lockfile exists, so it remains unpinned; no system installs, hosted compute allocations or expensive unchanged fixture replays occurred. Preserve the separate terminal consistent-host checkpoint.
 
 ## 3. Programme dispositions
 
