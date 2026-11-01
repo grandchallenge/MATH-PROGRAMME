@@ -127,7 +127,7 @@ All input identities below were read back on protected main `09f59d3887c30500b6c
 
 New-result custody: [R3 PR #2869](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2869) merged at `4f8d43213dca16537dbd6085bd77b0f6249083f8`; [R1 PR #2871](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2871) at `709556bbb4b042d7691bb69a5209983c2a87deba`; [R2 PR #2873](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2873) at `09f59d3887c30500b6c7336663149318f1d19ab3`. Each had source/fixture/audit readback and replay. Their critic passes are separately reasoned logical roles within the author's session/account, not external certification. The historical map critic 074 binds its original source. Updated integration critic 080 binds this revised map, the R1 acceptance ledger and the reconciled programme/matrix/triage.
 
-**Exit status:** the strong REACH exit is not met. The bounded typed map and its explicit failed identities are completed deliverables; the R2/R3 and corresponding positive R4 gates in section 4 remain open. No checkpoint or editorial integration turns those missing proofs into completion.
+**Current exit status:** the strong REACH exit is not met. R2 is fulfilled in111–113's reviewed scope. The bounded typed comparisons, unit obstruction114–116 and actual quantum R1 arrow117–119 are completed mathematical returns. Original R3 and the remaining M5/R4 integration gates remain open, including evaluation-kernel/connection descent and extended completed Weiss descent. No checkpoint or editorial integration turns those missing proofs into completion.
 
 ## 7. R1 endpoint and topology update custody
 

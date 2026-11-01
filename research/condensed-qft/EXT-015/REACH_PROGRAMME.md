@@ -134,7 +134,7 @@ $$
 - **R1:** [#2796](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796), assignment fulfilled by 069–078; completed issue closeout follows protected ledger 079 and editorial audit 080 readback. This does not close the larger programme.
 - **R2:** [#2797](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797), CLOSED/completed and portfolioDone after111–113 protected admission/readback in PR2953, on the declared enriched-record class. The finite physical quantum quotient and stronger product/remainder statements are not inferred.
 - **R3:** [#2798](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798), OPEN after the evaluated relation cover and all-degree injectivity of 067/068; degree-two surjectivity (67.14) remains the independent P0 task.
-- **R4:** existing [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), OPEN after the typed map073/074 and bounded unit obstruction114–116; actual quantum R1 comparison and full M5 remain unproved. No duplicate integration ticket.
+- **R4:** existing [EXT-015D #2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657), OPEN after the typed map073/074, bounded unit obstruction114–116 and proved quantum R1 arrow117–119. Evaluation-kernel/connection descent and the remaining full M5 obligations remain unproved. No duplicate integration ticket.
 
 Admitted mathematics, issue bookkeeping and an actual authenticated worker dispatch are distinct. This inventory creates no active lease, Project progression or certified RESULT/1. Keep the larger parent #2617 open.
 
