@@ -308,7 +308,7 @@ class SolveSpecialistTests(unittest.TestCase):
 
     def test_reviewed_material_must_bind_execution_chain(self):
         self.material["solve_execution"]["capture"]["blob_sha"] = "0" * 40
-        with self.assertRaisesRegex(ReceiptError, "differs from later attestation"):
+        with self.assertRaisesRegex(ReceiptError, "scope mismatch"):
             self.verify()
 
     def test_reviewer_approval_dismissal_rejected(self):
