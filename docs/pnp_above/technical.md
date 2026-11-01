@@ -30,15 +30,27 @@ Given a verifier $V=(S,D)$ and positive integer $\lambda$, the published compres
 
 For its substantive completeness and soundness conclusions, the *input verifier* must also be nine-level normal form and bounded by the parameter $\lambda$, and $n\ge C_0$ for a universal threshold specified existentially by the theorem.
 
-Writing $N=2^n$, the theorem transfers existence of a perfect PCC strategy and establishes
+Writing $N=2^n$, the theorem transfers existence of a perfect PCC strategy. A **source-level discrepancy** affects the stated quantitative factor. The printed **statement** of Theorem 12.1 gives
 
-$$
+$
+\mathcal E(V_n^{\mathrm{compr}},1/2)\geq
+\max\left\{
+\frac12\mathcal E(V_N,1/2),\,
+2^{N^\lambda-1}
+\right\}.
+$
+
+But Table 2 and the displayed conclusion of the **proof** on printed page 189 yield only
+
+$
 \mathcal E(V_n^{\mathrm{compr}},1/2)\geq
 \frac12\max\left\{
 \mathcal E(V_N,1/2),\,
 2^{N^\lambda-1}
 \right\}.
-$$
+$
+
+The earlier edition incorrectly labelled the proof-backed form the exact theorem statement. We use the weaker inequality conservatively, pending reconciliation of the factor of two in the second branch. [Read the dated source erratum and WP01 findings](wp01_erratum.md).
 
 Here PCC denotes the source's projective, consistent and commuting strategy condition. The bound says nothing by itself about a polynomial-time SAT decider or a polynomial-size Boolean circuit family. It should not be interpreted as a game-value algorithm for arbitrary explicitly described games.
 
@@ -102,6 +114,16 @@ $$
 The source completeness clause ensures every sufficiently large unary index is positive. Thus $L_G$ is cofinite and lies in $\mathsf P$ (a finite exception table can be hardcoded existentially). This is **not** a uniform algorithm for deciding game value from arbitrary game encodings. It does not provide an effective numerical $C_0$ or execute the full compressor.
 
 Source: [protected input note](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_AND_TRANSFER.md) and [Python emulator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_EMULATOR.py).
+
+## A proved restricted SAT transfer — and its limitation
+
+For finite explicitly tabulated two-prover games, existence of a perfect deterministic classical local strategy is equivalent to satisfiability of an explicitly constructed CNF formula. If SAT is polynomial-time decidable, self-reduction then produces the strategy in polynomial time in the **explicit table size**, with at most one SAT query per Boolean variable plus an initial feasibility query. This establishes a valid restricted classical strategy-extraction transfer.
+
+The magic-square game shows why a perfect entangled strategy does not entail satisfiability of the *classical* strategy CNF. And a succinct compressed verifier may have an exponentially large explicit game table, so this theorem does not give polynomial runtime in the compressed description length.
+
+A further sharp but restricted result says that outputting a uniform m-bit string using at most r fair random bits on the verifier side incurs total variation distance at least $1-2^{r-m}$. This applies to *local output sampling*, not the source's prover-assisted quantum introspection.
+
+The [WP01 erratum and results](wp01_erratum.md) provide proofs, test quantities and exact model restrictions.
 
 ## The missing lower-bound transfer
 
