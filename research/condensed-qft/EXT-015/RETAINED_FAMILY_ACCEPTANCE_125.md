@@ -29,7 +29,7 @@ CP091 binds the frozen primary. No scientific correction was requested or made; 
 | Concrete-contract obstruction | Failure already at finite weight one | Use actual120 section and point identification |
 | Concrete comparison | Every natural concrete-target map kills evaluation kernel; compatible connection kills nonzero derivative vector | Point-injective comparison only; no general derived no-go |
 | Quantum hostile control | Displayed derivative and whole joint ghost have explicit admissible primitives | Correct $+\partial_x^2$ sign, source factor and uniform cutoff-error estimates |
-| General evaluation-kernel cohomology | Unproved | Next actual bounded lemma, not inferred from one primitive |
+| General evaluation-kernel cohomology | Unproved | Separate unresolved question, not inferred from one primitive |
 
 ## 2. Custody and limits
 
