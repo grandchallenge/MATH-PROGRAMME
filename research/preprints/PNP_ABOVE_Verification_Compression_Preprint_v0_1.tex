@@ -1,0 +1,223 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable,enumitem}
+\usepackage{xcolor,hyperref,fancyhdr,titlesec}
+\definecolor{ink}{HTML}{202A33}
+\definecolor{muted}{HTML}{606D77}
+\definecolor{accent}{HTML}{42566A}
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent,citecolor=accent,pdftitle={P versus NP from Above: Verification Compression and the Classical Transfer Problem},pdfauthor={Grand Challenge Labs}}
+\titleformat{\section}{\Large\bfseries\color{ink}}{\thesection}{.65em}{}
+\titleformat{\subsection}{\large\bfseries\color{ink}}{\thesubsection}{.65em}{}
+\setlength{\parindent}{0pt}\setlength{\parskip}{.42em}
+\setlist[itemize]{topsep=4pt,itemsep=2pt,leftmargin=2em}
+\setlist[enumerate]{topsep=4pt,itemsep=2pt,leftmargin=2em}
+\newtheorem{proposition}{Proposition}
+\newtheorem{observation}[proposition]{Observation}
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{question}[proposition]{Research question}
+\newcommand{\Pclass}{\mathsf{P}}
+\newcommand{\NPclass}{\mathsf{NP}}
+\newcommand{\RE}{\mathsf{RE}}
+\newcommand{\MIP}{\mathsf{MIP}}
+\newcommand{\NEXP}{\mathsf{NEXP}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\val}{\operatorname{val}^{*}}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\footnotesize PNP-ABOVE \textbar\ Working Research Preprint}\fancyhead[R]{\footnotesize GCL \textbar\ 2026}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{.3pt}
+\begin{document}
+\begin{center}
+{\small\bfseries GRAND CHALLENGE LABS \quad / \quad MATHEMATICS PROGRAMME}\par\vspace{.7em}
+{\LARGE\bfseries P versus NP from Above}\par\vspace{.3em}
+{\Large Verification Compression and the Classical Transfer Problem}\par\vspace{.65em}
+{\normalsize Grand Challenge Labs -- PNP-ABOVE Research Line}\par
+{\small 1 November 2026 \quad\textbullet\quad Version 0.1 (documentary preprint)}\par\vspace{.65em}
+\fcolorbox{black!35}{black!3}{\parbox{.88\linewidth}{\centering\small
+\textbf{Working research exposition.} Not submitted to arXiv; not peer reviewed; not a mathematical certification; no resolution of $\Pclass$ versus $\NPclass$ or new classical lower bound is asserted.}}
+\end{center}
+\vspace{1.0em}
+\begin{abstract}
+We examine a possible ``from above'' approach to the $\Pclass$ versus $\NPclass$ problem motivated by the theorem $\MIP^*=\RE$ of Ji, Natarajan, Vidick, Wright and Yuen. The motivating thought is that recursive compression of quantum multiprover verification might expose a structural invariant that eventually admits a classical complexity lower-bound interpretation. The principal methodological danger is an invalid identification of verifier complexity, entanglement resources, strategy synthesis, and deterministic decision time. We organize the research problem around an explicit \emph{classical transfer obligation}. We review the published compression theorem, document a magic-square calibration, and present a finite nine-level input-verifier construction and a conditional, theorem-derived cofinite-language observation from GCL work package PNP-ABOVE-WP00. These results demonstrate why large entanglement requirements, even those arising from compressed verifiers, do not alone imply hardness of the associated decision predicate. We specify prerequisites for subsequent source-faithful execution and for any meaningful connection to ordinary uniform Boolean computation. This document is a source-grounded programme report, not a claimed separation theorem.
+\end{abstract}
+\vspace{.3em}
+\noindent\textbf{Keywords:} computational complexity; $\Pclass$ versus $\NPclass$; entangled provers; $\MIP^*=\RE$; verification compression; classical transfer; Schmidt rank; formal evidence.
+
+\section{The question and the change of vantage point}
+A decision problem belongs to $\Pclass$ if a deterministic Turing machine decides every instance in time polynomial in the length of its encoding. It belongs to $\NPclass$ if positive instances possess polynomially bounded classical certificates checkable deterministically in polynomial time. It remains unknown whether $\Pclass=\NPclass$. The SAT problem captures the issue through polynomial-time many-one completeness: a uniform polynomial-time SAT decision algorithm would imply $\Pclass=\NPclass$ under the standard encoding conventions.
+
+A useful lay analogy contrasts checking a completed puzzle with finding its solution. Yet the difference between a fast checker and a fast solver is not itself a theorem of separation. The present line of research therefore does not begin by announcing a proof of $\Pclass\ne\NPclass$. Instead it asks whether mathematical mechanisms developed for much more powerful verification models can yield a \emph{transferable} obstruction in finite classical computation.
+
+The established landscape includes
+\begin{equation}\label{eq:landscape}
+\Pclass\subseteq\NPclass\subseteq\NEXP=\MIP\subsetneq\MIP^*=\RE.
+\end{equation}
+The equality $\MIP^*=\RE$ is due to Ji--Natarajan--Vidick--Wright--Yuen \cite{jnvwy}. The class $\MIP^*$ permits a polynomial-time classical verifier to interact with computationally unbounded provers sharing quantum entanglement. Equation \eqref{eq:landscape} does not state that ordinary computers can efficiently decide the Halting Problem. The power of the interaction model, including its provers' resources, is essential. In particular, it is improper to infer $\NPclass$ lower bounds merely because $\MIP^*$ is large.
+
+\section{What resources must be distinguished?}
+The literature and the present programme use several different complexity measures:
+\begin{itemize}
+\item \textbf{Verifier cost:} time to sample a challenge and decide whether reported answers win.
+\item \textbf{Strategy cost:} the shared state, measurements, advice, or communication needed for successful responses.
+\item \textbf{Decision cost:} time to determine the truth of the proposition encoded by an instance.
+\item \textbf{Representation cost:} length of the verifier description or of an explicitly expanded game table.
+\item \textbf{Construction cost:} resources needed to synthesize or output a particular strategy or witness.
+\end{itemize}
+No pair of these measures can be identified without a theorem. In particular, even an efficient decision algorithm need not output a witnessing strategy; a problem can be easy to decide while its solutions are hard to construct in a specified representation.
+
+\subsection{The entanglement resource $\E$}
+Following Definition 5.12 in \cite{jnvwy}, write $\E(G,\nu)$ for the minimum Schmidt rank of a finite-dimensional tensor-product strategy winning game $G$ with probability at least $\nu$, and $\infty$ if no such strategy exists. A lower bound on $\E$ is a quantum strategy-resource statement, not a lower bound on Boolean circuit size or Turing time.
+
+\begin{observation}[The transfer question is additional data]
+A theorem establishing $\E(G_n,\nu)>n^k$ for all fixed $k$ is not, by itself, a theorem that any associated language is outside $\Pclass$. To derive the latter from the former one needs a uniform, quantitatively controlled implication from an assumed polynomial-time decision algorithm to a strategy of insufficient Schmidt rank. Such an implication is not part of the definition of $\E$.
+\end{observation}
+
+\section{Compression in $\MIP^*=\RE$}
+Theorem 12.1 of \cite{jnvwy}, in arXiv version 4 dated 16 October 2026, supplies a \emph{gap-preserving compression} procedure. It begins with a specially structured pair of Turing machines $V=(S,D)$ representing a verifier and a positive integer parameter $\lambda$. The procedure returns a nine-level normal-form verifier $V^{\mathrm{compr}}$. Its sampler and decider run in time polynomial in the compressed index $n$ and in $\lambda$.
+
+The quantitative conclusions require more than simply giving the constructor an arbitrary game: the input verifier must be nine-level normal form and $\lambda$-bounded, and $n$ must exceed an existential universal threshold $C_0$. With $N=2^n$, the theorem preserves existence of a value-one PCC strategy and asserts an entanglement-resource bound:
+\begin{equation}\label{eq:compression}
+\E(V_n^{\mathrm{compr}},1/2)\ \ge\ \frac12\max\!\left\{\E(V_N,1/2),\ 2^{N^\lambda-1}\right\}.
+\end{equation}
+This is an attributed consequence of a published theorem, not an independently reproved claim of the present work. The qualification ``PCC'' refers to the source's projective, consistent and commuting strategy structure; completeness is not a universal statement about arbitrary classical games.
+
+\subsection{Three stages of the transformation}
+The proof combines the following sequence; see \cite[Theorems 8.3, 10.30, 11.4; Theorem 12.1, Fig. 15, Table 2]{jnvwy}:
+\begin{center}
+\begin{tabular}{@{}p{.28\linewidth}cp{.26\linewidth}p{.27\linewidth}@{}}\toprule
+Stage & Levels & Sampler & Decider \\ \midrule
+Introspection & 5 & $\mathrm{poly}(n,\lambda)$ & $\mathrm{poly}(2^{n\lambda})$\\
+Answer reduction & 7 & $\mathrm{poly}(n,\lambda)$ & $\mathrm{poly}(n,\lambda)$\\
+Anchored repetition & 9 & $\mathrm{poly}(n,\lambda)$ & $\mathrm{poly}(n,\lambda)$\\ \bottomrule
+\end{tabular}
+\end{center}
+Introspection makes an enormously large verification task accessible through the smaller index. Answer reduction converts the costly decider into one with polynomial resource bounds. Repetition achieves the required soundness threshold. The phrase ``compresses verification'' must not be read as ``computes the answer efficiently.''
+
+\subsection{Symbolic parameter accounting}
+The source-level WP00 ledger records universal parameters, error functions, and constants, including $\epsilon_1,\epsilon_2,\sigma,\mu,\tau,C_0$ \cite{gclledger}. For illustration, one error choice is
+\begin{equation}
+\epsilon_1=\left(8a_1(\lambda n)^{a_1}\right)^{-1/b_1},
+\qquad a_1>0,\quad 0<b_1<1.
+\end{equation}
+It makes the leading term of an introspection error bound equal to $1/8$. Another choice sets
+\begin{equation}
+\epsilon_2=\left(\frac{\epsilon_1}{3\sigma^{a_2}(\lambda n)^{a_2\mu}}\right)^{1/b_2},
+\qquad a_2>0,\quad 0<b_2<1,
+\end{equation}
+so the corresponding leading answer-reduction term equals $\epsilon_1/3$. These substitutions validate symbolic bookkeeping only: they neither reproduce the full transformation theorems nor supply numerical values of all universal constants. The absence of certified concrete constants also prevents declaring that an arbitrary small $n$ yields a fully instantiated compressed game.
+
+\section{Finite calibration I: the magic-square game}
+In the Mermin--Peres magic-square game, Alice receives one of three rows and Bob one of three columns. They must supply binary row and column entries agreeing at their intersection. Each row has even parity; columns one and two have even parity, while the third has odd parity. Uniformly selected row and column yield nine equally likely question pairs.
+
+\begin{proposition}[Classical strategy value]
+The maximum winning probability for classical noncommunicating provers, even allowing shared randomness, is exactly $8/9$.
+\end{proposition}
+\begin{proof}
+A deterministic strategy winning at all nine pairs would define one $3\times3$ binary array with three even row sums and column sums of parity $0,0,1$. XORing the row equations gives $0$; XORing the column equations gives $1$, a contradiction. Thus every deterministic strategy loses at least one of the nine pairs. Conversely, take an array satisfying the rows and the first two columns, and change one reported entry in Bob's last column to give it odd parity. Alice's rows and Bob's columns then disagree at exactly one pair. Shared randomness is a convex combination of deterministic strategies and cannot improve the optimum.
+\end{proof}
+
+A perfect entangled strategy exists using two-qubit Pauli observable arrays and maximally entangled states \cite{jnvwy}; the entangled value is one. Yet the underlying global parity satisfiability system is linear over $\F_2$, and Gaussian elimination decides its satisfiability in polynomial time. The strict game-value gap therefore does not produce a classical decision-time lower bound. It is an exact calibration of the resource distinction, not a new complexity separation \cite{gclmagic}.
+
+\section{Finite calibration II: a nine-level input verifier}
+WP00 also records a finite, executable semantic emulator for an input verifier matching the nine-level conditionally linear form of \cite{jnvwy}. Let $W=\F_2^9$ and set both players' conditionally linear functions to the identity $L(z)=z$. At level $j$, the factor is the one-dimensional span of basis vector $e_j$ and the marginal retains coordinates $1$ through $j$. The sampler generates the uniform diagonal distribution
+\begin{equation}
+\Pr[(x,y)=(z,z)]=2^{-9}\quad\text{for every }z\in\F_2^9.
+\end{equation}
+There are exactly $2^9=512$ question pairs in its support. Define a trivial decider accepting valid questions precisely when the two answers are empty strings. A deterministic strategy that always returns the empty string wins perfectly, and may be viewed as a rank-one PCC strategy. The Python emulator checks all 512 vectors, all nine marginal transitions and representative malformed inputs \cite{gclwitness}.
+
+The emulator is \emph{not} a byte-exact Turing-machine implementation in the paper's specific encoding and does \emph{not} execute the paper's compressor. Because the machines have fixed finite descriptions and bounded behavior, there exists some sufficiently large fixed $\lambda$ for any faithful encoding; no numerical $\lambda$ is asserted for the paper's actual format.
+
+\begin{proposition}[Conditional cofinite-language observation]
+Suppose the encoded nine-level verifier just described satisfies Theorem 12.1's input hypotheses for a fixed $\lambda$, and define $G_n=(\operatorname{Compress}(V,\lambda))_n$. Let
+\begin{equation}\label{eq:unary}
+L_G=\{1^n:\val(G_n)=1\}.
+\end{equation}
+Then $L_G$ is cofinite and therefore $L_G\in\Pclass$, while for all $n\ge C_0$ the lower bound
+\begin{equation}\label{eq:double}
+\E(G_n,1/2)\ge 2^{2^{\lambda n}-2}
+\end{equation}
+holds as a consequence of the published compression theorem.
+\end{proposition}
+\begin{proof}
+The input verifier has a perfect PCC strategy for every index, including $N=2^n$. The theorem's completeness clause therefore yields a perfect PCC strategy for the compressed game for every $n\ge C_0$. Hence all but finitely many positive unary indices belong to $L_G$. A finite exceptional membership table can be hard-coded into a deterministic algorithm, so $L_G$ is in $\Pclass$ in the standard, nonconstructive existence sense. The theorem's entanglement bound gives $\E(G_n,1/2)\ge\frac12 2^{(2^n)^\lambda-1}=2^{2^{\lambda n}-2}$. The finite exceptions and $C_0$ are not computed by this argument.
+\end{proof}
+
+This is a formal illustration that \emph{extreme strategy-resource demands can coexist with a simple index decision language}. It is not a counterexample to every possible SAT-to-strategy reduction, nor is it a uniform algorithm for deciding entangled value on arbitrary input-game descriptions. The definitions of the language and the promised input family are essential.
+
+\section{The classical transfer obligation}
+The research programme seeks a cost invariant $\mathcal C_{\mathcal A}(G_n)$ defined for a fully specified family of games and a fully specified classical strategy or circuit model $\mathcal A$. A useful classical lower bound alone is insufficient. Its connection to SAT would require an independently proved uniform implication of the form
+\begin{equation}\label{eq:transfer}
+\text{SAT}\in\Pclass \quad\Longrightarrow\quad
+\mathcal C_{\mathcal A}(G_n)\le n^{O(1)}.
+\end{equation}
+Together with a conflicting lower bound for precisely the same $\mathcal C_{\mathcal A}$, this would imply $\Pclass\ne\NPclass$. But \eqref{eq:transfer} is \emph{not established}. The chosen resource must be one a polynomial-time SAT decider actually supplies. In particular, one cannot replace $\mathcal C_{\mathcal A}$ with Schmidt rank without proving a strategy-extraction mechanism.
+
+A valid transfer must record all of the following: uniform construction of the relevant game instances; length of explicit and succinct representations; promise completeness and soundness thresholds; output strategy representation; running-time and circuit-size accounting; input encoding and malformed-instance behavior; and the direction of every reduction. Claiming a lower bound for NP versus P/poly would demand stronger conclusions than simply proving $\Pclass\ne\NPclass$.
+
+\begin{question}[Classical transfer target]
+Can one identify a finite compression-derived game family and a natural \emph{classical} invariant whose lower bound is nontrivial, not already known in a restricted model, and for which a uniform SAT-to-realization implication can be stated without smuggling in unbounded entangled prover resources?
+\end{question}
+
+\section{Barriers, falsification, and scientific discipline}
+Classical lower-bound research faces relativization \cite{bgs}, natural-proofs \cite{rr} and algebrization \cite{aw} barriers. These theorems do not rule out every conceivable proof. Nevertheless, simply invoking self-reference, operator algebras or entanglement does not show that a proposed classical argument avoids them. Each intended transfer must be tested against the precise hypotheses of the corresponding barrier.
+
+We distinguish four outcomes, each worth recording with an evidence grade:
+\begin{enumerate}
+\item A \textbf{finite counterexample} refutes a proposed informal transfer and eliminates an unsound research route.
+\item A \textbf{restricted-model theorem} supplies a quantitative bound for exactly named strategies or circuits; no unrestricted conclusion follows automatically.
+\item A \textbf{uniform bridge theorem} proves a bounded reduction between the selected classical algorithm and strategy cost, with honest parameter accounting.
+\item An \textbf{unrestricted lower bound}, if ever established, would require substantially stronger independent mathematical scrutiny and certification.
+\end{enumerate}
+
+The programme must not confuse a successful test, a source-derived proposition, protected editorial admission, independent specialist verification and mathematical certification. These are separate states. Published source claims retain their authors' provenance.
+
+\section{Reproducibility, governance, and residual obligations}
+The source of Theorem 12.1 is pinned to arXiv:2001.04383v4 (16 October 2026), especially Definition 5.12, Theorems 8.3/10.30/11.4, and Theorem 12.1 on printed page 184; \cite{jnvwy}. Its source-level error and constant ledger is preserved in MATHSOLVE \cite{gclledger}. The finite sampler and decider emulator is linked from \cite{gclwitness}. A source-version URL is not the same as an independently retained byte checksum.
+
+The unclosed proof and engineering obligations are: a faithful machine encoding and exact description/step bounds; numerical constants sufficient to instantiate $n\ge C_0$; an implementation and independent test of the full compression transformation; a new classical resource invariant not merely relabelling quantum Schmidt rank; and a uniform SAT-to-realization theorem if the line is ever to address $\Pclass$ versus $\NPclass$ directly. The parent PNP-001 programme's formal-statement/machine encoding concordance remains unresolved and unchanged \cite{gclparent}.
+
+\section{Conclusion}
+The study yields a precise negative methodological lesson and a bounded positive research agenda. Quantum verification compression can create enormous entanglement-resource requirements even when a naturally associated indexed decision language is simple. That distinction is a constraint on, not a refutation of, the idea of approaching $\Pclass$ versus $\NPclass$ from a richer verification setting. The remaining route is to extract a genuinely classical, finite, uniform lower-bound mechanism and independently prove the transfer from standard decision computation. Until then, the programme is exploratory and $\Pclass$ versus $\NPclass$ remains unresolved.
+
+\appendix
+\section{Source-to-claim matrix}
+\small
+\begin{longtable}{@{}p{.24\linewidth}p{.44\linewidth}p{.26\linewidth}@{}}
+\toprule Claim & Evidential basis & Status \\ \midrule\endhead
+$\MIP^*=\RE$ & Ji et al., arXiv:2001.04383v4 & Established external theorem \\
+Compression resource bound & Ji et al., Thm. 12.1 & Attributed external theorem \\
+Magic-square $8/9$ and $1$ values & Parity proof; Pauli strategy in primary source & Standard finite example \\
+Nine-level identity sampler & MATHSOLVE WP00 finite emulator and note & Admitted research construction; no compression execution \\
+Cofinite unary-language implication & Elementary consequence of published theorem under identified hypotheses & Conditional mathematical exposition; not certification \\
+SAT-to-strategy transfer & No construction or proof & Open \\
+$\Pclass\ne\NPclass$ & No proof & Open \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Glossary for interdisciplinary readers}
+\begin{description}[leftmargin=2.3cm,labelwidth=2.15cm,style=nextline]
+\item[$\Pclass$, $\NPclass$] Classes defined through deterministic decision time and efficiently checkable positive certificates.
+\item[Interactive proof] An efficient verifier tests answers from more powerful provers according to a protocol.
+\item[Entangled game] A nonlocal game whose provers may share quantum entanglement but cannot communicate after receiving questions.
+\item[Schmidt rank] A resource measure for a bipartite quantum state across the players' partition.
+\item[Normal form] A structured verifier representation required by the cited compression construction.
+\item[Uniform reduction] A single polynomial-time procedure producing instances or strategies across all input lengths.
+\item[Cofinite] A language containing all but finitely many strings within a specified universe (here unary positive inputs).
+\item[Claim firewall] A rule keeping what was measured, proved, imported or hypothesized explicitly distinct.
+\end{description}
+
+\begin{thebibliography}{99}\small
+\bibitem{jnvwy} Z. Ji, A. Natarajan, T. Vidick, J. Wright and H. Yuen, \emph{MIP*=RE}, arXiv:2001.04383v4 (16 October 2026). \url{https://arxiv.org/abs/2001.04383}
+\bibitem{lowdegree} Z. Ji, A. Natarajan, T. Vidick, J. Wright and H. Yuen, \emph{Quantum soundness of the classical low individual degree test}, arXiv:2009.12982 (2020). \url{https://arxiv.org/abs/2009.12982}
+\bibitem{bgs} T. Baker, J. Gill and R. Solovay, \emph{Relativizations of the P=?NP question}, SIAM J. Comput. 4 (1975), 431--442.
+\bibitem{rr} A. Razborov and S. Rudich, \emph{Natural proofs}, J. Comput. Syst. Sci. 55 (1997), 24--35.
+\bibitem{aw} S. Aaronson and A. Wigderson, \emph{Algebrization: A new barrier in complexity theory}, ACM Trans. Comput. Theory 1 (2009), Article 2.
+\bibitem{gclparent} Grand Challenge Labs, \emph{PNP-001: P versus NP campaign tracker}. \url{https://github.com/grandchallenge/MATH-PROGRAMME/issues/162}
+\bibitem{gclmagic} Grand Challenge Labs, \emph{WP00 magic-square calibration}, MATHSOLVE PR 1137. \url{https://github.com/grandchallenge/MATHSOLVE/pull/1137}
+\bibitem{gclledger} Grand Challenge Labs, \emph{WP00 compression parameter ledger}, MATHSOLVE PR 1146. \url{https://github.com/grandchallenge/MATHSOLVE/pull/1146}
+\bibitem{gclwitness} Grand Challenge Labs, \emph{WP00 nine-level input and transfer}, MATHSOLVE PR 1147 and protected files. \url{https://github.com/grandchallenge/MATHSOLVE/pull/1147}
+\end{thebibliography}
+\end{document}
