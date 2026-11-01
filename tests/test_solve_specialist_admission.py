@@ -290,6 +290,36 @@ class SolveSpecialistTests(unittest.TestCase):
         with self.assertRaisesRegex(ReceiptError, "not approved"):
             self.verify()
 
+    def test_reviewed_material_cannot_be_provenance_attestation(self):
+        self.proof["review_anchor"]["reviewed_material"]["path"] = (
+            "contributions/solve-test/review.json")
+        with self.assertRaisesRegex(ReceiptError, "circular approval anchor"):
+            self.verify()
+
+    def test_reviewed_material_blob_lock_required(self):
+        self.proof["review_anchor"]["reviewed_material"]["blob_sha"] = "0" * 40
+        with self.assertRaisesRegex(ReceiptError, "blob drift"):
+            self.verify()
+
+    def test_reviewed_material_must_bind_exact_subject(self):
+        self.material["subject_sha"] = "0" * 40
+        with self.assertRaisesRegex(ReceiptError, "differs from later attestation"):
+            self.verify()
+
+    def test_reviewed_material_must_bind_execution_chain(self):
+        self.material["solve_execution"]["capture"]["blob_sha"] = "0" * 40
+        with self.assertRaisesRegex(ReceiptError, "differs from later attestation"):
+            self.verify()
+
+    def test_reviewer_approval_dismissal_rejected(self):
+        self.reviews.append({
+            "id": 730, "state": "DISMISSED", "commit_id": self.source_head,
+            "submitted_at": "2026-10-09T10:12:00Z",
+            "user": {"login": "solve-specialist-agent"},
+        })
+        with self.assertRaisesRegex(ReceiptError, "not approved"):
+            self.verify()
+
     def test_independent_proof_required_if_math_domain(self):
         self.receipt["authority_domain"] = "MATHEMATICAL"
         with self.assertRaises(ReceiptError):
