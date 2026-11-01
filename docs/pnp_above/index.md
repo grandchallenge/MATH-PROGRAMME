@@ -42,7 +42,7 @@ Let $G_n$ be a uniform family of games and let $\mathcal C_{\mathcal A}(G_n)$ be
 Even a genuine classical cost lower bound will not settle P versus NP unless an independently proved implication supplies a conflicting upper bound from a hypothetical fast SAT algorithm:
 
 $$
-\operatorname{SAT}\in\mathsf P
+\mathrm{SAT}\in\mathsf P
 \quad\Longrightarrow\quad
 \mathcal C_{\mathcal A}(G_n)\le n^{O(1)}.
 $$
