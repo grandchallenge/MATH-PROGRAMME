@@ -27,6 +27,7 @@ class SolveSpecialistTests(unittest.TestCase):
         self.head = "a" * 40
         self.base = "b" * 40
         self.proof_blob = "c" * 40
+        self.material_blob = "8" * 40
         self.receipt_blob = "d" * 40
         self.source_head = "e" * 40
         self.capture_blob = "1" * 40
@@ -85,8 +86,13 @@ class SolveSpecialistTests(unittest.TestCase):
             "review_anchor": {
                 "source_pr_number": 902, "source_pr_head_sha": self.source_head,
                 "review_id": 729, "reviewer_login": "solve-specialist-agent",
+                "reviewed_material": {"path": "contributions/solve-test/assessment.json",
+                                      "blob_sha": self.material_blob},
             },
         }
+        self.material = dict(self.proof)
+        self.material["record_type"] = "GCL_DOMAIN_REVIEWABLE_ASSESSMENT_V1"
+        self.material.pop("review_anchor")
         self.capture = {
             "record_type": "GCL_SOLVE_CAPTURE_RECEIPT_V1",
             "dispatch_id": self.dispatch, "result_ref": self.result_ref,
@@ -117,8 +123,8 @@ class SolveSpecialistTests(unittest.TestCase):
             "user": {"login": "solve-specialist-agent"},
         }]
         self.source_files = [{
-            "filename": "contributions/solve-test/review.json",
-            "status": "added", "sha": self.proof_blob,
+            "filename": "contributions/solve-test/assessment.json",
+            "status": "added", "sha": self.material_blob,
         }]
         self.called = []
 
@@ -141,6 +147,8 @@ class SolveSpecialistTests(unittest.TestCase):
                 value, sha = self.receipt, self.receipt_blob
             elif suffix.startswith("contents/contributions/solve-test/review.json"):
                 value, sha = self.proof, self.proof_blob
+            elif suffix.startswith("contents/contributions/solve-test/assessment.json"):
+                value, sha = self.material, self.material_blob
             elif suffix.startswith("contents/contributions/solve-test/capture.json"):
                 value, sha = self.capture, self.capture_blob
             elif suffix.startswith("contents/contributions/solve-test/replay.json"):
@@ -279,6 +287,36 @@ class SolveSpecialistTests(unittest.TestCase):
 
     def test_non_author_review_and_exact_source_head_required(self):
         self.reviews[0]["state"] = "COMMENTED"
+        with self.assertRaisesRegex(ReceiptError, "not approved"):
+            self.verify()
+
+    def test_reviewed_material_cannot_be_provenance_attestation(self):
+        self.proof["review_anchor"]["reviewed_material"]["path"] = (
+            "contributions/solve-test/review.json")
+        with self.assertRaisesRegex(ReceiptError, "circular approval anchor"):
+            self.verify()
+
+    def test_reviewed_material_blob_lock_required(self):
+        self.proof["review_anchor"]["reviewed_material"]["blob_sha"] = "0" * 40
+        with self.assertRaisesRegex(ReceiptError, "blob drift"):
+            self.verify()
+
+    def test_reviewed_material_must_bind_exact_subject(self):
+        self.material["subject_sha"] = "0" * 40
+        with self.assertRaisesRegex(ReceiptError, "differs from later attestation"):
+            self.verify()
+
+    def test_reviewed_material_must_bind_execution_chain(self):
+        self.material["solve_execution"]["capture"]["blob_sha"] = "0" * 40
+        with self.assertRaisesRegex(ReceiptError, "scope mismatch"):
+            self.verify()
+
+    def test_reviewer_approval_dismissal_rejected(self):
+        self.reviews.append({
+            "id": 730, "state": "DISMISSED", "commit_id": self.source_head,
+            "submitted_at": "2026-10-09T10:12:00Z",
+            "user": {"login": "solve-specialist-agent"},
+        })
         with self.assertRaisesRegex(ReceiptError, "not approved"):
             self.verify()
 

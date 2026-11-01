@@ -87,7 +87,7 @@ def _protected_json(
 def _verify_review_origin(
     api_get: Callable[[str], Any], repository: str,
     proof_path: str, proof_blob: str, proof_record: dict,
-    reviewer: str, candidate_author: str,
+    reviewer: str, candidate_author: str, protected_head: str,
 ) -> dict[str, Any]:
     """Verify the stated reviewer actually approved the exact domain evidence.
 
@@ -119,12 +119,45 @@ def _verify_review_origin(
     changed = api_get(prefix + "/files?per_page=100")
     if not isinstance(changed, list) or len(changed) != pr["changed_files"]:
         raise ReceiptError("source PR exact file list missing or truncated")
-    if not any(
-        isinstance(item, dict) and item.get("filename") == proof_path
-        and item.get("status") in ("added", "modified")
-        and item.get("sha") == proof_blob for item in changed
-    ):
-        raise ReceiptError("reviewed domain PR does not contain evidence blob")
+    if proof_record.get("authority_domain") == "SOLUTION_INTEGRITY":
+        # Two-stage source provenance: the immutable reviewed assessment is in
+        # source PR A. The later protected review attestation contains its real
+        # GitHub approval ID, which cannot exist while PR A is being authored.
+        reviewed = anchor.get("reviewed_material")
+        if not isinstance(reviewed, dict) or set(reviewed) != {"path", "blob_sha"}:
+            raise ReceiptError("missing independently reviewed material lock")
+        reviewed_path = reviewed.get("path")
+        reviewed_blob = _sha(reviewed.get("blob_sha"))
+        if not isinstance(reviewed_path, str) or not reviewed_path.startswith("contributions/"):
+            raise ReceiptError("reviewed material outside domain contribution scope")
+        if reviewed_path == proof_path:
+            raise ReceiptError("circular approval anchor: reviewed object is provenance attestation")
+        material, actual = _protected_json(api_get, repository, reviewed_path, protected_head)
+        if actual != reviewed_blob:
+            raise ReceiptError("reviewed material protected blob drift")
+        for field in ("authority_domain", "subject_repository", "subject_sha",
+                      "material_fingerprint", "review_scope", "solve_execution"):
+            if material.get(field) != proof_record.get(field):
+                raise ReceiptError("reviewed material differs from later attestation")
+        if material.get("record_type") != "GCL_DOMAIN_REVIEWABLE_ASSESSMENT_V1":
+            raise ReceiptError("reviewed assessment has invalid record type")
+        if material.get("reviewer_identity") not in (None, reviewer):
+            raise ReceiptError("reviewed assessment reviewer mismatch")
+        if material.get("disposition") != "ROLE_SCOPED_REVIEW_ACCEPTED":
+            raise ReceiptError("reviewed assessment not positively scoped")
+        if not any(
+            isinstance(item, dict) and item.get("filename") == reviewed_path
+            and item.get("status") in ("added", "modified")
+            and item.get("sha") == reviewed_blob for item in changed
+        ):
+            raise ReceiptError("source PR does not contain exact reviewed assessment")
+    else:
+        if not any(
+            isinstance(item, dict) and item.get("filename") == proof_path
+            and item.get("status") in ("added", "modified")
+            and item.get("sha") == proof_blob for item in changed
+        ):
+            raise ReceiptError("reviewed domain PR does not contain evidence blob")
     reviews = api_get(prefix + "/reviews?per_page=100")
     if not isinstance(reviews, list) or len(reviews) >= 100:
         raise ReceiptError("domain PR review list missing or truncated")
@@ -322,7 +355,7 @@ def protected_specialist_receipt(
             api_get, owner, protected_sha, record, proof_record, p,
         )
     origin = _verify_review_origin(
-        api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author,
+        api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author, protected_sha,
     )
     # Reconfirm current protected branch has not moved during retrieval.
     now = api_get(f"/repos/{owner}/git/ref/heads/main")
