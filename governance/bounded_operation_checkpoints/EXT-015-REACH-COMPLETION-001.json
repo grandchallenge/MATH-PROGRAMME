@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP077",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP078",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,15 +15,23 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Accepted quantum R1 comparison117; final editorial integration and protected admission pending",
-  "state": "IN_PROGRESS",
+  "phase": "Final editorial clear; PR2968 native protected checks and exact admission pending",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "039abcffbb307df20853898c76f086db07658a70",
-    "candidate_head_sha": "9a1ed19f0763c537b0ecba2275b14f122f41c217",
+    "candidate_head_sha": "5d2675f19297acd3243b51e3ae878719939558f9",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-r1-comparison-corrected-frozen-20261031",
-    "workflow_runs": []
+    "pr_number": 2968,
+    "branch": "research/reach-r1-quantum-comparison-20261031",
+    "workflow_runs": [
+      {
+        "run_id": 41282998483,
+        "name": "Protected material-profile delegated review",
+        "status": "completed",
+        "conclusion": "failure",
+        "job_id": 124778570906
+      }
+    ]
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
@@ -42,8 +50,18 @@
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "Final editorial5d2675f19297acd3243b51e3ae878719939558f9",
+        "status": "Distinct nonauthor exact readback clear:119865e16fd2970bd30d17e3852d2a0badf5598fa0c, PROGRAMMEcb82bf8012e8fe4d6df8483a79d7b115bf71e4ca,07338c2a0750601c9b16b028248bb3ab33c598bee22; two stale status lines corrected;117/118 unchanged. Same-system review, not external certification."
+      },
+      {
+        "kind": "workflow_run",
+        "identity": "41282998483/job124778570906 @5d2675f19297acd3243b51e3ae878719939558f9",
+        "status": "Optional protected material-profile routine review failed closed: candidate specialist class unresolved or mixed; no automatic classification/approval issued. Exact failed operation preserved, not retried/relabelled/bypassed. Separate already-authorized protected research-note admission uses explicit nonauthor scientific review and actual five required native checks; no mathematical certification asserted."
+      },
       {
         "kind": "artifact",
         "identity": "Fourissueunitfrontiers2797/2798/2657/2617reconciledafterPR2964readback",
@@ -143,20 +161,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "accept exact corrected117 after single requested family-domain correction and distinct118 readback",
-    "result": "Final118b712e319927dd4464b83f9d635cfb35ed6121c0b accepts actual117e95b1155ebb2018a80d2dc559560730fd7ea6594: source liquid/profinite comparison, typed quantum cochain arrow/termwise monicity, separate Wick/ordinary disjoint proofs, all-derivative Gaussian cross bound, scale connection on F^J and source-controlled image. No ambient evaluated-plot connection or evaluation faithfulness proved.114unit cone retained. One correction used; same-system nonauthor not external certification. Final integration/protection pending.",
+    "action": "preserve final editorial source readback and exact optional automatic-review failure before protected admission",
+    "result": "PR2968 exact reviewed head5d2675f19297acd3243b51e3ae878719939558f9/base039abcffbb307df20853898c76f086db07658a70 mergeable; native required checks still settling. Only two editorial lines changed after integrationfreeze14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec. All8 expected blobs retained externally. CPprogress is separate from immutable PRhead.",
     "evidence_refs": [
-      "9a1ed19f0763c537b0ecba2275b14f122f41c217",
-      "research/reach-r1-comparison-corrected-frozen-20261031",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_R1_QUANTUM_COMPARISON_118.md",
-      "research/condensed-qft/EXT-015/R1_QUANTUM_COMPARISON_ACCEPTANCE_119.md"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/2968",
+      "research/reach-r1-comparison-editorial-frozen-20261031",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/41282998483/job/124778570906"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-01T06:58:35.1440059Z"
+    "observed_at": "2026-11-01T07:00:54.1384416Z"
   },
   "resume": {
     "fresh_session_safe": true,
