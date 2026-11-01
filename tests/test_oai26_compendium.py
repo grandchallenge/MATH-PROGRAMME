@@ -63,7 +63,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
                 c.load_catalogue(p)
 
     def test_authored_drafts_have_six_sections(self):
-        for n in ("001", "002", "003", "005", "342", "376"):
+        for n in ("001", "002", "003", "005", "006", "342", "376"):
             draft = (c.EDITORIAL / (n + ".md")).read_text(encoding="utf-8")
             c.validate_draft(draft, n)
             with self.assertRaises(ValueError):
@@ -95,8 +95,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=3, editorially_admitted=3,
-                                         reference_only=366, generated_pages=373))
+                                         editorial_drafts=4, editorially_admitted=3,
+                                         reference_only=365, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
@@ -108,7 +108,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             third_page = (out / "families/003.md").read_text(encoding="utf-8")
             self.assertIn("EDITORIALLY_ADMITTED", third_page)
             self.assertIn("NO_CERTIFICATION", third_page)
-            for n in ("005", "342", "376"):
+            for n in ("005", "006", "342", "376"):
                 page = (out / "families" / (n+".md")).read_text(encoding="utf-8")
                 self.assertIn("DRAFT_UNACCEPTED", page)
                 self.assertIn("NO_CERTIFICATION", page)
