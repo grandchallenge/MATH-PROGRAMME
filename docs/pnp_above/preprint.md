@@ -34,9 +34,9 @@ The manuscript formalizes the missing classical-transfer obligation; summarizes 
 
 ## Distribution record
 
-Version 0.1 has been generated as a compiled PDF with reproducible LaTeX source and visually checked locally. Its **public GitHub release URL has not yet been established**. This page deliberately does not link to an invented public PDF, or present the manuscript as an actual arXiv submission.
+Version 0.1 has been generated as a compiled PDF with reproducible LaTeX source and visually checked locally. The exact [LaTeX source has been committed to the GCL repository](https://github.com/grandchallenge/MATH-PROGRAMME/blob/docs/pnp-above-mkdocs-programme-20261101/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex) for protected review. After admission, the equivalent permanent path is under the repository's protected main branch. Its **public GitHub release URL has not yet been established**. This page deliberately does not link to an invented public PDF, or present the manuscript as an actual arXiv submission.
 
-The local generated edition and its source are delivered separately with the current GCL work response. Publishing the exact binary PDF and TeX file in a versioned public release, with SHA-256 manifest and readback, is a separate release-engineering obligation.
+The compiled PDF is delivered separately with the current GCL work response. Its generated SHA-256 is `510f0de0a00a2a27711f8ccba319b0502df983f69b124e82f68bd295d02c72ce`. The LaTeX source was committed from the generated file, not transcribed manually. Publishing the exact binary PDF and TeX file in a versioned public release, with SHA-256 manifest and readback, is a separate release-engineering obligation.
 
 The source-checked MkDocs pages are already usable as a public textual companion:
 [reader's primer](primer.md), [technical spine](technical.md), and [evidence ledger](evidence.md). The earlier [lay manuscript](../research/pnp_above_lay_manuscript.md) is retained in the editorial archive.
