@@ -84,7 +84,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
         self.assertEqual(admitted["005"]["manuscript_sha256"],
                          "972871081d0ba1f686b79e044fb10aa9d3406156e712571bc06eb0a925a60d8e")
         self.assertEqual(admitted["006"]["manuscript_sha256"],
-                         "be076e3184f46f28938c2052d862add695edc957dbad1e06bfa714f915238851")
+                         "84badb815c57a21a3a93386a9c99599b988401de7b441b7c39c6289f72da54cb")
         row = dict(family_id="007", manuscript_sha256="0"*64,
                    source_audit_url="https://github.com/grandchallenge/MATHFORGE/issues/332",
                    critic_evidence_url="https://github.com/grandchallenge/MATHFORGE/issues/333",
