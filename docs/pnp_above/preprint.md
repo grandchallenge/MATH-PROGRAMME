@@ -34,9 +34,11 @@ The manuscript formalizes the missing classical-transfer obligation; summarizes 
 
 ## Distribution record
 
-Version 0.1 has been generated as a compiled PDF with reproducible LaTeX source and visually checked locally. The exact [LaTeX source has been committed to the GCL repository](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex) and admitted to protected main. Its **public GitHub release URL has not yet been established**. This page deliberately does not link to an invented public PDF, or present the manuscript as an actual arXiv submission.
+Version 0.1 has a protected [LaTeX source file](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex). The source's verified SHA-256 is `ec20a5a881f87df7f86c7b9026db868186f7c1947c7350d315983bf43fa61141`.
 
-The compiled PDF is delivered separately with the current GCL work response. Its generated SHA-256 is `0b6805dc7109abdadc64eac7a455ebdf086e95f7d6cd9f4d2e2a0c4bd8850d61`. The LaTeX source was committed from the generated file, not transcribed manually. Publishing the exact binary PDF and TeX file in a versioned public release, with SHA-256 manifest and readback, is a separate release-engineering obligation.
+A seven-page PDF has been built on the GCL publication host directly from those source bytes, with SHA-256 `c642a756a686cb9ea4c3e016e8c891b5be0bad8bfd26ef1c2574aee7d977410f`. A **draft distribution release** was created under tag `pnp-above-preprint-v0.1.0-binary-2026-11-01` containing the PDF, TeX source and `SHA256SUMS.txt`; all three assets were downloaded back from GitHub and the checksums passed. **Public release publication is not yet confirmed**, so this page does not assert a working public release asset URL.
+
+An earlier local seven-page PDF was supplied in the conversation (SHA-256 `0b6805dc7109abdadc64eac7a455ebdf086e95f7d6cd9f4d2e2a0c4bd8850d61`). It differs in binary identity from the reproducibly rebuilt release candidate. The [machine-readable preprint manifest](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_v0_1_MANIFEST.json) distinguishes them and records the remaining publication readback obligation. Neither PDF is an arXiv deposit.
 
 The source-checked MkDocs pages are already usable as a public textual companion:
 [reader's primer](primer.md), [technical spine](technical.md), and [evidence ledger](evidence.md). The earlier [lay manuscript](../research/pnp_above_lay_manuscript.md) is retained in the editorial archive.
