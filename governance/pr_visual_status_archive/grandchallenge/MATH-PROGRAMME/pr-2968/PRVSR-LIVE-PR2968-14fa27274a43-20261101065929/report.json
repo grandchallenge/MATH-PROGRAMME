@@ -1,0 +1,238 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-01T06:59:14Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-01T06:59:16Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+    "exact_head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+    "pr_number": 2968,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "REACH: prove the Wick-dressed quantum R1 comparison"
+  },
+  "integration": {
+    "merge_commit_sha": "2311c2bd4e5457316d969f82f6c4699cbe61a569",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 8,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 6833:1F7E:2B69B1E:8E05D2F:6AE6E353 and timestamp 2026-11-01 06:59:31 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 124778444502,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778444426,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778444457,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778444289,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778446301,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Classify material formal closure",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778446454,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778446441,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778447253,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778447486,
+          "conclusion": "success",
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124778448097,
+          "conclusion": "skipped",
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124778447055,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778447787,
+          "conclusion": "skipped",
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124778446889,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778446241,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778447833,
+          "conclusion": "success",
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124778446939,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 124778447358,
+          "conclusion": "success",
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124778448946,
+          "conclusion": "skipped",
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 124778447513,
+          "conclusion": null,
+          "head_sha": "14fa27274a430d9a2cea2f8b3b1a08e9ca9d18ec",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-01T06:59:29Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "8f330fa332423eeebf10e1f4875a98be3d16cf53c2ec02a427e65db2c2f47634"
+  },
+  "report_id": "PRVSR-LIVE-PR2968-14fa27274a43-20261101065929",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane"
+    ]
+  }
+}
