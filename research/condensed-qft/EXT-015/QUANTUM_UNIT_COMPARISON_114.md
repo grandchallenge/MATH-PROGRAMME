@@ -142,10 +142,20 @@ On total weight zero the Wick operator and all accepted Wick scale transports ar
 
 Actual regulator rescaling fixes $1$ and sends $\epsilon^{-1}$ to $s^{-1}\epsilon^{-1}$ for $s>0$. It therefore preserves the nonzero Laurent obstruction. It need not preserve $F_0$ on logarithmic zero-power families:111's binomial logarithm formula can add a finite constant. The cone statement is invariant under the actual rescaling automorphism; if a splitting is transported, its retraction is transported as well. No claim of scalar finite-scale invariance beyond the log-free historical scope is made.
 
-For an admitted finite record-scheme isomorphism $U_L$ of111, transport the full comparison diagram:
+For an admitted finite record-scheme isomorphism of111, name the actual record targets. Let $\mathscr R_{0,0}^0$ be111.7's arity-zero record boundary in the default scheme, and let $\mathscr R_{L,0}^0$ be the boundary of111.14's changed arity-zero record image. The proved record identification and scheme map are
 
 $$
-u_L=U_Lu,\qquad F_L=F_0U_L^{-1}.
+\rho_0:\mathcal Z_0\xrightarrow{\sim}\mathscr R_{0,0}^0,
+\qquad
+U_L:\mathscr R_{0,0}^0\xrightarrow{\sim}\mathscr R_{L,0}^0.
+$$
+
+Put $\Theta_L=U_L\rho_0$. Transport the full comparison diagram with its displayed codomains:
+
+$$
+u_L=\Theta_Lu:R\longrightarrow\mathscr R_{L,0}^0,
+\qquad
+F_L=F_0\Theta_L^{-1}:\mathscr R_{L,0}^0\longrightarrow R.
 \tag{114.10}
 $$
 
@@ -165,4 +175,4 @@ The precise next lemma beyond the unit sector is an actually typed comparison am
 
 Full M5 also still requires the actual smooth/connection, support, cofibration/fibration and completed extended Weiss comparisons or their correctly typed obstructions. This one cone does not adjudicate all of R4. Original R3 and both parent objectives remain open. No source is reopened merely because this new comparison fails.
 
-This is one primary bounded attempt by a delegated same-system construction context, with substantive typing and cone checks from the parent. Distinct non-author115 must assess the exact frozen source before acceptance. There is no numerical fixture: the assertions are liquid monomorphisms, scalar remainder estimates and an explicit cochain contraction. No Python, Git, tracker, protected admission or external mutation was performed in preparing this draft; those subsequent custody and validation obligations are separate.
+This is one primary bounded attempt by a delegated same-system construction context, with substantive typing and cone checks from the parent. The single correction requested by distinct non-author115 names the default and changed record-boundary codomains and composes their actual scheme isomorphism with the record identification. It changes no unit-cone or weight argument. Final exact-source review and acceptance remain separate. There is no numerical fixture: the assertions are liquid monomorphisms, scalar remainder estimates and an explicit cochain contraction. No Python, Git, tracker, protected admission or external mutation was performed by the delegated author while preparing the draft; the parent's subsequent custody and validation obligations are separate.
