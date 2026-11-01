@@ -1,6 +1,6 @@
 # EXT-015 REACH / 118 — critical review of the Wick-dressed R1 comparison
 
-**Disposition: the typed quantum comparison and its two matching disjoint prescriptions are justified; final acceptance awaits explicit family-quotient typing and exact corrected-source readback.** The liquid R1 source, finite graph bounds, monic cochain arrow and Gaussian cross estimates supply the asserted map. The scale connection is justified on the declared joint source-family quotient, certainly on the comparison's source-image families. It is not a connection on all abstract target quotient plots. The nonzero unit cone and remaining M5/R4/R3 obligations are preserved.
+**Disposition: corrected117's typed quantum comparison and its two matching disjoint prescriptions are accepted.** Exact corrected-source readback in section9 verifies the requested family-quotient typing. The liquid R1 source, finite graph bounds, monic cochain arrow and Gaussian cross estimates supply the asserted map. The scale connection is justified on the declared joint source-family quotient and on the comparison's controlled source-image families. It is not a connection on all abstract target quotient plots. The nonzero unit cone and remaining M5/R4/R3 obligations are preserved.
 
 ## 1. Sources and provenance
 
@@ -10,6 +10,9 @@
 | Primary frozen branch | `research/reach-r1-comparison-primary-frozen-20261031` |
 | Primary117 | 38a2de8903d250fbacf6aa144cfa0f8547104e63 |
 | Primary119 draft | 57c2f88979eff069dfb26468bc6567fad2bd6941 |
+| Corrected frozen commit | 9a1ed19f0763c537b0ecba2275b14f122f41c217 |
+| Corrected frozen branch | `research/reach-r1-comparison-corrected-frozen-20261031` |
+| Corrected117 | e95b1155ebb2018a80d2dc559560730fd7ea6594 |
 | Input cut | 039abcffbb307df20853898c76f086db07658a70 |
 | R1 normal source069 | b3f6fe6651cc1ea59dfdf5f52990576c4f7018c2 |
 | R1 critic070 | 01f4911bea83eeac9dfb232e7dd4b9550648639f |
@@ -29,6 +32,8 @@ The reviewer did not author117. Earlier critics106/109/112/115 were supplied by 
 Read-only PowerShell byte hashing verifies the actual117/119 primary blobs and all twelve source identities in `r1-comparison-input-manifest.json`. No Git invocation, Python, tracker or external mutation was used. No numerical fixture can establish the liquid source or parameter-quotient assertions.
 
 ## 2. Inference matrix
+
+The parameter-domain condition below records the primary review finding. Section9 verifies the single correction; it is not a remaining condition of the final acceptance.
 
 | Inference | Verdict | Exact condition or limitation |
 | --- | --- | --- |
@@ -105,4 +110,12 @@ This return proves one actual quantum comparison arrow, not full M5/R4. Accepted
 
 ## 9. Correction and final exact-source readback
 
-Pending the single parameter-family quotient typing clarification and actual corrected-source readback. All other tested inferences are accepted under their stated hypotheses. The final disposition must name the corrected117 bytes and actual connection domain. No new construction cycle, unrestricted target connection or programme closeout is requested. Source preflight, protected admission/readback and explicit tracker reconciliation remain separate events. Only this review file has been written in this pass; no Git invocation, Python, tracker or external mutation was performed.
+The single correction is frozen at9a1ed19f0763c537b0ecba2275b14f122f41c217 on `research/reach-r1-comparison-corrected-frozen-20261031`. Read-only hashing of the actual corrected117 bytes gives e95b1155ebb2018a80d2dc559560730fd7ea6594, matching the supplied frozen-source identity. The actual revised statement, parameter-domain definition, connection placement and limitations were inspected. Reversing precisely the six scope/typing/provenance text spans in memory reproduces primary38a2de8903d250fbacf6aa144cfa0f8547104e63 exactly. Thus the correction changes neither the source graph proof, the Gaussian/cross matching proofs nor any quantum formula.
+
+The corrected source defines $\mathfrak P^J$ from actual local joint source graph-jet families, with uniform mixed-derivative bounds, before taking the uniformly rapid subspace $\mathfrak I^J$. Its sheaf quotient $\mathfrak F^J_{\mathcal Z}$ is the declared domain of117.14. Differentiation preserves that null relation by definition, and the proved operator estimates preserve it. Evaluation $\mathrm{ev}_M$ to pointwise target classes is defined but is not asserted injective or to exhaust abstract liquid-quotient plots. The separately evaluated plot rule does not receive an automatic connection.
+
+For controlled families $J_sf$ coming from original R1 plots, pointwise monicity and concreteness of the source distribution families make evaluation faithful. Formula117.16 therefore gives a genuine transported connection on that controlled image, without identifying its transported plot rule with an ambient subspace rule or claiming an ambient smooth inverse. This is exactly the restricted positive assertion supported by the proof. The new explicit remaining parameter lemma is derivative stability of $\ker(\mathrm{ev})$ on actual admitted families; faithfulness would suffice but is not necessary. Coverage of all abstract target plots is a further issue, not a consequence of this result.
+
+No requested condition remains unmet. At this exact corrected source I accept the all-profinite R1 source-family comparison, finite graph-stage Wick bounds and bilinear liquid exterior typing, actual natural dressed quantum cochain map, termwise monicity, support/finite-filtration bounds, matching Wick and independently proved matching ordinary disjoint diagrams, and scale transport/connection on the named joint-family quotient and controlled source image. This is one typed M5 arrow with its known nonzero weight-zero cone, not an equivalence, a cohomology-injectivity theorem or full M5/R4 completion.
+
+Accepted R0/R1/R2 scopes and separate087–089 remain intact. Original R3 and both residual channels remain independent and open, as do R4 and both parent objectives. Source preflight, final editorial integration, protected admission/readback and explicit tracker reconciliation remain separate events. Only this review file has been written in this pass; no Git invocation, Python, tracker or external mutation was performed.
