@@ -32,16 +32,26 @@ The manuscript formalizes the missing classical-transfer obligation; summarizes 
 | 7–8 | Complexity barriers, falsification policy, reproducibility and next obligations |
 | Appendices | Claim matrix, interdisciplinary glossary and bibliography |
 
-## Distribution record
+## Public preprint distribution
 
-Version 0.1 has a protected [LaTeX source file](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex). The source's verified SHA-256 is `ec20a5a881f87df7f86c7b9026db868186f7c1947c7350d315983bf43fa61141`.
+**Published working release:** [PNP-ABOVE preprint v0.1.0 — PDF, LaTeX and checksums](https://github.com/grandchallenge/MATH-PROGRAMME/releases/tag/pnp-above-preprint-v0.1.0-binary-2026-11-01)
 
-A seven-page PDF has been built on the GCL publication host directly from those source bytes, with SHA-256 `c642a756a686cb9ea4c3e016e8c891b5be0bad8bfd26ef1c2574aee7d977410f`. A **draft distribution release** was created under tag `pnp-above-preprint-v0.1.0-binary-2026-11-01` containing the PDF, TeX source and `SHA256SUMS.txt`; all three assets were downloaded back from GitHub and the checksums passed. **Public release publication is not yet confirmed**, so this page does not assert a working public release asset URL.
+- [Download the seven-page PDF](https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf)
+- [Download exact LaTeX source](https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex)
+- [Download SHA-256 checksum record](https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/SHA256SUMS.txt)
 
-An earlier local seven-page PDF was supplied in the conversation (SHA-256 `0b6805dc7109abdadc64eac7a455ebdf086e95f7d6cd9f4d2e2a0c4bd8850d61`). It differs in binary identity from the reproducibly rebuilt release candidate. The [machine-readable preprint manifest](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_v0_1_MANIFEST.json) distinguishes them and records the remaining publication readback obligation. Neither PDF is an arXiv deposit.
+The LaTeX source is also [admitted on protected main](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex). The released PDF is a fresh seven-page compilation of that exact source; its bytes differ from an earlier locally compiled edition, so the authoritative release hash is the one below.
 
-The source-checked MkDocs pages are already usable as a public textual companion:
-[reader's primer](primer.md), [technical spine](technical.md), and [evidence ledger](evidence.md). The earlier [lay manuscript](../research/pnp_above_lay_manuscript.md) is retained in the editorial archive.
+| Released object | Bytes | SHA-256 |
+| --- | ---: | --- |
+| PDF | 347,551 | `c642a756a686cb9ea4c3e016e8c891b5be0bad8bfd26ef1c2574aee7d977410f` |
+| LaTeX source | 23,711 | `ec20a5a881f87df7f86c7b9026db868186f7c1947c7350d315983bf43fa61141` |
+
+All three assets were downloaded from the release and checked against the checksum file; the public PDF and TeX download URLs were also independently retrieved without authentication and matched these hashes. The [protected release manifest](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_v0_1_MANIFEST.json) captures the asset names and provenance.
+
+The release is explicitly a **working preprint/prerelease**, not a submission to arXiv, a peer-reviewed article, or an independently certified mathematical result. An earlier immutable metadata-only prerelease with no binary assets remains an archival record; this newer tagged release is the binary distribution.
+
+The source-checked MkDocs pages remain the online textual accompaniment: [reader's primer](primer.md), [technical spine](technical.md), and [evidence ledger](evidence.md). The earlier [lay manuscript](../research/pnp_above_lay_manuscript.md) is retained in the editorial archive.
 
 ## Suggested citation
 
