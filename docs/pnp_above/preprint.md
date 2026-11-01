@@ -34,7 +34,7 @@ The manuscript formalizes the missing classical-transfer obligation; summarizes 
 
 ## Distribution record
 
-Version 0.1 has been generated as a compiled PDF with reproducible LaTeX source and visually checked locally. The exact [LaTeX source has been committed to the GCL repository](https://github.com/grandchallenge/MATH-PROGRAMME/blob/docs/pnp-above-mkdocs-programme-20261101/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex) for protected review. After admission, the equivalent permanent path is under the repository's protected main branch. Its **public GitHub release URL has not yet been established**. This page deliberately does not link to an invented public PDF, or present the manuscript as an actual arXiv submission.
+Version 0.1 has been generated as a compiled PDF with reproducible LaTeX source and visually checked locally. The exact [LaTeX source has been committed to the GCL repository](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/preprints/PNP_ABOVE_Verification_Compression_Preprint_v0_1.tex) and admitted to protected main. Its **public GitHub release URL has not yet been established**. This page deliberately does not link to an invented public PDF, or present the manuscript as an actual arXiv submission.
 
 The compiled PDF is delivered separately with the current GCL work response. Its generated SHA-256 is `0b6805dc7109abdadc64eac7a455ebdf086e95f7d6cd9f4d2e2a0c4bd8850d61`. The LaTeX source was committed from the generated file, not transcribed manually. Publishing the exact binary PDF and TeX file in a versioned public release, with SHA-256 manifest and readback, is a separate release-engineering obligation.
 
