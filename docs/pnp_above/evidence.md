@@ -14,6 +14,8 @@
 
 A document merge or public MkDocs page certifies neither mathematical truth nor independence. The independent specialist certification route remains separate.
 
+**Source-semantic update, 1 November 2026:** [WP01 source erratum and classical transfer results](wp01_erratum.md) distinguishes the printed statement of Theorem 12.1 from its final displayed proof chain. The published printed theorem has a stronger second branch; the record uses the proof-backed bound pending reconciliation. Exact-code regression checks and a restricted explicit-table SAT transfer are recorded in [MATHSOLVE PR #1152](https://github.com/grandchallenge/MATHSOLVE/pull/1152). Neither a full quantum compression implementation nor an unrestricted SAT implication has been established.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |

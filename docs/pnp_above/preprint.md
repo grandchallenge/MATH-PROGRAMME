@@ -13,6 +13,10 @@
 !!! info "Distinguish the two papers"
     The source identifier [arXiv:2001.04383](https://arxiv.org/abs/2001.04383) belongs to the established external theorem *MIP*=RE* by Ji, Natarajan, Vidick, Wright and Yuen. **GCL's PNP-ABOVE manuscript has no arXiv identifier.** Do not quote the source identifier as the GCL preprint's identifier.
 
+## Source erratum and subsequent research
+
+**Companion correction (1 November 2026):** [Theorem 12.1 statement/proof factor-of-two discrepancy and WP01 classical results](wp01_erratum.md). The fixed v0.1 PDF is an archival edition and has **not** been silently changed. The correction distinguishes the stronger printed theorem inequality from the weaker final proof chain and records a finite classical SAT strategy compiler. It does not modify the PNP-001 claim status.
+
 ## Abstract
 
 We examine a possible “from above” approach to the P versus NP problem motivated by the equality MIP* = RE. Recursive compression of quantum multiprover verification might expose a structural invariant with a classical lower-bound interpretation. The principal obstacle is an invalid identification of verifier computation, entanglement resources, strategy synthesis, and deterministic decision time.
