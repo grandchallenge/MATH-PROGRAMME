@@ -18,6 +18,7 @@ These are supporting records, not necessarily current research instructions or c
 - [OZ-001 Research Guide](../campaigns/OZ_001_RESEARCH_GUIDE.md)
 - [VGSE-001 Research Guide](../campaigns/VGSE_001_RESEARCH_GUIDE.md)
 - [P versus NP from Above — lay research manuscript](../research/pnp_above_lay_manuscript.md)
+- [PNP-ABOVE WP01 source erratum and classical transfer](../pnp_above/wp01_erratum.md)
 
 ## Individual research guides
 
