@@ -32,23 +32,23 @@ For its substantive completeness and soundness conclusions, the *input verifier*
 
 Writing $N=2^n$, the theorem transfers existence of a perfect PCC strategy. A **source-level discrepancy** affects the stated quantitative factor. The printed **statement** of Theorem 12.1 gives
 
-$
+$$
 \mathcal E(V_n^{\mathrm{compr}},1/2)\geq
 \max\left\{
 \frac12\mathcal E(V_N,1/2),\,
 2^{N^\lambda-1}
 \right\}.
-$
+$$
 
 But Table 2 and the displayed conclusion of the **proof** on printed page 189 yield only
 
-$
+$$
 \mathcal E(V_n^{\mathrm{compr}},1/2)\geq
 \frac12\max\left\{
 \mathcal E(V_N,1/2),\,
 2^{N^\lambda-1}
 \right\}.
-$
+$$
 
 The earlier edition incorrectly labelled the proof-backed form the exact theorem statement. We use the weaker inequality conservatively, pending reconciliation of the factor of two in the second branch. [Read the dated source erratum and WP01 findings](wp01_erratum.md).
 
