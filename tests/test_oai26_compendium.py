@@ -72,7 +72,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
     def test_admission_fail_closed(self):
         j = json.loads(c.ADMISSIONS.read_text(encoding="utf-8"))
         admitted = c.load_admissions()
-        self.assertEqual(set(admitted), {"001", "002", "003", "004", "005", "006"})
+        self.assertEqual(set(admitted), {"001", "002", "003", "004", "005", "006", "011"})
         self.assertEqual(admitted["001"]["manuscript_sha256"],
                          "fead8152dee7a70a702fb217166f27d1c7e5cea40183f5580e3a47bfd21092a8")
         self.assertEqual(admitted["002"]["manuscript_sha256"],
@@ -85,6 +85,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
                          "972871081d0ba1f686b79e044fb10aa9d3406156e712571bc06eb0a925a60d8e")
         self.assertEqual(admitted["006"]["manuscript_sha256"],
                          "84badb815c57a21a3a93386a9c99599b988401de7b441b7c39c6289f72da54cb")
+        self.assertEqual(admitted["011"]["manuscript_sha256"],
+                         "5ee119cc587d62e02fe8fd698452c3ae7339cd3aee81743c4e1fadfd3dde4855")
         row = dict(family_id="007", manuscript_sha256="0"*64,
                    source_audit_url="https://github.com/grandchallenge/MATHFORGE/issues/332",
                    critic_evidence_url="https://github.com/grandchallenge/MATHFORGE/issues/333",
@@ -101,8 +103,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=9, editorially_admitted=6,
-                                         reference_only=357, generated_pages=373))
+                                         editorial_drafts=9, editorially_admitted=7,
+                                         reference_only=356, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
@@ -127,7 +129,10 @@ class DocumentaryCatalogueTest(unittest.TestCase):
                 page = (out / "families" / (n+".md")).read_text(encoding="utf-8")
                 self.assertIn("DRAFT_UNACCEPTED", page)
                 self.assertIn("NO_CERTIFICATION", page)
-            ref = (out / "families/011.md").read_text(encoding="utf-8")
+            admitted_011 = (out / "families/011.md").read_text(encoding="utf-8")
+            self.assertIn("EDITORIALLY_ADMITTED", admitted_011)
+            self.assertIn("NO_CERTIFICATION", admitted_011)
+            ref = (out / "families/012.md").read_text(encoding="utf-8")
             self.assertIn("REFERENCE_ONLY", ref)
             self.assertIn("FAMILY_SEMANTICS_UNREVIEWED", ref)
             self.assertIn("NO_CERTIFICATION", ref)
