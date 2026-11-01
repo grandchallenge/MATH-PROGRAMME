@@ -28,7 +28,7 @@ The objects being counted are quantum-state components across a bipartition. Thi
 
 Given a verifier $V=(S,D)$ and positive integer $\lambda$, the published compression constructor produces a nine-level normal-form verifier $V^{\mathrm{compr}}$ with sampler and decider time polynomial in the compressed index $n$ and in $\lambda$.
 
-For its substantive completeness and soundness conclusions, the *input verifier* must also be nine-level normal form and $\lambda$-bounded, and $n\ge C_0$ for a universal threshold specified existentially by the theorem.
+For its substantive completeness and soundness conclusions, the *input verifier* must also be nine-level normal form and bounded by the parameter $\lambda$, and $n\ge C_0$ for a universal threshold specified existentially by the theorem.
 
 Writing $N=2^n$, the theorem transfers existence of a perfect PCC strategy and establishes
 
@@ -96,7 +96,7 @@ $$
 Now define the *unary indexed* language
 
 $$
-L_G=\{1^n:\operatorname{val}^{*}(G_n)=1\}.
+L_G=\{1^n:\mathrm{val}^{*}(G_n)=1\}.
 $$
 
 The source completeness clause ensures every sufficiently large unary index is positive. Thus $L_G$ is cofinite and lies in $\mathsf P$ (a finite exception table can be hardcoded existentially). This is **not** a uniform algorithm for deciding game value from arbitrary game encodings. It does not provide an effective numerical $C_0$ or execute the full compressor.
@@ -110,7 +110,7 @@ Define an actual classical cost invariant $\mathcal C_{\mathcal A}(G_n)$, includ
 To prove P differs from NP using an independently established lower bound, one must also establish an implication of the form
 
 $$
-\operatorname{SAT}\in\mathsf P
+\mathrm{SAT}\in\mathsf P
 \quad\Longrightarrow\quad
 \mathcal C_{\mathcal A}(G_n)\leq n^{O(1)}
 $$
