@@ -14,6 +14,8 @@ GCL has organized precise definitions, useful equivalences and common mistakes i
 
 **Accessible research guide:** [PNP-001 Research Guide](PNP_001_RESEARCH_GUIDE.md)
 
+**New research accompaniment (November 2026):** [P versus NP from Above](../pnp_above/index.md) explores whether MIP* = RE verification compression can produce a transferable classical lower-bound principle. Read the [educated-lay primer](../pnp_above/primer.md), [technical spine](../pnp_above/technical.md), [evidence register](../pnp_above/evidence.md), and [working preprint record](../pnp_above/preprint.md). This is an exploratory approach, not a proof of P = NP or P != NP.
+
 
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/162  

@@ -48,6 +48,14 @@ The model concerns tiny motions around a flat configuration. It does **not** est
 
 [Read the continuing design study](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1179) · [Explore the broader mechanical-semantics research](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1084)
 
+## P versus NP from above: quantum verification and classical lower bounds
+
+A new bounded line of inquiry asks whether the recursive compression techniques underlying the established theorem $\mathsf{MIP}^{*}=\mathsf{RE}$ can reveal a structural invariant of finite **classical** computation. Existing work has isolated an important obstacle: very large entanglement requirements for winning a nonlocal game do not by themselves imply that the corresponding yes/no question is difficult to decide.
+
+The first GCL work package records a magic-square calibration, a source-pinned compression ledger and a nine-level finite verifier with an exhaustive 512-vector emulator. A theorem-derived cofinite-language observation makes the resource-versus-decision distinction explicit. **What remains:** an exact encoded compression instance, an independently proved classical resource lower bound and the missing uniform SAT-to-realization transfer. No new P versus NP theorem is claimed.
+
+[Explore the PNP-ABOVE documentary](pnp_above/index.md) · [Read the technical record](pnp_above/technical.md) · [Follow the Solve-owned research obligation](https://github.com/grandchallenge/MATHSOLVE/issues/1136)
+
 ## Other investigations worth following
 
 ### Condensed mathematics
