@@ -1,6 +1,6 @@
 # EXT-015 REACH / 121 — critical review of the admitted parameter-descent counterexample
 
-**Disposition: the negative parameter-descent result is justified on the stated admitted family class.** The source curve is smooth in one fixed complete R1 graph space, its output is an actual joint analytic family, every evaluated slice is rapid, and its evaluated derivative is not rapid in any fixed Sobolev order. The scale-connection conclusion has the stated weight-one typing. One compact-localization clarification is requested before final corrected-source readback. This does not reject the connection on the retained joint-family quotient or the controlled R1 image, and does not close M5/R4.
+**Disposition: corrected120's negative parameter-descent result is accepted on the stated admitted family class.** The source curve is smooth in one fixed complete R1 graph space, its output is an actual joint analytic family, every evaluated slice is rapid, and its evaluated derivative is not rapid in any fixed Sobolev order. The scale-connection conclusion has the stated weight-one typing. Section8 verifies the single compact-localization correction against the exact source. This does not reject the connection on the retained joint-family quotient or the controlled R1 image, and does not close M5/R4.
 
 ## 1. Frozen identities and provenance
 
@@ -10,6 +10,9 @@
 | Primary frozen branch | `research/reach-parameter-descent-primary-frozen-20261101` |
 | Primary120 | 732f08956e18f90cf79cab0e51fe816d546fd602 |
 | Primary122 draft | 38a46456c64429e551018a4a4f53b6b751020f71 |
+| Corrected frozen commit | aa2dfa97b92cca832161efe7230697848a354be2 |
+| Corrected frozen branch | `research/reach-parameter-descent-corrected-frozen-20261101` |
+| Corrected120 | 89f910e1d04d82da3f45d00c4ac7bb3ad0fbad13 |
 | Scientific input cut | ada64e23c6a6535b3b4847773521d20a4e387858 |
 | Scalar stages105 | a8ce66ff0edec33e2aff299550fca2089d671033 |
 | Mixed source108 | 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
@@ -55,7 +58,7 @@ The annular Fourier choice gives a nonzero real even Schwartz profile and all of
 
 The fixed coefficient curve tensored with this one scalar stage is a smooth curve in the complete mixed source. The admitted multiplier/projection map therefore supplies uniform joint source and graph-jet bounds for every mixed parameter/regulator derivative. This is much stronger than membership of each parameter slice in the target analytic image. Large pointwise heights of the narrow mollifier do not contradict those bounds: the single negative Sobolev norm and its fixed-cone graph estimates control the coefficient uniformly, while the scalar-source operator has only finite regulator losses.
 
-For complete source typing, explicitly insert a fixed scalar physical cutoff equal to one on a neighborhood of the common source support $K$. That localized scalar factor belongs to the compact scalar105 stage. Its product with the coefficient curve, and with all its parameter derivatives, is unchanged. The draft already invokes compact physical localization, so this is an explicit representation clarification rather than a defect in the counterexample. Suppressing this harmless cutoff in120.6–120.10 is valid once it is named.
+The primary review requested explicit insertion of a fixed scalar physical cutoff equal to one on a neighborhood of the common source support $K$. That localized scalar factor belongs to the compact scalar105 stage. Its product with the coefficient curve, and with all its parameter derivatives, is unchanged. The draft already invoked compact physical localization, so this was an explicit representation clarification rather than a defect in the counterexample. Section8 verifies the named cutoff in the corrected source and its harmless suppression in120.6–120.10.
 
 The projection forgets one physical vertex and is proper on the common support. It is a defining analytic-source operation; it is not being called a weight-preserving quantum cochain map from the two-vertex coefficient space. No illegal delta self-trace or overlapping singular counterterm product occurs.
 
@@ -93,4 +96,10 @@ Accepted R0/R1/R2 and separate087–089 scopes are unaffected. Original R3's deg
 
 ## 8. Correction and final readback
 
-The primary mathematical assessment is complete. The counterexample and its negative diagram are accepted under the stated compact-localization convention. The requested single clarification should name that fixed scalar cutoff, suppressing it in formulas only because it is one on the common source support. After exact corrected-source readback, this report will bind its final disposition to the actual120 blob. No further mechanism or construction cycle is requested. Source preflight, editorial integration, protected admission/readback and tracker reconciliation remain separate events. Only121 has been written in this pass; no Git invocation, Python, tracker or external mutation was performed.
+The single correction is frozen at aa2dfa97b92cca832161efe7230697848a354be2 on `research/reach-parameter-descent-corrected-frozen-20261101`. Read-only byte hashing of the actual corrected120 gives89f910e1d04d82da3f45d00c4ac7bb3ad0fbad13, matching the supplied frozen identity. The actual compact-localization paragraph, source equality and provenance were inspected. Reversing precisely those three text spans in memory recovers primary732f08956e18f90cf79cab0e51fe816d546fd602 exactly. Thus no estimate, derivative formula, norm lower bound or negative diagram changed in the single correction.
+
+Corrected120 chooses $\zeta\in C_c^\infty(U^2)$ equal to one near the common source support and defines the scalar source $A_\epsilon=\zeta\epsilon^{-1}\phi(t/\epsilon)$. Its normalized front coefficient is the stated compact centre coefficient times $\phi$, with the same flat complementary tails and fixed scalar-stage bounds. The source equality in120.6 is exact because $\zeta T_a=T_a$, also for every parameter derivative. This supplies the requested compact-stage representative without changing the actual joint family or its evaluated derivative.
+
+No requested condition remains unmet. At this exact corrected source I accept Lemma120.1, the fixed analytic joint-source admission, pointwise rapidness with every regulator derivative, the density-two derivative formula and its lower bound in every finite Sobolev order, the actual liquid nonzero class and Theorem120.2. The stated weight-one Gaussian connection descent fails for the same reason. The preimage-of-rapid nonclosedness is correctly supported by the explicit convergent source family and the stronger smooth derivative witness.
+
+The accepted negative result concerns the exact point-evaluated family intertwining contract. It does not reject the retained joint-family connection, the controlled R1 image, all possible differentiable-sheaf targets or the smaller raw finite Gaussian-polynomial span. Accepted R0/R1/R2 and separate087–089 remain intact; original R3, full M5/R4 and both parents stay open. Source preflight, final editorial integration, protected admission/readback and explicit tracker reconciliation remain separate events. Only121 has been written in this pass; no Git invocation, Python, tracker or external mutation was performed.
