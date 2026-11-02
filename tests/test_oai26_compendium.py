@@ -63,7 +63,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
                 c.load_catalogue(p)
 
     def test_authored_drafts_have_six_sections(self):
-        for n in ("001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "012", "014", "016", "020", "024", "026", "028", "030", "032", "034", "036", "042", "046", "048", "342", "376"):
+        for n in ("001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "012", "014", "016", "020", "024", "026", "028", "030", "032", "034", "036", "042", "046", "048", "056", "058", "342", "376"):
             draft = (c.EDITORIAL / (n + ".md")).read_text(encoding="utf-8")
             c.validate_draft(draft, n)
             with self.assertRaises(ValueError):
@@ -72,7 +72,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
     def test_admission_fail_closed(self):
         j = json.loads(c.ADMISSIONS.read_text(encoding="utf-8"))
         admitted = c.load_admissions()
-        self.assertEqual(set(admitted), {"001", "002", "003", "004", "005", "006", "011", "025"})
+        self.assertEqual(set(admitted), {"001", "002", "003", "004", "005", "006", "011", "025", "029"})
         self.assertEqual(admitted["001"]["manuscript_sha256"],
                          "fead8152dee7a70a702fb217166f27d1c7e5cea40183f5580e3a47bfd21092a8")
         self.assertEqual(admitted["002"]["manuscript_sha256"],
@@ -105,8 +105,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=20, editorially_admitted=8,
-                                         reference_only=344, generated_pages=373))
+                                         editorial_drafts=22, editorially_admitted=9,
+                                         reference_only=341, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
@@ -127,7 +127,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             sixth_page = (out / "families/006.md").read_text(encoding="utf-8")
             self.assertIn("EDITORIALLY_ADMITTED", sixth_page)
             self.assertIn("NO_CERTIFICATION", sixth_page)
-            for n in ("007", "008", "009", "010", "012", "014", "016", "020", "024", "026", "028", "030", "032", "034", "036", "042", "046", "048", "342", "376"):
+            for n in ("007", "008", "009", "010", "012", "014", "016", "020", "024", "026", "028", "030", "032", "034", "036", "042", "046", "048", "056", "058", "342", "376"):
                 page = (out / "families" / (n+".md")).read_text(encoding="utf-8")
                 self.assertIn("DRAFT_UNACCEPTED", page)
                 self.assertIn("NO_CERTIFICATION", page)
