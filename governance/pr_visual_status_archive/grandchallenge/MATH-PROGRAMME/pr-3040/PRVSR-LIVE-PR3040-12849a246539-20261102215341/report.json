@@ -1,0 +1,196 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-02T09:09:13Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-02T21:51:42Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+    "exact_head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+    "pr_number": 3040,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26-ED-01: Family 092 convex-body covering density documentary article"
+  },
+  "integration": {
+    "merge_commit_sha": null,
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 2,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 600E:25F91:601BFAC:13F6B12B:6AE90666 and timestamp 2026-11-02 21:53:42 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125574908584,
+          "conclusion": "success",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "Analyze (actions)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574909063,
+          "conclusion": "success",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "Analyze (c-cpp)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574908972,
+          "conclusion": null,
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125574909019,
+          "conclusion": null,
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575635411,
+          "conclusion": "neutral",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574915066,
+          "conclusion": "skipped",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574913007,
+          "conclusion": "failure",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574915465,
+          "conclusion": "skipped",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574913360,
+          "conclusion": null,
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "Observe material closure (no admission authority)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 125574912856,
+          "conclusion": "failure",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "Protected material-profile delegated review",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574911678,
+          "conclusion": "success",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574912080,
+          "conclusion": null,
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125574914033,
+          "conclusion": "skipped",
+          "head_sha": "12849a2465396fcf5b088cccdb77402680845dfa",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-02T21:53:41Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "baa71364dbbe434bba8c1bbfc1ae8f3538b0e37b773a6fbced4cd4e01f5fa2ce"
+  },
+  "report_id": "PRVSR-LIVE-PR3040-12849a246539-20261102215341",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane"
+    ]
+  }
+}
