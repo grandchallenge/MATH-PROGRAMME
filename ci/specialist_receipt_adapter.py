@@ -346,7 +346,7 @@ def protected_specialist_receipt(
                 assessment.get("material_fingerprint") != fingerprint or
                 assessment.get("review_scope") != "SOLVE_EXECUTION_INTEGRITY_ONLY" or
                 assessment.get("disposition") != "ROLE_SCOPED_REVIEW_ACCEPTED" or
-                receipt.get("review_scope") != "SOLVE_EXECUTION_INTEGRITY_ONLY"):
+                record.get("review_scope") != "SOLVE_EXECUTION_INTEGRITY_ONLY"):
             raise ReceiptError("delegated assessment has wrong scoped disposition")
         number = proof_record.get("reviewed_source_pr")
         source_head = _sha(proof_record.get("reviewed_source_head"))
