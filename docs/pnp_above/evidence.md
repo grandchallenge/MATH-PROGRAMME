@@ -16,6 +16,14 @@ A document merge or public MkDocs page certifies neither mathematical truth nor 
 
 **Source-semantic update, 1 November 2026:** [WP01 source erratum and classical transfer results](wp01_erratum.md) distinguishes the printed statement of Theorem 12.1 from its final displayed proof chain. The published printed theorem has a stronger second branch; the record uses the proof-backed bound pending reconciliation. Exact-code regression checks and a restricted explicit-table SAT transfer are recorded in [MATHSOLVE PR #1152](https://github.com/grandchallenge/MATHSOLVE/pull/1152). Neither a full quantum compression implementation nor an unrestricted SAT implication has been established.
 
+## WP03: executable parameter-recurrence slice (1 November 2026)
+
+The [admitted WP03 source and execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP03_LEAN_PARAMETER_EXECUTION_RECEIPT.md) document a **standalone Lean 4 numerical implementation** of the recurrence used for the compression pipeline's size parameter. The exact [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP03_ParameterRecurrence.lean), SHA-256 `540f7c27755c2b74c3b5f2b5001134fca65c634962dc9cb82ea93b5ff651b380`, was read back byte-for-byte from the research branch and executed successfully (exit code 0). At input `n=3`, its first five values are 7, 64, 16,384, 1,073,741,824, and 4,611,686,018,427,387,904. Lean guards also checked 126 finite inequalities over `0 ≤ c ≤ 5` and `0 ≤ n ≤ 20`.
+
+The upstream formalization is pinned to [commit 5926bdff](https://github.com/vidick/MIPRE-formalization/commit/5926bdff5db621f44682a101007ef2fe3ae8d970) and requires Lean 4.35.0-rc3 plus its locked dependencies. The standalone replay used Lean 4.34.1 and does **not** import upstream MIPRE, prove its PolyTimeFun complexity certificate, execute DecisionCompiler.compute, or implement quantum introspection, answer reduction or repetition. Installing the upstream toolchain was attempted, but did not finish within the bounded retrieval window. This is an execution-environment/dependency obligation, not a mathematical or safety restriction.
+
+**Research status:** precisely one verified numerical parameter subroutine, with no change to P-versus-NP claim status or to the open succinct classical transfer obligation.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
