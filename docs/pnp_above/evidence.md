@@ -42,6 +42,8 @@ The tested [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/r
 
 **Boundary:** This verifies genuine source-interface theorems for the degenerate parameter-zero branch. No concrete positive-`lambda` quantum introspection output, three-stage compressor, classical asymptotic lower bound or SAT transfer theorem has thereby been established.
 
+**WP06 (2 November 2026).** The [admitted Lean proof replay](https://github.com/grandchallenge/MATHSOLVE/pull/1169) confirms six zero-parameter source properties, with details in the [WP06 evidence record](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_COMPILER_BRANCH_VERIFICATION_RECEIPT.md). Corrected positive-parameter interface propositions remain unverified candidates, not an executed compressor.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
