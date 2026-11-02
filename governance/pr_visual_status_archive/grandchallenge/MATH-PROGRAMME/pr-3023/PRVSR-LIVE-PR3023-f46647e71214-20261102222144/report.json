@@ -1,0 +1,189 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-02T01:42:30Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-02T22:21:31Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+    "exact_head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+    "pr_number": 3023,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26-ED-01: Family 074 Kakeya in dimensions three and four documentary article"
+  },
+  "integration": {
+    "merge_commit_sha": null,
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 2,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID A013:336A3F:2D7E3E2:957C073:6AE90CF9 and timestamp 2026-11-02 22:21:46 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125589829646,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589829528,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589829185,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589829688,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589837862,
+          "conclusion": "skipped",
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125589835852,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589837666,
+          "conclusion": "skipped",
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125589836023,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589837224,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "Protected material-profile delegated review",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589836515,
+          "conclusion": "success",
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125589837633,
+          "conclusion": null,
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125589839260,
+          "conclusion": "skipped",
+          "head_sha": "f46647e71214459b2dcde33c81bf9cb9841691d2",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-02T22:21:44Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "f45978a2c815bfe1f3f84959d7cf17118e34c3f372ecf6e98987617a734e5cff"
+  },
+  "report_id": "PRVSR-LIVE-PR3023-f46647e71214-20261102222144",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane"
+    ]
+  }
+}
