@@ -348,12 +348,27 @@ def protected_specialist_receipt(
                 assessment.get("disposition") != "ROLE_SCOPED_REVIEW_ACCEPTED" or
                 receipt.get("review_scope") != "SOLVE_EXECUTION_INTEGRITY_ONLY"):
             raise ReceiptError("delegated assessment has wrong scoped disposition")
-        if (proof_record.get("reviewed_source_pr") != 1155 or
-                proof_record.get("reviewed_source_head") !=
-                "dbfe8d73f19f47efa1ce5b26a6b79e437376e3af" or
-                proof_record.get("reviewed_protected_merge") !=
-                "32a3a8c7ac686c0ab4b93a2e7fc9207572eac693"):
-            raise ReceiptError("delegated review source anchor does not match protected WP02 review")
+        number = proof_record.get("reviewed_source_pr")
+        source_head = _sha(proof_record.get("reviewed_source_head"))
+        source_merge = _sha(proof_record.get("reviewed_protected_merge"))
+        if type(number) is not int or number <= 0:
+            raise ReceiptError("delegated review source PR invalid")
+        source_pr = api_get(f"/repos/{owner}/pulls/{number}")
+        if (not isinstance(source_pr, dict) or not source_pr.get("merged_at") or
+                (source_pr.get("head") or {}).get("sha") != source_head or
+                source_pr.get("merge_commit_sha") != source_merge or
+                (source_pr.get("base") or {}).get("ref") != "main"):
+            raise ReceiptError("delegated review source not protected-merged at exact head")
+        if source_pr.get("changed_files") not in range(1, 100):
+            raise ReceiptError("delegated review source manifest unbounded")
+        source_files = api_get(f"/repos/{owner}/pulls/{number}/files?per_page=100")
+        if not isinstance(source_files, list) or len(source_files) != source_pr["changed_files"]:
+            raise ReceiptError("delegated review source manifest missing or truncated")
+        if not any(isinstance(item, dict) and item.get("filename") == path
+                   and item.get("sha") == assessment_blob
+                   and item.get("status") in ("added", "modified")
+                   for item in source_files):
+            raise ReceiptError("delegated review assessment absent from protected source PR")
         checks = proof_record.get("checks") or {}
         for check in ("capture_result_sha256", "source_blob_linkage",
                       "replay_capture_blob_lock", "adjudication_replay_blob_lock",
