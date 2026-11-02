@@ -34,6 +34,14 @@ The required Lean version has now been installed. **This dependency blocker was 
 
 **WP05 update (2 November 2026):** [Research PR #1162](https://github.com/grandchallenge/MATHSOLVE/pull/1162) records successful builds of the upstream native model (1,219 jobs) and introspection-decider module (3,978 jobs). The imported `Prog` replay passed. Positive-parameter compression remains unexecuted.
 
+## WP06: imported compiler theorem replay (2 November 2026)
+
+[MATHSOLVE WP06](https://github.com/grandchallenge/MATHSOLVE/pull/1166) directly imports the pinned upstream `MIPRE.Background.Introspection.DecisionCompiler` and executes seven Lean theorem proofs under the exact Lean 4.35.0-rc3 environment. For parameter zero, the imported `compute` selects `zeroProg`; this result is well-scoped, has a source-`Eval` execution witness, and obeys the source's exact acceptance condition (empty questions and answer lengths at most two). Concrete empty and nonempty question cases were proved accepted and rejected respectively. A seventh theorem characterizes the parameter-one compiler branch **symbolically**, without executing a generated positive-parameter program.
+
+The tested [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_SourceCompilerProofReplay.lean) has Git blob `68443763c21f182f02f05a151addd38c14e576ff` and SHA-256 `d6c4242a5242157edae2426bd407ab46469fe0ad0c764865fd0362fde2783451`. Its exact-branch Git blob matched the local executable file, and `lake env lean` exited 0 with no errors. The [execution and scope receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_IMPORTED_COMPILER_BRANCH_RECEIPT.md) records the first corrected namespace error and clean replay.
+
+**Boundary:** This verifies genuine source-interface theorems for the degenerate parameter-zero branch. No concrete positive-`lambda` quantum introspection output, three-stage compressor, classical asymptotic lower bound or SAT transfer theorem has thereby been established.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
