@@ -44,6 +44,8 @@ The tested [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/r
 
 **WP06 (2 November 2026).** The [admitted Lean proof replay](https://github.com/grandchallenge/MATHSOLVE/pull/1169) confirms six zero-parameter source properties, with details in the [WP06 evidence record](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_COMPILER_BRANCH_VERIFICATION_RECEIPT.md). Corrected positive-parameter interface propositions remain unverified candidates, not an executed compressor.
 
+**WP06 source-audit update (2 November 2026):** [MATHSOLVE WP06](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_PARAMETER_ERASURE_AND_SAT_TRANSFER_BOUNDARY.md) records the zero-parameter and oversized-description erasure behavior of the pinned introspection decider compiler. The resulting non-injectivity is a source-budget constraint, not a general SAT lower bound. Its companion Lean corollaries have not yet been replayed.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
