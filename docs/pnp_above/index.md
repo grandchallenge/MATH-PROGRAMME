@@ -37,6 +37,8 @@ Our research question is narrower: can a finite *structural invariant* of this v
 
 The original exploratory [lay manuscript](../research/pnp_above_lay_manuscript.md) remains preserved. This documentary edition incorporates work completed afterward.
 
+**November 2026 research update:** A classical-sampler randomness bound and a constructive SAT-to-perfect-classical-strategy transfer for **explicit finite game tables** have been proved and tested in a bounded WP01 candidate. This does not transfer to succinct quantum compression or P versus NP. A [source erratum and technical update](wp01_erratum.md) also records a factor-of-two discrepancy between the printed Theorem 12.1 and its displayed proof.
+
 ## The missing classical bridge
 
 Let $G_n$ be a uniform family of games and let $\mathcal C_{\mathcal A}(G_n)$ be the cost of implementing a precisely specified classical strategy or circuit model $\mathcal A$. A quantum-strategy Schmidt-rank lower bound is not automatically a lower bound on this classical cost.

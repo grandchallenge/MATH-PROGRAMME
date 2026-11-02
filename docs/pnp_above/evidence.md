@@ -14,6 +14,40 @@
 
 A document merge or public MkDocs page certifies neither mathematical truth nor independence. The independent specialist certification route remains separate.
 
+**Source-semantic update, 1 November 2026:** [WP01 source erratum and classical transfer results](wp01_erratum.md) distinguishes the printed statement of Theorem 12.1 from its final displayed proof chain. The published printed theorem has a stronger second branch; the record uses the proof-backed bound pending reconciliation. Exact-code regression checks and a restricted explicit-table SAT transfer are recorded in [MATHSOLVE PR #1152](https://github.com/grandchallenge/MATHSOLVE/pull/1152). Neither a full quantum compression implementation nor an unrestricted SAT implication has been established.
+
+## WP03: executable parameter-recurrence slice (1 November 2026)
+
+The [admitted WP03 source and execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP03_LEAN_PARAMETER_EXECUTION_RECEIPT.md) document a **standalone Lean 4 numerical implementation** of the recurrence used for the compression pipeline's size parameter. The exact [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP03_ParameterRecurrence.lean), SHA-256 `540f7c27755c2b74c3b5f2b5001134fca65c634962dc9cb82ea93b5ff651b380`, was read back byte-for-byte from the research branch and executed successfully (exit code 0). At input `n=3`, its first five values are 7, 64, 16,384, 1,073,741,824, and 4,611,686,018,427,387,904. Lean guards also checked 126 finite inequalities over `0 ≤ c ≤ 5` and `0 ≤ n ≤ 20`.
+
+The upstream formalization is pinned to [commit 5926bdff](https://github.com/vidick/MIPRE-formalization/commit/5926bdff5db621f44682a101007ef2fe3ae8d970) and requires Lean 4.35.0-rc3 plus its locked dependencies. The standalone replay used Lean 4.34.1 and does **not** import upstream MIPRE, prove its PolyTimeFun complexity certificate, execute DecisionCompiler.compute, or implement quantum introspection, answer reduction or repetition. Installing the upstream toolchain was attempted, but did not finish within the bounded retrieval window. This is an execution-environment/dependency obligation, not a mathematical or safety restriction.
+
+**Research status:** precisely one verified numerical parameter subroutine, with no change to P-versus-NP claim status or to the open succinct classical transfer obligation.
+
+## WP04: native program semantics replay (1 November 2026)
+
+The [WP04 research PR](https://github.com/grandchallenge/MATHSOLVE/pull/1161) adds [standalone Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/fc7c4c7f6d5e037b29e6b233f8a9a214ff16fce8/research/PNP-ABOVE/WP04_NativeProgReplay.lean) and an [exact execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/fc7c4c7f6d5e037b29e6b233f8a9a214ff16fce8/research/PNP-ABOVE/WP04_NATIVE_PROG_EXECUTION_RECEIPT.md) for a source-aligned model of the **seven MIPRE native program constructors**. It copies the upstream `Data`, `Prog`, `Env` and timed `Eval` definitions into a separate namespace and executes an independently implemented, fuel-bounded interpreter on Lean 4.35.0-rc3. The ten finite guards and two term-level `Eval` witnesses passed. The two-step loop evaluated to `nil` with 12 native cost units; process exit code was zero.
+
+The source is pinned to [upstream commit 5926bdff](https://github.com/vidick/MIPRE-formalization/commit/5926bdff5db621f44682a101007ef2fe3ae8d970). The executed file has Git blob `1e422f210df6db82538e36e5a99c6630aba6300b` and SHA-256 `f4419be14a6e5d913af5c47a41a5890b2191316fa4f9029474ed49bc9208d63e`; GitHub readback matched the local executed blob. This is a finite **CAL** result and source-semantic rehearsal, not an imported upstream theorem, a general proof of interpreter correctness, an executed introspection compiler or a quantum compression result.
+
+The required Lean version has now been installed. **This dependency blocker was subsequently resolved in WP05**. WP05 has since imported the actual `MIPRE.Cost.Prog` and built the upstream introspection compiler. Instantiating `DecisionCompiler.compute` on concrete positive parameters and testing a compressed verifier remain separate implementation tasks. No SAT transfer beyond the explicit-game result has been established.
+
+**WP05 update (2 November 2026):** [Research PR #1162](https://github.com/grandchallenge/MATHSOLVE/pull/1162) records successful builds of the upstream native model (1,219 jobs) and introspection-decider module (3,978 jobs). The imported `Prog` replay passed. Positive-parameter compression remains unexecuted.
+
+## WP06: imported compiler theorem replay (2 November 2026)
+
+[MATHSOLVE WP06](https://github.com/grandchallenge/MATHSOLVE/pull/1166) directly imports the pinned upstream `MIPRE.Background.Introspection.DecisionCompiler` and executes seven Lean theorem proofs under the exact Lean 4.35.0-rc3 environment. For parameter zero, the imported `compute` selects `zeroProg`; this result is well-scoped, has a source-`Eval` execution witness, and obeys the source's exact acceptance condition (empty questions and answer lengths at most two). Concrete empty and nonempty question cases were proved accepted and rejected respectively. A seventh theorem characterizes the parameter-one compiler branch **symbolically**, without executing a generated positive-parameter program.
+
+The tested [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_SourceCompilerProofReplay.lean) has Git blob `68443763c21f182f02f05a151addd38c14e576ff` and SHA-256 `d6c4242a5242157edae2426bd407ab46469fe0ad0c764865fd0362fde2783451`. Its exact-branch Git blob matched the local executable file, and `lake env lean` exited 0 with no errors. The [execution and scope receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_IMPORTED_COMPILER_BRANCH_RECEIPT.md) records the first corrected namespace error and clean replay.
+
+**Boundary:** This verifies genuine source-interface theorems for the degenerate parameter-zero branch. No concrete positive-`lambda` quantum introspection output, three-stage compressor, classical asymptotic lower bound or SAT transfer theorem has thereby been established.
+
+**WP06 (2 November 2026).** The [admitted Lean proof replay](https://github.com/grandchallenge/MATHSOLVE/pull/1169) confirms six zero-parameter source properties, with details in the [WP06 evidence record](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_COMPILER_BRANCH_VERIFICATION_RECEIPT.md). Corrected positive-parameter interface propositions remain unverified candidates, not an executed compressor.
+
+**WP06 source-audit update (2 November 2026):** [MATHSOLVE WP06](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_PARAMETER_ERASURE_AND_SAT_TRANSFER_BOUNDARY.md) records the zero-parameter and oversized-description erasure behavior of the pinned introspection decider compiler. The resulting non-injectivity is a source-budget constraint, not a general SAT lower bound. Its companion Lean corollaries were subsequently **replayed successfully** against the imported source in WP07 (exit 0); the earlier description was accurate only at initial publication.
+
+**WP07 (2 November 2026):** [The source-erasure proof replay and adequacy theorem](https://github.com/grandchallenge/MATHSOLVE/pull/1171) distinguish two cases. Descriptions whose encoded sizes exceed the selected budget can collapse to identical compiled decider programs. A positive budget at least `max(esize S, esize D)+1` preserves both source descriptions through the compiler's clamp. Both are Lean-checked results against the pinned upstream compiler, but **preservation of source descriptions is not compiler injectivity or a polynomial SAT transfer**. The full quantum compressor and asymptotic classical lower bounds remain open.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
