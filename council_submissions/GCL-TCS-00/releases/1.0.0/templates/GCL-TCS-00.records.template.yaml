@@ -1,0 +1,101 @@
+template_contract:
+  standard:
+    id: GCL-TCS-00
+    version: 1.0.0
+  machine_contract_revision: 1.0.0-r1
+  authority: candidate_template_only
+  note: Examples encode existing normative fields and do not confer authority.
+claim_record:
+  claim_id: CLAIM-EXAMPLE-001
+  statement: Example bounded claim.
+  claim_type: observation
+  claim_status: proposed
+  scope: Example scope.
+  assumptions: []
+  dependencies: []
+  supporting_evidence: []
+  counterevidence: []
+  falsifiers: []
+  limitations:
+  - Example only.
+  owner: Example owner
+  last_reviewed: '2026-09-03'
+evidence_record:
+  evidence_id: EVID-EXAMPLE-001
+  evidence_type: test_result
+  location: evidence/example.json
+  version_or_hash: sha256:example
+  method: Example method.
+  result_summary: Example result.
+  scope: Example scope.
+  limitations:
+  - Example only.
+  created_by: Example producer
+  created_at: '2026-09-03T00:00:00Z'
+review_record:
+  review_id: REV-EXAMPLE-001
+  gate_id: G2
+  reviewer: Example reviewer
+  review_role: Amanuensis
+  independence_statement: Example only; no authority is conferred.
+  date: '2026-09-03'
+  decision: DEFERRED
+  findings:
+  - Example finding.
+  required_actions:
+  - Complete real review.
+  resolved_actions: []
+  evidence:
+  - evidence/example.json
+  reviewed_revision: sha256:0000000000000000000000000000000000000000000000000000000000000000
+exception_record:
+  exception_id: EXC-EXAMPLE-001
+  rule_id: example_rule
+  artifact_scope: Example artifact only
+  affected_content: Example content
+  justification: Example only.
+  risk_assessment: Example risk.
+  compensating_controls:
+  - Example control.
+  requested_by: Example requester
+  approved_by: Example approver
+  issued_date: '2026-09-03'
+  expiry_date: '2026-09-04'
+  status: requested
+gate_record:
+  gate_id: G2
+  artifact_id: EXAMPLE-ARTIFACT-001
+  reviewed_revision: sha256:0000000000000000000000000000000000000000000000000000000000000000
+  decision: DEFERRED
+  review_record_ref: reviews/REV-EXAMPLE-001.yaml
+  evidence:
+  - evidence/example.json
+  material_change_invalidates: true
+conformance_statement:
+  primary_profile: GCL-TCS-P02/1.0.0
+  secondary_profiles: []
+  impact_class: IC-2
+  target_state: CHECKED
+  dimensions:
+    L: CHECKED
+    T: CHECKED
+    S: CHECKED
+    C: DECLARED
+    E: DECLARED
+    R: UNASSESSED
+    P: CHECKED
+    V: DECLARED
+    G: CHECKED
+  active_exceptions: []
+  promotion_status: in_review
+  date: '2026-09-03'
+  standard_versions:
+  - GCL-TCS-00/1.0.0
+release_record:
+  change_log: Describe the machine-contract correction.
+  migration_note: State compatibility and migration implications.
+  compatibility_statement: No normative meaning change.
+  previous_standard_identifier: GCL-TCS-00/1.0.0
+  new_standard_identifier: GCL-TCS-00/1.0.0
+  review_record: reviews/example.yaml
+  promotion_record: not_requested
