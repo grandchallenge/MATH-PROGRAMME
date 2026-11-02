@@ -1,0 +1,9 @@
+# Family 031 — source-bound editorial critic
+
+Source revision: openai/math@1581d4cbdd69a0faf34b2089614fe2a814316a6a. Primary manuscript: Open Homomorphisms of Global Solvably Closed Galois Groups (October 5, 2026). Git blob a7c0c45c87ec37927b2184e7dfa8d0a288ccda7f, 456051 bytes, 23 PDF pages. The exact PDF was retrieved and its abstract, Theorem 1.1 and opening proof outline read.
+
+Statement check: For possibly infinite solvably closed Galois extensions E1/F1 and E2/F2 of number fields, every continuous open Galois homomorphism Gal(E1/F1) to Gal(E2/F2) is claimed to come from a unique field embedding E2 into E1. Its kernel is unrestricted. No additional cyclotomic compatibility condition is assumed: the manuscript says its proof derives this from openness. The source's terminology defines solvably closed as having no nontrivial abelian algebraic extension. The introduction invokes an earlier cyclotomic criterion and discusses local prime correspondences and logarithmic character arguments.
+
+Editorial verdict: ACCEPTED_EXPOSITION_WITH_LIMITS. The six-section article accurately records the directly checked statement, assumptions, direction of the embedding and qualifications. Not independently checked: the complete 23-page proof, logarithmic character rigidity, interpolation determinants, uniform exceptional-prime bounds, cyclotomic implications, cited dependencies, formal Lean correspondence or MATHCERT. Statement fidelity is not mathematical certification.
+
+Protected admission requires exact article SHA-256 and successful source Markdown, compendium tests and rendered HTML inspection. Parent #2901 remains open.
