@@ -1,6 +1,6 @@
 # EXT-015 REACH / 128 — combined parameter realization acceptance ledger
 
-**Disposition: partial construction supported by primary127; one consolidated correction and final source readback pending. The original full126 recovery contract remains incomplete.** The finite-loss lifting lemma and a combined liquid model on the explicit source-controlled family rule are justified. Their identification with every prior retained family is not established. No counterexample or error in accepted123 is claimed; protected admission remains separate.
+**Disposition: corrected source-controlled construction ACCEPTED by final127 after one correction; the original full126 recovery contract remains incomplete.** The finite-loss lifting lemma and combined liquid model on the explicit source-controlled family rule are justified. Identification with every prior retained family is not established. No counterexample or error in accepted123 is claimed; protected admission/readback remains separate.
 
 ## 1. Authoritative contract and source custody
 
@@ -21,7 +21,7 @@ Work remains in real liquid modules for fixed $0<p\le1$, in ZFC, on the same phy
 | Liquid actual image and rapid quotient | Complete graph realization, actual image, uniform rapid intersection and cokernel; cover-local source equality | Justified |
 | Recovery on every manifold at the profinite singleton | Witness/row equivalence, exact singleton evaluation and parameter sheafification126.3 | Justified for the explicitly source-controlled subrule only |
 | Recovery on every profinite test at a manifold point | Explicit source maps both ways identify the actual image, rapid subobject and quotient in the liquid heart | Justified for the full liquid coefficient object |
-| Monic comparison from the source-controlled real sheaf to the prior retained sheaf | Actual source inclusion and precisely the induced uniform rapid ideal; real sheafification preserves the monomorphism | Available correction; surjectivity unresolved |
+| Monic comparison from the source-controlled real sheaf to the prior retained sheaf | Actual source inclusion and precisely the induced uniform rapid ideal; real sheafification preserves the monomorphism | Accepted in corrected source; surjectivity unresolved |
 | Combined scalar action, connection and quantum operations | Finite source seminorm estimates, finite projective cotangent summand, actual all-jet ideal preservation | Justified on the constructed source-controlled model |
 | Actual R1 and physical cochain comparison triangle | Separate combined source/target graph constructions and the admitted continuous maps | Justified on that model; prior retained comparisons restrict along its inclusion |
 | Full modern pro-category, extended completed Weiss descent, original R3 or full M5/R4 | No proof supplied by this bounded construction | Open |
@@ -49,3 +49,17 @@ The primary127 correction is consolidated: restrict the unsupported full recover
 R0/R1/R2 and the separate087-089 procedure remain completed within their reviewed scopes. Original R3, full M5/R4 and both parents remain open. The full126 recovery contract remains open even if the corrected partial result is accepted.
 
 The recommended next independent bounded audit129 is the actual current module-sheaf pro-cochain contract applied to the explicit source-controlled combined model, its original R1 arrow and formal weight tower. It must check clause by clause which original M5 conditions apply and whether a comparison with the larger retained sheaf is required. The audit can proceed on the constructed model without assuming the unresolved surjectivity, but cannot transfer its results to that larger sheaf, identify enrichment categories, infer extended Weiss descent or close full126/M5. Any further proof attempt on the lifting gap requires a documented new mechanism; fresh context alone is insufficient. All129 claims remain unproved.
+
+## 5. Final corrected-source acceptance entry
+
+| Accepted material | Exact identity and verdict |
+| --- | --- |
+| Single corrected source commit |f277869a46a4949a60c763e5b1f8fe175d9cfcd1, persistent `research/reach-combined-corrected-frozen-20261102` |
+| Corrected126 |5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
+| Corrected ledger draft inspected by127 |89bb2d7c8a227bd329312910e712d323dbbd7dcc |
+| Final exact-source127 |74c47f1329d414fdf65f85cb3fdda8712852e65f |
+| Positive result accepted | Finite-loss lemma, complete compatible rows, liquid actual image/rapid quotient, explicit source-controlled real recovery, full liquid coefficient recovery on every profinite test, monic comparison, connection/quantum/legal disjoint maps and R1/physical triangle |
+| Original full recovery | UNRESOLVED: local surjectivity modulo the actual uniform mixed rapid ideal126.14; no proof or counterexample |
+| Correction count | One consolidated author correction; final127 requests no further scientific correction |
+
+Final127 verifies the actual corrected126 bytes and the inspected draft128 against the preserved primary and primary review. It confirms all requested scope/proof clarifications. This ledger's final integration records that verdict without expanding it. Final editorial consistency, affected checks, protected admission/readback and explicit tracker reconciliation remain subsequent obligations. The same-system nonauthor provenance and service interruption are disclosed; neither a green check nor a protected merge constitutes external mathematical certification.

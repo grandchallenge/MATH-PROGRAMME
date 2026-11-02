@@ -1,5 +1,7 @@
 # EXT-015 REACH / 127 — nonauthor review of the combined parameter realization
 
+**Final disposition: ACCEPT the corrected source-controlled combined model; the original full126 recovery remains UNRESOLVED and is not accepted.** Section9 verifies the single consolidated correction at actual126 blob5b05c6147d237ca1d22e4dcbce9262b0f038c163. The primary findings and matrix below are retained as historical review evidence. The correction supplies the requested explicit subrule and monic comparison, not a proof of the missing surjectivity.
+
 **Primary disposition: a valid witness-controlled construction; full recovery of the previously admitted manifold-family sheaf is UNRESOLVED.** The finite-loss lifting lemma and complete coefficient-row model are justified. They realize the explicit continuous whole-source witness rule in126 section2. The frozen sources108/117/123 do not establish that every previously admitted joint family has such coefficient witnesses. Therefore the first recovery in126.1/126.10 and the stated full126 exit are not established as written. A single consolidated correction should preserve the construction, name its source-controlled real family subrule, give its natural monic comparison to the prior retained sheaf and record the missing surjectivity lemma. No counterexample to that surjectivity, or error in an accepted123 theorem, has been demonstrated.
 
 ## 1. Frozen custody, sources and provenance
@@ -107,3 +109,35 @@ The minimal remaining lemma for recovering the full prior retained quotient is l
 No proof or counterexample for this surjectivity is supplied by the frozen126.1 argument; its Fourier construction assumes the required witnesses. Record the precise missing lemma and the attempted finite-loss quotient mechanism. The original full126 contract is therefore incomplete at this primary source, despite the useful explicit combined model and full manifold-point liquid recovery.
 
 R0/R1/R2 and separate087–089 retain their completed reviewed scopes. Original R3's distinct degree-two equation, current pro-category criteria, extended completed Weiss descent, full M5/R4 and both parents remain open. Freeze the single correction for final exact-source readback before changing this review's disposition. Scientific source gates, final editorial consistency, protected admission/readback and explicit tracker reconciliation remain separate events.
+
+## 9. Final exact corrected-source readback
+
+| Corrected custody | Exact identity |
+| --- | --- |
+| Supplied single-correction freeze |f277869a46a4949a60c763e5b1f8fe175d9cfcd1 |
+| Preserved corrected branch | `research/reach-combined-corrected-frozen-20261102` |
+| Actual corrected126 |5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
+| Actual corrected128 draft |89bb2d7c8a227bd329312910e712d323dbbd7dcc |
+| Preserved primary review freeze |b9d444decce07596746636d2664104e82aa71484 |
+| Primary127 before this addendum |72e870ebb8a57fe66d386e8d1ded0e0cc3de918e |
+
+Read-only byte hashing of the actual corrected126/128 and the primary127 before this edit matches all three supplied blobs. The corrected126 was read in full against the consolidated request. Its finite-loss estimates, quotient fundamental-theorem argument, compatible rows, liquid actual images, rapid graphs and constructed-model operator mechanisms remain the ones assessed above; no second mechanism is introduced by the correction.
+
+| Requested correction | Actual corrected source and final verdict |
+| --- | --- |
+| Explicit source-controlled subrule | Section2 defines continuous whole-history coefficient witnesses and the induced rapid denominator in126.2a. It expressly withholds the converse implication for the prior rule. VERIFIED |
+| Correct first axis |126.1 and Theorem126.3 recover the source-controlled real manifold sheaf at the coefficient singleton. They no longer claim all prior retained families. VERIFIED |
+| Preserve full second axis | Theorem126.3 retains the full liquid coefficient identity at a manifold point, proved by explicit source maps in both directions on every profinite test. VERIFIED |
+| Natural monic comparison |126.10a gives the real module-sheaf map to the prior retained sheaf. Its kernel proof uses the induced same uniform rapid relation and left-exact real sheafification; surjectivity is explicitly unproved. VERIFIED |
+| Scope the operators and triangle | Sections7–8 place the liquid-valued maps on the constructed model. On the real manifold axis their relation to123 is restriction along the monic comparison; no larger combined target is inferred. VERIFIED |
+| State the exact missing lemma |126.14 is local surjectivity modulo uniform rapidness of every mixed jet in fixed finite orders. It is explicitly unproved, and the Fourier lemma is not claimed to supply its hypotheses. VERIFIED |
+| Category operations | Section6 explicitly derives limits from measure-extension uniqueness and coproducts/colimits from free-measure presentations and cokernel closure before the plus construction. VERIFIED |
+| Physical common support | Section8 uses a larger compact parameter neighborhood, restricts to a smaller open neighborhood and retains the same physical support for every derivative before finite Sobolev refinement. VERIFIED |
+
+Thus every item of the single consolidated correction is present. I accept corrected126's finite-loss lemma, complete compatible coefficient stages, source-controlled combined liquid quotient/sheaf, its corrected two-axis theorem, the monic real comparison and the stated scalar/connection/quantum/R1/physical maps on that constructed model. Its manifold-point coefficient object remains the full admitted liquid object on all profinite tests. This is a parameter-enrichment limitation, not removal of a physical source, normal profile, legal forest or mandatory host input.
+
+The monic comparison's surjectivity is still unknown. Equation126.14 remains the precise missing recovery inference; no proof, counterexample, equivalence with the larger retained sheaf or completion of the original full126 contract is accepted. Accepted123 is unchanged. The source-controlled model still contains120's nonzero evaluation-kernel family and123's quantum primitive; no concreteness or general derived no-go is inferred. The physical map retains its multiplication defect and nonzero weight-zero kernel.
+
+Corrected draft128 was also read. It retains the original full recovery objective as incomplete and describes a proposed independent129 category-applicability audit on the constructed source-controlled model, its R1 arrow and formal weight tower. That audit does not require the unknown surjectivity for its stated subject, but must not transfer properties to the larger retained sheaf, identify the two differentiable conventions, infer extended Weiss or close full126/M5. Whether an original M5 clause requires that larger comparison must be checked explicitly. All129 assertions are still proposed and unproved; another lifting proof attempt requires a documented new mechanism. Draft128's pending final-readback language remains pre-integration custody, not an additional scientific finding.
+
+No further scientific correction is requested. The primary broad recovery remains historically withheld, and the corrected partial result has the final source-bound acceptance just stated. R0/R1/R2 and separate087–089 retain their completed scopes; original R3, current pro-category criteria, extended completed Weiss descent, full M5/R4 and both parents remain open. This final pass edits only127 and supplies no external certification. Required gates, final editorial integration, native protected admission/exact readback and explicit tracker reconciliation remain separate.
