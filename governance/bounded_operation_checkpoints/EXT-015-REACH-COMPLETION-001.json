@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP109",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP110",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "129 primary frozen; nonauthor130 actual source and sequence-cofibrancy hostile review pending",
+  "phase": "User-resumed same frozen129 critical review; potential infinite-sequence source-lemma error under audit",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "a2e14adab7d4fe11827ff7eabc6f66736649c2a1",
@@ -44,6 +44,16 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "130 exactprimary review resumed2026-11-02 at1299f7adcbb4776bd084b23fa71703d61a391cc84c1",
+        "status": "Prior130turn endedserviceusage-limit beforewriting130orfinalverdict; no acceptanceclaimed. Userresume restarted same nonauthor task afterthe stated quota interval. Parent/constructor readonlynotesidentifypossiblecounterexampletoliteralC5.6.1 overVect andindependentcompletion-repairroute; no authorcorrection applied. One correction remains. BasicC4membershipandbasecofibmapclaims mustbeauditedseparatelyfromSeq-projectivecofibrancy; suspendonlydependentclaims iferrorproved."
+      },
+      {
+        "kind": "artifact",
+        "identity": "Current protectedmain3191d772767dbd8e7131a6e184952f39417303ea",
+        "status": "All59frozen scientificinputs unchanged froma2e14adab7d4fe11827ff7eabc6f66736649c2a1. Ten interveningfilesoutsideREACH/relevantvalidators/schemas/workflows/AGENTS/pins. No numericalsynchronizationmanufactured. Currentrequiredprotectedchecks stillapplybeforeadmission."
+      },
       {
         "kind": "artifact",
         "identity": "Frozen129 primary c8555f50db715112a7d0e55a4fa1a8ff3c64f24d",
@@ -298,8 +308,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Freeze129 primary androute actualprimary-source hostile review",
-    "result": "Primaryc8555f50db715112a7d0e55a4fa1a8ff3c64f24d persistentfrozenref;1299f7adcbb4776bd084b23fa71703d61a391cc84c1 anddraft131aa64e6ed6817f185a882d5fb238ad9d087d7464e. Independent130required, includinginfinite-sequencecofibrancytest; no approvaloradmissionclaimed. Onecorrectionremains.",
+    "action": "Resume interrupted same-source130 review and verify material closure",
+    "result": "Frozen129/131 unchanged atc8555f50db715112a7d0e55a4fa1a8ff3c64f24d. No130file/previousverdict; onecorrection remains. Currentprotectedmain preserves59inputsandvalidationclosure. Exactbooksequencelemmahostiletest mustbereconciledbefore acceptingdependentclaims; oldR1/126scopesunchanged.",
     "evidence_refs": [
       "research/reach-procochain-primary-frozen-20261102",
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_PROCOCHAIN_APPLICABILITY_129.md"
@@ -309,7 +319,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-02T09:17:55.2120838Z"
+    "observed_at": "2026-11-02T21:53:43.3901915Z"
   },
   "resume": {
     "fresh_session_safe": true,
