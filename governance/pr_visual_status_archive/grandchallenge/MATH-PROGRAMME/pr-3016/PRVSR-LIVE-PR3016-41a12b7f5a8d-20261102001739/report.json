@@ -1,0 +1,232 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-02T00:16:56Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-02T00:17:18Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+    "exact_head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+    "pr_number": 3016,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26 Family 029 \u2014 reconciled primitive-root editorial admission"
+  },
+  "integration": {
+    "merge_commit_sha": "f5b44416c0a4db9ca65c18a27b04ae0f72158736",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 4,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID A416:2A9060:E62BB2:2F4D09E:6AE7D6A5 and timestamp 2026-11-02 00:17:41 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125027168989,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027169175,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027169257,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027169244,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027201119,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Classify material formal closure",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027206511,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027206625,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027206752,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027187127,
+          "conclusion": "skipped",
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125027185870,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027186791,
+          "conclusion": "skipped",
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125027187012,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027171919,
+          "conclusion": "failure",
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Protected material-profile delegated review",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125027206213,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125027172057,
+          "conclusion": "success",
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125027207184,
+          "conclusion": "success",
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125027173373,
+          "conclusion": "skipped",
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125027206750,
+          "conclusion": null,
+          "head_sha": "41a12b7f5a8d161182fc1916e716621d10461bc5",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-02T00:17:39Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "6d98df62c0cd1a08d045c798332965908423aff3b13f81fc92d3bfc960ea961c"
+  },
+  "report_id": "PRVSR-LIVE-PR3016-41a12b7f5a8d-20261102001739",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "source_or_claim_classification"
+    ]
+  }
+}
