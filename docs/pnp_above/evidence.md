@@ -32,6 +32,8 @@ The source is pinned to [upstream commit 5926bdff](https://github.com/vidick/MIP
 
 The required Lean version has now been installed. **This dependency blocker was subsequently resolved in WP05**. WP05 has since imported the actual `MIPRE.Cost.Prog` and built the upstream introspection compiler. Instantiating `DecisionCompiler.compute` on concrete positive parameters and testing a compressed verifier remain separate implementation tasks. No SAT transfer beyond the explicit-game result has been established.
 
+**WP05 update (2 November 2026):** [Research PR #1162](https://github.com/grandchallenge/MATHSOLVE/pull/1162) records successful builds of the upstream native model (1,219 jobs) and introspection-decider module (3,978 jobs). The imported `Prog` replay passed. Positive-parameter compression remains unexecuted.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
