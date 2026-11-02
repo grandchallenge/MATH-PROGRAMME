@@ -145,7 +145,9 @@ class SolveSpecialistTests(unittest.TestCase):
         if suffix.startswith("contents/"):
             if "material_admission_receipts" in suffix:
                 value, sha = self.receipt, self.receipt_blob
-            elif suffix.startswith("contents/contributions/solve-test/logical-verifier-review.json"):\n                value, sha = self.proof, self.proof_blob\n            elif suffix.startswith("contents/contributions/solve-test/review.json"):
+            elif suffix.startswith("contents/contributions/solve-test/logical-verifier-review.json"):
+                value, sha = self.proof, self.proof_blob
+            elif suffix.startswith("contents/contributions/solve-test/review.json"):
                 value, sha = self.proof, self.proof_blob
             elif suffix.startswith("contents/contributions/solve-test/assessment.json"):
                 value, sha = self.material, self.material_blob
