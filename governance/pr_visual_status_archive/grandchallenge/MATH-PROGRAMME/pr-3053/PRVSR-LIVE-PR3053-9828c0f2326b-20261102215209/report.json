@@ -1,0 +1,196 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-02T10:48:42Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-02T21:51:02Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+    "exact_head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+    "pr_number": 3053,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26-ED-01: Family 108 cubic border determinantal complexity documentary"
+  },
+  "integration": {
+    "merge_commit_sha": null,
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 2,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 5C35:7CCF0:2D64D:935AC:6AE9060A and timestamp 2026-11-02 21:52:10 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125574566926,
+          "conclusion": "success",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "Analyze (actions)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574567320,
+          "conclusion": null,
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125574567152,
+          "conclusion": null,
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125574566705,
+          "conclusion": null,
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125574905043,
+          "conclusion": "neutral",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574576373,
+          "conclusion": "skipped",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574574258,
+          "conclusion": "failure",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574577489,
+          "conclusion": "skipped",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574574117,
+          "conclusion": "success",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "Observe material closure (no admission authority)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574574173,
+          "conclusion": "failure",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "Protected material-profile delegated review",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574574226,
+          "conclusion": "success",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125574574008,
+          "conclusion": null,
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125574576590,
+          "conclusion": "skipped",
+          "head_sha": "9828c0f2326b59df63ab18fe77508cc79db42f5b",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-02T21:52:09Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "d4f5a38b43c954b796c439ca51048cc8951ae7dfdfcb4ba14197a5fdca3f44aa"
+  },
+  "report_id": "PRVSR-LIVE-PR3053-9828c0f2326b-20261102215209",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane"
+    ]
+  }
+}
