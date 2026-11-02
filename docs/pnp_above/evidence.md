@@ -30,7 +30,9 @@ The [WP04 research PR](https://github.com/grandchallenge/MATHSOLVE/pull/1161) ad
 
 The source is pinned to [upstream commit 5926bdff](https://github.com/vidick/MIPRE-formalization/commit/5926bdff5db621f44682a101007ef2fe3ae8d970). The executed file has Git blob `1e422f210df6db82538e36e5a99c6630aba6300b` and SHA-256 `f4419be14a6e5d913af5c47a41a5890b2191316fa4f9029474ed49bc9208d63e`; GitHub readback matched the local executed blob. This is a finite **CAL** result and source-semantic rehearsal, not an imported upstream theorem, a general proof of interpreter correctness, an executed introspection compiler or a quantum compression result.
 
-The required Lean version has now been installed. **The remaining blocker is the absence of the upstream project's pinned Mathlib/Lake dependency build**. Importing the actual source `MIPRE.Cost.Prog`, instantiating `DecisionCompiler.compute`, and testing a compressed verifier remain separate implementation tasks. No SAT transfer beyond the explicit-game result has been established.
+The required Lean version has now been installed. **This dependency blocker was subsequently resolved in WP05**. WP05 has since imported the actual `MIPRE.Cost.Prog` and built the upstream introspection compiler. Instantiating `DecisionCompiler.compute` on concrete positive parameters and testing a compressed verifier remain separate implementation tasks. No SAT transfer beyond the explicit-game result has been established.
+
+**WP05 update (2 November 2026):** [Research PR #1162](https://github.com/grandchallenge/MATHSOLVE/pull/1162) records successful builds of the upstream native model (1,219 jobs) and introspection-decider module (3,978 jobs). The imported `Prog` replay passed. Positive-parameter compression remains unexecuted.
 
 ## Source-to-claim matrix
 
