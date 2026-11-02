@@ -87,7 +87,7 @@ def _protected_json(
 def _verify_review_origin(
     api_get: Callable[[str], Any], repository: str,
     proof_path: str, proof_blob: str, proof_record: dict,
-    reviewer: str, candidate_author: str,
+    reviewer: str, candidate_author: str, protected_head: str,
 ) -> dict[str, Any]:
     """Verify the stated reviewer actually approved the exact domain evidence.
 
@@ -119,12 +119,45 @@ def _verify_review_origin(
     changed = api_get(prefix + "/files?per_page=100")
     if not isinstance(changed, list) or len(changed) != pr["changed_files"]:
         raise ReceiptError("source PR exact file list missing or truncated")
-    if not any(
-        isinstance(item, dict) and item.get("filename") == proof_path
-        and item.get("status") in ("added", "modified")
-        and item.get("sha") == proof_blob for item in changed
-    ):
-        raise ReceiptError("reviewed domain PR does not contain evidence blob")
+    if proof_record.get("authority_domain") == "SOLUTION_INTEGRITY":
+        # Two-stage source provenance: the immutable reviewed assessment is in
+        # source PR A. The later protected review attestation contains its real
+        # GitHub approval ID, which cannot exist while PR A is being authored.
+        reviewed = anchor.get("reviewed_material")
+        if not isinstance(reviewed, dict) or set(reviewed) != {"path", "blob_sha"}:
+            raise ReceiptError("missing independently reviewed material lock")
+        reviewed_path = reviewed.get("path")
+        reviewed_blob = _sha(reviewed.get("blob_sha"))
+        if not isinstance(reviewed_path, str) or not reviewed_path.startswith("contributions/"):
+            raise ReceiptError("reviewed material outside domain contribution scope")
+        if reviewed_path == proof_path:
+            raise ReceiptError("circular approval anchor: reviewed object is provenance attestation")
+        material, actual = _protected_json(api_get, repository, reviewed_path, protected_head)
+        if actual != reviewed_blob:
+            raise ReceiptError("reviewed material protected blob drift")
+        for field in ("authority_domain", "subject_repository", "subject_sha",
+                      "material_fingerprint", "review_scope", "solve_execution"):
+            if material.get(field) != proof_record.get(field):
+                raise ReceiptError("reviewed material differs from later attestation")
+        if material.get("record_type") != "GCL_DOMAIN_REVIEWABLE_ASSESSMENT_V1":
+            raise ReceiptError("reviewed assessment has invalid record type")
+        if material.get("reviewer_identity") not in (None, reviewer):
+            raise ReceiptError("reviewed assessment reviewer mismatch")
+        if material.get("disposition") != "ROLE_SCOPED_REVIEW_ACCEPTED":
+            raise ReceiptError("reviewed assessment not positively scoped")
+        if not any(
+            isinstance(item, dict) and item.get("filename") == reviewed_path
+            and item.get("status") in ("added", "modified")
+            and item.get("sha") == reviewed_blob for item in changed
+        ):
+            raise ReceiptError("source PR does not contain exact reviewed assessment")
+    else:
+        if not any(
+            isinstance(item, dict) and item.get("filename") == proof_path
+            and item.get("status") in ("added", "modified")
+            and item.get("sha") == proof_blob for item in changed
+        ):
+            raise ReceiptError("reviewed domain PR does not contain evidence blob")
     reviews = api_get(prefix + "/reviews?per_page=100")
     if not isinstance(reviews, list) or len(reviews) >= 100:
         raise ReceiptError("domain PR review list missing or truncated")
@@ -287,6 +320,93 @@ def protected_specialist_receipt(
     proof_record, proof_blob = _protected_json(api_get, owner, p, protected_sha)
     if proof_blob != proof["blob_sha"]:
         raise ReceiptError("protected underlying evidence byte identity drift")
+    # GCL-AGENT-STAFFING-001: Solve may adjudicate execution integrity
+    # through a distinct delegated logical Verifier. No external reviewer
+    # identity or public certification is implied by this path.
+    if domain == "SOLUTION_INTEGRITY" and proof_record.get("record_type") == "GCL_LOGICAL_ROLE_SCOPED_CRITICAL_REVIEW_V1":
+        subject = proof_record.get("subject") or {}
+        if (proof_record.get("authority_domain") != domain or
+                proof_record.get("logical_role") != "VERIFIER" or
+                proof_record.get("review_mode") != "DELEGATED_NON_RESERVED_LOGICAL_ROLE" or
+                proof_record.get("disposition") != "LOGICAL_ROLE_REVIEW_ACCEPTED_EXECUTION_INTEGRITY_ONLY" or
+                subject != {"repository": REPO, "head_sha": head,
+                            "material_fingerprint": fingerprint}):
+            raise ReceiptError("delegated Solve review has wrong role, scope or subject")
+        locked = proof_record.get("reviewed_artifact") or {}
+        path = locked.get("path")
+        if not isinstance(path, str) or not path.startswith("contributions/") or path == p:
+            raise ReceiptError("delegated review has invalid independent assessment path")
+        assessment, assessment_blob = _protected_json(api_get, owner, path, protected_sha)
+        if assessment_blob != _sha(locked.get("blob_sha")):
+            raise ReceiptError("delegated review assessment blob drift")
+        if (assessment.get("record_type") != "GCL_DOMAIN_REVIEWABLE_ASSESSMENT_V1" or
+                assessment.get("authority_domain") != domain or
+                assessment.get("subject_repository") != REPO or
+                assessment.get("subject_sha") != head or
+                assessment.get("material_fingerprint") != fingerprint or
+                assessment.get("review_scope") != "SOLVE_EXECUTION_INTEGRITY_ONLY" or
+                assessment.get("disposition") != "ROLE_SCOPED_REVIEW_ACCEPTED" or
+                record.get("review_scope") != "SOLVE_EXECUTION_INTEGRITY_ONLY"):
+            raise ReceiptError("delegated assessment has wrong scoped disposition")
+        number = proof_record.get("reviewed_source_pr")
+        source_head = _sha(proof_record.get("reviewed_source_head"))
+        source_merge = _sha(proof_record.get("reviewed_protected_merge"))
+        if type(number) is not int or number <= 0:
+            raise ReceiptError("delegated review source PR invalid")
+        source_pr = api_get(f"/repos/{owner}/pulls/{number}")
+        if (not isinstance(source_pr, dict) or not source_pr.get("merged_at") or
+                (source_pr.get("head") or {}).get("sha") != source_head or
+                source_pr.get("merge_commit_sha") != source_merge or
+                (source_pr.get("base") or {}).get("ref") != "main"):
+            raise ReceiptError("delegated review source not protected-merged at exact head")
+        if source_pr.get("changed_files") not in range(1, 100):
+            raise ReceiptError("delegated review source manifest unbounded")
+        source_files = api_get(f"/repos/{owner}/pulls/{number}/files?per_page=100")
+        if not isinstance(source_files, list) or len(source_files) != source_pr["changed_files"]:
+            raise ReceiptError("delegated review source manifest missing or truncated")
+        if not any(isinstance(item, dict) and item.get("filename") == path
+                   and item.get("sha") == assessment_blob
+                   and item.get("status") in ("added", "modified")
+                   for item in source_files):
+            raise ReceiptError("delegated review assessment absent from protected source PR")
+        checks = proof_record.get("checks") or {}
+        for check in ("capture_result_sha256", "source_blob_linkage",
+                      "replay_capture_blob_lock", "adjudication_replay_blob_lock",
+                      "reproducibility_digest_and_dispatch", "claim_effects_all_false"):
+            if checks.get(check) != "PASS":
+                raise ReceiptError("delegated review critical check not passed")
+        if (checks.get("exact_search_completeness") != "NOT_ADMITTED" or
+                checks.get("independent_external_execution") != "NOT_ATTESTED" or
+                proof_record.get("scope_exclusions") != [
+                    "MATHEMATICAL_CERTIFICATION", "SOURCE_SEMANTIC_PROMOTION",
+                    "PUBLICATION", "PROTECTION_AUTHORITY"]):
+            raise ReceiptError("delegated Solve review attempted authority promotion")
+        if proof_record.get("github_review_provenance", {}).get("source_pr_approved_by_non_author") is not False:
+            raise ReceiptError("delegated review misrepresents GitHub independence")
+        execution = _verify_solve_integrity(
+            api_get, owner, protected_sha, record, assessment, path)
+        now = api_get(f"/repos/{owner}/git/ref/heads/main")
+        if _sha(((now or {}).get("object") or {}).get("sha")) != protected_sha:
+            raise ReceiptError("specialist source main moved during verification")
+        return {
+            "disposition": "PROTECTED_DOMAIN_EVIDENCE_RECOGNIZED",
+            "domain": domain, "source_repository": owner,
+            "protected_commit_sha": protected_sha,
+            "protected_receipt_path": name, "protected_receipt_blob": receipt_blob,
+            "protected_underlying_blob": proof_blob,
+            "subject_sha": head, "material_fingerprint": fingerprint,
+            "review_scope": record["review_scope"],
+            "solve_execution_evidence": execution,
+            "authenticated_review_origin": None,
+            "delegated_logical_review": {
+                "role": "VERIFIER", "review_blob": proof_blob,
+                "assessment_blob": assessment_blob},
+            "authority": {
+                "independent_scientific_validation_performed_by_this_controller": False,
+                "new_certification_created": False,
+                "github_approval_created": False,
+                "substantive_review_replaced": False},
+        }
     # The receipt must not point to an unrelated protected JSON object.
     # A second, independently admitted review artifact has to bind the exact
     # candidate bytes and the same domain with a positive scoped disposition.
@@ -322,7 +442,7 @@ def protected_specialist_receipt(
             api_get, owner, protected_sha, record, proof_record, p,
         )
     origin = _verify_review_origin(
-        api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author,
+        api_get, owner, p, proof_blob, proof_record, reviewer, candidate_author, protected_sha,
     )
     # Reconfirm current protected branch has not moved during retrieval.
     now = api_get(f"/repos/{owner}/git/ref/heads/main")
