@@ -1,0 +1,196 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-01T23:23:43Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-02T21:51:59Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+    "exact_head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+    "pr_number": 3007,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26-ED-01: Family 050 Griffiths positivity counterexample documentary article"
+  },
+  "integration": {
+    "merge_commit_sha": null,
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 2,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 47C7:3FCBF3:352CD2:AD5AA0:6AE9066D and timestamp 2026-11-02 21:53:49 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125575045683,
+          "conclusion": "success",
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "Analyze (actions)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125575045446,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575045975,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575045719,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575425400,
+          "conclusion": "neutral",
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125575057010,
+          "conclusion": "skipped",
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125575054867,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575057443,
+          "conclusion": "skipped",
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125575055662,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575053099,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "Protected material-profile delegated review",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575053552,
+          "conclusion": "success",
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125575055456,
+          "conclusion": null,
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125575055937,
+          "conclusion": "skipped",
+          "head_sha": "e7a5d757dbd78290f8391539c57782f395cafab3",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-02T21:53:48Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "877f42317d4dd664d32589d069ff4ecf8fc1eb8705ea2c5e6c739573016ea537"
+  },
+  "report_id": "PRVSR-LIVE-PR3007-e7a5d757dbd7-20261102215348",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane"
+    ]
+  }
+}
