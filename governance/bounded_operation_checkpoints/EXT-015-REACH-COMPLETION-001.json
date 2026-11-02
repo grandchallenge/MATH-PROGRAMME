@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP117",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP118",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "PR3079 five-file documentary closeout submitted; protected metadata readback required",
+  "phase": "PR3079 documentary consistency CLEAR; exact required checks and native queue remain",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "d3dca32faf023c73af36e266501bb224488a83c5",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "Documentary consistency CLEAR at1fbac056116443eccd674f267c67388e36c9c655",
+        "status": "Distinct nonauthor verifies5frozenblobs/62sciencehashes; CP116proposed132deterministic/unproved, alloriginalunknowns preserved; automaticroutineAppfailureheld/noapproval/retry/bypass. No scopeexpansion/newcertification. No fileschanged."
+      },
       {
         "kind": "artifact",
         "identity": "Documentary PR3079 at1fbac056116443eccd674f267c67388e36c9c655",
@@ -358,8 +363,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "PR3079 five-file documentary closeout submitted; protected metadata readback required",
-    "result": "Fivefilecloseout frozen; source129/130/131 unchanged. Scientific3077 readback8blobs/5nativecontexts/62sources/terminalPASS;4issuebodies/states/7portfolioPASS. CP116proposednext132unproved. Requiredchecks/currentdocumentaryreview/nativeprotectedreadbackpending; no fullprogrammeclosure.",
+    "action": "PR3079 documentary consistency CLEAR; exact required checks and native queue remain",
+    "result": "FivefiledocumentaryconsistencyCLEAR; nativechecks/queue/protectedreadback/fourissueCPpointer/exactfinalportfolio/cleanreturnreceiptremain. CP116willbecanonicalnextstepaftermetadataadmission; no newmathclaim.",
     "evidence_refs": [
       "research/reach-procochain-readback-20261102",
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_PROCOCHAIN_APPLICABILITY_129.md",
@@ -370,7 +375,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-02T22:27:01.7347591Z"
+    "observed_at": "2026-11-02T22:27:57.6827561Z"
   },
   "resume": {
     "fresh_session_safe": true,
