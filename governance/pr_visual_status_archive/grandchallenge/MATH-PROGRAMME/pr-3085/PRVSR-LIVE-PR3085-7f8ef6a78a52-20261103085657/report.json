@@ -1,0 +1,201 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+      "name": "formal-validation / formal-validation",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "5 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-03T08:56:40Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-03T08:56:52Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+    "exact_head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+    "pr_number": 3085,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26 Family 073 \u2014 source-reviewed Falconer documentary, sequenced after 071"
+  },
+  "integration": {
+    "merge_commit_sha": "7b44c21a101fe99ed235ec828a4a7c3fcc2a4d41",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 6,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125819479496,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125819479600,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "Analyze (c-cpp)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 125819479623,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125819479694,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "Analyze (python)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 125819487976,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125819484058,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "Protected material-profile delegated review",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125819484234,
+          "conclusion": null,
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "admit",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125819485604,
+          "conclusion": "skipped",
+          "head_sha": "7f8ef6a78a52120aaee7e2ea60d42c172cb7f3af",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-03T08:56:57Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "373c65ea72fbf1dd2d77c8ecf6a92f46ec78782f458fd1d0332f827c9d725e7f"
+  },
+  "report_id": "PRVSR-LIVE-PR3085-7f8ef6a78a52-20261103085657",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "source_or_claim_classification"
+    ]
+  }
+}
