@@ -1,0 +1,155 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-03T09:45:00Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-03T09:45:11Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+    "exact_head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+    "pr_number": 3087,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "OAI26 Family 075 \u2014 Fourier L log L source-pinned editorial admission"
+  },
+  "integration": {
+    "merge_commit_sha": "ca7abcc6cdf2793fd3ef1a96eef9ac04f94b2eb9",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 3,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 8C05:18E76F:78A15:83447:6AE9AD31 and timestamp 2026-11-03 09:45:21 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 125841290302,
+          "conclusion": null,
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125841290459,
+          "conclusion": null,
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125841290619,
+          "conclusion": null,
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125841290418,
+          "conclusion": null,
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125841301630,
+          "conclusion": "skipped",
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "Protected material-profile delegated review",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 125841298669,
+          "conclusion": null,
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "admit",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 125841299932,
+          "conclusion": "skipped",
+          "head_sha": "123366731fdf556a0d21557f608769df68dac9be",
+          "name": "qualify",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-03T09:45:19Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "47e577e6a2b445ec85c0c435bc969d93943732ae02bac7e0b9519a6dbf6ba226"
+  },
+  "report_id": "PRVSR-LIVE-PR3087-123366731fdf-20261103094519",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "governance_or_control_plane",
+      "source_or_claim_classification"
+    ]
+  }
+}
