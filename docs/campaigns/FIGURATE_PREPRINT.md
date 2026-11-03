@@ -114,6 +114,12 @@ Filipin and Szalay [3] prove that no triangular-output unit-offset quadruple con
 
 Consequently, a productive theorem programme must pin precise conditions, not merely ask whether triangular quadruples exist. Classical square-output quintuple nonexistence was settled in 2019 by He, Togbé and Ziegler [7]. The expanded citation catalogue documents these distinctions and links the sources.
 
+### An explicit published Type B quadruple
+
+The original 2023 Filipin–Szalay paper supplies the triangular-output quadruple with entries 14, 31, 135 and 3510, in which all six shifted products are triangular. Thus a universal Type B offset-one quadruple nonexistence claim is **false**. The nonextension theorem in that paper concerns the prescribed pair 1 and 2. Our entry-bound-60 census does not include the published quadruple and cannot be used to infer global absence.
+
+[WP05 primary-source matrix](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP05_PRIMARY_SOURCE_MATRIX_002.md) records theorem numbers and argument dependencies where original full papers have been inspected, while keeping inaccessible original proofs distinctly unverified.
+
 ## 6. Research questions
 
 The pilot's first substantive mathematical questions are:
