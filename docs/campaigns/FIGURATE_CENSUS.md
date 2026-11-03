@@ -55,6 +55,12 @@ The fact that no Type A, triangular, offset +1 quadruple occurs in a bound-60 su
 
 Read the [source-critical bibliography](FIGURATE_SOURCES.md) before inferring anything about maximum tuple sizes or general extension. An experimental positive tuple is only a witness; an experimental zero only concerns the declared finite domain.
 
+## Full-paper counterexample outside the census bound
+
+The [original 2023 Filipin–Szalay paper](https://hrcak.srce.hr/en/file/443905) records the **Type B triangular-output, offset +1** quadruple with entries 14, 31, 135 and 3510. Each pair product plus one is triangular, at indices 29, 61, 313, 91, 466 and 973 respectively. This example is excluded from the L60 experiment solely because the larger entries exceed 60.
+
+The paper's nonextension theorem applies specifically to quadruples **containing both 1 and 2**; it is not a global nonexistence result. A regression for the published quadruple is in [MATHSOLVE](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_published_type_b_quadruple.py). This should be retained as a high-value external witness for future search benchmarks.
+
 ## Claim and continuity record
 
 **Established:** machine-readable bounded archive, exact source implementation, runbook, and executable verification route.

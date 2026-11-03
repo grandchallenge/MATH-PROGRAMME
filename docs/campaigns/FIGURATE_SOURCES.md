@@ -53,6 +53,18 @@ In particular, our L60 computational rows with zero quadruples cannot be promote
 | Parameterized computational sieve and asymptotic cost bound | **Research direction, no measured speed-up** | Reproducible implementation and rigorous complexity or verified benchmark comparison |
 | Exhaustive absence within fixed entry bound | **Finite computation only** | Exact solver replay, independent witness/coverage check, machine-readable configuration |
 
+## Full-text source fidelity checkpoint (3 November 2026)
+
+The [WP05 theorem matrix](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP05_PRIMARY_SOURCE_MATRIX_002.md) now distinguishes inspected original papers from publisher/author abstracts and third-party transcriptions.
+
+The **original full text** of Filipin and Szalay (2023) was inspected through the [journal-hosted PDF](https://hrcak.srce.hr/en/file/443905). Its Definition 1.2 and Theorem 1.3 prohibit **only** Type B triangular-output unit-offset quadruples containing the prescribed pair 1 and 2. Lemma 2.1 excludes extension of the known triple with entries 1, 2 and 27; Proposition 6.2 treats large terms of the resulting Pell sequence. The proof uses simultaneous Pell equations, integral-point computations, linear forms in logarithms, recurrence intersections and Baker–Davenport reduction. Reading those dependencies is not an independent verification of Magma or numerical calculations.
+
+Crucially, the same original paper explicitly reports the Type B unit-offset triangular quadruple with entries **14, 31, 135 and 3510**. The six pairwise shifted products are triangular numbers of indices 29, 61, 313, 91, 466 and 973. A small entry-bound-60 census cannot see this known witness; no global Type B quadruple absence should be inferred from that census.
+
+The 2025 paper by Filipin, Jurasić and Szalay [DOI 10.1515/ms-2025-0057](https://doi.org/10.1515/ms-2025-0057) establishes nonextension of the **prescribed** triangular-output offset-3 pair with entries 3 and 6, according to its institutional abstract. The original complete proof is not yet inspected.
+
+The 2026 Filipin–Jurasić–Togbé paper has a publisher-confirmed abstract. An accessible **third-party reproduction** identifies Theorem 1.1 and numbered dependencies Lemma 4.1, Lemma 5.2, Theorem 6.1 and Proposition 6.2, including the final finite Pari/GP reduction. These provisional numbers and details must still be checked against the original publisher PDF. Neither 2026 arXiv paper's original full proof has yet been inspected. No source-fidelity record should be promoted to full-proof review until the missing originals are obtained.
+
 ## Source audit method and limitations
 
 The register verifies identities, publication metadata, terminology and the **narrowest stated conclusions** available from the primary publisher, author bibliography, and arXiv abstract pages. It does **not** independently inspect or certify every lemma and proof in these papers, and cannot prove a global literature search complete. Treat the F01 completeness conjecture as *apparently open in the inspected 2026 sources*, rather than a claim about all possible unpublished work.
