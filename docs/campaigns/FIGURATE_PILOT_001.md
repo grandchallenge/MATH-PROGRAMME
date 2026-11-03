@@ -90,6 +90,14 @@ The limit is the maximum **entry value**, not the maximum figurate index. Exhaus
 
 The pilot continues only if its evidence supports an original theorem, a rigorously improved algorithm, or a credible proof programme. All other findings retain their narrower computational or conjectural status.
 
+## Documentary library
+
+The documentary accompaniment is now organized as three separate, source-linked records:
+
+- [Source-critical bibliography and novelty ledger](FIGURATE_SOURCES.md): precise distinctions between published theorems, conjectures, offset-specific restrictions and new research questions.
+- [Reproducible bounded census](FIGURATE_CENSUS.md): full parameter domain, the 270-row archive, exact replay and finite-search limitations.
+- [Research preprint, version 0.1](FIGURATE_PREPRINT.md): arXiv-style methods manuscript, elementary identities, computational table and research agenda. It is a research draft, **not** a submitted article or a proved new theorem.
+
 ## Evidence, governance and continuity
 
 - [Canonical FIGURATE pilot charter, MATH-PROGRAMME #3093](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3093)
@@ -97,4 +105,4 @@ The pilot continues only if its evidence supports an original theorem, a rigorou
 - [Protected implementation and checks, PR #1175](https://github.com/grandchallenge/MATHSOLVE/pull/1175)
 - [Research source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_census.py) and [regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_census.py)
 
-**Continuity boundary:** The charter and technical baseline are admitted. The source-critical catalogue, parameter survey, theorem attempt, formal certification and final synthesis remain open. Publication of this explanatory page does not promote those research obligations to completion.
+**Continuity boundary:** The charter and technical baseline are admitted. The primary-source documentary catalogue, bounded parameter survey and preliminary manuscript have source editions; full-proof semantic review, larger search frontier, theorem attempt and formal certification remain open. Publication of this explanatory page does not promote those research obligations to completion.
