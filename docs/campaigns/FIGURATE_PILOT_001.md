@@ -8,7 +8,7 @@ This page is an accessible companion to the [exact research specification](https
 
 ## What is a figurate number?
 
-The $k$-gonal number at index $t$ is
+The polygonal number of order $k$ at index $t$ is
 
 $$
 P_k(t)=\frac{(k-2)t^2-(k-4)t}{2}, \qquad k\geq3,\quad t\geq1.
@@ -36,7 +36,7 @@ A result for one type is not automatically a result for another.
 
 ### Two examples
 
-The classical Diophantine quadruple $\{1,3,8,120\}$ has the property that each pairwise product plus $1$ is a square: the resulting values are $4,9,121,25,361,961$. Because squares are $4$-gonal numbers, it is also a Type B example with $k=4,c=1$.
+The classical Diophantine quadruple $\{1,3,8,120\}$ has the property that each pairwise product plus $1$ is a square: the resulting values are $4,9,121,25,361,961$. Because squares are polygonal numbers of order $4$, it is also a Type B example with $k=4,c=1$.
 
 The triple $\{1,2,27\}$ is a Type B triangular example with $k=3,c=1$, because
 
