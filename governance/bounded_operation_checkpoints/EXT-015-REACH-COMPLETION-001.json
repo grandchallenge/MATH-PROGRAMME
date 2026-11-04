@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP143",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP144",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "m5_contract_audit_scientific_admission",
+  "phase": "m5_contract_audit_scientific_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "4a72e2bf408dd0fc97111b4851cfada348c57d91",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "await_exact_m5_audit_checks_then_native_queue",
-      "description": "Wait for the five required checks on the exact reviewed audit head. Recheck effective rules and material evidence, then request native protected queue admission."
+      "id": "verify_native_m5_audit_merge_and_reconcile_trackers",
+      "description": "Wait for the native merge of the exact reviewed audit. Verify the second parent, eight changed blobs, five required native contexts, 76 scientific sources and the terminal checkpoint, then reconcile the four issue records."
     }
   ],
   "next_action": {
-    "id": "await_exact_m5_audit_checks_then_native_queue",
-    "description": "Wait for the five required checks on the exact reviewed audit head. Recheck effective rules and material evidence, then request native protected queue admission.",
+    "id": "verify_native_m5_audit_merge_and_reconcile_trackers",
+    "description": "Wait for the native merge of the exact reviewed audit. Verify the second parent, eight changed blobs, five required native contexts, 76 scientific sources and the terminal checkpoint, then reconcile the four issue records.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_M5_CONTRACT_139.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3130",
+        "status": "QUEUED_POSITION_1_AT_2026-11-04T23:42:02Z"
+      },
       {
         "kind": "artifact",
         "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3130",
@@ -458,8 +463,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "m5_contract_audit_scientific_admission",
-    "result": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING",
+    "action": "m5_contract_audit_scientific_native_queue",
+    "result": "QUEUED_POSITION_1_AT_2026-11-04T23:42:02Z",
     "evidence_refs": [
       "research/reach-m5-contract-audit-20261104",
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
@@ -470,7 +475,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T23:40:05.5401630Z"
+    "observed_at": "2026-11-04T23:42:08.3154967Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -537,7 +542,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Wait for the five required checks on the exact reviewed audit head. Recheck effective rules and material evidence, then request native protected queue admission."
+    "instructions": "Wait for the native merge of the exact reviewed audit. Verify the second parent, eight changed blobs, five required native contexts, 76 scientific sources and the terminal checkpoint, then reconcile the four issue records."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
