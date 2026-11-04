@@ -105,8 +105,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=32, editorially_admitted=10,
-                                         reference_only=330, generated_pages=373))
+                                         editorial_drafts=33, editorially_admitted=10,
+                                         reference_only=329, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
