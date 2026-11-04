@@ -46,6 +46,19 @@ def main() -> int:
     assert contract_test["policy_shards"] == ["core", "contracts", "docs"]
     assert not contract_test["unknown_paths"]
 
+    # OAI26 documentary edits use the bounded publication/regression lanes.
+    # An exact compendium-test path must not trigger unrelated CMDG/OZ.
+    oai26_test = impact.classify_paths(["tests/test_oai26_compendium.py"])
+    assert oai26_test["policy_shards"] == ["core", "docs", "repository-regression"]
+    assert not oai26_test["unknown_paths"]
+    oai26_pr = impact.classify_paths([
+        "governance/oai26_documentary/editorial/094.md",
+        "tests/test_oai26_compendium.py",
+    ])
+    assert oai26_pr["policy_shards"] == ["core", "contracts", "docs", "repository-regression"]
+    assert not oai26_pr["unknown_paths"]
+    # Preserve conservative treatment for other, unregistered test modules.
+
     unknown_test = impact.classify_paths(["tests/test_new_unclassified_research.py"])
     assert unknown_test["policy_shards"] == list(impact.ALL_SHARDS)
     assert unknown_test["unknown_paths"] == ["tests/test_new_unclassified_research.py"]

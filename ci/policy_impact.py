@@ -191,7 +191,12 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
             active.add("contracts")
             matched = True
         if path.startswith("tests/"):
-            if path in contract_tests:
+            if path == "tests/test_oai26_compendium.py":
+                # The compendium regression exercises documentary generation.
+                # Route it through the docs and repository regression lanes,
+                # not unrelated CMDG/OZ mathematical replay.
+                active.update({"docs", "repository-regression"})
+            elif path in contract_tests:
                 active.add("contracts")
                 if any(token in lower for token in ("documentary", "visual_pedagogy")):
                     active.add("docs")
