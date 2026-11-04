@@ -59,6 +59,7 @@ FULL_FANOUT_PATHS = {
     "schemas/formal_validation_registry.schema.json",
     "governance/policy_impact_gating.json",
     "schemas/policy_impact_gating.schema.json",
+    "schemas/policy_impact_gating.schema.json",
     "governance/policy_shard_registry.json",
     "schemas/policy_shard_registry.schema.json",
     "governance/contract_test_manifest.json",
@@ -459,6 +460,10 @@ def validate_control() -> None:
         raise ImpactError("policy impact control identity drift")
     if control.get("status") != "ACTIVE_ON_PROTECTED_MERGE":
         raise ImpactError("policy impact control status drift")
+    if control["classifier"]["component_manifest_directory"] != "governance/policy_components":
+        raise ImpactError("component directory contract drift")
+    if control["classifier"]["component_manifest_schema"] != "schemas/policy_component_manifest.schema.json":
+        raise ImpactError("component schema contract drift")
     if control["classifier"]["unknown_path_behavior"] != "FULL_FANOUT":
         raise ImpactError("unknown policy path behavior must remain FULL_FANOUT")
     if tuple(control["policy_dag"]["shards"]) != ALL_SHARDS:
