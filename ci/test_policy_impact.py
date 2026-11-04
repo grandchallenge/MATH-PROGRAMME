@@ -78,7 +78,7 @@ def main() -> int:
         added = impact.newly_added_test_paths("a" * 40, "b" * 40)
         assert added == ["tests/test_new_unclassified_research.py"]
         assert "--diff-filter=A" in run.call_args.args[0]
-        assert run.call_args.args[0][3:5] == ["a" * 40, "b" * 40]
+        assert run.call_args.args[0][4:6] == ["a" * 40, "b" * 40]
     # Existing unclassified paths retain the original conservative fallback.
 
     unknown_test = impact.classify_paths(["tests/test_new_unclassified_research.py"])
