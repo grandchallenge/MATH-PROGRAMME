@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 import copy
+import json
+import tempfile
+from pathlib import Path
 from unittest import mock
 
 import policy_impact as impact
@@ -59,6 +62,97 @@ def main() -> int:
     assert oai26_pr["policy_shards"] == ["core", "contracts", "docs", "repository-regression"]
     assert not oai26_pr["unknown_paths"]
     # Preserve conservative treatment for other, unregistered test modules.
+
+    # Fresh manifests are discovered without editing the central classifier.
+    # A producer change must activate every declared downstream consumer.
+    hypothetical = {
+        "shared": {
+            "shards": ["contracts"],
+            "depends_on": [],
+            "paths": {"exact": ["governance/shared/engine.json"], "prefixes": [], "test_prefixes": []},
+        },
+        "next_programme": {
+            "shards": ["docs", "repository-regression"],
+            "depends_on": ["shared"],
+            "paths": {"exact": [], "prefixes": ["governance/next_programme/"], "test_prefixes": ["tests/test_next_programme_"]},
+        },
+    }
+    shards, owned = impact.declarative_impacts(["tests/test_next_programme_unit.py"], hypothetical)
+    assert shards == {"docs", "repository-regression"}
+    assert owned == {"tests/test_next_programme_unit.py"}
+    shards, owned = impact.declarative_impacts(["governance/shared/engine.json"], hypothetical)
+    assert shards == {"contracts", "docs", "repository-regression"}
+    assert owned == {"governance/shared/engine.json"}
+    # Unknown programmes cannot acquire implicit ownership or be skipped.
+    assert impact.declarative_impacts(["tests/test_other_programme_x.py"], hypothetical) == (set(), set())
+    ambiguous = copy.deepcopy(hypothetical)
+    ambiguous["other"] = {
+        "shards": ["oz"], "depends_on": [],
+        "paths": {"exact": [], "prefixes": [], "test_prefixes": ["tests/test_next_programme_"]},
+    }
+    try:
+        impact.declarative_impacts(["tests/test_next_programme_x.py"], ambiguous)
+    except impact.ImpactError as exc:
+        assert "ambiguous component owner" in str(exc)
+    else:
+        raise AssertionError("ambiguous test ownership admitted")
+
+    manifest_schema = impact.load_json(impact.COMPONENT_SCHEMA)
+    with tempfile.TemporaryDirectory() as td:
+        directory = Path(td)
+        def manifest(name, *, deps=(), prefix=None):
+            return {
+                "schema_version": "1.0.0", "component_id": name,
+                "owner": "Synthetic independent research component",
+                "shards": ["docs"], "depends_on": list(deps),
+                "paths": {"exact": [], "prefixes": [prefix or f"governance/{name}/"], "test_prefixes": []},
+            }
+        (directory / "alpha.json").write_text(json.dumps(manifest("alpha")), encoding="utf-8")
+        with mock.patch.object(impact, "COMPONENT_DIR", directory):
+            discovered = impact.component_manifests()
+            assert list(discovered) == ["alpha"]
+            assert not impact.declarative_impacts(["governance/alpha/spec.json"])[0] - {"docs"}
+            (directory / "beta.json").write_text(json.dumps(manifest("beta", deps=("alpha",))), encoding="utf-8")
+            assert impact.declarative_impacts(["governance/alpha/spec.json"])[0] == {"docs"}
+            (directory / "alpha.json").write_text(json.dumps(manifest("alpha", deps=("beta",))), encoding="utf-8")
+            try:
+                impact.component_manifests()
+            except impact.ImpactError as exc:
+                assert "dependency cycle" in str(exc)
+            else:
+                raise AssertionError("dependency cycle admitted")
+            (directory / "beta.json").unlink()
+            try:
+                impact.component_manifests()
+            except impact.ImpactError as exc:
+                assert "missing component dependency" in str(exc)
+            else:
+                raise AssertionError("unbound dependency admitted")
+            (directory / "alpha.json").write_text(json.dumps(manifest("alpha", prefix="ci/")), encoding="utf-8")
+            try:
+                impact.component_manifests()
+            except impact.ImpactError as exc:
+                assert "control-plane path" in str(exc)
+            else:
+                raise AssertionError("component captured control plane")
+            (directory / "alpha.json").write_text(json.dumps(manifest("alpha", prefix="governance/alpha/")), encoding="utf-8")
+            malformed = manifest("alpha")
+            malformed["shards"] = ["invented-shard"]
+            (directory / "alpha.json").write_text(json.dumps(malformed), encoding="utf-8")
+            try:
+                impact.component_manifests()
+            except impact.ImpactError as exc:
+                assert "unknown shard" in str(exc)
+            else:
+                raise AssertionError("undefined shard admitted")
+    assert manifest_schema["title"] == "MATH-PROGRAMME declarative CI component"
+
+    declarative_oai = impact.classify_paths([
+        "governance/oai26_documentary/editorial/092.md",
+        "tests/test_oai26_compendium.py",
+    ])
+    assert declarative_oai["policy_shards"] == ["core", "contracts", "docs", "repository-regression"]
+    assert declarative_oai["unknown_paths"] == []
 
     # Exact transition guard: unknown *new* Python test modules cannot enter
     # protected source unnoticed merely by falling back to full fanout.
