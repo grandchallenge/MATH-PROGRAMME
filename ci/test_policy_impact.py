@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+from unittest import mock
 
 import policy_impact as impact
 
@@ -58,6 +59,27 @@ def main() -> int:
     assert oai26_pr["policy_shards"] == ["core", "contracts", "docs", "repository-regression"]
     assert not oai26_pr["unknown_paths"]
     # Preserve conservative treatment for other, unregistered test modules.
+
+    # Exact transition guard: unknown *new* Python test modules cannot enter
+    # protected source unnoticed merely by falling back to full fanout.
+    impact.validate_new_test_routing(["tests/test_oai26_compendium.py"])
+    impact.validate_new_test_routing(["tests/test_cmdg_example.py"])
+    impact.validate_new_test_routing(["tests/test_documentary_visual_pedagogy.py"])
+    try:
+        impact.validate_new_test_routing(["tests/test_new_unclassified_research.py"])
+    except impact.ImpactError as exc:
+        assert "missing policy impact route" in str(exc)
+    else:
+        raise AssertionError("new unregistered Python test accepted")
+    # A newly added path is detected using Git's A-only exact-head diff.
+    with mock.patch.object(impact.subprocess, "run") as run:
+        run.return_value.returncode = 0
+        run.return_value.stdout = "tests/test_new_unclassified_research.py\ntests/helper.txt\n"
+        added = impact.newly_added_test_paths("a" * 40, "b" * 40)
+        assert added == ["tests/test_new_unclassified_research.py"]
+        assert "--diff-filter=A" in run.call_args.args[0]
+        assert run.call_args.args[0][4:6] == ["a" * 40, "b" * 40]
+    # Existing unclassified paths retain the original conservative fallback.
 
     unknown_test = impact.classify_paths(["tests/test_new_unclassified_research.py"])
     assert unknown_test["policy_shards"] == list(impact.ALL_SHARDS)

@@ -291,6 +291,40 @@ def git_changed_paths(base: str, head: str) -> list[str]:
     return [line for line in completed.stdout.splitlines() if line.strip()]
 
 
+def newly_added_test_paths(base: str, head: str) -> list[str]:
+    """Find added test modules in the exact transition (not existing edits)."""
+    if not base or not head or base == ZERO_SHA:
+        raise ImpactError("transition diff base/head is unavailable")
+    completed = subprocess.run(
+        ["git", "diff", "--name-only", "--diff-filter=A", base, head, "--", "tests/"],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if completed.returncode:
+        raise ImpactError(f"added-test diff failed: {completed.stderr.strip()}")
+    return [path for path in normalize_paths(completed.stdout.splitlines())
+            if path.startswith("tests/") and path.endswith(".py")]
+
+
+def validate_new_test_routing(paths: Iterable[str]) -> None:
+    """Never admit a new test module without a bounded explicit impact route.
+
+    Existing unknown files still use FULL_FANOUT. Newly introduced test modules
+    are rejected until their route is registered in the same candidate.
+    """
+    for path in normalize_paths(paths):
+        if path.startswith("tests/") and path.endswith(".py"):
+            _, unknown = shard_impacts([path])
+            if unknown:
+                raise ImpactError(
+                    "new test module missing policy impact route: " + path
+                    + " (register a bounded route or an explicit full-fanout route)"
+                )
+
+
 def changed_paths_from_event(event_name: str, event: dict) -> list[str]:
     if event_name == "pull_request":
         pr = event.get("pull_request", {})
@@ -402,6 +436,15 @@ def main() -> int:
                     + "\n".join(defects[:50])
                 )
             print("mathematical Markdown source gate: PASS")
+        if args.event_name in {"pull_request", "push"}:
+            if args.event_name == "pull_request":
+                entity = event["pull_request"]
+                base = str(entity["base"]["sha"])
+                head = str(entity["head"]["sha"])
+            else:
+                base = str(event.get("before") or "")
+                head = str(event.get("after") or os.environ.get("GITHUB_SHA") or "")
+            validate_new_test_routing(newly_added_test_paths(base, head))
         result = classify_paths(paths, event_name=args.event_name, schedule=args.schedule)
         write_output(args.github_output, result)
         print(json.dumps(result, sort_keys=True))
