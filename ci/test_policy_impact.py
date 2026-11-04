@@ -74,7 +74,7 @@ def main() -> int:
     # A newly added path is detected using Git's A-only exact-head diff.
     with mock.patch.object(impact.subprocess, "run") as run:
         run.return_value.returncode = 0
-        run.return_value.stdout = "tests/test_new_unclassified_research.py\\ntests/helper.txt\\n"
+        run.return_value.stdout = "tests/test_new_unclassified_research.py\ntests/helper.txt\n"
         added = impact.newly_added_test_paths("a" * 40, "b" * 40)
         assert added == ["tests/test_new_unclassified_research.py"]
         assert "--diff-filter=A" in run.call_args.args[0]
