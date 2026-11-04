@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP137",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP138",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "extended_weiss_documentary_admission",
+  "phase": "extended_weiss_documentary_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "a4a9468813a7b90eb4d0c4257bb3a0511cc4f3ee",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "await_exact_documentary_checks_then_native_queue",
-      "description": "Wait for five required checks on the exact reviewed documentary head. Verify the protected closure and 65 frozen inputs, then request native queue admission."
+      "id": "read_back_documentary_merge_then_update_issue_pointers",
+      "description": "Wait for the native documentary merge. Verify the exact second parent, five changed blobs, five native contexts, 68 scientific identities and terminal checkpoint. Then reconcile the four final issue pointers and return the clean worktree to protected main."
     }
   ],
   "next_action": {
-    "id": "await_exact_documentary_checks_then_native_queue",
-    "description": "Wait for five required checks on the exact reviewed documentary head. Verify the protected closure and 65 frozen inputs, then request native queue admission.",
+    "id": "read_back_documentary_merge_then_update_issue_pointers",
+    "description": "Wait for the native documentary merge. Verify the exact second parent, five changed blobs, five native contexts, 68 scientific identities and terminal checkpoint. Then reconcile the four final issue pointers and return the clean worktree to protected main.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3120",
+        "status": "QUEUED_POSITION_1_AT_2026-11-04T10:29:10Z"
+      },
       {
         "kind": "artifact",
         "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3120",
@@ -438,8 +443,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "extended_weiss_documentary_admission",
-    "result": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING",
+    "action": "extended_weiss_documentary_native_queue",
+    "result": "QUEUED_POSITION_1_AT_2026-11-04T10:29:10Z",
     "evidence_refs": [
       "research/reach-extended-weiss-readback-20261104",
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
@@ -450,7 +455,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T10:26:27.4086003Z"
+    "observed_at": "2026-11-04T10:29:20.3909992Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -517,7 +522,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Wait for five required checks on the exact reviewed documentary head. Verify the protected closure and 65 frozen inputs, then request native queue admission."
+    "instructions": "Wait for the native documentary merge. Verify the exact second parent, five changed blobs, five native contexts, 68 scientific identities and terminal checkpoint. Then reconcile the four final issue pointers and return the clean worktree to protected main."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
