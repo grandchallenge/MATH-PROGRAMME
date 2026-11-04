@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP136",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP137",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,40 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Protected all-open completed Weiss read back. Original M5/R4 acceptance audit next.",
-  "state": "IN_PROGRESS",
+  "phase": "extended_weiss_documentary_admission",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
-    "protected_base_sha": "b5981219ebe3ea794db264be61a15e44aa59ccd1",
-    "candidate_head_sha": "49533e5f0eb7a045837104ef175752719ba81522",
+    "protected_base_sha": "a4a9468813a7b90eb4d0c4257bb3a0511cc4f3ee",
+    "candidate_head_sha": "21d6ab5aa7cd22a876450192a47f1441c6f62054",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-extended-weiss-integration-frozen-20261104",
+    "pr_number": 3120,
+    "branch": "research/reach-extended-weiss-readback-20261104",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "description": "Construct and freeze proposed 138, the source-locked audit of the original M5/R4 acceptance contract. Use the original SPEC, WORK_PACKAGES, earliest programme, plan 090 and actual comparison sources. Audit coefficient bases, unit and empty-open requirements, tensor comparisons, derived Hom, support, connection and lifting. Distinguish proved arrows, scoped obstructions and open inferences. Keep the original degree-two H,G_b,G support comparison distinct from the scalar-valued field comparison of 026. Identify which original requirements depend on full prior-family recovery (126.14). Keep the open bounded whole-source lifting and compact-transition hypotheses explicit. A new opposed R3 cycle requires documented new input. Freeze the audit for distinct nonauthor review and exact protected readback.",
-      "id": "audit-original-m5-r4-contract-138"
+      "id": "await_exact_documentary_checks_then_native_queue",
+      "description": "Wait for five required checks on the exact reviewed documentary head. Verify the protected closure and 65 frozen inputs, then request native queue admission."
     }
   ],
   "next_action": {
-    "description": "Construct and freeze proposed 138, the source-locked audit of the original M5/R4 acceptance contract. Use the original SPEC, WORK_PACKAGES, earliest programme, plan 090 and actual comparison sources. Audit coefficient bases, unit and empty-open requirements, tensor comparisons, derived Hom, support, connection and lifting. Distinguish proved arrows, scoped obstructions and open inferences. Keep the original degree-two H,G_b,G support comparison distinct from the scalar-valued field comparison of 026. Identify which original requirements depend on full prior-family recovery (126.14). Keep the open bounded whole-source lifting and compact-transition hypotheses explicit. A new opposed R3 cycle requires documented new input. Freeze the audit for distinct nonauthor review and exact protected readback.",
+    "id": "await_exact_documentary_checks_then_native_queue",
+    "description": "Wait for five required checks on the exact reviewed documentary head. Verify the protected closure and 65 frozen inputs, then request native queue admission.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_M5_CONTRACT_139.md",
-      "research/condensed-qft/EXT-015/M5_CONTRACT_AUDIT_ACCEPTANCE_140.md"
-    ],
-    "id": "audit-original-m5-r4-contract-138"
+      "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
+      "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
+    ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3120",
+        "status": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING"
+      },
       {
         "identity": "PR 3119 native merge b5981219ebe3ea794db264be61a15e44aa59ccd1 and tracker reconciliation",
         "kind": "artifact",
@@ -433,19 +438,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
+    "action": "extended_weiss_documentary_admission",
+    "result": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3119",
-      "research/reach-extended-weiss-integration-frozen-20261104",
-      "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
-    ],
-    "action": "Read back all-open completed Weiss and reconcile programme records",
-    "result": "PASS. Eight changed blobs, five required native checks, 68 scientific sources, unchanged terminal checkpoint, four issue bodies and seven programme boundaries."
+      "research/reach-extended-weiss-readback-20261104",
+      "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md"
+    ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T10:23:44.8771038Z"
+    "observed_at": "2026-11-04T10:26:27.4086003Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -512,7 +517,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Construct and freeze proposed 138, the source-locked audit of the original M5/R4 acceptance contract. Use the original SPEC, WORK_PACKAGES, earliest programme, plan 090 and actual comparison sources. Audit coefficient bases, unit and empty-open requirements, tensor comparisons, derived Hom, support, connection and lifting. Distinguish proved arrows, scoped obstructions and open inferences. Keep the original degree-two H,G_b,G support comparison distinct from the scalar-valued field comparison of 026. Identify which original requirements depend on full prior-family recovery (126.14). Keep the open bounded whole-source lifting and compact-transition hypotheses explicit. A new opposed R3 cycle requires documented new input. Freeze the audit for distinct nonauthor review and exact protected readback."
+    "instructions": "Wait for five required checks on the exact reviewed documentary head. Verify the protected closure and 65 frozen inputs, then request native queue admission."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
