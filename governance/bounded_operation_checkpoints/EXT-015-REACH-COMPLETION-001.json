@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP145",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP148",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Original M5 contract audit protected and read back. Scalar-relative weight-one comparison next.",
+  "phase": "scalar_relative_weight_one_inputs_frozen",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "496993688f2e5f15ab94a9f9f5ddca5605d0c6d5",
-    "candidate_head_sha": "830197b21deeef9a74dd30aec7e4aad5a8d6fb07",
+    "protected_base_sha": "3e3aae80e2d63c1fffafe41188640b32b293ec03",
+    "candidate_head_sha": "3e3aae80e2d63c1fffafe41188640b32b293ec03",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-m5-contract-editorial-frozen-20261104",
+    "branch": "research/reach-weight-one-input-frozen-20261104",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "construct-scalar-relative-weight-one-141",
-      "description": "Construct and freeze proposed 141, the first positive-weight comparison over the actual regulator scalar algebra on a nonempty interval. Verify the admitted zero-vertex scalar multiplication on the actual coefficient objects, form the bounded derived tensor map from the scalar extension of the arity-one R1 cochain complex into the enriched arity-one complex, and compute or precisely delimit its cone. Check weight zero and the relative unit. At weight one use the interval two-moment contraction only with proved whole-history source lifts, compact support and uniform rapid mixed-jet bounds. Verify the fixed-profinite-test smooth comparison separately and preserve the distinction between liquid-derived and differentiable complexes. Freeze one candidate for distinct nonauthor review and protected return. Full recovery 126.14, actual lifting, the full completed multiplicative tensor and cross-category derived comparison, original R3 and final integration remain open."
+      "id": "construct_and_freeze_weight_one_141",
+      "description": "Construct the weight-one liquid comparison and compute or precisely delimit its cone on nonempty intervals. Check the source-stage two-moment primitive and the separate fixed-test smooth maps, then freeze the primary candidate for nonauthor review."
     }
   ],
   "next_action": {
-    "description": "Construct and freeze proposed 141, the first positive-weight comparison over the actual regulator scalar algebra on a nonempty interval. Verify the admitted zero-vertex scalar multiplication on the actual coefficient objects, form the bounded derived tensor map from the scalar extension of the arity-one R1 cochain complex into the enriched arity-one complex, and compute or precisely delimit its cone. Check weight zero and the relative unit. At weight one use the interval two-moment contraction only with proved whole-history source lifts, compact support and uniform rapid mixed-jet bounds. Verify the fixed-profinite-test smooth comparison separately and preserve the distinction between liquid-derived and differentiable complexes. Freeze one candidate for distinct nonauthor review and protected return. Full recovery 126.14, actual lifting, the full completed multiplicative tensor and cross-category derived comparison, original R3 and final integration remain open.",
-    "id": "construct-scalar-relative-weight-one-141",
+    "id": "construct_and_freeze_weight_one_141",
+    "description": "Construct the weight-one liquid comparison and compute or precisely delimit its cone on nonempty intervals. Check the source-stage two-moment primitive and the separate fixed-test smooth maps, then freeze the primary candidate for nonauthor review.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_142.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "82 frozen inputs. Manifest SHA256 6f46ad34b778904b61e97efc883100a1af9f6b2c113cda626eba8a37812f6cf8",
+        "status": "CP145 verified live. All 76 prior scientific sources match. Frozen input cut and next construction are bound."
+      },
       {
         "kind": "artifact",
         "identity": "PR 3130 native merge 496993688f2e5f15ab94a9f9f5ddca5605d0c6d5 and tracker reconciliation",
@@ -468,19 +473,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
+    "action": "scalar_relative_weight_one_inputs_frozen",
+    "result": "CP145 verified live. All 76 prior scientific sources match. Frozen input cut and next construction are bound.",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3130",
-      "research/reach-m5-contract-editorial-frozen-20261104",
-      "research/condensed-qft/EXT-015/M5_CONTRACT_AUDIT_ACCEPTANCE_140.md"
-    ],
-    "action": "Read back original M5 contract audit and reconcile programme records",
-    "result": "PASS. Eight changed blobs, five required native checks, 76 scientific sources, unchanged terminal checkpoint, four issue bodies and seven programme boundaries."
+      "research/reach-weight-one-input-frozen-20261104",
+      "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_142.md"
+    ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T23:45:34.6383526Z"
+    "observed_at": "2026-11-04T23:54:53.3920305Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -547,7 +552,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Construct and freeze proposed 141, the first positive-weight comparison over the actual regulator scalar algebra on a nonempty interval. Verify the admitted zero-vertex scalar multiplication on the actual coefficient objects, form the bounded derived tensor map from the scalar extension of the arity-one R1 cochain complex into the enriched arity-one complex, and compute or precisely delimit its cone. Check weight zero and the relative unit. At weight one use the interval two-moment contraction only with proved whole-history source lifts, compact support and uniform rapid mixed-jet bounds. Verify the fixed-profinite-test smooth comparison separately and preserve the distinction between liquid-derived and differentiable complexes. Freeze one candidate for distinct nonauthor review and protected return. Full recovery 126.14, actual lifting, the full completed multiplicative tensor and cross-category derived comparison, original R3 and final integration remain open."
+    "instructions": "Construct the weight-one liquid comparison and compute or precisely delimit its cone on nonempty intervals. Check the source-stage two-moment primitive and the separate fixed-test smooth maps, then freeze the primary candidate for nonauthor review."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
