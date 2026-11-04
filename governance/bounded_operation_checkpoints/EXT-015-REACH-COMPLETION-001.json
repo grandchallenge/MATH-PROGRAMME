@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP134",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP135",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "extended_weiss_scientific_admission",
+  "phase": "extended_weiss_scientific_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "c6275b94a26f310e00992f6ad7f25e4a15b072e5",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "await_exact_scientific_checks_then_native_queue",
-      "description": "Wait for the five required checks on the exact reviewed scientific head, verify current rules and frozen inputs, then request native protected queue admission."
+      "id": "read_back_native_scientific_merge_then_reconcile_trackers",
+      "description": "Wait for the native merge, verify the exact second parent, eight changed blobs, five required native contexts, 68 scientific sources and the terminal checkpoint, then reconcile the four issue frontiers."
     }
   ],
   "next_action": {
-    "id": "await_exact_scientific_checks_then_native_queue",
-    "description": "Wait for the five required checks on the exact reviewed scientific head, verify current rules and frozen inputs, then request native protected queue admission.",
+    "id": "read_back_native_scientific_merge_then_reconcile_trackers",
+    "description": "Wait for the native merge, verify the exact second parent, eight changed blobs, five required native contexts, 68 scientific sources and the terminal checkpoint, then reconcile the four issue frontiers.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3119",
+        "status": "QUEUED_POSITION_1_AT_2026-11-04T10:19:14Z"
+      },
       {
         "kind": "artifact",
         "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3119",
@@ -423,8 +428,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "extended_weiss_scientific_admission",
-    "result": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING",
+    "action": "extended_weiss_scientific_native_queue",
+    "result": "QUEUED_POSITION_1_AT_2026-11-04T10:19:14Z",
     "evidence_refs": [
       "research/reach-extended-weiss-20261103",
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
@@ -435,7 +440,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T10:16:11.7750159Z"
+    "observed_at": "2026-11-04T10:19:20.3799109Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -502,7 +507,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Wait for the five required checks on the exact reviewed scientific head, verify current rules and frozen inputs, then request native protected queue admission."
+    "instructions": "Wait for the native merge, verify the exact second parent, eight changed blobs, five required native contexts, 68 scientific sources and the terminal checkpoint, then reconcile the four issue frontiers."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
