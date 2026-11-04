@@ -8,6 +8,7 @@ complete policy shard set.
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import subprocess
@@ -166,6 +167,38 @@ def component_manifests() -> dict[str, dict]:
                 if pattern.startswith(("ci/", ".github/", "schemas/", "governance/policy_components/")):
                     raise ImpactError(f"control-plane path cannot be programme-owned: {pattern}")
         manifests[name] = row
+    # A declared test route must also select a shard that actually discovers
+    # the test. The repository-regression runner discovers ordinary test_*.py;
+    # known exclusions are owned by dedicated registered shard runners.
+    registry = load_json(REGISTRY_PATH)
+    exclusions = registry["execution"]["repository_regression_exclusions"]["patterns"]
+    excluded_shards = {
+        "test_oz*.py": "oz",
+        "test_cmdg*.py": "cmdg",
+        "test_*fixture*.py": "fixtures",
+        "test_administrative*.py": "administrative",
+        "test_campaign*.py": "campaigns",
+    }
+    contract_tests = contract_test_paths()
+    for name, row in manifests.items():
+        tests = [path for path in row["paths"]["exact"] if path.startswith("tests/") and path.endswith(".py")]
+        tests += [prefix + "route_probe.py" for prefix in row["paths"]["test_prefixes"]]
+        for test in tests:
+            basename = Path(test).name
+            matching = [pattern for pattern in exclusions if fnmatch.fnmatch(basename, pattern)]
+            if test in contract_tests:
+                required = {"contracts"}
+            elif matching:
+                if any(pattern not in excluded_shards for pattern in matching):
+                    raise ImpactError(f"unrecognized test exclusion for {name}: {test}")
+                required = {excluded_shards[pattern] for pattern in matching}
+            else:
+                required = {"repository-regression"}
+            if not required.issubset(row["shards"]):
+                raise ImpactError(
+                    f"test route lacks executing shard for {name}: {test}; "
+                    f"required={sorted(required)}"
+                )
     for name, row in manifests.items():
         if name in row["depends_on"]:
             raise ImpactError(f"component self-dependency: {name}")
