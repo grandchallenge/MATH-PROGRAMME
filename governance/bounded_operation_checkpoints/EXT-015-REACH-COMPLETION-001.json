@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP141",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP142",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "m5_contract_audit_one_correction",
+  "phase": "m5_contract_audit_accepted_editorial_integration",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "8aa34f86c6e639b1609c02b30a5f44c0d7d6b0f1",
-    "candidate_head_sha": "73f068e89b85a2365d2d18022ba27d2c15c00ba1",
+    "protected_base_sha": "4a72e2bf408dd0fc97111b4851cfada348c57d91",
+    "candidate_head_sha": "badf3ddb80a9506c63f08aff60382d59df5d1495",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-m5-contract-review-frozen-20261104",
+    "branch": "research/reach-m5-contract-corrected-typed-frozen-20261104",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "apply_single_m5_contract_audit_correction",
-      "description": "Apply the four consolidated corrections from frozen review 139, including the five exact supplemental sources. Freeze the corrected audit and obtain exact nonauthor readback before editorial integration."
+      "id": "read_back_exact_m5_audit_integration_then_open_pr",
+      "description": "Verify the exact eight-file integration of corrected audit 138, review 139, ledger 140 and the four canonical records. After editorial clear, open the scientific PR on this reviewed head and advance to the required protected checks."
     }
   ],
   "next_action": {
-    "id": "apply_single_m5_contract_audit_correction",
-    "description": "Apply the four consolidated corrections from frozen review 139, including the five exact supplemental sources. Freeze the corrected audit and obtain exact nonauthor readback before editorial integration.",
+    "id": "read_back_exact_m5_audit_integration_then_open_pr",
+    "description": "Verify the exact eight-file integration of corrected audit 138, review 139, ledger 140 and the four canonical records. After editorial clear, open the scientific PR on this reviewed head and advance to the required protected checks.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_M5_CONTRACT_139.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "Nonauthor ACCEPT on corrected audit 138 blob de621fb8f1ddd384c2ed0fce5f542068517e69cd",
+        "status": "Accepted after the consolidated correction and the source-typing repair caught in readback. Current policy tests pass at 4a72e2bf408dd0fc97111b4851cfada348c57d91 and all 85 current audit input blobs are unchanged."
+      },
       {
         "kind": "review",
         "identity": "Review 139 blob 45abeb6142ee410b8c0c9bd519bd2de587561c6f and supplemental manifest SHA256 9815fabe269e340c62fff966517ae4c909e40361a4d143211858581751d70df9",
@@ -448,10 +453,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "m5_contract_audit_one_correction",
-    "result": "REVISE. Restore degree-one and completion controls, separate the monic arrows and obstructions, give exact R3 types, and type proposed weight-one derived comparison.",
+    "action": "m5_contract_audit_accepted_editorial_integration",
+    "result": "Accepted after the consolidated correction and the source-typing repair caught in readback. Current policy tests pass at 4a72e2bf408dd0fc97111b4851cfada348c57d91 and all 85 current audit input blobs are unchanged.",
     "evidence_refs": [
-      "research/reach-m5-contract-review-frozen-20261104",
+      "research/reach-m5-contract-corrected-typed-frozen-20261104",
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_M5_CONTRACT_139.md"
     ]
@@ -460,7 +465,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T11:12:43.4480473Z"
+    "observed_at": "2026-11-04T23:37:32.0671426Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -527,7 +532,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Apply the four consolidated corrections from frozen review 139, including the five exact supplemental sources. Freeze the corrected audit and obtain exact nonauthor readback before editorial integration."
+    "instructions": "Verify the exact eight-file integration of corrected audit 138, review 139, ledger 140 and the four canonical records. After editorial clear, open the scientific PR on this reviewed head and advance to the required protected checks."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
