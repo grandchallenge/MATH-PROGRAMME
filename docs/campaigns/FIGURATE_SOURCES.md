@@ -83,7 +83,7 @@ The [versioned WP05 recovery matrix](https://github.com/grandchallenge/MATHSOLVE
 
 ## Source audit method and limitations
 
-The register verifies identities, publication metadata, terminology and the **narrowest stated conclusions** available from the primary publisher, author bibliography, and arXiv abstract pages. It does **not** independently inspect or certify every lemma and proof in these papers, and cannot prove a global literature search complete. Treat the F01 completeness conjecture as *apparently open in the inspected 2026 sources*, rather than a claim about all possible unpublished work.
+The register verifies publication identities, terminology and narrow theorem conclusions. The original 2023 journal paper and three primary papers recovered in November 2026 have undergone source-reading and theorem-dependency extraction. The original 2025 *Mathematica Slovaca* journal text remains unavailable for reconciliation against author slides. None of these source readings independently certifies the authors' proofs or computational appendices, and no literature search proves exhaustive originality. Treat the F01 completeness conjecture as *apparently open in the inspected 2026 sources*, rather than a claim about all possible unpublished work.
 
 On any new theorem submission, freeze source versions, inspect full primary proofs, record theorem numbers, compare exact parameter domains, and submit the novelty and claim-semantics assessment to the appropriate mathematical adjudication lane. This catalogue is enough to prevent the important known misclassifications; it is not a mathematical originality certificate.
 
