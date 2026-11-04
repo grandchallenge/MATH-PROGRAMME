@@ -1,6 +1,6 @@
 # EXT-015 REACH / 137 — source-controlled extended Weiss acceptance ledger
 
-**Disposition: primary135 prepared for frozen separate136 review; no acceptance or protected admission asserted.** The candidate extends the same compact-source definition to all physical opens, determines its empty-open scalar object, proves exact compact-output rehosting into arbitrary nonempty opens, and proposes the actual all-manifold weightwise Weiss augmentation. Its full tuple/ordered Čech and labelled intersection-bar comparisons make the use of129 completion explicit. Full126.14, original R3, current unresolved lifting questions and full M5/R4 remain open.
+**Disposition.** Review136 accepts the unchanged primary135. It proves completed differentiable Weiss descent on all physical opens for the source-controlled model at each fixed profinite test. Protected admission and readback are pending.
 
 ## 1. Contract, sources and exact category
 
@@ -21,27 +21,27 @@ The physical category is all opens of the original real line. Finite-union and a
 
 The cover diagram retains all finite nonempty subsets of a nonempty Weiss-cover index set, arrows given by reverse inclusion, and their actual physical intersections, including empty intersections. Index labels are not merged merely because physical opens agree. The full tuple Čech convention is compared with the ordered alternating form and this actual intersection-poset bar. No all-liquid homotopy-colimit/evaluation interchange is assumed.
 
-## 2. Primary inference matrix
+## 2. Reviewed inference matrix
 
 | Inference | Actual proposed mechanism | Current status |
 | --- | --- | --- |
-| Same-class values on every physical open | Exactly108 sources with compact support in that open; any fixed whole support fits a finite union of relatively compact intervals | Unreviewed |
-| Old interval values unchanged | Source collection, complete coefficients and actual equality are literally unchanged there | Unreviewed |
-| All-open operator/extension typing |108/111 proofs are compact-local; global kernels and physical derivatives commute with compact extension | Unreviewed |
-| Correlated disconnected coefficients retained | Full fixed R1/scalar completed tensors on configuration space; no componentwise tensor exhaustion | Unreviewed |
-| Exact disconnected-target rehosting | Finite source-cluster charts, retained clusters fixed, hidden-only clusters moved affinely into disjoint target intervals | Unreviewed |
-| Full heat/scalar/R1 control on those charts | Active within-cluster partition centres preserved; cross-cluster centres absent; full smooth units and fixed cone estimates | Unreviewed |
-| Completed tensor and history relations | Fixed continuous patch-factor maps, finite full jet/cutoff rules, actual output pairings and image descent | Unreviewed |
-| All mixed rapid jets and parameter/profinite families | Canonical physical cutoff/restriction estimate on whole evaluated sums; complete rows and extremally disconnected cover descent | Unreviewed |
-| Zero-vertex scalar image versus all vacuum outputs |108.2 with test1 gives an actual continuous map into a computed scalar stage, including the flat remainder | Unreviewed |
-| Scalar index control across parameter rows | Normal R1 Taylor powers are nonnegative integer shifts; computed scalar output indices independent of row Sobolev refinements | Unreviewed |
-| Actual enriched empty-open object | Positive source arities vanish; zero-vertex scalar stages survive with their actual rapid quotient and manifold rows | Unreviewed |
-| Arity zero at every even weight | Empty value $\hbar^k\mathbf C[0]$ at weight2k and zero at odd weight; no real-unit substitution | Unreviewed |
-| Graded Čech contraction | Tuple-space partition, canonical intersection rehosting and index insertion, finite on whole compact source supports | Unreviewed |
-| Empty-intersection Čech contraction | Actual scalar constant coefficient object on the full nonempty augmented index simplex | Unreviewed |
-| Quantum cochain augmentation | Natural extension faces and finite vertical band $[-w,0]$, horizontal-first bounded double complex | Unreviewed |
-| Full tuple/ordered/bar comparison | Finite signed sorting, subdivision, last-vertex and carrier-cone formulas using only forward coefficient maps | Unreviewed |
-| Completed differentiable augmentation | Proven weightwise target plus129.8a, with129.4 applied to the actual labelled bar diagram | Unreviewed |
+| Same-class values on every physical open | Exactly108 sources with compact support in that open; any fixed whole support fits a finite union of relatively compact intervals | Justified in136 |
+| Old interval values unchanged | Source collection, complete coefficients and actual equality are literally unchanged there | Justified in136 |
+| All-open operator/extension typing |108/111 proofs are compact-local; global kernels and physical derivatives commute with compact extension | Justified in136 |
+| Correlated disconnected coefficients retained | Full fixed R1/scalar completed tensors on configuration space; no componentwise tensor exhaustion | Justified in136 |
+| Exact disconnected-target rehosting | Finite source-cluster charts, retained clusters fixed, hidden-only clusters moved affinely into disjoint target intervals | Justified in136 |
+| Full heat/scalar/R1 control on those charts | Active within-cluster partition centres preserved; cross-cluster centres absent; full smooth units and fixed cone estimates | Justified in136 |
+| Completed tensor and history relations | Fixed continuous patch-factor maps, finite full jet/cutoff rules, actual output pairings and image descent | Justified in136 |
+| All mixed rapid jets and parameter/profinite families | Canonical physical cutoff/restriction estimate on whole evaluated sums; complete rows and extremally disconnected cover descent | Justified in136 |
+| Zero-vertex scalar image versus all vacuum outputs |108.2 with test1 gives an actual continuous map into a computed scalar stage, including the flat remainder | Justified in136 |
+| Scalar index control across parameter rows | Normal R1 Taylor powers are nonnegative integer shifts; computed scalar output indices independent of row Sobolev refinements | Justified in136 |
+| Actual enriched empty-open object | Positive source arities vanish; zero-vertex scalar stages survive with their actual rapid quotient and manifold rows | Justified in136 |
+| Arity zero at every even weight | Empty value $\hbar^k\mathbf C[0]$ at weight2k and zero at odd weight; no real-unit substitution | Justified in136 |
+| Graded Čech contraction | Tuple-space partition, canonical intersection rehosting and index insertion, finite on whole compact source supports | Justified in136 |
+| Empty-intersection Čech contraction | Actual scalar constant coefficient object on the full nonempty augmented index simplex | Justified in136 |
+| Quantum cochain augmentation | Natural extension faces and finite vertical band $[-w,0]$, horizontal-first bounded double complex | Justified in136 |
+| Full tuple/ordered/bar comparison | Finite signed sorting, subdivision, last-vertex and carrier-cone formulas using only forward coefficient maps | Justified in136 |
+| Completed differentiable augmentation | Proven weightwise target plus129.8a, with129.4 applied to the actual labelled bar diagram | Justified in136 |
 | Liquid-valued colimit representation/evaluation commutation | No such theorem supplied | Open / outside this conclusion |
 | Every prior retained family has source witnesses126.14 | No new proof or counterexample | Open |
 | Actual projective-sequence cofibrancy or raw kernel fibrancy | Not inferred and not used | Open |
@@ -67,10 +67,16 @@ The exact nonempty-interval theorem132 remains unchanged.135 adds the missing al
 
 ## 4. Scope, provenance and required return
 
-The proposed positive exit is completed differentiable Weiss descent on the constructed source-controlled model for every physical open and every Weiss cover, at each fixed profinite coefficient test. It does not claim multiplicative tensor equivalences on disconnected opens, equivalence of the R1 or physical comparison maps, recovery of every prior retained-family section, or a liquid-derived descent theorem. These distinctions preserve the original larger obligations.
+The accepted result is completed differentiable Weiss descent on the constructed source-controlled model for every physical open and every Weiss cover, at each fixed profinite coefficient test. It does not claim multiplicative tensor equivalences on disconnected opens, equivalence of the R1 or physical comparison maps, recovery of every prior retained-family section, or a liquid-derived descent theorem. These distinctions preserve the original larger obligations.
 
-The parent and construction context are coauthors. The parent supplied source-custody checks, the cluster mechanism, scalar-source cautions, whole-family support controls and completion-comparison requirements. The construction context supplied the all-open implementation, actual scalar and parameter-row comparison, graded contraction, bounded cochain argument and explicit finite Čech/bar comparison. Shared earlier source/review dependencies are disclosed. Distinct nonauthor136 must inspect the frozen candidate; this is same-system scrutiny, not external certification.
+The parent and construction context are coauthors. The parent supplied source-custody checks, the cluster mechanism, scalar-source cautions, whole-family support controls and completion-comparison requirements. The construction context supplied the all-open implementation, actual scalar and parameter-row comparison, graded contraction, bounded cochain argument and explicit finite Čech/bar comparison. Shared earlier source/review dependencies are disclosed. Distinct nonauthor136 checked the frozen candidate; this is same-system scrutiny, not external certification.
 
-This is one primary attempt, with one correction available after the separate written review. No acceptance, protected merge, exact protected readback or tracker completion is asserted in this draft. No numerical fixture can verify the new functional-analytic claims; unchanged expensive finite fixtures are not replayed. No Python, system dependency installation, Git, tracker mutation, hosted compute or external mutation was used in the construction.
+The primary proof passed review without an author correction. The service interruption preceded the written verdict. The completed review binds the exact frozen source and all65 inputs. Existing fixture dependencies stayed fixed, so mathematical review and source validation are the relevant checks for this return.
 
 R0/R1/R2 and separate087–089 retain completed reviewed scopes. Full126.14, original R3, the remaining integration/comparison and lifting/derived-liquid requirements, full M5/R4 and both parents remain open.
+
+## 5. Acceptance custody and remaining contract
+
+The accepted proof has blob 62d91e9d5f38fc85cf2793507d887d526eccce7a at 31558a3fd8ac49ad29266a043c3bff9fa74d4d93. Review136 has blob 972cadf71143bef5117f1a798eb04fbe59d505d5 at 31f80faaaef9fb6fbea1db28c3f240b7a3647342, preserved on research/reach-extended-weiss-review-frozen-20261104. The original ledger draft remains at the primary cut.
+
+The next proposed audit138 will recover the original M5/R4 acceptance clauses from their admitted sources and check the types of the remaining arrows. The all-open theorem supplies an actual empty scalar value for that audit. A separate reading of123 and126 locates a missing premise for the proposed compactness route to full126.14. The prior plot rule supplies evaluated bounds and source data, but the route needs bounded sets of whole-source representatives. Compact transitions through completed coefficient sources or quotients also need proof. Full126.14 remains open, alongside the original degree-two comparison R3 and the remaining integration obligations.
