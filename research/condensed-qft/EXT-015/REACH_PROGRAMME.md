@@ -160,7 +160,7 @@ $$
 - **R1:** [#2796](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2796), assignment fulfilled by 069–078; completed issue closeout follows protected ledger 079 and editorial audit 080 readback. This does not close the larger programme.
 - **R2:** [#2797](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2797), CLOSED/completed and portfolioDone after111–113 protected admission/readback in PR2953, on the declared enriched-record class. The finite physical quantum quotient and stronger product/remainder statements are not inferred.
 - **R3:** [#2798](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798), OPEN after the evaluated relation cover and all-degree injectivity of 067/068; degree-two surjectivity (67.14) remains the independent P0 task.
-- **R4 remains open.** The constructed model now has all-open completed Weiss descent. Proposed138 audits the remaining original integration clauses and their typed arrows. Full126.14 and the independent R3 comparison remain open. [Issue2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657)
+- **R4 remains open.** The constructed model has all-open completed Weiss descent. Audit 138 and ledger 140 record the reviewed integration clauses, with protected admission pending. Proposed 141 tests the first positive weight over the actual regulator scalar algebra. Full 126.14, the remaining derived comparisons and the independent R3 comparison remain open. [Issue2657](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657)
 
 Admitted mathematics, issue bookkeeping and an actual authenticated worker dispatch are distinct. This inventory creates no active lease, Project progression or certified RESULT/1. Keep the larger parent #2617 open.
 

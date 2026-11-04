@@ -163,7 +163,7 @@ All input identities below were read back on protected main `09f59d3887c30500b6c
 
 New-result custody: [R3 PR #2869](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2869) merged at `4f8d43213dca16537dbd6085bd77b0f6249083f8`; [R1 PR #2871](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2871) at `709556bbb4b042d7691bb69a5209983c2a87deba`; [R2 PR #2873](https://github.com/grandchallenge/MATH-PROGRAMME/pull/2873) at `09f59d3887c30500b6c7336663149318f1d19ab3`. Each had source/fixture/audit readback and replay. Their critic passes are separately reasoned logical roles within the author's session/account, not external certification. The historical map critic 074 binds its original source. Updated integration critic 080 binds this revised map, the R1 acceptance ledger and the reconciled programme/matrix/triage.
 
-**Current exit status.** Full REACH remains incomplete. The constructed model satisfies all-open completed differentiable Weiss descent. Proposed138 will audit the remaining integration clauses and exact arrow types. Full126.14, original R3, lifting and the remaining derived-liquid comparisons stay open.
+**Current exit status.** Full REACH remains incomplete. The constructed model satisfies all-open completed differentiable Weiss descent. Audit 138 and ledger 140 record the reviewed clauses and exact arrow types, with protected admission pending. Proposed 141 tests the first positive-weight scalar-relative cone. Full 126.14, original R3, actual lifting and the remaining derived-liquid comparisons stay open.
 
 ## 7. R1 endpoint and topology update custody
 
