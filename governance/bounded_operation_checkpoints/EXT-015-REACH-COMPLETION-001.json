@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP146",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP147",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "m5_contract_audit_documentary_admission",
+  "phase": "m5_contract_audit_documentary_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "496993688f2e5f15ab94a9f9f5ddca5605d0c6d5",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "await_exact_m5_documentary_checks_then_native_queue",
-      "description": "Wait for five required checks on the reviewed five-file documentary head. Check the current protected base and scientific custody before native queue admission."
+      "id": "verify_native_m5_documentary_merge_and_final_issue_pointers",
+      "description": "Wait for the exact native documentary merge. Verify the second parent, five changed blobs, five native contexts, 76 scientific sources and terminal checkpoint. Reconcile the four final issue pointers and restore a clean returned branch at protected main."
     }
   ],
   "next_action": {
-    "id": "await_exact_m5_documentary_checks_then_native_queue",
-    "description": "Wait for five required checks on the reviewed five-file documentary head. Check the current protected base and scientific custody before native queue admission.",
+    "id": "verify_native_m5_documentary_merge_and_final_issue_pointers",
+    "description": "Wait for the exact native documentary merge. Verify the second parent, five changed blobs, five native contexts, 76 scientific sources and terminal checkpoint. Reconcile the four final issue pointers and restore a clean returned branch at protected main.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_M5_CONTRACT_139.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3131",
+        "status": "QUEUED_POSITION_1_AT_2026-11-04T23:48:17Z"
+      },
       {
         "kind": "artifact",
         "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3131",
@@ -473,8 +478,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "m5_contract_audit_documentary_admission",
-    "result": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING",
+    "action": "m5_contract_audit_documentary_native_queue",
+    "result": "QUEUED_POSITION_1_AT_2026-11-04T23:48:17Z",
     "evidence_refs": [
       "research/reach-m5-contract-readback-20261104",
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
@@ -485,7 +490,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T23:46:36.3179438Z"
+    "observed_at": "2026-11-04T23:48:23.9513622Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -552,7 +557,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Wait for five required checks on the reviewed five-file documentary head. Check the current protected base and scientific custody before native queue admission."
+    "instructions": "Wait for the exact native documentary merge. Verify the second parent, five changed blobs, five native contexts, 76 scientific sources and terminal checkpoint. Reconcile the four final issue pointers and restore a clean returned branch at protected main."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
