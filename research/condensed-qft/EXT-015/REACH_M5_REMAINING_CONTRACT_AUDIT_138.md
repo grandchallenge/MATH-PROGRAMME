@@ -94,7 +94,7 @@ The old 123 rule gives output graph, cone and scalar-index bounds and local hist
 
 ## 6. Independent degree-two obligation
 
-The original source is $H=\underline{\mathcal D_{[-1,1]}(\mathbb R)}$ with $G_b=\underline{\mathcal D_{[-b,b]}(\mathbb R)}$ and $G=\varinjlim_bG_b$. Here $\theta_H^2$ is the filtered-colimit comparison on $\mathrm{Ext}^2(H,-)$, or equivalently $\mathrm{Ext}^1(K_0,-)$ by dimension shifting along the actual first projective cover. In 067 the projective presentation $0\to K_1\xrightarrow{j}P_1\to K_0\to0$ and support-stage retractions give the boundary calculation and injectivity. Surjectivity still asks whether every actual $f:K_1\to G$ admits
+The original source is $H=\underline{\mathcal D_{[-1,1]}(\mathbb R)}$ with $G_b=\underline{\mathcal D_{[-b,b]}(\mathbb R)}$ and $G=\varinjlim_bG_b$. Here $\theta_H^2$ is the filtered-colimit comparison on $\mathrm{Ext}^2(H,-)$, or equivalently $\mathrm{Ext}^1(K_0,-)$ by dimension shifting along the actual first projective cover. Formula (37.7) splits $K_0\simeq Q_{\mathrm{pt}}\oplus K$ with $K=K_{\mathrm{red}}$ and $Q_{\mathrm{pt}}$ projective. Thus $\mathrm{Ext}^1(K_0,-)\simeq\mathrm{Ext}^1(K,-)$ naturally in the coefficient. The projective presentation in (67.5) is $0\to K_1\xrightarrow{j}P_1\to K\to0$. It gives the boundary calculation, and the support-stage retractions give injectivity. Surjectivity still asks whether every actual $f:K_1\to G$ admits
 
 $$
 f=\iota_b f_b+\psi j
