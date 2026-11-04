@@ -63,7 +63,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
                 c.load_catalogue(p)
 
     def test_authored_drafts_have_six_sections(self):
-        for n in ("001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "012", "014", "016", "020", "024", "026", "028", "030", "032", "034", "036", "042", "046", "048", "056", "058", "060", "066", "068", "072", "076", "080", "084", "088", "090", "096", "108", "069", "071", "073", "075", "077", "079", "081", "083", "085", "087", "110", "112", "114", "116", "118", "120", "122", "124", "126", "128", "130", "132", "134", "136", "342", "376"):
+        for n in ("001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "012", "014", "016", "020", "024", "026", "028", "030", "032", "034", "036", "042", "046", "048", "056", "058", "060", "066", "068", "072", "076", "080", "084", "088", "090", "096", "106", "108", "069", "071", "073", "075", "077", "079", "081", "083", "085", "087", "110", "112", "114", "116", "118", "120", "122", "124", "126", "128", "130", "132", "134", "136", "342", "376"):
             draft = (c.EDITORIAL / (n + ".md")).read_text(encoding="utf-8")
             c.validate_draft(draft, n)
             with self.assertRaises(ValueError):
@@ -105,8 +105,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=47, editorially_admitted=22,
-                                         reference_only=303, generated_pages=373))
+                                         editorial_drafts=48, editorially_admitted=22,
+                                         reference_only=302, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
