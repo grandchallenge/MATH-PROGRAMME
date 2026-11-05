@@ -136,6 +136,46 @@ The full [mathematical proof](https://github.com/grandchallenge/MATHSOLVE/blob/m
 
 The **complete modulo-32** test excludes the classes already listed in the modulus-16 table, plus exactly the two new offset families above. In every nonexcluded cell the checker supplies an explicit *local remainder witness*. Such a witness is not the same thing as an actual positive-integer Diophantine triple.
 
+### A structural result: when every binary remainder is attainable
+
+The successive tables suggest an important question: *why do the forbidden cases always have polygonal orders divisible by four?*
+
+There is a precise answer, not just a pattern in the data.
+
+**Binary surjectivity theorem.** The polygonal sequence $P_k(t)$ attains **every** remainder modulo $2^n$, for **every** $n\ge1$, **if and only if** the polygonal order $k$ is *not divisible by four*.
+
+Here is the mechanism. For any index increment $H$,
+
+$
+P_k(t+H)-P_k(t)
+=\frac H2\bigl((k-2)(2t+H)-(k-4)\bigr).
+$
+
+Start with an index representing the desired last binary digit. If $k$ is odd, adding $2^{n+1}$ to that index **flips exactly the next bit** of the polygonal remainder modulo $2^{n+1}$, while preserving the lower $n$ bits. If $k\equiv2\pmod4$, adding $2^n$ does the same job. Choosing to add the increment or not at each stage constructs a polygonal number with **any** specified binary remainder, however many bits it has.
+
+Conversely, when $k$ is divisible by four, polygonal numbers can only be $0$ or $1$ modulo $4$. The remainders $2$ and $3$ are unavailable, so the universal statement fails immediately.
+
+For a tangible calculation, suppose the target is remainder $317$ modulo $512$. The exact index-construction algorithm gives $P_3(361)\equiv317\pmod{512}$ for triangular numbers, and $P_6(181)\equiv317\pmod{512}$ for hexagonal numbers. Both were produced by the binary-lifting rule, not by searching for a lucky index.
+
+**What does this mean for triples?** For an order $k$ not divisible by four, no test using **only one power-of-two modulus** can rule out all Type B triples: choose all three *entry remainders* to be zero, and the theorem supplies a polygonal output congruent to the offset. Repeated remainders are permissible because distinct positive entries can all be divisible by the modulus. This says the *local remainders* are compatible, **not** that a genuine triple satisfying the original integer equations exists.
+
+This is a structural limitation on a whole family of obstruction methods, not merely one more negative search result.
+
+### A further refinement: modulus 64
+
+The complementary search at modulus 64 identifies **four additional global impossibility families**, beyond the preceding modulus-32 table:
+
+| Polygonal order | Additional offsets with no Type B triple |
+| --- | --- |
+| $k\equiv0\pmod{32}$ | $c\equiv9\pmod{32}$ |
+| $k\equiv16\pmod{32}$ | $c\equiv25\pmod{32}$ |
+| $k\equiv8\pmod{16}$ | $c\equiv13\pmod{32}$ |
+| $k\equiv12\pmod{16}$ | $c\equiv4\pmod{16}$ |
+
+These are unbounded nonexistence statements because every integer triple must project into a residue triple modulo 64. The exact certificate checks all 64 order residues and 64 offset residues, admits repeated entry classes, and independently reproduces the **first local witness** in every nonexcluded cell. The four listed families have a complete **finite modular certificate**; they are not claimed to have a separate short analytic proof or to be novel in the literature.
+
+The [structural proof, complete modulus-64 table, executable index builder and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SURJECTIVITY_MOD64_006.md) preserve the full hypotheses and validation record.
+
 ## 6. How the finite certificate proves an infinite statement
 
 Think of each integer as a box labeled by its remainder modulo 16. Although there are infinitely many integers, there are only 16 box labels. A possible triple lands in some **unordered triple of boxes**, and the labels may repeat even though the integers themselves must be distinct.
@@ -157,7 +197,7 @@ The computer is not **guessing** that large triples are absent. It exhausts an e
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
 
-**Established computationally:** the complete local exclusion tables modulo 8, 16 and 32, with independently repeated exact-integer tests. The two additional modulo-32 nonexistence families also have a direct elementary 2-adic proof.
+**Established computationally:** the complete local exclusion tables modulo 8, 16, 32 and 64, with independently repeated exact-integer tests. The two additional modulo-32 nonexistence families also have a direct elementary 2-adic proof.
 
 **Not established:** novelty relative to the entire literature, independent specialist certification, or a global classification of all polygonal Type B triples. Results for Type A and Type C require their own hypotheses. The still-open source review of one 2025 *Mathematica Slovaca* paper remains a separate documentary obligation.
 
@@ -170,6 +210,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 modulus-8 proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_GLOBAL_TRIPLE_OBSTRUCTION_002.md)
 - [WP08 modulus-16 proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD16_GLOBAL_OBSTRUCTIONS_003.md)
 - [WP08 modulus-32 global obstruction proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD32_GLOBAL_OBSTRUCTIONS_004.md)
+- [WP08 binary-surjectivity theorem and modulus-64 full certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SURJECTIVITY_MOD64_006.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
