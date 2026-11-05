@@ -226,9 +226,9 @@ The earlier one-sixth density is a useful sufficient test for individual offsets
 
 **Uniform binary admissibility theorem.** For every polygonal order $k\ge3$, and every integer offset $c$, a *single fixed triple of distinct positive integers* can be found whose three shifted pair products are polygonal residues modulo **every** power $2^n$ if and only if
 
-$
+$$
 4\nmid k\quad\text{or}\quad k\equiv4\pmod{16}.
-$
+$$
 
 For $4\nmid k$, the already-proved binary surjectivity means that the fixed entries $(1,2,3)$ always pass every local test. For $k\equiv4\pmod{16}$, something different happens: the completed-square coefficient $A=k/2-1$ is $1$ modulo $8$, so it has a square root in the 2-adic integers. The classical Euler pair-to-triple identity then provides a *formal* 2-adic triple; approximating its entries sufficiently accurately by ordinary positive integers preserves all three nonzero square conditions at every binary precision.
 
