@@ -12,6 +12,10 @@ This page is an accessible companion to the [exact research specification](https
 
 The updated FIGURATE research goes beyond counting small tuples. A complete modular argument rules out **all Type B triples**, without any numerical entry bound, for polygonal orders divisible by 8 and offsets congruent to 2, 3, or 6 modulo 8. A second family occurs for polygonal orders congruent to 12 modulo 16 and offsets congruent to 2 modulo 4. The linked guide develops the result from parity and remainders, gives a worked octagonal example, and explains how the independently verified finite residue tables yield unbounded conclusions. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
 
+## Research completion and remaining obligations
+
+The [bounded-pilot closure reconciliation](FIGURATE_CLOSURE_RECONCILIATION.md) distinguishes completed exact-arithmetic search, protected Type B research, public pedagogy, the remaining original-source access problem, and the separate mathematical-certification route. The original 2025 article is not yet source-audited in full; no external novelty or certification is claimed. The pilot tracker remains open for that genuine documentary dependency.
+
 ## What is a figurate number?
 
 The polygonal number of order $k$ at index $t$ is
