@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP163",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP164",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "scalar_relative_weight_two_documentary_pr_open",
+  "phase": "scalar_relative_weight_two_documentary_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "e0482fbf9e3aa1ca6fc5ad80646f73604b39aa10",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "admit_exact_weight_two_documentary_pr",
-      "description": "Read required checks and fresh admission evidence for documentary PR3142 at exact head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9. When current checks and controls pass, admit through the native protected queue. Read back all five documentary files and 82 unchanged scientific sources, then reconcile exact CP162 tracker pointers and verify the clean returned branch."
+      "id": "read_exact_weight_two_documentary_merge",
+      "description": "Read the native queue result for PR3142 at exact head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9. Verify exact merge parentage, five documentary hashes, five required native checks, 82 unchanged scientific sources and terminal consistent-host checkpoint. Reconcile four final CP162 issue pointers, verify all seven portfolio dispositions and six frozen refs, then verify a clean returned branch at protected main. Canonical CP162 assigns unproved147."
     }
   ],
   "next_action": {
-    "id": "admit_exact_weight_two_documentary_pr",
-    "description": "Read required checks and fresh admission evidence for documentary PR3142 at exact head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9. When current checks and controls pass, admit through the native protected queue. Read back all five documentary files and 82 unchanged scientific sources, then reconcile exact CP162 tracker pointers and verify the clean returned branch.",
+    "id": "read_exact_weight_two_documentary_merge",
+    "description": "Read the native queue result for PR3142 at exact head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9. Verify exact merge parentage, five documentary hashes, five required native checks, 82 unchanged scientific sources and terminal consistent-host checkpoint. Reconcile four final CP162 issue pointers, verify all seven portfolio dispositions and six frozen refs, then verify a clean returned branch at protected main. Canonical CP162 assigns unproved147.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_TWO_COMPARISON_144.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_WEIGHT_TWO_145.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3142 native queue entry at 2026-11-05T08:01:54Z",
+        "status": "QUEUED position1. Five required branch contexts, current native queue rules, reviews, live checkpoint and frozen inputs PASS. Final five-file same-system editorial CLEAR. Scientific144-146 unchanged. Documentary protected readback and final pointer reconciliation pending."
+      },
       {
         "kind": "artifact",
         "identity": "PR3142 exact documentary head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9",
@@ -538,8 +543,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "scalar_relative_weight_two_documentary_pr_open",
-    "result": "Distinct same-system final documentary CLEAR. Five frozen hashes, 82 unchanged sources, PR3140 readback, four issue hashes and seven portfolio boundaries verified. All four Markdown source gates and live CP162 passed. Required branch checks pending; protected documentary merge/readback pending.",
+    "action": "scalar_relative_weight_two_documentary_native_queue",
+    "result": "QUEUED position1. Five required branch contexts, current native queue rules, reviews, live checkpoint and frozen inputs PASS. Final five-file same-system editorial CLEAR. Scientific144-146 unchanged. Documentary protected readback and final pointer reconciliation pending.",
     "evidence_refs": [
       "research/reach-weight-two-readback-20261104",
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_TWO_COMPARISON_144.md",
@@ -550,7 +555,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-05T07:59:34.0898105Z"
+    "observed_at": "2026-11-05T08:02:08.4504024Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -617,7 +622,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Read required checks and fresh admission evidence for documentary PR3142 at exact head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9. When current checks and controls pass, admit through the native protected queue. Read back all five documentary files and 82 unchanged scientific sources, then reconcile exact CP162 tracker pointers and verify the clean returned branch."
+    "instructions": "Read the native queue result for PR3142 at exact head fa1f21a31a0713ff0f761dc0cf8f9bd06eea1ef9. Verify exact merge parentage, five documentary hashes, five required native checks, 82 unchanged scientific sources and terminal consistent-host checkpoint. Reconcile four final CP162 issue pointers, verify all seven portfolio dispositions and six frozen refs, then verify a clean returned branch at protected main. Canonical CP162 assigns unproved147."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
