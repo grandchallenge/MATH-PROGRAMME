@@ -261,15 +261,15 @@ The previous theorem supplies a triple of **fixed positive integers** whose pair
 
 Consider 20-gonal numbers:
 
-$
+$$
 P_{20}(t)=9t^2-8t.
-$
+$$
 
 Fix the three distinct positive integers $(1,242,375)$ and choose an offset from the infinite family
 
-$
+$$
 c=2+640m,\qquad m\in\mathbb Z.
-$
+$$
 
 For $m=0$, the three pair products plus the offset are $244$, $377$, and $90{,}752$. The completed-square test transforms them into $2212$, $3409$, and $816784$, respectively:
 
@@ -283,15 +283,15 @@ These are **2-adic squares**, since their powers of two are even and their remai
 
 Now examine remainders modulo **five**, a completely different prime:
 
-$
+$$
 P_{20}(t)\bmod5\in\{0,1,2\}.
-$
+$$
 
 But the first pair output is always
 
-$
+$$
 1\cdot242+c=244+640m\equiv4\pmod5.
-$
+$$
 
 Four is not a possible 20-gonal remainder modulo five. Therefore **this particular triple is never an exact Type B integer triple** for any offset in the family, regardless of how thoroughly it passes binary tests.
 
