@@ -299,6 +299,32 @@ The distinction is essential: *we have excluded the specified triple, not every 
 
 [WP09's ongoing research tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) now targets exact integer Type B constructions and simultaneous constraints from odd primes and powers of two. The earlier source-fidelity issue WP05 remains separate.
 
+### WP09: an odd-prime-power obstruction that rules out *every* triple
+
+The previous WP09 example showed that a *particular* triple can pass every binary test but fail modulo five. A stronger question is whether an odd modulus can rule out **all possible triples**, without specifying their entries.
+
+The answer is yes. **For every polygonal order $k$ divisible by three, and every offset $c$ congruent to 4 or 7 modulo nine, no Type B triple exists.** The conclusion applies to arbitrarily large positive integers.
+
+Why nine instead of three? For any $k$ divisible by three, the polygonal sequence has exactly the residues
+
+\`\`\`text
+0, 1, 3, 6  (modulo 9)
+\`\`\`
+
+If the offset is 4 modulo nine, every pair product must be one of $2,5,6,8$ modulo nine. If the offset is 7 modulo nine, the allowed products are $2,3,5,8$. Both lists have two remarkable properties: **no allowed product is 1 modulo three**, and **only one allowed product is divisible by three**.
+
+Now imagine three entries:
+
+1. If at least two are divisible by three, their product is zero modulo nine, which is not on either list.
+2. If none is divisible by three, all three pair products would have to be 2 modulo three. Multiplying them produces the square of the product of the three entries, but that square would be 2 modulo three—impossible.
+3. If exactly one is divisible by three, its two products force the remaining two entries to have the **same** nonzero remainder modulo three. Their mutual product must then be 1 modulo three, again forbidden.
+
+These cases exhaust the possibilities, so no triple can exist.
+
+For example, triangular numbers ($k=3$) with offset $c=4$ admit many **compatible pairs** such as $\{1,P_3(t)-4\}$ for sufficiently large $t$, but **none can ever be extended to a Type B triple**. This is a global impossibility proof, not a bounded computer search.
+
+The [WP09 full mathematical proof and independent modulus-nine certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_MOD9_OBSTRUCTIONS_002.md) also shows that the weaker modulus-three test misses these contradictions entirely. This conclusion is new to the GCL research programme; it is **not** asserted original in the wider mathematical literature or externally certified.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -321,6 +347,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 one-sixth 2-adic offset density and fixed coherent local triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_DENSITY_COHERENCE_008.md)
 - [WP08 complete all-offset 2-adic order classification, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md)
 - [WP09 infinite binary-versus-odd-prime separation, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ODD_PRIME_SEPARATION_001.md)
+- [WP09 global all-triples modulo-nine obstruction and exact verification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_MOD9_OBSTRUCTIONS_002.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
