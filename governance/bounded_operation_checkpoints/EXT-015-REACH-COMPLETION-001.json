@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP160",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP161",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,8 +15,8 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "scalar_relative_weight_two_pr_open",
-  "state": "IN_PROGRESS",
+  "phase": "scalar_relative_weight_two_native_queue",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "25094c2ecf9a923114206e57cc70b552c33b9cc2",
     "candidate_head_sha": "6b0017a3a0f6391e1963c62ca7f138f2a0c8b122",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "admit_exact_weight_two_pr",
-      "description": "Verify current required checks, rules, reviews and unchanged scientific inputs for PR3140 at exact head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122. Then use the native protected queue and read back exact source content before tracker reconciliation."
+      "id": "read_exact_weight_two_native_merge",
+      "description": "Read the native merge-queue result for PR3140 at exact head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122. Verify the merge parentage, all eight changed blobs, five native required checks, all 82 scientific sources and unchanged terminal consistent-host checkpoint, then reconcile four tracker bodies and seven programme boundaries."
     }
   ],
   "next_action": {
-    "id": "admit_exact_weight_two_pr",
-    "description": "Verify current required checks, rules, reviews and unchanged scientific inputs for PR3140 at exact head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122. Then use the native protected queue and read back exact source content before tracker reconciliation.",
+    "id": "read_exact_weight_two_native_merge",
+    "description": "Read the native merge-queue result for PR3140 at exact head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122. Verify the merge parentage, all eight changed blobs, five native required checks, all 82 scientific sources and unchanged terminal consistent-host checkpoint, then reconcile four tracker bodies and seven programme boundaries.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_TWO_COMPARISON_144.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_WEIGHT_TWO_145.md",
@@ -42,8 +42,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3140 native queue entry at 2026-11-05T07:52:14Z",
+        "status": "QUEUED position1. Current exact-head required checks, reviews, effective rules, live continuity and 79 prior sources passed. Protected main changed only unrelated FIGURATE documentation. Same-system scientific and final editorial acceptance retained. Native merge and readback pending."
+      },
       {
         "kind": "artifact",
         "identity": "PR3140 exact scientific head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122",
@@ -523,8 +528,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "scalar_relative_weight_two_pr_open",
-    "result": "Distinct same-system final editorial CLEAR on all eight exact blobs; review145 ACCEPT unchanged144. Five required branch checks pass. Optional advisory-report cancelled, not required. Native queue and protected readback remain pending.",
+    "action": "scalar_relative_weight_two_native_queue",
+    "result": "QUEUED position1. Current exact-head required checks, reviews, effective rules, live continuity and 79 prior sources passed. Protected main changed only unrelated FIGURATE documentation. Same-system scientific and final editorial acceptance retained. Native merge and readback pending.",
     "evidence_refs": [
       "research/reach-scalar-relative-weight-two-20261104",
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_TWO_COMPARISON_144.md",
@@ -535,7 +540,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-05T07:51:43.2827421Z"
+    "observed_at": "2026-11-05T07:52:27.4321772Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -602,7 +607,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Verify current required checks, rules, reviews and unchanged scientific inputs for PR3140 at exact head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122. Then use the native protected queue and read back exact source content before tracker reconciliation."
+    "instructions": "Read the native merge-queue result for PR3140 at exact head 6b0017a3a0f6391e1963c62ca7f138f2a0c8b122. Verify the merge parentage, all eight changed blobs, five native required checks, all 82 scientific sources and unchanged terminal consistent-host checkpoint, then reconcile four tracker bodies and seven programme boundaries."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
