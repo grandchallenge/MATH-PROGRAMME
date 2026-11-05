@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP157",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP158",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "scalar_relative_weight_two_primary_review",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "scalar_relative_weight_two_reviewed_editorial_integration",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "f17e15fe95131cfbadaf4cc467791a413abd2348",
-    "candidate_head_sha": "b0e7bb09b7c043701bd7301bcab611f1ecee0082",
+    "protected_base_sha": "2bf3860fc62b8a9c5e188630e5fbc5f19b8b3347",
+    "candidate_head_sha": "461b04ce9ef46ac8aaa0aaa9cb503cf21734983e",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-weight-two-primary-frozen-20261104",
+    "branch": "research/reach-weight-two-review-frozen-20261104",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "obtain_distinct_weight_two_review_145",
-      "description": "Review exact frozen 144. Check the scalar-linear Wick reduction and common translation identity, the whole-source relative decomposition and uniform rapid test, actual liquid cone retract and separate fixed-test smooth proof. Return written review 145 and at most one consolidated correction if needed."
+      "id": "read_back_exact_weight_two_integration_then_open_pr",
+      "description": "Check the eight-file integration of proof 144, review 145, ledger 146 and the four canonical records. After exact editorial clear, open the scientific PR and verify current protected checks."
     }
   ],
   "next_action": {
-    "id": "obtain_distinct_weight_two_review_145",
-    "description": "Review exact frozen 144. Check the scalar-linear Wick reduction and common translation identity, the whole-source relative decomposition and uniform rapid test, actual liquid cone retract and separate fixed-test smooth proof. Return written review 145 and at most one consolidated correction if needed.",
+    "id": "read_back_exact_weight_two_integration_then_open_pr",
+    "description": "Check the eight-file integration of proof 144, review 145, ledger 146 and the four canonical records. After exact editorial clear, open the scientific PR and verify current protected checks.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_TWO_COMPARISON_144.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_WEIGHT_TWO_145.md",
@@ -42,8 +42,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": true,
+    "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "Review 145 blob 038c70ed84c50990a6422d388587d1978d963ed9",
+        "status": "ACCEPT unchanged proof 144. No author correction. All 85 current inputs match protected main."
+      },
       {
         "kind": "artifact",
         "identity": "Primary 144 blob 667165785b6aed27bfc95e6e3eb92cc576369960",
@@ -508,10 +513,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "scalar_relative_weight_two_primary_review",
-    "result": "Source gate and live input continuity pass. Distinct nonauthor review pending.",
+    "action": "scalar_relative_weight_two_reviewed_editorial_integration",
+    "result": "ACCEPT unchanged proof 144. No author correction. All 85 current inputs match protected main.",
     "evidence_refs": [
-      "research/reach-weight-two-primary-frozen-20261104",
+      "research/reach-weight-two-review-frozen-20261104",
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_TWO_COMPARISON_144.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_WEIGHT_TWO_145.md"
     ]
@@ -520,7 +525,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-05T00:31:35.4756782Z"
+    "observed_at": "2026-11-05T00:37:31.3363876Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -587,7 +592,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Review exact frozen 144. Check the scalar-linear Wick reduction and common translation identity, the whole-source relative decomposition and uniform rapid test, actual liquid cone retract and separate fixed-test smooth proof. Return written review 145 and at most one consolidated correction if needed."
+    "instructions": "Check the eight-file integration of proof 144, review 145, ledger 146 and the four canonical records. After exact editorial clear, open the scientific PR and verify current protected checks."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
