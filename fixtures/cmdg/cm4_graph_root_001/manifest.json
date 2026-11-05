@@ -16,9 +16,11 @@
     "manifest": "1.0.0"
   },
   "semantic_scope": {
-    "description": "Restricted CM4 module-level profiniteSolid integer theorem; immediate semantic dependencies remain unreviewed",
+    "description": "Restricted module-level CM4 root: semantic prerequisites proposed for review, not yet admitted as direct edges.",
     "included_node_ids": [
-      "CMDG:CM4:PROFINITE_SOLID_Z"
+      "CMDG:CM4:PROFINITE_SOLID_Z",
+      "CMDG:CM4:SOLID_PREDICATE",
+      "CMDG:CM4:PROFINITE_SOLID_CONSTRUCTION"
     ],
     "completeness_semantics": "MANIFEST_RELATIVE_ONLY",
     "global_completeness_claim": false
@@ -39,7 +41,50 @@
     "quotient_requires_certified_generators": true
   },
   "boundaries": [],
-  "realizations": [],
+  "realizations": [
+    {
+      "schema_version": "1.0.0",
+      "edge_id": "CMDG:E:CM4-ROOT-LEAN-REALIZATION",
+      "layer": "CROSS_LAYER",
+      "relation": "REALIZES_AS",
+      "source": {
+        "identity": "CMDG:CM4:PROFINITE_SOLID_Z",
+        "kind": "SEMANTIC_NODE"
+      },
+      "target": {
+        "identity": "CMDG.CondensedCM4.cm4Target_via_pointFunctional",
+        "kind": "FORMAL_DECLARATION",
+        "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean@8ab0051746507099f7321460fe091e56a84b57bb"
+      },
+      "authority_state": "PROPOSED",
+      "proposal_origin": {
+        "origin": "OTHER_TOOL",
+        "tool": "GCL-CMDG-graph-triage",
+        "artifact_ref": "research/cmdg/CM4_GRAPH_EDGE_REVIEW_002.md"
+      },
+      "realization": {
+        "realization_kind": "LEAN_DECLARATION",
+        "correspondence_scope": "The exact restricted module-level integer coefficient CM4 target, not derived solidity or liquid tensor results",
+        "evidence_refs": [
+          "governance/cmdg_condensed_cm4_terminal_readback_001.json",
+          "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean"
+        ],
+        "target_locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean",
+        "proof_environment_ref": "cmdg-cm4-pinned-2026",
+        "restrictions": [
+          "Proposed realization mapping requires separate semantic review",
+          "No derived or complex version of source Proposition 0.5.7",
+          "No arbitrary-ring generalization"
+        ],
+        "automatic_claims": {
+          "definitional_equality": false,
+          "mathematical_equivalence": false,
+          "source_faithful_identity": false,
+          "foundational_concordance": false
+        }
+      }
+    }
+  ],
   "proof_environment": {
     "environment_id": "cmdg-cm4-pinned-2026",
     "prover": "Lean 4",
