@@ -146,10 +146,10 @@ There is a precise answer, not just a pattern in the data.
 
 Here is the mechanism. For any index increment $H$,
 
-$
+$$
 P_k(t+H)-P_k(t)
 =\frac H2\bigl((k-2)(2t+H)-(k-4)\bigr).
-$
+$$
 
 Start with an index representing the desired last binary digit. If $k$ is odd, adding $2^{n+1}$ to that index **flips exactly the next bit** of the polygonal remainder modulo $2^{n+1}$, while preserving the lower $n$ bits. If $k\equiv2\pmod4$, adding $2^n$ does the same job. Choosing to add the increment or not at each stage constructs a polygonal number with **any** specified binary remainder, however many bits it has.
 
