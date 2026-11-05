@@ -255,6 +255,50 @@ The [independent test suite](https://github.com/grandchallenge/MATHSOLVE/blob/ma
 
 The computer is not **guessing** that large triples are absent. It exhausts an exact finite list that every hypothetical large triple would have to pass.
 
+### WP09: binary compatibility is not enough
+
+The previous theorem supplies a triple of **fixed positive integers** whose pairwise outputs pass every power-of-two test. Does that mean they are actual polygonal numbers? **No.** The next research package identifies exactly where another prime can intervene.
+
+Consider 20-gonal numbers:
+
+$
+P_{20}(t)=9t^2-8t.
+$
+
+Fix the three distinct positive integers $(1,242,375)$ and choose an offset from the infinite family
+
+$
+c=2+640m,\qquad m\in\mathbb Z.
+$
+
+For $m=0$, the three pair products plus the offset are $244$, $377$, and $90{,}752$. The completed-square test transforms them into $2212$, $3409$, and $816784$, respectively:
+
+| Transformed value | Power of two extracted | Remaining odd number modulo 8 |
+| --- | --- | --- |
+| $2212$ | $2^2$ | 1 |
+| $3409$ | $2^0$ | 1 |
+| $816784$ | $2^4$ | 1 |
+
+These are **2-adic squares**, since their powers of two are even and their remaining odd factors are $1$ modulo $8$. When $m$ changes by one, each transformed output changes by $5760=2^7\cdot45$, too high a binary power to alter any of these square tests. So **the same fixed triple works modulo every power of two for every integer $m$**, including negative values.
+
+Now examine remainders modulo **five**, a completely different prime:
+
+$
+P_{20}(t)\bmod5\in\{0,1,2\}.
+$
+
+But the first pair output is always
+
+$
+1\cdot242+c=244+640m\equiv4\pmod5.
+$
+
+Four is not a possible 20-gonal remainder modulo five. Therefore **this particular triple is never an exact Type B integer triple** for any offset in the family, regardless of how thoroughly it passes binary tests.
+
+The distinction is essential: *we have excluded the specified triple, not every possible triple at the same polygonal order and offset*. This result establishes an infinite family of **fixed-witness local-to-global failures**, not a global nonexistence theorem. The [WP09 proof, exact calculator and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ODD_PRIME_SEPARATION_001.md) preserve that narrower, rigorous conclusion.
+
+[WP09's ongoing research tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) now targets exact integer Type B constructions and simultaneous constraints from odd primes and powers of two. The earlier source-fidelity issue WP05 remains separate.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -276,9 +320,10 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 complete 2-adic square normal form, proof and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SQUARE_NORMAL_FORM_007.md)
 - [WP08 one-sixth 2-adic offset density and fixed coherent local triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_DENSITY_COHERENCE_008.md)
 - [WP08 complete all-offset 2-adic order classification, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md)
+- [WP09 infinite binary-versus-odd-prime separation, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ODD_PRIME_SEPARATION_001.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
-- [Research programme and current status](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3125)
+- [Active successor WP09](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145)
 
 **Publication status:** an internally admitted mathematical exposition, not a peer-reviewed article, a public mathematical certification, or a claim of priority.
