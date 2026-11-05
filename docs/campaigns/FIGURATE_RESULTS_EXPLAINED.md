@@ -180,15 +180,15 @@ The [structural proof, complete modulus-64 table, executable index builder and i
 
 There is a complementary theorem for the other polygonal orders. Suppose $k$ is divisible by four and put
 
-$
+$$
 A=\frac{k}{2}-1,\qquad q=\frac{k}{4}-1.
-$
+$$
 
 Here $A$ is odd. Completing the square gives the *exact identity*
 
-$
+$$
 A P_k(t)+q^2=(At-q)^2.
-$
+$$
 
 Because $A$ is invertible modulo every power of two, the polygonal values modulo $2^n$ are **exactly** the residues $z$ for which $Az+q^2$ is a square modulo $2^n$. This is a two-way criterion, not merely a quick way to reject candidates.
 
@@ -198,9 +198,9 @@ For example, for octagonal numbers ($k=8$), we have $A=3$ and $q=1$. Thus a numb
 
 For a Type B triple, apply this test separately to
 
-$
+$$
 A(ab+c)+q^2,\quad A(ad+c)+q^2,\quad A(bd+c)+q^2.
-$
+$$
 
 All three must be squares *modulo the same power of two*. This reframes the whole binary obstruction hierarchy as a simultaneous square-residue problem and explains why finer moduli detect contradictions missed by coarser ones.
 
