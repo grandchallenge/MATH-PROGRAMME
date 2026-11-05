@@ -220,6 +220,24 @@ Why does a fixed triple work? If the transformed offset has the form $D=2^{2j}u$
 
 **Interpretation:** for exactly one-sixth of integer offsets (in the natural-density sense), this construction is available when $k$ is divisible by four. Such offsets are immune to *purely power-of-two congruence nonexistence arguments*. The complementary five-sixths are **not automatically impossible**; another argument would be needed to establish an obstruction. No claim about actual integer Type B triple existence follows from the local construction.
 
+### Which polygonal orders admit *every* offset locally?
+
+The earlier one-sixth density is a useful sufficient test for individual offsets, but it does not exhaust all the ways a Type B triple can be compatible in 2-adic arithmetic. The next result completely classifies **orders for which every integer offset works locally**.
+
+**Uniform binary admissibility theorem.** For every polygonal order $k\ge3$, and every integer offset $c$, a *single fixed triple of distinct positive integers* can be found whose three shifted pair products are polygonal residues modulo **every** power $2^n$ if and only if
+
+$
+4\nmid k\quad\text{or}\quad k\equiv4\pmod{16}.
+$
+
+For $4\nmid k$, the already-proved binary surjectivity means that the fixed entries $(1,2,3)$ always pass every local test. For $k\equiv4\pmod{16}$, something different happens: the completed-square coefficient $A=k/2-1$ is $1$ modulo $8$, so it has a square root in the 2-adic integers. The classical Euler pair-to-triple identity then provides a *formal* 2-adic triple; approximating its entries sufficiently accurately by ordinary positive integers preserves all three nonzero square conditions at every binary precision.
+
+**Worked example:** choose $k=20,c=2$. The previous offset test fails because $D=9\cdot2+4^2=34$ is not a 2-adic square. Nevertheless, the new construction produces the fixed entries $(1,242,375)$. Their shifted pair products are $244$, $377$, and $90752$. All three are **20-gonal residues modulo every power of two**, but this says nothing about their being actual 20-gonal integers.
+
+The reverse direction is equally concrete. If $k$ is divisible by eight, the offset $c=2$ is impossible for Type B triples already modulo eight. If $k\equiv12\pmod{16}$, that same offset is impossible modulo sixteen: the only allowed pair-product remainders are $7,10,14,15$, and their parity relations cannot be satisfied by a triple. These are exactly the order classes omitted by the displayed theorem.
+
+**What is classified?** The theorem answers the question “Does *every offset* have a fixed triple passing all binary congruence tests?” It does **not** establish that every individual offset outside those classes is forbidden, nor does it prove the existence of actual integer Diophantine triples. The proof, positive-integer constructor, and independent converse tests are in the [WP08 uniform 2-adic admissibility dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md).
+
 ## 6. How the finite certificate proves an infinite statement
 
 Think of each integer as a box labeled by its remainder modulo 16. Although there are infinitely many integers, there are only 16 box labels. A possible triple lands in some **unordered triple of boxes**, and the labels may repeat even though the integers themselves must be distinct.
@@ -257,6 +275,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 binary-surjectivity theorem and modulus-64 full certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SURJECTIVITY_MOD64_006.md)
 - [WP08 complete 2-adic square normal form, proof and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SQUARE_NORMAL_FORM_007.md)
 - [WP08 one-sixth 2-adic offset density and fixed coherent local triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_DENSITY_COHERENCE_008.md)
+- [WP08 complete all-offset 2-adic order classification, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
