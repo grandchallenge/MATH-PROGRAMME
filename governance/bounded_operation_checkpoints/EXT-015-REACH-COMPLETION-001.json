@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP149",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP150",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "scalar_relative_weight_one_primary_review",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "scalar_relative_weight_one_reviewed_editorial_integration",
+  "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "3e3aae80e2d63c1fffafe41188640b32b293ec03",
-    "candidate_head_sha": "0b3a12adead6032aa8452f14bb0cdfa469533ae5",
+    "candidate_head_sha": "c55ad085277f18161338bad518782651fb1fadfc",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-weight-one-primary-frozen-20261104",
+    "branch": "research/reach-weight-one-review-frozen-20261104",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "obtain_distinct_weight_one_review_142",
-      "description": "Review the exact frozen 141 proof and its typed liquid and fixed-test conclusions. Test the compact primitive on the actual whole-history graph stages, Fourier completion and rapid mixed rows. Return written review 142, with at most one consolidated correction if needed."
+      "id": "read_back_exact_weight_one_integration_then_open_pr",
+      "description": "Verify the exact eight-file integration of proof 141, review 142, ledger 143 and the four canonical records. After editorial clear, open the scientific PR and verify protected checks on the reviewed head."
     }
   ],
   "next_action": {
-    "id": "obtain_distinct_weight_one_review_142",
-    "description": "Review the exact frozen 141 proof and its typed liquid and fixed-test conclusions. Test the compact primitive on the actual whole-history graph stages, Fourier completion and rapid mixed rows. Return written review 142, with at most one consolidated correction if needed.",
+    "id": "read_back_exact_weight_one_integration_then_open_pr",
+    "description": "Verify the exact eight-file integration of proof 141, review 142, ledger 143 and the four canonical records. After editorial clear, open the scientific PR and verify protected checks on the reviewed head.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_142.md",
@@ -42,8 +42,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": true,
+    "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "Review 142 blob e2f6d15855fe8f15a933eded63e6eed0944e5ab5",
+        "status": "ACCEPT unchanged primary proof 141. No correction. All 82 input blobs match protected main."
+      },
       {
         "kind": "artifact",
         "identity": "Primary 141 blob de6b608c8def91dd0b8b2d98fe410348ac92a17d",
@@ -478,10 +483,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "scalar_relative_weight_one_primary_review",
-    "result": "Mathematical source preflight and live input continuity passed. Distinct nonauthor review pending.",
+    "action": "scalar_relative_weight_one_reviewed_editorial_integration",
+    "result": "ACCEPT unchanged primary proof 141. No correction. All 82 input blobs match protected main.",
     "evidence_refs": [
-      "research/reach-weight-one-primary-frozen-20261104",
+      "research/reach-weight-one-review-frozen-20261104",
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_142.md"
     ]
@@ -490,7 +495,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-04T23:59:37.5187482Z"
+    "observed_at": "2026-11-05T00:04:39.3796690Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -557,7 +562,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Review the exact frozen 141 proof and its typed liquid and fixed-test conclusions. Test the compact primitive on the actual whole-history graph stages, Fourier completion and rapid mixed rows. Return written review 142, with at most one consolidated correction if needed."
+    "instructions": "Verify the exact eight-file integration of proof 141, review 142, ledger 143 and the four canonical records. After editorial clear, open the scientific PR and verify protected checks on the reviewed head."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
