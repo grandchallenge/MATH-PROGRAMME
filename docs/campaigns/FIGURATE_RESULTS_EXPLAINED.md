@@ -206,6 +206,20 @@ All three must be squares *modulo the same power of two*. This reframes the whol
 
 This completed-square identity is **classical**, including its standard polygonal discriminant form; see [Wolfram MathWorld](https://mathworld.wolfram.com/PolygonalNumber.html) and the [GCL proof-and-test dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SQUARE_NORMAL_FORM_007.md). The contribution here is its explicit use as a complete all-exponents local test in the FIGURATE Type B programme, not an assertion that the identity has newly been discovered.
 
+### Exactly one-sixth of offsets escape every binary obstruction test
+
+The completed-square method has a further, quantitative consequence. For a polygonal order divisible by four, the proportion of possible polygonal output remainders modulo larger and larger powers of two tends to **one-sixth**. This limit is the same for square numbers, octagonal numbers, and every polygonal order divisible by four.
+
+More precisely, let $N(n)$ count the distinct polygonal output remainders modulo $2^n$. Then $N(n)=(2^n+8)/6$ if $n$ is even, and $N(n)=(2^n+10)/6$ if $n$ is odd. The count comes from the classical formula for quadratic residues modulo powers of two, via the invertible affine square normal form. These exact counts and their recurrence are documented in the [WP08 density and coherence proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_DENSITY_COHERENCE_008.md); the classical square-count source is [Stangl, *Counting Squares in Z_n* (1996)](https://www.jstor.org/stable/2690536).
+
+There is a stronger observation than simply obtaining some compatible remainders. Suppose $k$ is divisible by four, set $A=k/2-1$, $q=k/4-1$, and let $D=Ac+q^2$. If this *transformed offset* is a square in the 2-adic integers, it is possible to choose **one fixed triple of distinct positive integers** whose three pairwise outputs pass the polygonal congruence test modulo **every** power of two, with the entries never changing.
+
+Here is an explicit example. For octagonal numbers take $k=8$ and offset $c=-8$. Then $A=3$, $q=1$, and $D=-23$. Although negative, $-23$ is a 2-adic square, because it is an odd number congruent to $1$ modulo $8$. The fixed triple $(4,8,16)$ has shifted pair products $24,56,120$. Each is a legitimate octagonal *remainder* modulo every $2^n$, but this does **not** mean that $24,56,120$ are all ordinary octagonal integers.
+
+Why does a fixed triple work? If the transformed offset has the form $D=2^{2j}u$ with $u$ odd and congruent to $1$ modulo $8$, choose entries $2^{j+2}$, $2^{j+3}$ and $2^{j+4}$. Their pair products are divisible by sufficiently high powers of two that adding them changes none of the valuation or low odd-unit bits that make $D$ a 2-adic square. Hence all three transformed outputs remain 2-adic squares simultaneously, at all binary precisions.
+
+**Interpretation:** for exactly one-sixth of integer offsets (in the natural-density sense), this construction is available when $k$ is divisible by four. Such offsets are immune to *purely power-of-two congruence nonexistence arguments*. The complementary five-sixths are **not automatically impossible**; another argument would be needed to establish an obstruction. No claim about actual integer Type B triple existence follows from the local construction.
+
 ## 6. How the finite certificate proves an infinite statement
 
 Think of each integer as a box labeled by its remainder modulo 16. Although there are infinitely many integers, there are only 16 box labels. A possible triple lands in some **unordered triple of boxes**, and the labels may repeat even though the integers themselves must be distinct.
@@ -242,6 +256,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 modulus-32 global obstruction proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD32_GLOBAL_OBSTRUCTIONS_004.md)
 - [WP08 binary-surjectivity theorem and modulus-64 full certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SURJECTIVITY_MOD64_006.md)
 - [WP08 complete 2-adic square normal form, proof and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SQUARE_NORMAL_FORM_007.md)
+- [WP08 one-sixth 2-adic offset density and fixed coherent local triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_DENSITY_COHERENCE_008.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
