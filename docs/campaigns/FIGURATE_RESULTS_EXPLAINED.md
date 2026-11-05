@@ -346,29 +346,29 @@ The earlier modulo-nine, modulo-25 and modulo-49 examples have a common cause. W
 
 For a polygonal order $k\ge3$ and an integer offset $c$, fix an odd prime $p$ that does not divide $k-2$. Suppose $(k-2)/2$ is a **quadratic nonresidue** modulo $p$: it is not the remainder of a nonzero square. If
 
-$
+$$
 p\mid 8(k-2)c+(k-4)^2
-$
+$$
 
 but
 
-$
+$$
 p^2\nmid 8(k-2)c+(k-4)^2,
-$
+$$
 
-then **there cannot be three distinct positive integer entries whose pairwise shifted products are all $k$-gonal numbers**. This conclusion holds regardless of how large the entries might be.
+then **there cannot be three distinct positive integer entries whose pairwise shifted products are all polygonal numbers of order $k$**. This conclusion holds regardless of how large the entries might be.
 
 The reason is geometric arithmetic: completing the square gives
 
-$
+$$
 P_k(t)=A(t-h)^2+B,
-$
+$$
 
 where $A=(k-2)/2$ and $B=-(k-4)^2/[8(k-2)]$. Under the stated offset condition, each hypothetical pair would satisfy
 
-$
+$$
 xy+pu=Az^2\pmod{p^2}
-$
+$$
 
 for an invertible $u$ modulo $p$.
 
