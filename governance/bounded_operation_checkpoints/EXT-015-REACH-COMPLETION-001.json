@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP151",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP152",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "scalar_relative_weight_one_scientific_admission",
+  "phase": "scalar_relative_weight_one_scientific_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "3e3aae80e2d63c1fffafe41188640b32b293ec03",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "await_exact_weight_one_checks_then_native_queue",
-      "description": "Wait for five required checks on the exact reviewed weight-one head. Verify effective rules and frozen scientific inputs, then request native protected queue admission."
+      "id": "verify_native_weight_one_merge_and_reconcile_trackers",
+      "description": "Wait for native merge. Verify the exact second parent, eight admitted blobs, five required native checks, 79 scientific sources and terminal checkpoint, then reconcile the four tracker bodies."
     }
   ],
   "next_action": {
-    "id": "await_exact_weight_one_checks_then_native_queue",
-    "description": "Wait for five required checks on the exact reviewed weight-one head. Verify effective rules and frozen scientific inputs, then request native protected queue admission.",
+    "id": "verify_native_weight_one_merge_and_reconcile_trackers",
+    "description": "Wait for native merge. Verify the exact second parent, eight admitted blobs, five required native checks, 79 scientific sources and terminal checkpoint, then reconcile the four tracker bodies.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SCALAR_RELATIVE_142.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3132",
+        "status": "QUEUED_POSITION_1_AT_2026-11-05T00:09:22Z"
+      },
       {
         "kind": "artifact",
         "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3132",
@@ -488,8 +493,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "scalar_relative_weight_one_scientific_admission",
-    "result": "EDITORIAL_CLEAR_PR_OPEN_REQUIRED_CHECKS_PENDING",
+    "action": "scalar_relative_weight_one_scientific_native_queue",
+    "result": "QUEUED_POSITION_1_AT_2026-11-05T00:09:22Z",
     "evidence_refs": [
       "research/reach-scalar-relative-weight-one-20261104",
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
@@ -500,7 +505,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-05T00:07:15.3088291Z"
+    "observed_at": "2026-11-05T00:09:28.1339944Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -567,7 +572,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Wait for five required checks on the exact reviewed weight-one head. Verify effective rules and frozen scientific inputs, then request native protected queue admission."
+    "instructions": "Wait for native merge. Verify the exact second parent, eight admitted blobs, five required native checks, 79 scientific sources and terminal checkpoint, then reconcile the four tracker bodies."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
