@@ -6,6 +6,12 @@ A square number can be drawn as a square array of dots; a triangular number as a
 
 This page is an accessible companion to the [exact research specification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_PILOT_001.md). It distinguishes two different research questions that must not be confused.
 
+## New: a guide to the unbounded obstruction results
+
+[**Read the illustrated-by-examples mathematical explanation: *When three numbers cannot coexist*.**](FIGURATE_RESULTS_EXPLAINED.md)
+
+The updated FIGURATE research goes beyond counting small tuples. A complete modular argument rules out **all Type B triples**, without any numerical entry bound, for polygonal orders divisible by 8 and offsets congruent to 2, 3, or 6 modulo 8. A second family occurs for polygonal orders congruent to 12 modulo 16 and offsets congruent to 2 modulo 4. The linked guide develops the result from parity and remainders, gives a worked octagonal example, and explains how the independently verified finite residue tables yield unbounded conclusions. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
+
 ## What is a figurate number?
 
 The polygonal number of order $k$ at index $t$ is
