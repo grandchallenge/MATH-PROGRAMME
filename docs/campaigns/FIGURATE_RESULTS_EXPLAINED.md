@@ -119,6 +119,23 @@ For exact reproducibility, the complete underlying residue table is:
 
 **Important distinction:** “None” in the last row says that the *modulus-16 test* found no contradiction. It does **not** prove that any actual positive-integer triple exists. Another modulus or a global equation might still exclude it.
 
+### A further step: modulus 32
+
+The research next doubled the number of possible remainders, from sixteen to thirty-two. This reveals **two new global impossibility families** that the earlier modulus-16 test cannot detect:
+
+| Polygonal order | Additional offsets that cannot give Type B triples |
+| --- | --- |
+| $k\equiv0\pmod{16}$ | $c\equiv5\pmod{16}$ |
+| $k\equiv8\pmod{16}$ | $c\equiv9\pmod{16}$ |
+
+For example, if $k=16$ and $c=5$, or if $k=8$ and $c=9$, there is no Type B triple of *any* size. Nevertheless, choosing $a=1$ and $b=P_k(t)-c$ still produces infinitely many actual compatible pairs. The obstruction concerns making **three** pairwise conditions true simultaneously.
+
+**Why does doubling the modulus matter?** Modulo 16, certain potential pair products look indistinguishable. Modulo 32 they split into finer remainder classes. In these two families every permitted pair product has an odd remainder of $3$ modulo 4 or an even remainder of $8$ or $12$ modulo 16. Among even permitted products divisible by 8 but not 16, only **one remainder class modulo 32** is allowed. A parity case analysis shows any putative triple would force two such products to differ by 16 modulo 32—an impossibility.
+
+The full [mathematical proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD32_GLOBAL_OBSTRUCTIONS_004.md) examines all possibilities for how many entries are even, including cases where all three are even. The accompanying exact-integer check tests $\binom{34}{3}=5984$ unordered entry-remainder triples for each of $32\times32=1024$ order-and-offset classes. It includes repeated residues, because distinct integers can still have the same remainder.
+
+The **complete modulo-32** test excludes the classes already listed in the modulus-16 table, plus exactly the two new offset families above. In every nonexcluded cell the checker supplies an explicit *local remainder witness*. Such a witness is not the same thing as an actual positive-integer Diophantine triple.
+
 ## 6. How the finite certificate proves an infinite statement
 
 Think of each integer as a box labeled by its remainder modulo 16. Although there are infinitely many integers, there are only 16 box labels. A possible triple lands in some **unordered triple of boxes**, and the labels may repeat even though the integers themselves must be distinct.
@@ -140,7 +157,7 @@ The computer is not **guessing** that large triples are absent. It exhausts an e
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
 
-**Established computationally:** the complete local exclusion tables modulo 8 and 16, with independently repeated exact-integer tests.
+**Established computationally:** the complete local exclusion tables modulo 8, 16 and 32, with independently repeated exact-integer tests. The two additional modulo-32 nonexistence families also have a direct elementary 2-adic proof.
 
 **Not established:** novelty relative to the entire literature, independent specialist certification, or a global classification of all polygonal Type B triples. Results for Type A and Type C require their own hypotheses. The still-open source review of one 2025 *Mathematica Slovaca* paper remains a separate documentary obligation.
 
@@ -152,6 +169,8 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 
 - [WP08 modulus-8 proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_GLOBAL_TRIPLE_OBSTRUCTION_002.md)
 - [WP08 modulus-16 proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD16_GLOBAL_OBSTRUCTIONS_003.md)
+- [WP08 modulus-32 global obstruction proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD32_GLOBAL_OBSTRUCTIONS_004.md)
+- [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
 - [Research programme and current status](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3125)
