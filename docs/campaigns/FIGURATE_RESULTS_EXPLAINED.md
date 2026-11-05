@@ -176,6 +176,36 @@ These are unbounded nonexistence statements because every integer triple must pr
 
 The [structural proof, complete modulus-64 table, executable index builder and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SURJECTIVITY_MOD64_006.md) preserve the full hypotheses and validation record.
 
+### A complete square test for orders divisible by four
+
+There is a complementary theorem for the other polygonal orders. Suppose $k$ is divisible by four and put
+
+$
+A=\frac{k}{2}-1,\qquad q=\frac{k}{4}-1.
+$
+
+Here $A$ is odd. Completing the square gives the *exact identity*
+
+$
+A P_k(t)+q^2=(At-q)^2.
+$
+
+Because $A$ is invertible modulo every power of two, the polygonal values modulo $2^n$ are **exactly** the residues $z$ for which $Az+q^2$ is a square modulo $2^n$. This is a two-way criterion, not merely a quick way to reject candidates.
+
+For example, for octagonal numbers ($k=8$), we have $A=3$ and $q=1$. Thus a number $z$ is *locally octagonal* modulo $2^n$ precisely when $3z+1$ is a square modulo $2^n$. The actual octagonal value $z=21$ gives $3\cdot21+1=64=8^2$. But satisfying the criterion modulo a fixed power of two does not mean a particular integer is globally octagonal; the positive integer index condition still matters.
+
+**Why is this useful?** Every integer square has an even power-of-two valuation until it vanishes modulo the chosen power. After removing that even power, an odd square must equal $1$ modulo $8$ when at least three binary digits remain. Therefore the apparently complicated polygonal residue question becomes a very specific test of the valuation and low three bits of $Az+q^2$.
+
+For a Type B triple, apply this test separately to
+
+$
+A(ab+c)+q^2,\quad A(ad+c)+q^2,\quad A(bd+c)+q^2.
+$
+
+All three must be squares *modulo the same power of two*. This reframes the whole binary obstruction hierarchy as a simultaneous square-residue problem and explains why finer moduli detect contradictions missed by coarser ones.
+
+This completed-square identity is **classical**, including its standard polygonal discriminant form; see [Wolfram MathWorld](https://mathworld.wolfram.com/PolygonalNumber.html) and the [GCL proof-and-test dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SQUARE_NORMAL_FORM_007.md). The contribution here is its explicit use as a complete all-exponents local test in the FIGURATE Type B programme, not an assertion that the identity has newly been discovered.
+
 ## 6. How the finite certificate proves an infinite statement
 
 Think of each integer as a box labeled by its remainder modulo 16. Although there are infinitely many integers, there are only 16 box labels. A possible triple lands in some **unordered triple of boxes**, and the labels may repeat even though the integers themselves must be distinct.
@@ -211,6 +241,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 modulus-16 proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD16_GLOBAL_OBSTRUCTIONS_003.md)
 - [WP08 modulus-32 global obstruction proof and classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_MOD32_GLOBAL_OBSTRUCTIONS_004.md)
 - [WP08 binary-surjectivity theorem and modulus-64 full certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SURJECTIVITY_MOD64_006.md)
+- [WP08 complete 2-adic square normal form, proof and independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_2ADIC_SQUARE_NORMAL_FORM_007.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
