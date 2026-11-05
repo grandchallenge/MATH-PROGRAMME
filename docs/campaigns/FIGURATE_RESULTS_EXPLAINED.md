@@ -325,6 +325,21 @@ For example, triangular numbers ($k=3$) with offset $c=4$ admit many **compatibl
 
 The [WP09 full mathematical proof and independent modulus-nine certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_MOD9_OBSTRUCTIONS_002.md) also shows that the weaker modulus-three test misses these contradictions entirely. This conclusion is new to the GCL research programme; it is **not** asserted original in the wider mathematical literature or externally certified.
 
+### WP09: why modulo 25 can exclude triples that modulo five cannot
+
+The modulo-nine result is not an isolated phenomenon. A new, exact **modulo-25 certificate** detects further infinite families where the weaker modulo-five test admits compatible residues.
+
+For Type B, take a polygonal order $k\ge3$ and any integer offset $c$. **No triple of distinct positive integers exists** under either of these conditions:
+
+- $k\equiv1\pmod5$, $c\equiv3\pmod5$, and $c\not\equiv k-3\pmod{25}$.
+- $k\equiv3\pmod5$, $c\equiv3\pmod5$, and $c\not\equiv k\pmod{25}$.
+
+To see what is different, use triangular numbers, with $k=3$. At offset $c=8$, the modulo-five test has compatible triples of entry remainders, but **none of the 25 possible entry residues for each of three entries** can satisfy all three polygonal-output requirements modulo 25 simultaneously. Therefore no integer Type B triple exists, no matter how large the entries. Offset $c=3$, by contrast, remains *locally compatible* modulo 25; this does not prove an actual triple exists.
+
+The exact checker calculates all polygonal residues modulo 25 and checks all possible ordered entry-residue triples, **allowing repeated residues** because distinct integers may have equal remainders. Across 625 order/offset cells, exactly 40 are excluded; the corresponding modulo-five table has no excluded parameter classes. An independent arithmetic checker reconstructs the same table from the direct quadratic polygonal formula. These finite certificates prove an unbounded integer nonexistence theorem, not a negative search up to some entry cutoff.
+
+See the [WP09 modulo-25 proof dossier, reproducible classifier, and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MOD25_GLOBAL_OBSTRUCTIONS_003.md). The result is internally proved and source-admitted; independent mathematical certification and literature novelty remain open.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -348,6 +363,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP08 complete all-offset 2-adic order classification, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md)
 - [WP09 infinite binary-versus-odd-prime separation, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ODD_PRIME_SEPARATION_001.md)
 - [WP09 global all-triples modulo-nine obstruction and exact verification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_MOD9_OBSTRUCTIONS_002.md)
+- [WP09 modulo-25 global obstruction and exact finite certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MOD25_GLOBAL_OBSTRUCTIONS_003.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
