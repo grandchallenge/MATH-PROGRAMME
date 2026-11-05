@@ -33,7 +33,7 @@ $$
 The eigenvalues are $a+b$ and $a-b$, hence the known identity
 
 $$
-Z_N=\operatorname{tr}(T^N)=(a+b)^N+(a-b)^N.
+Z_N=\mathrm{tr}(T^N)=(a+b)^N+(a-b)^N.
 $$
 
 The initial integer-weight specimen uses $a=2$, $b=1$. It checks $N=1,\ldots,8$ against independent spin enumeration. This is not an original theorem.
