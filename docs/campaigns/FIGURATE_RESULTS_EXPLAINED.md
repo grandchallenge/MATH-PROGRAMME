@@ -506,6 +506,30 @@ This is a **Pell-versus-split dichotomy**. It tells us when an actual fixed-pair
 
 The full [proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md), [Pell recurrence and divisor-enumeration source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_general_pell_amplification.py), and [independent mathematical tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_general_pell_amplification.py) preserve the proofs and exact identities. The result uses classical Pell arithmetic; priority in the published literature and independent mathematical certification remain open.
 
+### WP09: an exact solution for every polygonal-minus-one offset
+
+The earlier Pell theorem showed how to turn **one genuine exact tuple** into infinitely many. We now have a stronger existence result that works for **every polygonal order**, without first searching for an integer seed.
+
+**Global seed-existence theorem.** For every order $k\ge3$ and every positive integer $u$, set the offset $c=P_k(u)-1$. Then there are infinitely many actual triples of distinct positive integers $(a,b,d)$ whose three shifted pair products are exactly $k$-gonal numbers at positive indices. In fact, except when $(k,u)=(4,1)$, infinitely many different fixed nonsquare second entries $b$ each support infinitely many such triples.
+
+**The construction.** Choose an index $r$ for which $b=P_k(r)-c>1$ is nonsquare. The temporary expressions $(1,b,1)$ satisfy all three exact polygonal-output identities because $1+c=P_k(u)$ and $b+c=P_k(r)$. But this **is not a Type B triple**: its first and third entries are the same. The key is to use its polygonal indices as a starting point of a generalized Pell equation. A suitable positive power of a norm-one Pell unit preserves the integer index congruences while making the third entry larger and distinct. All three resulting pair equations are exact identities, not just congruences.
+
+Why can we always choose such a nonsquare $b$? The quadratic polynomial $P_k(r)-P_k(u)+1$ cannot be a square for all sufficiently large integers $r$, unless $(k,u)=(4,1)$. Otherwise its integer square-root differences would eventually be constant, forcing a polynomial-square identity that is possible only for that one exception. In the exceptional square-order case, $c=0$ and $(1,r^2,s^2)$ directly supplies infinitely many exact square-output triples.
+
+**Examples, verified in ordinary integer arithmetic:**
+
+| Polygonal order | Offset | Exact entries | Exact indices |
+| --- | ---: | --- | --- |
+| 3 (triangular) | 0 | $(1,3,210)$ | $(2,20,35)$ |
+| 4 (square) | 0 | $(1,4,9)$ | $(2,3,6)$ |
+| 7 (heptagonal) | 6 | $(1,12,28051219)$ | $(3,3350,11604)$ |
+
+For the heptagonal example, the pair outputs are exactly $18=P_7(3)$, $28051225=P_7(3350)$, and $336614634=P_7(11604)$.
+
+This is a **global existence result for an infinite family of offsets at every order**, rather than a local-modulus test. It does **not** show that all locally compatible offsets have an exact solution, nor claim that the classical Pell tools themselves are novel.
+
+The complete [proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md), [constructive exact-tuple generator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_seed_existence.py), and [independent regressions](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_seed_existence.py) are in the protected research record.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -534,6 +558,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 complete criterion for all odd prime powers](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md)
 - [WP09 local CRT and exact Euler/Pell families](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md)
 - [WP09 general Pell amplification and finite square-entry extensions](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md)
+- [WP09 global existence at polygonal-minus-one offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
