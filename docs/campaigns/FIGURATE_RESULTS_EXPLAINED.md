@@ -466,6 +466,46 @@ The pair outputs are exactly $t^2$, $(t+1)^2$, and $(t(t+1)-c)^2$. This is the c
 
 The [complete arithmetic dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md) and [executable constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_crt_exact_families.py) distinguish finite modular witnesses from exact integer identities. Independent arithmetic replay compared 684 complete small-modulus parameter cases with a separate all-entry search, checked 20 mixed-prime-power CRT examples, and verified 23 exact integer constructions. This does **not** establish that every everywhere-locally-compatible order and offset has an exact Type B triple. Literature novelty and independent mathematical certification remain open.
 
+### WP09: when one exact solution becomes infinitely many
+
+FIGURATE now has a **general theorem about exact integer solutions**, not simply another modular obstruction. Suppose a genuine Type B triple has entries $(1,b,d)$ with $b>1$ a **nonsquare integer**. Then there are infinitely many genuine Type B triples with the same first two entries $(1,b)$, the same polygonal order, and the same offset.
+
+Write $P_k(n)$ for the polygonal formula and let $b=P_k(r)-c$, $d=P_k(s)-c$. The remaining exact equation is
+
+$
+P_k(t)=bP_k(s)-(b-1)c.
+$
+
+With $R=2(k-2)$, $L=k-4$, $S=Rs-L$, and $T=Rt-L$, the equation becomes
+
+$
+T^2-bS^2=-(b-1)\bigl(8(k-2)c+(k-4)^2\bigr).
+$
+
+This is a generalized Pell equation. Since $b$ is nonsquare, a norm-one Pell unit generates larger and larger solutions. By taking a suitable positive power of that unit, the transformed indices retain the required congruences modulo $R$, making the new indices positive integers. The resulting triples satisfy all three **exact polygonal equations**.
+
+We can apply this to different polygonal orders, using verified starting triples:
+
+| Order | Offset | Exact starting entries | Exact pair-output indices |
+| --- | ---: | --- | --- |
+| 5 (pentagonal) | 2 | $(1,3,3430)$ | $(2,48,83)$ |
+| 6 (hexagonal) | 2 | $(1,13,43)$ | $(3,5,17)$ |
+| 20 | 2 | $(1,18,13375)$ | $(2,39,164)$ |
+
+For example, the next pentagonal member after $(1,3,3430)$ is $(1,3,25051687815)$, with indices $(2,129233,223838)$. Each of its three shifted pair products is **exactly** a pentagonal number.
+
+There is a complementary **finite-extension theorem**. When the fixed second entry is a perfect square $b=h^2>1$, and $8(k-2)c+(k-4)^2$ is nonzero, the Pell equation instead factors into two integer terms:
+
+$
+(T-hS)(T+hS)=-(b-1)\bigl(8(k-2)c+(k-4)^2\bigr).
+$
+
+A fixed nonzero integer has only finitely many divisor pairs. Therefore there are only finitely many exact Type B extensions with that fixed first pair $(1,b)$. For example, at square order $k=4$ and offset $c=5$, the pair $(1,4)$ has the exact extension $(1,4,11)$ with indices $(3,4,7)$; its fixed-pair extensions are finite. The special zero-discriminant case is excluded from this finite assertion.
+
+This is a **Pell-versus-split dichotomy**. It tells us when an actual fixed-pair seed forces infinitely many solutions, and when fixed-pair extensions are finite. It does **not** tell us whether an arbitrary locally admissible parameter pair has its first exact solution.
+
+The full [proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md), [Pell recurrence and divisor-enumeration source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_general_pell_amplification.py), and [independent mathematical tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_general_pell_amplification.py) preserve the proofs and exact identities. The result uses classical Pell arithmetic; priority in the published literature and independent mathematical certification remain open.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -493,6 +533,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 uniform odd-prime-square obstruction theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_ODD_PRIME_SQUARE_005.md)
 - [WP09 complete criterion for all odd prime powers](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md)
 - [WP09 local CRT and exact Euler/Pell families](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md)
+- [WP09 general Pell amplification and finite square-entry extensions](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
