@@ -550,6 +550,42 @@ with exact polygonal indices $(6,3005822048347109708020586,132733507688687064040
 
 The [full mathematical proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_SHIFT_GLOBAL_EXISTENCE_010.md), [constructive generator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_square_shift_existence.py), and [independent arithmetic tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_square_shift_existence.py) distinguish real integer solutions from local congruence witnesses. This is a sufficient global-existence theorem for a specific family of offsets, not a universal local-to-global result or a literature-originality assertion.
 
+### WP09: why failure of the square-shift test is not nonexistence
+
+The new square-shift theorem proves that many offsets have exact integer Type B triples. But **failure of its representation condition does not mean a triple is impossible**. The distinction can be proved uniformly using residues modulo four.
+
+For every polygonal order divisible by four, the polygonal polynomial satisfies
+
+$$
+P_k(u)\equiv u^2\pmod4.
+$$
+
+Therefore the differences $P_k(u)-a^2$ can only be congruent to 0, 1 or 3 modulo four, **never 2**. Every offset $c\equiv2\pmod4$ falls outside the WP09-010 construction, even if we allow negative indices or a zero first entry.
+
+Nevertheless, the three distinct entry residues $(1,2,3)$ work simultaneously modulo four: the shifted pair outputs are $(0,1,0)$, matching the polygonal index residues $(4,1,4)$. There is no single *diagonal* entry residue that works, but three **different** residues do. This explains why the diagonal construction is sufficient, not necessary. It also shows that the convenient diagonal compatibility criterion at odd prime powers cannot be assumed at powers of two.
+
+The distinction survives when we demand **exact positive-integer equalities**, not just congruences:
+
+| Polygonal order | Offset | Exact entries | Exact indices |
+| --- | ---: | --- | --- |
+| 4 | 2 | $(1,7,14)$ | $(3,4,10)$ |
+| 20 | 2 | $(1,18,13375)$ | $(2,39,164)$ |
+| 36 | 2 | $(1,343,6478)$ | $(5,20,362)$ |
+
+The 36-gonal example is new to the FIGURATE proof record. Its three shifted products are exactly
+
+$$
+345=P_{36}(5),\qquad6480=P_{36}(20),\qquad2221956=P_{36}(362).
+$$
+
+Because 343 is not a perfect square, the earlier Pell amplification theorem converts this seed into **infinitely many exact 36-gonal Type B triples**, all at offset 2.
+
+For square outputs ($k=4$), the result is even broader: the classical Euler regular construction gives infinitely many exact triples at **every** signed integer offset $c$, including all offsets congruent to 2 modulo four. Thus an infinite set of parameter pairs missed by WP09-010 is nevertheless globally realizable.
+
+The [rigorous diagonal-gap proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_NONDIAGONAL_ANCHOR_GAP_011.md), [exact constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_nondiagonal_anchor_gap.py), and [independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_nondiagonal_anchor_gap.py) explain the precise distinction.
+
+This result does not prove that all orders divisible by four and all offsets congruent to two have exact integer solutions. It proves that **absence of a square-shift anchor must not be mistaken for an obstruction to the full three-entry problem**. The unresolved local-to-global question remains open.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -580,6 +616,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 general Pell amplification and finite square-entry extensions](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md)
 - [WP09 global existence at polygonal-minus-one offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md)
 - [WP09 global existence at polygonal-minus-square offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_SHIFT_GLOBAL_EXISTENCE_010.md)
+- [WP09 binary non-diagonal anchor gap and exact Type B counterexamples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_NONDIAGONAL_ANCHOR_GAP_011.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
