@@ -556,9 +556,9 @@ The new square-shift theorem proves that many offsets have exact integer Type B 
 
 For every polygonal order divisible by four, the polygonal polynomial satisfies
 
-$
+$$
 P_k(u)\equiv u^2\pmod4.
-$
+$$
 
 Therefore the differences $P_k(u)-a^2$ can only be congruent to 0, 1 or 3 modulo four, **never 2**. Every offset $c\equiv2\pmod4$ falls outside the WP09-010 construction, even if we allow negative indices or a zero first entry.
 
@@ -574,9 +574,9 @@ The distinction survives when we demand **exact positive-integer equalities**, n
 
 The 36-gonal example is new to the FIGURATE proof record. Its three shifted products are exactly
 
-$
+$$
 345=P_{36}(5),\qquad6480=P_{36}(20),\qquad2221956=P_{36}(362).
-$
+$$
 
 Because 343 is not a perfect square, the earlier Pell amplification theorem converts this seed into **infinitely many exact 36-gonal Type B triples**, all at offset 2.
 
