@@ -627,9 +627,9 @@ The earlier Pell theorem amplified exact Type B triples of the form $(1,b,d)$. T
 
 Let $r,s,t$ be the three polygonal indices, put $R=2(k-2)$, $L=k-4$, $D=8(k-2)c+L^2$, $S=Rs-L$, and $X=a(Rt-L)$. The two equations involving $d$ become the exact generalized Pell identity
 
-$
+$$
 X^2-abS^2=a(a-b)D.
-$
+$$
 
 A norm-one Pell unit for the nonsquare coefficient $ab$ preserves that equation. Taking a suitable power that acts as the identity modulo $2aR$ also preserves the integer polygonal indices and the divisibility required to reconstruct a new integer third entry. Increasing Pell powers produce infinitely many distinct positive exact solutions. This proves a stronger fixed-pair theorem than the earlier $a=1$ result.
 
