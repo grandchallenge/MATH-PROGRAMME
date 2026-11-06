@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP183",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP184",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,40 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Protected complementary reduction read back. New mixed mapping input audit next.",
-  "state": "IN_PROGRESS",
+  "phase": "complementary_documentary_admission",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "bfbd0e516988dbd8aa8187709a3aff57ac775a5a",
-    "candidate_head_sha": "5f9ab7713e6e71ab00156b6f72760cb24563d50f",
+    "candidate_head_sha": "4389ce8a42a01f87966948f42a033555fbaf9c23",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-complementary-two-integration-frozen-20261106",
+    "pr_number": 3170,
+    "branch": "research/reach-complementary-two-closeout-20261106",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "description": "Audit proposed153 mixed conormal Green-kernel mapping input for unresolved150.L on the actual joint residual W=ker(P,m). Before another construction, test a new augmented collision arrangement with a zero-width Green singularity at positive regulator against existing complete scalar/R1 sources. Identify a genuine mapping mechanism with fixed scalar indices, actual densities, all hidden collisions, completed coefficient and uniform mixed-row bounds, or record the exact absence of such input. Preserve the same-block cusp and Gaussian Fourier controls. Do not repeat the failed relative Fourier argument or infer closure from a scalar b-fibration. A further construction needs documented new mathematical input. All153 claims unproved. Residual acyclicity, full family recovery126.14, original R3, actual lifting, higher weights and final integration remain open.",
-      "id": "audit-mixed-green-mapping-input-153"
+      "id": "verify_3170_editorial_and_admission",
+      "description": "Verify documentary3170 exacthead4389ce8a42a01f87966948f42a033555fbaf9c23 editorial verdict, required checks/reviews and material closure; native merge and five-blob readback,88-source custody and final issue pointers. Preserve canonicalCP183 new input audit and open residual obligations."
     }
   ],
   "next_action": {
-    "description": "Audit proposed153 mixed conormal Green-kernel mapping input for unresolved150.L on the actual joint residual W=ker(P,m). Before another construction, test a new augmented collision arrangement with a zero-width Green singularity at positive regulator against existing complete scalar/R1 sources. Identify a genuine mapping mechanism with fixed scalar indices, actual densities, all hidden collisions, completed coefficient and uniform mixed-row bounds, or record the exact absence of such input. Preserve the same-block cusp and Gaussian Fourier controls. Do not repeat the failed relative Fourier argument or infer closure from a scalar b-fibration. A further construction needs documented new mathematical input. All153 claims unproved. Residual acyclicity, full family recovery126.14, original R3, actual lifting, higher weights and final integration remain open.",
+    "id": "verify_3170_editorial_and_admission",
+    "description": "Verify documentary3170 exacthead4389ce8a42a01f87966948f42a033555fbaf9c23 editorial verdict, required checks/reviews and material closure; native merge and five-blob readback,88-source custody and final issue pointers. Preserve canonicalCP183 new input audit and open residual obligations.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/MIXED_GREEN_KERNEL_MAPPING_AUDIT_153.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_GREEN_MAPPING_154.md",
-      "research/condensed-qft/EXT-015/GREEN_MAPPING_AUDIT_ACCEPTANCE_155.md"
-    ],
-    "id": "audit-mixed-green-mapping-input-153"
+      "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md",
+      "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_ACCEPTANCE_152.md"
+    ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3170 documentary head4389ce8a42a01f87966948f42a033555fbaf9c23",
+        "status": "Scientific3168 protected/read back and trackers reconciled. Documentary editorial and native required checks pending."
+      },
       {
         "kind": "artifact",
         "identity": "PR 3168 native merge bfbd0e516988dbd8aa8187709a3aff57ac775a5a and tracker reconciliation",
@@ -618,19 +623,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
+    "action": "complementary_documentary_admission",
+    "result": "Scientific3168 protected/read back and trackers reconciled. Documentary editorial and native required checks pending.",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3168",
-      "research/reach-complementary-two-integration-frozen-20261106",
-      "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_ACCEPTANCE_152.md"
-    ],
-    "action": "Read back complementary reduction and reconcile programme records",
-    "result": "PASS. Eight changed blobs, five required native checks, 88 scientific sources, unchanged terminal checkpoint, four issue bodies and seven programme boundaries."
+      "research/reach-complementary-two-closeout-20261106",
+      "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md"
+    ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-06T22:50:03.0368421Z"
+    "observed_at": "2026-11-06T22:51:19.0925242Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -697,7 +702,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Audit proposed153 mixed conormal Green-kernel mapping input for unresolved150.L on the actual joint residual W=ker(P,m). Before another construction, test a new augmented collision arrangement with a zero-width Green singularity at positive regulator against existing complete scalar/R1 sources. Identify a genuine mapping mechanism with fixed scalar indices, actual densities, all hidden collisions, completed coefficient and uniform mixed-row bounds, or record the exact absence of such input. Preserve the same-block cusp and Gaussian Fourier controls. Do not repeat the failed relative Fourier argument or infer closure from a scalar b-fibration. A further construction needs documented new mathematical input. All153 claims unproved. Residual acyclicity, full family recovery126.14, original R3, actual lifting, higher weights and final integration remain open."
+    "instructions": "Verify documentary3170 exacthead4389ce8a42a01f87966948f42a033555fbaf9c23 editorial verdict, required checks/reviews and material closure; native merge and five-blob readback,88-source custody and final issue pointers. Preserve canonicalCP183 new input audit and open residual obligations."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
