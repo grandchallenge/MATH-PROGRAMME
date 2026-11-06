@@ -655,17 +655,17 @@ The [full generalized Pell proof](https://github.com/grandchallenge/MATHSOLVE/bl
 
 The generalized Pell theorem applies to another genuine exact example at the same polygonal order but a **different offset**. At order $k=52$ and offset $c=6$, the three distinct positive entries $(2,2279,4757)$ have positive polygonal indices $(14,20,659)$. The exact shifted pair products are
 
-$
+$$
 2\cdot2279+6=4564=P_{52}(14),
-$
+$$
 
-$
+$$
 2\cdot4757+6=9520=P_{52}(20),
-$
+$$
 
-$
+$$
 2279\cdot4757+6=10841209=P_{52}(659).
-$
+$$
 
 Although the complete local arithmetic sieve allows this parameter pair, it cannot alone establish integer existence. Here the displayed integers supply that additional evidence. The offset is outside the square-shift construction, because $6\equiv2\pmod4$ and $P_{52}(u)-a^2$ can never have residue 2 modulo four.
 
