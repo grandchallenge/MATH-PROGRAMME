@@ -472,15 +472,15 @@ FIGURATE now has a **general theorem about exact integer solutions**, not simply
 
 Write $P_k(n)$ for the polygonal formula and let $b=P_k(r)-c$, $d=P_k(s)-c$. The remaining exact equation is
 
-$
+$$
 P_k(t)=bP_k(s)-(b-1)c.
-$
+$$
 
 With $R=2(k-2)$, $L=k-4$, $S=Rs-L$, and $T=Rt-L$, the equation becomes
 
-$
+$$
 T^2-bS^2=-(b-1)\bigl(8(k-2)c+(k-4)^2\bigr).
-$
+$$
 
 This is a generalized Pell equation. Since $b$ is nonsquare, a norm-one Pell unit generates larger and larger solutions. By taking a suitable positive power of that unit, the transformed indices retain the required congruences modulo $R$, making the new indices positive integers. The resulting triples satisfy all three **exact polygonal equations**.
 
@@ -496,9 +496,9 @@ For example, the next pentagonal member after $(1,3,3430)$ is $(1,3,25051687815)
 
 There is a complementary **finite-extension theorem**. When the fixed second entry is a perfect square $b=h^2>1$, and $8(k-2)c+(k-4)^2$ is nonzero, the Pell equation instead factors into two integer terms:
 
-$
+$$
 (T-hS)(T+hS)=-(b-1)\bigl(8(k-2)c+(k-4)^2\bigr).
-$
+$$
 
 A fixed nonzero integer has only finitely many divisor pairs. Therefore there are only finitely many exact Type B extensions with that fixed first pair $(1,b)$. For example, at square order $k=4$ and offset $c=5$, the pair $(1,4)$ has the exact extension $(1,4,11)$ with indices $(3,4,7)$; its fixed-pair extensions are finite. The special zero-discriminant case is excluded from this finite assertion.
 
