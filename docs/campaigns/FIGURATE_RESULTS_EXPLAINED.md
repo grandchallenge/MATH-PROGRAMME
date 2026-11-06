@@ -586,6 +586,39 @@ The [rigorous diagonal-gap proof](https://github.com/grandchallenge/MATHSOLVE/bl
 
 This result does not prove that all orders divisible by four and all offsets congruent to two have exact integer solutions. It proves that **absence of a square-shift anchor must not be mistaken for an obstruction to the full three-entry problem**. The unresolved local-to-global question remains open.
 
+### WP09: the full local test for orders divisible by four
+
+Some earlier research found that three different entry residues can pass a modulus-four test even when no repeated entry residue works. **A solution modulo four is not enough to establish local compatibility at all powers of two.** The already-protected WP08 theorem gives stronger obstructions that settle several examples immediately.
+
+For every polygonal order divisible by four and every offset congruent to two modulo four, the following is now a **complete decision rule for simultaneous Type B compatibility at every finite modulus**.
+
+First, if $k$ is divisible by eight, **no Type B triple exists**, because the three pair-output congruences are impossible modulo eight. If $k\equiv12\pmod{16}$, the congruences are impossible modulo sixteen. These are established WP08 results; orders 8, 12, 16 and 24 at offset 2 were **already proved impossible** and must not be described as unresolved.
+
+The remaining orders satisfy $k\equiv4\pmod{16}$. Here the binary local conditions are all compatible. To decide the odd-prime conditions, compute
+
+$
+\Delta=8(k-2)c+(k-4)^2.
+$
+
+Only odd primes dividing $\Delta$ to an **odd** power need checking. At such a prime $p$ not dividing $k-2$, the order and offset are locally impossible exactly when $(k-2)/2$ is a quadratic nonresidue modulo $p$. This comes from the already-proved WP09-006 theorem for all odd prime powers. If none of these obstructions occurs, the Chinese remainder theorem combines all local witnesses for **every specified modulus**.
+
+**Examples:**
+
+| Order | Offset | Complete local result | Explanation |
+| --- | ---: | --- | --- |
+| 8 | 2 | Impossible | WP08 obstruction modulo 8 |
+| 12 | 2 | Impossible | WP08 obstruction modulo 16 |
+| 16 | 2 | Impossible | WP08 obstruction modulo 8 |
+| 24 | 2 | Impossible | WP08 obstruction modulo 8 |
+| 20 | 2 | Compatible | Also has a previously proved exact integer Pell family |
+| 36 | 2 | Compatible | An explicit exact example is documented in the separate WP09-011 research candidate |
+| 36 | 18 | Impossible | Odd-prime obstructions at 5 and 37 |
+| 68 | 2 | Impossible | Odd-prime obstructions at 7 and 23 |
+
+An impossible local result rules out every exact integer Type B triple, regardless of size. A compatible local result is **not** an exact integer construction. The open problem is determining when everywhere-local compatibility yields genuine positive-integer triples.
+
+This synthesis uses [WP08's uniform binary classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md), [WP09's complete odd-prime-power classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md), and the [integrated decision theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_EVERYWHERE_LOCAL_STRATIFICATION_012.md). The protected WP08 obstruction is not claimed as a new discovery.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
