@@ -744,7 +744,7 @@ $$
 a\mid\gcd(A,B),\qquad b=A/a,\qquad d=B/a.
 $$
 
-Each divisor candidate is accepted precisely when the three entries are positive and distinct and $AB/a^2+c$ is an exact positive $k$-gonal number. The algorithm therefore examines index pairs and divisors of their gcd, rather than cubically enumerating entries.
+Each divisor candidate is accepted precisely when the three entries are positive and distinct and the third shifted pair product is an exact positive polygonal number of order $k$. The algorithm therefore examines index pairs and divisors of their gcd, rather than cubically enumerating entries.
 
 For a fixed first pair $(a,b)$, the remaining seed conditions can also be organized as the generalized Pell norm equation
 
