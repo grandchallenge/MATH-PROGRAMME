@@ -753,9 +753,9 @@ X^2-abS^2=a(a-b)\Delta,\qquad
 \Delta=8(k-2)c+(k-4)^2.
 $$
 
-But a solution of this norm equation alone is **not** enough: the polygonal index lattice, divisibility, positivity, and distinctness requirements must all hold. The known exact $(68,6)$ solution provides a positive control for these checks. The $(84,2)$ case is now solved by the WP09-018 exact Pell-orbit seed below; $(100,2)$ remains globally unresolved despite its earlier complete entry-bounded exclusion.
+But a solution of this norm equation alone is **not** enough: the polygonal index lattice, divisibility, positivity, and distinctness requirements must all hold. The known exact $(68,6)$ solution provides a positive control for these checks. The $(84,2)$ and $(100,2)$ cases are solved by WP09-018 and WP09-019; $(132,2)$ is solved by WP09-020, and WP09-021 adds four more exact cases.
 
-The [protected WP09-017 theorem dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SEED_DESCENT_017.md), [exact index-first implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_seed_descent_017.py), and [six regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_seed_descent_017.py) provide the derivations and arithmetic checks. The next objective is a *genuine* integral norm/lattice solvability theorem or unbounded obstruction, not another larger finite census. These are internal research results, without independent MATHCERT certification or an external priority claim.
+The [protected WP09-017 theorem dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SEED_DESCENT_017.md), [exact index-first implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_seed_descent_017.py), and [six regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_seed_descent_017.py) provide the derivations and arithmetic checks. The next objective is to explain which locally compatible pairs admit an integral Pell-lattice point, and to prove a general sufficient criterion or a genuine unbounded obstruction; another larger finite census is not enough. These are internal research results, without independent MATHCERT certification or an external priority claim.
 
 ### WP09: exact global existence at the 84-gonal offset two
 
@@ -803,9 +803,84 @@ $S\equiv84\pmod{164}$ and $X\equiv168\pmod{328}$. Recovering $s,t,d$ then gives 
 
 Because $ab=82$ is nonsquare, the protected WP09-013 fixed-first-pair Pell theorem applies. The unit has order 328 modulo the amplification lattice modulus $2aR=656$. Its 328th power preserves the seed's index and divisibility classes; the next exact family member has a 1,687-digit third entry. Thus this is not just one isolated seed: it establishes **infinitely many exact positive Type B triples** at $(84,2)$.
 
-The 39-digit third entry explains why the result escaped the WP09-016 complete census with all entries at most 300,000. That bounded exclusion remains correct; it was never a global nonexistence theorem. The result is an exact global existence proof, not a local-to-global counterexample. The $(100,2)$ case remains open.
+The 39-digit third entry explains why the result escaped the WP09-016 complete census with all entries at most 300,000. That bounded exclusion remains correct; it was never a global nonexistence theorem. The result is an exact global existence proof, not a local-to-global counterexample. WP09-019 below now resolves $(100,2)$ as well.
 
 The [WP09-018 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_84_GONAL_EXACT_SEED_018.md), [exact Pell-orbit constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_exact_seed_018.py), and [seven direct-polynomial regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_exact_seed_018.py) record the full derivation and reproducible checks. These are internally admitted producer results; independent MATHCERT certification and external literature-priority review remain separate.
+
+### WP09: exact global existence at the 100-gonal offset two
+
+The second case from the WP09-016 bounded frontier is also solved. For $(k,c)=(100,2)$, an exact Type B seed is
+
+$
+(a,b,d)=(1,98,394141484570467638798107106734400805257750080265189167281283878325018383881627360745786897584655),
+$
+
+$
+(r,s,t)=(2,89686697824951931533091760698417159299075689513,887853010999532105318395994347406981537890234904).
+$
+
+The three exact pair outputs are
+
+$
+P_{100}(r)=100=98+2,
+$
+
+$
+P_{100}(s)=394141484570467638798107106734400805257750080265189167281283878325018383881627360745786897584657=d+2,
+$
+
+$
+P_{100}(t)=38625865487905828602214496459971278915259507865988538393565820075851801620399481353087115963296192=98d+2.
+$
+
+The fixed first pair gives the norm equation $X^2-98S^2=-1046048$. Starting from $(4019472,406028)$ and applying $99+10\sqrt{98}$ nineteen times reaches the required lattice $X\equiv S\equiv100\pmod{196}$. Since $ab=98$ is nonsquare, WP09-013 gives infinitely many exact triples with this first pair. The amplification modulus is 392, the unit order is 196, and the next family member has a 996-digit third entry.
+
+The 96-digit seed is consistent with the earlier complete exclusion for entries at most 300,000. The bounded result was correct; it did not settle global existence. See the [WP09-019 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_100_GONAL_EXACT_SEED_019.md), [constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_exact_seed_019.py), and [seven exact regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_exact_seed_019.py).
+
+### WP09: exact global existence at the 132-gonal offset two
+
+The same construction solves $(k,c)=(132,2)$. An exact seed is
+
+$
+(a,b,d)=(1,130,8359584463533923231612770595169701590647797311),
+$
+
+$
+(r,s,t)=(2,11340590449649248400673,129302625368040561155552).
+$
+
+Its pair outputs are
+
+$
+P_{132}(r)=132=130+2,
+$
+
+$
+P_{132}(s)=8359584463533923231612770595169701590647797313=d+2,
+$
+
+$
+P_{132}(t)=1086745980259410020109660177372061206784213650432=130d+2.
+$
+
+Here $X^2-130S^2=-2381856$. The base point $(90608,7948)$, multiplied five times by the norm-one unit $6499+570\sqrt{130}$, reaches $X\equiv S\equiv132\pmod{260}$. The first-pair product 130 is nonsquare, so WP09-013 proves an infinite exact family. The amplification modulus is 520, the unit order is 52, and the next third entry has 474 digits.
+
+The [WP09-020 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_132_GONAL_EXACT_SEED_020.md), [constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_exact_seed_020.py), and [seven exact regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_exact_seed_020.py) contain the full arithmetic.
+
+### WP09: four further exact Pell seeds
+
+Four more parameter pairs from the all-place locally compatible frontier now have exact global seeds. All use the first pair $(a,b)=(1,k-2)$ at $r=2$; in each case $ab=k-2\equiv2\pmod{16}$ is nonsquare, so WP09-013 supplies an infinite family.
+
+| Order $k$ | Base Pell point $(X_0,S_0)$ | Norm-one unit | Seed steps | Third-entry digits | Amplification modulus / order |
+|---:|---:|---:|---:|---:|---:|
+| 164 | (72416,5692) | $19601+1540\sqrt{162}$ | 10 | 97 | 648 / 162 |
+| 196 | (4828080,346636) | $195+14\sqrt{194}$ | 57 | 304 | 776 / 388 |
+| 228 | (10227632,680332) | $451+30\sqrt{226}$ | 20 | 127 | 904 / 452 |
+| 244 | (11376,772) | $19601+1260\sqrt{242}$ | 44 | 407 | 968 / 242 |
+
+The exact indices, entries, norm identities, and next-family checks are recorded in the [WP09-021 dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_LOCAL_POSITIVE_SEED_BATCH_021.md), with its [constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_local_positive_seed_batch_021.py) and [seven regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_local_positive_seed_batch_021.py). The next family third-entry sizes are 1,585, 2,314, 2,799 and 2,630 digits, respectively.
+
+Together with $(84,2)$, $(100,2)$ and $(132,2)$, this gives seven newly solved locally compatible pairs in the present tranche. These examples do **not** prove that every locally compatible pair has a global seed. They provide concrete evidence for a more focused next question: whether the constrained Pell-lattice construction can be characterized uniformly across the local-positive parameter classes.
 
 ## 7. What is established—and what is not
 
