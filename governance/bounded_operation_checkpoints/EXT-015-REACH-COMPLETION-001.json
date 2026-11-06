@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP184",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP185",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "complementary_documentary_admission",
+  "phase": "complementary_documentary_native_queue",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "bfbd0e516988dbd8aa8187709a3aff57ac775a5a",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "verify_3170_editorial_and_admission",
-      "description": "Verify documentary3170 exacthead4389ce8a42a01f87966948f42a033555fbaf9c23 editorial verdict, required checks/reviews and material closure; native merge and five-blob readback,88-source custody and final issue pointers. Preserve canonicalCP183 new input audit and open residual obligations."
+      "id": "read_3170_and_finalize_bounded_return",
+      "description": "Read3170 native protected merge at exacthead4389ce8a42a01f87966948f42a033555fbaf9c23; verify five changed blobs/five native contexts,88source custody, unchanged147fixture and terminal checkpoint. Add final exactCP183 issue pointers, verify four bodies/seven dispositions and frozen refs, return clean at current main with final receipt. No programme completion."
     }
   ],
   "next_action": {
-    "id": "verify_3170_editorial_and_admission",
-    "description": "Verify documentary3170 exacthead4389ce8a42a01f87966948f42a033555fbaf9c23 editorial verdict, required checks/reviews and material closure; native merge and five-blob readback,88-source custody and final issue pointers. Preserve canonicalCP183 new input audit and open residual obligations.",
+    "id": "read_3170_and_finalize_bounded_return",
+    "description": "Read3170 native protected merge at exacthead4389ce8a42a01f87966948f42a033555fbaf9c23; verify five changed blobs/five native contexts,88source custody, unchanged147fixture and terminal checkpoint. Add final exactCP183 issue pointers, verify four bodies/seven dispositions and frozen refs, return clean at current main with final receipt. No programme completion.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3170 native queue2026-11-06T22:53:38Z position1",
+        "status": "Five-file documentary editorial CLEAR. Current required checks/reviews/rules/material closure/livecheckpoint PASS. Scientific3168 verified. Native documentary readback and final pointers pending."
+      },
       {
         "kind": "artifact",
         "identity": "PR3170 documentary head4389ce8a42a01f87966948f42a033555fbaf9c23",
@@ -623,8 +628,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complementary_documentary_admission",
-    "result": "Scientific3168 protected/read back and trackers reconciled. Documentary editorial and native required checks pending.",
+    "action": "complementary_documentary_native_queue",
+    "result": "Five-file documentary editorial CLEAR. Current required checks/reviews/rules/material closure/livecheckpoint PASS. Scientific3168 verified. Native documentary readback and final pointers pending.",
     "evidence_refs": [
       "research/reach-complementary-two-closeout-20261106",
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
@@ -635,7 +640,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-06T22:51:19.0925242Z"
+    "observed_at": "2026-11-06T22:53:52.3870609Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -702,7 +707,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Verify documentary3170 exacthead4389ce8a42a01f87966948f42a033555fbaf9c23 editorial verdict, required checks/reviews and material closure; native merge and five-blob readback,88-source custody and final issue pointers. Preserve canonicalCP183 new input audit and open residual obligations."
+    "instructions": "Read3170 native protected merge at exacthead4389ce8a42a01f87966948f42a033555fbaf9c23; verify five changed blobs/five native contexts,88source custody, unchanged147fixture and terminal checkpoint. Add final exactCP183 issue pointers, verify four bodies/seven dispositions and frozen refs, return clean at current main with final receipt. No programme completion."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
