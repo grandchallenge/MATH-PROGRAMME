@@ -703,6 +703,23 @@ A complete divisor-graph enumeration separately proves that there is **no unorde
 
 The globally unresolved local-compatible examples $(84,2)$ and $(100,2)$ remain open. No universal local-to-global theorem, external literature originality claim or independent MATHCERT certification is asserted.
 
+### WP09: complete bounded census at orders 84 and 100
+
+The remaining locally compatible candidates at orders $k=84$ and $k=100$, each with offset $c=2$, have now been checked by a complete **entry-bounded** arithmetic enumeration rather than only searching for small first entries or polygonal indices. The exact result is:
+
+| Order | Offset | Entry bound | Exact graph edges | Type B triples found |
+| --- | --- | ---: | ---: | ---: |
+| 84 | 2 | 300,000 | 17,471 | 0 |
+| 100 | 2 | 300,000 | 25,454 | 0 |
+
+The method constructs an exact graph whose vertices are positive integers from 1 through 300,000. An edge connects $a,b$ precisely when $ab+c$ equals a polygonal number at some positive integer index. All factor pairs of every polygonal value up to the maximum product are enumerated, so a Type B triple within the entry bound corresponds exactly to a triangle in this graph. **Both complete graphs have zero triangles.** This proves the two finite-bound exclusions, not global nonexistence. A solution with one or more entries greater than 300,000 remains possible.
+
+There is also a useful unrestricted structural theorem. For any order divisible by four and any offset congruent to two modulo four, **every exact Type B triple must have entries occupying residue classes 1, 2 and 3 modulo four, one entry in each class.** Indeed $P_k(n)$ has the same residue modulo four as $n^2$, so each pair product must be 2 or 3 modulo four. Two even entries are impossible, three odd entries are impossible, and the one even entry must be 2 modulo four while the odd entries must be 1 and 3 modulo four. This necessary condition does not exclude either target family.
+
+Both targets still pass the previously proved complete local sieve at every modulus: their discriminants are $7712=2^5\cdot241$ and $10784=2^5\cdot337$ respectively. **Existence of actual positive-integer triples remains unknown** for these two parameter pairs; passing all finite congruences is insufficient to conclude otherwise.
+
+The [protected WP09-016 proof and bounded-census dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FRONTIER_CENSUS_016.md), [integer-exact full graph enumerator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_frontier_census_016.py) and [independent regression source](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_frontier_census_016.py) record the precise bounds and reproduction instructions. The result is internally admitted research, not external originality or independent MATHCERT certification.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
