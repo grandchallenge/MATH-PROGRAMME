@@ -416,51 +416,51 @@ There is, however, a stronger **exact integer construction** in a case already c
 
 For order 20 and offset 2, the triple of **distinct positive integers**
 
-$
+$$
 (a,b,d)=(1,18,13375)
-$
+$$
 
 has the three pair outputs
 
-$
+$$
 ab+2=20=P_{20}(2),
-$
+$$
 
-$
+$$
 ad+2=13377=P_{20}(39),
-$
+$$
 
-$
+$$
 bd+2=240752=P_{20}(164).
-$
+$$
 
 All three are exact equalities in ordinary integers. This is different from the earlier $(1,242,375)$ example, which passes all binary congruence tests but does not satisfy the exact Type B equations.
 
 In fact, the new triple belongs to an **infinite family** with $a=1$ and $b=18$. Writing the remaining entry as $d=P_{20}(s)-2$, the last pair equation becomes
 
-$
+$$
 P_{20}(t)=18P_{20}(s)-34.
-$
+$$
 
 Set $S=9s-4$ and $T=9t-4$. Completing the square turns the equation into the generalized Pell equation
 
-$
+$$
 T^2-18S^2=-578.
-$
+$$
 
 The solution $(S,T)=(347,1472)$ gives the displayed triple. The recurrence
 
-$
+$$
 T'=17T+72S,\qquad S'=4T+17S
-$
+$$
 
 preserves the Pell equation. Applying it **18 times per family step** also preserves the required index congruences modulo 9, so each step creates a larger exact positive-integer 20-gonal Type B triple. This proves infinitely many actual solutions for the parameter pair $(k,c)=(20,2)$.
 
 There is also a classical family at order 4: for **every integer offset** $c$, take a sufficiently large positive integer $t$ and set
 
-$
+$$
 (a,b,d)=(1,t^2-c,(t+1)^2-c).
-$
+$$
 
 The pair outputs are exactly $t^2$, $(t+1)^2$, and $(t(t+1)-c)^2$. This is the classical Euler regular construction, not an originality claim.
 
