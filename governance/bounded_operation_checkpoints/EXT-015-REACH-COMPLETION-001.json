@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP178",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP179",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "complementary_corrected_source_review",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "complementary_final_editorial_integration",
+  "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "68115bc76d599edb75a61fd829ce5243bd538d84",
-    "candidate_head_sha": "fd3b23944f8da0c6a3ab1b218ab2aac62dfef181",
+    "candidate_head_sha": "379c741fb19b4a137b522d2343677be2a4aca029",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-complementary-two-corrected-frozen-20261106",
+    "branch": "research/reach-complementary-two-review-frozen-20261106",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "read_corrected_150_review",
-      "description": "Obtain distinct151 exact-source verdict on corrected150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f. Sole correction used: direct singleton source lift and explicit symmetric bump normalization. Preserve primary and review history;150.L and residual acyclicity remain unresolved."
+      "id": "review_integrated_150_152",
+      "description": "Review frozen eight-file editorial integration against accepted150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f and151 blob222424fd3a3d9b49d4268120f24958512c3c5bfe. Then required checks, native protected admission, exact readback and explicit tracker reconciliation. Residual acyclicity and150.L remain unresolved; no programme completion."
     }
   ],
   "next_action": {
-    "id": "read_corrected_150_review",
-    "description": "Obtain distinct151 exact-source verdict on corrected150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f. Sole correction used: direct singleton source lift and explicit symmetric bump normalization. Preserve primary and review history;150.L and residual acyclicity remain unresolved.",
+    "id": "review_integrated_150_152",
+    "description": "Review frozen eight-file editorial integration against accepted150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f and151 blob222424fd3a3d9b49d4268120f24958512c3c5bfe. Then required checks, native protected admission, exact readback and explicit tracker reconciliation. Residual acyclicity and150.L remain unresolved; no programme completion.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md",
@@ -42,8 +42,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": true,
+    "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "Distinct151 ACCEPT corrected150; review379c741fb19b4a137b522d2343677be2a4aca029",
+        "status": "One primary and one correction accepted within bounded scope. All92 inputs unchanged. Final editorial and protected admission pending."
+      },
       {
         "kind": "review",
         "identity": "Corrected150 atfd3b23944f8da0c6a3ab1b218ab2aac62dfef181",
@@ -593,10 +598,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complementary_corrected_source_review",
-    "result": "Markdown and diff gates PASS. One primary and one correction. Corrected-source review pending; no acceptance inferred.",
+    "action": "complementary_final_editorial_integration",
+    "result": "One primary and one correction accepted within bounded scope. All92 inputs unchanged. Final editorial and protected admission pending.",
     "evidence_refs": [
-      "research/reach-complementary-two-corrected-frozen-20261106",
+      "research/reach-complementary-two-review-frozen-20261106",
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md"
     ]
@@ -605,7 +610,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-06T13:39:20.7302555Z"
+    "observed_at": "2026-11-06T13:41:18.4658911Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -672,7 +677,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Obtain distinct151 exact-source verdict on corrected150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f. Sole correction used: direct singleton source lift and explicit symmetric bump normalization. Preserve primary and review history;150.L and residual acyclicity remain unresolved."
+    "instructions": "Review frozen eight-file editorial integration against accepted150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f and151 blob222424fd3a3d9b49d4268120f24958512c3c5bfe. Then required checks, native protected admission, exact readback and explicit tracker reconciliation. Residual acyclicity and150.L remain unresolved; no programme completion."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
