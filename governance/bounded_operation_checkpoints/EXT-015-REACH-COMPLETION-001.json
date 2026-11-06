@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP181",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP182",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "complementary_native_queue_readback",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "complementary_protected_readback_complete",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "6ac0ae534d83460c1e779b000e8165b125c9cbf6",
+    "protected_base_sha": "bfbd0e516988dbd8aa8187709a3aff57ac775a5a",
     "candidate_head_sha": "5f9ab7713e6e71ab00156b6f72760cb24563d50f",
     "issue_number": 2657,
-    "pr_number": 3168,
-    "branch": "research/reach-complementary-two-20261105",
+    "pr_number": null,
+    "branch": "research/reach-complementary-two-integration-frozen-20261106",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "read_native_3168_merge_and_sources",
-      "description": "Read3168 native merge at exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f; verify eight changed blobs, five native checks,88 scientific sources and unchanged terminal checkpoint. Then reconcile four issue bodies/seven dispositions and protect canonical continuation. Do not claim residual acyclicity or full completion."
+      "id": "protect_complementary_canonical_closeout",
+      "description": "Prepare and protect canonical documentary closeout from verified3168 merge and tracker readbacks. Preserve88 sources and terminal checkpoint. Bind next new mixed mapping-input audit153 without claiming150.L or residual acyclicity. Native source/readback and four bodies/seven dispositions complete."
     }
   ],
   "next_action": {
-    "id": "read_native_3168_merge_and_sources",
-    "description": "Read3168 native merge at exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f; verify eight changed blobs, five native checks,88 scientific sources and unchanged terminal checkpoint. Then reconcile four issue bodies/seven dispositions and protect canonical continuation. Do not claim residual acyclicity or full completion.",
+    "id": "protect_complementary_canonical_closeout",
+    "description": "Prepare and protect canonical documentary closeout from verified3168 merge and tracker readbacks. Preserve88 sources and terminal checkpoint. Bind next new mixed mapping-input audit153 without claiming150.L or residual acyclicity. Native source/readback and four bodies/seven dispositions complete.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md",
@@ -42,8 +42,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": true,
+    "waiting": false,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3168 mergedbfbd0e516988dbd8aa8187709a3aff57ac775a5a exacthead5f9ab7713e6e71ab00156b6f72760cb24563d50f",
+        "status": "Eight blobs/five native checks/88 sources/terminal/four issue bodies/seven dispositions PASS. CP181 live check correctly reported PR MERGED; rebind to preserved source ref without PR dependency."
+      },
       {
         "kind": "artifact",
         "identity": "PR3168 native queue entry2026-11-06T22:45:37Z position1",
@@ -608,10 +613,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complementary_native_queue_readback",
-    "result": "Distinct151 ACCEPT and final eight-file editorial CLEAR. Fresh required contexts, effective rules, reviews, live checkpoint,85 prior scientific identities and material closure PASS. Native merge/readback pending.",
+    "action": "complementary_protected_readback_complete",
+    "result": "Eight blobs/five native checks/88 sources/terminal/four issue bodies/seven dispositions PASS. CP181 live check correctly reported PR MERGED; rebind to preserved source ref without PR dependency.",
     "evidence_refs": [
-      "research/reach-complementary-two-20261105",
+      "research/reach-complementary-two-integration-frozen-20261106",
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md"
     ]
@@ -620,7 +625,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-06T22:45:50.7586060Z"
+    "observed_at": "2026-11-06T22:49:55.2248197Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -687,7 +692,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Read3168 native merge at exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f; verify eight changed blobs, five native checks,88 scientific sources and unchanged terminal checkpoint. Then reconcile four issue bodies/seven dispositions and protect canonical continuation. Do not claim residual acyclicity or full completion."
+    "instructions": "Prepare and protect canonical documentary closeout from verified3168 merge and tracker readbacks. Preserve88 sources and terminal checkpoint. Bind next new mixed mapping-input audit153 without claiming150.L or residual acyclicity. Native source/readback and four bodies/seven dispositions complete."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
