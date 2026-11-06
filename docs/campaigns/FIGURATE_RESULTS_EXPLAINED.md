@@ -596,9 +596,9 @@ First, if $k$ is divisible by eight, **no Type B triple exists**, because the th
 
 The remaining orders satisfy $k\equiv4\pmod{16}$. Here the binary local conditions are all compatible. To decide the odd-prime conditions, compute
 
-$
+$$
 \Delta=8(k-2)c+(k-4)^2.
-$
+$$
 
 Only odd primes dividing $\Delta$ to an **odd** power need checking. At such a prime $p$ not dividing $k-2$, the order and offset are locally impossible exactly when $(k-2)/2$ is a quadratic nonresidue modulo $p$. This comes from the already-proved WP09-006 theorem for all odd prime powers. If none of these obstructions occurs, the Chinese remainder theorem combines all local witnesses for **every specified modulus**.
 
