@@ -340,6 +340,46 @@ The exact checker calculates all polygonal residues modulo 25 and checks all pos
 
 See the [WP09 modulo-25 proof dossier, reproducible classifier, and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MOD25_GLOBAL_OBSTRUCTIONS_003.md). The result is internally proved and source-admitted; independent mathematical certification and literature novelty remain open.
 
+### WP09: one theorem for every odd prime
+
+The earlier modulo-nine, modulo-25 and modulo-49 examples have a common cause. We can now state it as **one structural theorem for every odd prime**, without enumerating cases individually.
+
+For a polygonal order $k\ge3$ and an integer offset $c$, fix an odd prime $p$ that does not divide $k-2$. Suppose $(k-2)/2$ is a **quadratic nonresidue** modulo $p$: it is not the remainder of a nonzero square. If
+
+$$
+p\mid 8(k-2)c+(k-4)^2
+$$
+
+but
+
+$$
+p^2\nmid 8(k-2)c+(k-4)^2,
+$$
+
+then **there cannot be three distinct positive integer entries whose pairwise shifted products are all polygonal numbers of order $k$**. This conclusion holds regardless of how large the entries might be.
+
+The reason is geometric arithmetic: completing the square gives
+
+$$
+P_k(t)=A(t-h)^2+B,
+$$
+
+where $A=(k-2)/2$ and $B=-(k-4)^2/[8(k-2)]$. Under the stated offset condition, each hypothetical pair would satisfy
+
+$$
+xy+pu=Az^2\pmod{p^2}
+$$
+
+for an invertible $u$ modulo $p$.
+
+If none of the three entries is divisible by $p$, all three pair products would have to be quadratic nonresidues, but their product is itself a square. If two entries are divisible by $p$, their mutual pair output has exactly one factor of $p$, impossible for a square modulo $p^2$. If exactly one entry is divisible by $p$, the other two must be congruent modulo $p$, forcing their mutual product to be a square when a nonresidue is required. All cases contradict the pair equations.
+
+**Example beyond the earlier prime tables:** triangular outputs have $k=3$. For the offset $c=26$, the expression $8c+1=209=11\cdot19$ has exactly one factor of 11. Because the inverse of 2 is a nonresidue modulo 11, the theorem rules out **every** triangular-output Type B triple at offset 26. Modulo nine and modulo 25 do not produce this exclusion.
+
+For each odd prime $p$, the theorem excludes exactly $p(p-1)^2/2$ periodic order-and-offset residue classes modulo $p^2$. This formula recovers 6 cells for $p=3$, 40 for $p=5$, and 126 for $p=7$, and supplies new families for $p=11,13$ and every other qualifying odd prime.
+
+The [full uniform-prime-square proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_ODD_PRIME_SQUARE_005.md), [executable theorem checker](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_uniform_prime_square.py), and [independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_uniform_prime_square.py) are protected-admitted research artifacts. This is a **sufficient obstruction theorem**, not a complete classification at arbitrary primes and not a claim that any surviving local class contains an exact integer triple. Literature originality and independent MATHCERT certification remain open.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -364,6 +404,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 infinite binary-versus-odd-prime separation, proof and tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ODD_PRIME_SEPARATION_001.md)
 - [WP09 global all-triples modulo-nine obstruction and exact verification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_MOD9_OBSTRUCTIONS_002.md)
 - [WP09 modulo-25 global obstruction and exact finite certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MOD25_GLOBAL_OBSTRUCTIONS_003.md)
+- [WP09 uniform odd-prime-square obstruction theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_ODD_PRIME_SQUARE_005.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
