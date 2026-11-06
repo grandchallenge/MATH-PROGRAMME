@@ -720,6 +720,43 @@ Both targets still pass the previously proved complete local sieve at every modu
 
 The [protected WP09-016 proof and bounded-census dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FRONTIER_CENSUS_016.md), [integer-exact full graph enumerator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_frontier_census_016.py) and [independent regression source](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_frontier_census_016.py) record the precise bounds and reproduction instructions. The result is internally admitted research, not external originality or independent MATHCERT certification.
 
+### WP09: seed-existence and two-index descent
+
+The next question is not how far an exhaustive search can be extended, but **when its first exact integer seed must exist**. WP09-017 gives two exact reductions that make this question more structured.
+
+Suppose three candidate polygonal indices give positive numbers
+
+$$
+A=P_k(r)-c,\qquad B=P_k(s)-c,\qquad C=P_k(t)-c.
+$$
+
+For them to be the pair products $ab$, $ad$, and $bd$ of three distinct positive integers, the quantity $T=\sqrt{ABC}$ must be an integer divisible by each of $A,B,C$. The recovered entries are then uniquely
+
+$$
+a=T/C,\qquad b=T/B,\qquad d=T/A,
+$$
+
+which must be pairwise distinct. Equivalently, at each prime, the exponents in $A,B,C$ must have even sum and satisfy all three triangle inequalities. This is a complete test for *specified polygonal indices*, but does not assert that appropriate indices exist.
+
+An even more useful search reduction fixes **two** polygonal indices $r<s$. Write $A=P_k(r)-c$ and $B=P_k(s)-c$. Any exact Type B seed with these first two indices has
+
+$$
+a\mid\gcd(A,B),\qquad b=A/a,\qquad d=B/a.
+$$
+
+Each divisor candidate is accepted precisely when the three entries are positive and distinct and the third shifted pair product is an exact positive polygonal number of order $k$. The algorithm therefore examines index pairs and divisors of their gcd, rather than cubically enumerating entries.
+
+For a fixed first pair $(a,b)$, the remaining seed conditions can also be organized as the generalized Pell norm equation
+
+$$
+X^2-abS^2=a(a-b)\Delta,\qquad
+\Delta=8(k-2)c+(k-4)^2.
+$$
+
+But a solution of this norm equation alone is **not** enough: the polygonal index lattice, divisibility, positivity, and distinctness requirements must all hold. The known exact $(68,6)$ solution provides a positive control for these checks. Orders $(84,2)$ and $(100,2)$ remain globally unresolved despite their earlier complete entry-bounded exclusions.
+
+The [protected WP09-017 theorem dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SEED_DESCENT_017.md), [exact index-first implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_seed_descent_017.py), and [six regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_seed_descent_017.py) provide the derivations and arithmetic checks. The next objective is a *genuine* integral norm/lattice solvability theorem or unbounded obstruction, not another larger finite census. These are internal research results, without independent MATHCERT certification or an external priority claim.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
