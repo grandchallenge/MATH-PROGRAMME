@@ -651,6 +651,28 @@ The search records its precise finite bounds on the first entry and polygonal in
 
 The [full generalized Pell proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GENERAL_FIRST_PAIR_PELL_013.md), [bounded search and exact constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_fixed_pair_seed_frontier.py), and [independent regression source](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_fixed_pair_seed_frontier.py) record the method and its limitations. These are internal research results using classical Pell techniques; external novelty and mathematical certification are not asserted.
 
+### WP09: exact order-52 solutions at offset six
+
+The generalized Pell theorem applies to another genuine exact example at the same polygonal order but a **different offset**. At order $k=52$ and offset $c=6$, the three distinct positive entries $(2,2279,4757)$ have positive polygonal indices $(14,20,659)$. The exact shifted pair products are
+
+$
+2\cdot2279+6=4564=P_{52}(14),
+$
+
+$
+2\cdot4757+6=9520=P_{52}(20),
+$
+
+$
+2279\cdot4757+6=10841209=P_{52}(659).
+$
+
+Although the complete local arithmetic sieve allows this parameter pair, it cannot alone establish integer existence. Here the displayed integers supply that additional evidence. The offset is outside the square-shift construction, because $6\equiv2\pmod4$ and $P_{52}(u)-a^2$ can never have residue 2 modulo four.
+
+The first pair has product $2\cdot2279=4558$, which is not a square. The already-protected arbitrary-first-pair Pell theorem therefore proves **infinitely many exact Type B solutions keeping $(2,2279)$ fixed**. The independent exact-integer divisor-graph census finds exactly one unordered solution with all three entries at most 10,000, namely this seed. That is a bounded statement, not global uniqueness.
+
+The [WP09-014 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_K52_C6_EXACT_SEED_014.md), [exact bounded enumerator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_k52_c6_exact_seed.py), and [six arithmetic tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_k52_c6_exact_seed.py) were admitted to protected MATHSOLVE research state. No independent MATHCERT certification or external literature originality is claimed.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
