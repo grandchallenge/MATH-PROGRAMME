@@ -677,25 +677,25 @@ The [WP09-014 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/ma
 
 The earlier frontier pair $(k,c)=(68,6)$ is **globally realizable**, not merely locally compatible. With $P_{68}(n)=33n^2-32n$, one exact positive distinct triple is $(a,b,d)=(10,44033,128739)$ at polygonal indices $(r,s,t)=(116,198,13107)$:
 
-$
+$$
 10\cdot44033+6=440336=P_{68}(116),
-$
+$$
 
-$
+$$
 10\cdot128739+6=1287396=P_{68}(198),
-$
+$$
 
-$
+$$
 44033\cdot128739+6=5668764393=P_{68}(13107).
-$
+$$
 
 Four other independently checked triples at the same parameter pair are $(22,13117,168855)$, $(55,4085,265746)$, $(61,55575,102610)$ and $(102145,629950,746915)$, with respective index triples $(94,336,8193)$, $(83,666,5736)$, $(321,436,13146)$ and $(44158,48083,119408)$. These are explicitly checked exact positive-integer examples, not a complete census up to one million.
 
 For every displayed triple the product $ab$ is nonsquare. Hence the earlier protected WP09-013 fixed-first-pair Pell theorem generates **infinitely many exact positive Type B triples** from each seed. For the first one, the norm equation is
 
-$
+$$
 X^2-440330S^2=-3197830720,
-$
+$$
 
 with $(X,S)=(17300600,26072)$. Its exact seed and the previously admitted unit argument—not the local sieve alone—establish global integer existence.
 
