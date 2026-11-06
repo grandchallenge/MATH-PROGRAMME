@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP179",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP180",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "complementary_final_editorial_integration",
-  "state": "IN_PROGRESS",
+  "phase": "complementary_scientific_pr_checks",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
-    "protected_base_sha": "68115bc76d599edb75a61fd829ce5243bd538d84",
-    "candidate_head_sha": "379c741fb19b4a137b522d2343677be2a4aca029",
+    "protected_base_sha": "6ac0ae534d83460c1e779b000e8165b125c9cbf6",
+    "candidate_head_sha": "5f9ab7713e6e71ab00156b6f72760cb24563d50f",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-complementary-two-review-frozen-20261106",
+    "pr_number": 3168,
+    "branch": "research/reach-complementary-two-20261105",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "review_integrated_150_152",
-      "description": "Review frozen eight-file editorial integration against accepted150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f and151 blob222424fd3a3d9b49d4268120f24958512c3c5bfe. Then required checks, native protected admission, exact readback and explicit tracker reconciliation. Residual acyclicity and150.L remain unresolved; no programme completion."
+      "id": "verify_3168_editorial_and_required_checks",
+      "description": "Obtain final editorial verdict for exact3168 head5f9ab7713e6e71ab00156b6f72760cb24563d50f, verify current native required checks/reviews/material inputs, then native merge queue and eight-blob readback. Do not alter frozen scientific head.150.L and residual W acyclicity remain open."
     }
   ],
   "next_action": {
-    "id": "review_integrated_150_152",
-    "description": "Review frozen eight-file editorial integration against accepted150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f and151 blob222424fd3a3d9b49d4268120f24958512c3c5bfe. Then required checks, native protected admission, exact readback and explicit tracker reconciliation. Residual acyclicity and150.L remain unresolved; no programme completion.",
+    "id": "verify_3168_editorial_and_required_checks",
+    "description": "Obtain final editorial verdict for exact3168 head5f9ab7713e6e71ab00156b6f72760cb24563d50f, verify current native required checks/reviews/material inputs, then native merge queue and eight-blob readback. Do not alter frozen scientific head.150.L and residual W acyclicity remain open.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md",
@@ -42,8 +42,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3168 exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f",
+        "status": "Scientific151 ACCEPT corrected150. Editorial review and required contexts pending; no protected admission yet."
+      },
       {
         "kind": "review",
         "identity": "Distinct151 ACCEPT corrected150; review379c741fb19b4a137b522d2343677be2a4aca029",
@@ -598,10 +603,10 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complementary_final_editorial_integration",
-    "result": "One primary and one correction accepted within bounded scope. All92 inputs unchanged. Final editorial and protected admission pending.",
+    "action": "complementary_scientific_pr_checks",
+    "result": "Scientific151 ACCEPT corrected150. Editorial review and required contexts pending; no protected admission yet.",
     "evidence_refs": [
-      "research/reach-complementary-two-review-frozen-20261106",
+      "research/reach-complementary-two-20261105",
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md"
     ]
@@ -610,7 +615,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-06T13:41:18.4658911Z"
+    "observed_at": "2026-11-06T13:42:36.3776095Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -677,7 +682,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Review frozen eight-file editorial integration against accepted150 blob03deca9212a9bea56743e482e5cb79edb46b9d7f and151 blob222424fd3a3d9b49d4268120f24958512c3c5bfe. Then required checks, native protected admission, exact readback and explicit tracker reconciliation. Residual acyclicity and150.L remain unresolved; no programme completion."
+    "instructions": "Obtain final editorial verdict for exact3168 head5f9ab7713e6e71ab00156b6f72760cb24563d50f, verify current native required checks/reviews/material inputs, then native merge queue and eight-blob readback. Do not alter frozen scientific head.150.L and residual W acyclicity remain open."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
