@@ -530,6 +530,26 @@ This is a **global existence result for an infinite family of offsets at every o
 
 The complete [proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md), [constructive exact-tuple generator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_seed_existence.py), and [independent regressions](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_seed_existence.py) are in the protected research record.
 
+### WP09: exact solutions for every polygonal-minus-square offset
+
+The previous existence theorem applied to offsets one less than a polygonal number. The next theorem generalizes the shift from $1$ to **any positive integer square**.
+
+**Uniform exact-integer theorem.** Choose any polygonal order $k\ge3$, positive integers $u$ and $a$, and set $c=P_k(u)-a^2$. Then infinitely many distinct positive-integer Type B triples $(a,b,d)$ exist at this order and offset, with all three shifted pair products **exactly equal** to polygonal numbers at positive integer indices. The first entry $a$ is fixed, not merely a residue class.
+
+To construct them, choose an index $r$ congruent to $u$ modulo $2a$, and set $b=(P_k(r)-c)/a$. For infinitely many such choices, $b>a$ and $ab$ is nonsquare. The formal repeated-entry triple $(a,b,a)$ satisfies the polygonal identities but is not a valid Type B triple. A generalized Pell recurrence transforms its two index coordinates into a **genuine third integer entry** different from the first two. The recurrence is chosen to preserve congruences modulo $4a(k-2)$: these ensure that both polygonal indices and the reconstructed entry remain integral.
+
+The required nonsquare choices exist because $P_k(r)-P_k(u)+a^2$ cannot be a square for all sufficiently large $r$ in that progression, except for the square-order case $k=4,a=u$. The exception has a simple direct construction: at offset zero, $(u,4u,n^2u)$ gives exact square-output triples for every $n\ge3$.
+
+**A genuinely new offset beyond WP09-009:** for heptagonal numbers, choose $k=7,u=2,a=2$. Then $c=P_7(2)-4=3$. The first promoted triple has entries
+
+- $a=2$
+- $b=39$
+- $d=11293707732912017913758403774086454320790468713804$
+
+with exact polygonal indices $(6,3005822048347109708020586,13273350768868706404017954)$. Each shifted pair output is verified against the heptagonal formula using exact integer arithmetic. The offset $3$ is not of the older form $P_7(v)-1$, so this result strictly enlarges the guaranteed global-realization family.
+
+The [full mathematical proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_SHIFT_GLOBAL_EXISTENCE_010.md), [constructive generator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_square_shift_existence.py), and [independent arithmetic tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_square_shift_existence.py) distinguish real integer solutions from local congruence witnesses. This is a sufficient global-existence theorem for a specific family of offsets, not a universal local-to-global result or a literature-originality assertion.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -559,6 +579,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 local CRT and exact Euler/Pell families](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md)
 - [WP09 general Pell amplification and finite square-entry extensions](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md)
 - [WP09 global existence at polygonal-minus-one offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md)
+- [WP09 global existence at polygonal-minus-square offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_SHIFT_GLOBAL_EXISTENCE_010.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
