@@ -611,7 +611,7 @@ Only odd primes dividing $\Delta$ to an **odd** power need checking. At such a p
 | 16 | 2 | Impossible | WP08 obstruction modulo 8 |
 | 24 | 2 | Impossible | WP08 obstruction modulo 8 |
 | 20 | 2 | Compatible | Also has a previously proved exact integer Pell family |
-| 36 | 2 | Compatible | An explicit exact example is documented in the separate WP09-011 research candidate |
+| 36 | 2 | Compatible | An explicit exact example is protected-admitted in the WP09-011 research record |
 | 36 | 18 | Impossible | Odd-prime obstructions at 5 and 37 |
 | 68 | 2 | Impossible | Odd-prime obstructions at 7 and 23 |
 
