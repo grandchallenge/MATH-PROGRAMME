@@ -1,5 +1,7 @@
 # EXT-015 REACH / 151 — critical review of the complementary weight-two test
 
+**Final corrected-source verdict: ACCEPT within the bounded scope below.** Section 6 verifies the sole correction at primary 150 blob `03deca9212a9bea56743e482e5cb79edb46b9d7f`. The primary correction finding is retained as history. The complementary comparison and residual acyclicity remain unresolved; acceptance does not promote the conditional lemma into a theorem.
+
 **Primary verdict: CORRECTION.** The pure R1 primitive and its homotopy, the actual affine-moment splitting, and the two negative method controls are justified. One consolidated correction must replace the unsupported appeal to overlapping exterior composition for bump reinsertion by its direct source lift, and make the symmetric bump normalization explicit. The restricted mixed-source lemma 150.L and the acyclicity of the residual complex remain **UNRESOLVED**. Neither negative control is a counterexample to that restricted lemma or to the complementary comparison.
 
 ## 1. Frozen custody and review provenance
@@ -88,3 +90,23 @@ The formal new Green edge is not an admitted scalar factor because its interior 
 With the direct bump lift supplied, 150.L would give the ambient homotopy on distinct-block histories. The cochain projection $\pi H|_Y$ would yield the required identity on the complement without any assumed commutation of extraction with the primitive. This implication is justified, but its premise remains unproved. Fixed finite histories, every hidden collision stratum, full scalar remainders, actual densities, complete coefficients and all mixed parameter rows are genuine obligations of 150.L.
 
 The resulting bounded return is a pure-source computation, an actual residual-complex reduction and precise failed-method controls. It is not a verdict on the complementary comparison. Higher weights, full recovery 126.14, original R3, actual lifting, broader derived and multiplicative integration and full M5/R4 remain open. The accepted host, all 277 sources, both legal spinneys and arbitrary fixed finite decorations remain in their existing scopes. No unchanged expensive fixture needs replay for this analytic audit. Markdown checks, editorial integration, protected admission, exact readback and tracker reconciliation remain separate.
+
+## 6. Sole correction and final exact-source readback
+
+| Object | Verified identity |
+| --- | --- |
+| Corrected freeze | `fd3b23944f8da0c6a3ab1b218ab2aac62dfef181` |
+| Persistent corrected ref | `research/reach-complementary-two-corrected-frozen-20261106` |
+| Corrected primary 150 blob | `03deca9212a9bea56743e482e5cb79edb46b9d7f` |
+| Preserved primary-review commit | `7ae0aa8e8af5c117c0de80b8f1935c21b4a0823c` |
+| Preserved primary-review 151 blob | `5836fc3b1d7cb3d8cfd47f5b3865388ea09f6921` |
+
+Read-only resolution of the corrected ref and hashing of the actual primary match the supplied identities. Before this append, the actual review matched its preserved primary-review blob and had no difference between the primary-review commit and the corrected freeze. I read the entire primary-to-corrected diff and the corrected argument with its conditional continuation. The changes are the two requested proof clarifications and the correction-provenance paragraph; there is no second attempted solution of 150.L.
+
+The corrected section 5 supplies the direct singleton lift. It checks admissibility by deleting the new zero-covector coordinate from a putative forbidden block, uses the actual forgetting b-map for scalar pullback, fixes compact cutoffs, and extends the old stratum, derivatives and projection without a new collision constraint. Product density yields exactly the smooth tensor reinsertion. The fixed graph and scalar maps extend to completed projective coefficients with the geometry and scalar choices independent of relaxed parameter-row orders. The actual pairing identity and smooth tensor bound handle relations and rapidness of whole sums. Thus this correction proves the needed map without claiming an overlapping prefactorization operation. The primary matrix's incorrect exterior-composition inference is repaired, not retained as a hypothesis of acceptance.
+
+The corrected section 4 displays the three moment-dual symmetric sections. Direct substitution of the bump moment identities gives the identity matrix for the zeroth, averaged mixed, and double-first moments. In particular the middle section is the sum of the two products; each mixed moment is one. The normalization ambiguity is removed.
+
+**ACCEPT corrected 150** for the pure R1 one-coordinate cone and graph map, its labelled four-moment and symmetric three-moment homotopies, the derived finite-free source replacement, the actual scalar bump splitting and identification of the complementary cone with the joint cochain kernel $W$, and the Gaussian Fourier and unrestricted-cusp controls in their stated scopes. The source-controlled fixed-test differentiable assertions have the separate row and connection proofs already audited. No further scientific correction is requested.
+
+The mixed lemma 150.L, acyclicity of $W$, and a positive or negative verdict on the complementary comparison remain **UNRESOLVED**. The conditional projected homotopy is accepted only as an implication with that premise. Full family recovery, original R3 and the remaining programme integration obligations remain open. This exact-source mathematical acceptance is same-system nonauthor scrutiny, not external certification or protected admission. Final ledger/editorial integration, affected checks, protected merge/readback and tracker reconciliation are still separate. Only this review file was changed during the corrected-source pass.
