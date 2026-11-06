@@ -408,6 +408,64 @@ Complete internal tests classified all 6,561 order–offset cells modulo 81 and 
 
 The [WP09 complete theorem and proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md), [constructive calculator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_odd_prime_power_complete.py), and [independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_odd_prime_power_complete.py) are in the protected research record. The theorem does not classify powers of two, exact integer solutions, or mathematical novelty in the prior literature.
 
+### WP09: from local congruences to exact integer triples
+
+The earlier FIGURATE work established complete odd-prime-power congruence criteria and a separate binary theory. **For any specified finite modulus**, we can now combine these prime-power results using the Chinese remainder theorem. It joins the three entry remainders *and* the three polygonal index remainders, with a binary index-period correction where necessary. A compatible result proves only that the equations hold modulo that number; it does not prove the three integer outputs are exactly polygonal.
+
+There is, however, a stronger **exact integer construction** in a case already central to WP08.
+
+For order 20 and offset 2, the triple of **distinct positive integers**
+
+$$
+(a,b,d)=(1,18,13375)
+$$
+
+has the three pair outputs
+
+$$
+ab+2=20=P_{20}(2),
+$$
+
+$$
+ad+2=13377=P_{20}(39),
+$$
+
+$$
+bd+2=240752=P_{20}(164).
+$$
+
+All three are exact equalities in ordinary integers. This is different from the earlier $(1,242,375)$ example, which passes all binary congruence tests but does not satisfy the exact Type B equations.
+
+In fact, the new triple belongs to an **infinite family** with $a=1$ and $b=18$. Writing the remaining entry as $d=P_{20}(s)-2$, the last pair equation becomes
+
+$$
+P_{20}(t)=18P_{20}(s)-34.
+$$
+
+Set $S=9s-4$ and $T=9t-4$. Completing the square turns the equation into the generalized Pell equation
+
+$$
+T^2-18S^2=-578.
+$$
+
+The solution $(S,T)=(347,1472)$ gives the displayed triple. The recurrence
+
+$$
+T'=17T+72S,\qquad S'=4T+17S
+$$
+
+preserves the Pell equation. Applying it **18 times per family step** also preserves the required index congruences modulo 9, so each step creates a larger exact positive-integer 20-gonal Type B triple. This proves infinitely many actual solutions for the parameter pair $(k,c)=(20,2)$.
+
+There is also a classical family at order 4: for **every integer offset** $c$, take a sufficiently large positive integer $t$ and set
+
+$$
+(a,b,d)=(1,t^2-c,(t+1)^2-c).
+$$
+
+The pair outputs are exactly $t^2$, $(t+1)^2$, and $(t(t+1)-c)^2$. This is the classical Euler regular construction, not an originality claim.
+
+The [complete arithmetic dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md) and [executable constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_crt_exact_families.py) distinguish finite modular witnesses from exact integer identities. Independent arithmetic replay compared 684 complete small-modulus parameter cases with a separate all-entry search, checked 20 mixed-prime-power CRT examples, and verified 23 exact integer constructions. This does **not** establish that every everywhere-locally-compatible order and offset has an exact Type B triple. Literature novelty and independent mathematical certification remain open.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -434,6 +492,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 modulo-25 global obstruction and exact finite certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MOD25_GLOBAL_OBSTRUCTIONS_003.md)
 - [WP09 uniform odd-prime-square obstruction theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_ODD_PRIME_SQUARE_005.md)
 - [WP09 complete criterion for all odd prime powers](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md)
+- [WP09 local CRT and exact Euler/Pell families](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
