@@ -380,6 +380,34 @@ For each odd prime $p$, the theorem excludes exactly $p(p-1)^2/2$ periodic order
 
 The [full uniform-prime-square proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_ODD_PRIME_SQUARE_005.md), [executable theorem checker](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_uniform_prime_square.py), and [independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_uniform_prime_square.py) are protected-admitted research artifacts. This is a **sufficient obstruction theorem**, not a complete classification at arbitrary primes and not a claim that any surviving local class contains an exact integer triple. Literature originality and independent MATHCERT certification remain open.
 
+### WP09: a complete rule for all odd prime powers
+
+The preceding prime-square theorem gave sufficient conditions for a triple to be impossible. A further theorem now supplies the **complete answer for every odd-prime-power congruence test**. We no longer need a new residue table each time the prime or exponent increases.
+
+For polygonal order $k\ge3$, integer offset $c$, any odd prime $p$, and any integer $n\ge1$, define
+
+$
+\Delta=8(k-2)c+(k-4)^2.
+$
+
+There is **no compatible Type B triple modulo $p^n$ if and only if** the following all hold: $p$ does not divide $k-2$; the number $(k-2)/2$ is a quadratic nonresidue modulo $p$; and the number of factors of $p$ in $\Delta$ is **odd and less than $n$**.
+
+The theorem is stronger in two ways. First, these conditions are necessary **and** sufficient for the absence of *any* locally compatible triple. Second, whenever they fail, a constructive arithmetic algorithm finds an entry remainder $x$ and an index remainder $t$ with
+
+$
+x^2+c\equiv P_k(t)\pmod{p^n}.
+$
+
+Choose the three entry remainders to equal $x$; positive distinct integer representatives $x+p^n$, $x+2p^n$, and $x+3p^n$ then satisfy **all three pairwise congruences simultaneously**. This is still **not** an exact integer Type B solution: it proves congruence compatibility only.
+
+**Why does valuation parity matter?** A quadratic nonresidue coefficient cannot turn an odd power of $p$ into a square. The proof considers the valuations of all three pair products. If none reaches the discriminant valuation, the product of three nonsquare leading factors would be a square—impossible. If two reach it, the required cancellation forces the remaining pair to have a square leading factor, also impossible. In the compatible cases, finite-field squares and a one-digit-at-a-time lifting construction produce the required index.
+
+**Worked higher-power example:** for triangular numbers ($k=3$) at offset $c=64$, the discriminant is $8c+1=513=3^3\cdot19$. The three congruences remain compatible modulo $3^3=27$ but are **impossible modulo $3^4=81$**. The first obstruction can therefore appear beyond the prime-square level.
+
+Complete internal tests classified all 6,561 order–offset cells modulo 81 and excluded 540. Independent tests also compared full three-entry residue searches against the theorem for smaller odd prime powers.
+
+The [WP09 complete theorem and proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md), [constructive calculator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_odd_prime_power_complete.py), and [independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_odd_prime_power_complete.py) are in the protected research record. The theorem does not classify powers of two, exact integer solutions, or mathematical novelty in the prior literature.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -405,6 +433,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 global all-triples modulo-nine obstruction and exact verification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_MOD9_OBSTRUCTIONS_002.md)
 - [WP09 modulo-25 global obstruction and exact finite certificate](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MOD25_GLOBAL_OBSTRUCTIONS_003.md)
 - [WP09 uniform odd-prime-square obstruction theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_ODD_PRIME_SQUARE_005.md)
+- [WP09 complete criterion for all odd prime powers](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
