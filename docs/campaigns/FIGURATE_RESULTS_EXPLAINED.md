@@ -619,6 +619,36 @@ An impossible local result rules out every exact integer Type B triple, regardle
 
 This synthesis uses [WP08's uniform binary classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md), [WP09's complete odd-prime-power classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md), and the [integrated decision theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_EVERYWHERE_LOCAL_STRATIFICATION_012.md). The protected WP08 obstruction is not claimed as a new discovery.
 
+### WP09: exact solutions with an arbitrary first entry
+
+The earlier Pell theorem amplified exact Type B triples of the form $(1,b,d)$. The next result removes the restriction that the first entry must be one.
+
+**General fixed-pair amplification.** Suppose an actual positive-integer Type B triple $(a,b,d)$ exists for polygonal order $k$ and offset $c$, with all three entries distinct. If the **product $ab$ is not a perfect square**, then infinitely many actual triples exist with the same first pair $(a,b)$, order $k$, and offset $c$. Each shifted pair product remains exactly polygonal at a positive integer index.
+
+Let $r,s,t$ be the three polygonal indices, put $R=2(k-2)$, $L=k-4$, $D=8(k-2)c+L^2$, $S=Rs-L$, and $X=a(Rt-L)$. The two equations involving $d$ become the exact generalized Pell identity
+
+$
+X^2-abS^2=a(a-b)D.
+$
+
+A norm-one Pell unit for the nonsquare coefficient $ab$ preserves that equation. Taking a suitable power that acts as the identity modulo $2aR$ also preserves the integer polygonal indices and the divisibility required to reconstruct a new integer third entry. Increasing Pell powers produce infinitely many distinct positive exact solutions. This proves a stronger fixed-pair theorem than the earlier $a=1$ result.
+
+**New exact-integer examples from bounded seed searches:**
+
+| Order | Offset | Exact entries | Polygonal indices |
+| --- | ---: | --- | --- |
+| 52 | 2 | $(2,25,703)$ | $(2,8,27)$ |
+| 116 | 2 | $(1,2399,5602386)$ | $(7,314,15356)$ |
+| 36 | 6 | $(1,30,715)$ | $(2,7,36)$ |
+
+For 52-gonal numbers, the three exact pair outputs are 52, 1408, and 17577. The second entry $25$ is a square, but its product with the first entry is $2\cdot25=50$, a nonsquare. Therefore the new general theorem gives an infinite exact family at order 52 and offset 2. An earlier search restricted to first entry 1 had missed this small valid seed.
+
+For 116-gonal numbers, the three exact outputs are 2401, 5602388, and 13440124016. Since $2399$ is nonsquare, this seed also amplifies to infinitely many exact triples.
+
+The search records its precise finite bounds on the first entry and polygonal indices. **Failure within a finite search window is never treated as a proof of nonexistence.** Several locally compatible pairs remain unresolved globally, and no general local-to-global theorem or counterexample follows.
+
+The [full generalized Pell proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GENERAL_FIRST_PAIR_PELL_013.md), [bounded search and exact constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_fixed_pair_seed_frontier.py), and [independent regression source](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_fixed_pair_seed_frontier.py) record the method and its limitations. These are internal research results using classical Pell techniques; external novelty and mathematical certification are not asserted.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
@@ -647,6 +677,7 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 complete criterion for all odd prime powers](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md)
 - [WP09 local CRT and exact Euler/Pell families](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_CRT_AND_EXACT_PELL_007.md)
 - [WP09 general Pell amplification and finite square-entry extensions](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PELL_AMPLIFICATION_DICHOTOMY_008.md)
+- [WP09 generalized first-pair Pell amplification and seed frontier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GENERAL_FIRST_PAIR_PELL_013.md)
 - [WP09 global existence at polygonal-minus-one offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md)
 - [WP09 global existence at polygonal-minus-square offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_SHIFT_GLOBAL_EXISTENCE_010.md)
 - [WP09 binary non-diagonal anchor gap and exact Type B counterexamples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_NONDIAGONAL_ANCHOR_GAP_011.md)
