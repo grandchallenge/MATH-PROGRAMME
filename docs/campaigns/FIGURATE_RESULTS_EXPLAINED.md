@@ -811,27 +811,27 @@ The [WP09-018 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/ma
 
 The second case from the WP09-016 bounded frontier is also solved. For $(k,c)=(100,2)$, an exact Type B seed is
 
-$
+$$
 (a,b,d)=(1,98,394141484570467638798107106734400805257750080265189167281283878325018383881627360745786897584655),
-$
+$$
 
-$
+$$
 (r,s,t)=(2,89686697824951931533091760698417159299075689513,887853010999532105318395994347406981537890234904).
-$
+$$
 
 The three exact pair outputs are
 
-$
+$$
 P_{100}(r)=100=98+2,
-$
+$$
 
-$
+$$
 P_{100}(s)=394141484570467638798107106734400805257750080265189167281283878325018383881627360745786897584657=d+2,
-$
+$$
 
-$
+$$
 P_{100}(t)=38625865487905828602214496459971278915259507865988538393565820075851801620399481353087115963296192=98d+2.
-$
+$$
 
 The fixed first pair gives the norm equation $X^2-98S^2=-1046048$. Starting from $(4019472,406028)$ and applying $99+10\sqrt{98}$ nineteen times reaches the required lattice $X\equiv S\equiv100\pmod{196}$. Since $ab=98$ is nonsquare, WP09-013 gives infinitely many exact triples with this first pair. The amplification modulus is 392, the unit order is 196, and the next family member has a 996-digit third entry.
 
@@ -841,27 +841,27 @@ The 96-digit seed is consistent with the earlier complete exclusion for entries 
 
 The same construction solves $(k,c)=(132,2)$. An exact seed is
 
-$
+$$
 (a,b,d)=(1,130,8359584463533923231612770595169701590647797311),
-$
+$$
 
-$
+$$
 (r,s,t)=(2,11340590449649248400673,129302625368040561155552).
-$
+$$
 
 Its pair outputs are
 
-$
+$$
 P_{132}(r)=132=130+2,
-$
+$$
 
-$
+$$
 P_{132}(s)=8359584463533923231612770595169701590647797313=d+2,
-$
+$$
 
-$
+$$
 P_{132}(t)=1086745980259410020109660177372061206784213650432=130d+2.
-$
+$$
 
 Here $X^2-130S^2=-2381856$. The base point $(90608,7948)$, multiplied five times by the norm-one unit $6499+570\sqrt{130}$, reaches $X\equiv S\equiv132\pmod{260}$. The first-pair product 130 is nonsquare, so WP09-013 proves an infinite exact family. The amplification modulus is 520, the unit order is 52, and the next third entry has 474 digits.
 
