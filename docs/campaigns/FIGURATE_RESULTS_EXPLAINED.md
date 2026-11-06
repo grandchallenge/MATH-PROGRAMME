@@ -386,17 +386,17 @@ The preceding prime-square theorem gave sufficient conditions for a triple to be
 
 For polygonal order $k\ge3$, integer offset $c$, any odd prime $p$, and any integer $n\ge1$, define
 
-$
+$$
 \Delta=8(k-2)c+(k-4)^2.
-$
+$$
 
 There is **no compatible Type B triple modulo $p^n$ if and only if** the following all hold: $p$ does not divide $k-2$; the number $(k-2)/2$ is a quadratic nonresidue modulo $p$; and the number of factors of $p$ in $\Delta$ is **odd and less than $n$**.
 
 The theorem is stronger in two ways. First, these conditions are necessary **and** sufficient for the absence of *any* locally compatible triple. Second, whenever they fail, a constructive arithmetic algorithm finds an entry remainder $x$ and an index remainder $t$ with
 
-$
+$$
 x^2+c\equiv P_k(t)\pmod{p^n}.
-$
+$$
 
 Choose the three entry remainders to equal $x$; positive distinct integer representatives $x+p^n$, $x+2p^n$, and $x+3p^n$ then satisfy **all three pairwise congruences simultaneously**. This is still **not** an exact integer Type B solution: it proves congruence compatibility only.
 
