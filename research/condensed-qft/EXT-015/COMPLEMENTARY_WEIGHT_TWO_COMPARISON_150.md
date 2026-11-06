@@ -104,7 +104,15 @@ Using the same bumps in both coordinates makes the moment retraction equivariant
 
 The maps and identities are actual liquid maps through graph stages, and actual parameter maps as established above. Derived scalar extension preserves this explicit homotopy equivalence. Its finite free right side computes $\mathcal C\otimes_R^L R^3=\mathcal C^3$. No nuclear flatness, arbitrary-profinite projectivity or evaluation of an arbitrary liquid-derived tensor is used. $\square$
 
-The ordinary scalar pairing takes these finite free generators to the corresponding smooth bump products in $Y$. They are distinct-block sources and have zero extraction by 147. Consequently (150.2) may be represented, in $D(\mathcal A)$, by the explicit map
+For the symmetric coordinates $(m_{00},(m_{10}+m_{01})/2,m_{11})$, the moment-dual sections are explicitly
+
+$$
+b_0\boxtimes b_0,\qquad
+b_1\boxtimes b_0+b_0\boxtimes b_1,\qquad
+b_1\boxtimes b_1.
+$$
+
+The middle section is the sum, not the half-sum: its two mixed moments are both one. The ordinary scalar pairing takes these finite free generators to these smooth bump products in $Y$. They are distinct-block sources and have zero extraction by 147. Consequently (150.2) may be represented, in $D(\mathcal A)$, by the explicit map
 
 $$
 \beta:\mathcal C^{\oplus3}[0]\longrightarrow Y(U)
@@ -130,7 +138,11 @@ All moment maps, bump sections and projections just used are explicit maps on th
 
 Represent a section of $Y$ locally on a source and rapid cover. Subtract its entire same-block jet contribution using the positive-scale coefficient maps of 147. The remainder is a finite sum of distinct-retained-block histories. For a quotient section with $P=0$, the subtracted contribution is rapid, by the extraction/insertion estimates. Thus these histories suffice; they do not make the remaining normal profiles regular at zero scale.
 
-Partial moments $m_{i,j}$ already act on such histories by smooth decoration and forgetting one vertex. The accepted 108 operations give a one-slot source. Bump reinsertion is exterior composition with a compact smooth one-slot source. Its retained labels are distinct blocks, so its extraction is zero. Their complete-source bounds and output scalar index families are fixed across the parameter rows. The unresolved part of (150.3) is solely convolution of the **whole** mixed history.
+Partial moments $m_{i,j}$ already act on such histories by smooth decoration and forgetting one vertex. The accepted 108 operations give a one-slot source. Bump reinsertion has a direct source lift, including when the bump and old output supports overlap. Adjoin a new singleton physical and block coordinate $r$ to an old history and replace its R1 coefficient $T$ by $b_j(r)\boxtimes T$. Its new covector is zero. A forbidden enlarged partition conormal would, after removing $r$ from its block, give an old forbidden partition conormal with the same nonzero old covector. Thus the enlarged coefficient satisfies the required cone exclusion. Fixed smooth tensoring gives a continuous graph map, with a fixed output support and cone.
+
+Pull the scalar factor back along forgetting $r$, the interior b-map supplied by 105.4. The fixed-stage pullback estimate of 105.6 supplies the full scalar index family, smooth defining-function units and remainder weights on the enlarged collision space. Choose fixed compact cutoffs equal to one near the coefficient support. Extend the old partition by the singleton, the old derivatives by zero in $r$, and the old projection by retaining $r$. With the product physical density and its unit Jacobian, the new history evaluates exactly to $b_j(r)$ times the old output. The graph tensor and scalar pullback maps have continuous finite-seminorm bounds; their tensor map therefore extends to the completed projective coefficient source of 108.6. Geometry, scalar indices, remainder weights and the finite history list are independent of relaxed graph orders in the genuine 126 parameter rows. The test-pairing identity preserves actual equality, and the fixed smooth tensor estimate preserves every mixed rapid derivative. This is a source representation, not an overlapping factorization operation.
+
+The two retained labels are distinct blocks, so this reinsertion has zero extraction by 147. Its complete-source bounds and output scalar index families are fixed across parameter rows. The unresolved part of (150.3) is solely convolution of the **whole** mixed history.
 
 **Unresolved lemma 150.L.** For every fixed finite collection of distinct-retained-block sources
 
@@ -241,6 +253,6 @@ A proof of that theorem, an alternative fixed-stage representation with those es
 | Legal sources and overlaps | No overlapping singular counterterms are multiplied; all277 sources and both legal spinneys stay in the unchanged model. |
 | Parameter and liquid scope | Proved R1 maps and conditional enriched maps distinguished; no full126.14 recovery or derived-evaluation interchange. |
 
-This is one primary construction. No correction has yet been consumed. A distinct same-system nonauthor must review the new coefficient-cone proof, actual R1 homotopy, Fourier control and the conditional boundary before admission; shared historical inputs are not external certification. No numerical fixture is needed for the analytic gap. The finite identities in (150.7) follow from the displayed operator equations rather than numerical sampling. Existing expensive host and 147 algebra fixtures are unchanged and need no replay for this result.
+This is one primary construction with one consolidated correction requested by 151: the direct singleton source proof replaces the unsupported overlapping-composition inference, and the symmetric bump normalization is explicit. Exact corrected-source review remains required before admission; shared historical inputs and distinct same-system scrutiny are not external certification. No numerical fixture is needed for the analytic gap. The finite identities in (150.7) follow from the displayed operator equations rather than numerical sampling. Existing expensive host and 147 algebra fixtures are unchanged and need no replay for this result.
 
 The complementary cone, higher weights, full family recovery (126.14), original liquid-cohomology comparison R3, actual lifting and the broader derived and multiplicative integration remain open. R0, R1, R2 and the fixed-host procedure retain their admitted scopes. No original programme obligation is closed by this bounded return.
