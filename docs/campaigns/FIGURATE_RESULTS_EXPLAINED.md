@@ -673,6 +673,36 @@ The first pair has product $2\cdot2279=4558$, which is not a square. The already
 
 The [WP09-014 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_K52_C6_EXACT_SEED_014.md), [exact bounded enumerator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_k52_c6_exact_seed.py), and [six arithmetic tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_k52_c6_exact_seed.py) were admitted to protected MATHSOLVE research state. No independent MATHCERT certification or external literature originality is claimed.
 
+### WP09: order-68 exact Type B families at offset six
+
+The earlier frontier pair $(k,c)=(68,6)$ is **globally realizable**, not merely locally compatible. With $P_{68}(n)=33n^2-32n$, one exact positive distinct triple is $(a,b,d)=(10,44033,128739)$ at polygonal indices $(r,s,t)=(116,198,13107)$:
+
+$
+10\cdot44033+6=440336=P_{68}(116),
+$
+
+$
+10\cdot128739+6=1287396=P_{68}(198),
+$
+
+$
+44033\cdot128739+6=5668764393=P_{68}(13107).
+$
+
+Four other independently checked triples at the same parameter pair are $(22,13117,168855)$, $(55,4085,265746)$, $(61,55575,102610)$ and $(102145,629950,746915)$, with respective index triples $(94,336,8193)$, $(83,666,5736)$, $(321,436,13146)$ and $(44158,48083,119408)$. These are explicitly checked exact positive-integer examples, not a complete census up to one million.
+
+For every displayed triple the product $ab$ is nonsquare. Hence the earlier protected WP09-013 fixed-first-pair Pell theorem generates **infinitely many exact positive Type B triples** from each seed. For the first one, the norm equation is
+
+$
+X^2-440330S^2=-3197830720,
+$
+
+with $(X,S)=(17300600,26072)$. Its exact seed and the previously admitted unit argument—not the local sieve alone—establish global integer existence.
+
+A complete divisor-graph enumeration separately proves that there is **no unordered triple with all entries at most 100,000** at $(68,6)$. This is a finite-bound result only and is consistent with the larger positive seeds. The [protected proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_K68_C6_EXACT_SEEDS_015.md), [reproducible integer-only enumerator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_k68_c6_exact_seeds.py) and [five source tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_k68_c6_exact_seeds.py) document its scope.
+
+The globally unresolved local-compatible examples $(84,2)$ and $(100,2)$ remain open. No universal local-to-global theorem, external literature originality claim or independent MATHCERT certification is asserted.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
