@@ -753,9 +753,59 @@ X^2-abS^2=a(a-b)\Delta,\qquad
 \Delta=8(k-2)c+(k-4)^2.
 $$
 
-But a solution of this norm equation alone is **not** enough: the polygonal index lattice, divisibility, positivity, and distinctness requirements must all hold. The known exact $(68,6)$ solution provides a positive control for these checks. Orders $(84,2)$ and $(100,2)$ remain globally unresolved despite their earlier complete entry-bounded exclusions.
+But a solution of this norm equation alone is **not** enough: the polygonal index lattice, divisibility, positivity, and distinctness requirements must all hold. The known exact $(68,6)$ solution provides a positive control for these checks. The $(84,2)$ case is now solved by the WP09-018 exact Pell-orbit seed below; $(100,2)$ remains globally unresolved despite its earlier complete entry-bounded exclusion.
 
 The [protected WP09-017 theorem dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SEED_DESCENT_017.md), [exact index-first implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_seed_descent_017.py), and [six regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_seed_descent_017.py) provide the derivations and arithmetic checks. The next objective is a *genuine* integral norm/lattice solvability theorem or unbounded obstruction, not another larger finite census. These are internal research results, without independent MATHCERT certification or an external priority claim.
+
+### WP09: exact global existence at the 84-gonal offset two
+
+The previously unresolved pair $(k,c)=(84,2)$ now has an exact positive-integer Type B solution. Its entries are
+
+$$
+(a,b,d)=(2,41,172124700980346120000589924527450935999),
+$$
+
+and its polygonal indices are
+
+$$
+(r,s,t)=(2,2897641606046209200,13119630367519738931).
+$$
+
+Direct substitution gives the three exact pair outputs
+
+$$
+P_{84}(r)=84=2\cdot41+2,
+$$
+
+$$
+P_{84}(s)=344249401960692240001179849054901872000=2d+2,
+$$
+
+$$
+P_{84}(t)=7057112740194190920024186905625488375961=41d+2.
+$$
+
+The construction fixes the small first pair $a=2,b=41$ at index $r=2$. With $R=164$, $L=80$ and $\Delta=7712$, the remaining equations reduce to
+
+$$
+X^2-82S^2=-601536,
+$$
+
+where $S=164s-80$ and $X=2(164t-80)$. An exact starting solution is $(X,S)=(3585208,395920)$. The norm-one unit $163+18\sqrt{82}$, applied six times, gives
+
+$$
+(X,S)=(4303238760546474369208,\;
+475213223391578308720),
+$$
+
+which lies in the required index lattice:
+$S\equiv84\pmod{164}$ and $X\equiv168\pmod{328}$. Recovering $s,t,d$ then gives the exact triple above.
+
+Because $ab=82$ is nonsquare, the protected WP09-013 fixed-first-pair Pell theorem applies. The unit has order 328 modulo the amplification lattice modulus $2aR=656$. Its 328th power preserves the seed's index and divisibility classes; the next exact family member has a 1,687-digit third entry. Thus this is not just one isolated seed: it establishes **infinitely many exact positive Type B triples** at $(84,2)$.
+
+The 39-digit third entry explains why the result escaped the WP09-016 complete census with all entries at most 300,000. That bounded exclusion remains correct; it was never a global nonexistence theorem. The result is an exact global existence proof, not a local-to-global counterexample. The $(100,2)$ case remains open.
+
+The [WP09-018 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_84_GONAL_EXACT_SEED_018.md), [exact Pell-orbit constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_exact_seed_018.py), and [seven direct-polynomial regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_exact_seed_018.py) record the full derivation and reproducible checks. These are internally admitted producer results; independent MATHCERT certification and external literature-priority review remain separate.
 
 ## 7. What is established—and what is not
 
