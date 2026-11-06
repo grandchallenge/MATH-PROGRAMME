@@ -619,6 +619,38 @@ An impossible local result rules out every exact integer Type B triple, regardle
 
 This synthesis uses [WP08's uniform binary classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP08_UNIFORM_2ADIC_ADMISSIBILITY_009.md), [WP09's complete odd-prime-power classification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ALL_ODD_PRIME_POWERS_COMPLETE_006.md), and the [integrated decision theorem](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_EVERYWHERE_LOCAL_STRATIFICATION_012.md). The protected WP08 obstruction is not claimed as a new discovery.
 
+### WP09: an exact 52-gonal family beyond the square-shift construction
+
+The complete local sieve tells us whether congruences can be solved at every finite modulus. It does **not** by itself produce an exact integer triple. A new explicit result closes that gap for one additional parameter pair: polygonal order $k=52$ and offset $c=2$.
+
+The three distinct positive integers $(2,25,703)$ form an exact Type B tuple. Since $P_{52}(n)=25n^2-24n$, their pair products satisfy
+
+$
+2\cdot25+2=52=P_{52}(2),
+$
+
+$
+2\cdot703+2=1408=P_{52}(8),
+$
+
+$
+25\cdot703+2=17577=P_{52}(27).
+$
+
+The offset 2 is **not** covered by the earlier square-shift existence theorem: for polygonal orders divisible by four, a difference $P_k(u)-a^2$ can never equal 2 modulo four. Nevertheless the displayed triple is an actual integer solution.
+
+There are in fact **infinitely many exact solutions retaining the first two entries $(2,25)$**. Completing the square in the remaining two polygonal equations yields the generalized Pell equation
+
+$
+X^2-50S^2=-142784.
+$
+
+The seed indices $(8,27)$ give $(X,S)=(5304,752)$. Multiplication by the norm-one unit $99+14\sqrt{50}$ preserves this equation. Its 200th power is the identity modulo 400, preserving the divisibility and index conditions needed to recover an exact Type B triple at each iteration. The resulting third entries grow without bound. This is an application of classical Pell arithmetic, not an external originality claim.
+
+A separate exhaustive divisor-graph calculation found exactly **one unordered solution with all entries at most 2,000**, namely $(2,25,703)$. It is a bounded census only: the Pell theorem produces infinitely many larger solutions, and no global uniqueness is implied.
+
+The [protected proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_K52_EXACT_PELL_SEED_013.md), [executable Pell constructor and bounded enumerator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_k52_exact_pell_seed.py), and [independent arithmetic regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_k52_exact_pell_seed.py) document the result. Source review for literature novelty and separate MATHCERT mathematical certification remain open.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
