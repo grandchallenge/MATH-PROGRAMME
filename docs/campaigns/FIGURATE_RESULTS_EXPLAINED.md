@@ -761,42 +761,42 @@ The [protected WP09-017 theorem dossier](https://github.com/grandchallenge/MATHS
 
 The previously unresolved pair $(k,c)=(84,2)$ now has an exact positive-integer Type B solution. Its entries are
 
-$
+$$
 (a,b,d)=(2,41,172124700980346120000589924527450935999),
-$
+$$
 
 and its polygonal indices are
 
-$
+$$
 (r,s,t)=(2,2897641606046209200,13119630367519738931).
-$
+$$
 
 Direct substitution gives the three exact pair outputs
 
-$
+$$
 P_{84}(r)=84=2\cdot41+2,
-$
+$$
 
-$
+$$
 P_{84}(s)=344249401960692240001179849054901872000=2d+2,
-$
+$$
 
-$
+$$
 P_{84}(t)=7057112740194190920024186905625488375961=41d+2.
-$
+$$
 
 The construction fixes the small first pair $a=2,b=41$ at index $r=2$. With $R=164$, $L=80$ and $\Delta=7712$, the remaining equations reduce to
 
-$
+$$
 X^2-82S^2=-601536,
-$
+$$
 
 where $S=164s-80$ and $X=2(164t-80)$. An exact starting solution is $(X,S)=(3585208,395920)$. The norm-one unit $163+18\sqrt{82}$, applied six times, gives
 
-$
+$$
 (X,S)=(4303238760546474369208,\;
 475213223391578308720),
-$
+$$
 
 which lies in the required index lattice:
 $S\equiv84\pmod{164}$ and $X\equiv168\pmod{328}$. Recovering $s,t,d$ then gives the exact triple above.
