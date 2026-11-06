@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP180",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP181",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "complementary_scientific_pr_checks",
+  "phase": "complementary_native_queue_readback",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "6ac0ae534d83460c1e779b000e8165b125c9cbf6",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "verify_3168_editorial_and_required_checks",
-      "description": "Obtain final editorial verdict for exact3168 head5f9ab7713e6e71ab00156b6f72760cb24563d50f, verify current native required checks/reviews/material inputs, then native merge queue and eight-blob readback. Do not alter frozen scientific head.150.L and residual W acyclicity remain open."
+      "id": "read_native_3168_merge_and_sources",
+      "description": "Read3168 native merge at exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f; verify eight changed blobs, five native checks,88 scientific sources and unchanged terminal checkpoint. Then reconcile four issue bodies/seven dispositions and protect canonical continuation. Do not claim residual acyclicity or full completion."
     }
   ],
   "next_action": {
-    "id": "verify_3168_editorial_and_required_checks",
-    "description": "Obtain final editorial verdict for exact3168 head5f9ab7713e6e71ab00156b6f72760cb24563d50f, verify current native required checks/reviews/material inputs, then native merge queue and eight-blob readback. Do not alter frozen scientific head.150.L and residual W acyclicity remain open.",
+    "id": "read_native_3168_merge_and_sources",
+    "description": "Read3168 native merge at exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f; verify eight changed blobs, five native checks,88 scientific sources and unchanged terminal checkpoint. Then reconcile four issue bodies/seven dispositions and protect canonical continuation. Do not claim residual acyclicity or full completion.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "PR3168 native queue entry2026-11-06T22:45:37Z position1",
+        "status": "Distinct151 ACCEPT and final eight-file editorial CLEAR. Fresh required contexts, effective rules, reviews, live checkpoint,85 prior scientific identities and material closure PASS. Native merge/readback pending."
+      },
       {
         "kind": "artifact",
         "identity": "PR3168 exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f",
@@ -603,8 +608,8 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "complementary_scientific_pr_checks",
-    "result": "Scientific151 ACCEPT corrected150. Editorial review and required contexts pending; no protected admission yet.",
+    "action": "complementary_native_queue_readback",
+    "result": "Distinct151 ACCEPT and final eight-file editorial CLEAR. Fresh required contexts, effective rules, reviews, live checkpoint,85 prior scientific identities and material closure PASS. Native merge/readback pending.",
     "evidence_refs": [
       "research/reach-complementary-two-20261105",
       "research/condensed-qft/EXT-015/COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md",
@@ -615,7 +620,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-06T13:42:36.3776095Z"
+    "observed_at": "2026-11-06T22:45:50.7586060Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -682,7 +687,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_EXTENDED_WEISS_136.md",
       "research/condensed-qft/EXT-015/EXTENDED_WEISS_ACCEPTANCE_137.md"
     ],
-    "instructions": "Obtain final editorial verdict for exact3168 head5f9ab7713e6e71ab00156b6f72760cb24563d50f, verify current native required checks/reviews/material inputs, then native merge queue and eight-blob readback. Do not alter frozen scientific head.150.L and residual W acyclicity remain open."
+    "instructions": "Read3168 native merge at exact head5f9ab7713e6e71ab00156b6f72760cb24563d50f; verify eight changed blobs, five native checks,88 scientific sources and unchanged terminal checkpoint. Then reconcile four issue bodies/seven dispositions and protect canonical continuation. Do not claim residual acyclicity or full completion."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
