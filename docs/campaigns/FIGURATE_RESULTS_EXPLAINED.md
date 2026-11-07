@@ -948,30 +948,30 @@ The repeated exact examples at orders congruent to four modulo sixteen suggest s
 
 Set
 
-$
+$$
 k=16m+4,\qquad A=8m+1,\qquad H=8m(m+1)+1,
-$
+$$
 
 where $m$ is any nonnegative integer. Fix offset $c=2$ and first entries $(a,b)=(1,k-2)=(1,2A)$, with first polygonal index $r=2$.
 
 **Exact theorem.** A positive distinct Type B seed with this fixed first pair exists **if and only if** the following reduced generalized Pell equation has a positive integer solution:
 
-$
+$$
 x^2-2Ay^2=-2(2A-1)H,
-$
+$$
 
 subject to just one prescribed **odd-modulus** residue class:
 
-$
+$$
 2x\equiv2y\equiv1\pmod A.
-$
+$$
 
 The reduction is exact. The original fixed-pair Pell coordinates $X,S$ are necessarily multiples of four; setting $X=4x$, $S=4y$ divides the original norm by sixteen. The required polygonal indices are recovered by
 
-$
+$$
 t=\frac{x+(A-1)/2}{A},\qquad
 s=\frac{y+(A-1)/2}{A}.
-$
+$$
 
 Far enough forward along a residue-preserving norm-one Pell orbit, both indices are positive and the third entry $d=P_k(s)-2$ becomes positive and distinct from the first pair. Direct integer arithmetic then verifies all three original polygonal equations. Thus any positive solution of the reduced norm-and-residue system generates **infinitely many genuine exact Type B triples**.
 
