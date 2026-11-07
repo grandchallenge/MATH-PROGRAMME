@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl-tcs-record-contracts-1.0.0-r1.schema.json",
+  "title": "GCL-TCS-00 Candidate Record Contracts",
+  "description": "Derivative machine representation of existing GCL-TCS-00/1.0.0 normative record fields. Does not create authority.",
+  "$defs": {
+    "immutableRevision": {"type": "string", "pattern": "^(?:git-(?:blob|commit|tree):[0-9a-f]{40}|sha256:[0-9a-f]{64}|[0-9a-f]{40})$"},
+    "claimRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "claim_type", "claim_status", "scope", "assumptions", "dependencies", "supporting_evidence", "counterevidence", "falsifiers", "limitations", "owner", "last_reviewed"],
+      "oneOf": [{"required": ["statement"]}, {"required": ["statement_ref"]}],
+      "properties": {
+        "claim_id": {"type": "string", "minLength": 1},
+        "statement": {"type": "string", "minLength": 1},
+        "statement_ref": {"type": "string", "minLength": 1},
+        "claim_type": {"enum": ["definition", "assumption", "observation", "hypothesis", "conjecture", "lemma", "proposition", "theorem", "empirical_result", "engineering_result", "interpretation", "recommendation", "speculation"]},
+        "claim_status": {"enum": ["proposed", "illustrative", "tested", "replicated", "independently_reproduced", "conditionally_established", "formally_verified", "falsified", "superseded", "withdrawn"]},
+        "scope": {"type": "string", "minLength": 1},
+        "assumptions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "dependencies": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "supporting_evidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "counterevidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "owner": {"type": "string", "minLength": 1},
+        "last_reviewed": {"type": "string", "format": "date"}
+      }
+    },
+    "evidenceRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_id", "evidence_type", "location", "version_or_hash", "method", "result_summary", "scope", "limitations", "created_by", "created_at"],
+      "properties": {
+        "evidence_id": {"type": "string", "minLength": 1}, "evidence_type": {"type": "string", "minLength": 1}, "location": {"type": "string", "minLength": 1}, "version_or_hash": {"type": "string", "minLength": 1}, "method": {"type": "string", "minLength": 1}, "result_summary": {"type": "string", "minLength": 1}, "scope": {"type": "string", "minLength": 1}, "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}, "created_by": {"type": "string", "minLength": 1}, "created_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "reviewRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["review_id", "gate_id", "reviewer", "review_role", "independence_statement", "date", "decision", "findings", "required_actions", "resolved_actions", "evidence", "reviewed_revision"],
+      "properties": {
+        "review_id": {"type": "string", "minLength": 1}, "gate_id": {"type": "string", "pattern": "^G[0-9]$"}, "reviewer": {"type": "string", "minLength": 1}, "review_role": {"type": "string", "minLength": 1}, "independence_statement": {"type": "string", "minLength": 1}, "date": {"type": "string", "format": "date"}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "findings": {"type": "array", "items": {"type": "string", "minLength": 1}}, "required_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "resolved_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}, "reviewed_revision": {"type": "string", "pattern": "^(?:git-(?:blob|commit|tree):[0-9a-f]{40}|sha256:[0-9a-f]{64}|[0-9a-f]{40})$"}
+      }
+    },
+    "exceptionRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["exception_id", "rule_id", "artifact_scope", "affected_content", "justification", "risk_assessment", "compensating_controls", "requested_by", "approved_by", "issued_date", "status"],
+      "anyOf": [{"required": ["review_date"]}, {"required": ["expiry_date"]}],
+      "properties": {
+        "exception_id": {"type": "string", "minLength": 1}, "rule_id": {"type": "string", "minLength": 1}, "artifact_scope": {"type": "string", "minLength": 1}, "affected_content": {"type": "string", "minLength": 1}, "justification": {"type": "string", "minLength": 1}, "risk_assessment": {"type": "string", "minLength": 1}, "compensating_controls": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}, "requested_by": {"type": "string", "minLength": 1}, "approved_by": {"type": "string", "minLength": 1}, "issued_date": {"type": "string", "format": "date"}, "review_date": {"type": "string", "format": "date"}, "expiry_date": {"type": "string", "format": "date"}, "status": {"enum": ["requested", "approved", "rejected", "expired", "revoked", "superseded"]}
+      }
+    },
+    "gateRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["gate_id", "artifact_id", "reviewed_revision", "decision", "review_record_ref", "evidence"],
+      "properties": {
+        "gate_id": {"type": "string", "pattern": "^G[0-9]$"}, "artifact_id": {"type": "string", "minLength": 1}, "reviewed_revision": {"type": "string", "pattern": "^(?:git-(?:blob|commit|tree):[0-9a-f]{40}|sha256:[0-9a-f]{64}|[0-9a-f]{40})$"}, "decision": {"enum": ["PASS", "FAIL", "DEFERRED", "NOT_APPLICABLE"]}, "review_record_ref": {"type": "string", "minLength": 1}, "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}, "not_applicable_reason": {"type": "string", "minLength": 1}, "material_change_invalidates": {"type": "boolean"}
+      },
+      "allOf": [{"if": {"properties": {"decision": {"const": "NOT_APPLICABLE"}}}, "then": {"required": ["not_applicable_reason"]}}]
+    },
+    "conformanceStatement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["primary_profile", "secondary_profiles", "impact_class", "target_state", "dimensions", "active_exceptions", "promotion_status", "date", "standard_versions"],
+      "properties": {
+        "primary_profile": {"type": "string", "minLength": 1}, "secondary_profiles": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}, "impact_class": {"enum": ["IC-0", "IC-1", "IC-2", "IC-3"]}, "target_state": {"enum": ["UNASSESSED", "DECLARED", "CHECKED", "ASSURED", "FAILED", "EXCEPTED"]}, "dimensions": {"type": "object", "minProperties": 1, "additionalProperties": {"enum": ["UNASSESSED", "DECLARED", "CHECKED", "ASSURED", "FAILED", "EXCEPTED"]}}, "active_exceptions": {"type": "array", "items": {"type": "string", "minLength": 1}}, "promotion_status": {"enum": ["working_draft", "registered", "review_ready", "in_review", "verified", "promoted", "published", "superseded", "withdrawn"]}, "date": {"type": "string", "format": "date"}, "standard_versions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "releaseRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["change_log", "migration_note", "compatibility_statement", "previous_standard_identifier", "new_standard_identifier", "review_record", "promotion_record"],
+      "properties": {
+        "change_log": {"type": "string", "minLength": 1}, "migration_note": {"type": "string", "minLength": 1}, "compatibility_statement": {"type": "string", "minLength": 1}, "previous_standard_identifier": {"type": "string", "minLength": 1}, "new_standard_identifier": {"type": "string", "minLength": 1}, "review_record": {"type": "string", "minLength": 1}, "promotion_record": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
