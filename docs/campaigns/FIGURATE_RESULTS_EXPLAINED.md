@@ -900,6 +900,24 @@ Every constructed first-pair product $k-2$ is nonsquare, so the already protecte
 
 The [WP09-022 producer dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_LOCAL_POSITIVE_SEED_BATCH_022.md), [exact Pell constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_local_positive_seed_batch_022.py), and [seven arithmetic regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_local_positive_seed_batch_022.py) record full values, index lattice checks, and replay. No independent MATHCERT certification or external mathematical originality claim is made.
 
+### WP09: a uniform finite decision for fixed-pair Pell index lattices
+
+The accumulating enormous exact seeds raise a more fundamental question: *can we decide whether a given first pair can ever be extended to a third entry?* WP09-023 answers this in full for **each specified exact first pair $(a,b)$ whose product $Q=ab$ is nonsquare**. It is an exact mathematical decision procedure, although its worst-case cost may be very large.
+
+Fix polygonal order $k$, offset $c$ and a verified first pair $(a,b)$ with $ab+c=P_k(r)$. As in the preceding theorem, set $R=2(k-2)$, $L=k-4$, and $\Delta=8(k-2)c+L^2$. An exact third entry must provide positive integer coordinates on
+
+$
+X^2-abS^2=a(a-b)\Delta,
+$
+
+along with congruences ensuring that $S=Rs-L$, $X=a(Rt-L)$, and $d=(P_k(s)-c)/a$ are all integral.
+
+The new result has two steps. First, multiplication by the fundamental Pell unit moves *every* positive integer norm solution back into one bounded region. This produces a **finite, provably complete set of possible starting representatives**, rather than a search with an arbitrary stopping point. Second, multiplying a representative by that unit modulo $M=2aR$ has a finite periodic residue orbit. Each residue is tested against the integer-index and third-entry divisibility conditions. A compatible state yields a genuine exact positive seed after sufficiently many forward unit steps; if every orbit fails, no third entry exists **for that first pair**.
+
+The [WP09-023 mathematical proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_UNIFORM_PELL_LATTICE_023.md) gives the necessary-and-sufficient criterion and finite-domain proof, with an [integer-exact decision implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_uniform_pell_lattice_023.py) and [seven regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_uniform_pell_lattice_023.py). Existing exact positive families at orders 84, 100 and 308 provide controls. A first-pair negative at order 68, offset 2 is separately checked; it does not constitute a new global obstruction.
+
+**Important limitation:** this decides extension of a **specified** first pair, not whether there exists some suitable first pair for every everywhere-locally-compatible order and offset. It also does not imply a fast algorithm: the fundamental unit and representative bounds may be enormous. A resource limit in the implementation raises an explicit error rather than pretending to prove nonexistence. The next substantial objective is to classify or bound the possible first pairs uniformly, so that the decision procedure can address whole parameter families. No independent MATHCERT certification or literature-priority assessment is asserted.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
