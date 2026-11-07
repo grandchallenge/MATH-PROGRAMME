@@ -981,6 +981,28 @@ The [WP09-025 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/ma
 
 The remaining research question is **which values of $m$ satisfy the primitive norm-and-residue condition without running a separate Pell computation for each one**. WP09-025 does not prove that every locally compatible order has such a solution, nor that the recurring anchor covers every global solution using other first pairs. Generalized Pell finite-orbit theory is classical; this work specializes and normalizes its integral polygonal-index constraints. Independent mathematical certification and external novelty review remain separate.
 
+### WP09: the Pell ray can be decided with two gcd tests
+
+WP09-025 reduced the recurring order-$k=16m+4$ anchor existence question to a primitive generalized Pell norm and a single target residue class modulo the odd integer $A=8m+1$. The remaining finite modular orbit can now be solved *algebraically*, without visiting its states.
+
+Write $q=2A$, $r=(A+1)/2$, and let $U+V\sqrt q$ be the fundamental positive norm-one Pell unit. Fix any positive integer representative $(x_0,y_0)$ of the primitive norm. The entire infinite unit orbit meets the polygonal-index target $(r,r)$ modulo $A$ **if and only if** at least one of two alternatives holds:
+
+$
+x_0\equiv r\pmod A,\qquad y_0\equiv r\pmod{\gcd(V,A)},
+$
+
+or
+
+$
+x_0\equiv Ur\pmod A,\qquad y_0\equiv Ur\pmod{\gcd(V,A)}.
+$
+
+The reason is that, modulo $A$, the Pell unit multiplication matrix becomes triangular; its even powers are linear shears and its odd powers are their translate. The exponent needed to hit the ray is given by a solvable linear congruence, not an exhaustive orbit search. An exponent can therefore be constructed using gcd and modular inversion. Once it reaches the ray, residue-preserving further Pell steps yield genuine positive distinct exact Type B triples.
+
+The [WP09-026 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_LINEAR_RAY_026.md), [exact linear-ray implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_linear_ray_026.py), and [six regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_linear_ray_026.py) document the necessary-and-sufficient ray criterion, constructive exponents and verification against complete finite orbits.
+
+**What this does not establish:** whether the required *norm-equation representatives themselves* exist for all $m$, whether every locally compatible order has a seed, or mathematical certification and literature priority. The remaining family-wide problem lies in quadratic-order norm representation and principality, not Pell-unit residue traversal.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
