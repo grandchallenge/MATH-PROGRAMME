@@ -918,6 +918,30 @@ The [WP09-023 mathematical proof dossier](https://github.com/grandchallenge/MATH
 
 **Important limitation:** this decides extension of a **specified** first pair, not whether there exists some suitable first pair for every everywhere-locally-compatible order and offset. It also does not imply a fast algorithm: the fundamental unit and representative bounds may be enormous. A resource limit in the implementation raises an explicit error rather than pretending to prove nonexistence. The next substantial objective is to classify or bound the possible first pairs uniformly, so that the decision procedure can address whole parameter families. No independent MATHCERT certification or literature-priority assessment is asserted.
 
+### WP09: uniform index restrictions and a smaller Pell-lattice test
+
+A sequence of extremely large exact seeds does not, by itself, explain which polygonal orders admit solutions. WP09-024 instead proves two statements **uniformly across parameter classes**.
+
+First consider the recurring construction at offset $c=2$, with first entries $a=1$, $b=k-2$, first polygonal index $r=2$, and order $k=16m+4$. Any exact positive Type B third entry $d$ at indices $s,t$ necessarily satisfies
+
+$$
+s\equiv1\pmod2,\qquad d\equiv7\pmod8,\qquad t\equiv0\pmod4.
+$$
+
+The condition can be sharpened: the residue class of $t$ modulo eight is uniquely determined by the parity of $m$ and the square class of $s$ modulo sixteen,
+
+$$
+\frac{t}{4}\equiv m+\frac{s^2-1}{8}\pmod2.
+$$
+
+The fraction is integral because $s$ must be odd. Thus every even candidate $s$ is impossible for this anchor, and the permitted $t$ branch is known before any expensive Pell computation. These conditions are **necessary, not sufficient**: meeting them does not manufacture an exact global solution.
+
+The second result improves the complete fixed-first-pair decision from WP09-023. That method tests a finite Pell orbit modulo $2aR$, where $R=2(k-2)$. An exact integer-polynomial periodicity theorem shows that the smaller modulus $Rh$ is sufficient, with $h=a$ whenever $k$ is even or $a$ is odd, and $h=2a$ otherwise. Hence for the important anchor $a=1$, the modulus decreases from $2R$ to $R$, reducing the maximum possible number of residue states by a factor of four without losing any genuine solutions or false-negative protection.
+
+These two theorems give a principled way to reject impossible index branches and reduce the exact solvability search. The results are checked against previously admitted positive anchors at orders 84, 100 and 308, and against the known negative fixed-pair control at order 68. Their complete proofs and explicit limitations are recorded in the [WP09-024 dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ANCHOR_INDEX_LATTICE_024.md), [exact implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_anchor_index_lattice_024.py), and [independent arithmetic regressions](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_anchor_index_lattice_024.py).
+
+**What remains open:** whether every compatible order has an admissible first pair, whether its Pell norm equation possesses an integral lattice representative, and whether a family-wide construction or unbounded obstruction can be proved. A uniform necessary congruence theorem is not a universal local-to-global theorem, and internal research admission does not imply independent MATHCERT certification or literature priority.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
