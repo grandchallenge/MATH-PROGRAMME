@@ -882,6 +882,24 @@ The exact indices, entries, norm identities, and next-family checks are recorded
 
 Together with $(84,2)$, $(100,2)$ and $(132,2)$, this gives seven newly solved locally compatible pairs in the present tranche. These examples do **not** prove that every locally compatible pair has a global seed. They provide concrete evidence for a more focused next question: whether the constrained Pell-lattice construction can be characterized uniformly across the local-positive parameter classes.
 
+### WP09: three more exact Pell seeds at orders 308, 340 and 356
+
+Further exact global Type B seeds have been constructed at offsets $c=2$ for polygonal orders $k=308,340,356$, all within the previously classified all-place locally compatible range. As in the preceding tranche, take $a=1$, $b=k-2$ and the first polygonal index $r=2$. The first pair satisfies $ab+2=k=P_k(2)$, and $ab=k-2$ is nonsquare.
+
+The remaining two equations are solved by integral Pell norm and polygonal-index lattice conditions. The following data reproduce each seed from a norm-equation base point and a positive unit:
+
+| Order $k$ | Pell base point $(X_0,S_0)$ | Norm-one unit | Seed steps | Digits in third entry |
+|---:|---:|---:|---:|---:|
+| 308 | $(7521856,429996)$ | $35+2\sqrt{306}$ | 1 | 12 |
+| 340 | $(18592,1068)$ | $114243+6214\sqrt{338}$ | 8 | 89 |
+| 356 | $(30800,1676)$ | $258065+13716\sqrt{354}$ | 32 | 369 |
+
+For example, at order $308$ the exact triple is $(a,b,d)=(1,306,369944066839)$ with polygonal indices $(2,49173,860168)$. All shifted pair products match the corresponding positive polygonal values by integer arithmetic. For the other two cases, the exact large entries and indices are preserved in the source rather than rounded in the table.
+
+Every constructed first-pair product $k-2$ is nonsquare, so the already protected WP09-013 Pell amplification theorem establishes infinitely many further exact Type B triples with that first pair. These are **three additional constructive existence results**, not evidence that the local-to-global principle holds universally.
+
+The [WP09-022 producer dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_LOCAL_POSITIVE_SEED_BATCH_022.md), [exact Pell constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_local_positive_seed_batch_022.py), and [seven arithmetic regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_local_positive_seed_batch_022.py) record full values, index lattice checks, and replay. No independent MATHCERT certification or external mathematical originality claim is made.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
