@@ -942,6 +942,45 @@ These two theorems give a principled way to reject impossible index branches and
 
 **What remains open:** whether every compatible order has an admissible first pair, whether its Pell norm equation possesses an integral lattice representative, and whether a family-wide construction or unbounded obstruction can be proved. A uniform necessary congruence theorem is not a universal local-to-global theorem, and internal research admission does not imply independent MATHCERT certification or literature priority.
 
+### WP09: an exact primitive Pell criterion for the recurring anchor
+
+The repeated exact examples at orders congruent to four modulo sixteen suggest studying the common first-pair construction *as a whole*. WP09-025 produces a stronger equivalence than simply testing larger and larger candidate seeds.
+
+Set
+
+$
+k=16m+4,\qquad A=8m+1,\qquad H=8m(m+1)+1,
+$
+
+where $m$ is any nonnegative integer. Fix offset $c=2$ and first entries $(a,b)=(1,k-2)=(1,2A)$, with first polygonal index $r=2$.
+
+**Exact theorem.** A positive distinct Type B seed with this fixed first pair exists **if and only if** the following reduced generalized Pell equation has a positive integer solution:
+
+$
+x^2-2Ay^2=-2(2A-1)H,
+$
+
+subject to just one prescribed **odd-modulus** residue class:
+
+$
+2x\equiv2y\equiv1\pmod A.
+$
+
+The reduction is exact. The original fixed-pair Pell coordinates $X,S$ are necessarily multiples of four; setting $X=4x$, $S=4y$ divides the original norm by sixteen. The required polygonal indices are recovered by
+
+$
+t=\frac{x+(A-1)/2}{A},\qquad
+s=\frac{y+(A-1)/2}{A}.
+$
+
+Far enough forward along a residue-preserving norm-one Pell orbit, both indices are positive and the third entry $d=P_k(s)-2$ becomes positive and distinct from the first pair. Direct integer arithmetic then verifies all three original polygonal equations. Thus any positive solution of the reduced norm-and-residue system generates **infinitely many genuine exact Type B triples**.
+
+This theorem treats every value of $m$ by the *same mathematical condition*. The reduced Pell-orbit test needs at most $A^2$ modular states, compared with $(4A)^2$ in the previous WP09-024 anchor construction. It also uses a norm whose magnitude is sixteen times smaller. This is a rigorous search-space reduction, not an assertion of polynomial runtime.
+
+The [WP09-025 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_ODD_RAY_LATTICE_025.md), [exact normalized solver](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_odd_ray_lattice_025.py), and [independent arithmetic tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_odd_ray_lattice_025.py) document the necessary-and-sufficient theorem, complete finite decision procedure, positive controls and guarded non-completion.
+
+The remaining research question is **which values of $m$ satisfy the primitive norm-and-residue condition without running a separate Pell computation for each one**. WP09-025 does not prove that every locally compatible order has such a solution, nor that the recurring anchor covers every global solution using other first pairs. Generalized Pell finite-orbit theory is classical; this work specializes and normalizes its integral polygonal-index constraints. Independent mathematical certification and external novelty review remain separate.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
