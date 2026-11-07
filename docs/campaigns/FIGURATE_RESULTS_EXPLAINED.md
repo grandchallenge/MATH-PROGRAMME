@@ -906,9 +906,9 @@ The accumulating enormous exact seeds raise a more fundamental question: *can we
 
 Fix polygonal order $k$, offset $c$ and a verified first pair $(a,b)$ with $ab+c=P_k(r)$. As in the preceding theorem, set $R=2(k-2)$, $L=k-4$, and $\Delta=8(k-2)c+L^2$. An exact third entry must provide positive integer coordinates on
 
-$
+$$
 X^2-abS^2=a(a-b)\Delta,
-$
+$$
 
 along with congruences ensuring that $S=Rs-L$, $X=a(Rt-L)$, and $d=(P_k(s)-c)/a$ are all integral.
 
