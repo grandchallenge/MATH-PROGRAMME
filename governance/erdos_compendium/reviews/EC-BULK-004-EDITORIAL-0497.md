@@ -1,0 +1,9 @@
+# EC-BULK-004 #497 same-operator source and mathematical checks
+
+Observed 2026-10-15 UTC. Editorial actor fyremael. Not independent peer approval; not protected admission.
+
+Original Erdős 1961 Problem II.1, printed p.239, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=19, visually read. Sperner bounds antichain SIZE by middle-level M(n)=binom(n,floor n/2), not the number D(n) of antichains. Every subfamily of the middle layer is an antichain, so D(n)>=2^M(n). Erdős asks for the matching exponent asymptotic upper bound. D. J. Kleitman, *On Dedekind's problem: The number of monotone Boolean functions*, *Proc. AMS* 21 (1969) 677–682, DOI 10.1090/S0002-9939-1969-0241334-6, establishes log2 D(n)~M(n). The publisher paper URL returned HTTP 403; original author-article introduction stating the theorem available from ResearchGate, but full proof independently unread. Do not claim full independent proof validation.
+
+Every antichain F maps to an upward-closed family U(F); the minimal elements of U(F) recover F. That bijection exactly counts monotone Boolean functions, INCLUDING constant-zero from the empty antichain and constant-one from singleton family {emptyset}. Exhaustive two-definition tests for n=0..4 yield D(n)=2,3,6,20,168. A finite check never proves the 1969 asymptotic theorem. Source return https://github.com/grandchallenge/MATH-PROGRAMME/issues/1768#issuecomment-6186796215 . GCL pinned FC-GDM-85F86371 lacks 497.lean; newer unpinned statement has by sorry and external reported Lean provider. No GCL kernel replay or publication implied.
+
+Next research-fidelity obligation: obtain original Kleitman 1969 pages 677–682, reconstruct explicit upper error estimate and independently verify against the exact asymptotic normalization. Ordinary GCL editorial drafts need not trigger an unbounded reviewer queue, but no protected article admission is claimed.

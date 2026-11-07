@@ -1,0 +1,23 @@
+# EC-BULK-004 — Erdős #489 and #490 same-operator editorial QA
+
+Date: 2026-10-14/15. Editorial identity fyremael. These are same-operator checks of newly drafted mathematical exposition, **not independent-person mathematical certification** and not a substitute for protected batch admission.
+
+## #489 original-statement and special-case review
+
+The 1961 primary source, *Some unsolved problems*, Problem I.28, printed pp.236–237, was visually inspected at https://users.renyi.hu/~p_erdos/1961-22.pdf#page=17 . It gives a_k/k² -> infinity and seeks a finite limit of the normalized sum of squared NEXT gaps, with starts b_i<x. The modern sparse counting hypothesis A(x)=o(sqrt x) has the same asymptotic information when A is enumerated increasingly and infinitely; the additional finite-A periodic case is an extension of the *domain*, not a purported resolution of the open infinite case. A containing 1 produces no survivors and must not be passed to an infinite enumeration.
+
+The established squarefree case is primary-proved in Erdős (1951), *Some problems and results in elementary number theory*, *Publ. Math. Debrecen* 2, 103–109, printed pp.107–109, directly inspected at https://users.renyi.hu/~p_erdos/1951-13.pdf#page=5 . The proof uses fixed-length gap frequencies plus an independent squared-tail estimate (Lemmas 1,2, formulas 23–29). No extension of those estimates to arbitrary sparse divisors is claimed. The 1951 cutoff on the right-hand gap endpoint and 1961 start-cutoff formulations are equivalent only after controlling the terminal gap, which is available via the squarefree bounds. Do not claim their equality without this bridge.
+
+The finite-moduli result in article 0489.md is completely elementary: if A is finite, avoid residue zero modulo each a, take L=lcm(A), and compute the cyclic successor-gap squared-energy S. Then the gap-square sum differs from (x/L)S by O(S) uniformly in x, yielding limit S/L. The wraparound gap must be included; the final successor is allowed past the cutoff. Tests test_erdos_compendium_0489_squared_gaps.py check both and independently compare one-period energy to enumerated prefixes. No inference to the full OPEN problem or to Lean proof is authorized. The pinned 489.lean at FC-GDM-85F86371 contains sorry for both general and squarefree variants.
+
+## #490 primary-solution and hypotheses review
+
+The original Erdős 1961 Problem I.29, printed p.237, was visually inspected. The original sqrt(n) normalization and the maintained [1,N] formulation have the same N²/log N scale after N=sqrt(n); product injectivity is on ordered cross-pairs (a,b), not only on distinct elements within the component sets.
+
+An **independently accessible complete published proof** was visually read: P. Erdős and A. Szemerédi (1976), *On multiplicative representations of integers*, *J. Austral. Math. Soc. Ser. A* 21, 418–427, https://users.renyi.hu/~p_erdos/1976-24.pdf, Theorem 1 printed p.421 and proof pp.421–423. The paper explicitly says it offers a simpler proof of an original Szemerédi theorem; that original Szemerédi JNT 8 (1976), 264–270 is NOT independently inspected. The proved bound has an absolute C and all products a_i b_j distinct. It does not establish existence or a value for the optimal normalized extremal limit; the latter is a separate open question.
+
+Finite witness check: A=[1,floor(N/2)], B=primes in (N/2,N] has all products distinct, because p cannot divide a'<=N/2 unless p equals p'; the prime number theorem implies size product ~N²/(4 log N). This proves the order is sharp, not the best constant. Test test_erdos_compendium_0490_distinct_products.py checks noninjective 2*6=3*4, exact subset-pair enumeration N<=8, two independent collision-check algorithms and the large-prime witness N<=300. The pinned GCL FC provider lacks 490.lean; later unpinned FC main points to external Lean, with theorem body still sorry. No transitive GCL kernel replay is claimed.
+
+## QA and admission boundary
+
+Both article files have six required sections, source links, exact mathematical definitions, and UNACCEPTED_DRAFT status. Authenticated original issue-bound returns are https://github.com/grandchallenge/MATH-PROGRAMME/issues/1760#issuecomment-6181335495 and https://github.com/grandchallenge/MATH-PROGRAMME/issues/1761#issuecomment-6181385235 . No duplicate source returns were posted. These are ordinary unsampled editorial drafts; this receipt does **not** fill a mandatory independent review or claim protected V2 admission. The protected-main exact-head validation, full deployment and public browser readback remain separate.

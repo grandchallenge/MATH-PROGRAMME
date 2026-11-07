@@ -1,0 +1,23 @@
+# EC-BULK-004 — Erdős #513–514 source fidelity and exact mathematics review
+
+Observed 2026-10-15 UTC. Authenticated editorial operator fyremael. Same-operator source and fixture review only; neither independent theorem certification nor a protected editorial admission.
+
+## #513 — open maximum-term constant, 2026 source progress
+
+Original P. Erdős (1961), printed p249 IV.5, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=29, visually inspected. Ask B=sup over **transcendental entire** f of liminf_{r→∞} μ(r,f)/M(r,f), where μ=max individual Taylor term and M=max full modulus on circle. The printed 1961 omission of “transcendental” would allow f=z+1 giving ratio→1, so the modern hypothesis is essential. The pinned GDM 513.lean at FC-GDM-85F86371 Git blob b0b038f70efcf9a2686927960f64fbed955c670a was directly read, states transcendental/entire and upper/lower variants with by sorry. No GCL Lean proof.
+
+Classical Clunie–Hayman (1964), *J. Analyse Math.* 12, 143–186, proves 4/7<B≤2/pi−c, full original paper uninspected. He–Tang arXiv:2602.12217v1 February2026 original https://arxiv.org/pdf/2602.12217 pages1,4 visually inspected: generalized phase construction B>0.5850724 with exact Laurent scaling and rigorous interval step. Later documented Sothanaphan-prompted community improvement B>0.5850788 has no independent GCL numerical certificate. Maintained problem page revised April2026 reflects both; pinned catalogue Aug2025 does not. OPEN status retained.
+
+Exact source-derived coefficient lemma for K>1, |eps|=1, a_n=eps^{n(n−1)/2} K^{−n(n+1)/2} for all n in Z: a_n K^n=a_{n−1}eps^{n−1}, yielding k(Kz)=z k(eps z). For entire positive-index series, at r=K^m two adjacent terms n=m−1,m tie at K^{m(m−1)/2}; all others smaller. The finite Fraction fixture checks K=2, eps±1 and negative Laurent indices. Proof of B's numerical lower bound requires controlling Laurent tails, intermediate radii and interval maximum, none of which finite coefficients establish. Authenticated return https://github.com/grandchallenge/MATH-PROGRAMME/issues/1784#issuecomment-6204052023, BOUNDED_TASK_DESIGNED. Four focused tests pass.
+
+## #514 — open aggregate, three distinct questions and external formalization scope
+
+Original Erdős (1961), printed p249 IV.6, original https://users.renyi.hu/~p_erdos/1961-22.pdf#page=29 visually inspected: (1) path where |f(z)|/|z|^n→infinity for every n, reported Boas unpublished affirmative; (2) bound path length in terms of circle maximum M_f(r); (3) grow faster than a fixed comparison of M_f, e.g. M_f^eps. Adjacent Huber integrability is separate #515. Transcendental is necessary as degree-d polynomial fails for n>d.
+
+Hayman 1960 *On the growth of integral functions on asymptotic paths*, *J. Indian Math. Soc.* (N.S.) 24, 251–264, original publication identified, full Theorem2 and proof NOT fetched. Later 2026 discussion says Hayman power-type universal comparison negative and arbitrary nondecreasing comparison via an auxiliary-selection lemma. Yuta Oriike 2026 original revised TeX https://github.com/yuta0x89/ErdosProblems/blob/main/notes/514/erdos_514_third_question_forum_note.tex directly read via GitHub connector, observed repo HEAD c4b8a44732a5813ac3e6f1f9f43c32c1e06fceb9. The theorem is quantified FOR EVERY nondecreasing Phi(T)→infinity, EXISTS transcendental entire f, FOR EVERY path gamma to infinity, liminf |f(gamma)|/Phi(M_f(|gamma|))=0. Author explicitly corrects priority to Hayman and reports Lean 4 proof; no independent GCL Lean compilation or axiom audit. A negative answer under UNIVERSAL Phi interpretation does not prove failure of f-dependent comparisons, and does not settle path-length. Maintained aggregate OPEN, pinned GCL FC provider has no 514.lean.
+
+Elementary ray evidence: f(z)=exp(z^m), M_f(r)=exp(r^m), |f(re^{iθ})|=exp(r^m cos(mθ)), quotient to M_f^eps=exp((cos(mθ)−eps)r^m), radial length O(r), positive real ray beats every polynomial power. These are special examples, cannot solve ∀f. For eps≥1, |f(z)|≤M_f(|z|) trivially excludes ratio→infinity for all f, but hard question is eps in (0,1). Five focused exact rational sign tests pass. Authenticated original return https://github.com/grandchallenge/MATH-PROGRAMME/issues/1785#issuecomment-6204052300, STATUS_CONFLICT for 2026 partial result and quantifier ambiguity.
+
+## Admission boundary
+
+Nine new exact finite tests PASS. Both six-section articles UNACCEPTED_DRAFT. Historic unresolved proof-body access and exact newer external Lean certification flagged; same-operator QA does not equal independent mathematical acceptance. Strict MkDocs, cohort regression, browser MathJax and protected admission separate.
