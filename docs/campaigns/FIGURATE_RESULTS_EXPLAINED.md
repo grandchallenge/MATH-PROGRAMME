@@ -924,15 +924,15 @@ A sequence of extremely large exact seeds does not, by itself, explain which pol
 
 First consider the recurring construction at offset $c=2$, with first entries $a=1$, $b=k-2$, first polygonal index $r=2$, and order $k=16m+4$. Any exact positive Type B third entry $d$ at indices $s,t$ necessarily satisfies
 
-$
+$$
 s\equiv1\pmod2,\qquad d\equiv7\pmod8,\qquad t\equiv0\pmod4.
-$
+$$
 
 The condition can be sharpened: the residue class of $t$ modulo eight is uniquely determined by the parity of $m$ and the square class of $s$ modulo sixteen,
 
-$
+$$
 \frac{t}{4}\equiv m+\frac{s^2-1}{8}\pmod2.
-$
+$$
 
 The fraction is integral because $s$ must be odd. Thus every even candidate $s$ is impossible for this anchor, and the permitted $t$ branch is known before any expensive Pell computation. These conditions are **necessary, not sufficient**: meeting them does not manufacture an exact global solution.
 
