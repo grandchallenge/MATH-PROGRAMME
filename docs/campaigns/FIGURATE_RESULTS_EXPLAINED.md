@@ -1019,6 +1019,36 @@ The [WP09-027 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/ma
 
 **Remaining boundary:** This determines the correct class-theoretic obstruction but does **not yet compute** oriented ray class groups or classify all $m$. The next substantive work is a conductor-aware oriented ray-class calculator, tested against exact positive and negative anchors. No independent MATHCERT certification or external mathematical priority is asserted.
 
+### WP09: exact ideal enumeration and targeted oriented ray classification
+
+The preceding quadratic-order reformulation identifies the **oriented ray class** as the obstruction to an exact global anchor seed. WP09-028 now provides an exact finite way to classify **every candidate ideal of the required norm** for any specified polygonal order at which the complete computation fits the resource limit.
+
+Write $A=8m+1$, $D=2A$ and $N=-2(2A-1)(8m(m+1)+1)$. Work in the actual quadratic order $\mathcal O=\mathbb Z[\sqrt D]$, including when it has a nontrivial conductor. Every integral ideal of norm $|N|$ has a unique integer-lattice basis determined by positive integers $c,h$ and residue $j$:
+
+$
+I=\langle(ch,0),(cj,c)\rangle,\qquad
+c^2h=|N|,\quad 0\le j<h,\quad j^2\equiv D\pmod h.
+$
+
+The conditions are **necessary and sufficient** for an ideal, so the resulting enumeration cannot miss a norm ideal. Because $\gcd(A,N)=1$, every candidate ideal avoids the conductor and is invertible.
+
+For each ideal, the code uses a complete generalized-Pell norm-representative enumeration and the already-proved WP09-026 two-gcd test to decide whether its norm generators reach the required oriented coefficientwise ray. It distinguishes a ray match, an oriented principal ideal in the **wrong** ray, and an ideal with no norm-$N$ generator of the specified real-sign pattern. This is a genuine class-membership decision for the required norm ideals, without pretending that ordinary principality or locally compatible ideal norms suffice.
+
+The first complete classifications expose the distinction:
+
+| Order $k$ | Candidate norm ideals | Required ray matches |
+|---:|---:|---:|
+| 36 | 4 | 1 |
+| 84 | 10 | 6 |
+| 100 | 4 | 2 |
+| 228 | 27 | 6 |
+
+At order 36, for example, the four candidate ideals split among one target-ray match, one oriented principal ideal in the wrong ray, and two lacking a generator of the required negative norm and real signs. In the previously proved locally obstructed order-68 case, there are no norm ideals at all.
+
+The [WP09-028 HNF and ray proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_IDEAL_RAY_ENUMERATION_028.md), [exact integer implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_ideal_ray_enumeration_028.py), and [independent lattice and Pell tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_ideal_ray_enumeration_028.py) explain the complete finite decision and strict computation guards. A guard failure is **undecided**, never a mathematical NO.
+
+**What remains genuinely open:** This is a **targeted norm-ideal fibre calculator**, not an abstract presentation of the whole oriented ray class group or a uniform classification of all parameters $m$. Removing the generalized-Pell representative bottleneck through independent reduced-ideal arithmetic, especially in nonmaximal orders, is the next research obligation. Mathematical certification and external novelty claims remain separate.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
