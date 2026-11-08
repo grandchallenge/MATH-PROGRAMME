@@ -1032,7 +1032,7 @@ $$
 
 The conditions are **necessary and sufficient** for an ideal, so the resulting enumeration cannot miss a norm ideal. Because $\gcd(A,N)=1$, every candidate ideal avoids the conductor and is invertible.
 
-For each ideal, the code uses a complete generalized-Pell norm-representative enumeration and the already-proved WP09-026 two-gcd test to decide whether its norm generators reach the required oriented coefficientwise ray. It distinguishes a ray match, an oriented principal ideal in the **wrong** ray, and an ideal with no norm-$N$ generator of the specified real-sign pattern. This is a genuine class-membership decision for the required norm ideals, without pretending that ordinary principality or locally compatible ideal norms suffice.
+For each ideal, the code uses a complete generalized-Pell norm-representative enumeration and the already-proved WP09-026 two-gcd test to decide whether its norm generators reach the required oriented coefficientwise ray. It distinguishes a ray match, an oriented principal ideal in the **wrong** ray, and an ideal with no norm $N$ generator of the specified real-sign pattern. This is a genuine class-membership decision for the required norm ideals, without pretending that ordinary principality or locally compatible ideal norms suffice.
 
 The first complete classifications expose the distinction:
 
