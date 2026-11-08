@@ -1025,10 +1025,10 @@ The preceding quadratic-order reformulation identifies the **oriented ray class*
 
 Write $A=8m+1$, $D=2A$ and $N=-2(2A-1)(8m(m+1)+1)$. Work in the actual quadratic order $\mathcal O=\mathbb Z[\sqrt D]$, including when it has a nontrivial conductor. Every integral ideal of norm $|N|$ has a unique integer-lattice basis determined by positive integers $c,h$ and residue $j$:
 
-$
+$$
 I=\langle(ch,0),(cj,c)\rangle,\qquad
 c^2h=|N|,\quad 0\le j<h,\quad j^2\equiv D\pmod h.
-$
+$$
 
 The conditions are **necessary and sufficient** for an ideal, so the resulting enumeration cannot miss a norm ideal. Because $\gcd(A,N)=1$, every candidate ideal avoids the conductor and is invertible.
 
