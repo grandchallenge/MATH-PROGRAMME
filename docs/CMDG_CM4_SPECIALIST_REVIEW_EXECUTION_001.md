@@ -8,10 +8,10 @@ Request an **independent mathematical appraisal**, not an administrative approva
 
 The existing canonical materials already suffice for a first approach:
 
-- [External mathematical review packet](../../docs/CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md).
-- [Standalone mathematical note](../../docs/CMDG_CM4_MATHEMATICAL_NOTE.md).
-- [Reproducibility protocol](../../docs/CMDG_CM4_REPRODUCIBILITY.md).
-- [Exact terminal Lean wrapper](../../fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean).
+- [External mathematical review packet](CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md).
+- [Standalone mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md).
+- [Reproducibility protocol](CMDG_CM4_REPRODUCIBILITY.md).
+- [Exact terminal Lean wrapper](https://github.com/grandchallenge/MATH-PROGRAMME/blob/7a0f33588aa8d1add4d941c9b4681b6910644bf1/fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean).
 - [External review issue #1222](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222).
 
 Frozen replay checkout: `7a0f33588aa8d1add4d941c9b4681b6910644bf1`; terminal source blob `8ab0051746507099f7321460fe091e56a84b57bb`, proof module blob `d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7`; Lean `v4.33.0-rc1`, mathlib `79d0395a1825a6264ad5d269e35e60537518955e`. Reproducing the theorem is not a review disposition.
