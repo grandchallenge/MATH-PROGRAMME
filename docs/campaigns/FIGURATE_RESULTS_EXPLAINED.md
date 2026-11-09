@@ -1073,6 +1073,36 @@ The [WP09-029 mathematical dossier](https://github.com/grandchallenge/MATHSOLVE/
 
 **Unresolved:** The full ray class group for arbitrary $m$ still requires the narrow Picard group and the extension/group law. No uniform classification of all successful polygonal orders, independent MATHCERT certification, or external originality claim follows from this work.
 
+### WP09: narrow Picard groups for an infinite nonmaximal-order family
+
+WP09-029 computed the entire *ray kernel* but left the narrow Picard group—and hence most of the full ray class group—unknown. WP09-030 now supplies an exact computation of the **whole narrow Picard group** for the infinite square-conductor subfamily. Take a positive odd integer $f$, put $A=f^2=8m+1$, and consider the actual quadratic order $\mathcal O_f=\mathbb Z[f\sqrt2]$ with conductor $f$.
+
+The maximal order $\mathbb Z[\sqrt2]$ is norm-Euclidean and has trivial narrow class group. Its totally positive units are powers of $3+2\sqrt2$. The conductor exact sequence therefore gives a complete finite-group representation of the narrow Picard group:
+
+$
+\operatorname{Pic}^{+}(\mathcal O_f)
+\cong
+\frac{(\mathbb Z[\sqrt2]/f)^\times}
+{(\mathbb Z/f)^\times\cdot\operatorname{im}\langle3+2\sqrt2\rangle}.
+$
+
+Unlike a count of ideal classes alone, this quotient determines the actual abelian group law. The code enumerates its elements and computes invariant factors, checking the result separately against the classical conductor class-number formula and a direct modular Pell-unit recurrence. The computation retains the nonmaximal order rather than silently using the maximal-order ray.
+
+| Conductor $f$ | Narrow Picard group | Full oriented ray-group order |
+|---:|:---|---:|
+| 3 | $C_2$ | 6 |
+| 5 | $C_2$ | 20 |
+| 7 | $C_2$ | 84 |
+| 15 | $C_2\times C_2$ | 720 |
+| 17 | $C_4$ | 544 |
+| 21 | $C_2\times C_2$ | 1,512 |
+
+The final column combines these complete narrow Picard groups with WP09-029's complete ray kernels through the exact short sequence. It determines **full ray-group cardinalities**, not the group extension structure or invariant factors. The full oriented ray groups have been established only for the already proved base cases $f=1$ and $f=3$.
+
+The [WP09-030 proof dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_CONDUCTOR_PICARD_030.md), [exact narrow-Picard implementation](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_square_conductor_picard_030.py) and [independent tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_square_conductor_picard_030.py) record the full conductor proof, finite quotient arithmetic and strict resource guards.
+
+**Remaining mathematics:** determine the full ray-group extension law even in this square-conductor family, then extend narrow Picard computations to more general quadratic fields and classify which parameter values carry an ideal in the required oriented ray class. None of the displayed orders proves global existence for all locally compatible parameters, and independent MATHCERT certification or literature priority is not claimed.
+
 ## 7. What is established—and what is not
 
 **Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
