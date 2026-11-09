@@ -1079,12 +1079,12 @@ WP09-029 computed the entire *ray kernel* but left the narrow Picard group—and
 
 The maximal order $\mathbb Z[\sqrt2]$ is norm-Euclidean and has trivial narrow class group. Its totally positive units are powers of $3+2\sqrt2$. The conductor exact sequence therefore gives a complete finite-group representation of the narrow Picard group:
 
-$
-\operatorname{Pic}^{+}(\mathcal O_f)
+$$
+\mathrm{Pic}^{+}(\mathcal O_f)
 \cong
 \frac{(\mathbb Z[\sqrt2]/f)^\times}
-{(\mathbb Z/f)^\times\cdot\operatorname{im}\langle3+2\sqrt2\rangle}.
-$
+{(\mathbb Z/f)^\times\cdot\mathrm{im}\langle3+2\sqrt2\rangle}.
+$$
 
 Unlike a count of ideal classes alone, this quotient determines the actual abelian group law. The code enumerates its elements and computes invariant factors, checking the result separately against the classical conductor class-number formula and a direct modular Pell-unit recurrence. The computation retains the nonmaximal order rather than silently using the maximal-order ray.
 
