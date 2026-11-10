@@ -1169,34 +1169,34 @@ All eleven group orders agree with WP09-030. The [independent exact tests](https
 
 **WP09-032 moves beyond computing the obstruction:** for **every** positive integer $e$, set
 
-$
+$$
 f=3^e,\qquad A=f^2=9^e,\qquad k=2A+2,\qquad c=2.
-$
+$$
 
 There are **infinitely many distinct positive integers $d$** for which $(1,2A,d)$ is an exact Type B triple. Equivalently, all three required pairwise outputs are polygonal with **positive integer indices**:
 
-$
+$$
 P_k(2)=2A+2,\qquad
 P_k(s)=d+2,\qquad
 P_k(t)=2Ad+2.
-$
+$$
 
 This supplies a **uniform infinite family of polygonal orders** $k=20,164,1460,13124,\ldots$, not just one enormous search witness or a local-congruence prediction. The $k=20$ case was already known constructively; the new proof gives a single formula-and-lifting argument for **every** $e\ge1$. Literature originality has not been established.
 
 **Why the theorem succeeds:** In the maximal ring $\mathbb Z[\sqrt2]$, construct an explicit element of the desired negative norm:
 
-$
+$$
 \alpha=\frac{(1+f\sqrt2)(f^2+3+2\sqrt2)}2,\qquad
 N(\alpha)=-2(2f^2-1)\frac{f^4+6f^2+1}{8}.
-$
+$$
 
 The difficulty is that $\alpha$ need not belong to the **conductor order** $\mathbb Z[f\sqrt2]$ or satisfy its much stricter ray congruence. WP09-032 uses the positive norm-one unit $u=3+2\sqrt2$. Elementary $3$-adic lifting proves that, for $L=4\cdot3^{2e-1}$, the unit $u^L$ can adjust exactly the missing $\sqrt2$-coefficient modulo $f^3$. An explicitly computed exponent $E$ then gives
 
-$
+$$
 \beta=\alpha u^E\in\mathbb Z[f\sqrt2],\qquad
 \beta\equiv \frac{f^2+1}{2}(1+f\sqrt2)
 \pmod{f^2\mathbb Z[f\sqrt2]}.
-$
+$$
 
 Thus the **prescribed norm-ideal fibre contains an ideal in the actual oriented target ray class**, not merely an ideal in some class of a computed abstract group. The earlier exact Pell-to-polygonal equivalence then produces the desired triples; additional unit powers give infinitely many different $d$.
 
