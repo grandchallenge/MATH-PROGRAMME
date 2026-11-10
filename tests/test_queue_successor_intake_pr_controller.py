@@ -100,6 +100,48 @@ class QueueControllerTests(unittest.TestCase):
         self.assertEqual(p.base,BASE)
         self.assertEqual(controller.expected_paths(DISPATCH,COMMENT_ID,gh),(RAW,RECEIPT_PATH))
 
+    def test_rwp003_protected_queue_binding_is_exact(self):
+        binding = dict(
+            BIND,
+            dispatch_id="RWP-003-NSPHERE-IA-001",
+            campaign="GCL-RWP-003",
+            dispatch_path="contributions/GCL-RWP-003/dispatches/RWP-003-NSPHERE-IA-001.json",
+        )
+        profile = controller.profile_for_queue_binding(binding)
+        self.assertEqual(profile.campaign, "GCL-RWP-003")
+        self.assertEqual(profile.base, "contributions/GCL-RWP-003")
+        self.assertEqual(profile.branch_prefix, "intake/rwp-003-nsphere-ia-001")
+        with self.assertRaisesRegex(controller.ControllerError, "outside bounded pilot"):
+            controller.profile_for_queue_binding(
+                dict(binding, dispatch_id="RWP-003-OTHER-IA-001",
+                     dispatch_path="contributions/GCL-RWP-003/dispatches/RWP-003-OTHER-IA-001.json")
+            )
+        with self.assertRaisesRegex(controller.ControllerError, "outside bounded pilot"):
+            controller.profile_for_queue_binding(
+                dict(binding, dispatch_path="contributions/OTHER/dispatches/RWP-003-NSPHERE-IA-001.json")
+            )
+
+    def test_oai26_existing_protected_cohort_does_not_halt_discovery(self):
+        for n in range(6):
+            did = f"OAI26-WP0{n}-IA-001"
+            binding = dict(
+                BIND, dispatch_id=did, campaign="GCL-OAI-MATH-2026",
+                dispatch_path=f"contributions/OAI-MATH-2026/TRIAGE_001/dispatches/{did}.json",
+            )
+            profile = controller.profile_for_queue_binding(binding)
+            self.assertEqual(profile.campaign, "GCL-OAI-MATH-2026")
+            self.assertEqual(profile.branch_prefix, "intake/" + did.lower())
+        with self.assertRaisesRegex(controller.ControllerError, "outside registered cohort"):
+            controller.profile_for_queue_binding(dict(
+                BIND, dispatch_id="OAI26-WP06-IA-001",
+                campaign="GCL-OAI-MATH-2026",
+                dispatch_path="contributions/OAI-MATH-2026/TRIAGE_001/dispatches/OAI26-WP06-IA-001.json"
+            ))
+        with self.assertRaisesRegex(controller.ControllerError, "unregistered"):
+            controller.profile_for_queue_binding(dict(
+                BIND, campaign="UNREGISTERED-CAMPAIGN"
+            ))
+
     def test_missing_manifest_fails_closed(self):
         gh=GH({"record_type":"GCL_QUEUE_INTAKE_BINDINGS","schema_version":"1.0.0",
                "authority_effect":{"queue_operation_only":True,"mathematical":False,"certification":False},
