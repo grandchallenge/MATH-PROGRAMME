@@ -16,7 +16,7 @@ The results below follow five mathematical stages, not just a succession of calc
 2. **Exact global constructions:** for stated families, find actual positive integers and positive polygonal indices. Pell recurrences can turn one rigorously verified seed into infinitely many triples.
 3. **Ideal-class interpretation (WP09-027 and WP09-028):** in the recurring anchor $k=16m+4$ with offset $c=2$, identify the exact ideal-norm and **oriented ray-class** condition behind the constrained Pell equation; retain the nonmaximal order when its conductor is nontrivial.
 4. **Compute the obstruction (WP09-029 through WP09-031):** determine the ray kernel, complete narrow Picard group and, for the infinite odd square-conductor subfamily, **the entire oriented ray-class group**, including invariant factors.
-5. **Resolve realization (proved for specified infinite families; otherwise open):** show when an ideal of the prescribed norm **occupies the required ray class**. WP09-032 and WP09-033 now give explicit sufficient constructions for powers of three and for mixed 3/5/7 conductors, respectively. A general classification and genuine global-obstruction theorem remain open; a computed group alone does not produce an ideal of a prescribed norm.
+5. **Resolve realization (proved for specified infinite families; otherwise open):** show when an ideal of the prescribed norm **occupies the required ray class**. WP09-032/033 give sufficient families and WP09-034 provides an exact prime-general test **for one explicit Pell-unit orbit**. Its successes prove more infinite families, while its failures cannot rule out other norm ideals or a general Type B triple. A complete parameter classification and a genuine global-obstruction theorem remain open.
 
 For the anchor, the outstanding mathematical decision can be written schematically as:
 
@@ -28,7 +28,7 @@ $$
 
 with $n_m$, $\rho_m$ and the **actual** ray modulus defined by the [anchored ideal criterion](https://github.com/grandchallenge/MATHSOLVE/pull/1224) and [exact norm-ideal enumeration](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_IDEAL_RAY_ENUMERATION_028.md). The criterion already supports exact case-by-case decisions under its finite-enumeration conditions. **What remains is a uniform theorem** proving which parameter families satisfy it.
 
-**Next research priority:** generalize the proved target-ray realization beyond 3/5/7-supported conductors by analyzing the prime-adic unit-lift condition and its possible obstructions, or prove a genuine globally obstructed family that is nonetheless everywhere locally compatible. Extend to other conductors only when it advances a concrete existence/nonexistence theorem. The longer goal includes separate Types A and C theories.
+**Next research priority:** use the WP09-034 prime-general necessary-and-sufficient criterion for its **specified orbit**, then examine additional norm representatives where it fails. Distinguish orbit-level CRT incompatibility from an actual global obstruction. Generalize beyond square-conductor anchors and first pairs only when the mathematics supports it; Types A and C remain separate.
 
 **Status distinction:** the linked proof dossiers and executable checks are internally admitted mathematical work. They do not establish the universal Type B local-to-global principle, exhaustive literature originality, or independent MATHCERT certification. The [programme overview](FIGURATE_PILOT_001.md) and [active WP09 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) preserve the wider scope and outstanding obligations.
 
@@ -1259,17 +1259,49 @@ The [full WP09-033 proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/
 
 **Boundary:** this theorem does **not** cover arbitrary odd primes, all first pairs, non-square conductors, Types A/C, independent MATHCERT certification or literature originality. The successor question is how to treat other primes and interactions where the unit's principal-component lift has higher valuation or the common exponent introduces incompatible divisibility.
 
+### WP09: a prime-general target-ray criterion, with a precise negative boundary
+
+**WP09-034** removes the restriction to conductors supported on 3, 5 and 7 **for an explicitly defined Pell-unit orbit**. For any odd conductor $f>1$, take the same norm representative
+
+$$
+\alpha=\frac{(1+f\sqrt2)(f^2+3+2\sqrt2)}2,\qquad
+u=3+2\sqrt2.
+$$
+
+We seek an exponent $E\ge0$ such that $\beta=\alpha u^E$ satisfies the required ray congruence in the **actual conductor order**, not merely in the maximal order. The proof establishes the exact equivalence, writing $n=E+1$,
+
+$$
+\beta\equiv\rho\pmod{f^2\mathbb Z[f\sqrt2]}
+\quad\Longleftrightarrow\quad
+u^n\equiv 1+2f^2\sqrt2\pmod{f^3\mathbb Z[\sqrt2]}.
+$$
+
+At each odd prime $p$ dividing $f$, let $e=v_p(f)$ and let $t_p$ be the order of $u$ modulo $p$. Define $\lambda_p$ as the p-adic valuation of the radical coefficient of $u^{t_p}$. This number determines the unit's lifting behaviour. When $\lambda_p\le2e$, the ray hit is equivalent to **one exact congruence for the exponent $n$**:
+
+$$
+n\equiv r_p\pmod{M_p},\qquad
+M_p=t_p p^{3e-\lambda_p}.
+$$
+
+The residue $r_p$ is explicitly determined using a modular inverse; the complete formula and proof are in the [WP09-034 mathematical dossier](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PRIME_GENERAL_CRT_034.md). The local congruences are simultaneously achievable **exactly when generalized CRT says they are compatible**. Any positive result produces an actual correct-norm, oriented-ray ideal and infinitely many positive exact Type B triples at order $k=2f^2+2$, offset 2, with first entries $(1,2f^2)$.
+
+**What is new:** the method proves the result for every power of primes 11, 13, 17, 19, 23 and 31, among others, and for new compatible mixed conductors such as 33, 39, 65, 93 and 155. The unit has higher initial p-adic slope at primes 13 and 31; the refined exponent formula handles them.
+
+**What a failed test actually says:** at conductor $f=219=3\cdot73$, the 3-adic condition forces $n\equiv24\pmod{36}$ while the order of the unit modulo 73 forces $n\equiv0\pmod{36}$. No exponent in this **particular alpha-unit orbit** can satisfy both. This is a real obstruction **to that construction**, but **not** a proof that every norm ideal fails or that no Type B triple exists at the corresponding polygonal order. The broader norm-fibre/global-existence question remains open.
+
+The [exact decision source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_prime_general_crt_034.py) distinguishes constructive success, a narrowly scoped orbit obstruction and an unfinished resource-guarded computation. [Independent exact tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_prime_general_crt_034.py) replay the modular orders, cyclic ray-orbits, generalized CRT and actual positive polygonal indices. Mathematical originality and independent MATHCERT certification remain unasserted.
+
 ## 7. What is established—and what remains open
 
 **Proved nonexistence in specified families:** the congruence arguments rule out every Type B triple under their exact order/offset hypotheses, irrespective of the size of its entries. Independent finite residue-table checks support, but do not replace, the proofs.
 
 **Proved existence in specified families:** the documented exact integer seeds, Pell amplifications and other constructions give genuine Type B solutions, in several cases infinitely many, with index positivity and integrality checked. These results are stronger than mere local compatibility.
 
-**Proved structural reductions and uniform target-ray families:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 through WP09-031 compute the ray arithmetic for all odd square conductors; WP09-032 constructs target-class ideals for powers of three, and **WP09-033 extends the exact construction to all 3/5/7-supported conductors**, including mixed prime powers. These yield infinitely many positive Type B triples in each corresponding family.
+**Proved structural reductions, target-ray families and orbit criterion:** for the recurring $k=16m+4$, $c=2$ anchor, WP09-029 through WP09-031 determine square-conductor ray arithmetic; WP09-032/033 construct infinite prime-power and mixed families, while WP09-034 supplies a necessary-and-sufficient valuation/CRT criterion for **one explicit unit orbit** at every odd conductor. Passing it gives infinitely many positive Type B triples; failing it proves nothing about other norm ideals.
 
-**Not yet established:** a complete parameter-wide characterization of when those norm-ideal fibres contain the target ray **outside the proved 3/5/7-supported family**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
+**Not yet established:** a complete characterization of target-ray norm-ideal fibres **outside the proven families and the tested explicit orbit**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
 
-**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The ray-class machinery explains the **shape of a global obstruction**, while WP09-032 and WP09-033 constructively **overcome it across infinitely many prime-power and mixed-conductor parameter families**. The next payoff is a prime-general realization criterion or an actual global obstruction for another well-defined family. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
+**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The ray-class machinery explains the **shape of a global obstruction**; WP09-032 through WP09-034 construct many infinite prime-power and mixed-conductor existence families and expose a new **orbit-only CRT obstruction**. The next payoff is to examine the remaining norm-ideal orbits and establish a genuinely global theorem rather than mistake failure of one construction for nonexistence. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
 
 ## 8. Primary GCL research record
 
@@ -1303,6 +1335,8 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09-032 exact construction and independently verified regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_power3_global_seeds_032.py)
 - [WP09-033 uniform mixed 3/5/7 conductor target-ray realization and proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MIXED_CONDUCTOR_REALIZATION_033.md)
 - [WP09-033 exact construction and independent matrix/discriminant regressions](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_mixed_conductor_realization_033.py)
+- [WP09-034 prime-general valuation and CRT theorem, with orbit-only failure boundary](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_PRIME_GENERAL_CRT_034.md)
+- [WP09-034 independent modular-order, cyclic ray, CRT and positive-index tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_prime_general_crt_034.py)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
