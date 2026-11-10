@@ -1165,17 +1165,56 @@ All eleven group orders agree with WP09-030. The [independent exact tests](https
 
 **Limits:** This computes full oriented ray groups for the infinite *square-conductor* family $A=f^2$, not arbitrary squarefree part $a_0\ne1$. Knowing the abstract class group does not, by itself, show that a particular prescribed norm ideal occupies the target ray or that all locally admissible Type B parameters have actual positive-integer triples. Those problems, general-conductor Picard arithmetic, source priority, and independent MATHCERT mathematical certification remain separate.
 
+### WP09: an infinite family where the target ray is actually attained
+
+**WP09-032 moves beyond computing the obstruction:** for **every** positive integer $e$, set
+
+$$
+f=3^e,\qquad A=f^2=9^e,\qquad k=2A+2,\qquad c=2.
+$$
+
+There are **infinitely many distinct positive integers $d$** for which $(1,2A,d)$ is an exact Type B triple. Equivalently, all three required pairwise outputs are polygonal with **positive integer indices**:
+
+$$
+P_k(2)=2A+2,\qquad
+P_k(s)=d+2,\qquad
+P_k(t)=2Ad+2.
+$$
+
+This supplies a **uniform infinite family of polygonal orders** $k=20,164,1460,13124,\ldots$, not just one enormous search witness or a local-congruence prediction. The $k=20$ case was already known constructively; the new proof gives a single formula-and-lifting argument for **every** $e\ge1$. Literature originality has not been established.
+
+**Why the theorem succeeds:** In the maximal ring $\mathbb Z[\sqrt2]$, construct an explicit element of the desired negative norm:
+
+$$
+\alpha=\frac{(1+f\sqrt2)(f^2+3+2\sqrt2)}2,\qquad
+N(\alpha)=-2(2f^2-1)\frac{f^4+6f^2+1}{8}.
+$$
+
+The difficulty is that $\alpha$ need not belong to the **conductor order** $\mathbb Z[f\sqrt2]$ or satisfy its much stricter ray congruence. WP09-032 uses the positive norm-one unit $u=3+2\sqrt2$. Elementary 3-adic lifting proves that, for $L=4\cdot3^{2e-1}$, the unit $u^L$ can adjust exactly the missing coefficient of $\sqrt2$ modulo $f^3$. An explicitly computed exponent $E$ then gives
+
+$$
+\beta=\alpha u^E\in\mathbb Z[f\sqrt2],\qquad
+\beta\equiv \frac{f^2+1}{2}(1+f\sqrt2)
+\pmod{f^2\mathbb Z[f\sqrt2]}.
+$$
+
+Thus the **prescribed norm-ideal fibre contains an ideal in the actual oriented target ray class**, not merely an ideal in some class of a computed abstract group. The earlier exact Pell-to-polygonal equivalence then produces the desired triples; additional unit powers give infinitely many different $d$.
+
+The [complete theorem and proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_POWER3_GLOBAL_SEEDS_032.md), [exact constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_power3_global_seeds_032.py), and [independent matrix, norm, and polygonal-index regressions](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_power3_global_seeds_032.py) distinguish mathematical existence from the impracticality of printing very large witnesses. Exact positive triples were replayed at $e=1,2$; higher exponents were checked at the modular certificate level, while the proof covers **all** $e$.
+
+**Still open:** which other conductors realize the target ray; whether there are everywhere-locally-compatible but genuinely globally obstructed infinite parameter families; the unrestricted Type B problem; and separate Types A/C questions. A theorem for $f=3^e$ does **not** imply one for arbitrary odd $f$. Independent MATHCERT certification and external novelty/priority review are also outstanding.
+
 ## 7. What is established—and what remains open
 
 **Proved nonexistence in specified families:** the congruence arguments rule out every Type B triple under their exact order/offset hypotheses, irrespective of the size of its entries. Independent finite residue-table checks support, but do not replace, the proofs.
 
 **Proved existence in specified families:** the documented exact integer seeds, Pell amplifications and other constructions give genuine Type B solutions, in several cases infinitely many, with index positivity and integrality checked. These results are stronger than mere local compatibility.
 
-**Proved structural reductions:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 to WP09-031 determine increasing portions of the associated group arithmetic, culminating in the full abstract ray group for every positive odd square conductor $f$.
+**Proved structural reductions and first target-family realization:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 through WP09-031 compute the ray arithmetic for all odd square conductors; WP09-032 goes further by **exhibiting a target-class ideal for every $f=3^e$** and giving infinitely many exact positive Type B triples in each corresponding parameter family.
 
-**Not yet established:** a parameter-uniform theorem saying precisely when those norm-ideal fibres contain the required ray class; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
+**Not yet established:** a complete parameter-wide characterization of when those norm-ideal fibres contain the target ray **outside the proved power-of-three subfamily**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
 
-**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The present ray-class machinery explains the **shape of a global obstruction**; the next mathematical payoff is to show **when that obstruction is actually met or overcome** in uniform parameter families. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
+**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The ray-class machinery explains the **shape of a global obstruction**, and WP09-032 now shows **how to overcome it throughout one infinite parameter family**. The next payoff is to extend that theorem or prove a genuine global obstruction for another well-defined family. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
 
 ## 8. Primary GCL research record
 
@@ -1205,6 +1244,8 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 complete narrow Picard groups for odd square conductors (WP09-030)](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_CONDUCTOR_PICARD_030.md)
 - [WP09 full oriented ray groups and invariant factors for odd square conductors (WP09-031)](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FULL_RAY_GROUP_031.md)
 - [WP09-031 independent exact group tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_full_ray_square_conductor_031.py)
+- [WP09-032 uniform 3-power oriented-ray realization and infinitely many exact Type B triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_POWER3_GLOBAL_SEEDS_032.md)
+- [WP09-032 exact construction and independently verified regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_power3_global_seeds_032.py)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
