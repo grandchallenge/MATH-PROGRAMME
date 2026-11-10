@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_id": "CMDG-MANIFEST-CM4-ROOT-001",
+  "manifest_version": "0.1.0",
+  "intent": "CANDIDATE",
+  "root": {
+    "node_id": "CMDG:CM4:PROFINITE_SOLID_Z",
+    "root_kind": "THEOREM",
+    "programme_level": 5,
+    "replayable_certificate_equivalent": false
+  },
+  "ontology_version": "CMDG-CHARTER-001",
+  "schema_versions": {
+    "node": "1.0.0",
+    "edge": "1.0.0",
+    "manifest": "1.0.0"
+  },
+  "semantic_scope": {
+    "description": "Restricted CM4 module-level profiniteSolid integer theorem; immediate semantic dependencies remain unreviewed",
+    "included_node_ids": [
+      "CMDG:CM4:PROFINITE_SOLID_Z"
+    ],
+    "completeness_semantics": "MANIFEST_RELATIVE_ONLY",
+    "global_completeness_claim": false
+  },
+  "direct_semantic_edges": [],
+  "closure_policy": {
+    "policy_id": "CMDG-CM4-ROOT-DIRECT-REVIEW-001",
+    "policy_version": "0.1.0",
+    "traversable_semantic_relations": [
+      "REQUIRES_DEFINITION",
+      "USES_THEOREM"
+    ],
+    "direction": "DEPENDENT_TO_PREREQUISITE",
+    "boundary_behavior": "TERMINATE_AT_DECLARED_BOUNDARY",
+    "realization_crossing": "EXPLICIT_REALIZES_AS_ONLY",
+    "equivalence_handling": "PRESERVE_MULTIGRAPH",
+    "derived_closure_authoritative": false,
+    "quotient_requires_certified_generators": true
+  },
+  "boundaries": [],
+  "realizations": [],
+  "proof_environment": {
+    "environment_id": "cmdg-cm4-pinned-2026",
+    "prover": "Lean 4",
+    "toolchain": "leanprover/lean4:v4.33.0-rc1",
+    "pins": [
+      "lean:62eed1db4d67327ec8120be05f1a1b0847d74561",
+      "mathlib:79d0395a1825a6264ad5d269e35e60537518955e"
+    ],
+    "clean_replay_command": "bash ci/replay_cmdg_cm4_external.sh"
+  },
+  "axiom_footprint": {
+    "operational_substrate": [
+      "Lean 4 kernel"
+    ],
+    "imported_formal_declarations": [],
+    "root_proof": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "object_theory_assumptions": [],
+    "boundary_trust": []
+  },
+  "classicality_footprint": {
+    "operational_substrate": [],
+    "imported_formal_declarations": [],
+    "root_proof": [
+      "Classical.choice"
+    ],
+    "object_theory_assumptions": [],
+    "boundary_trust": []
+  },
+  "implementation_dependencies": [
+    {
+      "dependency_id": "cmdg-cm4-proof-fixture",
+      "locator": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean",
+      "pin": "terminal-cm4-receipt:8ab0051746507099f7321460fe091e56a84b57bb",
+      "purpose": "PROOF_REPLAY"
+    },
+    {
+      "dependency_id": "mathlib4",
+      "locator": "https://github.com/leanprover-community/mathlib4",
+      "pin": "79d0395a1825a6264ad5d269e35e60537518955e",
+      "purpose": "BUILD"
+    }
+  ],
+  "provenance_references": [
+    "CMDG_CHARTER.md",
+    "governance/cmdg_condensed_cm4_terminal_readback_001.json",
+    "governance/cmdg_condensed_cm4_p3_underived_closure_001.json"
+  ],
+  "replay": {
+    "route_id": "CMDG-CM4-EXTERNAL-REPLAY",
+    "clean_environment_required": true,
+    "exact_environment_ref": "cmdg-cm4-pinned-2026",
+    "command": "bash ci/replay_cmdg_cm4_external.sh",
+    "artifact_refs": [
+      "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean"
+    ]
+  },
+  "unresolved_obligations": [
+    {
+      "obligation_id": "CM4-GRAPH-DIRECT-SEMANTIC-EDGE-AUDIT",
+      "scope": "INSIDE_BOUNDARY",
+      "description": "Review actual immediate semantic dependency edges for root and expand represented nodes",
+      "status": "OPEN"
+    },
+    {
+      "obligation_id": "CM4-GRAPH-REALIZATION-BINDINGS",
+      "scope": "INSIDE_BOUNDARY",
+      "description": "Bind each semantic node to formal declarations with separately reviewed REALIZES_AS and pin evidence",
+      "status": "OPEN"
+    },
+    {
+      "obligation_id": "CM4-GRAPH-FOUR-LAYER-RECONCILIATION",
+      "scope": "INSIDE_BOUNDARY",
+      "description": "Extract exact proof and implementation graphs and provenance without layer conflation",
+      "status": "OPEN"
+    },
+    {
+      "obligation_id": "CM4-GRAPH-C06-CLEAN-REPLAY-ADVERSARIAL",
+      "scope": "INSIDE_BOUNDARY",
+      "description": "Retain all required C06 hostile and clean-pinned-replay evidence",
+      "status": "OPEN"
+    },
+    {
+      "obligation_id": "CM4-EXTERNAL-SPECIALIST-REVIEW",
+      "scope": "OUTSIDE_BOUNDARY",
+      "description": "Independent external mathematical review tracked by issue 1222",
+      "status": "OPEN"
+    }
+  ],
+  "quotient_projection": {
+    "enabled": false,
+    "generator_edge_ids": [],
+    "traceability_required": true
+  },
+  "claim_boundary": {
+    "schema_validation_only": true,
+    "graph_certified_conferred": false,
+    "global_completeness_claim": false
+  }
+}
