@@ -30,7 +30,7 @@ namespace CMDG.CondensedCM5R0
 private noncomputable instance : HasDerivedCategory Ambient :=
   HasDerivedCategory.standard Ambient
 
-private noncomputable instance : HasExt Ambient :=
+private noncomputable instance : HasExt.{u + 2} Ambient :=
   HasExt.standard Ambient
 
 /-- The explicit Ext¹ map pulled back along ordinary free-to-solid
