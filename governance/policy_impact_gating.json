@@ -13,7 +13,9 @@
     "implementation": "ci/policy_impact.py",
     "shard_registry": "governance/policy_shard_registry.json",
     "unknown_path_behavior": "FULL_FANOUT",
-    "classifier_change_behavior": "FULL_FANOUT"
+    "classifier_change_behavior": "FULL_FANOUT",
+    "component_manifest_directory": "governance/policy_components",
+    "component_manifest_schema": "schemas/policy_component_manifest.schema.json"
   },
   "formal_validation": {
     "registry": "governance/formal_validation_registry.json",
@@ -36,7 +38,17 @@
     }
   },
   "policy_dag": {
-    "shards": ["core", "fixtures", "cmdg", "oz", "administrative", "campaigns", "contracts", "docs", "repository-regression"],
+    "shards": [
+      "core",
+      "fixtures",
+      "cmdg",
+      "oz",
+      "administrative",
+      "campaigns",
+      "contracts",
+      "docs",
+      "repository-regression"
+    ],
     "final_aggregator": "validate-json",
     "full_policy_sentinel_cron": "43 8 * * *",
     "irrelevant_shard_behavior": "VERIFIED_NO_OP",
