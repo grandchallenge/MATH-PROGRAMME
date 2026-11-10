@@ -30,8 +30,8 @@ namespace CMDG.CondensedCM5R0
 private noncomputable instance : HasDerivedCategory Ambient :=
   HasDerivedCategory.standard Ambient
 
-private noncomputable instance : HasExt.{u + 2} Ambient :=
-  HasExt.standard Ambient
+private noncomputable instance : HasExt.{u + 2} Ambient.{u} :=
+  HasExt.standard Ambient.{u}
 
 /-- The explicit Ext¹ map pulled back along ordinary free-to-solid
 solidification for any profinite T, into the existing protected CM4 target.
