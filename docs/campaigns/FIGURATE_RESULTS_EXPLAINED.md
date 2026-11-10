@@ -1228,7 +1228,7 @@ $$
 These are the starting points for 3-adic, 5-adic and 7-adic lifting, respectively. Raising each base to successive powers of its prime increases the radical-coefficient valuation **by exactly one each time**. The common exponent
 
 $$
-L=\operatorname{lcm}_{p\mid f}\left(t_p p^{2v_p(f)-1}\right),
+L=\mathrm{lcm}_{p\mid f}\left(t_p p^{2v_p(f)-1}\right),
 \qquad (t_3,t_5,t_7)=(4,6,3),
 $$
 
