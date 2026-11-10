@@ -4,43 +4,119 @@
   "title": "Programme policy impact gating control",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "control_id", "status", "issue", "protected_required_contexts", "classifier", "formal_validation", "policy_dag", "authority_boundary", "claim_boundaries"],
+  "required": [
+    "schema_version",
+    "control_id",
+    "status",
+    "issue",
+    "protected_required_contexts",
+    "classifier",
+    "formal_validation",
+    "policy_dag",
+    "authority_boundary",
+    "claim_boundaries"
+  ],
   "properties": {
-    "schema_version": {"const": "2.0.0"},
-    "control_id": {"const": "MP-POLICY-IMPACT-GATING-001"},
-    "status": {"const": "ACTIVE_ON_PROTECTED_MERGE"},
-    "issue": {"const": 936},
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "control_id": {
+      "const": "MP-POLICY-IMPACT-GATING-001"
+    },
+    "status": {
+      "const": "ACTIVE_ON_PROTECTED_MERGE"
+    },
+    "issue": {
+      "const": 936
+    },
     "protected_required_contexts": {
-      "const": ["validate-json", "formal-validation / formal-validation", "policy / policy", "security / action-policy"]
+      "const": [
+        "validate-json",
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "security / action-policy"
+      ]
     },
     "classifier": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["implementation", "shard_registry", "unknown_path_behavior", "classifier_change_behavior"],
+      "required": [
+        "implementation",
+        "shard_registry",
+        "unknown_path_behavior",
+        "classifier_change_behavior",
+        "component_manifest_directory",
+        "component_manifest_schema"
+      ],
       "properties": {
-        "implementation": {"const": "ci/policy_impact.py"},
-        "shard_registry": {"const": "governance/policy_shard_registry.json"},
-        "unknown_path_behavior": {"const": "FULL_FANOUT"},
-        "classifier_change_behavior": {"const": "FULL_FANOUT"}
+        "implementation": {
+          "const": "ci/policy_impact.py"
+        },
+        "shard_registry": {
+          "const": "governance/policy_shard_registry.json"
+        },
+        "unknown_path_behavior": {
+          "const": "FULL_FANOUT"
+        },
+        "classifier_change_behavior": {
+          "const": "FULL_FANOUT"
+        },
+        "component_manifest_directory": {
+          "const": "governance/policy_components"
+        },
+        "component_manifest_schema": {
+          "const": "schemas/policy_component_manifest.schema.json"
+        }
       }
     },
     "formal_validation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["registry", "workflow", "required_context", "unaffected_lane_behavior", "unknown_formal_path_behavior", "control_plane_change_behavior", "protected_sentinel", "compatibility_aliases"],
+      "required": [
+        "registry",
+        "workflow",
+        "required_context",
+        "unaffected_lane_behavior",
+        "unknown_formal_path_behavior",
+        "control_plane_change_behavior",
+        "protected_sentinel",
+        "compatibility_aliases"
+      ],
       "properties": {
-        "registry": {"const": "governance/formal_validation_registry.json"},
-        "workflow": {"const": ".github/workflows/formal-validation.yml"},
-        "required_context": {"const": "formal-validation / formal-validation"},
-        "unaffected_lane_behavior": {"const": "ABSENT"},
-        "unknown_formal_path_behavior": {"const": "ERROR"},
-        "control_plane_change_behavior": {"const": "FULL_FORMAL_FANOUT"},
-        "protected_sentinel": {"type": "object"},
-        "compatibility_aliases": {"type": "object"}
+        "registry": {
+          "const": "governance/formal_validation_registry.json"
+        },
+        "workflow": {
+          "const": ".github/workflows/formal-validation.yml"
+        },
+        "required_context": {
+          "const": "formal-validation / formal-validation"
+        },
+        "unaffected_lane_behavior": {
+          "const": "ABSENT"
+        },
+        "unknown_formal_path_behavior": {
+          "const": "ERROR"
+        },
+        "control_plane_change_behavior": {
+          "const": "FULL_FORMAL_FANOUT"
+        },
+        "protected_sentinel": {
+          "type": "object"
+        },
+        "compatibility_aliases": {
+          "type": "object"
+        }
       }
     },
-    "policy_dag": {"type": "object"},
-    "authority_boundary": {"type": "object"},
-    "claim_boundaries": {"type": "object"}
+    "policy_dag": {
+      "type": "object"
+    },
+    "authority_boundary": {
+      "type": "object"
+    },
+    "claim_boundaries": {
+      "type": "object"
+    }
   }
 }
