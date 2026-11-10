@@ -1,20 +1,40 @@
 # FIGURATE: Diophantine Tuples of Figurate Numbers
 
-**Research status:** Active bounded pilot, launched 3 November 2026. **No new theorem or mathematical certification is claimed.**
+**Research status (10 November 2026):** Continuing research programme, launched as a bounded pilot on 3 November 2026. Multiple **bounded** mathematical results have since been internally proved, tested and admitted through protected repository processes, including uniform Type B obstruction and construction families and exact ray-class arithmetic. This is **not** an independent MATHCERT certification, a claim of literature priority or a complete classification.
 
 A square number can be drawn as a square array of dots; a triangular number as a triangle. Mathematicians call these *figurate numbers*. The FIGURATE pilot asks how difficult it is to assemble collections of positive integers when every pair obeys a figurate-number constraint.
 
-This page is an accessible companion to the [exact research specification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_PILOT_001.md). It distinguishes two different research questions that must not be confused.
+This page is an accessible companion to the [exact research specification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_PILOT_001.md). The programme distinguishes **three** mathematical types (A, B and C), which must not be conflated.
 
-## New: a guide to the unbounded obstruction results
+## The mathematical end-game
 
-[**Read the illustrated-by-examples mathematical explanation: *When three numbers cannot coexist*.**](FIGURATE_RESULTS_EXPLAINED.md)
+The ultimate question is **when figurate Diophantine tuples exist, when they cannot exist, and what arithmetic principle separates those outcomes**. For each clearly specified polygonal order, offset and tuple type, the aspiration is an exact existence criterion or a theorem covering an infinite parameter family. Complete unrestricted classification is a research ambition, **not** an announced theorem or guaranteed outcome.
 
-The updated FIGURATE research goes beyond counting small tuples. A complete modular argument rules out **all Type B triples**, without any numerical entry bound, for polygonal orders divisible by 8 and offsets congruent to 2, 3, or 6 modulo 8. A second family occurs for polygonal orders congruent to 12 modulo 16 and offsets congruent to 2 modulo 4. The linked guide develops the result from parity and remainders, gives a worked octagonal example, and explains how the independently verified finite residue tables yield unbounded conclusions. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
+The active [WP09 research track](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) concentrates on **Type B**: distinct positive entries whose pairwise products, after adding a fixed offset, are polygonal numbers. The [mathematical results guide](FIGURATE_RESULTS_EXPLAINED.md) records both rigorous nonexistence conditions and genuine infinite construction families. Its latest research advances concern an oriented ray-class obstruction in a recurring Pell-equation anchor family.
+
+### From modular tests to an existence theorem
+
+1. **Local arithmetic:** prove which congruence restrictions are necessary, using binary and odd-prime-power conditions. Local compatibility alone is not a solution.
+2. **Global construction:** transform the remaining integer conditions into constrained Pell equations; prove genuine positive-index solutions when possible.
+3. **Ideal-class arithmetic:** for the recurring anchor $k=16m+4$ and offset $c=2$, interpret the global condition using ideals of the **actual quadratic order** and their oriented ray classes.
+4. **Decisive realization test:** determine whether an ideal of the required norm *actually represents the required ray class*. Calculating the ray-class group does not establish that such an ideal exists.
+5. **Uniform conclusion:** use a proved target-class realization or obstruction to obtain an infinite parameter-family theorem for positive-integer triples or their nonexistence.
+
+**Progress through WP09-031:** the programme has complete local criteria in stated regimes, exact Type B families, ideal-norm enumeration and targeted ray membership tests, and full oriented ray-group structures for the **odd square-conductor subfamily**. These are meaningful intermediate results, not a general resolution of Step 4 or Step 5.
+
+**Next proposed theorem target:** resolve target-class realization uniformly for a nontrivial family, beginning where the square-conductor ray groups are already understood. Seek either a proved infinite family of actual triples or a proved infinite family with a genuine global obstruction. Extend the algebra to general conductors when it advances that question, rather than computing groups without a stated existence application.
+
+The longer programme must separately address **Type A** (figurate entries with square pairwise outputs) and **Type C** (both entry and output restrictions). The active Type B results do not automatically imply results for either.
+
+## Results and mathematical explanation
+
+[**Read the mathematical guide: *Figurate tuples—existence, obstruction and global arithmetic*.**](FIGURATE_RESULTS_EXPLAINED.md)
+
+The results guide begins with elementary, uniform nonexistence theorems from congruences (including octagonal examples), then covers odd-prime-power local tests, exact integer construction families, Pell reductions and the later ideal/ray-class analysis through WP09-031. It separates each verified theorem from the stronger, still-open global existence and classification claims. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
 
 ## Research completion and remaining obligations
 
-The [bounded-pilot closure reconciliation](FIGURATE_CLOSURE_RECONCILIATION.md) distinguishes completed exact-arithmetic search, protected Type B research, public pedagogy, the remaining original-source access problem, and the separate mathematical-certification route. The original 2025 article is not yet source-audited in full; no external novelty or certification is claimed. The pilot tracker remains open for that genuine documentary dependency.
+The [bounded-pilot closure reconciliation](FIGURATE_CLOSURE_RECONCILIATION.md) records the initial work-package acceptances and the distinct original-source fidelity gap. The [continuing WP09 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) records later protected research and public admissions. **Completion of WP09-031 is not closure of the Type B local-to-global problem or of FIGURATE.** The original 2025 article is not yet source-audited in full, and independent mathematical certification and literature novelty remain unresolved.
 
 ## What is a figurate number?
 
@@ -91,28 +111,34 @@ python3 -m research.figurate_census --kind B --k 3 --offset 1 --limit 100 --size
 
 The limit is the maximum **entry value**, not the maximum figurate index. Exhaustive output within declared bounds never establishes global nonexistence.
 
-## Four work packages
+## Original four pilot work packages
+
+The list below describes the **initial November 3 pilot architecture**, not a count of current work packages. Later work through WP09 is tracked separately.
 
 1. **WP01: sources and novelty.** Pin original literature, separate definitions, confirm open conjectures and record prior constructions and exclusions.
 2. **WP02: computational census.** Run reproducible, independently checked surveys over polygonal orders and offsets; record costs, exact bounds and witness hashes.
 3. **WP03: arithmetic obstructions.** Develop modular residue exclusions and simultaneous Pell-type reductions with precisely proved hypotheses.
 4. **WP04: theorem attempt.** Seek a genuinely new parameter-uniform obstruction, a new infinite construction or a rigorous algorithmic result. Route substantive claims through the appropriate mathematical review and certification process.
 
-The pilot continues only if its evidence supports an original theorem, a rigorously improved algorithm, or a credible proof programme. All other findings retain their narrower computational or conjectural status.
+The bounded pilot has produced source-linked proof dossiers and exact computations; the larger programme continues because the general existence/classification objective remains open. Internal mathematical results are not by themselves a novelty determination or external certification.
 
 ## Documentary library
 
-The documentary accompaniment is now organized as three separate, source-linked records:
+The core documentary records serve distinct purposes:
 
 - [Source-critical bibliography and novelty ledger](FIGURATE_SOURCES.md): precise distinctions between published theorems, conjectures, offset-specific restrictions and new research questions.
 - [Reproducible bounded census](FIGURATE_CENSUS.md): full parameter domain, the 270-row archive, exact replay and finite-search limitations.
-- [Research preprint, version 0.1](FIGURATE_PREPRINT.md): arXiv-style methods manuscript, elementary identities, computational table and research agenda. It is a research draft, **not** a submitted article or a proved new theorem.
+- [Research preprint, version 0.1](FIGURATE_PREPRINT.md): an **earlier** arXiv-style methods draft, not an automatically updated account of later WP09 results or a submitted article.
+- [Current mathematical results and synthesis](FIGURATE_RESULTS_EXPLAINED.md): what is proved, how the evidence relates and which global realization theorem is still missing.
+- [Bounded-pilot closure reconciliation](FIGURATE_CLOSURE_RECONCILIATION.md): accepted early deliverables versus outstanding primary-source and certification obligations.
 
 ## Evidence, governance and continuity
 
 - [Canonical FIGURATE pilot charter, MATH-PROGRAMME #3093](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3093)
+- [Continuing Type B research and protected WP09 evidence, #3145](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145)
+- [Latest full square-conductor oriented ray-group dossier, WP09-031](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FULL_RAY_GROUP_031.md)
 - [MATHSOLVE source specification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_PILOT_001.md)
 - [Protected implementation and checks, PR #1175](https://github.com/grandchallenge/MATHSOLVE/pull/1175)
 - [Research source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_census.py) and [regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_census.py)
 
-**Continuity boundary:** The charter and technical baseline are admitted. The primary-source documentary catalogue, bounded parameter survey and preliminary manuscript have source editions; full-proof semantic review, larger search frontier, theorem attempt and formal certification remain open. Publication of this explanatory page does not promote those research obligations to completion.
+**Continuity boundary:** Initial charter and computational baselines, multiple bounded Type B mathematical dossiers and public explanations are protected-admitted. The WP09 target-class realization and wider parameter-classification questions remain active; the primary-source fidelity gap and independent MATHCERT certification remain separate. This overview reports programme direction and admitted evidence; it does not assert a universal existence theorem, a public priority determination or live-site deployment verification.
