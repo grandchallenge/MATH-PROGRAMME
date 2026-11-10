@@ -78,10 +78,14 @@ theorem comparisonAtShift_finite_bijective
       (FintypeCat.toProfinite.obj X)) :=
     solidification_isIso_finite X
   haveI : IsIso (solidificationAtZero (FintypeCat.toProfinite.obj X)) := by
-    dsimp [solidificationAtZero]
-    infer_instance
+    change IsIso ((DerivedCategory.singleFunctor Ambient 0).map
+      ((Condensed.profiniteSolidification Coeff).app (FintypeCat.toProfinite.obj X)))
+    exact Functor.map_isIso (DerivedCategory.singleFunctor Ambient 0)
+      ((Condensed.profiniteSolidification Coeff).app (FintypeCat.toProfinite.obj X))
   haveI : IsIso ((shiftFunctor (DerivedCategory Ambient) n).map
-      (solidificationAtZero (FintypeCat.toProfinite.obj X))) := inferInstance
+      (solidificationAtZero (FintypeCat.toProfinite.obj X))) :=
+    Functor.map_isIso (shiftFunctor (DerivedCategory Ambient) n)
+      (solidificationAtZero (FintypeCat.toProfinite.obj X))
   change Function.Bijective
     (fun g => (shiftFunctor (DerivedCategory Ambient) n).map
       (solidificationAtZero (FintypeCat.toProfinite.obj X)) ≫ g)
