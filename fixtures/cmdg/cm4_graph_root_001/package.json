@@ -1,0 +1,56 @@
+{
+  "package_schema_version": "1.0.0",
+  "package_id": "CMDG-PACKAGE-CM4-ROOT-001-CANDIDATE",
+  "manifest_path": "fixtures/cmdg/cm4_graph_root_001/manifest.json",
+  "manifest_git_blob_sha1": "30135517cef69dff3e571da4c9fce159192903e8",
+  "required_schema_versions": {
+    "node": "1.0.0",
+    "edge": "1.0.0",
+    "manifest": "1.0.0",
+    "package": "1.0.0",
+    "report": "1.0.0"
+  },
+  "nodes": [
+    {
+      "schema_version": "1.0.0",
+      "node_id": "CMDG:CM4:PROFINITE_SOLID_Z",
+      "node_type": "Theorem",
+      "engagement_mode": "RECONSTRUCTED",
+      "canonical_label": "Profinite solid integer-coefficient module-level solidity",
+      "provenance_refs": [
+        "governance/cmdg_condensed_cm4_terminal_readback_001.json",
+        "CMDG-CONDENSED-CM4-001"
+      ]
+    }
+  ],
+  "additional_edges": [],
+  "retained_evidence": {
+    "proof_environment": {
+      "environment_id": "cmdg-cm4-pinned-2026",
+      "prover": "Lean 4",
+      "toolchain": "leanprover/lean4:v4.33.0-rc1",
+      "pins": [
+        "lean:62eed1db4d67327ec8120be05f1a1b0847d74561",
+        "mathlib:79d0395a1825a6264ad5d269e35e60537518955e"
+      ],
+      "clean_replay_command": "bash ci/replay_cmdg_cm4_external.sh"
+    },
+    "replay": {
+      "route_id": "CMDG-CM4-EXTERNAL-REPLAY",
+      "exact_environment_ref": "cmdg-cm4-pinned-2026",
+      "command": "bash ci/replay_cmdg_cm4_external.sh",
+      "artifact_refs": [
+        "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean"
+      ]
+    },
+    "implementation_pins": {
+      "cmdg-cm4-proof-fixture": "terminal-cm4-receipt:8ab0051746507099f7321460fe091e56a84b57bb",
+      "mathlib4": "79d0395a1825a6264ad5d269e35e60537518955e"
+    }
+  },
+  "requested_terminal_state": "VALIDATOR_ACCEPTED_PRECONDITIONS",
+  "claim_boundary": {
+    "graph_certified_conferred": false,
+    "global_completeness_claim": false
+  }
+}
