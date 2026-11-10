@@ -10,7 +10,7 @@ This page is an accessible companion to the [exact research specification](https
 
 The ultimate question is **when figurate Diophantine tuples exist, when they cannot exist, and what arithmetic principle separates those outcomes**. For each clearly specified polygonal order, offset and tuple type, the aspiration is an exact existence criterion or a theorem covering an infinite parameter family. Complete unrestricted classification is a research ambition, **not** an announced theorem or guaranteed outcome.
 
-The active [WP09 research track](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) concentrates on **Type B**: distinct positive entries whose pairwise products, after adding a fixed offset, are polygonal numbers. The [mathematical results guide](FIGURATE_RESULTS_EXPLAINED.md) records both rigorous nonexistence conditions and genuine infinite construction families. Its latest research advances use conductor-sensitive oriented ray classes to prove a first **uniform infinite target-class realization family** inside the recurring Pell-equation anchor.
+The active [WP09 research track](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) concentrates on **Type B**: distinct positive entries whose pairwise products, after adding a fixed offset, are polygonal numbers. The [mathematical results guide](FIGURATE_RESULTS_EXPLAINED.md) records both rigorous nonexistence conditions and genuine infinite construction families. The latest advances use conductor-sensitive oriented ray classes to prove **uniform target-class realization** for the recurring Pell-equation anchor, first for powers of three and now for every odd conductor built from the primes 3, 5 and 7.
 
 ### From modular tests to an existence theorem
 
@@ -20,9 +20,9 @@ The active [WP09 research track](https://github.com/grandchallenge/MATH-PROGRAMM
 4. **Decisive realization test:** determine whether an ideal of the required norm *actually represents the required ray class*. Calculating the ray-class group does not establish that such an ideal exists.
 5. **Uniform conclusion:** use a proved target-class realization or obstruction to obtain an infinite parameter-family theorem for positive-integer triples or their nonexistence.
 
-**Progress through WP09-032:** the programme has complete local criteria in stated regimes, exact Type B families, ideal-norm enumeration and full oriented ray-group structures for **odd square conductors** (WP09-031). **WP09-032 now realizes the required oriented ray class for every conductor $f=3^e$, $e\ge1$**, proving infinitely many genuine positive Type B triples for each order $k=2\cdot9^e+2$ at offset 2 and first pair $(1,2\cdot9^e)$. This completes Steps 4–5 for that **specific infinite parameter family**, not for arbitrary square conductors or Type B parameters.
+**Progress through WP09-033:** exact Type B constructions and local criteria coexist with full oriented ray-group structures for every odd square conductor (WP09-031). WP09-032 proved target-class realization for every power-of-three conductor. **WP09-033 extends that existence theorem to all $f=3^a5^b7^c>1$ with nonnegative exponents**, including mixed conductors. For each such $f$, the order is $k=2f^2+2$, the offset is 2, and the fixed pair $(1,2f^2)$ has infinitely many distinct positive Type B extensions. Thus Steps 4–5 are now proved for a substantially broader **specified infinite family**, not for every odd conductor or all possible Type B first pairs.
 
-**Next proposed theorem target:** extend the proven power-of-three construction to other prime-power or mixed conductors **or** exhibit a genuinely globally obstructed, everywhere-locally-compatible infinite family. General-conductor calculations should serve a specific existence/nonexistence theorem, rather than enlarge class-group tables without an application.
+**Next proposed theorem target:** derive and test a criterion for additional odd primes, including those where the required prime-adic unit lift has higher valuation or common exponents interfere; alternatively, establish a genuine everywhere-locally-compatible but globally obstructed family. Extend beyond square-conductor orders when supported by a concrete existence or nonexistence theorem.
 
 The longer programme must separately address **Type A** (figurate entries with square pairwise outputs) and **Type C** (both entry and output restrictions). The active Type B results do not automatically imply results for either.
 
@@ -30,11 +30,11 @@ The longer programme must separately address **Type A** (figurate entries with s
 
 [**Read the mathematical guide: *Figurate tuples—existence, obstruction and global arithmetic*.**](FIGURATE_RESULTS_EXPLAINED.md)
 
-The results guide begins with elementary, uniform nonexistence theorems from congruences (including octagonal examples), then covers odd-prime-power local tests, exact integer construction families, Pell reductions and the later ideal/ray-class analysis and uniform power-of-three realization theorem through WP09-032. It separates each verified theorem from the stronger, still-open global existence and classification claims. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
+The results guide begins with elementary, uniform nonexistence theorems from congruences (including octagonal examples), then covers odd-prime-power local tests, exact integer construction families, Pell reductions and the later ideal/ray-class analysis, power-of-three family and uniform mixed-conductor existence theorem through WP09-033. It separates each verified theorem from the stronger, still-open global existence and classification claims. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
 
 ## Research completion and remaining obligations
 
-The [bounded-pilot closure reconciliation](FIGURATE_CLOSURE_RECONCILIATION.md) records the initial work-package acceptances and the distinct original-source fidelity gap. The [continuing WP09 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) records later protected research and public admissions. **Completion of WP09-032 proves one infinite global-existence family but does not close the Type B local-to-global problem or FIGURATE.** The original 2025 article is not yet source-audited in full, and independent mathematical certification and literature novelty remain unresolved.
+The [bounded-pilot closure reconciliation](FIGURATE_CLOSURE_RECONCILIATION.md) records the initial work-package acceptances and the distinct original-source fidelity gap. The [continuing WP09 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) records later protected research and public admissions. **WP09-032 and WP09-033 prove explicit infinite global-existence families but do not close the Type B local-to-global problem or FIGURATE.** The original 2025 article is not yet source-audited in full, and independent mathematical certification and literature novelty remain unresolved.
 
 ## What is a figurate number?
 
@@ -138,6 +138,7 @@ The core documentary records serve distinct purposes:
 - [Continuing Type B research and protected WP09 evidence, #3145](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145)
 - [Latest full square-conductor oriented ray-group dossier, WP09-031](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FULL_RAY_GROUP_031.md)
 - [Uniform power-of-three target-ray realization and Type B infinite-family proof, WP09-032](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_POWER3_GLOBAL_SEEDS_032.md)
+- [WP09-033: uniform mixed 3/5/7 conductor realization and exact Type B triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MIXED_CONDUCTOR_REALIZATION_033.md)
 - [MATHSOLVE source specification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_PILOT_001.md)
 - [Protected implementation and checks, PR #1175](https://github.com/grandchallenge/MATHSOLVE/pull/1175)
 - [Research source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_census.py) and [regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_census.py)
