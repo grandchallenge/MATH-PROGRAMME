@@ -1,0 +1,95 @@
+{
+  "record_type": "CMDG_CM4_OBSERVED_LAYER_SEED_001",
+  "schema_version": "1.0.0",
+  "status": "EVIDENCE_SEED_NOT_GRAPH_CERTIFIED",
+  "source_protected_main_at_creation": "53c32e5ad7f48469102d1ce640d796916f59af00",
+  "material_pins": {
+    "terminal_wrapper": {
+      "path": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4Blocker.lean",
+      "git_blob_sha1": "8ab0051746507099f7321460fe091e56a84b57bb"
+    },
+    "point_functional_proof": {
+      "path": "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3GPointFunctional.lean",
+      "git_blob_sha1": "d3ef22a2ad2d9c0af6982773d0a24b715e61f5a7"
+    },
+    "pinned_mathlib_solid": {
+      "path": "Mathlib/Condensed/Solid.lean",
+      "git_blob_sha1": "f5214433f91ee87fc8fbe7e2746e0bd227faed2a"
+    },
+    "mathlib_commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "lean_commit": "62eed1db4d67327ec8120be05f1a1b0847d74561"
+  },
+  "root": {
+    "declaration": "CMDG.CondensedCM4.cm4Target_via_pointFunctional",
+    "type": "CMDG.CondensedCM4.CM4Target",
+    "semantic_limit": "UNDERIVED_MODULE_LEVEL_INTEGER_COEFFICIENTS_ONLY"
+  },
+  "G_proof": {
+    "observation_status": "SOURCE_INSPECTED_NOT_FRESH_COMPILER_REPLAY",
+    "direct_declaration_references_in_root_proof": [
+      {
+        "source": "CMDG.CondensedCM4.cm4Target_via_pointFunctional",
+        "target": "CMDG.CondensedCM4P3M.KernelPointBridge.profiniteSolid_isSolid_via_pointFunctional",
+        "relation": "PROOF_USES_DECLARATION",
+        "authority_state": "OBSERVED_FROM_TERMINAL_WRAPPER"
+      }
+    ],
+    "recorded_axioms_from_protected_receipt": [
+      "propext", "Classical.choice", "Quot.sound"
+    ],
+    "recorded_sorry_ax": false,
+    "unresolved": [
+      "Transitive declaration-level proof graph must be extracted from exact compiled environment",
+      "Recorded axioms must be independently replayed before graph certification"
+    ]
+  },
+  "G_implementation": {
+    "observation_status": "SOURCE_INSPECTED",
+    "direct_imports_in_root_file": [
+      "Mathlib.Condensed.Solid",
+      "Mathlib.Topology.Category.Profinite.Nobeling.Induction",
+      "Mathlib.Algebra.Ring.ULift",
+      "CMDGCondensedCM4P3GPointFunctional"
+    ],
+    "import_graph_is_not_semantic_graph": true
+  },
+  "G_provenance": {
+    "records": [
+      "governance/cmdg_condensed_cm4_terminal_readback_001.json",
+      "docs/CMDG_CM4_MATHEMATICAL_NOTE.md",
+      "docs/CMDG_CM4_REPRODUCIBILITY.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1222"
+    ],
+    "external_specialist_review_state": "OPEN_NOT_RECEIVED"
+  },
+  "G_semantic": {
+    "admitted_direct_edges": [],
+    "candidate_only_not_reviewed_direct": [
+      {
+        "source": "CMDG:CM4:PROFINITE_SOLID_Z",
+        "target": "CondensedMod.IsSolid",
+        "proposed_relation": "REQUIRES_DEFINITION",
+        "review_state": "AWAITING_SEMANTIC_CRITIC"
+      },
+      {
+        "source": "CMDG:CM4:PROFINITE_SOLID_Z",
+        "target": "Condensed.profiniteSolid",
+        "proposed_relation": "REQUIRES_DEFINITION",
+        "review_state": "AWAITING_SEMANTIC_CRITIC"
+      },
+      {
+        "source": "CMDG:CM4:PROFINITE_SOLID_Z",
+        "target": "CMDG.CondensedCM4.ZLift",
+        "proposed_relation": "REQUIRES_DEFINITION",
+        "review_state": "AWAITING_SEMANTIC_CRITIC"
+      }
+    ]
+  },
+  "claim_boundary": {
+    "graph_certified": false,
+    "semantic_edges_reviewed": false,
+    "external_mathematical_review_conferred": false,
+    "derived_or_complex_statement": false,
+    "global_dependency_completeness": false
+  }
+}
