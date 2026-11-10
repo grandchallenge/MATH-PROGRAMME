@@ -4,6 +4,11 @@
 
 Some projects aim to prove long-standing conjectures. Others try to understand exactly why an attempted proof is incomplete, or to find out what a mathematical model can reliably predict. A careful negative result or a precisely identified gap can be useful progress even when the central problem remains unsolved.
 
+## Categorical statistical mechanics — CSM-001
+
+The newly approved [CSM-001 research programme](campaigns/CSM_001.md) asks how statistical mechanics can be represented through compositional mathematics, and which equilibrium properties survive coarse-graining and thermodynamic limits. The first finite weighted-kernel examples and an exact Ising-chain check are established mathematics used to calibrate the framework, **not** a new theorem. A new Gibbsian preservation or obstruction theorem remains an open research target. [Follow the authoritative CSM tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3136).
+
+
 Research changes quickly. The links below lead to the original work and its latest recorded status. A completed work package is not necessarily a solved mathematical problem.
 
 <a id="bsd-001--literal-p2-inverse-limit-replay"></a>
