@@ -32,7 +32,7 @@ abbrev Ambient := CondensedMod.{u} Coeff
 
 #synth CategoryTheory.Abelian Ambient
 #check CategoryTheory.HasExt
-#check CategoryTheory.DerivedCategory.singleFunctor
+#check DerivedCategory.singleFunctor
 
 /-- The protected underived CM4 profinite-solid object. -/
 def underivedObject (S : Profinite.{u}) : Ambient :=
@@ -46,8 +46,8 @@ theorem underivedObject_isSolid (S : Profinite.{u}) :
 /-- Degree-zero image under the ordinary derived-category embedding.
 This construction does not imply derived solidity. -/
 def degreeZeroObject (S : Profinite.{u}) :
-    CategoryTheory.DerivedCategory Ambient :=
-  (CategoryTheory.DerivedCategory.singleFunctor Ambient 0).obj (underivedObject S)
+    DerivedCategory Ambient :=
+  (DerivedCategory.singleFunctor Ambient 0).obj (underivedObject S)
 
 #check underivedObject
 #check underivedObject_isSolid
