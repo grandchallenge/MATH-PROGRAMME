@@ -34,6 +34,11 @@ abbrev Ambient := CondensedMod.{u} Coeff
 #check CategoryTheory.HasExt
 #check DerivedCategory.singleFunctor
 
+/-- Use the canonical constructed localization at the standard universe level;
+mathlib does not install this choice as a global instance. -/
+private noncomputable instance : HasDerivedCategory Ambient :=
+  HasDerivedCategory.standard Ambient
+
 /-- The protected underived CM4 profinite-solid object. -/
 def underivedObject (S : Profinite.{u}) : Ambient :=
   (Condensed.profiniteSolid Coeff).obj S
