@@ -20,11 +20,11 @@ The results below follow five mathematical stages, not just a succession of calc
 
 For the anchor, the outstanding mathematical decision can be written schematically as:
 
-$
+$$
 \exists\,\mathfrak a:\quad
 N(\mathfrak a)=n_m,\qquad
 [\mathfrak a]_{\mathrm{ray}}=[\rho_m]_{\mathrm{ray}},
-$
+$$
 
 with $n_m$, $\rho_m$ and the **actual** ray modulus defined by the [anchored ideal criterion](https://github.com/grandchallenge/MATHSOLVE/pull/1224) and [exact norm-ideal enumeration](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_IDEAL_RAY_ENUMERATION_028.md). The criterion already supports exact case-by-case decisions under its finite-enumeration conditions. **What remains is a uniform theorem** proving which parameter families satisfy it.
 
