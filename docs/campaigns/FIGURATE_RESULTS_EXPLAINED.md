@@ -1208,10 +1208,10 @@ The [complete theorem and proof](https://github.com/grandchallenge/MATHSOLVE/blo
 
 The power-of-three result in WP09-032 was **not** the limit of the method. WP09-033 proves a substantially larger, exact infinite family. Let
 
-$
+$$
 f=3^a5^b7^c,\qquad a,b,c\ge0,\qquad a+b+c>0,
 \qquad k=2f^2+2.
-$
+$$
 
 For **every** such $f$, with offset 2, the fixed pair $(1,2f^2)$ has **infinitely many distinct positive Type B extensions**. All three pairwise outputs have positive integer polygonal indices, not merely matching residues.
 
@@ -1219,39 +1219,39 @@ For example, $f=5,7,15,21,35,105$ gives orders $52,100,452,884,2452,22052$. The 
 
 **Why mixing conductors works.** The same totally positive unit $u=3+2\sqrt2$ has exactly one factor of the relevant prime in the radical coefficient of the following explicitly computable powers:
 
-$
+$$
 u^4=577+408\sqrt2,\quad
 u^6=19601+13860\sqrt2,\quad
 u^3=99+70\sqrt2.
-$
+$$
 
 These are the starting points for 3-adic, 5-adic and 7-adic lifting, respectively. Raising each base to successive powers of its prime increases the radical-coefficient valuation **by exactly one each time**. The common exponent
 
-$
+$$
 L=\operatorname{lcm}_{p\mid f}\left(t_p p^{2v_p(f)-1}\right),
 \qquad (t_3,t_5,t_7)=(4,6,3),
-$
+$$
 
 has exactly the required prime-adic valuations in every component. It therefore produces
 
-$
+$$
 u^L\equiv1+f^2 B\sqrt2\pmod{f^3\mathbb Z[\sqrt2]},
 \qquad \gcd(B,f)=1.
-$
+$$
 
 Choose the computable inverse residue $jB\equiv2\pmod f$ and set $E=Lj-1$. Starting from the explicit norm element used in WP09-032,
 
-$
+$$
 \alpha=\frac{(1+f\sqrt2)(f^2+3+2\sqrt2)}2,
-$
+$$
 
 the corrected element $\beta=\alpha u^E$ has the prescribed negative norm and, crucially, lies in the **actual conductor order** with the correct *coefficientwise oriented ray*:
 
-$
+$$
 \beta\in\mathbb Z[f\sqrt2],\qquad
 \beta\equiv\frac{f^2+1}{2}(1+f\sqrt2)
 \pmod{f^2\mathbb Z[f\sqrt2]}.
-$
+$$
 
 Thus a norm ideal really **occupies the target ray class**. The previously proved exact Pell-to-polygonal formulas give the required positive-integer triples. Further ray-preserving unit powers give infinitely many distinct extensions. This is a global construction, not a general assertion that local compatibility implies a solution.
 
