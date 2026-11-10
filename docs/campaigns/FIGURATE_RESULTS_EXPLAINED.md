@@ -16,7 +16,7 @@ The results below follow five mathematical stages, not just a succession of calc
 2. **Exact global constructions:** for stated families, find actual positive integers and positive polygonal indices. Pell recurrences can turn one rigorously verified seed into infinitely many triples.
 3. **Ideal-class interpretation (WP09-027 and WP09-028):** in the recurring anchor $k=16m+4$ with offset $c=2$, identify the exact ideal-norm and **oriented ray-class** condition behind the constrained Pell equation; retain the nonmaximal order when its conductor is nontrivial.
 4. **Compute the obstruction (WP09-029 through WP09-031):** determine the ray kernel, complete narrow Picard group and, for the infinite odd square-conductor subfamily, **the entire oriented ray-class group**, including invariant factors.
-5. **Resolve realization (still open in a parameter-uniform form):** show when an ideal of the prescribed norm **occupies the required ray class**. Deduce an infinite-family theorem of existence or an explicit global nonexistence obstruction. A computed group does not by itself produce an ideal of the requested norm.
+5. **Resolve realization (proved for specified infinite families; otherwise open):** show when an ideal of the prescribed norm **occupies the required ray class**. WP09-032 and WP09-033 now give explicit sufficient constructions for powers of three and for mixed 3/5/7 conductors, respectively. A general classification and genuine global-obstruction theorem remain open; a computed group alone does not produce an ideal of a prescribed norm.
 
 For the anchor, the outstanding mathematical decision can be written schematically as:
 
@@ -28,7 +28,7 @@ $$
 
 with $n_m$, $\rho_m$ and the **actual** ray modulus defined by the [anchored ideal criterion](https://github.com/grandchallenge/MATHSOLVE/pull/1224) and [exact norm-ideal enumeration](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_IDEAL_RAY_ENUMERATION_028.md). The criterion already supports exact case-by-case decisions under its finite-enumeration conditions. **What remains is a uniform theorem** proving which parameter families satisfy it.
 
-**Next research priority:** use the known square-conductor group structures to prove an infinite successful or globally obstructed *target-class realization family*. Generalize to other conductors where that is required for a concrete existence theorem. The broader ambition is a coherent existence/nonexistence theory for Types A, B and C, not the indefinite production of larger group tables.
+**Next research priority:** generalize the proved target-ray realization beyond 3/5/7-supported conductors by analyzing the prime-adic unit-lift condition and its possible obstructions, or prove a genuine globally obstructed family that is nonetheless everywhere locally compatible. Extend to other conductors only when it advances a concrete existence/nonexistence theorem. The longer goal includes separate Types A and C theories.
 
 **Status distinction:** the linked proof dossiers and executable checks are internally admitted mathematical work. They do not establish the universal Type B local-to-global principle, exhaustive literature originality, or independent MATHCERT certification. The [programme overview](FIGURATE_PILOT_001.md) and [active WP09 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) preserve the wider scope and outstanding obligations.
 
@@ -1204,17 +1204,72 @@ The [complete theorem and proof](https://github.com/grandchallenge/MATHSOLVE/blo
 
 **Still open:** which other conductors realize the target ray; whether there are everywhere-locally-compatible but genuinely globally obstructed infinite parameter families; the unrestricted Type B problem; and separate Types A/C questions. A theorem for $f=3^e$ does **not** imply one for arbitrary odd $f$. Independent MATHCERT certification and external novelty/priority review are also outstanding.
 
+### WP09: mixed prime-power conductors give more uniform global existence
+
+The power-of-three result in WP09-032 was **not** the limit of the method. WP09-033 proves a substantially larger, exact infinite family. Let
+
+$
+f=3^a5^b7^c,\qquad a,b,c\ge0,\qquad a+b+c>0,
+\qquad k=2f^2+2.
+$
+
+For **every** such $f$, with offset 2, the fixed pair $(1,2f^2)$ has **infinitely many distinct positive Type B extensions**. All three pairwise outputs have positive integer polygonal indices, not merely matching residues.
+
+For example, $f=5,7,15,21,35,105$ gives orders $52,100,452,884,2452,22052$. The mixed cases $f=15,21,35,105$ exhibit what the earlier power-of-three theorem did not cover. The claim is **uniform across all nonnegative exponents**, not a finite list of successful computations.
+
+**Why mixing conductors works.** The same totally positive unit $u=3+2\sqrt2$ has exactly one factor of the relevant prime in the radical coefficient of the following explicitly computable powers:
+
+$
+u^4=577+408\sqrt2,\quad
+u^6=19601+13860\sqrt2,\quad
+u^3=99+70\sqrt2.
+$
+
+These are the starting points for 3-adic, 5-adic and 7-adic lifting, respectively. Raising each base to successive powers of its prime increases the radical-coefficient valuation **by exactly one each time**. The common exponent
+
+$
+L=\operatorname{lcm}_{p\mid f}\left(t_p p^{2v_p(f)-1}\right),
+\qquad (t_3,t_5,t_7)=(4,6,3),
+$
+
+has exactly the required prime-adic valuations in every component. It therefore produces
+
+$
+u^L\equiv1+f^2 B\sqrt2\pmod{f^3\mathbb Z[\sqrt2]},
+\qquad \gcd(B,f)=1.
+$
+
+Choose the computable inverse residue $jB\equiv2\pmod f$ and set $E=Lj-1$. Starting from the explicit norm element used in WP09-032,
+
+$
+\alpha=\frac{(1+f\sqrt2)(f^2+3+2\sqrt2)}2,
+$
+
+the corrected element $\beta=\alpha u^E$ has the prescribed negative norm and, crucially, lies in the **actual conductor order** with the correct *coefficientwise oriented ray*:
+
+$
+\beta\in\mathbb Z[f\sqrt2],\qquad
+\beta\equiv\frac{f^2+1}{2}(1+f\sqrt2)
+\pmod{f^2\mathbb Z[f\sqrt2]}.
+$
+
+Thus a norm ideal really **occupies the target ray class**. The previously proved exact Pell-to-polygonal formulas give the required positive-integer triples. Further ray-preserving unit powers give infinitely many distinct extensions. This is a global construction, not a general assertion that local compatibility implies a solution.
+
+The [full WP09-033 proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MIXED_CONDUCTOR_REALIZATION_033.md), [exact constructor](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp09_mixed_conductor_realization_033.py), and [independent exact matrix and discriminant tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_mixed_conductor_realization_033.py) preserve the distinctions between the theorem for all supported conductors and the finite regression sample. Exact independent tests cover 26 prime-power/mixed combinations, with full positive-index tuples checked for selected smaller conductors. Guarded large-witness cases do not become false nonexistence results.
+
+**Boundary:** this theorem does **not** cover arbitrary odd primes, all first pairs, non-square conductors, Types A/C, independent MATHCERT certification or literature originality. The successor question is how to treat other primes and interactions where the unit's principal-component lift has higher valuation or the common exponent introduces incompatible divisibility.
+
 ## 7. What is established—and what remains open
 
 **Proved nonexistence in specified families:** the congruence arguments rule out every Type B triple under their exact order/offset hypotheses, irrespective of the size of its entries. Independent finite residue-table checks support, but do not replace, the proofs.
 
 **Proved existence in specified families:** the documented exact integer seeds, Pell amplifications and other constructions give genuine Type B solutions, in several cases infinitely many, with index positivity and integrality checked. These results are stronger than mere local compatibility.
 
-**Proved structural reductions and first target-family realization:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 through WP09-031 compute the ray arithmetic for all odd square conductors; WP09-032 goes further by **exhibiting a target-class ideal for every $f=3^e$** and giving infinitely many exact positive Type B triples in each corresponding parameter family.
+**Proved structural reductions and uniform target-ray families:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 through WP09-031 compute the ray arithmetic for all odd square conductors; WP09-032 constructs target-class ideals for powers of three, and **WP09-033 extends the exact construction to all 3/5/7-supported conductors**, including mixed prime powers. These yield infinitely many positive Type B triples in each corresponding family.
 
-**Not yet established:** a complete parameter-wide characterization of when those norm-ideal fibres contain the target ray **outside the proved power-of-three subfamily**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
+**Not yet established:** a complete parameter-wide characterization of when those norm-ideal fibres contain the target ray **outside the proved 3/5/7-supported family**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
 
-**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The ray-class machinery explains the **shape of a global obstruction**, and WP09-032 now shows **how to overcome it throughout one infinite parameter family**. The next payoff is to extend that theorem or prove a genuine global obstruction for another well-defined family. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
+**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The ray-class machinery explains the **shape of a global obstruction**, while WP09-032 and WP09-033 constructively **overcome it across infinitely many prime-power and mixed-conductor parameter families**. The next payoff is a prime-general realization criterion or an actual global obstruction for another well-defined family. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
 
 ## 8. Primary GCL research record
 
@@ -1246,6 +1301,8 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09-031 independent exact group tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_full_ray_square_conductor_031.py)
 - [WP09-032 uniform 3-power oriented-ray realization and infinitely many exact Type B triples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_POWER3_GLOBAL_SEEDS_032.md)
 - [WP09-032 exact construction and independently verified regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_power3_global_seeds_032.py)
+- [WP09-033 uniform mixed 3/5/7 conductor target-ray realization and proof](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_MIXED_CONDUCTOR_REALIZATION_033.md)
+- [WP09-033 exact construction and independent matrix/discriminant regressions](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_mixed_conductor_realization_033.py)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
