@@ -65,7 +65,7 @@ theorem unshiftedDerivedPrecomposition_bijective (S T : Profinite.{u}) :
     Function.Bijective
       (fun g : degreeZeroObject T ⟶ degreeZeroObject S =>
         solidificationAtZero T ≫ g) := by
-  simpa only [degreeZeroObject, solidificationAtZero, underivedObject] using
+  simpa only [degreeZeroObject, freeAtZero, solidificationAtZero, underivedObject] using
     (precomposition_bijective_of_full_faithful
       (DerivedCategory.singleFunctor Ambient 0)
       ((Condensed.profiniteSolidification Coeff).app T)
