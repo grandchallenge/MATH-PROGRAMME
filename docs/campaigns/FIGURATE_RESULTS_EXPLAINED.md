@@ -1190,7 +1190,7 @@ $$
 N(\alpha)=-2(2f^2-1)\frac{f^4+6f^2+1}{8}.
 $$
 
-The difficulty is that $\alpha$ need not belong to the **conductor order** $\mathbb Z[f\sqrt2]$ or satisfy its much stricter ray congruence. WP09-032 uses the positive norm-one unit $u=3+2\sqrt2$. Elementary $3$-adic lifting proves that, for $L=4\cdot3^{2e-1}$, the unit $u^L$ can adjust exactly the missing $\sqrt2$-coefficient modulo $f^3$. An explicitly computed exponent $E$ then gives
+The difficulty is that $\alpha$ need not belong to the **conductor order** $\mathbb Z[f\sqrt2]$ or satisfy its much stricter ray congruence. WP09-032 uses the positive norm-one unit $u=3+2\sqrt2$. Elementary 3-adic lifting proves that, for $L=4\cdot3^{2e-1}$, the unit $u^L$ can adjust exactly the missing coefficient of $\sqrt2$ modulo $f^3$. An explicitly computed exponent $E$ then gives
 
 $$
 \beta=\alpha u^E\in\mathbb Z[f\sqrt2],\qquad
@@ -1212,7 +1212,7 @@ The [complete theorem and proof](https://github.com/grandchallenge/MATHSOLVE/blo
 
 **Proved structural reductions and first target-family realization:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 through WP09-031 compute the ray arithmetic for all odd square conductors; WP09-032 goes further by **exhibiting a target-class ideal for every $f=3^e$** and giving infinitely many exact positive Type B triples in each corresponding parameter family.
 
-**Not yet established:** a complete parameter-wide characterization of when those norm-ideal fibres contain the target ray **outside the proved $3$-power subfamily**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
+**Not yet established:** a complete parameter-wide characterization of when those norm-ideal fibres contain the target ray **outside the proved power-of-three subfamily**; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
 
 **Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The ray-class machinery explains the **shape of a global obstruction**, and WP09-032 now shows **how to overcome it throughout one infinite parameter family**. The next payoff is to extend that theorem or prove a genuine global obstruction for another well-defined family. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
 
