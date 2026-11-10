@@ -1,10 +1,36 @@
-# Figurate tuples: when three numbers cannot coexist
+# Figurate tuples: existence, obstruction and global arithmetic
 
-*FIGURATE mathematical guide · 4 November 2026*
+*FIGURATE mathematical guide · originally 4 November 2026; research synthesis updated 10 November 2026*
 
-**Reading level:** familiar with parity, square numbers and remainders. The examples can be checked with integer arithmetic; a short advanced appendix gives the precise classification.
+**Reading level:** familiar with parity, square numbers and remainders for the early sections; the later Pell and ideal-class analysis is more technical. The worked examples can be checked with integer arithmetic; the advanced results give **partial classifications in explicitly stated families**, not an unrestricted Type B classification.
 
 **Research status:** The congruence arguments below are written as complete elementary proofs and checked by independent exact-integer code. Their admission into GCL research repositories is **not** independent mathematical certification, and their originality in the wider mathematical literature has **not** been established.
+
+## The research objective: from congruence tests to integer existence
+
+**End-game.** Given a polygonal order and an offset, explain when **distinct positive-integer tuples really exist**, when they are impossible, and which arithmetic principle separates these outcomes. The current main research track is Type B; Types A and C require different hypotheses. A classification for all parameters and all types is **not** a completed result.
+
+The results below follow five mathematical stages, not just a succession of calculations:
+
+1. **Local obstructions (WP08 and early WP09):** test the polygonal conditions modulo powers of two and odd primes. Some congruence classes are ruled out for *all* integer triples, but passing every tested modulus is not an existence proof.
+2. **Exact global constructions:** for stated families, find actual positive integers and positive polygonal indices. Pell recurrences can turn one rigorously verified seed into infinitely many triples.
+3. **Ideal-class interpretation (WP09-027 and WP09-028):** in the recurring anchor $k=16m+4$ with offset $c=2$, identify the exact ideal-norm and **oriented ray-class** condition behind the constrained Pell equation; retain the nonmaximal order when its conductor is nontrivial.
+4. **Compute the obstruction (WP09-029 through WP09-031):** determine the ray kernel, complete narrow Picard group and, for the infinite odd square-conductor subfamily, **the entire oriented ray-class group**, including invariant factors.
+5. **Resolve realization (still open in a parameter-uniform form):** show when an ideal of the prescribed norm **occupies the required ray class**. Deduce an infinite-family theorem of existence or an explicit global nonexistence obstruction. A computed group does not by itself produce an ideal of the requested norm.
+
+For the anchor, the outstanding mathematical decision can be written schematically as:
+
+$$
+\exists\,\mathfrak a:\quad
+N(\mathfrak a)=n_m,\qquad
+[\mathfrak a]_{\mathrm{ray}}=[\rho_m]_{\mathrm{ray}},
+$$
+
+with $n_m$, $\rho_m$ and the **actual** ray modulus defined by the [anchored ideal criterion](https://github.com/grandchallenge/MATHSOLVE/pull/1224) and [exact norm-ideal enumeration](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_IDEAL_RAY_ENUMERATION_028.md). The criterion already supports exact case-by-case decisions under its finite-enumeration conditions. **What remains is a uniform theorem** proving which parameter families satisfy it.
+
+**Next research priority:** use the known square-conductor group structures to prove an infinite successful or globally obstructed *target-class realization family*. Generalize to other conductors where that is required for a concrete existence theorem. The broader ambition is a coherent existence/nonexistence theory for Types A, B and C, not the indefinite production of larger group tables.
+
+**Status distinction:** the linked proof dossiers and executable checks are internally admitted mathematical work. They do not establish the universal Type B local-to-global principle, exhaustive literature originality, or independent MATHCERT certification. The [programme overview](FIGURATE_PILOT_001.md) and [active WP09 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145) preserve the wider scope and outstanding obligations.
 
 ## 1. Start with a simple rule
 
@@ -1139,15 +1165,17 @@ All eleven group orders agree with WP09-030. The [independent exact tests](https
 
 **Limits:** This computes full oriented ray groups for the infinite *square-conductor* family $A=f^2$, not arbitrary squarefree part $a_0\ne1$. Knowing the abstract class group does not, by itself, show that a particular prescribed norm ideal occupies the target ray or that all locally admissible Type B parameters have actual positive-integer triples. Those problems, general-conductor Picard arithmetic, source priority, and independent MATHCERT mathematical certification remain separate.
 
-## 7. What is established—and what is not
+## 7. What is established—and what remains open
 
-**Established by the displayed arithmetic:** the specific global nonexistence statements under the stated congruence hypotheses. The argument applies to infinitely many polygonal orders and offsets, not just the bounded surveys.
+**Proved nonexistence in specified families:** the congruence arguments rule out every Type B triple under their exact order/offset hypotheses, irrespective of the size of its entries. Independent finite residue-table checks support, but do not replace, the proofs.
 
-**Established computationally:** the complete local exclusion tables modulo 8, 16, 32 and 64, with independently repeated exact-integer tests. The two additional modulo-32 nonexistence families also have a direct elementary 2-adic proof.
+**Proved existence in specified families:** the documented exact integer seeds, Pell amplifications and other constructions give genuine Type B solutions, in several cases infinitely many, with index positivity and integrality checked. These results are stronger than mere local compatibility.
 
-**Not established:** novelty relative to the entire literature, independent specialist certification, or a global classification of all polygonal Type B triples. Results for Type A and Type C require their own hypotheses. The still-open source review of one 2025 *Mathematica Slovaca* paper remains a separate documentary obligation.
+**Proved structural reductions:** for the recurring $k=16m+4$, $c=2$ anchor, the Pell and ideal-theoretic work identifies the conductor-sensitive oriented ray-class condition for an appropriate norm-ideal fibre. WP09-029 to WP09-031 determine increasing portions of the associated group arithmetic, culminating in the full abstract ray group for every positive odd square conductor $f$.
 
-The progression matters: the initial [bounded census](FIGURATE_CENSUS.md) reported what happened below a numerical cutoff; the [pilot overview](FIGURATE_PILOT_001.md) introduced the questions; the present page explains **why certain entire infinite families cannot exist**, using proofs rather than negative search results.
+**Not yet established:** a parameter-uniform theorem saying precisely when those norm-ideal fibres contain the required ray class; a general local-to-global theorem for Type B; analogous classification for Types A and C; external priority or independent MATHCERT certification. The separate unrecovered original 2025 source remains a documentary fidelity obligation, not a theorem-proof substitute.
+
+**Why this matters:** [the original bounded census](FIGURATE_CENSUS.md) asked what occurs below a finite cutoff. The next results proved infinite families of *impossibility* and *existence*. The present ray-class machinery explains the **shape of a global obstruction**; the next mathematical payoff is to show **when that obstruction is actually met or overcome** in uniform parameter families. The [overview](FIGURATE_PILOT_001.md) describes this research end-game and the distinction between a completed bounded work package and a completed classification.
 
 ## 8. Primary GCL research record
 
@@ -1171,6 +1199,12 @@ The public pedagogical exposition is deliberately separate from the versioned ev
 - [WP09 global existence at polygonal-minus-one offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_GLOBAL_SEED_EXISTENCE_009.md)
 - [WP09 global existence at polygonal-minus-square offsets](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_SHIFT_GLOBAL_EXISTENCE_010.md)
 - [WP09 binary non-diagonal anchor gap and exact Type B counterexamples](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_NONDIAGONAL_ANCHOR_GAP_011.md)
+- [WP09 oriented ideal-norm/ray-class criterion, protected research PR #1224](https://github.com/grandchallenge/MATHSOLVE/pull/1224)
+- [WP09 exact norm-ideal enumeration and targeted class decision (WP09-028)](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_IDEAL_RAY_ENUMERATION_028.md)
+- [WP09 full finite oriented ray kernel (WP09-029)](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_RAY_KERNEL_029.md)
+- [WP09 complete narrow Picard groups for odd square conductors (WP09-030)](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_SQUARE_CONDUCTOR_PICARD_030.md)
+- [WP09 full oriented ray groups and invariant factors for odd square conductors (WP09-031)](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FULL_RAY_GROUP_031.md)
+- [WP09-031 independent exact group tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_wp09_full_ray_square_conductor_031.py)
 - [Exact modulo-32 certificate and independently checked witnesses](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod32.py)
 - [Exact modulus-16 classifier](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_wp08_mod16_classification.py)
 - [Source-critical bibliography](FIGURATE_SOURCES.md)
