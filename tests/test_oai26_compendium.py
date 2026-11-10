@@ -72,7 +72,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
     def test_admission_fail_closed(self):
         j = json.loads(c.ADMISSIONS.read_text(encoding="utf-8"))
         admitted = c.load_admissions()
-        self.assertEqual(set(admitted), {'001', '002', '003', '004', '005', '006', '011', '025', '029', '035', '051', '059', '063', '067', '069', '071', '073', '075', '077', '079', '081', '083', '085', '087'})
+        self.assertEqual(set(admitted), {'035', '059', '025', '077', '081', '003', '029', '075', '051', '011', '073', '004', '063', '006', '087', '001', '085', '002', '071', '083', '067', '031', '079', '069', '005'})
         self.assertEqual(admitted["001"]["manuscript_sha256"],
                          "fead8152dee7a70a702fb217166f27d1c7e5cea40183f5580e3a47bfd21092a8")
         self.assertEqual(admitted["002"]["manuscript_sha256"],
@@ -105,8 +105,8 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
             self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=54, editorially_admitted=24,
-                                         reference_only=294, generated_pages=373))
+                                         editorial_drafts=54, editorially_admitted=25,
+                                         reference_only=293, generated_pages=373))
             self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
