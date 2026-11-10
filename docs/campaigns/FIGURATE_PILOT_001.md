@@ -22,7 +22,7 @@ The active [WP09 research track](https://github.com/grandchallenge/MATH-PROGRAMM
 
 **Progress through WP09-032:** the programme has complete local criteria in stated regimes, exact Type B families, ideal-norm enumeration and full oriented ray-group structures for **odd square conductors** (WP09-031). **WP09-032 now realizes the required oriented ray class for every conductor $f=3^e$, $e\ge1$**, proving infinitely many genuine positive Type B triples for each order $k=2\cdot9^e+2$ at offset 2 and first pair $(1,2\cdot9^e)$. This completes Steps 4–5 for that **specific infinite parameter family**, not for arbitrary square conductors or Type B parameters.
 
-**Next proposed theorem target:** extend the proven $3$-power construction to other prime-power or mixed conductors **or** exhibit a genuinely globally obstructed, everywhere-locally-compatible infinite family. General-conductor calculations should serve a specific existence/nonexistence theorem, rather than enlarge class-group tables without an application.
+**Next proposed theorem target:** extend the proven power-of-three construction to other prime-power or mixed conductors **or** exhibit a genuinely globally obstructed, everywhere-locally-compatible infinite family. General-conductor calculations should serve a specific existence/nonexistence theorem, rather than enlarge class-group tables without an application.
 
 The longer programme must separately address **Type A** (figurate entries with square pairwise outputs) and **Type C** (both entry and output restrictions). The active Type B results do not automatically imply results for either.
 
@@ -30,7 +30,7 @@ The longer programme must separately address **Type A** (figurate entries with s
 
 [**Read the mathematical guide: *Figurate tuples—existence, obstruction and global arithmetic*.**](FIGURATE_RESULTS_EXPLAINED.md)
 
-The results guide begins with elementary, uniform nonexistence theorems from congruences (including octagonal examples), then covers odd-prime-power local tests, exact integer construction families, Pell reductions and the later ideal/ray-class analysis and uniform $3$-power realization theorem through WP09-032. It separates each verified theorem from the stronger, still-open global existence and classification claims. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
+The results guide begins with elementary, uniform nonexistence theorems from congruences (including octagonal examples), then covers odd-prime-power local tests, exact integer construction families, Pell reductions and the later ideal/ray-class analysis and uniform power-of-three realization theorem through WP09-032. It separates each verified theorem from the stronger, still-open global existence and classification claims. Mathematical originality and independent specialist certification remain unverified; repository admission does not certify them.
 
 ## Research completion and remaining obligations
 
@@ -137,9 +137,9 @@ The core documentary records serve distinct purposes:
 - [Canonical FIGURATE pilot charter, MATH-PROGRAMME #3093](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3093)
 - [Continuing Type B research and protected WP09 evidence, #3145](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3145)
 - [Latest full square-conductor oriented ray-group dossier, WP09-031](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_FULL_RAY_GROUP_031.md)
-- [Uniform $3$-power target-ray realization and Type B infinite-family proof, WP09-032](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_POWER3_GLOBAL_SEEDS_032.md)
+- [Uniform power-of-three target-ray realization and Type B infinite-family proof, WP09-032](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_WP09_POWER3_GLOBAL_SEEDS_032.md)
 - [MATHSOLVE source specification](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/FIGURATE_PILOT_001.md)
 - [Protected implementation and checks, PR #1175](https://github.com/grandchallenge/MATHSOLVE/pull/1175)
 - [Research source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/figurate_census.py) and [regression tests](https://github.com/grandchallenge/MATHSOLVE/blob/main/tests/test_figurate_census.py)
 
-**Continuity boundary:** Initial charter and computational baselines, multiple bounded Type B mathematical dossiers and public explanations are protected-admitted. The general WP09 target-class realization and wider parameter-classification questions remain active despite the solved $3$-power family; the primary-source fidelity gap and independent MATHCERT certification remain separate. This overview reports programme direction and admitted evidence; it does not assert a universal existence theorem, a public priority determination or live-site deployment verification.
+**Continuity boundary:** Initial charter and computational baselines, multiple bounded Type B mathematical dossiers and public explanations are protected-admitted. The general WP09 target-class realization and wider parameter-classification questions remain active despite the solved power-of-three family; the primary-source fidelity gap and independent MATHCERT certification remain separate. This overview reports programme direction and admitted evidence; it does not assert a universal existence theorem, a public priority determination or live-site deployment verification.
