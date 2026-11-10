@@ -8,6 +8,7 @@ complete policy shard set.
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import subprocess
@@ -26,6 +27,8 @@ CONTROL_SCHEMA = ROOT / "schemas/policy_impact_gating.schema.json"
 REGISTRY_PATH = ROOT / "governance/policy_shard_registry.json"
 REGISTRY_SCHEMA = ROOT / "schemas/policy_shard_registry.schema.json"
 CONTRACT_MANIFEST_PATH = ROOT / "governance/contract_test_manifest.json"
+COMPONENT_DIR = ROOT / "governance/policy_components"
+COMPONENT_SCHEMA = ROOT / "schemas/policy_component_manifest.schema.json"
 ZERO_SHA = "0" * 40
 ALL_SHARDS = (
     "core",
@@ -57,9 +60,11 @@ FULL_FANOUT_PATHS = {
     "schemas/formal_validation_registry.schema.json",
     "governance/policy_impact_gating.json",
     "schemas/policy_impact_gating.schema.json",
+    "schemas/policy_impact_gating.schema.json",
     "governance/policy_shard_registry.json",
     "schemas/policy_shard_registry.schema.json",
     "governance/contract_test_manifest.json",
+    "schemas/policy_component_manifest.schema.json",
     "governance/cmdg_workflow_impact_gating.json",
     "schemas/cmdg_workflow_impact_gating.schema.json",
 }
@@ -126,11 +131,137 @@ def contract_test_paths() -> set[str]:
     return out
 
 
+def component_manifests() -> dict[str, dict]:
+    """Discover versioned component manifests; no central per-programme edits."""
+    if not COMPONENT_DIR.is_dir():
+        raise ImpactError("component registry directory missing")
+    files = sorted(COMPONENT_DIR.glob("*.json"))
+    if not files:
+        raise ImpactError("component registry empty")
+    schema = load_json(COMPONENT_SCHEMA)
+    manifests: dict[str, dict] = {}
+    for file in files:
+        row = load_json(file)
+        jsonschema.validate(row, schema)
+        name = row["component_id"]
+        if file.stem != name or name in manifests:
+            raise ImpactError(f"component id/filename collision: {file}")
+        if not set(row["shards"]).issubset(ALL_SHARDS):
+            raise ImpactError(f"unknown shard in component: {name}")
+        patterns = row["paths"]
+        if not any(patterns.values()):
+            raise ImpactError(f"component without owned paths: {name}")
+        for kind in ("exact", "prefixes", "test_prefixes"):
+            for pattern in patterns[kind]:
+                if (
+                    normalize_paths([pattern]) != [pattern]
+                    or any(char in pattern for char in "*?[]")
+                ):
+                    raise ImpactError(f"unsafe component path: {name}:{pattern}")
+                if kind == "prefixes" and not pattern.endswith("/"):
+                    raise ImpactError(f"component prefix must end in slash: {pattern}")
+                if kind == "test_prefixes" and not pattern.startswith("tests/test_"):
+                    raise ImpactError(f"test prefix must start tests/test_: {pattern}")
+                if kind == "test_prefixes" and not pattern.endswith("_"):
+                    raise ImpactError(f"test prefix must end at module boundary: {pattern}")
+                if pattern.startswith(("ci/", ".github/", "schemas/", "governance/policy_components/")):
+                    raise ImpactError(f"control-plane path cannot be programme-owned: {pattern}")
+        manifests[name] = row
+    # A declared test route must also select a shard that actually discovers
+    # the test. The repository-regression runner discovers ordinary test_*.py;
+    # known exclusions are owned by dedicated registered shard runners.
+    registry = load_json(REGISTRY_PATH)
+    exclusions = registry["execution"]["repository_regression_exclusions"]["patterns"]
+    excluded_shards = {
+        "test_oz*.py": "oz",
+        "test_cmdg*.py": "cmdg",
+        "test_*fixture*.py": "fixtures",
+        "test_administrative*.py": "administrative",
+        "test_campaign*.py": "campaigns",
+    }
+    contract_tests = contract_test_paths()
+    for name, row in manifests.items():
+        tests = [path for path in row["paths"]["exact"] if path.startswith("tests/") and path.endswith(".py")]
+        tests += [prefix + "route_probe.py" for prefix in row["paths"]["test_prefixes"]]
+        for test in tests:
+            basename = Path(test).name
+            matching = [pattern for pattern in exclusions if fnmatch.fnmatch(basename, pattern)]
+            if test in contract_tests:
+                required = {"contracts"}
+            elif matching:
+                if any(pattern not in excluded_shards for pattern in matching):
+                    raise ImpactError(f"unrecognized test exclusion for {name}: {test}")
+                required = {excluded_shards[pattern] for pattern in matching}
+            else:
+                required = {"repository-regression"}
+            if not required.issubset(row["shards"]):
+                raise ImpactError(
+                    f"test route lacks executing shard for {name}: {test}; "
+                    f"required={sorted(required)}"
+                )
+    for name, row in manifests.items():
+        if name in row["depends_on"]:
+            raise ImpactError(f"component self-dependency: {name}")
+        for dep in row["depends_on"]:
+            if dep not in manifests:
+                raise ImpactError(f"missing component dependency: {name}->{dep}")
+    visiting: set[str] = set()
+    done: set[str] = set()
+    def visit(name: str) -> None:
+        if name in visiting:
+            raise ImpactError(f"component dependency cycle: {name}")
+        if name in done:
+            return
+        visiting.add(name)
+        for dep in manifests[name]["depends_on"]:
+            visit(dep)
+        visiting.remove(name)
+        done.add(name)
+    for name in sorted(manifests):
+        visit(name)
+    return manifests
+
+
+def declarative_impacts(paths: Iterable[str], manifests: dict[str, dict] | None = None) -> tuple[set[str], set[str]]:
+    """Return dependency-closed shards and owned paths, rejecting ambiguous ownership.
+
+    If component A depends on B, a change to B runs both B and downstream A;
+    a change to A alone does not incorrectly invalidate B.
+    """
+    manifests = component_manifests() if manifests is None else manifests
+    roots: set[str] = set()
+    owned: set[str] = set()
+    for path in normalize_paths(paths):
+        matches = []
+        for name, row in manifests.items():
+            patterns = row["paths"]
+            if (
+                path in patterns["exact"]
+                or any(path.startswith(prefix) for prefix in patterns["prefixes"])
+                or (path.endswith(".py") and any(path.startswith(prefix) for prefix in patterns["test_prefixes"]))
+            ):
+                matches.append(name)
+        if len(matches) > 1:
+            raise ImpactError(f"ambiguous component owner for {path}: {','.join(sorted(matches))}")
+        if matches:
+            roots.add(matches[0])
+            owned.add(path)
+    impacted = set(roots)
+    changed = True
+    while changed:
+        before = len(impacted)
+        impacted.update(name for name, row in manifests.items() if any(dep in impacted for dep in row["depends_on"]))
+        changed = len(impacted) != before
+    return set().union(*(set(manifests[name]["shards"]) for name in impacted)), owned
+
+
 def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
     active = {"core"}
     unknown: list[str] = []
     contract_tests = contract_test_paths()
-    if any(path in FULL_FANOUT_PATHS for path in paths):
+    declared_shards, declared_paths = declarative_impacts(paths)
+    active.update(declared_shards)
+    if any(path in FULL_FANOUT_PATHS or path.startswith("governance/policy_components/") for path in paths):
         return list(ALL_SHARDS), []
 
     for path in paths:
@@ -191,7 +322,9 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
             active.add("contracts")
             matched = True
         if path.startswith("tests/"):
-            if path in contract_tests:
+            if path in declared_paths:
+                pass  # Versioned component manifest owns its test route.
+            elif path in contract_tests:
                 active.add("contracts")
                 if any(token in lower for token in ("documentary", "visual_pedagogy")):
                     active.add("docs")
@@ -286,6 +419,40 @@ def git_changed_paths(base: str, head: str) -> list[str]:
     return [line for line in completed.stdout.splitlines() if line.strip()]
 
 
+def newly_added_test_paths(base: str, head: str) -> list[str]:
+    """Find added test modules in the exact transition (not existing edits)."""
+    if not base or not head or base == ZERO_SHA:
+        raise ImpactError("transition diff base/head is unavailable")
+    completed = subprocess.run(
+        ["git", "diff", "--name-only", "--diff-filter=A", base, head, "--", "tests/"],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if completed.returncode:
+        raise ImpactError(f"added-test diff failed: {completed.stderr.strip()}")
+    return [path for path in normalize_paths(completed.stdout.splitlines())
+            if path.startswith("tests/") and path.endswith(".py")]
+
+
+def validate_new_test_routing(paths: Iterable[str]) -> None:
+    """Never admit a new test module without a bounded explicit impact route.
+
+    Existing unknown files still use FULL_FANOUT. Newly introduced test modules
+    are rejected until their route is registered in the same candidate.
+    """
+    for path in normalize_paths(paths):
+        if path.startswith("tests/") and path.endswith(".py"):
+            _, unknown = shard_impacts([path])
+            if unknown:
+                raise ImpactError(
+                    "new test module missing policy impact route: " + path
+                    + " (register a bounded route or an explicit full-fanout route)"
+                )
+
+
 def changed_paths_from_event(event_name: str, event: dict) -> list[str]:
     if event_name == "pull_request":
         pr = event.get("pull_request", {})
@@ -320,11 +487,16 @@ def validate_control() -> None:
     jsonschema.validate(control, load_json(CONTROL_SCHEMA))
     jsonschema.validate(registry, load_json(REGISTRY_SCHEMA))
     contract_test_paths()
+    component_manifests()  # Enforce schema, ownership, DAG and shard invariants on every CI run.
 
     if control.get("control_id") != "MP-POLICY-IMPACT-GATING-001":
         raise ImpactError("policy impact control identity drift")
     if control.get("status") != "ACTIVE_ON_PROTECTED_MERGE":
         raise ImpactError("policy impact control status drift")
+    if control["classifier"]["component_manifest_directory"] != "governance/policy_components":
+        raise ImpactError("component directory contract drift")
+    if control["classifier"]["component_manifest_schema"] != "schemas/policy_component_manifest.schema.json":
+        raise ImpactError("component schema contract drift")
     if control["classifier"]["unknown_path_behavior"] != "FULL_FANOUT":
         raise ImpactError("unknown policy path behavior must remain FULL_FANOUT")
     if tuple(control["policy_dag"]["shards"]) != ALL_SHARDS:
@@ -397,6 +569,15 @@ def main() -> int:
                     + "\n".join(defects[:50])
                 )
             print("mathematical Markdown source gate: PASS")
+        if args.event_name in {"pull_request", "push"}:
+            if args.event_name == "pull_request":
+                entity = event["pull_request"]
+                base = str(entity["base"]["sha"])
+                head = str(entity["head"]["sha"])
+            else:
+                base = str(event.get("before") or "")
+                head = str(event.get("after") or os.environ.get("GITHUB_SHA") or "")
+            validate_new_test_routing(newly_added_test_paths(base, head))
         result = classify_paths(paths, event_name=args.event_name, schedule=args.schedule)
         write_output(args.github_output, result)
         print(json.dumps(result, sort_keys=True))

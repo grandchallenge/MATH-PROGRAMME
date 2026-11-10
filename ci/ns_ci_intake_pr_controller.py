@@ -172,8 +172,23 @@ def profile_for_queue_binding(binding: dict[str, Any]) -> IntakeProfile:
     if parts.is_absolute() or ".." in parts.parts or parts.name != did + ".json":
         raise ControllerError("protected queue dispatch path is unsafe or unbound")
     campaign = binding.get("campaign")
-    if campaign not in {"RH-001","ERDOS-OPEN","QFT-COND-005"}:
+    if campaign not in {
+        "RH-001", "ERDOS-OPEN", "QFT-COND-005",
+        "GCL-OAI-MATH-2026", "GCL-RWP-003",
+    }:
         raise ControllerError("queue intake campaign unregistered")
+    # Register only the already-protected campaign families. An arbitrary
+    # dispatch added to a manifest must not expand these bounded intake routes.
+    if campaign == "GCL-RWP-003" and (
+        did != "RWP-003-NSPHERE-IA-001"
+        or parts.parent.parent.as_posix() != "contributions/GCL-RWP-003"
+    ):
+        raise ControllerError("RWP-003 queue intake identity outside bounded pilot")
+    if campaign == "GCL-OAI-MATH-2026" and (
+        re.fullmatch(r"OAI26-WP0[0-5]-IA-001", did) is None
+        or parts.parent.parent.as_posix() != "contributions/OAI-MATH-2026/TRIAGE_001"
+    ):
+        raise ControllerError("OAI-26 queue intake identity outside registered cohort")
     return IntakeProfile(
         campaign=campaign,
         branch_prefix="intake/" + did.lower(),
