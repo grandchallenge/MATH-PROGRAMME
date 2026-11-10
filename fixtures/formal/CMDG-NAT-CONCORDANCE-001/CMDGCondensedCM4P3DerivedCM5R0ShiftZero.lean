@@ -57,19 +57,23 @@ private theorem precomposition_bijective_of_natIso_id
       F.map f ≫ (i.hom.app Y ≫ g) = (F.map f ≫ i.hom.app Y) ≫ g := by simp [Category.assoc]
       _ = (i.hom.app X ≫ f) ≫ g := by rw [hn_hom]
       _ = i.hom.app X ≫ (f ≫ g) := by simp [Category.assoc]
-      _ = i.hom.app X ≫ (i.inv.app X ≫ q) := by rw [hg]
+      _ = i.hom.app X ≫ (i.inv.app X ≫ q) := by
+        exact congrArg (fun k => i.hom.app X ≫ k) hg
       _ = q := by simp [Category.assoc]
 
 /-- The actual zero-shift instance of the previously introduced
 `comparisonAtShift` is bijective, by CM4 and full faithfulness. -/
 theorem comparisonAtShift_zero_bijective (S T : Profinite.{u}) :
     Function.Bijective (comparisonAtShift S T 0) := by
-  simpa only [comparisonAtShift] using
-    (precomposition_bijective_of_natIso_id
-      (shiftFunctor (DerivedCategory Ambient) (0 : ℤ))
-      (shiftFunctorZero (DerivedCategory Ambient) ℤ)
-      (solidificationAtZero T)
-      (unshiftedDerivedPrecomposition_bijective S T))
+  change Function.Bijective
+    (fun g : ((shiftFunctor (DerivedCategory Ambient) (0 : ℤ)).obj
+      (degreeZeroObject T) ⟶ degreeZeroObject S) =>
+      (shiftFunctor (DerivedCategory Ambient) (0 : ℤ)).map (solidificationAtZero T) ≫ g)
+  exact precomposition_bijective_of_natIso_id
+    (shiftFunctor (DerivedCategory Ambient) (0 : ℤ))
+    (shiftFunctorZero (DerivedCategory Ambient) ℤ)
+    (solidificationAtZero T)
+    (unshiftedDerivedPrecomposition_bijective S T)
 
 #print axioms comparisonAtShift_zero_bijective
 
