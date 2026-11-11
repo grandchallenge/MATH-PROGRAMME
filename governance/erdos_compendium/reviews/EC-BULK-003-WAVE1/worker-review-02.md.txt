@@ -1,0 +1,158 @@
+## Problem 251
+
+- **PROBLEM_ID:** 251
+- **VERDICT:** REQUEST_CHANGES
+- **Exact source:** [governance/erdos_compendium/editorial/0251.md](/home/jim/ec-bulk-003-review-02/governance/erdos_compendium/editorial/0251.md)
+- **Source SHA256 (stripped text):** `30a611f9f658bdd9974ac103d123ef8946c9bdfec6a9b74491126cc15cb7bc9b`
+- **Primary sources inspected:** Erdős 1958, p. 94; Erdős 1988, p. 103; pinned catalogue/formal files. The 1958 and 1988 scan hosts were intermittently inaccessible during fresh retrieval, but the manuscript records that limitation.
+- **Original source-audit comment:** [issue #1521 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1521#issuecomment-6134946161)
+
+The statement, indexing, dyadic-tail reduction, and quantifier discussion are mathematically coherent. Exact arithmetic reproduced the manuscript’s calculation:
+
+```python
+from fractions import Fraction
+p=[2,3,5,7,11,13,17,19,23,29,31]
+S=sum((Fraction(p[n-1],2**n) for n in range(1,11)),Fraction())
+D=sum((Fraction(p[n]-p[n-1],2**n) for n in range(1,11)),Fraction())
+assert (S,D)==(Fraction(3727,1024),Fraction(855,512))
+```
+
+The section contract passes: six H2 headings, no H1, portable delimiters, no forbidden escaped delimiters, and no frozen draft status.
+
+The defect is status/provenance freshness. Lines 67–73 present the 1988 broader conjecture as current context without recording the later external counterexample report [On the Erdős problem #251](https://web.math.pmf.unizg.hr/~vjekovac/files/Erdos_problem_251.pdf). Lines 75 and 109 also say no external proof/report was identified, while newer conditional reports exist, including the 2026 Land/Ringer material indexed in the [current research record](https://github.com/wcook04/plectis-erdos/blob/main/docs/PRIOR_ART.md). These do not solve the unconditional problem, but omission makes the review date claim inaccurate.
+
+**Corrections:** lines 67–75 should distinguish the unresolved unconditional dyadic case from newer conditional work and explicitly label the broader conjecture as externally challenged, not current conjectural background. Update the source list and line 105 accordingly.
+
+**Safeguard:** retain “no GCL certification,” “no unconditional proof,” and “formal statement is not a proof.” Do not promote either external report to theorem status.
+
+## Problem 252
+
+- **PROBLEM_ID:** 252
+- **VERDICT:** PASS
+- **Exact source:** [governance/erdos_compendium/editorial/0252.md](/home/jim/ec-bulk-003-review-02/governance/erdos_compendium/editorial/0252.md)
+- **Source SHA256 (stripped text):** `d40c86ef14b4b2273ae0dbd25950ba5e8929f369c0d79bbf220d5d233d809b2d`
+- **Primary sources inspected:** Erdős–Straus 1971, Theorem 2.26 p. 642; Erdős–Straus 1974, Theorem 1.1 p. 85; Schlage-Puchta 2006 p. 455; Friedlander–Luca–Stoiciu 2007, Theorems 1–2 pp. 2–3; Pratt 2022, Theorem 1 p. 2.
+- **Original source-audit comment:** [issue #1522 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1522#issuecomment-6134991093)
+
+The article correctly separates the unconditional cases $k=1,2,3,4$ from the unresolved $k\ge5$ remainder, and correctly labels Schinzel/prime-tuples implications as conditional. Its normalization caveats are strong: the source starts at $n=1$, while the pinned Lean `tsum` includes $n=0`; the formal theorem bodies contain `sorry`; and natural/integer polynomial encodings are not silently treated as equivalent.
+
+The exact finite claim reproduced successfully:
+
+```python
+from fractions import Fraction
+from math import factorial
+def sigma(k,n): return sum(d**k for d in range(1,n+1) if n%d==0)
+v=[sigma(4,n) for n in range(1,8)]
+s=sum((Fraction(sigma(4,n),factorial(n)) for n in range(1,8)),Fraction())
+assert v==[1,17,82,273,626,1394,2402]
+assert s==Fraction(106271,2520)
+```
+
+The six-section/no-H1/math-delimiter/source-status checks all pass. No unsupported precision or fabricated theorem page was found. The bibliography’s warning about the Erdős–Kac/Breusch citation conflation is appropriately conservative.
+
+I found no newer source that changes the $k\ge5$ status during the bounded literature check; Pratt’s 2022 result remains the cited $k=4$ endpoint.
+
+**Provenance disposition:** PASS as documentary editorial review, not mathematical certification.
+
+**Correction instructions:** none required.
+
+**Safeguard:** preserve the explicit “statement scaffold with unproved declarations” language and the distinction between conditional published theorems, borrowed classical results, and GCL authority.
+
+## Problem 253
+
+- **PROBLEM_ID:** 253
+- **VERDICT:** PASS
+- **Exact source:** [governance/erdos_compendium/editorial/0253.md](/home/jim/ec-bulk-003-review-02/governance/erdos_compendium/editorial/0253.md)
+- **Source SHA256 (stripped text):** `26c03f7da6a2bd482fed2bc39b1666e036592970a37f624ae97481e0d810a482`
+- **Primary sources inspected:** Erdős 1961, Problem 17 pp. 230–231; Cassels 1960, Theorem II p. 112 and construction pp. 122–124; pinned/live formal metadata.
+- **Original source-audit comment:** [issue #1523 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1523#issuecomment-6134982424)
+
+The article correctly identifies Cassels’s counterexample and preserves the important quantifier distinction: Cassels’s sequence depends on the chosen $\varepsilon$, so the text does not overstate the result as one unqualified density-zero construction. The progression hypothesis, shrinking-gap implication, distinct-subset-sum interpretation, and eventual-completeness contradiction are logically sound. The external Lean pointer and `sorry` caveat are correctly treated as provenance only.
+
+The article’s floating-point toy example was not used as the exact check. I independently reproduced its alternate finite principle with fraction-exact arithmetic:
+
+```python
+from fractions import Fraction
+from itertools import combinations
+A=range(1,13)
+S={sum((Fraction(a) for a in c),Fraction())
+   for r in range(13) for c in combinations(A,r)}
+assert S=={Fraction(n) for n in range(79)}
+```
+
+Output: 79 sums, exactly $0$ through $78$.
+
+All structural checks pass: six required H2 headings, no H1, portable MathJax delimiters, no forbidden escaped delimiters, and no source-level frozen `UNACCEPTED DRAFT` text. The Cassels theorem is presented as a borrowed classical resolution, not as a GCL proof. The newer literature checked did not produce a substantive status change for this exact problem.
+
+**Provenance/exception disposition:** PASS. The article appropriately records formalization and source-access boundaries.
+
+**Correction instructions:** none required.
+
+**Safeguard:** retain the explicit statement that Cassels’s theorem is externally borrowed, no Lean replay was performed, and no GCL mathematical certification or new proof is claimed.
+
+## Problem 254
+
+- **PROBLEM_ID:** 254
+- **VERDICT:** REQUEST_CHANGES
+- **Exact source:** [governance/erdos_compendium/editorial/0254.md](/home/jim/ec-bulk-003-review-02/governance/erdos_compendium/editorial/0254.md)
+- **Source SHA256 (stripped text):** `ae9529aee48e027e7eb476189e3fb4947e8f7cd3b96fc08e716fb372e68b82a1`
+- **Primary sources inspected:** Erdős 1961, Problem 17 p. 231 and formulas (1.17.1)–(1.17.2); Cassels 1960, Theorem I p. 111; Schmidt/Fan’s newer external preprint [arXiv:2607.14071v5](https://arxiv.org/abs/2607.14071).
+- **Original source-audit comment:** [issue #1524 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1524#issuecomment-6134996539)
+
+The manuscript accurately states the original hypotheses, Cassels’s stronger sufficient theorem, the positive-integer versus `Set ℕ` normalization gap, and the natural-subtraction caveat. Its finite certificate was reproduced exactly:
+
+```python
+from fractions import Fraction
+from itertools import combinations
+A=range(1,13)
+S={sum((Fraction(a) for a in c),Fraction())
+   for r in range(13) for c in combinations(A,r)}
+assert S=={Fraction(n) for n in range(79)}
+```
+
+The structural contract passes completely.
+
+However, lines 46 and 85 are materially stale. Steve Fan’s revised 2026 preprint states that sets satisfying the same L1 divergence condition and eventually at least five elements in each dyadic interval are strongly complete, and explicitly says this resolves Erdős’s 1961 conjecture. Since $A(2x)-A(x)\to\infty$ implies the eventual fixed lower bound, this is directly relevant to Problem 254. It is an unverified external theorem claim, not GCL certification, but its omission makes “remains unresolved” inaccurate as a current literature statement.
+
+**Corrections:** revise lines 46, 72, and 85 to say that a newer external preprint claims an affirmative resolution; state that the claim has not been independently verified or admitted by GCL; add the exact arXiv version/date and theorem interface. Retain Cassels as a stronger classical subcase and do not call Fan’s result certified.
+
+**Safeguard:** the article must distinguish “external preprint claims solved” from “GCL-certified theorem.” Do not silently change the protected catalogue status.
+
+## Problem 255
+
+- **PROBLEM_ID:** 255
+- **VERDICT:** REQUEST_CHANGES
+- **Exact source:** [governance/erdos_compendium/editorial/0255.md](/home/jim/ec-bulk-003-review-02/governance/erdos_compendium/editorial/0255.md)
+- **Source SHA256 (stripped text):** `e6bb123ad1eaceb0b0c8c835ecd6dffb9ab1bd842e3edf855ffe79ff9ce1dc42`
+- **Primary sources inspected:** Erdős 1961, Problem (1.21.6) p. 234; Schmidt 1972, Theorem and Corollary p. 64; Schmidt 1968 publisher metadata/DOI only.
+- **Original source-audit comment:** [issue #1525 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1525#issuecomment-6134991443)
+
+The mathematical status and source boundary are well handled. Schmidt 1972 directly supports the countability route: its theorem gives empty higher derivatives for bounded-discrepancy endpoint sets, and its corollary makes those sets countable. The manuscript correctly says the 1968 full primary text was unavailable and does not fabricate theorem numbering or pages. It also correctly rejects upstream “Lean” metadata as certification.
+
+The exact finite discrepancy calculation was reproduced with rational arithmetic:
+
+```python
+from fractions import Fraction
+z=[Fraction(0),Fraction(1,2),Fraction(1,4),Fraction(3,4),
+   Fraction(1,8),Fraction(5,8),Fraction(3,8),Fraction(7,8)]
+h=Fraction(1,2)
+assert [sum(x<h for x in z[:N])-N*h for N in range(1,9)] == [
+ Fraction(1,2),Fraction(0),Fraction(1,2),Fraction(0),
+ Fraction(1,2),Fraction(0),Fraction(1,2),Fraction(0)]
+```
+
+The structural contract passes.
+
+A quantifier/notation defect occurs at line 14: `∃ I⊆[0,1]` formally permits an arbitrary subset, not necessarily an interval. The surrounding prose says interval, but the displayed formula must carry the restriction. This is especially important because the article itself emphasizes fixed-interval quantification.
+
+**Correction:** replace line 14 with an explicit `∃ I, I is an interval ...`, or use the normalized form `∃ x∈(0,1): limsup |D_N([0,x))|=∞`; also state the endpoint convention in that display or immediately beside it.
+
+**Safeguard:** retain the explicit 1968 access limitation and the statement that Schmidt’s result is borrowed external mathematics, not a GCL proof.
+
+## Totals
+
+- **PASS:** 2
+- **REQUEST_CHANGES:** 3
+- **SOURCE_BLOCKED:** 0
+
+Cross-cutting defects: structural contracts and hashes pass for all five; the substantive issues are outdated external-literature coverage for Problems 251 and 254, plus the interval quantifier defect in Problem 255.

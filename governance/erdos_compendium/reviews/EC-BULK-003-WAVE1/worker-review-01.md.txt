@@ -1,0 +1,122 @@
+## PROBLEM_ID=246
+
+VERDICT=REQUEST_CHANGES
+
+Exact source: [governance/erdos_compendium/editorial/0246.md](/home/jim/ec-bulk-003-review-01/governance/erdos_compendium/editorial/0246.md). Stripped-text SHA256: `2b0de85400f23d27b68d94b1983720f438497fa5a190e447e8745dccf263ff1e`.
+
+Primary source inspected: Birch, *Note on a problem of Erdős*, pp. 370–373, especially theorem and \(N(3,5)=22\) on p. 370 ([journal record](https://doi.org/10.1017/S0305004100034150), [scan](https://www.brand.site.co.il/riddles/201507a_files/S0305004100034150a.pdf)). The original scan visibly says “positive integers” for exponent pairs; the article correctly identifies this as a normalization ambiguity because the theorem and binary example require zero exponents.
+
+Original audit comment: [RESULT/1, issue #1515](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1515#issuecomment-6134850376), exact identity and disposition `SOURCE_LOCK_READY`.
+
+Exact arithmetic replay:
+
+```python
+terms={3**i*5**j for i in range(20) for j in range(20)
+       if 3**i*5**j <= 500}
+reachable={0}
+for t in sorted(terms):
+    reachable |= {x+t for x in list(reachable) if x+t <= 500}
+missing=[n for n in range(1,501) if n not in reachable]
+# [2, 7, 11, 22]
+```
+
+The theorem’s quantifiers, distinct-summand interpretation, \(a,b\ge2\), and finite example are mathematically correct. The article properly separates Birch’s classical proof, finite computation, Cassels’s un replayed generalization, and external Lean metadata. The direct current catalogue page was inaccessible with 403, and that boundary is explicitly acknowledged.
+
+Structural checks pass: exactly six H2 headings, no H1, balanced portable dollar math, no legacy delimiters. Correction required: line 54 contains the forbidden frozen phrase “unaccepted draft.” Replace it with wording such as “This manuscript is outside the protected admissions ledger.” The article must not imply GCL certification or certify the external `sorry`-based Lean pointer.
+
+## PROBLEM_ID=247
+
+VERDICT=PASS
+
+Exact source: [governance/erdos_compendium/editorial/0247.md](/home/jim/ec-bulk-003-review-01/governance/erdos_compendium/editorial/0247.md). Stripped-text SHA256: `77ea1f08d6316df9cf09e53794200011014d5a250cebca1a2b2107180bf79a42`.
+
+Primary sources inspected: Erdős (1975), pp. 1–2 ([PDF](https://www.renyi.hu/~p_erdos/1976-44.pdf)); Erdős–Graham (1980), p. 61 ([scan](https://mathweb.ucsd.edu/~ronspubs/80_11_number_theory.pdf)); and Erdős (1988), printed pp. 102–106 ([PDF](https://renyi.hu/~p_erdos/1988-22.pdf)). These support the distinction between the open linear-limsup problem and stronger polynomial-growth results.
+
+Original audit comment: [RESULT/1, issue #1516](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1516#issuecomment-6134945772), disposition `PARTIAL`.
+
+Exact arithmetic replay:
+
+```python
+from fractions import Fraction
+sum(Fraction(1, 2**(n*n)) for n in range(1,6))
+# Fraction(18940417, 33554432)
+```
+
+The article correctly states the source condition \(1\le a_1<a_2<\cdots\) and \(\limsup a_n/n=\infty\), including its full “for every \(C>0\), every \(N\)” quantifier form. The \(a_n=n^2\) example and tail estimate are correct; \(a_n=2n\) correctly demonstrates failure of the hypothesis despite a rational sum. The stronger 1980 and 1988 conditions are explicitly presented as external results, not as a solution of #247 or GCL certification.
+
+The Lean indexing mismatch, positivity omission, `k+1` denominator, and `sorry` caveats are accurately recorded. No newer source found in the bounded review changes the stated status. Structural checks pass: six H2 headings, no H1, balanced portable math delimiters, no escaped math syntax, and no frozen draft-status phrase. The article preserves the open-case claim limit and does not overstate external theorem authority.
+
+## PROBLEM_ID=248
+
+VERDICT=REQUEST_CHANGES
+
+Exact source: [governance/erdos_compendium/editorial/0248.md](/home/jim/ec-bulk-003-review-01/governance/erdos_compendium/editorial/0248.md). Stripped-text SHA256: `2d09ce4b594e222ca29202130eb63b9d13de8cf88c4741c7c4d976238dfb2d77`.
+
+Primary sources inspected: Erdős–Graham (1980), p. 61 ([scan](https://mathweb.ucsd.edu/~ronspubs/80_11_number_theory.pdf)); Tao–Teräväinen, Theorem 1.1, p. 2 and proof §2, pp. 11–24 ([arXiv record](https://arxiv.org/abs/2512.01739v2), [PDF](https://arxiv.org/pdf/2512.01739v2)); and Lau, Theorem 1.1, p. 3 ([arXiv](https://arxiv.org/abs/2604.15042v2)). The later Lau result is correctly kept separate because it starts at \(k\ge2\).
+
+Original audit comment: [RESULT/1, issue #1517](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1517#issuecomment-6134981537), disposition `STATUS_CONFLICT`.
+
+Exact arithmetic replay for \(n=1,C=1\), \(1\le k\le8\):
+
+```text
+omega(2..9) = [1,1,1,1,2,1,1,1]
+omega(n+k) <= k for every displayed k
+max omega(n+k)/k = 1
+omega(12)=2, Omega(12)=3
+```
+
+The article’s quantifiers are correct: one absolute \(C\), infinitely many positive \(n\), and every positive \(k\). The \(\omega\le\Omega\) bridge is valid, and the Tao–Teräväinen theorem is accurately presented as borrowed external mathematics rather than an original GCL proof. Formal natural-number positivity and the pinned/current `sorry` distinction are properly disclosed.
+
+Structural checks pass: six H2 headings, no H1, portable math delimiters, no legacy syntax, and no frozen draft phrase. Editorial correction required at line 67: “A subsequent authenticated source return is recorded for issue #1517 is open…” is grammatically defective. Rewrite, for example: “A subsequent authenticated source return for issue #1517 is now recorded; the issue remains open.” No mathematical or certification correction is otherwise required.
+
+## PROBLEM_ID=249
+
+VERDICT=PASS
+
+Exact source: [governance/erdos_compendium/editorial/0249.md](/home/jim/ec-bulk-003-review-01/governance/erdos_compendium/editorial/0249.md). Stripped-text SHA256: `87c59c4671639b5348d8a59032def8fa8ed793292f8563716a859a82594b48e8`.
+
+Primary sources inspected: Erdős–Graham (1980), p. 61 ([scan](https://mathweb.ucsd.edu/~ronspubs/80_11_number_theory.pdf)); Erdős (1988), pp. 102–109 ([PDF](https://renyi.hu/~p_erdos/1988-22.pdf)); and the current formal-provider issue documenting related but nonresolving variants ([issue #5037](https://github.com/google-deepmind/formal-conjectures/issues/5037)). The cited 1974 scan was not reliably fetched during this review, but the article explicitly records that the audit did not find the exact statement there.
+
+Original audit comment: [RESULT/1, issue #1518](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1518#issuecomment-6134981825), disposition `BOUNDED_TASK_DESIGNED`.
+
+Exact arithmetic replay:
+
+```python
+phi(1..10) = [1,1,2,2,4,2,6,4,6,4]
+sum(phi(n)/2**n for n=1..10) = 87/64
+```
+
+The statement, \(n\ge1\) indexing, \(n=0\) formal normalization caveat, and open status are correct. The lacunary subseries calculation is also correct:
+\[
+\phi(2^m)/2^{2^m}=2^{-(2^m-m+1)},
+\]
+with exponent gaps \(2^m-1\to\infty\). The article correctly explains why irrationality of that subseries does not imply irrationality of the full positive series because of the uncontrolled remainder and possible carries.
+
+The formal declaration’s `answer(sorry)`, current-provider changes, and neighboring finite results are carefully bounded. No newer resolving preprint was found in the bounded search. Structural checks pass completely: six H2 headings, no H1, balanced portable math delimiters, no legacy delimiters, and no frozen draft-status phrase. The manuscript does not claim GCL proof, formal certification, or current-literature completeness.
+
+## PROBLEM_ID=250
+
+VERDICT=PASS
+
+Exact source: [governance/erdos_compendium/editorial/0250.md](/home/jim/ec-bulk-003-review-01/governance/erdos_compendium/editorial/0250.md). Stripped-text SHA256: `59951b02f762f534953fc9106979d3cbd3716663ce78be53799ddc3c07496fa2`.
+
+Primary source inspected: Nesterenko, *Modular functions and transcendence questions*, definition of \(P(q)\) p. 1319 and Theorem 1/Corollary 2 p. 1320 ([Math-Net full text](https://www.mathnet.ru/php/getFT.phtml?jrnid=sm&option_lang=rus&paperid=158&what=fullteng), [DOI](https://doi.org/10.1070/SM1996v187n09ABEH000158)). Original problem sources are also linked: Erdős–Graham p. 61 and Erdős 1988 p. 102.
+
+Original audit comment: [RESULT/1, issue #1519](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1519#issuecomment-6134982111), disposition `STATUS_CONFLICT`.
+
+Exact arithmetic replay:
+
+```text
+sigma(1..9) = [1,3,4,7,6,12,8,15,13]
+S_8 = 687/256
+1 - 24*S_8 = -2029/32
+sigma(9)/2^9 = 13/512
+```
+
+The quantifier distinction between the classical single convergent sum and the Lean `HasSum` implication is mathematically important and correctly explained. The convergence comparison \(\sigma_1(n)\le n^2\) is valid. Nesterenko’s definition and Corollary 2 support transcendence of \(P(1/2)\); the affine identity \(S=(1-P(1/2))/24\) then correctly yields transcendence, hence irrationality.
+
+The pinned/current formal files and external Lean pointer are accurately described as containing or depending on `sorry`-based, unreplayed material. No GCL formal certification is claimed. Structural checks pass fully: six H2 headings, no H1, portable math delimiters, no escaped syntax, and no frozen draft phrase.
+
+Total verdict count: PASS 3; REQUEST_CHANGES 2; SOURCE_BLOCKED 0.
+
+Cross-cutting defects: the exact `MATHSOLVE/WORKERS.md` path was absent; the available worker-bootstrap document was read instead. Manuscript contract structure otherwise passed for all five.
