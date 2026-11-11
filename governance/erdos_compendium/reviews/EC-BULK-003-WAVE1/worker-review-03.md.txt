@@ -1,0 +1,77 @@
+## Problem 256
+
+- **PROBLEM_ID:** 256
+- **VERDICT:** PASS
+- **Exact source:** [`governance/erdos_compendium/editorial/0256.md`](/home/jim/ec-bulk-003-review-03/governance/erdos_compendium/editorial/0256.md)
+- **Source SHA256 of stripped text:** `b883d2ba0f00f94009f4d3e84e3575ae9b547eef075c31b40bf1bc864d6e9493`
+- **Primary sources/pages inspected:** Erdős–Szekeres (1959), pp. 29–34; Atkinson (1961), pp. 7–12; Odlyzko (1982), pp. 412–420; Belov–Konyagin (1996), pp. 1123–1182; Tang, Theorem 1. The local retrieval of the Renyi-hosted 1959 scan returned HTTP 403, but the authenticated audit records direct inspection.
+- **Original source-audit comment:** [RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1526#issuecomment-6134946838)
+- **Exact arithmetic check:** For \(x=\cos t\), the manuscript’s identity gives \(8(1-x)^2(1+x)\). At \(x=-1/3\), this is \(256/27\), hence the maximum is \(16/(3\sqrt3)=3.079201435678004\). This confirms the stated candidate upper bound \(f(2)\le16/(3\sqrt3)\), not equality for \(f(2)\).
+- **Mathematical and quantifier assessment:** Correctly preserves positive integers, nondecreasing tuples, repeated exponents, the infimum distinction, and the separate \(f^*(n)\) variant. The negative answer to the specific superpolynomial question is clearly separated from the unresolved order of \(f(n)\).
+- **Provenance/exception disposition:** External published results are attributed as external; no GCL theorem or formal proof is claimed. The newer Tang lower bound is dated and identified as external.
+- **Correction instructions:** None required.
+- **Claim-limit safeguard:** Lines 89 and 101 correctly state that catalogue metadata, finite checks, and external theorems do not constitute GCL certification.
+
+## Problem 257
+
+- **PROBLEM_ID:** 257
+- **VERDICT:** REQUEST_CHANGES
+- **Exact source:** [`governance/erdos_compendium/editorial/0257.md`](/home/jim/ec-bulk-003-review-03/governance/erdos_compendium/editorial/0257.md)
+- **Source SHA256 of stripped text:** `dbf48ec27742d8f5fb4564b9b82b5e86b7943e4d33c2b69b95a30630e199619b`
+- **Primary sources/pages inspected:** Erdős (1948), p. 63; Erdős (1968), pp. 222–225; Tao–Teräväinen v2, Theorem 1.3, p. 4; Kovač–Tao, Theorem 2.5 and Corollary 2.6, p. 7. The audit records direct inspection of the cited scans and arXiv sources.
+- **Original source-audit comment:** [RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1527#issuecomment-6134982748)
+- **Exact arithmetic check:** The supplied Fraction calculation gives \(S(\{1,2,3\})=31/21\), \(R_{12}=6045/4096\), difference \(31/86016\), and bound \(3/4096\). The divisor reindexing and finite tail inequality are correct.
+- **Mathematical and quantifier assessment:** The manuscript correctly distinguishes the universal \(A\subseteq\mathbb N_{>0}\) assertion from full-support, pairwise-coprime, and prime subcases. The \(0\)-denominator/domain caveat and Lean division-by-zero convention are accurately explained. The prime-power claim is appropriately not promoted to a checked proof.
+- **Provenance/exception disposition:** Line 73 calls the Tao–Teräväinen arXiv result a “published-source result,” although the cited evidence is an arXiv preprint. This is a provenance error, not a mathematical error.
+- **Correction instructions:** At lines 73 and 104 replace “published-source result” with “external preprint result” or provide a verified journal publication citation. Preserve the existing caveat that the prime-power extension is only stated, not detailed.
+- **Claim-limit safeguard:** Lines 87–95 correctly deny universal proof or GCL certification; retain that language after correction.
+
+## Problem 258
+
+- **PROBLEM_ID:** 258
+- **VERDICT:** PASS
+- **Exact source:** [`governance/erdos_compendium/editorial/0258.md`](/home/jim/ec-bulk-003-review-03/governance/erdos_compendium/editorial/0258.md)
+- **Source SHA256 of stripped text:** `0ffe296a3afa54c296fe9ab61df3de34b7b25676171b53b1d2135a6affa55b6e`
+- **Primary sources/pages inspected:** Erdős (1948), pp. 63–66; Erdős–Straus (1971), Theorem 2.23 and Conjecture 2.24, pp. 641–642; Tao–Teräväinen, Theorem 1.1; Chojecki, Lemma 1 and Theorem 2, pp. 1–2. The authenticated audit records direct inspection.
+- **Original source-audit comment:** [RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1528#issuecomment-6134947154)
+- **Exact arithmetic check:** Direct divisor counting verifies \(\tau(36+k)\le2^k\) for every \(1\le k\le30\); initial values include \(\tau(37)=2,\tau(38)=4,\tau(39)=4,\tau(40)=8\). This is correctly labelled only as a finite illustration.
+- **Mathematical and quantifier assessment:** The manuscript accurately preserves the unrestricted positive-integer sequence \(a_n\to\infty\), distinguishes it from the monotone theorem, and explains why finite initial terms do not affect convergence or irrationality. The deduction from \(\Omega(N+k)\le Ck\) to \(\tau(N+k)\le2^{Ck}\) is correct.
+- **Provenance/exception disposition:** The Tao–Teräväinen/Chojecki route is clearly presented as an external proof report, not as a GCL theorem. The pinned Lean file’s `sorry` and the axiom-conditional gist are explicitly disclosed.
+- **Correction instructions:** None required.
+- **Claim-limit safeguard:** Lines 72, 76, and 80 correctly separate external mathematical status from GCL certification and formal replay.
+
+## Problem 259
+
+- **PROBLEM_ID:** 259
+- **VERDICT:** SOURCE_BLOCKED
+- **Exact source:** [`governance/erdos_compendium/editorial/0259.md`](/home/jim/ec-bulk-003-review-03/governance/erdos_compendium/editorial/0259.md)
+- **Source SHA256 of stripped text:** `643a7f77e430d74f57261157919d9e0b9ee1253f03de59f1e76a46b57b212252`
+- **Primary sources/pages inspected:** Erdős (1981), pp. 765–768; Erdős (1988), cited p. 103; Chen–Ruzsa (1999), *Periodica Mathematica Hungarica* 38, pp. 31–37. The decisive Chen–Ruzsa article was not reliably retrievable: the accessible publisher metadata does not expose the theorem text or exact theorem page. The manuscript acknowledges this boundary.
+- **Original source-audit comment:** [RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1529#issuecomment-6135128458)
+- **Exact arithmetic check:** Exact Fraction arithmetic reproduces the squarefree list through 20 and gives \(890183/524288=1.6978893280029296875\). The full derivative-geometric tail is \(11/524288<2.1\times10^{-5}\). The normalization check is correct.
+- **Mathematical and quantifier assessment:** The Möbius-square/squarefree equivalence, enumeration, \(r=2,\ell=2\) specialization, and distinction between squarefree and squarefull are correct. The article does not silently convert the pinned `sorry` declaration or external Lean gist into proof authority.
+- **Provenance/exception disposition:** The central Chen–Ruzsa theorem is presented as the classical published resolution, but its decisive hypotheses and printed theorem page cannot be independently checked from the primary article in this environment.
+- **Correction instructions:** No concealment is needed. Keep lines 75–77 and 83 unchanged or strengthen them by saying “editorially source-blocked pending primary-text retrieval.” Do not admit the manuscript until the theorem text, page, and hypotheses are verified.
+- **Claim-limit safeguard:** Lines 69, 71, 75, and 83 correctly state that the provider file and external formalization are not certification.
+
+## Problem 260
+
+- **PROBLEM_ID:** 260
+- **VERDICT:** PASS
+- **Exact source:** [`governance/erdos_compendium/editorial/0260.md`](/home/jim/ec-bulk-003-review-03/governance/erdos_compendium/editorial/0260.md)
+- **Source SHA256 of stripped text:** `f2e7bcd745a683ec1ddafd2623edddd93f26232d31a6d409aef17d7d66758398`
+- **Primary sources/pages inspected:** Erdős (1981), p. 765; Borwein–Loring (1990), p. 378; Wang arXiv v4, Theorem 1.1 and Corollary 1.2, pp. 2–4. The 1988 survey scan was not reliably retrievable, and the manuscript explicitly records that limitation.
+- **Original source-audit comment:** [RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1530#issuecomment-6135128884)
+- **Exact arithmetic check:** Fraction arithmetic reproduces the \(a_j=2j\) example: partial sum at \(m=20\) is \(7635497415/8589934592\), and the exact tail from \(8/9\) is \(1/77309411328\).
+- **Mathematical and quantifier assessment:** The article correctly preserves strict increase, positive integers, the universal quantifier, and \(a_n/n\to\infty\). It correctly explains that this condition does not imply diverging consecutive gaps. The contradiction from positive density versus zero density is valid conditional on Wang’s theorem.
+- **Provenance/exception disposition:** The Wang route is consistently labelled an external claim requiring specialist review. The pinned formal declaration contains `sorry`, and the external repository is explicitly not GCL certification.
+- **Correction instructions:** None required. The inaccessible 1988 survey is already disclosed at line 122.
+- **Claim-limit safeguard:** Lines 103, 107, 115, and 126 prevent the external preprint or Lean repository from being presented as a certified solution.
+
+## Final count and cross-cutting defects
+
+- **PASS:** 3
+- **REQUEST_CHANGES:** 1
+- **SOURCE_BLOCKED:** 1
+
+All five manuscripts pass the six-H2/no-H1, math-delimiter, math-gate, and exact SHA-256 checks. No files were edited and the worktree remains unchanged. The required `MATHSOLVE/WORKERS.md` is absent from this checkout, so that procedural prerequisite could not be independently read; this should be recorded as a repository/process defect.

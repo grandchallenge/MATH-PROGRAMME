@@ -1,0 +1,152 @@
+## Problem 261 — `VERDICT=PASS`
+
+- **PROBLEM_ID:** 261
+- **Exact source path:** [`governance/erdos_compendium/editorial/0261.md`](/home/jim/ec-bulk-003-review-04/governance/erdos_compendium/editorial/0261.md)
+- **Source SHA256 of stripped text:** `53fc52752761f7b42d7bd8401e9ba74ca5c2ffdcbd00caec3d7b20bd69321d6f`
+- **Original source-audit comment:** [issue #1531 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1531#issuecomment-6135129250), assignment `ERDOS-CATALOGUE-0261-S01`, disposition `PARTIAL`.
+
+The article has exactly six required H2 sections, no H1, portable dollar delimiters, no escaped math delimiters, and no frozen `UNACCEPTED DRAFT` claim. Its quantifiers correctly distinguish infinitely many finite solutions, universal solvability, and the separate continuum-representation question. The Borwein–Loring identity and the weaker two-representation example are not promoted to solutions of the open questions.
+
+Exact arithmetic replay:
+
+```python
+from fractions import Fraction
+assert Fraction(4,16) == Fraction(5,32) + Fraction(6,64)
+for m in range(2,9):
+    n = 2**(m+1)-m-2
+    assert Fraction(n,2**n) == sum(
+        (Fraction(n+i,2**(n+i)) for i in range(1,m+1)), Fraction())
+```
+
+I inspected the [Borwein–Loring primary PDF](https://www.cecm.sfu.ca/~pborwein/PAPERS/P46.pdf), Proposition 1, pp. 382–383, and the source-audit references to Tengely–Ulas–Zygadło, Theorems 2.5, 3.5, and Corollary 3.6. The 1988 scan was not directly retrievable in this review, but the audit records a recovered, hashed copy and the article accurately preserves that access boundary.
+
+**Provenance/exception disposition:** PASS; the audit’s `PARTIAL` status concerns missing `MATHSOLVE/WORKERS.md`, not a manuscript mathematical defect.
+**Correction instructions:** None.
+**Claim-limit/certification safeguard:** Strong. The article explicitly separates external results, computation, formal declarations containing `sorry`, and GCL certification.
+
+---
+
+## Problem 262 — `VERDICT=PASS`
+
+- **PROBLEM_ID:** 262
+- **Exact source path:** [`governance/erdos_compendium/editorial/0262.md`](/home/jim/ec-bulk-003-review-04/governance/erdos_compendium/editorial/0262.md)
+- **Source SHA256 of stripped text:** `2dac97ce203b867d8c1f29faa855c9b8bda18e284bf06f46881a43315fb080f8`
+- **Original source-audit comment:** [issue #1532 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1532#issuecomment-6135129652), assignment `ERDOS-CATALOGUE-0262-S01`, disposition `STATUS_CONFLICT`.
+
+The six-section contract passes exactly: six H2 headings, no H1, renderer-safe math, no legacy delimiters, and no frozen draft language. The article states the universal positive-multiplier quantifier correctly and distinguishes Erdős’s positive example from Hančl’s obstruction. It does not treat the contradictory catalogue `solved (Lean)` label as proof authority.
+
+Exact arithmetic replay:
+
+```python
+from fractions import Fraction
+import math
+assert sum(
+    (Fraction(1,(n+2)*math.factorial(n)) for n in range(1,20)),
+    Fraction()) == Fraction(25545471085854719999,51090942171709440000)
+assert Fraction(1,2**16)/(1-Fraction(1,2**16)) == Fraction(1,65535)
+```
+
+The factorial telescoping identity is correct and gives the infinite value \(1/2\). I inspected Erdős’s [1976 primary PDF](https://www.renyi.hu/~p_erdos/1976-44.pdf), including the theorem interface cited at printed p. 6. Hančl’s article was independently located through the [Acta Arithmetica volume record](https://pldml.icm.edu.pl/pldml/element/bwmeta1.element.bwnjournal-number-aa-1991-59-2); the source audit supplies the retrieved article hash and page-specific theorem references. The 1988 mirror has retrieval instability, acknowledged in the audit and not used as sole evidence.
+
+**Provenance/exception disposition:** PASS with documented catalogue/provider status conflict.
+**Correction instructions:** None.
+**Claim-limit/certification safeguard:** Strong. Published theorems, finite arithmetic, catalogue metadata, absent formal-provider evidence, and GCL certification remain distinct.
+
+---
+
+## Problem 263 — `VERDICT=REQUEST_CHANGES`
+
+- **PROBLEM_ID:** 263
+- **Exact source path:** [`governance/erdos_compendium/editorial/0263.md`](/home/jim/ec-bulk-003-review-04/governance/erdos_compendium/editorial/0263.md)
+- **Source SHA256 of stripped text:** `a19a578fafdb68081c0a62305b85d6fdce3b4e314f171f77692d01df2e1d543e`
+- **Original source-audit comment:** [issue #1533 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1533#issuecomment-6135130121), assignment `ERDOS-CATALOGUE-0263-S01`, disposition `STATUS_CONFLICT`.
+
+The structural contract otherwise passes: exactly six H2 sections, no H1, portable math delimiters, no escaped syntax, and no frozen draft statement. The mathematical framing is careful about strict monotonicity, indexing, ratio orientation, unrestricted `tsum`, and the fact that existing formal declarations contain `sorry`.
+
+There is one concrete editorial/math rendering defect at **line 49**:
+
+> `If $(a_n)$ is strictly increasing, $sum 1/a_n$ converges, and`
+
+`$sum 1/a_n$` is not the intended operator and is not acceptable mathematical notation. Replace it with, for example, `$\sum_{n=1}^{\infty}1/a_n$`. This is a source correction, not a mathematical certification issue.
+
+Exact arithmetic replay:
+
+```python
+from fractions import Fraction
+a = [2**(2**n) for n in range(5)]
+assert sum((Fraction(1,x) for x in a), Fraction()) == Fraction(53505,65536)
+assert [Fraction(a[n+1],a[n]**2) for n in range(4)] == [Fraction(1)]*4
+```
+
+I inspected the [Kovač–Tao primary paper](https://arxiv.org/abs/2406.17593), Theorem 2.4, p. 6, and [Koizumi’s preprint](https://arxiv.org/abs/2504.05933), Theorem 4, p. 3. The original 1988 scan returned a 502 during this review; the audit records recovered source evidence and the manuscript explicitly reports the formal/source boundary.
+
+**Provenance/exception disposition:** Request one precise notation correction; status conflict is accurately disclosed.
+**Correction instructions:** Line 49 only.
+**Claim-limit/certification safeguard:** Adequate after correction; no external theorem is presented as GCL-certified.
+
+---
+
+## Problem 264 — `VERDICT=PASS`
+
+- **PROBLEM_ID:** 264
+- **Exact source path:** [`governance/erdos_compendium/editorial/0264.md`](/home/jim/ec-bulk-003-review-04/governance/erdos_compendium/editorial/0264.md)
+- **Source SHA256 of stripped text:** `441206c0f3501306a86acc43316ec5dff67a182fd0e1b287699bd3bb3ca66e2d`
+- **Original source-audit comment:** [issue #1534 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1534#issuecomment-6135130517), assignment `ERDOS-CATALOGUE-0264-S01`, disposition `SOURCE_LOCK_READY`.
+
+The manuscript passes the exact six-H2/no-H1 contract and all math-source checks. It correctly presents the modern nonzero-perturbation convention, the distinction between \(2^n\) and \(n!\), and the fact that the pinned Lean declarations are statement interfaces with `sorry`, not checked proofs.
+
+Exact arithmetic replay:
+
+```python
+from fractions import Fraction
+assert 4**1 * sum(
+    (Fraction(1,4**k) for k in range(2,8)), Fraction()
+) == Fraction(1365,4096)
+assert Fraction(1,1) / 3 == Fraction(4**1) * sum(
+    (Fraction(1,4**k) for k in range(2,1000)), Fraction()
+)
+```
+
+The finite value \(1365/4096\) and limiting tail value \(1/3\) are correct. The factorial estimate also correctly yields \(1/[n(n+2)]\to0\), and the article does not infer a factorial solution from failure of the Kovač–Tao hypothesis.
+
+I inspected [Kovač–Tao](https://arxiv.org/abs/2406.17593), Theorem 2.5, p. 6 and its proof interface, including the positive-shift construction. The historical source mirror for the 1988 paper has retrieval instability, but the audit records recovered source evidence; the decisive modern theorem is independently accessible through arXiv and the journal record.
+
+**Provenance/exception disposition:** PASS; the mixed branch status is accurately described and the source-audit disposition is quoted exactly.
+**Correction instructions:** None.
+**Claim-limit/certification safeguard:** Strong. The \(2^n\) conclusion is attributed to external published mathematics; \(n!\) remains open; no GCL proof or formal certification is claimed.
+
+---
+
+## Problem 265 — `VERDICT=PASS`
+
+- **PROBLEM_ID:** 265
+- **Exact source path:** [`governance/erdos_compendium/editorial/0265.md`](/home/jim/ec-bulk-003-review-04/governance/erdos-bulk-003-review-04/governance/erdos_compendium/editorial/0265.md)
+- **Source SHA256 of stripped text:** `ca732f03a582a58f302c7ec6c69d052b91a2893507501392e23c0712c985bc49`
+- **Original source-audit comment:** [issue #1535 RESULT/1](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1535#issuecomment-6135130938), assignment `ERDOS-CATALOGUE-0265-S01`, disposition `STATUS_CONFLICT`.
+
+The manuscript passes the six-H2/no-H1 contract and all portable math checks. The Cantor example is correctly normalized for the minus-one formulation. The two infinite sums are \(1\) and \(11/9\), not \(2\) and \(11/9\), and the source correctly highlights that correction.
+
+Exact arithmetic replay:
+
+```python
+from fractions import Fraction
+s = sum((Fraction(1,k*(k-1)//2) for k in range(3,101)), Fraction())
+t = sum((Fraction(1,k*(k-1)//2-1) for k in range(3,101)), Fraction())
+assert (s,t) == (Fraction(49,50), Fraction(1803151,1499850))
+```
+
+I inspected [Kovač–Tao](https://arxiv.org/abs/2406.17593), §2.2.1, Theorem 2.8, pp. 8–9, and equation (7.9), plus Erdős’s [1985 source](https://www.renyi.hu/~p_erdos/1985-10.pdf), printed p. 334. The 1988 scan was not directly retrievable in this review, but the audit records a recovered source copy and the manuscript explicitly describes the plus/minus normalization conflict. The external Lean repository is accurately described as an unverified provider claim whose build was blocked by a read-only environment; it is not presented as certified.
+
+**Provenance/exception disposition:** PASS with documented source-sign and external-formalization conflicts.
+**Correction instructions:** None. The future-dated `2026-10-13` observation is inherited from the cohort/audit fixture and should be reconciled by the coordinator before publication.
+**Claim-limit/certification safeguard:** Strong; no Lean proof, solved status, GCL certification, or final admission is asserted.
+
+---
+
+### Totals
+
+- **PASS:** 4
+- **REQUEST_CHANGES:** 1
+- **SOURCE_BLOCKED:** 0
+
+Cross-cutting defects: `MATHSOLVE/WORKERS.md` is absent from the checkout despite being required; #263 has the line-49 `sum` notation defect; and the cohort/audit metadata contains future-dated `2026-10-13` observations relative to the review date. The newer [Barreto–Kang–Kim–Kovač–Zhang preprint](https://arxiv.org/abs/2601.21442) concerns a different rapidly converging series and does not change Problems 261–265.
