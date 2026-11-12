@@ -51,12 +51,6 @@ def main():
     if issue.get("state") != "open":
         print(json.dumps({"result": "INELIGIBLE", "reason": "issue not open"}))
         return 2
-    before, pages = comments(args.issue)
-    found = adjudications(before)
-    if found:
-        print(json.dumps({"result": "ALREADY_ADJUDICATED", "comments": found,
-                          "count": len(before), "pages": pages}))
-        return 3
     if args.action == "inspect":
         try:
             current = api("GET", "git/ref/" + ref.removeprefix("refs/"))
@@ -76,6 +70,12 @@ def main():
         api("DELETE", "git/" + ref)
         print(json.dumps({"result": "RELEASED", "sha": args.claim_sha}))
         return 0
+    before, pages = comments(args.issue)
+    found = adjudications(before)
+    if found:
+        print(json.dumps({"result": "ALREADY_ADJUDICATED", "comments": found,
+                          "count": len(before), "pages": pages}))
+        return 3
     main_ref = api("GET", "git/ref/heads/main")
     head = main_ref["object"]["sha"]
     commit = api("GET", f"git/commits/{head}")
