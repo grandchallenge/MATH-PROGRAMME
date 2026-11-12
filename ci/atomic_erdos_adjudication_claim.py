@@ -47,10 +47,6 @@ def main():
     if args.issue < 1310:
         p.error("issue must be at least 1310")
     ref = PREFIX + str(args.issue)
-    issue = api("GET", f"issues/{args.issue}")
-    if issue.get("state") != "open":
-        print(json.dumps({"result": "INELIGIBLE", "reason": "issue not open"}))
-        return 2
     if args.action == "inspect":
         try:
             current = api("GET", "git/ref/" + ref.removeprefix("refs/"))
@@ -70,6 +66,10 @@ def main():
         api("DELETE", "git/" + ref)
         print(json.dumps({"result": "RELEASED", "sha": args.claim_sha}))
         return 0
+    issue = api("GET", f"issues/{args.issue}")
+    if issue.get("state") != "open":
+        print(json.dumps({"result": "INELIGIBLE", "reason": "issue not open"}))
+        return 2
     before, pages = comments(args.issue)
     found = adjudications(before)
     if found:
