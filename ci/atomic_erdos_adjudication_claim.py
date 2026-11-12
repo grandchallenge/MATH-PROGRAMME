@@ -15,9 +15,10 @@ PREFIX = "refs/heads/gcl-adjudication-claims/issue-"
 
 def api(method, path, fields=None):
     cmd = ["gh", "api", "--method", method, f"repos/{REPO}/{path}"]
-    for key, value in (fields or {}).items():
-        cmd += ["-f", f"{key}={value}"]
-    result = subprocess.run(cmd, text=True, capture_output=True)
+    if fields is not None:
+        cmd += ["--input", "-"]
+    result = subprocess.run(cmd, input=json.dumps(fields) if fields is not None else None,
+                            text=True, capture_output=True)
     if result.returncode:
         raise RuntimeError(result.stderr.strip() or result.stdout.strip())
     return json.loads(result.stdout) if result.stdout.strip() else {}
@@ -84,7 +85,7 @@ def main():
     nonce = uuid.uuid4().hex
     claim_commit = api("POST", "git/commits", {
         "message": f"GCL_ADJUDICATION_CLAIM/1 issue={args.issue} actor={actor} nonce={nonce}",
-        "tree": commit["tree"]["sha"], "parents[]": head
+        "tree": commit["tree"]["sha"], "parents": [head]
     })
     try:
         api("POST", "git/refs", {"ref": ref, "sha": claim_commit["sha"]})
