@@ -58,8 +58,8 @@ Let $u=\delta_0-b_0$, $G=e-C_0$, and let $F_{\mathrm{lab}}=G(x)w_\epsilon^\circ(
 | Evaluated summand | Admitted source mechanism |
 | --- | --- |
 | $(1-\alpha)G\,w_\epsilon^\circ$ | One-slot $w_\epsilon^\circ$ plus smooth compact singleton $(1-\alpha)G$ |
-| $(1-\alpha)H_\epsilon\,u$ | Two-slot identity history: scalar strict-$x$ stage and R1 with pure $z$ covectors |
-| $\alpha G(1-\beta)w_\epsilon^\circ$ | Two-slot identity history: scalar strict-$z$ stage and R1 with pure $x$ covectors |
+| $(1-\alpha)H_\epsilon\,u$ | Two-slot identity history: scalar stage on the strict face away from the $x$ anchor and R1 with pure $z$ covectors |
+| $\alpha G(1-\beta)w_\epsilon^\circ$ | Two-slot identity history: scalar stage on the strict face away from the $z$ anchor and R1 with pure $x$ covectors |
 | $\alpha H_\epsilon(1-\beta)u$ | One-slot $H_\epsilon$ plus smooth singleton $-(1-\beta)b_0$ |
 
 In the second and third terms, R1 covectors with only one nonzero coordinate cannot be pure two-slot diagonal conormals. The scalar inputs are in existing 105.5 fixed complete stages; the 108.6 projective tensor product and the normal topology control all requested coefficient derivatives. In the first and fourth terms, the smooth singleton map from 150 §5 and the one-slot map from 141 give a fixed finite source list. No step forms the illegal joint R1 coefficient $G(x)\delta_0(y)$. The cutoffs and density maps are fixed and the geometric/source index lists are independent of relaxed graph orders in all genuine 126 derivative rows.
