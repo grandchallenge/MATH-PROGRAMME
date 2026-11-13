@@ -35,7 +35,7 @@ T=\sum_{m=1}^{\infty}2^{-e_m},
 e_{m+1}-e_m=2^m-1\geq1.
 $$
 
-In particular the exponents $e_m$ are positive, strictly increasing integers and the series converges. Its $N$-th partial sum is a dyadic rational
+In particular the exponents $e_m$ are positive, strictly increasing integers and the series converges. Its partial sum through index $N$ is a dyadic rational
 
 $$
 T_N=\sum_{m=1}^{N}2^{-e_m}
