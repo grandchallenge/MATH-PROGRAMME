@@ -41,11 +41,14 @@ theorem freeStoneanPresentationMap_epi (T : Profinite.{u}) :
     exact (Profinite.epi_iff_surjective _).mp (inferInstance : Epi (Profinite.presentation.π T))
   have hset : Epi (profiniteToCondensed.map (Profinite.presentation.π T)) := by
     change Epi (compHausToCondensed.map (profiniteToCompHaus.map (Profinite.presentation.π T)))
-    exact (compHausToCondensed.preservesEpimorphisms _)
-  have hfree : Epi ((Condensed.free Coeff).map
-      (profiniteToCondensed.map (Profinite.presentation.π T))) :=
-    (Condensed.free Coeff).preservesEpimorphisms _
-  exact hfree
+    letI : Epi (profiniteToCompHaus.map (Profinite.presentation.π T)) := hcomp
+    infer_instance
+  haveI : Epi (profiniteToCondensed.map (Profinite.presentation.π T)) := hset
+  haveI : PreservesEpimorphisms (Condensed.free Coeff) :=
+    preservesEpimorphisms_of_adjunction (Condensed.freeForgetAdjunction Coeff)
+  change Epi ((Condensed.free Coeff).map
+    (profiniteToCondensed.map (Profinite.presentation.π T)))
+  infer_instance
 
 /-- The source of the canonical projective presentation is
 projective in the actual condensed-module category. -/
