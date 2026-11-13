@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "ERDOS-PROOF-VERIFICATION-001.CP001",
+  "checkpoint_id": "ERDOS-PROOF-VERIFICATION-001.CP002",
   "governed_work_id": "ERDOS-PROOF-VERIFICATION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,34 +15,34 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3201"
   },
-  "phase": "Five source-pinned proof verification successors created and registered; protected admission pending; global catalogue triage incomplete",
+  "phase": "Pilot manifests protected-admitted by native merge queue PR #3207 (main 85cf1200); five verification children #3202-#3206 activated AVAILABLE and remain OPEN/Todo; global reconciliation #3208 queued; no proof verification or mathematical certification completed.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "a6bd77291dfd1528de01ba8d260af09a990cbc0f",
-    "candidate_head_sha": "b2821f695f0a9ecc2b7a8a4288bd7bad3acacd6b",
+    "protected_base_sha": "85cf1200afca5c036add48159f048f04e9a7f62b",
+    "candidate_head_sha": "85cf1200afca5c036add48159f048f04e9a7f62b",
     "issue_number": 3201,
-    "pr_number": 3207,
-    "branch": "gcl/erdos-proof-verification-coverage-001",
+    "pr_number": null,
+    "branch": "gcl/erdos-pv-continuity-anchor-001",
     "workflow_runs": []
   },
   "terminal_condition": "Only close upon complete catalogue audit-to-verification triage, completed or evidence-blocked selected verification work, protected reviews/admissions/readback, and separate MATHCERT dispositions only where certification is authorized. Source audit closure is never proof completion.",
   "permitted_next_actions": [
     {
-      "id": "admit-and-activate-pilot",
-      "description": "Reconcile native PR and checks; protected merge/readback followed by unblock of five actual verification queue items."
+      "id": "verify-248-source-and-kernel",
+      "description": "Claim available Erdős #248 verification issue #3204 after fresh ownership check; lock actual formal source and imports, compare exact theorem against Tao–Teräväinen and replay full Lean proof/axiom chain or record precise source/compute blocker; do not claim certification."
     },
     {
       "id": "reconcile-global-source-triage",
-      "description": "Deduplicate existing verified Erd\u0151s work and populate explicit selected/reused/declined/pending decisions across source audit cohort."
+      "description": "Process one bounded batch of catalogue-source-to-verification triage issue #3208, dedupe existing #14/#470/#593 proof lanes, and record source-item decisions under protected admission."
     }
   ],
   "next_action": {
-    "id": "admit-and-activate-pilot",
-    "description": "Read live branch/PR required contexts; merge only via protected route; verify protected main registry and queue, then release blocked labels on issues 3202-3206. Update this checkpoint at each material transition.",
+    "id": "verify-248-source-and-kernel",
+    "description": "Execute the first substantive independent proof-verification unit in issue #3204: source lock + full external Lean dependency and theorem-type audit; run exact kernel replay if accessible, otherwise publish exact blocker and separately review semantics. The proof itself remains unverified until evidence is admitted.",
     "evidence_targets": [
-      "governance/erdos_proof_verification/registry.json",
-      "grandchallenge/MATH-PROGRAMME#3202",
-      "grandchallenge/MATH-PROGRAMME#3206"
+      "grandchallenge/MATH-PROGRAMME#3204",
+      "governance/erdos_proof_verification/manifests/0248.json",
+      "https://github.com/plby/lean-proofs/blob/8822f7ddef30fadbd92e1c6ab4ed897af356af5e/src/latest/ErdosProblems/Erdos248.lean"
     ]
   },
   "external_evidence": {
@@ -50,34 +50,47 @@
     "objects": [
       {
         "kind": "artifact",
-        "identity": "grandchallenge/MATH-PROGRAMME#3201",
-        "status": "GOVERNING_ISSUE_OPEN"
+        "identity": "grandchallenge/MATH-PROGRAMME#3207; merge-group 85cf1200afca5c036add48159f048f04e9a7f62b",
+        "status": "PROTECTED_MERGED_AND_BLOB_READBACK_PASS"
       },
       {
         "kind": "artifact",
         "identity": "grandchallenge/MATH-PROGRAMME#3202-3206",
-        "status": "FIVE_VERIFICATION_TASKS_OPEN_BLOCKED"
+        "status": "FIVE_PROOF_VERIFICATION_ISSUES_OPEN_TODO_AVAILABLE_UNEXECUTED"
+      },
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATH-PROGRAMME#3208",
+        "status": "GLOBAL_TRIAGE_ISSUE_OPEN_TODO_AVAILABLE_INCOMPLETE"
+      },
+      {
+        "kind": "artifact",
+        "identity": "GCL scheduled automation create",
+        "status": "REJECTED_TOO_MANY_ACTIVE_AUTOMATIONS_5_OF_5; EXISTING_SCHEDULES_UNCHANGED"
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Create governing issue and five separate source-linked proof verification tasks, add them to Project #2",
-    "result": "Six issues created with Project item readback. Source audit != completed verification; all children blocked until protected manifest admission.",
+    "action": "Protected merge, immutable receipt readback and explicit activation of five separate verification children, plus global source-audit reconciliation task",
+    "result": "PR #3207 protected merge-group checks PASS and native merge 85cf1200; exact seven file readbacks PASS. #3202–#3206 OPEN/Todo and available labels confirmed, #3208 registered OPEN/Todo/available. No Lean proof replay or certification. Separate hourly automation attempt rejected at plan limit; existing tasks unchanged.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#3207",
+      "grandchallenge/MATH-PROGRAMME@85cf1200afca5c036add48159f048f04e9a7f62b:governance/erdos_proof_verification/registry.json",
       "grandchallenge/MATH-PROGRAMME#3201",
       "grandchallenge/MATH-PROGRAMME#3202",
       "grandchallenge/MATH-PROGRAMME#3203",
       "grandchallenge/MATH-PROGRAMME#3204",
       "grandchallenge/MATH-PROGRAMME#3205",
-      "grandchallenge/MATH-PROGRAMME#3206"
+      "grandchallenge/MATH-PROGRAMME#3206",
+      "grandchallenge/MATH-PROGRAMME#3208"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-13T02:00:53Z"
+    "observed_at": "2026-11-13T02:27:15.481Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -89,7 +102,7 @@
       "docs/ERDOS_PROOF_VERIFICATION.md",
       "grandchallenge/MATHCERT/AGENTS.md"
     ],
-    "instructions": "Re-read exact issue/project/PR states and verify live freshness before mutation. First complete protected admission and activation. For each child require source pin, semantics, proof or bounded lemma replay with no sorry, adversarial pass, internal adjudication, protected readback; reserve certification for MATHCERT. Continue global triage explicitly; do not reuse source-audit closure as proof verification."
+    "instructions": "Re-read #3201, source-pinned registry and manifests, and Project #2 before doing next work. First complete substantive #3204 proof-source/Lean replay (or exact blocker) with role-scoped Adversary and Referee. Independently reconcile global catalogue via #3208 in bounded tranches. Preserve source-audit vs proof-verification and MATHCERT boundaries. The anchor branch is an immutable protected-admission identity, not an authority to push to main; create a fresh ordinary PR for material evidence and rebind checkpoint for each protected transition."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
