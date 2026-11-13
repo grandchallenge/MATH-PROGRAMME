@@ -19,11 +19,12 @@ class QueueTests(unittest.TestCase):
         x=q.candidates('A',cohort='1201-1221',limit=30)
         self.assertEqual((len(x),x[0]['problem_id'],x[-1]['problem_id']),(21,1201,1221))
         self.assertTrue(all(r['queue_issue']==3224 for r in x))
-    def test_only_source_ready_problem_enters_math_stage(self):
+    def test_protected_math_return_not_selected_again(self):
         x=q.candidates('B',limit=5)
-        self.assertEqual([(item['problem_id'],item['queue_issue']) for item in x],[(1,3225)])
+        self.assertEqual(x,[])
         self.assertEqual(q.candidates('B',after=1,limit=1),[])
-    def test_downstream_formal_not_prematurely_dispatched(self):self.assertEqual(q.candidates('C',limit=5),[])
+    def test_only_same_problem_formal_stage_is_ready(self):
+        self.assertEqual([(x['problem_id'],x['queue_issue']) for x in q.candidates('C',limit=5)],[(1,3238)])
     def test_downstream_documentary_not_prematurely_dispatched(self):self.assertEqual(q.candidates('D',limit=5),[])
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]

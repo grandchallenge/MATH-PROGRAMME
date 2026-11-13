@@ -99,10 +99,10 @@ class E2ELifecycleTests(unittest.TestCase):
         self.assertFalse(rc.can_release_after_readback(
             self.row, "A", "grandchallenge/MATH-PROGRAMME@" + "1" * 40))
 
-    def test_one_stage_A_enables_only_same_problem_B(self):
+    def test_one_completed_B_enables_only_same_problem_C(self):
         b = queue.candidates("B", limit=20)
-        self.assertEqual([(x["problem_id"], x["queue_issue"]) for x in b], [(1, 3225)])
-        self.assertEqual(queue.candidates("C", limit=20), [])
+        self.assertEqual(b, [])
+        self.assertEqual([(x["problem_id"],x["queue_issue"]) for x in queue.candidates("C", limit=20)], [(1,3238)])
         self.assertEqual(queue.candidates("D", limit=20), [])
         self.assertEqual(self.cohort["items"][1]["stage_work_items"]["A"]["work_status"],
                          "UNEXECUTED")

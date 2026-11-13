@@ -26,7 +26,7 @@ def comments(issue):
  s=run("gh","api","--paginate","--slurp",f"{BASE}/issues/{issue}/comments?per_page=100")
  return [c for page in json.loads(s) for c in page]
 
-def scope(task_id):
+def scope(task_id, require_eligible=True):
  m=TASK.fullmatch(task_id)
  if not m or not 1<=int(m[1])<=1221: raise ValueError("Bad exact task ID")
  n,stage=int(m[1]),m[2]
@@ -34,7 +34,7 @@ def scope(task_id):
  row=read(cohort["packet"])["items"][(n-1)%100]
  if row["problem_id"]!=n or row["stage_work_items"][stage]["task_id"]!=task_id:
   raise ValueError("Manifest task identity drift")
- if not permitted(row,stage): raise ValueError("Task not eligible on protected manifest")
+ if require_eligible and not permitted(row,stage): raise ValueError("Task not eligible on protected manifest")
  return {"id":task_id,"number":n,"stage":stage,"row":row,
          "issue":row["stage_work_items"][stage]["issue_number"],"packet":cohort["packet"]}
 
@@ -105,6 +105,51 @@ def submit(s,sha,body_path):
          "url":posted["html_url"],"claim_sha":sha,
          "ref_still_held_until_protected_admission":True}
 
+def release(s,claim_sha,admission_sha):
+ if not re.fullmatch(r"[0-9a-f]{40}",claim_sha) or not re.fullmatch(r"[0-9a-f]{40}",admission_sha):
+  raise ValueError("Exact 40-char claim and protected admission SHAs are required")
+ stage=s["row"]["stage_work_items"][s["stage"]]
+ proof_ref=f"grandchallenge/MATH-PROGRAMME@{admission_sha}"
+ if (stage["work_status"]!="PROTECTED_ADMITTED"
+     or stage.get("protected_admission_ref")!=proof_ref
+     or stage["review_status"] in ("NOT_REVIEWED","PENDING","")
+     or not stage.get("evidence_refs")):
+  raise ValueError("Missing exact protected completion and review receipt")
+ held=current_ref(s)
+ if not held or held["object"]["sha"]!=claim_sha:
+  raise ValueError("Claim not held at exact expected SHA")
+ actor=run("gh","api","user","--jq",".login").strip()
+ message=api("GET",f"git/commits/{claim_sha}")["message"]
+ if (not message.startswith("GCL_PV_RESERVATION/1 ")
+     or f"task={s['id']} actor={actor} " not in message
+     or f"source_sha256={s['row']['source_issue_body_sha256']}" not in message):
+  raise ValueError("Actor or source does not match held claim")
+ protected=api("GET",f"contents/{s['packet']}?ref=main")["sha"]
+ local=run("git","hash-object",
+           str(Path(__file__).resolve().parents[1]/s["packet"])).strip()
+ if protected!=local:raise ValueError("Exact cohort status not on protected main")
+ main=api("GET","git/ref/heads/main")["object"]["sha"]
+ status=run("gh","api",f"{BASE}/compare/{admission_sha}...{main}",
+            "--jq",".status").strip()
+ if status not in ("identical","ahead"):
+  raise ValueError("Evidence admission SHA not an ancestor of main")
+ for path in stage["evidence_refs"]:
+  if not path.startswith("governance/"):continue
+  candidate=Path(__file__).resolve().parents[1]/path
+  if not candidate.is_file():raise ValueError("Evidence artifact absent locally")
+  digest=run("git","hash-object",str(candidate)).strip()
+  if api("GET",f"contents/{path}?ref=main")["sha"]!=digest:
+   raise ValueError("Evidence bytes not on protected main")
+ results=[x for x in comments(s["issue"]) if (x.get("body") or "").startswith("RESULT/1\n")
+          and f"ASSIGNMENT_ID: {s['id']}" in (x.get("body") or "")]
+ if len(results)!=1:raise ValueError("Expected exactly one task-bound RESULT/1")
+ validate_return(s["row"],s["stage"],results[0]["body"],[])
+ api("DELETE",f"git/refs/{ref(s).removeprefix('refs/')}")
+ if current_ref(s) is not None:raise RuntimeError("Deleted claim still present")
+ return {"result":"RELEASED_AFTER_PROTECTED_READBACK","task":s["id"],
+         "claim_sha":claim_sha,"protected_admission_sha":admission_sha,
+         "result_comment":results[0]["html_url"]}
+
 def inspect(s):
  held=current_ref(s)
  hits=[{"id":x["id"],"url":x.get("html_url")} for x in comments(s["issue"])
@@ -116,13 +161,16 @@ def inspect(s):
 
 def main():
  p=argparse.ArgumentParser(description=__doc__)
- p.add_argument("action",choices=("inspect","claim","return"))
+ p.add_argument("action",choices=("inspect","claim","return","release"))
  p.add_argument("task_id")
- p.add_argument("--claim-sha");p.add_argument("--body-file")
+ p.add_argument("--claim-sha");p.add_argument("--body-file");p.add_argument("--admission-sha")
  a=p.parse_args()
- s=scope(a.task_id)
+ s=scope(a.task_id, require_eligible=a.action in ("claim","return"))
  if a.action=="inspect":out=inspect(s)
  elif a.action=="claim":out=claim(s)
+ elif a.action=="release":
+  if not a.claim_sha or not a.admission_sha:p.error("Need --claim-sha and --admission-sha")
+  out=release(s,a.claim_sha,a.admission_sha)
  else:
   if not a.claim_sha or not a.body_file:p.error("Need --claim-sha and --body-file")
   out=submit(s,a.claim_sha,a.body_file)

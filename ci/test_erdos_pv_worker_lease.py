@@ -10,11 +10,12 @@ import erdos_pv_binary_blocks as math
 class LeaseTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.s=w.scope("ERDOS-PV-0001-B")
+  cls.s=w.scope("ERDOS-PV-0001-B",require_eligible=False)
  def test_only_one_b_ready(self):
   self.assertEqual(self.s["issue"],3225)
   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0002-B")
-  with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-C")
+  with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-B")
+  self.assertEqual(w.scope("ERDOS-PV-0001-C")["issue"],3238)
  def test_bad_ids(self):
   for x in ["ERDOS-PV-0000-B","ERDOS-PV-1222-A","ERDOS-PV-0001-Z","ERDOS-PV-1-B"]:
    with self.subTest(x=x), self.assertRaises(ValueError):w.scope(x)
@@ -66,6 +67,35 @@ class LeaseTests(unittest.TestCase):
  def test_wrong_lease_owner_forbids_return(self):
   with patch.object(w,"current_ref",return_value={"object":{"sha":"a"*40}}):
    with self.assertRaisesRegex(ValueError,"not held"):w.submit(self.s,"b"*40,"/dev/null")
+ def test_release_requires_admitted_status_before_any_delete(self):
+  with patch.object(w,"api") as api:
+   with self.assertRaisesRegex(ValueError,"protected completion"):
+    w.release(self.s,"a"*40,"b"*40)
+   api.assert_not_called()
+ def test_release_rejects_unverified_claim_sha(self):
+  s=copy.deepcopy(self.s);q=s["row"]["stage_work_items"]["B"]
+  q["work_status"]="PROTECTED_ADMITTED"
+  q["protected_admission_ref"]="grandchallenge/MATH-PROGRAMME@"+"b"*40
+  with patch.object(w,"current_ref",return_value=None),patch.object(w,"api") as api:
+   with self.assertRaisesRegex(ValueError,"not held"):
+    w.release(s,"a"*40,"b"*40)
+   api.assert_not_called()
+ def test_release_rejects_fake_parent_commit_before_delete(self):
+  s=copy.deepcopy(self.s);q=s["row"]["stage_work_items"]["B"]
+  q["work_status"]="PROTECTED_ADMITTED"
+  q["protected_admission_ref"]="grandchallenge/MATH-PROGRAMME@"+"b"*40
+  with patch.object(w,"current_ref",return_value={"object":{"sha":"a"*40}}),\
+       patch.object(w,"api",return_value={"message":"not a claim"}) as api,\
+       patch.object(w,"run",return_value="testactor"):
+   with self.assertRaisesRegex(ValueError,"Actor or source"):
+    w.release(s,"a"*40,"b"*40)
+   self.assertFalse(any(call.args[0]=="DELETE" for call in api.call_args_list))
+ def test_release_does_not_accept_wrong_receipt_sha(self):
+  s=copy.deepcopy(self.s);q=s["row"]["stage_work_items"]["B"]
+  q["work_status"]="PROTECTED_ADMITTED"
+  q["protected_admission_ref"]="grandchallenge/MATH-PROGRAMME@"+"b"*40
+  with self.assertRaisesRegex(ValueError,"protected completion"):
+   w.release(s,"a"*40,"c"*40)
  def test_negative_finite_fixture_detected(self):
   x=math.evidence()
   self.assertEqual(x["result"],"PASS_EXACT_FINITE_FIXTURES_NOT_UNIVERSAL_THEOREM")
