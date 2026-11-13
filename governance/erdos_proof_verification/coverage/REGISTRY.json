@@ -38,7 +38,7 @@
     "live_source_audit_states": "UNRECONCILED",
     "historical_source_status_not_live_mathematical_verdict": true
   },
-  "state": "FULL_POPULATION_QUEUE_CREATED_UNVERIFIED",
+  "state": "INVENTORY_ADMITTED_SOURCE_SCOPE_AVAILABLE_UNVERIFIED",
   "inventory_complete": true,
   "triage_complete": false,
   "proof_verification_complete": false,
@@ -381,7 +381,18 @@
     "no_terminal_cohort_with_unreviewed_rows": true,
     "certification_only_by_mathcert": true
   },
-  "protected_admission": "PENDING_PROTECTED_PR",
+  "protected_admission": "ADMITTED_PROTECTED_MAIN",
   "snapshot_utc": "2026-11-13T04:40:58Z",
-  "next_action": "Protect this complete inventory; activate 13 Phase A cohorts and dispatch validator when main readback confirms; leave B/C/D per-problem source dependencies and all mathematical certification pending."
+  "next_action": "Run one actual source-scope work unit per available Phase A cohort under authorized atomic claim; continue existing proof pilot #3204. Keep B/C/D evidence-gated, 1,216 triage decisions pending, and all mathematical certification unclaimed.",
+  "admission_receipt": {
+    "pr_number": 3271,
+    "merge_commit": "9b8067556d116ac8c09a7651e52d6f10c6952832",
+    "exact_protected_blob_readback_count": 14,
+    "project_item_readback_count": 58,
+    "available_issue_count": 17,
+    "dependency_blocked_issue_count": 41,
+    "mathematical_proofs_verified_by_queue_admission": 0,
+    "queue_class": "Mathematics",
+    "project_status": "Todo"
+  }
 }
