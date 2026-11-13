@@ -39,8 +39,7 @@ theorem extOneToNegativeHom_bijective (X Y : Ambient) :
       ((shiftFunctorZero (DerivedCategory Ambient) ℤ).app B)
   let eqv : Abelian.Ext X Y 1 ≃ (F.obj A ⟶ B) :=
     (Abelian.Ext.homEquiv (X := X) (Y := Y) (n := 1)).trans
-      (((Functor.FullyFaithful.ofFullyFaithful F).homEquiv A
-        (B⟦(1 : ℤ)⟧)).trans i.homToEquiv)
+      (((Functor.FullyFaithful.ofFullyFaithful F).homEquiv).trans i.homToEquiv)
   have heq : eqv = extOneToNegativeHom (X := X) (Y := Y) := by
     funext e
     rfl
