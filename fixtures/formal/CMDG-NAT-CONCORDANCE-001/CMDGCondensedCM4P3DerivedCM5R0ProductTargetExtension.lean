@@ -32,7 +32,7 @@ namespace CMDG.CondensedCM5R0
 /-- Construct an extension of any actual Stonean-kernel morphism to
 a categorical product target from extensions of each component. -/
 theorem extendKernelHom_toProduct
-    (T : Profinite.{u}) {ι : Type u} (A : ι → Ambient)
+    (T : Profinite.{u}) {ι : Type (u + 1)} (A : ι → Ambient)
     (f : stoneanPresentationKernel T ⟶ ∏ᶜ A)
     (h : ∀ i : ι,
       ∃ g : ((Condensed.profiniteFree Coeff).obj
@@ -60,7 +60,7 @@ vanishing implies Ext¹ vanishing into their categorical product
 for arbitrary profinite T, by *constructing* the required
 kernel extension. -/
 theorem freeProfinite_extOne_product_vanishes_of_components
-    (T : Profinite.{u}) {ι : Type u} (A : ι → Ambient)
+    (T : Profinite.{u}) {ι : Type (u + 1)} (A : ι → Ambient)
     (h : ∀ i : ι,
       ∀ e : Abelian.Ext ((Condensed.profiniteFree Coeff).obj T) (A i) 1,
         e = 0) :
@@ -83,7 +83,7 @@ morphism into the product, extending all coordinates by `Pi.lift`,
 and transporting the result back through e.inv. Neither e nor the
 component extension theorem is silently assumed to be proved. -/
 theorem extendKernelHom_toSolid_of_productModel
-    (T S : Profinite.{u}) {ι : Type u} (Z : Ambient)
+    (T S : Profinite.{u}) {ι : Type (u + 1)} (Z : Ambient)
     (e : underivedObject S ≅ ∏ᶜ (fun _ : ι => Z))
     (hZ : ∀ f : stoneanPresentationKernel T ⟶ Z,
       ∃ g : ((Condensed.profiniteFree Coeff).obj
@@ -115,7 +115,7 @@ realization of G_S and integer-coordinate Ext¹ vanishing suffice,
 via an explicit kernel-extension construction, for arbitrary T.
 Neither premise is discharged by this theorem. -/
 theorem freeProfinite_extOne_solid_vanishes_of_productModel
-    (T S : Profinite.{u}) {ι : Type u} (Z : Ambient)
+    (T S : Profinite.{u}) {ι : Type (u + 1)} (Z : Ambient)
     (e : underivedObject S ≅ ∏ᶜ (fun _ : ι => Z))
     (hZ : ∀ x : Abelian.Ext
       ((Condensed.profiniteFree Coeff).obj T) Z 1, x = 0) :
