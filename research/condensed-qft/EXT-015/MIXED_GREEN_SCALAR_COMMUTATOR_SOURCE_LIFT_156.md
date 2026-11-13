@@ -64,7 +64,7 @@ $$
 P_\epsilon(t):=(e*\kappa_\epsilon)(t)
 =\frac{\epsilon}{\sqrt{2\pi}}
 e^{-t^2/(2\epsilon^2)}
-+\frac{t}{2}\operatorname{erf}\!\left(\frac{t}{\sqrt2\epsilon}\right),
++\frac{t}{2}\mathrm{erf}\!\left(\frac{t}{\sqrt2\epsilon}\right),
 \qquad P_\epsilon''=\kappa_\epsilon.
 \tag{156.4}
 $$
@@ -127,7 +127,7 @@ Let the R1 coefficient be $T'(x,z)=\phi(x)\rho(z)$. Its nonzero wavefront covect
 
 $$
 q_*[A_\epsilon T']=A_\epsilon(x,z)\phi(x)\rho(z)
-=h_1v_\epsilon(x,z),\qquad q=\operatorname{id},
+=h_1v_\epsilon(x,z),\qquad q=\mathrm{id},
 \tag{156.10}
 $$
 
