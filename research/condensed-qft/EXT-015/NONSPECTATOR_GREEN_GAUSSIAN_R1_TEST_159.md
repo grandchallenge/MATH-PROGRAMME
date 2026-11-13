@@ -196,7 +196,7 @@ This proposition does **not** address histories with hidden vertices, fixed R1 c
 
 ## 6. Exact finite tests and research verdict
 
-The standard-library [159 fixture](fixtures/nonspectator_green_controls_159.py) uses exact rational arithmetic. It verifies the two affine bump moments, the Green second-difference and finite support, the moment-zero $W$ input and exact Green output for all 242 nonzero ternary five-site input vectors (13,310 output pairings), and 81 polynomial Gaussian/Wick moment expansions. This detects sign, projection and normalization mistakes but is not a computational proof of wavefront, scalar conormal stages or categorical source nonmembership.
+The standard-library [159 fixture](fixtures/nonspectator_green_controls_159.py) uses exact rational arithmetic. It verifies the two affine bump moments, the Green second-difference and finite support, the moment-zero labelled and symmetric $W$ inputs and both exact Green outputs for all 242 nonzero ternary five-site input vectors (26,620 labelled-and-symmetric output pairings), and 81 polynomial Gaussian/Wick moment expansions. This detects sign, projection and normalization mistakes but is not a computational proof of wavefront, scalar conormal stages or categorical source nonmembership.
 
 | Required scientific obligation | Result of primary 159 |
 | --- | --- |
