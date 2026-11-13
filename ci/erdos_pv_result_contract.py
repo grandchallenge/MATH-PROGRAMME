@@ -85,7 +85,8 @@ def can_release_after_readback(row: dict, stage: str, protected_receipt_ref: str
                                     "VERIFIED_BOUNDED")
             and item["review_status"] not in ("NOT_REVIEWED", "PENDING", "")
             and bool(item["evidence_refs"])
-            and bool(protected_receipt_ref)
+            and bool(item.get("protected_admission_ref"))
+            and item["protected_admission_ref"] == protected_receipt_ref
             and protected_receipt_ref.startswith("grandchallenge/MATH-PROGRAMME@"))
 
 
