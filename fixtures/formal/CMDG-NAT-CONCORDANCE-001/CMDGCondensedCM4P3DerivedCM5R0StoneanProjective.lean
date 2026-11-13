@@ -34,8 +34,12 @@ theorem freeProfiniteSectionsEquiv_naturality_target
       (((Condensed.forget Coeff).map f).hom.app
         (Opposite.op (profiniteToCompHaus.obj T)))
         (freeProfiniteSectionsEquiv T A g) := by
-  unfold freeProfiniteSectionsEquiv
-  simp only [Equiv.trans_apply, freeProfiniteHomEquiv_naturality_target]
+  change (coherentTopology CompHaus).uliftYonedaEquiv
+      (freeProfiniteHomEquiv T B (g ≫ f)) =
+    (((Condensed.forget Coeff).map f).hom.app
+      (Opposite.op (profiniteToCompHaus.obj T)))
+      ((coherentTopology CompHaus).uliftYonedaEquiv (freeProfiniteHomEquiv T A g))
+  rw [freeProfiniteHomEquiv_naturality_target]
   exact (coherentTopology CompHaus).uliftYonedaEquiv_comp _ _
 
 /-- The actual free condensed module on a Stonean test is projective,
