@@ -50,7 +50,7 @@ Stonean presentation epi. -/
 theorem stoneanCechDifference_comp_zero (T : Profinite.{u}) :
     stoneanCechDifference T ≫ freeStoneanPresentationMap T = 0 := by
   unfold stoneanCechDifference freeStoneanPresentationMap
-  rw [sub_comp, ← Functor.map_comp, ← Functor.map_comp,
+  rw [Preadditive.sub_comp, ← Functor.map_comp, ← Functor.map_comp,
     pullback.condition, sub_self]
 
 /-- Canonical map from the free condensed Čech relation object into
