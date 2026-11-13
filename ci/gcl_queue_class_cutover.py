@@ -28,6 +28,7 @@ AVAILABLE_FILTER = "is:open label:gcl-state:available"
 DIRECT = "gcl-pickup:direct-editorial"
 SOURCE_ROLE = "gcl-role:source-audit"
 ERDOS = re.compile(r"^(?:\[GCL-ERDOS\]\s+)?ERDOS-CATALOGUE-\d{4}-S\d{2}\b")
+ERDOS_PV = re.compile(r"^(?:ERDOS-PROOF-VERIFICATION-001|ERDOS-PV-[A-Z0-9]+(?:-[A-Z0-9]+)*) — \S")
 ROLLING_ROSTER = Path(__file__).resolve().parents[1] / "governance/erdos_catalogue/ROLLING_RESEARCH_024.json"
 R41_TRACKS = {
     2790: ("ERDOS-041-R41-A — fourth-order overlap propagation or counterexample", "gcl-role:constructive"),
@@ -209,6 +210,15 @@ def classify(item: dict) -> tuple[str,str]:
         raise ValueError(f"{repo}#{number}: closed editorial source identity drift")
     if pickup!={DIRECT}:
         raise ValueError(f"{repo}#{number}: missing/contradictory direct pickup label")
+    # Erdős proof-verification assignments execute by direct pickup but belong
+    # in Mathematics. Role + cooperative routing distinguish them from editorial
+    # reviews and prevent title-only promotion into the mathematics queue.
+    if repo=="grandchallenge/MATH-PROGRAMME" and title.startswith(
+            ("ERDOS-PV-", "ERDOS-PROOF-VERIFICATION-")):
+        if (not ERDOS_PV.match(title) or
+                not {"gcl-role:verify","gcl-collab:cooperative"} <= names):
+            raise ValueError(f"{repo}#{number}: invalid Erdős proof-verification route")
+        return "Mathematics",mode
     if repo=="grandchallenge/MATH-PROGRAMME" and (
             number in R41_TRACKS or title.startswith("ERDOS-041-R41-")):
         bound=R41_TRACKS.get(number)
