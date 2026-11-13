@@ -38,9 +38,7 @@ noncomputable def stoneanCechRegularEpiCondensed
     RegularEpi (profiniteToCondensed.map (Profinite.presentation.π T)) := by
   letI : EffectiveEpi (Profinite.presentation.π T) :=
     stoneanPresentation_effectiveEpi_profinite T
-  letI : PreservesEffectiveEpis profiniteToCondensed := ⟨fun f hf => by
-    change EffectiveEpi (compHausToCondensed.map (profiniteToCompHaus.map f))
-    infer_instance⟩
+  letI : PreservesEffectiveEpis profiniteToCondensed := inferInstance
   exact regularEpiOfPreserves
     (Profinite.presentation.π T) profiniteToCondensed
     (pullback.cone _ _) (pullback.isLimit _ _)
@@ -54,9 +52,6 @@ noncomputable def stoneanCechFreeCokernel
       (stoneanCechDifference_comp_zero T)) := by
   let h := stoneanCechRegularEpiCondensed T
   letI := (Condensed.freeForgetAdjunction Coeff).leftAdjoint_preservesColimits
-  have hco : IsColimit ((Condensed.free Coeff).mapCocone
-      (Cofork.ofπ (profiniteToCondensed.map (Profinite.presentation.π T)) h.w)) :=
-    isColimitOfPreserves (Condensed.free Coeff) h.isColimit
   have hco' : IsColimit (Cofork.ofπ
       (freeStoneanPresentationMap T)
       (by
@@ -69,8 +64,10 @@ noncomputable def stoneanCechFreeCokernel
         have hh := stoneanCechDifference_comp_zero T
         unfold stoneanCechDifference at hh
         simpa only [Preadditive.sub_comp, sub_eq_zero] using hh)) := by
-    convert hco using 1
-  convert Preadditive.isColimitCokernelCoforkOfCofork hco' using 1
+    exact isColimitCoforkMapOfIsColimit
+      (Condensed.free Coeff) h.w h.isColimit
+  have hck := Preadditive.isColimitCokernelCoforkOfCofork hco'
+  simpa only [Preadditive.cokernelCoforkOfCofork_ofπ] using hck
 
 /-- **Unconditional**: for every profinite T the canonical map
 from the actual free Čech relation object to the kernel K_T
