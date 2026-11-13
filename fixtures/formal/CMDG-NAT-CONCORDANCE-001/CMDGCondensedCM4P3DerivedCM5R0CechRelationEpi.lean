@@ -38,7 +38,18 @@ noncomputable def stoneanCechRegularEpiCondensed
     RegularEpi (profiniteToCondensed.map (Profinite.presentation.π T)) := by
   letI : EffectiveEpi (Profinite.presentation.π T) :=
     stoneanPresentation_effectiveEpi_profinite T
-  letI : PreservesEffectiveEpis profiniteToCondensed := inferInstance
+  letI : PreservesEffectiveEpis profiniteToCondensed := by
+    change PreservesEffectiveEpis
+      (profiniteToCompHaus ⋙ compHausToCondensed)
+    infer_instance
+  haveI : PreservesLimitsOfShape WalkingCospan compHausToCondensed := by
+    change PreservesLimitsOfShape WalkingCospan
+      ((coherentTopology CompHaus).uliftYoneda)
+    infer_instance
+  haveI : PreservesLimitsOfShape WalkingCospan profiniteToCondensed := by
+    change PreservesLimitsOfShape WalkingCospan
+      (profiniteToCompHaus ⋙ compHausToCondensed)
+    infer_instance
   exact regularEpiOfPreserves
     (Profinite.presentation.π T) profiniteToCondensed
     (pullback.cone _ _) (pullback.isLimit _ _)
@@ -64,10 +75,13 @@ noncomputable def stoneanCechFreeCokernel
         have hh := stoneanCechDifference_comp_zero T
         unfold stoneanCechDifference at hh
         simpa only [Preadditive.sub_comp, sub_eq_zero] using hh)) := by
-    exact isColimitCoforkMapOfIsColimit
-      (Condensed.free Coeff) h.w h.isColimit
+    simpa only [freeStoneanPresentationMap, Condensed.profiniteFree,
+      Functor.comp_map] using
+      (isColimitCoforkMapOfIsColimit
+        (Condensed.free Coeff) h.w h.isColimit)
   have hck := Preadditive.isColimitCokernelCoforkOfCofork hco'
-  simpa only [Preadditive.cokernelCoforkOfCofork_ofπ] using hck
+  simpa only [Preadditive.cokernelCoforkOfCofork_ofπ,
+    stoneanCechDifference] using hck
 
 /-- **Unconditional**: for every profinite T the canonical map
 from the actual free Čech relation object to the kernel K_T
