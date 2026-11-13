@@ -84,4 +84,25 @@ theorem comparisonAtShift_neg_one_bijective_iff_extOneComparison
 
 #print axioms comparisonAtShift_neg_one_bijective_iff_extOneComparison
 
+/-- Once both degree-one Ext groups are shown to vanish (expressed here
+as subsingleton instances), the actual negative-shift comparison follows.
+The instances are *hypotheses*, not established for infinite profinite
+probes by this theorem. -/
+theorem comparisonAtShift_neg_one_bijective_of_extOne_subsingleton
+    (S T : Profinite.{u})
+    [Subsingleton (Abelian.Ext ((Condensed.profiniteSolid Coeff).obj T)
+      (underivedObject S) 1)]
+    [Subsingleton (Abelian.Ext ((Condensed.profiniteFree Coeff).obj T)
+      (underivedObject S) 1)] :
+    Function.Bijective (comparisonAtShift S T (-1)) := by
+  rw [comparisonAtShift_neg_one_bijective_iff_extOneComparison]
+  constructor
+  · intro _ _ _
+    exact Subsingleton.elim _ _
+  · intro y
+    refine ⟨0, ?_⟩
+    exact Subsingleton.elim _ _
+
+#print axioms comparisonAtShift_neg_one_bijective_of_extOne_subsingleton
+
 end CMDG.CondensedCM5R0
