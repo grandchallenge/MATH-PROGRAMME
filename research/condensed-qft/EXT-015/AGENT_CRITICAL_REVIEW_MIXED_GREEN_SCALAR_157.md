@@ -50,7 +50,7 @@ The two full Gaussian moments are exactly 1 and $z$, not merely asymptotic. Subs
 
 ## 3. V157 — independently check scalar-flat tails, including the singular crossing
 
-On a fixed compact $z$-support of $\theta$, the distance from that support to the complement of the plateau $\chi=1$ is a strictly positive $\delta$. Thus every contribution of $\chi-1$ has $|y-z|\ge\delta$. For each integer $N$, fixed derivative multi-index and compact $x,z$ set,
+On the fixed compact support of $\theta$ in the $z$ coordinate, the distance from that support to the complement of the plateau $\chi=1$ is a strictly positive $\delta$. Thus every contribution of $\chi-1$ has $|y-z|\ge\delta$. For each integer $N$, fixed derivative multi-index and compact $x,z$ set,
 
 $$
 \left|\partial_\epsilon^k\partial_z^l
