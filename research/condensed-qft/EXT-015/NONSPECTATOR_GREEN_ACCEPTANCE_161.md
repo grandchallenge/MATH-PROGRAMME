@@ -28,7 +28,7 @@ GCL's one-system logical-role policy permits distinct recorded Verifier and Adve
 | Actual *labelled* joint-kernel input | ACCEPT | $Qv=(\delta-b_0)(y)(1-B_z)w(z)$, where $Q=(1-B_y)(1-B_z)$ is already source-admitted |
 | Actual symmetric residual $W^0$ input | **ACCEPT AFTER CORRECTION** | Degree-zero slot average of the labelled input; four affine moments and 147 extraction vanish, nonrapid class |
 | Exact symmetric ambient Green primitive | ACCEPT | One half each of $G(x)w^\circ(z)$ and $H_\epsilon(x)(\delta-b_0)(z)$; $H_\epsilon=e*w^\circ$ |
-| Positive-scale pure diagonal wavefront | EXCLUDED | Every positive regulator has only pure-$x$ and/or pure-$z$ singular covectors |
+| Positive-scale pure diagonal wavefront | EXCLUDED | Every positive regulator has only singular covectors concentrated in either the $x$ or the $z$ direction |
 | Zero-scale leading coefficient | **DIAGONAL CONORMAL PRESENT** | Both ambient primitives tend strongly to $\rho(0)G(x)(\delta-b_0)(z)$ |
 | Candidate augmented hidden-source R1 product | REJECT | $G(x)\delta_0(y)\rho(z)$ has forbidden $\{x,y\}$ partition conormal at x=y=0 |
 | No-hidden, spectator-regular identity-partition output template | REJECT FOR LABELLED PRIMITIVE | On separated strict face, source-limit coefficients are smooth in z, but actual limit contains delta(z) |
