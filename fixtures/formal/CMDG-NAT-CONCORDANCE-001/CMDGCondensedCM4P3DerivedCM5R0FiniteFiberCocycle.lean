@@ -88,6 +88,38 @@ theorem finiteFiberIntegerProduct_cocycle_is_coboundary
   intro x y hxy
   exact fiberCocyclePotential_coboundary p hp c hc x y hxy
 
+/-- Two potentials with the same fiberwise coboundary differ by
+a function pulled back from the quotient. The explicit base-side
+correction is obtained by evaluating their difference on a chosen
+section of the quotient.
+
+This is the finite-refinement gauge freedom needed when arranging
+compatible potentials across finite quotients. It makes no assertion
+that compatible potentials exist across an *infinite* inverse system.
+-/
+theorem fiberCocyclePotentials_gauge
+    (p : α → β) (hp : Function.Surjective p)
+    (c : α → α → M)
+    (b b' : α → M)
+    (hb : ∀ x y, p x = p y → c x y = b x - b y)
+    (hb' : ∀ x y, p x = p y → c x y = b' x - b' y) :
+    ∃ d : β → M, ∀ x : α, b x = b' x + d (p x) := by
+  let s : β → α := fiberSection p hp
+  refine ⟨fun t => b (s t) - b' (s t), ?_⟩
+  intro x
+  have hxs : p x = p (s (p x)) := by
+    exact (fiberSection_spec p hp (p x)).symm
+  have h1 := hb x (s (p x)) hxs
+  have h2 := hb' x (s (p x)) hxs
+  have heq : b x - b (s (p x)) = b' x - b' (s (p x)) :=
+    h1.symm.trans h2
+  change b x = b' x + (b (s (p x)) - b' (s (p x)))
+  calc
+    b x = (b x - b (s (p x))) + b (s (p x)) := by abel
+    _ = (b' x - b' (s (p x))) + b (s (p x)) := by rw [heq]
+    _ = b' x + (b (s (p x)) - b' (s (p x))) := by abel
+
+#print axioms fiberCocyclePotentials_gauge
 #print axioms fiberCocyclePotential_coboundary
 #print axioms finiteFiberIntegerProduct_cocycle_is_coboundary
 
