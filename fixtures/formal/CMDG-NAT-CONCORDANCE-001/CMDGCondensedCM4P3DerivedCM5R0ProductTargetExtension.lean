@@ -74,6 +74,61 @@ theorem freeProfinite_extOne_product_vanishes_of_components
   exact (freeProfinite_extOne_vanishes_iff_kernel_hom_extends
     T (A i)).1 (h i) (f ≫ Pi.π A i)
 
+/-- Explicit extension into the *actual* CM5 free solid coefficient
+target G_S, under a precisely typed product realization e and a
+componentwise extension theorem for a single coefficient object Z.
+
+The candidate extension is obtained by mapping the input kernel
+morphism into the product, extending all coordinates by `Pi.lift`,
+and transporting the result back through e.inv. Neither e nor the
+component extension theorem is silently assumed to be proved. -/
+theorem extendKernelHom_toSolid_of_productModel
+    (T S : Profinite.{u}) {ι : Type u} (Z : Ambient)
+    (e : underivedObject S ≅ ∏ᶜ (_ : ι) ↦ Z)
+    (hZ : ∀ f : stoneanPresentationKernel T ⟶ Z,
+      ∃ g : ((Condensed.profiniteFree Coeff).obj
+            (Stonean.toProfinite.obj T.presentation)) ⟶ Z,
+        kernel.ι (freeStoneanPresentationMap T) ≫ g = f)
+    (f : stoneanPresentationKernel T ⟶ underivedObject S) :
+    ∃ g : ((Condensed.profiniteFree Coeff).obj
+          (Stonean.toProfinite.obj T.presentation)) ⟶ underivedObject S,
+      kernel.ι (freeStoneanPresentationMap T) ≫ g = f := by
+  have hcoord : ∀ i : ι,
+      ∃ g : ((Condensed.profiniteFree Coeff).obj
+            (Stonean.toProfinite.obj T.presentation)) ⟶ Z,
+        kernel.ι (freeStoneanPresentationMap T) ≫ g =
+          (f ≫ e.hom) ≫ Pi.π (fun _ : ι ↦ Z) i := by
+    intro i
+    exact hZ _
+  obtain ⟨gprod, hg⟩ :=
+    extendKernelHom_toProduct T (fun _ : ι ↦ Z) (f ≫ e.hom) hcoord
+  refine ⟨gprod ≫ e.inv, ?_⟩
+  calc
+    kernel.ι (freeStoneanPresentationMap T) ≫ (gprod ≫ e.inv) =
+      (kernel.ι (freeStoneanPresentationMap T) ≫ gprod) ≫ e.inv :=
+      (Category.assoc _ _ _).symm
+    _ = (f ≫ e.hom) ≫ e.inv := by rw [hg]
+    _ = f := by simp
+
+/-- Conditional *actual solid-target* Ext¹ reduction.  A product
+realization of G_S and integer-coordinate Ext¹ vanishing suffice,
+via an explicit kernel-extension construction, for arbitrary T.
+Neither premise is discharged by this theorem. -/
+theorem freeProfinite_extOne_solid_vanishes_of_productModel
+    (T S : Profinite.{u}) {ι : Type u} (Z : Ambient)
+    (e : underivedObject S ≅ ∏ᶜ (_ : ι) ↦ Z)
+    (hZ : ∀ x : Abelian.Ext
+      ((Condensed.profiniteFree Coeff).obj T) Z 1, x = 0) :
+    ∀ x : Abelian.Ext
+      ((Condensed.profiniteFree Coeff).obj T) (underivedObject S) 1, x = 0 := by
+  apply (freeProfinite_extOne_vanishes_iff_kernel_hom_extends
+    T (underivedObject S)).2
+  intro f
+  exact extendKernelHom_toSolid_of_productModel T S Z e
+    ((freeProfinite_extOne_vanishes_iff_kernel_hom_extends T Z).1 hZ) f
+
+#print axioms extendKernelHom_toSolid_of_productModel
+#print axioms freeProfinite_extOne_solid_vanishes_of_productModel
 #print axioms extendKernelHom_toProduct
 #print axioms freeProfinite_extOne_product_vanishes_of_components
 
