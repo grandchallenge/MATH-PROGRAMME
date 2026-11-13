@@ -83,8 +83,10 @@ noncomputable def stoneanCechFreeCokernel
         simpa only [Preadditive.sub_comp, sub_eq_zero] using hh)) := by
     dsimp only [cp, PullbackCone.fst, PullbackCone.snd,
       PullbackCone.mk_π_app_left, PullbackCone.mk_π_app_right] at hfree
-    simpa [f, c, freeStoneanPresentationMap,
-      Condensed.profiniteFree, Functor.comp_map] using hfree
+    exact IsColimit.ofIsoColimit hfree
+      (Cofork.ext (Iso.refl _) (by
+        simp [f, c, freeStoneanPresentationMap,
+          Condensed.profiniteFree, Functor.comp_map]))
   have hck := Preadditive.isColimitCokernelCoforkOfCofork hfree'
   simpa only [Preadditive.cokernelCoforkOfCofork_ofπ,
     stoneanCechDifference] using hck
