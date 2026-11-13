@@ -30,18 +30,20 @@ open CategoryTheory Limits CategoryTheory.Functor
 
 namespace CMDG.CondensedCM5R0
 
-/-- The actual Yoneda image of the Stonean presentation has the
-canonical regular epi diagram from the genuine profinite Čech
-fiber product. -/
-noncomputable def stoneanCechRegularEpiCondensed
+/-- For any profinite T, the actual free condensed-module presentation
+is the cokernel of its explicit Čech difference map. The proof uses
+the effective-epi structure of this *specific* Stonean cover, not
+a typeclass claim about preserving every effective epimorphism. -/
+noncomputable def stoneanCechFreeCokernel
     (T : Profinite.{u}) :
-    RegularEpi (profiniteToCondensed.map (Profinite.presentation.π T)) := by
-  letI : EffectiveEpi (Profinite.presentation.π T) :=
-    stoneanPresentation_effectiveEpi_profinite T
-  letI : PreservesEffectiveEpis profiniteToCondensed := by
-    change PreservesEffectiveEpis
-      (profiniteToCompHaus ⋙ compHausToCondensed)
-    infer_instance
+    IsColimit (CokernelCofork.ofπ
+      (freeStoneanPresentationMap T)
+      (stoneanCechDifference_comp_zero T)) := by
+  let f := Profinite.presentation.π T
+  let c : PullbackCone f f := pullback.cone f f
+  have hc : IsLimit c := pullback.isLimit _ _
+  letI : EffectiveEpi (profiniteToCondensed.map f) :=
+    stoneanPresentation_effectiveEpi_condensed T
   haveI : PreservesLimitsOfShape WalkingCospan compHausToCondensed := by
     change PreservesLimitsOfShape WalkingCospan
       ((coherentTopology CompHaus).uliftYoneda)
@@ -50,20 +52,24 @@ noncomputable def stoneanCechRegularEpiCondensed
     change PreservesLimitsOfShape WalkingCospan
       (profiniteToCompHaus ⋙ compHausToCondensed)
     infer_instance
-  exact regularEpiOfPreserves
-    (Profinite.presentation.π T) profiniteToCondensed
-    (pullback.cone _ _) (pullback.isLimit _ _)
-
-/-- The free condensed-module presentation is the cokernel of
-the actual difference of the two free Čech arrows. -/
-noncomputable def stoneanCechFreeCokernel
-    (T : Profinite.{u}) :
-    IsColimit (CokernelCofork.ofπ
-      (freeStoneanPresentationMap T)
-      (stoneanCechDifference_comp_zero T)) := by
-  let h := stoneanCechRegularEpiCondensed T
+  let cp : PullbackCone (profiniteToCondensed.map f)
+      (profiniteToCondensed.map f) :=
+    PullbackCone.mk (profiniteToCondensed.map c.fst)
+      (profiniteToCondensed.map c.snd)
+      (by simp [← Functor.map_comp, c.condition])
+  have hcp : IsLimit cp := by
+    refine IsLimit.equivOfNatIsoOfIso ?_ _ _ ?_
+      (isLimitOfPreserves profiniteToCondensed hc)
+    · exact cospanIsoMk (Iso.refl _) (Iso.refl _) (Iso.refl _)
+    · exact Cone.ext (Iso.refl _) <| by
+        rintro (_ | _ | _) <;> cat_disch
+  have hco : IsColimit (Cofork.ofπ
+      (profiniteToCondensed.map f) cp.condition) :=
+    isColimitCoforkOfEffectiveEpi (profiniteToCondensed.map f) cp hcp
   letI := (Condensed.freeForgetAdjunction Coeff).leftAdjoint_preservesColimits
-  have hco' : IsColimit (Cofork.ofπ
+  have hfree := isColimitCoforkMapOfIsColimit
+    (Condensed.free Coeff) cp.condition hco
+  have hfree' : IsColimit (Cofork.ofπ
       (freeStoneanPresentationMap T)
       (by
         change ((Condensed.profiniteFree Coeff).map
@@ -75,11 +81,9 @@ noncomputable def stoneanCechFreeCokernel
         have hh := stoneanCechDifference_comp_zero T
         unfold stoneanCechDifference at hh
         simpa only [Preadditive.sub_comp, sub_eq_zero] using hh)) := by
-    simpa only [freeStoneanPresentationMap, Condensed.profiniteFree,
-      Functor.comp_map] using
-      (isColimitCoforkMapOfIsColimit
-        (Condensed.free Coeff) h.w h.isColimit)
-  have hck := Preadditive.isColimitCokernelCoforkOfCofork hco'
+    simpa [f, c, cp, freeStoneanPresentationMap,
+      Condensed.profiniteFree, Functor.comp_map] using hfree
+  have hck := Preadditive.isColimitCokernelCoforkOfCofork hfree'
   simpa only [Preadditive.cokernelCoforkOfCofork_ofπ,
     stoneanCechDifference] using hck
 
@@ -97,7 +101,6 @@ theorem stoneanCechRelationToKernel_epi
     sc.exact_of_g_is_cokernel (stoneanCechFreeCokernel T)
   exact (sc.exact_iff_epi_kernel_lift).mp hx
 
-#print axioms stoneanCechRegularEpiCondensed
 #print axioms stoneanCechFreeCokernel
 #print axioms stoneanCechRelationToKernel_epi
 
