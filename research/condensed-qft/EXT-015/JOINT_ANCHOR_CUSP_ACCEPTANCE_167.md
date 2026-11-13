@@ -11,7 +11,7 @@
 | Exact finite [165 fixture](fixtures/joint_anchor_core_controls_165.py) | Git blob a0a59aed807551b7bad11e5efc7a12cc3e8110aa |
 | Canonical mathematical [critic 166](AGENT_CRITICAL_REVIEW_JOINT_ANCHOR_CUSP_166.md) | Git blob 29b440786b9a7db1a414fbaaa33d259ff5eab787 |
 | Source-bound native mathematical review | GitHub review ID 5899496264, COMMENTED on exact primary head, same account; **not** nonauthor APPROVED |
-| Protected primary source admission at ledger drafting | **PENDING_PROTECTED_MERGE_AND_READBACK** |
+| Protected primary source admission at ledger drafting | [PR 3313](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3313) native protected merge a561621a387ed5616218b25b52f80206b4241dec on 2026-11-13T23:32:53Z; all five required merge-group workflows PASS; exact proof and fixture blobs verified on protected main |
 | Scalar heat 105 / finite mixed 108 / parameter rows 126 | a8ce66ff0edec33e2aff299550fca2089d671033 / 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 / 5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
 | Full one-slot source 141 / partial Green 150 | de6b608c8def91dd0b8b2d98fe410348ac92a17d / 03deca9212a9bea56743e482e5cb79edb46b9d7f |
 | Corrected W witness 159 / punctured source theorem 162 | 555088f3da2c87dc02304dcf44b2738510f65062 / 20febc0e1196990addf446f0054f5e9e563ba615 |
@@ -40,7 +40,7 @@ The source equivalence holds in the **actual evaluated analytic image**, prior t
 
 The exact candidate fixture Git blob a0a59aed807551b7bad11e5efc7a12cc3e8110aa was fetched from primary PR #3313 and run on the authenticated CHAD OS account. Capture 56a655be2ac64f4faad434a12ec51f63, exit 0, recorded 242 five-site input vectors, 36,300 exact core decompositions, 7,260 finite matched-partition second-difference controls, 234 nonzero projected inputs and 16 Gaussian moment identities. Receipt SHA256 01e43ce2731d005b6569fba507d4a552ded2ebc3cdbc8f1a4039f5ffbfc318f9. This is finite exact algebra, **not** analytical proof of complete projective source membership, a normal-wavefront certificate or independently authenticated mathematical execution.
 
-The proof of legal source remainders and matched inclusions comes from 105/108/141/150 plus the explicit computations in 165; the complete distributional dilation follows from Gaussian weighted Taylor bounds. This ledger becomes a *protected documentary acceptance* only after both the primary and its own review/ledger PR have passed native protected CI and merge-group checks, with the exact four blobs read back from main. Historical status written before that admission must not be promoted.
+The proof of legal source remainders and matched inclusions comes from 105/108/141/150 plus the explicit computations in 165; the complete distributional dilation follows from Gaussian weighted Taylor bounds. Primary 165 has native protected admission and exact source readback. This ledger becomes a *protected documentary acceptance* only after its own review/ledger PR also passes native protected CI and merge-group checks, with both additional blobs read back from main. Historical status written before that admission must not be promoted.
 
 ## 4. Deterministic next mathematical obligation
 
