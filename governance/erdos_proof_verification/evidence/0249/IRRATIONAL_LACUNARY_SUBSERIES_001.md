@@ -17,7 +17,7 @@ $$
 S=\sum_{n=1}^{\infty}\frac{\varphi(n)}{2^n}.
 $$
 
-The source-catalogue lock is \`teorth/erdosproblems@536408716724a2402bdfa7c1d764bf83d64a8c89:data/problems.yaml\`, entry 249 (Git blob \`4e60263a80af6207aca494d2e1388e44fa372889\`). The pinned statement provider is \`google-deepmind/formal-conjectures@85f863718beeec7b58a3a1926ee92e3472bc2020:FormalConjectures/ErdosProblems/249.lean\`, blob \`ed4650c870f58a7cbfbc9ec8c4bc4c35175b074a\`. Its statement concerns the *full* $S$ and contains \`answer(sorry)\` and \`by sorry\`, not a completed proof. Original source discussion: Erdős–Graham (1980), p. 61; Erdős (1988), p. 102, DOI 10.1017/CBO9780511897184.009.
+The source-catalogue lock is `teorth/erdosproblems@536408716724a2402bdfa7c1d764bf83d64a8c89:data/problems.yaml`, entry 249 (Git blob `4e60263a80af6207aca494d2e1388e44fa372889`). The pinned statement provider is `google-deepmind/formal-conjectures@85f863718beeec7b58a3a1926ee92e3472bc2020:FormalConjectures/ErdosProblems/249.lean`, blob `ed4650c870f58a7cbfbc9ec8c4bc4c35175b074a`. Its statement concerns the *full* $S$ and contains `answer(sorry)` and `by sorry`, not a completed proof. Original source discussion: Erdős–Graham (1980), p. 61; Erdős (1988), p. 102, DOI 10.1017/CBO9780511897184.009.
 
 ## Proof by dyadic rational separation
 
@@ -84,4 +84,4 @@ The proof's critical conditions are independently explicit: the exponent gap is 
 
 ## Verification and custody limits
 
-The displayed proof was independently reconstructed as a dyadic-denominator argument; it is not a Lean-checked theorem, independent human review, or MATHCERT certification. The registered full-conjecture Lean statement remains \`by sorry\`. The bounded formal successor is to prove the totient power-of-two identity, the gap and tail inequalities, and the dyadic rational separation argument in Lean with pinned toolchain and an actual successful kernel replay; then conduct a separate role-scoped adversarial check. Do not close issue #3205 or classify the full $S$ as irrational before its own proper acceptance.
+The displayed proof was independently reconstructed as a dyadic-denominator argument; it is not a Lean-checked theorem, independent human review, or MATHCERT certification. The registered full-conjecture Lean statement remains `by sorry`. The bounded formal successor is to prove the totient power-of-two identity, the gap and tail inequalities, and the dyadic rational separation argument in Lean with pinned toolchain and an actual successful kernel replay; then conduct a separate role-scoped adversarial check. Do not close issue #3205 or classify the full $S$ as irrational before its own proper acceptance.
