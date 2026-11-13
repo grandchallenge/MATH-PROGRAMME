@@ -1,0 +1,52 @@
+{
+  "record_type": "ERDOS_PV_A_RECONCILIATION_RECEIPT/1",
+  "assignment_id": "ERDOS-PV-0001-A",
+  "problem_id": 1,
+  "parent_cohort_issue": 3212,
+  "source_audit_issue": 1270,
+  "exclusive_test_branch": "gcl-pv-claims/ERDOS-PV-0001-A",
+  "branch_collision_test": "EXACT_SAME_REF_CREATE_REJECTED_HTTP_422",
+  "execution_kind": "MANUAL_REAL_GITHUB_CANARY_WITH_HISTORICAL_SOURCE_REVIEW_REUSE",
+  "disposition": "SOURCE_SCOPE_RECONCILED_REUSED_PRIOR_REVIEW; COMPLETE_PROOF_REPLAY_NOT_ESTABLISHED",
+  "source_ledger": {
+    "catalogue": "teorth/erdosproblems@536408716724a2402bdfa7c1d764bf83d64a8c89:data/problems.yaml",
+    "catalogue_blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+    "source_issue_body_sha256": "96f2a163ff4e2619a6ef8b9d4fccc1db157c205612a3711d87ea9e4ca3ac26e1",
+    "frozen_status": "disproved",
+    "frozen_status_date_warning": "A last-updated date of 2025-08-31 precedes the documented 2026 resolution; do not infer theorem chronology from metadata.",
+    "formal_source": "google-deepmind/formal-conjectures@85f863718beeec7b58a3a1926ee92e3472bc2020:FormalConjectures/ErdosProblems/1.lean",
+    "formal_blob": "c8aa6e1889b02f48b18164df3dce518a80409b27",
+    "formal_statement_historical": "Exists uniform C > 0 ...; theorem `erdos_1` contains sorry and historical research-open label.",
+    "proof_source": "tadamcz/erdos1@db6f9091dfaf9bac704e6b28fb3a094594869328:Erdos1/Resolutions/Erdos1_219usd_38h.lean",
+    "proof_blob": "07d2f36647a2319e65c0c8c756527460925e9075",
+    "paper": "Adamczewski–Bloom, FrontierMath Erdős, arXiv:2609.25050 (2026)"
+  },
+  "verified_source_facts": [
+    "Original predicate: Finset A subset [1,N] and the subset sum map on A.powerset is injective.",
+    "The registered conjecture requires a single uniform absolute C>0 bounding N below by C*2^|A| for all admissible A and nonzero N.",
+    "The source proof states the negation of the uniform claim; existence of arbitrary small N/2^|A| is not an assertion of constructive or low-dimensional counterexamples for every N.",
+    "Formal provider pinned theorem remains a sorry; this is not a contradiction of the later disproof.",
+    "Author proof contains RelationFree and the binary-block bridge, plus the nonuniform subset-bound target; the author proof was not kernel-replayed by this canary."
+  ],
+  "reused_prior_evidence": [
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1270#issuecomment-6099562233",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1270#issuecomment-6249309294"
+  ],
+  "source_audit_issue_live_state": "CLOSED",
+  "review_role": "REUSE_ACCEPTED_EVIDENCE_REVIEW_2026_10_18_NOT_AN_INDEPENDENT_NEW_HUMAN_REVIEW",
+  "adversarial_boundaries": [
+    "Do not imply a completed kernel proof from named Lean theorem/README.",
+    "Do not confuse a false uniform conjecture with an open variant for real-valued sets.",
+    "Do not equate positive small examples to the deep asymptotic counterexample theorem.",
+    "Do not re-run a source-audit issue already closed and professionally reviewed."
+  ],
+  "nonclaims": {
+    "full_source_proof_replayed": false,
+    "source_proof_certified": false,
+    "mathcert_certified": false,
+    "full_problem_originality_claim": false,
+    "autonomous_agent_dispatch_proven": false
+  },
+  "next_stage": "ERDOS-PV-0001-B should become eligible after protected admission/readback of this A-stage receipt, via normal issue #3225 projection; still requires separate protected proof-lemma work.",
+  "acceptance": "A-stage source/statement-scope reconciliation only; no mathematical theorem certification."
+}
