@@ -94,7 +94,7 @@ $$
 
 Its second $X$ derivative is $\rho(0)[\delta_0(X)K(Z)+K(X)\delta_0(Z)]/2$ by $e''=\delta_0$, $P_1''=K$.
 
-This is a **rescaled distributional profile**, not a claim that either uncut core is in the scalar 105 heat-space stage. Its pure-$X$/pure-$Z$ positive-normal covectors do not imply exclusion or admission of any complete source, and do not contradict 159's distinct physical zero-scale conormal limit.
+This is a **rescaled distributional profile**, not a claim that either uncut core is in the scalar 105 heat-space stage. Its positive-normal covectors confined to either the $X$ or $Z$ direction do not imply exclusion or admission of any complete source, and do not contradict 159's distinct physical zero-scale conormal limit.
 
 **V166-B PASS:** full joint-normal expansion, exact leading profile and correct density scaling.
 
@@ -106,7 +106,7 @@ For $\partial_x^2 B$, use the *different* partition $\{z,y\}\mid\{x\}$, block va
 
 Both R1 coefficients have one nonzero block covector and no forbidden two-block $(\tau,-\tau)$ conormal. Their distributional deltas on the equalities $x=y$ and $z=y$ arise from **typed same-block partition inclusions**, not unlicensed multiplication of two singular R1 kernels. The original 108 source admits precisely these finite order-zero inclusions with the Gaussian scalar stage, proper pushforward and fixed projective coefficient maps.
 
-For global $\chi$, $\partial_x^2(\chi e)=\delta_0+f_\chi$ with $f_\chi=2\chi'e'+\chi''e$ fixed smooth compact. The extra $f_\chi w_\epsilon$ is a valid one-slot source plus smooth singleton. Also $\partial_x^2(\chi Q_\epsilon)=\chi w_\epsilon+2\chi'Q_\epsilon'+\chi''Q_\epsilon$. Since the supports of $\chi',\chi''$ stay a fixed positive distance from the origin, the last two terms are actual smooth scalar heat-stage coefficients with fixed saturated indices and retained flat remainders by the strict-face Gaussian estimates of 162.3, multiplied by a fixed pure-$z$ R1 delta. This preserves the stated source typing and compatible 126 rows.
+For global $\chi$, $\partial_x^2(\chi e)=\delta_0+f_\chi$ with $f_\chi=2\chi'e'+\chi''e$ fixed smooth compact. The extra $f_\chi w_\epsilon$ is a valid one-slot source plus smooth singleton. Also $\partial_x^2(\chi Q_\epsilon)=\chi w_\epsilon+2\chi'Q_\epsilon'+\chi''Q_\epsilon$. Since the supports of $\chi',\chi''$ stay a fixed positive distance from the origin, the last two terms are actual smooth scalar heat-stage coefficients with fixed saturated indices and retained flat remainders by the strict-face Gaussian estimates of 162.3, multiplied by a fixed R1 delta concentrated in the $z$ coordinate. This preserves the stated source typing and compatible 126 rows.
 
 **V166-C PASS:** both *second derivatives* have explicit finite existing source histories, including global cutoff terms.
 
