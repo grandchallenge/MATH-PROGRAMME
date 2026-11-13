@@ -302,5 +302,42 @@ class Contract(unittest.TestCase):
         self.assertIn("BLOCKED / UNVERIFIED",receipt_message(None,**args))
 
 
+    def test_erdos_pv_proof_verification_is_mathematics_direct_pickup(self):
+        cases=[
+            (3201, "ERDOS-PROOF-VERIFICATION-001 — end-to-end independent proof-verification coverage"),
+            (3204, "ERDOS-PV-0248-S01 — Tao–Teräväinen Omega-to-omega bridge and external Lean kernel replay"),
+            (3212, "ERDOS-PV-COVERAGE-0001-0100-A — source and scope reconciliation (100 problems)"),
+            (3263, "ERDOS-PV-COVERAGE-1201-1221-D — documentary/protected admission and bounded closure (21)"),
+            (3264, "ERDOS-PV-COVERAGE-GATE-001 — exhaustive 1,221-item validator and closed-world status gate"),
+            (3208, "ERDOS-PV-GLOBAL-TRIAGE-001 — exhaustive catalogue source-audit to proof-verification reconciliation"),
+        ]
+        labels=["gcl-job",DIRECT,"gcl-role:verify",
+                "gcl-collab:cooperative","gcl-state:available"]
+        for n,title in cases:
+            with self.subTest(n=n):
+                good=make_item(n,"grandchallenge/MATH-PROGRAMME",title,labels,"Editorial")
+                self.assertEqual(classify(good),("Mathematics","direct_editorial"))
+                changes,summary=prepare(project(),[good])
+                self.assertEqual(len(changes),1)
+                self.assertEqual(changes[0]["class"],"Mathematics")
+                self.assertEqual(summary["classes_expected"],{"Mathematics":1})
+                good["fieldValueByName"]={"name":"Mathematics"}
+                self.assertEqual(prepare(project(),[good])[0],[])
+
+    def test_erdos_pv_invalid_route_is_not_editorial_fallback(self):
+        title="ERDOS-PV-COVERAGE-0001-0100-B — independent proof and bounded-lemma verification (100)"
+        labels=["gcl-job",DIRECT,"gcl-role:verify","gcl-collab:cooperative"]
+        for drop in ("gcl-role:verify","gcl-collab:cooperative",DIRECT):
+            with self.subTest(drop=drop):
+                incomplete=[x for x in labels if x!=drop]
+                case=make_item(3225,"grandchallenge/MATH-PROGRAMME",title,incomplete,"Mathematics")
+                with self.assertRaises(ValueError):
+                    classify(case)
+        malformed=make_item(3225,"grandchallenge/MATH-PROGRAMME",
+                            "ERDOS-PV-COVERAGE-0001-0100-B",labels,"Mathematics")
+        with self.assertRaisesRegex(ValueError,"invalid Erdős proof-verification route"):
+            classify(malformed)
+
+
 if __name__=="__main__":
     unittest.main()
