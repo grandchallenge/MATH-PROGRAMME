@@ -1,0 +1,31 @@
+# Erdős Proof Verification — end-to-end workstream
+
+This is a **separate substantive verification lane**, not a rename of the compendium source-audit lane. It is controlled by [ERDOS-PROOF-VERIFICATION-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3201) and the protected registry `governance/erdos_proof_verification/registry.json`. The workstream is currently **pilot-registered, global triage incomplete**. No proof has been verified by creating these manifests.
+
+## Task-specific executable entrypoints
+
+| Problem | Source audit (completed administratively) | Independent verification (open) | Intended check |
+| --- | --- | --- | --- |
+| 246 | [#1515](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1515) | [#3202](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3202) | Birch source-level fidelity and theorem-to-formal bridge |
+| 247 | [#1516](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1516) | [#3203](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3203) | Positive-index normalization and stronger growth-interface audit; **open** conjecture |
+| 248 | [#1517](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1517) | [#3204](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3204) | External Lean kernel/axiom replay and Tao–Teräväinen transfer |
+| 249 | [#1518](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1518) | [#3205](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3205) | Independent lacunary-subseries irrationality proof, not full open conjecture |
+| 250 | [#1519](https://github.com/grandchallenge/MATH-PROGRAMME/issues/1519) | [#3206](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3206) | Nesterenko bridge and external Lean kernel/axiom replay |
+
+All six issues are on the [GCL Worker Queue, Project #2](https://github.com/orgs/grandchallenge/projects/2), Queue Class `Mathematics`. The five successors initially carry `gcl-state:blocked`: verify the registry and manifests **on protected `main`** before changing them to `gcl-state:available`. Their Project status is `Todo`, not `Done`. No protected merge, compiler output, mathematical claim, or certification is implied by source-adjudication closure.
+
+## Mandatory execution lifecycle
+
+1. **Triage and deduplicate.** Each completed catalogue source audit receives an explicit decision: `SELECTED_WITH_MANIFEST`, `REUSED_EXISTING_VERIFICATION`, `DECLINED_WITH_REASON`, or `PENDING`. Reconcile pre-existing Erdős 14 verification [#2702](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2702) and Erdős 470/593 MATHSOLVE tasks before creating duplicates. The existing compendium batch snapshots are the ingestion population, not proof evidence. Record the actual distinction between proved literature, open conjecture, elementary lemma, and reported external formal proof.
+2. **Lock sources and statements.** Check exact primary paper theorem/page, source snapshot blob, all hypotheses/quantifiers, proof-provider commit, original Lean theorem type and any admitted axioms. Explicitly separate classic published proof from source-to-Lean interpretation. A live tag such as `proved (Lean)` is only a lead.
+3. **Independently inspect mathematics.** Reconstruct at least one bounded decisive proof step or demonstrate a precise equivalence/counterexample; inspect dimension, positivity, indexing, finiteness, quantification, and quantifier transfer. The same system may staff distinct role-scoped Adversary and Referee passes, but must not invent a new source or claim substantive independence from its own construction.
+4. **Reproducible formal replay when applicable.** Pin Lean, Mathlib, imports, solver source and command. Capture exact exit status, stdout/stderr hashes, full theorem type, `#print axioms` or equivalent, occurrence of `sorry`/`admit` and any imported axiom, and a hostile changed-goal test. CPU/Lean resources are suitable for early formal tasks; use integrated Colab when necessary. For empirical tests, prefer one GPU initially, log with W&B, and require multi-seed CLI reproduction. A compiler success is not proof of source-semantic equivalence or mathematical certification.
+5. **Separate non-authoring critical review.** Challenge the source, acceptance conditions and proof dependency boundary; distinguish independently reconstructed mathematics, borrowed literature claims, and formal kernel facts. A proof that an auxiliary lemma holds cannot close the original conjecture.
+6. **Internal adjudication and protected documentary admission.** Record reviewer and exact immutable evidence refs, proof gaps, negative tests, disposition and next action. Use an ordinary branch, protected PR, applicable checks, merge queue and protected readback. Keep evidence receipts and continuity updated. An evidence-backed exact blocker is a valid bounded result, but is not a positive verification result.
+7. **Optional MATHCERT submission.** Only separately authorize certification with independently sufficient evidence through MATHCERT's current policy. Protected merge, source audit, proof replay and reviewer passes confer **no certification authority**. Leave unsubmitted work marked `NOT_SUBMITTED`.
+
+## Validation and continuity
+
+Run `python3 ci/validate_erdos_proof_verification.py` and `python3 ci/test_erdos_proof_verification.py`. The campaign policy shard includes both commands. The validator fails on duplicate issues, mutable pins, claim-scope drift, self-certifying statuses, and any green replay without a formal evidence receipt and semantic predecessor. Nine hostile fixture tests accompany the five manifests. The registry does not claim a fully reconciled catalogue population; global triage is explicitly pending.
+
+The long-horizon multi-session current-state authority is `governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json`. Follow its exact `next_action`, run its live freshness command before a material transition, and rebind changed PR/branch identities. Existing child source-audit issues remain closed as source work; proof-verification issues remain open until they reach a genuinely supported bounded proof disposition. Do not mark an open conjecture solved or close the parent on the basis of source-audit volume.

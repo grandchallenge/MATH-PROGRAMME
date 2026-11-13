@@ -1,0 +1,58 @@
+{
+  "record_type": "ERDOS_PROOF_VERIFICATION_MANIFEST/1",
+  "schema_version": "1.0.0",
+  "manifest_id": "ERDOS-PV-0248-S01",
+  "problem_id": 248,
+  "governing_issue": 3201,
+  "source_audit_issue": 1517,
+  "verification_issue": 3204,
+  "project_number": 2,
+  "project_item_id": "PVTI_lADOB9Ao_c4BlwurzhIVEts",
+  "literature_status": "PROVED",
+  "verification_kind": "OMEGA_BRIDGE_KERNEL_REPLAY",
+  "work_status": "QUEUED_UNEXECUTED",
+  "claim_scope": "Verify quantified omega<=Omega bridge and replay external Erdos248 proof with exact theorem-type, axiom and import checks",
+  "falsification": "Wrong constant/shift quantifier, missing proof, sorry or unreported axiom",
+  "source_locks": {
+    "catalogue_repository": "teorth/erdosproblems",
+    "catalogue_commit": "536408716724a2402bdfa7c1d764bf83d64a8c89",
+    "catalogue_blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+    "catalogue_path": "data/problems.yaml",
+    "catalogue_entry": "248",
+    "formal_repository": "google-deepmind/formal-conjectures",
+    "formal_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+    "formal_blob": "b80827cbaaf0da740901def1606e36f770d43756",
+    "formal_path": "FormalConjectures/ErdosProblems/248.lean",
+    "primary_reference": "https://arxiv.org/abs/2512.01739v2 theorem 1.1",
+    "source_return_comment": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1517#issuecomment-6134981537",
+    "external_formal_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+    "external_formal_path": "src/latest/ErdosProblems/Erdos248.lean"
+  },
+  "stage_results": {
+    "SOURCE_LOCK": "PENDING",
+    "STATEMENT_EQUIVALENCE": "PENDING",
+    "REPLAY_PREPARATION": "PENDING",
+    "REPLAY_EXECUTION": "PENDING",
+    "ADVERSARIAL_REVIEW": "PENDING",
+    "INTERNAL_ADJUDICATION": "PENDING",
+    "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
+  },
+  "proof_receipts": [],
+  "review_receipts": [],
+  "toolchain_pins": null,
+  "certification_status": "NOT_SUBMITTED",
+  "guardrails": {
+    "no_open_conjecture_promotion": true,
+    "source_audit_not_proof_verification": true,
+    "certification_reserved_to_mathcert": true,
+    "non_authoring_critical_pass_required": true
+  },
+  "replay_contract": {
+    "input": "Exact source and formal pins; original theorem quantifiers",
+    "method": "Independent source semantic proof audit; exact compiler and full axiom/dep replay when formal source available",
+    "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
+    "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
+  },
+  "next_action": "Fetch and hash exact primary and formal source; fix theorem/lemma quantifiers and determine genuine proof replayability",
+  "last_known_evidence": "Source-audit RESULT/1 exists; this manifest makes no proof-verification or mathematical-certification claim"
+}

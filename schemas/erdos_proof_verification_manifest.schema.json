@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.github.io/MATH-PROGRAMME/schemas/erdos_proof_verification_manifest.schema.json",
+  "title": "Erdos Proof Verification Work Item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "manifest_id",
+    "problem_id",
+    "governing_issue",
+    "source_audit_issue",
+    "verification_issue",
+    "project_number",
+    "project_item_id",
+    "literature_status",
+    "verification_kind",
+    "work_status",
+    "claim_scope",
+    "falsification",
+    "source_locks",
+    "stage_results",
+    "proof_receipts",
+    "review_receipts",
+    "toolchain_pins",
+    "certification_status",
+    "guardrails",
+    "replay_contract",
+    "next_action",
+    "last_known_evidence"
+  ],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_item_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "falsification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "last_known_evidence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_type": {
+      "const": "ERDOS_PROOF_VERIFICATION_MANIFEST/1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "problem_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "governing_issue": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_audit_issue": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "verification_issue": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "project_number": {
+      "const": 2
+    },
+    "literature_status": {
+      "enum": [
+        "OPEN",
+        "PROVED",
+        "DISPROVED",
+        "UNKNOWN"
+      ]
+    },
+    "work_status": {
+      "enum": [
+        "QUEUED_UNEXECUTED",
+        "IN_PROGRESS",
+        "EVIDENCE_BLOCKED",
+        "VERIFIED_WITHOUT_CERTIFICATION",
+        "SUBMITTED_TO_MATHCERT"
+      ]
+    },
+    "proof_receipts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 10
+      }
+    },
+    "review_receipts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 10
+      }
+    },
+    "toolchain_pins": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "certification_status": {
+      "enum": [
+        "NOT_SUBMITTED",
+        "SUBMITTED",
+        "MATHCERT_CERTIFIED",
+        "MATHCERT_DECLINED"
+      ]
+    },
+    "source_locks": {
+      "type": "object",
+      "required": [
+        "catalogue_repository",
+        "catalogue_commit",
+        "catalogue_blob",
+        "catalogue_path",
+        "catalogue_entry",
+        "formal_repository",
+        "formal_commit",
+        "formal_blob",
+        "formal_path",
+        "primary_reference",
+        "source_return_comment",
+        "external_formal_commit",
+        "external_formal_path"
+      ],
+      "properties": {
+        "catalogue_repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "catalogue_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "catalogue_blob": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "catalogue_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "catalogue_entry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formal_repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "formal_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "formal_blob": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "formal_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "primary_reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_return_comment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external_formal_commit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "external_formal_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "stage_results": {
+      "type": "object",
+      "required": [
+        "SOURCE_LOCK",
+        "STATEMENT_EQUIVALENCE",
+        "REPLAY_PREPARATION",
+        "REPLAY_EXECUTION",
+        "ADVERSARIAL_REVIEW",
+        "INTERNAL_ADJUDICATION",
+        "PROTECTED_EVIDENCE_ADMISSION"
+      ],
+      "properties": {
+        "SOURCE_LOCK": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "STATEMENT_EQUIVALENCE": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "REPLAY_PREPARATION": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "REPLAY_EXECUTION": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "ADVERSARIAL_REVIEW": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "INTERNAL_ADJUDICATION": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "PROTECTED_EVIDENCE_ADMISSION": {
+          "enum": [
+            "PENDING",
+            "PASS",
+            "BLOCKED",
+            "NOT_APPLICABLE"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "guardrails": {
+      "type": "object",
+      "required": [
+        "no_open_conjecture_promotion",
+        "source_audit_not_proof_verification",
+        "certification_reserved_to_mathcert",
+        "non_authoring_critical_pass_required"
+      ],
+      "properties": {
+        "no_open_conjecture_promotion": {
+          "const": true
+        },
+        "source_audit_not_proof_verification": {
+          "const": true
+        },
+        "certification_reserved_to_mathcert": {
+          "const": true
+        },
+        "non_authoring_critical_pass_required": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "replay_contract": {
+      "type": "object",
+      "required": [
+        "input",
+        "method",
+        "acceptance",
+        "stopping"
+      ],
+      "properties": {
+        "input": {
+          "type": "string",
+          "minLength": 10
+        },
+        "method": {
+          "type": "string",
+          "minLength": 10
+        },
+        "acceptance": {
+          "type": "string",
+          "minLength": 10
+        },
+        "stopping": {
+          "type": "string",
+          "minLength": 10
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
