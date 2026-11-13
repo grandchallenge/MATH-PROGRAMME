@@ -175,6 +175,8 @@ def main():
   if not a.claim_sha or not a.body_file:p.error("Need --claim-sha and --body-file")
   out=submit(s,a.claim_sha,a.body_file)
  print(json.dumps(out,sort_keys=True))
+ if a.action=="claim" and out.get("result")!="ACQUIRED":
+  raise SystemExit(4)  # A held/lost/ambiguous claim must not appear successful to workers.
 if __name__=="__main__":
  try:main()
  except (RuntimeError,ValueError) as exc:
