@@ -17,7 +17,7 @@ Keep ZFC, fixed real $\mathrm{Liq}_p(\mathbb R)$, $0<p\leq1$, the existing one-d
 | [150: residual cone and proposed primitive](COMPLEMENTARY_WEIGHT_TWO_COMPARISON_150.md) | `03deca9212a9bea56743e482e5cb79edb46b9d7f` |
 | [151: corrected-source nonauthor review](AGENT_CRITICAL_REVIEW_COMPLEMENTARY_WEIGHT_TWO_151.md) | `222424fd3a3d9b49d4268120f24958512c3c5bfe` |
 
-The protected [checkpoint CP183](../../governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json) has blob `dbc63f10ca6f0723be3da0bf5f65e44c4e512859`. The preserved `research/reach-green-mapping-input-frozen-20261107` input ref and `research/reach-green-mapping-20261107` CP186 attempt are provenance; the latter has not been protected-admitted and contains no 153 manuscript. Current-main scientific blobs above agree with the prior accepted results. This note does **not** assert that the unavailable CHAD live validator ran.
+The protected [checkpoint CP183](../../../governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json) has blob `dbc63f10ca6f0723be3da0bf5f65e44c4e512859`. The preserved `research/reach-green-mapping-input-frozen-20261107` input ref and `research/reach-green-mapping-20261107` CP186 attempt are provenance; the latter has not been protected-admitted and contains no 153 manuscript. Current-main scientific blobs above agree with the prior accepted results. This note does **not** assert that the unavailable CHAD live validator ran.
 
 ## 2. Positive fixed-regulator microlocal theorem
 
