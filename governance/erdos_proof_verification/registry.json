@@ -6,7 +6,7 @@
   "project_number": 2,
   "project_id": "PVT_kwDOB9Ao_c4Blwur",
   "project_item_id": "PVTI_lADOB9Ao_c4BlwurzhIVEkA",
-  "status": "PILOT_REGISTERED_GLOBAL_TRIAGE_INCOMPLETE",
+  "status": "FULL_CATALOGUE_QUEUED_TRIAGE_AND_PROOFS_PENDING",
   "manifest_schema": "schemas/erdos_proof_verification_manifest.schema.json",
   "manifests": [
     "governance/erdos_proof_verification/manifests/0246.json",
@@ -18,8 +18,8 @@
   "source_population": {
     "input": "governance/erdos_compendium/batches/EC-BULK-*.json and source-audit issue returns",
     "coverage_policy": "Every completed source audit must be SELECTED_WITH_MANIFEST, REUSED_EXISTING_VERIFICATION, DECLINED_WITH_REASON, or PENDING; no implicit proof certification",
-    "current_global_triage": "PENDING_NOT_EXHAUSTIVELY_RECONCILED",
-    "global_inventory_complete": false
+    "current_global_triage": "INVENTORY_COMPLETE_DECISIONS_PENDING",
+    "global_inventory_complete": true
   },
   "selection_policy": {
     "source_audit_completed_is_not_verification": true,
@@ -54,5 +54,16 @@
     "blocked_issues_remain_open": true
   },
   "protected_entrypoint": "docs/ERDOS_PROOF_VERIFICATION.md",
-  "continuity_checkpoint": "governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json"
+  "continuity_checkpoint": "governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json",
+  "full_catalogue_queue": {
+    "coverage_registry": "governance/erdos_proof_verification/coverage/REGISTRY.json",
+    "source_problem_count": 1221,
+    "individual_unverified_problems": 1216,
+    "reused_active_pilot_problems": 5,
+    "cohorts": 13,
+    "new_stage_queue_issues": 52,
+    "crosscutting_queue_issues": 6,
+    "proofs_completed_by_inventory_creation": 0,
+    "mathematical_certification_asserted": false
+  }
 }
