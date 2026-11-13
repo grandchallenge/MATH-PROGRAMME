@@ -65,3 +65,9 @@ python3 ci/erdos_pv_queue.py get --problem 248 --stage B
 ```
 
 The pickup command is intentionally read-only; a candidate is **not a lease**, independent review, or a claim of successful execution. Before doing work, acquire the current authorized atomic claim, check all issue comments and protected artifact state, and record the exact source and receipt. Validate the inventory and negative cases with `python3 ci/validate_erdos_pv_full_coverage.py`, `python3 ci/test_erdos_pv_full_coverage.py`, and `python3 ci/test_erdos_pv_queue.py`; these are added to the campaign policy shard. The complete inventory must be present for the gate to pass, while mathematical completion is separately fail-closed until individual evidence is actually admitted.
+
+## Protected inventory admission receipt
+
+The exhaustive inventory was protected-admitted through [PR #3271](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3271), merge commit `9b8067556d116ac8c09a7651e52d6f10c6952832`. Readback confirmed the coverage registry and all 13 cohort packets (14 exact blobs), and the 58 Project #2 issues in the Mathematics class and Todo state. Of these, **17 are AVAILABLE**: 13 source-scope cohorts (Phase A) plus coverage gate #3264, dispatcher #3265, prior-work reconciliation #3266 and public-status work #3268. The other **41 remain dependency-blocked**: 39 cohort B/C/D phases, MATHCERT handoff #3267 and terminal closure #3269. The existing five explicit proof pilots are reused and remain separate.
+
+These are issue and evidence-readback facts, **not completed proofs**. The exhaustive registry records 1,216 unsatisfied new per-problem triage decisions and no newly verified full mathematical claims. The next substantive proof obligation remains [Erdős #248 verification #3204](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3204); source scope pickup can proceed concurrently via the governed read-only queue selector and an authorized atomic claim.

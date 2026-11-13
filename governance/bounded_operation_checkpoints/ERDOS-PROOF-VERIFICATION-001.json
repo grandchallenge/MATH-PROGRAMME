@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "ERDOS-PROOF-VERIFICATION-001.CP003",
+  "checkpoint_id": "ERDOS-PROOF-VERIFICATION-001.CP004",
   "governed_work_id": "ERDOS-PROOF-VERIFICATION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,39 +15,43 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3201"
   },
-  "phase": "Full 1,221-problem inventory and 58 new GitHub queue issues created/read back in Project #2 Mathematics/Todo; 13 source-scope cohorts plus 39 downstream stages and 6 crosscut obligations; protected ledger not yet admitted, all 58 new issues remain blocked until protected readback. Five pilot proof tasks remain separate.",
+  "phase": "Full 1,221-problem proof-verification inventory protected-admitted in PR #3271, merge 9b8067556d116ac8c09a7651e52d6f10c6952832; 58 new OPEN/Todo/Mathematics Project #2 entries independently read back, 17 AVAILABLE and 41 dependency-blocked; 14 protected registry/packet blobs read back; 1,216 unsatisfied triage decisions, no proof verification or MATHCERT certification claimed.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "85cf1200afca5c036add48159f048f04e9a7f62b",
-    "candidate_head_sha": "85cf1200afca5c036add48159f048f04e9a7f62b",
+    "protected_base_sha": "9b8067556d116ac8c09a7651e52d6f10c6952832",
+    "candidate_head_sha": "9b8067556d116ac8c09a7651e52d6f10c6952832",
     "issue_number": 3201,
     "pr_number": null,
-    "branch": "gcl/erdos-pv-continuity-anchor-001",
+    "branch": "gcl/erdos-pv-full-coverage-anchor-001",
     "workflow_runs": []
   },
   "terminal_condition": "Only close upon complete catalogue audit-to-verification triage, completed or evidence-blocked selected verification work, protected reviews/admissions/readback, and separate MATHCERT dispositions only where certification is authorized. Source audit closure is never proof completion.",
   "permitted_next_actions": [
     {
-      "id": "admit-full-coverage-ledger",
-      "description": "Review exhaustive 1,221-row ledger, 58 exact project IDs, CLI and acceptance tests; merge through native protected queue; read back source registry and all cohort packets; only then activate 13 Phase A cohort issues and initial coverage/dispatch/prior-proof tasks."
+      "id": "verify-248-source-and-kernel",
+      "description": "Execute #3204 source-locked Erdős248 actual Lean proof and mathematical semantics replay with exact imports, axioms, a nonauthoring critical pass and protected receipt; no certification without MathCERT."
     },
     {
-      "id": "verify-248-source-and-kernel",
-      "description": "Preserve existing independently executable pilot #3204 (Erdos 248) with exact source, Lean dependency, axioms, source proof semantics and bounded adjudication; no certification."
+      "id": "start-first-source-scope-cohort",
+      "description": "Acquire the authorized atomic claim and complete one substantive ERDOS-PV-0001-A source/scope verification from cohort #3212, not a historical source-audit replay; read live source and all comments, return immutable evidence."
     },
     {
       "id": "reconcile-global-source-triage",
-      "description": "Advance source issue #3208 with 1,221-exact source triage and per-problem ledger decisions, not copied historical statuses."
+      "description": "Process a bounded tranche of #3208 with dedupe, source-critical analysis and exact per-problem ledger updates, no global completion until all 1,221 decisions."
+    },
+    {
+      "id": "repair-shared-dispatch",
+      "description": "Advance queue dispatcher #3265 so available per-problem subjobs are leased and progressed fairly by existing GCL workers, preserving existing recurring automation schedules."
     }
   ],
   "next_action": {
-    "id": "admit-full-coverage-ledger",
-    "description": "Open and merge the exhaustive 1,221-item queue/ledger PR through native protected controls after the coverage validator and 25 hostile/pickup tests pass; confirm 58 Project #2/Todo entries; on protected readback activate 13 Phase A source-scope cohorts, coverage gate and dispatcher, while leaving phases B/C/D dependency-blocked. Then rebind this checkpoint to the protected outcome.",
+    "id": "verify-248-source-and-kernel",
+    "description": "Carry out the next substantive independent mathematical verification of Erdős #248 under open issue #3204, using the pinned provider, theorem-type/axiom audit and replay or a precise evidence-backed blocker; in parallel, runnable source-cohort #3212 and dispatcher #3265 are available. Do not repeat full-coverage queue setup.",
     "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME#3204",
+      "governance/erdos_proof_verification/manifests/0248.json",
       "governance/erdos_proof_verification/coverage/REGISTRY.json",
-      "ci/validate_erdos_pv_full_coverage.py",
-      "grandchallenge/MATH-PROGRAMME#3212",
-      "grandchallenge/MATH-PROGRAMME#3269"
+      "grandchallenge/MATH-PROGRAMME#3265"
     ]
   },
   "external_evidence": {
@@ -55,47 +59,52 @@
     "objects": [
       {
         "kind": "artifact",
-        "identity": "grandchallenge/MATH-PROGRAMME#3212-3263",
-        "status": "52_COHORT_PHASE_ISSUES_OPEN_TODO_MATHEMATICS_BLOCKED_PENDING_PROTECTED_LEDGER"
+        "identity": "grandchallenge/MATH-PROGRAMME#3271@9b8067556d116ac8c09a7651e52d6f10c6952832",
+        "status": "PROTECTED_MERGED_AND_14_BLOBS_READBACK_PASS"
       },
       {
         "kind": "artifact",
-        "identity": "grandchallenge/MATH-PROGRAMME#3264-3269",
-        "status": "SIX_CROSSCUT_ISSUES_OPEN_TODO_MATHEMATICS_BLOCKED_PENDING_PROTECTED_LEDGER"
+        "identity": "grandchallenge/MATH-PROGRAMME#3212-3269",
+        "status": "58_PROJECT2_MATHEMATICS_TODO_ISSUES;17_AVAILABLE_41_DEPENDENCY_BLOCKED"
       },
       {
         "kind": "artifact",
         "identity": "grandchallenge/MATH-PROGRAMME#3202-3206",
-        "status": "FIVE_PILOT_ISSUES_AVAILABLE_WITHOUT_DUPLICATE_PROOF"
+        "status": "FIVE_PILOT_PROOF_TASKS_REUSED_UNEXECUTED"
       },
       {
         "kind": "artifact",
         "identity": "grandchallenge/MATH-PROGRAMME#3208",
-        "status": "GLOBAL_SOURCE_TRIAGE_REMAINS_OPEN_IN_PROGRESS"
+        "status": "GLOBAL_SOURCE_TRIAGE_OPEN;1216_DECISIONS_PENDING"
+      },
+      {
+        "kind": "artifact",
+        "identity": "GCL queue automation state",
+        "status": "FIVE_EXISTING_SCHEDULES_UNCHANGED"
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Inventory all Erdős catalogue IDs, create 52 four-stage cohort queue issues and 6 crosscut obligations, assign exact Project #2 items, validate preliminary ledger",
-    "result": "GitHub issue and Project readback confirms 58 new OPEN/Todo Mathematics items, all blocked pending protected ledger admission; 1,221 individually enumerated source records and 4,884 stage work unit IDs generated, 5 pilot proof issues reused; no proof verification or mathematical certification completed.",
+    "action": "Admit full 1,221-problem registry by native protected merge; activate 13 source cohorts and four independent controls, preserve 41 gated downstream issues",
+    "result": "PR #3271 merge 9b8067556d116ac8c09a7651e52d6f10c6952832; protected source registry plus 13 cohort packet blobs exact readback PASS; 58 GitHub issue+Project status+Queue Class+label readbacks PASS (17 available, 41 blocked). Source snapshot 1–1221 complete; 4,884 individually named stage work units; 1,216 nonpilot decisions PENDING; zero new proof-verification closures; no certification.",
     "evidence_refs": [
+      "grandchallenge/MATH-PROGRAMME#3271",
+      "grandchallenge/MATH-PROGRAMME@9b8067556d116ac8c09a7651e52d6f10c6952832:governance/erdos_proof_verification/coverage/REGISTRY.json",
       "grandchallenge/MATH-PROGRAMME#3212",
       "grandchallenge/MATH-PROGRAMME#3224",
-      "grandchallenge/MATH-PROGRAMME#3225",
-      "grandchallenge/MATH-PROGRAMME#3238",
-      "grandchallenge/MATH-PROGRAMME#3251",
-      "grandchallenge/MATH-PROGRAMME#3263",
       "grandchallenge/MATH-PROGRAMME#3264",
-      "grandchallenge/MATH-PROGRAMME#3269",
-      "/tmp/gcl_erdos_pv_project_items.json_LOCAL_READBACK"
+      "grandchallenge/MATH-PROGRAMME#3265",
+      "grandchallenge/MATH-PROGRAMME#3266",
+      "grandchallenge/MATH-PROGRAMME#3268",
+      "grandchallenge/MATH-PROGRAMME#3269"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-13T04:49:44Z"
+    "observed_at": "2026-11-13T05:27:04.488Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -112,7 +121,7 @@
       "grandchallenge/MATH-PROGRAMME#3265",
       "grandchallenge/MATH-PROGRAMME#3269"
     ],
-    "instructions": "First read #3201 and protected coverage registry; if this CP003 still awaits admission, check 1,221-item PR and protected merge queue. After protected admission, exact-main readback then activate 13 A cohorts #3212–#3224 (and live coverage/dispatcher/prior-work reconciliation) while B/C/D per-item dependencies remain blocked. Continue source-and-proof work via 5 existing pilots #3202–#3206 and #3208. Use read-only ci/erdos_pv_queue.py next --stage A with atomic GitHub claim and live readback before work; 1 substantive problem per worker return, no false mathematical completion. Never infer certification, source status or proof review from presence in queue."
+    "instructions": "Do NOT recreate the already protected 58 queue items or 1,221 work records. Read protected governance/erdos_proof_verification/coverage/REGISTRY.json and per-cohort packets; validate current Project statuses and claim ownership. Source cohorts A #3212-#3224 are available, B/C/D #3225-#3263 gated per problem, selected crosscuts #3264/#3265/#3266/#3268 available; #3267 certification and #3269 terminal blocked. Next mathematical action #3204 Erdős248 real Lean replay. For coverage pickup use python3 ci/erdos_pv_queue.py next --stage A --limit 1; it is read-only, NOT a lease; acquire authorized atomic claim and reconcile comments. Preserve no source-audit-as-proof, no proof from hint, nonauthoring review and MATHCERT authority. Do not change existing recurring automation schedule."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
