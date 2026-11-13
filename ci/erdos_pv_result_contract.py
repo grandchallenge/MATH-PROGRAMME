@@ -91,4 +91,29 @@ def can_release_after_readback(row: dict, stage: str, protected_receipt_ref: str
 
 
 if __name__ == "__main__":
-    raise SystemExit("Import as a validator; do not use it to dispatch or reserve workers.")
+    import json
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from validate_erdos_pv_full_coverage import read
+
+    if sys.argv[1:] != ["--selftest"]:
+        raise SystemExit("Use --selftest; this checker does not dispatch workers.")
+    row = read("governance/erdos_proof_verification/coverage/cohorts/0001-0100.json")["items"][0]
+    source_sha = row["source_issue_body_sha256"]
+    text = ("RESULT/1\\nASSIGNMENT_ID: ERDOS-PV-0001-A\\nPROBLEM_ID: 1\\n"
+            "PHASE: A\\nCOHORT_ISSUE: 3212\\nSOURCE_ISSUE: 1270\\n"
+            f"SOURCE_BODY_SHA256: {source_sha}\\n"
+            "DISPOSITION: SOURCE_SCOPE_RECONCILED_CANDIDATE\\n"
+            "EVIDENCE_REF: governance/erdos_proof_verification/evidence/0001/SOURCE_SCOPE_RECONCILIATION_001.json\\n"
+            "CLAIM_REF: refs/heads/gcl-pv-claims/ERDOS-PV-0001-A\\n")
+    result = validate_return(row, "A", text)
+    assert result["ASSIGNMENT_ID"] == "ERDOS-PV-0001-A"
+    try:
+        validate_return(row, "A", text, [text])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("duplicate return accepted")
+    print(json.dumps({"result": "PASS", "task_id": "ERDOS-PV-0001-A",
+                      "selftest": "exact return accepted, duplicate rejected"}))
