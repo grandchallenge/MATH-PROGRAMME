@@ -33,7 +33,7 @@ private theorem bijective_iff_of_commuting_vertical_bijections
     · intro c c' hcc
       obtain ⟨a, rfl⟩ := hu.2 c
       obtain ⟨a', rfl⟩ := hu.2 c'
-      apply hu.1
+      apply congrArg u
       apply hf.1
       apply hv.1
       calc
