@@ -52,6 +52,44 @@ theorem stoneanPresentation_effectiveEpi_condensed
     (profiniteToCompHaus.map (Profinite.presentation.π T)))
   infer_instance
 
+/-- For any actual CM5 solid target G_S, a condensed-set map
+from the Stonean covering probe descends *constructively* whenever
+it respects the effective-epi Čech relation. This is a degree-zero
+set-valued descent construction, not the missing arbitrary-kernel
+module morphism extension. -/
+noncomputable def descendStoneanCoverToSolidUnderlying
+    (T S : Profinite.{u})
+    (e : (Stonean.toProfinite.obj T.presentation).toCondensed ⟶
+      (Condensed.forget Coeff).obj (underivedObject S))
+    (h : ∀ {Z : CondensedSet.{u}}
+      (g₁ g₂ : Z ⟶ (Stonean.toProfinite.obj T.presentation).toCondensed),
+        g₁ ≫ profiniteToCondensed.map (Profinite.presentation.π T) =
+        g₂ ≫ profiniteToCondensed.map (Profinite.presentation.π T) →
+        g₁ ≫ e = g₂ ≫ e) :
+    T.toCondensed ⟶ (Condensed.forget Coeff).obj (underivedObject S) := by
+  letI : EffectiveEpi (profiniteToCondensed.map (Profinite.presentation.π T)) :=
+    stoneanPresentation_effectiveEpi_condensed T
+  exact EffectiveEpi.desc
+    (profiniteToCondensed.map (Profinite.presentation.π T)) e h
+
+/-- The constructed descended map restricts to the original
+compatible solid-target section on the Stonean presentation. -/
+theorem descendStoneanCoverToSolidUnderlying_fac
+    (T S : Profinite.{u})
+    (e : (Stonean.toProfinite.obj T.presentation).toCondensed ⟶
+      (Condensed.forget Coeff).obj (underivedObject S))
+    (h : ∀ {Z : CondensedSet.{u}}
+      (g₁ g₂ : Z ⟶ (Stonean.toProfinite.obj T.presentation).toCondensed),
+        g₁ ≫ profiniteToCondensed.map (Profinite.presentation.π T) =
+        g₂ ≫ profiniteToCondensed.map (Profinite.presentation.π T) →
+        g₁ ≫ e = g₂ ≫ e) :
+    profiniteToCondensed.map (Profinite.presentation.π T) ≫
+      descendStoneanCoverToSolidUnderlying T S e h = e := by
+  letI : EffectiveEpi (profiniteToCondensed.map (Profinite.presentation.π T)) :=
+    stoneanPresentation_effectiveEpi_condensed T
+  exact EffectiveEpi.fac (profiniteToCondensed.map (Profinite.presentation.π T)) e h
+
+#print axioms descendStoneanCoverToSolidUnderlying_fac
 #print axioms stoneanPresentation_effectiveEpi_profinite
 #print axioms stoneanPresentation_effectiveEpi_condensed
 
