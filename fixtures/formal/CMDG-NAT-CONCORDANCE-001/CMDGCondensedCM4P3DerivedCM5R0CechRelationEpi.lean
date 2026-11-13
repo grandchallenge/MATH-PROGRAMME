@@ -81,8 +81,9 @@ noncomputable def stoneanCechFreeCokernel
         have hh := stoneanCechDifference_comp_zero T
         unfold stoneanCechDifference at hh
         simpa only [Preadditive.sub_comp, sub_eq_zero] using hh)) := by
-    simpa [f, c, cp, freeStoneanPresentationMap,
-      Condensed.profiniteFree, Functor.comp_map] using hfree
+    simpa [f, c, cp, PullbackCone.mk_fst, PullbackCone.mk_snd,
+      freeStoneanPresentationMap, Condensed.profiniteFree,
+      Functor.comp_map] using hfree
   have hck := Preadditive.isColimitCokernelCoforkOfCofork hfree'
   simpa only [Preadditive.cokernelCoforkOfCofork_ofπ,
     stoneanCechDifference] using hck
