@@ -101,12 +101,12 @@ if __name__ == "__main__":
         raise SystemExit("Use --selftest; this checker does not dispatch workers.")
     row = read("governance/erdos_proof_verification/coverage/cohorts/0001-0100.json")["items"][0]
     source_sha = row["source_issue_body_sha256"]
-    text = ("RESULT/1\\nASSIGNMENT_ID: ERDOS-PV-0001-A\\nPROBLEM_ID: 1\\n"
-            "PHASE: A\\nCOHORT_ISSUE: 3212\\nSOURCE_ISSUE: 1270\\n"
-            f"SOURCE_BODY_SHA256: {source_sha}\\n"
-            "DISPOSITION: SOURCE_SCOPE_RECONCILED_CANDIDATE\\n"
-            "EVIDENCE_REF: governance/erdos_proof_verification/evidence/0001/SOURCE_SCOPE_RECONCILIATION_001.json\\n"
-            "CLAIM_REF: refs/heads/gcl-pv-claims/ERDOS-PV-0001-A\\n")
+    text = ("RESULT/1\nASSIGNMENT_ID: ERDOS-PV-0001-A\nPROBLEM_ID: 1\n"
+            "PHASE: A\nCOHORT_ISSUE: 3212\nSOURCE_ISSUE: 1270\n"
+            f"SOURCE_BODY_SHA256: {source_sha}\n"
+            "DISPOSITION: SOURCE_SCOPE_RECONCILED_CANDIDATE\n"
+            "EVIDENCE_REF: governance/erdos_proof_verification/evidence/0001/SOURCE_SCOPE_RECONCILIATION_001.json\n"
+            "CLAIM_REF: refs/heads/gcl-pv-claims/ERDOS-PV-0001-A\n")
     result = validate_return(row, "A", text)
     assert result["ASSIGNMENT_ID"] == "ERDOS-PV-0001-A"
     try:
