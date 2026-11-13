@@ -29,7 +29,7 @@ H^q(T, \underline{ℤ}_T) = 0,  q>0.
 ```
 This proves the classical *topological* acyclicity statement. It does not alone prove the GCL condensed-category Ext assertion.
 
-**Potential formal dependency:** in pinned mathlib `79d0395a1825a6264ad5d269e35e60537518955e`, the profinite finite-quotient and locally constant factorization API appears in `Mathlib/Topology/Category/Profinite/CofilteredLimit.lean` and `.../Extend.lean`. Nöbeling's theorem is already formalized in `Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean`. Do not claim that a sheaf-cohomology-to-Čech comparison for this category has already been formalized: it has not been established in the present CM5 proof closure.
+**Formal status of the partition lemma (already solved in pinned mathlib):** at mathlib commit `79d0395a1825a6264ad5d269e35e60537518955e`, `Mathlib/Topology/Separation/DisjointCover.lean` proves `TopologicalSpace.IsOpenCover.exists_finite_nonempty_disjoint_clopen_cover`: for an open cover of any compact Hausdorff totally disconnected space, there exist finitely many nonempty pairwise-disjoint clopens covering the space and each subordinate to an original open. The theorem applies to arbitrary profinite `T` with no finite-cardinality restriction. The proof in §1 is an independent mathematical explanation of an *already formally available* fact, not an unformalized partition theorem. The pinned profinite finite-quotient / locally constant factorization API also appears in `Mathlib/Topology/Category/Profinite/CofilteredLimit.lean` and `.../Extend.lean`; Nöbeling freeness is formalized in `Mathlib/Topology/Category/Profinite/Nobeling/Induction.lean`. Neither the Čech acyclicity chain nor the Čech-to-derived-sections bridge for GCL's exact condensed site has been established in the present CM5 Lean closure.
 
 ## 3. The *missing* categorical identification: no illicit transfer
 
@@ -44,7 +44,7 @@ Required source-to-Lean gates:
 
 1. Bind `F_T`, `ZLift`, coefficient universes, and the exact target discrete integer condensed module. In particular `LocallyConstant T ℤ` as an ordinary module is *not* literally `F_T` in the condensed category.
 2. Construct the derived adjunction / evaluation interface that relates `RHom_{Condensed}(F_T,ZLift)` to derived sections on `T`; prove the comparison is canonical, natural, and of the asserted variance.
-3. Formalize the finite clopen partition refinement and the corresponding Čech contracting/acyclicity argument (or choose an already justified equivalent resolution) in the actual sheaf site. A statement about ordinary topological sheaf cohomology cannot silently substitute for the derived condensed-site object.
+3. **Reuse**, rather than reprove, pinned mathlib's `IsOpenCover.exists_finite_nonempty_disjoint_clopen_cover`; formalize the corresponding Čech contracting/acyclicity argument (or an equivalent resolution) in the *actual* sheaf site. A statement about ordinary topological sheaf cohomology cannot silently substitute for derived condensed-site cohomology.
 4. Transport through the exact coefficient `ZLift` realization, rather than replace it with unlifted integers by notation.
 5. Preserve the *solid-side* derived biduality and *target-product* Ext transport as independent outstanding obligations. In particular, never infer solid-side vanishing from free-side vanishing or from CM4 underived solidity.
 
