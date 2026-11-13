@@ -75,9 +75,9 @@ theorem extOneComparison_negative_commutes (S T : Profinite.{u})
       (underivedObject S) 1) :
     extOneToNegativeHom (extOneComparison S T e) =
       comparisonAtShift S T (-1) (extOneToNegativeHom e) := by
-  simpa only [comparisonAtShift, solidificationAtZero, extOneComparison] using
-    (extOne_negative_natural
-      ((Condensed.profiniteSolidification Coeff).app T) e)
+  unfold extOneComparison comparisonAtShift solidificationAtZero
+  exact extOne_negative_natural
+    ((Condensed.profiniteSolidification Coeff).app T) e
 
 #print axioms extOneComparison_negative_commutes
 
