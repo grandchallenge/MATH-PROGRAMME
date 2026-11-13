@@ -72,7 +72,7 @@ The second summand is indispensable. Neither formula is *a priori* an output leg
 
 ## 4. V160 — zero-regulator conormal trap with exact Gaussian limits
 
-For $\epsilon>0$, both $w_\epsilon^\circ$ and $H_\epsilon$ are smooth. The labelled output has possible singular covectors only $(\xi,0)$, and the symmetric output is the sum of a pure-$x$ and a pure-$z$ wavefront. Neither intersects the pure diagonal conormal $(\tau,-\tau)$ with $\tau\ne0$.
+For $\epsilon>0$, both $w_\epsilon^\circ$ and $H_\epsilon$ are smooth. The labelled output has possible singular covectors only $(\xi,0)$, and the symmetric output is the sum of a wavefront consisting of pure covectors in $x$ and another of pure covectors in $z$. Neither intersects the pure diagonal conormal $(\tau,-\tau)$ with $\tau\ne0$.
 
 For every compact test $\varphi$, Gaussian Taylor expansion is
 
