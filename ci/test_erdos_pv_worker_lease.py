@@ -96,6 +96,59 @@ class LeaseTests(unittest.TestCase):
   q["protected_admission_ref"]="grandchallenge/MATH-PROGRAMME@"+"b"*40
   with self.assertRaisesRegex(ValueError,"protected completion"):
    w.release(s,"a"*40,"c"*40)
+ def test_protected_evidence_validated_before_release(self):
+  s=copy.deepcopy(self.s)
+  stage=s["row"]["stage_work_items"]["B"]
+  self.assertEqual(stage["work_status"],"PROTECTED_ADMITTED")
+  admitted="1ffcebfaa2fb9980301bfdac2b5ca0993b2820d0"
+  assert stage["protected_admission_ref"]=="grandchallenge/MATH-PROGRAMME@"+admitted
+  claim_sha="a"*40
+  source=s["row"]["source_issue_body_sha256"]
+  body=("\n".join([
+   "RESULT/1","ASSIGNMENT_ID: ERDOS-PV-0001-B","PROBLEM_ID: 1",
+   "PHASE: B","COHORT_ISSUE: 3225","SOURCE_ISSUE: 1270",
+   f"SOURCE_BODY_SHA256: {source}",
+   "DISPOSITION: BOUNDED_RESULT_RETURNED",
+   "EVIDENCE_REF: governance/erdos_proof_verification/evidence/0001/BINARY_BLOCK_LEMMA_001.md",
+   "CLAIM_REF: refs/heads/gcl-pv-claims/ERDOS-PV-0001-B",""]))
+  deleted=[]
+  def fake_api(method,path,data=None):
+   if path==f"git/commits/{claim_sha}":
+    return {"message":f"GCL_PV_RESERVATION/1 task=ERDOS-PV-0001-B actor=fyremael source_sha256={source} nonce=123"}
+   if path.startswith("contents/"):return {"sha":"f"*40}
+   if path=="git/ref/heads/main":return {"object":{"sha":"b"*40}}
+   if method=="DELETE":
+    deleted.append(path)
+    return {}
+   raise AssertionError((method,path))
+  def fake_run(*args,stdin=None):
+   if args[:3]==("gh","api","user"):return "fyremael\n"
+   if args[:2]==("git","hash-object"):return "f"*40+"\n"
+   if args[-2:]==("--jq",".status"):return "ahead\n"
+   raise AssertionError(args)
+  with patch.object(w,"current_ref",side_effect=[
+      {"object":{"sha":claim_sha}},None
+     ]),patch.object(w,"api",side_effect=fake_api),patch.object(w,"run",side_effect=fake_run),patch.object(w,"comments",return_value=[
+       {"body":body,"html_url":"https://github.com/grandchallenge/MATH-PROGRAMME/issues/3225#issuecomment-6856158672"}]):
+   out=w.release(s,claim_sha,admitted)
+  self.assertEqual(out["result"],"RELEASED_AFTER_PROTECTED_READBACK")
+  self.assertEqual(deleted,["git/refs/heads/gcl-pv-claims/ERDOS-PV-0001-B"])
+ def test_fake_protected_main_blob_blocks_delete(self):
+  s=copy.deepcopy(self.s)
+  sha="a"*40;admitted="1ffcebfaa2fb9980301bfdac2b5ca0993b2820d0"
+  source=s["row"]["source_issue_body_sha256"]
+  def fake_api(method,path,data=None):
+   if path==f"git/commits/{sha}":
+    return {"message":f"GCL_PV_RESERVATION/1 task=ERDOS-PV-0001-B actor=fyremael source_sha256={source}"}
+   if path.startswith("contents/"):return {"sha":"0"*40}
+   raise AssertionError("Unexpected mutation "+path)
+  def fake_run(*args,stdin=None):
+   if args[:3]==("gh","api","user"):return "fyremael"
+   if args[:2]==("git","hash-object"):return "f"*40
+   raise AssertionError(args)
+  with patch.object(w,"current_ref",return_value={"object":{"sha":sha}}),patch.object(w,"api",side_effect=fake_api),patch.object(w,"run",side_effect=fake_run):
+   with self.assertRaisesRegex(ValueError,"not on protected main"):
+    w.release(s,sha,admitted)
  def test_negative_finite_fixture_detected(self):
   x=math.evidence()
   self.assertEqual(x["result"],"PASS_EXACT_FINITE_FIXTURES_NOT_UNIVERSAL_THEOREM")
