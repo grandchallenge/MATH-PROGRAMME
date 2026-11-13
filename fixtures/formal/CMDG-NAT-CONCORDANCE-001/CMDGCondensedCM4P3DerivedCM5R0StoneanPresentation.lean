@@ -21,7 +21,7 @@ noncomputable section
 
 universe u
 
-open CategoryTheory
+open CategoryTheory CategoryTheory.Functor
 
 namespace CMDG.CondensedCM5R0
 
