@@ -49,7 +49,20 @@ theorem locallyConstantInteger_extOne_eq_zero
     locallyConstantInteger_projective T
   exact e.eq_zero_of_projective
 
+/-- The stronger Nöbeling consequence: all *positive-degree*
+ordinary Ext groups from the locally constant integer module vanish.
+This still makes no assertion about condensed-module Ext. -/
+theorem locallyConstantInteger_extPositive_eq_zero
+    (T : Profinite.{u}) (M : ModuleCat.{u} ℤ)
+    (n : ℕ)
+    (e : Abelian.Ext (LocallyConstantIntegerModule T) M (n + 1)) :
+    e = 0 := by
+  letI : Projective (LocallyConstantIntegerModule T) :=
+    locallyConstantInteger_projective T
+  exact e.eq_zero_of_projective
+
 #print axioms locallyConstantInteger_projective
 #print axioms locallyConstantInteger_extOne_eq_zero
+#print axioms locallyConstantInteger_extPositive_eq_zero
 
 end CMDG.CondensedCM5R0
