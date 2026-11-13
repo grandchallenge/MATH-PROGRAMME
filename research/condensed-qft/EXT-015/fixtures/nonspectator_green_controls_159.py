@@ -76,15 +76,31 @@ def main():
         w = {z: F(value) for z, value in zip(SITES, coeffs)}
         r = projected(w)
         assert moment(r, 0) == moment(r, 1) == 0
-        # The labelled 4 affine moments of fy(y)*r(z) vanish.
+        # The labelled four affine moments vanish. Its ordinary
+        # degree-zero slot average is the genuine symmetric residual input.
         for a, b in product((0, 1), repeat=2):
             assert moment(fy, a)*moment(r, b) == 0
+        sym = {
+            (y, z): (fy.get(y, F(0))*r[z] + r[y]*fy.get(z, F(0)))/2
+            for y in SITES for z in SITES
+        }
+        assert all(sym[y,z] == sym[z,y] for y in SITES for z in SITES)
+        for a, b in product((0, 1), repeat=2):
+            assert sum((F(y**a*z**b)*sym[y,z]
+                        for y in SITES for z in SITES), F(0)) == 0
         nonzero_w += bool(any(r.values()))
         for x in OUTPUT:
+            hr = sum((green(x-y)*r[y] for y in SITES), F(0))
             for z in SITES:
-                direct = sum((green(x-y)*value*r[z] for y, value in fy.items()), F(0))
-                assert direct == G(x)*r[z]
-                pairings += 1
+                labelled = sum(
+                    (green(x-y)*value*r[z] for y, value in fy.items()), F(0)
+                )
+                assert labelled == G(x)*r[z]
+                symmetric = sum(
+                    (green(x-y)*sym[y,z] for y in SITES), F(0)
+                )
+                assert symmetric == (G(x)*r[z]+hr*fy.get(z, F(0)))/2
+                pairings += 2
         samples += 1
 
     # Polynomial Wick identity: integrate normal N(0,eps^2)
@@ -106,7 +122,7 @@ def main():
         assert by_moments == by_taylor
         gaussian_tests += 1
 
-    assert samples == 242 and pairings == 13310
+    assert samples == 242 and pairings == 26620
     assert nonzero_w == 234 and gaussian_tests == 81
     print(
         f"PASS: {samples} finite W inputs, {pairings} exact Green pairings, "
