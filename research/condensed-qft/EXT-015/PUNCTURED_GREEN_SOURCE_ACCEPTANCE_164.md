@@ -9,7 +9,7 @@
 | [Primary 162](LEGAL_HIDDEN_NONSPECTATOR_GREEN_SOURCE_AUDIT_162.md) | Blob 20febc0e1196990addf446f0054f5e9e563ba615 |
 | Exact [PR 3305](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3305) primary head | 5ae41e1a20dc304a1e62bc8409286d971f7733d3 |
 | Exact [finite fixture 162](fixtures/hidden_corner_localization_controls_162.py) | Blob 3bc21b06ffdebf3d06a3e93429b9767b6e49df20 |
-| Canonical [mathematical critic 163](AGENT_CRITICAL_REVIEW_PUNCTURED_GREEN_163.md) | Blob **PENDING_EXACT_BLOB_READBACK**; distinct logical Verifier and Adversary audit |
+| Canonical [mathematical critic 163](AGENT_CRITICAL_REVIEW_PUNCTURED_GREEN_163.md) | Blob 32187f9f0d7031522715259b7be78dc6f4f1b917; distinct logical Verifier and Adversary audit |
 | Source-bound GitHub mathematical review | Review ID 5892870101, COMMENTED on exact 162 head, same account; not nonauthor APPROVED |
 | Protected primary merge | **PENDING_SOURCE_PROTECTED_ADMISSION**; no merge SHA assumed at ledger creation |
 | Scalar heat 105 / complete mixed source 108 | a8ce66ff0edec33e2aff299550fca2089d671033 / 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
