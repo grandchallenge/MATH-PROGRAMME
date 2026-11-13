@@ -1,6 +1,6 @@
 # EXT-015 REACH / 161 — bounded acceptance ledger for non-spectator Gaussian joint-kernel test
 
-**SCOPED MATHEMATICAL DISPOSITION: BOUNDED ACCEPT after a material labelled/symmetric correction; general 150.L remains OPEN.** This is a documentary candidate until the review/ledger and the corresponding primary have passed their own protected admission gates. A mathematical source and its review are not an external mathematical certificate.
+**SCOPED MATHEMATICAL DISPOSITION: BOUNDED ACCEPT after a material labelled/symmetric correction; general 150.L remains OPEN.** Primary 159 is protected-admitted and read back. This remains a documentary candidate until review 160 and ledger 161 pass their own protected admission gates. A mathematical source and its review are not an external mathematical certificate.
 
 ## 1. Exact source, proof and review custody
 
@@ -9,7 +9,7 @@
 | Primary [159](NONSPECTATOR_GREEN_GAUSSIAN_R1_TEST_159.md) | Git blob 555088f3da2c87dc02304dcf44b2738510f65062 |
 | Primary [PR #3300](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3300) | Corrected exact head f20a103678d3f6aa758f91cf46e294761d934aba |
 | Exact [159 fixture](fixtures/nonspectator_green_controls_159.py) | Git blob eaacdd57d77e9cbaddef23f697fe7b170aefbc8b |
-| Protected source custody at ledger creation | PR #3300 admitted to native protected merge queue; exact protected merge/readback PENDING at ledger creation. Do not treat candidate as accepted until source merge is verified. |
+| Protected source custody at ledger creation | PR #3300 native protected merge 823a115b3574ad05c147f94313c99e72c5696121 on 2026-11-13T13:26:07Z; all five merge-group workflows PASS; exact primary and fixture blobs read back on protected main. |
 | Canonical role-scoped [critic 160](AGENT_CRITICAL_REVIEW_NONSPECTATOR_GREEN_160.md) | Git blob c11d08c17b5819a8042cc816520b920ede022ffa |
 | Native exact-head mathematical COMMENT review | GitHub review ID 5891645324; same GitHub account; not a nonauthor APPROVED or MATHCERT |
 | Fixed input contracts 105 / 108 / 126 | a8ce66ff0edec33e2aff299550fca2089d671033 / 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 / 5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
@@ -42,7 +42,7 @@ The *boundary conormal* is not prohibited by existing source 108; its leading ph
 
 The exact committed test fixture was fetched from the PR branch and run on the authenticated CHAD OS account. Capture record 8d601df9516647cba466cee673a41c0d, exit 0: 242 nonzero lattice inputs, 26,620 labelled/symmetric exact Green pairings, 234 nonzero projected samples and 81 Gaussian polynomial Wick moments. This verifies finite algebraic signs and moment identities; it is **not** an independent mathematical proof of wavefront, scalar polyhomogeneity or source completion. The CHAD execution is marked OS_ACCOUNT_ONLY and not independently authenticated as a separate reviewer.
 
-All protected source admission, critical mathematical review, ledger admission, merge-group CI and final readback are separate facts. This ledger will become a protected recorded acceptance *only* after the required CI and native queue admission of both source and review material. The source proof is a bounded result, not the full comparison.
+All protected source admission, critical mathematical review, ledger admission, merge-group CI and final readback are separate facts. Source 159 has completed protected merge and exact readback. This ledger becomes a protected documentary acceptance *only* after review 160 and this ledger themselves pass required CI, native merge queue and exact protected-main readback. The source proof is a bounded result, not the full comparison.
 
 ## 4. Deterministic next research obligation
 
