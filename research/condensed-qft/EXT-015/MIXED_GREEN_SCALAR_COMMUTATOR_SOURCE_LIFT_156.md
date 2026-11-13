@@ -44,7 +44,7 @@ A scalar depending only on the spectator variable $z$ commutes with both partial
 
 ## 3. An exact admitted Gaussian–spectator R1 source lift
 
-**Theorem 156.1 (completed Gaussian–spectator lift).** Fix a nonempty interval $U$, a compact $K\Subset U$, and $\chi,\theta\in C_c^\infty(U)$ with $\chi=1$ on an open neighborhood $O$ of $K$, $\theta=1$ on a neighborhood of $K$ and $\operatorname{supp}\theta\Subset O$. Let $b_0,b_1$ be the fixed moment-normalizing bumps of 150.3. Fix an output cutoff $\psi\in C_c^\infty(U)$ equal to one on the interval hull of $\operatorname{supp}\chi\cup\operatorname{supp}b_0\cup\operatorname{supp}b_1$; choose $\phi\in C_c^\infty(U)$ with $\phi=1$ on $\operatorname{supp}\psi$.
+**Theorem 156.1 (completed Gaussian–spectator lift).** Fix a nonempty interval $U$, a compact $K\Subset U$, and $\chi,\theta\in C_c^\infty(U)$ with $\chi=1$ on an open neighborhood $O$ of $K$, $\theta=1$ on a neighborhood of $K$ and $\mathrm{supp}\theta\Subset O$. Let $b_0,b_1$ be the fixed moment-normalizing bumps of 150.3. Fix an output cutoff $\psi\in C_c^\infty(U)$ equal to one on the interval hull of $\mathrm{supp}\chi\cup\mathrm{supp}b_0\cup\mathrm{supp}b_1$; choose $\phi\in C_c^\infty(U)$ with $\phi=1$ on $\mathrm{supp}\psi$.
 
 Let $\rho\in E_{s,K,\Gamma}^{(z)}$ be any one-coordinate compact distribution, including a point delta or its derivatives, and let $s_\epsilon(z)$ occupy one *fixed admissible one-slot scalar power/logarithmic stage* of 105.5, independent of the integrated coordinate $y$. Write
 
@@ -80,14 +80,14 @@ r_{j,\epsilon}(z)&=\int y^j(\chi(y)-1)\kappa_\epsilon(y-z)\,dy
 \tag{156.5}
 $$
 
-The integrands in (156.5) are not compact in $y$, but Gaussian domination makes the integrals absolutely convergent, and they equal the differences of well-defined compact input integrals and full Gaussian moments. Because $\chi=1$ on $O\supset\operatorname{supp}\theta$, choose a positive distance $\delta$ from $\operatorname{supp}\theta$ to $\operatorname{supp}(\chi-1)$. If $z\in\operatorname{supp}\theta$, every $y$ in the tail integration obeys $|y-z|\ge\delta$. Polynomial factors from physical, parameter and regulator derivatives are dominated by $\exp(-\delta^2/(4\epsilon^2))$ times a fixed inverse power of $\epsilon$. For every $N$ and every fixed multi-derivative, the product of $\theta(z)$ with each $R_\epsilon$ and $r_{j,\epsilon}$ is $O(\epsilon^N)$ in every compact physical $C^r$ seminorm. For $R_\epsilon$, the first two $x$ derivatives follow from the dominated sign kernel, and the higher derivatives follow exactly from
+The integrands in (156.5) are not compact in $y$, but Gaussian domination makes the integrals absolutely convergent, and they equal the differences of well-defined compact input integrals and full Gaussian moments. Because $\chi=1$ on $O\supset\mathrm{supp}\theta$, choose a positive distance $\delta$ from $\mathrm{supp}\theta$ to $\mathrm{supp}(\chi-1)$. If $z\in\mathrm{supp}\theta$, every $y$ in the tail integration obeys $|y-z|\ge\delta$. Polynomial factors from physical, parameter and regulator derivatives are dominated by $\exp(-\delta^2/(4\epsilon^2))$ times a fixed inverse power of $\epsilon$. For every $N$ and every fixed multi-derivative, the product of $\theta(z)$ with each $R_\epsilon$ and $r_{j,\epsilon}$ is $O(\epsilon^N)$ in every compact physical $C^r$ seminorm. For $R_\epsilon$, the first two $x$ derivatives follow from the dominated sign kernel, and the higher derivatives follow exactly from
 
 $$
 \partial_x^2R_\epsilon=(\chi(x)-1)\kappa_\epsilon(x-z).
 \tag{156.6}
 $$
 
-This also controls derivatives when the integration point crosses the $x$-diagonal: Gaussian separation, not a fictitious smoothness of $e$, supplies the bound.
+This also controls derivatives when the integration point crosses the diagonal in $x$: Gaussian separation, not a fictitious smoothness of $e$, supplies the bound.
 
 The uncut Gaussian zeroth and first moments are $1$ and $z$. Since $s_\epsilon(z)\rho(z)$ is independent of $y$, the genuine distributional moments are
 
@@ -123,7 +123,7 @@ $$
 
 The product $\psi\theta P_\epsilon$ is an admitted Gaussian/Wick scalar edge on the existing two-vertex collision space by 105.4–105.6. The cut-off functions $C_0,C_1$ and multiplication by $z$ are smooth physical scalar decorations. The last three terms in the square bracket, after multiplication by $\psi\theta$, are smooth and **flat with every derivative** at the regulator boundary. On every full collision corner, $\epsilon$ is a positive smooth unit times a finite monomial of boundary defining functions. Arbitrarily high $\epsilon$ powers absorb every prescribed corner weight and finite b-derivative loss, so these terms lie in the existing complete scalar flat-remainder stage of 105.5. They need no new asymptotic index family. Pulling $s_\epsilon(z)$ back from its allowed one-slot stage, then multiplying these fixed scalar factors, is a continuous scalar-stage map by 105.6, with one fixed finite union of index families and weight relaxations.
 
-Let the R1 coefficient be $T'(x,z)=\phi(x)\rho(z)$. Its nonzero wavefront covectors have **zero $x$ component**, and hence cannot be forbidden conormals to the $x=z$ partition. The fixed smooth tensor map from the one-slot complete graph stage is continuous into a two-slot R1 graph stage with cone supported in $\{\xi_x=0\}$. Since $\phi=1$ on $\operatorname{supp}\psi$, the legal identity-partition 108.7 history
+Let the R1 coefficient be $T'(x,z)=\phi(x)\rho(z)$. Its nonzero wavefront covectors have **zero $x$ component**, and hence cannot be forbidden conormals to the $x=z$ partition. The fixed smooth tensor map from the one-slot complete graph stage is continuous into a two-slot R1 graph stage with cone supported in $\{\xi_x=0\}$. Since $\phi=1$ on $\mathrm{supp}\psi$, the legal identity-partition 108.7 history
 
 $$
 q_*[A_\epsilon T']=A_\epsilon(x,z)\phi(x)\rho(z)
@@ -157,7 +157,7 @@ $$
 \tag{156.12}
 $$
 
-The right side lies in the fixed $N$-dimensional span of the $f_j(\cdot,z_0)$. Choose $N+1$ distinct positive Gaussian rates $\lambda_r=1/(2\epsilon_r^2)$. The functions $\exp[-\lambda_r(x-z_0)^2]$ are linearly independent on $I$: if a combination vanishes there, its even derivatives of orders $0,2,\ldots,2N$ at $x=z_0$ give a Vandermonde matrix in the distinct $\lambda_r$, with nonzero determinant. Gaussian normalizing constants are all nonzero. This contradicts the fixed $N$-dimensional span. $\square$
+The right side lies in the fixed span of dimension $N$ of the $f_j(\cdot,z_0)$. Choose $N+1$ distinct positive Gaussian rates $\lambda_r=1/(2\epsilon_r^2)$. The functions $\exp[-\lambda_r(x-z_0)^2]$ are linearly independent on $I$: if a combination vanishes there, its even derivatives of orders $0,2,\ldots,2N$ at $x=z_0$ give a Vandermonde matrix in the distinct $\lambda_r$, with nonzero determinant. Gaussian normalizing constants are all nonzero. This contradicts the fixed span of dimension $N$. $\square$
 
 The contrast is substantive: the single **nonseparable Gaussian/Wick scalar edge** in (156.9) is a finite legal source history, whereas every fixed finite **separated** mode ansatz fails. Thus a failed Fourier/separation method does not imply nonrepresentability in the actual source category.
 
