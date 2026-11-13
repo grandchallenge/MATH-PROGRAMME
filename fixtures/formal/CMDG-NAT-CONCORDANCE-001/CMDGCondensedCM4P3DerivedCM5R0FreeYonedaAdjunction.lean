@@ -40,6 +40,20 @@ theorem freeProfiniteHomEquiv_naturality_target
       freeProfiniteHomEquiv T A g ≫ (Condensed.forget Coeff).map f :=
   (Condensed.freeForgetAdjunction Coeff).homEquiv_naturality_right g f
 
+/-- Canonical sections form of the free-profinite representability:
+maps out of the *actual* free condensed module are sections of the
+target underlying condensed sheaf over T, for arbitrary profinite T.
+
+The universe raising in `T.toCondensed` is accounted for by the
+pinned sheaf `uliftYonedaEquiv`, not silently erased. -/
+noncomputable def freeProfiniteSectionsEquiv (T : Profinite.{u}) (A : Ambient) :
+    (((Condensed.profiniteFree Coeff).obj T) ⟶ A) ≃
+      ((Condensed.forget Coeff).obj A).obj.obj
+        (Opposite.op (profiniteToCompHaus.obj T)) :=
+  (freeProfiniteHomEquiv T A).trans
+    ((coherentTopology CompHaus).uliftYonedaEquiv)
+
+#print axioms freeProfiniteSectionsEquiv
 #print axioms freeProfiniteHomEquiv
 #print axioms freeProfiniteHomEquiv_naturality_target
 
