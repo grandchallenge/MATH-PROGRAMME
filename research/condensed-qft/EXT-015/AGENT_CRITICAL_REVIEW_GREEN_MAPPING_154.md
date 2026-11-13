@@ -68,7 +68,7 @@ $$
 K_\epsilon(x,y,z)=\chi(x)e(x-y)a_\epsilon(y,z)T(y,z).
 $$
 
-The wavefront of $e(x-y)$ at its singular diagonal has a nonzero new-$x$ component; every wavefront covector of the pullback of $a_\epsilon T$ from $(y,z)$ has zero new-$x$ component. The Hörmander opposite-covector obstruction therefore does not occur. The compact $y$ support makes its physical pushforward proper, with affine Jacobian one.
+The wavefront of $e(x-y)$ at its singular diagonal has a nonzero component in the new $x$ direction; every wavefront covector of the pullback of $a_\epsilon T$ from $(y,z)$ has zero component in the new $x$ direction. The Hörmander opposite-covector obstruction therefore does not occur. The compact $y$ support makes its physical pushforward proper, with affine Jacobian one.
 
 **Attacked inference:** If the new Green factor is placed in the original scalar stage, it fails smoothness on the positive-regulator interior $x=y$ diagonal. If put in an R1 graph coefficient, its conormal to the new collision diagonal is forbidden. The whole product is a well-defined **ambient distribution** but has no demonstrated representation by the typed finite completed histories of 108.7. All simultaneous collision corners, scalar index families, physical densities, finite jets and 126 mixed derivatives remain unverified for a proposed lift. Ordinary scalar b-fibration and source 150.1 do not supply this theorem.
 
