@@ -52,3 +52,7 @@ These are supporting records, not necessarily current research instructions or c
 - [Repository Documents](../REPOSITORY_DOCS.md)
 - [Glossary](../GLOSSARY.md)
 - [Retired Minderlings Pointer](../MINDERLINGS.md)
+
+## Proof-verification workstreams
+
+- [Erdős proof-verification runbook](../ERDOS_PROOF_VERIFICATION.md) — source-pinned tasks, replay checks, adversarial adjudication, and MATHCERT claim boundaries.

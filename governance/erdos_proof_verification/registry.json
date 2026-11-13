@@ -1,0 +1,58 @@
+{
+  "record_type": "ERDOS_PROOF_VERIFICATION_REGISTRY/1",
+  "schema_version": "1.0.0",
+  "programme_id": "ERDOS-PROOF-VERIFICATION-001",
+  "governing_issue": 3201,
+  "project_number": 2,
+  "project_id": "PVT_kwDOB9Ao_c4Blwur",
+  "project_item_id": "PVTI_lADOB9Ao_c4BlwurzhIVEkA",
+  "status": "PILOT_REGISTERED_GLOBAL_TRIAGE_INCOMPLETE",
+  "manifest_schema": "schemas/erdos_proof_verification_manifest.schema.json",
+  "manifests": [
+    "governance/erdos_proof_verification/manifests/0246.json",
+    "governance/erdos_proof_verification/manifests/0247.json",
+    "governance/erdos_proof_verification/manifests/0248.json",
+    "governance/erdos_proof_verification/manifests/0249.json",
+    "governance/erdos_proof_verification/manifests/0250.json"
+  ],
+  "source_population": {
+    "input": "governance/erdos_compendium/batches/EC-BULK-*.json and source-audit issue returns",
+    "coverage_policy": "Every completed source audit must be SELECTED_WITH_MANIFEST, REUSED_EXISTING_VERIFICATION, DECLINED_WITH_REASON, or PENDING; no implicit proof certification",
+    "current_global_triage": "PENDING_NOT_EXHAUSTIVELY_RECONCILED",
+    "global_inventory_complete": false
+  },
+  "selection_policy": {
+    "source_audit_completed_is_not_verification": true,
+    "prioritize": [
+      "exact external formal proof replay",
+      "source-semantic drift",
+      "reusable bounded lemma",
+      "core theorem dependence"
+    ],
+    "dedupe_existing": [
+      "grandchallenge/MATH-PROGRAMME#2702",
+      "grandchallenge/MATHSOLVE Erdős 470/593 lanes"
+    ],
+    "no_indiscriminate_external_certification": true
+  },
+  "lifecycle": [
+    "SOURCE_AUDITED",
+    "SELECTED",
+    "SOURCE_LOCKED",
+    "SEMANTICALLY_RECONCILED",
+    "REPLAY_PREPARED",
+    "REPLAY_EXECUTED",
+    "ADVERSARIAL_REVIEWED",
+    "INTERNALLY_ADJUDICATED",
+    "PROTECTED_ADMITTED",
+    "OPTIONAL_CERTIFICATION"
+  ],
+  "terminal_rules": {
+    "source_audit_return_not_terminal": true,
+    "green_replay_requires_exact_receipt_axiom_review": true,
+    "mathematical_certification_only_mathcert": true,
+    "blocked_issues_remain_open": true
+  },
+  "protected_entrypoint": "docs/ERDOS_PROOF_VERIFICATION.md",
+  "continuity_checkpoint": "governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json"
+}
