@@ -22,45 +22,54 @@ The protected [checkpoint CP183](../../governance/bounded_operation_checkpoints/
 ## 2. Positive fixed-regulator microlocal theorem
 
 Let $U\subset\mathbb R$ be an open interval; fix a compact set in $U^2$ and normalized bumps $b_0,b_1\in C_c^\infty(U)$ with
-$
+
+$$
 
 \int x^j b_k(x)\,dx=\delta_{jk}\quad(0\leq j,k\leq1).
 
-$
+$$
+
 For $i=1,2$, define $m_{i,j}$, $B_i=\sum_j b_j(x_i)m_{i,j}$, and
-$
+
+$$
 
 e(t)=\frac{|t|}{2},\qquad h_i v=e*_{x_i}(1-B_i)v,\qquad D_i=\partial_{x_i}^2.
 
-$
+$$
+
 These are exactly (150.3), with ordinary physical density, and $D_i h_i=1-B_i$. The subtraction gives compact output support inside the hull of the input and bump supports.
 
 Write $\Delta=\{x_1=x_2\}$ and
-$
+
+$$
 
 N^*\Delta\setminus0
 =\{(x,x;\tau,-\tau):\tau\neq0\}.
 
-$
+$$
 
 **Proposition 153.1 (positive-regulator noncreation of diagonal conormals).** If $v\in\mathcal E'(U^2)$ has
-$
+
+$$
 
 \mathrm{WF}(v)\cap(N^*\Delta\setminus0)=\varnothing,
 
-$
+$$
+
 then each compactly normalized $h_i v$ also has no wavefront on $N^*\Delta\setminus0$. On fixed compact supports and fixed closed input wavefront cones disjoint from this conormal, every localized output *normal-topology* seminorm in a sufficiently small conic neighborhood of $N^*\Delta$ is bounded by finitely many input normal seminorms and one global negative-Sobolev norm. Cutoffs, conic neighborhoods, and constants can be fixed across a parameter/regulator family whose input occupies the specified fixed stage. Each fixed mixed derivative obeys the corresponding finite estimate, but this proves no asymptotic scalar-stage closure.
 
-**Proof.** All moment maps are proper distributional projections with a fixed smooth test in $x_i$. Thus $B_iv=\sum_jb_j(x_i)m_{i,j}v$ is smooth in $x_i$ with distribution coefficients in the other variable, and every nonzero covector of $B_iv$ has $x_i$-component zero. It cannot meet $N^*\Delta\setminus0$, where the $x_i$-component is necessarily nonzero.
+**Proof.** All moment maps are proper distributional projections with a fixed smooth test in $x_i$. Thus $B_iv=\sum_jb_j(x_i)m_{i,j}v$ is smooth in $x_i$ with distribution coefficients in the other variable, and every nonzero covector of $B_iv$ has zero covector component in the $x_i$ direction. It cannot meet $N^*\Delta\setminus0$, where its component in the $x_i$ direction is necessarily nonzero.
 
 By (150.4), $D_i h_iv=(1-B_i)v$. The operator $D_i$ is microlocally elliptic at **every** covector in $N^*\Delta\setminus0$, since its principal symbol there is $-\tau^2\neq0$. Microlocal elliptic regularity implies
-$
+
+$$
 
 \mathrm{WF}(h_i v)\cap(N^*\Delta\setminus0)
 =\mathrm{WF}(D_i h_i v)\cap(N^*\Delta\setminus0)
 =\varnothing.
 
-$
+$$
+
 This is a statement about the *output wavefront*, not about admissibility of the intermediate Green factor.
 
 For the quantified version choose compact spatial cutoffs and a closed conic neighborhood of the target conormal avoiding the fixed input wavefront cone and the $\xi_i=0$ covectors of $B_i v$. A fixed microlocal parametrix for $D_i$ gives an output Fourier/normal seminorm bounded by finitely many input off-cone seminorms plus a lower-order global distribution seminorm of $h_iv$. The latter is controlled by (150.6), whose constant depends on the common compact supports/bump choices but not on the regulator or requested rapidness order. Applying the same fixed operators to each parameter/regulator derivative is legitimate because $h_i,B_i$ have no parameter dependence. The finite-loss bound holds for each derivative request on its fixed input stage. None of these estimates identifies an element of $E_{s,K,\Gamma}\widehat\otimes_\pi S_\lambda$ after the **full** mixed history projection. $\square$
@@ -72,12 +81,14 @@ The same-block hostile input $\rho(x_2)\delta(x_1-x_2)$ of (150.15) **does not s
 ## 3. What an augmented Green edge does and does not permit
 
 Let $T(y,z)$ be a compact R1 distributional coefficient on old block variables and $a_\epsilon$ a smooth scalar coefficient at a **fixed** $\epsilon>0$. Introduce a new output coordinate $x$, and consider the formal integrand
-$
+
+$$
 
 K_\epsilon(x,y,z)=\chi(x)e(x-y)\,a_\epsilon(y,z)\,T(y,z)
 
-$
-where $\chi$ is a fixed compact output cutoff. The original R1 factor pulls back with **zero** covector in the new $x$ direction, whereas every nonzero wavefront covector of $e(x-y)$ at $x=y$ has a nonzero $x$-component. Hence their wavefront sets contain no opposite pair. The Hörmander distribution product is well-defined at each fixed positive regulator. With compact support, its proper pushforward in $y$ is a well-defined ambient distribution.
+$$
+
+where $\chi$ is a fixed compact output cutoff. The original R1 factor pulls back with **zero** covector in the new $x$ direction, whereas every nonzero wavefront covector of $e(x-y)$ at $x=y$ has a nonzero component in the $x$ direction. Hence their wavefront sets contain no opposite pair. The Hörmander distribution product is well-defined at each fixed positive regulator. With compact support, its proper pushforward in $y$ is a well-defined ambient distribution.
 
 **This ambient existence is not an admissible 108.7 source history.** The factor $e(x-y)$ is not smooth on the *positive-regulator interior* diagonal $x=y$. It therefore is not a scalar $S_\lambda$ coefficient of 105/108. If instead assigned to the R1 coefficient it has precisely a forbidden partition conormal on the newly introduced diagonal. The intermediate product is a legitimate distribution in an ambient enlarged space, not a product licensed by 108.4's typed operations. A finite source lift could still arise **after** integration, but neither product existence nor 105.4's ordinary b-fibration proves it.
 
