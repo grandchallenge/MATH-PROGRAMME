@@ -86,32 +86,32 @@ belongs to the **existing actual mixed source image**, not merely the ambient di
 
 The four **labelled** affine moments of (159.5) vanish exactly. Its intrinsic labelled diagonal extraction $P_{\mathrm{lab}}$ vanishes, since the source expression and its single-coordinate bump reinsertions have *distinct retained blocks*, and 147 annihilates them. Thus (159.5) lies in the labelled joint kernel, but it is **not generally symmetric under exchange**. The governing $W$ of 150 is in the graded-symmetric category. Define the exact source-admitted symmetric average (degree zero has no Koszul exchange sign):
 
-$
+$$
 v_\epsilon^{W,\mathrm{sym}}(y,z)=\frac12\left[
 v_\epsilon^{W,\mathrm{lab}}(y,z)+v_\epsilon^{W,\mathrm{lab}}(z,y)
 \right]\in W^0=\ker(P,m)^0.
 \tag{159.6}
-$
+$$
 
 This average is a legal finite source sum by label-exchange closure and invertibility of $2$ in the real liquid heart. Its zero-scale limit is the nonzero product $\rho(0)(\delta_0-b_0)(y)(\delta_0-b_0)(z)$, so it is nontrivial for sufficiently small positive regulator.
 
 Because $B_y$ commutes with $B_z$ and $h_y B_y=0$, the labelled ambient primitive is
 
-$
+$$
 h_yv_\epsilon^{W,\mathrm{lab}}(x,z)
 =G(x)w_\epsilon^\circ(z).
 \tag{159.7}
-$
+$$
 
 For the **symmetric** source, let $H_\epsilon=h_y(w_\epsilon^\circ)=e*w_\epsilon^\circ$, a compact smooth function in $x$ at every positive regulator because $w_\epsilon^\circ$ is smooth, compact and has two vanishing affine moments. The corresponding ambient primitive is
 
-$
+$$
 h_yv_\epsilon^{W,\mathrm{sym}}(x,z)
 =\frac12\left[
 G(x)w_\epsilon^\circ(z)+H_\epsilon(x)(\delta_0(z)-b_0(z))
 \right].
 \tag{159.7a}
-$
+$$
 
 **Proposition 159.2 (legally sourced joint-kernel stress test).** Both the labelled family (159.5) and the symmetric family (159.6) are nontrivial, source-admitted degree-zero joint-kernel inputs. Only the **symmetrized** family is asserted to belong to the residual object $W$ of (150.8a). Formulas (159.7) and (159.7a) are exact *ambient* primitives. They do **not** establish completed source membership of either output and hence do not imply a contracting homotopy, exactness, nonexactness or nonzero cohomology of $W$.
 
@@ -143,20 +143,20 @@ Here the even distributional derivatives have positive test-pairing signs. Taylo
 
 Since $B_z$ is fixed and continuous on compact distributions, (159.8) gives the labelled limit
 
-$
+$$
 h_yv_\epsilon^{W,\mathrm{lab}}\longrightarrow
 \rho(0)\,G(x)\bigl[\delta_0(z)-b_0(z)\bigr]
 \quad\text{in }\mathcal E'(U^2).
 \tag{159.10}
-$
+$$
 
 Also $H_\epsilon=e*w_\epsilon^\circ\longrightarrow\rho(0)G$ in compact distributions by the fixed compact normalized Green bounds. Thus the symmetric primitive (159.7a) has **exactly the same** leading distributional limit:
 
-$
+$$
 h_yv_\epsilon^{W,\mathrm{sym}}\longrightarrow
 \rho(0)\,G(x)\bigl[\delta_0(z)-b_0(z)\bigr].
 \tag{159.10a}
-$
+$$
 
 At $(x,z)=(0,0)$, both $G$ and $\delta_0-b_0$ are genuinely singular. Their external tensor product has pure diagonal conormal covectors $(\tau,-\tau)$, $\tau\ne0$: with product localizers, the Fourier transform has the nonrapid $|\xi|^{-2}$ cusp tail in $x$ and the nondecaying delta transform in $z$ along these directions.
 
