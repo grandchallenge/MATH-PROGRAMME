@@ -90,7 +90,7 @@ At every truncation its remainder and each fixed regulator derivative have the r
 **Proof.** For $x$ in any fixed compact support of $(1-\alpha)$, choose a positive distance $\delta$ from zero. On the Gaussian peak $|t|<\delta/2$ the Green kernel is **exactly affine in $t$**, so
 
 $$
-e(x-t)=e(x)-\frac12\operatorname{sgn}(x)t
+e(x-t)=e(x)-\frac12\mathrm{sgn}(x)t
 \qquad(|t|<|x|).
 \tag{162.6}
 $$
@@ -101,13 +101,13 @@ $$
 (1-\alpha)H_\epsilon
 =(1-\alpha)\left[
 G(x)M_{0,\epsilon}
--\left(C_1(x)+\frac12\operatorname{sgn}(x)\right)M_{1,\epsilon}
+-\left(C_1(x)+\frac12\mathrm{sgn}(x)\right)M_{1,\epsilon}
 +R_{\epsilon}(x)
 \right],
 \tag{162.7}
 $$
 
-where $R_\epsilon$ and all fixed derivatives are $O(\epsilon^N)$ for every $N$ on the prescribed compact patch. Here $G$ and $\operatorname{sgn}(x)$ are smooth on the support of $1-\alpha$; after multiplying by the compactly supported $H_\epsilon$ or applying a fixed output cutoff, all functions are compact on the required physical source patch. The Taylor stages for $M_j$ are those of (162.5). Every collision face has a smooth tangential coefficient, and the same b-map estimates as in Lemma 162.2 apply. $\square$
+where $R_\epsilon$ and all fixed derivatives are $O(\epsilon^N)$ for every $N$ on the prescribed compact patch. Here $G$ and $\mathrm{sgn}(x)$ are smooth on the support of $1-\alpha$; after multiplying by the compactly supported $H_\epsilon$ or applying a fixed output cutoff, all functions are compact on the required physical source patch. The Taylor stages for $M_j$ are those of (162.5). Every collision face has a smooth tangential coefficient, and the same b-map estimates as in Lemma 162.2 apply. $\square$
 
 These two lemmas deliberately **do not** assert that $w_\epsilon^\circ$ is a scalar source near $z=0$, or that $H_\epsilon$ is a scalar source near $x=0$. Those are the simultaneous anchor/cusp regimes not covered by the result.
 
