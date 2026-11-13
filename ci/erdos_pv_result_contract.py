@@ -28,7 +28,7 @@ def parse_result(body: str) -> dict:
             break
         if not line.strip():
             continue
-        m = re.fullmatch(r"([A-Z_]+): (.+)", line)
+        m = re.fullmatch(r"([A-Z0-9_]+): (.+)", line)
         if not m or m.group(1) not in FIELDS or m.group(1) in data:
             raise ValueError("malformed, duplicate or unrecognized RESULT/1 field")
         data[m.group(1)] = m.group(2)
