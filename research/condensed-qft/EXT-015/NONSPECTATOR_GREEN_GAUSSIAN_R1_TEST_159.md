@@ -1,6 +1,6 @@
 # EXT-015 REACH / 159 — integrated-coordinate R1 singularity and the zero-scale diagonal trap
 
-**Primary disposition: exact non-spectator test and a restricted source-lifting obstruction; universal 150.L OPEN.** A legal mixed Gaussian/R1 history whose R1 singularity lies in the coordinate integrated by the Green operator has an exactly computable primitive. The test also produces a genuine degree-zero element of the admitted residual joint kernel $W=\ker(P,m)$. Its fixed-positive-regulator output excludes diagonal conormals, but its **zero-regulator distributional leading coefficient has a pure diagonal-conormal wavefront**. A no-go theorem rules out extending the spectator-regular, two-retained-vertex source template of 156 to this example. Neither theorem rules out *every* allowed hidden-vertex or non-spectator mixed history. Thus neither full source nonmembership nor W cohomology is claimed.
+**Primary disposition: exact non-spectator test and a restricted source-lifting obstruction; universal 150.L OPEN.** A legal mixed Gaussian/R1 history whose R1 singularity lies in the coordinate integrated by the Green operator has an exactly computable primitive. The test first constructs a legally sourced element of the **labelled** joint kernel; exact slot averaging then gives a genuine degree-zero element of the admitted **graded-symmetric** residual kernel $W=\ker(P,m)$. Their fixed-positive-regulator Green outputs exclude diagonal conormals, but the common **zero-regulator distributional leading coefficient has a pure diagonal-conormal wavefront**. A no-go theorem rules out extending the spectator-regular, two-retained-vertex source template of 156 to this example. Neither theorem rules out *every* allowed hidden-vertex or non-spectator mixed history. Thus neither full source nonmembership nor W cohomology is claimed.
 
 ## 1. Source lock and question
 
@@ -77,33 +77,47 @@ $$
 The degree-zero input
 
 $$
-v_\epsilon^W=Qv_\epsilon
+v_\epsilon^{W,\mathrm{lab}}=Qv_\epsilon
 =(\delta_0(y)-b_0(y))\,w_\epsilon^\circ(z)
 \tag{159.5}
 $$
 
 belongs to the **existing actual mixed source image**, not merely the ambient distribution envelope. The formula on the right is an evaluated factorization; its source admissibility is supplied by the finite linear combination of the original legal history and the established $B_y,B_z$ source maps. It does **not** assert that $w_\epsilon^\circ$ is itself a legal two-vertex scalar factor.
 
-The four labelled affine moments of (159.5) vanish exactly. Its intrinsic diagonal extraction $P$ vanishes, since the source expression and its single-coordinate bump reinsertions have *distinct retained blocks*, and 147 annihilates them. Consequently
+The four **labelled** affine moments of (159.5) vanish exactly. Its intrinsic labelled diagonal extraction $P_{\mathrm{lab}}$ vanishes, since the source expression and its single-coordinate bump reinsertions have *distinct retained blocks*, and 147 annihilates them. Thus (159.5) lies in the labelled joint kernel, but it is **not generally symmetric under exchange**. The governing $W$ of 150 is in the graded-symmetric category. Define the exact source-admitted symmetric average (degree zero has no Koszul exchange sign):
 
-$$
-v^W\in W^0=\ker(P,m)^0.
+$
+v_\epsilon^{W,\mathrm{sym}}(y,z)=\frac12\left[
+v_\epsilon^{W,\mathrm{lab}}(y,z)+v_\epsilon^{W,\mathrm{lab}}(z,y)
+\right]\in W^0=\ker(P,m)^0.
 \tag{159.6}
-$$
+$
 
-Because $B_y$ commutes with $B_z$ and $h_y B_y=0$, applying the ambient compact primitive gives
+This average is a legal finite source sum by label-exchange closure and invertibility of $2$ in the real liquid heart. Its zero-scale limit is the nonzero product $\rho(0)(\delta_0-b_0)(y)(\delta_0-b_0)(z)$, so it is nontrivial for sufficiently small positive regulator.
 
-$$
-h_yv_\epsilon^W(x,z)
+Because $B_y$ commutes with $B_z$ and $h_y B_y=0$, the labelled ambient primitive is
+
+$
+h_yv_\epsilon^{W,\mathrm{lab}}(x,z)
 =G(x)w_\epsilon^\circ(z).
 \tag{159.7}
-$$
+$
 
-**Proposition 159.2 (legally sourced joint-kernel stress test).** The family (159.5) is a nontrivial, source-admitted degree-zero input in the actual residual joint kernel. Formula (159.7) is an exact *ambient* primitive. It does **not** establish that this primitive lies in the complete mixed source image and hence does not imply a contracting homotopy, exactness, nonexactness or nonzero cohomology for $W$.
+For the **symmetric** source, let $H_\epsilon=h_y(w_\epsilon^\circ)=e*w_\epsilon^\circ$, a compact smooth function in $x$ at every positive regulator because $w_\epsilon^\circ$ is smooth, compact and has two vanishing affine moments. The corresponding ambient primitive is
+
+$
+h_yv_\epsilon^{W,\mathrm{sym}}(x,z)
+=\frac12\left[
+G(x)w_\epsilon^\circ(z)+H_\epsilon(x)(\delta_0(z)-b_0(z))
+\right].
+\tag{159.7a}
+$
+
+**Proposition 159.2 (legally sourced joint-kernel stress test).** Both the labelled family (159.5) and the symmetric family (159.6) are nontrivial, source-admitted degree-zero joint-kernel inputs. Only the **symmetrized** family is asserted to belong to the residual object $W$ of (150.8a). Formulas (159.7) and (159.7a) are exact *ambient* primitives. They do **not** establish completed source membership of either output and hence do not imply a contracting homotopy, exactness, nonexactness or nonzero cohomology of $W$.
 
 ## 4. The positive-scale / zero-scale wavefront discontinuity
 
-For every $\epsilon>0$, $w_\epsilon^\circ$ is a smooth compact function of $z$. As $G$ is singular only at $x=0$, the nonzero wavefront covectors of $h_yv_\epsilon^W$ have the form $(\xi,0)$ above $x=0$. They avoid the pure diagonal conormal $(\tau,-\tau)$, exactly as predicted by admitted Proposition 153.1.
+For every $\epsilon>0$, $w_\epsilon^\circ$ and $H_\epsilon$ are smooth compact functions. The labelled primitive (159.7) has nonzero wavefront covectors only of the form $(\xi,0)$ above $x=0$. The second summand of the symmetric primitive (159.7a) instead has covectors only of the form $(0,\eta)$ above $z=0$. The union of these two cones excludes $(\tau,-\tau)$ with $\tau\ne0$. Both results therefore agree with fixed-positive-scale Proposition 153.1, without pretending that their wavefronts are identical.
 
 The zero-scale distributional limit is different. Standard Gaussian test-function Taylor expansion, with every derivative taken against the full test, gives
 
@@ -127,18 +141,26 @@ $$
 
 Here the even distributional derivatives have positive test-pairing signs. Taylor's integral remainder after order $2N$ is bounded by finitely many $C^{2N+2}$ seminorms of the full test and by $O(\epsilon^{2N+2})$; differentiating the scaled Gaussian gives the corresponding finite-order estimates for each fixed regulator derivative. The expansion and all coefficient moments are therefore strong and source-test uniform on bounded smooth test families, not pointwise approximations of an arbitrary profinite section.
 
-Since $B_z$ is fixed and continuous on compact distributions, (159.8) implies
+Since $B_z$ is fixed and continuous on compact distributions, (159.8) gives the labelled limit
 
-$$
-h_yv_\epsilon^W\longrightarrow
+$
+h_yv_\epsilon^{W,\mathrm{lab}}\longrightarrow
 \rho(0)\,G(x)\bigl[\delta_0(z)-b_0(z)\bigr]
 \quad\text{in }\mathcal E'(U^2).
 \tag{159.10}
-$$
+$
+
+Also $H_\epsilon=e*w_\epsilon^\circ\longrightarrow\rho(0)G$ in compact distributions by the fixed compact normalized Green bounds. Thus the symmetric primitive (159.7a) has **exactly the same** leading distributional limit:
+
+$
+h_yv_\epsilon^{W,\mathrm{sym}}\longrightarrow
+\rho(0)\,G(x)\bigl[\delta_0(z)-b_0(z)\bigr].
+\tag{159.10a}
+$
 
 At $(x,z)=(0,0)$, both $G$ and $\delta_0-b_0$ are genuinely singular. Their external tensor product has pure diagonal conormal covectors $(\tau,-\tau)$, $\tau\ne0$: with product localizers, the Fourier transform has the nonrapid $|\xi|^{-2}$ cusp tail in $x$ and the nondecaying delta transform in $z$ along these directions.
 
-**Proposition 159.3 (new zero-scale microlocal boundary trap).** A legal positive-regulator family in the **actual residual $W^0$** has an ambient compact Green primitive whose wavefront excludes the diagonal conormal at every positive scale, yet the distributional leading boundary coefficient of that primitive has a nonzero pure diagonal-conormal wavefront. Therefore fixed-positive-scale exclusion from 153.1 cannot be promoted to a zero-scale diagonal regularity assertion. This is not a counterexample to the existing 108 source class, which allows distributional coefficients on boundary faces; source *membership* of the primitive remains the missing step.
+**Proposition 159.3 (new zero-scale microlocal boundary trap).** Both a legal labelled source and its **genuinely symmetric residual $W^0$** average have ambient compact Green primitives whose wavefront excludes the diagonal conormal at every positive scale, yet their distributional leading boundary coefficient has a nonzero pure diagonal-conormal wavefront. Therefore fixed-positive-scale exclusion from 153.1 cannot be promoted to a zero-scale diagonal regularity assertion. This is not a counterexample to the existing 108 source class, which allows distributional coefficients on boundary faces; source *membership* of the primitive remains the missing step.
 
 ## 5. Two concrete source-lift shortcuts that fail
 
@@ -168,7 +190,7 @@ $$
 
 which is **not** smooth in $z$ on $I\times J$. This contradiction proves:
 
-**Proposition 159.4 (strict-face obstruction).** No finite sum of fixed completed, *spectator-regular*, no-hidden, identity-partition two-slot histories of the specified type can evaluate to the whole family (159.7). In particular the one-history spectator template of 156 does not generalize by merely changing its R1 factor to a spatial cusp and keeping a scalar two-vertex heat coefficient.
+**Proposition 159.4 (strict-face obstruction).** No finite sum of fixed completed, *spectator-regular*, no-hidden, identity-partition two-slot histories of the specified type can evaluate to the labelled whole family (159.7). In particular the one-history spectator template of 156 does not generalize by merely changing its R1 factor to a spatial cusp and keeping a scalar two-vertex heat coefficient.
 
 This proposition does **not** address histories with hidden vertices, fixed R1 cones permitting $z$ singularities, same-block jets later canceled in evaluated sums, or any other full 108.7 presentation. It is explicitly **not** nonmembership of (159.7) in $\mathcal P_2$.
 
@@ -180,7 +202,7 @@ The standard-library [159 fixture](fixtures/nonspectator_green_controls_159.py) 
 | --- | --- |
 | Genuine integrated-coordinate-singular R1 Gaussian source | **EXPLICIT, ADMITTED SOURCE** |
 | Whole normalized compact Green formula | **EXACT AMBIENT IDENTITY** |
-| Explicit residual $W^0$ input | **CONSTRUCTED IN EXISTING SOURCE** |
+| Labelled joint kernel and symmetric residual $W^0$ input | **BOTH CONSTRUCTED IN EXISTING SOURCE** |
 | Zero-scale boundary diagonal conormal after fixed-scale avoidance | **PROVED** |
 | Illegal hidden-variable R1 product shortcut | **REFUTED** by a forbidden partition conormal |
 | Spectator-regular no-hidden two-slot output template | **REFUTED** by strict-face distributional singularity |
