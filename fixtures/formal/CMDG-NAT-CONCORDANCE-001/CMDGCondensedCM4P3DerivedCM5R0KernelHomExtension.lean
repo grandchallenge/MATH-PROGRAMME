@@ -37,8 +37,15 @@ theorem freeProfinite_extOne_vanishes_iff_kernel_hom_extends
     obtain ⟨y, hy⟩ := h (Abelian.Ext.mk₀ f)
     refine ⟨Abelian.Ext.homEquiv₀ y, ?_⟩
     apply (Abelian.Ext.mk₀_bijective _ _).1
-    simpa only [Abelian.Ext.mk₀_comp_mk₀,
-      Abelian.Ext.mk₀_homEquiv₀_apply] using hy
+    calc
+      Abelian.Ext.mk₀
+          (kernel.ι (freeStoneanPresentationMap T) ≫ Abelian.Ext.homEquiv₀ y) =
+        (Abelian.Ext.mk₀ (kernel.ι (freeStoneanPresentationMap T))).comp
+          (Abelian.Ext.mk₀ (Abelian.Ext.homEquiv₀ y)) (zero_add 0) :=
+        (Abelian.Ext.mk₀_comp_mk₀ _ _).symm
+      _ = (Abelian.Ext.mk₀ (kernel.ι (freeStoneanPresentationMap T))).comp
+          y (zero_add 0) := by rw [Abelian.Ext.mk₀_homEquiv₀_apply]
+      _ = Abelian.Ext.mk₀ f := hy
   · intro h x
     obtain ⟨g, hg⟩ := h (Abelian.Ext.homEquiv₀ x)
     refine ⟨Abelian.Ext.mk₀ g, ?_⟩
