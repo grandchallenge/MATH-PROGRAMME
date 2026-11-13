@@ -69,6 +69,47 @@ theorem freeProfinite_extOne_vanishes_iff_kernel_obstruction_zero
     obtain ⟨x, rfl⟩ := stoneanKernelExtOneObstruction_surjective T A e
     exact h x
 
+/-- The connecting obstruction is zero for all degree-zero kernel
+classes precisely when every such class lifts across the kernel
+inclusion to the projective Stonean source. This is exactness of the
+long Ext sequence at Ext⁰(K_T,A), not a vanishing assumption. -/
+theorem stoneanKernel_obstruction_zero_iff_extZero_lifts
+    (T : Profinite.{u}) (A : Ambient) :
+    (∀ x : Abelian.Ext (stoneanPresentationKernel T) A 0,
+      stoneanKernelExtOneObstruction T A x = 0) ↔
+      (∀ x : Abelian.Ext (stoneanPresentationKernel T) A 0,
+        ∃ y : Abelian.Ext
+          ((Condensed.profiniteFree Coeff).obj
+            (Stonean.toProfinite.obj T.presentation)) A 0,
+          (Abelian.Ext.mk₀ (kernel.ι (freeStoneanPresentationMap T))).comp
+            y (zero_add 0) = x) := by
+  constructor
+  · intro h x
+    exact Abelian.Ext.contravariant_sequence_exact₁
+      (stoneanPresentationShortExact T) A x (by decide : 1 + 0 = 1) (h x)
+  · intro h x
+    obtain ⟨y, hy⟩ := h x
+    unfold stoneanKernelExtOneObstruction
+    rw [← hy]
+    exact (stoneanPresentationShortExact T).extClass_comp_assoc y
+
+/-- Full exact reduction of Ext¹-vanishing to extension of *all*
+degree-zero kernel classes across the Stonean projective cover.
+This equivalence is unconditional; neither side is asserted true. -/
+theorem freeProfinite_extOne_vanishes_iff_kernel_extZero_lifts
+    (T : Profinite.{u}) (A : Ambient) :
+    (∀ e : Abelian.Ext ((Condensed.profiniteFree Coeff).obj T) A 1, e = 0) ↔
+      (∀ x : Abelian.Ext (stoneanPresentationKernel T) A 0,
+        ∃ y : Abelian.Ext
+          ((Condensed.profiniteFree Coeff).obj
+            (Stonean.toProfinite.obj T.presentation)) A 0,
+          (Abelian.Ext.mk₀ (kernel.ι (freeStoneanPresentationMap T))).comp
+            y (zero_add 0) = x) :=
+  (freeProfinite_extOne_vanishes_iff_kernel_obstruction_zero T A).trans
+    (stoneanKernel_obstruction_zero_iff_extZero_lifts T A)
+
+#print axioms stoneanKernel_obstruction_zero_iff_extZero_lifts
+#print axioms freeProfinite_extOne_vanishes_iff_kernel_extZero_lifts
 #print axioms stoneanKernelExtOneObstruction_surjective
 #print axioms freeProfinite_extOne_vanishes_iff_kernel_obstruction_zero
 
