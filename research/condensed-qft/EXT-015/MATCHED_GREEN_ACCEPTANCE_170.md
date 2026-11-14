@@ -7,7 +7,7 @@
 | Item | Source identity |
 | --- | --- |
 | Primary mathematical note 168 | [Source](MATCHED_PARTITION_GREEN_ANTIDERIVATIVE_168.md), Git blob `e2c43f218c9175b919c51f371acb8c04e659faea` |
-| Primary [PR 3322](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3322) | Reviewed candidate head `dbc5963050863078c95a014048ce74e26eb65436` |
+| Primary [PR 3322](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3322) | Exact reviewed candidate head `dbc5963050863078c95a014048ce74e26eb65436`, protected merge `cf4b682b1b1f10bc9ebb410f2b34fff0bb0f6c1a` and exact primary blob readback |
 | Critical mathematical pass 169 | [Review](AGENT_CRITICAL_REVIEW_MATCHED_GREEN_169.md), V169 and A169 logically distinct but same producer system/account |
 | GitHub native primary mathematical COMMENT review | ID `5903927572`, exact candidate head; not a nonauthor APPROVED or external certification |
 | Exact CHAD mathematical Markdown preflight | Capture `498609ca02e84e349fa654a6d7c44355`, exit zero, OS-account-only |
@@ -15,7 +15,7 @@
 | Accepted scalar stages 105 | Git blob `a8ce66ff0edec33e2aff299550fca2089d671033` |
 | Previous exact two-core reduction 165 | Git blob `24b82716d41d309438fcb7a97bbacab0b724afde` |
 
-The review is mathematically role-scoped, not an independently authenticated second person. The native COMMENT does not supply the nonauthor APPROVED state. Admission is governed by GitHub branch protection and checks; a CI pass is not a mathematical certificate. Record native protected merge/readback in the canonical programme ledger only after observed, and never infer it from the existence of a PR or from a queued entry.
+The review is mathematically role-scoped, not an independently authenticated second person. The native COMMENT does not supply the nonauthor APPROVED state. Admission is governed by GitHub branch protection and checks; a CI pass is not a mathematical certificate. The primary native protected merge and exact blob readback have been observed. The present critic/ledger pair remains pending its own protected admission until its separate review PR is merged and read back.
 
 ## Claim-by-claim decision
 
