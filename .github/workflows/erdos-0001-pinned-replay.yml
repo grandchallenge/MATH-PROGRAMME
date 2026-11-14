@@ -1,0 +1,93 @@
+name: Erdős 0001 source-pinned Lean replay
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-0001-lean-replay
+  cancel-in-progress: false
+
+jobs:
+  replay:
+    name: Pinned Lean 4.28 / Mathlib replay (unadjudicated)
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Lock exact author source and imported Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p replay replay-logs
+          git clone --filter=blob:none --no-checkout https://github.com/tadamcz/erdos1.git replay/erdos-1
+          git -C replay/erdos-1 fetch --depth 1 origin db6f9091dfaf9bac704e6b28fb3a094594869328
+          git -C replay/erdos-1 checkout --detach db6f9091dfaf9bac704e6b28fb3a094594869328
+          python3 ci/erdos_pv_0001_replay_contract.py prepare --source-dir replay/erdos-1 > replay-logs/lock.json
+      - name: Set up pinned Lean without persistent GitHub cache
+        uses: grandchallenge/lean-action@37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01
+        with:
+          lake-package-directory: replay/erdos-1
+          auto-config: false
+          build: false
+          test: false
+          use-github-cache: false
+          use-mathlib-cache: true
+      - name: Compile bounded lemma and inspect public theorem axioms
+        id: actual
+        shell: bash
+        run: |
+          set -uo pipefail
+          cd replay/erdos-1
+          timeout -k 15s 3300s lake build Erdos1 > ../../replay-logs/build.log 2>&1
+          build_exit=$?
+          if [ "$build_exit" -eq 0 ]; then
+            timeout -k 15s 120s lake env lean GCLReadback.lean > ../../replay-logs/readback.log 2>&1
+            type_exit=$?
+          else
+            echo "NOT_RUN: author source build not green" > ../../replay-logs/readback.log
+            type_exit=125
+          fi
+          if [ "$type_exit" -eq 0 ]; then
+            timeout -k 15s 120s lake env lean GCLNegative.lean > ../../replay-logs/negative.log 2>&1
+            bad_exit=$?
+          else
+            echo "NOT_RUN: positive readback not green" > ../../replay-logs/negative.log
+            bad_exit=125
+          fi
+          echo "build_exit=$build_exit" >> "$GITHUB_OUTPUT"
+          echo "type_exit=$type_exit" >> "$GITHUB_OUTPUT"
+          echo "bad_exit=$bad_exit" >> "$GITHUB_OUTPUT"
+      - name: Fail closed and emit exact compiler receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p replay-logs
+          for file in build readback negative; do
+            test -f "replay-logs/$file.log" || echo NOT_RUN > "replay-logs/$file.log"
+          done
+          python3 ci/erdos_pv_0001_replay_contract.py adjudicate \
+            --source-dir replay/erdos-1 \
+            --build-log replay-logs/build.log \
+            --type-log replay-logs/readback.log \
+            --bad-log replay-logs/negative.log \
+            --build-exit "${{ steps.actual.outputs.build_exit || '125' }}" \
+            --type-exit "${{ steps.actual.outputs.type_exit || '125' }}" \
+            --bad-exit "${{ steps.actual.outputs.bad_exit || '125' }}" \
+            --receipt replay-logs/receipt.json
+      - name: Preserve replay evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: erdos-0001-source-locked-lean-evidence
+          path: |
+            replay-logs
+            replay/erdos-1/GCLReadback.lean
+            replay/erdos-1/GCLNegative.lean
+          if-no-files-found: warn
+          retention-days: 30
