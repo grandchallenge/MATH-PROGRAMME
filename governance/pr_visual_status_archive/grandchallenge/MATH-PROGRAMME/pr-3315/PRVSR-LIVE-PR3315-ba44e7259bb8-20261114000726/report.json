@@ -1,0 +1,274 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-14T00:06:37Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-14T00:07:08Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+    "exact_head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+    "pr_number": 3315,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5: identify Ext\u00b9 with actual induced \u010cech cochain cohomology"
+  },
+  "integration": {
+    "merge_commit_sha": "1612086fd4bd12cc80bdf3490c4a89710e6edd2a",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 0C37:1361A6:269E01:3BE64E:6AF7A63F and timestamp 2026-11-14 00:07:27 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 132251470956,
+          "conclusion": null,
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 132251471161,
+          "conclusion": null,
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 132251471116,
+          "conclusion": null,
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 132251471066,
+          "conclusion": null,
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 132251486086,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Classify material formal closure",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251486937,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251702144,
+          "conclusion": "neutral",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "CodeQL",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251486592,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251487843,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251488116,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251492804,
+          "conclusion": "skipped",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251490964,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251492478,
+          "conclusion": "skipped",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251490014,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Observe material closure (no admission authority)",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251601042,
+          "conclusion": null,
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Policy shard / cmdg",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 132251601054,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Policy shard / core",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251600906,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Policy shard / fixtures",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251486596,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251490803,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251489618,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "advisory-report",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251664082,
+          "conclusion": null,
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "cmdg-cm4-p3",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 132251488338,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251492471,
+          "conclusion": "skipped",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 132251488138,
+          "conclusion": "success",
+          "head_sha": "ba44e7259bb82124a4371a4b78055ac7cb4e2174",
+          "name": "security / action-policy",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-14T00:07:26Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "438fd7cd744ed062d37879a202af770e0895c559f239dffa210636fcab8209ce"
+  },
+  "report_id": "PRVSR-LIVE-PR3315-ba44e7259bb8-20261114000726",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
