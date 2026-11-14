@@ -56,7 +56,7 @@ theorem locallyConstant_extend_finite_closed_family
     ext x
     simp only [Set.mem_iUnion, Set.mem_univ, iff_true]
     change ∃ j, (x : X) ∈ C j
-    exact x.property
+    simpa only [H, Set.mem_iUnion] using x.property
   let ff : (j : J) → LocallyConstant (D j) ℤ :=
     fun j => (f j).comap
       (⟨(fun x : D j => (x.val.val : X)),
