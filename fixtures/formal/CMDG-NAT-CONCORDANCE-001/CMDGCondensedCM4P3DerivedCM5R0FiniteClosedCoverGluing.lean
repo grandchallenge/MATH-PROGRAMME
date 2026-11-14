@@ -65,6 +65,7 @@ theorem locallyConstant_glue_finite_closed_cover
         (fun x : E i => f i x) := by
       funext x
       exact hg i x.val x.property
+    change Continuous (fun x : E i => g x.val)
     rw [heq]
     exact (IsLocallyConstant.iff_continuous _).mp
       (f i).isLocallyConstant
@@ -105,7 +106,7 @@ of the intended finite closed-cover induction. -/
 theorem integerTwoClosedSets_transition_is_coboundary
     (X : Profinite.{u})
     (U V : Set X) (hU : IsClosed U) (hV : IsClosed V)
-    (c : LocallyConstant (U ∩ V) ℤ) :
+    (c : LocallyConstant (↥(U ∩ V)) ℤ) :
     ∃ (a : LocallyConstant U ℤ)
       (b : LocallyConstant V ℤ),
       ∀ (x : X) (hxU : x ∈ U) (hxV : x ∈ V),
