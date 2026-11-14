@@ -36,7 +36,10 @@ noncomputable def kernelInducedCechAddHom
   refine AddMonoidHom.mk'
     (fun f => stoneanCechRelationToKernel T ≫ f) ?_
   intro f g
-  exact Preadditive.comp_add _ _ _
+  change stoneanCechRelationToKernel T ≫ (f + g) =
+    (stoneanCechRelationToKernel T ≫ f) +
+      (stoneanCechRelationToKernel T ≫ g)
+  rw [Preadditive.comp_add]
 
 /-- Genuine Čech cochains in the image of kernel functionals.
 This is intentionally a subgroup, not all free-module cochains. -/
@@ -85,7 +88,10 @@ noncomputable def genuineCechBoundaryAddHom
     rw [← Category.assoc, stoneanCechRelationToKernel_comp_ι]
   · intro g h
     apply Subtype.ext
-    exact Preadditive.comp_add _ _ _
+    change stoneanCechDifference T ≫ (g + h) =
+      (stoneanCechDifference T ≫ g) +
+        (stoneanCechDifference T ≫ h)
+    rw [Preadditive.comp_add]
 
 /-- The obstruction on genuine induced Čech cochains. This is
 well-defined and additive because each such cochain has a unique
@@ -175,8 +181,8 @@ theorem inducedCechObstruction_ker_eq_boundary_range
 
 /-- The concrete Čech obstruction cohomology group: genuinely
 kernel-induced cochains modulo genuinely realized Čech boundaries. -/
-noncomputable def inducedCechCohomology
-    (T : Profinite.{u}) (A : Ambient) :=
+noncomputable abbrev inducedCechCohomology
+    (T : Profinite.{u}) (A : Ambient) : Type _ :=
   kernelInducedCechCochains T A ⧸
     (genuineCechBoundaryAddHom T A).range
 
