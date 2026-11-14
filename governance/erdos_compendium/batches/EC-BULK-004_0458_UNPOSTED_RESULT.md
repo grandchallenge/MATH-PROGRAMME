@@ -1,0 +1,24 @@
+RESULT/1
+ASSIGNMENT_ID: ERDOS-CATALOGUE-0458-S01
+PROBLEM_ID: 458
+DISPOSITION: SOURCE_LOCK_READY
+CONTEXT_CLASS: ZERO_CONTEXT
+TIMEBOX_OBSERVED: NO
+
+## Exact statement and normalization
+Let p_k be the kth prime (p_1=2) and L(n)=lcm(1,...,n). The 1980 Erdős–Graham question is the universal arithmetic assertion P: for every k>=1, L(p_{k+1}-1)<p_k L(p_k). Equivalent exact criterion for each consecutive-prime gap (p,r): B(p,r)=product of prime bases q over all proper prime powers q^a with a>=2 and p<q^a<r, counted with multiplicity; then P at that gap iff B(p,r)<p. There are no primes in the gap. Bertrand's theorem r<2p shows a fixed base cannot contribute two distinct powers within one gap. All quantities are computable integers.
+
+## Dated status and primary evidence
+Primary printed p.91 visually read 2026-10-13: P. Erdős and R. Graham, Old and New Problems and Results in Combinatorial Number Theory (1980), https://mathweb.ucsd.edu/~ronspubs/80_11_number_theory.pdf (previously pinned SHA256 0cbf0c32f0ab1e1c71db5121a88bac905bf976c4a6ab6bb6d7d9cf9ddd184ed3). Authors call inequality 'almost certainly' true, explicitly cite possible multiple prime squares in a gap and difficulties from small primes. Pinned teorth catalogue @536408716724a2402bdfa7c1d764bf83d64a8c89 reports FALSIFIABLE, last update 2025-08-31. Public problem page indexed 2026-10-13 reports FALSIFIABLE, last edit 2025-10-07: https://www.erdosproblems.com/458. External public discussion (https://www.erdosproblems.com/forum/thread/458) includes unverified computational claims to 10^12 (2026-04-27) and 10^20 (2026-06-12); GCL does not adopt their exhaustive bounds. Pinned google-deepmind/formal-conjectures@85f863718beeec7b58a3a1926ee92e3472bc2020, FormalConjectures/ErdosProblems/458.lean, exact blob a0cd551ed43e9eb8f9782375f4dd5ddcd27a425f, has `answer(sorry)` and proof `by sorry`; it represents the universal inequality with 0-indexed `nth Prime`. No formal proof certified.
+
+## Strongest verified interface
+Because L(n)=product_{q prime} q^{floor(log_q n)}, crossing a proper prime power q^a multiplies L by q. Thus L(r-1)/L(p)=B(p,r), and a finite counterexample k can be checked by integer arithmetic. The universal P is a Pi_1 arithmetic sentence (universal quantification of a decidable predicate); a counterexample would refute it and be verifiable in weak ordinary arithmetic, but no finite verification proves P for all k. 'FALSIFIABLE' does NOT mean 'false', 'independent', 'decidable as a universal sentence', or 'proved'. In a fixed arithmetic theory such as PA, each explicit counterexample gives a proof of not-P; no result on provability or independence of P in PA is established here. Independent deterministic finite checks for every consecutive prime gap with upper prime <=99991: 9591 gaps, zero failures. Exactly five gaps contain multiple proper prime powers below 100000: (7,11) product 6, (23,29) 15, (113,127) 55, (2179,2203) 39, (32749,32771) 362. A second exact lcm calculation verifies 167 gaps with upper prime <=1000. All these are finite evidence, not a proof.
+
+## Proposed bounded successor task
+EC004-0458-GAP-CERT. Inputs: pinned 1980 p.91, pinned formal provider blob, explicit finite prime-power fixture. Target: formalize the exact LCM quotient/product criterion and no-repeat-base lemma for consecutive primes in Lean. Method: prove L(n) changes only at prime powers, invoke Bertrand to show no repeated base, test the first five multiple-power gaps, and compare the formal quantifiers and prime indexing to the original. Acceptance: compiled proof with no sorry/unexpected axioms, exact theorem semantic readback, deterministic replay; falsification: a counterexample gap or any mismatched theorem hypothesis. Stop after one proof build and one replay or record exact toolchain blocker. A separate exploratory path may analyze prime-square clustering and higher-power collisions, without converting conditional bounds into an unconditional proof.
+
+## Prerequisites and blocker
+SOURCE_LOCK_READY for a documentary article that preserves the FALSIFIABLE/OPEN boundary. No claim that any computational search resolves the universal conjecture. Formal provider has sorry, and the 2026 third-party computational reports have not been independently reproduced. The issue-bound RESULT/1 comment remains UNPOSTED because the CHAD comment write was blocked by transport safety checks; no issue-return custody is claimed. Protected production and V2 admission remain pending.
+
+## Reuse and claim boundary
+Reused exact pinned registry, visually inspected original 1980 page, dated public tracker/discussion, pinned Lean source. Independently derived the prime-power product criterion and logical classification and ran two distinct finite-check algorithms. No sibling return, external large-scale bound, new mathematical resolution, Lean proof, MathCert, or editorial acceptance is claimed.

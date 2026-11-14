@@ -1,0 +1,29 @@
+# EC-BULK-004 — Erdős #499–500 source-fidelity and exact-QA review
+
+Observed 2026-10-15 UTC. Authenticated editorial operator fyremael. **Same-operator editorial review**, not an independent mathematical certification, protected publication, or a claim of originality.
+
+## #499: historical chain and quantifiers
+
+Original P. Erdős (1961), *Some unsolved problems*, printed p.242, Problem II.7, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=22, directly visually inspected. The statement requires a permutation sigma with PRODUCT of nonnegative entries at least n^-n for each n-by-n doubly stochastic matrix, n>=1. It is NOT the assertion that every permutation product is large. The second, weaker condition in the original asks a positive permutation diagonal with SUM of entries>=1 (Marcus–Ree 1959); its proof is not the same as the product claim.
+
+Marcus–Minc, *Some results on doubly stochastic matrices*, Proc. AMS 13 (1962), 571–579, DOI 10.1090/S0002-9939-1962-0139625-6, credited with original positive resolution; bibliographic primary record checked but complete proof unavailable. Van der Waerden permanent inequality, independently established in the early 1980s by Egorychev/Falikman, implies the weaker #499 bound by elementary max>=mean of n! permutation products. Falikman's 1981 *Matematicheskie Zametki* 29:6 original bibliographic abstract explicitly states per(M)>=n!/n^n. This derivation does NOT imply 1962 solution postdates 1981.
+
+Pinned FormalConjectures/ErdosProblems/499.lean at 85f863718beeec7b58a3a1926ee92e3472bc2020, blob 0dc4da0ee48100b0d193ca14aba3e6204bbeeb61, directly read: product, permanent, and positive-sum variants exist as separate statements with by sorry placeholders. External reported Lean badge is not GCL kernel evidence. Reproducible exact rational fixtures test matrices generated as convex combinations of permutation matrices for n<=5, uniform sharpness through n=6, elementary n=2, and reject non-stochastic zero matrices. They prove only the stated special cases, not the full van der Waerden theorem.
+
+Original authenticated return https://github.com/grandchallenge/MATH-PROGRAMME/issues/1770#issuecomment-6188331523 ; source status PROVED retained.
+
+## #500: primary arithmetic and bound provenance conflict
+
+Original Erdős (1961), printed p.243 Problem II.8, https://users.renyi.hu/~p_erdos/1961-22.pdf#page=23, **visually inspected**. Defines f(n) as the least NUMBER of triples forcing four vertices with all four triples. It is exactly ex_3(n,K4^3)+1 (for n>=4); confusing exact ex with the forcing threshold is an off-by-one error. Open asymptotic density conjecture 5/9 is not resolved by small computational checks. USD 500 catalogue prize metadata is not a reward-authorization claim.
+
+Turán cyclic three-class template: edges are rainbow or have two in class i and one in successor class i+1 modulo three. Each of 81 ordered colour patterns on four vertices has <=3 selected triples; the template is K4-free. At n=3k edge count (5k³-3k²)/2 exactly, yielding asymptotic density 5/9. Exhaustive checks of every 3-graph on n=4 (2^4 cases) and n=5 (2^10 cases) establish ex_3(4,K4^3)=3 and ex_3(5,K4^3)=7. They also show the finite-n inequality ex<=0.5611666*binom(n,3) stated literally on the maintained catalogue page is FALSE: at n=4, 3>0.5611666*4.
+
+Razborov, *On 3-hypergraphs with forbidden 4-vertex configurations* (SIAM J. Discrete Math. 24, 2010, 946–963), actual author preprint https://homepage.mi-ras.ru/~razborov/turan dated 2008, visually inspected printed p.3. Theorem 1 proves density <=5/9 **only under an ADDITIONAL induced one-edge four-set exclusion**. For unrestricted K4-free 3-graphs, the same page reports NUMERICAL approximately 0.438334 complementary lower density / approximately 0.561666 upper density, and expressly says its floating-point calculation was NOT converted to rigorous proof in that paper. Do not cite the conditional theorem as resolution of unrestricted Turán problem.
+
+Independent primary Flagmatic User's Guide v1.5, indexed PDF https://lidicky.name/flagmatic/UsersGuide.pdf pp.8–9, provides a step-by-step certificate/verification transcript with 964 six-vertex admissible graphs and exact rational upper density 2246662543771/4000000000000 = 0.56166563594275. Its full PDF could not be directly fetched, and GCL has **not** independently replayed its certificate, so this is **documented exact guide bound, not a GCL-verified theorem**. The maintained tracker number 0.5611666 is smaller by precisely 1996143771/4000000000000 and was not located in Razborov or Flagmatic original references. Likely typographical drift is a hypothesis, not established fact. Correct statement is an asymptotic DENSITY bound, equivalently ex_3(n,K4^3)<=(guide_bound+o(1))*binom(n,3), not a universal finite-n multiple.
+
+Original authenticated return https://github.com/grandchallenge/MATH-PROGRAMME/issues/1771#issuecomment-6188358355 has disposition STATUS_CONFLICT; pinned catalogue status OPEN remains. GCL pinned FC snapshot lacks 500.lean. Proposed next task: source-correct upper bound under governance, validate full Flagmatic certificate under pinned toolchain, and mathematically investigate unrestricted density beyond bounded examples. Do not launch unselected Solve work or claim historical first discovery of these small cases.
+
+## QA and admission boundary
+
+Both manuscripts contain six required substantive sections, provenance, exact quantifiers and separately recorded partial-source-access limits. Fixtures tests/test_erdos_compendium_0499_doubly_stochastic.py and tests/test_erdos_compendium_0500_turan_hypergraph.py were executed with 8/8 focused PASS. Exact-head cohort tests and local MathJax to follow. Both manuscripts are UNACCEPTED_DRAFT, with no protected merge, deployed-site render guarantee, or independent specialist approval claimed.
