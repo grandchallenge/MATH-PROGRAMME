@@ -77,9 +77,9 @@ The preceding obstruction cannot be promoted to full source nonmembership. With 
 T(x,z,y)=f(x)\,\theta(z)\delta_0(y),
 \qquad a_\epsilon(x,z,y)=\eta(x,z,y)\kappa_\epsilon(z-y). \tag{171.7}
 \]
-Here the smooth cutoffs equal one on all actual supports. The R1 wavefront is only in the \(y\) covector and avoids every nonzero partial-partition conormal. The scalar Gaussian edge is a permitted relative heat stage, and forgetting \(y\) is proper on the fixed compact coefficient support. The exact output is
+Here \(\theta\in C_c^\infty(U)\) is fixed and equal to one near zero, and the additional smooth cutoffs equal one on the compact support of \(f(x)\theta(z)\delta_0(y)\). The R1 wavefront is only in the \(y\) covector and avoids every nonzero partial-partition conormal. The scalar Gaussian edge is a permitted relative heat stage, and forgetting \(y\) is proper on the fixed compact coefficient support. The exact output is
 \[
-q_*[a_\epsilon T]=f(x)\kappa_\epsilon(z). \tag{171.8}
+q_*[a_\epsilon T]=f(x)\theta(z)\kappa_\epsilon(z). \tag{171.8}
 \]
 Its expansion on the same off-diagonal \(V\) has unbounded \(\delta_0^{(2n)}(z)\) orders. This shows **by an existing legal source** that Lemma 171.1 genuinely depends on *no hidden vertices*, rather than extending by an unsupported pullback/pushforward order estimate.
 
