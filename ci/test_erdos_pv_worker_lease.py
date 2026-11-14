@@ -15,7 +15,8 @@ class LeaseTests(unittest.TestCase):
   self.assertEqual(self.s["issue"],3225)
   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0002-B")
   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-B")
-  self.assertEqual(w.scope("ERDOS-PV-0001-C")["issue"],3238)
+  with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-C")
+  self.assertEqual(w.scope("ERDOS-PV-0001-D")["issue"],3251)
  def test_bad_ids(self):
   for x in ["ERDOS-PV-0000-B","ERDOS-PV-1222-A","ERDOS-PV-0001-Z","ERDOS-PV-1-B"]:
    with self.subTest(x=x), self.assertRaises(ValueError):w.scope(x)
