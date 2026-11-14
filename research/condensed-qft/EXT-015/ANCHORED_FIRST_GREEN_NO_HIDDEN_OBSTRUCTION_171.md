@@ -1,10 +1,10 @@
 # EXT-015 REACH / 171 — a completed no-hidden obstruction for the first anchored Green core
 
-**Primary disposition: NEW BOUNDED NEGATIVE THEOREM.** The first Green core $A_\epsilon=\chi(x)e(x)\rho(z)\kappa_\epsilon(z)$ has **no finite representation, even modulo the original uniform rapid ideal, by any collection of existing 108.7 histories without forgotten physical vertices**. The assertion includes every fixed completed $E_{s,K,\Gamma}\widehat\otimes_\pi S_\lambda$ coefficient, arbitrary fixed finite jet order, scalar power/log indices and legal partition inclusions in that subclass. It is **not** a nonmembership result in the whole 108.7 source: hidden-vertex histories can produce arbitrarily high absolute-anchor Gaussian jets. Universal 150.L, residual $W$ -acyclicity and original R3 remain OPEN.
+**Primary disposition: NEW BOUNDED NEGATIVE THEOREM.** The first Green core $A_\epsilon=\chi(x)e(x)\rho(z)\kappa_\epsilon(z)$ has **no finite representation, even modulo the original uniform rapid ideal, by any collection of existing 108.7 histories without forgotten physical vertices**. The assertion includes every fixed completed $E_{s,K,\Gamma}\widehat\otimes_\pi S_\lambda$ coefficient, arbitrary fixed finite jet order, scalar power/log indices and legal partition inclusions in that subclass. It is **not** a nonmembership result in the whole 108.7 source: hidden-vertex histories can produce arbitrarily high absolute-anchor Gaussian jets. Universal 150.L, residual acyclicity of $W$ and original R3 remain OPEN.
 
 ## 1. Frozen contract and precise domain
 
-Use protected 105 (Git blob \`a8ce66ff0edec33e2aff299550fca2089d671033\`), 108 (\`587c15fd6e24f6e6b14de574ff878221cdbd5cb6\`), 126 (\`5b05c6147d237ca1d22e4dcbce9262b0f038c163\`), 150 (\`03deca9212a9bea56743e482e5cb79edb46b9d7f\`), 165 (\`24b82716d41d309438fcb7a97bbacab0b724afde\`), and the protected B-arm 168 primary (\`e2c43f218c9175b919c51f371acb8c04e659faea\`), review169 (\`fb43b4ba450f95deb105fd65b297864979a6ed52\`) and bounded ledger170 (\`600ffd88d260c5d8460cc67a6553534f138f78d9\`). Checkpoint CP189 is the governing current continuation; this theorem does not change the source class, its completion or its quotient.
+Use protected 105 (Git blob `a8ce66ff0edec33e2aff299550fca2089d671033`), 108 (`587c15fd6e24f6e6b14de574ff878221cdbd5cb6`), 126 (`5b05c6147d237ca1d22e4dcbce9262b0f038c163`), 150 (`03deca9212a9bea56743e482e5cb79edb46b9d7f`), 165 (`24b82716d41d309438fcb7a97bbacab0b724afde`), and the protected B-arm 168 primary (`e2c43f218c9175b919c51f371acb8c04e659faea`), review169 (`fb43b4ba450f95deb105fd65b297864979a6ed52`) and bounded ledger170 (`600ffd88d260c5d8460cc67a6553534f138f78d9`). Checkpoint CP189 is the governing current continuation; this theorem does not change the source class, its completion or its quotient.
 
 Work on the original interval $U\ni0$ and the same fixed $\rho,\chi\in C_c^\infty(U)$, with $\rho(0)\ne0$, $\chi=1$ near the joint anchor. Put
 
@@ -111,7 +111,7 @@ To replace the fixed smooth $f(x)$ by the cusp $\chi(x)e(x)$ in (171.7) would in
 | Rapid-equivalent $A$ source in that no-hidden subcollection | **EXCLUDED** |
 | Source obstruction with hidden vertices | **NOT PROVED**; (171.7) explicitly breaks this invariant |
 | Full source membership/nonmembership of $A$ in $\mathcal P_2$ | **OPEN** |
-| Universal 150.L, residual $W$ -acyclicity, R3, 126.14, higher weights, M5/R4 | **OPEN** |
+| Universal 150.L, residual acyclicity of $W$, R3, 126.14, higher weights, M5/R4 | **OPEN** |
 
 **Exact next mathematical target 174 (subject to critical review 172 and bounded ledger 173):** Classify the complete hidden-vertex mechanisms capable of generating an absolute Gaussian $\delta^{(2n)}(z)$ tower while retaining the independently singular first-coordinate Green cusp, without a forbidden R1 partial-partition conormal. A positive construction must give one finite fixed 108.7 history and a complete 126 row; a negative result must exclude all allowable finite hidden histories and their completed cancellations. The no-hidden theorem alone is not a universal source invariant or a $W$ cohomology computation.
 
