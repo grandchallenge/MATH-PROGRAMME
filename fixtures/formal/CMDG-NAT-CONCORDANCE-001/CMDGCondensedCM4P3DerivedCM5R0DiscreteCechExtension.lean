@@ -37,7 +37,7 @@ noncomputable section
 
 universe u v
 
-open CategoryTheory
+open CategoryTheory Limits
 
 namespace CMDG.CondensedCM5R0
 
@@ -65,7 +65,7 @@ theorem finiteLocallyConstant_extension_of_injective
   have hcomm : q ∘ j.hom.hom = p ∘ (f : X → A) := rfl
   obtain ⟨g, hg, _, hgj⟩ :=
     Profinite.exists_lift_of_finite_of_injective_of_surjective
-      j.hom.hom j.hom.continuous hj
+      j.hom.hom j.hom.hom.continuous hj
       p hp (f : X → A) hf q continuous_const hcomm
   refine ⟨⟨g, (IsLocallyConstant.iff_continuous _).mpr hg⟩, ?_⟩
   intro x
@@ -122,7 +122,7 @@ theorem integerCechCochain_factors_finiteQuotient
       (cQ : LocallyConstant
         ((stoneanPresentationCechPairs T).diagram.obj j) ℤ),
       c = cQ.comap
-        (finiteQuotientMap (stoneanPresentationCechPairs T) j).hom.hom := by
+        ((stoneanPresentationCechPairs T).asLimitCone.π.app j).hom.hom := by
   exact Profinite.exists_locallyConstant
     (stoneanPresentationCechPairs T).asLimitCone
     (stoneanPresentationCechPairs T).asLimit c
@@ -181,9 +181,7 @@ theorem integerCechCochain_ambientFiniteObservation
         (((Stonean.toProfinite.obj T.presentation) ⨯
           (Stonean.toProfinite.obj T.presentation)).diagram.obj j) ℤ),
       ∀ x : stoneanPresentationCechPairs T,
-        cQ ((finiteQuotientMap
-          ((Stonean.toProfinite.obj T.presentation) ⨯
-            (Stonean.toProfinite.obj T.presentation)) j).hom.hom
+        cQ ((Q.asLimitCone.π.app j).hom.hom
               ((stoneanCechPairEmbedding T).hom.hom x)) = c x := by
   obtain ⟨b, hb⟩ := integerCechCochain_extend_to_product T c
   let Q : Profinite.{u} :=
@@ -194,7 +192,7 @@ theorem integerCechCochain_ambientFiniteObservation
   refine ⟨j, cQ, ?_⟩
   intro x
   calc
-    cQ ((finiteQuotientMap Q j).hom.hom
+    cQ ((Q.asLimitCone.π.app j).hom.hom
         ((stoneanCechPairEmbedding T).hom.hom x)) =
       b ((stoneanCechPairEmbedding T).hom.hom x) := by
         exact (LocallyConstant.congr_fun hc
