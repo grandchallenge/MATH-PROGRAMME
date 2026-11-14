@@ -34,7 +34,7 @@ $$
 
 ## 2. Explicit existing 108.7 history and exact evaluation
 
-Choose fixed $\eta_x,\eta_z\in C_c^\infty(U)$ such that $\eta_x=1$ on $\operatorname{supp}\chi$ and $\eta_z=1$ near zero. On the **two physical block coordinates** $(x,z)$ take
+Choose fixed $\eta_x,\eta_z\in C_c^\infty(U)$ such that $\eta_x=1$ on $\mathrm{supp}\,\chi$ and $\eta_z=1$ near zero. On the **two physical block coordinates** $(x,z)$ take
 
 $$
 T(x,z)=\chi(x)\delta_0(z),\qquad
@@ -54,13 +54,13 @@ $$
 
 The final equality is the ordinary restriction of a smooth coefficient to the support of $\delta_0(z)$; it is **exact for every $\epsilon>0$**, not a Wick expansion, approximation or rapid equivalence. There is no integration Jacobian to omit: $q=i_{\mathrm{id}}=\mathrm{id}$, with the standard $dx\,dz$ test-pairing density. The cutoff factors act as one on the support of $T$; all physical supports are fixed compact subsets of $U^2$.
 
-The wavefront of $T$ has only $(0,\zeta)$ covectors. The only proper nontrivial two-block partition conormal is the conormal of $x=z$, whose nonzero covectors have the form $(\tau,-\tau)$. These cones are disjoint. Thus the original R1 graph stage $E_{s,K,\Gamma}$ may be chosen with a closed permitted pure-$z$ cone, with $s$ large enough for the fixed delta. The scalar factor is smooth for every positive regulator. The noncharacteristic R1 pullback, product and graph-stage tensor maps are *exactly* those admitted in 108 §§2,4; no forbidden overlapping distributional product, hidden-vertex anchor, or new conormal source is used.
+The wavefront of $T$ has only $(0,\zeta)$ covectors. The only proper nontrivial two-block partition conormal is the conormal of $x=z$, whose nonzero covectors have the form $(\tau,-\tau)$. These cones are disjoint. Thus the original R1 graph stage $E_{s,K,\Gamma}$ may be chosen with a closed permitted pure $z$ cone, with $s$ large enough for the fixed delta. The scalar factor is smooth for every positive regulator. The noncharacteristic R1 pullback, product and graph-stage tensor maps are *exactly* those admitted in 108 §§2,4; no forbidden overlapping distributional product, hidden-vertex anchor, or new conormal source is used.
 
 It remains necessary to prove that $a_\epsilon$ is in one fixed, **complete** scalar stage of 105, not merely smooth for $\epsilon>0$. That is the content of the next section.
 
 ## 3. Fixed all-face scalar heat estimates
 
-**Lemma 168.2 (heat-smoothed weighted Green cusp).** For every fixed compact $t$-interval, the actual function $(\epsilon,t)\mapsto Q_\epsilon(t)$, multiplied by a fixed compact cutoff in $t$, is polyhomogeneous on the ordinary two-point heat blowup of $\{\epsilon=0,t=0\}$, with compatible all-order b-derivative remainder estimates. Its index family may be fixed once and for all: integer powers without logarithms, including the nonnegative integer saturation, with front-face leading order at least $1$, strict regulator-face leading order at least $0$, and fixed lower auxiliary weights chosen below those exponents. The map $\rho\mapsto Q$ is continuous from each fixed-support $C_K^\infty$ stage to this **one** 105.5 complete scalar stage. Fixed smooth physical cutoff and pullback by $t=x-z$ preserve that stage on the complete two-vertex heat collision space.
+**Lemma 168.2 (heat-smoothed weighted Green cusp).** For every fixed compact interval in $t$, the actual function $(\epsilon,t)\mapsto Q_\epsilon(t)$, multiplied by a fixed compact cutoff in $t$, is polyhomogeneous on the ordinary two-point heat blowup of $\{\epsilon=0,t=0\}$, with compatible all-order b-derivative remainder estimates. Its index family may be fixed once and for all: integer powers without logarithms, including the nonnegative integer saturation, with front-face leading order at least $1$, strict regulator-face leading order at least $0$, and fixed lower auxiliary weights chosen below those exponents. The map $\rho\mapsto Q$ is continuous from each fixed-support $C_K^\infty$ stage to this **one** 105.5 complete scalar stage. Fixed smooth physical cutoff and pullback by $t=x-z$ preserve that stage on the complete two-vertex heat collision space.
 
 **Proof.** At positive scale $Q_\epsilon''=\rho\kappa_\epsilon$, so $Q_\epsilon$ is smooth in $t$; its derivatives under any fixed $\epsilon>0$ are ordinary convergent Gaussian integrals. On the front chart $t=\epsilon X$, substitute $y=\epsilon Y$ to obtain the *exact* expression
 
@@ -70,7 +70,7 @@ Q_\epsilon(\epsilon X)
 \tag{168.6}
 $$
 
-For each $N\ge0$, Taylor's formula with integral remainder gives, on bounded $X$-charts and after every prescribed finite ordinary or b-derivative,
+For each $N\ge0$, Taylor's formula with integral remainder gives, on bounded charts in $X$ and after every prescribed finite ordinary or b-derivative,
 
 $$
 Q_\epsilon(\epsilon X)
@@ -92,12 +92,12 @@ M_{j,\epsilon}=\int y^j\rho(y)\kappa_\epsilon(y)\,dy
 \tag{168.8}
 $$
 
-Since $e(t-y)=(|t|-\operatorname{sgn}(t)y)/2$ whenever $|y|<|t|$, splitting the Gaussian integral at $|y|=|t|$ yields
+Since $e(t-y)=(|t|-\mathrm{sgn}(t)y)/2$ whenever $|y|<|t|$, splitting the Gaussian integral at $|y|=|t|$ yields
 
 $$
 Q_\epsilon(t)
 =e(t)M_{0,\epsilon}
--\tfrac12\operatorname{sgn}(t)M_{1,\epsilon}
+-\tfrac12\mathrm{sgn}(t)M_{1,\epsilon}
 +E_\epsilon(t),
 \tag{168.9}
 $$
@@ -108,7 +108,7 @@ At the front/strict corner use $X=t/\epsilon\to\pm\infty$. Writing $m_n=\int Y^n
 
 $$
 J_n(X)
-=e(X)m_n-\tfrac12\operatorname{sgn}(X)m_{n+1}
+=e(X)m_n-\tfrac12\mathrm{sgn}(X)m_{n+1}
 +O\!\left((1+|X|)^{n+1}e^{-X^2/2}\right),
 \tag{168.10}
 $$
@@ -126,7 +126,7 @@ T\otimes a\in E_{s,K,\Gamma}\widehat\otimes_\pi S_\lambda,
 \tag{168.11}
 $$
 
-with **one** fixed permitted cone, compact hull, scalar heat index/auxiliary-weight family and zero insertion derivative. By Lemma 168.2, $\rho\mapsto a$ is continuous in the complete scalar coefficient topology; $T$ is fixed in the complete graph stage. Their tensor map and the 108.7 evaluation have the continuous finite-seminorm estimates of 108 §§2,4. No replacement by a weaker positive-interior or pointwise-completion topology is made. With $\rho(a,y)$ smooth in an external finite-dimensional parameter on compact charts and a common compact $y$-support, differentiate (168.2) under the Gaussian integral. All source derivatives are literally $T\otimes\partial_a^\alpha a$, lie in the *same* completed stage with compact-chart bounds, and are mutually compatible coefficient derivatives. Taking these as the actual depth-$r$ rows (or their finite graph-order relaxations) gives the genuine 126 §4 row identities and entire evaluation compatibility. Nothing is inferred for arbitrary previously admitted 126 families; the open surjectivity issue in 126.14 is untouched.
+with **one** fixed permitted cone, compact hull, scalar heat index/auxiliary-weight family and zero insertion derivative. By Lemma 168.2, $\rho\mapsto a$ is continuous in the complete scalar coefficient topology; $T$ is fixed in the complete graph stage. Their tensor map and the 108.7 evaluation have the continuous finite-seminorm estimates of 108 §§2,4. No replacement by a weaker positive-interior or pointwise-completion topology is made. With $\rho(a,y)$ smooth in an external finite-dimensional parameter on compact charts and a common compact $y$-support, differentiate (168.2) under the Gaussian integral. All source derivatives are literally $T\otimes\partial_a^\alpha a$, lie in the *same* completed stage with compact-chart bounds, and are mutually compatible coefficient derivatives. Taking these as the actual depth $r$ rows (or their finite graph-order relaxations) gives the genuine 126 §4 row identities and entire evaluation compatibility. Nothing is inferred for arbitrary previously admitted 126 families; the open surjectivity issue in 126.14 is untouched.
 
 The source represents $B$ before quotienting. Hence it represents its class after quotient by the *unchanged* uniformly rapid all-mixed-derivative ideal; the equality defect in (168.5) is exactly zero under **every** rapid seminorm. Physical $x$ differentiation of this same legal history is among the already closed source operators of 105/108, so its second derivative is the 165.17 $\partial_x^2B$ with precisely the $\chi$ cutoff corrections of 165.20. This constructs an antiderivative **for this one matched source output**, not a continuous inverse derivative on any general mixed coefficient space. $\square$
 
@@ -151,7 +151,7 @@ C_\epsilon(x,z)
 \tag{168.13}
 $$
 
-This is a valid single existing 108.7 source: R1 $\chi(t)e(t)\rho(z)$ has only pure-$t$ wavefront; the relative Gaussian is an admitted two-block heat scalar; order-zero inclusion $x=y=t$ and proper forgetting of $y$ carry unit density. However **$C\ne A$**, and the discrepancy is not uniformly rapid. The exact joint-normal difference is
+This is a valid single existing 108.7 source: R1 $\chi(t)e(t)\rho(z)$ has only pure $t$ wavefront; the relative Gaussian is an admitted two-block heat scalar; order-zero inclusion $x=y=t$ and proper forgetting of $y$ carry unit density. However **$C\ne A$**, and the discrepancy is not uniformly rapid. The exact joint-normal difference is
 
 $$
 (C-A)_\epsilon(\epsilon X,\epsilon Z)
