@@ -1,0 +1,115 @@
+{
+  "record_type": "ERDOS_PV_SOURCE_LOCK/1",
+  "problem_id": 248,
+  "governing_issue": 3201,
+  "verification_issue": 3204,
+  "source_audit_issue": 1517,
+  "disposition": "SOURCE_AND_SEMANTIC_INTERFACE_CHECKED; KERNEL_REPLAY_NOT_EXECUTED",
+  "sources": {
+    "catalogue": {
+      "repo": "teorth/erdosproblems",
+      "commit": "536408716724a2402bdfa7c1d764bf83d64a8c89",
+      "path": "data/problems.yaml",
+      "blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+      "entry": 248
+    },
+    "formal": {
+      "repo": "google-deepmind/formal-conjectures",
+      "commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+      "path": "FormalConjectures/ErdosProblems/248.lean",
+      "blob": "b80827cbaaf0da740901def1606e36f770d43756",
+      "state": "by sorry, theorem statement only"
+    },
+    "external": {
+      "repo": "plby/lean-proofs",
+      "commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+      "path": "src/latest/ErdosProblems/Erdos248.lean",
+      "blob": "166659f39a435831d1a751718f9a385effcd7dfa",
+      "import": "ErdosProblems.Erdos248.TailAssembly",
+      "final_theorem": "Erdos248.erdos_248",
+      "delegates_to": "erdos248_resolved",
+      "contains_print_axioms_command": true,
+      "axiom_output_observed": false
+    },
+    "paper": {
+      "url": "https://arxiv.org/html/2512.01739v2",
+      "theorem": "Tao–Teräväinen Theorem 1.1, Eq. 1.6",
+      "result": "one C>0; infinitely many positive n; all positive k; omega(n+k)<=Omega(n+k)<=C*k"
+    }
+  },
+  "toolchain": {
+    "lean": "leanprover/lean4:v4.33.0",
+    "lean_toolchain_blob": "025e59548e48cf71f2744154e2890beefe30a258",
+    "lake_manifest_blob": "1b7a0663de506f371211df75da206fa2c96befd2",
+    "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d"
+  },
+  "inspected_dependency_frontier": [
+    {
+      "file": "TailAssembly.lean",
+      "blob": "37da350799f0ecd68747bba2d3828385aed45d6e",
+      "imports": [
+        "BadMassAssembly",
+        "MediumTail",
+        "LargeTail"
+      ]
+    },
+    {
+      "file": "BadMassAssembly.lean",
+      "blob": "0ad939fc84cd63fad863459e2ff0b6e2cf3b7a08",
+      "imports": [
+        "FinalReduction",
+        "PrimeSumBounds"
+      ]
+    },
+    {
+      "file": "FinalReduction.lean",
+      "blob": "2fdadc2e526a2af45d3077d40f0458c6d9827748",
+      "imports": [
+        "SieveMassBounds"
+      ]
+    },
+    {
+      "file": "MediumTail.lean",
+      "blob": "3334a80714cb4fdb8c2ccd3d42941c1ee69424ff",
+      "imports": [
+        "MediumMoment",
+        "MediumSharpEventMass",
+        "MediumSharpEnergy",
+        "MediumScaleAbsorption",
+        "PrimeRangeFacts"
+      ]
+    },
+    {
+      "file": "LargeTail.lean",
+      "blob": "69ae7466af00cf5181a3b87d0bc605810a0cf2de",
+      "imports": [
+        "LargeRangeMoment"
+      ]
+    }
+  ],
+  "semantic_audit": {
+    "formal_and_external_statements": "Exact same top-level existence of positive real C and infinite natural n satisfying the omega(n+k)<=C*k bound for all natural k>=1",
+    "paper_stronger_than_external_lean": "Paper proves the Omega bound as well; external Lean final theorem states omega bound only. Do not claim external Lean formalizes the full paper theorem.",
+    "n_positivity": "Removing n=0 from an infinite natural-number subset leaves infinitely many positive n",
+    "omega_bridge": "For m>0, prime factorization has exponents e_i>=1, so omega(m)=sum_i 1 <= sum_i e_i=Omega(m)",
+    "pitfalls": [
+      "Forall-k and one common C must remain outside the infinite-n quantifier",
+      "A bound for finitely many k does not prove the target",
+      "A by-sorry theorem is not a formal proof",
+      "A #print axioms command in a file is not an observed axiom report",
+      "Scanning this import frontier does not certify the entire transitive dependency chain"
+    ],
+    "conclusion": "LITERATURE_AND_TOP_LEVEL_LEAN_STATEMENT_COMPATIBLE; FULL_DEPENDENCY_AND_KERNEL_RESULT_UNKNOWN"
+  },
+  "execution": {
+    "compiler_invoked": false,
+    "kernel_result": "UNEXECUTED",
+    "full_transitive_import_scan": false,
+    "axiom_report": null,
+    "logs": null,
+    "independent_proof_review": false,
+    "mathematical_certification": false,
+    "blocker": "GCL_CONTROL run_bash and system_status returned internal errors during this execution; local container has no lean/lake; protected Colab JOBS.json lists ERDOS-041-FINITE-001 only, not ERDOS-0248.",
+    "next_action": "Create an exact protected Erdos248 CPU Colab job and replay pinned complete proof; record compiler stdout/stderr SHA256, theorem type, #print axioms and import graph; then separate nonauthoring adverse review and protected admission. Keep verification issue open."
+  }
+}
