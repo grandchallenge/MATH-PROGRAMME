@@ -1,6 +1,5 @@
 import CMDGCondensedCM4P3DerivedCM5R0FiniteClosedCoverGluing
 import Mathlib.Topology.LocallyConstant.Algebra
-import Mathlib.Tactic.Omega
 
 /-!
 # CM5: constructive H¹ vanishing for finite closed-cover scalar cocycles
