@@ -55,8 +55,8 @@ theorem finiteLocallyConstant_extension_of_injective
   letI : TopologicalSpace A := ⊥
   haveI : DiscreteTopology A := ⟨rfl⟩
   haveI : T2Space A := inferInstance
-  let p : A → PUnit := fun _ => PUnit.unit
-  let q : Y → PUnit := fun _ => PUnit.unit
+  let p : A → PUnit.{u + 1} := fun _ => PUnit.unit
+  let q : Y → PUnit.{u + 1} := fun _ => PUnit.unit
   have hp : Function.Surjective p := by
     intro _
     exact ⟨Classical.choice ‹Nonempty A›, rfl⟩
