@@ -726,8 +726,8 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
         article = manuscript(n, editorial)
         if article:
             found_ids.add(n)
-        legacy = article is not None and n in LEGACY_EXEMPLARS and admission is None
         admission = admissions.get(n)
+        legacy = article is not None and n in LEGACY_EXEMPLARS and admission is None
         if admission is not None:
             if article is None:
                 raise ValueError(f"Admission without manuscript for #{n}")
