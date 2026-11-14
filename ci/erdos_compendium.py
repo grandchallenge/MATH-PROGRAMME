@@ -25,6 +25,12 @@ FOUR_DISPLAY_AMENDMENTS = ROOT / "governance/erdos_compendium/EDITORIAL_DISPLAY_
 # Existing published exemplars #1–#3 predate this acceptance ledger. They are
 # preserved only as clearly qualified LEGACY articles, not reviewed admissions.
 LEGACY_EXEMPLARS = frozenset({1, 2, 3})
+# An originally grandfathered article may leave legacy status ONLY after a
+# separate, exact-manuscript protected editorial admission and public readback.
+# A hash-pinned, issue-scoped exception must not admit #2/#3 or future edits.
+LEGACY_PROMOTION_SHA256 = {
+    1: "64026cab37a6ba0bbe18d154ad64b38fe311d933dd0804e2c1a3414a9802cf78",
+}
 # Older #4 also predates cross-renderer delimiter enforcement; remediate separately.
 MATH_DELIMITER_LEGACY = frozenset({1, 2, 3, 4})
 GENERATED = ROOT / "docs/erdos"
@@ -66,7 +72,7 @@ def load_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
         if not isinstance(row, dict) or set(row) != required:
             raise ValueError("Incomplete or unexpected editorial admission fields")
         n = row["problem_id"]
-        if (type(n) is not int or n <= 0 or n in LEGACY_EXEMPLARS
+        if (type(n) is not int or n <= 0 or (n in LEGACY_EXEMPLARS and row["source_sha256"] != LEGACY_PROMOTION_SHA256.get(n))
                 or n in accepted or not re.fullmatch(r"[0-9a-f]{64}", row["source_sha256"])):
             raise ValueError("Invalid, duplicated, or legacy editorial admission identity")
         for key, pattern in link_patterns.items():
@@ -120,7 +126,7 @@ def load_batch_admissions(path: Path = ACCEPTANCE) -> dict[int, dict]:
             if not isinstance(entry, dict) or set(entry) != {"problem_id", "source_sha256", "source_check"}:
                 raise ValueError("Invalid per-article batch evidence")
             n = entry["problem_id"]
-            if (type(n) is not int or n <= 0 or n in LEGACY_EXEMPLARS or n in accepted
+            if (type(n) is not int or n <= 0 or (n in LEGACY_EXEMPLARS and entry["source_sha256"] != LEGACY_PROMOTION_SHA256.get(n)) or n in accepted
                     or not isinstance(entry["source_sha256"], str)
                     or not re.fullmatch(r"[0-9a-f]{64}", entry["source_sha256"])):
                 raise ValueError("Invalid, duplicated, or legacy batch admission identity")
@@ -720,8 +726,8 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
         article = manuscript(n, editorial)
         if article:
             found_ids.add(n)
-        legacy = article is not None and n in LEGACY_EXEMPLARS
         admission = admissions.get(n)
+        legacy = article is not None and n in LEGACY_EXEMPLARS and admission is None
         if admission is not None:
             if article is None:
                 raise ValueError(f"Admission without manuscript for #{n}")
