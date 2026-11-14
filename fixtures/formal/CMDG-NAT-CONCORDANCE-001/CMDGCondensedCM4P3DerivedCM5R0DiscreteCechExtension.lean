@@ -127,13 +127,19 @@ theorem integerCechCochain_factors_finiteQuotient
     (stoneanPresentationCechPairs T).asLimitCone
     (stoneanPresentationCechPairs T).asLimit c
 
+/-- The ordinary profinite product of the source of the canonical
+Stonean presentation with itself. -/
+noncomputable abbrev stoneanPresentationPairProduct (T : Profinite.{u}) :
+    Profinite.{u} :=
+  (Stonean.toProfinite.obj T.presentation) ⨯
+    (Stonean.toProfinite.obj T.presentation)
+
 /-- The real Stonean Čech pair R=P×_T P embeds into the ordinary
 product P×P. Its mono property is categorical and does not require
 the surjection P→T to split. -/
 noncomputable def stoneanCechPairEmbedding (T : Profinite.{u}) :
     stoneanPresentationCechPairs T ⟶
-      (Stonean.toProfinite.obj T.presentation) ⨯
-        (Stonean.toProfinite.obj T.presentation) :=
+      stoneanPresentationPairProduct T :=
   prod.lift
     (pullback.fst (Profinite.presentation.π T) (Profinite.presentation.π T))
     (pullback.snd (Profinite.presentation.π T) (Profinite.presentation.π T))
@@ -153,15 +159,12 @@ topological extension result and not yet a Čech coboundary. -/
 theorem integerCechCochain_extend_to_product
     (T : Profinite.{u})
     (c : LocallyConstant (stoneanPresentationCechPairs T) ℤ) :
-    ∃ b : LocallyConstant
-        ((Stonean.toProfinite.obj T.presentation) ⨯
-          (Stonean.toProfinite.obj T.presentation)) ℤ,
+    ∃ b : LocallyConstant (stoneanPresentationPairProduct T) ℤ,
       ∀ x : stoneanPresentationCechPairs T,
         b ((stoneanCechPairEmbedding T).hom.hom x) = c x := by
   exact locallyConstant_extension_of_injective
     (stoneanPresentationCechPairs T)
-    ((Stonean.toProfinite.obj T.presentation) ⨯
-      (Stonean.toProfinite.obj T.presentation))
+    (stoneanPresentationPairProduct T)
     (stoneanCechPairEmbedding T)
     (stoneanCechPairEmbedding_injective T) c
 
@@ -174,19 +177,14 @@ automatically coherent primitive. -/
 theorem integerCechCochain_ambientFiniteObservation
     (T : Profinite.{u})
     (c : LocallyConstant (stoneanPresentationCechPairs T) ℤ) :
-    ∃ (j : DiscreteQuotient
-        ((Stonean.toProfinite.obj T.presentation) ⨯
-          (Stonean.toProfinite.obj T.presentation)))
+    ∃ (j : DiscreteQuotient (stoneanPresentationPairProduct T))
       (cQ : LocallyConstant
-        (((Stonean.toProfinite.obj T.presentation) ⨯
-          (Stonean.toProfinite.obj T.presentation)).diagram.obj j) ℤ),
+        ((stoneanPresentationPairProduct T).diagram.obj j) ℤ),
       ∀ x : stoneanPresentationCechPairs T,
-        cQ ((Q.asLimitCone.π.app j).hom.hom
-              ((stoneanCechPairEmbedding T).hom.hom x)) = c x := by
+        cQ (((stoneanPresentationPairProduct T).asLimitCone.π.app j).hom.hom
+            ((stoneanCechPairEmbedding T).hom.hom x)) = c x := by
   obtain ⟨b, hb⟩ := integerCechCochain_extend_to_product T c
-  let Q : Profinite.{u} :=
-    (Stonean.toProfinite.obj T.presentation) ⨯
-      (Stonean.toProfinite.obj T.presentation)
+  let Q : Profinite.{u} := stoneanPresentationPairProduct T
   obtain ⟨j, cQ, hc⟩ :=
     Profinite.exists_locallyConstant Q.asLimitCone Q.asLimit b
   refine ⟨j, cQ, ?_⟩
