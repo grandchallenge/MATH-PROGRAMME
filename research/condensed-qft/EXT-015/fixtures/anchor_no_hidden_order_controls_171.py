@@ -19,10 +19,12 @@ def main() -> None:
         assert weight * factorial(2 * n) == moment
         # For psi(z)=z^(2n)/(2n)! near the anchor,
         # every lower jet vanishes, while the 2n-jet is one.
-        for j in range(2 * n):
-            assert j < 2 * n
-            cases += 1
-        assert Fraction(factorial(2 * n), factorial(2 * n)) == 1
+        # Formal derivatives at zero of the monomial z^(2n)/(2n)!.
+        jets = [Fraction(factorial(j), factorial(2 * n)) if j == 2 * n
+                else Fraction(0) for j in range(2 * n + 1)]
+        assert all(jet == 0 for jet in jets[:-1])
+        assert jets[-1] == 1
+        cases += 2 * n + 1
         assert moment > 0
         cases += 1
     print(f"PASS: {cases} exact Gaussian-moment and detecting-jet arithmetic controls")
