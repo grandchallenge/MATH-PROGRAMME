@@ -473,7 +473,8 @@ class EditorialGateTests(unittest.TestCase):
                       for batch in ledger["batches"] for e in batch["entries"]}
         # Admission cohorts run in parallel. Do not freeze the global
         # acceptance count at this R2 batch's historical base.
-        self.assertEqual(len(accepted), len(historical) + 1)\n        self.assertIn(1, accepted)  # Explicit reviewed legacy promotion, not a historical cohort rewrite
+        self.assertEqual(len(accepted), len(historical) + 1)
+        self.assertIn(1, accepted)  # Explicit reviewed legacy promotion, not a historical cohort rewrite
         self.assertGreaterEqual(len(accepted), 469)
         for row in doc["entries"]:
             n = row["problem_id"]
