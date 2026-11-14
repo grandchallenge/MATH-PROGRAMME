@@ -1,0 +1,7 @@
+GCLNegative.lean:10:2: error: Type mismatch
+  ErdosCounter.exists_binary_block_set d k W hd hk a ha hW
+has type
+  ErdosCounter.RelationFree a (2 ^ k) →
+    ∃ A, A.card = d * k ∧ A ⊆ Finset.Icc 1 (2 ^ (k - 1) * W) ∧ ErdosCounter.SumDistinct A
+but is expected to have type
+  ∃ A, A.card = d * k ∧ A ⊆ Finset.Icc 1 (2 ^ (k - 1) * W) ∧ ErdosCounter.SumDistinct A
