@@ -118,7 +118,7 @@ theorem integerTwoClosedSets_transition_is_coboundary
   let ιU : C(U, X) := ⟨Subtype.val, continuous_subtype_val⟩
   refine ⟨g.comap ιU, LocallyConstant.const V 0, ?_⟩
   intro x hxU hxV
-  have h := hg (⟨x, ⟨hxU, hxV⟩⟩ : U ∩ V)
+  have h := hg (⟨x, ⟨hxU, hxV⟩⟩ : ↥(U ∩ V))
   change g x = c ⟨x, ⟨hxU, hxV⟩⟩ at h
   simpa [ιU] using h.symm
 
