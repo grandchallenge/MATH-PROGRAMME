@@ -258,6 +258,10 @@ class EditorialGateTests(unittest.TestCase):
             accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
             self.assertIn("Reviewed explanatory article", accepted_page)
             self.assertNotIn("UNACCEPTED DRAFT", accepted_page)
+            promoted_page = (root / "site" / "problems" / "0001.md").read_text(encoding="utf-8")
+            self.assertIn("Reviewed explanatory article — evidence qualified", promoted_page)
+            self.assertNotIn("Legacy authored exemplar", promoted_page)
+            self.assertIn("MATHCERT certification", promoted_page)
 
     def test_bulk_001_protected_admission_evidence_and_exact_source(self):
         """Full-batch admission must bind every manuscript and all shared receipts."""
