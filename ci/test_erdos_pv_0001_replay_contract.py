@@ -83,7 +83,7 @@ class Contracts(unittest.TestCase):
         self.assertEqual(set(c.parse_axioms(raw)), set(c.THEOREMS))
 
     def test_unrelated_compiler_error_cannot_pass_negative_check(self):
-        self.assertEqual(self.adjudicate(bad="bad.lean:1:1: error: Type mismatch"), "REPLAY_FAILED_OR_UNVERIFIED")
+        self.assertEqual(self.adjudicate(bad="bad.lean:1:1: error: Type mismatch")["result"], "REPLAY_FAILED_OR_UNVERIFIED")
 
     def test_axiom_injection_stays_red(self):
         self.assertEqual(self.adjudicate(log=GREEN.replace("Quot.sound","Injected"))["result"],
