@@ -85,11 +85,11 @@ def parse_axioms(log):
         raise ValueError("untrusted sorry axiom marker")
     out = {}
     for theorem in THEOREMS:
-        found = re.search(r"(?m)^" + re.escape(theorem) +
-                          r" depends on axioms:\s*\[([^\]]*)\]", log)
+        found = re.search(r"(?m)^'?" + re.escape(theorem) +
+                          r"'? depends on axioms:\s*\[([^\]]*)\]", log)
         if found:
             values = [v.strip() for v in found.group(1).split(",") if v.strip()]
-        elif re.search(r"(?m)^" + re.escape(theorem) + r" does not depend on any axioms", log):
+        elif re.search(r"(?m)^'?" + re.escape(theorem) + r"'? does not depend on any axioms", log):
             values = []
         else:
             raise ValueError("missing kernel axiom report: " + theorem)
@@ -111,8 +111,11 @@ def adjudicate(root, build_log, readback_log, negative_log, build_exit, readback
     try:
         if build_exit != 0 or readback_exit != 0 or negative_exit == 0:
             raise ValueError("kernel build/readback/negative exit mismatch")
-        if "error:" not in logs["negative"].read_text():
-            raise ValueError("negative test did not produce an error")
+        negative_text = logs["negative"].read_text()
+        if not all(token in negative_text for token in
+                   ("error:", "Type mismatch", "ErdosCounter.RelationFree",
+                    "ErdosCounter.exists_binary_block_set")):
+            raise ValueError("negative test did not reject the missing RelationFree premise")
         receipt["axioms"] = parse_axioms(logs["readback"].read_text())
         receipt["result"] = "LEAN_KERNEL_REPLAY_PASS_UNADJUDICATED"
     except ValueError as exc:
