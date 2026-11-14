@@ -8,8 +8,8 @@ from unittest.mock import patch
 import erdos_pv_0001_replay_contract as c
 
 GREEN = (
-    "ErdosCounter.exists_binary_block_set depends on axioms: [propext, Quot.sound, Classical.choice]\n"
-    "Erdos1.erdos_1.disproof depends on axioms: [propext, Classical.choice]\n"
+    "'ErdosCounter.exists_binary_block_set' depends on axioms: [propext, Quot.sound, Classical.choice]\n"
+    "'Erdos1.erdos_1.disproof' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
 )
 
 class Contracts(unittest.TestCase):
@@ -50,7 +50,7 @@ class Contracts(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"untrusted"):
             c.parse_axioms(GREEN+"sorryAx\n")
 
-    def adjudicate(self, build=0, checked=0, negative=1, log=GREEN, bad="error: missing relation"):
+    def adjudicate(self, build=0, checked=0, negative=1, log=GREEN, bad="GCLNegative.lean:10:2: error: Type mismatch\\n  ErdosCounter.exists_binary_block_set d k W hd hk a ha hW\\nhas type ErdosCounter.RelationFree a (2 ^ k) → ..." ):
         with tempfile.TemporaryDirectory() as temp:
             p=Path(temp)
             logs=[p/x for x in ("build.log","check.log","bad.log")]
@@ -77,6 +77,13 @@ class Contracts(unittest.TestCase):
 
     def test_fake_negative_error_stays_red(self):
         self.assertEqual(self.adjudicate(bad="not run")["result"],"REPLAY_FAILED_OR_UNVERIFIED")
+
+    def test_unquoted_axiom_format_still_allowed(self):
+        raw = GREEN.replace("'ErdosCounter.exists_binary_block_set'", "ErdosCounter.exists_binary_block_set").replace("'Erdos1.erdos_1.disproof'", "Erdos1.erdos_1.disproof")
+        self.assertEqual(set(c.parse_axioms(raw)), set(c.THEOREMS))
+
+    def test_unrelated_compiler_error_cannot_pass_negative_check(self):
+        self.assertEqual(self.adjudicate(bad="bad.lean:1:1: error: Type mismatch")["result"], "REPLAY_FAILED_OR_UNVERIFIED")
 
     def test_axiom_injection_stays_red(self):
         self.assertEqual(self.adjudicate(log=GREEN.replace("Quot.sound","Injected"))["result"],

@@ -42,6 +42,10 @@ jobs:
         id: actual
         shell: bash
         run: |
+          # GitHub's bash wrapper enables errexit; disable it explicitly here.
+          # Each compiler invocation has a meaningful nonzero result, including
+          # the expected failure of the adversarial negative test.
+          set +e
           set -uo pipefail
           cd replay/erdos-1
           timeout -k 15s 3300s lake build Erdos1 > ../../replay-logs/build.log 2>&1
@@ -63,6 +67,9 @@ jobs:
           echo "build_exit=$build_exit" >> "$GITHUB_OUTPUT"
           echo "type_exit=$type_exit" >> "$GITHUB_OUTPUT"
           echo "bad_exit=$bad_exit" >> "$GITHUB_OUTPUT"
+          printf "LEAN_STATUS/1 build=%s readback=%s negative=%s\n" "$build_exit" "$type_exit" "$bad_exit"
+          # Do not rely on this step to confer verification: the adjudicator
+          # checks the full source lock, compiler logs, axioms and negative result.
       - name: Fail closed and emit exact compiler receipts
         if: always()
         shell: bash
