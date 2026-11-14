@@ -26,7 +26,8 @@ class RecoveredErdos436Admission(unittest.TestCase):
         original = next(e for e in batch["entries"] if e["problem_id"] == 436)
         self.assertEqual(original["source_sha256"], PREVIOUS_SHA)
         accepted = ec.load_batch_admissions()
-        self.assertEqual(len(accepted), 650)
+        self.assertEqual(len(set(accepted) - {1}), 650)
+        self.assertEqual(accepted[1]["source_sha256"], "64026cab37a6ba0bbe18d154ad64b38fe311d933dd0804e2c1a3414a9802cf78")
         self.assertEqual(accepted[436]["source_sha256"], REVISED_SHA)
         self.assertEqual(accepted[436]["exposition_amendment_id"], "EC-436-QRPAIR-20261022")
         self.assertEqual(

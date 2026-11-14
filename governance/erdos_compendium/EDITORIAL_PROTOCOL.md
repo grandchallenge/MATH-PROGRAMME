@@ -40,10 +40,19 @@ The gate validates the evidence record's shape and source-hash identity;
 the accountable editorial agent must verify that linked evidence supports the proposed acceptance decision; applicable protected approvals are still enforced. Never
 equate a syntactically valid link with proof of successful verification.
 
-The original #1–#3 are narrowly grandfathered as **legacy authored
-exemplars** to avoid silently withdrawing existing historical pedagogy.
-They are visibly marked as not separately accepted, are excluded from the
-reviewed count, and the grandfather rule must not expand to later manuscripts.
+The original #1–#3 were grandfathered as **legacy authored exemplars** to
+avoid silently withdrawing historical pedagogy. They receive no editorial
+credit merely for having appeared on the site. **Problem #1 alone** may now
+graduate out of legacy status by a distinct source-hash-bound, protected
+editorial admission: its corrected manuscript digest must be exactly
+`64026cab37a6ba0bbe18d154ad64b38fe311d933dd0804e2c1a3414a9802cf78`,
+supported by source review, separate role-scoped critical review, a protected
+manuscript PR, successful strict MkDocs build and actual public HTML/math
+readback. The generator's pinned exception may not be extended by inference;
+any later manuscript edit invalidates it until separately reviewed. Problems
+#2 and #3 remain legacy, explicitly not editorially accepted; the original
+grandfathering does not expand to any other problem. A reviewed explanatory
+article is **not** a new proof, independent human review or MATHCERT certificate.
 At the initial gate cutover, #4 and #7 were both authored **visible drafts**.
 The protected `EDITORIAL_ADMISSIONS.json` is the current editorial authority,
 not this historical prose: the generator checks the exact source hash before
