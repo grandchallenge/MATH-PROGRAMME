@@ -20,9 +20,13 @@ class CoverageTests(unittest.TestCase):
         bad=copy.deepcopy(self.base)
         mutation(bad)
         with self.assertRaises(ValueError):v.validate_row(bad,self.src,self.phase)
-    def test_full_population_and_zero_false_terminal(self):
+    def test_full_population_and_one_bounded_terminal(self):
         result=v.validate()
-        self.assertEqual((result['individual_problems'],result['project_issues'],result['substantive_terminal_count']),(1221,58,0))
+        self.assertEqual((result['individual_problems'],result['project_issues'],result['substantive_terminal_count']),(1221,58,1))
+        first=v.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][0]
+        self.assertEqual(first['closure_status'], 'ADMITTED_BOUNDED_COMPLETE')
+        self.assertEqual(first['mathcert_status'], 'NOT_SUBMITTED')
+        self.assertFalse(v.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['fully_verified'])
     def test_wrong_source_issue(self):self.reject(lambda x:x.__setitem__('source_audit_issue',3201))
     def test_wrong_source_body_sha(self):self.reject(lambda x:x.__setitem__('source_issue_body_sha256','0'*64))
     def test_status_at_lock_is_not_rewritable(self):self.reject(lambda x:x.__setitem__('catalogue_status_at_lock','proved'))

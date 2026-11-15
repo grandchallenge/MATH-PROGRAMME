@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3201"
   },
-  "phase": "A/B/C already protected for Erdős #1; D corrected six-section manuscript and #1-only editorial admission protected. Existing canonical accepted-parity workflow run 43652748837 verified exact public Pages deployment a9525ee9: protected receipt a9525ee9942c-43652748837.json, 14/14 visible MathJax nodes, public page hash eb6ed1... identical to later Pages upload. Unique D RESULT/1 returned as issue #3251 comment 6886589880. D evidence admission/custody and authorized exact claim release remain; other 99 D tasks unexecuted and cohort remains open. Full global independent proof adjudication and MATHCERT not claimed.",
+  "phase": "CP006 source-locked Erdős #1 A/B/C + D editorial and public live-browser verification reviewed. Unique D RESULT/1 #3251/6886589880 protected via source-evidence merge #3347@bcad3e1b206674fbe090d29496fab75876629241. Exact-merge D custody and ADMITTED_BOUNDED_COMPLETE being admitted through a separate protected PR; the D claim remains held until protected readback and authorized release. The 99 other D records and entire 1221-problem campaign remain incomplete; source author's global disproof not independently fully adjudicated and no MATHCERT.",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "a9525ee9942cc5106c4d155efa28d14089321843",
@@ -79,13 +79,13 @@
   ],
   "next_action": {
     "id": "admit-0001-d-result-and-custody",
-    "description": "Unique D RESULT/1 exists; source-locked live publication evidence already protected. Admit D VERIFIED_BOUNDED through policy/CI and protected merge, then exact-merge custody PR with PROTECTED_ADMITTED, bounded closure and authenticated task claim release at SHA 7ca928d43b142c951bd495c62412427e3bdfd76c. Cohort 100 still OPEN.",
+    "description": "Admit exact-merge D custody and per-ID ADMITTED_BOUNDED_COMPLETE through protected PR, then validate protected status and source-bound unique RESULT/1; release only held claim 7ca928d43b142c951bd495c62412427e3bdfd76c using authorized actor, read back deletion and preserve a durable release receipt. Do not close #3251.",
     "evidence_targets": [
+      "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3347",
       "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/43652748837",
-      "governance/erdos_compendium/publication_parity/receipts/a9525ee9942c-43652748837.json",
-      "governance/erdos_compendium/publication_parity/COVERAGE.json",
-      "governance/erdos_proof_verification/evidence/0001/D_EDITORIAL_PROTECTED_PUBLIC_PROJECTION_001.json"
+      "governance/erdos_proof_verification/coverage/cohorts/0001-0100.json",
+      "refs/heads/gcl-pv-claims/ERDOS-PV-0001-D"
     ]
   },
   "external_evidence": {
@@ -195,20 +195,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Locate existing authorized browser readback, independently inspect live workflow run #43652748837 and protected receipt/coverage, reconcile old pending Pages status, reject duplicate verifier PR #3345, return unique ERDOS-PV-0001-D RESULT/1.",
-    "result": "PASS_EXACT_PROTECTED_PAGES_SOURCE_TO_LIVE_MATHJAX_PARITY_14_OF_14; D RESULT/1 RETURNED; D PROTECTED_EVIDENCE/CUSTODY AND CLAIM RELEASE PENDING",
+    "action": "Protected admission of unique source-bound Erdős #1 Phase D documentary evidence in PR #3347; bind exact protected merge for subsequent custody.",
+    "result": "PASS_VERIFIED_BOUNDED_EVIDENCE_PROTECTED at bcad3e1b206674fbe090d29496fab75876629241; custody and claim release not yet protected or performed.",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/43652748837",
-      "governance/erdos_compendium/publication_parity/receipts/a9525ee9942c-43652748837.json",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3345"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3347",
+      "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-15T00:30:02.278Z"
+    "observed_at": "2026-11-15T11:53:05.709Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -233,7 +232,7 @@
       "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json",
       "governance/erdos_proof_verification/evidence/0001/D_EDITORIAL_PROTECTED_PUBLIC_PROJECTION_001.json"
     ],
-    "instructions": "CP006 update: prior post-admission live HTTP pending is SUPERSEDED by protected accepted-parity source and live Chromium verification. Existing readback workflow run 43652748837 passed at editorial source a9525ee9942cc5106c4d155efa28d14089321843 and Pages deployment 7795413841, #1 page SHA eb6ed1..., 14/14 MathJax nodes; exact receipt governance/erdos_compendium/publication_parity/receipts/a9525ee9942c-43652748837.json and COVERAGE.json on protected main. Unique D RESULT/1 issue #3251 comment 6886589880; claim ref heads/gcl-pv-claims/ERDOS-PV-0001-D still SHA 7ca928d.... D source evidence PR and later exact-merge custody are required, THEN release claim after readback. Do not close 100-item cohort issue #3251 or claim full independent global proof adjudication or MATHCERT. Duplicate Pages workflow PR #3345 closed without merge. Separate dispatcher #3265 open."
+    "instructions": "Resume CP006: verified full source-bound Chromium accepted publication parity for Erdős #1 run 43652748837 and protected receipt. D unique RESULT/1 #3251 comment 6886589880. Evidence PR #3347 merged exact bcad3e1b206674fbe090d29496fab75876629241 after all checks PASS; D custody PR must set D PROTECTED_ADMITTED and ADMITTED_BOUNDED_COMPLETE with that exact admission ref. Then protected main+file+RESULT/1+claim SHA readback, authorized release of gcl-pv-claims/ERDOS-PV-0001-D at 7ca928d43b142c951bd495c62412427e3bdfd76c, verify deletion and retain release receipt. Do not close 100-item cohort #3251, no MATHCERT or full independent global theorem proof; dispatcher #3265 separate."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
