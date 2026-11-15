@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3201"
   },
-  "phase": "Erdős #1 A/B/C on protected main with exact source, bounded math and pinned Lean 4.28 replay; Phase D manuscript correction protected in PR #3327 and separate editorial admission protected in PR #3330. Source ledger now records #1 as the 651st separately reviewed article. Post-admission public Pages URL still returned previous legacy badge; exact updated deployment/HTML readback is required before Phase D terminal receipt, protected custody and claim release. The original global theorem lacks fully independent mathematical adjudication and MATHCERT certification.",
+  "phase": "Erdős #1 A/B/C, corrected D manuscript, and exact-hash #1-only editorial admission are protected. 651 reviewed entries; #2/#3 remain legacy. Current main validated-site artifact and successful Pages deployment at source 6ec0694 were independently inspected: Erdős #1 page bytes matched the Pages-upload artifact exactly (SHA256 eb6ed1...), with qualified-review badge and Arithmatex; deployed public HTTP/DOM has NOT been independently fetched since that release. Phase D exact RESULT/1, protected custody and claim release still pending; no full independent global-gadget adjudication or MATHCERT.",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "a9525ee9942cc5106c4d155efa28d14089321843",
@@ -30,6 +30,20 @@
         "status": "completed",
         "conclusion": "success",
         "job_id": null
+      },
+      {
+        "run_id": 43656304815,
+        "name": "Programme policy checks (main push)",
+        "status": "completed",
+        "conclusion": "success",
+        "job_id": null
+      },
+      {
+        "run_id": 43656404676,
+        "name": "Deploy documentation site",
+        "status": "completed",
+        "conclusion": "success",
+        "job_id": 132635851861
       }
     ]
   },
@@ -37,7 +51,7 @@
   "permitted_next_actions": [
     {
       "id": "confirm-0001-d-pages-parity",
-      "description": "Confirm the post-PR #3330 published Erdős #1 page has the source-accepted reviewed-article badge and MathJax semantics. Check protected main Pages deployment and exact site SHA/DOM, record immutable readback evidence. The earlier browser readback still returned legacy badge."
+      "description": "The validated-site and Pages-upload artifacts for main@6ec0694 contain identical reviewed Erdős #1 HTML and deployment succeeded; now independently fetch the served public URL and verify the qualified editorial badge plus rendered math, recording HTTP/DOM and source revision before any RESULT/1."
     },
     {
       "id": "admit-0001-d-result-and-custody",
@@ -45,7 +59,7 @@
     },
     {
       "id": "repair-pages-deployment",
-      "description": "If Pages stays stale, diagnose main push policy validated-site artifact and Pages workflow status. Never substitute PR successful MkDocs build for actual deployed HTML evidence; repair deployment through governed workflow."
+      "description": "Only if the served public HTTP page remains stale after successful deployment, diagnose Pages CDN/status and workflow, then repair through governed procedure. No mere CI success may substitute for served page parity."
     },
     {
       "id": "activate-persistent-per-problem-worker",
@@ -58,13 +72,14 @@
   ],
   "next_action": {
     "id": "confirm-0001-d-pages-parity",
-    "description": "Recheck the public Erdős #1 status after protected editorial PR #3330. Source main has the correct exact-hash admission, but external HTML readback still showed the former legacy badge. Require actual reviewed badge, mathematical-rendering parity and a trusted deployment receipt. Only then file the exact scoped Phase D result, protected review/custody and claim release.",
+    "description": "Verify live served Erdős #1 URL from successful Pages deploy #43656404676: source/build/upload byte parity already PASS, but direct HTTP/DOM content remains unobserved from available transport. Confirm qualified reviewed badge and rendered mathematics before returning unique RESULT/1, protected custody, and releasing D claim.",
     "evidence_targets": [
       "grandchallenge/MATH-PROGRAMME#3251",
-      "grandchallenge/MATH-PROGRAMME#3330",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886436675",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/43656304815",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/43656404676",
       "governance/erdos_proof_verification/evidence/0001/D_EDITORIAL_PROTECTED_PUBLIC_PROJECTION_001.json",
-      "https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0001/",
-      "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"
+      "https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0001/"
     ]
   },
   "external_evidence": {
@@ -133,23 +148,38 @@
       {
         "kind": "external_source",
         "identity": "https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0001/",
-        "status": "EXTERNAL_READBACK_STALE_LEGACY_BADGE_POST_MERGE; UPDATED_PAGES_PARITY_PENDING"
+        "status": "HISTORICAL_PRE_DEPLOY_LEGACY_OBSERVATION; POST_SUCCESSFUL_DEPLOY_PUBLIC_HTTP_DOM_UNATTESTED"
       },
       {
         "kind": "artifact",
         "identity": "grandchallenge/MATH-PROGRAMME#3251",
         "status": "ERDOS_0001_D_CLAIM_HELD; EDITORIAL_SOURCE_ADMITTED; TERMINAL_RESULT_NOT_RETURNED; 99_OTHER_D_TASKS_DEPENDENCY_GATED"
+      },
+      {
+        "kind": "workflow_run",
+        "identity": "grandchallenge/MATH-PROGRAMME actions run #43656304815 @6ec0694fd8606e8f9b446101a43ac1e51f8e9922",
+        "status": "SUCCESS_VALIDATED_SITE_ARTIFACT_ID_14137568742"
+      },
+      {
+        "kind": "workflow_run",
+        "identity": "grandchallenge/MATH-PROGRAMME actions run #43656404676 @6ec0694fd8606e8f9b446101a43ac1e51f8e9922",
+        "status": "PAGES_BUILD_AND_DEPLOY_SUCCESS"
+      },
+      {
+        "kind": "artifact",
+        "identity": "Pages uploaded rendered Erdős #1 index.html SHA256 eb6ed1dbb2f3623ac1ce1d6487ff25d2fa8a1a024b6be3c502c7cd28e88ea2e1",
+        "status": "BYTE_IDENTICAL_TO_VALIDATED_SITE; REVIEW_BADGE_AND_ARITHMATEX_PRESENT; NOT_PUBLIC_HTTP_READBACK"
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Admit Erdős #1 as the unique formerly legacy reviewed article by exact source hash, separate critical review and protected PR, while preserving historic 650 reviewed baseline and #2/#3 legacy restrictions.",
-    "result": "PR #3330 merged at a9525ee9942cc5106c4d155efa28d14089321843. Source ledger now contains the one exact #1 admission, validated by protected GCL conformance/formal/policy suites. Historical regression failures from 650→651 count were fixed to preserve old cohort totals and require the new #1 admission. Public Pages site still showed prior legacy badge at latest external readback; Phase D receipt, claim release and cohort closure must remain pending.",
+    "action": "Read back source-bound current-main validated site, verified inner checksum, byte-compared public Erdős #1 HTML with exact GitHub Pages upload artifact, and verified successful Pages deploy job.",
+    "result": "Validated source-run #43656304815 and Pages deploy #43656404676 both success at exact main 6ec0694...; the rendered problem 0001 HTML SHA256 eb6ed1... matches between validated and Pages-upload bundles; qualified badge present, legacy absent in both. Public served HTTP/DOM still unobserved due web/CHAD transport failures; D result/claim and cohort remain open.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#3330",
-      "grandchallenge/MATH-PROGRAMME#3251",
-      "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/43656304815",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/43656404676",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886436675",
       "governance/erdos_proof_verification/evidence/0001/D_EDITORIAL_PROTECTED_PUBLIC_PROJECTION_001.json"
     ]
   },
@@ -157,7 +187,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-14T23:26:28.296Z"
+    "observed_at": "2026-11-15T00:16:17.069Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -182,7 +212,7 @@
       "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json",
       "governance/erdos_proof_verification/evidence/0001/D_EDITORIAL_PROTECTED_PUBLIC_PROJECTION_001.json"
     ],
-    "instructions": "Resume from CP006, not obsolete CP005. Erdős #1 source A/B/C is already protected, with actual Lean 4.28 kernel/axiom replay run #43541084973, independent role-scoped bounded argument, no full independent lattice/cube-gadget audit or MATHCERT. Phase D manuscript PR #3327 merged; distinct exact-manuscript-hash editorial admission PR #3330 merged at a9525ee9942cc5106c4d155efa28d14089321843 with source ledger, 651 reviewed vs historic 650 and #2/#3 unchanged. The public Pages URL still showed LEGACY at last external readback; do not mark D terminal until real deployed badge changed, MathJax render parity is checked, and exact RESULT/1, native protected D/custody PRs and claim release are completed. The exact ERDOS-PV-0001-D reservation branch remains held. Issue #3251 stays OPEN for 99 other items. GCL_CONTROL transport periodically fails; use GitHub connector for source, but claim release requires authorized exact-ref actor path. Dispatcher #3265 autonomy remains open. Preserve other active automations."
+    "instructions": "Resume CP006 from deployment artifact readback, not obsolete post-merge legacy observation. Erdős #1 A/B/C, PR #3327 D manuscript, PR #3330 #1-only editorial ledger and PR #3336 continuity checkpoint are protected. Exact main 6ec0694... policy run #43656304815 produced validated-site artifact, and Pages run #43656404676 built/deployed successfully. Extracted 0001/index.html in both bundles is byte-identical SHA256 eb6ed1... and shows 'Reviewed explanatory article — evidence qualified' with Arithmatex. But direct public HTTP/DOM has not been read back after this success; do NOT return D RESULT/1, release ERDOS-PV-0001-D claim ref, or close per-ID until served URL verifies qualified badge and math. Then protected D/custody and exact claim release. Cohort #3251 remains OPEN for 99 other D IDs; no full independent global proof adjudication, human endorsement, or MATHCERT; dispatcher #3265 autonomy remains open. Preserve other automations and no authority inflation."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
