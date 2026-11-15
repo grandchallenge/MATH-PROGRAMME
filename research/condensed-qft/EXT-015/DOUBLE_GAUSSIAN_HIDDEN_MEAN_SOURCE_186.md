@@ -82,7 +82,7 @@ S_\epsilon(x,z)
 \tag{186.7}
 $$
 
-For general smooth $m_\epsilon$ depending on retained $z$, its transformed factor remains inside the integral and cannot in general be pulled into a $z$-independent $V_\epsilon$. This is a **real nonterminal output-scalar effect**; (186.7) is not asserted for such a coefficient. However the weak-limit theorem in Section 4 applies to this larger smooth-through-zero scalar subclass.
+For general smooth $m_\epsilon$ depending on retained $z$, its transformed factor remains inside the integral and cannot in general be pulled into an effective $V_\epsilon$ independent of $z$. This is a **real nonterminal output-scalar effect**; (186.7) is not asserted for such a coefficient. However the weak-limit theorem in Section 4 applies to this larger smooth-through-zero scalar subclass.
 
 Equation (186.5) is an exact source-controlled Gaussian identity, not an assertion that an arbitrary compact $V_\epsilon$ is itself an allowed original R1 input. In fact, the next section proves that this would be false.
 
