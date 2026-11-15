@@ -24,7 +24,7 @@ $$
 
 $$
 \limsup_{t\to+\infty}\frac{\log|L_u(t)|}{t}
-=\sup\operatorname{supp}u\in\mathbb R.
+=\sup\mathrm{supp}u\in\mathbb R.
 \tag{180.2}
 $$
 
