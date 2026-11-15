@@ -26,7 +26,7 @@ class QueueTests(unittest.TestCase):
     def test_formal_reviewed_task_not_selected_twice(self):
         self.assertEqual(q.candidates('C',limit=5),[])
     def test_only_formal_reviewed_problem_enters_documentary(self):
-        self.assertEqual([(x['problem_id'],x['queue_issue']) for x in q.candidates('D',limit=5)],[(1,3251)])
+        self.assertEqual(q.candidates('D',limit=5),[]) # returned D evidence is not re-dispatchable
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]
         self.assertEqual(x['problem_id'],246)

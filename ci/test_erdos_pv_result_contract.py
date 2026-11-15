@@ -103,7 +103,7 @@ class E2ELifecycleTests(unittest.TestCase):
         b = queue.candidates("B", limit=20)
         self.assertEqual(b, [])
         self.assertEqual(queue.candidates("C", limit=20), [])
-        self.assertEqual([(x["problem_id"],x["queue_issue"]) for x in queue.candidates("D", limit=20)], [(1,3251)])
+        self.assertEqual(queue.candidates("D", limit=20), [])
         self.assertEqual(self.cohort["items"][1]["stage_work_items"]["A"]["work_status"],
                          "UNEXECUTED")
         self.assertEqual(self.cohort["items"][1]["stage_work_items"]["B"]["work_status"],
