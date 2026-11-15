@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP204",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP207",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Protected186–191 read back; zero-energy source mechanism192 remains unproved",
+  "phase": "Zero-energy/disconnected source mechanism192 primary construction",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "10ce83eecc6643ae22ef75a78eb83404733be2be",
-    "candidate_head_sha": "10ce83eecc6643ae22ef75a78eb83404733be2be",
+    "protected_base_sha": "c999e3090f2483b5ee85a63dfaf35f09aa9cc290",
+    "candidate_head_sha": "c999e3090f2483b5ee85a63dfaf35f09aa9cc290",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-189-191-protected-anchor-20261115",
+    "branch": "research/reach-zero-energy192-input-frozen-20261115",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "status": "CP204 live verification passed. Only unrelated ERDOS checkpoint changed since complete3355/3356/3357 return. All scientific sources unchanged. Primary192 unproved.",
+        "identity": "Frozen192inputs atc999e3090f2483b5ee85a63dfaf35f09aa9cc290 preservedresearch/reach-zero-energy192-input-frozen-20261115",
+        "kind": "artifact"
+      },
       {
         "kind": "artifact",
         "identity": "PR3356 native merge10ce83eecc6643ae22ef75a78eb83404733be2be exacthead1d3742f2c63a5b88165aafe8b361122d937d9945",
@@ -888,18 +893,17 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Protected network result read back; bind192",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3356",
-      "research/reach-189-191-protected-anchor-20261115"
+      "research/reach-zero-energy192-input-frozen-20261115"
     ],
-    "result": "Boundedsciencecomplete; originalprogrammeOPEN"
+    "action": "Bind192 before mathematical construction",
+    "result": "Primaryconstructionauthorized"
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-15T13:04:46.6879599Z"
+    "observed_at": "2026-11-15T13:18:00.6148990Z"
   },
   "resume": {
     "fresh_session_safe": true,
