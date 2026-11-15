@@ -207,6 +207,9 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: false
 
+      - name: Verify exact-byte Pages readback hostile tests
+        run: python ci/test_pages_public_readback.py
+
       - name: Verify served Erdős #1 HTML equals deployed validated artifact
         shell: bash
         env:
