@@ -6,8 +6,8 @@
 
 | Evidence item | Exact identity / governing restriction |
 | --- | --- |
-| Primary186 | [DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md](DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md), corrected candidate Git blob a310c7b74db07dde683fb722fd16aa3036aa2110 |
-| Primary PR3352 | Corrected exact head 8de361b1222d650cfd8b278c204f27b94657be6c; prior candidate head 9c04d9c3afe705dac989277d43b3513581fd9336 superseded by explicit identity-partition hypothesis and intermediate eb57cf5f3a70e6f6daf987d0eb3e9616e939f4f7 superseded by math Markdown notation correction |
+| Primary186 | [DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md](DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md), corrected candidate Git blob 7985fec06cb3134110b16afa4aa4fc5b71444341 |
+| Primary PR3352 | Corrected exact head 768dfe86f262c6ae73dd57951201d1cf466d90b3; prior candidate head 9c04d9c3afe705dac989277d43b3513581fd9336 superseded by explicit identity-partition hypothesis and intermediate eb57cf5f3a70e6f6daf987d0eb3e9616e939f4f7 superseded by math Markdown notation correction |
 | Mathematical critic187 | [AGENT_CRITICAL_REVIEW_DOUBLE_GAUSSIAN_MEAN_187.md](AGENT_CRITICAL_REVIEW_DOUBLE_GAUSSIAN_MEAN_187.md); detailed independent logical checks of Gaussian normalization, full four-vertex R1 cone, strict rapid and conditional weak-limit trace |
 | Original 105 | Gaussian/Wick scalar edge stages, protected blob a8ce66ff0edec33e2aff299550fca2089d671033 |
 | Original 108 | Completed mixed 108.6–108.7 histories and fixed-order rapid quotient, blob 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
