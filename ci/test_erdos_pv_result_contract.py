@@ -46,7 +46,7 @@ class E2ELifecycleTests(unittest.TestCase):
     def test_main_census_unmodified(self):
         result = queue.validate()
         self.assertEqual(result["individual_problems"], 1221)
-        self.assertEqual(result["substantive_terminal_count"], 0)
+        self.assertEqual(result["substantive_terminal_count"], 1)\n        self.assertEqual(self.row["closure_status"], "ADMITTED_BOUNDED_COMPLETE")\n        self.assertEqual(self.row["stage_work_items"]["D"]["protected_admission_ref"], "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241")
 
     def test_protected_source_identity_and_review_reuse(self):
         r = self.row
