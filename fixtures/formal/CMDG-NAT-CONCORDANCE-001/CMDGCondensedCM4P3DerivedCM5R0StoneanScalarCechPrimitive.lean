@@ -101,6 +101,9 @@ noncomputable def stoneanCechExplicitToAbstract
       stoneanPresentationCechPairs T := by
   let P := Stonean.toProfinite.obj T.presentation
   let p := Profinite.presentation.π T
+  letI : CompactSpace (↥(profiniteCechRelatedSet P T p)) :=
+    isCompact_iff_compactSpace.mp
+      (profiniteCechRelatedSet_isClosed P T p).isCompact
   let R := stoneanCechRelatedProfinite T
   let f : R ⟶ P :=
     CompHausLike.ofHom _
@@ -112,6 +115,7 @@ noncomputable def stoneanCechExplicitToAbstract
         continuous_snd.comp continuous_subtype_val⟩ : C(R, P))
   have hfg : f ≫ p = g ≫ p := by
     ext z
+    change p.hom.hom z.val.1 = p.hom.hom z.val.2
     exact z.property
   exact pullback.lift f g hfg
 
