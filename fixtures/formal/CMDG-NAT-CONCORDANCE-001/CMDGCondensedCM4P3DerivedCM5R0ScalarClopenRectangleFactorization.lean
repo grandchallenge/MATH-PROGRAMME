@@ -33,30 +33,33 @@ open CategoryTheory Limits Set TopologicalSpace
 
 namespace CMDG.CondensedCM5R0
 
-/-- A Boolean membership indicator of a clopen subset is locally
-constant, with no global finite-space assumption. -/
+/-- Explicit classical truth-value indicator of a clopen membership;
+the decidability witness is contained in the definition rather than
+required as an implicit argument of the theorem statement. -/
+noncomputable def clopenIndicator
+    (P : Profinite.{u}) (U : Clopens P) (x : P) : Bool :=
+  @decide (x ∈ (U : Set P)) (Classical.propDecidable _)
+
+/-- Every clopen membership indicator is locally constant. -/
 theorem locallyConstant_decide_clopen
     (P : Profinite.{u}) (U : Clopens P) :
-    IsLocallyConstant
-      (fun x : P => decide (x ∈ (U : Set P))) := by
+    IsLocallyConstant (clopenIndicator P U) := by
   classical
   apply IsLocallyConstant.iff_isOpen_fiber.mpr
   intro b
   cases b with
   | false =>
     have hset :
-        (fun x : P => decide (x ∈ (U : Set P))) ⁻¹' {false} =
-          (U : Set P)ᶜ := by
+        (clopenIndicator P U) ⁻¹' {false} = (U : Set P)ᶜ := by
       ext x
-      simp
+      simp [clopenIndicator]
     rw [hset]
     exact U.isClopen.1.isOpen_compl
   | true =>
     have hset :
-        (fun x : P => decide (x ∈ (U : Set P))) ⁻¹' {true} =
-          (U : Set P) := by
+        (clopenIndicator P U) ⁻¹' {true} = (U : Set P) := by
       ext x
-      simp
+      simp [clopenIndicator]
     rw [hset]
     exact U.isClopen.2
 
@@ -67,12 +70,13 @@ compactness, not any finite hypothesis on P itself. -/
 theorem integerLocallyConstant_product_finiteRectangles
     (P : Profinite.{u})
     (f : LocallyConstant (P × P) ℤ) :
-    ∃ (I : Type (u + 1)) (hI : Fintype I)
+    ∃ (I : Type u) (hI : Fintype I)
       (q : LocallyConstant P I) (d : I → I → ℤ),
       ∀ x y : P, f (x, y) = d (q x) (q y) := by
   classical
   let R := Set.range (f : P × P → ℤ)
   haveI : Finite R := f.range_finite.to_subtype
+  letI : Fintype R := Fintype.ofFinite R
   let W (r : R) : Clopens (P × P) :=
     ⟨{z | f z = r.val}, f.isLocallyConstant.isClopen_fiber r.val⟩
   have hboxes (r : R) :
@@ -82,15 +86,15 @@ theorem integerLocallyConstant_product_finiteRectangles
   choose Bs hBs using hboxes
   let all : Finset (Clopens P × Clopens P) :=
     Finset.univ.biUnion Bs
-  let I : Type (u + 1) := (↥all → Bool × Bool)
+  let I : Type u := (↥all → Bool × Bool)
   let sig (x : P) : I := fun k =>
-    (decide (x ∈ (k.val.1 : Set P)),
-      decide (x ∈ (k.val.2 : Set P)))
+    (clopenIndicator P k.val.1 x,
+      clopenIndicator P k.val.2 x)
   have hcoord (k : ↥all) :
       IsLocallyConstant
         (fun x : P =>
-          (decide (x ∈ (k.val.1 : Set P)),
-            decide (x ∈ (k.val.2 : Set P)))) :=
+          (clopenIndicator P k.val.1 x,
+            clopenIndicator P k.val.2 x)) :=
     (locallyConstant_decide_clopen P k.val.1).prodMk
       (locallyConstant_decide_clopen P k.val.2)
   have hsig : IsLocallyConstant sig := by
@@ -99,8 +103,8 @@ theorem integerLocallyConstant_product_finiteRectangles
     have hfiber :
         sig ⁻¹' {t} =
           ⋂ k : ↥all, ((fun x : P =>
-            (decide (x ∈ (k.val.1 : Set P)),
-              decide (x ∈ (k.val.2 : Set P)))) ⁻¹' {t k}) := by
+            (clopenIndicator P k.val.1 x,
+              clopenIndicator P k.val.2 x)) ⁻¹' {t k}) := by
       ext x
       simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_iInter]
       exact funext_iff
@@ -127,16 +131,16 @@ theorem integerLocallyConstant_product_finiteRectangles
     let kk : ↥all := ⟨k, hkall⟩
     have hxl := congrArg Prod.fst (congrFun hx kk)
     have hyr := congrArg Prod.snd (congrFun hy kk)
-    change decide (x ∈ (k.1 : Set P)) =
-      decide (x' ∈ (k.1 : Set P)) at hxl
-    change decide (y ∈ (k.2 : Set P)) =
-      decide (y' ∈ (k.2 : Set P)) at hyr
+    change clopenIndicator P k.1 x =
+      clopenIndicator P k.1 x' at hxl
+    change clopenIndicator P k.2 y =
+      clopenIndicator P k.2 y' at hyr
     have hxk' : x' ∈ (k.1 : Set P) := by
       by_contra hn
-      simp [hxk, hn] at hxl
+      simp [clopenIndicator, hxk, hn] at hxl
     have hyk' : y' ∈ (k.2 : Set P) := by
       by_contra hn
-      simp [hyk, hn] at hyr
+      simp [clopenIndicator, hyk, hn] at hyr
     have hw2' : (x', y') ∈
         (↑((Bs r).sup (fun k => k.1 ×ˢ k.2)) :
           Set (P × P)) := by
@@ -182,6 +186,7 @@ theorem integerProfiniteCocycle_ambientProduct_potential
   obtain ⟨I, fintypeI, q, d, hrect⟩ :=
     integerLocallyConstant_product_finiteRectangles P c
   letI : Fintype I := fintypeI
+  haveI : Finite I := Finite.of_fintype I
   exact integerProfiniteCocycle_potential_of_finiteRectangles
     P T p q d (fun x y => c (x, y)) hc
       (fun x y _ => hrect x y)
