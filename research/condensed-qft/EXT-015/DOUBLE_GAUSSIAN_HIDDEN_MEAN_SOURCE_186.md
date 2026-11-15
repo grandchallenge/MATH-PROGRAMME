@@ -149,7 +149,7 @@ The harmless numerical exponent is conservative for $d=2$. The spatial and regul
 
 ## 4. Bounded no-go for graph-regular double bridges, including modulo rapid
 
-**Theorem 186.2 (regular double-bridge source obstruction).** Consider a finite sum of legal double-hidden-bridge sources (186.2), each with fixed finite Gaussian widths, compact support, no additional Wick/Green scalar singularity, no unbounded normal-jet order, and a coefficient $m_\epsilon T_\epsilon$ that extends continuously to regulator zero in one fixed original permitted R1 normal graph stage after multiplication by smooth physical multipliers. The scalar $m_\epsilon$ and all its fixed parameter rows extend smoothly through zero on the same physical compact stage, with no negative Laurent pole or other singular heat front factor beyond the **two displayed Gaussian edges**. Then no such finite sum can equal $A$ **even modulo the unchanged original uniform finite-order rapid ideal**.
+**Theorem 186.2 (regular double-bridge source obstruction).** Consider a finite sum of legal double-hidden-bridge sources (186.2), each with fixed finite Gaussian widths, compact support, the **identity partition** (no nonidentity source-jet inclusion), no additional Wick/Green scalar singularity, only fixed finite physical differential decorations, and a coefficient $m_\epsilon T_\epsilon$ that extends continuously to regulator zero in one fixed original permitted R1 normal graph stage after multiplication by smooth physical multipliers. The scalar $m_\epsilon$ and all its fixed parameter rows extend smoothly through zero on the same physical compact stage, with no negative Laurent pole or other singular heat front factor beyond the **two displayed Gaussian edges**. Then no such finite sum can equal $A$ **even modulo the unchanged original uniform finite-order rapid ideal**.
 
 **Proof.** First work with one source. For every test supported in a compact physical patch, the pair of normalized Gaussian kernels in (186.2) is an approximate identity in the two normal directions $(y-z,h-z)$. The original R1 cone excludes the conormal to $y=h$ and the triple vertex partition, so the trace
 
@@ -170,7 +170,7 @@ $$
 
 All densities are the physical ones; the determinant-one change of variables and normalized Gaussian masses give no missing constant. If $m_\epsilon$ has retained-$z$ dependence, keep it inside the integral before passing to the limit; smooth-through-zero bounds give the same (186.15), without needing the exact terminal factorization (186.7).
 
-By the original R1 restriction-cone property in 108 Section 4, the distribution $T_0(x,z,z)$ excludes the nonzero $x=z$ conormal. Multiplication by the smooth $m_0$ and $\rho$ cannot add wavefront directions. Hence the right side of (186.15) has **no nonzero diagonal conormal $(\tau,-\tau)$** at $(0,0)$. This remains true for finite sums and any fixed finite physical derivatives taken within the same graph-regular class.
+By the original R1 restriction-cone property in 108 Section 4, the distribution $T_0(x,z,z)$ excludes the nonzero $x=z$ conormal. Multiplication by the smooth $m_0$ and $\rho$ cannot add wavefront directions. Hence the right side of (186.15) has **no nonzero diagonal conormal $(\tau,-\tau)$** at $(0,0)$. This remains true for finite sums and any fixed finite physical derivatives taken within the same graph-regular **identity-partition** class. It does not cover a normal jet inserted by a nonidentity partition map.
 
 On the other hand, the target has weak limit
 
@@ -192,7 +192,7 @@ A rapidly flat coefficient such as (186.11) is compatible with the theorem: its 
 | Gaussian product and mean-coordinate transformation | **EXACT** with correctly normalized physical Jacobian |
 | Original R1 cone always descends to effective target-width R1 cone | **FALSE**, legal example (186.9)–(186.12) |
 | Effective diagonal conormal counterexample survives in the original rapid quotient | **NO**; this particular counterexample is regulator-flat |
-| Finite graph-regular double bridges with scalar factor smooth through zero | **EXCLUDED for $A$ even modulo rapid** |
+| Finite graph-regular identity-partition double bridges with scalar factor smooth through zero | **EXCLUDED for $A$ even modulo rapid** |
 | Arbitrary nonpolynomial retained-output scalar stages, negative Laurent/source boundary singularities, nonidentity partition jets | **OPEN** |
 | Full original 108.7 $A$ source status, universal 150.L, residual $W$ acyclicity, original R3, full126.14, higher weights, actual lifting, M5/R4 | **OPEN** |
 
