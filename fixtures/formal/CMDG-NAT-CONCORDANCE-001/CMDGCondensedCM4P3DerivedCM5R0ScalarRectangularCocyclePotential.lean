@@ -56,7 +56,7 @@ theorem integerProfiniteCocycle_potential_of_finiteRectangles
   let E : I → Set T :=
     fun i => p.hom.hom '' ((q : P → I) ⁻¹' {i})
   have hEclosed (i : I) : IsClosed (E i) := by
-    exact (CompHausLike.isClosedMap p)
+    exact (CompHausLike.isClosedMap p) _
       (q.isLocallyConstant.isClopen_fiber i).1
   let co : (i j : I) → LocallyConstant (↥(E i ∩ E j)) ℤ :=
     fun i j => LocallyConstant.const _ (d i j)
