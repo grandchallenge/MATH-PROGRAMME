@@ -95,13 +95,13 @@ The tempting assertion that original R1 on $(x,y,h)$ forces the effective $V_\ep
 Take $a=b=\sqrt2$, so $c=1$, $d=2$, $\alpha=\beta=1/2$. Choose a compact interval inside the physical open $U$, smooth compact $g(x)\ne0$, and a smooth nonnegative $\psi(v)\not\equiv0$ with
 
 $$
-\operatorname{supp}\psi
+\mathrm{supp}\psi
 \Subset\{v:\delta<|v|<2\delta\}
 \quad\text{for some }\delta>0,
 \tag{186.8}
 $$
 
-with $\delta$ small enough that every physical coordinate stays in the original compact patch. Choose fixed cutoffs in $u$ equal to one on $\operatorname{supp}g$. On $(x,u,v)$ define the compact distribution
+with $\delta$ small enough that every physical coordinate stays in the original compact patch. Choose fixed cutoffs in $u$ equal to one on $\mathrm{supp}g$. On $(x,u,v)$ define the compact distribution
 
 $$
 T(x,u,v)=g(x)\psi(v)\delta(x-u).
@@ -115,7 +115,7 @@ x=u,\qquad y=u+v/2,\qquad h=u-v/2.
 \tag{186.10}
 $$
 
-Thus the support of its nonzero wavefront avoids every proper partial-partition equality locus for these three vertices. After extending by a smooth compact retained-$z$ cutoff, any additional possible partition equality involving $z$ has a conormal with a nonzero $z$ component or requires one of the already absent equalities; the original wavefront has zero $z$ component. Hence the input belongs to a fixed compact permitted R1 normal cone, including the full four-vertex partition test. This is a **legal original R1 input**, not an artificially enlarged source.
+Thus the support of its nonzero wavefront avoids every proper partial-partition equality locus for these three vertices. After extending by a smooth compact retained-coordinate $z$ cutoff, any additional possible partition equality involving $z$ has a conormal with a nonzero $z$ component or requires one of the already absent equalities; the original wavefront has zero $z$ component. Hence the input belongs to a fixed compact permitted R1 normal cone, including the full four-vertex partition test. This is a **legal original R1 input**, not an artificially enlarged source.
 
 Integrating $v$ in (186.6) gives
 
@@ -168,7 +168,7 @@ S_\epsilon\longrightarrow
 \tag{186.15}
 $$
 
-All densities are the physical ones; the determinant-one change of variables and normalized Gaussian masses give no missing constant. If $m_\epsilon$ has retained-$z$ dependence, keep it inside the integral before passing to the limit; smooth-through-zero bounds give the same (186.15), without needing the exact terminal factorization (186.7).
+All densities are the physical ones; the determinant-one change of variables and normalized Gaussian masses give no missing constant. If $m_\epsilon$ has retained-coordinate $z$ dependence, keep it inside the integral before passing to the limit; smooth-through-zero bounds give the same (186.15), without needing the exact terminal factorization (186.7).
 
 By the original R1 restriction-cone property in 108 Section 4, the distribution $T_0(x,z,z)$ excludes the nonzero $x=z$ conormal. Multiplication by the smooth $m_0$ and $\rho$ cannot add wavefront directions. Hence the right side of (186.15) has **no nonzero diagonal conormal $(\tau,-\tau)$** at $(0,0)$. This remains true for finite sums and any fixed finite physical derivatives taken within the same graph-regular **identity-partition** class. It does not cover a normal jet inserted by a nonidentity partition map.
 
