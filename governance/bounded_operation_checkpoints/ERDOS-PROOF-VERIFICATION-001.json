@@ -15,54 +15,21 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3201"
   },
-  "phase": "CP006 source-locked Erdős #1 A/B/C + D editorial and public live-browser verification reviewed. Unique D RESULT/1 #3251/6886589880 protected via source-evidence merge #3347@bcad3e1b206674fbe090d29496fab75876629241. Exact-merge D custody and ADMITTED_BOUNDED_COMPLETE being admitted through a separate protected PR; the D claim remains held until protected readback and authorized release. The 99 other D records and entire 1221-problem campaign remain incomplete; source author's global disproof not independently fully adjudicated and no MATHCERT.",
+  "phase": "CP006 Erdős #1 A/B/C and protected editorial/live-render D documentary custody are completed. D evidence merge #3347@bcad3e1..., custody merge #3351@9988bef...; stage D PROTECTED_ADMITTED, per-problem ADMITTED_BOUNDED_COMPLETE, unique result #3251 comment 6886589880. The exact claim ref at 7ca928d... is still HELD, with authenticated release and durable terminal receipt next. Other 99 cohort D records and separate source-global adjudication/MATHCERT remain open.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "a9525ee9942cc5106c4d155efa28d14089321843",
-    "candidate_head_sha": "a9525ee9942cc5106c4d155efa28d14089321843",
+    "protected_base_sha": "3e8429927d1e85aedc7789fb41c82ce084feed13",
+    "candidate_head_sha": "7ca928d43b142c951bd495c62412427e3bdfd76c",
     "issue_number": 3251,
-    "pr_number": 3330,
-    "branch": "gcl/erdos-pv-0001-d-legacy-admission-001",
-    "workflow_runs": [
-      {
-        "run_id": 43652160276,
-        "name": "Programme policy checks",
-        "status": "completed",
-        "conclusion": "success",
-        "job_id": null
-      },
-      {
-        "run_id": 43656304815,
-        "name": "Programme policy checks (main push)",
-        "status": "completed",
-        "conclusion": "success",
-        "job_id": null
-      },
-      {
-        "run_id": 43656404676,
-        "name": "Deploy documentation site",
-        "status": "completed",
-        "conclusion": "success",
-        "job_id": 132635851861
-      },
-      {
-        "run_id": 43652748837,
-        "name": "Erdős Compendium public mathematical HTML readback — accepted Problem #1",
-        "status": "completed",
-        "conclusion": "success",
-        "job_id": 132624584347
-      }
-    ]
+    "pr_number": null,
+    "branch": "gcl-pv-claims/ERDOS-PV-0001-D",
+    "workflow_runs": []
   },
   "terminal_condition": "Only close upon complete catalogue audit-to-verification triage, completed or evidence-blocked selected verification work, protected reviews/admissions/readback, and separate MATHCERT dispositions only where certification is authorized. Source audit closure is never proof completion.",
   "permitted_next_actions": [
     {
       "id": "confirm-0001-d-pages-parity",
       "description": "COMPLETE through already-protected authenticated Chromium readback #43652748837 and accepted publication parity receipt; source and live HTML SHA256 match, all 14 math expressions visible. Do not duplicate this existing verifier."
-    },
-    {
-      "id": "admit-0001-d-result-and-custody",
-      "description": "Return #6886589880 already submitted once. Protect D evidence admission with source-bound review, then separately bind exact protected merge as D custody and bounded per-ID closure; authorize claim release only on exact state readback; keep cohort issue #3251 open."
     },
     {
       "id": "repair-pages-deployment",
@@ -75,17 +42,21 @@
     {
       "id": "verify-248-source-and-kernel",
       "description": "Maintain separate pilot #3204 for Erdős #248 Lean proof replay and source fidelity; do not conflate with #1."
+    },
+    {
+      "id": "release-0001-d-claim",
+      "description": "After protected D custody and unique RESULT/1 readback, verify exact held claim ref and authorized actor; perform one exact-claim deletion under the existing lease contract, reconcile deletion and record durable release evidence."
     }
   ],
   "next_action": {
-    "id": "admit-0001-d-result-and-custody",
-    "description": "Admit exact-merge D custody and per-ID ADMITTED_BOUNDED_COMPLETE through protected PR, then validate protected status and source-bound unique RESULT/1; release only held claim 7ca928d43b142c951bd495c62412427e3bdfd76c using authorized actor, read back deletion and preserve a durable release receipt. Do not close #3251.",
+    "id": "release-0001-d-claim",
+    "description": "D documentary custody PR #3351 merged at 9988befb3087d00c29f48cc1fbf4d154f13d75c7. Verify live held branch gcl-pv-claims/ERDOS-PV-0001-D still points to 7ca928d43b142c951bd495c62412427e3bdfd76c; run scope-specific ci/erdos_pv_worker_lease.py release under original authenticated fyremael actor and exact evidence admission bcad3e1b206674fbe090d29496fab75876629241; confirm remote ref absent, then retain protected release receipt. No other claim or cohort issue changes.",
     "evidence_targets": [
-      "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3351",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3347",
       "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880",
-      "governance/erdos_proof_verification/coverage/cohorts/0001-0100.json",
-      "refs/heads/gcl-pv-claims/ERDOS-PV-0001-D"
+      "refs/heads/gcl-pv-claims/ERDOS-PV-0001-D",
+      "governance/erdos_proof_verification/coverage/cohorts/0001-0100.json"
     ]
   },
   "external_evidence": {
@@ -190,24 +161,30 @@
         "kind": "external_source",
         "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880",
         "status": "SINGLE_RETURNED_RESULT_1_NOT_YET_PROTECTED_D_ADMISSION"
+      },
+      {
+        "kind": "artifact",
+        "identity": "grandchallenge/MATH-PROGRAMME@9988befb3087d00c29f48cc1fbf4d154f13d75c7",
+        "status": "PROTECTED_EXACT_D_DOCUMENTARY_CUSTODY_ADMITTED_BOUNDED_COMPLETE"
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Protected admission of unique source-bound Erdős #1 Phase D documentary evidence in PR #3347; bind exact protected merge for subsequent custody.",
-    "result": "PASS_VERIFIED_BOUNDED_EVIDENCE_PROTECTED at bcad3e1b206674fbe090d29496fab75876629241; custody and claim release not yet protected or performed.",
+    "action": "Rebind operational freshness to the still-held exact task claim after protected evidence and custody mergers.",
+    "result": "PROTECTED_CUSTODY_ADMITTED; EXACT_CLAIM_HELD_PRE_RELEASE; prior PR #3330 historical and no longer an open verification target.",
     "evidence_refs": [
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3347",
-      "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3351",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880",
+      "refs/heads/gcl-pv-claims/ERDOS-PV-0001-D"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/ERDOS-PROOF-VERIFICATION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-15T11:53:05.709Z"
+    "observed_at": "2026-11-15T13:10:41.011Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -232,7 +209,7 @@
       "governance/erdos_compendium/EDITORIAL_ADMISSIONS.json",
       "governance/erdos_proof_verification/evidence/0001/D_EDITORIAL_PROTECTED_PUBLIC_PROJECTION_001.json"
     ],
-    "instructions": "Resume CP006: verified full source-bound Chromium accepted publication parity for Erdős #1 run 43652748837 and protected receipt. D unique RESULT/1 #3251 comment 6886589880. Evidence PR #3347 merged exact bcad3e1b206674fbe090d29496fab75876629241 after all checks PASS; D custody PR must set D PROTECTED_ADMITTED and ADMITTED_BOUNDED_COMPLETE with that exact admission ref. Then protected main+file+RESULT/1+claim SHA readback, authorized release of gcl-pv-claims/ERDOS-PV-0001-D at 7ca928d43b142c951bd495c62412427e3bdfd76c, verify deletion and retain release receipt. Do not close 100-item cohort #3251, no MATHCERT or full independent global theorem proof; dispatcher #3265 separate."
+    "instructions": "CP006 source-bound claim-release cursor: PR #3347 evidence protected bcad3e1b206674fbe090d29496fab75876629241; custody PR #3351 protected 9988befb3087d00c29f48cc1fbf4d154f13d75c7. D status PROTECTED_ADMITTED, #1 ADMITTED_BOUNDED_COMPLETE. Unique D RESULT/1 #3251 comment 6886589880; original claim owner fyremael ref refs/heads/gcl-pv-claims/ERDOS-PV-0001-D at SHA 7ca928d43b142c951bd495c62412427e3bdfd76c; cohort #3251 OPEN. Verify-live now intentionally binds exact held claim branch, not a historical merged PR. On protected checkpoint readback run `python3 ci/validate_bounded_operation_continuity.py --verify-live ...` and the source-locked release script from an isolated exact protected checkout; after release, confirm ref absent, record actual receipt, rebind checkpoint for next work. No MATHCERT or global proof certification."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
