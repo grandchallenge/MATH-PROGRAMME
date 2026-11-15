@@ -79,11 +79,57 @@ theorem integerProfiniteCechCocycle_hasPotential
   rw [← hCx x y hxy]
   exact hb x y hxy
 
-/-- Scalar cocycle primitives on the **canonical** Stonean
-Čech fiber product. Mathlib's explicit profinite pullback is
-the closed subtype of the ordinary pair product, so this is
-the exact topological relation used in the CM5 resolution.
-This is not yet a statement about G_S-valued condensed sections. -/
+/-- Explicit topological closed-related-pairs object for the
+canonical Stonean presentation. This object is genuinely profinite
+by closedness in a profinite product. -/
+noncomputable abbrev stoneanCechRelatedProfinite
+    (T : Profinite.{u}) : Profinite.{u} := by
+  let P := Stonean.toProfinite.obj T.presentation
+  let p := Profinite.presentation.π T
+  letI : CompactSpace (↥(profiniteCechRelatedSet P T p)) :=
+    isCompact_iff_compactSpace.mp
+      (profiniteCechRelatedSet_isClosed P T p).isCompact
+  exact Profinite.of (↥(profiniteCechRelatedSet P T p))
+
+/-- Actual morphism from the explicit related-pair subtype to the
+abstract categorical Stonean Čech pullback. It is constructed by the
+pullback universal property, with no fabricated definitional equality
+between the two models. -/
+noncomputable def stoneanCechExplicitToAbstract
+    (T : Profinite.{u}) :
+    stoneanCechRelatedProfinite T ⟶
+      stoneanPresentationCechPairs T := by
+  let P := Stonean.toProfinite.obj T.presentation
+  let p := Profinite.presentation.π T
+  let R := stoneanCechRelatedProfinite T
+  let f : R ⟶ P :=
+    CompHausLike.ofHom _
+      (⟨(fun z : R => z.val.1),
+        continuous_fst.comp continuous_subtype_val⟩ : C(R, P))
+  let g : R ⟶ P :=
+    CompHausLike.ofHom _
+      (⟨(fun z : R => z.val.2),
+        continuous_snd.comp continuous_subtype_val⟩ : C(R, P))
+  have hfg : f ≫ p = g ≫ p := by
+    ext z
+    exact z.property
+  exact pullback.lift f g hfg
+
+/-- The actual categorical Čech point corresponding to two
+source points with equal image in the base. -/
+noncomputable def stoneanCechPairOfRelated
+    (T : Profinite.{u})
+    (x y : Stonean.toProfinite.obj T.presentation)
+    (hxy : (Profinite.presentation.π T).hom.hom x =
+      (Profinite.presentation.π T).hom.hom y) :
+    stoneanPresentationCechPairs T :=
+  (stoneanCechExplicitToAbstract T).hom.hom ⟨(x, y), hxy⟩
+
+/-- Every scalar locally constant cocycle on the real categorical
+Stonean Čech pair has a locally constant primitive on its Stonean
+source. The cocycle is tested on the canonical pullback points arising
+from all fiber-related triples, with no assumption that the two
+pullback presentations are definitionally equal. -/
 theorem integerStoneanCechCocycle_hasPotential
     (T : Profinite.{u})
     (c : LocallyConstant (stoneanPresentationCechPairs T) ℤ)
@@ -92,19 +138,40 @@ theorem integerStoneanCechCocycle_hasPotential
         (Profinite.presentation.π T).hom.hom y)
       (hyz : (Profinite.presentation.π T).hom.hom y =
         (Profinite.presentation.π T).hom.hom z),
-      c ⟨(x, z), hxy.trans hyz⟩ =
-        c ⟨(x, y), hxy⟩ + c ⟨(y, z), hyz⟩) :
+      c (stoneanCechPairOfRelated T x z (hxy.trans hyz)) =
+        c (stoneanCechPairOfRelated T x y hxy) +
+          c (stoneanCechPairOfRelated T y z hyz)) :
     ∃ b : LocallyConstant (Stonean.toProfinite.obj T.presentation) ℤ,
       ∀ (x y : Stonean.toProfinite.obj T.presentation)
         (hxy : (Profinite.presentation.π T).hom.hom x =
           (Profinite.presentation.π T).hom.hom y),
-        c ⟨(x, y), hxy⟩ = b x - b y := by
-  exact integerProfiniteCechCocycle_hasPotential
-    (Stonean.toProfinite.obj T.presentation) T
-    (Profinite.presentation.π T) c hc
+        c (stoneanCechPairOfRelated T x y hxy) = b x - b y := by
+  let c' : LocallyConstant
+      (↥(profiniteCechRelatedSet
+        (Stonean.toProfinite.obj T.presentation) T
+        (Profinite.presentation.π T))) ℤ :=
+    c.comap (stoneanCechExplicitToAbstract T).hom.hom
+  have hc' : ∀ (x y z : Stonean.toProfinite.obj T.presentation)
+      (hxy : (Profinite.presentation.π T).hom.hom x =
+        (Profinite.presentation.π T).hom.hom y)
+      (hyz : (Profinite.presentation.π T).hom.hom y =
+        (Profinite.presentation.π T).hom.hom z),
+      c' ⟨(x, z), hxy.trans hyz⟩ =
+        c' ⟨(x, y), hxy⟩ + c' ⟨(y, z), hyz⟩ := by
+    intro x y z hxy hyz
+    exact hc x y z hxy hyz
+  obtain ⟨b, hb⟩ :=
+    integerProfiniteCechCocycle_hasPotential
+      (Stonean.toProfinite.obj T.presentation) T
+      (Profinite.presentation.π T) c' hc'
+  refine ⟨b, ?_⟩
+  intro x y hxy
+  exact hb x y hxy
 
 #print axioms profiniteCechRelatedSet_isClosed
 #print axioms integerProfiniteCechCocycle_hasPotential
+#print axioms stoneanCechExplicitToAbstract
+#print axioms stoneanCechPairOfRelated
 #print axioms integerStoneanCechCocycle_hasPotential
 
 end CMDG.CondensedCM5R0
