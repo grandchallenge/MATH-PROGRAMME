@@ -4,7 +4,7 @@
 
 ## 1. Exact identity and original source premises
 
-Source: [DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md](DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md), corrected candidate PR3352 head 8de361b1222d650cfd8b278c204f27b94657be6c, Git blob a310c7b74db07dde683fb722fd16aa3036aa2110. The initial head 9c04d9c3afe705dac989277d43b3513581fd9336 was superseded by a **substantive scope clarification**, then head eb57cf5f3a70e6f6daf987d0eb3e9616e939f4f7 by a Markdown-only correction: the graph-regular rapid no-go assumes the identity partition and excludes new nonidentity partition source-jet inclusions. A critical review must use only the corrected head, not stale checks or the broad initial wording.
+Source: [DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md](DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md), corrected candidate PR3352 head 768dfe86f262c6ae73dd57951201d1cf466d90b3, Git blob 7985fec06cb3134110b16afa4aa4fc5b71444341. The initial head 9c04d9c3afe705dac989277d43b3513581fd9336 was superseded by a **substantive scope clarification**, then head eb57cf5f3a70e6f6daf987d0eb3e9616e939f4f7 by a Markdown-only correction: the graph-regular rapid no-go assumes the identity partition and excludes new nonidentity partition source-jet inclusions. A critical review must use only the corrected head, not stale checks or the broad initial wording.
 
 Protected inputs: scalar 105 blob a8ce66ff0edec33e2aff299550fca2089d671033, complete 108 blob 587c15fd6e24f6e6b14de574ff878221cdbd5cb6, parameter rows126 blob 5b05c6147d237ca1d22e4dcbce9262b0f038c163, joint source165 blob 24b82716d41d309438fcb7a97bbacab0b724afde, one-bridge174 blob 7c470ba092d917dc434a8883e5afaff7bce1dfc6, finite-width180 blob fac58764ac29e518ac522e0451a9c9829e86720b and polynomial183 blob e1d6473ac075b0e17eb354603b25b94d1208be19. Primary183 is protected via PR3348 merge 2af279aff16578031a8cd41aeb05b6e875a265e9; CP193 is protected via PR3349 merge 030344a264a16e8ab465c997981cfb99a281c521. Review184–185 is separately in PR3350 and must not be described as protected until verified.
 
@@ -28,7 +28,7 @@ $$
 
 This is a **two-edge** calculation on original physical vertices, not a formal external absolute Gaussian anchor. Original105 (105.4 and its finite edge closure), original108 (108.6–108.7), fixed scalar indices and legal proper pushforward admit each finite relative Gaussian edge with fixed cutoffs and an original permitted R1 coefficient. Multiplication by two scalar functions smooth for each positive regulator is not multiplication of two singular source counterterms. The complete projective coefficient stage contains the simple tensor; larger arbitrary completed tensors are not assumed to obey an unverified factorization.
 
-For a smooth-through-zero scalar coefficient depending genuinely on the retained output $z$, the transformed multiplier **cannot** be moved out of the $v$ integral to form a $z$-independent compact input. Primary186 correctly restricts its exact terminal formula to the coefficient that separates from $z$ and proves only a weak-limit statement for the genuinely retained-$z$ smooth class. This distinction is essential.
+For a smooth-through-zero scalar coefficient depending genuinely on the retained output $z$, the transformed multiplier **cannot** be moved out of the $v$ integral to form a independent of $z$ compact input. Primary186 correctly restricts its exact terminal formula to the coefficient that separates from $z$ and proves only a weak-limit statement for the genuinely retained-coordinate $z$ smooth class. This distinction is essential.
 
 **V187 PASS** on normalized identity, determinant, actual source grammar for finite relative Gaussian edges and the terminal/separable versus retained-output nonterminal distinction.
 
@@ -42,7 +42,7 @@ T(x,y,h)=g(x)\psi(y-h)
 \tag{187.3}
 $$
 
-At every point of the conormal support, $x=(y+h)/2$ and $y\ne h$; hence $x\ne y$, $x\ne h$ and $y\ne h$. No original three-vertex partition diagonal intersects that nonzero conormal support. With a smooth retained-$z$ cutoff, its conormal has coordinate pattern
+At every point of the conormal support, $x=(y+h)/2$ and $y\ne h$; hence $x\ne y$, $x\ne h$ and $y\ne h$. No original three-vertex partition diagonal intersects that nonzero conormal support. With a smooth retained-coordinate $z$ cutoff, its conormal has coordinate pattern
 
 $$
 (\xi_x,\xi_z,\xi_y,\xi_h)
@@ -58,7 +58,7 @@ The separated support $\delta<|v|<2\delta$ implies $C_\epsilon>0$ for every posi
 
 ## 4. V187/A187 — separate graph-regular no-go and its true boundary
 
-Theorem186.2 assumes an identity-partition two-bridge source, finite fixed widths, scalar multipliers smooth through regulator zero, and compact coefficients extending through zero in **one fixed permitted R1 normal graph stage**. Under those hypotheses the normalized pair of Gaussian edges is a two-direction approximate identity. The original R1 cone excludes the normal conormal of $y=h$ and the triple partition; thus the pullback $T_0(x,z,z)$ is well-defined and excludes the conormal of $x=z$ by 108 Section4. One can first restrict in the $v=y-h$ direction, then approximate identity in $u$; a smooth retained-$z$ coefficient yields its value on the same diagonal. The output's weak limit is the permitted R1 distribution
+Theorem186.2 assumes an identity-partition two-bridge source, finite fixed widths, scalar multipliers smooth through regulator zero, and compact coefficients extending through zero in **one fixed permitted R1 normal graph stage**. Under those hypotheses the normalized pair of Gaussian edges is a two-direction approximate identity. The original R1 cone excludes the normal conormal of $y=h$ and the triple partition; thus the pullback $T_0(x,z,z)$ is well-defined and excludes the conormal of $x=z$ by 108 Section4. One can first restrict in the $v=y-h$ direction, then approximate identity in $u$; a smooth retained-coordinate $z$ coefficient yields its value on the same diagonal. The output's weak limit is the permitted R1 distribution
 
 $$
 \rho(z)m_0(x,z,z,z)T_0(x,z,z).
