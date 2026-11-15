@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP205",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP206",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "PR3357 canonical readback and continuation admission",
+  "phase": "PR3357 nativequeue; finalreadback and tracker reconciliation",
   "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "10ce83eecc6643ae22ef75a78eb83404733be2be",
@@ -43,6 +43,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "status": "Five requiredcontexts/currentrules/reviews/materialclosure/livecheckpointPASS; finaldocumentaryeditorialCLEAR. Fiveblobnative readbackpending.",
+        "identity": "PR3357 nativequeue2026-11-15T13:08:00Z position1",
+        "kind": "artifact"
+      },
       {
         "identity": "PR3357 exactheadf3cb8b410974aa132e4c62b3b4a2b1af3254e8f6",
         "status": "FivefiledocumentaryeditorialCLEAR; sourceMarkdown/continuity/diffPASS. Nativechecks/readbackpending.",
@@ -903,7 +908,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-15T13:05:47.0068023Z"
+    "observed_at": "2026-11-15T13:08:14.1730863Z"
   },
   "resume": {
     "fresh_session_safe": true,
