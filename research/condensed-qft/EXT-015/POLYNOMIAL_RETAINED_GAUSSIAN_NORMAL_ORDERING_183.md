@@ -16,7 +16,7 @@ A_\epsilon(x,z)=f(x)\rho(z)\kappa_\epsilon(z),
 \tag{183.1}
 $$
 
-The unresolved mechanism after180 is **essential** retained-coordinate scalar dependence and general nonidentity partition inclusions. The present proof excludes a nontrivial part of the former: finite polynomial retained-$z$ factors applied to each terminal Gaussian convolution, including finite Hermite derivatives. No claim of a legal general source inverse, or of effective R1 cone preservation under arbitrary partition inclusion, is made.
+The unresolved mechanism after180 is **essential** retained-coordinate scalar dependence and general nonidentity partition inclusions. The present proof excludes a nontrivial part of the former: finite polynomial retained-coordinate $z$ factors applied to each terminal Gaussian convolution, including finite Hermite derivatives. No claim of a legal general source inverse, or of effective R1 cone preservation under arbitrary partition inclusion, is made.
 
 ## 2. Exact Gaussian intertwining
 
@@ -116,7 +116,7 @@ Consequently exact representation is impossible if there is **no** width one. It
 
 **Proof.** Lemma183.1 converts each term of (183.7) into one Gaussian convolution with the same width and a compact distributional input. Group equal widths to get (183.9). On an interval where $\rho$ is nonzero, subtract the target $\kappa_\epsilon*f(x)\delta_0(y)$, viewed as a width-one term. Each Gaussian convolution of a compact distribution is entire in $z$, so the local equality becomes a global equality. Apply protected Theorem180.2, whose finite-width independence requires **only compact effective inputs**, not R1 cones. It forces all non-target blocks to vanish and the unit-width block to be (183.10). If width one is absent this contradicts $f\ne0$. For width one, the required $f(x)\delta_0(y)$ has the forbidden nonzero $(\tau,-\tau)$ conormal at $(x,y)=(0,0)$, whereas finite polynomial normal ordering does not introduce such a wavefront direction into an effective R1-compatible block. $\square$
 
-The result extends 180 beyond a pure terminal Hermite family to arbitrary **finite polynomial retained-$z$ scalar decorations**. It does not treat a genuinely nonpolynomial retained scalar, noncompact upstream support, infinite polynomial degree, arbitrary rapid equivalence or a partition map that creates a target-width diagonal conormal.
+The result extends 180 beyond a pure terminal Hermite family to arbitrary **finite polynomial retained-coordinate $z$ scalar decorations**. It does not treat a genuinely nonpolynomial retained scalar, noncompact upstream support, infinite polynomial degree, arbitrary rapid equivalence or a partition map that creates a target-width diagonal conormal.
 
 ## 4. Hostile nonpolynomial control: multiplying Gaussians changes the width
 
@@ -137,7 +137,7 @@ The operator formula itself may be iterated for a polynomial of fixed degree eve
 
 | Question | 183 status |
 | --- | --- |
-| Fixed finite polynomial retained-$z$ multipliers after a terminal Gaussian edge | **EXACTLY NORMAL-ORDERED** into compact effective inputs |
+| Fixed finite polynomial retained-coordinate $z$ multipliers after a terminal Gaussian edge | **EXACTLY NORMAL-ORDERED** into compact effective inputs |
 | R1 cone under the finite polynomial normal-ordering operator | **PRESERVED**, if the effective input cone was already permitted |
 | Any finite set of such polynomial terminal histories without width one equals $A$ | **EXCLUDED for exact equality** |
 | Target-width polynomial terminal history with permitted effective R1 cone equals $A$ | **EXCLUDED for exact equality** |
