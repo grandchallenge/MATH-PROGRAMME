@@ -5,6 +5,9 @@ on:
       - ci/zensical_parity_probe.py
       - .github/workflows/zensical-parity.yml
   workflow_dispatch:
+concurrency:
+  group: zensical-parity-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
