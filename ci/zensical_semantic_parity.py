@@ -155,48 +155,75 @@ def governed_asset_census(baseline:Path,candidate:Path):
             'missing_examples':missing[:20],'changed_examples':changed[:20],
             'byte_identical_on_shared_source_assets':not missing and not changed}
 
+def canonical_search_route(location:str) -> str | None:
+    """Normalize page URL, dropping heading fragments and site mount prefix."""
+    from urllib.parse import urlsplit, unquote
+    value=urlsplit(location)
+    if value.scheme and value.scheme not in ('http','https'):
+        return None
+    path=unquote(value.path).lstrip('/')
+    if path.startswith('MATH-PROGRAMME/'):
+        path=path[len('MATH-PROGRAMME/'):]
+    if not path or path=='/':return 'index.html'
+    if path.endswith('/'):return path+'index.html'
+    if path.endswith('.html'):return path
+    if '.' not in path.rsplit('/',1)[-1]:return path+'/index.html'
+    return None
+
 def search_census(root:Path):
-    """Report actual built search-index form; never invent search compatibility."""
-    candidates=sorted(p for p in root.rglob('*') if p.is_file()
-                      and 'search' in p.parts and p.name.endswith('.json'))
+    """Parse both pinned engines' independent, actual search artifact schemas."""
+    import json
     records=[]
-    for p in candidates:
-        record={'path':p.relative_to(root).as_posix(), 'bytes':p.stat().st_size,
+    for name in ('search/search_index.json','search.json'):
+        p=root/name
+        if not p.is_file():continue
+        record={'path':name,'bytes':p.stat().st_size,
                 'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
         try:
-            import json
-            j=json.loads(p.read_text(encoding='utf-8'))
-            if isinstance(j,dict) and isinstance(j.get('docs'),list):
-                docs=j['docs']
-                record['indexed_documents']=len(docs)
-                record['indexed_title_count']=sum(bool(x.get('title')) for x in docs if isinstance(x,dict))
-                record['locations']=sorted({x.get('location') for x in docs
-                                           if isinstance(x,dict) and isinstance(x.get('location'),str)})
-                record['index_schema']='MKDOCS_SEARCH_DOCS'
+            doc=json.loads(p.read_text(encoding='utf-8'))
+            if isinstance(doc,dict) and isinstance(doc.get('docs'),list):
+                items=doc['docs'];record['index_schema']='MKDOCS_SEARCH_DOCS'
+            elif isinstance(doc,dict) and isinstance(doc.get('items'),list):
+                items=doc['items'];record['index_schema']='ZEN_SEARCH_ITEMS'
             else:
-                record['index_schema']='OTHER_JSON'
+                items=[];record['index_schema']='UNKNOWN_JSON_SCHEMA'
+            record['indexed_documents']=len(items)
+            record['indexed_title_count']=sum(bool(x.get('title')) for x in items if isinstance(x,dict))
+            locations=[x.get('location') for x in items if isinstance(x,dict)
+                       and isinstance(x.get('location'),str)]
+            record['locations']=sorted(set(locations))
+            record['page_routes']=sorted({q for v in locations if (q:=canonical_search_route(v))})
         except (ValueError,OSError,UnicodeError):
             record['index_schema']='UNREADABLE_JSON'
         records.append(record)
     return records
 
-def search_parity(baseline:Path,candidate:Path):
+def search_parity(baseline:Path,candidate:Path,html_routes:set[str]|None=None):
     before=search_census(baseline);after=search_census(candidate)
-    bypath_before={x['path']:x for x in before}
-    bypath_after={x['path']:x for x in after}
-    missing=sorted(bypath_before.keys()-bypath_after.keys())
-    route_losses=[]
-    for path in sorted(bypath_before.keys()&bypath_after.keys()):
-        a,b=bypath_before[path],bypath_after[path]
-        if a.get('index_schema')=='MKDOCS_SEARCH_DOCS' and b.get('index_schema')=='MKDOCS_SEARCH_DOCS':
-            route_losses.extend(sorted(set(a['locations'])-set(b['locations'])))
-    return {'baseline_search_files':len(before),'candidate_search_files':len(after),
-            'baseline_indexes':[{k:v for k,v in x.items() if k!='locations'} for x in before],
-            'candidate_indexes':[{k:v for k,v in x.items() if k!='locations'} for x in after],
-            'missing_baseline_search_files':missing,
-            'missing_indexed_locations_count':len(route_losses),
-            'missing_indexed_locations_examples':route_losses[:20],
-            'search_parity_proven':bool(before) and bool(after) and not missing and not route_losses
-                and all(x.get('index_schema')=='MKDOCS_SEARCH_DOCS' for x in before+after),
-            'limitations':['Matching search document locations does not prove search ranking, tokenization or browser interactions.',
-                           'No search index file or an unknown schema is inconclusive, never proof of parity.']}
+    b=next((x for x in before if x.get('index_schema')=='MKDOCS_SEARCH_DOCS'),None)
+    c=next((x for x in after if x.get('index_schema')=='ZEN_SEARCH_ITEMS'),None)
+    known=set(html_routes) if html_routes is not None else None
+    baseline_routes=set(b.get('page_routes',[])) if b else set()
+    candidate_routes=set(c.get('page_routes',[])) if c else set()
+    if known is not None:
+        baseline_routes &= known
+        candidate_routes &= known
+    missing=sorted(baseline_routes-candidate_routes)
+    extra=sorted(candidate_routes-baseline_routes)
+    result={
+        'baseline_search_files':len(before),'candidate_search_files':len(after),
+        'baseline_indexes':[{k:v for k,v in x.items() if k not in ('locations','page_routes')} for x in before],
+        'candidate_indexes':[{k:v for k,v in x.items() if k not in ('locations','page_routes')} for x in after],
+        'baseline_indexed_page_routes':len(baseline_routes),
+        'candidate_indexed_page_routes':len(candidate_routes),
+        'missing_indexed_locations_count':len(missing),
+        'missing_indexed_locations_examples':missing[:30],
+        'candidate_only_indexed_routes_count':len(extra),
+        'candidate_only_indexed_route_examples':extra[:15],
+        'search_parity_proven':b is not None and c is not None
+            and bool(baseline_routes) and not missing,
+        'cross_engine_index_schema_different':b is not None and c is not None,
+        'limitations':['Page search inclusion parity does not establish matching search rank, tokenization, highlight, or browser behavior.',
+                       'Engines intentionally use different index formats and may segment pages into different numbers of records.',
+                       'Unknown or unreadable indexes do not constitute search parity.']}
+    return result

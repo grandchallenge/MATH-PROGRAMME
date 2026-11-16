@@ -96,7 +96,7 @@ def verify() -> None:
             unexpanded.append(path)
     semantic = audit_rendered_content(BASELINE, SITE, baseline_routes & candidate_routes)
     assets = governed_asset_census(BASELINE,SITE)
-    search = search_parity(BASELINE,SITE)
+    search = search_parity(BASELINE,SITE,baseline_routes & candidate_routes)
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report = {
         "record_type": "GCL_ZENSICAL_RENDERER_PROBE/2",
@@ -120,8 +120,7 @@ def verify() -> None:
         "critical_parity": not missing and not extra and not missing_sentinels and not unexpanded
             and not semantic["critical_issue_count"]
             and assets["byte_identical_on_shared_source_assets"]
-            and not search["missing_baseline_search_files"]
-            and not search["missing_indexed_locations_count"],
+            and search["search_parity_proven"],
         "production_switch_authorized": False,
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
