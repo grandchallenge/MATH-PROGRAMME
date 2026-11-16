@@ -67,6 +67,59 @@ theorem gsLocallyConstantFinsupp_coordinatesFinite
   change f x i = (0 : R.{u})
   exact hs x i hi
 
+/-- Package the coordinate sections into an *actual* finitely supported
+family. The finite-support witness comes from compactness and is not
+assumed from the start. -/
+noncomputable def gsLocallyConstantFinsupp_coordinateFamily
+    (X : CompHaus.{u}) (I : Type (u + 1))
+    (f : LocallyConstant X (I →₀ R.{u})) :
+    I →₀ LocallyConstant X R.{u} := by
+  classical
+  obtain ⟨s, hs⟩ := gsLocallyConstantFinsupp_coordinatesFinite X I f
+  exact Finsupp.onFinset s
+    (fun i => LocallyConstant.map (fun a : I →₀ R.{u} => a i) f)
+    (by
+      intro i hne
+      by_contra hi
+      exact hne (hs i hi))
+
+@[simp]
+theorem gsLocallyConstantFinsupp_coordinateFamily_apply
+    (X : CompHaus.{u}) (I : Type (u + 1))
+    (f : LocallyConstant X (I →₀ R.{u}))
+    (i : I) (x : X) :
+    gsLocallyConstantFinsupp_coordinateFamily X I f i x = f x i := by
+  simp [gsLocallyConstantFinsupp_coordinateFamily, LocallyConstant.map_apply]
+
+/-- The coordinate extraction is genuinely R-linear, for arbitrary
+infinite basis index sets. -/
+noncomputable def gsLocallyConstantFinsupp_coordinateLinear
+    (X : CompHaus.{u}) (I : Type (u + 1)) :
+    LocallyConstant X (I →₀ R.{u}) →ₗ[R.{u}]
+      (I →₀ LocallyConstant X R.{u}) where
+  toFun := gsLocallyConstantFinsupp_coordinateFamily X I
+  map_add' := by
+    intro f g
+    ext i x
+    simp only [gsLocallyConstantFinsupp_coordinateFamily_apply]
+    rfl
+  map_smul' := by
+    intro a f
+    ext i x
+    simp only [gsLocallyConstantFinsupp_coordinateFamily_apply]
+    rfl
+
+/-- No information is lost when passing to all compact-test coordinate
+sections of the algebraic discrete sum. -/
+theorem gsLocallyConstantFinsupp_coordinateLinear_injective
+    (X : CompHaus.{u}) (I : Type (u + 1)) :
+    Function.Injective (gsLocallyConstantFinsupp_coordinateLinear X I) := by
+  intro f g h
+  ext x i
+  have hi := congrArg (fun k : I →₀ LocallyConstant X R.{u} => k i x) h
+  simpa only [gsLocallyConstantFinsupp_coordinateLinear,
+    gsLocallyConstantFinsupp_coordinateFamily_apply] using hi
+
 /-- The coefficient sheaf's actual enriched rank-one internal Hom. -/
 noncomputable def gsRankOneInternalHomCondensed :
     CondensedMod.{u} R.{u} :=
@@ -91,11 +144,17 @@ noncomputable def gsRankOneInternalHomCondensedIso :
 
 #check gsLocallyConstantFinsupp_uniformSupport
 #check gsLocallyConstantFinsupp_coordinatesFinite
+#check gsLocallyConstantFinsupp_coordinateFamily
+#check gsLocallyConstantFinsupp_coordinateLinear
+#check gsLocallyConstantFinsupp_coordinateLinear_injective
 #check gsRankOneInternalHomCondensed
 #check gsRankOneInternalHomCondensedIso
 
 #print axioms gsLocallyConstantFinsupp_uniformSupport
 #print axioms gsLocallyConstantFinsupp_coordinatesFinite
+#print axioms gsLocallyConstantFinsupp_coordinateFamily
+#print axioms gsLocallyConstantFinsupp_coordinateLinear
+#print axioms gsLocallyConstantFinsupp_coordinateLinear_injective
 #print axioms gsRankOneInternalHomCondensed
 #print axioms gsRankOneInternalHomCondensedIso
 
