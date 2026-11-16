@@ -36,6 +36,7 @@ class VerificationContractTests(unittest.TestCase):
         bad = copy.deepcopy(self.good)
         bad['work_status']='IN_PROGRESS'
         bad['stage_results']['REPLAY_EXECUTION']='PASS'
+        bad['stage_results']['STATEMENT_EQUIVALENCE']='PENDING'  # explicit hostile input
         bad['proof_receipts']=['evidence/foo/replay.json']
         bad['toolchain_pins']={'lean':'4.0'}
         with self.assertRaises(ValueError): mod.validate_manifest(bad,self.schema)
