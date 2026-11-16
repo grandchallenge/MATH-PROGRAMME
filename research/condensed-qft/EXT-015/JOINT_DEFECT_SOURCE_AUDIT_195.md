@@ -123,18 +123,60 @@ $$
 
 Every fixed derivative of $F$ is bounded on a compact front chart by the preceding Fourier integral. No nonsmooth $|R_1|$ coefficient is inserted into the scalar stage. The logarithm is essential at the critical order $-2$ in dimension2 and is allowed by105.5.
 
-We check the strict regulator face uniformly up to all angular directions. On a fixed annulus in $(r,s)$, local heat Taylor expansion gives
+We check the strict regulator face using two actual heat convolutions before taking any Taylor polynomial. Fix an output annulus $A=\{a_0\le |(r,s)|\le a_1\}$, with a slightly larger compact annulus for derivative estimates. Choose one fixed smooth point cutoff $\vartheta_0(r,t)$ equal to1 near the input origin and supported in $|(r,t)|<\delta_0$, where $\delta_0<a_0/10$. Define
 
 $$
-H_\epsilon(r,s)
-\sim\sum_{j\ge0}\frac{\epsilon^{2j}}{2^j j!}
+H_{\rm sm}=(1-\vartheta_0)H,\qquad
+S_\epsilon=\kappa_\epsilon*_tH_{\rm sm},\qquad
+Z_\epsilon=\kappa_\epsilon*_t(\vartheta_0H),\qquad
+H_\epsilon=S_\epsilon+Z_\epsilon.
+\tag{195.12a}
+$$
+
+The last equality is an exact equality of the two actual partial heat convolutions. The input $H_{\rm sm}$ is globally smooth and has polynomial growth in $t$, with every derivative, on each compact $r$ set. In particular $S_\epsilon$ is an actual smooth heat family through regulator zero. It is not its finite Taylor polynomial. With $K(Y)=(2\pi)^{-1/2}e^{-Y^2/2}$ its mixed derivatives are given by
+
+$$
+\partial_r^u\partial_s^v\partial_\epsilon^kS_\epsilon(r,s)
+=\int_{\mathbb R}(-Y)^kK(Y)
+\partial_r^u\partial_t^{v+k}H_{\rm sm}(r,s-\epsilon Y)\,dY.
+\tag{195.12b}
+$$
+
+Polynomial growth and Gaussian moments justify every derivative and its continuous extension to $\epsilon=0$. The same argument works on an interval of signed $\epsilon$; the family is even because $K$ is even. At zero its even derivatives are $(2j)!\,\partial_s^{2j}H_{\rm sm}/(2^j j!)$ and its odd derivatives vanish. On a neighborhood of $A$, $H_{\rm sm}=H$. Thus the actual Taylor polynomial of $S_\epsilon$ there is
+
+$$
+T_N(\epsilon,r,s)=\sum_{j=0}^N\frac{\epsilon^{2j}}{2^j j!}
 \partial_s^{2j}H(r,s).
 \tag{195.12}
 $$
 
-For completeness, the nonlocal singular point does not invalidate its all-derivative remainder. Cover the annulus by patches with either $|r|$ bounded below or $|s|$ bounded below. On the first patches the input $H(r,t)$ is smooth near every potentially relevant $t$, and ordinary local Gaussian Taylor estimates apply. On a patch of the second type, separate a small fixed neighborhood of the input point $(r,t)=0$ from the local neighborhood of $t=s$. The compact point-singular part has $|s-t|\ge\delta>0$. All derivatives of its Gaussian multiplier are bounded by a fixed inverse power times $e^{-\delta^2/(4\epsilon^2)}$. A compact negative-Sobolev norm of this point-singular distribution and the proper partial projection estimate therefore make that contribution rapid in one fixed negative order for each derivative. Smooth remote tails are estimated directly with polynomial growth and the same Gaussian separation.
+The separated point contribution $Z_\epsilon$ is controlled independently. Where $|r|>2\delta_0$ it vanishes, since partial convolution does not change $r$. On the rest of $A$, $|s|$ is bounded below by a constant greater than $a_0/2$, whereas its input support has $|t|<\delta_0$. Thus $|s-t|\ge\delta>0$ uniformly wherever this contribution can be nonzero on $A$. After fixed annular localization, every mixed derivative of its Gaussian multiplier is bounded by a fixed inverse power of $\epsilon$ times $e^{-\delta^2/(4\epsilon^2)}$. The compact distribution $\vartheta_0H$ has a finite negative Sobolev order. Smooth multiplier estimates and the compact partial pushforward estimate therefore give, for each fixed regulator derivative $k$, one finite order $t_k$ such that
 
-This rapid negative-order statement can be strengthened to every requested positive norm here. The whole $H_\epsilon$ has polynomial positive-Sobolev bounds by the conic Fourier calculation above; the local smooth heat Taylor part has those bounds too. Their difference is therefore polynomially moderate in every positive Sobolev order. Interpolation between its fixed-order rapid norm and any sufficiently high moderate norm makes it rapid in each requested $C^m$ norm, after Sobolev embedding. This is the elementary saturation estimate of108.1, applied to actual norm estimates, without assuming scalar-stage membership. It applies also after any fixed regulator derivative. Thus the remainder in195.12, after truncation through $j=N$, is $O(\epsilon^{2N+2})$ in every fixed annular $C^m$ and b-derivative seminorm. This argument handles in particular the angular directions $r=0,s\ne0$, where an unjustified pointwise Taylor assertion would be insufficient.
+$$
+\|\partial_\epsilon^kZ_\epsilon\|_{H^{-t_k}(A)}
+\le C_{k,L}\epsilon^L\quad\text{for every }L.
+\tag{195.12c}
+$$
+
+The order $t_k$ does not depend on $L$. The statement includes finite physical derivatives after their corresponding fixed order losses. Annular cutoff derivatives obey the same separation estimate. The compact-input and output cutoffs in this estimate are fixed.
+
+For this same actual $Z_\epsilon$, polynomial positive-Sobolev bounds follow by subtracting the actual $S_\epsilon$ from the whole $H_\epsilon$ in195.12a. The whole family has those bounds by the conic Fourier calculation above, and195.12b bounds every positive norm of $S_\epsilon$ through zero on the annulus. The argument applies to each fixed regulator derivative. Interpolation of195.12c with a sufficiently high moderate positive norm, followed by Sobolev embedding, yields
+
+$$
+\|\partial_\epsilon^kZ_\epsilon\|_{C^m(A)}
+\le C_{k,m,L}\epsilon^L\quad\text{for every }L.
+\tag{195.12d}
+$$
+
+Only this separated point contribution is asserted rapid. The different object $S_\epsilon-T_N$ has a finite Taylor remainder. Taylor's theorem applied to195.12b and the even extension gives the combined uniform estimate
+
+$$
+\|\partial_\epsilon^k(H_\epsilon-T_N)\|_{C^m(A)}
+\le C_{N,k,m}\epsilon^{2N+2-k}.
+\tag{195.12e}
+$$
+
+For $k\le2N+2$ this is the differentiated even Taylor remainder plus195.12d. For $k>2N+2$ the right side is a weaker bound, obtained from bounded higher derivatives of $S_\epsilon$ and rapidness of $Z_\epsilon$. Deeper truncation supplies any requested finite ordinary derivative. Every physical derivative is covered by increasing $m$ in this same estimate. Finite products of $\epsilon\partial_\epsilon$ preserve its undifferentiated weight $\epsilon^{2N+2}$. The constants are uniform over the complete compact angular annulus, including $r=0,s\ne0$, and over bounded fixed-support smooth decorations. This supplies a smooth strict-face extension with all the differentiated asymptotic seminorms, rather than only pointwise coefficients.
 
 Put $a=|(r,s)|$, $\omega=(r,s)/a$ and $\sigma=\epsilon/a$ at the front/strict corner. Equations195.9 and195.12 give
 
@@ -147,9 +189,63 @@ H_\sigma(\omega)\sim
 \tag{195.13}
 $$
 
-The preceding annular bounds are uniform in $\omega$, with every angular derivative and $\sigma\partial_\sigma$ derivative. The radial b-derivatives are controlled by195.9. This proves the compatible full corner remainders, and agrees exactly with195.11 on the overlapping front chart. In particular the expansion is a statement about the actual heat-smoothed function, including its flat tails, rather than a prescribed formal coefficient array.
+Write $\mathcal R_N(\sigma,\omega)=H_\sigma(\omega)-T_N(\sigma,\omega)$ on the unit angular annulus. The corrected estimate195.12e states explicitly that, for all fixed $k,\ell,\beta$,
 
-On three vertices the remaining partial-collision centers are $r=0$, $s=0$ and $r=s$, all over $\epsilon=0$. Away from the full origin,195.12 has smooth physical coefficients. At their intersections with the full front,195.13 has smooth angular coefficients, including those same directions. The subsequent partial-collision blowups therefore pull back smooth coefficients and the already controlled power/logarithmic remainders; they introduce only nonnegative integer Taylor shifts. There is no additional unproved affine or absolute-anchor collision center. The common center $h$ is a smooth passive variable.
+$$
+\sup_\omega\left|
+\partial_\omega^\beta\partial_\sigma^k
+(\sigma\partial_\sigma)^\ell\mathcal R_N
+\right|
+\le C_{N,k,\ell,\beta}\sigma^{2N+2-k}.
+\tag{195.13a}
+$$
+
+The $c_0\log a$ term in195.13 is kept separately. The remainder and its heat coefficients are independent of $a$, so finite products of $a\partial_a$ add no loss there. Applied to the logarithm, they give $c_0$ or zero after the first derivative. At fixed physical $(r,s)$, ordinary regulator derivatives have their actual factors:
+
+$$
+\partial_\epsilon^k=a^{-k}\partial_\sigma^k,\qquad
+\left|\partial_\epsilon^k\mathcal R_N(\epsilon/a,\omega)\right|
+\le C a^{-k}\sigma^{2N+2-k}.
+\tag{195.13b}
+$$
+
+They are not assigned unchanged scalar indices. Likewise an ordinary physical derivative at fixed $\epsilon$ is a finite $a^{-1}$ weighted combination of the controlled derivatives. For example, with $V_r,V_s$ the smooth tangential projections of the coordinate vectors onto the angular circle,
+
+$$
+\partial_r=a^{-1}\bigl[\omega_r(a\partial_a-\sigma\partial_\sigma)+V_r\bigr],\qquad
+\partial_s=a^{-1}\bigl[\omega_s(a\partial_a-\sigma\partial_\sigma)+V_s\bigr].
+\tag{195.13c}
+$$
+
+Repeated ordinary derivatives therefore introduce only their finite integer boundary-weight shifts. Smooth center variables remain passive. Smooth physical decorations have their ordinary Taylor expansions in $a$ with smooth angular and center coefficients. A remainder after order $M$ is bounded by $a^{M+1}$ under all the displayed b- and angular derivatives; multiplication by the retained logarithm gives at most $a^{M+1}(1+|\log a|)$. The already smooth heat term of $G$ in195.10 has a smooth pullback in the same charts. These observations include cutoff and center derivatives in the full corner bounds. They agree exactly with195.11 on the overlapping front chart, so the expansion concerns the actual heat-smoothed function and its flat tails.
+
+We now carry these estimates through each remaining three-vertex partial face. The remaining relative pair-collision lines are $r=0$, $s=0$ and $r=s$ over $\epsilon=0$. Their angular directions are separated after the full-origin blowup. Near one such direction choose a smooth angular coordinate $v$ vanishing on that line. The additional center is $\{\sigma=v=0\}$, with $a$ and the physical center $h$ as passive variables. The two types of projective chart and the relevant vector fields are
+
+$$
+\begin{array}{lll}
+\sigma=\tau,\quad v=\tau V:
+&\tau\partial_\tau=\sigma\partial_\sigma+v\partial_v,
+&\partial_V=\sigma\partial_v,\\
+v=\pm\tau,\quad\sigma=\tau S:
+&\tau\partial_\tau=\sigma\partial_\sigma+v\partial_v,
+&S\partial_S=\sigma\partial_\sigma.
+\end{array}
+\tag{195.13d}
+$$
+
+All coefficients are bounded on compact projective charts; $a\partial_a$ and smooth center derivatives persist. In the first chart195.13a gives $\mathcal R_N=O(\tau^L)$, where $L=2N+2$, under every product of these new b-vector fields and $\partial_V$. Its coefficients $\sigma^{2j}c_j(v)$ become $\tau^{2j}c_j(\tau V)$, whose ordinary Taylor expansions in $\tau$ have smooth $V$ coefficients and uniformly bounded differentiated remainders. In the second chart the same remainder is $O(\tau^LS^L)$ under every product of $\tau\partial_\tau$ and $S\partial_S$. More precisely, an ordinary $S$ derivative of order $k$ satisfies the bound $O(\tau^LS^{L-k})$, because $\partial_S^k=\tau^k\partial_\sigma^k$ and195.13a applies. The finite terms become $\tau^{2j}S^{2j}c_j(\pm\tau)$. Taylor expansion of the smooth $c_j$ in $\tau$ gives all recursive new-face coefficients and remainders. For any prescribed finite depths at the new face $\tau=0$ and the lifted strict face $S=0$, take $L$ larger than both depths and Taylor expand the finite coefficient list far enough. The joint remainder then has the required weights at both faces; all its new b-derivatives obey the same weights. Thus the argument controls every recursive remainder seminorm, not only the leading angular coefficient.
+
+Ordinary derivatives retain their finite poles in these further charts as well. In the first chart
+
+$$
+\partial_\epsilon=a^{-1}\tau^{-1}
+(\tau\partial_\tau-V\partial_V),
+\tag{195.13e}
+$$
+
+whereas in the second chart $\partial_\epsilon=a^{-1}\tau^{-1}\partial_S=a^{-1}\tau^{-1}S^{-1}(S\partial_S)$. Hence a fixed ordinary regulator derivative of order $k$ incurs its finite $a^{-k}$ factor and the corresponding finite $\tau^{-k}$ and, in the second chart, $S^{-k}$ weight shifts. Ordinary physical derivatives similarly have only the finite poles obtained from195.13c and these projective changes. The undifferentiated scalar has nonnegative integer indices; derivatives pass to the computed stages with these finite lower-index shifts, as required by105, rather than being claimed to preserve the same lower indices.
+
+Away from the full origin the scalar is already smooth through the strict face by195.12e. The analogous partial blowups there consequently pull back a smooth function. At the full front the charts195.13d cover each remaining line direction separately, so no further unresolved intersection of pair directions is left. The only logarithm is the retained $c_0\log a$ (or its front-chart expression195.11); the additional blowups leave $a$ unchanged and do not create a higher logarithmic degree. A single common undifferentiated index family $E_H=\mathbb N_0\times\{0,1\}$ at every face, with the required downward logarithmic closure and integer saturation, contains all these coefficients. One may choose the fixed auxiliary lower-weight vector $\mathbf b=(-1)_H$ at every face, including recursive coefficient spaces; it lies strictly below every leading exponent and absorbs the degree-one logarithm. For each fixed ordinary derivative, its computed finite integer index shifts and a correspondingly lower fixed auxiliary vector give the required derivative stage. These choices are made once per stage, independently of truncation depth, Cauchy nets and parameters. Fixed compact center decorations and all their derivatives satisfy the same estimates. There is no affine or absolute-anchor blowup being added to the original three-vertex collision space.
 
 Finally multiply by $\chi(r)\rho(s)$ and any fixed smooth physical cutoffs. Their full Taylor expansions and bounded derivatives preserve the stated saturated index family, with fixed lower auxiliary weights below0 to absorb logarithms. Each requested target coefficient/remainder seminorm uses finitely many derivatives of these cutoffs, the fixed Fourier symbol, and a finite collection of the estimates above. This supplies the claimed complete scalar stage and continuity in fixed-support smooth parameter cutoffs. $\square$
 
@@ -244,4 +340,4 @@ Thus the exact nonsmooth joint profile $(P_b(X)-e(X))K(Z)$ is represented by a f
 
 **Claim submitted for review196:** accept or reject Lemma195.1 with its uniform strict-corner estimates, the fixed R1 cones in195.14/195.16, and their two whole source evaluations. If accepted, the answer to the central source-membership question is positive: both $A$ and $D$ are actual original105/108 sources, with source-controlled126 rows in the stated explicit parameter families. By165/168 this also supplies source membership of the particular labelled and symmetric Green outputs already reduced to $A$. It supplies no general source-level antiderivative map for arbitrary mixed histories.
 
-This is one primary construction; the single author correction is reserved for a substantive source-locked196 request. Scientific review, editorial integration, native protected admission, exact readback and canonical tracker reconciliation remain separate. Producer and internal reviewer contexts share the Codex system and historical dependencies; no external or independently authenticated mathematical certification is asserted. Universal150.L, residual $W$ acyclicity, originalR3, full126.14, higher weights, actual lifting and M5/R4 remain OPEN.
+This is one primary construction and its sole consolidated author correction, requested in section3 of review196 frozen at6c395353bcb36eb786df0260da649ceceaf1602d on `research/reach-joint-profile195-primary-review-frozen-20261115`, and bound by CP216. The correction changes only Lemma195.1's strict-annular and corner proof: it separates the actual smooth heat convolution from the actual separated point contribution, gives the differentiated Taylor remainder, and tracks all additional partial-face derivatives and weights. The conic split, the two source histories and their exact equality are unchanged. The corrected source still requires freeze and source-locked196 rereview; no affirmative reviewed scientific disposition is inferred here. Scientific review, editorial integration, native protected admission, exact readback and canonical tracker reconciliation remain separate. Producer and internal reviewer contexts share the Codex system and historical dependencies; no external or independently authenticated mathematical certification is asserted. Universal150.L, residual $W$ acyclicity, originalR3, full126.14, higher weights, actual lifting and M5/R4 remain OPEN.
