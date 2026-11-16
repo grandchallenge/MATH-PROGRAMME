@@ -107,9 +107,14 @@ noncomputable def gsBasisEnrichedCoefficientFanIsLimit
         CMDG.CondensedCM4P2D.coefficientPresheaf.{u}) :=
     Discrete.natIso
       (fun _ => CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHomNatIso)
-  apply (IsLimit.postcomposeHomEquiv e (gsBasisEnrichedRankOneFan S)).symm
-    (gsBasisEnrichedRankOneFanIsLimit S) |>.ofIsoLimit
-  exact Cone.ext (Iso.refl _)
+  have h :
+      IsLimit ((Cone.postcompose e.hom).obj
+        (gsBasisEnrichedRankOneFan S)) :=
+    (IsLimit.postcomposeHomEquiv e
+      (gsBasisEnrichedRankOneFan S)).symm
+        (gsBasisEnrichedRankOneFanIsLimit S)
+  exact IsLimit.ofIsoLimit h
+    (Cone.ext (Iso.refl _) (fun ⟨i⟩ => rfl))
 
 /-- Real enriched-Hom-to-product comparison on the exact underlying
 presheaves used to construct G_S. -/
@@ -118,8 +123,6 @@ noncomputable def gsBasisEnrichedToCoefficientProductPresheafIso
     gsBasisInternalHomPresheaf S ≅
       (∏ᶜ (fun _ : LiftedSourceBasisIndex S =>
         CMDG.CondensedCM4P2D.coefficientPresheaf.{u})) :=
-  letI : HasProduct (fun _ : LiftedSourceBasisIndex S =>
-    CMDG.CondensedCM4P2D.coefficientPresheaf.{u}) := by infer_instance
   (gsBasisEnrichedCoefficientFanIsLimit S).conePointUniqueUpToIso
     (limit.isLimit (Discrete.functor
       (fun _ : LiftedSourceBasisIndex S =>
