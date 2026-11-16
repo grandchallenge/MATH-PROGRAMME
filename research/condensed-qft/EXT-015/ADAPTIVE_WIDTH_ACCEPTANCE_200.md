@@ -7,7 +7,7 @@
 | Item | Evidence |
 | --- | --- |
 | Primary198 | [ADAPTIVE_WIDTH_RAPID_STAGE_DIAGNOSTIC_198.md](ADAPTIVE_WIDTH_RAPID_STAGE_DIAGNOSTIC_198.md), Git blob 60e64ccda7770c2243624b23da69e09d83df4c92, initial primary commit 496e753c74293e1199b29f9d032306f029ad76b3 |
-| Source-locked critical199 | [AGENT_CRITICAL_REVIEW_ADAPTIVE_WIDTH_199.md](AGENT_CRITICAL_REVIEW_ADAPTIVE_WIDTH_199.md), exact Git blob 4c2e167b6d2343355d65390ebd6d45e8c6b94e53, V199/A199 same-account logically separated proof/adversary passes, not externally authenticated certification |
+| Source-locked critical199 | [AGENT_CRITICAL_REVIEW_ADAPTIVE_WIDTH_199.md](AGENT_CRITICAL_REVIEW_ADAPTIVE_WIDTH_199.md), exact Git blob bdce078cdf6c51d92fc62eba1682f82eb2e683b4 (notation-only Markdown correction; earlier source blob 4c2e167b6d2343355d65390ebd6d45e8c6b94e53), V199/A199 same-account logically separated proof/adversary passes, not externally authenticated certification |
 | Original scalar105 | Gaussian/Wick source and resolved fixed all-face index stages, blob a8ce66ff0edec33e2aff299550fca2089d671033 |
 | Original complete mixed108 | Exact108.6 completed coefficient source and108.3 fixed-Sobolev rapid ideal, blob 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
 | Original126 | Source-controlled parameter rows, blob 5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
