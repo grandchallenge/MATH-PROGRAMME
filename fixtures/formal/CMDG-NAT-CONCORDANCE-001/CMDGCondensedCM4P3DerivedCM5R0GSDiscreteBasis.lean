@@ -81,17 +81,8 @@ noncomputable def liftedSourceBasis (S : Profinite.{u}) :
 bijection, from C(S,R) to its direct-sum coefficient presentation. -/
 noncomputable def liftedSourceModuleIso (S : Profinite.{u}) :
     ModuleCat.of LiftedR.{u} (LocallyConstant S LiftedR.{u}) ≅
-      ModuleCat.of LiftedR.{u} (LiftedSourceBasisIndex S →₀ LiftedR.{u}) where
-  hom := ModuleCat.ofHom (liftedSourceBasis S).repr.toLinearMap
-  inv := ModuleCat.ofHom (liftedSourceBasis S).repr.symm.toLinearMap
-  hom_inv_id := by
-    apply ModuleCat.hom_injective
-    ext f
-    exact (liftedSourceBasis S).repr.symm_apply_apply f
-  inv_hom_id := by
-    apply ModuleCat.hom_injective
-    ext f
-    exact (liftedSourceBasis S).repr.apply_symm_apply f
+      ModuleCat.of LiftedR.{u} (LiftedSourceBasisIndex S →₀ LiftedR.{u}) :=
+  (liftedSourceBasis S).repr.toModuleIso
 
 /-- The actual presheaf in the protected CM4-P2-D enriched-Hom model
 is the discrete presheaf of the basis-sum module. -/
