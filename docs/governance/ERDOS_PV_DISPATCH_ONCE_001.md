@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-The canonical programme ledger is `governance/erdos_proof_verification/coverage/registry.json` and its protected cohort packets. The current selection contract is `ci/erdos_pv_queue.py`; the authenticated GitHub ref claim, typed return and protected release contract is `ci/erdos_pv_worker_lease.py`.
+The canonical programme ledger is `governance/erdos_proof_verification/coverage/REGISTRY.json` and its protected cohort packets. The current selection contract is `ci/erdos_pv_queue.py`; the authenticated GitHub ref claim, typed return and protected release contract is `ci/erdos_pv_worker_lease.py`.
 
 `ci/erdos_pv_dispatch_once.py` adds one **bounded controller-call adapter**. It is not a persistent scheduler, independently executing research agent, mathematical referee or Project V2 projection controller. No GH Actions workflow, automation, recurring schedule, or permission is added or changed.
 
