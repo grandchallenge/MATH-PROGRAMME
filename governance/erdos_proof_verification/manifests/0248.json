@@ -31,13 +31,16 @@
   "stage_results": {
     "SOURCE_LOCK": "PASS",
     "STATEMENT_EQUIVALENCE": "PASS",
-    "REPLAY_PREPARATION": "BLOCKED",
-    "REPLAY_EXECUTION": "PENDING",
+    "REPLAY_PREPARATION": "PASS",
+    "REPLAY_EXECUTION": "BLOCKED",
     "ADVERSARIAL_REVIEW": "PENDING",
     "INTERNAL_ADJUDICATION": "PENDING",
     "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
   },
-  "proof_receipts": [],
+  "proof_receipts": [
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001.receipt.json",
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001.logs.tar.gz.b64"
+  ],
   "review_receipts": [],
   "toolchain_pins": {
     "lean": "leanprover/lean4:v4.33.0",
@@ -60,6 +63,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "Create an exact protected CPU Colab job for full source-locked Erdos248 Lean replay at Lean v4.33.0 and mathlib db584cd; capture compiler exit, full import closure, #print axioms, theorem-type equivalence, and nonauthoring review. No kernel execution yet. CHAD GCL_CONTROL transport failed this turn; do not assert proof failure.",
-  "last_known_evidence": "governance/erdos_proof_verification/evidence/0248/SOURCE_SEMANTIC_AND_TOOLCHAIN_LOCK_001.json: pinned original theorem, formal statement, external top-level Lean source, toolchain, inspected import frontier, and explicit unexecuted full replay"
+  "next_action": "Admit exact protected provider-post-update successor worker in branch gcl/erdos-pv-0248-provider-post-update-002 (new worker SHA), then execute one new source-locked Colab attempt from a clean exact protected-main checkout. It must run the pinned provider lake post_update compatibility hook, verify all nine patch blob locks and unchanged package SHAs, and produce full Lean build, #check and #print axioms evidence. Do not reuse/remove the original RED attempt ticket or claim kernel proof from the first failed build.",
+  "last_known_evidence": "Original CPU Colab job ERDOS-0248-LEAN-REPLAY-001 conclusively RED on 2026-11-16; immutable receipt SHA256 5c2267eb7b34dc3aed058e69ca89f6d3576c0d5898e5725863c416452c9fbfab and log archive SHA256 7eb28e5a45fe5199d82642d37e2874e226def0995637a959435b4a5d2da9f071, admitted in governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001.*. The provider lakefile.lean explicitly declares post_update patches for the observed BoundedGaps modules; initial worker omitted the hook. Source-critical issue comments 6917793288, 6918898886, and terminal failure comment 6932762350. Mathematical replay and certification remain unverified."
 }
