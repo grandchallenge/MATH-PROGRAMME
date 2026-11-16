@@ -68,6 +68,25 @@ def main(argv: list[str] | None = None) -> int:
             path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
             print(json.dumps(report, indent=2))
             return 0
+        # The base synchronizer would repeat the identical Actions run listing
+        # immediately. Reuse these exact repo/head-bound receipts instead of
+        # spending a second installation API request. The base still validates
+        # protected receipt state, ancestry, mirrors, and authority independently.
+        verified_repository = repository
+        verified_head = head
+        verified_successes = dict(successful)
+        original_verifier = implementation.verify_required_workflows
+
+        def verified_workflows_again(bound_client, bound_repository: str, bound_head: str) -> dict[str, int]:
+            if bound_repository != verified_repository or bound_head != verified_head:
+                raise automation.AutomationError("cached workflow verification identity changed")
+            return dict(verified_successes)
+
+        implementation.verify_required_workflows = verified_workflows_again
+        try:
+            return implementation.main(args)
+        finally:
+            implementation.verify_required_workflows = original_verifier
     return implementation.main(args)
 
 
