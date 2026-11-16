@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP223",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP225",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -18,11 +18,11 @@
   "phase": "Protected conic source A/D and bounded uniform heat-normal rank gate UC-OP-001–003 admitted/read back. Legal partition inclusion counterexample excludes universal one-edge smoothing; exact five-case rank fixture protected. Universal mixed108 Green source operator, 150.L, W acyclicity, originalR3, full126.14 and M5/R4 remain OPEN.",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "ce828643ec7cf2e001ab068e578daf4befb91fbb",
-    "candidate_head_sha": "42338504b5c04b52967334a561095fed96206d64",
+    "protected_base_sha": "0d3390be01cc4d42468eaf701f12825dbf705e8c",
+    "candidate_head_sha": "ce828643ec7cf2e001ab068e578daf4befb91fbb",
     "issue_number": 2657,
-    "pr_number": 3376,
-    "branch": "research/reach-uniform-conic-rank-gate-uc001-20261115",
+    "pr_number": null,
+    "branch": "research/reach-uc001-003-protected-anchor-20261116",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "identity": "PR3371 merge1d741353367997f51d0789ad7049ded1c0712c9e andcurrentPR3376 mergece828643ec7cf2e001ab068e578daf4befb91fbb",
+        "kind": "artifact",
+        "status": "3371exacteightblobs/fivenativechecks/terminalcheckpointreadbackPASS. Current3376liveMERGED42338504b5c04b52967334a561095fed96206d64; historicalactivePRbindingandsettled-failurecomparisonremovedbyrebindingtoimmutableprotectedanchor. ExistingUC004nextaction/scientificdispositionsunchanged. Noautoapprovalorcertificationinferred."
+      },
       {
         "identity": "Resolvedactual3371mergeconflict against2e9f7db2e77c8e533edc4b671806bf05f5d8c97b",
         "status": "Preservedallconcurrentwidth195–197/adaptive198–200 supplementfiles andmainprogrammehistory; theirfixed-presentationobstructionsdonotexcludeourtwo-sectorfiniteconstruction. Noacceptedproofreopened. Futureconicoperatorstudyunnumberedtoavoidnumericcollision. Primary195/review196unchanged.",
@@ -1868,21 +1873,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "Protected native UC001–003 rank-gate mathematical review and fixture readback from exact PR3376 merge; select bounded finite graph incidence successor UC004",
-    "result": "RANK_GATE_BOUNDED_PROTECTED__UNIFORM_ONE_EDGE_FALSE__GENERAL_SOURCE_OPERATOR_OPEN",
+    "result": "Preserved currentUC004continuation andallprogrammeboundaries",
+    "action": "Repair stale merged-PR continuity binding without altering next science",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3376",
-      "research/condensed-qft/EXT-015/UNIFORM_CONIC_GREEN_OPERATOR_AUDIT_UC001.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_UNIFORM_CONIC_UC002.md",
-      "research/condensed-qft/EXT-015/UNIFORM_CONIC_ACCEPTANCE_UC003.md",
-      "fixtures/algebraic/conic_heat_rank_gate_uc001.py"
+      "research/reach-uc001-003-protected-anchor-20261116",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3371",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3376"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-16T03:43:30Z"
+    "observed_at": "2026-11-16T14:00:55.5482069Z"
   },
   "resume": {
     "fresh_session_safe": true,
