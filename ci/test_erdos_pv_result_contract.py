@@ -101,21 +101,42 @@ class E2ELifecycleTests(unittest.TestCase):
         self.assertFalse(rc.can_release_after_readback(
             self.row, "A", "grandchallenge/MATH-PROGRAMME@" + "1" * 40))
 
-    def test_one_reviewed_C_enables_only_same_problem_D(self):
-        b = queue.candidates("B", limit=20)
-        self.assertEqual(b, [])
-        self.assertEqual(queue.candidates("C", limit=20), [])
-        self.assertEqual(queue.candidates("D", limit=20), [])
-        self.assertEqual(self.cohort["items"][1]["stage_work_items"]["A"]["work_status"],
-                         "UNEXECUTED")
-        self.assertEqual(self.cohort["items"][1]["stage_work_items"]["B"]["work_status"],
+    def test_per_problem_dependency_eligibility_not_whole_cohort(self):
+        first = self.cohort["items"][0]
+        second = self.cohort["items"][1]
+        self.assertFalse(queue.permitted(first,"B"))
+        self.assertFalse(queue.permitted(first,"C"))
+        self.assertFalse(queue.permitted(first,"D"))
+        # The selected second problem may advance to B only after its A
+        # is source reviewed; C/D are always separately dependent.
+        # Source completion is necessary, but a returned B task must not
+        # become claimable again merely because A remains ready.
+        expected=(second["stage_work_items"]["A"]["work_status"] in queue.READY
+                  and second["stage_work_items"]["B"]["work_status"]
+                      in ("UNEXECUTED","EVIDENCE_BLOCKED")
+                  and second["existing_proof_issue"] is None)
+        self.assertEqual(queue.permitted(second,"B"),expected)
+        # C can become manifest-eligible only after B is critically verified;
+        # separate live issue-label and exact protected-blob gates still apply.
+        expected_C=(second["stage_work_items"]["B"]["work_status"] in queue.READY
+                    and second["stage_work_items"]["C"]["work_status"]
+                        in ("UNEXECUTED","EVIDENCE_BLOCKED")
+                    and second["triage_decision"]!="PENDING")
+        self.assertEqual(queue.permitted(second,"C"),expected_C)
+        self.assertFalse(queue.permitted(second,"D"))
+        # A later source receipt must not make all 100 items globally ready.
+        self.assertFalse(queue.permitted(self.cohort["items"][2],"B"))
+
+    def test_cohort_issue_remains_open_until_every_child(self):
+        self.assertFalse(self.cohort["fully_verified"])
+        self.assertEqual(len(self.cohort["items"]),100)
+        completed_A=sum(row["stage_work_items"]["A"]["work_status"]!="UNEXECUTED"
+                        for row in self.cohort["items"])
+        self.assertGreaterEqual(completed_A,1)
+        self.assertLess(completed_A,100)
+        self.assertEqual(self.cohort["items"][2]["stage_work_items"]["A"]["work_status"],
                          "UNEXECUTED")
 
-    def test_cohort_issue_not_complete_after_one_child(self):
-        self.assertFalse(self.cohort["fully_verified"])
-        self.assertEqual(len(self.cohort["items"]), 100)
-        self.assertEqual(sum(x["stage_work_items"]["A"]["work_status"] != "UNEXECUTED"
-                             for x in self.cohort["items"]), 1)
 
 if __name__ == "__main__":
     unittest.main()

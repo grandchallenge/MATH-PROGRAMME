@@ -11,7 +11,14 @@ q=importlib.util.module_from_spec(spec);spec.loader.exec_module(q)
 
 class QueueTests(unittest.TestCase):
     def test_first_runnable_reflects_protected_source_completion(self):
-        x=q.candidates('A');self.assertEqual((x[0]['problem_id'],x[0]['queue_issue']),(2,3212))
+        x=q.candidates('A')
+        self.assertTrue(x)
+        first=x[0]
+        self.assertEqual(first['queue_issue'],3212)
+        self.assertGreater(first['problem_id'],1)
+        row=q.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][first['problem_id']-1]
+        self.assertTrue(q.permitted(row,'A'))
+        self.assertEqual(row['stage_work_items']['A']['work_status'],'UNEXECUTED')
     def test_cohort_transition_exact(self):
         x=q.candidates('A',after=99,limit=2)
         self.assertEqual([r['problem_id'] for r in x],[100,101])
@@ -21,10 +28,26 @@ class QueueTests(unittest.TestCase):
         self.assertTrue(all(r['queue_issue']==3224 for r in x))
     def test_protected_math_return_not_selected_again(self):
         x=q.candidates('B',limit=5)
-        self.assertEqual(x,[])
-        self.assertEqual(q.candidates('B',after=1,limit=1),[])
-    def test_formal_reviewed_task_not_selected_twice(self):
-        self.assertEqual(q.candidates('C',limit=5),[])
+        self.assertTrue(all(r['task_id']!='ERDOS-PV-0001-B' for r in x))
+        self.assertTrue(all(r['problem_id']>1 for r in x))
+        cohort=q.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')
+        for candidate in x:
+            if candidate['cohort']!='0001-0100':
+                continue
+            row=cohort['items'][candidate['problem_id']-1]
+            self.assertTrue(q.permitted(row,'B'))
+            self.assertIn(row['stage_work_items']['A']['work_status'],q.READY)
+        self.assertTrue(all(r['problem_id']>1 for r in q.candidates('B',after=1,limit=5)))
+    def test_formal_selection_is_scoped_to_reviewed_math(self):
+        candidates=q.candidates('C',limit=5)
+        self.assertTrue(all(x['problem_id']!=1 for x in candidates))
+        for x in candidates:
+            reg=q.read(q.REG)
+            meta=reg['cohorts'][(x['problem_id']-1)//100]
+            row=q.read(meta['packet'])['items'][(x['problem_id']-1)%100]
+            self.assertTrue(q.permitted(row,'C'))
+            self.assertIn(row['stage_work_items']['B']['work_status'],q.READY)
+            self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
     def test_only_formal_reviewed_problem_enters_documentary(self):
         self.assertEqual(q.candidates('D',limit=5),[]) # returned D evidence is not re-dispatchable
     def test_pilot_reuse_does_not_run_duplicate_work(self):
