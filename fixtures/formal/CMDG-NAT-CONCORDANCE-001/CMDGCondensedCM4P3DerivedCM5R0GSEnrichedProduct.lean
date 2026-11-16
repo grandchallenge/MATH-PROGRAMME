@@ -54,12 +54,29 @@ protected source-presheaf coproduct cocone to a product fan. -/
 noncomputable def gsBasisEnrichedRankOneFanIsLimit
     (S : Profinite.{u}) :
     IsLimit (gsBasisEnrichedRankOneFan S) := by
-  have h := isLimitOfPreserves
-    (MonoidalClosed.internalHom.flip.obj
-      CMDG.CondensedCM4P2D.coefficientPresheaf.{u})
-    (Cofan.IsColimit.op
-      (gsBasisDiscreteSourcePresheafCofanIsColimit S))
-  exact IsLimit.ofIsoLimit h
+  let F : (CMDG.CondensedCM4P2D.PresheafModule.{u})ᵒᵖ ⥤
+      CMDG.CondensedCM4P2D.PresheafModule.{u} :=
+    MonoidalClosed.internalHom.flip.obj
+      CMDG.CondensedCM4P2D.coefficientPresheaf.{u}
+  let e :
+      Discrete.functor
+        (fun _ : LiftedSourceBasisIndex S =>
+          op CMDG.CondensedCM4P2D.coefficientPresheaf.{u}) ⋙ F ≅
+      Discrete.functor
+        (fun _ : LiftedSourceBasisIndex S =>
+          CMDG.CondensedCM4P2E.InternalHom.rankOneInternalHom.{u}) :=
+    Discrete.natIso (fun _ => Iso.refl _)
+  have h : IsLimit (F.mapCone
+      (gsBasisDiscreteSourcePresheafCofan S).op) :=
+    isLimitOfPreserves F
+      (Cofan.IsColimit.op
+        (gsBasisDiscreteSourcePresheafCofanIsColimit S))
+  have h' : IsLimit
+      ((Cone.postcompose e.hom).obj
+        (F.mapCone (gsBasisDiscreteSourcePresheafCofan S).op)) :=
+    (IsLimit.postcomposeHomEquiv e
+      (F.mapCone (gsBasisDiscreteSourcePresheafCofan S).op)).symm h
+  exact IsLimit.ofIsoLimit h'
     (Cone.ext (Iso.refl _) (fun ⟨i⟩ => by
       rfl))
 
