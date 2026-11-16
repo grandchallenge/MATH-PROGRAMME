@@ -99,6 +99,7 @@ These are supporting records, not necessarily current research instructions or c
 - [MATH-CORE-centred GCL Mathematics Architecture ADR-0021](../decisions/ADR-0021_MATH_CORE_CENTRED_GCL_MATHEMATICS_ARCHITECTURE.md)
 - [Exact-object-first Documentary Visualization ADR-0022](../decisions/ADR-0022_EXACT_OBJECT_FIRST_DOCUMENTARY_VISUALIZATION.md)
 - [Research Surface Contract ADR-0023](../decisions/ADR-0023_RESEARCH_SURFACE_CONTRACT.md)
+- [Documentation Renderer Succession ADR-0024](../decisions/ADR-0024_DOCUMENTATION_RENDERER_SUCCESSION.md)
 
 ## Historical audits
 
