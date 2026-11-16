@@ -34,6 +34,12 @@ def classify(root: Path, before: str, after: str, current: str) -> dict:
             raise ValueError('ambiguous protected push')
         if git(root,'rev-parse','HEAD') != current:
             raise ValueError('current checkout not event SHA')
+        # A push checkout can be older than current protected main. Never
+        # suppress refresh from a stale event, even when its own file delta
+        # is unrelated. The remote identity is read again at decision time.
+        remote = git(root,'ls-remote','origin','refs/heads/main').split()
+        if len(remote) != 2 or remote[0] != current or remote[1] != 'refs/heads/main':
+            raise ValueError('protected main moved or remote identity unavailable')
         git(root,'cat-file','-e',before+'^{commit}')
         git(root,'cat-file','-e',after+'^{commit}')
         git(root,'merge-base','--is-ancestor',before,after)

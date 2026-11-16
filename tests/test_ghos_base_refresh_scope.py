@@ -1,11 +1,12 @@
 import pathlib, subprocess, tempfile, unittest
+from unittest import mock
 from ci.ghos_base_refresh_scope import CONTROL_INPUTS,classify
 
 def git(root,*args):return subprocess.check_output(['git',*args],cwd=root,text=True).strip()
 class RefreshProofTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.root=pathlib.Path(self.tmp.name)
-  git(self.root,'init','-q');git(self.root,'config','user.email','audit@example.invalid');git(self.root,'config','user.name','Audit')
+  git(self.root,'init','-q','-b','main');git(self.root,'remote','add','origin',str(self.root));git(self.root,'config','user.email','audit@example.invalid');git(self.root,'config','user.name','Audit')
   for name in CONTROL_INPUTS:
    p=self.root/name
    if name in ('.github/workflows','.ghos-routing'):
@@ -32,6 +33,20 @@ class RefreshProofTests(unittest.TestCase):
   p=self.root/'misc';p.write_text('change');self.commit('change');head=self.current()
   for old,new,current in [('0'*40,head,head),('x',head,head),(self.base,head,'f'*40),(self.base,'a'*40,'a'*40),(head,head,head)]:
    self.assertTrue(classify(self.root,old,new,current)['refresh'])
+ def test_old_push_fails_open_when_protected_main_advanced(self):
+  p=self.root/'math.txt';p.write_text('first math');self.commit('first push')
+  older=self.current()
+  p.write_text('later math');self.commit('second push')
+  # The first event checkout can still be checked out in a separate job,
+  # but the authoritative remote must now identify the second push.
+  with mock.patch('ci.ghos_base_refresh_scope.git') as fake:
+   from ci.ghos_base_refresh_scope import git as normal
+   def same_except_remote(root,*args):
+    if args[0]=='ls-remote':return self.current()+'\trefs/heads/main'
+    if args[:2]==('rev-parse','HEAD'):return older
+    return normal(root,*args)
+   fake.side_effect=same_except_remote
+   self.assertTrue(classify(self.root,self.base,older,older)['refresh'])
  def test_deleted_input_fails_open(self):
   (self.root/'requirements/policy.txt').unlink();self.commit('deletion')
   self.assertTrue(classify(self.root,self.base,self.current(),self.current())['refresh'])
