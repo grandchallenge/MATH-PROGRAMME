@@ -41,9 +41,22 @@ theorem stoneanCechPairOfRelated_fst
   change (stoneanCechExplicitToAbstract T ≫
     pullback.fst (Profinite.presentation.π T)
       (Profinite.presentation.π T)).hom.hom ⟨(x, y), hxy⟩ = x
-  unfold stoneanCechExplicitToAbstract
-  simp only [pullback.lift_fst]
-  rfl
+  let P := Stonean.toProfinite.obj T.presentation
+  let f : stoneanCechRelatedProfinite T ⟶ P :=
+    CompHausLike.ofHom _
+      (⟨(fun z : stoneanCechRelatedProfinite T => z.val.1),
+        continuous_fst.comp continuous_subtype_val⟩ :
+        C(stoneanCechRelatedProfinite T, P))
+  have hmap :
+      stoneanCechExplicitToAbstract T ≫
+        pullback.fst (Profinite.presentation.π T)
+          (Profinite.presentation.π T) = f := by
+    unfold stoneanCechExplicitToAbstract
+    exact pullback.lift_fst _ _ _
+  have hh := congrArg
+    (fun m : stoneanCechRelatedProfinite T ⟶ P =>
+      m.hom.hom ⟨(x, y), hxy⟩) hmap
+  exact hh
 
 /-- The second endpoint of the actual categorical pair. -/
 theorem stoneanCechPairOfRelated_snd
@@ -57,9 +70,22 @@ theorem stoneanCechPairOfRelated_snd
   change (stoneanCechExplicitToAbstract T ≫
     pullback.snd (Profinite.presentation.π T)
       (Profinite.presentation.π T)).hom.hom ⟨(x, y), hxy⟩ = y
-  unfold stoneanCechExplicitToAbstract
-  simp only [pullback.lift_snd]
-  rfl
+  let P := Stonean.toProfinite.obj T.presentation
+  let g : stoneanCechRelatedProfinite T ⟶ P :=
+    CompHausLike.ofHom _
+      (⟨(fun z : stoneanCechRelatedProfinite T => z.val.2),
+        continuous_snd.comp continuous_subtype_val⟩ :
+        C(stoneanCechRelatedProfinite T, P))
+  have hmap :
+      stoneanCechExplicitToAbstract T ≫
+        pullback.snd (Profinite.presentation.π T)
+          (Profinite.presentation.π T) = g := by
+    unfold stoneanCechExplicitToAbstract
+    exact pullback.lift_snd _ _ _
+  have hh := congrArg
+    (fun m : stoneanCechRelatedProfinite T ⟶ P =>
+      m.hom.hom ⟨(x, y), hxy⟩) hmap
+  exact hh
 
 /-- Points in a categorical profinite pair pullback are determined
 by their two endpoint values. -/
@@ -88,7 +114,7 @@ theorem stoneanCechPair_eq_of_endpoints
         (Profinite.presentation.π T) := by
     ext s
     exact hsnd
-  have h : pa = pb := pullback.hom_ext pa pb ha hb
+  have h : pa = pb := pullback.hom_ext ha hb
   have hh := congrArg
     (fun m : Profinite.of PUnit.{u + 1} ⟶
       stoneanPresentationCechPairs T => m.hom.hom PUnit.unit) h
@@ -125,9 +151,21 @@ theorem stoneanCechTripleOfRelated_xy
     (stoneanCechTripleXY T).hom.hom
       (stoneanCechTripleOfRelated T x y z hxy hyz) =
         stoneanCechPairOfRelated T x y hxy := by
-  unfold stoneanCechTripleOfRelated
-  simp only [stoneanCechTripleXY, pullback.lift_fst]
-  rfl
+  let p := Profinite.presentation.π T
+  let xy := stoneanCechPairOfRelated T x y hxy
+  let a := singletonProfinitePointMap (stoneanPresentationCechPairs T) xy
+  let b := singletonProfinitePointMap (Stonean.toProfinite.obj T.presentation) z
+  have h : a ≫ (pullback.fst p p ≫ p) = b ≫ p := by
+    ext s
+    change p.hom.hom ((pullback.fst p p).hom.hom xy) = p.hom.hom z
+    rw [stoneanCechPairOfRelated_fst]
+    exact hxy.trans hyz
+  have hmap : pullback.lift a b h ≫ stoneanCechTripleXY T = a :=
+    pullback.lift_fst _ _ _
+  have hh := congrArg
+    (fun m : Profinite.of PUnit.{u + 1} ⟶
+      stoneanPresentationCechPairs T => m.hom.hom PUnit.unit) hmap
+  exact hh
 
 theorem stoneanCechTripleOfRelated_z
     (T : Profinite.{u})
@@ -138,9 +176,21 @@ theorem stoneanCechTripleOfRelated_z
       (Profinite.presentation.π T).hom.hom z) :
     (stoneanCechTripleZ T).hom.hom
       (stoneanCechTripleOfRelated T x y z hxy hyz) = z := by
-  unfold stoneanCechTripleOfRelated
-  simp only [stoneanCechTripleZ, pullback.lift_snd]
-  rfl
+  let p := Profinite.presentation.π T
+  let xy := stoneanCechPairOfRelated T x y hxy
+  let a := singletonProfinitePointMap (stoneanPresentationCechPairs T) xy
+  let b := singletonProfinitePointMap (Stonean.toProfinite.obj T.presentation) z
+  have h : a ≫ (pullback.fst p p ≫ p) = b ≫ p := by
+    ext s
+    change p.hom.hom ((pullback.fst p p).hom.hom xy) = p.hom.hom z
+    rw [stoneanCechPairOfRelated_fst]
+    exact hxy.trans hyz
+  have hmap : pullback.lift a b h ≫ stoneanCechTripleZ T = b :=
+    pullback.lift_snd _ _ _
+  have hh := congrArg
+    (fun m : Profinite.of PUnit.{u + 1} ⟶
+      Stonean.toProfinite.obj T.presentation => m.hom.hom PUnit.unit) hmap
+  exact hh
 
 /-- The categorical triple's XZ projection on any specified
 fiber-related triple is exactly the canonical (x,z) pair. -/
