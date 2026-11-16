@@ -395,6 +395,12 @@ def classify_paths(
         }
 
     shards, unknown = shard_impacts(changed)
+    if event_name == "push":
+        # The Pages workflow consumes the exact successful main-push policy
+        # run's validated-site artifact. That artifact must exist even when
+        # only formal fixtures or other non-documents changed. Keep PR
+        # impact routing selective; ci.yml limits push events to main.
+        shards = [shard for shard in ALL_SHARDS if shard in set(shards) | {"docs"}]
     return {
         "event_mode": "transition",
         "changed_paths": changed,
