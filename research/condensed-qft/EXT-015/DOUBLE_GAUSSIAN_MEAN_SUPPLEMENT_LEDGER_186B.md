@@ -1,0 +1,43 @@
+# EXT-015 REACH / DG-186B — supplementary bounded ledger for legal double-Gaussian hidden mean and effective R1 conormal
+
+**Disposition: BOUNDED MATHEMATICAL ACCEPT only, protected primary source PR3352 custody and logical source-locked DG critic recorded; separate protected admission of this supplementary ledger remains required.** Two independent legal hidden Gaussian edges have an exact determinant-one normalized mean-map reduction. A compact original R1 source can yield a forbidden diagonal conormal in its effective terminal coefficient at each positive regulator, but the explicit counterexample has a rapidly flat output and is zero in the original enriched quotient. Under **identity-partition, fixed R1 graph-regular and smooth-through-zero scalar** hypotheses, a separate theorem excludes the first Green core even modulo the original rapid ideal. No universal source A verdict or W-acyclicity result follows.
+
+## 1. Immutable source-lock and proper procedural status
+
+| Evidence item | Exact identity / governing restriction |
+| --- | --- |
+| Supplementary double-bridge source, distinct from canonical nonpolynomial186 | [DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md](DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md), corrected candidate Git blob 7985fec06cb3134110b16afa4aa4fc5b71444341 |
+| Primary PR3352 | Corrected exact head 768dfe86f262c6ae73dd57951201d1cf466d90b3; prior candidate head 9c04d9c3afe705dac989277d43b3513581fd9336 superseded by explicit identity-partition hypothesis and intermediate eb57cf5f3a70e6f6daf987d0eb3e9616e939f4f7 superseded by math Markdown notation correction |
+| Supplementary mathematical critic DG-186B | [DOUBLE_GAUSSIAN_MEAN_SUPPLEMENT_CRITIC_186B.md](DOUBLE_GAUSSIAN_MEAN_SUPPLEMENT_CRITIC_186B.md); detailed independent logical checks of Gaussian normalization, full four-vertex R1 cone, strict rapid and conditional weak-limit trace |
+| Original 105 | Gaussian/Wick scalar edge stages, protected blob a8ce66ff0edec33e2aff299550fca2089d671033 |
+| Original 108 | Completed mixed 108.6–108.7 histories and fixed-order rapid quotient, blob 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
+| Original 126 | Source-controlled parameter rows, blob 5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
+| Original 165, 174 | Joint Green first core blob 24b82716d41d309438fcb7a97bbacab0b724afde; single bridge blob 7c470ba092d917dc434a8883e5afaff7bce1dfc6 |
+| Protected 180 and 183 | Primary180 blob fac58764ac29e518ac522e0451a9c9829e86720b, PR3344 merge 28d978e788c9a1930a00056a0044ae3f4a124469; primary183 blob e1d6473ac075b0e17eb354603b25b94d1208be19, PR3348 merge 2af279aff16578031a8cd41aeb05b6e875a265e9 |
+| Protected CP193 | PR3349 merge 030344a264a16e8ab465c997981cfb99a281c521, nonterminal checkpoint source blob bd1357d726fccd84ebdd54f09d92bc142d65c866 |
+
+Supplementary double-bridge source passed corrected exact-head GCL conformance, policy and formal-validation checks, then native protected-merged in PR3352 at `3dc09319b417272b3c1ec35b74e2bb30392e5c31`. Exact proof blob `7985fec06cb3134110b16afa4aa4fc5b71444341` was re-read on main. The DG-186B critic and ledger have their own distinct source-head checks and native custody obligations. Same-model logical Verifier and Adversary are not independent nonauthor APPROVED, external reviewers, or MATHCERT. No live CHAD verification is claimed.
+
+## 2. Scientific acceptance and hostile controls
+
+| Statement | Bounded decision |
+| --- | --- |
+| Normalized identity for two relative edges with $c=ab/\sqrt{a^2+b^2}$ and $d=\sqrt{a^2+b^2}$, determinant-one hidden change of coordinates | PROVED algebraically and source-controlled |
+| Actual admitted Gaussian scalar stages and original compact R1 simple-tensor source | ACCEPT within stated fixed histories |
+| Original R1 cone universally survives hidden Gaussian effective mean pushdown | REFUTED: legal off-partition-conormal source at fixed positive regulator |
+| The specific forbidden-effective-conormal source provides nonrapid evidence against W acyclicity | REFUTED: output is uniformly rapid |
+| Original R1 diagonal pullback along $y=h=z$ under graph-regular identity-partition and smooth-scalar assumptions | ACCEPT |
+| Finite graph-regular identity-partition double bridge with smooth-through-zero scalar factors equals $A$ modulo uniform rapid | EXCLUDED by permitted weak trace versus forbidden target cone |
+| Arbitrary scalar 105 stages, especially Wick/Green zero-scale singularity or negative Laurent poles | OPEN |
+| Arbitrary nonidentity source partition/jet inclusion, unbounded completed cancellations and general rapid quotient | OPEN |
+| Source admission of first core $A$, universal Lemma150.L, residual W acyclicity, original R3, full126.14, higher weights, lifting, M5/R4 | OPEN |
+
+**Potentially misleading inference expressly rejected.** The fixed-positive-regulator effective mean coefficient may have a diagonal conormal even for legal original R1 inputs; hence 180's effective R1 test cannot be assumed for every multi-bridge history. Equally, the legal B arm168 has a singular cusp-times-delta weak limit, so the restricted smooth-trace obstruction cannot be promoted to *all* source histories. Both countercontrols are essential.
+
+## 3. Documentary and mathematical successor
+
+After primary186 exact protected merge and source readback, update this ledger with its verified merge SHA, preserve the exact final corrected source head and Git blob, and update critical187 if required. The separate 187–188 PR must pass fresh checks, native merge queue and exact protected-main source review readback; terminal state stays false.
+
+**Current successor:** protected CP204 assigns canonical zero-energy source audit192, which explicitly references this double-Gaussian mean source as an existing distinct input. Frozen192 must receive its own source-locked review193 and ledger194. This DG-186B supplement is not a replacement for those workflows. The remaining full original source $A$ and general 150.L/W questions require source-controlled evidence beyond any bounded terminal no-go.
+
+Governing issues #2617, #2657 and #2798 remain OPEN. The checkpoint is nonterminal CP204; no global certification or protected bypass is authorized.
