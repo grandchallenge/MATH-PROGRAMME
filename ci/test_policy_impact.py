@@ -27,7 +27,18 @@ def main() -> int:
         assert not receipt["unknown_paths"]
 
     non_parity = impact.classify_paths(["governance/other/ordinary_evidence.json"], event_name="push")
-    assert non_parity["policy_shards"] == ["core", "contracts"]
+    assert non_parity["policy_shards"] == ["core", "contracts", "docs"]
+
+    # Every protected main push must supply the exact-run Pages artifact.
+    # This source-only CM5 merge previously passed policy but triggered an
+    # impossible Pages deployment (missing validated-site).
+    cm5_source = ["fixtures/formal/CMDG-NAT-CONCORDANCE-001/CMDGCondensedCM4P3DerivedCM5R0GSProductCompactSupport.lean"]
+    cm5_push = impact.classify_paths(cm5_source, event_name="push")
+    assert cm5_push["policy_shards"] == ["core", "fixtures", "cmdg", "docs"]
+    assert not cm5_push["unknown_paths"]
+    cm5_pr = impact.classify_paths(cm5_source, event_name="pull_request")
+    assert cm5_pr["policy_shards"] == ["core", "fixtures", "cmdg"]
+    assert not cm5_pr["unknown_paths"]
 
     handoff = impact.classify_paths(["handoffs/GHOS-ESTATE-ROLLOUT-001/PHASE1/HANDOFF.md"])
     assert handoff["policy_shards"] == ["core", "administrative", "campaigns", "docs"]
