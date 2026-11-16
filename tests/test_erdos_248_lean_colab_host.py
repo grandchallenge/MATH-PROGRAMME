@@ -7,6 +7,7 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 from ci import erdos_248_lean_colab_host as h
+from colab import erdos_248_lean_worker as w
 
 class Erdos248HostTests(unittest.TestCase):
     def identity(self):
@@ -23,12 +24,24 @@ class Erdos248HostTests(unittest.TestCase):
           "axioms_observed": True, "axiom_report": "axioms used: [propext]",
           "theorem_type_observed": True, "theorem_audit_log_sha256": "f"*64,
           "log_archive_sha256": "f"*64,
+          "source_mode": "PINNED_PROVIDER_WITH_DECLARED_COMPATIBILITY_PATCHES",
+          "compatibility_patch_plan": [
+              {"dependency": d, "patch": n, "git_blob": blob}
+              for d, n, blob in w.COMPATIBILITY_PATCHES
+          ],
+          "compatibility_patch_effects": {
+              d: {"commit": sha, "modified_files": (
+                  ["BoundedGaps/BoundedGaps/Maynard/FaceDecomposition.lean",
+                   "BoundedGaps/BoundedGaps/Maynard/ImprovedGPY/S2Pair.lean"]
+                  if d == "BoundedGaps" else ["Example.lean"])}
+              for d, sha in w.PINNED_DEPENDENCIES.items()
+          },
           "authority_effects": {
               "mathematical_certification": False, "publication": False,
               "protected_state_mutation": False, "source_adjudication": False},
           "steps": [{"stage": k, "exit_code": 0} for k in
                     ("git-fetch", "git-checkout", "lean-version",
-                     "mathlib-cache", "lean-build", "axiom-audit")]
+                     "mathlib-cache", "compat-post-update", "lean-build", "axiom-audit")]
         }
 
     def test_lean_four_axiom_receipt(self):
@@ -45,6 +58,12 @@ class Erdos248HostTests(unittest.TestCase):
             lambda d: d.update(axioms_observed=False),
             lambda d: d.update(theorem_type_observed=False),
             lambda d: d.update(log_archive_sha256=None),
+            lambda d: d.update(source_mode="PINNED_UNPATCHED"),
+            lambda d: d["compatibility_patch_plan"].pop(),
+            lambda d: d["compatibility_patch_effects"]["BoundedGaps"].update(
+                commit="0"*40),
+            lambda d: d["compatibility_patch_effects"]["BoundedGaps"].update(
+                modified_files=["Other.lean"]),
             lambda d: d.update(full_kernel_replay=False),
             lambda d: d["authority_effects"].update(mathematical_certification=True),
             lambda d: d.update(source_sha256="c"*64),
