@@ -229,11 +229,17 @@ theorem stoneanCechTripleBoundary_split_contraction
         (Condensed.profiniteFree Coeff).map (stoneanCechExtraPair T s hs) -
       𝟙 ((Condensed.profiniteFree Coeff).obj
         (stoneanPresentationCechPairs T)) := by
+  have hId :
+      (Condensed.profiniteFree Coeff).map
+          (𝟙 (stoneanPresentationCechPairs T)) =
+        𝟙 ((Condensed.profiniteFree Coeff).obj
+          (stoneanPresentationCechPairs T)) :=
+    (Condensed.profiniteFree Coeff).map_id _
   unfold stoneanCechTripleBoundary stoneanCechDifference
   simp only [Preadditive.comp_sub, Preadditive.sub_comp, ← Functor.map_comp,
     stoneanCechExtraTriple_xy, stoneanCechExtraTriple_xz,
     stoneanCechExtraTriple_yz]
-  simp only [Functor.map_id]
+  rw [hId]
   abel
 
 /-- Every triple relation generates the entire second kernel if the
@@ -265,9 +271,12 @@ theorem stoneanCechTripleToSecondRelation_split
   apply (cancel_mono i).1
   calc
     ((-i ≫ h) ≫ stoneanCechTripleToSecondRelation T) ≫ i =
-      -((i ≫ h) ≫ stoneanCechTripleBoundary T) := by
-        simp [Preadditive.neg_comp, Category.assoc,
-          stoneanCechTripleToSecondRelation_comp_ι]
+      -(((i ≫ h) ≫ stoneanCechTripleToSecondRelation T) ≫ i) := by
+        simp only [Preadditive.neg_comp]
+    _ = -((i ≫ h) ≫
+        (stoneanCechTripleToSecondRelation T ≫ i)) := by rw [Category.assoc]
+    _ = -((i ≫ h) ≫ stoneanCechTripleBoundary T) := by
+        rw [stoneanCechTripleToSecondRelation_comp_ι]
     _ = i := by rw [hc, neg_neg]
     _ = (𝟙 _) ≫ i := by simp
 
