@@ -1,7 +1,6 @@
 import CMDGCondensedCM4P3DerivedCM5R0GSMeasureBasisTransport
 import CMDGCondensedCM4P3DerivedCM5R0DiscreteCoefficientCechBridge
 import Mathlib.Algebra.Category.ModuleCat.Colimits
-import Mathlib.CategoryTheory.Limits.Shapes.Coproducts
 import Mathlib.Condensed.Limits
 
 /-!
