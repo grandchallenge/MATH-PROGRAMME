@@ -51,8 +51,11 @@ theorem gsLocallyConstantFinsupp_coordinate_assemble
   ext j x
   simp [gsLocallyConstantFinsupp_assembleLinear,
     gsLocallyConstantFinsupp_coordinateLinear,
-    gsLocallyConstantFinsupp_coordinateFamily_apply,
-    LocallyConstant.map_apply]
+    gsLocallyConstantFinsupp_coordinateFamily_apply]
+  by_cases hij : i = j
+  · subst j
+    simp
+  · simp [Finsupp.single_apply, hij, Ne.symm hij]
 
 /-- Every finite family of locally constant coordinate sections comes from
 a locally constant section of the infinite discrete Finsupp sum. -/
@@ -77,13 +80,31 @@ noncomputable def gsLocallyConstantFinsupp_coordinateEquiv
     ⟨gsLocallyConstantFinsupp_coordinateLinear_injective X I,
       gsLocallyConstantFinsupp_coordinateLinear_surjective X I⟩
 
+/-- Pullback of compact-test sections commutes with each extracted
+coordinate. This naturality is essential for the presheaf-colimit bridge. -/
+theorem gsLocallyConstantFinsupp_coordinateEquiv_naturality
+    {X Y : CompHaus.{u}} (I : Type (u + 1))
+    (f : C(X, Y)) (g : LocallyConstant Y (I →₀ R.{u})) (i : I) :
+    (gsLocallyConstantFinsupp_coordinateEquiv X I
+      (LocallyConstant.comap f g)) i =
+        LocallyConstant.comap f
+          ((gsLocallyConstantFinsupp_coordinateEquiv Y I g) i) := by
+  ext x
+  change (gsLocallyConstantFinsupp_coordinateFamily X I
+      (LocallyConstant.comap f g)) i x =
+    (gsLocallyConstantFinsupp_coordinateFamily Y I g) i (f x)
+  simp only [gsLocallyConstantFinsupp_coordinateFamily_apply,
+    LocallyConstant.coe_comap_apply]
+
 #check gsLocallyConstantFinsupp_assembleLinear
 #check gsLocallyConstantFinsupp_coordinate_assemble
 #check gsLocallyConstantFinsupp_coordinateLinear_surjective
 #check gsLocallyConstantFinsupp_coordinateEquiv
+#check gsLocallyConstantFinsupp_coordinateEquiv_naturality
 
 #print axioms gsLocallyConstantFinsupp_coordinate_assemble
 #print axioms gsLocallyConstantFinsupp_coordinateLinear_surjective
 #print axioms gsLocallyConstantFinsupp_coordinateEquiv
+#print axioms gsLocallyConstantFinsupp_coordinateEquiv_naturality
 
 end CMDG.CondensedCM5R0
