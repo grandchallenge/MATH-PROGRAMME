@@ -25,6 +25,15 @@ class Erdos248WorkerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "named final theorem"):
             w.validate_axiom_output("axioms used: [propext]")
 
+    def test_actual_lean_four_print_format(self):
+        line = "'Erdos248.erdos_248' depends on axioms: [propext, Classical.choice]"
+        self.assertEqual(w.validate_axiom_output(line), line)
+
+    def test_lean_four_sorry_axiom_rejected(self):
+        with self.assertRaisesRegex(ValueError, "forbidden"):
+            w.validate_axiom_output(
+                "'Erdos248.erdos_248' depends on axioms: [sorryAx]")
+
     def test_valid_lean_axiom_print_parses(self):
         self.assertEqual(w.validate_axiom_output(
             "Erdos248.erdos_248 : True\naxioms used: [propext, Classical.choice, Quot.sound]\n"),
