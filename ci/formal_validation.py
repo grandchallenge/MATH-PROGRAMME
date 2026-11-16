@@ -13,6 +13,8 @@ from typing import Iterable
 
 import jsonschema
 
+from formal_contract_dependency import CONTRACT_FILES, contract_only_safe
+
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "governance/formal_validation_registry.json"
 SCHEMA_PATH = ROOT / "schemas/formal_validation_registry.schema.json"
@@ -64,6 +66,8 @@ def validate_registry(registry: dict) -> None:
         ".github/workflows/formal-validation.yml",
         "ci/formal_validation.py",
         "ci/test_formal_validation.py",
+        "ci/formal_contract_dependency.py",
+        "ci/test_formal_contract_dependency.py",
         "governance/formal_validation_registry.json",
         "schemas/formal_validation_registry.schema.json",
     }
@@ -104,11 +108,20 @@ def classify_paths(paths: Iterable[str], registry: dict) -> dict:
     controls = registry["control_plane"]
 
     control_hits = [p for p in changed if any(matches(p, pat) for pat in controls["full_fanout_patterns"])]
+    contract_hits = [p for p in control_hits if p in CONTRACT_FILES]
+    # Only the six existing governed non-formal contract scripts may bypass
+    # full Lean replay; an unknown newly named script is never exempt.
+    # The dependency proof is recomputed from the candidate's actual sources
+    # and returns full fanout on missing, ambiguous or dynamic imports.
     if control_hits:
-        return result(changed, all_ids, "control_plane_full_fanout", control_hits, [])
+        safe = False
+        if contract_hits and len(contract_hits) == len(control_hits):
+            safe, _ = contract_only_safe(ROOT, registry)
+        if not safe:
+            return result(changed, all_ids, "control_plane_full_fanout", control_hits, [])
 
     selected: set[str] = set()
-    matched_paths: set[str] = set()
+    matched_paths: set[str] = set(contract_hits)
     for lane_id, lane in lanes.items():
         for path in changed:
             if any(matches(path, pat) for pat in lane["material_patterns"]):
@@ -144,7 +157,8 @@ def classify_paths(paths: Iterable[str], registry: dict) -> dict:
             "unclassified executable/formal path(s): " + ", ".join(sorted(unknown))
         )
 
-    reason = "material_lanes" if selected else "no_formal_material_change"
+    reason = ("material_lanes" if selected else "nonformal_contract_only" if contract_hits
+              else "no_formal_material_change")
     return result(changed, [lane_id for lane_id in all_ids if lane_id in selected], reason, [], [])
 
 
@@ -168,8 +182,26 @@ def git(*args: str, cwd: Path = ROOT, check: bool = True) -> subprocess.Complete
 def diff_paths(base: str, head: str, root: Path = ROOT) -> list[str]:
     if not SHA40.fullmatch(base) or not SHA40.fullmatch(head):
         raise FormalValidationError("event diff identities must be full commit SHAs")
-    cp = git("diff", "--name-only", "--diff-filter=ACMR", f"{base}...{head}", cwd=root)
-    return normalize_paths(line for line in cp.stdout.splitlines() if line)
+    # Include deletions and *both* sides of renames. A deleted/moved formal
+    # source is a material change, not an excuse to skip its proof obligation.
+    cp = git("diff", "--name-status", "-z", "--diff-filter=ACDMRT",
+             f"{base}...{head}", cwd=root)
+    tokens = cp.stdout.split("\0")
+    if not tokens or tokens[-1] != "":
+        raise FormalValidationError("truncated NUL-delimited Git name/status readback")
+    tokens.pop()
+    changed = []
+    i = 0
+    while i < len(tokens):
+        status = tokens[i]
+        if not status or status[0] not in "ACDMRT":
+            raise FormalValidationError(f"unrecognized Git diff status: {status!r}")
+        width = 2 if status[0] in "RC" else 1
+        if i + width >= len(tokens):
+            raise FormalValidationError("truncated Git rename/change pair")
+        changed.extend(tokens[i + 1:i + width + 1])
+        i += 1 + width
+    return normalize_paths(changed)
 
 
 def event_plan(event_name: str, event: dict, registry: dict, root: Path = ROOT) -> dict:
