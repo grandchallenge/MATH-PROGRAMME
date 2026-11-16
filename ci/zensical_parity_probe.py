@@ -25,6 +25,7 @@ from erdos_compendium_hook import (  # noqa: E402
 )
 from oai26_compendium import build as build_oai26  # noqa: E402
 from zensical_semantic_parity import audit as audit_rendered_content  # noqa: E402
+from zensical_documentary_assets import rewrite_temporary_docs  # noqa: E402
 
 DOCS = ROOT / ".zensical-probe-docs"
 CONFIG = ROOT / "zensical-probe.yml"
@@ -56,6 +57,7 @@ def prepare() -> None:
         if p.exists():
             raise RuntimeError(f"refusing to overwrite existing probe material: {p}")
     shutil.copytree(ROOT / "docs", DOCS, symlinks=False)
+    documentary_assets = rewrite_temporary_docs(DOCS)
     erdos = build_erdos(output=DOCS / "erdos")
     oai = build_oai26(output_dir=DOCS / "oai26")
     if erdos["problems"] != 1221 or erdos["pages"] < 1222:
@@ -74,7 +76,8 @@ def prepare() -> None:
     config["docs_dir"] = DOCS.name
     config["site_dir"] = SITE.name
     CONFIG.write_text(yaml.safe_dump(config, sort_keys=False, allow_unicode=True), encoding="utf-8")
-    print(json.dumps({"prepared": True, "erdos": erdos, "oai26": oai}, sort_keys=True))
+    print(json.dumps({"prepared": True, "erdos": erdos, "oai26": oai,
+                      "temporary_documentary_asset_rebases": documentary_assets}, sort_keys=True))
 
 
 def verify() -> None:
