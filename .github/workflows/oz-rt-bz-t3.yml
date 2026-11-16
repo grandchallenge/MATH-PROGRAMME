@@ -88,7 +88,7 @@ jobs:
           sudo mkdir -p /home/ubuntu/fable-episode-2
           sudo ln -sfnT "$GITHUB_WORKSPACE/src1" /home/ubuntu/fable-episode-2/zeta-math
           sudo ln -sfnT "$GITHUB_WORKSPACE/src2" /home/ubuntu/fable-episode-2/zeta-math-2
-          python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007.log
+          PYTHONPATH="$GITHUB_WORKSPACE/src2/work/lb5:$GITHUB_WORKSPACE/src2/work/z5cf" python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007.log
           grep -Fq 'w5: ALL PASS n=0..34' x007.log
           grep -Fq 'L_BZ[sum T w5] = 0 for n = 0..31 : ALL ZERO' x007.log
           echo 'Finite T3 replay retains theorem_effect=NONE.' >> "$GITHUB_STEP_SUMMARY"
@@ -187,7 +187,7 @@ jobs:
         working-directory: source-delta
         run: |
           set -euo pipefail
-          timeout --signal=TERM 600s python3 -c "import runpy; runpy.run_path('papers_out/expository_apery/verify.py', run_name='__main__')" | tee ../apery.log
+          PYTHONPATH="$GITHUB_WORKSPACE/source-delta/work/z5eps" timeout --signal=TERM 600s python3 -c "import runpy; runpy.run_path('papers_out/expository_apery/verify.py', run_name='__main__')" | tee ../apery.log
           grep -Fq 'CHECK1 a_n sum==recurrence n<=25: True' ../apery.log
           grep -Fq 'CHECK2 b_n closed form satisfies recurrence 1<=n<=24: True' ../apery.log
           grep -Fq 'CHECK7 b_n == 6 B(n) n<=25: True' ../apery.log
