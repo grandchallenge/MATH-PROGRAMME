@@ -111,8 +111,8 @@ noncomputable def gsLocallyConstantFinsupp_coordinateLinear
   map_smul' := by
     intro a f
     ext i x
-    simp only [gsLocallyConstantFinsupp_coordinateFamily_apply]
-    simp
+    simp only [gsLocallyConstantFinsupp_coordinateFamily_apply,
+      LocallyConstant.smul_apply, Finsupp.smul_apply]
 
 /-- No information is lost when passing to all compact-test coordinate
 sections of the algebraic discrete sum. -/
