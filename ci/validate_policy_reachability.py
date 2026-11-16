@@ -40,6 +40,21 @@ def formal_registry_python_roots(path:Path)->set[str]:
                 roots.add(str(command[1]))
     return roots
 
+def lean_colab_python_roots(path:Path)->set[str]:
+    """Protected, hash-locked Colab registry declares real executable launchers."""
+    roots=set()
+    if not path.is_file():
+        return roots
+    data=json.loads(path.read_text(encoding='utf-8'))
+    if data.get('schema')!='GCL-LEAN-COLAB-JOBS/1':
+        raise ValueError('unrecognized Lean/Colab job registry')
+    for job in data.get('jobs',[]):
+        launcher=job.get('launcher')
+        if not isinstance(launcher,str) or not re.fullmatch(r'ci\\.[a-z][a-z_0-9]*',launcher):
+            raise ValueError('invalid governed Colab launcher')
+        roots.add('ci/'+launcher.split('.',1)[1]+'.py')
+    return roots
+
 def workflow_python_roots(root:Path=ROOT)->set[str]:
     roots=set()
     for path in sorted((root/'.github/workflows').glob('*.y*ml')):
@@ -56,6 +71,7 @@ def workflow_python_roots(root:Path=ROOT)->set[str]:
             if len(cmd)>=2 and cmd[0] in {'python','python3'}:roots.add(str(cmd[1]))
     roots.update(registry_python_roots(root/'governance/policy_shard_registry.json'))
     roots.update(formal_registry_python_roots(root/'governance/formal_validation_registry.json'))
+    roots.update(lean_colab_python_roots(root/'governance/lean_colab/JOBS.json'))
     return roots
 
 def ci_modules(root:Path=ROOT)->dict[str,str]:return {p.stem:p.relative_to(root).as_posix() for p in sorted((root/'ci').glob('*.py')) if p.is_file()}
