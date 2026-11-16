@@ -143,7 +143,7 @@ def validate_receipt(data, identity):
         raise ValueError("receipt claims unauthorized authority")
     if (data.get("status") != "GREEN_KERNEL_REPLAY_UNADJUDICATED" or
             not data.get("full_kernel_replay") or not data.get("axioms_observed") or
-            "axioms used:" not in data.get("axiom_report", "") or
+            not any(token in data.get("axiom_report", "") for token in ("axioms used:", "depends on axioms:")) or
             "sorryAx" in data.get("axiom_report", "") or
             data.get("external_commit") !=
             "8822f7ddef30fadbd92e1c6ab4ed897af356af5e" or
