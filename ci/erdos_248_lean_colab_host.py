@@ -45,11 +45,27 @@ def registered_identity():
             "authority": "UNADJUDICATED_COMPUTATIONAL_EVIDENCE_ONLY"}
 
 def project_available():
-    q = ('query{repository(owner:"grandchallenge",name:"MATH-PROGRAMME")'
-         '{issue(number:3204){state labels(first:30){nodes{name}}'
-         'projectItems(first:10){nodes{project{number}'
-         'fieldValues(first:40){nodes{... on ProjectV2ItemFieldSingleSelectValue'
-         '{name field{... on ProjectV2SingleSelectField{name}}}}}}}}}}}')
+    q = """query {
+      repository(owner:"grandchallenge",name:"MATH-PROGRAMME") {
+        issue(number:3204) {
+          state
+          labels(first:30) { nodes { name } }
+          projectItems(first:10) {
+            nodes {
+              project { number }
+              fieldValues(first:40) {
+                nodes {
+                  ... on ProjectV2ItemFieldSingleSelectValue {
+                    name
+                    field { ... on ProjectV2SingleSelectField { name } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }"""
     p = subprocess.run(["gh", "api", "graphql", "-f", "query=" + q],
                        text=True, capture_output=True, timeout=45, check=False)
     if p.returncode:
