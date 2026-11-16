@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""Isolated, nonauthoritative Zensical migration probe for GCL compendia.
+
+Never replace the production MkDocs workflow or write generated files to
+tracked docs/. Build a temporary copy and fail if protected input is missing.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import shutil
+import sys
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "ci"))
+
+from erdos_compendium import build as build_erdos  # noqa: E402
+from erdos_compendium_hook import (  # noqa: E402
+    ERDOS_HOME_MARKER, ERDOS_SHOWCASE_MARKER, ERDOS_LANDING_MARKER,
+    erdos_home_status, erdos_showcase_status, erdos_landing_status,
+)
+from oai26_compendium import build as build_oai26  # noqa: E402
+
+DOCS = ROOT / ".zensical-probe-docs"
+CONFIG = ROOT / "zensical-probe.yml"
+SITE = ROOT / ".zensical-probe-site"
+BASELINE = ROOT / ".mkdocs-probe-site"
+REPORT = ROOT / "zensical-parity-report.json"
+
+SENTINELS = (
+    "index.html",
+    "erdos/catalogue/index.html",
+    "erdos/problems/0001/index.html",
+    "erdos/problems/1221/index.html",
+    "oai26/catalogue/index.html",
+    "oai26/families/001/index.html",
+    "oai26/families/377/index.html",
+    "CMDG_CM4/index.html",
+)
+
+
+def inject(path: Path, marker: str, value: str) -> None:
+    original = path.read_text(encoding="utf-8")
+    if original.count(marker) != 1:
+        raise RuntimeError(f"expected one {marker} in {path}")
+    path.write_text(original.replace(marker, value), encoding="utf-8")
+
+
+def prepare() -> None:
+    for p in (DOCS, CONFIG, SITE):
+        if p.exists():
+            raise RuntimeError(f"refusing to overwrite existing probe material: {p}")
+    shutil.copytree(ROOT / "docs", DOCS, symlinks=False)
+    erdos = build_erdos(output=DOCS / "erdos")
+    oai = build_oai26(output_dir=DOCS / "oai26")
+    if erdos["problems"] != 1221 or erdos["pages"] < 1222:
+        raise RuntimeError(f"Erdős generator incomplete: {erdos}")
+    if oai["families"] != 372 or oai["manuscript_paths"] != 719:
+        raise RuntimeError(f"OAI26 generator incomplete: {oai}")
+
+    inject(DOCS / "index.md", ERDOS_HOME_MARKER, erdos_home_status())
+    inject(DOCS / "SHOWCASE.md", ERDOS_SHOWCASE_MARKER, erdos_showcase_status())
+    inject(DOCS / "erdos" / "index.md", ERDOS_LANDING_MARKER, erdos_landing_status())
+
+    config = yaml.safe_load((ROOT / "mkdocs.yml").read_text(encoding="utf-8"))
+    if config.get("hooks") != ["ci/erdos_compendium_hook.py", "ci/oai26_compendium_hook.py"]:
+        raise RuntimeError("hook inventory changed: do not silently drop new hooks")
+    config.pop("hooks")
+    config["docs_dir"] = DOCS.name
+    config["site_dir"] = SITE.name
+    CONFIG.write_text(yaml.safe_dump(config, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    print(json.dumps({"prepared": True, "erdos": erdos, "oai26": oai}, sort_keys=True))
+
+
+def verify() -> None:
+    if not BASELINE.is_dir() or not SITE.is_dir():
+        raise RuntimeError("both baseline and candidate output directories required")
+    baseline_routes = {p.relative_to(BASELINE).as_posix() for p in BASELINE.rglob("*.html")}
+    candidate_routes = {p.relative_to(SITE).as_posix() for p in SITE.rglob("*.html")}
+    missing = sorted(baseline_routes - candidate_routes)
+    extra = sorted(candidate_routes - baseline_routes)
+    missing_sentinels = [p for p in SENTINELS if not (SITE / p).is_file()]
+    unexpanded = []
+    for path in ("index.html", "SHOWCASE/index.html", "erdos/index.html"):
+        page = SITE / path
+        if page.is_file() and "GCL_ERDOS_" in page.read_text(encoding="utf-8"):
+            unexpanded.append(path)
+    report = {
+        "record_type": "GCL_ZENSICAL_RENDERER_PROBE/1",
+        "candidate_generator": "zensical==0.1.1",
+        "baseline_html_routes": len(baseline_routes),
+        "candidate_html_routes": len(candidate_routes),
+        "missing_count": len(missing),
+        "extra_count": len(extra),
+        "missing_routes_first_40": missing[:40],
+        "extra_routes_first_40": extra[:40],
+        "missing_sentinels": missing_sentinels,
+        "unexpanded_status_markers": unexpanded,
+        "route_parity": not missing and not extra and not missing_sentinels and not unexpanded,
+        "production_switch_authorized": False,
+    }
+    REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(json.dumps(report, sort_keys=True))
+    if not report["route_parity"]:
+        raise SystemExit("Zensical parity FAIL; production MkDocs remains authoritative")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("action", choices=("prepare", "verify"))
+    args = parser.parse_args()
+    if args.action == "prepare":
+        prepare()
+    else:
+        verify()
