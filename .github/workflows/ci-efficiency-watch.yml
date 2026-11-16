@@ -1,0 +1,51 @@
+name: GCL bounded CI efficiency sentinel
+
+on:
+  schedule:
+    - cron: '17 11 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gcl-ci-efficiency-watch
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Observe CI, Pages and GitHub API budget
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run bounded hostile/positive tests
+        run: |
+          python3 ci/test_workflow_conformance_pilot_impact.py
+          python3 ci/test_ci_efficiency_watch.py
+      - name: Read-only bounded observation
+        shell: bash
+        run: |
+          set +e
+          python3 ci/ci_efficiency_watch.py --output "$RUNNER_TEMP/ci-efficiency-watch.json"
+          result=$?
+          if [ -f "$RUNNER_TEMP/ci-efficiency-watch.json" ]; then
+            cat "$RUNNER_TEMP/ci-efficiency-watch.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$result"
+      - name: Preserve hashed readback evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-ci-efficiency-weekly-sentinel
+          path: |
+            ${{ runner.temp }}/ci-efficiency-watch.json
+            ${{ runner.temp }}/ci-efficiency-watch.json.sha256
+          retention-days: 30
+          if-no-files-found: error
