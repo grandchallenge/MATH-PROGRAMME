@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -23,6 +24,7 @@ from erdos_compendium_hook import (  # noqa: E402
     erdos_home_status, erdos_showcase_status, erdos_landing_status,
 )
 from oai26_compendium import build as build_oai26  # noqa: E402
+from zensical_semantic_parity import audit as audit_rendered_content  # noqa: E402
 
 DOCS = ROOT / ".zensical-probe-docs"
 CONFIG = ROOT / "zensical-probe.yml"
@@ -88,8 +90,15 @@ def verify() -> None:
         page = SITE / path
         if page.is_file() and "GCL_ERDOS_" in page.read_text(encoding="utf-8"):
             unexpanded.append(path)
+    semantic = audit_rendered_content(BASELINE, SITE, baseline_routes & candidate_routes)
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report = {
-        "record_type": "GCL_ZENSICAL_RENDERER_PROBE/1",
+        "record_type": "GCL_ZENSICAL_RENDERER_PROBE/2",
+        "source_head": head,
+        "source_locked_erdos_counts": __import__("erdos_compendium_hook").protected_erdos_counts(),
+        "oai26_expected_families": 372,
+        "oai26_expected_manuscript_paths": 719,
+        "rendered_content_audit": semantic,
         "candidate_generator": "zensical==0.1.1",
         "baseline_html_routes": len(baseline_routes),
         "candidate_html_routes": len(candidate_routes),
@@ -100,12 +109,13 @@ def verify() -> None:
         "missing_sentinels": missing_sentinels,
         "unexpanded_status_markers": unexpanded,
         "route_parity": not missing and not extra and not missing_sentinels and not unexpanded,
+        "critical_parity": not missing and not extra and not missing_sentinels and not unexpanded and not semantic["critical_issue_count"],
         "production_switch_authorized": False,
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
-    if not report["route_parity"]:
-        raise SystemExit("Zensical parity FAIL; production MkDocs remains authoritative")
+    if not report["critical_parity"]:
+        raise SystemExit("Zensical critical parity FAIL; production MkDocs remains authoritative")
 
 
 if __name__ == "__main__":
