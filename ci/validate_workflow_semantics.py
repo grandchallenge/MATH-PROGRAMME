@@ -365,9 +365,16 @@ def workflow_semantic_errors(
         errors.append("pages.yml: privileged checkout must use trusted protected main")
     validation_steps = [s for s in build.get("steps", []) if s.get("name") == "Require validated commit to remain current main"]
     if (len(validation_steps) != 1
+            or validation_steps[0].get("id") != "freshness"
             or validation_steps[0].get("env", {}).get("VALIDATED_EVENT_SHA") != "${{ github.event.workflow_run.head_sha }}"
-            or "${VALIDATED_EVENT_SHA}" not in str(validation_steps[0].get("run", ""))):
-        errors.append("pages.yml: trusted main checkout must equal validated workflow event SHA")
+            or "${VALIDATED_EVENT_SHA}" not in str(validation_steps[0].get("run", ""))
+            or '"${validated_sha}" != "${current_main_sha}"' not in str(validation_steps[0].get("run", ""))
+            or '"${VALIDATED_EVENT_SHA}" != "${current_main_sha}"' not in str(validation_steps[0].get("run", ""))
+            or 'current=false' not in str(validation_steps[0].get("run", ""))
+            or 'current=true' not in str(validation_steps[0].get("run", ""))
+            or len(publication) != 1
+            or publication[0].get("if") != "steps.freshness.outputs.current == 'true'"):
+        errors.append("pages.yml: trusted main must be checked and stale validated runs must suppress publication")
     page_runs = job_runs(pages, "build")
     if contains_command(page_runs, DOCS_INSTALL) or contains_command(page_runs, "mkdocs build --strict"):
         errors.append("pages.yml: Pages must deploy the policy artifact without rebuilding documentation")

@@ -35,6 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Require validated commit to remain current main
+        id: freshness
         shell: bash
         env:
           VALIDATED_EVENT_SHA: ${{ github.event.workflow_run.head_sha }}
@@ -43,12 +44,21 @@ jobs:
           git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
           validated_sha="$(git rev-parse HEAD)"
           current_main_sha="$(git rev-parse refs/remotes/origin/main)"
-          if [[ "${validated_sha}" != "${VALIDATED_EVENT_SHA}" || "${validated_sha}" != "${current_main_sha}" ]]; then
-            echo "Validated event SHA, trusted checkout, and current main differ; refusing stale publication."
+          # An older successful main event is benign; it must not publish.
+          # A checkout differing from actual trusted main is an integrity failure.
+          if [[ "${validated_sha}" != "${current_main_sha}" ]]; then
+            echo "Trusted main checkout differs from live protected main; refusing publication." >&2
             exit 1
           fi
+          if [[ "${VALIDATED_EVENT_SHA}" != "${current_main_sha}" ]]; then
+            echo "Validated event is stale; publication is superseded by current main."
+            echo "current=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "current=true" >> "$GITHUB_OUTPUT"
 
       - name: Decide publication necessity using latest successful deployment
+        if: steps.freshness.outputs.current == 'true'
         id: publication
         env:
           GH_TOKEN: ${{ github.token }}
