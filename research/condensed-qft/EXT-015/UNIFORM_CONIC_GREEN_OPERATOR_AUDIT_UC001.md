@@ -44,7 +44,7 @@ Here the first condition is interpreted on the punctured cone, equivalently $C\c
 For a finite set of collision partitions $\mathcal P$, let $C_P=N^*\Delta_P$ be each linear partition-diagonal conormal subspace (with the zero covector excluded). The criterion for ellipticity simultaneously on their entire conormal union is the **finite exact rank test**
 
 $$
-\operatorname{rank}(L|_{C_P})=\dim C_P
+\mathrm{rank}(L|_{C_P})=\dim C_P
 \quad\text{for every }P\in\mathcal P.
 \tag{UC1.3}
 $$
