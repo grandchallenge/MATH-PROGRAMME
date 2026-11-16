@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP228",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP229",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,34 +15,39 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "UC004 frozen primary; distinct source-locked UC005 critical review",
+  "phase": "UC004–006 internal acceptance; final editorial and native protected admission",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "5ee7fe0c95092f30595a19bf23bd7fc40be9616c",
-    "candidate_head_sha": "d22c6a45a835880c90ce6a31a0e8896362fdb44b",
+    "candidate_head_sha": "eb69f1577d96c38f80257e2e9086497babb58e66",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-heat-incidence-uc004-primary-frozen-20261116",
+    "branch": "research/reach-heat-incidence-uc004-review-frozen-20261116",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "critical-heat-incidence-uc005",
-      "description": "Critically review frozen primaryUC004 e3b4a794b022abbf5cd3b4b6c32c48ced94e82d8 and fixtureaf837ab9dfaaccd81523d52f754d88efa55f2704 at d22c6a45a835880c90ce6a31a0e8896362fdb44b. Test full-span rank, legal nonsmoothing witness, grounded classification, conic estimate scope and conditional eleven-edge-host interpretation. One correction maximum; write UC005, then ledgerUC006 and protected admission. General150.L/W/R3/full126.14/M5 remainOPEN."
+      "id": "admit-heat-incidence-uc004-006",
+      "description": "Final editorial review of unchanged frozenUC004 e3b4a794b022abbf5cd3b4b6c32c48ced94e82d8, acceptedUC005 be479a888cd0934d483d54e246d623bdf7439c50, ledgerUC006 cf758a6f9d95293967f61ab6c41169b1f0cf37c4 and four canonical records. Run affected checks/current protected controls; create ordinary PR, native protected queue, exact changed-source/terminal readback, explicit tracker reconciliation. Only then advance to rank-passing three-vertex nonidentity-partition actual source lift UC007. All original remaining obligationsOPEN."
     }
   ],
   "next_action": {
-    "id": "critical-heat-incidence-uc005",
-    "description": "Critically review frozen primaryUC004 e3b4a794b022abbf5cd3b4b6c32c48ced94e82d8 and fixtureaf837ab9dfaaccd81523d52f754d88efa55f2704 at d22c6a45a835880c90ce6a31a0e8896362fdb44b. Test full-span rank, legal nonsmoothing witness, grounded classification, conic estimate scope and conditional eleven-edge-host interpretation. One correction maximum; write UC005, then ledgerUC006 and protected admission. General150.L/W/R3/full126.14/M5 remainOPEN.",
+    "id": "admit-heat-incidence-uc004-006",
+    "description": "Final editorial review of unchanged frozenUC004 e3b4a794b022abbf5cd3b4b6c32c48ced94e82d8, acceptedUC005 be479a888cd0934d483d54e246d623bdf7439c50, ledgerUC006 cf758a6f9d95293967f61ab6c41169b1f0cf37c4 and four canonical records. Run affected checks/current protected controls; create ordinary PR, native protected queue, exact changed-source/terminal readback, explicit tracker reconciliation. Only then advance to rank-passing three-vertex nonidentity-partition actual source lift UC007. All original remaining obligationsOPEN.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_HEAT_INCIDENCE_UC005.md",
-      "research/condensed-qft/EXT-015/HEAT_INCIDENCE_ACCEPTANCE_UC006.md"
+      "research/condensed-qft/EXT-015/HEAT_INCIDENCE_ACCEPTANCE_UC006.md",
+      "research/condensed-qft/EXT-015/REACH_PROGRAMME.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "identity": "Reviewfreezeeb69f1577d96c38f80257e2e9086497babb58e66 criticbe479a888cd0934d483d54e246d623bdf7439c50 ledgercf758a6f9d95293967f61ab6c41169b1f0cf37c4",
+        "kind": "review",
+        "status": "BoundedACCEPT unchangedUC004, zero mathematicalcorrections. Distinctnonauthor reconstructedcontrols/all203hostGrams withoutproducerstate. Same-system/shareddependencyprovenance disclosed. SourcegatesPASS; finaleditorial/nativeadmission pending."
+      },
       {
         "identity": "UC004 primary d22c6a45a835880c90ce6a31a0e8896362fdb44b sourcee3b4a794b022abbf5cd3b4b6c32c48ced94e82d8 fixtureaf837ab9dfaaccd81523d52f754d88efa55f2704",
         "kind": "artifact",
@@ -1882,17 +1887,17 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "FreezeUC004primary",
-    "result": "Distinctcriticalreviewrequired",
+    "action": "RecordUC005boundedACCEPTandUC006ledger",
+    "result": "Finaleditorialandprotectedadmissionpending",
     "evidence_refs": [
-      "research/reach-heat-incidence-uc004-primary-frozen-20261116"
+      "research/reach-heat-incidence-uc004-review-frozen-20261116"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-16T14:20:39.4155616Z"
+    "observed_at": "2026-11-16T14:27:50.3341478Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2041,9 +2046,13 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_UNIFORM_CONIC_UC002.md",
       "research/condensed-qft/EXT-015/UNIFORM_CONIC_ACCEPTANCE_UC003.md",
       "fixtures/algebraic/conic_heat_rank_gate_uc001.py",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3376"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3376",
+      "research/condensed-qft/EXT-015/HEAT_GRAPH_PARTITION_INCIDENCE_UC004.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_HEAT_INCIDENCE_UC005.md",
+      "research/condensed-qft/EXT-015/HEAT_INCIDENCE_ACCEPTANCE_UC006.md",
+      "fixtures/algebraic/heat_graph_partition_incidence_uc004.py"
     ],
-    "instructions": "Critically review frozen primaryUC004 e3b4a794b022abbf5cd3b4b6c32c48ced94e82d8 and fixtureaf837ab9dfaaccd81523d52f754d88efa55f2704 at d22c6a45a835880c90ce6a31a0e8896362fdb44b. Test full-span rank, legal nonsmoothing witness, grounded classification, conic estimate scope and conditional eleven-edge-host interpretation. One correction maximum; write UC005, then ledgerUC006 and protected admission. General150.L/W/R3/full126.14/M5 remainOPEN."
+    "instructions": "Final editorial review of unchanged frozenUC004 e3b4a794b022abbf5cd3b4b6c32c48ced94e82d8, acceptedUC005 be479a888cd0934d483d54e246d623bdf7439c50, ledgerUC006 cf758a6f9d95293967f61ab6c41169b1f0cf37c4 and four canonical records. Run affected checks/current protected controls; create ordinary PR, native protected queue, exact changed-source/terminal readback, explicit tracker reconciliation. Only then advance to rank-passing three-vertex nonidentity-partition actual source lift UC007. All original remaining obligationsOPEN."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
