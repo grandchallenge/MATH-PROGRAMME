@@ -37,10 +37,14 @@ noncomputable def gsBasisCondensedCoefficientFan (S : Profinite.{u}) :
 because the inclusion of sheaves creates limits. -/
 noncomputable def gsBasisCondensedCoefficientFanIsLimit (S : Profinite.{u}) :
     IsLimit (gsBasisCondensedCoefficientFan S) := by
+  change IsLimit (Fan.mk (gsBasisInternalHomCondensed S)
+    (fun i => ObjectProperty.homMk (gsBasisEnrichedCoordinatePresheaf S i)))
   apply (isLimitOfIsLimitFanMkObj
     (sheafToPresheaf (coherentTopology CompHaus.{u})
       (ModuleCat.{u + 1} R.{u}))
+    (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff.{u})
     (fun i => ObjectProperty.homMk (gsBasisEnrichedCoordinatePresheaf S i)))
+  change IsLimit (gsBasisEnrichedCoefficientFan S)
   exact gsBasisEnrichedCoefficientFanIsLimit S
 
 /-- An actual categorical isomorphism in CondensedMod, not merely
@@ -78,7 +82,7 @@ theorem gsFreeSolidToCoefficientProduct_eq_iso_hom
     (freeSolidToBasisInternalHomCondensedIso S).hom ≫
       (gsBasisCondensedToCoefficientProductIso S).hom ≫
         Pi.π (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff.{u}) i
-  rw [Category.assoc, gsBasisCondensedToCoefficientProductIso_projection]
+  rw [gsBasisCondensedToCoefficientProductIso_projection]
   rfl
 
 /-- The preexisting canonical comparison is a genuine isomorphism. -/
