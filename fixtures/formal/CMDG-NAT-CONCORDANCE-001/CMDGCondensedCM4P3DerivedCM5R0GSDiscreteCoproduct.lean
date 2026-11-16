@@ -58,6 +58,18 @@ noncomputable def gsBasisDiscreteCondensedCoconeIsColimit
     (CondensedMod.LocallyConstant.functor R.{u})
     (gsBasisModuleFinsuppCoconeIsColimit S)
 
+/-- A bounded, explicit HasCoproduct witness constructed from the actual
+mapped Finsupp colimit. This avoids searching globally for all arbitrary
+colimits of condensed modules, while retaining the full universal property. -/
+noncomputable instance gsBasisDiscreteCoeffHasCoproduct
+    (S : Profinite.{u}) :
+    HasCoproduct (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff) :=
+  HasColimit.mk
+    ⟨(CondensedMod.LocallyConstant.functor R.{u}).mapCocone
+        (ModuleCat.finsuppCocone R.{u} R.{u}
+          (LiftedSourceBasisIndex S)),
+      gsBasisDiscreteCondensedCoconeIsColimit S⟩
+
 /-- The Nöbeling source is genuinely a categorical coproduct in
 the actual condensed-module category, not only in underlying modules.
 The canonical rank-one summands are the exact discrete integer
@@ -77,6 +89,7 @@ noncomputable def gsBasisDiscreteSourceCoproductIso
 
 #print axioms gsBasisModuleFinsuppCoconeIsColimit
 #print axioms gsBasisDiscreteCondensedCoconeIsColimit
+#print axioms gsBasisDiscreteCoeffHasCoproduct
 #print axioms gsBasisDiscreteSourceCoproductIso
 
 end CMDG.CondensedCM5R0
