@@ -55,7 +55,7 @@ theorem gsLocallyConstantFinsupp_coordinate_assemble
   by_cases hij : i = j
   · subst j
     simp
-  · simp
+  · simp [Ne.symm hij]
 
 /-- Every finite family of locally constant coordinate sections comes from
 a locally constant section of the infinite discrete Finsupp sum. -/
