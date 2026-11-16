@@ -118,6 +118,32 @@ class Github:
             return None
         return json.loads(raw.decode("utf-8"))
 
+    def matching_intake_refs(self) -> set[str] | None:
+        """Read exact intake ref inventory once, not one GET per absent binding.
+
+        The Git matching-refs endpoint is an authoritative *nonempty* inventory.
+        Empty/404 inventories retain the previous per-binding conservative
+        contents fallback, so a disabled/unsupported route never drops intake.
+        """
+        try:
+            rows = self.get_optional(f"/repos/{OWNER}/{REPO}/git/matching-refs/heads/intake/")
+        except ControllerError:
+            raise  # Permission and rate errors are not missing-ref evidence.
+        if not rows:
+            return None
+        if not isinstance(rows, list):
+            raise ControllerError("intake matching-ref inventory is malformed")
+        refs: set[str] = set()
+        prefix = "refs/heads/intake/"
+        for row in rows:
+            if not isinstance(row, dict) or not isinstance(row.get("ref"), str):
+                raise ControllerError("intake matching-ref item is malformed")
+            ref = row["ref"]
+            if not ref.startswith(prefix) or not ref[len(prefix):]:
+                raise ControllerError("intake matching-ref outside scoped prefix")
+            refs.add(ref[len("refs/heads/"):])
+        return refs
+
     def get_optional(self, path: str) -> Any | None:
         try:
             return self.request("GET", path)
@@ -248,6 +274,14 @@ def fetch_text(gh: Github, path: str, ref: str) -> tuple[str, str]:
     return content_text(item), sha
 
 
+def _known_intake_branch(ref: str) -> bool:
+    try:
+        profile_for_branch(ref)
+    except ControllerError:
+        return False
+    return True
+
+
 def list_intake_branches(gh: Github) -> list[str]:
     """Discover exact registered intake heads, including branches without PRs.
 
@@ -258,6 +292,10 @@ def list_intake_branches(gh: Github) -> list[str]:
     protected dispatch, exact path set, raw bytes and source identity.
     """
     bindings = protected_queue_bindings(gh)
+    # Legacy fakes and installs without matching-ref support retain exactly
+    # the original conservative discovery behavior.
+    inventory_reader = getattr(gh, "matching_intake_refs", None)
+    matching = inventory_reader() if callable(inventory_reader) else None
     queue_heads = {
         profile_for_queue_binding(binding).branch_prefix for binding in bindings
     }
@@ -297,13 +335,21 @@ def list_intake_branches(gh: Github) -> list[str]:
                 break
             page += 1
 
-    # The protected queue manifest gives an exact fallback even where
-    # listing an installation's branch refs returns no visible heads.
+    # Preserve discovery through the original branches and PR surfaces. A
+    # contradictory matching-ref inventory is not trusted for negative hits.
+    inventory_consistent = matching is not None and names.issubset(matching)
+    if inventory_consistent:
+        names.update(ref for ref in matching if ref in queue_heads or _known_intake_branch(ref))
+
+    # Only a complete, consistent ref inventory can prove a bound branch
+    # absent. Otherwise preserve the exact old per-binding contents fallback.
     for binding in bindings:
         profile = profile_for_queue_binding(binding)
         branch = profile.branch_prefix
         if branch in names:
             continue
+        if inventory_consistent:
+            continue  # Absence established by the authoritative ref listing.
         receipt_directory = f"{profile.base}/receipts/{binding['dispatch_id']}"
         encoded = urllib.parse.quote(receipt_directory, safe="/")
         ref = urllib.parse.quote(branch, safe="")

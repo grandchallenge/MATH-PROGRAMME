@@ -131,6 +131,61 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             ["intake/gcl-e2e-canary-003-ia-001"],
         )
 
+    def test_matching_ref_inventory_eliminates_twenty_absent_binding_probes(self) -> None:
+        bindings = [
+            {"dispatch_id": f"RH-R{n:03d}-WP-A-IA-001",
+             "campaign": "RH-001",
+             "dispatch_path": (f"contributions/RH-001/dispatches/"
+                               f"RH-R{n:03d}-WP-A-IA-001.json")}
+            for n in range(20)
+        ]
+        import unittest.mock as mock
+        from ci.ns_ci_intake_pr_controller import Github
+        class InventoryGithub:
+            def __init__(self):
+                self.calls=[]
+            def matching_intake_refs(self):
+                self.calls.append("inventory")
+                return {"intake/gcl-e2e-canary-003-ia-001"}
+            def request(self, method,path):
+                self.calls.append(path)
+                if "/branches?" in path:
+                    return [{"name":"intake/gcl-e2e-canary-003-ia-001"}]
+                if "/pulls?" in path:return []
+                raise AssertionError("unnecessary individual API read: " + path)
+            def get_optional(self,path):
+                raise AssertionError("unnecessary fallback: " + path)
+        gh=InventoryGithub()
+        with mock.patch('ci.ns_ci_intake_pr_controller.protected_queue_bindings', return_value=bindings):
+            names=list_intake_branches(gh)
+        self.assertEqual(names,["intake/gcl-e2e-canary-003-ia-001"])
+        self.assertEqual(len(gh.calls),3)
+
+    def test_conflicting_inventory_preserves_protected_binding_fallback(self) -> None:
+        import unittest.mock as mock
+        binding={"dispatch_id":"RH-R057-WP-A-IA-001", "campaign":"RH-001",
+                 "dispatch_path":"contributions/RH-001/dispatches/RH-R057-WP-A-IA-001.json"}
+        class ContradictoryInventory:
+            def matching_intake_refs(self):return {"intake/unrelated"}
+            def request(self, method,path):
+                if "/branches?" in path:return [{"name":"intake/rh-r057-wp-a-ia-001"}]
+                if "/pulls?" in path:return []
+                raise AssertionError(path)
+            def get_optional(self,path):return None
+        gh=ContradictoryInventory()
+        with mock.patch('ci.ns_ci_intake_pr_controller.protected_queue_bindings',return_value=[binding]):
+            self.assertEqual(list_intake_branches(gh),["intake/rh-r057-wp-a-ia-001"])
+
+    def test_malformed_ref_inventory_is_rejected_not_negative_evidence(self) -> None:
+        from ci.ns_ci_intake_pr_controller import Github
+        import unittest.mock as mock
+        with mock.patch.object(Github, 'get_optional', return_value=[{"ref":"refs/heads/main"}]):
+            with self.assertRaisesRegex(ControllerError, 'outside scoped prefix'):
+                Github('placeholder').matching_intake_refs()
+        with mock.patch.object(Github, 'get_optional', side_effect=ControllerError('HTTP 403: API rate limit exceeded')):
+            with self.assertRaisesRegex(ControllerError, 'rate limit'):
+                Github('placeholder').matching_intake_refs()
+
     def test_branch_listing_fails_closed_when_malformed(self) -> None:
         class FakeGithub:
             def get_optional(self, path):
