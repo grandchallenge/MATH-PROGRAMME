@@ -63,7 +63,7 @@ mapped Finsupp colimit. This avoids searching globally for all arbitrary
 colimits of condensed modules, while retaining the full universal property. -/
 noncomputable instance gsBasisDiscreteCoeffHasCoproduct
     (S : Profinite.{u}) :
-    HasCoproduct (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff) :=
+    HasCoproduct (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff.{u}) :=
   HasColimit.mk
     ⟨(CondensedMod.LocallyConstant.functor R.{u}).mapCocone
         (ModuleCat.finsuppCocone R.{u} R.{u}
@@ -76,16 +76,15 @@ The canonical rank-one summands are the exact discrete integer
 coefficient sheaves consumed by the protected Ext¹ theorem. -/
 noncomputable def gsBasisDiscreteSourceCoproductIso
     (S : Profinite.{u}) :
-    (∐ (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff)) ≅
+    (∐ (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff.{u})) ≅
       gsBasisDiscreteSourceCondensed S := by
   letI : (CondensedMod.LocallyConstant.functor R.{u}).IsLeftAdjoint :=
     (CondensedMod.LocallyConstant.adjunction R.{u}).isLeftAdjoint
-  exact
+  exact IsColimit.coconePointUniqueUpToIso
     (colimit.isColimit
       (Discrete.functor
-        (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff)))
-      .coconePointUniqueUpToIso
-        (gsBasisDiscreteCondensedCoconeIsColimit S)
+        (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff.{u})))
+    (gsBasisDiscreteCondensedCoconeIsColimit S)
 
 #print axioms gsBasisModuleFinsuppCoconeIsColimit
 #print axioms gsBasisDiscreteCondensedCoconeIsColimit
