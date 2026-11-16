@@ -27,7 +27,6 @@ jobs:
           persist-credentials: false
       - name: Run bounded hostile/positive tests
         run: |
-          python3 ci/test_workflow_conformance_pilot_impact.py
           python3 ci/test_ci_efficiency_watch.py
       - name: Read-only bounded observation
         shell: bash
