@@ -1,0 +1,40 @@
+name: Zensical compatibility probe (non-production)
+on:
+  pull_request:
+    paths:
+      - ci/zensical_parity_probe.py
+      - .github/workflows/zensical-parity.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  parity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - name: Install pinned baseline and candidate generators
+        run: python -m pip install -r requirements/docs.txt zensical==0.1.1
+      - name: Build source-validated MkDocs baseline
+        run: mkdocs build --clean --site-dir .mkdocs-probe-site
+      - name: Materialize governed compendia independently of MkDocs hooks
+        run: python ci/zensical_parity_probe.py prepare
+      - name: Build isolated Zensical candidate
+        run: zensical build --config-file zensical-probe.yml --clean
+      - name: Compare all HTML routes and required sentinels
+        run: python ci/zensical_parity_probe.py verify
+      - name: Preserve parity report when available
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: zensical-parity-report
+          path: |
+            zensical-parity-report.json
+            zensical-probe.yml
+          if-no-files-found: ignore
+          retention-days: 14
