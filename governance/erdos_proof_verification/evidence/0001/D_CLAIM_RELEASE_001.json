@@ -1,0 +1,62 @@
+{
+  "record_type": "ERDOS_PV_0001_D_PROTECTED_CLAIM_RELEASE/1",
+  "assignment_id": "ERDOS-PV-0001-D",
+  "problem_id": 1,
+  "phase": "D",
+  "cohort_issue": 3251,
+  "source_issue": 1270,
+  "source_issue_body_sha256": "96f2a163ff4e2619a6ef8b9d4fccc1db157c205612a3711d87ea9e4ca3ac26e1",
+  "result_comment": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6886589880",
+  "result_comment_count": 1,
+  "source_admission": {
+    "pr": 3347,
+    "merge_sha": "bcad3e1b206674fbe090d29496fab75876629241"
+  },
+  "custody": {
+    "pr": 3351,
+    "merge_sha": "9988befb3087d00c29f48cc1fbf4d154f13d75c7",
+    "stage_status": "PROTECTED_ADMITTED",
+    "individual_closure": "ADMITTED_BOUNDED_COMPLETE"
+  },
+  "pre_release": {
+    "protected_main_sha": "c999e3090f2483b5ee85a63dfaf35f09aa9cc290",
+    "continuity_verification": "PASS_EXACT_HELD_BRANCH_AND_ISSUE",
+    "manifest_validator": "PASS_1221_PROBLEMS_58_PROJECT_ISSUES_1_BOUNDED_TERMINAL",
+    "result_contract_tests": "12_PASS",
+    "exact_pre_release_claim_sha": "7ca928d43b142c951bd495c62412427e3bdfd76c"
+  },
+  "release": {
+    "actor_login": "fyremael",
+    "os_account": "jim",
+    "execution_origin": "CHAD_OS_ACCOUNT_THROUGH_GCL_CONTROL; NOT_INDEPENDENTLY_ATTESTED",
+    "tool": "ci/erdos_pv_worker_lease.py",
+    "action": "release",
+    "command_exit_code": 0,
+    "result": "RELEASED_AFTER_PROTECTED_READBACK",
+    "exact_ref": "refs/heads/gcl-pv-claims/ERDOS-PV-0001-D",
+    "claim_sha": "7ca928d43b142c951bd495c62412427e3bdfd76c",
+    "evidence_admission_sha": "bcad3e1b206674fbe090d29496fab75876629241",
+    "chad_execution_capture_id": "ed6e74e5c3574dd8b6227ca1f65d4d69",
+    "chad_execution_capture_sha256": "989ac79b71268a206548c2b7800bdb80a9599a104686a76222e51a5cd1d8f597",
+    "chad_output_sha256": "76ca096f26c8b4883b1ec2a7cb73f8acf29c71795ffa95495e85c7f30c2b49f3"
+  },
+  "independent_post_release": {
+    "provider": "GITHUB_API",
+    "request": "GET /repos/grandchallenge/MATH-PROGRAMME/git/ref/heads/gcl-pv-claims/ERDOS-PV-0001-D",
+    "response_status": 404,
+    "ref_absent": true,
+    "protected_main_sha": "c999e3090f2483b5ee85a63dfaf35f09aa9cc290",
+    "unique_result_comment_id": 6886589880,
+    "cohort_issue_open": true,
+    "evidence_comment": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3251#issuecomment-6904607467"
+  },
+  "observed_recorded_utc": "2026-11-16T01:15:14.089Z",
+  "boundaries": {
+    "global_source_proof_independently_adjudicated": false,
+    "independent_human_referee": false,
+    "mathcert_certified": false,
+    "cohort_fully_verified": false,
+    "unattended_dispatcher_operational": false
+  },
+  "next_programme_obligation": "grandchallenge/MATH-PROGRAMME#3265; also continue individual A-stage source work and separate #248 proof pilot"
+}
