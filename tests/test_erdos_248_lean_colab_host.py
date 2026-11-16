@@ -1,5 +1,7 @@
 """Hostile tests for governed one-shot Colab allocation and receipt verification."""
 import copy
+import hashlib
+import tarfile
 import tempfile
 from pathlib import Path
 import unittest
@@ -19,6 +21,8 @@ class Erdos248HostTests(unittest.TestCase):
           "source_sha256": "a"*64, "worker_sha256": "b"*64,
           "status": "GREEN_KERNEL_REPLAY_UNADJUDICATED", "full_kernel_replay": True,
           "axioms_observed": True, "axiom_report": "axioms used: [propext]",
+          "theorem_type_observed": True, "theorem_audit_log_sha256": "f"*64,
+          "log_archive_sha256": "f"*64,
           "authority_effects": {
               "mathematical_certification": False, "publication": False,
               "protected_state_mutation": False, "source_adjudication": False},
@@ -39,6 +43,8 @@ class Erdos248HostTests(unittest.TestCase):
         for mutate in (
             lambda d: d.update(status="RED"),
             lambda d: d.update(axioms_observed=False),
+            lambda d: d.update(theorem_type_observed=False),
+            lambda d: d.update(log_archive_sha256=None),
             lambda d: d.update(full_kernel_replay=False),
             lambda d: d["authority_effects"].update(mathematical_certification=True),
             lambda d: d.update(source_sha256="c"*64),
@@ -63,7 +69,7 @@ class Erdos248HostTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "red"):
                     h.launch("colab", Path(directory))
             self.assertEqual(steps, ["new", "upload", "upload", "exec",
-                                      "download", "stop"])
+                                      "download", "download", "stop"])
 
     def test_success_cleanup(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -72,6 +78,33 @@ class Erdos248HostTests(unittest.TestCase):
                               actions.append(argv[2])):
                 h.launch("colab", Path(directory))
             self.assertEqual(actions[-1], "stop")
+
+    def test_archive_log_digest_check(self):
+        import io
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            report = self.good()
+            report["steps"] = [
+                {"stage": "axiom-audit", "exit_code": 0,
+                 "stdout_sha256": hashlib.sha256(b"checked").hexdigest(),
+                 "stderr_sha256": hashlib.sha256(b"").hexdigest()}
+            ]
+            audit = b"import ErdosProblems.Erdos248"
+            report["audit_source_sha256"] = hashlib.sha256(audit).hexdigest()
+            archive = root / "logs.tar.gz"
+            with tarfile.open(archive, mode="w:gz") as tar:
+                for name, data in (("logs/axiom-audit.out", b"checked"),
+                                   ("logs/axiom-audit.err", b""),
+                                   ("Erdos248ReplayAudit.lean", audit)):
+                    info = tarfile.TarInfo(name)
+                    info.size = len(data)
+                    tar.addfile(info, io.BytesIO(data))
+            report["log_archive_sha256"] = h.digest(archive)
+            report["log_archive_bytes"] = archive.stat().st_size
+            self.assertTrue(h.validate_log_archive(report, archive))
+            report["steps"][0]["stdout_sha256"] = "0"*64
+            with self.assertRaisesRegex(ValueError, "digest mismatch"):
+                h.validate_log_archive(report, archive)
 
     def test_queue_state_strict(self):
         rows = {"data": {"repository": {"issue": {
