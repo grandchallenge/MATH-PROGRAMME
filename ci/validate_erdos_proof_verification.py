@@ -39,6 +39,29 @@ def validate_manifest(data: dict, schema: dict) -> None:
     if data['stage_results']['REPLAY_EXECUTION'] == 'PASS':
         require(data['proof_receipts'] and data['toolchain_pins'], f'replay PASS missing receipt or toolchain: {n}')
         require(data['stage_results']['STATEMENT_EQUIVALENCE'] == 'PASS', f'replay PASS lacks semantic review: {n}')
+        if n == 248:
+            # This lane has a machine-readable exact-worker receipt. A preserved
+            # RED failure is evidence of execution, not evidence of proof replay.
+            receipts = []
+            for path in data['proof_receipts']:
+                if isinstance(path, str) and path.endswith('.receipt.json'):
+                    receipts.append(load(path))
+            require(any(
+                r.get('schema') == 'GCL-ERDOS-248-LEAN-REPLAY/1'
+                and r.get('job') == 'ERDOS-0248-LEAN-REPLAY-001'
+                and r.get('status') == 'GREEN_KERNEL_REPLAY_UNADJUDICATED'
+                and r.get('full_kernel_replay') is True
+                and r.get('axioms_observed') is True
+                and r.get('theorem_type_observed') is True
+                and r.get('source_mode') == 'PINNED_PROVIDER_WITH_DECLARED_COMPATIBILITY_PATCHES'
+                and r.get('source_sha256') ==
+                    '292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267'
+                and r.get('external_commit') ==
+                    '8822f7ddef30fadbd92e1c6ab4ed897af356af5e'
+                and r.get('mathlib_commit') ==
+                    'db584cd6d46c92f209a44c0f1c829460d327499d'
+                for r in receipts
+            ), 'Erdos248 replay PASS requires a real pinned GREEN kernel/axiom receipt')
     if data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS':
         require(data['review_receipts'], f'review PASS missing independent receipt: {n}')
     if data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS':
