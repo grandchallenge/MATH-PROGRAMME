@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -23,6 +24,9 @@ from erdos_compendium_hook import (  # noqa: E402
     erdos_home_status, erdos_showcase_status, erdos_landing_status,
 )
 from oai26_compendium import build as build_oai26  # noqa: E402
+from zensical_semantic_parity import (  # noqa: E402
+    audit as audit_rendered_content, governed_asset_census, search_parity)
+from zensical_documentary_assets import rewrite_temporary_docs  # noqa: E402
 
 DOCS = ROOT / ".zensical-probe-docs"
 CONFIG = ROOT / "zensical-probe.yml"
@@ -54,6 +58,7 @@ def prepare() -> None:
         if p.exists():
             raise RuntimeError(f"refusing to overwrite existing probe material: {p}")
     shutil.copytree(ROOT / "docs", DOCS, symlinks=False)
+    documentary_assets = rewrite_temporary_docs(DOCS)
     erdos = build_erdos(output=DOCS / "erdos")
     oai = build_oai26(output_dir=DOCS / "oai26")
     if erdos["problems"] != 1221 or erdos["pages"] < 1222:
@@ -72,7 +77,8 @@ def prepare() -> None:
     config["docs_dir"] = DOCS.name
     config["site_dir"] = SITE.name
     CONFIG.write_text(yaml.safe_dump(config, sort_keys=False, allow_unicode=True), encoding="utf-8")
-    print(json.dumps({"prepared": True, "erdos": erdos, "oai26": oai}, sort_keys=True))
+    print(json.dumps({"prepared": True, "erdos": erdos, "oai26": oai,
+                      "temporary_documentary_asset_rebases": documentary_assets}, sort_keys=True))
 
 
 def verify() -> None:
@@ -88,8 +94,19 @@ def verify() -> None:
         page = SITE / path
         if page.is_file() and "GCL_ERDOS_" in page.read_text(encoding="utf-8"):
             unexpanded.append(path)
+    semantic = audit_rendered_content(BASELINE, SITE, baseline_routes & candidate_routes)
+    assets = governed_asset_census(BASELINE,SITE)
+    search = search_parity(BASELINE,SITE,baseline_routes & candidate_routes)
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report = {
-        "record_type": "GCL_ZENSICAL_RENDERER_PROBE/1",
+        "record_type": "GCL_ZENSICAL_RENDERER_PROBE/2",
+        "source_head": head,
+        "source_locked_erdos_counts": __import__("erdos_compendium_hook").protected_erdos_counts(),
+        "oai26_expected_families": 372,
+        "oai26_expected_manuscript_paths": 719,
+        "rendered_content_audit": semantic,
+        "governed_static_asset_parity": assets,
+        "search_index_audit": search,
         "candidate_generator": "zensical==0.1.1",
         "baseline_html_routes": len(baseline_routes),
         "candidate_html_routes": len(candidate_routes),
@@ -100,12 +117,16 @@ def verify() -> None:
         "missing_sentinels": missing_sentinels,
         "unexpanded_status_markers": unexpanded,
         "route_parity": not missing and not extra and not missing_sentinels and not unexpanded,
+        "critical_parity": not missing and not extra and not missing_sentinels and not unexpanded
+            and not semantic["critical_issue_count"]
+            and assets["byte_identical_on_shared_source_assets"]
+            and search["search_parity_proven"],
         "production_switch_authorized": False,
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
-    if not report["route_parity"]:
-        raise SystemExit("Zensical parity FAIL; production MkDocs remains authoritative")
+    if not report["critical_parity"]:
+        raise SystemExit("Zensical critical parity FAIL; production MkDocs remains authoritative")
 
 
 if __name__ == "__main__":
