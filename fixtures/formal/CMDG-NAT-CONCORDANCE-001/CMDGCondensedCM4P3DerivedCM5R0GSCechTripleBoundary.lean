@@ -79,6 +79,7 @@ private noncomputable def stoneanCechExtraPair
   let p := Profinite.presentation.π T
   refine pullback.lift (𝟙 _) (p ≫ s) ?_
   simp only [Category.id_comp, Category.assoc, hs, Category.comp_id]
+  rfl
 
 /-- Extra triple (x,y,s(p(x))) on the actual Cech pair object. -/
 private noncomputable def stoneanCechExtraTriple
@@ -90,6 +91,7 @@ private noncomputable def stoneanCechExtraTriple
   let p := Profinite.presentation.π T
   refine pullback.lift (𝟙 _) ((pullback.fst p p ≫ p) ≫ s) ?_
   simp only [Category.id_comp, Category.assoc, hs, Category.comp_id]
+  rfl
 
 private theorem stoneanCechExtraTriple_xy
     (T : Profinite.{u})
@@ -97,7 +99,7 @@ private theorem stoneanCechExtraTriple_xy
     (hs : s ≫ Profinite.presentation.π T = 𝟙 T) :
     stoneanCechExtraTriple T s hs ≫ stoneanCechTripleXY T =
       𝟙 (stoneanPresentationCechPairs T) := by
-  simp [stoneanCechExtraTriple, stoneanCechTripleXY]
+  exact pullback.lift_fst _ _ _
 
 private theorem stoneanCechExtraTriple_xz
     (T : Profinite.{u})
@@ -107,11 +109,54 @@ private theorem stoneanCechExtraTriple_xz
       pullback.fst (Profinite.presentation.π T)
         (Profinite.presentation.π T) ≫
       stoneanCechExtraPair T s hs := by
+  let p := Profinite.presentation.π T
+  have hXZfst : stoneanCechTripleXZ T ≫ pullback.fst p p =
+      stoneanCechTripleXY T ≫ pullback.fst p p :=
+    pullback.lift_fst _ _ _
+  have hXZsnd : stoneanCechTripleXZ T ≫ pullback.snd p p =
+      stoneanCechTripleZ T :=
+    pullback.lift_snd _ _ _
+  have hPairFst : stoneanCechExtraPair T s hs ≫ pullback.fst p p =
+      𝟙 (Stonean.toProfinite.obj T.presentation) :=
+    pullback.lift_fst _ _ _
+  have hPairSnd : stoneanCechExtraPair T s hs ≫ pullback.snd p p =
+      p ≫ s :=
+    pullback.lift_snd _ _ _
+  have hExtraZ : stoneanCechExtraTriple T s hs ≫ stoneanCechTripleZ T =
+      (pullback.fst p p ≫ p) ≫ s :=
+    pullback.lift_snd _ _ _
   apply pullback.hom_ext
-  · simp [stoneanCechTripleXZ, stoneanCechExtraTriple,
-      stoneanCechExtraPair, Category.assoc]
-  · simp [stoneanCechTripleXZ, stoneanCechExtraTriple,
-      stoneanCechExtraPair, Category.assoc]
+  · calc
+      (stoneanCechExtraTriple T s hs ≫ stoneanCechTripleXZ T) ≫
+          pullback.fst p p =
+        stoneanCechExtraTriple T s hs ≫
+          (stoneanCechTripleXZ T ≫ pullback.fst p p) :=
+          Category.assoc _ _ _
+      _ = stoneanCechExtraTriple T s hs ≫
+          (stoneanCechTripleXY T ≫ pullback.fst p p) := by rw [hXZfst]
+      _ = (stoneanCechExtraTriple T s hs ≫ stoneanCechTripleXY T) ≫
+          pullback.fst p p := (Category.assoc _ _ _).symm
+      _ = pullback.fst p p := by
+        rw [stoneanCechExtraTriple_xy, Category.id_comp]
+      _ = pullback.fst p p ≫
+          (stoneanCechExtraPair T s hs ≫ pullback.fst p p) := by
+        rw [hPairFst, Category.comp_id]
+      _ = (pullback.fst p p ≫ stoneanCechExtraPair T s hs) ≫
+          pullback.fst p p := (Category.assoc _ _ _).symm
+  · calc
+      (stoneanCechExtraTriple T s hs ≫ stoneanCechTripleXZ T) ≫
+          pullback.snd p p =
+        stoneanCechExtraTriple T s hs ≫
+          (stoneanCechTripleXZ T ≫ pullback.snd p p) :=
+          Category.assoc _ _ _
+      _ = stoneanCechExtraTriple T s hs ≫ stoneanCechTripleZ T := by
+        rw [hXZsnd]
+      _ = (pullback.fst p p ≫ p) ≫ s := hExtraZ
+      _ = pullback.fst p p ≫ (p ≫ s) := Category.assoc _ _ _
+      _ = pullback.fst p p ≫
+          (stoneanCechExtraPair T s hs ≫ pullback.snd p p) := by rw [hPairSnd]
+      _ = (pullback.fst p p ≫ stoneanCechExtraPair T s hs) ≫
+          pullback.snd p p := (Category.assoc _ _ _).symm
 
 private theorem stoneanCechExtraTriple_yz
     (T : Profinite.{u})
@@ -121,11 +166,55 @@ private theorem stoneanCechExtraTriple_yz
       pullback.snd (Profinite.presentation.π T)
         (Profinite.presentation.π T) ≫
       stoneanCechExtraPair T s hs := by
+  let p := Profinite.presentation.π T
+  have hYZfst : stoneanCechTripleYZ T ≫ pullback.fst p p =
+      stoneanCechTripleXY T ≫ pullback.snd p p :=
+    pullback.lift_fst _ _ _
+  have hYZsnd : stoneanCechTripleYZ T ≫ pullback.snd p p =
+      stoneanCechTripleZ T :=
+    pullback.lift_snd _ _ _
+  have hPairFst : stoneanCechExtraPair T s hs ≫ pullback.fst p p =
+      𝟙 (Stonean.toProfinite.obj T.presentation) :=
+    pullback.lift_fst _ _ _
+  have hPairSnd : stoneanCechExtraPair T s hs ≫ pullback.snd p p =
+      p ≫ s :=
+    pullback.lift_snd _ _ _
+  have hExtraZ : stoneanCechExtraTriple T s hs ≫ stoneanCechTripleZ T =
+      (pullback.fst p p ≫ p) ≫ s :=
+    pullback.lift_snd _ _ _
   apply pullback.hom_ext
-  · simp [stoneanCechTripleYZ, stoneanCechExtraTriple,
-      stoneanCechExtraPair, Category.assoc]
-  · simp [stoneanCechTripleYZ, stoneanCechExtraTriple,
-      stoneanCechExtraPair, Category.assoc]
+  · calc
+      (stoneanCechExtraTriple T s hs ≫ stoneanCechTripleYZ T) ≫
+          pullback.fst p p =
+        stoneanCechExtraTriple T s hs ≫
+          (stoneanCechTripleYZ T ≫ pullback.fst p p) :=
+          Category.assoc _ _ _
+      _ = stoneanCechExtraTriple T s hs ≫
+          (stoneanCechTripleXY T ≫ pullback.snd p p) := by rw [hYZfst]
+      _ = (stoneanCechExtraTriple T s hs ≫ stoneanCechTripleXY T) ≫
+          pullback.snd p p := (Category.assoc _ _ _).symm
+      _ = pullback.snd p p := by
+        rw [stoneanCechExtraTriple_xy, Category.id_comp]
+      _ = pullback.snd p p ≫
+          (stoneanCechExtraPair T s hs ≫ pullback.fst p p) := by
+        rw [hPairFst, Category.comp_id]
+      _ = (pullback.snd p p ≫ stoneanCechExtraPair T s hs) ≫
+          pullback.fst p p := (Category.assoc _ _ _).symm
+  · calc
+      (stoneanCechExtraTriple T s hs ≫ stoneanCechTripleYZ T) ≫
+          pullback.snd p p =
+        stoneanCechExtraTriple T s hs ≫
+          (stoneanCechTripleYZ T ≫ pullback.snd p p) :=
+          Category.assoc _ _ _
+      _ = stoneanCechExtraTriple T s hs ≫ stoneanCechTripleZ T := by
+        rw [hYZsnd]
+      _ = (pullback.fst p p ≫ p) ≫ s := hExtraZ
+      _ = (pullback.snd p p ≫ p) ≫ s := by rw [pullback.condition]
+      _ = pullback.snd p p ≫ (p ≫ s) := Category.assoc _ _ _
+      _ = pullback.snd p p ≫
+          (stoneanCechExtraPair T s hs ≫ pullback.snd p p) := by rw [hPairSnd]
+      _ = (pullback.snd p p ≫ stoneanCechExtraPair T s hs) ≫
+          pullback.snd p p := (Category.assoc _ _ _).symm
 
 /-- Explicit contracting identity in the free condensed-module category:
 d2(x,y,s(p(x))) = d1(x,y) carried into the split pair - (x,y).
@@ -143,7 +232,8 @@ theorem stoneanCechTripleBoundary_split_contraction
   unfold stoneanCechTripleBoundary stoneanCechDifference
   simp only [Preadditive.comp_sub, Preadditive.sub_comp, ← Functor.map_comp,
     stoneanCechExtraTriple_xy, stoneanCechExtraTriple_xz,
-    stoneanCechExtraTriple_yz, Functor.map_id, Category.comp_id]
+    stoneanCechExtraTriple_yz]
+  simp only [Functor.map_id]
   abel
 
 /-- Every triple relation generates the entire second kernel if the
@@ -174,7 +264,7 @@ theorem stoneanCechTripleToSecondRelation_split
   refine ⟨-(i ≫ h), ?_⟩
   apply (cancel_mono i).1
   calc
-    (-(i ≫ h) ≫ stoneanCechTripleToSecondRelation T) ≫ i =
+    ((-i ≫ h) ≫ stoneanCechTripleToSecondRelation T) ≫ i =
       -((i ≫ h) ≫ stoneanCechTripleBoundary T) := by
         simp [Preadditive.neg_comp, Category.assoc,
           stoneanCechTripleToSecondRelation_comp_ι]
@@ -199,8 +289,8 @@ theorem stoneanCechTripleToSecondRelation_epi_stonean
       (Stonean.toProfinite.obj S)) := by
   let T := Stonean.toProfinite.obj S
   let p := Profinite.presentation.π T
-  let s := Stonean.lift (𝟙 T) p
-  have hs : s ≫ p = 𝟙 T := Stonean.lift_lifts (𝟙 T) p
+  let s := Profinite.lift (𝟙 T) p
+  have hs : s ≫ p = 𝟙 T := Profinite.lift_lifts (𝟙 T) p
   exact stoneanCechTripleToSecondRelation_epi_of_section T s hs
 
 #print axioms stoneanCechTripleBoundary_comp_relation_zero
