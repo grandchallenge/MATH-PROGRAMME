@@ -37,12 +37,15 @@ noncomputable def gsBasisCondensedCoefficientFan (S : Profinite.{u}) :
 because the inclusion of sheaves creates limits. -/
 noncomputable def gsBasisCondensedCoefficientFanIsLimit (S : Profinite.{u}) :
     IsLimit (gsBasisCondensedCoefficientFan S) := by
-  unfold gsBasisCondensedCoefficientFan
+  let g : ∀ i : LiftedSourceBasisIndex S,
+      gsBasisInternalHomCondensed S ⟶ discreteIntegerCoeff.{u} :=
+    fun i => ObjectProperty.homMk (gsBasisEnrichedCoordinatePresheaf S i)
+  change IsLimit (Fan.mk (gsBasisInternalHomCondensed S) g)
   apply (isLimitOfIsLimitFanMkObj
     (sheafToPresheaf (coherentTopology CompHaus.{u})
       (ModuleCat.{u + 1} R.{u}))
     (fun _ : LiftedSourceBasisIndex S => discreteIntegerCoeff.{u})
-    (fun i => ObjectProperty.homMk (gsBasisEnrichedCoordinatePresheaf S i)))
+    (P := gsBasisInternalHomCondensed S) g)
   change IsLimit (gsBasisEnrichedCoefficientFan S)
   exact gsBasisEnrichedCoefficientFanIsLimit S
 
