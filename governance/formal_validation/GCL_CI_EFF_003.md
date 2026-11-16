@@ -8,7 +8,7 @@
 
 The formal validation workflow has an impact classifier, a conditional lane matrix, a fail-closed aggregate job, and the required `formal-validation / formal-validation` status. The matrix contains 15 lanes: twelve CMDG Lean closure jobs, LOG-GCD, PC-WP04 and Union-Closed/MATHCERT. The registry retains its 23 pre-existing full-fanout patterns, shared CMDG triggers, toolchain constraints, and all material-lane patterns. The schedule still runs the three legacy lanes; `workflow_dispatch` still selects all fifteen. The separate protected CMDG full replay remains scheduled.
 
-The executable Python dependency graph starts from the router and **all** lane validator commands, including the twelve `python -m unittest tests.test_cmdg_*` invocations. It follows source imports under `ci/`, `tests/`, `campaigns/`, and `fixtures/`. At baseline, this closure contains **52** Python files. The PC-WP04 fixture also runs a validator from its manifest; the dependency guard resolves that script and verifies its expected Git blob before allowing a reduced lane set. The external MATHCERT checkout and Lean/mathlib setup remain pinned and unchanged.
+The source-resolved Python dependency graph starts from the router and **all** lane validator commands, including the twelve `python -m unittest tests.test_cmdg_*` invocations. It follows source imports under `ci/`, `tests/`, `campaigns/`, and `fixtures/`. At baseline, this closure contains **33** resolved Python source files. The PC-WP04 fixture also runs a validator from its manifest; the dependency guard resolves that script and verifies its expected Git blob before allowing a reduced lane set. The external MATHCERT checkout and Lean/mathlib setup remain pinned and unchanged.
 
 The guard recomputes these dependencies from the exact candidate checkout. It refuses an exemption if a formal executable imports any contract-only module, if a source is absent or unparseable, if the PC-WP04 script does not match the locked blob, or if a required contract test is not registered in the governed `contracts` shard. Unknown dynamic imports and unreviewed subprocess execution also refuse the exemption. A refusal selects all fifteen lanes.
 
@@ -28,9 +28,9 @@ If a contract file changes together with a known LOG-GCD, CMDG or PC-WP04 materi
 
 ## Historical counterfactual replay
 
-Run `python3 tools/formal_fanout_shadow.py --commits 350 --output <path>` from the source worktree. This reads only the Git history and reclassifies 350 first-parent transitions using the original protected registry and the candidate guard; it does **not** launch 350 CI jobs. The full records are stored in CHAD evidence:
+Run `python3 tools/formal_fanout_shadow.py --commits 350 --history-head 505bdbbda91ce18892a85e0d9b42995f0cf0f8be --output <path>` from the source worktree. This reads only the Git history and reclassifies 350 first-parent transitions using the original protected registry and the candidate guard; it does **not** launch 350 CI jobs. The full records are stored in CHAD evidence:
 
-`/home/jim/gcl-evidence/ci-efficiency-20261116/formal_shadow_350_candidate.json` — SHA-256 `e996dc978e58fe7eb4e9477492f07979bbc4e82ffcfdf87ce4d4a15219c1f892`.
+`/home/jim/gcl-evidence/ci-efficiency-20261116/formal_shadow_350_candidate.json` — SHA-256 `37aebbb8adc7116a731cf743ead59641b0a5006f36d90b1fd915be73dcaadf8e`.
 
 | Replay disposition | Transitions |
 | --- | ---: |

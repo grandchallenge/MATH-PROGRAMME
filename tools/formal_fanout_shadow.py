@@ -46,15 +46,16 @@ def describe(plan: dict) -> dict:
     return {name:plan[name] for name in ('reason','lanes','control_plane_hits','unknown_paths')}
 
 
-def replay(commits: int) -> dict:
-    original = json.loads(run('show','HEAD:governance/formal_validation_registry.json'))
+def replay(commits: int, history_head: str) -> dict:
+    history_sha = run('rev-parse', history_head)
+    original = json.loads(run('show',history_sha + ':governance/formal_validation_registry.json'))
     candidate = formal.load_registry(ROOT)
     all_ids = {lane['id'] for lane in candidate['lanes']}
     permitted = set(contracts.CONTRACT_FILES)
     guard_ok, guard_reason = contracts.contract_only_safe(ROOT, candidate)
     if not guard_ok:
         raise RuntimeError('NO-GO: dependency guard unproved: '+guard_reason)
-    revisions = run('rev-list','--first-parent','--max-count',str(commits+1),'HEAD').splitlines()
+    revisions = run('rev-list','--first-parent','--max-count',str(commits+1),history_sha).splitlines()
     rows=[];counts=collections.Counter()
     for current,parent in zip(revisions,revisions[1:]):
         old_paths=historical_paths(parent,current,legacy=True)
@@ -90,7 +91,7 @@ def replay(commits: int) -> dict:
         rows.append(record)
     result={'record_type':'GCL_FORMAL_FANOUT_FIRST_PARENT_SHADOW/1',
             'timestamp_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
-            'protected_base_head':run('rev-parse','HEAD'),
+            'protected_base_head':history_sha,
             'first_parent_transitions':len(rows),
             'full_fanout_patterns_preexisting':len(original['control_plane']['full_fanout_patterns']),
             'formal_lanes':len(candidate['lanes']),
@@ -108,11 +109,13 @@ def replay(commits: int) -> dict:
 def main() -> int:
     parser=argparse.ArgumentParser()
     parser.add_argument('--commits',type=int,default=350)
+    parser.add_argument('--history-head',default='HEAD',
+                        help='exact commit identity used for historical first-parent transitions')
     parser.add_argument('--output',required=True)
     args=parser.parse_args()
     if not (1 <= args.commits <= 2000):
         parser.error('--commits must be 1..2000')
-    doc=replay(args.commits)
+    doc=replay(args.commits, args.history_head)
     dest=Path(args.output)
     dest.parent.mkdir(parents=True,exist_ok=True)
     encoded=json.dumps(doc,indent=2,sort_keys=True)+'\n'

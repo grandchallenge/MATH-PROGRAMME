@@ -28,6 +28,10 @@ CONTRACT_REQUIRED_COMMANDS = frozenset({
 # One dynamic subprocess replay is pinned by an exact Git blob in the PC-WP04
 # manifest. Its validator runs in the other explicit PC-WP04 material lane.
 PC_MANIFEST = 'fixtures/formal/PC-WP04/certificate_manifest.json'
+KNOWN_IMPORTLIB_SOURCES = {
+    'tests/test_cmdg_condensed_cm4_p3.py': ('MODULE_PATH', 'ci/validate_cmdg_condensed_cm4_p3.py'),
+    'tests/test_cmdg_condensed_cm4_p2_e.py': ('PATH', 'ci/validate_cmdg_condensed_cm4_p2_e.py'),
+}
 KNOWN_PYTHON_SPAWN = frozenset({
     'ci/formal_validation.py', 'ci/validate_pc_wp04_fixture.py',
     'ci/test_pc_wp04_fixture.py', 'ci/formal_contract_dependency.py',
@@ -63,12 +67,27 @@ def _dynamic_pc_target(root: Path) -> str:
 
 
 def audited_code_paths(root: Path, registry: dict) -> set[str]:
-    module_lookup: dict[str, set[str]] = {}
-    for directory in ('ci', 'tests', 'campaigns', 'fixtures'):
-        for p in (root / directory).rglob('*.py'):
-            if any(part in ('.lake', '.venv', 'node_modules', '__pycache__') for part in p.parts):
-                continue
-            module_lookup.setdefault(p.stem, set()).add(p.relative_to(root).as_posix())
+    # Resolve imports by module path and calling script directory. Do not
+    # treat every Python file named `validate.py` in unrelated campaigns as a
+    # possible runtime import of every other `validate` module.
+    def local_modules(module: str, caller: str) -> set[str]:
+        parts = module.split('.')
+        if not parts or any(not item.isidentifier() for item in parts):
+            raise DependencyUnproved('unresolvable module name in ' + caller)
+        package_path = root.joinpath(*parts)
+        candidates = [package_path.with_suffix('.py'), package_path / '__init__.py']
+        if len(parts) == 1:
+            candidates.append(root / Path(caller).parent / (module + '.py'))
+            candidates.append(root / 'ci' / (module + '.py'))
+            candidates.append(root / 'tests' / (module + '.py'))
+        out = set()
+        for path in candidates:
+            if path.is_file():
+                resolved = path.resolve()
+                if not resolved.is_relative_to(root.resolve()):
+                    raise DependencyUnproved('local module resolves outside repo')
+                out.add(resolved.relative_to(root.resolve()).as_posix())
+        return out
     initial = {'ci/formal_validation.py', _dynamic_pc_target(root)}
     for lane in registry['lanes']:
         for cmd in lane['validator_commands']:
@@ -92,21 +111,47 @@ def audited_code_paths(root: Path, registry: dict) -> set[str]:
         if not source.is_file() or source.suffix != '.py':
             raise DependencyUnproved('missing Python dependency: ' + relative)
         tree = ast.parse(source.read_text(encoding='utf-8'), filename=relative)
+        # Two CMDG unit tests load one explicitly pinned local validator using
+        # importlib.util. Allow only their exact variable and path expressions;
+        # a new dynamic importer must restore full formal replay.
+        importlib_nodes = [node for node in ast.walk(tree)
+                           if isinstance(node, ast.Import) and any(alias.name.startswith('importlib') for alias in node.names)]
+        if importlib_nodes:
+            allowed = KNOWN_IMPORTLIB_SOURCES.get(relative)
+            if not allowed:
+                raise DependencyUnproved('unreviewed importlib loader: ' + relative)
+            var, expected = allowed
+            bindings = [node.value for node in ast.walk(tree)
+                        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == var for t in node.targets)]
+            exact_binding = (len(bindings) == 1 and isinstance(bindings[0], ast.BinOp)
+                             and isinstance(bindings[0].op, ast.Div)
+                             and isinstance(bindings[0].left, ast.Name)
+                             and bindings[0].left.id == 'ROOT'
+                             and isinstance(bindings[0].right, ast.Constant)
+                             and bindings[0].right.value == expected)
+            loaders = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
+                       and isinstance(node.func, ast.Attribute) and node.func.attr == 'spec_from_file_location']
+            exact_loader = (len(loaders) == 1 and len(loaders[0].args) == 2
+                            and isinstance(loaders[0].args[1], ast.Name)
+                            and loaders[0].args[1].id == var)
+            if not exact_binding or not exact_loader:
+                raise DependencyUnproved('dynamic validator source identity not proved: ' + relative)
         for node in ast.walk(tree):
             modules = []
             if isinstance(node, ast.Import):
                 modules.extend(a.name for a in node.names)
-            elif isinstance(node, ast.ImportFrom) and node.module:
-                modules.append(node.module)
-                modules.extend(node.module + '.' + a.name for a in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                if node.level:
+                    raise DependencyUnproved('unreviewed relative module import: ' + relative)
+                if node.module:
+                    modules.append(node.module)
+                    modules.extend(node.module + '.' + a.name for a in node.names)
             for module in modules:
                 parts = module.split('.')
-                for part in parts:
-                    if part in {Path(name).stem for name in CONTRACT_FILES}:
-                        raise DependencyUnproved('formal validator imports contract code: ' + relative + ':' + part)
-                    if part in module_lookup:
-                        stack.extend(module_lookup[part])
-                if module in ('importlib', 'runpy'):
+                if any(part in {Path(name).stem for name in CONTRACT_FILES} for part in parts):
+                    raise DependencyUnproved('formal validator imports contract code: ' + relative + ':' + module)
+                stack.extend(local_modules(module, relative))
+                if module.split('.')[0] == 'runpy' or (module.split('.')[0] == 'importlib' and relative not in KNOWN_IMPORTLIB_SOURCES):
                     raise DependencyUnproved('dynamic module loader in ' + relative)
             if isinstance(node, ast.Call):
                 func = node.func

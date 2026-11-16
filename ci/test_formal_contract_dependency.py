@@ -114,6 +114,35 @@ class ContractDependencyTests(unittest.TestCase):
             target.write_text(target.read_text()+'\n__import__("unexpected")\n')
             self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
 
+    def test_unrelated_duplicate_module_name_is_not_an_execution_dependency(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.make_fixture(root)
+            unrelated=root/'campaigns/odd_zeta/unrelated/validate.py'
+            unrelated.parent.mkdir(parents=True)
+            unrelated.write_text('__import__("unexpected")\n')
+            self.assertTrue(guard.contract_only_safe(root,self.registry)[0])
+
+    def test_guard_rejects_importlib_replay_target_drift(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.make_fixture(root)
+            p=root/'tests/test_cmdg_condensed_cm4_p3.py'
+            p.write_text(p.read_text().replace(
+                '"ci/validate_cmdg_condensed_cm4_p3.py"',
+                '"ci/validate_workflow_semantics.py"'))
+            ok,reason=guard.contract_only_safe(root,self.registry)
+            self.assertFalse(ok)
+            self.assertIn('dynamic validator source identity',reason)
+
+    def test_relative_import_is_unproved_and_fails_open(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.make_fixture(root)
+            p=root/'ci/validate_cmdg_nat_concordance.py'
+            p.write_text(p.read_text()+'\nfrom . import unexpected_module\n')
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+
     def test_missing_contract_command_forces_full_fanout(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
