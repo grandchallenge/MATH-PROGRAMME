@@ -31,6 +31,42 @@ def main() -> int:
     baseline = workflow_coverage_errors(texts=texts, evidence=evidence, registry=registry)
     assert not baseline, baseline
 
+    # Cost control: shared CI infrastructure cannot wake expensive unrelated
+    # theorem, renderer, or administrative suites. The central policy DAG
+    # validates those shared files; each specialist suite retains its own
+    # exact source, workflow, test and manual-dispatch triggers.
+    import fnmatch
+    from validate_workflow_coverage import load_yaml_text
+
+    scoped = {
+        "oz-rt-apery-brow.yml": "campaigns/odd_zeta/OZ_RT_APERY_BROW_001/README.md",
+        "oz-rt-bz-t3.yml": "campaigns/odd_zeta/OZ_RT_BZ_T3_001/manifest.json",
+        "oz-rt-lb-instance.yml": "campaigns/odd_zeta/OZ_RT_LB_INSTANCE_001/manifest.json",
+        "visual-pedagogy-representation-repair.yml": "governance/visual_pedagogy/fixture.json",
+        "administrative-maintenance-automation-validation.yml": "ci/administrative_automation.py",
+    }
+    shared_control = (
+        "ci/validate_workflow_coverage.py",
+        "ci/validate_workflow_coverage_v2.py",
+        "ci/test_workflow_coverage_v2.py",
+        "ci/campaign_replay_registry.json",
+    )
+    for name, own_source in scoped.items():
+        document = load_yaml_text(texts[name])
+        events = document.get("on", {})
+        assert "workflow_dispatch" in events, name
+        event_configs = [events["pull_request"]]
+        if "push" in events:
+            event_configs.append(events["push"])
+        for event_config in event_configs:
+            patterns = event_config.get("paths", [])
+            assert patterns and all(isinstance(pattern, str) for pattern in patterns), name
+            assert any(fnmatch.fnmatchcase(own_source, pattern) for pattern in patterns), name
+            assert any(fnmatch.fnmatchcase(".github/workflows/" + name, pattern) for pattern in patterns), name
+            for control_path in shared_control:
+                assert not any(fnmatch.fnmatchcase(control_path, pattern) for pattern in patterns), (
+                    name, "unrelated CI source triggered expensive specialist suite", control_path)
+
     missing_policy = dict(texts)
     missing_policy.pop("ci.yml")
     require_error(missing_policy, evidence, "missing governed workflow ci.yml", registry=registry)
