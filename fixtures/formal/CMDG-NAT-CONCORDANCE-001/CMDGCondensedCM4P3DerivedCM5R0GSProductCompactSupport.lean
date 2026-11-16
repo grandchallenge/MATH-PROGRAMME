@@ -121,9 +121,11 @@ theorem gsLocallyConstantFinsupp_coordinateLinear_injective
     Function.Injective (gsLocallyConstantFinsupp_coordinateLinear X I) := by
   intro f g h
   ext x i
-  have hi := congrArg (fun k : I →₀ LocallyConstant X R.{u} => k i x) h
-  simpa only [gsLocallyConstantFinsupp_coordinateLinear,
-    gsLocallyConstantFinsupp_coordinateFamily_apply] using hi
+  have hi := congrArg
+    (fun k : I →₀ LocallyConstant X R.{u} => (k i x).down) h
+  change ((gsLocallyConstantFinsupp_coordinateFamily X I f) i x).down =
+    ((gsLocallyConstantFinsupp_coordinateFamily X I g) i x).down at hi
+  simpa only [gsLocallyConstantFinsupp_coordinateFamily_apply] using hi
 
 /-- The coefficient sheaf's actual enriched rank-one internal Hom. -/
 noncomputable def gsRankOneInternalHomCondensed :
