@@ -6,13 +6,13 @@
 
 | Object | Source identity |
 | --- | --- |
-| Primary195 | [DEFECT_WIDTH_INTEGRAL_SOURCE_COMPLETION_195.md](DEFECT_WIDTH_INTEGRAL_SOURCE_COMPLETION_195.md), exact initial Git blob 122ab5d709f983abe0eb3bedcc9a8890d620bc67 |
-| Logical Verifier V196 and Adversary A196 | [AGENT_CRITICAL_REVIEW_DEFECT_WIDTH_COMPLETION_196.md](AGENT_CRITICAL_REVIEW_DEFECT_WIDTH_COMPLETION_196.md), Git blob 7087512b32c2d4f914a997d7d11caf34cde7955b, reviewed source195 without author correction |
+| Primary195 | [DEFECT_WIDTH_INTEGRAL_SOURCE_COMPLETION_195.md](DEFECT_WIDTH_INTEGRAL_SOURCE_COMPLETION_195.md), initial Git blob 122ab5d709f983abe0eb3bedcc9a8890d620bc67; **corrected exact reviewed source Git blob 9165aa604fcad4935ccfa541334d023deda8ce5a** at commit cf009eee5f079dcb3cd960d39df99bb8eceea9aa (one documentary-only source-custody correction) |
+| Logical Verifier V196 and Adversary A196 | [AGENT_CRITICAL_REVIEW_DEFECT_WIDTH_COMPLETION_196.md](AGENT_CRITICAL_REVIEW_DEFECT_WIDTH_COMPLETION_196.md), original review Git blob 7087512b32c2d4f914a997d7d11caf34cde7955b; **source-lock replay blob 3ef53f8cb0c614aa4c79441a8dfa478b497c89af**, reviewed corrected195 with one documentary-only author correction and no mathematical corrections |
 | Protected original scalar105 | Git blob a8ce66ff0edec33e2aff299550fca2089d671033 |
 | Protected complete mixed source108 | Git blob 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 |
 | Protected parameter row126 | Git blob 5b05c6147d237ca1d22e4dcbce9262b0f038c163 |
 | Canonical nonpolynomial source186 | PR3355 protected merge f71362ef0fba3a3b73d023a63f74efc3651b2bc3, separate from double-Gaussian DG-186B supplemental work |
-| Zero-energy source192–194 | Primary192 frozen blob 6003987b03980ae65ead3e286109be1eed02c8c7; logical review193 blob 7e6625fede8ec2797dcad7a9752a5728e8942de7; bounded ledger194 blob feb36d49385f004ef197fcdc79ae98697f5fa876; PR3360 protected admission pending at writing |
+| Zero-energy source192–194 | PR3360 protected-merged at ff1f71ff5686a4adcac659bd6e6e817a77139666; primary192 frozen/protected blob 6003987b03980ae65ead3e286109be1eed02c8c7, actual protected logical review193 blob 39873b26b2b1e9085d77cdb0964658ef7bd6b69d (earlier candidate 7e6625fede8ec2797dcad7a9752a5728e8942de7), bounded ledger194 original protected blob feb36d49385f004ef197fcdc79ae98697f5fa876. Documentary ledger194 custody reconciliation in PR3365 is separate and pending. |
 
 Both reviewers are logical roles carried out by the same ChatGPT/GitHub identity as the primary author, not independently authenticated nonauthor APPROVED, external mathematical referees or MATHCERT. Scientific acceptance here is strictly bounded and not a protected merge claim. The primary195 manuscript and its critical review/ledger196–197 still require a fresh exact-head CI replay, native protected queue, and protected-main exact source-blob readback.
 
@@ -34,7 +34,7 @@ The reviewer specifically rejects the tempting but false upgrade from nonconverg
 
 ## 3. Next documentary and scientific obligations
 
-After protected admission/readback of upstream zero-energy192–194, rebind this package to that exact protected merge. Submit primary195, critic196 and ledger197 through native protected review checks and queue; read back their exact Git blobs on protected main. Update the nonterminal programme overview and continuity checkpoint only after source custody is verified.
+Upstream zero-energy192–194 is protected and re-read via PR3360, exact native merge ff1f71ff5686a4adcac659bd6e6e817a77139666. Primary195 exact revised blob 9165aa604fcad4935ccfa541334d023deda8ce5a and reviewer196 exact source-locked blob 3ef53f8cb0c614aa4c79441a8dfa478b497c89af require native protected review checks and queue, along with this ledger197. Read back all exact protected-main blobs and the actual merge identity before programme checkpoint promotion. Update the nonterminal programme overview and continuity checkpoint only after source custody is verified.
 
 The substantive next question is whether another actually admitted finite 108 source history can realize the exact defect with its joint-normal cusp profile without introducing the illegal independent cusp-and-anchor R1 input, or prove an all-history invariant excluding it even modulo the original fixed-order rapid ideal. No additional scalar or R1 source is authorized by the present continuum integral, and no infinite Taylor/jet limit is smuggled into a fixed completed stage.
 
