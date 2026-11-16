@@ -178,12 +178,26 @@ def perform(source, worker, receipt, workdir):
             raise ValueError("downloaded mathlib revision mismatch")
         data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "build", "ErdosProblems.Erdos248"], project,
                                  logdir, "lean-build", TIMEOUTS["lean-build"]))
+        # A separate read-only audit proves the exact imported declaration type,
+        # independent of merely finding a #print command in external source.
+        audit = workdir / "Erdos248ReplayAudit.lean"
+        audit.write_text(
+            "import ErdosProblems.Erdos248\n"
+            "#check Erdos248.erdos_248\n"
+            "#print axioms Erdos248.erdos_248\n"
+        )
+        data["audit_source_sha256"] = sha256(audit)
         data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "env", "lean",
-                                  "ErdosProblems/Erdos248.lean"], project, logdir,
+                                  str(audit)], project, logdir,
                                  "axiom-audit", TIMEOUTS["axiom-audit"]))
         output = (logdir / "axiom-audit.out").read_text(errors="replace")
         data["axiom_report"] = validate_axiom_output(output)
         data["axioms_observed"] = True
+        if "Erdos248.erdos_248" not in output or
+                not ("∃ C" in output or "Exists" in output):
+            raise ValueError("no observed theorem type in Lean #check output")
+        data["theorem_type_observed"] = True
+        data["theorem_audit_log_sha256"] = sha256(logdir / "axiom-audit.out")
         if git_blob(project / "lake-manifest.json") != MANIFEST_BLOB:
             raise ValueError("Lake manifest drift after build")
         if git_blob(project / "ErdosProblems/Erdos248.lean") != SOURCE_BLOB:
@@ -193,6 +207,22 @@ def perform(source, worker, receipt, workdir):
     except Exception as exc:
         data["error"] = type(exc).__name__ + ": " + str(exc)[:1500]
     finally:
+        # Retain complete compiler output across destructive Colab teardown.
+        # Never archive the provider checkout, tokens, credentials, or caches.
+        archive = receipt.parent / "erdos248_lean_logs.tar.gz"
+        try:
+            with tarfile.open(archive, mode="w:gz") as tar:
+                for path in sorted(logdir.glob("*")):
+                    if path.is_file():
+                        tar.add(path, arcname="logs/" + path.name)
+                audit = workdir / "Erdos248ReplayAudit.lean"
+                if audit.is_file():
+                    tar.add(audit, arcname="Erdos248ReplayAudit.lean")
+            data["log_archive_sha256"] = sha256(archive)
+            data["log_archive_bytes"] = archive.stat().st_size
+        except Exception as exc:
+            data["status"] = "RED"
+            data["archive_error"] = type(exc).__name__ + ": " + str(exc)[:400]
         data["elapsed_seconds"] = round(time.monotonic() - started, 3)
         receipt.parent.mkdir(parents=True, exist_ok=True)
         receipt.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
