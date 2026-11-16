@@ -66,7 +66,7 @@ $$
 \tag{UC1.4}
 $$
 
-The estimate extends continuously to any bounded set or smooth parameter family in a **fixed** $H^{-s}_K$ stage; parameter derivatives are bounded by the same formula applied to the actual input derivatives. A fixed compact output multiplier preserves the estimates and restores proper output support. It also extends to moderate evaluated source curves with fixed negative-order rows by ordinary finite Leibniz bounds.
+The estimate is uniform on bounded subsets, and on compact parameter sets for smooth parameter families whose derivatives are bounded in the same **fixed** $H^{-s}_K$ stage; parameter derivatives obey the same formula applied to the actual input derivatives. A fixed compact output multiplier preserves the estimates and restores proper output support. It also extends to moderate evaluated source curves with fixed negative-order rows by ordinary finite Leibniz bounds.
 
 **Proof.** Fourier inversion and Cauchy–Schwarz against the defining $H^{-s}$ norm give
 
