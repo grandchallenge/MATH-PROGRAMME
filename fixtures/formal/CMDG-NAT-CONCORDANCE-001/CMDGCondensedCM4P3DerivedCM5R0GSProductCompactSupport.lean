@@ -28,6 +28,7 @@ noncomputable section
 universe u
 
 open CategoryTheory Limits
+open CategoryTheory.Enriched.FunctorCategory
 
 namespace CMDG.CondensedCM5R0
 
