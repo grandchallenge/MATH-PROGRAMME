@@ -104,8 +104,8 @@ def main() -> int:
 
     overprivileged_build = dict(texts)
     overprivileged_build["pages.yml"] = overprivileged_build["pages.yml"].replace(
-        "    permissions:\n      actions: read\n      contents: read\n      pages: write\n",
-        "    permissions:\n      actions: read\n      contents: read\n      pages: write\n      id-token: write\n",
+        "    permissions:\n      actions: read\n      contents: read\n      deployments: read\n      pages: write\n",
+        "    permissions:\n      actions: read\n      contents: read\n      deployments: read\n      pages: write\n      id-token: write\n",
         1,
     )
     require_error(overprivileged_build, evidence, "build permissions must be exactly", registry=registry)

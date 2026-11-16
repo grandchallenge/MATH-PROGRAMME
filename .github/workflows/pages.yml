@@ -14,6 +14,8 @@ concurrency:
 
 jobs:
   build:
+    outputs:
+      publish: ${{ steps.publication.outputs.publish }}
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'main' &&
@@ -21,6 +23,7 @@ jobs:
     permissions:
       actions: read
       contents: read
+      deployments: read
       pages: write
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -43,12 +46,24 @@ jobs:
             exit 1
           fi
 
+      - name: Decide publication necessity using latest successful deployment
+        id: publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 ci/pages_publish_gate.py \
+            --repository "${{ github.repository }}" \
+            --head "${{ github.event.workflow_run.head_sha }}" \
+            --github-output "$GITHUB_OUTPUT"
+
       - name: Set up Python
+        if: steps.publication.outputs.publish == 'true'
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.12"
 
       - name: Download and verify policy-validated site
+        if: steps.publication.outputs.publish == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
@@ -154,9 +169,11 @@ jobs:
           PY
 
       - name: Configure Pages
+        if: steps.publication.outputs.publish == 'true'
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
 
       - name: Upload artifact
+        if: steps.publication.outputs.publish == 'true'
         uses: grandchallenge/upload-pages-artifact@4934497e00858680775a65f544192e61e1b1b3cb
         with:
           path: site
@@ -171,6 +188,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     needs: build
+    if: needs.build.result == 'success' && needs.build.outputs.publish == 'true'
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

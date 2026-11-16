@@ -71,9 +71,35 @@ def gh(args):
     return json.loads(p.stdout)
 
 def recent_comments():
-    q='query { repository(owner:"grandchallenge",name:"MATH-PROGRAMME") { issue(number:2763) { comments(last:100) { nodes { databaseId author { login } body createdAt url } } } } }'
-    data=gh(['graphql','-f','query='+q])
-    return data['data']['repository']['issue']['comments']['nodes']
+    """Read last 100 heartbeat comments with bounded REST; no GraphQL.
+
+    Query total first, then one or two exact last pages. Fail closed if
+    concurrent comment creation changes the pagination boundary.
+    """
+    base = 'repos/grandchallenge/MATH-PROGRAMME/issues/2763'
+    meta = gh([base])
+    total = meta.get('comments')
+    if type(total) is not int or total < 0:
+        raise ValueError('malformed issue comment count')
+    if total == 0:
+        return []
+    per_page = 100
+    page_count = (total + per_page - 1) // per_page
+
+    def page(number):
+        rows = gh([base + f'/comments?per_page=100&page={number}'])
+        if not isinstance(rows, list):
+            raise ValueError('malformed comments page')
+        return rows
+
+    last = page(page_count)
+    if len(last) != total - (page_count - 1) * per_page:
+        raise ValueError('comment count changed during bounded read')
+    rows = (page(page_count - 1) + last) if page_count > 1 and len(last) < per_page else last
+    return [{'databaseId': c['id'],
+             'author': {'login': (c.get('user') or {}).get('login')},
+             'body': c.get('body'), 'createdAt': c['created_at'],
+             'url': c['html_url']} for c in rows[-per_page:]]
 
 
 def main():
