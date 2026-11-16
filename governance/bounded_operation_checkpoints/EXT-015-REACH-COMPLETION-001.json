@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP210",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP214",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Protected192–194 read back; joint-profile source mechanism195 remains open",
-  "state": "AWAITING_EXTERNAL_EVIDENCE",
+  "phase": "Joint-defect source195 primary construction",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "ff1f71ff5686a4adcac659bd6e6e817a77139666",
-    "candidate_head_sha": "311ab74479dd2104de623bf597ec945e06236a64",
+    "protected_base_sha": "80e3288b06aacfa900e95e8f45f10b144952cf75",
+    "candidate_head_sha": "80e3288b06aacfa900e95e8f45f10b144952cf75",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-zero-energy192-primary-frozen-20261115",
+    "branch": "research/reach-joint-profile195-input-frozen-20261115",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -36,14 +36,17 @@
     "id": "construct-joint-profile-source-audit195",
     "description": "Construct and freeze proposed195 joint-defect source audit after protected3360 readback: test192.12 heat-width integral with zero-widthendpoint, actualfinite108source implementation, nonidentitypartition/jet mechanisms, R1cones, interior smoothness, fixedscalarindices, completedcoefficients and126rows. Actualsourceforthefullprofile or invariantacrossalllegalhistoriesneeded. Weaklimits/formalinfinitedeltaseries/inverseheatmodrapidcannotsettle. Oneprimaryonecorrectiondistinctcritic. All195/coreA/150.L/W/R3/126.14/integrationOPEN.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/ZERO_ENERGY_SOURCE_MECHANISM_AUDIT_192.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_ZERO_ENERGY_193.md",
-      "research/condensed-qft/EXT-015/ZERO_ENERGY_SOURCE_ACCEPTANCE_194.md"
+      "research/condensed-qft/EXT-015/JOINT_DEFECT_SOURCE_AUDIT_195.md research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_JOINT_DEFECT_196.md research/condensed-qft/EXT-015/JOINT_DEFECT_SOURCE_ACCEPTANCE_197.md"
     ]
   },
   "external_evidence": {
-    "waiting": true,
+    "waiting": false,
     "objects": [
+      {
+        "identity": "Frozen195 input80e3288b06aacfa900e95e8f45f10b144952cf75; priorzero-energy192-final-return-receipt.json",
+        "status": "Prior3360/3363 protectedreadback andfourissues/sevenstatusescomplete;183sourcesverified. CP210 historicalwaitingflagcleared; noexternalgateoutstanding. New195claims unproved.",
+        "kind": "artifact"
+      },
       {
         "identity": "PR3360 native mergeff1f71ff5686a4adcac659bd6e6e817a77139666 exacthead6b1633c77fd4823333a52a864fa962e9088de487",
         "status": "Fourchangedblobs/fivenativerequiredchecks/unchangedterminalreadbackPASS. Bothagreeingboundedreviewsretained. Queuedbranchpushdenialwasnotretried/dequeued; thisseparatepostadmissiondocumentationpreservesthemergedscientificrecord.",
@@ -918,17 +921,17 @@
   },
   "blocking_boundary": null,
   "last_transition": {
+    "action": "Bind195 full-profile membership attempt",
+    "result": "Primaryconstruction",
     "evidence_refs": [
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3360"
-    ],
-    "result": "Boundedscienceprotected; fullprogrammeOPEN",
-    "action": "Read3360 protected science and reconcilecontinuation"
+      "research/reach-joint-profile195-input-frozen-20261115"
+    ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-16T01:20:53.5131693Z"
+    "observed_at": "2026-11-16T01:30:52.7207669Z"
   },
   "resume": {
     "fresh_session_safe": true,
