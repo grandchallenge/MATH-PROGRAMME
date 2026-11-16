@@ -128,7 +128,6 @@ theorem stoneanCechDifference_discreteProduct_scalar
   rw [freeProfiniteDiscreteProductHomScalarEquiv_sub]
   rw [freeProfiniteDiscreteProductHomScalarEquiv_precomp]
   rw [freeProfiniteDiscreteProductHomScalarEquiv_precomp]
-  rfl
 
 #print axioms freeProfiniteDiscreteIntegerHomScalarEquiv_precomp
 #print axioms freeProfiniteDiscreteIntegerHomScalarEquiv_sub
