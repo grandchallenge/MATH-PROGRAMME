@@ -130,3 +130,73 @@ def audit(baseline:Path,candidate:Path,routes:set[str]):
                            'Visible token overlap is a diagnostic, not proof of semantic equivalence.',
                            'Search index relevance or navigability requires a dedicated browser audit.',
                            'External and root-absolute asset URLs are not verified by local file checks.']}
+
+# Governed source assets should be byte identical across renderers; theme
+# bundles need not match because their implementation is renderer-dependent.
+GOVERNED_ASSET_PREFIXES = ('assets/documentaries/', 'assets/visual_pedagogy/',
+                           'stylesheets/', 'javascripts/')
+
+def governed_asset_census(baseline:Path,candidate:Path):
+    def file_map(root):
+        result={}
+        for prefix in GOVERNED_ASSET_PREFIXES:
+            d=root/prefix
+            if d.is_dir():
+                for p in d.rglob('*'):
+                    if p.is_file():
+                        result[p.relative_to(root).as_posix()]=hashlib.sha256(p.read_bytes()).hexdigest()
+        return result
+    before=file_map(baseline);after=file_map(candidate)
+    missing=sorted(before.keys()-after.keys())
+    changed=sorted(k for k in before.keys()&after.keys() if before[k]!=after[k])
+    return {'baseline_governed_asset_files':len(before),
+            'candidate_governed_asset_files':len(after),
+            'missing_governed_asset_count':len(missing),'changed_governed_asset_count':len(changed),
+            'missing_examples':missing[:20],'changed_examples':changed[:20],
+            'byte_identical_on_shared_source_assets':not missing and not changed}
+
+def search_census(root:Path):
+    """Report actual built search-index form; never invent search compatibility."""
+    candidates=sorted(p for p in root.rglob('*') if p.is_file()
+                      and 'search' in p.parts and p.name.endswith('.json'))
+    records=[]
+    for p in candidates:
+        record={'path':p.relative_to(root).as_posix(), 'bytes':p.stat().st_size,
+                'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+        try:
+            import json
+            j=json.loads(p.read_text(encoding='utf-8'))
+            if isinstance(j,dict) and isinstance(j.get('docs'),list):
+                docs=j['docs']
+                record['indexed_documents']=len(docs)
+                record['indexed_title_count']=sum(bool(x.get('title')) for x in docs if isinstance(x,dict))
+                record['locations']=sorted({x.get('location') for x in docs
+                                           if isinstance(x,dict) and isinstance(x.get('location'),str)})
+                record['index_schema']='MKDOCS_SEARCH_DOCS'
+            else:
+                record['index_schema']='OTHER_JSON'
+        except (ValueError,OSError,UnicodeError):
+            record['index_schema']='UNREADABLE_JSON'
+        records.append(record)
+    return records
+
+def search_parity(baseline:Path,candidate:Path):
+    before=search_census(baseline);after=search_census(candidate)
+    bypath_before={x['path']:x for x in before}
+    bypath_after={x['path']:x for x in after}
+    missing=sorted(bypath_before.keys()-bypath_after.keys())
+    route_losses=[]
+    for path in sorted(bypath_before.keys()&bypath_after.keys()):
+        a,b=bypath_before[path],bypath_after[path]
+        if a.get('index_schema')=='MKDOCS_SEARCH_DOCS' and b.get('index_schema')=='MKDOCS_SEARCH_DOCS':
+            route_losses.extend(sorted(set(a['locations'])-set(b['locations'])))
+    return {'baseline_search_files':len(before),'candidate_search_files':len(after),
+            'baseline_indexes':[{k:v for k,v in x.items() if k!='locations'} for x in before],
+            'candidate_indexes':[{k:v for k,v in x.items() if k!='locations'} for x in after],
+            'missing_baseline_search_files':missing,
+            'missing_indexed_locations_count':len(route_losses),
+            'missing_indexed_locations_examples':route_losses[:20],
+            'search_parity_proven':bool(before) and bool(after) and not missing and not route_losses
+                and all(x.get('index_schema')=='MKDOCS_SEARCH_DOCS' for x in before+after),
+            'limitations':['Matching search document locations does not prove search ranking, tokenization or browser interactions.',
+                           'No search index file or an unknown schema is inconclusive, never proof of parity.']}

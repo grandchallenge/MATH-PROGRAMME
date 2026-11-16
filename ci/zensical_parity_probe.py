@@ -24,7 +24,8 @@ from erdos_compendium_hook import (  # noqa: E402
     erdos_home_status, erdos_showcase_status, erdos_landing_status,
 )
 from oai26_compendium import build as build_oai26  # noqa: E402
-from zensical_semantic_parity import audit as audit_rendered_content  # noqa: E402
+from zensical_semantic_parity import (  # noqa: E402
+    audit as audit_rendered_content, governed_asset_census, search_parity)
 from zensical_documentary_assets import rewrite_temporary_docs  # noqa: E402
 
 DOCS = ROOT / ".zensical-probe-docs"
@@ -94,6 +95,8 @@ def verify() -> None:
         if page.is_file() and "GCL_ERDOS_" in page.read_text(encoding="utf-8"):
             unexpanded.append(path)
     semantic = audit_rendered_content(BASELINE, SITE, baseline_routes & candidate_routes)
+    assets = governed_asset_census(BASELINE,SITE)
+    search = search_parity(BASELINE,SITE)
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report = {
         "record_type": "GCL_ZENSICAL_RENDERER_PROBE/2",
@@ -102,6 +105,8 @@ def verify() -> None:
         "oai26_expected_families": 372,
         "oai26_expected_manuscript_paths": 719,
         "rendered_content_audit": semantic,
+        "governed_static_asset_parity": assets,
+        "search_index_audit": search,
         "candidate_generator": "zensical==0.1.1",
         "baseline_html_routes": len(baseline_routes),
         "candidate_html_routes": len(candidate_routes),
@@ -112,7 +117,11 @@ def verify() -> None:
         "missing_sentinels": missing_sentinels,
         "unexpanded_status_markers": unexpanded,
         "route_parity": not missing and not extra and not missing_sentinels and not unexpanded,
-        "critical_parity": not missing and not extra and not missing_sentinels and not unexpanded and not semantic["critical_issue_count"],
+        "critical_parity": not missing and not extra and not missing_sentinels and not unexpanded
+            and not semantic["critical_issue_count"]
+            and assets["byte_identical_on_shared_source_assets"]
+            and not search["missing_baseline_search_files"]
+            and not search["missing_indexed_locations_count"],
         "production_switch_authorized": False,
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
