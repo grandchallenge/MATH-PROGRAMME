@@ -27,6 +27,7 @@ These are supporting records, not necessarily current research instructions or c
 - [GCL Controlled Epistemic Interface](../governance/GCL_CONTROLLED_EPISTEMIC_INTERFACE.md)
 - [GCL Worker Queue and Collaboration](../governance/GCL_WORKER_QUEUE_COLLABORATION_OPERATING_DESIGN.md)
 - [Erdős Source-Return Queue Projection Runbook](../operations/ERDOS_QUEUE_RETURN_PROJECTION.md)
+- [Erdős Proof Worker One-Shot Dispatch Contract](../governance/ERDOS_PV_DISPATCH_ONCE_001.md)
 - [Erdős Return Exceptions and Arbitration](../operations/ERDOS_RETURN_EXCEPTION_HANDLING.md)
 - [Source-integrity 46-case adjudication handoff (2026-10-21)](../handoffs/SOURCE_INTEGRITY_46_ADJUDICATION_20261021.md)
 - [Erdős-024 Forge Copilot Critical Review Pilot](../governance/ERDOS_024_FORGE_COPILOT_PILOT.md)
