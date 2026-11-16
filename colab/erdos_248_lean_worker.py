@@ -208,6 +208,7 @@ def perform(source, worker, receipt, workdir):
     finally:
         # Retain complete compiler output across destructive Colab teardown.
         # Never archive the provider checkout, tokens, credentials, or caches.
+        receipt.parent.mkdir(parents=True, exist_ok=True)
         archive = receipt.parent / "erdos248_lean_logs.tar.gz"
         try:
             with tarfile.open(archive, mode="w:gz") as tar:
