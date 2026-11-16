@@ -1,16 +1,39 @@
 {
-  "schema":"GCL-LEAN-COLAB-JOBS/1",
-  "jobs":[{
-    "id":"ERDOS-041-FINITE-001",
-    "problem_id":41,
-    "review_issue":2536,
-    "source":"experiments/erdos-024/lean/Erdos41Finite.lean",
-    "source_sha256":"be601d62dfb2470ce3e2c015d48cddf66490ba6ec3796a6c323b49e0386fa233",
-    "worker":"colab/erdos_41_lean_worker.py",
-    "worker_sha256":"f5ecdff2ce503bdecee9e338df561efce18c46eb607b666f344e5da8ea34d807",
-    "launcher":"ci.erdos_41_lean_colab_host",
-    "toolchain":"leanprover/lean4:v4.29.1",
-    "accelerator":"CPU",
-    "authority":"UNADJUDICATED_COMPUTATIONAL_EVIDENCE_ONLY"
-  }]
+  "schema": "GCL-LEAN-COLAB-JOBS/1",
+  "jobs": [
+    {
+      "id": "ERDOS-041-FINITE-001",
+      "problem_id": 41,
+      "review_issue": 2536,
+      "source": "experiments/erdos-024/lean/Erdos41Finite.lean",
+      "source_sha256": "be601d62dfb2470ce3e2c015d48cddf66490ba6ec3796a6c323b49e0386fa233",
+      "worker": "colab/erdos_41_lean_worker.py",
+      "worker_sha256": "f5ecdff2ce503bdecee9e338df561efce18c46eb607b666f344e5da8ea34d807",
+      "launcher": "ci.erdos_41_lean_colab_host",
+      "toolchain": "leanprover/lean4:v4.29.1",
+      "accelerator": "CPU",
+      "authority": "UNADJUDICATED_COMPUTATIONAL_EVIDENCE_ONLY"
+    },
+    {
+      "id": "ERDOS-0248-LEAN-REPLAY-001",
+      "problem_id": 248,
+      "review_issue": 3204,
+      "source": "experiments/erdos_proof_verification/0248/Erdos248.lean",
+      "source_sha256": "292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267",
+      "worker": "colab/erdos_248_lean_worker.py",
+      "worker_sha256": "78567661d596c1850378b86480641f33f03d19c1fe951916f6c717fad3157dff",
+      "host": "ci/erdos_248_lean_colab_host.py",
+      "host_sha256": "3258b8b77118ac87641cc8f7df654c28872d814f07456700cb03b6eea8b0c894",
+      "launcher": "ci.erdos_248_lean_colab_host",
+      "source_repository": "plby/lean-proofs",
+      "source_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+      "source_blob": "166659f39a435831d1a751718f9a385effcd7dfa",
+      "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "manifest_blob": "1b7a0663de506f371211df75da206fa2c96befd2",
+      "toolchain": "leanprover/lean4:v4.33.0",
+      "accelerator": "CPU",
+      "max_runtime_seconds": 4500,
+      "authority": "UNADJUDICATED_COMPUTATIONAL_EVIDENCE_ONLY"
+    }
+  ]
 }
