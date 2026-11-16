@@ -164,9 +164,9 @@ def main() -> int:
     checkout_drift = copy.deepcopy(workflows)
     for step in checkout_drift["pages.yml"]["jobs"]["build"]["steps"]:
         if str(step.get("uses", "")).startswith("actions/checkout@"):
-            step["with"]["ref"] = "main"
+            step["with"]["ref"] = "${{ github.event.workflow_run.head_sha }}"
             break
-    assert any("workflow_run.head_sha" in error for error in errors(checkout_drift))
+    assert any("trusted protected main" in error for error in errors(checkout_drift))
 
     pages_rebuild = copy.deepcopy(workflows)
     pages_rebuild["pages.yml"]["jobs"]["build"]["steps"].append({"run": "mkdocs build --strict"})

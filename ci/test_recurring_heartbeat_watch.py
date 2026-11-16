@@ -64,6 +64,48 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(evaluate(POLICY,[invalid],'2026-10-19T04:00:00Z')['valid_count_in_window'],0)
         self.assertIsNone(fields('GCL-SCHEDULER-RUN/1\nNO_SEP','GCL-SCHEDULER-RUN/1'))
         self.assertEqual(fields(ALERT_HEADER+'\nEPISODE_ID: abc\n',ALERT_HEADER),{'EPISODE_ID':'abc'})
+    def test_rest_reads_one_final_page_without_graphql(self):
+        from unittest.mock import patch
+        from recurring_heartbeat_watch import recent_comments
+        comment = {'id': 3, 'user': {'login': 'fyremael'}, 'body': 'x',
+                   'created_at': '2026-10-19T03:00:00Z', 'html_url': 'https://example.com/3'}
+        with patch('recurring_heartbeat_watch.gh', side_effect=[{'comments': 1}, [comment]]) as call:
+            rows = recent_comments()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['databaseId'], 3)
+        self.assertEqual(rows[0]['author']['login'], 'fyremael')
+        self.assertEqual(call.call_count, 2)
+        self.assertTrue(all('graphql' not in str(c) for c in call.call_args_list))
+
+    def test_rest_reads_last_two_pages_but_only_latest_hundred(self):
+        from unittest.mock import patch
+        from recurring_heartbeat_watch import recent_comments
+        def c(i):
+            return {'id': i, 'user': {'login': 'fyremael'}, 'body': 'x',
+                    'created_at': '2026-10-19T03:00:00Z', 'html_url': f'https://example.com/{i}'}
+        with patch('recurring_heartbeat_watch.gh', side_effect=[
+                {'comments': 105}, [c(i) for i in range(101, 106)],
+                [c(i) for i in range(1, 101)]]) as call:
+            rows = recent_comments()
+        self.assertEqual(len(rows), 100)
+        self.assertEqual(rows[0]['databaseId'], 6)
+        self.assertEqual(rows[-1]['databaseId'], 105)
+        self.assertEqual(call.call_count, 3)
+
+    def test_rest_rejects_comment_count_drift(self):
+        from unittest.mock import patch
+        from recurring_heartbeat_watch import recent_comments
+        with patch('recurring_heartbeat_watch.gh', side_effect=[{'comments': 105}, []]):
+            with self.assertRaisesRegex(ValueError, 'changed'):
+                recent_comments()
+
+    def test_rest_empty_issue_requires_no_comment_page(self):
+        from unittest.mock import patch
+        from recurring_heartbeat_watch import recent_comments
+        with patch('recurring_heartbeat_watch.gh', return_value={'comments': 0}) as call:
+            self.assertEqual(recent_comments(), [])
+            call.assert_called_once()
+
     def test_independent_wake_paths_configured(self):
         from pathlib import Path
         workflow = (Path(__file__).resolve().parents[1] /

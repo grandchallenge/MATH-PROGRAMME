@@ -264,10 +264,10 @@ def workflow_coverage_errors(
         jobs = pages.get("jobs", {})
         build = jobs.get("build", {})
         deploy = jobs.get("deploy", {})
-        expected_build_permissions = {"actions": "read", "contents": "read", "pages": "write"}
+        expected_build_permissions = {"actions": "read", "contents": "read", "deployments": "read", "pages": "write"}
         expected_deploy_permissions = {"pages": "write", "id-token": "write"}
         if build.get("permissions") != expected_build_permissions:
-            errors.append("pages.yml: build permissions must be exactly actions: read, contents: read, and pages: write")
+            errors.append("pages.yml: build permissions must be exactly actions: read, contents: read, deployments: read, and pages: write")
         if deploy.get("permissions") != expected_deploy_permissions:
             errors.append("pages.yml: deploy permissions must be exactly pages: write and id-token: write")
         if deploy.get("needs") != "build":
@@ -280,7 +280,8 @@ def workflow_coverage_errors(
             "github.event.workflow_run.conclusion == 'success'",
             "github.event.workflow_run.head_branch == 'main'",
             "github.event.workflow_run.event == 'push'",
-            "ref: ${{ github.event.workflow_run.head_sha }}",
+            "ref: refs/heads/main",
+            "VALIDATED_EVENT_SHA: ${{ github.event.workflow_run.head_sha }}",
             "archive_download_url",
             'artifact.get("name") == "validated-site"',
             "workflow artifact digest mismatch",
