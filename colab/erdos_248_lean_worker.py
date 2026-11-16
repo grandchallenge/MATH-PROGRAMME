@@ -166,7 +166,7 @@ def perform(source, worker, receipt, workdir):
         data["steps"].append(v)
         if not re.search(r"Lean \(version 4\.33\.0(?:,|\))", v["stdout_tail"]):
             raise ValueError("Lean runtime version mismatch")
-        data["steps"].append(run(["lake", "exe", "cache", "get"], project, logdir,
+        data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "exe", "cache", "get"], project, logdir,
                                  "mathlib-cache", TIMEOUTS["mathlib-cache"]))
         mathlib_path = project / ".lake/packages/mathlib"
         actual_mathlib = subprocess.check_output(["git", "-C", str(mathlib_path),
@@ -174,9 +174,9 @@ def perform(source, worker, receipt, workdir):
                                                  timeout=25).strip()
         if actual_mathlib != MATHLIB:
             raise ValueError("downloaded mathlib revision mismatch")
-        data["steps"].append(run(["lake", "build", "ErdosProblems.Erdos248"], project,
+        data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "build", "ErdosProblems.Erdos248"], project,
                                  logdir, "lean-build", TIMEOUTS["lean-build"]))
-        data["steps"].append(run(["lake", "env", "lean",
+        data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "env", "lean",
                                   "ErdosProblems/Erdos248.lean"], project, logdir,
                                  "axiom-audit", TIMEOUTS["axiom-audit"]))
         output = (logdir / "axiom-audit.out").read_text(errors="replace")
