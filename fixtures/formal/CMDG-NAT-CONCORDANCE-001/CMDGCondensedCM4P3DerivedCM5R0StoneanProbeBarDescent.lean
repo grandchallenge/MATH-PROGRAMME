@@ -38,9 +38,9 @@ namespace CMDG.CondensedCM5R0
 Stonean presentation. Lift universe to match the pinned ModuleCat.free. -/
 noncomputable def stoneanProbePresentationMap
     (T : Profinite.{u}) (U : Stonean.{u}) :
-    ULift.{1} (Stonean.toProfinite.obj U ⟶
+    ULift.{u + 1} (Stonean.toProfinite.obj U ⟶
       Stonean.toProfinite.obj T.presentation) ⟶
-    ULift.{1} (Stonean.toProfinite.obj U ⟶ T) :=
+    ULift.{u + 1} (Stonean.toProfinite.obj U ⟶ T) :=
   ↾fun z => ULift.up (z.down ≫ Profinite.presentation.π T)
 
 /-- A Stonean test object provides an explicit section of the induced
@@ -54,7 +54,7 @@ noncomputable def stoneanProbePresentationSplitEpi
     id := ?_
   }
   apply CategoryTheory.ConcreteCategory.hom_ext
-  funext z
+  intro z
   rcases z with ⟨q⟩
   exact congrArg ULift.up (Profinite.lift_lifts q p)
 
@@ -100,13 +100,14 @@ noncomputable def stoneanProbeCechPairEquiv
         xy.2 ≫ Profinite.presentation.π T } where
   toFun z :=
     ⟨⟨z ≫ pullback.fst _ _, z ≫ pullback.snd _ _⟩, by
-      simpa only [Category.assoc] using
+      simp only [Category.assoc]
+      exact congrArg (fun a => z ≫ a)
         (pullback.condition :
-          (z ≫ pullback.fst (Profinite.presentation.π T)
-            (Profinite.presentation.π T)) ≫
+          pullback.fst (Profinite.presentation.π T)
+              (Profinite.presentation.π T) ≫
               Profinite.presentation.π T =
-          (z ≫ pullback.snd (Profinite.presentation.π T)
-            (Profinite.presentation.π T)) ≫
+          pullback.snd (Profinite.presentation.π T)
+              (Profinite.presentation.π T) ≫
               Profinite.presentation.π T)⟩
   invFun xy := pullback.lift xy.1.1 xy.1.2 xy.2
   left_inv z := by
