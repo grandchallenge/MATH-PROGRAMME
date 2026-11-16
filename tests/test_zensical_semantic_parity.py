@@ -21,7 +21,7 @@ class RendererAuditTest(unittest.TestCase):
  def test_missing_local_asset_is_critical(self):
   self.put(self.before,'<h1>Math</h1>')
   self.put(self.after,'<h1>Math</h1><script src="missing.js"></script>')
-  self.assertEqual(audit(self.before,self.after,{'index.html'})['critical_issues'][0]['code'],'BROKEN_LOCAL_ASSETS')
+  self.assertEqual(audit(self.before,self.after,{'index.html'})['critical_issues'][0]['code'],'NEW_BROKEN_LOCAL_ASSETS')
  def test_directory_style_internal_html_link_resolves_to_index(self):
   for root in (self.before,self.after):
    (root/'chapter').mkdir()
@@ -37,6 +37,12 @@ class RendererAuditTest(unittest.TestCase):
   self.put(self.before,'<h1>Math</h1><span class="arithmatex">x</span>')
   self.put(self.after,'<h1>Math</h1><p>x</p>')
   self.assertEqual(audit(self.before,self.after,{'index.html'})['math_marker_loss_count'],1)
+ def test_shared_legacy_broken_asset_not_mislabelled_new(self):
+  for site in (self.before,self.after):
+   self.put(site,'<h1>Math</h1><script src="missing.js"></script>')
+  x=audit(self.before,self.after,{'index.html'})
+  self.assertEqual(x['critical_issue_count'],0)
+  self.assertEqual(x['baseline_broken_asset_route_count'],1)
  def test_asset_path_escape_cannot_be_accepted(self):
   self.put(self.before,'<h1>Math</h1>')
   self.put(self.after,'<h1>Math</h1><link href="../../../secret.css">')

@@ -79,12 +79,25 @@ def inspect(root:Path,route:str):
             'html_sha256':hashlib.sha256(markup.encode()).hexdigest()}
 
 def audit(baseline:Path,candidate:Path,routes:set[str]):
-    issues=[];descriptive=[]; heading_drift=[]; math_loss=[]; missing=[];low_overlap=[]
+    issues=[];descriptive=[]; heading_drift=[]; math_loss=[];low_overlap=[]
+    inherited_broken=[]
     for route in sorted(routes):
         b=inspect(baseline,route);c=inspect(candidate,route)
         if c['unexpanded_marker']:issues.append({'route':route,'code':'UNEXPANDED_SOURCE_MARKER'})
         if c['missing_assets']:
-            issues.append({'route':route,'code':'BROKEN_LOCAL_ASSETS','examples':c['missing_assets']})
+            # A defect shared by the production baseline is an independent
+            # legacy defect; it is not evidence of *new* Zensical breakage.
+            # Compare resolved target identities, not only href strings.
+            baseline_broken = set(b['missing_assets'])
+            new_broken = sorted(set(c['missing_assets']) - baseline_broken)
+            if new_broken:
+                issues.append({'route':route,'code':'NEW_BROKEN_LOCAL_ASSETS',
+                               'examples':new_broken[:20],
+                               'baseline_broken_examples':b['missing_assets']})
+            if baseline_broken:
+                inherited_broken.append({'route':route,
+                                         'baseline_examples':b['missing_assets'],
+                                         'candidate_examples':c['missing_assets']})
         if route in _CRITICAL and not c['h1']:
             issues.append({'route':route,'code':'MISSING_CRITICAL_HEADING'})
         if b['h1']!=c['h1']:
@@ -105,7 +118,10 @@ def audit(baseline:Path,candidate:Path,routes:set[str]):
     # Some CSS/JS is intentionally renderer-specific; report counts rather than
     # require binary asset equality. Missing locally referenced files are fatal.
     return {'html_routes_audited':len(routes),'critical_issues':issues[:40],
-            'critical_issue_count':len(issues), 'heading_drift_count':len(heading_drift),
+            'critical_issue_count':len(issues),
+            'baseline_broken_asset_route_count':len(inherited_broken),
+            'baseline_broken_asset_route_examples':inherited_broken[:12],
+            'heading_drift_count':len(heading_drift),
             'heading_drift_examples':heading_drift[:20], 'math_marker_loss_count':len(math_loss),
             'math_marker_loss_examples':math_loss[:20], 'low_visible_token_overlap_count':len(low_overlap),
             'low_overlap_examples':low_overlap[:20], 'critical_route_fingerprints':descriptive,
