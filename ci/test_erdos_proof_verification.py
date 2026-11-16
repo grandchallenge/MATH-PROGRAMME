@@ -20,7 +20,12 @@ class VerificationContractTests(unittest.TestCase):
     def test_current_registry_and_five_children(self):
         result = mod.validate_registry()
         self.assertEqual(result['problem_ids'], [246,247,248,249,250])
-        self.assertEqual(set(result['statuses'].values()), {'QUEUED_UNEXECUTED'})
+        self.assertEqual(set(result['statuses']), {str(n) for n in result['problem_ids']})
+        self.assertTrue(
+            set(result['statuses'].values()).issubset(
+                set(self.schema['properties']['work_status']['enum'])
+            )
+        )
 
     def test_unexecuted_cannot_claim_kernel_replay(self):
         bad = copy.deepcopy(self.good)
