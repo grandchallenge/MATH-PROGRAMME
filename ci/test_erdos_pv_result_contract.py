@@ -109,11 +109,20 @@ class E2ELifecycleTests(unittest.TestCase):
         self.assertFalse(queue.permitted(first,"D"))
         # The selected second problem may advance to B only after its A
         # is source reviewed; C/D are always separately dependent.
-        if second["stage_work_items"]["A"]["work_status"] in queue.READY:
-            self.assertTrue(queue.permitted(second,"B"))
-        else:
-            self.assertFalse(queue.permitted(second,"B"))
-        self.assertFalse(queue.permitted(second,"C"))
+        # Source completion is necessary, but a returned B task must not
+        # become claimable again merely because A remains ready.
+        expected=(second["stage_work_items"]["A"]["work_status"] in queue.READY
+                  and second["stage_work_items"]["B"]["work_status"]
+                      in ("UNEXECUTED","EVIDENCE_BLOCKED")
+                  and second["existing_proof_issue"] is None)
+        self.assertEqual(queue.permitted(second,"B"),expected)
+        # C can become manifest-eligible only after B is critically verified;
+        # separate live issue-label and exact protected-blob gates still apply.
+        expected_C=(second["stage_work_items"]["B"]["work_status"] in queue.READY
+                    and second["stage_work_items"]["C"]["work_status"]
+                        in ("UNEXECUTED","EVIDENCE_BLOCKED")
+                    and second["triage_decision"]!="PENDING")
+        self.assertEqual(queue.permitted(second,"C"),expected_C)
         self.assertFalse(queue.permitted(second,"D"))
         # A later source receipt must not make all 100 items globally ready.
         self.assertFalse(queue.permitted(self.cohort["items"][2],"B"))

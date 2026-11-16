@@ -38,8 +38,16 @@ class QueueTests(unittest.TestCase):
             self.assertTrue(q.permitted(row,'B'))
             self.assertIn(row['stage_work_items']['A']['work_status'],q.READY)
         self.assertTrue(all(r['problem_id']>1 for r in q.candidates('B',after=1,limit=5)))
-    def test_formal_reviewed_task_not_selected_twice(self):
-        self.assertEqual(q.candidates('C',limit=5),[])
+    def test_formal_selection_is_scoped_to_reviewed_math(self):
+        candidates=q.candidates('C',limit=5)
+        self.assertTrue(all(x['problem_id']!=1 for x in candidates))
+        for x in candidates:
+            reg=q.read(q.REG)
+            meta=reg['cohorts'][(x['problem_id']-1)//100]
+            row=q.read(meta['packet'])['items'][(x['problem_id']-1)%100]
+            self.assertTrue(q.permitted(row,'C'))
+            self.assertIn(row['stage_work_items']['B']['work_status'],q.READY)
+            self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
     def test_only_formal_reviewed_problem_enters_documentary(self):
         self.assertEqual(q.candidates('D',limit=5),[]) # returned D evidence is not re-dispatchable
     def test_pilot_reuse_does_not_run_duplicate_work(self):
