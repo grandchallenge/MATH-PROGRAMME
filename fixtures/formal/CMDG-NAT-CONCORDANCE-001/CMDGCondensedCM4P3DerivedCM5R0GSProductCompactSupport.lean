@@ -49,7 +49,7 @@ theorem gsLocallyConstantFinsupp_uniformSupport
   have hnot : i ∉ (f x).support := by
     intro hmem
     exact hi (Finset.mem_biUnion.mpr ⟨f x, hx, hmem⟩)
-  exact Finsupp.not_mem_support_iff.mp hnot
+  exact Finsupp.notMem_support_iff.mp hnot
 
 /-- A section of the discrete direct sum has finitely many nonzero
 locally-constant coordinate sections on each compact Hausdorff test.
