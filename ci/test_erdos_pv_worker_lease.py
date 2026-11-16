@@ -11,9 +11,13 @@ class LeaseTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.s=w.scope("ERDOS-PV-0001-B",require_eligible=False)
- def test_only_one_b_ready(self):
+ def test_only_source_ready_b_tasks_are_eligible(self):
   self.assertEqual(self.s["issue"],3225)
-  with self.assertRaises(ValueError):w.scope("ERDOS-PV-0002-B")
+  second=w.scope("ERDOS-PV-0002-B",require_eligible=False)
+  if w.permitted(second["row"],"B"):
+   self.assertEqual(w.scope("ERDOS-PV-0002-B")["issue"],3225)
+  else:
+   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0002-B")
   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-B")
   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-C")
   with self.assertRaises(ValueError):w.scope("ERDOS-PV-0001-D")

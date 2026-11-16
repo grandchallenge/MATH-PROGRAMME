@@ -1,0 +1,81 @@
+{
+  "record_type": "ERDOS_PV_A_RECONCILIATION_RECEIPT/1",
+  "assignment_id": "ERDOS-PV-0002-A",
+  "problem_id": 2,
+  "parent_cohort_issue": 3212,
+  "source_audit_issue": 1271,
+  "claim_ref": "refs/heads/gcl-pv-claims/ERDOS-PV-0002-A",
+  "claim_sha": "05dfdb6242ae9c5486daa2918d4e043ec0b0e242",
+  "claim_actor": "fyremael",
+  "claim_capture": "2b45f4ec73e74a0bbab4efdbf1015f4d",
+  "source_body_sha256": "65e4ef993de9e9c69ac5ca9f21c9d784f5553f79fafed42cf197f38a3295e54d",
+  "protected_manifest_blob_at_claim": "e9c6a2dbec8f6b594e0e3d2762a3da00c3fefab5",
+  "source_catalogue": "teorth/erdosproblems@536408716724a2402bdfa7c1d764bf83d64a8c89:data/problems.yaml",
+  "source_catalogue_blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+  "source_issue_live_state": "CLOSED",
+  "source_comments": 2,
+  "source_return": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1271#issuecomment-6256012770",
+  "prior_critic": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/1271#issuecomment-6472247244",
+  "disposition": "SOURCE_SCOPE_RECONCILED_CANDIDATE__SOURCE_REVIEW_REUSED",
+  "scope_statement": "Finite distinct modulus covering system 1<m1<...<mk, one class per modulus, union Z; is m1 unbounded?",
+  "published_Hough_2015": "Annals Math 181 (2015) Thm 1 p362: all distinct covers have m1<=10^16",
+  "published_BBMST_2022": "Inventiones Math 228 (2022) Thm 8.1 preprint v1 s8: no cover with distinct moduli all >=616000, hence m1<=615999",
+  "primary_source_links": [
+    "https://annals.math.princeton.edu/2015/181-1/p06",
+    "https://doi.org/10.1007/s00222-021-01087-5",
+    "https://arxiv.org/abs/1811.03547v1"
+  ],
+  "fresh_chad_capture": "a26d43df548345ae8fef30f4d0741cdc",
+  "finite_replay": {
+    "hough_example": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        7,
+        12
+      ],
+      [
+        23,
+        24
+      ]
+    ],
+    "lcm": 24,
+    "covers_all_residues": true,
+    "all_moduli_distinct": true,
+    "hostile_last_class_changed_to_24_mod_24_misses": [
+      23
+    ],
+    "trivial_repeat_modulus_2_covers": true,
+    "trivial_repeat_modulus_2_is_distinct": false
+  },
+  "adversarial_review": "governance/erdos_proof_verification/evidence/0002/A_SOURCE_AND_FINITE_ADVERSARIAL_REVIEW_001.md",
+  "present_status_note": "October 2026 optimization ledger constant 90a notes unrefereed 44 lower bound; prior October source audit cited 42. No GCL replay or certification of 44.",
+  "current_status_link": "https://teorth.github.io/optimizationproblems/constants/90a.html",
+  "next_task": "ERDOS-PV-0002-B finite periodicity/semantics lemma with Lean exact source pin, independent finite hostile check, no analytic proof claim; only after A custody",
+  "result_comment": "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3212#issuecomment-6905230628",
+  "nonclaims": {
+    "analytic_proof_rederived": false,
+    "lean_kernel_replayed": false,
+    "mathcert_certified": false,
+    "human_independent_review": false,
+    "unattended_dispatch_proven": false,
+    "protected_admitted": false
+  },
+  "result_comment_id": 6905230628,
+  "result_submitted_capture": "9b1c407482f94127b0e3191057b0f302",
+  "result_unique_readback_count": 1
+}
