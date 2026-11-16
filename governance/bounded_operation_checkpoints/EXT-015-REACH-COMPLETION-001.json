@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP222",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP223",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -23,7 +23,15 @@
     "issue_number": 2657,
     "pr_number": 3371,
     "branch": "research/reach-joint-profile195-20261115",
-    "workflow_runs": []
+    "workflow_runs": [
+      {
+        "run_id": 43792240653,
+        "name": "Protected material-profile delegated review",
+        "job_id": 133053086021,
+        "conclusion": "failure",
+        "status": "completed"
+      }
+    ]
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
@@ -42,6 +50,11 @@
   "external_evidence": {
     "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "Optionalroutineapprovalrun43792240653 job133053086021 at126150106dca6f540041edfd162964a0937662b7",
+        "status": "FAILCLOSED candidate specialist class unresolved or mixed. No automaticapproval/certificationissued; exactoperationnotretried/relabeled/rerouted. Requirednativecontextsareseparate andcurrentrulesrequirezeroPRapprovals; distinctsource196scientific/editorialreviewscomplete. Recordsettledfailurebeforefurtherpermittednativeadmission."
+      },
       {
         "kind": "artifact",
         "identity": "ReconciledPR3371 head126150106dca6f540041edfd162964a0937662b7 on2e9f7db2e77c8e533edc4b671806bf05f5d8c97b",
@@ -1851,7 +1864,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-16T02:28:44.1429671Z"
+    "observed_at": "2026-11-16T02:30:36.8269124Z"
   },
   "resume": {
     "fresh_session_safe": true,
