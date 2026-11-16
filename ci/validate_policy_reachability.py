@@ -50,7 +50,7 @@ def lean_colab_python_roots(path:Path)->set[str]:
         raise ValueError('unrecognized Lean/Colab job registry')
     for job in data.get('jobs',[]):
         launcher=job.get('launcher')
-        if not isinstance(launcher,str) or not re.fullmatch(r'ci\\.[a-z][a-z_0-9]*',launcher):
+        if not isinstance(launcher,str) or not re.fullmatch(r'ci\.[a-z][a-z_0-9]*',launcher):
             raise ValueError('invalid governed Colab launcher')
         roots.add('ci/'+launcher.split('.',1)[1]+'.py')
     return roots
