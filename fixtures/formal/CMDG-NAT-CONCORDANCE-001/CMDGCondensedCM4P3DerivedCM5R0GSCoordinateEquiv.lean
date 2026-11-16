@@ -55,7 +55,7 @@ theorem gsLocallyConstantFinsupp_coordinate_assemble
   by_cases hij : i = j
   · subst j
     simp
-  · simp [Finsupp.single_apply, hij, Ne.symm hij]
+  · simp
 
 /-- Every finite family of locally constant coordinate sections comes from
 a locally constant section of the infinite discrete Finsupp sum. -/
@@ -90,9 +90,9 @@ theorem gsLocallyConstantFinsupp_coordinateEquiv_naturality
         LocallyConstant.comap f
           ((gsLocallyConstantFinsupp_coordinateEquiv Y I g) i) := by
   ext x
-  change (gsLocallyConstantFinsupp_coordinateFamily X I
-      (LocallyConstant.comap f g)) i x =
-    (gsLocallyConstantFinsupp_coordinateFamily Y I g) i (f x)
+  change ((gsLocallyConstantFinsupp_coordinateFamily X I
+      (LocallyConstant.comap f g)) i x).down =
+    ((gsLocallyConstantFinsupp_coordinateFamily Y I g) i (f x)).down
   simp only [gsLocallyConstantFinsupp_coordinateFamily_apply,
     LocallyConstant.coe_comap_apply]
 
