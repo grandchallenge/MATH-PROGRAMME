@@ -86,6 +86,8 @@ jobs:
       - name: Replay protected X007 evidence without promotion
         run: |
           sudo mkdir -p /home/ubuntu/fable-episode-2
+          # GitHub hosted runner uses a non-ubuntu account; allow traversal only.
+          sudo chmod o+x /home/ubuntu
           sudo ln -sfnT "$GITHUB_WORKSPACE/src1" /home/ubuntu/fable-episode-2/zeta-math
           sudo ln -sfnT "$GITHUB_WORKSPACE/src2" /home/ubuntu/fable-episode-2/zeta-math-2
           PYTHONPATH="$GITHUB_WORKSPACE/src2/work/lb5:$GITHUB_WORKSPACE/src2/work/z5cf" python3 -c "import runpy,sys; sys.path.insert(0,'src2/work/z5cf'); runpy.run_path('src2/work/z5cf/verify_compact.py', run_name='__main__')" | tee x007.log
@@ -181,6 +183,8 @@ jobs:
           git -C source-delta checkout --detach "$SRC2_DELTA_SHA"
           test "$(git -C source-delta rev-parse HEAD)" = "$SRC2_DELTA_SHA"
           sudo mkdir -p /home/ubuntu/fable-episode-2
+          # GitHub hosted runner uses a non-ubuntu account; allow traversal only.
+          sudo chmod o+x /home/ubuntu
           sudo ln -sfnT "$GITHUB_WORKSPACE/source-base" /home/ubuntu/fable-episode-2/zeta-math
           sudo ln -sfnT "$GITHUB_WORKSPACE/source-delta" /home/ubuntu/fable-episode-2/zeta-math-2
       - name: Replay expository Apéry checks
