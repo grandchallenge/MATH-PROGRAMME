@@ -3,8 +3,13 @@
 from __future__ import annotations
 import argparse
 import hashlib
+import io
 import json
 import os
+import platform
+import sys
+import tarfile
+import urllib.request
 from pathlib import Path
 import re
 import shutil
@@ -27,6 +32,42 @@ AUTHORITY = {"mathematical_certification": False, "publication": False,
 TIMEOUTS = {"git-init": 25, "git-fetch": 360, "git-checkout": 240,
             "lean-install": 240, "lean-version": 35,
             "mathlib-cache": 1500, "lean-build": 2400, "axiom-audit": 240}
+
+ELAN_ARCHIVE_SHA256 = "42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63"
+ELAN_RELEASE_URL = ("https://github.com/leanprover/elan/releases/download/v4.2.4/"
+                    "elan-x86_64-unknown-linux-gnu.tar.gz")
+
+def provision_elan():
+    """Pinned elan archive bootstrap, never generic curl|sh."""
+    existing = shutil.which("elan")
+    if existing:
+        return existing
+    if sys.platform != "linux" or platform.machine().lower() not in ("x86_64", "amd64"):
+        raise RuntimeError("unsupported pinned elan bootstrap platform")
+    req = urllib.request.Request(ELAN_RELEASE_URL, headers={"User-Agent": "gcl-lean-replay/1"})
+    with urllib.request.urlopen(req, timeout=50) as response:
+        archive_bytes = response.read(8_000_001)
+    if (len(archive_bytes) > 8_000_000 or
+            hashlib.sha256(archive_bytes).hexdigest() != ELAN_ARCHIVE_SHA256):
+        raise ValueError("elan installer release digest mismatch")
+    with tarfile.open(fileobj=io.BytesIO(archive_bytes), mode="r:gz") as tar:
+        members = tar.getmembers()
+        if len(members) != 1 or members[0].name != "elan-init" or not members[0].isfile():
+            raise ValueError("unexpected pinned elan archive layout")
+        exe_bytes = tar.extractfile(members[0]).read()
+    with tempfile.TemporaryDirectory(prefix="gcl-erdos248-elan-") as directory:
+        exe = Path(directory) / "elan-init"
+        exe.write_bytes(exe_bytes)
+        exe.chmod(0o700)
+        out = subprocess.run([str(exe), "-y", "--no-modify-path",
+                              "--default-toolchain", TOOLCHAIN],
+                             capture_output=True, text=True, timeout=200)
+        if out.returncode:
+            raise RuntimeError("pinned elan installation failed with " + str(out.returncode))
+    elan = Path.home() / ".elan" / "bin" / "elan"
+    if not elan.is_file():
+        raise RuntimeError("pinned elan installer missing output")
+    return str(elan)
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -117,9 +158,7 @@ def perform(source, worker, receipt, workdir):
                  if entry.get("name") == "mathlib"]
         if found != [MATHLIB]:
             raise ValueError("mathlib lock mismatch")
-        elan = shutil.which("elan")
-        if elan is None:
-            raise RuntimeError("elan not installed on bounded worker; no unpinned installer")
+        elan = provision_elan()
         data["steps"].append(run([elan, "toolchain", "install", TOOLCHAIN], project,
                                  logdir, "lean-install", TIMEOUTS["lean-install"]))
         v = run([elan, "run", TOOLCHAIN, "lean", "--version"], project,
