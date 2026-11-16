@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP221",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP222",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Scientific196 ACCEPT corrected195 exactA/D source; final editorial/nativeadmission",
-  "state": "IN_PROGRESS",
+  "phase": "PR3371 reconciled integration admission",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "2e9f7db2e77c8e533edc4b671806bf05f5d8c97b",
-    "candidate_head_sha": "4c218abeeb1ad713a383df2177eeaab5b47987c0",
+    "candidate_head_sha": "126150106dca6f540041edfd162964a0937662b7",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-joint-profile195-review-frozen-20261115",
+    "pr_number": 3371,
+    "branch": "research/reach-joint-profile195-20261115",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -40,8 +40,13 @@
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "ReconciledPR3371 head126150106dca6f540041edfd162964a0937662b7 on2e9f7db2e77c8e533edc4b671806bf05f5d8c97b",
+        "status": "Eightfiles, primaryfc0unchanged, allconcurrentnegativewidthproofspreserved. Currentadmissionmanifest191 sciencefiles; finalmergeeditorial/currentchecks/readbackpending."
+      },
       {
         "identity": "Resolvedactual3371mergeconflict against2e9f7db2e77c8e533edc4b671806bf05f5d8c97b",
         "status": "Preservedallconcurrentwidth195–197/adaptive198–200 supplementfiles andmainprogrammehistory; theirfixed-presentationobstructionsdonotexcludeourtwo-sectorfiniteconstruction. Noacceptedproofreopened. Futureconicoperatorstudyunnumberedtoavoidnumericcollision. Primary195/review196unchanged.",
@@ -1846,7 +1851,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-16T02:26:58.8125731Z"
+    "observed_at": "2026-11-16T02:28:44.1429671Z"
   },
   "resume": {
     "fresh_session_safe": true,
