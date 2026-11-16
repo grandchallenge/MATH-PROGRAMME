@@ -112,7 +112,7 @@ noncomputable def gsLocallyConstantFinsupp_coordinateLinear
     intro a f
     ext i x
     simp only [gsLocallyConstantFinsupp_coordinateFamily_apply,
-      LocallyConstant.smul_apply, Finsupp.smul_apply]
+      LocallyConstant.smul_apply, Finsupp.smul_apply, RingHom.id_apply]
 
 /-- No information is lost when passing to all compact-test coordinate
 sections of the algebraic discrete sum. -/
