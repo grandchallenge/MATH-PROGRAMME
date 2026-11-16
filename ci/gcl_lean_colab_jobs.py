@@ -23,8 +23,32 @@ def jobs():
                 raise ValueError("job path escaped/missing")
             if hashlib.sha256(path.read_bytes()).hexdigest()!=job[field+"_sha256"]:
                 raise ValueError("source or worker bytes changed")
-        if job["toolchain"]!="leanprover/lean4:v4.29.1":
-            raise ValueError("unapproved toolchain")
+        allowed = {
+            "ERDOS-041-FINITE-001": (
+                41, 2536, "leanprover/lean4:v4.29.1",
+                "ci.erdos_41_lean_colab_host"),
+            "ERDOS-0248-LEAN-REPLAY-001": (
+                248, 3204, "leanprover/lean4:v4.33.0",
+                "ci.erdos_248_lean_colab_host"),
+        }
+        if (key not in allowed or
+                (job["problem_id"], job["review_issue"], job["toolchain"],
+                 job["launcher"]) != allowed[key]):
+            raise ValueError("unapproved frozen job/toolchain/issue binding")
+        if key == "ERDOS-0248-LEAN-REPLAY-001":
+            pinned = {
+                "source_repository": "plby/lean-proofs",
+                "source_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+                "source_blob": "166659f39a435831d1a751718f9a385effcd7dfa",
+                "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+                "manifest_blob": "1b7a0663de506f371211df75da206fa2c96befd2",
+            }
+            if any(job.get(k) != v for k, v in pinned.items()):
+                raise ValueError("external proof or mathlib custody mismatch")
+            p = (ROOT / job["host"]).resolve()
+            if (not p.is_relative_to(ROOT.resolve()) or not p.is_file() or
+                    hashlib.sha256(p.read_bytes()).hexdigest() != job["host_sha256"]):
+                raise ValueError("registered host bytes changed")
         items[key]=job
     return items
 

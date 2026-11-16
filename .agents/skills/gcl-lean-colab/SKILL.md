@@ -15,6 +15,8 @@ The protected dispatcher is ci/gcl_lean_colab_jobs.py. From an authenticated Git
 4. python3 ci/gcl_lean_colab_jobs.py preflight --job ERDOS-041-FINITE-001
 5. Only from exact clean protected main, with verified queue and Colab OAuth: python3 ci/gcl_lean_colab_jobs.py execute --job ERDOS-041-FINITE-001
 
+For the separately pinned Erdos248 Mathlib replay job, substitute `ERDOS-0248-LEAN-REPLAY-001` in discovery, selftest, preflight and execute commands above. This job uses Lean `v4.33.0` and the external `plby/lean-proofs` fixed source and manifest; it is not permitted to reuse or retarget the `ERDOS-041-FINITE-001` CPU arithmetic canary. The host and worker are hash-locked in `governance/lean_colab/JOBS.json`. See `docs/lean-colab/RUN_MATRIX.md` for exact commands and governance limits.
+
 Do not upload provider tokens or run language models in Colab. The job adapter must record exact source and worker SHA-256, Lean pin, process exit, receipt, CPU usage and clean teardown. A RED result reserves its one-shot attempt; create a protected successor rather than retrying silently.
 
 To extend the skill, add an explicit protected entry to governance/lean_colab/JOBS.json, a bounded adapter and worker, exact hash and queue lock, and hostile CI tests. Do not point live execution at arbitrary user files.

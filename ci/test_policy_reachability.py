@@ -2,6 +2,7 @@
 """Adversarial tests for executable CI policy reachability."""
 from __future__ import annotations
 
+import json
 import tempfile
 from pathlib import Path
 
@@ -48,6 +49,25 @@ def main() -> int:
             encoding="utf-8",
         )
         assert not policy_reachability_errors(root)
+
+        # A frozen CPU Colab job registry is an explicit execution root.
+        colab_host = root / "ci" / "erdos_248_test_host.py"
+        colab_host.write_text(
+            "#!/usr/bin/env python3\nif __name__ == '__main__': print('locked')\n",
+            encoding="utf-8",
+        )
+        (root / "governance" / "lean_colab").mkdir()
+        job_lock = root / "governance" / "lean_colab" / "JOBS.json"
+        lock = {"schema": "GCL-LEAN-COLAB-JOBS/1",
+                "jobs": [{"launcher": "ci.erdos_248_test_host"}]}
+        job_lock.write_text(json.dumps(lock) + "\n", encoding="utf-8")
+        assert not policy_reachability_errors(root)
+        lock["jobs"][0]["launcher"] = "ci.missing_colab_host"
+        job_lock.write_text(json.dumps(lock) + "\n", encoding="utf-8")
+        assert any("missing Python script ci/missing_colab_host.py" in e
+                   for e in policy_reachability_errors(root))
+        lock["jobs"][0]["launcher"] = "ci.erdos_248_test_host"
+        job_lock.write_text(json.dumps(lock) + "\n", encoding="utf-8")
 
         (root / ".github" / "workflows" / "ci.yml").write_text(WORKFLOW.replace("ci/root_check.py", "ci/missing.py"), encoding="utf-8")
         assert any("missing Python script ci/missing.py" in error for error in policy_reachability_errors(root))

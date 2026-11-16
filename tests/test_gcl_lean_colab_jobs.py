@@ -14,4 +14,5 @@ class LeanColabSkillTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"protected main"):
                 skill.protected_main()
     def test_offline_registry(self):
-        self.assertEqual(skill.main(["verify"]) if False else len(skill.jobs()),1)
+        self.assertEqual(set(skill.jobs()), {"ERDOS-041-FINITE-001",
+                                              "ERDOS-0248-LEAN-REPLAY-001"})
