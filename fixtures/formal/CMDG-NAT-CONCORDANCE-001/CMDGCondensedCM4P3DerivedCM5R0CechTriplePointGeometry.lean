@@ -62,7 +62,10 @@ theorem stoneanCechPairOfRelated_fst
     exact pullback.lift_fst _ _ _
   have hh := congrArg (fun m : R ⟶ P =>
     m.hom.hom (⟨(x, y), hxy⟩ : R)) hmap
-  simpa [f] using hh
+  have hval : f.hom.hom (⟨(x, y), hxy⟩ : R) = x := rfl
+  change (stoneanCechExplicitToAbstract T ≫ pullback.fst p p).hom.hom
+    (⟨(x, y), hxy⟩ : R) = x
+  exact hh.trans hval
 
 /-- The second endpoint of the actual categorical pair. -/
 theorem stoneanCechPairOfRelated_snd
@@ -97,7 +100,10 @@ theorem stoneanCechPairOfRelated_snd
     exact pullback.lift_snd _ _ _
   have hh := congrArg (fun m : R ⟶ P =>
     m.hom.hom (⟨(x, y), hxy⟩ : R)) hmap
-  simpa [g] using hh
+  have hval : g.hom.hom (⟨(x, y), hxy⟩ : R) = y := rfl
+  change (stoneanCechExplicitToAbstract T ≫ pullback.snd p p).hom.hom
+    (⟨(x, y), hxy⟩ : R) = y
+  exact hh.trans hval
 
 /-- Points in a categorical profinite pair pullback are determined
 by their two endpoint values. -/
