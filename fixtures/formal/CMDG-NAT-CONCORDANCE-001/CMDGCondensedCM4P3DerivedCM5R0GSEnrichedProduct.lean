@@ -54,15 +54,14 @@ protected source-presheaf coproduct cocone to a product fan. -/
 noncomputable def gsBasisEnrichedRankOneFanIsLimit
     (S : Profinite.{u}) :
     IsLimit (gsBasisEnrichedRankOneFan S) := by
-  change IsLimit
-    ((MonoidalClosed.internalHom.flip.obj
-        CMDG.CondensedCM4P2D.coefficientPresheaf.{u}).mapCone
-      (gsBasisDiscreteSourcePresheafCofan S).op)
-  exact isLimitOfPreserves
+  have h := isLimitOfPreserves
     (MonoidalClosed.internalHom.flip.obj
       CMDG.CondensedCM4P2D.coefficientPresheaf.{u})
     (Cofan.IsColimit.op
       (gsBasisDiscreteSourcePresheafCofanIsColimit S))
+  exact IsLimit.ofIsoLimit h
+    (Cone.ext (Iso.refl _) (fun ⟨i⟩ => by
+      rfl))
 
 /-- Canonical product identification for the genuine enriched source
 with the unconverted rank-one internal-Hom presheaves. -/
