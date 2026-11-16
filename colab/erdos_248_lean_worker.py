@@ -31,7 +31,28 @@ AUTHORITY = {"mathematical_certification": False, "publication": False,
              "protected_state_mutation": False, "source_adjudication": False}
 TIMEOUTS = {"git-init": 25, "git-fetch": 360, "git-checkout": 240,
             "lean-install": 240, "lean-version": 35,
-            "mathlib-cache": 1500, "lean-build": 2400, "axiom-audit": 240}
+            "mathlib-cache": 1500, "compat-post-update": 1200,
+            "lean-build": 2400, "axiom-audit": 240}
+
+
+# Exact compatibility set declared in the pinned external lakefile.lean.
+COMPATIBILITY_PATCHES = (
+    ("BoundedGaps", "formalpantheon-v4.33.0.patch", "ad5f8915e55205e15d4557958020d71314294d6e"),
+    ("BoundedGaps", "formalpantheon-v4.33.0-s2.patch", "78471a0699e5669b3fa1baa676f5241133dc7e06"),
+    ("BoundedGaps", "boundedgaps-linter-v4.33.0.patch", "ed5fb157c1564b865fe85ac2c7ffda31faa7d1a8"),
+    ("AINTLIB", "aintlib-v4.33.0.patch", "e02a679298d785fa4e0af18e531356ba4fdacf02"),
+    ("AINTLIB", "hasseweil-linter-v4.33.0.patch", "de07708b124f4a5704d16acb0c467b47a62fd8e3"),
+    ("AINTLIB", "chebotarev-linter-v4.33.0.patch", "0a719f3a6b416c8e7465c627516f959b040c7550"),
+    ("AINTLIB", "dedekind-flt-linter-v4.33.0.patch", "b2c5a35010b0087842674ce646d0e97306693cb1"),
+    ("leancert", "leancert-linter-v4.33.0.patch", "f2c9e2e2f4186c7fb4b1c2edf4fefe8ebf780b1d"),
+    ("Waring", "waring-linter-v4.33.0.patch", "981c78d177d2f819b7115451dc57e86aa4035e0a"),
+)
+PINNED_DEPENDENCIES = {
+    "BoundedGaps": "ffbb65c21afc8a36ace67720f1b0df1c63d26bd1",
+    "Waring": "ffbb65c21afc8a36ace67720f1b0df1c63d26bd1",
+    "AINTLIB": "1c1c74664e40071c2c2165bc55ca2616a67ccd6b",
+    "leancert": "7486c107f7c2ce814d0914a5f82f7f157ff8bb57",
+}
 
 ELAN_ARCHIVE_SHA256 = "42b94d4244e8353142c456ec0e4ca6528fd898a6c604d4059f494e706e431f63"
 ELAN_RELEASE_URL = ("https://github.com/leanprover/elan/releases/download/v4.2.4/"
@@ -99,6 +120,61 @@ def git_blob(path):
     result = subprocess.run(["git", "hash-object", str(path)], capture_output=True,
                             text=True, timeout=30, check=True)
     return result.stdout.strip()
+
+def verify_provider_patch_locks(project):
+    """Fail closed unless the declared immutable provider post-update set matches."""
+    lake = (project / "lakefile.lean").read_text(encoding="utf-8")
+    if "post_update pkg do" not in lake or git_blob(project / "lakefile.lean") != LAKEFILE_BLOB:
+        raise ValueError("provider post_update hook or pinned lakefile missing")
+    manifest = json.loads((project / "lake-manifest.json").read_text())
+    for dep, sha in PINNED_DEPENDENCIES.items():
+        revs = [p["rev"] for p in manifest["packages"] if p.get("name") == dep]
+        if revs != [sha]:
+            raise ValueError("pinned dependency manifest drift for " + dep)
+    entries = []
+    for dep, name, expected in COMPATIBILITY_PATCHES:
+        if ('("' + dep + '", "' + name + '")') not in lake:
+            raise ValueError("undeclared compatibility patch " + name)
+        patch = project / "patches" / name
+        actual = git_blob(patch)
+        if actual != expected:
+            raise ValueError("provider compatibility patch blob drift: " + name)
+        entries.append({"dependency": dep, "patch": name, "git_blob": actual})
+    return entries
+
+
+def verify_provider_post_update(project):
+    """Require the pinned provider hook to change only declared Lean files."""
+    result = {}
+    for dep, sha in PINNED_DEPENDENCIES.items():
+        root = project / ".lake" / "packages" / dep
+        actual = subprocess.check_output(
+            ["git", "-C", str(root), "rev-parse", "HEAD"], text=True,
+            timeout=25).strip()
+        if actual != sha:
+            raise ValueError("post-update dependency HEAD drift: " + dep)
+        changed = subprocess.check_output(
+            ["git", "-C", str(root), "diff", "--name-only"], text=True,
+            timeout=35).splitlines()
+        if not changed or any(
+                not file.endswith(".lean") or file.startswith("/") or
+                ".." in Path(file).parts for file in changed):
+            raise ValueError("missing or unexpected provider patch effects: " + dep)
+        check = subprocess.run(["git", "-C", str(root), "diff", "--check"],
+                               capture_output=True, text=True, timeout=35)
+        if check.returncode:
+            raise ValueError("provider patch diff check failed: " + dep)
+        result[dep] = {"commit": actual, "modified_files": sorted(changed)}
+    bg = set(result["BoundedGaps"]["modified_files"])
+    if not {
+        "BoundedGaps/BoundedGaps/Maynard/FaceDecomposition.lean",
+        "BoundedGaps/BoundedGaps/Maynard/ImprovedGPY/S2Pair.lean"
+    } <= bg:
+        raise ValueError("known BoundedGaps failing modules not patched")
+    if git_blob(project / "lake-manifest.json") != MANIFEST_BLOB:
+        raise ValueError("Lake manifest drift after compatibility hook")
+    return result
+
 
 def validate_axiom_output(text):
     # Lean 4 prints "'theorem' depends on axioms: [..]"; tolerate older emitters.
@@ -176,6 +252,14 @@ def perform(source, worker, receipt, workdir):
                                                  timeout=25).strip()
         if actual_mathlib != MATHLIB:
             raise ValueError("downloaded mathlib revision mismatch")
+        # Original replay failed because the pinned provider's compatibility
+        # hook had never executed before compilation. Run that exact hook.
+        data["compatibility_patch_plan"] = verify_provider_patch_locks(project)
+        data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "update"],
+                                 project, logdir, "compat-post-update",
+                                 TIMEOUTS["compat-post-update"]))
+        data["compatibility_patch_effects"] = verify_provider_post_update(project)
+        data["source_mode"] = "PINNED_PROVIDER_WITH_DECLARED_COMPATIBILITY_PATCHES"
         data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "build", "ErdosProblems.Erdos248"], project,
                                  logdir, "lean-build", TIMEOUTS["lean-build"]))
         # A separate read-only audit proves the exact imported declaration type,

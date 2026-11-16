@@ -39,6 +39,47 @@ class Erdos248WorkerTests(unittest.TestCase):
             "Erdos248.erdos_248 : True\naxioms used: [propext, Classical.choice, Quot.sound]\n"),
             "axioms used: [propext, Classical.choice, Quot.sound]")
 
+    def test_provider_patch_plan_is_complete(self):
+        self.assertEqual(len(w.COMPATIBILITY_PATCHES), 9)
+        self.assertEqual(len(set(p[1] for p in w.COMPATIBILITY_PATCHES)), 9)
+        self.assertEqual(w.PINNED_DEPENDENCIES["BoundedGaps"],
+                         "ffbb65c21afc8a36ace67720f1b0df1c63d26bd1")
+        self.assertIn(("BoundedGaps", "formalpantheon-v4.33.0.patch",
+                       "ad5f8915e55205e15d4557958020d71314294d6e"),
+                      w.COMPATIBILITY_PATCHES)
+
+    def test_patch_provenance_and_missing_hook_fail_closed(self):
+        import json
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory)
+            (project / "patches").mkdir()
+            declared = "\n".join(
+                '(' + '"' + dep + '", "' + name + '")'
+                for dep, name, blob in w.COMPATIBILITY_PATCHES)
+            (project / "lakefile.lean").write_text("post_update pkg do\n" + declared)
+            (project / "lake-manifest.json").write_text(json.dumps({
+                "packages": [{"name": name, "rev": rev}
+                             for name, rev in w.PINNED_DEPENDENCIES.items()]}))
+            for _, filename, _ in w.COMPATIBILITY_PATCHES:
+                (project / "patches" / filename).write_text("frozen patch")
+            patch_digests = {
+                str(project / "patches" / filename): sha
+                for _, filename, sha in w.COMPATIBILITY_PATCHES}
+            patch_digests[str(project / "lakefile.lean")] = w.LAKEFILE_BLOB
+            with patch.object(w, "git_blob",
+                              side_effect=lambda p: patch_digests[str(p)]):
+                records = w.verify_provider_patch_locks(project)
+                self.assertEqual(len(records), 9)
+                patch_digests[str(project / "patches" /
+                    "formalpantheon-v4.33.0.patch")] = "0" * 40
+                with self.assertRaisesRegex(ValueError, "blob drift"):
+                    w.verify_provider_patch_locks(project)
+                patch_digests[str(project / "patches" /
+                    "formalpantheon-v4.33.0.patch")] = w.COMPATIBILITY_PATCHES[0][2]
+                (project / "lakefile.lean").write_text(declared)
+                with self.assertRaisesRegex(ValueError, "post_update"):
+                    w.verify_provider_patch_locks(project)
+
     def test_red_receipt_is_written_before_checkout(self):
         with tempfile.TemporaryDirectory() as directory:
             p = Path(directory)
