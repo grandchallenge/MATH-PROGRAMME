@@ -66,7 +66,11 @@ def inspect(root:Path,route:str):
     missing=[]
     for u in parsed.refs:
         asset=_local_asset(root,html,u)
-        if asset=='ESCAPES_SITE_ROOT' or (asset is not None and not asset.is_file()):
+        # MkDocs/Zensical use directory-style canonical links (`../foo/`).
+        # A route with index.html is a valid local target, not a broken asset.
+        if asset=='ESCAPES_SITE_ROOT' or (asset is not None
+                and not asset.is_file()
+                and not (asset.is_dir() and (asset/'index.html').is_file())):
             missing.append(u)
     return {'h1':heading,'word_count':sum(words.values()),'words':words,
             'math_markers':len(_MATH.findall(markup)),

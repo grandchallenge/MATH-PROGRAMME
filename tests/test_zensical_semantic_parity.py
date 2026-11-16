@@ -22,6 +22,13 @@ class RendererAuditTest(unittest.TestCase):
   self.put(self.before,'<h1>Math</h1>')
   self.put(self.after,'<h1>Math</h1><script src="missing.js"></script>')
   self.assertEqual(audit(self.before,self.after,{'index.html'})['critical_issues'][0]['code'],'BROKEN_LOCAL_ASSETS')
+ def test_directory_style_internal_html_link_resolves_to_index(self):
+  for root in (self.before,self.after):
+   (root/'chapter').mkdir()
+   (root/'chapter/index.html').write_text('<h1>Chapter</h1>',encoding='utf-8')
+  self.put(self.before,'<h1>Math</h1>')
+  self.put(self.after,'<h1>Math</h1><link href="chapter/">')
+  self.assertEqual(audit(self.before,self.after,{'index.html'})['critical_issue_count'],0)
  def test_unexpanded_status_is_critical(self):
   self.put(self.before,'<h1>Math</h1>')
   self.put(self.after,'<h1>Math</h1><!-- GCL_ERDOS_HOME_STATUS -->')
