@@ -29,10 +29,15 @@ universe u
 
 open CategoryTheory Limits
 open CategoryTheory.Enriched.FunctorCategory
+open scoped CategoryTheory.MonoidalClosed
 
 namespace CMDG.CondensedCM5R0
 
 private abbrev R : Type (u + 1) := CMDG.CondensedCM4P2D.R.{u}
+
+noncomputable local instance : MonoidalClosed
+    CMDG.CondensedCM4P2D.PresheafModule.{u} :=
+  MonoidalClosed.FunctorCategory.monoidalClosed
 
 /-- Every locally constant map from a compact Hausdorff test X into an
 arbitrary (possibly infinitely indexed) algebraic direct sum has one
@@ -64,8 +69,8 @@ theorem gsLocallyConstantFinsupp_coordinatesFinite
   refine ⟨s, ?_⟩
   intro i hi
   ext x
-  change f x i = (0 : R.{u})
-  exact hs x i hi
+  simpa only [LocallyConstant.map_apply, Function.comp_apply,
+    LocallyConstant.zero_apply] using congrArg ULift.down (hs x i hi)
 
 /-- Package the coordinate sections into an *actual* finitely supported
 family. The finite-support witness comes from compactness and is not
@@ -75,13 +80,13 @@ noncomputable def gsLocallyConstantFinsupp_coordinateFamily
     (f : LocallyConstant X (I →₀ R.{u})) :
     I →₀ LocallyConstant X R.{u} := by
   classical
-  obtain ⟨s, hs⟩ := gsLocallyConstantFinsupp_coordinatesFinite X I f
-  exact Finsupp.onFinset s
+  let p := gsLocallyConstantFinsupp_coordinatesFinite X I f
+  exact Finsupp.onFinset (Classical.choose p)
     (fun i => LocallyConstant.map (fun a : I →₀ R.{u} => a i) f)
     (by
       intro i hne
       by_contra hi
-      exact hne (hs i hi))
+      exact hne ((Classical.choose_spec p) i hi))
 
 @[simp]
 theorem gsLocallyConstantFinsupp_coordinateFamily_apply
@@ -89,7 +94,7 @@ theorem gsLocallyConstantFinsupp_coordinateFamily_apply
     (f : LocallyConstant X (I →₀ R.{u}))
     (i : I) (x : X) :
     gsLocallyConstantFinsupp_coordinateFamily X I f i x = f x i := by
-  simp [gsLocallyConstantFinsupp_coordinateFamily, LocallyConstant.map_apply]
+  simp [gsLocallyConstantFinsupp_coordinateFamily]
 
 /-- The coordinate extraction is genuinely R-linear, for arbitrary
 infinite basis index sets. -/
@@ -102,12 +107,12 @@ noncomputable def gsLocallyConstantFinsupp_coordinateLinear
     intro f g
     ext i x
     simp only [gsLocallyConstantFinsupp_coordinateFamily_apply]
-    rfl
+    simp
   map_smul' := by
     intro a f
     ext i x
     simp only [gsLocallyConstantFinsupp_coordinateFamily_apply]
-    rfl
+    simp
 
 /-- No information is lost when passing to all compact-test coordinate
 sections of the algebraic discrete sum. -/
