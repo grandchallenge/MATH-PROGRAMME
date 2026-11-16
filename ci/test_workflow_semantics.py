@@ -168,6 +168,30 @@ def main() -> int:
             break
     assert any("trusted protected main" in error for error in errors(checkout_drift))
 
+    # The stale-run path must be a deliberate no-publication decision, not
+    # an exception and not a bypass of protected-main identity checking.
+    missing_stale_gate = copy.deepcopy(workflows)
+    for step in missing_stale_gate["pages.yml"]["jobs"]["build"]["steps"]:
+        if step.get("id") == "publication":
+            step.pop("if", None)
+    assert any("stale validated runs must suppress publication" in error
+               for error in errors(missing_stale_gate))
+
+    missing_trusted_main_check = copy.deepcopy(workflows)
+    for step in missing_trusted_main_check["pages.yml"]["jobs"]["build"]["steps"]:
+        if step.get("id") == "freshness":
+            step["run"] = str(step["run"]).replace(
+                '"${validated_sha}" != "${current_main_sha}"', '"${validated_sha}" == "${current_main_sha}"')
+    assert any("stale validated runs must suppress publication" in error
+               for error in errors(missing_trusted_main_check))
+
+    stale_event_is_failure = copy.deepcopy(workflows)
+    for step in stale_event_is_failure["pages.yml"]["jobs"]["build"]["steps"]:
+        if step.get("id") == "freshness":
+            step["run"] = str(step["run"]).replace('echo "current=false"', 'exit 1 # no skip output')
+    assert any("stale validated runs must suppress publication" in error
+               for error in errors(stale_event_is_failure))
+
     pages_rebuild = copy.deepcopy(workflows)
     pages_rebuild["pages.yml"]["jobs"]["build"]["steps"].append({"run": "mkdocs build --strict"})
     assert any("without rebuilding documentation" in error for error in errors(pages_rebuild))
