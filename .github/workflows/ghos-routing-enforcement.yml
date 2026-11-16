@@ -410,7 +410,25 @@ jobs:
       contents: read
       pull-requests: read
     steps:
+      - name: Check out exact protected push for routing-input proof
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prove whether effective routing control bytes changed
+        id: scope
+        env:
+          PROTECTED_BEFORE: ${{ github.event.before }}
+          PROTECTED_AFTER: ${{ github.sha }}
+        run: >-
+          python3 ci/ghos_base_refresh_scope.py
+          --before "$PROTECTED_BEFORE"
+          --after "$PROTECTED_AFTER"
+          --current "$PROTECTED_AFTER"
+          --github-output "$GITHUB_OUTPUT"
       - name: Dispatch current-base revalidation for open pull requests
+        if: steps.scope.outputs.refresh == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
