@@ -28,21 +28,23 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - name: Checkout validated main commit
+      - name: Checkout trusted protected main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: refs/heads/main
           persist-credentials: false
 
       - name: Require validated commit to remain current main
         shell: bash
+        env:
+          VALIDATED_EVENT_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
           git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
           validated_sha="$(git rev-parse HEAD)"
           current_main_sha="$(git rev-parse refs/remotes/origin/main)"
-          if [[ "${validated_sha}" != "${current_main_sha}" ]]; then
-            echo "Validated commit ${validated_sha} is no longer current main ${current_main_sha}; refusing stale publication."
+          if [[ "${validated_sha}" != "${VALIDATED_EVENT_SHA}" || "${validated_sha}" != "${current_main_sha}" ]]; then
+            echo "Validated event SHA, trusted checkout, and current main differ; refusing stale publication."
             exit 1
           fi
 

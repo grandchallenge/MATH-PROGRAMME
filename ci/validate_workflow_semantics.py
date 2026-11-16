@@ -361,8 +361,13 @@ def workflow_semantic_errors(
         if len(matches) != 1 or "steps.publication.outputs.publish" not in str(matches[0].get("if", "")):
             errors.append("pages.yml: site activity must be skipped when no site inputs changed: " + name)
     page_checkouts = steps_using(build, "actions/checkout@")
-    if len(page_checkouts) != 1 or page_checkouts[0].get("with", {}).get("ref") != "${{ github.event.workflow_run.head_sha }}":
-        errors.append("pages.yml: checkout must bind the validated workflow_run.head_sha")
+    if len(page_checkouts) != 1 or page_checkouts[0].get("with", {}).get("ref") != "refs/heads/main":
+        errors.append("pages.yml: privileged checkout must use trusted protected main")
+    validation_steps = [s for s in build.get("steps", []) if s.get("name") == "Require validated commit to remain current main"]
+    if (len(validation_steps) != 1
+            or validation_steps[0].get("env", {}).get("VALIDATED_EVENT_SHA") != "${{ github.event.workflow_run.head_sha }}"
+            or "${VALIDATED_EVENT_SHA}" not in str(validation_steps[0].get("run", ""))):
+        errors.append("pages.yml: trusted main checkout must equal validated workflow event SHA")
     page_runs = job_runs(pages, "build")
     if contains_command(page_runs, DOCS_INSTALL) or contains_command(page_runs, "mkdocs build --strict"):
         errors.append("pages.yml: Pages must deploy the policy artifact without rebuilding documentation")
