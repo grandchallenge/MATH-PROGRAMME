@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import tarfile
 import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,7 @@ REGISTRY = ROOT / "governance/lean_colab/JOBS.json"
 REMOTE_SOURCE = "/content/Erdos248.lean"
 REMOTE_WORKER = "/content/erdos_248_lean_worker.py"
 REMOTE_RECEIPT = "/content/erdos248_lean_receipt.json"
+REMOTE_LOG_ARCHIVE = "/content/erdos248_lean_logs.tar.gz"
 
 def digest(file):
     return hashlib.sha256(Path(file).read_bytes()).hexdigest()
@@ -121,6 +123,8 @@ def launch(colab, directory):
         try:
             cli(prefix + ["download", "-s", session, REMOTE_RECEIPT,
                           str(directory / "receipt.json")], timeout=90)
+            cli(prefix + ["download", "-s", session, REMOTE_LOG_ARCHIVE,
+                          str(directory / "logs.tar.gz")], timeout=150)
         except Exception:
             if error is None:
                 raise
@@ -143,6 +147,9 @@ def validate_receipt(data, identity):
         raise ValueError("receipt claims unauthorized authority")
     if (data.get("status") != "GREEN_KERNEL_REPLAY_UNADJUDICATED" or
             not data.get("full_kernel_replay") or not data.get("axioms_observed") or
+            not data.get("theorem_type_observed") or
+            not data.get("theorem_audit_log_sha256") or
+            not data.get("log_archive_sha256") or
             not any(token in data.get("axiom_report", "") for token in ("axioms used:", "depends on axioms:")) or
             "sorryAx" in data.get("axiom_report", "") or
             data.get("external_commit") !=
@@ -156,6 +163,34 @@ def validate_receipt(data, identity):
                   if s.get("exit_code") == 0}
     if not needed <= successful:
         raise ValueError("missing successful exact replay stages")
+    return True
+
+def validate_log_archive(data, archive):
+    """Compare complete Colab compiler outputs against source-bound receipt digests."""
+    archive = Path(archive)
+    if (not archive.is_file() or not data.get("log_archive_sha256") or
+            digest(archive) != data["log_archive_sha256"] or
+            archive.stat().st_size != data.get("log_archive_bytes")):
+        raise ValueError("log archive digest/size mismatch")
+    with tarfile.open(archive, mode="r:gz") as tar:
+        names = tar.getnames()
+        if len(names) != len(set(names)) or any(
+                not (n.startswith("logs/") or n == "Erdos248ReplayAudit.lean")
+                or ".." in n.split("/") for n in names):
+            raise ValueError("unexpected log archive member")
+        for step in data.get("steps", []):
+            for kind in ("stdout", "stderr"):
+                member = tar.extractfile("logs/" + step["stage"] +
+                                         (".out" if kind == "stdout" else ".err"))
+                if member is None:
+                    raise ValueError("missing log for " + step["stage"])
+                actual = hashlib.sha256(member.read()).hexdigest()
+                if actual != step[kind + "_sha256"]:
+                    raise ValueError("logged stage digest mismatch")
+        source = tar.extractfile("Erdos248ReplayAudit.lean")
+        if source is None or hashlib.sha256(source.read()).hexdigest() != data.get(
+                "audit_source_sha256"):
+            raise ValueError("theorem audit source digest mismatch")
     return True
 
 def main():
@@ -191,6 +226,7 @@ def main():
         launch(opts.colab, directory)
         receipt = json.loads((directory / "receipt.json").read_text())
         validate_receipt(receipt, identity)
+        validate_log_archive(receipt, directory / "logs.tar.gz")
         print(json.dumps({"state": "VERIFIED_UNADJUDICATED",
                           "receipt_sha256": digest(directory / "receipt.json"),
                           "directory": str(directory), **identity}))
