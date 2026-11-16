@@ -193,7 +193,7 @@ def perform(source, worker, receipt, workdir):
         output = (logdir / "axiom-audit.out").read_text(errors="replace")
         data["axiom_report"] = validate_axiom_output(output)
         data["axioms_observed"] = True
-        if not re.search(r"Erdos248\\.erdos_248\\s*:\\s*(?:∃|Exists)", output):
+        if not re.search(r"Erdos248\.erdos_248\s*:\s*(?:∃|Exists)", output):
             raise ValueError("no observed theorem type in Lean #check output")
         data["theorem_type_observed"] = True
         data["theorem_audit_log_sha256"] = sha256(logdir / "axiom-audit.out")
