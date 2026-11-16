@@ -101,13 +101,15 @@ def git_blob(path):
     return result.stdout.strip()
 
 def validate_axiom_output(text):
-    if "axioms used:" not in text:
+    # Lean 4 prints "'theorem' depends on axioms: [..]"; tolerate older emitters.
+    match = re.search(r"(?m)^.*(?:depends on axioms:|axioms used:)\\s*\\[[^\\]]*\\]", text)
+    if match is None:
         raise ValueError("no observed #print axioms output")
-    if re.search(r"\bsorryAx\b|\b(?:admit|sorry)\b", text):
+    if re.search(r"\\bsorryAx\\b|\\b(?:admit|sorry)\\b", match.group(0)):
         raise ValueError("forbidden sorry/admit appears in axiom audit")
     if "Erdos248.erdos_248" not in text:
         raise ValueError("missing named final theorem in audit output")
-    return text[text.index("axioms used:"):].splitlines()[0][:1200]
+    return match.group(0)[:1200]
 
 def perform(source, worker, receipt, workdir):
     source, worker, receipt, workdir = map(Path, (source, worker, receipt, workdir))
