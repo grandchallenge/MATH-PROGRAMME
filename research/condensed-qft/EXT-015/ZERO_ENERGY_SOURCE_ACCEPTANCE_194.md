@@ -1,16 +1,16 @@
 # EXT-015 REACH / 194 — bounded acceptance ledger for zero-energy weighted means and the disconnected Wick defect
 
-**Scientific disposition: BOUNDED ACCEPT after source-locked same-system review193; protected admission of 192–194 and the accompanying nonterminal checkpoint remains OPEN.** The actual source-class result is an exact two-hidden-Gaussian terminal obstruction with a near-collapse R1-compatible moderate component and an original fixed-order rapid tail. The constructive result is an admitted disconnected Wick source with the same weak limit as the first Green core, but a demonstrably nonrapid joint-corner defect. Neither result gives full core membership, residual W acyclicity, or a theorem about arbitrary original sources.
+**Scientific disposition: BOUNDED ACCEPT after source-locked same-system review193; primary192, critic193 and ledger194 protected-admitted through PR3360.** The actual source-class result is an exact two-hidden-Gaussian terminal obstruction with a near-collapse R1-compatible moderate component and an original fixed-order rapid tail. The constructive result is an admitted disconnected Wick source with the same weak limit as the first Green core, but a demonstrably nonrapid joint-corner defect. Neither result gives full core membership, residual W acyclicity, or a theorem about arbitrary original sources.
 
 ## 1. Frozen immutable source and completed review
 
 | Evidence item | Exact identity and state |
 | --- | --- |
 | Original frozen primary192 | [ZERO_ENERGY_SOURCE_MECHANISM_AUDIT_192.md](ZERO_ENERGY_SOURCE_MECHANISM_AUDIT_192.md), source Git blob 6003987b03980ae65ead3e286109be1eed02c8c7, preserved at exact commit 311ab74479dd2104de623bf597ec945e06236a64 on branch research/reach-zero-energy192-primary-frozen-20261115 |
-| Critical review193 | [AGENT_CRITICAL_REVIEW_ZERO_ENERGY_193.md](AGENT_CRITICAL_REVIEW_ZERO_ENERGY_193.md), source Git blob 7e6625fede8ec2797dcad7a9752a5728e8942de7; logical Verifier V193 and Adversary A193, same ChatGPT/GitHub producer identity, not an independently authenticated nonauthor APPROVED reviewer or external MATHCERT |
+| Critical review193 | [AGENT_CRITICAL_REVIEW_ZERO_ENERGY_193.md](AGENT_CRITICAL_REVIEW_ZERO_ENERGY_193.md), earlier source Git blob 7e6625fede8ec2797dcad7a9752a5728e8942de7 and exact protected-main blob 39873b26b2b1e9085d77cdb0964658ef7bd6b69d, which adds a reconciled distinct-context source review without changing frozen192; logical Verifier V193 and Adversary A193, same ChatGPT/GitHub producer identity, not an independently authenticated nonauthor APPROVED reviewer or external MATHCERT |
 | Protected parent | c999e3090f2483b5ee85a63dfaf35f09aa9cc290, checkpoint CP204 and all originally admitted 105/108/126/165/168/174/180/183/canonical186–191 source |
 | Distinct double-Gaussian supplement | [DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md](DOUBLE_GAUSSIAN_HIDDEN_MEAN_SOURCE_186.md) (not canonical nonpolynomial186), PR3352 native protected merge 3dc09319b417272b3c1ec35b74e2bb30392e5c31, proof Git blob 7985fec06cb3134110b16afa4aa4fc5b71444341 |
-| Editorial/protected admission | Not yet established for 192–194. Native PR exact-head checks, protected merge and protected-main blob readback are separately required. |
+| Editorial/protected admission | PR3360 passed GCL conformance, formal validation and Programme policy checks and protected-merged at ff1f71ff5686a4adcac659bd6e6e817a77139666; protected primary192 blob 6003987b03980ae65ead3e286109be1eed02c8c7, critic193 blob 39873b26b2b1e9085d77cdb0964658ef7bd6b69d and ledger194 original blob feb36d49385f004ef197fcdc79ae98697f5fa876 were read back on main. This correction is subject to its own protected admission. |
 
 This ledger uses the exact **frozen** primary192 bytes rather than an untracked branch modification. Mathematical review193 introduces no author correction to that frozen primary. The same-system role separation is valid for internal bounded adjudication and is **not** independent public mathematical certification.
 
@@ -44,7 +44,7 @@ Its fixed-test pairing with a test equal to one near the joint origin begins wit
 
 ## 3. Documentary obligations and scientific successor
 
-Submit the frozen source192, source-locked critic193 and acceptance194 for policy classification, mathematics review, native checks and protected queue. Only after exact final-head merge and readback may the program overview and checkpoint make a protected-192–194 claim. The active checkpoint may identify the **next proposed** work, but it must remain nonterminal and keep all global claim flags false.
+The frozen source192, source-locked critic193 and acceptance194 have passed native checks, protected-merged and been read back via PR3360. The newer protected critic193 blob includes a reconciled additional same-system review after the originally recorded review blob; this documentary correction binds the actual protected bytes. The programme overview and checkpoint were separately reconciled by PR3363 to nonterminal CP210. All global claim flags remain false.
 
 The scientifically meaningful next operation is to test the full joint defect194.1 against a genuinely legal finite 108.7 history with nonidentity partition/jet maps, proper physical density, fixed original R1 cones, complete source-stage tensors, fixed all-corner scalar indices and genuine 126 parameter rows. A claimed negative result must be across the full permitted source and uniform rapid equivalence, not merely an additional terminal-Gaussian subclass. An actual positive result must give an evaluated completed source for the defect without inserting an impermissible cusp-times-anchored-delta coefficient or infinite formal jet series.
 
