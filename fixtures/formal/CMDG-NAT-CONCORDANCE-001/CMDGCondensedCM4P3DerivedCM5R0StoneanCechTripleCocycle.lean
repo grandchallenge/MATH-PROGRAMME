@@ -66,7 +66,10 @@ noncomputable def stoneanCechTripleXZ
   refine pullback.lift
     (stoneanCechTripleXY T ≫ pullback.fst p p)
     (stoneanCechTripleZ T) ?_
-  exact pullback.condition (pullback.fst p p ≫ p) p
+  simpa only [Category.assoc] using
+    (pullback.condition :
+      stoneanCechTripleXY T ≫ (pullback.fst p p ≫ p) =
+        stoneanCechTripleZ T ≫ p)
 
 /-- The (y,z) pair, using the x/y pair relation to construct the
 third pullback map. -/
@@ -85,7 +88,7 @@ noncomputable def stoneanCechTripleYZ
     _ = stoneanCechTripleXY T ≫ (pullback.fst p p ≫ p) := by
       rw [← pullback.condition]
     _ = stoneanCechTripleZ T ≫ p :=
-      pullback.condition (pullback.fst p p ≫ p) p
+      pullback.condition
 
 /-- Free-module alternating difference on the genuine triple relation:
 x-z = (x-y) + (y-z). -/
@@ -100,8 +103,7 @@ theorem stoneanCechDifference_triple
   unfold stoneanCechDifference
   simp only [Preadditive.comp_sub, ← Functor.map_comp,
     stoneanCechTripleXZ, stoneanCechTripleYZ,
-    pullback.lift_fst, pullback.lift_snd,
-    Category.assoc]
+    pullback.lift_fst, pullback.lift_snd]
   abel
 
 /-- The relation's genuine morphism into the Stonean kernel satisfies
