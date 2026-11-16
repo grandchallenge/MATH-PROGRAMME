@@ -129,9 +129,11 @@ theorem stoneanCechKernelDiscreteScalar_cocycle
   change c ((stoneanCechTripleXZ T).hom.hom t) =
     c ((stoneanCechTripleXY T).hom.hom t) +
       c ((stoneanCechTripleYZ T).hom.hom t) at hv
-  simpa only [stoneanCechTripleOfRelated_xz,
-    stoneanCechTripleOfRelated_xy,
-    stoneanCechTripleOfRelated_yz] using hv
+  dsimp only [t] at hv
+  rw [stoneanCechTripleOfRelated_xz T x y z hxy hyz,
+    stoneanCechTripleOfRelated_xy T x y z hxy hyz,
+    stoneanCechTripleOfRelated_yz T x y z hxy hyz] at hv
+  exact hv
 
 /-- Construct an ACTUAL extension K_T → Z_disc across the kernel
 inclusion into F_(P(T)), for arbitrary profinite T. -/
