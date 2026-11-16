@@ -36,7 +36,7 @@ This is not a sheaf-only coproduct witness. -/
 noncomputable def gsBasisDiscreteSourcePresheafCofan
     (S : Profinite.{u}) :
     Cofan (fun _ : LiftedSourceBasisIndex S =>
-      CMDG.CondensedCM4P2D.coefficientPresheaf) :=
+      CMDG.CondensedCM4P2D.coefficientPresheaf.{u}) :=
   Cofan.mk (gsBasisDiscreteSourcePresheaf S)
     (gsBasisCoefficientInclusionPresheaf S)
 
@@ -96,7 +96,7 @@ category, built from the verified colimiting inclusion cocone. -/
 noncomputable instance gsBasisPresheafCoeffHasCoproduct
     (S : Profinite.{u}) :
     HasCoproduct (fun _ : LiftedSourceBasisIndex S =>
-      CMDG.CondensedCM4P2D.coefficientPresheaf) :=
+      CMDG.CondensedCM4P2D.coefficientPresheaf.{u}) :=
   HasColimit.mk
     ⟨gsBasisDiscreteSourcePresheafCofan S,
       gsBasisDiscreteSourcePresheafCofanIsColimit S⟩
@@ -106,12 +106,12 @@ exact source presheaf used in the protected enriched internal Hom. -/
 noncomputable def gsBasisDiscreteSourcePresheafCoproductIso
     (S : Profinite.{u}) :
     (∐ (fun _ : LiftedSourceBasisIndex S =>
-        CMDG.CondensedCM4P2D.coefficientPresheaf)) ≅
+        CMDG.CondensedCM4P2D.coefficientPresheaf.{u})) ≅
       gsBasisDiscreteSourcePresheaf S :=
   IsColimit.coconePointUniqueUpToIso
     (colimit.isColimit (Discrete.functor
       (fun _ : LiftedSourceBasisIndex S =>
-        CMDG.CondensedCM4P2D.coefficientPresheaf)))
+        CMDG.CondensedCM4P2D.coefficientPresheaf.{u})))
     (gsBasisDiscreteSourcePresheafCofanIsColimit S)
 
 #check gsBasisDiscreteSourcePresheafCofan
