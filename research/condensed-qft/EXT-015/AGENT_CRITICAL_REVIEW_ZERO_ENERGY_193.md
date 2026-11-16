@@ -21,7 +21,7 @@ u=\beta y+\alpha h,\quad v=y-h.
 \tag{193.1}
 $$
 
-The absolute coordinate Jacobian is 1. Completing the square gives normalized Gaussian identity \(\kappa_{a\epsilon}(z-y)\kappa_{b\epsilon}(z-h)=\kappa_{c\epsilon}(z-u)\kappa_{d\epsilon}(v)\). This identity is used only on already typed original physical vertices. The result does not declare the weighted mean to be an original physical vertex-forgetting operation or a new R1 coefficient stage.
+The absolute coordinate Jacobian is 1. Completing the square gives normalized Gaussian identity $\kappa_{a\epsilon}(z-y)\kappa_{b\epsilon}(z-h)=\kappa_{c\epsilon}(z-u)\kappa_{d\epsilon}(v)$. This identity is used only on already typed original physical vertices. The result does not declare the weighted mean to be an original physical vertex-forgetting operation or a new R1 coefficient stage.
 
 For an output forbidden covector (tau,-tau) at x=u, its pullback at fixed v is (tau,-beta tau,-alpha tau) in (x,y,h). When x=u and v=0, these are conormal to the original three-vertex diagonal: their sum vanishes and all three coordinates coincide. The original closed permitted cone excludes those directions. Compact normalized covector spheres and the closed graph cone give a positive angular separation on a small fixed neighborhood in (x,u,v). Choose a fixed smooth v cutoff theta equal to one near zero. Its near-zero part W has wavefront avoiding a fixed forbidden output cone and moderate off-cone Sobolev estimates; this uses the actual noncharacteristic pushforward estimates of108, not a postulated exact-cone map for all v.
 
@@ -64,7 +64,7 @@ D_\epsilon=\chi(x)\bigl(P_{b\epsilon}(x)-e(x)\bigr)
 \tag{193.4}
 $$
 
-Since \(\partial_t P_{b\epsilon}(t)\) is smooth and e(t)=|t|/2 is not, the difference has a cusp for every positive regulator. The heat-semigroup identity provides the exact formula
+Since $\partial_t P_{b\epsilon}(t)$ is smooth and e(t)=|t|/2 is not, the difference has a cusp for every positive regulator. The heat-semigroup identity provides the exact formula
 
 $$
 P_{b\epsilon}-e
