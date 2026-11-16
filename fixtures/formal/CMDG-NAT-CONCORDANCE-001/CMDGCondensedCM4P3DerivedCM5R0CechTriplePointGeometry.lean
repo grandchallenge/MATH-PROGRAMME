@@ -38,25 +38,31 @@ theorem stoneanCechPairOfRelated_fst
     (pullback.fst (Profinite.presentation.π T)
       (Profinite.presentation.π T)).hom.hom
         (stoneanCechPairOfRelated T x y hxy) = x := by
-  change (stoneanCechExplicitToAbstract T ≫
-    pullback.fst (Profinite.presentation.π T)
-      (Profinite.presentation.π T)).hom.hom ⟨(x, y), hxy⟩ = x
   let P := Stonean.toProfinite.obj T.presentation
-  let f : stoneanCechRelatedProfinite T ⟶ P :=
+  let p := Profinite.presentation.π T
+  letI : CompactSpace (↥(profiniteCechRelatedSet P T p)) :=
+    isCompact_iff_compactSpace.mp
+      (profiniteCechRelatedSet_isClosed P T p).isCompact
+  let R := stoneanCechRelatedProfinite T
+  let f : R ⟶ P :=
     CompHausLike.ofHom _
-      (⟨(fun z : stoneanCechRelatedProfinite T => z.val.1),
-        continuous_fst.comp continuous_subtype_val⟩ :
-        C(stoneanCechRelatedProfinite T, P))
+      (⟨fun z : R => z.val.1,
+        continuous_fst.comp continuous_subtype_val⟩ : C(R, P))
+  let g : R ⟶ P :=
+    CompHausLike.ofHom _
+      (⟨fun z : R => z.val.2,
+        continuous_snd.comp continuous_subtype_val⟩ : C(R, P))
+  have hfg : f ≫ p = g ≫ p := by
+    ext z
+    change p.hom.hom z.val.1 = p.hom.hom z.val.2
+    exact z.property
   have hmap :
-      stoneanCechExplicitToAbstract T ≫
-        pullback.fst (Profinite.presentation.π T)
-          (Profinite.presentation.π T) = f := by
-    unfold stoneanCechExplicitToAbstract
+      stoneanCechExplicitToAbstract T ≫ pullback.fst p p = f := by
+    change pullback.lift f g hfg ≫ pullback.fst p p = f
     exact pullback.lift_fst _ _ _
-  have hh := congrArg
-    (fun m : stoneanCechRelatedProfinite T ⟶ P =>
-      m.hom.hom ⟨(x, y), hxy⟩) hmap
-  exact hh
+  have hh := congrArg (fun m : R ⟶ P =>
+    m.hom.hom (⟨(x, y), hxy⟩ : R)) hmap
+  simpa [f] using hh
 
 /-- The second endpoint of the actual categorical pair. -/
 theorem stoneanCechPairOfRelated_snd
@@ -67,25 +73,31 @@ theorem stoneanCechPairOfRelated_snd
     (pullback.snd (Profinite.presentation.π T)
       (Profinite.presentation.π T)).hom.hom
         (stoneanCechPairOfRelated T x y hxy) = y := by
-  change (stoneanCechExplicitToAbstract T ≫
-    pullback.snd (Profinite.presentation.π T)
-      (Profinite.presentation.π T)).hom.hom ⟨(x, y), hxy⟩ = y
   let P := Stonean.toProfinite.obj T.presentation
-  let g : stoneanCechRelatedProfinite T ⟶ P :=
+  let p := Profinite.presentation.π T
+  letI : CompactSpace (↥(profiniteCechRelatedSet P T p)) :=
+    isCompact_iff_compactSpace.mp
+      (profiniteCechRelatedSet_isClosed P T p).isCompact
+  let R := stoneanCechRelatedProfinite T
+  let f : R ⟶ P :=
     CompHausLike.ofHom _
-      (⟨(fun z : stoneanCechRelatedProfinite T => z.val.2),
-        continuous_snd.comp continuous_subtype_val⟩ :
-        C(stoneanCechRelatedProfinite T, P))
+      (⟨fun z : R => z.val.1,
+        continuous_fst.comp continuous_subtype_val⟩ : C(R, P))
+  let g : R ⟶ P :=
+    CompHausLike.ofHom _
+      (⟨fun z : R => z.val.2,
+        continuous_snd.comp continuous_subtype_val⟩ : C(R, P))
+  have hfg : f ≫ p = g ≫ p := by
+    ext z
+    change p.hom.hom z.val.1 = p.hom.hom z.val.2
+    exact z.property
   have hmap :
-      stoneanCechExplicitToAbstract T ≫
-        pullback.snd (Profinite.presentation.π T)
-          (Profinite.presentation.π T) = g := by
-    unfold stoneanCechExplicitToAbstract
+      stoneanCechExplicitToAbstract T ≫ pullback.snd p p = g := by
+    change pullback.lift f g hfg ≫ pullback.snd p p = g
     exact pullback.lift_snd _ _ _
-  have hh := congrArg
-    (fun m : stoneanCechRelatedProfinite T ⟶ P =>
-      m.hom.hom ⟨(x, y), hxy⟩) hmap
-  exact hh
+  have hh := congrArg (fun m : R ⟶ P =>
+    m.hom.hom (⟨(x, y), hxy⟩ : R)) hmap
+  simpa [g] using hh
 
 /-- Points in a categorical profinite pair pullback are determined
 by their two endpoint values. -/
