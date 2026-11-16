@@ -6,6 +6,7 @@ on:
   merge_group:
   schedule:
     - cron: "23 7 * * 1"
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
@@ -21,7 +22,25 @@ jobs:
     permissions:
       contents: read
     uses: grandchallenge/.github/.github/workflows/gcl-security.yml@bed7430e5197c632ed3bc44bc75549a0cf903739
+  pilot-impact:
+    name: Classify optional synthetic-pilot impact
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      assurance: ${{ steps.classify.outputs.assurance }}
+      disclosure: ${{ steps.classify.outputs.disclosure }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Route exact changed files, preserving unknown replay
+        id: classify
+        run: python3 ci/workflow_conformance_pilot_impact.py --event-name "$GITHUB_EVENT_NAME" --event-path "$GITHUB_EVENT_PATH" --github-output "$GITHUB_OUTPUT"
+
   assurance-pilot:
+    needs: pilot-impact
+    if: always() && (needs.pilot-impact.result != 'success' || needs.pilot-impact.outputs.assurance != 'false')
     name: GCL ASSURE PR synthetic dossier
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -54,6 +73,8 @@ jobs:
           retention-days: 30
           compression-level: 0
   disclosure-pilot:
+    needs: pilot-impact
+    if: always() && (needs.pilot-impact.result != 'success' || needs.pilot-impact.outputs.disclosure != 'false')
     name: GCL DISCLOSE PR synthetic release gate
     runs-on: ubuntu-24.04
     timeout-minutes: 10
