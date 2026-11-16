@@ -10,7 +10,7 @@
   "project_item_id": "PVTI_lADOB9Ao_c4BlwurzhIVExc",
   "literature_status": "OPEN",
   "verification_kind": "LACUNARY_SUBSERIES_IRRATIONALITY",
-  "work_status": "QUEUED_UNEXECUTED",
+  "work_status": "IN_PROGRESS",
   "claim_scope": "Independently prove T irrational with exact phi(2^m), binary digit-gap and carry arguments; do not imply full S irrational",
   "falsification": "Wrong exponent gap, periodicity or invalid implication to full S",
   "source_locks": {
@@ -29,15 +29,17 @@
     "external_formal_path": null
   },
   "stage_results": {
-    "SOURCE_LOCK": "PENDING",
-    "STATEMENT_EQUIVALENCE": "PENDING",
-    "REPLAY_PREPARATION": "PENDING",
+    "SOURCE_LOCK": "PASS",
+    "STATEMENT_EQUIVALENCE": "PASS",
+    "REPLAY_PREPARATION": "BLOCKED",
     "REPLAY_EXECUTION": "PENDING",
     "ADVERSARIAL_REVIEW": "PENDING",
     "INTERNAL_ADJUDICATION": "PENDING",
     "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
   },
-  "proof_receipts": [],
+  "proof_receipts": [
+    "governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md"
+  ],
   "review_receipts": [],
   "toolchain_pins": null,
   "certification_status": "NOT_SUBMITTED",
@@ -53,6 +55,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "Fetch and hash exact primary and formal source; fix theorem/lemma quantifiers and determine genuine proof replayability",
-  "last_known_evidence": "Source-audit RESULT/1 exists; this manifest makes no proof-verification or mathematical-certification claim"
+  "next_action": "Prepare pinned Lean no-sorry proof of phi(2^m)=2^(m-1), exponent gap, tail <=2^(1-e_(N+1)), and rational denominator separation; run actual kernel/axiom checks, separate nonauthoring adversarial review and protected evidence admission. Original Erdős #249 S remains OPEN.",
+  "last_known_evidence": "Independently reconstructed bounded proof T irrational via dyadic-denominator separation (not the open full series S). Evidence: governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md; no Lean replay or certification"
 }
