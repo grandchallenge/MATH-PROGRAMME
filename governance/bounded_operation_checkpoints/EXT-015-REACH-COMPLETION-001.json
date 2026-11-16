@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP225",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP227",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Protected conic source A/D and bounded uniform heat-normal rank gate UC-OP-001–003 admitted/read back. Legal partition inclusion counterexample excludes universal one-edge smoothing; exact five-case rank fixture protected. Universal mixed108 Green source operator, 150.L, W acyclicity, originalR3, full126.14 and M5/R4 remain OPEN.",
+  "phase": "UC004 finite heat-graph/partition incidence criterion primary",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "0d3390be01cc4d42468eaf701f12825dbf705e8c",
-    "candidate_head_sha": "ce828643ec7cf2e001ab068e578daf4befb91fbb",
+    "protected_base_sha": "88c2c7971795ff4ba77bec7362c5252fb01ca42f",
+    "candidate_head_sha": "88c2c7971795ff4ba77bec7362c5252fb01ca42f",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-uc001-003-protected-anchor-20261116",
+    "branch": "research/reach-heat-incidence-uc004-input-frozen-20261116",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "identity": "FrozenUC004input88c2c7971795ff4ba77bec7362c5252fb01ca42f refresearch/reach-heat-incidence-uc004-input-frozen-20261116",
+        "kind": "artifact",
+        "status": "CP225livePASS; nextUC004unchanged. UC001–003 protectedinputs andexactA/D3371scope retained. Oneprimary/onecorrection/distinctUC005; no universalclosurepromotion. WindowsisolatedunpinnedCPython3.12.12/externalGCLcaches; noinstalls."
+      },
       {
         "identity": "PR3371 merge1d741353367997f51d0789ad7049ded1c0712c9e andcurrentPR3376 mergece828643ec7cf2e001ab068e578daf4befb91fbb",
         "kind": "artifact",
@@ -1873,19 +1878,17 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "result": "Preserved currentUC004continuation andallprogrammeboundaries",
-    "action": "Repair stale merged-PR continuity binding without altering next science",
     "evidence_refs": [
-      "research/reach-uc001-003-protected-anchor-20261116",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3371",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3376"
-    ]
+      "research/reach-heat-incidence-uc004-input-frozen-20261116"
+    ],
+    "result": "Primaryresearch",
+    "action": "BindUC004beforeconstruction"
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-16T14:00:55.5482069Z"
+    "observed_at": "2026-11-16T14:11:20.6724403Z"
   },
   "resume": {
     "fresh_session_safe": true,
