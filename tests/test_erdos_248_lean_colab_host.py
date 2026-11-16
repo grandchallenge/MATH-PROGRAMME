@@ -27,6 +27,11 @@ class Erdos248HostTests(unittest.TestCase):
                      "mathlib-cache", "lean-build", "axiom-audit")]
         }
 
+    def test_lean_four_axiom_receipt(self):
+        report = self.good()
+        report["axiom_report"] = "'Erdos248.erdos_248' depends on axioms: [propext]"
+        self.assertTrue(h.validate_receipt(report, self.identity()))
+
     def test_valid_unaudjudicated_receipt(self):
         self.assertTrue(h.validate_receipt(self.good(), self.identity()))
 
