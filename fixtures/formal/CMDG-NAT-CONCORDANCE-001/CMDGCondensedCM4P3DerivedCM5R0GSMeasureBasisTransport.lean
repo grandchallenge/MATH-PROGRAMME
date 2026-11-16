@@ -104,9 +104,8 @@ noncomputable def freeSolidToBasisInternalHomCondensedIso
     (S : Profinite.{u}) :
     (Condensed.profiniteSolid CMDG.CondensedCM4P2D.R.{u}).obj S ≅
       gsBasisInternalHomCondensed S :=
-  (CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness
-    .measureProfiniteSolidNatIso.app S).symm ≪≫
-      measureToBasisInternalHomCondensedIso S
+  (CMDG.CondensedCM4P2E.CanonicalRightKanUniqueness.measureProfiniteSolidNatIso.app S).symm ≪≫
+    measureToBasisInternalHomCondensedIso S
 
 #check gsBasisDiscreteSourcePresheaf
 #check gsBasisInternalHomPresheaf
