@@ -3,8 +3,12 @@
 import argparse,datetime,hashlib,json,subprocess
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from ci.renderer_browser_b01 import serve
-from ci.zensical_semantic_parity import canonical_search_route
+if __package__:
+ from ci.renderer_browser_b01 import serve
+ from ci.zensical_semantic_parity import canonical_search_route
+else:
+ from renderer_browser_b01 import serve
+ from zensical_semantic_parity import canonical_search_route
 
 # Every mandatory target is a previously verified generated canonical page.
 CASES=(
