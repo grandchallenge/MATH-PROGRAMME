@@ -1,0 +1,84 @@
+{
+  "record_type": "GCL-ERDOS-248-REFEREE-ADJUDICATION/1",
+  "adjudication_id": "ERDOS-PV-0248-A001",
+  "governing_issue": 3204,
+  "parent_issue": 3201,
+  "governed_manifest": "governance/erdos_proof_verification/manifests/0248.json",
+  "decision": "ACCEPT_SCOPED_OMEGA248_FORMAL_VERIFICATION_WITHOUT_MATHCERT",
+  "outcome_scope": "EXACT_DISTINCT_PRIME_OMEGA_ERDOS248_FORMAL_STATEMENT_ONLY",
+  "review_office": "REFEREE",
+  "reviewer_source_author": false,
+  "role_pass_independent_identity": false,
+  "independent_human_attestation": false,
+  "separate_source_critical_pass": true,
+  "prior_source_critical_receipt": "governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.json",
+  "prior_source_critical_sha256": "dc58e9dd9b2f069426ecfd3cfbb5c6a20094010bf4a0afa344e6aa7c1c323520",
+  "provider_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+  "provider_source_sha256": "292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267",
+  "provider_lean_module_count": 40,
+  "provider_lean_module_bundle_sha256": "7a4e16be1ef119996a7e3ee773a6a9abb0e6c041791565e679cab8cf1c28f815",
+  "lean_version": "leanprover/lean4:v4.33.0",
+  "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "kernel_receipt_sha256": "708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28",
+  "kernel_archive_sha256": "def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08",
+  "protected_kernel_admission": "a55255f01b18139ddf045d4c82fb566c3e77f36d",
+  "protected_source_review_admission": "bb91ff9e21679e201013de3ef9bc5fba8986748d",
+  "printed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "adjudication_document": "governance/erdos_proof_verification/adjudications/0248_REFEREE_ADJUDICATION_001.md",
+  "adjudication_document_sha256": "0218423c75cb5712bdd3f9bc3031f003e398f5a966bfd82075cedcacfc753d6a",
+  "findings": {
+    "same_C_for_all_k": true,
+    "same_n_for_every_k": true,
+    "infinitely_many_positive_n": true,
+    "exact_formal_type_checked": true,
+    "final_axiom_report_standard_only": true,
+    "no_sorryAx": true,
+    "all_60_stage_logs_verified": true,
+    "patched_dependency_identity_retained": true,
+    "zero_sieve_mass_excluded": true,
+    "near_far_very_far_shifts_covered": true,
+    "uniform_medium_and_large_thresholds": true,
+    "omega_le_Omega_direction_correct": true,
+    "published_Omega_multiplicity_formalized": false,
+    "author_leanization_map_present": false,
+    "complete_independent_analytic_reconstruction": false
+  },
+  "residual_dispositions": [
+    {
+      "code": "PUBLISHED_THEOREM_OMEGA_SCOPE",
+      "classification": "OUTSIDE_ADJUDICATED_CLAIM",
+      "parent_issue": 3201,
+      "blocks": "FULL_PAPER_VERIFICATION",
+      "does_not_block": "EXACT_OMEGA_DISTINCT_PRIME_FORMAL_STATEMENT"
+    },
+    {
+      "code": "AUTHOR_LEANIZATION_MAP_MISSING",
+      "classification": "CARRIED_DOCUMENTARY_DEFECT_NOT_SUBSTITUTED",
+      "parent_issue": 3201,
+      "blocks": "PAPER_SOURCE_EQUIVALENCE",
+      "does_not_block": "EXACT_OMEGA_DISTINCT_PRIME_FORMAL_STATEMENT"
+    },
+    {
+      "code": "THIRD_PARTY_PATCH_NONIDENTITY",
+      "classification": "PINNED_EXECUTED_PATCHED_SOURCE_ONLY",
+      "parent_issue": 3201,
+      "blocks": "UNPATCHED_DEPENDENCY_IDENTITY",
+      "does_not_block": "EXACT_PATCHED_FORMAL_REPLAY"
+    }
+  ],
+  "authority_effects": {
+    "internal_adjudication": true,
+    "adversarial_review_claim_scope_unchanged": true,
+    "protected_evidence_admission": false,
+    "verified_without_certification_status": false,
+    "mathcert_certification": false,
+    "publication": false,
+    "external_human_independence": false,
+    "issue_closure": false
+  },
+  "required_followon": "PROTECTED_MERGE_OF_THIS_ADJUDICATION__EXACT_REF_READBACK__SEPARATE_FINAL_EVIDENCE_ADMISSION_RECORD_AND_QUEUE_READBACK"
+}

@@ -51,7 +51,7 @@ class VerificationContractTests(unittest.TestCase):
         good = copy.deepcopy(self.good)
         self.assertEqual(good['stage_results']['REPLAY_EXECUTION'], 'PASS')
         self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
-        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
+        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
         self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
@@ -92,14 +92,57 @@ class VerificationContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'exact qualified scope'):
                 mod.validate_manifest(copy.deepcopy(self.good), self.schema)
 
-    def test_real_scoped_adversarial_pass_preserves_open_boundaries(self):
+    def test_real_scoped_adversarial_pass_preserves_certification_boundary(self):
         good = copy.deepcopy(self.good)
         self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
-        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
+        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
         self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
         self.assertEqual(good['work_status'], 'IN_PROGRESS')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
+
+    def test_referee_adjudication_cannot_be_forged_with_placeholder_receipt(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts'] = [
+            x for x in bad['review_receipts']
+            if 'REFEREE_ADJUDICATION' not in x
+        ]
+        with self.assertRaisesRegex(ValueError, 'exact Referee receipt'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_referee_cannot_claim_stronger_Omega_theorem(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/adjudications/'
+             '0248_REFEREE_ADJUDICATION_001.json')
+        original = mod.load
+        forged = copy.deepcopy(original(p))
+        forged['findings']['published_Omega_multiplicity_formalized'] = True
+        def injected(path, *args, **kwargs):
+            return forged if path == p else original(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=injected):
+            with self.assertRaisesRegex(ValueError, 'real scoped noncertifying custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_referee_cannot_claim_independent_human_or_certification(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/adjudications/'
+             '0248_REFEREE_ADJUDICATION_001.json')
+        original = mod.load
+        forged = copy.deepcopy(original(p))
+        forged['independent_human_attestation'] = True
+        forged['authority_effects']['mathcert_certification'] = True
+        def injected(path, *args, **kwargs):
+            return forged if path == p else original(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=injected):
+            with self.assertRaisesRegex(ValueError, 'real scoped noncertifying custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_no_protected_admission_without_internal_referee(self):
+        bad = copy.deepcopy(self.good)
+        bad['stage_results']['INTERNAL_ADJUDICATION'] = 'PENDING'
+        bad['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] = 'PASS'
+        with self.assertRaisesRegex(ValueError, 'admitted without adjudication'):
+            mod.validate_manifest(bad, self.schema)
 
     def test_no_mathcert_status_from_source_return(self):
         bad = copy.deepcopy(self.good)

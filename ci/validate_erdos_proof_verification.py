@@ -110,6 +110,58 @@ def validate_manifest(data: dict, schema: dict) -> None:
             )
     if data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS':
         require(data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS', f'adjudication without adverse pass: {n}')
+        if n == 248:
+            # Internal Referee decision is a separate scoped non-author review
+            # of the pinned external formalization, not a certificate.
+            path = 'governance/erdos_proof_verification/adjudications/0248_REFEREE_ADJUDICATION_001.json'
+            require(path in data['review_receipts'],
+                    'Erdos248 adjudication PASS requires exact Referee receipt')
+            r = load(path)
+            doc = 'governance/erdos_proof_verification/adjudications/0248_REFEREE_ADJUDICATION_001.md'
+            require(doc in data['review_receipts'],
+                    'Erdos248 adjudication PASS requires full Referee report')
+            report = (ROOT / doc).resolve()
+            require(report.is_relative_to(ROOT.resolve()) and report.is_file(),
+                    'Erdos248 Referee report unavailable')
+            flags = r.get('findings', {})
+            auth = r.get('authority_effects', {})
+            require(
+                r.get('record_type') == 'GCL-ERDOS-248-REFEREE-ADJUDICATION/1'
+                and r.get('adjudication_id') == 'ERDOS-PV-0248-A001'
+                and r.get('governing_issue') == 3204
+                and r.get('parent_issue') == 3201
+                and r.get('decision') ==
+                    'ACCEPT_SCOPED_OMEGA248_FORMAL_VERIFICATION_WITHOUT_MATHCERT'
+                and r.get('outcome_scope') ==
+                    'EXACT_DISTINCT_PRIME_OMEGA_ERDOS248_FORMAL_STATEMENT_ONLY'
+                and r.get('provider_commit') ==
+                    '8822f7ddef30fadbd92e1c6ab4ed897af356af5e'
+                and r.get('provider_source_sha256') ==
+                    '292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267'
+                and r.get('kernel_receipt_sha256') ==
+                    '708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28'
+                and r.get('prior_source_critical_sha256') ==
+                    'dc58e9dd9b2f069426ecfd3cfbb5c6a20094010bf4a0afa344e6aa7c1c323520'
+                and r.get('adjudication_document') == doc
+                and r.get('adjudication_document_sha256') ==
+                    hashlib.sha256(report.read_bytes()).hexdigest()
+                and r.get('reviewer_source_author') is False
+                and r.get('role_pass_independent_identity') is False
+                and r.get('independent_human_attestation') is False
+                and flags.get('same_C_for_all_k') is True
+                and flags.get('same_n_for_every_k') is True
+                and flags.get('uniform_medium_and_large_thresholds') is True
+                and flags.get('omega_le_Omega_direction_correct') is True
+                and flags.get('published_Omega_multiplicity_formalized') is False
+                and flags.get('author_leanization_map_present') is False
+                and flags.get('complete_independent_analytic_reconstruction') is False
+                and auth.get('internal_adjudication') is True
+                and auth.get('protected_evidence_admission') is False
+                and auth.get('verified_without_certification_status') is False
+                and auth.get('mathcert_certification') is False
+                and auth.get('issue_closure') is False,
+                'Erdos248 Referee PASS requires real scoped noncertifying custody'
+            )
     if data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS':
         require(data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS', f'admitted without adjudication: {n}')
     if data['work_status'] in ('VERIFIED_WITHOUT_CERTIFICATION','SUBMITTED_TO_MATHCERT'):

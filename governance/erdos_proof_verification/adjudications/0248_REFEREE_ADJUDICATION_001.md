@@ -1,0 +1,48 @@
+# Erdős #248 — internal Referee adjudication 001
+
+**Disposition:** ACCEPT_SCOPED_OMEGA248_FORMAL_VERIFICATION_WITHOUT_MATHCERT. Accept exact **distinct-prime-factor** Erdős #248 proposition established by the frozen Lean proof. This is **not** mathematical certification of the complete published Tao–Teräväinen theorem, not a new proof by GCL, and not a MATHCERT disposition.
+
+**Governing task:** MATH-PROGRAMME #3204, parent #3201, manifest ERDOS-PV-0248-S01. This is a distinct logical Referee decision on a preexisting non-author critical review. One authenticated GCL operator performed both role-scoped passes; distinct human reviewers, human endorsement and external mathematical independence are **not** asserted. The source author of the Lean proof is external to the GCL review.
+
+## Exact material evidence
+
+- **Original statement:** google-deepmind/formal-conjectures commit 85f863718beeec7b58a3a1926ee92e3472bc2020, file FormalConjectures/ErdosProblems/248.lean, Git blob b80827cbaaf0da740901def1606e36f770d43756. Source catalogue teorth/erdosproblems commit 536408716724a2402bdfa7c1d764bf83d64a8c89, entry 248, catalogue blob 4e60263a80af6207aca494d2e1388e44fa372889.
+- **Proof provider:** plby/lean-proofs commit 8822f7ddef30fadbd92e1c6ab4ed897af356af5e, main proof blob 166659f39a435831d1a751718f9a385effcd7dfa, SHA-256 292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267. Exact local proof subtree: 40 modules, 16,369 lines, deterministic SHA-256 bundle 7a4e16be1ef119996a7e3ee773a6a9abb0e6c041791565e679cab8cf1c28f815.
+- **Kernel run:** frozen parent protected revision 1cf3b6d6a6f9ebcb53e032a2475e6257467f451c; Lean v4.33.0; mathlib db584cd6d46c92f209a44c0f1c829460d327499d; nine separately recorded compatibility patches. Actual GREEN receipt SHA-256 708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28, archive SHA-256 def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08; protected main admission a55255f01b18139ddf045d4c82fb566c3e77f36d. Build completed all 8,918 jobs; independent theorem-type and axiom commands returned success; all 60 archived stdout/stderr SHA-256 digests matched. Final reported axioms were precisely propext, Classical.choice and Quot.sound; no sorryAx. Three previous RED execution results remain preserved as failed attempts, not proof evidence.
+- **Critical review:** protected main admission bb91ff9e21679e201013de3ef9bc5fba8986748d, source report governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.md, SHA-256 dc58e9dd9b2f069426ecfd3cfbb5c6a20094010bf4a0afa344e6aa7c1c323520; accompanying machine-readable scoped QUALIFIED_PASS. The critical review is not itself a second Lean execution or new human mathematical proof.
+
+## Referee examination of mathematical closure
+
+**Accepted quantified statement.** There exists a single positive real constant $C$ such that infinitely many natural numbers $n$ simultaneously satisfy, for every natural shift $k\geq1$,
+
+$$
+\omega(n+k)\leq Ck.
+$$
+
+The source's omega notation is ArithmeticFunction.cardDistinctFactors, not prime multiplicity. The existential quantifier on $C$ is outside both the set of witnesses and the universal quantification in $k$. The result gives infinitely many positive witnesses because removing zero from an infinite natural-number set preserves infinitude.
+
+**Proof chain.** The exact provider's main theorem Erdos248.erdos_248 depends directly on the imported, proved Erdos248.erdos248_resolved. TailAssembly.lean obtains a single uniform medium-prime exceptional-mass threshold and a single uniform large-prime threshold from MediumTail.lean and LargeTail.lean, then takes their maximum. The threshold is chosen independently of sieve dimension and shift. BadMassAssembly.lean derives weighted bad-shift masses with reciprocal-square budgets of at most one-sixteenth of total sieve mass per near/large exceptional event, and sums these bounds to a strict fraction of the positive sieve mass. The positivity itself is proved using diagonal dominance and error bounds in Mass.lean and SieveMassBounds.lean. Extraction.lean gets *one* positive-weight integer avoiding *all* relevant finite shifts and extends its bound to every larger shift by the elementary size bound for omega. FinalReduction.lean chooses arbitrarily large sieve dimensions and thus obtains arbitrarily large integers. Each named statement is an actual kernel-checked dependency, not an extra final theorem hypothesis.
+
+**Quantifier and loophole challenges.** The exact declaration rejects a shift-dependent $C$, a witness $n$ chosen separately for each $k$, coverage of only finitely many $k$, or a bound applying only to near shifts. Positive shifts ensure $n+k>0$. The sieve mass is strictly positive rather than a vacuous zero-weight measure. Reported Lean axioms rule out a hidden sorryAx in the final theorem. The nine provider patches must remain part of the verified source identity. These findings are grounded in the source-critical report and the authenticated, archived proof run. They are **not** an independent line-by-line rederivation of the full 16,369-line analytic development or its external dependencies.
+
+**Elementary bridge from distinct to multiplicity-counting prime factors.** For any positive integer $m$, write its prime factorization using exponents $\nu_p(m)$. Distinct-prime omega counts primes whose exponent is positive; $\Omega(m)$ sums those exponents, so each contributing prime counts at least one toward the latter. Therefore $\omega(m)\leq\Omega(m)$. For $m=n+k$ and $k\geq1$ no zero exception arises. Consequently the published stronger $\Omega$ inequality implies the formal distinct-prime target; the formal target alone does **not** imply the stronger published claim.
+
+## Documentary and authority dispositions
+
+**D-001 — stronger published theorem:** **EXCLUDED; NOT VERIFIED HERE.** Tao and Teräväinen, arXiv:2512.01739v2, Theorem 1.1, prove the stronger bound on multiplicity-counting $\Omega(n+k)$, and the consequent divisor-function bound. The pinned Lean proof is an alternate formal argument directly for distinct-prime $\omega$. This adjudication does not claim the paper's fourth prime-power axiom, multiplicity estimate, entire sieve derivation or divisor-function consequence has been formalized. Full-paper verification remains governed by parent issue #3201 and requires separate evidence, not a fabricated implication from omega to Omega.
+
+**D-002 — absent provider Leanization map:** **DOCUMENTARY ABSENCE CONFIRMED; NONBLOCKING ONLY FOR THIS LIMITED CLAIM.** The exact pinned source states that its mathematical proof and Leanization map reside in tex/248.tex, but that file is absent at the pinned commit. The GCL critical review supplies a *new reviewer crosswalk*, not that purported original author document. Without the original map, detailed source-to-paper correspondence cannot be certified. Keep this recorded as a parent-programme documentary residual; do not invent, silently restore, or attribute an author map. The absence does not undo a theorem kernel-checked from its actual available formal source.
+
+**D-003 — compatibility patches:** **ACCEPT EXACT EXECUTED PATCHED CLOSURE ONLY.** Nine dependency patches were admitted as part of the source lock, several containing substantive external proof edits. Kernel validity for those exact patches does not imply byte or proof identity to unpatched upstream. The patch provenance stays attached to all downstream claims.
+
+**D-004 — role independence:** **NON-AUTHOR BUT SAME OPERATOR.** A GCL agent reviewed a proof written externally. Source-critical and Referee passes are different logical roles executed under one authenticated identity, not independently signed human specialist passes. GCL internal adjudication is permitted, but only MATHCERT can claim public certification.
+
+## Decision and necessary protected follow-through
+
+- **Internal Referee decision:** ACCEPT_SCOPED_OMEGA248_FORMAL_VERIFICATION_WITHOUT_MATHCERT. The exact original Erdős #248 distinct-prime bound has a real source-locked, axioms-audited kernel proof and a qualified critical review. It is internally verified within the stated limits.
+- **Immediate manifest transition:** INTERNAL_ADJUDICATION=PASS; ADVERSARIAL_REVIEW=PASS and REPLAY_EXECUTION=PASS retained. Work remains IN_PROGRESS, certification remains NOT_SUBMITTED, and PROTECTED_EVIDENCE_ADMISSION stays PENDING until this adjudication's own actual protected merge and exact hash readback.
+- **Subsequent transition only after protected readback:** a distinct guarded evidence-custody record can set PROTECTED_EVIDENCE_ADMISSION=PASS and work_status=VERIFIED_WITHOUT_CERTIFICATION. That record must bind the genuine merge SHA and review/adjudication bytes, not an unmerged candidate.
+- **Issue lifecycle:** issue #3204 remains OPEN/Mathematics Todo while final evidence custody is pending. Once final protected readback confirms the bounded formal verification, it may be closed as *verified without certification*, keeping the governing global issue #3201 OPEN for broader proof-verification coverage, missing author map and unverified paper-level $\Omega$ claims. Never close #3204 on this adjudication merge alone.
+- **Continuity authority:** the protected manifest, exact GREEN receipt, source-critical report/receipt and this decision document/receipt form the bounded task's evidence ledger. MATHCERT certification, public mathematical endorsement and broader publication claims remain expressly unauthorized.
+
+**Disposition classifier:** SCOPED_OMEGA248_ACCEPTED__STRONGER_OMEGA_UNFORMALIZED__AUTHOR_MAP_MISSING__MATHCERT_NOT_SUBMITTED.
