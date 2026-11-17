@@ -41,7 +41,9 @@
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001.receipt.json",
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001.logs.tar.gz.b64",
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_002.receipt.json",
-    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_002.logs.tar.gz.b64"
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_002.logs.tar.gz.b64",
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_003.receipt.json",
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_003.logs.tar.gz.b64"
   ],
   "review_receipts": [],
   "toolchain_pins": {
@@ -65,6 +67,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "Protected-admit the exact direct-patch successor worker: after pinned Mathlib cache, invoke git apply --check and git apply for each of the nine provider-declared SHA-locked patches without lake update; verify the Lake manifest Git blob remains unchanged, all four pinned dependencies and actual Lean diffs match, then build exact Erdos248 target and audit #check plus #print axioms. Launch one new guarded CPU Colab attempt only from clean exact protected main; keep the two old RED tickets and receipts untouched.",
-  "last_known_evidence": "Two genuine authenticated CPU Colab one-shot runs are terminal RED, not theorem failures. First receipt SHA256 5c2267eb7b34dc3aed058e69ca89f6d3576c0d5898e5725863c416452c9fbfab, full logs SHA256 7eb28e5a45fe5199d82642d37e2874e226def0995637a959435b4a5d2da9f071: missing provider patch causes BoundedGaps errors. Second receipt SHA256 ea4b697af7f742bcafb8debf4ee25c329a083d53decbcaa6d46d24cc2d80599e, full logs SHA256 3e1c1c0e6e4d94ac239da80e50a0a52213687c4442f8d1a55e7694e063a3f20d: all nine patches applied, lake update unexpectedly changed the manifest; stopped before build. Exact receipts/archive in governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001 and _002. Source critical comment 6918898886; second terminal failure comment 6933225418. Mathematical replay and certification remain open."
+  "next_action": "After protected admission of source-locked CPU budget successor, execute one new exact-main O_EXCL guarded Colab CPU attempt with unchanged Erdos248.lean, frozen external provider and mathlib commits, nine verified direct compatibility patches, bounded 10800-second Lean build within a 15000-second session; verify exact terminal receipt, complete log digests, #check theorem type, #print axioms and absence of sorryAx. Never rerun, rename, or remove any of the three earlier RED tickets.",
+  "last_known_evidence": "Three exact, distinct source-locked authenticated CPU Colab attempts terminated RED with full logs preserved. First: BoundedGaps missing provider patch; second: provider Lake update regenerated locked manifest; third (exact protected PR #3420 merge 9f6f66772fe9f738e1723bffaf46a271131ca486): all nine patches, mathlib and manifest locks PASS, but Lean build timed out at 2400 seconds (exit 124) after >3800 successful compile steps, without compiler proof errors. Third receipt SHA256 3a3bc836d3ed8d986a879d0959e81572ca24942acfcb09946a48b31058c84415 and full logs SHA256 772a752e420a50dfd78d35a74d90e8f358b1d2fd292f5a17fe3b72a1f8676d71, verified 56 archived log-member digests. Immutable source and all old RED receipts/log archives preserved under governance/erdos_proof_verification/evidence/0248. Issue #3204 comment 6934490395; final theorem compile, kernel type check, axiom audit, adversarial review and certification remain open."
 }
