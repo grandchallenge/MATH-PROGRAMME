@@ -82,7 +82,7 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(row['stage_work_items']['C']['work_status'],'PROTECTED_ADMITTED')
         self.assertFalse(q.permitted(row,'B'))
         self.assertFalse(q.permitted(row,'C'))
-        self.assertEqual(row['stage_work_items']['D']['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(row['stage_work_items']['D']['work_status'],'PROTECTED_ADMITTED')
         self.assertFalse(q.permitted(row,'D'))
         can_claim_documentary=deepcopy(row)
         can_claim_documentary['stage_work_items']['D']['work_status']='UNEXECUTED'

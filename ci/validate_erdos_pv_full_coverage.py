@@ -71,7 +71,10 @@ def validate_five_source_scope(row, root=ROOT):
            and stage['work_status']==('VERIFIED_BOUNDED' if expected_selected else 'EVIDENCE_BLOCKED')
            and stage['review_status']==('ROLE_SCOPED_CRITICAL_PASS' if expected_selected else 'BLOCKER_CONFIRMED')
            and stage['blocker']==(None if expected_selected else r['critical_role_pass']['finding'])
-           and row['closure_status']==('IN_PROGRESS' if expected_selected else 'BLOCKED_WITH_EVIDENCE')
+           and row['closure_status']==(
+               'ADMITTED_BOUNDED_COMPLETE'
+               if n==560 and row['stage_work_items']['D']['work_status']=='PROTECTED_ADMITTED'
+               else ('IN_PROGRESS' if expected_selected else 'BLOCKED_WITH_EVIDENCE'))
            and r['selected_phase_B_queue_issue']==(3230 if expected_selected else None)
            and r['scope_review']==('SOURCE_READY_FOR_BOUNDED_VERIFICATION' if expected_selected
                                     else ('SOURCE_CONFLICT_REPAIR_REQUIRED' if n==563 else 'EVIDENCE_BLOCKED')),
@@ -318,6 +321,68 @@ def validate_five_source_scope(row, root=ROOT):
                    and 'proof-verification-0560.md' in (root/'docs/erdos/index.md').read_text()
                    and 'erdos/proof-verification-0560.md' in (root/'mkdocs.yml').read_text(),
                    'problem 560 D: public claim or navigation not scoped')
+            if v['work_status']=='PROTECTED_ADMITTED':
+                evidence_merge='fc77c28fd1132efca1ff2cc5db56d8632b06c8e5'
+                custody_path=prefix+'D_PROTECTED_CUSTODY_BINDING_001.json'
+                custody=read(custody_path,root)
+                custody_sha=hashlib.sha256((root/custody_path).read_bytes()).hexdigest()
+                expected_paths={
+                    'docs/erdos/index.md','docs/erdos/proof-verification-0560.md',
+                    'mkdocs.yml','governance/erdos_proof_verification/coverage/cohorts/0501-0600.json',
+                    prefix+'D_DOCUMENTARY_ADMISSION_001.md',
+                    prefix+'D_DOCUMENTARY_REVIEW_001.json',
+                    prefix+'D_EDITORIAL_ADVERSARIAL_REVIEW_001.md',
+                    prefix+'D_RETURN_BINDING_001.json',
+                    'ci/validate_erdos_pv_full_coverage.py',
+                    'ci/test_erdos_pv_full_coverage.py',
+                    'ci/test_erdos_pv_queue.py',
+                }
+                blobs=custody.get('protected_source_and_artifact_blob_ids',{})
+                closure_expected=[
+                    prefix+'D_DOCUMENTARY_ADMISSION_001.md',
+                    prefix+'D_DOCUMENTARY_REVIEW_001.json',
+                    prefix+'D_EDITORIAL_ADVERSARIAL_REVIEW_001.md',
+                    custody_path,'docs/erdos/proof-verification-0560.md',
+                ]
+                ensure(v['protected_admission_ref']=='grandchallenge/MATH-PROGRAMME@'+evidence_merge
+                       and row['closure_status']=='ADMITTED_BOUNDED_COMPLETE'
+                       and row['closure_evidence_refs']==closure_expected
+                       and custody_sha=='a5e9d582e2c88a1c69d2cb89c48428b331aa6e52f952ac758c6f590489d638a5'
+                       and custody.get('record_type')=='ERDOS_PV_D_ADMISSION_CUSTODY_BINDING/1'
+                       and custody.get('assignment_id')=='ERDOS-PV-0560-D'
+                       and custody.get('phase')=='D' and custody.get('problem_id')==560
+                       and custody.get('source_issue_body_sha256')==row['source_issue_body_sha256']
+                       and custody.get('protected_evidence_pull_request')=='https://github.com/grandchallenge/MATH-PROGRAMME/pull/3451'
+                       and custody.get('protected_evidence_head')=='890a52e7ff2452fc85b74d8724379ef942f6bb1b'
+                       and custody.get('protected_evidence_merge_commit')==evidence_merge
+                       and custody.get('protected_exact_byte_readback')=='MATCHED_ELEVEN_FILES_AGAINST_GIT_FETCHED_PROTECTED_MERGE'
+                       and set(blobs)==expected_paths and len(blobs)==11
+                       and all(re.fullmatch('[a-f0-9]{40}',digest) for digest in blobs.values())
+                       and custody.get('claim_ref')=='refs/heads/gcl-pv-claims/ERDOS-PV-0560-D'
+                       and custody.get('claim_sha')=='0ac8ec3ce8d59868e1d260f8974fb62c36ab0b85'
+                       and custody.get('claim_actor')=='fyremael'
+                       and custody.get('unique_result_sha256')=='90d6b082312f3bd26827c0801d34dddff207c89bfbe49157cdcccec11308ffbe'
+                       and custody.get('original_problem_status')=='OPEN'
+                       and custody.get('mathcert_status')=='NOT_SUBMITTED'
+                       and custody.get('formalization_work_required') is True
+                       and custody.get('formalization_residual')=='FORMALIZATION_WORK_REQUIRED__COPY_COUNT_TAIL_FIRST_MOMENT'
+                       and custody.get('bounded_disposition')=='REVIEWED_VERIFIED_BOUNDED_OFF_DIAGONAL_LEMMA__ORIGINAL_PROBLEM_OPEN'
+                       and custody.get('release_state')=='PENDING_EXACT_PROTECTED_CUSTODY_MERGE_AND_AUTHENTICATED_READBACK'
+                       and all(custody.get(key) is False for key in (
+                           'full_CFW_proposition_2_2_kernel_proved',
+                           'source_to_Mathlib_equivalence_kernel_proved',
+                           'external_independent_review_attested',
+                           'original_diagonal_Knn_conjecture_solved',
+                           'mathcert_certified','cohort_100_problems_complete',
+                           'global_1221_problems_complete')),
+                       'problem 560 D: protected documentary custody, source or closure boundary drift')
+                # Verify immutable proof/publication bytes. Original tool and
+                # menu files may evolve in subsequent protected changes.
+                for path in (required-{custody_path})|{'docs/erdos/proof-verification-0560.md'}:
+                    data=(root/path).read_bytes()
+                    blob=hashlib.sha1(b'blob '+str(len(data)).encode()+bytes([0])+data).hexdigest()
+                    ensure(blobs[path]==blob,
+                           'problem 560 D: original evidence file changed: '+path)
         if v['work_status']=='PROTECTED_ADMITTED':
             ensure(bool(v['protected_admission_ref']),
                    f'problem {n}: unbound protected admission')
