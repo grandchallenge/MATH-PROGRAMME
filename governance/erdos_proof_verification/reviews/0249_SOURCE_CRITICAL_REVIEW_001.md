@@ -17,7 +17,7 @@
 $$
 \left(\sum_{m=0}^{\infty}
   \frac{\varphi(2^{m+1})}{2^{2^{m+1}}}\right)
-\notin\operatorname{range}(\mathbb Q\hookrightarrow\mathbb R).
+\notin\mathrm{range}(\mathbb Q\hookrightarrow\mathbb R).
 $$
 
 By reindexing $j=m+1$, this is exactly the series $T$ in the already protected handwritten proof. The `Set.range Rat.cast` predicate is the definitional content of Mathlib's `Irrational` for real numbers. No implication concerning the full $S$ is present in the final theorem type.
