@@ -52,6 +52,37 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(row['problem_id'],246)
         row['existing_proof_issue']=None
         with self.assertRaises(ValueError):v.validate_row(row,self.source[245],self.phase)
+    def test_five_source_scope_triage_is_complete_and_bounded(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        for n in range(560,565):
+            with self.subTest(problem=n):
+                row=cohort['items'][n-501]
+                v.validate_row(row,self.source[n-1],cohort['phase_issues'])
+                self.assertEqual(row['source_issue_live_state'],'OPEN_RETURNED')
+                self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
+                self.assertEqual(row['stage_work_items']['B']['work_status'],'UNEXECUTED')
+                if n<=562:
+                    self.assertEqual(row['triage_decision'],'SELECTED_WITH_MANIFEST')
+                    self.assertEqual(row['stage_work_items']['A']['work_status'],'VERIFIED_BOUNDED')
+                else:
+                    self.assertEqual(row['triage_decision'],'PENDING')
+                    self.assertEqual(row['stage_work_items']['A']['work_status'],'EVIDENCE_BLOCKED')
+
+    def test_five_source_triage_undocumented_promotion_rejected(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        for n in range(560,565):
+            row=cohort['items'][n-501]
+            for mutation in (
+                lambda r:r.__setitem__('triage_decision','SELECTED_WITH_MANIFEST' if n>562 else 'PENDING'),
+                lambda r:r['stage_work_items']['A'].__setitem__('evidence_refs',[]),
+                lambda r:r['stage_work_items']['B'].__setitem__('work_status','VERIFIED_BOUNDED'),
+                lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
+            ):
+                with self.subTest(problem=n,mutation=str(mutation)):
+                    bad=copy.deepcopy(row);mutation(bad)
+                    with self.assertRaises(ValueError):
+                        v.validate_row(bad,self.source[n-1],cohort['phase_issues'])
+
     def test_open_conjecture_promotion_is_rejected(self):
         row=next(x for x in self.pack['items'] if x['catalogue_status_at_lock']=='open' and x['problem_id'] not in v.PILOT)
         bad=copy.deepcopy(row);bad['scope']='FULL_ORIGINAL_CONJECTURE_SOLVED'

@@ -1,0 +1,155 @@
+{
+  "record_type": "GCL-ERDOS-560-564-PHASE-A-SCOPE-TRIAGE/1",
+  "schema_version": "1.0.0",
+  "cohort_issue": 3217,
+  "phase_B_issue": 3230,
+  "source_registry": "governance/erdos_catalogue/REGISTRY.json",
+  "source_commit": "536408716724a2402bdfa7c1d764bf83d64a8c89",
+  "source_file_blob_sha1": "4e60263a80af6207aca494d2e1388e44fa372889",
+  "source_only_verified_count": 3,
+  "source_blocked_count": 2,
+  "selection_policy": "SOURCE_SCOPE_BEFORE_PROOF__NO_DUPLICATE_QUEUE__NO_AUTO_CERTIFICATION",
+  "role_note": "Sequential same-system source and critical logical passes; not independent human or mathematical proof verification",
+  "records": [
+    {
+      "problem_id": 560,
+      "source_audit_issue": 1831,
+      "source_comment_id": 6916199376,
+      "source_comment_sha256": "7d551e9f53ee66f58f18d6f771e36a9c0a0dacaaf772cd49c73ac46f9ecccc6f",
+      "source_issue_body_sha256": "2bafa6656b0d797f8b7637be2d7ff77e7682e329467a9df9c858da7e9b7708c1",
+      "source_issue_live_custody": "OPEN__PROJECT_RETURNED__ISSUE_FIELD_RETURNED",
+      "historical_status": "open",
+      "source_role_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "scope_review": "SOURCE_READY_FOR_BOUNDED_VERIFICATION",
+      "triage_decision": "SELECTED_WITH_MANIFEST",
+      "selected_phase_B_queue_issue": 3230,
+      "primary_evidence": "Conlon, Fox, Wigderson, Three early problems on size Ramsey numbers, arXiv:2111.05420, Theorem 1.1, Proposition 2.2, Corollary 1.2",
+      "bounded_next_target": "Reconstruct K_{s,t} degree-ranked copy bound N_{s,t}(H) <= (8e^2 q/(st))^t for s>=2,t>=s+2; independently verify first-moment transfer to size-Ramsey lower bound.",
+      "critical_role_pass": {
+        "role": "LOGICAL_ADVERSARY",
+        "actor": "fyremael",
+        "separate_human_identity_claim": false,
+        "finding": "Published off-diagonal t>=s+2 counting bound cannot assert the diagonal K_{n,n} asymptotic; distinguish source theorem and independent proof.",
+        "scope": "STATEMENT_AND_QUEUE_SCOPE_ONLY__NO_PROOF"
+      },
+      "acceptance_or_stop_condition": "Typed source theorem and exact constants, full finite-graph count convention, correct t>=s+2 range, analytic sum control and independently checkable bounded proof; no conjecture closure.",
+      "prohibitions": {
+        "mathcert_certification": false,
+        "full_original_problem_solved": false,
+        "source_return_equals_mathematical_proof": false
+      }
+    },
+    {
+      "problem_id": 561,
+      "source_audit_issue": 1832,
+      "source_comment_id": 6918133447,
+      "source_comment_sha256": "50751f373fe8a05019e306db3909ed0c5cfecf8fa7364d4c3614c4b70321c78e",
+      "source_issue_body_sha256": "040d064d6aa382dbc832b449e8d0869378c145523bf99e795b185997c49751b4",
+      "source_issue_live_custody": "OPEN__PROJECT_RETURNED__ISSUE_FIELD_RETURNED",
+      "historical_status": "open",
+      "source_role_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "scope_review": "SOURCE_READY_FOR_BOUNDED_VERIFICATION",
+      "triage_decision": "SELECTED_WITH_MANIFEST",
+      "selected_phase_B_queue_issue": 3230,
+      "primary_evidence": "You, 2026-10-19 preprint arXiv:2610.25958v1, Theorem 1.2 and Claim 3.10; comparison against 1978 Burr-Erdos-Faudree-Rousseau-Schelp formulation",
+      "bounded_next_target": "Independently verify or falsify the parity-sensitive (g,f)-factor/partition step of Claim 3.10 for the bounded s=2 union-of-stars case with a>=b>=1, q>=1.",
+      "critical_role_pass": {
+        "role": "LOGICAL_ADVERSARY",
+        "actor": "fyremael",
+        "separate_human_identity_claim": false,
+        "finding": "The modern theorem treats s=2, not all star-forest pairs; 19,383 finite parameter identity tests and an auxiliary cut lemma do not validate the full graph proof.",
+        "scope": "STATEMENT_AND_QUEUE_SCOPE_ONLY__NO_PROOF"
+      },
+      "acceptance_or_stop_condition": "Exact arXiv version, quantified Claim 3.10 hypotheses, checked factor criterion and adversarial parity/edge-case tests; leave general s,t>=3 open.",
+      "prohibitions": {
+        "mathcert_certification": false,
+        "full_original_problem_solved": false,
+        "source_return_equals_mathematical_proof": false
+      }
+    },
+    {
+      "problem_id": 562,
+      "source_audit_issue": 1833,
+      "source_comment_id": 6918432873,
+      "source_comment_sha256": "7a387b297c617a5f3041279c5abd7ced4fc00d11793a591efc386e2d76dea195",
+      "source_issue_body_sha256": "610b492566fd1ebaf5a156c39fe26850a0f492f18923e607175c9e719e281f5c",
+      "source_issue_live_custody": "OPEN__PROJECT_RETURNED__ISSUE_FIELD_RETURNED",
+      "historical_status": "open",
+      "source_role_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "scope_review": "SOURCE_READY_FOR_BOUNDED_VERIFICATION",
+      "triage_decision": "SELECTED_WITH_MANIFEST",
+      "selected_phase_B_queue_issue": 3230,
+      "primary_evidence": "Erdos-Hajnal-Rado hypergraph Ramsey classical bounds; protected formal-conjectures 562.lean at 85f863718beeec7b58a3a1926ee92e3472bc2020",
+      "bounded_next_target": "Prove no-sorry finite first-moment lemma: for n>=4 a two-colouring of triples on floor(2^((n-1)(n-2)/12)) vertices with no monochromatic n-set exists; derive the explicit R_3(n) lower bound.",
+      "critical_role_pass": {
+        "role": "LOGICAL_ADVERSARY",
+        "actor": "fyremael",
+        "separate_human_identity_claim": false,
+        "finding": "The first-moment lower bound grows singly-exponentially in n^2 and cannot close the required double-exponential r=3 lower bound; distinguish 2-color from 4-color evidence.",
+        "scope": "STATEMENT_AND_QUEUE_SCOPE_ONLY__NO_PROOF"
+      },
+      "acceptance_or_stop_condition": "Source-locked Lean theorem and axiom output, exact coloring/infimum/floor bridge, small integer tests and separately critical review; no general conjecture closure.",
+      "prohibitions": {
+        "mathcert_certification": false,
+        "full_original_problem_solved": false,
+        "source_return_equals_mathematical_proof": false
+      }
+    },
+    {
+      "problem_id": 563,
+      "source_audit_issue": 1834,
+      "source_comment_id": 6918874144,
+      "source_comment_sha256": "e2eb9043caa1560b646951830067d87cbc0b7f8bc45341779689e6af89f0b623",
+      "source_issue_body_sha256": "3eebbb63dcc8f8018600a85e0d68b9e03feeaaf9fc7d0d3057d54f1959045896",
+      "source_issue_live_custody": "OPEN__PROJECT_RETURNED__ISSUE_FIELD_RETURNED",
+      "historical_status": "open",
+      "source_role_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "scope_review": "SOURCE_CONFLICT_REPAIR_REQUIRED",
+      "triage_decision": "PENDING",
+      "selected_phase_B_queue_issue": null,
+      "primary_evidence": "Erdos 1990 balanced-colouring limit problem; unadmitted newer formal-conjectures@a3aa3ca... 563.lean, absent from protected FC-GDM-85F86371",
+      "bounded_next_target": "First source-lock and admit corrected strict-density threshold definition, then independently prove m-subset reduction and Ramsey inverse F(n,alpha)=min{k:R_alpha(k)>n}; NOT the asymptotic limit.",
+      "critical_role_pass": {
+        "role": "LOGICAL_ADVERSARY",
+        "actor": "fyremael",
+        "separate_human_identity_claim": false,
+        "finding": "Strict > versus >=, m>n vacuity, and F/R off-by-one change theorem meaning; newer upstream formal text is NOT an admitted GCL source.",
+        "scope": "STATEMENT_AND_QUEUE_SCOPE_ONLY__NO_PROOF"
+      },
+      "acceptance_or_stop_condition": "Protected formal source pin plus adversarial semantic review before Phase B; fixed-alpha asymptotic limit remains open.",
+      "prohibitions": {
+        "mathcert_certification": false,
+        "full_original_problem_solved": false,
+        "source_return_equals_mathematical_proof": false
+      }
+    },
+    {
+      "problem_id": 564,
+      "source_audit_issue": 1835,
+      "source_comment_id": 6932748559,
+      "source_comment_sha256": "0efe6a750410022d0237fe511ada93be95e88d8eaa248ad6346954ced48fe2fc",
+      "source_issue_body_sha256": "e109d6b99493c380780b91af06bf165ad7fac2b7ccf22bb03b21bb60b4654e4c",
+      "source_issue_live_custody": "OPEN__PROJECT_RETURNED__ISSUE_FIELD_RETURNED",
+      "historical_status": "open",
+      "source_role_return_disposition": "BOUNDED_TASK_DESIGNED",
+      "scope_review": "EVIDENCE_BLOCKED",
+      "triage_decision": "PENDING",
+      "selected_phase_B_queue_issue": null,
+      "primary_evidence": "Erdos-Hajnal-Milner-Rado 1984 four-colour construction: full primary pages not yet source-locked; protected provider 564.lean is statement-only/sorry",
+      "bounded_next_target": "Only after sourcing EHMR84, verify finite four-colour palette Property-B merger tests (7 nonconstant merges up to swap), and obtain a certificate or obstruction for one fixed construction; NOT a two-colour asymptotic proof.",
+      "critical_role_pass": {
+        "role": "LOGICAL_ADVERSARY",
+        "actor": "fyremael",
+        "separate_human_identity_claim": false,
+        "finding": "Finite four-colour merger obstruction does not establish the missing two-colour double-exponential r=3 lower bound; 1984 full construction and new mechanism absent.",
+        "scope": "STATEMENT_AND_QUEUE_SCOPE_ONLY__NO_PROOF"
+      },
+      "acceptance_or_stop_condition": "Obtain exact EHMR84 page/bytes and policy authorisation of new mechanism; otherwise retain DEFER_UNTIL_NEW_MECHANISM and block Phase B.",
+      "prohibitions": {
+        "mathcert_certification": false,
+        "full_original_problem_solved": false,
+        "source_return_equals_mathematical_proof": false
+      }
+    }
+  ]
+}
