@@ -188,8 +188,8 @@ theorem splitFreeCechDegreeOne_exact
   have hcalc :
       (splitFreeCechD2 p) ((splitFreeCechH1 p s hs) c) =
         (splitFreeCechH0 p s hs) ((splitFreeCechD1 p) c) - c := by
-    simpa only [CategoryTheory.comp_apply, Preadditive.sub_apply,
-      CategoryTheory.id_apply] using hcon
+    simpa only [ModuleCat.comp_apply, ModuleCat.hom_sub,
+      LinearMap.sub_apply, ModuleCat.id_apply] using hcon
   change (splitFreeCechD2 p) (-(splitFreeCechH1 p s hs c)) = c
   rw [map_neg, hcalc, hc, map_zero]
   abel
