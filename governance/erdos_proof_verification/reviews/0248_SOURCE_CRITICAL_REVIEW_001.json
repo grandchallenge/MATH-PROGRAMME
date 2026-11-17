@@ -1,0 +1,102 @@
+{
+  "record_type": "GCL-ERDOS-248-SOURCE-CRITICAL-REVIEW/1",
+  "review_id": "ERDOS-PV-0248-R001",
+  "review_scope": "FORMAL_ERDOS_248_DISTINCT_PRIME_OMEGA_ONLY",
+  "disposition": "QUALIFIED_PASS",
+  "review_mode": "SINGLE_AUTHENTICATED_ACTOR_ROLE_SCOPED_NON_AUTHORING",
+  "independent_human_attestation": false,
+  "distinct_specialist_logins": false,
+  "provider_repository": "plby/lean-proofs",
+  "provider_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+  "provider_blob": "166659f39a435831d1a751718f9a385effcd7dfa",
+  "source_sha256": "292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267",
+  "module_count": 40,
+  "module_lines": 16369,
+  "module_bundle_sha256": "7a4e16be1ef119996a7e3ee773a6a9abb0e6c041791565e679cab8cf1c28f815",
+  "kernel_receipt_sha256": "708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28",
+  "kernel_archive_sha256": "def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08",
+  "protected_kernel_evidence_merge": "a55255f01b18139ddf045d4c82fb566c3e77f36d",
+  "observed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "source_to_target_theorem": "Erdos248.erdos_248",
+  "formal_statement_scope": "EXISTS_ONE_POSITIVE_REAL_C__INFINITE_NATURAL_WITNESSES__FOR_ALL_POSITIVE_NATURAL_K__CARD_DISTINCT_FACTORS",
+  "published_comparator": "arxiv:2512.01739v2 Theorem 1.1 and Section 2",
+  "published_comparator_scope": "STRONGER_OMEGA_WITH_MULTIPLICITY_NOT_FORMALIZED",
+  "review_document": "governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.md",
+  "review_document_sha256": "dc58e9dd9b2f069426ecfd3cfbb5c6a20094010bf4a0afa344e6aa7c1c323520",
+  "role_passes": [
+    {
+      "role": "VERIFIER",
+      "result": "PASS",
+      "evidence": "exact theorem type, source SHA and full kernel axiom report; 60 stage-log digests reverified",
+      "limit": "not a separate Lean re-execution"
+    },
+    {
+      "role": "CARTOGRAPHER",
+      "result": "PASS_WITH_RESIDUAL",
+      "evidence": "40-file import and main theorem crosswalk to arxiv Section 2",
+      "limit": "provider tex/248.tex author Leanization map absent"
+    },
+    {
+      "role": "ADVERSARY",
+      "result": "PASS_WITH_SCOPE_LIMIT",
+      "evidence": "quantifier challenges; all shift regimes; positive sieve mass; threshold uniformity; omega-to-Omega direction; patched source inspection",
+      "limit": "does not reconstruct the full 16,369-line proof or published Omega theorem"
+    },
+    {
+      "role": "REFEREE",
+      "result": "QUALIFIED_PASS",
+      "evidence": "accept exact original Erdős #248 formal target, explicitly exclude stronger published multiplicity theorem",
+      "limit": "MATHCERT and distinct internal adjudication pending"
+    }
+  ],
+  "checks": {
+    "one_C_outside_all_k": true,
+    "one_n_for_every_k": true,
+    "infinitely_many_positive_n": true,
+    "zero_shift_not_required": true,
+    "near_far_very_far_coverage": true,
+    "nonzero_sieve_mass_proved": true,
+    "uniform_T_independent_of_K_and_k": true,
+    "omega_le_Omega_elementary_bridge": true,
+    "full_paper_Omega_proved_in_lean": false,
+    "sorryAx_observed": false,
+    "unexpected_axioms_observed": false,
+    "all_nine_patches_source_locked": true,
+    "unpatched_dependency_equivalence_established": false,
+    "original_author_leanization_map_present": false,
+    "independent_analytic_rederivation_complete": false
+  },
+  "open_residuals": [
+    {
+      "code": "AUTHOR_LEANIZATION_MAP_MISSING",
+      "finding": "The pinned theorem source promises tex/248.tex; absent from that exact repository commit. New reviewer crosswalk is not the missing author map.",
+      "effect": "No line-by-line source-to-paper correspondence claim.",
+      "closure": "Recover a pinned author-produced map or author and review an explicitly new map."
+    },
+    {
+      "code": "PUBLISHED_THEOREM_OMEGA_SCOPE",
+      "finding": "The paper proves the Omega multiplicity bound; the actual Lean target proves omega distinct-prime bound.",
+      "effect": "Full published theorem, prime-power axiom and tau corollary not certified by this replay.",
+      "closure": "A separate source-locked formal Omega theorem and complete review if a full-paper claim is desired."
+    },
+    {
+      "code": "THIRD_PARTY_PATCH_NONIDENTITY",
+      "finding": "Nine declared compatibility patches alter four dependency checkouts; some are substantive proof edits, though no forbidden new axiom token was found.",
+      "effect": "Computed theorem is valid for the exact patched import closure, not an assertion of unpatched source byte identity.",
+      "closure": "Preserve exact patch blob hashes and kernel receipt with every derived claim."
+    }
+  ],
+  "authority_effects": {
+    "adversarial_review_pass_for_scoped_formal_statement": true,
+    "internal_adjudication": false,
+    "protected_review_admission": false,
+    "mathematical_certification": false,
+    "publication": false,
+    "issue_closure": false
+  },
+  "recommended_followon": "INTERNAL_REFEREE_ADJUDICATION_OF_QUALIFIED_OMEGA248_RESULT__RESOLVE_OR_CARRY_FORWARD_MISSING_LEANIZATION_MAP__NO_MATHCERT_PROMOTION"
+}
