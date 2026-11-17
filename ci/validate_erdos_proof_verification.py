@@ -427,7 +427,7 @@ def validate_manifest(data: dict, schema: dict) -> None:
             and flags.get('original_s_claim') is False
             and flags.get('original_s_formal_open') is True
             and flags.get('actual_kernel_green') is True
-            and flags.get('foundational_axioms_only') is True
+            and flags.get('axioms_foundational_only') is True
             and flags.get('no_sorryAx') is True
             and flags.get('reviewer_different_from_author') is False
             and flags.get('reviewer_independent_human') is False
