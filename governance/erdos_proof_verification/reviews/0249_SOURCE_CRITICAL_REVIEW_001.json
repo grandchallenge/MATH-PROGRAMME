@@ -1,0 +1,68 @@
+{
+  "record_type": "GCL-ERDOS249-SOURCE-CRITICAL-REVIEW/1",
+  "review_id": "ERDOS-PV-0249-R001",
+  "problem": 249,
+  "governing_issue": 3205,
+  "original_conjecture_status": "OPEN",
+  "review_scope": "AUXILIARY_LACUNARY_SUBSERIES_T_ONLY",
+  "disposition": "QUALIFIED_PASS",
+  "same_authenticated_agent_as_formal_author": true,
+  "role_scoped_adversary_separate_pass": true,
+  "independent_human_review": false,
+  "independent_external_mathematical_rederivation": false,
+  "review_document": "governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.md",
+  "review_document_sha256": "334fe2621bca16973ee4a4af8b4be26725ce6753820d223a396aa3860b353887",
+  "protected_proof_merge": "62ffaa1db3e2d1a5d120611e86fc189f1c24b50e",
+  "source_sha256": "6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99",
+  "source_lines": 292,
+  "toolchain": "leanprover/lean4:v4.35.0-rc3",
+  "mathlib_commit": "c55e6e786f49471c72fbddbec5415808896aec1e",
+  "stdout_sha256": "038d3d08c883f2c17394c2e39a9eaeaeda5d57970745626390528d360f9c9365",
+  "observed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "checks": {
+    "totient_power_two": true,
+    "correct_zero_based_index_shift": true,
+    "exact_exponent_gap": true,
+    "series_summable": true,
+    "positive_tail": true,
+    "explicit_tail_upper_bound": true,
+    "dyadic_partial_sum": true,
+    "denominator_greater_than_zero": true,
+    "integer_obstruction_positive_and_less_than_one": true,
+    "no_binary_nonperiodicity_gap": true,
+    "source_logs_sha_verified": true,
+    "hostile_full_series_type_rejected": true,
+    "full_original_series_irrationality_proved": false,
+    "mathcert_certification": false
+  },
+  "open_residuals": [
+    {
+      "code": "ORIGINAL_S_OPEN",
+      "disposition": "NOT_PROVEN_BY_SUBSERIES",
+      "parent_issue": 3201
+    },
+    {
+      "code": "SAME_AGENT_ROLE_PASSES",
+      "disposition": "NO_EXTERNALLY_INDEPENDENT_HUMAN_ATTESTATION",
+      "parent_issue": 3201
+    },
+    {
+      "code": "NOT_CLEAN_ROOM_MATHLIB_BUILD",
+      "disposition": "PROVEN_WITH_EXACT_PINNED_COMPILED_DEPENDENCIES",
+      "parent_issue": 3201
+    }
+  ],
+  "authority_effects": {
+    "adversarial_review_scoped_T": true,
+    "internal_adjudication": false,
+    "protected_evidence_admission": false,
+    "original_conjecture_promotion": false,
+    "mathcert": false,
+    "issue_closure": false
+  },
+  "next_action": "Separate qualified internal Referee decision on exact T theorem with explicit same-actor limit, then protected merge/readback; final custody later."
+}
