@@ -48,8 +48,13 @@ def uliftCompatiblePairEquiv {A B C : Type u}
     rintro ⟨⟨⟨a, b⟩, hab⟩⟩
     rfl
   right_inv := by
-    rintro ⟨⟨a⟩, ⟨b⟩, hab⟩
-    rfl
+    intro ab
+    apply Subtype.ext
+    apply Prod.ext
+    · change ULift.up ab.1.1.down = ab.1.1
+      exact ULift.up_down
+    · change ULift.up ab.1.2.down = ab.1.2
+      exact ULift.up_down
 
 /-- Pair degree of the *actual* universe-lifted CompHaus
 representable, identified with the compatible pairs of the
