@@ -221,30 +221,105 @@ def remove_available_label(issue: int, labels: set[str]) -> None:
 
 
 
-def verify_terminal_source_exception_custody(issue: int) -> None:
-    """Do not preserve Done after an unresolved source-integrity rejection.
+def verify_protected_exception_resolution(issue: int, comments: list[dict]) -> dict:
+    """Protected source-audit closure only. Never accepts the original bad return."""
+    if issue != 1836:
+        raise ValueError(f"#{issue}: source exception requires protected review")
+    path = "governance/source_erdos_565/TERMINAL_SOURCE_RESOLUTION.json"
+    def protected_file(p):
+        import base64
+        item = gh("api", f"repos/{OWNER}/{REPO}/contents/{p}?ref=main")
+        if item.get("type") != "file" or item.get("encoding") != "base64":
+            raise ValueError("resolution must be protected on main")
+        raw = base64.b64decode(item["content"].replace("\n", ""), validate=True)
+        blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
+        if blob != item.get("sha"):
+            raise ValueError("protected source blob drift")
+        return json.loads(raw), blob
 
-    Closed/Done is not a source verdict. Exception comments can arrive after
-    the closure event, so the comment census must be live, issue-bound, and
-    complete. Resolve exceptions through the protected source-review process,
-    not through an implicit return-projector override.
-    """
+    doc, _ = protected_file(path)
+    source, exception, review, resolution = (doc.get(k) or {} for k in
+        ("source", "exception", "protected_review", "resolution"))
+    if (doc.get("record_type") != "GCL-ERDOS-SOURCE-EXCEPTION-TERMINAL-RESOLUTION/1"
+        or doc.get("schema_version") != "1.0.0"
+        or (doc.get("issue"), doc.get("problem"), doc.get("assignment")) !=
+          (1836, 565, "ERDOS-CATALOGUE-0565-S01")
+        or exception.get("comment_id") != 6288214238
+        or exception.get("status") != "ORIGINAL_RESULT_REMAINS_REJECTED"
+        or (source.get("original_comment_id"), source.get("review_comment_id"),
+            source.get("replacement_comment_id")) != (6287257066, 6935147232, 6935151422)
+        or source.get("replacement_structural_validation") != "STRUCTURALLY_VALID_UNADJUDICATED"
+        or source.get("replacement_disposition") != "SOURCE_LOCK_READY"
+        or source.get("primary_statement_concordance") != "REVIEWED_WITH_ATTRIBUTION__NOT_FULL_PROOF_REPLAY"
+        or (review.get("source_review_pr"), review.get("source_review_merge_commit"),
+            review.get("record_path"), review.get("record_git_blob_sha1")) !=
+           (3429, "ae737b6fcb87edbf0a31067ee0e30c1a5688f2b9",
+            "governance/source_erdos_565/EXCEPTION_REVIEW.json",
+            "f2c4fcedf7555803410aa3f6962936fb20c2ff96")
+        or resolution != {
+            "disposition": "SOURCE_AUDIT_RETURN_ACCEPTED_AFTER_PROTECTED_EXCEPTION_REVIEW",
+            "terminal_source_audit_custody_authorized": True,
+            "target_issue_state": "closed", "target_project_status": "Done",
+            "target_gcl_state": "RETURNED", "original_exception_erased": False,
+            "mathematical_proof_independently_verified": False,
+            "mathematical_certification": False, "external_status_changed": False,
+            "downstream_research_automatically_selected": False
+        }):
+        raise ValueError("source resolution scope or claim boundary drift")
+    pr = gh("api", f"repos/{OWNER}/{REPO}/pulls/3429")
+    if not pr.get("merged_at") or pr.get("merge_commit_sha") != review["source_review_merge_commit"]:
+        raise ValueError("source review not protected merged")
+    prior, blob = protected_file(review["record_path"])
+    previously = prior.get("source_record") or {}
+    if (blob != review["record_git_blob_sha1"]
+        or prior.get("record_type") != "GCL-ERDOS-565-SOURCE-INTEGRITY-EXCEPTION-REVIEW/1"
+        or (previously.get("clerk_exception") or {}).get("sha256") != exception["comment_sha256"]
+        or (previously.get("original_worker_comment") or {}).get("sha256") != source["original_sha256"]
+        or (previously.get("bounded_specialist_logical_pass") or {}).get("sha256") != source["review_sha256"]
+        or (previously.get("new_valid_return") or {}).get("sha256") != source["replacement_sha256"]
+        or prior.get("closure", {}).get("original_comment_format_accepted") is not False
+        or prior.get("closure", {}).get("terminal_done_authorized_by_this_candidate_record") is not False):
+        raise ValueError("prior source review protected identity drift")
+    by_id = {c.get("id"): c for c in comments if isinstance(c, dict)}
+    if len(by_id) != len(comments):
+        raise ValueError("duplicate source comment identities")
+    locks = [
+        (exception["comment_id"], exception["comment_sha256"], "gcl-council-clerk[bot]", "GCL-RETURN-EXCEPTION/1"),
+        (source["original_comment_id"], source["original_sha256"], "fyremael", "RESULT/1"),
+        (source["review_comment_id"], source["review_sha256"], "fyremael", "GCL-SOURCE-SEMANTIC-REVIEW/1"),
+        (source["replacement_comment_id"], source["replacement_sha256"], "fyremael", "RESULT/1"),
+    ]
+    for cid, sha, actor, kind in locks:
+        c = by_id.get(cid) or {}
+        body = c.get("body") or ""
+        if (c.get("issue_url") != f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue}"
+            or c.get("user", {}).get("login") != actor
+            or not body.startswith(kind + "\n")
+            or hashlib.sha256(body.encode()).hexdigest() != sha):
+            raise ValueError(f"#{issue}: source comment {cid} changed")
+    from ci import erdos_catalogue_programme_intake as intake
+    intake.parse_return(by_id[source["replacement_comment_id"]]["body"], 565)
+    try:
+        intake.parse_return(by_id[source["original_comment_id"]]["body"], 565)
+    except intake.IntakeError:
+        pass
+    else:
+        raise ValueError("original rejected return was silently accepted")
+    return {"source_audit_custody": "SOURCE_ONLY_TERMINAL_AUTHORIZED",
+            "math_certification": False}
+
+
+def verify_terminal_source_exception_custody(issue: int) -> None:
+    """Fail closed unless a matching protected post-exception resolution exists."""
     comments = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}/comments?per_page=100")
     if not isinstance(comments, list) or len(comments) >= 100:
         raise ValueError(f"#{issue}: terminal source exception comment census incomplete")
-    prefix = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue}"
-    exceptions = [
-        c for c in comments if isinstance(c, dict)
-        and (c.get("body") or "").startswith("GCL-RETURN-EXCEPTION/1\n")
-    ]
-    if any(c.get("issue_url") != prefix or not isinstance(c.get("id"), int)
-           for c in exceptions):
-        raise ValueError(f"#{issue}: source exception not bound to issue")
+    exceptions = [c for c in comments if isinstance(c, dict)
+                  and (c.get("body") or "").startswith("GCL-RETURN-EXCEPTION/1\n")]
     if exceptions:
-        ids = sorted(c["id"] for c in exceptions)
-        raise ValueError(
-            f"#{issue}: closed Done source exception requires protected review: {ids}"
-        )
+        if len(exceptions) != 1 or issue != 1836:
+            raise ValueError(f"#{issue}: closed Done source exception requires protected review")
+        verify_protected_exception_resolution(issue, comments)
 
 def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     receipt = validate_receipt(report, issue)

@@ -678,5 +678,104 @@ class LateExceptionRecoveryTest(unittest.TestCase):
                     m.late_exception_run("restore",p,Path(d))
 
 
+class Source565TerminalResolutionTests(unittest.TestCase):
+    """Offline hostile replay of exact, immutable #1836 Clerk and worker sources."""
+
+    @classmethod
+    def setUpClass(cls):
+        base = Path(__file__).resolve().parents[1]
+        cls.comments = json.loads((base / "tests/fixtures/erdos_565/comments.json").read_text())
+        cls.resolution = json.loads((base / "governance/source_erdos_565/TERMINAL_SOURCE_RESOLUTION.json").read_text())
+        cls.review = json.loads((base / "governance/source_erdos_565/EXCEPTION_REVIEW.json").read_text())
+
+    def fake_gh(self, *, comments=None, resolution=None, review=None):
+        import base64, hashlib
+        comment_rows = copy.deepcopy(comments if comments is not None else self.comments)
+        doc = copy.deepcopy(resolution if resolution is not None else self.resolution)
+        earlier = copy.deepcopy(review if review is not None else self.review)
+        def file_payload(data):
+            b=(json.dumps(data,indent=2,ensure_ascii=False)+"\n").encode()
+            return {"type":"file","encoding":"base64","content":base64.b64encode(b).decode(),
+                    "sha":hashlib.sha1(f"blob {len(b)}\0".encode()+b).hexdigest()}
+        def gh(*args):
+            path=args[1]
+            if path.endswith("TERMINAL_SOURCE_RESOLUTION.json?ref=main"):
+                return file_payload(doc)
+            if path.endswith("EXCEPTION_REVIEW.json?ref=main"):
+                return file_payload(earlier)
+            if path.endswith("/pulls/3429"):
+                return {"merged_at":"2026-11-17T02:04:06Z",
+                        "merge_commit_sha":"ae737b6fcb87edbf0a31067ee0e30c1a5688f2b9"}
+            if path.endswith("/issues/1836/comments?per_page=100"):
+                return comment_rows
+            raise AssertionError(f"unexpected source API: {path}")
+        return gh
+
+    def test_actual_source_resolution_allows_terminal_source_custody(self):
+        with patch.object(mod,"gh",side_effect=self.fake_gh()):
+            self.assertIsNone(mod.verify_terminal_source_exception_custody(1836))
+            self.assertFalse(mod.verify_protected_exception_resolution(1836,self.comments)["math_certification"])
+
+    def test_authority_is_protected_main_not_comment_or_candidate(self):
+        def missing(*args):
+            if args[1].endswith("TERMINAL_SOURCE_RESOLUTION.json?ref=main"):
+                raise RuntimeError("404 protected source")
+            return self.fake_gh()(*args)
+        with patch.object(mod,"gh",side_effect=missing):
+            with self.assertRaisesRegex(RuntimeError,"404"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_historical_comment_edit_rejected(self):
+        comments=copy.deepcopy(self.comments)
+        comments[-1]["body"]+="\npost-capture edit"
+        with patch.object(mod,"gh",side_effect=self.fake_gh(comments=comments)):
+            with self.assertRaisesRegex(ValueError,"source comment"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_wrong_actor_rejected(self):
+        comments=copy.deepcopy(self.comments)
+        comments[1]["user"]["login"]="other-worker"
+        with patch.object(mod,"gh",side_effect=self.fake_gh(comments=comments)):
+            with self.assertRaisesRegex(ValueError,"source comment"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_disposition_cannot_certify_or_change_math(self):
+        doc=copy.deepcopy(self.resolution)
+        doc["resolution"]["mathematical_certification"]=True
+        with patch.object(mod,"gh",side_effect=self.fake_gh(resolution=doc)):
+            with self.assertRaisesRegex(ValueError,"claim boundary"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_reviewed_original_cannot_be_accepted(self):
+        doc=copy.deepcopy(self.resolution)
+        doc["exception"]["status"]="ORIGINAL_NOW_VALID"
+        with patch.object(mod,"gh",side_effect=self.fake_gh(resolution=doc)):
+            with self.assertRaisesRegex(ValueError,"claim boundary"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_second_clerk_exception_blocks_resolved_terminal(self):
+        comments=copy.deepcopy(self.comments)
+        another=copy.deepcopy(comments[1])
+        another["id"]=6288214239
+        comments.append(another)
+        with patch.object(mod,"gh",side_effect=self.fake_gh(comments=comments)):
+            with self.assertRaisesRegex(ValueError,"source exception requires protected review"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_source_review_blob_or_content_drift_rejected(self):
+        previous=copy.deepcopy(self.review)
+        previous["source_record"]["clerk_exception"]["sha256"]="0"*64
+        with patch.object(mod,"gh",side_effect=self.fake_gh(review=previous)):
+            with self.assertRaisesRegex(ValueError,"protected identity drift"):
+                mod.verify_terminal_source_exception_custody(1836)
+
+    def test_other_issue_not_whitelisted(self):
+        with patch.object(mod,"gh",side_effect=lambda *args: [
+            {"id":12,"body":"GCL-RETURN-EXCEPTION/1\nREVIEW: REQUIRED\n",
+             "issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/999"}]):
+            with self.assertRaisesRegex(ValueError,"source exception requires protected review"):
+                mod.verify_terminal_source_exception_custody(999)
+
+
 if __name__ == "__main__":
     unittest.main()
