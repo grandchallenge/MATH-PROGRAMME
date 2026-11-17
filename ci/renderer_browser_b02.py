@@ -2,7 +2,6 @@
 """Real browser cross-engine search test. All outcomes fail closed on required target."""
 import argparse,datetime,hashlib,json,subprocess
 from pathlib import Path
-from playwright.sync_api import sync_playwright
 if __package__:
  from ci.renderer_browser_b01 import serve
  from ci.zensical_semantic_parity import canonical_search_route
@@ -98,6 +97,7 @@ def activate_required_result(page, expected):
  return {'activated':False,'error':'no focusable matching rendered result'}
 
 def run(a):
+ from playwright.sync_api import sync_playwright
  mk=a.mkdocs.resolve();zen=a.zensical.resolve();out=a.out.resolve();out.mkdir(parents=True,exist_ok=True)
  for root in (mk,zen):
   if not root.is_dir():raise RuntimeError('missing build '+str(root))
