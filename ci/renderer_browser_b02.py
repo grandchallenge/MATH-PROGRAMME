@@ -10,7 +10,7 @@ from ci.zensical_semantic_parity import canonical_search_route
 CASES=(
  {'query':'Erdős Problem #1221','target':'erdos/problems/1221/index.html','kind':'number'},
  {'query':'Free Solid Abelian Groups on Profinite Spaces','target':'CMDG_CM4/index.html','kind':'heading'},
- {'query':'OAI26 catalogue','target':'oai26/catalogue/index.html','kind':'acronym'},
+ {'query':'OAI-26 source catalogue','target':'oai26/catalogue/index.html','kind':'acronym'},
  {'query':'The Geometry of Hidden Harmony','target':'documentaries/hodge/index.html','kind':'source-title'},
  {'query':'The Music of the Primes','target':'documentaries/riemann/index.html','kind':'source-title'},
  {'query':'The Shape of Computational Truth','target':'documentaries/p_vs_np/index.html','kind':'source-title'},
@@ -72,6 +72,27 @@ def check(result,expected):
   failures.append('REQUIRED_TARGET_NOT_FOUND')
  return failures
 
+def activate_required_result(page, expected):
+ """Keyboard-activate a real hit in either engine; do not fake navigation."""
+ prefix='/MATH-PROGRAMME/'+expected.removesuffix('index.html')
+ links=page.locator('a[href*="'+prefix+'"]')
+ for i in range(min(links.count(),80)):
+  node=links.nth(i)
+  href=node.get_attribute('href') or ''
+  if canonical_search_route(href.split('/MATH-PROGRAMME/')[-1])!=expected:
+   continue
+  try:
+   node.focus()
+   node.press('Enter',timeout=5000)
+   page.wait_for_timeout(350)
+   reached=canonical_search_route(page.url.split('/MATH-PROGRAMME/')[-1])
+   if reached==expected:
+    h1=page.locator('h1').first.inner_text(timeout=4000)[:150] if page.locator('h1').count() else ''
+    return {'activated':True,'method':'focus_and_enter','route':reached,'heading':h1,'target_href':href}
+  except Exception as e:
+   return {'activated':False,'error':str(e)[:400],'target_href':href}
+ return {'activated':False,'error':'no focusable matching rendered result'}
+
 def run(a):
  mk=a.mkdocs.resolve();zen=a.zensical.resolve();out=a.out.resolve();out.mkdir(parents=True,exist_ok=True)
  for root in (mk,zen):
@@ -90,9 +111,16 @@ def run(a):
     for label,url in (('mkdocs',bm),('zensical',bz)):
      cx=browser.new_context(viewport={'width':w,'height':h});page=cx.new_page();page._gcl_base=url
      result=probe(page,case['query'],viewport,case['kind']);result['engine']=label
-     failures=check(result,case['target']);result['critical_failures']=failures
+     shot=out/(label+'-'+viewport+'-'+str(len(observations))+'.png');page.screenshot(path=str(shot));result['search_screenshot']=shot.name;result['search_screenshot_sha256']=hashlib.sha256(shot.read_bytes()).hexdigest()
+     failures=check(result,case['target'])
+     if case['target'] and not failures:
+      result['navigation']=activate_required_result(page,case['target'])
+      if not result['navigation']['activated']:failures.append('KEYBOARD_RESULT_ACTIVATION_FAILED')
+      navshot=out/(label+'-'+viewport+'-'+str(len(observations))+'-destination.png')
+      page.screenshot(path=str(navshot));result['destination_screenshot']=navshot.name
+      result['destination_screenshot_sha256']=hashlib.sha256(navshot.read_bytes()).hexdigest()
+     result['critical_failures']=failures
      critical.extend([{'engine':label,'viewport':viewport,'query':case['query'],'expected':case['target'],'code':x} for x in failures])
-     shot=out/(label+'-'+viewport+'-'+str(len(observations))+'.png');page.screenshot(path=str(shot));result['screenshot']=shot.name;result['screenshot_sha256']=hashlib.sha256(shot.read_bytes()).hexdigest()
      observations.append(result);cx.close()
   browser.close()
  head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
