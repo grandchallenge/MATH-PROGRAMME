@@ -128,6 +128,8 @@ class QueueProjectionTests(unittest.TestCase):
             if args[1].endswith("/issues/comments/77"):
                 return {"issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
                         "body":self.body}
+            if args[1].endswith("/issues/2491/comments?per_page=100"):
+                return []
             raise AssertionError(f"unexpected API: {args}")
         with patch.object(mod,"gh",side_effect=gh), \
              patch.object(mod,"project_metadata",return_value=("PROJECT","FIELD","RETURNED")), \
@@ -140,6 +142,36 @@ class QueueProjectionTests(unittest.TestCase):
                 self.assertTrue(receipt["historical_terminal"])
                 self.assertFalse(receipt["available_removed"])
             mutation.assert_not_called()
+
+    def test_late_source_exception_blocks_closed_done_without_mutation(self):
+        # Exact regression for #1836: Done preceded the Clerk's SOURCE_INTEGRITY
+        # exception. Never mistake terminal queue state for accepted source.
+        def gh(*args):
+            if args[1].endswith("/issues/2491"):
+                return {"state": "closed", "labels": [{"name": x} for x in
+                    ("gcl-job", "gcl-pickup:direct-editorial", "gcl-role:source-audit")]}
+            if args[1].endswith("/issues/comments/77"):
+                return {"issue_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                        "body": self.body}
+            if args[1].endswith("/issues/2491/comments?per_page=100"):
+                return [{"id": 6288214238,
+                         "issue_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                         "created_at": "2026-10-20T09:49:43Z",
+                         "body": "GCL-RETURN-EXCEPTION/1\nTYPE: SOURCE_INTEGRITY\nREVIEW: REQUIRED, NO SOURCE ACCEPTANCE\n"}]
+            raise AssertionError(f"unexpected API: {args}")
+        with patch.object(mod, "gh", side_effect=gh), \
+             patch.object(mod, "project_metadata", return_value=("PROJECT", "FIELD", "RETURNED")), \
+             patch.object(mod, "issue_project_item", return_value={"id": "ITEM", "status": "Done"}), \
+             patch.object(mod.subprocess, "run") as mutation:
+            for dry in (False, True):
+                with self.assertRaisesRegex(ValueError, "source exception requires protected review"):
+                    mod.reconcile(self.report, self.issue, dry)
+            mutation.assert_not_called()
+
+    def test_terminal_exception_census_incomplete_fails_closed(self):
+        with patch.object(mod, "gh", return_value=[{}] * 100):
+            with self.assertRaisesRegex(ValueError, "census incomplete"):
+                mod.verify_terminal_source_exception_custody(self.issue)
 
     def test_closed_nonterminal_project_is_rejected_without_write(self):
         def gh(*args):

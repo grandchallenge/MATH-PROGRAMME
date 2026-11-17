@@ -17,7 +17,8 @@ jobs:
     if: >-
       !github.event.issue.pull_request &&
       startsWith(github.event.issue.title, '[GCL-ERDOS] ERDOS-CATALOGUE-') &&
-      startsWith(github.event.comment.body, 'RESULT/1')
+      (startsWith(github.event.comment.body, 'RESULT/1') ||
+       startsWith(github.event.comment.body, 'GCL-RETURN-EXCEPTION/1'))
     runs-on: ubuntu-24.04
     environment: release-trust
     timeout-minutes: 10
@@ -36,8 +37,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          python ci/erdos_return_fastpath.py capture \
-            --event "$GITHUB_EVENT_PATH" --out fastpath
+          if [[ "${{ startsWith(github.event.comment.body, 'GCL-RETURN-EXCEPTION/1') }}" == "true" ]]; then
+            python ci/erdos_late_exception_recovery.py capture \
+              --event "$GITHUB_EVENT_PATH" --out fastpath
+          else
+            python ci/erdos_return_fastpath.py capture \
+              --event "$GITHUB_EVENT_PATH" --out fastpath
+          fi
       - name: Mint bounded Council Clerk issue and Project token
         id: queue-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
@@ -55,8 +61,15 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$GH_TOKEN" || { echo "Missing Clerk credential"; exit 1; }
-          python ci/erdos_return_fastpath.py apply \
-            --event "$GITHUB_EVENT_PATH" --out fastpath
+          if [[ "${{ startsWith(github.event.comment.body, 'GCL-RETURN-EXCEPTION/1') }}" == "true" ]]; then
+            # The guarded Python controller performs gh api PATCH and Project item-edit;
+            # preserve explicit WRITE_CAPABLE routing for this Clerk token.
+            python ci/erdos_late_exception_recovery.py restore \
+              --event "$GITHUB_EVENT_PATH" --out fastpath
+          else
+            python ci/erdos_return_fastpath.py apply \
+              --event "$GITHUB_EVENT_PATH" --out fastpath
+          fi
       - name: Preserve exact verified return or fail-closed blocker
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -67,5 +80,7 @@ jobs:
             fastpath/REPORT.json
             fastpath/PROJECTION.json
             fastpath/BLOCKER.json
+            fastpath/EXCEPTION_BINDING.json
+            fastpath/EXCEPTION_CUSTODY.json
           retention-days: 90
           if-no-files-found: error

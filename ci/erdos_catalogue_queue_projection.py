@@ -220,6 +220,32 @@ def remove_available_label(issue: int, labels: set[str]) -> None:
             raise
 
 
+
+def verify_terminal_source_exception_custody(issue: int) -> None:
+    """Do not preserve Done after an unresolved source-integrity rejection.
+
+    Closed/Done is not a source verdict. Exception comments can arrive after
+    the closure event, so the comment census must be live, issue-bound, and
+    complete. Resolve exceptions through the protected source-review process,
+    not through an implicit return-projector override.
+    """
+    comments = gh("api", f"repos/{OWNER}/{REPO}/issues/{issue}/comments?per_page=100")
+    if not isinstance(comments, list) or len(comments) >= 100:
+        raise ValueError(f"#{issue}: terminal source exception comment census incomplete")
+    prefix = f"https://api.github.com/repos/{OWNER}/{REPO}/issues/{issue}"
+    exceptions = [
+        c for c in comments if isinstance(c, dict)
+        and (c.get("body") or "").startswith("GCL-RETURN-EXCEPTION/1\n")
+    ]
+    if any(c.get("issue_url") != prefix or not isinstance(c.get("id"), int)
+           for c in exceptions):
+        raise ValueError(f"#{issue}: source exception not bound to issue")
+    if exceptions:
+        ids = sorted(c["id"] for c in exceptions)
+        raise ValueError(
+            f"#{issue}: closed Done source exception requires protected review: {ids}"
+        )
+
 def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
     receipt = validate_receipt(report, issue)
     # For multi-return adjudication, the protected comparison binds *all*
@@ -260,6 +286,7 @@ def reconcile(report: dict, issue: int, dry_run: bool) -> dict:
         # Do not demote a completed item to RETURNED or rewrite its labels.
         if item.get("status")!="Done" or "gcl-state:available" in labels:
             raise ValueError("closed source return lacks terminal Done custody")
+        verify_terminal_source_exception_custody(issue)
         before.update({"target":"PRESERVE_DONE","historical_terminal":True,
                        "verified_status":"Done","available_removed":False})
         return before

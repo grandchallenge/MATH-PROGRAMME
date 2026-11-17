@@ -96,3 +96,11 @@ A full production completion claim requires terminal GitHub Actions success,
 valid exact-scope receipt, and readback of any specific changed Project and
 Issue Fields. Outstanding invalid or multiple returns remain separately
 classified work; none are silently declared completed by this projector.
+
+
+## Late source-exception custody guard
+
+If a Council Clerk source exception arrives after Done, the existing one-issue
+controller restores the source issue and Project item to review-pending
+RETURNED custody. A closed Done replay with a live exception is also
+blocked. See [late-exception custody](ERDOS_LATE_SOURCE_EXCEPTION_CUSTODY.md).
