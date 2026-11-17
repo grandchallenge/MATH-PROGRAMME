@@ -103,6 +103,37 @@ class Erdos248HostTests(unittest.TestCase):
                 h.launch("colab", Path(directory))
             self.assertEqual(actions[-1], "stop")
 
+    def test_registered_runtime_budget_drift_rejected(self):
+        import json
+        self.assertEqual(h.MAX_RUNTIME_SECONDS, 15000)
+        with tempfile.TemporaryDirectory() as directory:
+            p = Path(directory) / "JOBS.json"
+            p.write_text(json.dumps({"jobs": [{
+                "id": h.JOB_ID, "review_issue": h.ISSUE, "problem_id": 248,
+                "toolchain": h.TOOLCHAIN,
+                "authority": "UNADJUDICATED_COMPUTATIONAL_EVIDENCE_ONLY",
+                "accelerator": "CPU",
+                "launcher": "ci.erdos_248_lean_colab_host",
+                "max_runtime_seconds": 4500
+            }]}))
+            with patch.object(h, "REGISTRY", p):
+                with self.assertRaisesRegex(ValueError, "CPU runtime budget mismatch"):
+                    h.registered_identity()
+
+    def test_colab_exec_timeout_matches_protected_registry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            calls = []
+            def record(argv, timeout=75):
+                calls.append((argv, timeout))
+            with patch.object(h, "cli", side_effect=record):
+                h.launch("colab", Path(directory))
+            exact = [(argv, duration) for argv, duration in calls if argv[2] == "exec"]
+            self.assertEqual(len(exact), 1)
+            argv, duration = exact[0]
+            self.assertEqual(argv[argv.index("--timeout") + 1], "15000")
+            self.assertEqual(duration, 15200)
+            self.assertEqual(calls[-1][0][2], "stop")
+
     def test_archive_log_digest_check(self):
         import io
         with tempfile.TemporaryDirectory() as directory:
