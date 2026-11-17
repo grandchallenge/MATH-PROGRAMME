@@ -121,6 +121,9 @@ def validate_five_source_scope(row, root=ROOT):
                 'C_ADVERSARIAL_REVIEW_001.md',
                 'C_RETURN_BINDING_001.json',
             )}
+            custody_path=prefix+'C_PROTECTED_CUSTODY_BINDING_001.json'
+            if v['work_status']=='PROTECTED_ADMITTED':
+                required.add(custody_path)
             ensure(set(evidence)==required
                    and v['formal_replay_receipt']==prefix+'C_LEAN_CORE_REPLAY_001.json'
                    and v['axiom_report_receipt']==prefix+'C_LEAN_CORE_STDOUT_001.txt'
@@ -142,6 +145,57 @@ def validate_five_source_scope(row, root=ROOT):
                    and returned.get('whole_size_ramsey_proved') is False
                    and returned.get('mathcert_certified') is False,
                    'problem 560 C: worker return/source or completion boundary drift')
+            if v['work_status']=='PROTECTED_ADMITTED':
+                merge='2371fb3feda35d98f6da19855a0a1348ca284afa'
+                cust=read(custody_path,root)
+                expected_paths=required-{custody_path}
+                expected_paths.update({
+                    'experiments/erdos_proof_verification/0560/Erdos560Core.lean',
+                    'experiments/erdos_proof_verification/0560/lean-toolchain',
+                    'experiments/erdos_proof_verification/0560/lakefile.toml',
+                    'ci/erdos_pv_0560_formal_replay.py',
+                    'ci/test_erdos_pv_0560_formal_replay.py',
+                    'governance/formal_validation_registry.json',
+                    '.github/workflows/formal-validation.yml',
+                    'ci/formal_contract_dependency.py',
+                    'governance/erdos_proof_verification/coverage/cohorts/0501-0600.json',
+                })
+                blobs=cust.get('protected_source_and_artifact_blob_ids',{})
+                custody_hash=hashlib.sha256((root/custody_path).read_bytes()).hexdigest()
+                ensure(
+                    v['protected_admission_ref']=='grandchallenge/MATH-PROGRAMME@'+merge
+                    and custody_hash=='e72bff7dee6924da0edcbb794d4ea276bd114147bd830bb5eb5c002f2aa475c3'
+                    and cust.get('record_type')=='ERDOS_PV_C_ADMISSION_CUSTODY_BINDING/1'
+                    and cust.get('assignment_id')=='ERDOS-PV-0560-C'
+                    and cust.get('problem_id')==560 and cust.get('phase')=='C'
+                    and cust.get('protected_evidence_head')=='bbc5fcba7afd74919d2cd3c760a5a7aa0da99c5a'
+                    and cust.get('protected_evidence_merge_commit')==merge
+                    and cust.get('protected_evidence_pull_request')=='https://github.com/grandchallenge/MATH-PROGRAMME/pull/3443'
+                    and cust.get('protected_exact_byte_readback')=='MATCHED_FIFTEEN_FILES_AGAINST_GIT_FETCHED_PROTECTED_MERGE'
+                    and set(blobs)==expected_paths and len(blobs)==15
+                    and all(re.fullmatch('[0-9a-f]{40}',digest) for digest in blobs.values())
+                    and cust.get('claim_ref')=='refs/heads/gcl-pv-claims/ERDOS-PV-0560-C'
+                    and cust.get('claim_sha')=='8b6a32fa6fc8fd037051835fa54542f81ecca50e'
+                    and cust.get('claim_actor')=='fyremael'
+                    and cust.get('unique_result_sha256')=='7ac16b9c6ebfdc9c7c549ec0708af0d83af1b1da57aee7371b88dc4eedfa659a'
+                    and cust.get('next_phase')=='ERDOS-PV-0560-D'
+                    and cust.get('formalization_work_required') is True
+                    and cust.get('formalization_residual')=='FORMALIZATION_WORK_REQUIRED__COPY_COUNT_TAIL_FIRST_MOMENT'
+                    and cust.get('lean_compiled_auxiliary_theorems')==12
+                    and cust.get('lean_rejected_hostile_targets')==3
+                    and cust.get('next_phase_documentary_work_executed') is False
+                    and cust.get('release_state')=='PENDING_EXACT_PROTECTED_CUSTODY_MERGE_AND_AUTHENTICATED_READBACK'
+                    and len(cust.get('nonclaims',{}))==7
+                    and all(flag is False for flag in cust.get('nonclaims',{}).values()),
+                    'problem 560 C: protected custody and exact identity drift')
+                # Sealed evidence is immutable; workflow/registry entries in
+                # the hash-locked provenance receipt may evolve in later PRs.
+                for source_path in expected_paths & (
+                        required | {'experiments/erdos_proof_verification/0560/Erdos560Core.lean'}):
+                    raw=(root/source_path).read_bytes()
+                    git_blob=hashlib.sha1(b'blob '+str(len(raw)).encode()+bytes([0])+raw).hexdigest()
+                    ensure(git_blob==blobs[source_path],
+                           'problem 560 C: original protected evidence bytes changed: '+source_path)
             expected_source=root/'experiments/erdos_proof_verification/0560/Erdos560Core.lean'
             actual_sha=hashlib.sha256(expected_source.read_bytes()).hexdigest()
             log_sha=hashlib.sha256((root/(prefix+'C_LEAN_CORE_STDOUT_001.txt')).read_bytes()).hexdigest()
