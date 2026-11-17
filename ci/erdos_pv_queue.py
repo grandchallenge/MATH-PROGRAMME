@@ -63,6 +63,12 @@ def permitted(row,phase):
     if phase=='B' and row['triage_decision']!='SELECTED_WITH_MANIFEST':
         return False
     if row['existing_proof_issue'] is not None:return False # independent pilot issue already owns B/C/D
+    # This newly admitted five-problem cohort requires protected, not merely
+    # candidate, evidence before moving to a later substantive stage.
+    if row['problem_id'] in (560,561,562,563,564) and phase in ('C','D'):
+        prerequisite={'C':'B','D':'C'}[phase]
+        if s[prerequisite]['work_status'] != 'PROTECTED_ADMITTED':
+            return False
     prev={'B':'A','C':'B','D':'C'}[phase]
     if s[prev]['work_status'] not in READY:return False
     if phase in ('C','D') and row['triage_decision']=='PENDING':return False
