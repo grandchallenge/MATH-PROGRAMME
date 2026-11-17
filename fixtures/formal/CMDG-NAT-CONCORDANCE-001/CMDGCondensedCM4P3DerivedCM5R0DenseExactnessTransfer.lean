@@ -89,9 +89,9 @@ theorem stoneanCechDegreeOneExact_of_stoneanPresheafExact
       stoneanCechDegreeOneComplex T :=
     ShortComplex.isoMk (Iso.refl _) (Iso.refl _) (Iso.refl _)
       (by simpa only [Iso.refl_hom, Category.id_comp, Category.comp_id]
-        using presheafStoneanCechDegreeOneComplex_sheafify_f T)
+        using (presheafStoneanCechDegreeOneComplex_sheafify_f T).symm)
       (by simpa only [Iso.refl_hom, Category.id_comp, Category.comp_id]
-        using presheafStoneanCechDegreeOneComplex_sheafify_g T)
+        using (presheafStoneanCechDegreeOneComplex_sheafify_g T).symm)
   exact ShortComplex.exact_of_iso e hComp
 
 /-- The authentic second-relation epi follows from exactness
