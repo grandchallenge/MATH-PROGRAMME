@@ -297,7 +297,7 @@ def validate_manifest(data: dict, schema: dict) -> None:
             and r.get('referee_document_sha256') ==
                 hashlib.sha256(d.read_bytes()).hexdigest()
             and r.get('source_critical_document_sha256') ==
-                '334fe2621bca16973ee4a4af8b4be26725ce6753820d223a396aa3860b353887'
+                '8ff6b75a2d4458c9e7bea14203f332f382409a89ae56452cada970d6205b6943'
             and r.get('protected_green_proof_commit') ==
                 '62ffaa1db3e2d1a5d120611e86fc189f1c24b50e'
             and r.get('source_sha256') ==
