@@ -45,6 +45,22 @@ noncomputable def compHausHomProfinitePullbackEquiv
   let e : F.obj (pullback f g) ≅
       pullback (F.map f) (F.map g) :=
     PreservesPullback.iso F f g
+  have he_fst :
+      e.hom ≫ pullback.fst (F.map f) (F.map g) =
+        F.map (pullback.fst f g) :=
+    PreservesPullback.iso_hom_fst F f g
+  have he_snd :
+      e.hom ≫ pullback.snd (F.map f) (F.map g) =
+        F.map (pullback.snd f g) :=
+    PreservesPullback.iso_hom_snd F f g
+  have he_inv_fst :
+      e.inv ≫ F.map (pullback.fst f g) =
+        pullback.fst (F.map f) (F.map g) :=
+    PreservesPullback.iso_inv_fst F f g
+  have he_inv_snd :
+      e.inv ≫ F.map (pullback.snd f g) =
+        pullback.snd (F.map f) (F.map g) :=
+    PreservesPullback.iso_inv_snd F f g
   refine {
     toFun := fun z => ⟨⟨z ≫ F.map (pullback.fst f g),
       z ≫ F.map (pullback.snd f g)⟩, ?_⟩
@@ -61,17 +77,13 @@ noncomputable def compHausHomProfinitePullbackEquiv
     apply (cancel_mono e.hom).1
     rw [Category.assoc, e.inv_hom_id, Category.comp_id]
     apply pullback.hom_ext
-    · simp only [pullback.lift_fst, Category.assoc,
-        PreservesPullback.iso_hom_fst]
-    · simp only [pullback.lift_snd, Category.assoc,
-        PreservesPullback.iso_hom_snd]
+    · simp only [pullback.lift_fst, Category.assoc, he_fst]
+    · simp only [pullback.lift_snd, Category.assoc, he_snd]
   · intro xy
     apply Subtype.ext
     apply Prod.ext
-    · simp only [Category.assoc, PreservesPullback.iso_inv_fst,
-        pullback.lift_fst]
-    · simp only [Category.assoc, PreservesPullback.iso_inv_snd,
-        pullback.lift_snd]
+    · simp only [Category.assoc, he_inv_fst, pullback.lift_fst]
+    · simp only [Category.assoc, he_inv_snd, pullback.lift_snd]
 
 /-- Honest pair object R=P×_T P in CompHaus-site Hom coordinates. -/
 noncomputable abbrev stoneanCompHausProbeCechPairEquiv
