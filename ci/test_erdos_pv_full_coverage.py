@@ -20,9 +20,9 @@ class CoverageTests(unittest.TestCase):
         bad=copy.deepcopy(self.base)
         mutation(bad)
         with self.assertRaises(ValueError):v.validate_row(bad,self.src,self.phase)
-    def test_full_population_and_one_bounded_terminal(self):
+    def test_full_population_and_two_bounded_documentary_terminals(self):
         result=v.validate()
-        self.assertEqual((result['individual_problems'],result['project_issues'],result['substantive_terminal_count']),(1221,58,1))
+        self.assertEqual((result['individual_problems'],result['project_issues'],result['substantive_terminal_count']),(1221,58,2))
         first=v.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][0]
         self.assertEqual(first['closure_status'], 'ADMITTED_BOUNDED_COMPLETE')
         self.assertEqual(first['mathcert_status'], 'NOT_SUBMITTED')
@@ -125,7 +125,7 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(len(custody['protected_source_and_artifact_blob_ids']),15)
         self.assertTrue(custody['formalization_work_required'])
         self.assertTrue(all(flag is False for flag in custody['nonclaims'].values()))
-        self.assertEqual(row['stage_work_items']['D']['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(row['stage_work_items']['D']['work_status'],'PROTECTED_ADMITTED')
         self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
         for mutation in (
             lambda b:b.__setitem__('protected_admission_ref','grandchallenge/MATH-PROGRAMME@'+'f'*40),
@@ -156,22 +156,26 @@ class CoverageTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 v.validate_row(bad,self.source[559],cohort['phase_issues'])
 
-    def test_560_documentary_candidate_is_exact_reviewed_nonterminal(self):
+    def test_560_documentary_protected_bounded_closure_not_original_solved(self):
         cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
         row=cohort['items'][59]
         d=row['stage_work_items']['D']
-        self.assertEqual(d['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(d['work_status'],'PROTECTED_ADMITTED')
         self.assertEqual(d['review_status'],'ROLE_SCOPED_CRITICAL_PASS')
-        self.assertEqual(d['protected_admission_ref'],None)
-        self.assertEqual(row['closure_status'],'IN_PROGRESS')
+        self.assertEqual(d['protected_admission_ref'],
+                         'grandchallenge/MATH-PROGRAMME@fc77c28fd1132efca1ff2cc5db56d8632b06c8e5')
+        self.assertEqual(row['closure_status'],'ADMITTED_BOUNDED_COMPLETE')
         self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
-        self.assertEqual(len(d['evidence_refs']),4)
+        self.assertEqual(len(d['evidence_refs']),5)
+        self.assertEqual(len(row['closure_evidence_refs']),5)
+        self.assertEqual(row['scope'],'OPEN_BOUNDED_LEMMA_ONLY')
+        self.assertEqual(row['catalogue_status_at_lock'],'open')
         proof=v.read('governance/erdos_proof_verification/evidence/0560/D_DOCUMENTARY_REVIEW_001.json')
         self.assertEqual(proof['original_problem_status'],'OPEN')
         self.assertFalse(proof['full_primary_proposition_in_lean'])
         self.assertEqual(proof['kernel_checked_auxiliary_declarations'],12)
         for mutation in (
-            lambda r:r.__setitem__('closure_status','ADMITTED_BOUNDED_COMPLETE'),
+            lambda r:r.__setitem__('closure_status','IN_PROGRESS'),
             lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
             lambda r:r.__setitem__('mathcert_status','CERTIFIED'),
             lambda r:r['stage_work_items']['D'].__setitem__('blocker',None),
@@ -179,6 +183,8 @@ class CoverageTests(unittest.TestCase):
             lambda r:r['stage_work_items']['D'].__setitem__('adversarial_review_receipt',None),
             lambda r:r['stage_work_items']['D'].__setitem__('evidence_refs',[]),
             lambda r:r['stage_work_items']['D'].__setitem__('protected_admission_ref','main@forged'),
+            lambda r:r['stage_work_items']['D'].__setitem__('work_status','VERIFIED_BOUNDED'),
+            lambda r:r.__setitem__('closure_evidence_refs',[]),
             lambda r:r['stage_work_items']['C'].__setitem__('work_status','VERIFIED_BOUNDED'),
         ):
             bad=copy.deepcopy(row)
