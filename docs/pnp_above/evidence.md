@@ -62,6 +62,18 @@ The separate [classical explicitization negative-control script](https://github.
 
 **OPEN:** all-input decider completeness and cost bounds, source-native full `Sampler 9` and `Verifier 9`, positive-parameter quantum compression, a succinct polynomial-overhead classical transfer, PNP-001 Formal Conjectures concordance, and Theorem 12.1 source-statement/proof reconciliation. No parent claim or certification state changes.
 
+## WP11: cost-indexed native interpreter completeness and uniform finite decider (17 November 2026)
+
+The [admitted MATHSOLVE WP11 PR #1239](https://github.com/grandchallenge/MATHSOLVE/pull/1239) is protected-merged at `ef12175a28be8d3bcff1a2ce1dfde44dea30b5de`. Its [new source-native Lean proof](https://github.com/grandchallenge/MATHSOLVE/blob/ef12175a28be8d3bcff1a2ce1dfde44dea30b5de/research/PNP-ABOVE/WP11_EvalFuelCompleteness.lean) (Git blob `088a731db4a7a1a21097a593958706df6b8a488b`, SHA-256 `eecbc4ffec6cc671d048ca8566aef01e41bb9159cbf8353522ac3ae27109de34`) imports exact WP08–WP10 source modules against `vidick/MIPRE-formalization@5926bdff5db621f44682a101007ef2fe3ae8d970` and Lean 4.35.0-rc3.
+
+**General semantic completeness:** For every *terminating* native upstream evaluation, the interpreter returns exactly the same result and cost when given one more unit of fuel than that cost. Together with previously proved WP09 soundness this yields `Eval env p r t ↔ WP09.runFuel (t+1) env p = some (r,t)`. The proof covers the source's looping rules; it does not assert that arbitrary programs terminate.
+
+**Uniform identity-decider totality:** WP11 proves that the actual WP08 decider contains neither unbounded loops nor variable-copy operations, terminates for **every raw input**, and has a mechanically checked uniform source evaluation-cost bound of **89**. Therefore fuel **90** suffices for all raw inputs, including malformed input structures, and the result is always a canonical Boolean. For every *typed* game question, native `Decider.Accepts` holds exactly when the interpreter returns canonical true at fuel 90; its negation holds exactly when it returns false at fuel 90. This advances WP10's two example theorems to quantified operational-semantic equivalence.
+
+The [source-locked replay receipt](https://github.com/grandchallenge/MATHSOLVE/blob/ef12175a28be8d3bcff1a2ce1dfde44dea30b5de/research/PNP-ABOVE/WP11_IMPORT_REPLAY_RECEIPT.md) records the exact candidate `a08e02e50432f77d8b8c176e40bf4f0830a84e6e`, all four imported WP08–WP11 modules compiling with exit 0, and **18 WP11 theorem declarations** passing a nonstandard-axiom audit. Their dependencies are confined to Lean's usual `propext`, `Classical.choice` and `Quot.sound`. The protected branch was read back at the admitted commit; GitHub's affected required checks passed.
+
+**Remaining boundary:** This verifies the operational semantics of the specific decider, **not** that acceptance for all inputs is exactly the intended positive-index/two-length-nine-questions/empty-answer predicate. The all-input parser-specification theorem, source-native nine-level sampler with `CLFun.ExactlyOn` and all run conditions, full `Verifier 9`, effective positive-parameter compression, and succinct uniform SAT-to-classical-resource transfer remain open. This is not mathematical certification or a P-versus-NP theorem. The original PNP Formal Conjectures concordance blocker and external Theorem 12.1 source discrepancy remain unchanged.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
