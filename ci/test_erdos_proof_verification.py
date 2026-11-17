@@ -50,8 +50,9 @@ class VerificationContractTests(unittest.TestCase):
     def test_green_receipt_is_valid_but_not_mathematical_certification(self):
         good = copy.deepcopy(self.good)
         self.assertEqual(good['stage_results']['REPLAY_EXECUTION'], 'PASS')
-        self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PENDING')
+        self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
         self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
+        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
 
