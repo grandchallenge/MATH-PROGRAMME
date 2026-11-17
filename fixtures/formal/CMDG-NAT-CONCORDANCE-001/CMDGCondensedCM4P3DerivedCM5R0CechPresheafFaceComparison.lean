@@ -91,7 +91,7 @@ theorem presheafStoneanCechTripleBoundary_comp_difference_zero
   unfold presheafStoneanCechTripleBoundary
   simp only [Preadditive.sub_comp]
   rw [presheafStoneanCechDifference_triple]
-  abel
+  simp only [add_sub_cancel_left, sub_self]
 
 /-- Sheafification of the presheaf d₁ is literally the
 genuine already-protected CondensedMod differential. -/
@@ -100,7 +100,7 @@ theorem presheafStoneanCechDifference_sheafify
     moduleSheafification.map (presheafStoneanCechDifference T) =
       stoneanCechDifference T := by
   unfold presheafStoneanCechDifference stoneanCechDifference
-  rw [map_sub]
+  rw [Functor.map_sub]
   rfl
 
 /-- Sheafification of the presheaf d₂ is literally the
@@ -111,7 +111,7 @@ theorem presheafStoneanCechTripleBoundary_sheafify
     moduleSheafification.map (presheafStoneanCechTripleBoundary T) =
       stoneanCechTripleBoundary T := by
   unfold presheafStoneanCechTripleBoundary stoneanCechTripleBoundary
-  rw [map_sub, map_sub]
+  rw [Functor.map_sub, Functor.map_sub]
   rfl
 
 /-- The actual two-step free-presheaf Čech short complex;
