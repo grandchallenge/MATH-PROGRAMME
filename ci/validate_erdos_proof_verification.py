@@ -164,6 +164,72 @@ def validate_manifest(data: dict, schema: dict) -> None:
             )
     if data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS':
         require(data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS', f'admitted without adjudication: {n}')
+        if n == 248:
+            # Final status is permitted only after the prior Referee decision
+            # exists on protected main with real merge/byte identities. The
+            # current final PR remains a candidate until protected merge/readback.
+            receipt = 'governance/erdos_proof_verification/admissions/0248_PROTECTED_EVIDENCE_ADMISSION_001.json'
+            doc = 'governance/erdos_proof_verification/admissions/0248_PROTECTED_EVIDENCE_ADMISSION_001.md'
+            require(receipt in data['review_receipts'] and doc in data['review_receipts'],
+                    'Erdos248 protected PASS requires exact final custody packet')
+            r = load(receipt)
+            md = (ROOT / doc).resolve()
+            require(md.is_relative_to(ROOT.resolve()) and md.is_file(),
+                    'Erdos248 final custody document absent')
+            checks = r.get('evidence_chain_status', {})
+            excluded = r.get('claim_exclusions', {})
+            auth = r.get('authority_effects', {})
+            require(
+                r.get('record_type') == 'GCL-ERDOS-248-PROTECTED-EVIDENCE-ADMISSION/1'
+                and r.get('admission_id') == 'ERDOS-PV-0248-EA001'
+                and r.get('governing_issue') == 3204
+                and r.get('parent_issue') == 3201
+                and r.get('candidate_phase') ==
+                    'FINAL_EVIDENCE_ADMISSION_SUBJECT_TO_PROTECTED_MERGE_AND_READBACK'
+                and r.get('outcome') == 'VERIFIED_WITHOUT_CERTIFICATION'
+                and r.get('outcome_scope') ==
+                    'EXACT_ERDOS248_DISTINCT_PRIME_OMEGA_KERNEL_VERIFIED_ONLY'
+                and r.get('source_provider_commit') ==
+                    '8822f7ddef30fadbd92e1c6ab4ed897af356af5e'
+                and r.get('source_sha256') ==
+                    '292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267'
+                and r.get('kernel_receipt_sha256') ==
+                    '708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28'
+                and r.get('source_review_sha256') ==
+                    'dc58e9dd9b2f069426ecfd3cfbb5c6a20094010bf4a0afa344e6aa7c1c323520'
+                and r.get('referee_adjudication_doc_sha256') ==
+                    '0218423c75cb5712bdd3f9bc3031f003e398f5a966bfd82075cedcacfc753d6a'
+                and r.get('referee_adjudication_json_sha256') ==
+                    'ce859d609dcf89c7ae030234ea2aa3bae9e9d735fbb73a0e3f3cf7d9ee57f455'
+                and r.get('protected_green_replay_merge') ==
+                    'a55255f01b18139ddf045d4c82fb566c3e77f36d'
+                and r.get('protected_source_review_merge') ==
+                    'bb91ff9e21679e201013de3ef9bc5fba8986748d'
+                and r.get('protected_referee_adjudication_merge') ==
+                    '3cd3e6951c9c34d970b1e0e8ca7ae7edcb6ba871'
+                and r.get('admission_document') == doc
+                and r.get('admission_document_sha256') ==
+                    hashlib.sha256(md.read_bytes()).hexdigest()
+                and checks.get('source_lock') is True
+                and checks.get('compiler_and_axiom_replay') is True
+                and checks.get('non_author_critical_review') is True
+                and checks.get('internal_referee_adjudication') is True
+                and checks.get('all_three_predecessor_prs_protected') is True
+                and checks.get('final_pr_protected_readback_required') is True
+                and checks.get('certification_not_submitted') is True
+                and excluded.get('published_multiplicity_Omega_formalized') is False
+                and excluded.get('full_published_paper_verified') is False
+                and excluded.get('author_tex_248_leanization_map_present') is False
+                and excluded.get('mathcert_certified') is False
+                and excluded.get('independent_human_certification') is False
+                and auth.get('public_certification') is False
+                and auth.get('human_independence') is False
+                and auth.get('issue_auto_closure') is False
+                and auth.get('issue_manual_completion_only_after_exact_merge_and_project_readback') is True
+                and data['work_status'] == 'VERIFIED_WITHOUT_CERTIFICATION'
+                and data['certification_status'] == 'NOT_SUBMITTED',
+                'Erdos248 final protected admission requires exact noncertifying source custody'
+            )
     if data['work_status'] in ('VERIFIED_WITHOUT_CERTIFICATION','SUBMITTED_TO_MATHCERT'):
         require(data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS', f'verified absent protected evidence: {n}')
     if data['certification_status'] != 'NOT_SUBMITTED':
