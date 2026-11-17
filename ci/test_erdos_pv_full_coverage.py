@@ -110,7 +110,26 @@ class CoverageTests(unittest.TestCase):
             'grandchallenge/MATH-PROGRAMME@997a3d8068c3b2a036d5811bfabfce2b92a4be15')
         self.assertIsNone(b['formal_replay_receipt'])
         self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
-        self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
+        self.assertEqual(row['stage_work_items']['C']['work_status'],'VERIFIED_BOUNDED')
+
+    def test_560_partial_formal_review_cannot_promote_full_proof(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][59]
+        for mutation in (
+          lambda b:b.__setitem__('blocker',None),
+          lambda b:b.__setitem__('formal_replay_receipt',None),
+          lambda b:b.__setitem__('axiom_report_receipt',None),
+          lambda b:b.__setitem__('evidence_refs',[]),
+          lambda b:b.__setitem__('source_lock_receipt','forged'),
+          lambda b:b.__setitem__('semantic_equivalence_receipt',None),
+          lambda b:b.__setitem__('adversarial_review_receipt',None),
+          lambda b:b.__setitem__('review_status','NOT_REVIEWED'),
+          lambda b:b.__setitem__('protected_admission_ref','main@not_merged'),
+        ):
+            bad=copy.deepcopy(row)
+            mutation(bad['stage_work_items']['C'])
+            with self.assertRaises(ValueError):
+                v.validate_row(bad,self.source[559],cohort['phase_issues'])
 
     def test_open_conjecture_promotion_is_rejected(self):
         row=next(x for x in self.pack['items'] if x['catalogue_status_at_lock']=='open' and x['problem_id'] not in v.PILOT)
