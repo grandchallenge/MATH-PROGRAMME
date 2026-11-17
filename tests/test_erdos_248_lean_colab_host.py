@@ -41,7 +41,9 @@ class Erdos248HostTests(unittest.TestCase):
               "protected_state_mutation": False, "source_adjudication": False},
           "steps": [{"stage": k, "exit_code": 0} for k in
                     ("git-fetch", "git-checkout", "lean-version",
-                     "mathlib-cache", "compat-post-update", "lean-build", "axiom-audit")]
+                     "mathlib-cache", "compat-post-update", "lean-build", "axiom-audit") +
+                    tuple(f"compat-{i:02d}-{a}" for i in range(9)
+                          for a in ("check", "apply"))]
         }
 
     def test_lean_four_axiom_receipt(self):
@@ -70,6 +72,9 @@ class Erdos248HostTests(unittest.TestCase):
             lambda d: d.update(worker_sha256="c"*64),
             lambda d: d.update(axiom_report="axioms used: [sorryAx]"),
             lambda d: d["steps"].pop(),
+            lambda d: d["steps"].__setitem__(
+                slice(None), [s for s in d["steps"]
+                              if s["stage"] != "compat-05-apply"]),
             lambda d: d.update(mathlib_commit="0"*40)):
             data = copy.deepcopy(self.good())
             mutate(data)
