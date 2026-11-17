@@ -176,7 +176,9 @@ def main() -> int:
     assert "repository: grandchallenge/MATHCERT" in generic
     assert "ref: d59173899dcd1a67dbe8f31de0b9f0917cd1459a" in generic
     assert "use-github-cache: false" in generic
-    assert "use-mathlib-cache: true" in generic
+    # All Mathlib-dependent lanes keep cache retrieval.
+    # An Init-only core does not provide the Mathlib cache executable.
+    assert "use-mathlib-cache: ${{ matrix.lane != 'erdos-pv-0560-core' }}" in generic
 
     print("formal validation routing and security acceptance matrix passed")
     return 0

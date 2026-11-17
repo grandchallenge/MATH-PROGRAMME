@@ -85,7 +85,7 @@ jobs:
           build: false
           test: false
           use-github-cache: false
-          use-mathlib-cache: true
+          use-mathlib-cache: ${{ matrix.lane != 'erdos-pv-0560-core' }}
       - name: Execute only the materially selected formal lane
         env:
           FORMAL_CHANGED_PATHS: ${{ needs.impact.outputs.changed_paths_json }}
