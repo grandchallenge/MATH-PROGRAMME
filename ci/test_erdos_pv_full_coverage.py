@@ -61,7 +61,7 @@ class CoverageTests(unittest.TestCase):
                 self.assertEqual(row['source_issue_live_state'],'OPEN_RETURNED')
                 self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
                 self.assertEqual(row['stage_work_items']['B']['work_status'],
-                                 'VERIFIED_BOUNDED' if n==560 else 'UNEXECUTED')
+                                 'PROTECTED_ADMITTED' if n==560 else 'UNEXECUTED')
                 if n<=562:
                     self.assertEqual(row['triage_decision'],'SELECTED_WITH_MANIFEST')
                     self.assertEqual(row['stage_work_items']['A']['work_status'],'VERIFIED_BOUNDED')
@@ -76,7 +76,7 @@ class CoverageTests(unittest.TestCase):
             for mutation in (
                 lambda r:r.__setitem__('triage_decision','SELECTED_WITH_MANIFEST' if n>562 else 'PENDING'),
                 lambda r:r['stage_work_items']['A'].__setitem__('evidence_refs',[]),
-                lambda r:r['stage_work_items']['B'].__setitem__('work_status','PROTECTED_ADMITTED'),
+                lambda r:r['stage_work_items']['B'].__setitem__('work_status','VERIFIED_BOUNDED' if n==560 else 'PROTECTED_ADMITTED'),
                 lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
             ):
                 with self.subTest(problem=n,mutation=str(mutation)):
@@ -100,6 +100,17 @@ class CoverageTests(unittest.TestCase):
             mutation(bad)
             with self.assertRaises(ValueError):
                 v.validate_row(bad,self.source[559],cohort['phase_issues'])
+
+    def test_560_protected_b_exact_material_binding_and_noncertification(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][59]
+        b=row['stage_work_items']['B']
+        self.assertEqual(b['work_status'],'PROTECTED_ADMITTED')
+        self.assertEqual(b['protected_admission_ref'],
+            'grandchallenge/MATH-PROGRAMME@997a3d8068c3b2a036d5811bfabfce2b92a4be15')
+        self.assertIsNone(b['formal_replay_receipt'])
+        self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
+        self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
 
     def test_open_conjecture_promotion_is_rejected(self):
         row=next(x for x in self.pack['items'] if x['catalogue_status_at_lock']=='open' and x['problem_id'] not in v.PILOT)
