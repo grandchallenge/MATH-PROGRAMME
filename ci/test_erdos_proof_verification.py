@@ -67,8 +67,38 @@ class VerificationContractTests(unittest.TestCase):
     def test_no_self_adjudication_without_review(self):
         bad = copy.deepcopy(self.good)
         bad['work_status']='IN_PROGRESS'
+        bad['stage_results']['ADVERSARIAL_REVIEW']='PENDING'
+        bad['review_receipts']=[]
         bad['stage_results']['INTERNAL_ADJUDICATION']='PASS'
         with self.assertRaises(ValueError): mod.validate_manifest(bad,self.schema)
+
+    def test_scoped_adversarial_review_cannot_be_replaced_by_generic_receipt(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts']=['evidence/fake-critical-review.json']
+        with self.assertRaisesRegex(ValueError, 'exact qualified review receipt'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_forged_full_paper_omega_claim_fails_review_gate(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/reviews/'
+             '0248_SOURCE_CRITICAL_REVIEW_001.json')
+        real_load = mod.load
+        r = copy.deepcopy(real_load(p))
+        r['checks']['full_paper_Omega_proved_in_lean'] = True
+        def inject(path, *args, **kwargs):
+            return r if path == p else real_load(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact qualified scope'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_real_scoped_adversarial_pass_preserves_open_boundaries(self):
+        good = copy.deepcopy(self.good)
+        self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
+        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
+        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
+        self.assertEqual(good['work_status'], 'IN_PROGRESS')
+        self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
+        mod.validate_manifest(good, self.schema)
 
     def test_no_mathcert_status_from_source_return(self):
         bad = copy.deepcopy(self.good)
