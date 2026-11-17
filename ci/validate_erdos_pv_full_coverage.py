@@ -227,6 +227,97 @@ def validate_five_source_scope(row, root=ROOT):
                         'overlap_without_loopless'}
                    and all(c['exit_code']!=0 for c in replay['hostile'].values()),
                    'problem 560 C: exact kernel-source, hostile or claim boundary drift')
+        if n==560 and later=='D' and v['work_status'] in admitted:
+            prefix='governance/erdos_proof_verification/evidence/0560/'
+            required={prefix+name for name in (
+                'D_DOCUMENTARY_ADMISSION_001.md',
+                'D_EDITORIAL_ADVERSARIAL_REVIEW_001.md',
+                'D_DOCUMENTARY_REVIEW_001.json',
+                'D_RETURN_BINDING_001.json')}
+            if v['work_status']=='PROTECTED_ADMITTED':
+                required.add(prefix+'D_PROTECTED_CUSTODY_BINDING_001.json')
+            ensure(set(evidence)==required
+                   and v['source_lock_receipt']==TRIAGE_FIVE_PATH
+                   and v['semantic_equivalence_receipt']==prefix+'D_DOCUMENTARY_ADMISSION_001.md'
+                   and v['adversarial_review_receipt']==prefix+'D_EDITORIAL_ADVERSARIAL_REVIEW_001.md'
+                   and v['formal_replay_receipt'] is None and v['axiom_report_receipt'] is None
+                   and v['review_status']=='ROLE_SCOPED_CRITICAL_PASS'
+                   and v['blocker']=='FORMALIZATION_WORK_REQUIRED__COPY_COUNT_TAIL_FIRST_MOMENT'
+                   and row['scope']=='OPEN_BOUNDED_LEMMA_ONLY'
+                   and row['mathcert_status']=='NOT_SUBMITTED'
+                   and row['certification_ref'] is None,
+                   'problem 560 D: documentary evidence, scope or formal review drift')
+            doc=read(prefix+'D_DOCUMENTARY_REVIEW_001.json',root)
+            ret=read(prefix+'D_RETURN_BINDING_001.json',root)
+            ensure(doc.get('record_type')=='ERDOS_PV_0560_D_DOCUMENTARY_EVIDENCE/1'
+                   and doc.get('assignment_id')=='ERDOS-PV-0560-D'
+                   and doc.get('source_issue_body_sha256')==row['source_issue_body_sha256']
+                   and doc.get('held_claim_sha')=='0ac8ec3ce8d59868e1d260f8974fb62c36ab0b85'
+                   and doc.get('source_catalogue_commit')=='536408716724a2402bdfa7c1d764bf83d64a8c89'
+                   and doc.get('original_problem_status')=='OPEN'
+                   and doc.get('scope_disposition')=='REVIEWED_VERIFIED_BOUNDED_OFF_DIAGONAL_LEMMA__ORIGINAL_PROBLEM_OPEN'
+                   and doc.get('finite_graph_cases')==36168
+                   and doc.get('exact_rational_parameter_checks')==987
+                   and doc.get('kernel_checked_auxiliary_declarations')==12
+                   and doc.get('hostile_kernel_targets_rejected')==3
+                   and doc.get('formalization_residual')=='FORMALIZATION_WORK_REQUIRED__COPY_COUNT_TAIL_FIRST_MOMENT'
+                   and doc.get('phase_C_protected_custody_merge')=='1f2c11fe2c3f40c9083ebf8603f0fd25e36d5f21'
+                   and doc.get('mathcert_status')=='NOT_SUBMITTED'
+                   and doc.get('distinct_human_reviewer') is False
+                   and doc.get('per_problem_documentary_candidate') is True
+                   and doc.get('phase_D_protected_admission_ref') is None
+                   and doc.get('cohort_100_problems_complete') is False
+                   and doc.get('global_1221_problems_complete') is False
+                   and all(doc.get(key) is False for key in (
+                       'full_primary_proposition_in_lean',
+                       'mathlib_source_equivalence_kernel_checked',
+                       'original_diagonal_conjecture_solved',
+                       'external_independent_mathematical_review',
+                       'mathcert_certified','external_certification_requested')),
+                   'problem 560 D: original open/formal/MATHCERT boundary drift')
+            ensure(ret.get('record_type')=='ERDOS_PV_0560_D_CLAIM_AND_WORKER_RETURN/1'
+                   and ret.get('assignment_id')=='ERDOS-PV-0560-D'
+                   and ret.get('claim_sha')=='0ac8ec3ce8d59868e1d260f8974fb62c36ab0b85'
+                   and ret.get('claim_source_manifest_blob')=='878243e3026fbe00a99a0af1753e25904bf2e06d'
+                   and ret.get('return_comment_id')==6963394409
+                   and ret.get('return_body_sha256')=='90d6b082312f3bd26827c0801d34dddff207c89bfbe49157cdcccec11308ffbe'
+                   and ret.get('unique_result_verified') is True
+                   and ret.get('full_diagonal_conjecture_solved') is False
+                   and ret.get('mathcert_certified') is False,
+                   'problem 560 D: authenticated return/source binding drift')
+            refs=doc.get('source_refs',{})
+            expected={'public_document','documentary_admission','adversarial_review',
+                      'index','navigation','phase_b_proof','phase_b_count_receipt',
+                      'phase_c_lean_receipt','phase_c_lean_stdout','phase_c_source_scope',
+                      'phase_c_adversarial','phase_b_custody','phase_c_custody'}
+            ensure(set(refs)==expected,'problem 560 D: missing documentary references')
+            for key,record in refs.items():
+                path=record.get('path','')
+                resolved=(root/path).resolve()
+                ensure(isinstance(path,str) and resolved.is_relative_to(root.resolve())
+                       and resolved.is_file()
+                       and re.fullmatch('[a-f0-9]{64}',record.get('sha256','')),
+                       'problem 560 D: unsafe or missing source path '+key)
+                if key not in ('index','navigation'):
+                    actual=resolved.read_bytes()
+                    ensure(len(actual)==record.get('bytes')
+                           and hashlib.sha256(actual).hexdigest()==record['sha256'],
+                           'problem 560 D: documentary source byte drift '+key)
+            ensure(refs['public_document']['path']=='docs/erdos/proof-verification-0560.md'
+                   and refs['documentary_admission']['path']==prefix+'D_DOCUMENTARY_ADMISSION_001.md'
+                   and refs['adversarial_review']['path']==prefix+'D_EDITORIAL_ADVERSARIAL_REVIEW_001.md'
+                   and refs['index']['path']=='docs/erdos/index.md'
+                   and refs['navigation']['path']=='mkdocs.yml',
+                   'problem 560 D: public document identity changed')
+            page=(root/'docs/erdos/proof-verification-0560.md').read_text()
+            ensure('Original problem: OPEN' in page
+                   and 'not necessarily induced' in page
+                   and 'The full size-Ramsey counting theorem is not yet formalized.' not in page
+                   and 'MATHCERT' in page and 'twelve' in page.lower()
+                   and 'formalization' in page.lower()
+                   and 'proof-verification-0560.md' in (root/'docs/erdos/index.md').read_text()
+                   and 'erdos/proof-verification-0560.md' in (root/'mkdocs.yml').read_text(),
+                   'problem 560 D: public claim or navigation not scoped')
         if v['work_status']=='PROTECTED_ADMITTED':
             ensure(bool(v['protected_admission_ref']),
                    f'problem {n}: unbound protected admission')

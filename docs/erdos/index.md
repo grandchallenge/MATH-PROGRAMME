@@ -34,6 +34,8 @@ In [problem 665](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/
 
 These articles also illustrate an important distinction: reporting an established result, explaining an unsolved question, and independently checking a complete proof are not the same thing.
 
+For an example of how GCL separates these levels, read the [independent proof-verification status for Erdős problem 560](proof-verification-0560.md): a published off-diagonal lemma has been reconstructed and twelve auxiliary statements have been checked in Lean, but the original diagonal question remains open.
+
 ## What you will find in an article
 
 A developed explanation begins by stating the question in ordinary language and offering an example where possible. It then describes the results known so far, names the researchers or sources behind them, and identifies what remains unresolved. Links to research papers and records of GCL's work are provided for readers who want to examine the evidence in greater detail.
