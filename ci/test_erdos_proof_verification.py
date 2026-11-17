@@ -30,7 +30,17 @@ class VerificationContractTests(unittest.TestCase):
     def test_unexecuted_cannot_claim_kernel_replay(self):
         bad = copy.deepcopy(self.good)
         bad['stage_results']['REPLAY_EXECUTION']='PASS'
+        bad['proof_receipts']=[]  # explicit unexecuted hostile input
         with self.assertRaises(ValueError): mod.validate_manifest(bad,self.schema)
+
+    def test_red_receipt_cannot_promote_kernel_pass(self):
+        # The protected first Colab attempt is a genuine RED receipt.
+        # Its presence must not pass an otherwise source-locked manifest.
+        bad = copy.deepcopy(self.good)
+        bad['stage_results']['REPLAY_EXECUTION']='PASS'
+        self.assertTrue(bad['proof_receipts'])
+        with self.assertRaisesRegex(ValueError,'pinned GREEN kernel/axiom receipt'):
+            mod.validate_manifest(bad,self.schema)
 
     def test_replay_receipt_cannot_skip_semantic_review(self):
         bad = copy.deepcopy(self.good)

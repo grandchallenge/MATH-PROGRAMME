@@ -157,8 +157,26 @@ def validate_receipt(data, identity):
             data.get("mathlib_commit") !=
             "db584cd6d46c92f209a44c0f1c829460d327499d"):
         raise ValueError("kernel/axiom replay not attested")
+    if data.get("source_mode") != "PINNED_PROVIDER_WITH_DECLARED_COMPATIBILITY_PATCHES":
+        raise ValueError("exact provider compatibility status missing")
+    from colab.erdos_248_lean_worker import COMPATIBILITY_PATCHES, PINNED_DEPENDENCIES
+    expected = [{"dependency": dep, "patch": filename, "git_blob": blob}
+                for dep, filename, blob in COMPATIBILITY_PATCHES]
+    if data.get("compatibility_patch_plan") != expected:
+        raise ValueError("declared provider compatibility plan mismatch")
+    effects = data.get("compatibility_patch_effects")
+    if not isinstance(effects, dict) or set(effects) != set(PINNED_DEPENDENCIES):
+        raise ValueError("missing patched dependency custody")
+    for dep, sha in PINNED_DEPENDENCIES.items():
+        row = effects[dep]
+        if row.get("commit") != sha or not row.get("modified_files"):
+            raise ValueError("patched dependency revision or files missing")
+    bg = set(effects["BoundedGaps"]["modified_files"])
+    if not {"BoundedGaps/BoundedGaps/Maynard/FaceDecomposition.lean",
+            "BoundedGaps/BoundedGaps/Maynard/ImprovedGPY/S2Pair.lean"} <= bg:
+        raise ValueError("failing module patch not attested")
     needed = {"git-fetch", "git-checkout", "lean-version",
-              "mathlib-cache", "lean-build", "axiom-audit"}
+              "mathlib-cache", "compat-post-update", "lean-build", "axiom-audit"}
     successful = {s.get("stage") for s in data.get("steps", [])
                   if s.get("exit_code") == 0}
     if not needed <= successful:

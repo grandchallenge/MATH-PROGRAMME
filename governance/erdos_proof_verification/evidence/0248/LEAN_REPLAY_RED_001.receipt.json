@@ -1,0 +1,185 @@
+{
+  "authority_effects": {
+    "mathematical_certification": false,
+    "protected_state_mutation": false,
+    "publication": false,
+    "source_adjudication": false
+  },
+  "axioms_observed": false,
+  "elapsed_seconds": 2604.099,
+  "error": "RuntimeError: stage lean-build failed exit=1 stderr=error: build failed\n",
+  "external_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+  "full_kernel_replay": false,
+  "job": "ERDOS-0248-LEAN-REPLAY-001",
+  "log_archive_bytes": 9466,
+  "log_archive_sha256": "7eb28e5a45fe5199d82642d37e2874e226def0995637a959435b4a5d2da9f071",
+  "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "schema": "GCL-ERDOS-248-LEAN-REPLAY/1",
+  "source_blob": "166659f39a435831d1a751718f9a385effcd7dfa",
+  "source_sha256": "292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267",
+  "status": "RED",
+  "steps": [
+    {
+      "argv": [
+        "git",
+        "init",
+        "/content/gcl-erdos248-work/provider"
+      ],
+      "elapsed_seconds": 0.068,
+      "exit_code": 0,
+      "stage": "git-init",
+      "stderr_bytes": 485,
+      "stderr_sha256": "7cc74f74cc8a8f9938bd00571e2c171ce3c59d048f2242a836ccca722182d430",
+      "stderr_tail": "hint: Using 'master' as the name for the initial branch. This default branch name\nhint: is subject to change. To configure the initial branch name to use in all\nhint: of your new repositories, which will suppress this warning, call:\nhint: \nhint: \tgit config --global init.defaultBranch <name>\nhint: \nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint: \nhint: \tgit branch -m <name>\n",
+      "stdout_bytes": 78,
+      "stdout_sha256": "8825b3ea7872db7c97447da20986d98bb521d79e0971697fb4e1669a7f8a8226",
+      "stdout_tail": "Initialized empty Git repository in /content/gcl-erdos248-work/provider/.git/\n"
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/plby/lean-proofs.git"
+      ],
+      "elapsed_seconds": 0.004,
+      "exit_code": 0,
+      "stage": "git-remote",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": "",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "init",
+        "--cone"
+      ],
+      "elapsed_seconds": 0.004,
+      "exit_code": 0,
+      "stage": "git-sparse-init",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": "",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "src/latest"
+      ],
+      "elapsed_seconds": 0.004,
+      "exit_code": 0,
+      "stage": "git-sparse-set",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": "",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "--no-tags",
+        "--filter=blob:none",
+        "origin",
+        "8822f7ddef30fadbd92e1c6ab4ed897af356af5e"
+      ],
+      "elapsed_seconds": 1.27,
+      "exit_code": 0,
+      "stage": "git-fetch",
+      "stderr_bytes": 117,
+      "stderr_sha256": "716b12a235d1a5d67e85d5608d6e88f76a71b0def180cec46bfb781acdb5d209",
+      "stderr_tail": "From https://github.com/plby/lean-proofs\n * branch            8822f7ddef30fadbd92e1c6ab4ed897af356af5e -> FETCH_HEAD\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "elapsed_seconds": 34.639,
+      "exit_code": 0,
+      "stage": "git-checkout",
+      "stderr_bytes": 30,
+      "stderr_sha256": "2b47866803164411d318efaa32596109b015447670c4f2809a3c1c8ec9f755ea",
+      "stderr_tail": "HEAD is now at 8822f7dd minor\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    },
+    {
+      "argv": [
+        "/root/.elan/bin/elan",
+        "toolchain",
+        "install",
+        "leanprover/lean4:v4.33.0"
+      ],
+      "elapsed_seconds": 63.152,
+      "exit_code": 0,
+      "stage": "lean-install",
+      "stderr_bytes": 157,
+      "stderr_sha256": "ab86bba82e9a7437ef823d8102f5c639ddf116802fd1508e7ebf168ff8f62cb3",
+      "stderr_tail": "info: downloading https://releases.lean-lang.org/lean4/v4.33.0/lean-4.33.0-linux.tar.zst\ninfo: installing /root/.elan/toolchains/leanprover--lean4---v4.33.0\n",
+      "stdout_bytes": 145,
+      "stdout_sha256": "b93a43c820a1970d7dd5b31969c1b1a57642c438dbe62a8a325a7bd3d2b37ade",
+      "stdout_tail": "\nleanprover/lean4:v4.33.0 installed - Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n\n"
+    },
+    {
+      "argv": [
+        "/root/.elan/bin/elan",
+        "run",
+        "leanprover/lean4:v4.33.0",
+        "lean",
+        "--version"
+      ],
+      "elapsed_seconds": 0.065,
+      "exit_code": 0,
+      "stage": "lean-version",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": "",
+      "stdout_bytes": 106,
+      "stdout_sha256": "64f534c7cd1d0dbe701f44b4da6679d120b63f0f9f3bfab60540a07af143f1f2",
+      "stdout_tail": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n"
+    },
+    {
+      "argv": [
+        "/root/.elan/bin/elan",
+        "run",
+        "leanprover/lean4:v4.33.0",
+        "lake",
+        "exe",
+        "cache",
+        "get"
+      ],
+      "elapsed_seconds": 230.04,
+      "exit_code": 0,
+      "stage": "mathlib-cache",
+      "stderr_bytes": 31209,
+      "stderr_sha256": "baeb906d60f703296ecb0bc708a3742c3f3f0f7eb903986cd70028de06a42c84",
+      "stderr_tail": "K\rDownloaded: 7900 file(s) [attempted 7900/8690 = 90%, 31 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 7916 file(s) [attempted 7916/8690 = 91%, 205 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 7944 file(s) [attempted 7944/8690 = 91%, 510 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 7965 file(s) [attempted 7965/8690 = 91%, 79 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 7993 file(s) [attempted 7993/8690 = 91%, 21 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8014 file(s) [attempted 8014/8690 = 92%, 24 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8040 file(s) [attempted 8040/8690 = 92%, 82 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8064 file(s) [attempted 8064/8690 = 92%, 187 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8089 file(s) [attempted 8089/8690 = 93%, 502 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8113 file(s) [attempted 8113/8690 = 93%, 119 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8138 file(s) [attempted 8138/8690 = 93%, 130 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8162 file(s) [attempted 8162/8690 = 93%, 146 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8190 file(s) [attempted 8190/8690 = 94%, 238 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8213 file(s) [attempted 8213/8690 = 94%, 83 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8241 file(s) [attempted 8241/8690 = 94%, 28 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8262 file(s) [attempted 8262/8690 = 95%, 54 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8286 file(s) [attempted 8286/8690 = 95%, 1174 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8311 file(s) [attempted 8311/8690 = 95%, 131 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8337 file(s) [attempted 8337/8690 = 95%, 48 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8361 file(s) [attempted 8361/8690 = 96%, 48 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8386 file(s) [attempted 8386/8690 = 96%, 220 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8410 file(s) [attempted 8410/8690 = 96%, 415 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8435 file(s) [attempted 8435/8690 = 97%, 57 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8456 file(s) [attempted 8456/8690 = 97%, 174 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8480 file(s) [attempted 8480/8690 = 97%, 85 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8510 file(s) [attempted 8510/8690 = 97%, 81 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8534 file(s) [attempted 8534/8690 = 98%, 345 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8559 file(s) [attempted 8559/8690 = 98%, 688 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8585 file(s) [attempted 8585/8690 = 98%, 265 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8608 file(s) [attempted 8608/8690 = 99%, 214 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8632 file(s) [attempted 8632/8690 = 99%, 509 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8658 file(s) [attempted 8658/8690 = 99%, 755 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8683 file(s) [attempted 8683/8690 = 99%, 51 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8688 file(s) [attempted 8688/8690 = 99%, 167 KB/s], Decompressed: 3597\u001b[K\rDownloaded: 8690 file(s) [attempted 8690/8690 = 100%, 167 KB/s], Decompressed: 3597\u001b[K\n",
+      "stdout_bytes": 279,
+      "stdout_sha256": "23360fe51dda249f7af8b31531e716ff6abcd02f5716d2e761f571bbc4bc4579",
+      "stdout_tail": "Current branch: HEAD\nUsing cache from origin: (some leanprover-community/mathlib4)\nAttempting to download 8690 file(s) from leanprover-community/mathlib4 cache at https://lakecache.blob.core.windows.net/mathlib4-master\nDecompressed 8690 file(s)\nAlready decompressed 8690 file(s)\n"
+    }
+  ],
+  "toolchain": "leanprover/lean4:v4.33.0",
+  "worker_sha256": "4087951721b88546909584bc37a2583586939d2dcb79ba8ba7d2f714afbec3ab"
+}
