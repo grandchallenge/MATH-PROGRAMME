@@ -52,9 +52,9 @@ def uliftCompatiblePairEquiv {A B C : Type u}
     apply Subtype.ext
     apply Prod.ext
     · change ULift.up ab.1.1.down = ab.1.1
-      exact ULift.up_down
+      exact ULift.up_down ab.1.1
     · change ULift.up ab.1.2.down = ab.1.2
-      exact ULift.up_down
+      exact ULift.up_down ab.1.2
 
 /-- Pair degree of the *actual* universe-lifted CompHaus
 representable, identified with the compatible pairs of the
