@@ -32,7 +32,7 @@ AUTHORITY = {"mathematical_certification": False, "publication": False,
 TIMEOUTS = {"git-init": 25, "git-fetch": 360, "git-checkout": 240,
             "lean-install": 240, "lean-version": 35,
             "mathlib-cache": 1500, "compat-post-update": 1200,
-            "lean-build": 2400, "axiom-audit": 240}
+            "lean-build": 10800, "axiom-audit": 240}
 
 
 # Exact compatibility set declared in the pinned external lakefile.lean.
