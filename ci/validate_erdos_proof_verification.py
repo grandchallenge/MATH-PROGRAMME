@@ -178,6 +178,48 @@ def validate_manifest(data: dict, schema: dict) -> None:
                 and authority.get('issue_closure') is False,
                 'Erdos248 adversarial PASS requires exact qualified scope and no certification'
             )
+    if n == 249 and data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS':
+        p = 'governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.json'
+        doc = 'governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.md'
+        require(p in data['review_receipts'] and doc in data['review_receipts'],
+                'Erdos249 adversarial PASS requires exact T review receipt')
+        r = load(p)
+        f = (ROOT / doc).resolve()
+        checks = r.get('checks', {})
+        authority = r.get('authority_effects', {})
+        require(f.is_relative_to(ROOT.resolve()) and f.is_file(),
+                'Erdos249 source critical report unavailable')
+        require(
+            r.get('record_type') == 'GCL-ERDOS249-SOURCE-CRITICAL-REVIEW/1'
+            and r.get('review_id') == 'ERDOS-PV-0249-R001'
+            and r.get('review_scope') == 'AUXILIARY_LACUNARY_SUBSERIES_T_ONLY'
+            and r.get('disposition') == 'QUALIFIED_PASS'
+            and r.get('original_conjecture_status') == 'OPEN'
+            and r.get('same_authenticated_agent_as_formal_author') is True
+            and r.get('role_scoped_adversary_separate_pass') is True
+            and r.get('independent_human_review') is False
+            and r.get('independent_external_mathematical_rederivation') is False
+            and r.get('review_document') == doc
+            and r.get('review_document_sha256') ==
+                hashlib.sha256(f.read_bytes()).hexdigest()
+            and r.get('protected_proof_merge') ==
+                '62ffaa1db3e2d1a5d120611e86fc189f1c24b50e'
+            and r.get('source_sha256') ==
+                '6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99'
+            and r.get('stdout_sha256') ==
+                '038d3d08c883f2c17394c2e39a9eaeaeda5d57970745626390528d360f9c9365'
+            and checks.get('exact_exponent_gap') is True
+            and checks.get('positive_tail') is True
+            and checks.get('dyadic_partial_sum') is True
+            and checks.get('integer_obstruction_positive_and_less_than_one') is True
+            and checks.get('full_original_series_irrationality_proved') is False
+            and checks.get('mathcert_certification') is False
+            and authority.get('adversarial_review_scoped_T') is True
+            and authority.get('internal_adjudication') is False
+            and authority.get('protected_evidence_admission') is False
+            and authority.get('issue_closure') is False,
+            'Erdos249 adversarial pass must be exact qualified same-agent T scope'
+        )
     if data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS':
         require(data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS', f'adjudication without adverse pass: {n}')
         if n == 248:
@@ -232,6 +274,50 @@ def validate_manifest(data: dict, schema: dict) -> None:
                 and auth.get('issue_closure') is False,
                 'Erdos248 Referee PASS requires real scoped noncertifying custody'
             )
+    if n == 249 and data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS':
+        p = 'governance/erdos_proof_verification/adjudications/0249_REFEREE_ADJUDICATION_001.json'
+        doc = 'governance/erdos_proof_verification/adjudications/0249_REFEREE_ADJUDICATION_001.md'
+        require(p in data['review_receipts'] and doc in data['review_receipts'],
+                'Erdos249 adjudication PASS requires exact scoped Referee receipt')
+        r = load(p)
+        d = (ROOT / doc).resolve()
+        require(d.is_relative_to(ROOT.resolve()) and d.is_file(),
+                'Erdos249 Referee report unavailable')
+        authorship = r.get('actual_review_authorship', {})
+        checks = r.get('mathematical_checks', {})
+        authority = r.get('authority_effects', {})
+        require(
+            r.get('record_type') == 'GCL-ERDOS249-REFEREE-ADJUDICATION/1'
+            and r.get('decision_id') == 'ERDOS-PV-0249-A001'
+            and r.get('problem_id') == 249
+            and r.get('disposition') == 'ACCEPT_AUXILIARY_LACUNARY_T_IRRATIONALITY_ONLY'
+            and r.get('claim_scope') == 'PROVED_AUXILIARY_T_ONLY'
+            and r.get('original_full_S_status') == 'OPEN'
+            and r.get('referee_document') == doc
+            and r.get('referee_document_sha256') ==
+                hashlib.sha256(d.read_bytes()).hexdigest()
+            and r.get('source_critical_document_sha256') ==
+                '334fe2621bca16973ee4a4af8b4be26725ce6753820d223a396aa3860b353887'
+            and r.get('protected_green_proof_commit') ==
+                '62ffaa1db3e2d1a5d120611e86fc189f1c24b50e'
+            and r.get('source_sha256') ==
+                '6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99'
+            and authorship.get('same_authenticated_agent_as_formal_author') is True
+            and authorship.get('logical_roles_distinct') is True
+            and authorship.get('independent_human_reviewer') is False
+            and authorship.get('independent_external_mathematical_rederivation') is False
+            and checks.get('actual_kernel_green') is True
+            and checks.get('integer_denominator_contradiction') is True
+            and checks.get('original_series_claim') is False
+            and authority.get('internal_adjudication_scoped_T') is True
+            and authority.get('protected_evidence_admission') is False
+            and authority.get('certification') is False
+            and authority.get('original_conjecture_solved') is False
+            and authority.get('issue_closure') is False
+            and data['literature_status'] == 'OPEN'
+            and data['certification_status'] == 'NOT_SUBMITTED',
+            'Erdos249 internal Referee requires exact noncertifying T scope'
+        )
     if data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS':
         require(data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS', f'admitted without adjudication: {n}')
         if n == 248:
