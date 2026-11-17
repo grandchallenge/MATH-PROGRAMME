@@ -258,8 +258,8 @@ class Erdos249LacunaryReplayTests(unittest.TestCase):
         self.assertEqual(m['literature_status'], 'OPEN')
         self.assertEqual(m['work_status'], 'IN_PROGRESS')
         self.assertEqual(m['stage_results']['REPLAY_EXECUTION'], 'PASS')
-        self.assertEqual(m['stage_results']['ADVERSARIAL_REVIEW'], 'PENDING')
-        self.assertEqual(m['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
+        self.assertEqual(m['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
+        self.assertEqual(m['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
         self.assertEqual(m['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
         self.assertEqual(m['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(m, self.schema)
@@ -299,6 +299,46 @@ class Erdos249LacunaryReplayTests(unittest.TestCase):
         bad['toolchain_pins']['mathlib'] = '0' * 40
         with self.assertRaisesRegex(ValueError, 'limited to exact pinned T'):
             mod.validate_manifest(bad, self.schema)
+
+    def test_249_review_requires_exact_source_critical_receipt(self):
+        m = copy.deepcopy(self.good)
+        m['review_receipts'] = [p for p in m['review_receipts']
+                                if '0249_SOURCE_CRITICAL_REVIEW_001' not in p]
+        with self.assertRaisesRegex(ValueError, 'exact T review receipt'):
+            mod.validate_manifest(m, self.schema)
+
+    def test_249_referee_requires_exact_adjudication_receipt(self):
+        m = copy.deepcopy(self.good)
+        m['review_receipts'] = [p for p in m['review_receipts']
+                                if '0249_REFEREE_ADJUDICATION_001' not in p]
+        with self.assertRaisesRegex(ValueError, 'exact scoped Referee receipt'):
+            mod.validate_manifest(m, self.schema)
+
+    def test_249_adversary_cannot_claim_independent_human(self):
+        from unittest.mock import patch
+        file = ('governance/erdos_proof_verification/reviews/'
+                '0249_SOURCE_CRITICAL_REVIEW_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(file))
+        forged['independent_human_review'] = True
+        def altered(path, *args, **kwargs):
+            return forged if path == file else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=altered):
+            with self.assertRaisesRegex(ValueError, 'exact qualified same-agent'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_249_referee_cannot_promote_original_S(self):
+        from unittest.mock import patch
+        file = ('governance/erdos_proof_verification/adjudications/'
+                '0249_REFEREE_ADJUDICATION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(file))
+        forged['authority_effects']['original_conjecture_solved'] = True
+        def altered(path, *args, **kwargs):
+            return forged if path == file else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=altered):
+            with self.assertRaisesRegex(ValueError, 'exact noncertifying T scope'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
 
     def test_no_proof_of_open_series_from_bounded_green(self):
         bad = copy.deepcopy(self.good)

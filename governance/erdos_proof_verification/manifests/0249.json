@@ -33,8 +33,8 @@
     "STATEMENT_EQUIVALENCE": "PASS",
     "REPLAY_PREPARATION": "PASS",
     "REPLAY_EXECUTION": "PASS",
-    "ADVERSARIAL_REVIEW": "PENDING",
-    "INTERNAL_ADJUDICATION": "PENDING",
+    "ADVERSARIAL_REVIEW": "PASS",
+    "INTERNAL_ADJUDICATION": "PASS",
     "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
   },
   "proof_receipts": [
@@ -43,7 +43,12 @@
     "experiments/erdos_proof_verification/0249/theorem_replay_stdout.log",
     "governance/erdos_proof_verification/evidence/0249/LACUNARY_HOSTILE_FULL_SERIES_001.stdout.log"
   ],
-  "review_receipts": [],
+  "review_receipts": [
+    "governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.md",
+    "governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.json",
+    "governance/erdos_proof_verification/adjudications/0249_REFEREE_ADJUDICATION_001.md",
+    "governance/erdos_proof_verification/adjudications/0249_REFEREE_ADJUDICATION_001.json"
+  ],
   "toolchain_pins": {
     "lean": "leanprover/lean4:v4.35.0-rc3",
     "lean_commit": "470d5ce1400764999581fd26d5d72b00d990b0f4",
@@ -66,6 +71,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "Review the exact protected 292-line no-sorry Lean proof Erdos249Bounded.totient_subseries_irrational with separate role-scoped adversarial source/semantic pass and independent arithmetic cross-check, challenge rational denominator and dyadic carry pitfalls, confirm hostile full S type mismatch, record qualified Referee adjudication, and protected evidence admission. Do not infer full original S irrational or any MATHCERT certificate. Reuse exact Lean4 v4.35.0-rc3, Mathlib c55e6e... source and captured replay; do not require costly 4.33 full-cache rebuild for unchanged mathematical proof.",
-  "last_known_evidence": "Independently reconstructed bounded proof T irrational via dyadic-denominator separation (not the open full series S). Evidence: governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md; no Lean replay or certification New formal auxiliary theorem at experiments/erdos_proof_verification/0249/Erdos249Lacunary.lean, SHA256 6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99, 292 lines. Actual Lean 4.35.0-rc3 (binary 470d5ce), Mathlib c55e6e786f49471c72fbddbec5415808896aec1e, Lake manifest SHA256 3b9de3758005c73d884250d11611c935882adf24f02d9a35dc698a033daadde2, full source-locked standalone compile exit 0, exact GitHub candidate head b13cfb2... byte-verified fresh replay, final theorem type x∉Set.range Rat.cast, axioms exactly [propext, Classical.choice, Quot.sound]; stdout sha256 038d3d08c883f2c17394c2e39a9eaeaeda5d57970745626390528d360f9c9365, stderr zero; intentional application to original full S fails exact Lean type check (hostile log sha256 5cc0d6ccb3b7a8ed27e283c9bc78a435984441bc0cb2faa4f810acc2e258f6ec). Evidence LACUNARY_LEAN_GREEN_001.receipt.json. NOT a proof of full S; role review/adjudication pending."
+  "next_action": "Following protected PR admission and exact content readback of source-critical qualified T-only review and scoped Referee adjudication, create a distinct final protected evidence custody packet binding exact review merge and earlier GREEN proof merge. Only that later protected packet may set PROTECTED_EVIDENCE_ADMISSION PASS and VERIFIED_WITHOUT_CERTIFICATION for T; retain original full S OPEN, certification NOT_SUBMITTED. After final readback reconcile #3205 and GCL Project #2 board item. Never close original mathematical conjecture or call auxiliary result proof of S.",
+  "last_known_evidence": "Independently reconstructed bounded proof T irrational via dyadic-denominator separation (not the open full series S). Evidence: governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md; no Lean replay or certification New formal auxiliary theorem at experiments/erdos_proof_verification/0249/Erdos249Lacunary.lean, SHA256 6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99, 292 lines. Actual Lean 4.35.0-rc3 (binary 470d5ce), Mathlib c55e6e786f49471c72fbddbec5415808896aec1e, Lake manifest SHA256 3b9de3758005c73d884250d11611c935882adf24f02d9a35dc698a033daadde2, full source-locked standalone compile exit 0, exact GitHub candidate head b13cfb2... byte-verified fresh replay, final theorem type x∉Set.range Rat.cast, axioms exactly [propext, Classical.choice, Quot.sound]; stdout sha256 038d3d08c883f2c17394c2e39a9eaeaeda5d57970745626390528d360f9c9365, stderr zero; intentional application to original full S fails exact Lean type check (hostile log sha256 5cc0d6ccb3b7a8ed27e283c9bc78a435984441bc0cb2faa4f810acc2e258f6ec). Evidence LACUNARY_LEAN_GREEN_001.receipt.json. NOT a proof of full S; role review/adjudication pending. Distinct logical-role source-critical qualified review R001 and internal Referee A001, both authored by same authenticated agent as new 292-line Lean proof (not independent human review), completed for auxiliary T only. Review SHA256 8ff6b75a2d4458c9e7bea14203f332f382409a89ae56452cada970d6205b6943; Referee report SHA256 13159251dcbe80165b1780f55f022ee3707b89cc31b6bcfe0a6566196502a596. GCL source-locked GREEN protected proof 62ffaa1db3e2d1a5d120611e86fc189f1c24b50e (v4.35/c55e Mathlib). Not original S; final custody pending."
 }
