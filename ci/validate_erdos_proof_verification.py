@@ -63,6 +63,76 @@ def validate_manifest(data: dict, schema: dict) -> None:
                     'db584cd6d46c92f209a44c0f1c829460d327499d'
                 for r in receipts
             ), 'Erdos248 replay PASS requires a real pinned GREEN kernel/axiom receipt')
+    if n == 249 and data['stage_results']['REPLAY_EXECUTION'] == 'PASS':
+        # A proved lacunary subseries cannot promote the original open series.
+        root = 'experiments/erdos_proof_verification/0249/'
+        receipt = 'governance/erdos_proof_verification/evidence/0249/LACUNARY_LEAN_GREEN_001.receipt.json'
+        require(receipt in data['proof_receipts'],
+                'Erdos249 Green requires the exact bounded lacunary receipt')
+        r = load(receipt)
+        hostile = r.get('hostile_full_series_target', {})
+        src = root + 'Erdos249Lacunary.lean'
+        fixed = {
+            src: '6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99',
+            root + 'lean-toolchain': 'bc84812c94489d1e3e191baa1dc10d5eb684382d7fe9d2a5ab085e72c1c67e47',
+            root + 'lakefile.toml': '4dc46a70590893697fb3f3183000af552e29d972e1eacb6b5c7adb86a9f30525',
+            root + 'lake-manifest.json': '3b9de3758005c73d884250d11611c935882adf24f02d9a35dc698a033daadde2',
+            root + 'theorem_replay_stdout.log':
+                '038d3d08c883f2c17394c2e39a9eaeaeda5d57970745626390528d360f9c9365',
+            'governance/erdos_proof_verification/evidence/0249/LACUNARY_HOSTILE_FULL_SERIES_001.stdout.log':
+                '5cc0d6ccb3b7a8ed27e283c9bc78a435984441bc0cb2faa4f810acc2e258f6ec',
+        }
+        for file, digest in fixed.items():
+            p = (ROOT / file).resolve()
+            require(p.is_relative_to(ROOT.resolve()) and p.is_file()
+                    and hashlib.sha256(p.read_bytes()).hexdigest() == digest,
+                    f'Erdos249 exact source/log package drift: {file}')
+        t = data['toolchain_pins'] or {}
+        require(
+            r.get('schema') == 'GCL-ERDOS-249-LACUNARY-LEAN-REPLAY/1'
+            and r.get('job') == 'ERDOS-PV-0249-LACUNARY-001'
+            and r.get('problem_id') == 249
+            and r.get('source_scope') == 'AUXILIARY_LACUNARY_TOTIENT_SUBSERIES_ONLY'
+            and r.get('original_erdos_249_full_series_irrational_claim') is False
+            and r.get('result') == 'GREEN_KERNEL_PROOF_UNADJUDICATED'
+            and r.get('build_exit_code') == 0
+            and r.get('independent_execution_attested') is False
+            and r.get('kernel_proof_source') == src
+            and r.get('source_sha256') == fixed[src]
+            and r.get('lean_toolchain') == 'leanprover/lean4:v4.35.0-rc3'
+            and r.get('lean_binary_commit') ==
+                '470d5ce1400764999581fd26d5d72b00d990b0f4'
+            and r.get('mathlib_commit') ==
+                'c55e6e786f49471c72fbddbec5415808896aec1e'
+            and r.get('lakefile_sha256') == fixed[root + 'lakefile.toml']
+            and r.get('lake_manifest_sha256') == fixed[root + 'lake-manifest.json']
+            and r.get('source_lines') == 292
+            and r.get('command') == 'lake env lean Erdos249Lacunary.lean'
+            and r.get('stdout_sha256') == fixed[root + 'theorem_replay_stdout.log']
+            and r.get('stderr_empty') is True
+            and r.get('stderr_sha256') ==
+                'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+            and r.get('theorem_name') == 'Erdos249Bounded.totient_subseries_irrational'
+            and r.get('theorem_type_observed') is True
+            and r.get('axiom_report_observed') is True
+            and r.get('axioms') == ['propext','Classical.choice','Quot.sound']
+            and r.get('sorryAx_observed') is False
+            and r.get('formal_derivation_complete_for_auxiliary_series') is True
+            and hostile.get('expected_failure_observed') is True
+            and hostile.get('exit_code') == 1
+            and hostile.get('stdout_sha256') ==
+                fixed['governance/erdos_proof_verification/evidence/0249/LACUNARY_HOSTILE_FULL_SERIES_001.stdout.log']
+            and r.get('provider_formal_statement',{}).get('full_theorem_has_sorry') is True
+            and r.get('provider_formal_statement',{}).get('full_theorem_replay_green') is False
+            and r.get('adjudication_state') == 'NOT_YET_PERFORMED'
+            and r.get('certification_state') == 'NOT_SUBMITTED'
+            and t.get('lean') == r.get('lean_toolchain')
+            and t.get('mathlib') == r.get('mathlib_commit')
+            and t.get('provider_source_sha256') == r.get('source_sha256')
+            and data['literature_status'] == 'OPEN'
+            and data['certification_status'] == 'NOT_SUBMITTED',
+            'Erdos249 Green is limited to exact pinned T, never full S'
+        )
     if data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS':
         require(data['review_receipts'], f'review PASS missing independent receipt: {n}')
         if n == 248:
