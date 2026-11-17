@@ -58,14 +58,14 @@ noncomputable def stoneanCompHausProbePresentationSplitEpi
   haveI : Epi (profiniteToCompHaus.map p) := inferInstance
   refine {
     section_ := ↾fun z => ULift.up
-      (Stonean.lift z.down (profiniteToCompHaus.map p))
+      (CompHaus.lift z.down (profiniteToCompHaus.map p))
     id := ?_
   }
   apply CategoryTheory.ConcreteCategory.hom_ext
   intro z
   rcases z with ⟨q⟩
   exact congrArg ULift.up
-    (Stonean.lift_lifts q (profiniteToCompHaus.map p))
+    (CompHaus.lift_lifts q (profiniteToCompHaus.map p))
 
 /-- This is *exactly* the morphism of the true represented
 condensed-set presheaves, evaluated at the Stonean CompHaus
