@@ -47,10 +47,10 @@
       0.007857192
     ],
     "theoretical_phase_truncation_bounds": [
-      1.498633852686768e-9,
-      5.8873880904882465e-9,
-      4.688481008338833e-8,
-      1.8732494569303564e-7
+      1.498633852686768e-09,
+      5.8873880904882465e-09,
+      4.688481008338833e-08,
+      1.8732494569303564e-07
     ],
     "trigonometric_precision": "ordinary_double_not_certified_interval",
     "asymptotic_conclusion": false
@@ -63,10 +63,10 @@
     "finite_run_controls_pass": true
   },
   "source_files_sha256": {
-    "README.md": "29c4158f0625c0c40c841755fa133807f5624964dd45ba3968d9883e45747323",
-    "fourier_probe.py": "eb79b8aeaeb89154e399d8940d8caafd8c1233dd9fa951ce89fd37c86d31ce67",
-    "depth_stress.py": "ec5d97e50d3479cd22bb39aee38da3b9a21f741300a9784a59846483dc9a72b8",
-    "test_fourier_probe.py": "aca481548ef34787aa7afc1852e1f38e717e1900b0a4d2138e078e69ce069cf6"
+    "README.md": "b9464ad13a40949025e89698c8e11a4f27f96430c35c647dd39200ab2172f6f1",
+    "fourier_probe.py": "99e3717af0ae9adb8465efe8321f885f1a72405860c24b9590a05e5c238ac76e",
+    "depth_stress.py": "d65208cb5fb430a9fd22737361ed040e9b7c9111917d1db2ea04c95ef7873f05",
+    "tests/test_erdos249_full_series_phase.py": "d0e623c31a83a1e8919d451c8b700cd46e40da8431ed2b63da7204b254f57908"
   },
   "result_files_sha256": {
     "result_1024.json": "6c907fb0245817d73c941da3b4a93aafbb00629ecdbccea1971279ee0b57e753",
@@ -76,7 +76,7 @@
     "depth_stress_results.json": "368db4b6674c75b915fa103f8287d8347a6c07dc83b7ddf34afd5d5633201d33"
   },
   "tests": {
-    "passed": 6,
+    "passed": 7,
     "failed": 0,
     "stages": [
       "totient-versus-gcd",
@@ -84,11 +84,21 @@
       "modular-recurrence-vs-direct",
       "exact-rational-control",
       "mobius-squared-lambert-finite-identity",
-      "output-and-rational-controls"
+      "output-and-rational-controls",
+      "depth-stress-module-exact-replay"
     ],
-    "mishap": "Möbius sieve prime detection initially failed a rational-identity test; diagnosed and corrected before source admission",
-    "actual_test_capture": "b27f5f75a2ef41b3b959010edf5ec892",
-    "artifact_byte_readback_capture": "04727bad2d644763bad4f899702da368"
+    "mishap": "M\u00f6bius sieve prime detection initially failed a rational-identity test; diagnosed and corrected before source admission",
+    "actual_test_capture": "e6d1d4500dce49eba8e65b6548577d2f",
+    "artifact_byte_readback_capture": "PENDING_EXACT_CANDIDATE_PUSH_READBACK",
+    "artifact_byte_readback_capture_pre_refactor": "04727bad2d644763bad4f899702da368"
   },
-  "next_research_obligation": "Construct or refute moving-depth arithmetic nonconcentration estimate with universal positive-denominator quantifier; compare to Cook 2026 conditional bounds; preserve exact full-series scope."
+  "next_research_obligation": "Construct or refute moving-depth arithmetic nonconcentration estimate with universal positive-denominator quantifier; compare to Cook 2026 conditional bounds; preserve exact full-series scope.",
+  "repository_contract_repair": {
+    "reason": "ci/validate_repository_execution.py enforces experiments as importable library-only modules reachable from tests/test_*.py",
+    "execution_entrypoints": "import library main from Python -c, governed unittest discovery",
+    "separate_independent_human_review": false,
+    "source_code_relocated": "experiments/erdos249_full_series_phase/",
+    "unittest_path": "tests/test_erdos249_full_series_phase.py",
+    "original_full_series_status": "OPEN"
+  }
 }

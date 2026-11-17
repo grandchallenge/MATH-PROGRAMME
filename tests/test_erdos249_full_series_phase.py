@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
 """Exact-rational and modular controls for ERDOS249 moving-depth phase experiment."""
 import unittest,math,json
 from fractions import Fraction
+from experiments.erdos249_full_series_phase.depth_stress import main as run_depth_stress
 from pathlib import Path
-from fourier_probe import totients, comparator, exact_residue, residue_sequence, phase_scan
+from experiments.erdos249_full_series_phase.fourier_probe import totients, comparator, exact_residue, residue_sequence, phase_scan
 
 def mobius(n):
     is_prime=[True]*(n+1)
@@ -54,8 +54,16 @@ class PhaseProbeTests(unittest.TestCase):
         mobius_prefix=Fraction(1,2)+sum((Fraction(mu[d],(2**d-1)**2) for d in range(1,D+1)),Fraction(0))
         bound=Fraction(N+2,2**N)+Fraction(4,3*4**D)
         self.assertLessEqual(abs(prefix-mobius_prefix),bound)
+    def test_depth_stress_module_exact_replay(self):
+        from hashlib import sha256
+        run_depth_stress()
+        d=Path(__file__).resolve().parents[1]/'experiments'/'erdos249_full_series_phase'
+        self.assertEqual(
+            sha256((d/'depth_stress_results.json').read_bytes()).hexdigest(),
+            '368db4b6674c75b915fa103f8287d8347a6c07dc83b7ddf34afd5d5633201d33')
+
     def test_output_integrity_and_known_controls(self):
-        d=Path(__file__).parent
+        d=Path(__file__).resolve().parents[1]/'experiments'/'erdos249_full_series_phase'
         for X,H in ((1024,32),(4096,32),(16384,64),(65536,64)):
             z=json.loads((d/f'result_{X}.json').read_text())
             self.assertEqual((z['x'],z['truncation_L'],z['max_h']),(X,48,H))
@@ -67,4 +75,3 @@ class PhaseProbeTests(unittest.TestCase):
         self.assertEqual(len(ds['rows']),32)
         self.assertEqual([(r['integral_fraction']) for r in ds['rows'] if r['L']==2],
                 sorted([r['integral_fraction'] for r in ds['rows'] if r['L']==2]))
-if __name__=='__main__':unittest.main()

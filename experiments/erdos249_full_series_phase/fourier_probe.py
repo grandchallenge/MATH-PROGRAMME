@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """ERDOS249 full-S experimental phase probe. Finite evidence only; never a proof of irrationality."""
 import argparse, cmath, json, math, hashlib
 from pathlib import Path
@@ -78,4 +77,3 @@ def main():
        'control_h3':result['rational_control_4_over_3'][2],
        'totient_h1':result['actual_totient'][0],
        'totient_h3':result['actual_totient'][2]},sort_keys=True))
-if __name__=='__main__':main()

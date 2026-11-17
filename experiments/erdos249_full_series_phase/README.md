@@ -157,9 +157,9 @@ For its exact scaled tails, $e(hU_N^{(C)})=e(h2^NC)$. At h = 3 this equals 1 for
 
 Reproducible sources:
 
-- **fourier_probe.py** — integer totient sieve, modular window recurrence and harmonic averages. SHA-256: eb79b8aeaeb89154e399d8940d8caafd8c1233dd9fa951ce89fd37c86d31ce67.
-- **depth_stress.py** — the independent fixed/moving-depth matrix. SHA-256: ec5d97e50d3479cd22bb39aee38da3b9a21f741300a9784a59846483dc9a72b8.
-- **test_fourier_probe.py** — exact-rational and modular hostile tests. SHA-256: aca481548ef34787aa7afc1852e1f38e717e1900b0a4d2138e078e69ce069cf6.
+- **fourier_probe.py** — integer totient sieve, modular window recurrence and harmonic averages. SHA-256: 99e3717af0ae9adb8465efe8321f885f1a72405860c24b9590a05e5c238ac76e.
+- **depth_stress.py** — the independent fixed/moving-depth matrix. SHA-256: d65208cb5fb430a9fd22737361ed040e9b7c9111917d1db2ea04c95ef7873f05.
+- **tests/test_erdos249_full_series_phase.py** — exact-rational and modular hostile tests. SHA-256: d0e623c31a83a1e8919d451c8b700cd46e40da8431ed2b63da7204b254f57908.
 
 Actual run data SHA-256:
 
@@ -171,9 +171,17 @@ Actual run data SHA-256:
 | result_65536.json | a9da923c1b6bd73161de6b6295ed9ef7b822fc59d3627933918c68888f227caf |
 | depth_stress_results.json | 368db4b6674c75b915fa103f8287d8347a6c07dc83b7ddf34afd5d5633201d33 |
 
-The **six automated checks passed** after a deliberately caught Möbius-sieve bug in the test harness was corrected before admission. Checks include the totient sieve against direct gcd counting, the exact modular recurrence against independent direct sums, an exact-rational rational-series comparator, $2\varphi(n)^2\ge n$ for all n up to 132000, and the prior Möbius squared-Lambert identity using independent finite rational arithmetic plus explicit upper bounds for both tails. An isolated failure before correction is not recorded as a successful run.
+The **seven automated checks passed** after a deliberately caught Möbius-sieve bug in the test harness was corrected before admission. Checks include the totient sieve against direct gcd counting, the exact modular recurrence against independent direct sums, an exact-rational rational-series comparator, $2\varphi(n)^2\ge n$ for all n up to 132000, and the prior Möbius squared-Lambert identity using independent finite rational arithmetic plus explicit upper bounds for both tails. An isolated failure before correction is not recorded as a successful run.
 
-To reproduce with Python 3, run the phase probe with X = 1024 or 4096 and H = 32, with X = 16384 or 65536 and H = 64, and in each case L = 48. Run depth_stress.py and the six-test unittest fixture. No GPU, external network or W&B account is needed. CPU and memory requirements are modest.
+To reproduce from the repository root in Python 3, use importable governed modules (not standalone experiment scripts):
+
+```bash
+python3 -c 'from experiments.erdos249_full_series_phase.fourier_probe import main; main()' --x 1024 --l 48 --h 32 --out experiments/erdos249_full_series_phase/result_1024.json
+python3 -c 'from experiments.erdos249_full_series_phase.depth_stress import main; main()'
+python3 -m unittest discover -s tests -p 'test_erdos249_full_series_phase.py' -v
+```
+
+Repeat the first command with X = 4096 and H = 32, then X = 16384 or 65536 and H = 64, all with L = 48, changing the output filename accordingly. The seventh unittest case imports and executes the depth-stress library module, checking the existing JSON's exact SHA-256. This placement follows the GCL repository execution policy: experiment modules are library-only, and the runnable tests are discovered in `tests/`. No GPU, external network or W&B account is needed. CPU and memory requirements are modest.
 
 **Review provenance:** Theorem A and B have complete human-readable elementary arguments in this document. They are **not Lean-checked**; a separate human reviewer has not reviewed them, and theorem-level novelty has not been established. The elementary consequences of the classical normal order of prime factors and Euler's prime reciprocal divergence should not be relabeled as GCL discoveries. The Cook record already isolates the need for moving-depth and uniform arithmetic estimates; this experiment contributes an explicit fixed-depth incompatibility warning, control fixture and a bounded empirical pilot rather than an independent resolution.
 
