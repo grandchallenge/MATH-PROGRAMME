@@ -77,13 +77,41 @@ noncomputable def compHausHomProfinitePullbackEquiv
     apply (cancel_mono e.hom).1
     rw [Category.assoc, e.inv_hom_id, Category.comp_id]
     apply pullback.hom_ext
-    · simp only [pullback.lift_fst, Category.assoc, he_fst]
-    · simp only [pullback.lift_snd, Category.assoc, he_snd]
+    · calc
+        z ≫ F.map (pullback.fst f g) =
+            z ≫ (e.hom ≫ pullback.fst (F.map f) (F.map g)) :=
+          congrArg (fun k => z ≫ k) he_fst.symm
+        _ = (z ≫ e.hom) ≫ pullback.fst (F.map f) (F.map g) :=
+          (Category.assoc _ _ _).symm
+    · calc
+        z ≫ F.map (pullback.snd f g) =
+            z ≫ (e.hom ≫ pullback.snd (F.map f) (F.map g)) :=
+          congrArg (fun k => z ≫ k) he_snd.symm
+        _ = (z ≫ e.hom) ≫ pullback.snd (F.map f) (F.map g) :=
+          (Category.assoc _ _ _).symm
   · intro xy
     apply Subtype.ext
     apply Prod.ext
-    · simp only [Category.assoc, he_inv_fst, pullback.lift_fst]
-    · simp only [Category.assoc, he_inv_snd, pullback.lift_snd]
+    · calc
+        (pullback.lift xy.1.1 xy.1.2 xy.2 ≫ e.inv) ≫
+            F.map (pullback.fst f g) =
+          pullback.lift xy.1.1 xy.1.2 xy.2 ≫
+            (e.inv ≫ F.map (pullback.fst f g)) :=
+          Category.assoc _ _ _
+        _ = pullback.lift xy.1.1 xy.1.2 xy.2 ≫
+            pullback.fst (F.map f) (F.map g) :=
+          congrArg (fun k => pullback.lift xy.1.1 xy.1.2 xy.2 ≫ k) he_inv_fst
+        _ = xy.1.1 := pullback.lift_fst _ _ _
+    · calc
+        (pullback.lift xy.1.1 xy.1.2 xy.2 ≫ e.inv) ≫
+            F.map (pullback.snd f g) =
+          pullback.lift xy.1.1 xy.1.2 xy.2 ≫
+            (e.inv ≫ F.map (pullback.snd f g)) :=
+          Category.assoc _ _ _
+        _ = pullback.lift xy.1.1 xy.1.2 xy.2 ≫
+            pullback.snd (F.map f) (F.map g) :=
+          congrArg (fun k => pullback.lift xy.1.1 xy.1.2 xy.2 ≫ k) he_inv_snd
+        _ = xy.1.2 := pullback.lift_snd _ _ _
 
 /-- Honest pair object R=P×_T P in CompHaus-site Hom coordinates. -/
 noncomputable abbrev stoneanCompHausProbeCechPairEquiv
