@@ -32,7 +32,7 @@
     "SOURCE_LOCK": "PASS",
     "STATEMENT_EQUIVALENCE": "PASS",
     "REPLAY_PREPARATION": "PASS",
-    "REPLAY_EXECUTION": "BLOCKED",
+    "REPLAY_EXECUTION": "PASS",
     "ADVERSARIAL_REVIEW": "PENDING",
     "INTERNAL_ADJUDICATION": "PENDING",
     "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
@@ -43,7 +43,9 @@
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_002.receipt.json",
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_002.logs.tar.gz.b64",
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_003.receipt.json",
-    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_003.logs.tar.gz.b64"
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_003.logs.tar.gz.b64",
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_GREEN_004.receipt.json",
+    "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_GREEN_004.logs.tar.gz.b64"
   ],
   "review_receipts": [],
   "toolchain_pins": {
@@ -67,6 +69,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "After protected admission of source-locked CPU budget successor, execute one new exact-main O_EXCL guarded Colab CPU attempt with unchanged Erdos248.lean, frozen external provider and mathlib commits, nine verified direct compatibility patches, bounded 10800-second Lean build within a 15000-second session; verify exact terminal receipt, complete log digests, #check theorem type, #print axioms and absence of sorryAx. Never rerun, rename, or remove any of the three earlier RED tickets.",
-  "last_known_evidence": "Three exact, distinct source-locked authenticated CPU Colab attempts terminated RED with full logs preserved. First: BoundedGaps missing provider patch; second: provider Lake update regenerated locked manifest; third (exact protected PR #3420 merge 9f6f66772fe9f738e1723bffaf46a271131ca486): all nine patches, mathlib and manifest locks PASS, but Lean build timed out at 2400 seconds (exit 124) after >3800 successful compile steps, without compiler proof errors. Third receipt SHA256 3a3bc836d3ed8d986a879d0959e81572ca24942acfcb09946a48b31058c84415 and full logs SHA256 772a752e420a50dfd78d35a74d90e8f358b1d2fd292f5a17fe3b72a1f8676d71, verified 56 archived log-member digests. Immutable source and all old RED receipts/log archives preserved under governance/erdos_proof_verification/evidence/0248. Issue #3204 comment 6934490395; final theorem compile, kernel type check, axiom audit, adversarial review and certification remain open."
+  "next_action": "Complete a role-scoped, non-authoring adversarial source-semantic review of pinned Erdos248.erdos_248 and imported erdos248_resolved dependency boundary, including exact original quantifiers, omega<=Omega bridge, external proof-vs-literature scope, and absence of source-altering/unreviewed patch effects; publish review receipt. Then perform internal mathematical adjudication and protected evidence-admission readback. Do not mark certification or publication; reserved MATHCERT remains NOT_SUBMITTED.",
+  "last_known_evidence": "Fourth exact source-locked Colab CPU replay, admitted via native protected PR #3424 at 1cf3b6d6a6f9ebcb53e032a2475e6257467f451c, completed 2026-11-17 02:33 UTC, GREEN_KERNEL_REPLAY_UNADJUDICATED. Exact receipt SHA256 708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28 (54130 bytes); full logs SHA256 def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08 (8973 bytes); all 60 per-stage stdout/stderr SHA-256 digests verified. Lean v4.33.0, mathlib db584cd6d46c92f209a44c0f1c829460d327499d, provider plby/lean-proofs@8822f7ddef30fadbd92e1c6ab4ed897af356af5e, source SHA256 292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267. All nine declared provider patches and manifest/commit locks passed, Lean build 8918/8918 jobs (4191.28s), separate theorem #check and #print axioms (14.593s) passed. Observed axioms exactly [propext, Classical.choice, Quot.sound]; no sorryAx. Three predecessor RED tickets/receipts preserved and mathematically noncertifying. External proof's alignment with full published sieve argument and independent mathematical adversarial review remain pending; NOT MATHCERT certified."
 }

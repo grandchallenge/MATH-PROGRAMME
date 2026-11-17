@@ -38,9 +38,22 @@ class VerificationContractTests(unittest.TestCase):
         # Its presence must not pass an otherwise source-locked manifest.
         bad = copy.deepcopy(self.good)
         bad['stage_results']['REPLAY_EXECUTION']='PASS'
+        bad['proof_receipts'] = [
+            path for path in bad['proof_receipts']
+            if '/LEAN_REPLAY_RED_' in path
+        ]  # a genuine RED-only set despite the now-admitted GREEN fixture
         self.assertTrue(bad['proof_receipts'])
+        self.assertFalse(any('GREEN' in path for path in bad['proof_receipts']))
         with self.assertRaisesRegex(ValueError,'pinned GREEN kernel/axiom receipt'):
             mod.validate_manifest(bad,self.schema)
+
+    def test_green_receipt_is_valid_but_not_mathematical_certification(self):
+        good = copy.deepcopy(self.good)
+        self.assertEqual(good['stage_results']['REPLAY_EXECUTION'], 'PASS')
+        self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PENDING')
+        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
+        self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
+        mod.validate_manifest(good, self.schema)
 
     def test_replay_receipt_cannot_skip_semantic_review(self):
         bad = copy.deepcopy(self.good)
