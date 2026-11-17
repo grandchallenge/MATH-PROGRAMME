@@ -47,6 +47,14 @@ class Erdos248WorkerTests(unittest.TestCase):
         self.assertNotIn('"lake", "update"', worker_source)
         self.assertIn('verify_provider_post_update(project)', worker_source)
 
+    def test_bounded_cpu_budget_for_heavy_pinned_sieve_proof(self):
+        self.assertEqual(w.TIMEOUTS["lean-build"], 10800)
+        self.assertEqual(w.TIMEOUTS["mathlib-cache"], 1500)
+        self.assertEqual(w.TIMEOUTS["axiom-audit"], 240)
+        self.assertLessEqual(
+            sum(w.TIMEOUTS.values()) + 80, 15000,
+            "all conservative worker stage caps must fit protected CPU session")
+
     def test_provider_patch_plan_is_complete(self):
         self.assertEqual(len(w.COMPATIBILITY_PATCHES), 9)
         self.assertEqual(len(set(p[1] for p in w.COMPATIBILITY_PATCHES)), 9)
