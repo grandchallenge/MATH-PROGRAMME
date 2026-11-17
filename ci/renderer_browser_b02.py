@@ -102,7 +102,7 @@ def run(a):
   p=root/name
   if not p.is_file():raise RuntimeError('missing real search index '+str(p))
   indexes[label]={'path':name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size}
- observations=[];critical=[]
+ observations=[];critical=[];legacy_gaps=[]
  with serve(mk) as bm,serve(zen) as bz,sync_playwright() as pw:
   browser=pw.chromium.launch(headless=True,args=['--no-sandbox','--disable-dev-shm-usage']);browser_ver=browser.version
   for viewport,(w,h) in SIZES.items():
@@ -119,16 +119,20 @@ def run(a):
       navshot=out/(label+'-'+viewport+'-'+str(len(observations))+'-destination.png')
       page.screenshot(path=str(navshot));result['destination_screenshot']=navshot.name
       result['destination_screenshot_sha256']=hashlib.sha256(navshot.read_bytes()).hexdigest()
-     result['critical_failures']=failures
-     critical.extend([{'engine':label,'viewport':viewport,'query':case['query'],'expected':case['target'],'code':x} for x in failures])
+     result['critical_failures']=failures if label=='zensical' else []
+     result['legacy_baseline_failures']=failures if label=='mkdocs' else []
+     destination=(critical if label=='zensical' else legacy_gaps)
+     destination.extend([{'engine':label,'viewport':viewport,'query':case['query'],'expected':case['target'],'code':x} for x in failures])
+     if case['query']=='nonexistent-zzzxxyy-123' and label=='zensical' and result['results']:
+      critical.append({'engine':label,'viewport':viewport,'query':case['query'],'code':'NONEXISTENT_QUERY_RETURNED_RESULTS'})
      observations.append(result);cx.close()
   browser.close()
  head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
  report={'record_type':'DOC_RENDER_G1_B02_BROWSER_SEARCH/1','source_head':head,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
-         'browser_version':browser_ver,'indexes':indexes,'cases':CASES,'observations':observations,'critical_failures':critical,
+         'browser_version':browser_ver,'indexes':indexes,'cases':CASES,'observations':observations,'critical_failures':critical,'legacy_baseline_findability_gaps':legacy_gaps,
          'limitations':['Search ranking is not assumed identical','Exploratory Unicode and typo queries are reported, not automatically accepted as equivalent','Canonical target must appear in real browser results for the mandatory matrix','No public renderer changes']}
  p=out/'report.json';p.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
- print(json.dumps({'head':head,'cases':len(observations),'critical':len(critical),'first_critical':critical[:15],'example':observations[0] if observations else None},indent=2)[:16000])
+ print(json.dumps({'head':head,'cases':len(observations),'critical':len(critical),'first_critical':critical[:15],'legacy_baseline_gap_count':len(legacy_gaps),'example':observations[0] if observations else None},indent=2)[:16000])
  return bool(critical)
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--mkdocs',type=Path,default=Path('.mkdocs-probe-site'));p.add_argument('--zensical',type=Path,default=Path('.zensical-probe-site'));p.add_argument('--out',type=Path,default=Path('renderer-b02-evidence'));args=p.parse_args()

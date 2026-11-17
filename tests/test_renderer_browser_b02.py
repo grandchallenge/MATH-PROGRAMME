@@ -16,4 +16,5 @@ class BrowserSearchContract(unittest.TestCase):
  def test_diagnostic_query_is_not_false_acceptance(self):
   self.assertEqual(check({'input_selected':False,'errors':[], 'results':[]},None),[])
   self.assertTrue(any('ζ' in x for x in EXPLORATORY))
+  self.assertTrue(any('nonexistent' in x for x in EXPLORATORY))
 if __name__=='__main__':unittest.main()
