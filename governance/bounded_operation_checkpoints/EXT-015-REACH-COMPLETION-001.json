@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP242",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP243",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "UC013-015 bounded internal acceptance: final editorial and protected admission",
+  "phase": "UC013-015 editorial notation repair: corrected frozen ledger and exact-head rereview",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "32dbbb4635a9493a5b46cf9f0962e833a19120fe",
-    "candidate_head_sha": "ab69f254806bf60d2b1c85b823fce3ab6b839ceb",
+    "candidate_head_sha": "9ba5e41001f78b6f591334bf179410d4b7e4788e",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-filtered-green-uc013-review-frozen-20261117",
+    "branch": "research/reach-filtered-green-uc013-ledger-corrected-frozen-20261117",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "identity": "Corrected ledger freeze9ba5e41001f78b6f591334bf179410d4b7e4788e blob680154530d95a4d930ee66d66b80a685c77ec8b6",
+        "kind": "review",
+        "status": "Editorial blocker atb13ad1855 retained in exact receiptSHA256331ab98cc2736430c4df41e074f76918f3f793ef7730b95c572f3771c404606b: broken critic link and stripped TeX in UC015 only. Literal notation/link repaired and current canonical source IDs rebound. Primary05ed1fafdbc35cc63c1423d4e48292d24193d029 and criticd698d2d03ffae73dd2818e51cf52266db7a983fb byteunchanged; zero mathematical corrections. Distinct corrected exact-head editorial reread required before admission; no autoapproval bypass."
+      },
       {
         "identity": "Review freezeab69f254806bf60d2b1c85b823fce3ab6b839ceb criticd698d2d03ffae73dd2818e51cf52266db7a983fb ledgerf9438bf0f83cefa21ffd85030e79e0462c0c73ce",
         "kind": "review",
@@ -1953,19 +1958,17 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "AcceptUC013AfterDistinctUC014",
-    "result": "Bounded internal ACCEPT; protected admission/readback and documentary reconciliation pending",
+    "action": "RepairUC015EditorialNotationAndRebind",
+    "result": "Editorial correction only; exact-head rereview and native admission pending",
     "evidence_refs": [
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_FILTERED_GREEN_UC014.md",
-      "research/condensed-qft/EXT-015/FILTERED_GREEN_ACCEPTANCE_UC015.md",
-      "research/reach-filtered-green-uc013-review-frozen-20261117"
+      "research/reach-filtered-green-uc013-ledger-corrected-frozen-20261117"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-17T23:09:27.018311+00:00"
+    "observed_at": "2026-11-17T23:12:09.458663+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2135,7 +2138,8 @@
       "research/reach-filtered-green-uc013-primary-frozen-20261117",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_FILTERED_GREEN_UC014.md",
       "research/condensed-qft/EXT-015/FILTERED_GREEN_ACCEPTANCE_UC015.md",
-      "research/reach-filtered-green-uc013-review-frozen-20261117"
+      "research/reach-filtered-green-uc013-review-frozen-20261117",
+      "research/reach-filtered-green-uc013-ledger-corrected-frozen-20261117"
     ],
     "instructions": "Complete distinct final editorial review of unchanged UC013-015, four canonical banners and CP242; run source/continuity and current affected controls, native protected queue and exact-source readback; then documentary and explicit four-issue/seven-state reconciliation. G_i=h_iC2 source/quotient/suppliedrows internally accepted, no unfiltered150.L/W/DG/integration promotion. Do not begin UC016 residual filter-removal study until this return is fully reconciled."
   },
