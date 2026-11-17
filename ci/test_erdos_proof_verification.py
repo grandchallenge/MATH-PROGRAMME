@@ -256,7 +256,7 @@ class Erdos249LacunaryReplayTests(unittest.TestCase):
     def test_actual_green_auxiliary_proof_keeps_original_open(self):
         m = copy.deepcopy(self.good)
         self.assertEqual(m['literature_status'], 'OPEN')
-        self.assertEqual(m['work_status'], 'IN_PROGRESS')
+        self.assertEqual(m['work_status'], 'VERIFIED_WITHOUT_CERTIFICATION')
         self.assertEqual(m['stage_results']['REPLAY_EXECUTION'], 'PASS')
         self.assertEqual(m['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
         self.assertEqual(m['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
