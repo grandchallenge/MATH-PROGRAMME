@@ -1,0 +1,60 @@
+name: Zensical accessibility browser B03 (non-production)
+on:
+  pull_request:
+    paths:
+      - ci/renderer_browser_b03.py
+      - tests/test_renderer_browser_b03.py
+      - .github/workflows/zensical-accessibility-b03.yml
+  workflow_dispatch:
+concurrency:
+  group: zensical-b03-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  browser-a11y:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - name: Install renderer and browser dependencies
+        run: python -m pip install --requirement requirements/docs.txt --requirement requirements/zensical-probe.txt --requirement requirements/browser-b01.txt
+      - name: Verify accessibility contract
+        run: python -m unittest tests.test_renderer_browser_b03 -q
+      - name: Build MkDocs independently
+        run: mkdocs build --clean --site-dir .mkdocs-probe-site
+      - name: Materialize protected compendia in isolated inputs
+        run: python ci/zensical_parity_probe.py prepare
+      - name: Build Zensical independently
+        run: zensical build --config-file zensical-probe.yml --clean
+      - name: Verify route and source parity
+        run: python ci/zensical_parity_probe.py verify
+      - name: Install pinned accessibility engine and Chromium
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund axe-core@4.10.3
+          python -m playwright install --with-deps chromium
+      - name: Run paired accessibility and responsive checks
+        run: python ci/renderer_browser_b03.py --out renderer-b03-evidence
+      - name: Archive accessibility report and screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: renderer-b03-accessibility
+          path: renderer-b03-evidence/
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Archive exact-source static parity
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: renderer-b03-static
+          path: |
+            zensical-parity-report.json
+            zensical-probe.yml
+          if-no-files-found: ignore
+          retention-days: 30
