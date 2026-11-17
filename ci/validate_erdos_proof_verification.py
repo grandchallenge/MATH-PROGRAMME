@@ -386,6 +386,63 @@ def validate_manifest(data: dict, schema: dict) -> None:
                 and data['certification_status'] == 'NOT_SUBMITTED',
                 'Erdos248 final protected admission requires exact noncertifying source custody'
             )
+    if n == 249 and data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS':
+        p = 'governance/erdos_proof_verification/admissions/0249_PROTECTED_EVIDENCE_ADMISSION_001.json'
+        doc = 'governance/erdos_proof_verification/admissions/0249_PROTECTED_EVIDENCE_ADMISSION_001.md'
+        require(p in data['review_receipts'] and doc in data['review_receipts'],
+                'Erdos249 final PASS requires exact protected custody packet')
+        r = load(p)
+        f = (ROOT / doc).resolve()
+        flags = r.get('scope_checks', {})
+        authority = r.get('authority_effects', {})
+        require(f.is_relative_to(ROOT.resolve()) and f.is_file(),
+                'Erdos249 final custody document missing')
+        require(
+            r.get('record_type') == 'GCL-ERDOS249-PROTECTED-EVIDENCE-ADMISSION/1'
+            and r.get('admission_id') == 'ERDOS-PV-0249-EA001'
+            and r.get('issue') == 3205
+            and r.get('parent_issue') == 3201
+            and r.get('phase') ==
+                'FINAL_PACKET_CANDIDATE_AWAITING_PROTECTED_ADMISSION'
+            and r.get('status_if_merged') == 'VERIFIED_WITHOUT_CERTIFICATION'
+            and r.get('scope') == 'AUXILIARY_T_LACUNARY_TOTIENT_ONLY'
+            and r.get('original_full_S_status') == 'OPEN'
+            and r.get('certification') == 'NOT_SUBMITTED'
+            and r.get('protected_green_proof_commit') ==
+                '62ffaa1db3e2d1a5d120611e86fc189f1c24b50e'
+            and r.get('protected_adversarial_referee_commit') ==
+                'b9a122c4c8c0db9c83dae8a3f3be4e0b017d0188'
+            and r.get('source_sha256') ==
+                '6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99'
+            and r.get('green_receipt_sha256') ==
+                '1ea9b7416febb26115c968a479ec51b5fa13fab7c8e071c4066f81f8ea519e00'
+            and r.get('source_critical_document_sha256') ==
+                '8ff6b75a2d4458c9e7bea14203f332f382409a89ae56452cada970d6205b6943'
+            and r.get('referee_document_sha256') ==
+                '13159251dcbe80165b1780f55f022ee3707b89cc31b6bcfe0a6566196502a596'
+            and r.get('admission_document') == doc
+            and r.get('admission_document_sha256') ==
+                hashlib.sha256(f.read_bytes()).hexdigest()
+            and flags.get('only_t_irrational') is True
+            and flags.get('original_s_claim') is False
+            and flags.get('original_s_formal_open') is True
+            and flags.get('actual_kernel_green') is True
+            and flags.get('foundational_axioms_only') is True
+            and flags.get('no_sorryAx') is True
+            and flags.get('reviewer_different_from_author') is False
+            and flags.get('reviewer_independent_human') is False
+            and flags.get('external_certification') is False
+            and flags.get('final_protected_readback_required') is True
+            and authority.get('promote_auxiliary_verified_without_certification_only') is True
+            and authority.get('certification_status') == 'NOT_SUBMITTED'
+            and authority.get('close_parent_issue') is False
+            and authority.get('original_math_problem_solved') is False
+            and authority.get('public_math_certification') is False
+            and data['work_status'] == 'VERIFIED_WITHOUT_CERTIFICATION'
+            and data['literature_status'] == 'OPEN'
+            and data['certification_status'] == 'NOT_SUBMITTED',
+            'Erdos249 protected custody must preserve exact T-only theorem and open S'
+        )
     if data['work_status'] in ('VERIFIED_WITHOUT_CERTIFICATION','SUBMITTED_TO_MATHCERT'):
         require(data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS', f'verified absent protected evidence: {n}')
     if data['certification_status'] != 'NOT_SUBMITTED':
