@@ -4,8 +4,10 @@ import json
 import unittest
 from fractions import Fraction
 from pathlib import Path
+import sys
 
-from ci import erdos_pv_bipartite_count_0560 as p
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import erdos_pv_bipartite_count_0560 as p
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "governance/erdos_proof_verification/evidence/0560/B_FINITE_COUNTING_001.json"
