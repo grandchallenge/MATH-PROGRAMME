@@ -77,6 +77,34 @@ class VerificationContractTests(unittest.TestCase):
         bad['verification_kind']='FULL_CONJECTURE_CERTIFICATION'
         with self.assertRaises(ValueError): mod.validate_manifest(bad,self.schema)
 
+    def test_stale_source_566_567_cannot_be_promoted(self):
+        for problem, old_blob in (
+            (566, '0db66813b8f17be6819c53afca9cd3f853426a53'),
+            (567, 'f2e29d94a0391f71f78d4b32168ce5e627e28b27'),
+        ):
+            with self.subTest(problem=problem):
+                row = copy.deepcopy(self.good)
+                row['problem_id'] = problem
+                row['manifest_id'] = f'ERDOS-PV-{problem:04}-S01'
+                row['source_audit_issue'] = problem + 1271
+                row['source_locks']['catalogue_entry'] = str(problem)
+                row['source_locks']['formal_path'] = f'FormalConjectures/ErdosProblems/{problem}.lean'
+                row['source_locks']['formal_repository'] = 'google-deepmind/formal-conjectures'
+                row['source_locks']['formal_commit'] = '85f863718beeec7b58a3a1926ee92e3472bc2020'
+                row['source_locks']['formal_blob'] = old_blob
+                row['source_locks']['external_formal_commit'] = None
+                row['source_locks']['external_formal_path'] = None
+                row['source_locks']['source_return_comment'] = (
+                    f'https://github.com/grandchallenge/MATH-PROGRAMME/issues/{row["source_audit_issue"]}'
+                    '#issuecomment-1')
+                with self.assertRaisesRegex(ValueError, 'stale sizeRamsey'):
+                    mod.validate_manifest(row, self.schema)
+                row['source_locks']['external_formal_commit'] = (
+                    '6751c0f043985ac6647db28a45a63afdf21acffe')
+                row['source_locks']['external_formal_path'] = (
+                    f'FormalConjectures/ErdosProblems/{problem}.lean')
+                mod.validate_manifest(row, self.schema)
+
     def test_external_formal_source_requires_pin(self):
         bad = copy.deepcopy(self.good)
         bad['source_locks']['external_formal_commit']=None

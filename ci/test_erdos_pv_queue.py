@@ -55,6 +55,18 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(x['problem_id'],246)
         self.assertFalse(q.permitted(x,'B'))
         self.assertEqual(x['stage_work_items']['B']['issue_number'],3202)
+    def test_566_567_formal_source_override_fails_closed(self):
+        for problem, expected in q.RAMSEY_SOURCE_BLOBS.items():
+            with self.subTest(problem=problem):
+                row = q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')['items'][problem-501]
+                self.assertEqual(row['problem_id'], problem)
+                x = q.checked_formal_source_override(problem)
+                self.assertEqual(x['commit'], q.RAMSEY_SOURCE_COMMIT)
+                self.assertEqual(x['git_blob_sha1'], expected)
+                self.assertEqual(x['original_invariant'], 'SimpleGraph.graphRamsey')
+                self.assertEqual(x['legacy_invariant_disallowed'], 'SimpleGraph.sizeRamsey')
+        self.assertIsNone(q.checked_formal_source_override(564))
+
     def test_none_beyond_last(self):self.assertEqual(q.candidates('A',after=1221),[])
     def test_source_snapshots_are_not_claims(self):
         x=q.candidates('A')[0]

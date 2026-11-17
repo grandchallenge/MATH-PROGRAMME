@@ -78,6 +78,22 @@ def validate_manifest(data: dict, schema: dict) -> None:
         require(s['external_formal_path'] is None, f'unpinned external path: {n}')
     else:
         require(bool(s['external_formal_path']), f'missing external path: {n}')
+    if n in (566, 567):
+        # The frozen FC-GDM-85F86371 provider misidentified vertex-Ramsey
+        # size-linearity as edge-minimal sizeRamsey. Preserve the historical
+        # immutable lock; require exact corrected, per-problem external source.
+        legacy = {
+            566: '0db66813b8f17be6819c53afca9cd3f853426a53',
+            567: 'f2e29d94a0391f71f78d4b32168ce5e627e28b27',
+        }
+        require(
+            s['formal_repository'] == 'google-deepmind/formal-conjectures'
+            and s['formal_commit'] == '85f863718beeec7b58a3a1926ee92e3472bc2020'
+            and s['formal_blob'] == legacy[n]
+            and s['external_formal_commit'] == '6751c0f043985ac6647db28a45a63afdf21acffe'
+            and s['external_formal_path'] == f'FormalConjectures/ErdosProblems/{n}.lean',
+            f'problem {n}: stale sizeRamsey formal theorem cannot enter replay; '
+            'require corrected graphRamsey source lock')
 
 
 def validate_registry(root: Path = ROOT) -> dict:
