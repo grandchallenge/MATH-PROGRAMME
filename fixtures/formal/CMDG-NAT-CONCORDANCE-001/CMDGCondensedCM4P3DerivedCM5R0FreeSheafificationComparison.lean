@@ -98,13 +98,7 @@ theorem moduleSheafification_preservesExact
     moduleSheafification_preservesFiniteLimits
   haveI : PreservesFiniteColimits moduleSheafification :=
     moduleSheafification_preservesFiniteColimits
-  have hExact :
-      ∀ (R : ShortComplex CompHausModulePresheaves),
-        R.Exact → (R.map moduleSheafification).Exact :=
-    ((Functor.exact_tfae moduleSheafification).out 3 1).mp
-      ⟨moduleSheafification_preservesFiniteLimits,
-        moduleSheafification_preservesFiniteColimits⟩
-  exact hExact S h
+  exact h.map moduleSheafification
 
 #print axioms genuineFreeModule_eq_sheafification
 #print axioms genuineFreeModuleSheafificationIso
