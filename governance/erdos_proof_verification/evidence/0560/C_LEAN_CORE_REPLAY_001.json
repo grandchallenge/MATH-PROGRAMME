@@ -1,0 +1,76 @@
+{
+  "assignment_id": "ERDOS-PV-0560-C",
+  "axioms": {
+    "completeBetween_disjoint": [],
+    "completeBetween_mono": [],
+    "completeBetween_symm": [],
+    "gap_ge_two": [
+      "propext",
+      "Quot.sound"
+    ],
+    "integral_denominators_positive": [
+      "propext",
+      "Quot.sound"
+    ],
+    "integral_factor_cleared": [
+      "propext",
+      "Quot.sound"
+    ],
+    "n_le_two_pow": [
+      "propext",
+      "Quot.sound"
+    ],
+    "right_subset_neighbors": [],
+    "strict_gate_all": [
+      "propext",
+      "Quot.sound"
+    ],
+    "strict_gate_base": [],
+    "strict_gate_step": [
+      "propext"
+    ],
+    "t_ge_four": [
+      "propext",
+      "Quot.sound"
+    ]
+  },
+  "claim_sha": "8b6a32fa6fc8fd037051835fa54542f81ecca50e",
+  "execution_origin": "CHAD_LOCAL_OS_ONLY_NOT_INDEPENDENTLY_ATTESTED",
+  "formalization_work_required": true,
+  "hostile": {
+    "incorrect_gap_a_eq_1": {
+      "diagnostic": "/tmp/gcl-pv-0560-c-2mpywvxv/incorrect_gap_a_eq_1.lean:2:62: error: Tactic `decide` proved that the proposition\n  (2 - 1) * 2 ^ 1 \u2264 (1 - 1) * 2 ^ (2 + 1) * (2 - 1) ^ 1\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "81870a7060ab5b9f8c7f9d7da545008722686507b7bff87ea14c0ec2b11280dd",
+      "source_sha256": "5381f8bb744e392d430a8e434eeb9ae95a5161f9131565b1dbd2a7743cec2275"
+    },
+    "incorrect_t_ge_2": {
+      "diagnostic": "/tmp/gcl-pv-0560-c-2mpywvxv/incorrect_t_ge_2.lean:2:36: error: Tactic `decide` proved that the proposition\n  2 * 18 ^ 2 < 25 ^ 2\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "031393066103b0a0d18f4461374abd62c6b1e89ef72c41b07ae989efebe2cae9",
+      "source_sha256": "7c41c4b4da8b1b8dd88ab81a453281ad6ba5b27fd767ff10dc1224de79e9e2bd"
+    },
+    "overlap_without_loopless": {
+      "diagnostic": "/tmp/gcl-pv-0560-c-2mpywvxv/overlap_without_loopless.lean:3:44: error: failed to synthesize\n  Decidable (\u2200 (v : Unit), \u00ac(S v \u2227 S v))\n\nHint: Additional diagnostic information may be available using the `set_option diagnostics true` command.\n",
+      "exit_code": 1,
+      "log_sha256": "9f6ae260677eb91a3bbce0e011a6bdaeaae3036dd5d4ab747baf5746342f58d3",
+      "source_sha256": "aa3aa5c144babc101fd60c2d5023d766ab53ba919d42e5e73b7d97752051ddfe"
+    }
+  },
+  "imports": [
+    "Init"
+  ],
+  "init_olean_sha256": "26523a3af45a445bdbae0b9070334c12856c650808276348189e2999fa1d07aa",
+  "lean_binary_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+  "lean_version": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "mathcert_certified": false,
+  "mathlib_semantic_equivalence_kernel_checked": false,
+  "positive_exit_code": 0,
+  "positive_stdout_sha256": "b95a86d38f04e47a54a73adeac8328b8ba4f55405373d65d43ba9192a4a4c5c9",
+  "predecessor_main": "123701f543f32c7bf92197f77f39405a3702f8f4",
+  "record_type": "ERDOS_PV_0560_C_LEAN_CORE_REPLAY/1",
+  "scope": "TWELVE_KERNEL_CHECKED_AUXILIARY_DECLARATIONS_ONLY",
+  "source_path": "experiments/erdos_proof_verification/0560/Erdos560Core.lean",
+  "source_sha256": "78842795481bfd08385fdd8c83abbedbd3c235db330da48355904f90ea49a5f0",
+  "whole_size_ramsey_proved": false
+}

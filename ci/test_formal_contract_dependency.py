@@ -57,16 +57,16 @@ class ContractDependencyTests(unittest.TestCase):
     def test_any_mixed_full_control_overrides_contract_exception(self):
         result = formal.classify_paths(['ci/test_workflow_coverage.py',
                                          '.github/workflows/formal-validation.yml'], self.registry)
-        self.assertEqual(len(result['lanes']), 15)
+        self.assertEqual(len(result['lanes']), len(self.registry['lanes']))
 
     def test_uncertain_dependency_fails_to_full_fanout(self):
         with mock.patch.object(formal, 'contract_only_safe', return_value=(False,'unknown')):
             result = formal.classify_paths(['ci/test_workflow_semantics.py'],self.registry)
-        self.assertEqual(len(result['lanes']), 15)
+        self.assertEqual(len(result['lanes']), len(self.registry['lanes']))
 
     def test_sentinels_manual_and_unclassified_formal_preserved(self):
         event = formal.event_plan('workflow_dispatch', {}, self.registry)
-        self.assertEqual(len(event['lanes']), 15)
+        self.assertEqual(len(event['lanes']), len(self.registry['lanes']))
         scheduled = formal.event_plan('schedule',
             {'schedule':self.registry['sentinels']['legacy_formal_cron']},self.registry)
         self.assertEqual(len(scheduled['lanes']), 3)
@@ -154,6 +154,19 @@ class ContractDependencyTests(unittest.TestCase):
                     xs.remove(['python3','ci/test_workflow_semantics.py'])
             p.write_text(json.dumps(j))
             self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+
+    def test_unknown_python_process_spawn_remains_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.make_fixture(root)
+            # The existing separately audited CMDG validator cannot gain
+            # ad hoc subprocess execution from a candidate change.
+            target=root/'ci/validate_cmdg_nat_concordance.py'
+            target.write_text(target.read_text()+
+                              '\nimport subprocess\nsubprocess.run(["true"])\n')
+            allowed,reason=guard.contract_only_safe(root,self.registry)
+            self.assertFalse(allowed)
+            self.assertIn('unreviewed subprocess dependency',reason)
 
     def test_deleted_or_renamed_formal_source_is_not_invisible(self):
         with tempfile.TemporaryDirectory() as tmp:
