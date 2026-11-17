@@ -67,6 +67,23 @@ class QueueTests(unittest.TestCase):
                 self.assertEqual(x['legacy_invariant_disallowed'], 'SimpleGraph.sizeRamsey')
         self.assertIsNone(q.checked_formal_source_override(564))
 
+    def test_selected_560_562_enter_existing_phase_b_only(self):
+        x=q.candidates('B',after=559,cohort='0501-0600',limit=10)
+        self.assertEqual([r['problem_id'] for r in x],[560,561,562])
+        self.assertTrue(all(r['queue_issue']==3230 for r in x))
+        self.assertTrue(all(r['triage_decision']=='SELECTED_WITH_MANIFEST' for r in x))
+        self.assertFalse(any(xi['problem_id'] in (563,564) for xi in x))
+
+    def test_pending_triage_never_enters_phase_b(self):
+        x=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')['items'][62]
+        self.assertEqual(x['problem_id'],563)
+        # Even if a future Phase A receipt becomes green, PENDING must not
+        # convert source work automatically into mathematical-verification work.
+        from copy import deepcopy
+        lifted=deepcopy(x)
+        lifted['stage_work_items']['A']['work_status']='VERIFIED_BOUNDED'
+        self.assertFalse(q.permitted(lifted,'B'))
+
     def test_none_beyond_last(self):self.assertEqual(q.candidates('A',after=1221),[])
     def test_source_snapshots_are_not_claims(self):
         x=q.candidates('A')[0]

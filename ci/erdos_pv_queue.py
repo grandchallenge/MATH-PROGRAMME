@@ -59,6 +59,9 @@ def permitted(row,phase):
     if phase in ('B', 'C', 'D') and row['problem_id'] in RAMSEY_SOURCE_BLOBS:
         checked_formal_source_override(row['problem_id'])
     if phase=='A':return True
+    # Source review alone is never an implicit Phase B research selection.
+    if phase=='B' and row['triage_decision']!='SELECTED_WITH_MANIFEST':
+        return False
     if row['existing_proof_issue'] is not None:return False # independent pilot issue already owns B/C/D
     prev={'B':'A','C':'B','D':'C'}[phase]
     if s[prev]['work_status'] not in READY:return False

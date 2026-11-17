@@ -25,7 +25,65 @@ def read(path,root=ROOT):
     ensure(p.is_relative_to(root.resolve()) and p.is_file(),'unsafe or missing file '+str(path))
     return json.loads(p.read_text())
 
-def validate_row(row,source,phase_issues):
+TRIAGE_FIVE_PATH = 'governance/erdos_proof_verification/triage/0560-0564.json'
+
+
+def validate_five_source_scope(row, root=ROOT):
+    n=row['problem_id']
+    if n not in (560,561,562,563,564):
+        return
+    doc=read(TRIAGE_FIVE_PATH,root)
+    ensure(doc['record_type']=='GCL-ERDOS-560-564-PHASE-A-SCOPE-TRIAGE/1'
+           and doc['source_commit']=='536408716724a2402bdfa7c1d764bf83d64a8c89'
+           and doc['source_file_blob_sha1']=='4e60263a80af6207aca494d2e1388e44fa372889'
+           and doc['cohort_issue']==3217 and doc['phase_B_issue']==3230
+           and doc['source_only_verified_count']==3 and doc['source_blocked_count']==2
+           and doc['selection_policy']=='SOURCE_SCOPE_BEFORE_PROOF__NO_DUPLICATE_QUEUE__NO_AUTO_CERTIFICATION',
+           '560-564 protected triage identity or claim scope drift')
+    records=doc['records']
+    ensure(len(records)==5 and [r['problem_id'] for r in records]==[560,561,562,563,564],
+           '560-564 triage record census drift')
+    r=records[n-560]
+    expected_selected=n in (560,561,562)
+    expected='SELECTED_WITH_MANIFEST' if expected_selected else 'PENDING'
+    stage=row['stage_work_items']['A']
+    ensure(r['source_audit_issue']==row['source_audit_issue']
+           and r['source_issue_body_sha256']==row['source_issue_body_sha256']
+           and re.fullmatch('[a-f0-9]{64}',r['source_comment_sha256']) is not None
+           and isinstance(r['source_comment_id'],int) and r['source_comment_id']>0
+           and r['source_issue_live_custody']=='OPEN__PROJECT_RETURNED__ISSUE_FIELD_RETURNED'
+           and r['source_role_return_disposition']=='BOUNDED_TASK_DESIGNED'
+           and r['triage_decision']==expected
+           and row['source_issue_live_state']=='OPEN_RETURNED'
+           and row['triage_decision']==expected
+           and row['literature_status_current']=='SOURCE_AUDIT_RETURNED__RESEARCH_STATUS_UNCERTIFIED'
+           and row['mathcert_status']=='NOT_SUBMITTED'
+           and row['scope']=='OPEN_BOUNDED_LEMMA_ONLY'
+           and r['critical_role_pass']['scope']=='STATEMENT_AND_QUEUE_SCOPE_ONLY__NO_PROOF'
+           and r['critical_role_pass']['separate_human_identity_claim'] is False
+           and r['critical_role_pass']['role']=='LOGICAL_ADVERSARY'
+           and r['critical_role_pass']['actor']=='fyremael'
+           and all(v is False for v in r['prohibitions'].values()),
+           f'problem {n}: source critical-scope or return identity drift')
+    comment=f"https://github.com/grandchallenge/MATH-PROGRAMME/issues/{row['source_audit_issue']}#issuecomment-{r['source_comment_id']}"
+    ensure(stage['source_lock_receipt']==TRIAGE_FIVE_PATH
+           and stage['evidence_refs']==[TRIAGE_FIVE_PATH,comment]
+           and stage['work_status']==('VERIFIED_BOUNDED' if expected_selected else 'EVIDENCE_BLOCKED')
+           and stage['review_status']==('ROLE_SCOPED_CRITICAL_PASS' if expected_selected else 'BLOCKER_CONFIRMED')
+           and stage['blocker']==(None if expected_selected else r['critical_role_pass']['finding'])
+           and row['closure_status']==('IN_PROGRESS' if expected_selected else 'BLOCKED_WITH_EVIDENCE')
+           and r['selected_phase_B_queue_issue']==(3230 if expected_selected else None)
+           and r['scope_review']==('SOURCE_READY_FOR_BOUNDED_VERIFICATION' if expected_selected
+                                    else ('SOURCE_CONFLICT_REPAIR_REQUIRED' if n==563 else 'EVIDENCE_BLOCKED')),
+           f'problem {n}: invalid Phase A triage, evidence or blocker')
+    for later in 'BCD':
+        v=row['stage_work_items'][later]
+        ensure(v['work_status']=='UNEXECUTED' and not v['evidence_refs']
+               and v['formal_replay_receipt'] is None
+               and v['protected_admission_ref'] is None,
+               f'problem {n}: downstream phase was promoted without proof')
+
+def validate_row(row,source,phase_issues,root=ROOT):
     n=source['problem_id'];tag=f'problem {n}'
     ensure(row['problem_id']==n,tag+': wrong ID')
     ensure(row['source_audit_issue']==source['issue_number'],tag+': wrong source issue')
@@ -68,6 +126,7 @@ def validate_row(row,source,phase_issues):
         admitted={'VERIFIED_BOUNDED','PROTECTED_ADMITTED','REUSED_SCOPE_VERIFIED','NOT_APPLICABLE_REVIEWED'}
         ensure(all(stages[p]['work_status'] in admitted for p in PHASES),tag+': terminal stages not actually reviewed')
     else:ensure(row['closure_status'] in ('NOT_STARTED','IN_PROGRESS','BLOCKED_WITH_EVIDENCE'),tag+': invalid closure status')
+    validate_five_source_scope(row,root)
 
 def validate(root=ROOT):
     registry=read(REG,root);source_path=root/SRC;source=read(SRC,root)
@@ -101,7 +160,7 @@ def validate(root=ROOT):
             pid=packet['phase_project_items'][phase]
             ensure(isinstance(pid,str) and pid.startswith('PVTI_') and pid not in project_ids,'invalid or duplicate project item');project_ids.add(pid)
         for row,source_row in zip(packet['items'],src[start-1:end]):
-            validate_row(row,source_row,expected);seen.append(row['problem_id']);pending+=(row['triage_decision']=='PENDING');complete+=(row['closure_status']=='ADMITTED_BOUNDED_COMPLETE')
+            validate_row(row,source_row,expected,root);seen.append(row['problem_id']);pending+=(row['triage_decision']=='PENDING');complete+=(row['closure_status']=='ADMITTED_BOUNDED_COMPLETE')
     ensure(seen==list(range(1,1222)),'source population missing or permuted')
     cross=registry['crosscutting_issues'];ensure(len(cross)==6 and sorted(cross.values())==list(range(3264,3270)),'missing closure/dispatch issues')
     for label,n in cross.items():
