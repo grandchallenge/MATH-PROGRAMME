@@ -7,22 +7,22 @@
 | Evidence | Exact identity |
 | --- | --- |
 | [Primary UC013](FILTERED_COMPACT_GREEN_SOURCE_UC013.md) | Git blob05ed1fafdbc35cc63c1423d4e48292d24193d029; frozen commitb3418cff6fc648c3ead6cf7ef412fd4e6e32e153; retained ref research/reach-filtered-green-uc013-primary-frozen-20261117 |
-| [Distinct critic UC014](AGENT_d698d2d03ffae73dd2818e51cf52266db7a983fbAL_REVIEW_FILTERED_GREEN_UC014.md) | Git blob d698d2d03ffae73dd2818e51cf52266db7a983fb; bounded ACCEPT of unchanged UC013 |
+| [Distinct critic UC014](AGENT_CRITICAL_REVIEW_FILTERED_GREEN_UC014.md) | Git blob d698d2d03ffae73dd2818e51cf52266db7a983fb; bounded ACCEPT of unchanged UC013 |
 | Frozen input | 32dbbb4635a9493a5b46cf9f0962e833a19120fe; retained ref research/reach-filtered-green-uc013-input-frozen-20261117;262 prior scientific artifacts preserved |
 | UC010 / UC011 / UC012 | efe5a9a40011b8ba510fc56107406f7bbe86b7ff / 0d509ef7b493c470fc6daad6fb273b50c21c520c / dbe5fed29240dbb7a5a52f770422cc837f1c1afa |
 | Scalar105 / mixed108 / parameter126 / comparison150 | a8ce66ff0edec33e2aff299550fca2089d671033 / 587c15fd6e24f6e6b14de574ff878221cdbd5cb6 / 5b05c6147d237ca1d22e4dcbce9262b0f038c163 / 03deca9212a9bea56743e482e5cb79edb46b9d7f |
 | Durable authorization | Protocol090, issue2657 and existing completion checkpoint; CP240 preceded construction and CP241 bound the frozen distinct review |
 
-Work in ZFC in real liquid modules of fixed exponent $0<ple1$, in the original physical line/interval model. Root and primary co-developed the analytic and domain mechanism. A fresh nonauthor context supplied UC014. These contexts share the system, account and dependencies; this is internal logical criticism, not external certification, MATHCERT or independent execution attestation. One primary, zero post-freeze mathematical corrections.
+Work in ZFC in real liquid modules of fixed exponent $0<p\le1$, in the original physical line/interval model. Root and primary co-developed the analytic and domain mechanism. A fresh nonauthor context supplied UC014. These contexts share the system, account and dependencies; this is internal logical criticism, not external certification, MATHCERT or independent execution attestation. One primary, zero post-freeze mathematical corrections.
 
 ## 2. Accepted operation, proof and controls
 
 Fix the ordered two-slot source, an actual connected Gaussian heat convolution, a high-pass angular selector near the collision conormal and away from both coordinate axes, the actual compact output cutoff, and150's fixed affine-moment-dual bumps. The proved maps are
 
 $$
-G_i=h_iC_2:mathcal P_2longrightarrowmathcal P_2,qquad
-overline G_i:mathcal Z_2longrightarrowmathcal Z_2,qquad
-D_iG_i=(1-B_i)C_2,quad i=1,2.
+G_i=h_iC_2:\mathcal P_2\longrightarrow\mathcal P_2,\qquad
+\overline G_i:\mathcal Z_2\longrightarrow\mathcal Z_2,\qquad
+D_iG_i=(1-B_i)C_2,\quad i=1,2.
 $$
 
 The displayed identity holds for actual entire evaluated families, before quotient. It is not an inverse identity with the identity operator on the right.
@@ -49,11 +49,11 @@ Primary and critic passed mathematical Markdown source preflight. The existing i
 
 ## 4. Decision: the exact remaining filter-removal question
 
-**Continue toward the original source lemma, without claiming it is solved.** For an actual fixed collection of distinct-retained-block histories150.9, choose an allowed cutoff $chi$ equal to one near its common input support. With $C_2=chi q(D)H_epsilon$, the exact compact decomposition is
+**Continue toward the original source lemma, without claiming it is solved.** For an actual fixed collection of distinct-retained-block histories150.9, choose an allowed cutoff $\chi$ equal to one near its common input support. With $C_2=\chi q(D)H_\epsilon$, the exact compact decomposition is
 
 $$
-h_i v=G_i v+R_i v,qquad
-R_i v=h_iigl[chi(1-q(D))v+chi q(D)(1-H_epsilon)vigr].
+h_i v=G_i v+R_i v,\qquad
+R_i v=h_i\bigl[\chi(1-q(D))v+\chi q(D)(1-H_\epsilon)v\bigr].
 $$
 
 Both terms inside brackets are physically compact after the same cutoff, and their sum is exactly $(1-C_2)v$. UC013 supplies the first summand $G_i v$. The missing assertion is source closure of the **entire residual** $R_i v$ on the actual150.9 completed histories, with fixed scalar/geometric choices across supplied126 rows. Its ambient identity and rapid estimates are already available; its source representation is not. Separate closure of either displayed piece would be sufficient progress, but failure of a separated representation would not disprove closure of their sum.
