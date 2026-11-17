@@ -179,6 +179,8 @@ def validate_receipt(data, identity):
               "mathlib-cache", "compat-post-update", "lean-build", "axiom-audit"}
     successful = {s.get("stage") for s in data.get("steps", [])
                   if s.get("exit_code") == 0}
+    needed.update(f"compat-{index:02d}-{action}"
+                  for index in range(9) for action in ("check", "apply"))
     if not needed <= successful:
         raise ValueError("missing successful exact replay stages")
     return True
