@@ -33,13 +33,16 @@ def run(args):
    for route in ROUTES:
     pair={}
     for label,base in (('mkdocs',ma),('zensical',za)):
-     cx=browser.new_context(viewport={'width':w,'height':h},reduced_motion='reduce');page=cx.new_page();errors=[]
+     cx=browser.new_context(viewport={'width':w,'height':h},reduced_motion='reduce',color_scheme='dark' if view=='reflow200' else 'light');page=cx.new_page();errors=[]
      page.on('pageerror',lambda e:errors.append(str(e)[:200]))
      resp=page.goto(base+route.removesuffix('index.html'),wait_until='domcontentloaded',timeout=25000)
      page.wait_for_timeout(550);before=inspect(page)
      page.keyboard.press('Tab');first=inspect(page)
      for _ in range(4):page.keyboard.press('Tab')
      fifth=inspect(page)
+     # Expose actual browser-computed accessible names, not only HTML labels.
+     aria_h1=page.locator('h1').first.aria_snapshot(timeout=6000)[:500] if page.locator('h1').count() else ''
+     aria_nav=page.locator('nav').first.aria_snapshot(timeout=6000)[:1300] if page.locator('nav').count() else ''
      page.add_script_tag(path=str(axe))
      ax=page.evaluate('''async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','best-practice']}})''')
      viol=[{'id':v['id'],'impact':v['impact'],'nodes':len(v['nodes']),'examples':[{'target':n['target'],'summary':(n.get('failureSummary') or '')[:180]} for n in v['nodes'][:3]]} for v in ax['violations']]
@@ -49,7 +52,7 @@ def run(args):
       search=inspect(page)
       page.keyboard.press('Escape')
      shot=out/(label+'_'+view+'_'+route.replace('/','_')+'.png');page.screenshot(path=str(shot))
-     pair[label]={'status':resp.status if resp else None,'before':before,'first_tab':first,'fifth_tab':fifth,'search_shortcut':search,'axe_violations':viol,'axe_incomplete':len(ax['incomplete']),'axe_passes':len(ax['passes']),'js_errors':errors[:6],'screenshot':shot.name,'screenshot_sha256':hashlib.sha256(shot.read_bytes()).hexdigest()}
+     pair[label]={'status':resp.status if resp else None,'before':before,'first_tab':first,'fifth_tab':fifth,'search_shortcut':search,'aria_heading_snapshot':aria_h1,'aria_nav_snapshot':aria_nav,'color_scheme':'dark' if view=='reflow200' else 'light','axe_violations':viol,'axe_incomplete':len(ax['incomplete']),'axe_passes':len(ax['passes']),'js_errors':errors[:6],'screenshot':shot.name,'screenshot_sha256':hashlib.sha256(shot.read_bytes()).hexdigest()}
      cx.close()
     b=pair['mkdocs'];c=pair['zensical'];new=new_severe(b['axe_violations'],c['axe_violations'])
     if new:critical.append({'route':route,'view':view,'code':'NEW_SEVERE_AXE_RULE','rules':new})
@@ -58,7 +61,7 @@ def run(args):
     rows.append({'route':route,'view':view,**pair})
   browser.close()
  head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
- report={'type':'GCL_B03_CHROMIUM_AXE/1','source_head':head,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'chromium':version,'axe_sha256':hashlib.sha256(axe.read_bytes()).hexdigest(),'paired_samples':rows,'new_critical_regressions':critical,'limitations':['Automated axe tests do not prove WCAG conformance','Manual screen-reader testing not performed by automation','Only sampled routes and Chromium with three viewports','Separate manual focus and semantic inspection needed before B03 closure','No production changes']}
+ report={'type':'GCL_B03_CHROMIUM_AXE/1','source_head':head,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'chromium':version,'axe_sha256':hashlib.sha256(axe.read_bytes()).hexdigest(),'paired_samples':rows,'new_critical_regressions':critical,'limitations':['Automated axe tests do not prove WCAG conformance','Manual screen-reader testing not performed by automation','Only sampled routes and Chromium with three viewports; reflow200 is a narrow viewport proxy, not actual browser zoom','Separate manual focus and semantic inspection needed before B03 closure','No production changes']}
  (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
  print(json.dumps({'source_head':head,'paired':len(rows),'critical':len(critical),'examples':critical[:7],'screens':len(list(out.glob('*.png')))},indent=2)[:8000]);return bool(critical)
 if __name__=='__main__':
