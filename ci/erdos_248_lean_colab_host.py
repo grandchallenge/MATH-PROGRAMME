@@ -15,6 +15,9 @@ JOB_ID = "ERDOS-0248-LEAN-REPLAY-001"
 ISSUE = 3204
 REPO = "grandchallenge/MATH-PROGRAMME"
 TOOLCHAIN = "leanprover/lean4:v4.33.0"
+# Bounded CPU duration accommodates expensive pinned formal-proof imports.
+# Prior exact worker RED: lean-build exit 124 at 2400s, no Lean error.
+MAX_RUNTIME_SECONDS = 15000
 SOURCE = ROOT / "experiments/erdos_proof_verification/0248/Erdos248.lean"
 WORKER = ROOT / "colab/erdos_248_lean_worker.py"
 REGISTRY = ROOT / "governance/lean_colab/JOBS.json"
@@ -37,6 +40,8 @@ def registered_identity():
             ISSUE, 248, TOOLCHAIN, "UNADJUDICATED_COMPUTATIONAL_EVIDENCE_ONLY",
             "CPU", "ci.erdos_248_lean_colab_host"):
         raise ValueError("protected identity or authority mismatch")
+    if j.get("max_runtime_seconds") != MAX_RUNTIME_SECONDS:
+        raise ValueError("protected CPU runtime budget mismatch")
     if j.get("source") != SOURCE.relative_to(ROOT).as_posix() or (
             j.get("worker") != WORKER.relative_to(ROOT).as_posix()):
         raise ValueError("protected source/worker path mismatch")
@@ -116,7 +121,8 @@ def launch(colab, directory):
         )
         try:
             cli(prefix + ["exec", "-s", session, "-f", str(script),
-                          "--timeout", "4500"], timeout=4600)
+                          "--timeout", str(MAX_RUNTIME_SECONDS)],
+                timeout=MAX_RUNTIME_SECONDS + 200)
         except Exception as exc:
             error = exc
         # Download the evidence even after a failed computation when possible.
