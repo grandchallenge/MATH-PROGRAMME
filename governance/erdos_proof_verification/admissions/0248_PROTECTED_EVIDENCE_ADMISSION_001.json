@@ -1,0 +1,85 @@
+{
+  "record_type": "GCL-ERDOS-248-PROTECTED-EVIDENCE-ADMISSION/1",
+  "admission_id": "ERDOS-PV-0248-EA001",
+  "governing_issue": 3204,
+  "parent_issue": 3201,
+  "manifest": "governance/erdos_proof_verification/manifests/0248.json",
+  "candidate_phase": "FINAL_EVIDENCE_ADMISSION_SUBJECT_TO_PROTECTED_MERGE_AND_READBACK",
+  "source_provider_commit": "8822f7ddef30fadbd92e1c6ab4ed897af356af5e",
+  "source_sha256": "292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267",
+  "kernel_receipt_sha256": "708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28",
+  "kernel_archive_sha256": "def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08",
+  "source_review_sha256": "dc58e9dd9b2f069426ecfd3cfbb5c6a20094010bf4a0afa344e6aa7c1c323520",
+  "referee_adjudication_doc_sha256": "0218423c75cb5712bdd3f9bc3031f003e398f5a966bfd82075cedcacfc753d6a",
+  "referee_adjudication_json_sha256": "ce859d609dcf89c7ae030234ea2aa3bae9e9d735fbb73a0e3f3cf7d9ee57f455",
+  "protected_green_replay_merge": "a55255f01b18139ddf045d4c82fb566c3e77f36d",
+  "protected_source_review_merge": "bb91ff9e21679e201013de3ef9bc5fba8986748d",
+  "protected_referee_adjudication_merge": "3cd3e6951c9c34d970b1e0e8ca7ae7edcb6ba871",
+  "admission_document": "governance/erdos_proof_verification/admissions/0248_PROTECTED_EVIDENCE_ADMISSION_001.md",
+  "admission_document_sha256": "5d9c313cdae526ca8c2b6008457186c01042f70a6844dc8de177b95e8f49119f",
+  "outcome": "VERIFIED_WITHOUT_CERTIFICATION",
+  "outcome_scope": "EXACT_ERDOS248_DISTINCT_PRIME_OMEGA_KERNEL_VERIFIED_ONLY",
+  "observed_foundations": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "evidence_chain_status": {
+    "source_lock": true,
+    "statement_semantic_equivalence": true,
+    "compiler_and_axiom_replay": true,
+    "non_author_critical_review": true,
+    "internal_referee_adjudication": true,
+    "all_three_predecessor_prs_protected": true,
+    "final_pr_protected_readback_required": true,
+    "certification_not_submitted": true
+  },
+  "claim_exclusions": {
+    "published_multiplicity_Omega_formalized": false,
+    "full_published_paper_verified": false,
+    "author_tex_248_leanization_map_present": false,
+    "unpatched_source_equivalence_established": false,
+    "independent_human_certification": false,
+    "mathcert_certified": false,
+    "externally_promotable_without_separate_governance": false
+  },
+  "documentary_residuals": [
+    {
+      "code": "AUTHOR_LEANIZATION_MAP_MISSING",
+      "status": "CARRIED_TO_PARENT",
+      "parent_issue": 3201,
+      "blocking_for": "PAPER_LINE_BY_LINE_CORRESPONDENCE",
+      "nonblocking_for": "PINNED_EXACT_OMEGA_THEOREM"
+    },
+    {
+      "code": "PUBLISHED_OMEGA_MULTIPLICITY_NOT_FORMALIZED",
+      "status": "EXCLUDED_FROM_THIS_WORK_ITEM",
+      "parent_issue": 3201,
+      "blocking_for": "STRONGER_PAPER_CLAIM",
+      "nonblocking_for": "ORIGINAL_DISTINCT_PRIME_OMEGA_THEOREM"
+    },
+    {
+      "code": "PATCHED_EXTERNAL_DEPENDENCIES",
+      "status": "PINNED_EXECUTED_SOURCE_IDENTITY",
+      "parent_issue": 3201,
+      "blocking_for": "UNPATCHED_SOURCE_IDENTITY",
+      "nonblocking_for": "PATCHED_EXACT_KERNEL_REPLAY"
+    }
+  ],
+  "authority_effects": {
+    "protected_scope_limited_to_omega": true,
+    "work_status_if_protected": "VERIFIED_WITHOUT_CERTIFICATION",
+    "certification_status": "NOT_SUBMITTED",
+    "public_certification": false,
+    "human_independence": false,
+    "claim_publication": false,
+    "issue_auto_closure": false,
+    "issue_manual_completion_only_after_exact_merge_and_project_readback": true
+  },
+  "pending_post_merge_actions": [
+    "Read actual native protected merge SHA and match actual manifest, receipt and document.",
+    "Confirm original Green kernel receipt and source-critical/Referee objects are still unchanged.",
+    "Record issue 3204 verified without certification and reconcile Project #2 Mathematics status Done.",
+    "Keep parent issue 3201 OPEN and record missing provider map and unformalized full-paper theorem there."
+  ]
+}

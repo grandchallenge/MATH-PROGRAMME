@@ -52,7 +52,7 @@ class VerificationContractTests(unittest.TestCase):
         self.assertEqual(good['stage_results']['REPLAY_EXECUTION'], 'PASS')
         self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
         self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
-        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
+        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PASS')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
 
@@ -96,8 +96,8 @@ class VerificationContractTests(unittest.TestCase):
         good = copy.deepcopy(self.good)
         self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
         self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
-        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
-        self.assertEqual(good['work_status'], 'IN_PROGRESS')
+        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PASS')
+        self.assertEqual(good['work_status'], 'VERIFIED_WITHOUT_CERTIFICATION')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
 
@@ -142,6 +142,52 @@ class VerificationContractTests(unittest.TestCase):
         bad['stage_results']['INTERNAL_ADJUDICATION'] = 'PENDING'
         bad['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] = 'PASS'
         with self.assertRaisesRegex(ValueError, 'admitted without adjudication'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_final_custody_cannot_be_replaced_with_generic_marker(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts'] = [
+            x for x in bad['review_receipts']
+            if 'PROTECTED_EVIDENCE_ADMISSION_001' not in x
+        ]
+        with self.assertRaisesRegex(ValueError, 'exact final custody packet'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_final_custody_rejects_forged_protected_referee_merge(self):
+        from unittest.mock import patch
+        path = ('governance/erdos_proof_verification/admissions/'
+                '0248_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(path))
+        forged['protected_referee_adjudication_merge'] = '0' * 40
+        def inject(p, *args, **kwargs):
+            return forged if p == path else real(p, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact noncertifying source custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_final_custody_rejects_false_full_paper_or_mathcert_claim(self):
+        from unittest.mock import patch
+        path = ('governance/erdos_proof_verification/admissions/'
+                '0248_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(path))
+        forged['claim_exclusions']['full_published_paper_verified'] = True
+        forged['claim_exclusions']['mathcert_certified'] = True
+        def inject(p, *args, **kwargs):
+            return forged if p == path else real(p, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact noncertifying source custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_terminal_status_cannot_claim_mathcert_or_missing_admission(self):
+        bad = copy.deepcopy(self.good)
+        bad['certification_status'] = 'MATHCERT_CERTIFIED'
+        with self.assertRaises(ValueError):
+            mod.validate_manifest(bad, self.schema)
+        bad = copy.deepcopy(self.good)
+        bad['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] = 'PENDING'
+        with self.assertRaisesRegex(ValueError, 'verified absent protected evidence'):
             mod.validate_manifest(bad, self.schema)
 
     def test_no_mathcert_status_from_source_return(self):
