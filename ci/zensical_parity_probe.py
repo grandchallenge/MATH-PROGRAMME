@@ -74,6 +74,34 @@ def prepare() -> None:
     if config.get("hooks") != ["ci/erdos_compendium_hook.py", "ci/oai26_compendium_hook.py"]:
         raise RuntimeError("hook inventory changed: do not silently drop new hooks")
     config.pop("hooks")
+    # Candidate-only footer contrast repair. Never mutate authored docs or
+    # production MkDocs; this is a copied, isolated renderer compatibility fix.
+    override = DOCS / "stylesheets" / "zensical-contrast.css"
+    override.write_text(
+        "/* G1 B03: accessible footer for Zensical on dark footer surface. */\n"
+        ".md-footer .md-copyright, .md-footer .md-copyright__highlight, "
+        ".md-footer a[href$=\"zensical.org/\"] "
+        "{ color: #f2f5fa !important; }\n"
+        "@media (prefers-color-scheme: light) { "
+        ".md-typeset .highlight .kd, .md-typeset .highlight .kt "
+        "{ color: #214a88 !important; } }\n", encoding="utf-8")
+    extra_css = config.get("extra_css", [])
+    if not isinstance(extra_css, list):
+        raise RuntimeError("invalid extra_css inventory")
+    config["extra_css"] = [*extra_css, "stylesheets/zensical-contrast.css"]
+    focus = DOCS / "javascripts" / "zensical-code-focus.js"
+    focus.write_text(
+        "/* Isolated renderer B03: allow keyboard focus on overflow code. */\n"
+        "(() => { const apply = () => { document.querySelectorAll('pre code').forEach(e => { "
+        "if (e.scrollWidth > e.clientWidth && e.clientWidth > 0) { "
+        "e.tabIndex = 0; e.setAttribute('aria-label', 'Scrollable code block'); } "
+        "}); }; if (document.readyState === 'loading') "
+        "document.addEventListener('DOMContentLoaded', apply, {once:true}); "
+        "else apply(); })();\n", encoding="utf-8")
+    extra_js = config.get("extra_javascript", [])
+    if not isinstance(extra_js, list):
+        raise RuntimeError("invalid extra_javascript inventory")
+    config["extra_javascript"] = [*extra_js, "javascripts/zensical-code-focus.js"]
     config["docs_dir"] = DOCS.name
     config["site_dir"] = SITE.name
     CONFIG.write_text(yaml.safe_dump(config, sort_keys=False, allow_unicode=True), encoding="utf-8")
