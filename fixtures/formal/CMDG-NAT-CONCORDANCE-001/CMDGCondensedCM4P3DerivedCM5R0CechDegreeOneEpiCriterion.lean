@@ -40,7 +40,7 @@ namespace CMDG.CondensedCM5R0
 
 /-- The genuine degree-one Čech complex at the free presheaf
 sheafification target, using actual first and second differentials. -/
-noncomputable def stoneanCechDegreeOneComplex (T : Profinite.{u}) :
+noncomputable abbrev stoneanCechDegreeOneComplex (T : Profinite.{u}) :
     ShortComplex Ambient :=
   ShortComplex.mk (stoneanCechTripleBoundary T)
     (stoneanCechDifference T) (by
@@ -50,7 +50,7 @@ noncomputable def stoneanCechDegreeOneComplex (T : Profinite.{u}) :
 
 /-- The same source/degree-one relation, with true kernel K_T as
 its right term. This is not the second-syzygy kernel L_T. -/
-noncomputable def stoneanCechDegreeOneKernelComplex (T : Profinite.{u}) :
+noncomputable abbrev stoneanCechDegreeOneKernelComplex (T : Profinite.{u}) :
     ShortComplex Ambient :=
   ShortComplex.mk (stoneanCechTripleBoundary T)
     (stoneanCechRelationToKernel T)
@@ -58,13 +58,13 @@ noncomputable def stoneanCechDegreeOneKernelComplex (T : Profinite.{u}) :
 
 /-- The factorization of genuine degree-one complexes along
 the original monomorphism K_T → F_{P(T)}. -/
-noncomputable def stoneanCechKernelComplexComparison (T : Profinite.{u}) :
+noncomputable abbrev stoneanCechKernelComplexComparison (T : Profinite.{u}) :
     stoneanCechDegreeOneKernelComplex T ⟶
       stoneanCechDegreeOneComplex T :=
   ShortComplex.homMk
     (𝟙 _) (𝟙 _) (kernel.ι (freeStoneanPresentationMap T))
     (by simp)
-    (by simpa only [Category.id_comp, stoneanCechRelationToKernel_comp_ι]
+    (by simpa only [Category.id_comp]
       using (stoneanCechRelationToKernel_comp_ι T).symm)
 
 /-- Exactness of d₂,d₁ in the **real condensed module category**
@@ -74,6 +74,17 @@ theorem stoneanCechDegreeOneExact_iff_kernelComplexExact
     (T : Profinite.{u}) :
     (stoneanCechDegreeOneComplex T).Exact ↔
       (stoneanCechDegreeOneKernelComplex T).Exact := by
+  haveI : Epi (stoneanCechKernelComplexComparison T).τ₁ := by
+    change Epi (𝟙 ((Condensed.profiniteFree Coeff).obj
+      (stoneanPresentationCechTriples T)))
+    infer_instance
+  haveI : IsIso (stoneanCechKernelComplexComparison T).τ₂ := by
+    change IsIso (𝟙 ((Condensed.profiniteFree Coeff).obj
+      (stoneanPresentationCechPairs T)))
+    infer_instance
+  haveI : Mono (stoneanCechKernelComplexComparison T).τ₃ := by
+    change Mono (kernel.ι (freeStoneanPresentationMap T))
+    infer_instance
   exact (ShortComplex.exact_iff_of_epi_of_isIso_of_mono
     (stoneanCechKernelComplexComparison T)).symm
 
