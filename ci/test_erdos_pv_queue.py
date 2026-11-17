@@ -48,8 +48,11 @@ class QueueTests(unittest.TestCase):
             self.assertTrue(q.permitted(row,'C'))
             self.assertIn(row['stage_work_items']['B']['work_status'],q.READY)
             self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
-    def test_only_formal_reviewed_problem_enters_documentary(self):
-        self.assertEqual(q.candidates('D',limit=5),[]) # returned D evidence is not re-dispatchable
+    def test_only_protected_formal_review_enters_documentary(self):
+        documentary=q.candidates('D',limit=5)
+        self.assertEqual([x['problem_id'] for x in documentary],[560])
+        self.assertEqual(documentary[0]['queue_issue'],3256)
+        self.assertEqual(documentary[0]['task_id'],'ERDOS-PV-0560-D')
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]
         self.assertEqual(x['problem_id'],246)
@@ -74,17 +77,21 @@ class QueueTests(unittest.TestCase):
         self.assertTrue(all(r['triage_decision']=='SELECTED_WITH_MANIFEST' for r in x))
         self.assertFalse(any(xi['problem_id'] in (563,564) for xi in x))
 
-    def test_560_c_review_candidate_cannot_be_claimed_twice_or_unlock_d(self):
+    def test_560_c_protected_candidate_unlocks_d_without_reclaiming_c(self):
         from copy import deepcopy
         cohort=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
         row=cohort['items'][560-501]
         self.assertEqual(row['stage_work_items']['B']['work_status'],'PROTECTED_ADMITTED')
-        self.assertEqual(row['stage_work_items']['C']['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(row['stage_work_items']['C']['work_status'],'PROTECTED_ADMITTED')
         self.assertFalse(q.permitted(row,'B'))
         self.assertFalse(q.permitted(row,'C'))
-        self.assertFalse(q.permitted(row,'D'))
+        self.assertTrue(q.permitted(row,'D'))
         self.assertNotIn(560,[x['problem_id'] for x in
                                q.candidates('C',after=559,cohort='0501-0600',limit=10)])
+        premature_documentary=deepcopy(row)
+        premature_documentary['stage_work_items']['C']['work_status']='VERIFIED_BOUNDED'
+        premature_documentary['stage_work_items']['C']['protected_admission_ref']=None
+        self.assertFalse(q.permitted(premature_documentary,'D'))
         premature=deepcopy(row)
         premature['stage_work_items']['C']['work_status']='UNEXECUTED'
         premature['stage_work_items']['B']['work_status']='VERIFIED_BOUNDED'

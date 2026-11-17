@@ -94,7 +94,7 @@ class CoverageTests(unittest.TestCase):
             lambda x:x['stage_work_items']['B'].__setitem__('semantic_equivalence_receipt',None),
             lambda x:x['stage_work_items']['B'].__setitem__('adversarial_review_receipt',None),
             lambda x:x['stage_work_items']['B'].__setitem__('protected_admission_ref','main@forged'),
-            lambda x:x['stage_work_items']['C'].__setitem__('work_status','PROTECTED_ADMITTED'),
+            lambda x:x['stage_work_items']['C'].__setitem__('work_status','VERIFIED_BOUNDED'),
         ):
             bad=copy.deepcopy(row)
             mutation(bad)
@@ -110,7 +110,32 @@ class CoverageTests(unittest.TestCase):
             'grandchallenge/MATH-PROGRAMME@997a3d8068c3b2a036d5811bfabfce2b92a4be15')
         self.assertIsNone(b['formal_replay_receipt'])
         self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
-        self.assertEqual(row['stage_work_items']['C']['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(row['stage_work_items']['C']['work_status'],'PROTECTED_ADMITTED')
+
+    def test_560_c_protected_custody_exact_sha_and_no_false_promotion(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][59]
+        c=row['stage_work_items']['C']
+        custody_path='governance/erdos_proof_verification/evidence/0560/C_PROTECTED_CUSTODY_BINDING_001.json'
+        self.assertEqual(c['work_status'],'PROTECTED_ADMITTED')
+        self.assertEqual(c['protected_admission_ref'],
+                         'grandchallenge/MATH-PROGRAMME@2371fb3feda35d98f6da19855a0a1348ca284afa')
+        self.assertIn(custody_path,c['evidence_refs'])
+        custody=v.read(custody_path)
+        self.assertEqual(len(custody['protected_source_and_artifact_blob_ids']),15)
+        self.assertTrue(custody['formalization_work_required'])
+        self.assertTrue(all(flag is False for flag in custody['nonclaims'].values()))
+        self.assertEqual(row['stage_work_items']['D']['work_status'],'UNEXECUTED')
+        self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
+        for mutation in (
+            lambda b:b.__setitem__('protected_admission_ref','grandchallenge/MATH-PROGRAMME@'+'f'*40),
+            lambda b:b.__setitem__('work_status','VERIFIED_BOUNDED'),
+            lambda b:b.__setitem__('evidence_refs',b['evidence_refs'][:-1]),
+        ):
+            bad=copy.deepcopy(row)
+            mutation(bad['stage_work_items']['C'])
+            with self.assertRaises(ValueError):
+                v.validate_row(bad,self.source[559],cohort['phase_issues'])
 
     def test_560_partial_formal_review_cannot_promote_full_proof(self):
         cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
