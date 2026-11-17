@@ -1,0 +1,79 @@
+{
+  "assignment_id": "ERDOS-PV-0560-C",
+  "counterfactuals_excluded": [
+    "formalized_original_diagonal_size_ramsey_asymptotic",
+    "full_Proposition_2_2_kernel_proof",
+    "pinned_mathlib_semantic_equivalence_kernel_proof",
+    "MATHCERT_certification"
+  ],
+  "exact_prior_phase_b": {
+    "custody_merge": "123701f543f32c7bf92197f77f39405a3702f8f4",
+    "custody_pr": 3436,
+    "evidence_pr": 3434,
+    "protected_evidence_merge": "997a3d8068c3b2a036d5811bfabfce2b92a4be15",
+    "receipt": "governance/erdos_proof_verification/evidence/0560/B_PROTECTED_CUSTODY_BINDING_001.json"
+  },
+  "existing_protected_mathlib_reference": {
+    "commit": "79d0395a1825a6264ad5d269e35e60537518955e",
+    "git_blob": "f0d556b1218da889dbb72747f39a573cd694ef78",
+    "note": "Source API inspected; not imported or kernel-replayed against this mathlib revision",
+    "observed_definition": "forall v in s, forall w in t, G.Adj v w",
+    "path": "Mathlib/Combinatorics/SimpleGraph/Basic.lean",
+    "repository": "leanprover-community/mathlib4",
+    "verified_declarations": [
+      "SimpleGraph.IsCompleteBetween",
+      "SimpleGraph.IsCompleteBetween.disjoint",
+      "SimpleGraph.isCompleteBetween_comm"
+    ]
+  },
+  "formal_applicability": "YES_FOR_BOUNDED_LEMMA",
+  "formal_provider_availability": "NONE_IN_FROZEN_PROVIDER",
+  "formalization_work_required": true,
+  "frozen_formal_provider": {
+    "commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+    "path": "FormalConjectures/ErdosProblems/560.lean",
+    "proof_status": "NO_PINNED_PROVIDER_AND_NO_REPLAYABLE_FULL_THEOREM",
+    "repository": "google-deepmind/formal-conjectures",
+    "status": "ABSENT_HTTP_404_OBSERVED"
+  },
+  "kernel_replay": {
+    "axiom_report": "C_LEAN_CORE_STDOUT_001.txt",
+    "formal_source_sha256": "78842795481bfd08385fdd8c83abbedbd3c235db330da48355904f90ea49a5f0",
+    "full_primary_theorem_compiled": false,
+    "import_closure": [
+      "Init"
+    ],
+    "init_olean_sha256": "26523a3af45a445bdbae0b9070334c12856c650808276348189e2999fa1d07aa",
+    "lean_binary_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "lean_version": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+    "proved_auxiliary_theorems": 12,
+    "source_report": "C_LEAN_CORE_REPLAY_001.json",
+    "toolchain_requested": "leanprover/lean4:v4.33.0"
+  },
+  "primary_paper": {
+    "arxiv": "2111.05420v2",
+    "authors": [
+      "David Conlon",
+      "Jacob Fox",
+      "Yuval Wigderson"
+    ],
+    "bounded_result": "Proposition 2.2, equation (1)",
+    "date": "2023-02-08",
+    "scope": "OFF_DIAGONAL_s_ge_2_t_ge_s_plus_2",
+    "title": "Three early problems on size Ramsey numbers",
+    "url": "https://arxiv.org/html/2111.05420v2"
+  },
+  "record_type": "ERDOS_PV_0560_C_SOURCE_SCOPE_LOCK/1",
+  "source_audit_issue": 1831,
+  "source_catalogue": {
+    "commit": "536408716724a2402bdfa7c1d764bf83d64a8c89",
+    "entry_number": 560,
+    "git_blob": "4e60263a80af6207aca494d2e1388e44fa372889",
+    "historical_formal_solution_status": "unformalized",
+    "historical_status": "open",
+    "path": "data/problems.yaml",
+    "repository": "teorth/erdosproblems",
+    "statement_formalized": "no"
+  },
+  "source_issue_body_sha256": "2bafa6656b0d797f8b7637be2d7ff77e7682e329467a9df9c858da7e9b7708c1"
+}

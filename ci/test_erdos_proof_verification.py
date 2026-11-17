@@ -51,8 +51,8 @@ class VerificationContractTests(unittest.TestCase):
         good = copy.deepcopy(self.good)
         self.assertEqual(good['stage_results']['REPLAY_EXECUTION'], 'PASS')
         self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
-        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
-        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
+        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
+        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PASS')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
 
@@ -92,14 +92,103 @@ class VerificationContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'exact qualified scope'):
                 mod.validate_manifest(copy.deepcopy(self.good), self.schema)
 
-    def test_real_scoped_adversarial_pass_preserves_open_boundaries(self):
+    def test_real_scoped_adversarial_pass_preserves_certification_boundary(self):
         good = copy.deepcopy(self.good)
         self.assertEqual(good['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
-        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PENDING')
-        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
-        self.assertEqual(good['work_status'], 'IN_PROGRESS')
+        self.assertEqual(good['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
+        self.assertEqual(good['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PASS')
+        self.assertEqual(good['work_status'], 'VERIFIED_WITHOUT_CERTIFICATION')
         self.assertEqual(good['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(good, self.schema)
+
+    def test_referee_adjudication_cannot_be_forged_with_placeholder_receipt(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts'] = [
+            x for x in bad['review_receipts']
+            if 'REFEREE_ADJUDICATION' not in x
+        ]
+        with self.assertRaisesRegex(ValueError, 'exact Referee receipt'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_referee_cannot_claim_stronger_Omega_theorem(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/adjudications/'
+             '0248_REFEREE_ADJUDICATION_001.json')
+        original = mod.load
+        forged = copy.deepcopy(original(p))
+        forged['findings']['published_Omega_multiplicity_formalized'] = True
+        def injected(path, *args, **kwargs):
+            return forged if path == p else original(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=injected):
+            with self.assertRaisesRegex(ValueError, 'real scoped noncertifying custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_referee_cannot_claim_independent_human_or_certification(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/adjudications/'
+             '0248_REFEREE_ADJUDICATION_001.json')
+        original = mod.load
+        forged = copy.deepcopy(original(p))
+        forged['independent_human_attestation'] = True
+        forged['authority_effects']['mathcert_certification'] = True
+        def injected(path, *args, **kwargs):
+            return forged if path == p else original(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=injected):
+            with self.assertRaisesRegex(ValueError, 'real scoped noncertifying custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_no_protected_admission_without_internal_referee(self):
+        bad = copy.deepcopy(self.good)
+        bad['stage_results']['INTERNAL_ADJUDICATION'] = 'PENDING'
+        bad['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] = 'PASS'
+        with self.assertRaisesRegex(ValueError, 'admitted without adjudication'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_final_custody_cannot_be_replaced_with_generic_marker(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts'] = [
+            x for x in bad['review_receipts']
+            if 'PROTECTED_EVIDENCE_ADMISSION_001' not in x
+        ]
+        with self.assertRaisesRegex(ValueError, 'exact final custody packet'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_final_custody_rejects_forged_protected_referee_merge(self):
+        from unittest.mock import patch
+        path = ('governance/erdos_proof_verification/admissions/'
+                '0248_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(path))
+        forged['protected_referee_adjudication_merge'] = '0' * 40
+        def inject(p, *args, **kwargs):
+            return forged if p == path else real(p, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact noncertifying source custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_final_custody_rejects_false_full_paper_or_mathcert_claim(self):
+        from unittest.mock import patch
+        path = ('governance/erdos_proof_verification/admissions/'
+                '0248_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(path))
+        forged['claim_exclusions']['full_published_paper_verified'] = True
+        forged['claim_exclusions']['mathcert_certified'] = True
+        def inject(p, *args, **kwargs):
+            return forged if p == path else real(p, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact noncertifying source custody'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_terminal_status_cannot_claim_mathcert_or_missing_admission(self):
+        bad = copy.deepcopy(self.good)
+        bad['certification_status'] = 'MATHCERT_CERTIFIED'
+        with self.assertRaises(ValueError):
+            mod.validate_manifest(bad, self.schema)
+        bad = copy.deepcopy(self.good)
+        bad['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] = 'PENDING'
+        with self.assertRaisesRegex(ValueError, 'verified absent protected evidence'):
+            mod.validate_manifest(bad, self.schema)
 
     def test_no_mathcert_status_from_source_return(self):
         bad = copy.deepcopy(self.good)
@@ -153,6 +242,147 @@ class VerificationContractTests(unittest.TestCase):
         bad = copy.deepcopy(self.good)
         bad['source_locks']['external_formal_commit']=None
         with self.assertRaises(ValueError): mod.validate_manifest(bad,self.schema)
+
+
+
+class Erdos249LacunaryReplayTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.schema = mod.load(mod.SCHEMA)
+        cls.good = mod.load('governance/erdos_proof_verification/manifests/0249.json')
+        cls.receipt = ('governance/erdos_proof_verification/evidence/0249/'
+                       'LACUNARY_LEAN_GREEN_001.receipt.json')
+
+    def test_actual_green_auxiliary_proof_keeps_original_open(self):
+        m = copy.deepcopy(self.good)
+        self.assertEqual(m['literature_status'], 'OPEN')
+        self.assertEqual(m['work_status'], 'VERIFIED_WITHOUT_CERTIFICATION')
+        self.assertEqual(m['stage_results']['REPLAY_EXECUTION'], 'PASS')
+        self.assertEqual(m['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
+        self.assertEqual(m['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
+        self.assertEqual(m['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PASS')
+        self.assertEqual(m['certification_status'], 'NOT_SUBMITTED')
+        mod.validate_manifest(m, self.schema)
+
+    def test_generic_or_missing_replay_cannot_pass(self):
+        bad = copy.deepcopy(self.good)
+        bad['proof_receipts'] = [x for x in bad['proof_receipts']
+                                 if not x.endswith('LACUNARY_LEAN_GREEN_001.receipt.json')]
+        with self.assertRaisesRegex(ValueError, 'exact bounded lacunary receipt'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_forged_original_full_series_result_fails(self):
+        from unittest.mock import patch
+        real = mod.load
+        r = copy.deepcopy(real(self.receipt))
+        r['original_erdos_249_full_series_irrational_claim'] = True
+        def inject(path, *args, **kwargs):
+            return r if path == self.receipt else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'limited to exact pinned T'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_forged_sorry_ax_or_kernel_status_fails(self):
+        from unittest.mock import patch
+        real = mod.load
+        r = copy.deepcopy(real(self.receipt))
+        r['sorryAx_observed'] = True
+        r['build_exit_code'] = 1
+        def inject(path, *args, **kwargs):
+            return r if path == self.receipt else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'limited to exact pinned T'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_wrong_mathlib_or_compiler_pin_fails(self):
+        bad = copy.deepcopy(self.good)
+        bad['toolchain_pins']['mathlib'] = '0' * 40
+        with self.assertRaisesRegex(ValueError, 'limited to exact pinned T'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_249_review_requires_exact_source_critical_receipt(self):
+        m = copy.deepcopy(self.good)
+        m['review_receipts'] = [p for p in m['review_receipts']
+                                if '0249_SOURCE_CRITICAL_REVIEW_001' not in p]
+        with self.assertRaisesRegex(ValueError, 'exact T review receipt'):
+            mod.validate_manifest(m, self.schema)
+
+    def test_249_referee_requires_exact_adjudication_receipt(self):
+        m = copy.deepcopy(self.good)
+        m['review_receipts'] = [p for p in m['review_receipts']
+                                if '0249_REFEREE_ADJUDICATION_001' not in p]
+        with self.assertRaisesRegex(ValueError, 'exact scoped Referee receipt'):
+            mod.validate_manifest(m, self.schema)
+
+    def test_249_adversary_cannot_claim_independent_human(self):
+        from unittest.mock import patch
+        file = ('governance/erdos_proof_verification/reviews/'
+                '0249_SOURCE_CRITICAL_REVIEW_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(file))
+        forged['independent_human_review'] = True
+        def altered(path, *args, **kwargs):
+            return forged if path == file else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=altered):
+            with self.assertRaisesRegex(ValueError, 'exact qualified same-agent'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_249_referee_cannot_promote_original_S(self):
+        from unittest.mock import patch
+        file = ('governance/erdos_proof_verification/adjudications/'
+                '0249_REFEREE_ADJUDICATION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(file))
+        forged['authority_effects']['original_conjecture_solved'] = True
+        def altered(path, *args, **kwargs):
+            return forged if path == file else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=altered):
+            with self.assertRaisesRegex(ValueError, 'exact noncertifying T scope'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_249_final_custody_missing_receipt_fails(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts'] = [r for r in bad['review_receipts']
+                                  if '0249_PROTECTED_EVIDENCE_ADMISSION_001' not in r]
+        with self.assertRaisesRegex(ValueError, 'exact protected custody packet'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_249_final_custody_cannot_promote_full_original_series(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/admissions/'
+             '0249_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(p))
+        forged['scope_checks']['original_s_claim'] = True
+        def inject(path, *args, **kwargs):
+            return forged if path == p else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact T-only theorem and open S'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_249_final_custody_rejects_stale_protected_referee(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/admissions/'
+             '0249_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(p))
+        forged['protected_adversarial_referee_commit'] = '0' * 40
+        def inject(path, *args, **kwargs):
+            return forged if path == p else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact T-only theorem and open S'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_no_proof_of_open_series_from_bounded_green(self):
+        bad = copy.deepcopy(self.good)
+        bad['verification_kind'] = 'FULL_CONJECTURE_CERTIFICATION'
+        with self.assertRaises(ValueError):
+            mod.validate_manifest(bad, self.schema)
+        bad = copy.deepcopy(self.good)
+        bad['certification_status'] = 'MATHCERT_CERTIFIED'
+        with self.assertRaises(ValueError):
+            mod.validate_manifest(bad, self.schema)
+
 
 
 if __name__ == '__main__':

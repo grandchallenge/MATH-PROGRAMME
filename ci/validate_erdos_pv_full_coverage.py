@@ -111,6 +111,68 @@ def validate_five_source_scope(row, root=ROOT):
                    and v['adversarial_review_receipt'] in evidence
                    and v['semantic_equivalence_receipt'] in evidence,
                    f'problem {n}: bounded result lacks semantic/adversarial review')
+        if n==560 and later=='C' and v['work_status'] in admitted:
+            prefix='governance/erdos_proof_verification/evidence/0560/'
+            required={prefix+x for x in (
+                'C_SOURCE_SCOPE_LOCK_001.json',
+                'C_LEAN_CORE_REPLAY_001.json',
+                'C_LEAN_CORE_STDOUT_001.txt',
+                'C_FORMAL_APPLICABILITY_001.md',
+                'C_ADVERSARIAL_REVIEW_001.md',
+                'C_RETURN_BINDING_001.json',
+            )}
+            ensure(set(evidence)==required
+                   and v['formal_replay_receipt']==prefix+'C_LEAN_CORE_REPLAY_001.json'
+                   and v['axiom_report_receipt']==prefix+'C_LEAN_CORE_STDOUT_001.txt'
+                   and v['semantic_equivalence_receipt']==prefix+'C_FORMAL_APPLICABILITY_001.md'
+                   and v['adversarial_review_receipt']==prefix+'C_ADVERSARIAL_REVIEW_001.md'
+                   and v['review_status']=='ROLE_SCOPED_CRITICAL_PASS'
+                   and v['blocker']=='FORMALIZATION_WORK_REQUIRED__COPY_COUNT_TAIL_FIRST_MOMENT'
+                   and row['mathcert_status']=='NOT_SUBMITTED',
+                   'problem 560 C: bounded formalization residual or review custody false')
+            source=read(prefix+'C_SOURCE_SCOPE_LOCK_001.json',root)
+            replay=read(prefix+'C_LEAN_CORE_REPLAY_001.json',root)
+            returned=read(prefix+'C_RETURN_BINDING_001.json',root)
+            ensure(returned.get('record_type')=='ERDOS_PV_0560_C_CLAIM_AND_WORKER_RETURN/1'
+                   and returned.get('assignment_id')=='ERDOS-PV-0560-C'
+                   and returned.get('claim_sha')=='8b6a32fa6fc8fd037051835fa54542f81ecca50e'
+                   and returned.get('return_comment_id')==6947981217
+                   and returned.get('return_body_sha256')=='7ac16b9c6ebfdc9c7c549ec0708af0d83af1b1da57aee7371b88dc4eedfa659a'
+                   and returned.get('single_result_readback') is True
+                   and returned.get('whole_size_ramsey_proved') is False
+                   and returned.get('mathcert_certified') is False,
+                   'problem 560 C: worker return/source or completion boundary drift')
+            expected_source=root/'experiments/erdos_proof_verification/0560/Erdos560Core.lean'
+            actual_sha=hashlib.sha256(expected_source.read_bytes()).hexdigest()
+            log_sha=hashlib.sha256((root/(prefix+'C_LEAN_CORE_STDOUT_001.txt')).read_bytes()).hexdigest()
+            ensure(source.get('formal_applicability')=='YES_FOR_BOUNDED_LEMMA'
+                   and source.get('formal_provider_availability')=='NONE_IN_FROZEN_PROVIDER'
+                   and source.get('formalization_work_required') is True
+                   and source.get('kernel_replay',{}).get('formal_source_sha256')==actual_sha
+                   and source.get('kernel_replay',{}).get('full_primary_theorem_compiled') is False
+                   and replay.get('record_type')=='ERDOS_PV_0560_C_LEAN_CORE_REPLAY/1'
+                   and replay.get('source_sha256')==actual_sha
+                   and replay.get('predecessor_main')=='123701f543f32c7bf92197f77f39405a3702f8f4'
+                   and replay.get('claim_sha')=='8b6a32fa6fc8fd037051835fa54542f81ecca50e'
+                   and replay.get('positive_exit_code')==0
+                   and replay.get('positive_stdout_sha256')==log_sha
+                   and replay.get('whole_size_ramsey_proved') is False
+                   and replay.get('formalization_work_required') is True
+                   and replay.get('mathlib_semantic_equivalence_kernel_checked') is False
+                   and replay.get('mathcert_certified') is False
+                   and set(replay.get('axioms',{}))=={
+                        'completeBetween_disjoint','right_subset_neighbors',
+                        'completeBetween_symm','completeBetween_mono','n_le_two_pow',
+                        'integral_factor_cleared','strict_gate_base','strict_gate_step',
+                        'strict_gate_all','integral_denominators_positive',
+                        'gap_ge_two','t_ge_four'}
+                   and all(set(ax)<={'propext','Quot.sound'}
+                           for ax in replay['axioms'].values())
+                   and set(replay.get('hostile',{}))=={
+                        'incorrect_t_ge_2','incorrect_gap_a_eq_1',
+                        'overlap_without_loopless'}
+                   and all(c['exit_code']!=0 for c in replay['hostile'].values()),
+                   'problem 560 C: exact kernel-source, hostile or claim boundary drift')
         if v['work_status']=='PROTECTED_ADMITTED':
             ensure(bool(v['protected_admission_ref']),
                    f'problem {n}: unbound protected admission')

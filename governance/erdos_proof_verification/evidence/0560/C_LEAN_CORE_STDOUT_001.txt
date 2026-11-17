@@ -1,0 +1,19 @@
+def ErdosPV0560.CompleteBetween : {V : Type} → SimpleAdj V → (V → Prop) → (V → Prop) → Prop :=
+fun {V} G S T => ∀ ⦃v : V⦄, S v → ∀ ⦃w : V⦄, T w → G.adj v w
+ErdosPV0560.integral_factor_cleared (s a : Nat) (hs : 2 ≤ s) (ha : 2 ≤ a) :
+  (s - 1) * s ^ a ≤ (a - 1) * 2 ^ (s + a) * (s - 1) ^ a
+ErdosPV0560.strict_gate_all (t : Nat) (ht : 4 ≤ t) : 2 * 18 ^ t < 25 ^ t
+ErdosPV0560.completeBetween_disjoint {V : Type} (G : SimpleAdj V) {S T : V → Prop} (h : CompleteBetween G S T) (v : V) :
+  ¬(S v ∧ T v)
+'ErdosPV0560.completeBetween_disjoint' does not depend on any axioms
+'ErdosPV0560.right_subset_neighbors' does not depend on any axioms
+'ErdosPV0560.completeBetween_symm' does not depend on any axioms
+'ErdosPV0560.completeBetween_mono' does not depend on any axioms
+'ErdosPV0560.n_le_two_pow' depends on axioms: [propext, Quot.sound]
+'ErdosPV0560.integral_factor_cleared' depends on axioms: [propext, Quot.sound]
+'ErdosPV0560.strict_gate_base' does not depend on any axioms
+'ErdosPV0560.strict_gate_step' depends on axioms: [propext]
+'ErdosPV0560.strict_gate_all' depends on axioms: [propext, Quot.sound]
+'ErdosPV0560.integral_denominators_positive' depends on axioms: [propext, Quot.sound]
+'ErdosPV0560.gap_ge_two' depends on axioms: [propext, Quot.sound]
+'ErdosPV0560.t_ge_four' depends on axioms: [propext, Quot.sound]

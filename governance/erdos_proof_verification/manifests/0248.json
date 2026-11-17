@@ -10,7 +10,7 @@
   "project_item_id": "PVTI_lADOB9Ao_c4BlwurzhIVEts",
   "literature_status": "PROVED",
   "verification_kind": "OMEGA_BRIDGE_KERNEL_REPLAY",
-  "work_status": "IN_PROGRESS",
+  "work_status": "VERIFIED_WITHOUT_CERTIFICATION",
   "claim_scope": "Verify quantified omega<=Omega bridge and replay external Erdos248 proof with exact theorem-type, axiom and import checks",
   "falsification": "Wrong constant/shift quantifier, missing proof, sorry or unreported axiom",
   "source_locks": {
@@ -34,8 +34,8 @@
     "REPLAY_PREPARATION": "PASS",
     "REPLAY_EXECUTION": "PASS",
     "ADVERSARIAL_REVIEW": "PASS",
-    "INTERNAL_ADJUDICATION": "PENDING",
-    "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
+    "INTERNAL_ADJUDICATION": "PASS",
+    "PROTECTED_EVIDENCE_ADMISSION": "PASS"
   },
   "proof_receipts": [
     "governance/erdos_proof_verification/evidence/0248/LEAN_REPLAY_RED_001.receipt.json",
@@ -49,7 +49,11 @@
   ],
   "review_receipts": [
     "governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.md",
-    "governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.json"
+    "governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.json",
+    "governance/erdos_proof_verification/adjudications/0248_REFEREE_ADJUDICATION_001.md",
+    "governance/erdos_proof_verification/adjudications/0248_REFEREE_ADJUDICATION_001.json",
+    "governance/erdos_proof_verification/admissions/0248_PROTECTED_EVIDENCE_ADMISSION_001.md",
+    "governance/erdos_proof_verification/admissions/0248_PROTECTED_EVIDENCE_ADMISSION_001.json"
   ],
   "toolchain_pins": {
     "lean": "leanprover/lean4:v4.33.0",
@@ -72,6 +76,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "Distinct internal Referee adjudication of the QUALIFIED source-critical PASS: accept only kernel-proved Erdős #248 omega theorem while retaining mandatory disclaimers that paper's stronger Omega theorem is not formalized and pinned provider tex/248.tex author map is missing. Resolve or explicitly carry documentary defect; never treat role-scoped review as independent human or MATHCERT certification. Then protected evidence-admission final readback and issue closure only if the bounded source-critical workstream is legitimately finished.",
-  "last_known_evidence": "Fourth exact source-locked Colab CPU replay, admitted via native protected PR #3424 at 1cf3b6d6a6f9ebcb53e032a2475e6257467f451c, completed 2026-11-17 02:33 UTC, GREEN_KERNEL_REPLAY_UNADJUDICATED. Exact receipt SHA256 708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28 (54130 bytes); full logs SHA256 def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08 (8973 bytes); all 60 per-stage stdout/stderr SHA-256 digests verified. Lean v4.33.0, mathlib db584cd6d46c92f209a44c0f1c829460d327499d, provider plby/lean-proofs@8822f7ddef30fadbd92e1c6ab4ed897af356af5e, source SHA256 292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267. All nine declared provider patches and manifest/commit locks passed, Lean build 8918/8918 jobs (4191.28s), separate theorem #check and #print axioms (14.593s) passed. Observed axioms exactly [propext, Classical.choice, Quot.sound]; no sorryAx. Three predecessor RED tickets/receipts preserved and mathematically noncertifying. External proof's alignment with full published sieve argument and independent mathematical adversarial review remain pending; NOT MATHCERT certified. Role-scoped (not human-independent) adversarial source-critical review qualified PASS for the exact omega distinct-prime statement only; pinned 40-module 16369-line import-closure SHA-256 7a4e16be1ef119996a7e3ee773a6a9abb0e6c041791565e679cab8cf1c28f815; reviewed uniform single C/one n/all k, positive sieve mass, fixed medium and large second/fourth-moment thresholds, weighted union bound, extraction, three shift regimes, omega<=Omega arithmetic direction, and exact axiom/patch closure. Written crosswalk + machine receipt reviews/0248_SOURCE_CRITICAL_REVIEW_001.*. Theorem 1.1 stronger Omega bound is not formalized; original claimed tex/248.tex Leanization map absent at pinned provider commit; independent 16369-line analytic rederivation not claimed."
+  "next_action": "After this final candidate is admitted via native protected queue, independently verify protected receipt and manifest checksum readback, then complete bounded issue #3204 as VERIFIED_WITHOUT_CERTIFICATION and reconcile GCL Project #2 Mathematics board Status=Done. Parent issue #3201 stays OPEN for global programme coverage and any further stronger published Omega formalization or unavailable author tex/248.tex source-to-paper map. No MATHCERT certification was requested or granted; do not rerun the source-locked Lean proof without a relevant changed dependency.",
+  "last_known_evidence": "Fourth exact source-locked Colab CPU replay, admitted via native protected PR #3424 at 1cf3b6d6a6f9ebcb53e032a2475e6257467f451c, completed 2026-11-17 02:33 UTC, GREEN_KERNEL_REPLAY_UNADJUDICATED. Exact receipt SHA256 708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28 (54130 bytes); full logs SHA256 def278ff642df48c17787d4d5c0fdbfd671138b63728b66a9105f3ac7d450e08 (8973 bytes); all 60 per-stage stdout/stderr SHA-256 digests verified. Lean v4.33.0, mathlib db584cd6d46c92f209a44c0f1c829460d327499d, provider plby/lean-proofs@8822f7ddef30fadbd92e1c6ab4ed897af356af5e, source SHA256 292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267. All nine declared provider patches and manifest/commit locks passed, Lean build 8918/8918 jobs (4191.28s), separate theorem #check and #print axioms (14.593s) passed. Observed axioms exactly [propext, Classical.choice, Quot.sound]; no sorryAx. Three predecessor RED tickets/receipts preserved and mathematically noncertifying. External proof's alignment with full published sieve argument and independent mathematical adversarial review remain pending; NOT MATHCERT certified. Role-scoped (not human-independent) adversarial source-critical review qualified PASS for the exact omega distinct-prime statement only; pinned 40-module 16369-line import-closure SHA-256 7a4e16be1ef119996a7e3ee773a6a9abb0e6c041791565e679cab8cf1c28f815; reviewed uniform single C/one n/all k, positive sieve mass, fixed medium and large second/fourth-moment thresholds, weighted union bound, extraction, three shift regimes, omega<=Omega arithmetic direction, and exact axiom/patch closure. Written crosswalk + machine receipt reviews/0248_SOURCE_CRITICAL_REVIEW_001.*. Theorem 1.1 stronger Omega bound is not formalized; original claimed tex/248.tex Leanization map absent at pinned provider commit; independent 16369-line analytic rederivation not claimed. Internal Referee adjudication A001 (one authenticated operator, non-author of external Lean proof, not independent human) accepts only exact source-locked distinct-prime omega theorem: reports 8,918 kernel jobs, exact type, foundational axioms, verified 60-stage hashes, nonzero sieve mass, fixed uniform thresholds, all-shift extraction, elementary omega≤Omega direction. Referee report governance/erdos_proof_verification/adjudications/0248_REFEREE_ADJUDICATION_001.md SHA-256 0218423c75cb5712bdd3f9bc3031f003e398f5a966bfd82075cedcacfc753d6a, JSON decision record. Not full paper Omega, missing author's tex/248.tex map retained, only patched source verified. Protected adjudication admission pending, MATHCERT not submitted. Protected native PR #3442 admitted separate internal Referee A001 at 3cd3e6951c9c34d970b1e0e8ca7ae7edcb6ba871, report SHA256 0218423c75cb5712bdd3f9bc3031f003e398f5a966bfd82075cedcacfc753d6a and JSON SHA256 ce859d609dcf89c7ae030234ea2aa3bae9e9d735fbb73a0e3f3cf7d9ee57f455; exact protected readback confirmed both and INTERNAL_ADJUDICATION=PASS. Final evidence-admission candidate A001 governed by admissions/0248_PROTECTED_EVIDENCE_ADMISSION_001.*; this candidate only becomes protected terminal evidence on its own native merge and exact readback. Qualified omega theorem only; stronger paper Omega unformalized and missing author's tex/248.tex map carried to parent #3201; certification remains NOT_SUBMITTED."
 }

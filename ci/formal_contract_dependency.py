@@ -35,6 +35,9 @@ KNOWN_IMPORTLIB_SOURCES = {
 KNOWN_PYTHON_SPAWN = frozenset({
     'ci/formal_validation.py', 'ci/validate_pc_wp04_fixture.py',
     'ci/test_pc_wp04_fixture.py', 'ci/formal_contract_dependency.py',
+    # Exact source-scoped Lean core replay, reached only by the governed
+    # erdos-pv-0560-core formal lane. Unknown future subprocesses still fail.
+    'ci/erdos_pv_0560_formal_replay.py',
 })
 
 

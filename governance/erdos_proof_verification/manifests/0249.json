@@ -10,7 +10,7 @@
   "project_item_id": "PVTI_lADOB9Ao_c4BlwurzhIVExc",
   "literature_status": "OPEN",
   "verification_kind": "LACUNARY_SUBSERIES_IRRATIONALITY",
-  "work_status": "IN_PROGRESS",
+  "work_status": "VERIFIED_WITHOUT_CERTIFICATION",
   "claim_scope": "Independently prove T irrational with exact phi(2^m), binary digit-gap and carry arguments; do not imply full S irrational",
   "falsification": "Wrong exponent gap, periodicity or invalid implication to full S",
   "source_locks": {
@@ -31,17 +31,35 @@
   "stage_results": {
     "SOURCE_LOCK": "PASS",
     "STATEMENT_EQUIVALENCE": "PASS",
-    "REPLAY_PREPARATION": "BLOCKED",
-    "REPLAY_EXECUTION": "PENDING",
-    "ADVERSARIAL_REVIEW": "PENDING",
-    "INTERNAL_ADJUDICATION": "PENDING",
-    "PROTECTED_EVIDENCE_ADMISSION": "PENDING"
+    "REPLAY_PREPARATION": "PASS",
+    "REPLAY_EXECUTION": "PASS",
+    "ADVERSARIAL_REVIEW": "PASS",
+    "INTERNAL_ADJUDICATION": "PASS",
+    "PROTECTED_EVIDENCE_ADMISSION": "PASS"
   },
   "proof_receipts": [
-    "governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md"
+    "governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md",
+    "governance/erdos_proof_verification/evidence/0249/LACUNARY_LEAN_GREEN_001.receipt.json",
+    "experiments/erdos_proof_verification/0249/theorem_replay_stdout.log",
+    "governance/erdos_proof_verification/evidence/0249/LACUNARY_HOSTILE_FULL_SERIES_001.stdout.log"
   ],
-  "review_receipts": [],
-  "toolchain_pins": null,
+  "review_receipts": [
+    "governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.md",
+    "governance/erdos_proof_verification/reviews/0249_SOURCE_CRITICAL_REVIEW_001.json",
+    "governance/erdos_proof_verification/adjudications/0249_REFEREE_ADJUDICATION_001.md",
+    "governance/erdos_proof_verification/adjudications/0249_REFEREE_ADJUDICATION_001.json",
+    "governance/erdos_proof_verification/admissions/0249_PROTECTED_EVIDENCE_ADMISSION_001.md",
+    "governance/erdos_proof_verification/admissions/0249_PROTECTED_EVIDENCE_ADMISSION_001.json"
+  ],
+  "toolchain_pins": {
+    "lean": "leanprover/lean4:v4.35.0-rc3",
+    "lean_commit": "470d5ce1400764999581fd26d5d72b00d990b0f4",
+    "mathlib": "c55e6e786f49471c72fbddbec5415808896aec1e",
+    "provider_source_sha256": "6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99",
+    "lakefile_sha256": "4dc46a70590893697fb3f3183000af552e29d972e1eacb6b5c7adb86a9f30525",
+    "lake_manifest_sha256": "3b9de3758005c73d884250d11611c935882adf24f02d9a35dc698a033daadde2",
+    "scope": "bounded totient lacunary subseries only; no Lean proof for original full S"
+  },
   "certification_status": "NOT_SUBMITTED",
   "guardrails": {
     "no_open_conjecture_promotion": true,
@@ -55,6 +73,6 @@
     "acceptance": "Statement-equivalent evidence, reproducible receipts, hostile checks, independently reviewed protected admission",
     "stopping": "One bounded replay/review pass or exact evidence-backed blocker; never infer PASS"
   },
-  "next_action": "Prepare pinned Lean no-sorry proof of phi(2^m)=2^(m-1), exponent gap, tail <=2^(1-e_(N+1)), and rational denominator separation; run actual kernel/axiom checks, separate nonauthoring adversarial review and protected evidence admission. Original Erdős #249 S remains OPEN.",
-  "last_known_evidence": "Independently reconstructed bounded proof T irrational via dyadic-denominator separation (not the open full series S). Evidence: governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md; no Lean replay or certification"
+  "next_action": "On native protected admission of the final custody PR, read exact protected main sha and content digests, then reconcile bounded #3205 as DONE with GCL Worker Queue Project #2 Mathematics Done and remove gcl-state:available. Original full series S remains OPEN under parent #3201, even though auxiliary lacunary totient T is rigorously formalized. Certification NOT_SUBMITTED; never infer mathcert. Before issue transition verify all six stage receipt files and current issue/project identities.",
+  "last_known_evidence": "Independently reconstructed bounded proof T irrational via dyadic-denominator separation (not the open full series S). Evidence: governance/erdos_proof_verification/evidence/0249/IRRATIONAL_LACUNARY_SUBSERIES_001.md; no Lean replay or certification New formal auxiliary theorem at experiments/erdos_proof_verification/0249/Erdos249Lacunary.lean, SHA256 6ec552e86902699f26472a3cddb6fdcf79e7dba1abb6ac3c3b486a2bda82cb99, 292 lines. Actual Lean 4.35.0-rc3 (binary 470d5ce), Mathlib c55e6e786f49471c72fbddbec5415808896aec1e, Lake manifest SHA256 3b9de3758005c73d884250d11611c935882adf24f02d9a35dc698a033daadde2, full source-locked standalone compile exit 0, exact GitHub candidate head b13cfb2... byte-verified fresh replay, final theorem type x∉Set.range Rat.cast, axioms exactly [propext, Classical.choice, Quot.sound]; stdout sha256 038d3d08c883f2c17394c2e39a9eaeaeda5d57970745626390528d360f9c9365, stderr zero; intentional application to original full S fails exact Lean type check (hostile log sha256 5cc0d6ccb3b7a8ed27e283c9bc78a435984441bc0cb2faa4f810acc2e258f6ec). Evidence LACUNARY_LEAN_GREEN_001.receipt.json. NOT a proof of full S; role review/adjudication pending. Distinct logical-role source-critical qualified review R001 and internal Referee A001, both authored by same authenticated agent as new 292-line Lean proof (not independent human review), completed for auxiliary T only. Review SHA256 8ff6b75a2d4458c9e7bea14203f332f382409a89ae56452cada970d6205b6943; Referee report SHA256 13159251dcbe80165b1780f55f022ee3707b89cc31b6bcfe0a6566196502a596. GCL source-locked GREEN protected proof 62ffaa1db3e2d1a5d120611e86fc189f1c24b50e (v4.35/c55e Mathlib). Not original S; final custody pending. Parent proof PR #3446 protected 62ffaa1db3e2d1a5d120611e86fc189f1c24b50e; review/adjudication PR #3447 protected b9a122c4c8c0db9c83dae8a3f3be4e0b017d0188, source critical report SHA 8ff6b75a2d4458c9e7bea14203f332f382409a89ae56452cada970d6205b6943, Referee report SHA 13159251dcbe80165b1780f55f022ee3707b89cc31b6bcfe0a6566196502a596, same agent as formal author admitted and no human-independent certification. Final custody candidate admissions/0249_PROTECTED_EVIDENCE_ADMISSION_001.* locks all sources; only actual final PR protected merge establishes canonical PASS. Bounded T only, open original S."
 }
