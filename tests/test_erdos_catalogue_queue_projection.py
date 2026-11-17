@@ -2,11 +2,13 @@
 import unittest
 import copy
 import json
+import os
 import sys
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
 from ci import erdos_catalogue_queue_projection as mod
+m = mod
 
 
 class QueueProjectionTests(unittest.TestCase):
@@ -128,6 +130,8 @@ class QueueProjectionTests(unittest.TestCase):
             if args[1].endswith("/issues/comments/77"):
                 return {"issue_url":"https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
                         "body":self.body}
+            if args[1].endswith("/issues/2491/comments?per_page=100"):
+                return []
             raise AssertionError(f"unexpected API: {args}")
         with patch.object(mod,"gh",side_effect=gh), \
              patch.object(mod,"project_metadata",return_value=("PROJECT","FIELD","RETURNED")), \
@@ -140,6 +144,36 @@ class QueueProjectionTests(unittest.TestCase):
                 self.assertTrue(receipt["historical_terminal"])
                 self.assertFalse(receipt["available_removed"])
             mutation.assert_not_called()
+
+    def test_late_source_exception_blocks_closed_done_without_mutation(self):
+        # Exact regression for #1836: Done preceded the Clerk's SOURCE_INTEGRITY
+        # exception. Never mistake terminal queue state for accepted source.
+        def gh(*args):
+            if args[1].endswith("/issues/2491"):
+                return {"state": "closed", "labels": [{"name": x} for x in
+                    ("gcl-job", "gcl-pickup:direct-editorial", "gcl-role:source-audit")]}
+            if args[1].endswith("/issues/comments/77"):
+                return {"issue_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                        "body": self.body}
+            if args[1].endswith("/issues/2491/comments?per_page=100"):
+                return [{"id": 6288214238,
+                         "issue_url": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/issues/2491",
+                         "created_at": "2026-10-20T09:49:43Z",
+                         "body": "GCL-RETURN-EXCEPTION/1\nTYPE: SOURCE_INTEGRITY\nREVIEW: REQUIRED, NO SOURCE ACCEPTANCE\n"}]
+            raise AssertionError(f"unexpected API: {args}")
+        with patch.object(mod, "gh", side_effect=gh), \
+             patch.object(mod, "project_metadata", return_value=("PROJECT", "FIELD", "RETURNED")), \
+             patch.object(mod, "issue_project_item", return_value={"id": "ITEM", "status": "Done"}), \
+             patch.object(mod.subprocess, "run") as mutation:
+            for dry in (False, True):
+                with self.assertRaisesRegex(ValueError, "source exception requires protected review"):
+                    mod.reconcile(self.report, self.issue, dry)
+            mutation.assert_not_called()
+
+    def test_terminal_exception_census_incomplete_fails_closed(self):
+        with patch.object(mod, "gh", return_value=[{}] * 100):
+            with self.assertRaisesRegex(ValueError, "census incomplete"):
+                mod.verify_terminal_source_exception_custody(self.issue)
 
     def test_closed_nonterminal_project_is_rejected_without_write(self):
         def gh(*args):
@@ -546,6 +580,102 @@ class ReviewCompletionTests(unittest.TestCase):
                 d=json.loads(Path(tmp,"r.json").read_text())
                 self.assertTrue(d["complete"])
                 self.assertFalse(d["applied"])
+
+
+
+from ci import erdos_catalogue_programme_intake as intake
+
+class LateExceptionRecoveryTest(unittest.TestCase):
+    def setUp(self):
+        self.issue = 1836
+        self.cid = 6288214238
+        self.body = ("GCL-RETURN-EXCEPTION/1\nISSUE: 1836\n"
+                     "PROBLEM: 565\nTYPE: SOURCE_INTEGRITY\n"
+                     "REVIEW: REQUIRED, NO SOURCE ACCEPTANCE\n"
+                     "DETAIL: duplicate or unsafe header EVIDENCE_AUTHORITY\n")
+        self.e = {"action":"created",
+                  "repository":{"full_name":m.LATE_REPO},
+                  "issue":{"number":self.issue},
+                  "comment":{"id":self.cid,"body":self.body,
+                             "user":{"login":m.LATE_BOT}}}
+        self.env={"GITHUB_ACTIONS":"true","GITHUB_REPOSITORY":m.LATE_REPO,
+                  "GITHUB_REF":"refs/heads/main",
+                  "GITHUB_EVENT_NAME":"issue_comment",
+                  "GCL_RETURN_FASTPATH_CONTROL":"protected-main"}
+        self.live={"issue_url":f"https://api.github.com/repos/{m.LATE_REPO}/issues/{self.issue}",
+                   "body":self.body,"user":{"login":m.LATE_BOT}}
+        self.registry={"issues":[{"issue_number":self.issue,"problem_id":565}]}
+
+    def fixture(self, directory):
+        p=Path(directory)/"event.json"
+        p.write_text(json.dumps(self.e))
+        return p
+
+    def test_reject_wrong_clerk_issue_and_corpus(self):
+        with tempfile.TemporaryDirectory() as d, patch.dict(os.environ,self.env), \
+            patch.object(intake,"load_registry",return_value=self.registry), \
+            patch.object(m,"gh",return_value=self.live):
+            path=self.fixture(d)
+            self.assertEqual(m.late_exception_bound_event(path)[:2],(self.issue,self.cid))
+            for bad in ("other-user","not-clerk"):
+                self.e["comment"]["user"]["login"]=bad
+                path.write_text(json.dumps(self.e))
+                with self.assertRaisesRegex(ValueError,"untrusted"):
+                    m.late_exception_bound_event(path)
+            self.e["comment"]["user"]["login"]=m.LATE_BOT
+            self.e["issue"]["number"]=9999
+            path.write_text(json.dumps(self.e))
+            with self.assertRaises(ValueError):
+                m.late_exception_bound_event(path)
+
+    def test_closed_done_is_reopened_and_project_returns(self):
+        with tempfile.TemporaryDirectory() as d, patch.dict(os.environ,self.env), \
+            patch.object(intake,"load_registry",return_value=self.registry):
+            path=self.fixture(d)
+            state={"issue":"closed","status":"Done"}
+            def gh(*args):
+                if args[1].endswith(f"/issues/comments/{self.cid}"):
+                    return self.live
+                if args[1].endswith(f"/issues/{self.issue}"):
+                    return {"state":state["issue"],"labels":[{"name":x} for x in
+                        ("gcl-job","gcl-pickup:direct-editorial","gcl-role:source-audit")]}
+                raise AssertionError(args)
+            def metadata(): return ("PROJECT","FIELD","OPTION")
+            def item(*args): return {"id":"ITEM","status":state["status"]}
+            def update_project(*args): state["status"]="RETURNED"
+            def patch_issue(*args,**kwargs):
+                state["issue"]="open"
+                return None
+            with patch.object(m,"gh",side_effect=gh), \
+                patch.object(m,"project_metadata",side_effect=metadata), \
+                patch.object(m,"issue_project_item",side_effect=item), \
+                patch.object(m,"apply_returned_project_status",side_effect=update_project), \
+                patch.object(m,"source_issue_gcl_state",return_value="RETURNED"), \
+                patch.object(m,"apply_returned_issue_field"), \
+                patch.object(m,"remove_available_label"), \
+                patch.object(m.subprocess,"run",side_effect=patch_issue) as mutation:
+                receipt=m.late_exception_run("capture",path,Path(d))
+                self.assertFalse(receipt["source_semantics_accepted"])
+                first=m.late_exception_run("restore",path,Path(d))
+                self.assertEqual(first["status"],"VERIFIED_SOURCE_REVIEW_PENDING")
+                self.assertEqual(first["issue_state"],"open")
+                self.assertEqual(first["project_status"],"RETURNED")
+                self.assertFalse(first["source_review_complete"])
+                self.assertEqual(mutation.call_count,1)
+                # Idempotent reentry must not repeat the issue PATCH.
+                again=m.late_exception_run("restore",path,Path(d))
+                self.assertEqual(again["status"],"VERIFIED_SOURCE_REVIEW_PENDING")
+                self.assertEqual(mutation.call_count,1)
+
+    def test_missing_protected_control_is_fail_closed(self):
+        with tempfile.TemporaryDirectory() as d, patch.dict(os.environ,self.env), \
+            patch.object(intake,"load_registry",return_value=self.registry), \
+            patch.object(m,"gh",return_value=self.live):
+            p=self.fixture(d)
+            m.late_exception_run("capture",p,Path(d))
+            with patch.dict(os.environ,{"GCL_RETURN_FASTPATH_CONTROL":""}):
+                with self.assertRaisesRegex(ValueError,"protected Council Clerk control"):
+                    m.late_exception_run("restore",p,Path(d))
 
 
 if __name__ == "__main__":
