@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL-ERDOS-566-567-FORMAL-SOURCE-RECONCILIATION/1",
+  "scope": "PER_PROBLEM_FORMAL_SOURCE_OVERRIDE_ONLY",
+  "legacy_provider_snapshot": "FC-GDM-85F86371",
+  "legacy_provider_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+  "corrected_source_repository": "google-deepmind/formal-conjectures",
+  "corrected_source_commit": "6751c0f043985ac6647db28a45a63afdf21acffe",
+  "corrected_definition": {
+    "path": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/Ramsey.lean",
+    "git_blob_sha1": "9ad9e73d898e9b0cca1db96f1c537466bc07f385",
+    "symbol": "SimpleGraph.IsRamseySizeLinear",
+    "target_invariant": "SimpleGraph.graphRamsey",
+    "semantic_meaning": "minimum vertex count of a complete two-color Ramsey host, bounded by target edge count"
+  },
+  "legacy_wrong_definition": {
+    "path": "FormalConjecturesForMathlib/Combinatorics/SimpleGraph/SizeRamsey.lean",
+    "git_blob_sha1": "142aac36c17d12d351b8a9b5ed2efc1f157bda45",
+    "target_invariant": "SimpleGraph.sizeRamsey",
+    "semantic_mismatch": "minimum host edge count over arbitrary Ramsey host graphs"
+  },
+  "problems": {
+    "566": {
+      "source_audit_issue": 1837,
+      "source_return_comment": 6933484877,
+      "legacy_formal_path": "FormalConjectures/ErdosProblems/566.lean",
+      "legacy_formal_blob_sha1": "0db66813b8f17be6819c53afca9cd3f853426a53",
+      "corrected_formal_path": "FormalConjectures/ErdosProblems/566.lean",
+      "corrected_formal_blob_sha1": "554166014f8b0f596c59b02bd5d5a7796c0383c9",
+      "corrected_theorem": "Erdos566.erdos_566"
+    },
+    "567": {
+      "source_audit_issue": 1838,
+      "source_return_comment": 6933909202,
+      "legacy_formal_path": "FormalConjectures/ErdosProblems/567.lean",
+      "legacy_formal_blob_sha1": "f2e29d94a0391f71f78d4b32168ce5e627e28b27",
+      "corrected_formal_path": "FormalConjectures/ErdosProblems/567.lean",
+      "corrected_formal_blob_sha1": "f7159b8864d80b72ea44c16a78a93a871763291f",
+      "corrected_theorem": "Erdos567.erdos_567.parts.i/ii/iii"
+    }
+  },
+  "primary_reference": {
+    "authors": "P. Erdos, R. J. Faudree, C. C. Rousseau and R. H. Schelp",
+    "title": "Ramsey Size Linear Graphs",
+    "journal": "Combinatorics, Probability and Computing 2(4) (1993), 389-399",
+    "doi": "10.1017/S096354830000078X",
+    "registered_question": "R(G,H) <= c_G |E(H)| for every no-isolate H"
+  },
+  "formal_source_disposition": "CORRECTED_STATEMENT_IDENTITY_LOCKED_FOR_BOUNDED_WORK",
+  "claim_boundary": {
+    "legacy_source_for_566_567_rejected": true,
+    "global_provider_snapshot_replaced": false,
+    "source_semantics_reviewed_for_invariant": true,
+    "formal_kernel_proof_verified": false,
+    "theorems_proved": false,
+    "mathcert_certified": false
+  },
+  "next": "Only exact corrected per-problem source pins can enter formal verification manifests; proof replay, adverse review and protected admission remain separate."
+}
