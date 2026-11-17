@@ -53,7 +53,7 @@ noncomputable def stoneanCompHausSheafificationCompatibility :
         (Condensed.StoneanCompHaus.equivalence
           (ModuleCat Coeff)).inverse := by
   exact Functor.IsDenseSubsite.sheafEquivSheafificationCompatibility
-    Stonean.toCompHaus (coherentTopology Stonean)
+    (G := Stonean.toCompHaus) (coherentTopology Stonean)
       (coherentTopology CompHaus) (ModuleCat Coeff)
 
 /-- Canonical sheafified comparison at ANY profinite X:
@@ -102,7 +102,7 @@ theorem stoneanProbeFreeBarComplex_exactAt_positive
     (stoneanProbeFreeBarComplex T U).ExactAt (n + 1) := by
   let e := stoneanProbeFreeCechHomotopyEquiv T U
   haveI : QuasiIso e.hom := e.quasiIso_hom
-  exact (HomologicalComplex.exactAt_iff_of_quasiIsoAt
+  exact (exactAt_iff_of_quasiIsoAt
     e.hom (n + 1)).2
     (ChainComplex.exactAt_succ_single_obj _ n)
 
