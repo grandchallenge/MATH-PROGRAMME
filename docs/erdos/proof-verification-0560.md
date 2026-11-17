@@ -4,7 +4,7 @@
 
 **Original problem: OPEN.** GCL has independently reconstructed a published **off-diagonal lower-bound lemma** and checked twelve supporting statements using Lean. It has **not** proved the requested diagonal asymptotic, formalized the complete published lemma in Lean, or received a MATHCERT certificate.
 
-[Read the numbered Erdős problem](https://www.erdosproblems.com/560) · [Browse the GCL compendium entry](problems/0560.md) · [Understand the verification programme](../ERDOS_PROOF_VERIFICATION.md)
+[Read the numbered Erdős problem](https://www.erdosproblems.com/560) · [Browse the GCL compendium entry](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/0560/) · [Understand the verification programme](../ERDOS_PROOF_VERIFICATION.md)
 
 ## The mathematical question
 
