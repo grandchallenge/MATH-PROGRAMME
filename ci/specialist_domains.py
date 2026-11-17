@@ -92,7 +92,9 @@ def protected_path(path: str) -> bool:
         "mkdocs.yml", "governance/specialist_admission_domains.json",
         # Protected-main operational custody, queue, and policy controller lanes.
         "ci/erdos_catalogue_queue_projection.py",
+        "ci/erdos_late_exception_recovery.py",
         "tests/test_erdos_catalogue_queue_projection.py",
+        "tests/test_campaign_erdos_late_exception_recovery.py",
         "ci/erdos_event_custody.py",
         "tests/test_erdos_event_custody.py",
         "ci/validate_workflow_coverage_v2.py",
