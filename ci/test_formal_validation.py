@@ -18,7 +18,7 @@ def expect(paths: list[str], lanes: list[str]) -> None:
 def main() -> int:
     registry = formal.load_registry(ROOT)
     lane_ids = [lane["id"] for lane in registry["lanes"]]
-    assert len(lane_ids) == 15
+    assert len(lane_ids) == 16
     assert len(lane_ids) == len(set(lane_ids))
 
     # The live reproduction from PR #919 must instantiate exactly one substantive
@@ -42,6 +42,30 @@ def main() -> int:
         ["pc-wp04"],
     )
     expect(["evidence/UC-WP02-MATHCERT.json"], ["union-closed-mathcert"])
+    # A new Init-only Erdős review executes a dedicated Lean lane;
+    # it must not awaken unrelated CMDG, LOG-GCD or external-MATHCERT lanes.
+    erdos_core = "experiments/erdos_proof_verification/0560/"
+    for source in (
+        erdos_core + "Erdos560Core.lean",
+        erdos_core + "lakefile.toml",
+        erdos_core + "lean-toolchain",
+        "ci/erdos_pv_0560_formal_replay.py",
+        "ci/test_erdos_pv_0560_formal_replay.py",
+        "governance/erdos_proof_verification/evidence/0560/C_LEAN_CORE_REPLAY_001.json",
+    ):
+        expect([source], ["erdos-pv-0560-core"])
+    expect([erdos_core+"Erdos560Core.lean", "README.md"], ["erdos-pv-0560-core"])
+    # Source additions under the managed Erdős proof root that are not
+    # explicitly compiled by the registered Lake target must fail closed.
+    try:
+        formal.classify_paths([erdos_core + "UnregisteredNewLemma.lean"], registry)
+    except formal.FormalValidationError as exc:
+        assert "unclassified executable/formal path" in str(exc)
+    else:
+        raise AssertionError("unreviewed formal source was silently accepted")
+    # Source under a different formal programme is never reassigned.
+    expect([erdos_core+"Erdos560Core.lean", p3_point],
+           ["cmdg-cm4-p3", "erdos-pv-0560-core"])
     expect(["docs/WORKFLOW_COVERAGE.md"], [])
     expect(["README.md"], [])
 
