@@ -260,7 +260,7 @@ class Erdos249LacunaryReplayTests(unittest.TestCase):
         self.assertEqual(m['stage_results']['REPLAY_EXECUTION'], 'PASS')
         self.assertEqual(m['stage_results']['ADVERSARIAL_REVIEW'], 'PASS')
         self.assertEqual(m['stage_results']['INTERNAL_ADJUDICATION'], 'PASS')
-        self.assertEqual(m['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PENDING')
+        self.assertEqual(m['stage_results']['PROTECTED_EVIDENCE_ADMISSION'], 'PASS')
         self.assertEqual(m['certification_status'], 'NOT_SUBMITTED')
         mod.validate_manifest(m, self.schema)
 
@@ -338,6 +338,39 @@ class Erdos249LacunaryReplayTests(unittest.TestCase):
             return forged if path == file else real(path, *args, **kwargs)
         with patch.object(mod, 'load', side_effect=altered):
             with self.assertRaisesRegex(ValueError, 'exact noncertifying T scope'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_249_final_custody_missing_receipt_fails(self):
+        bad = copy.deepcopy(self.good)
+        bad['review_receipts'] = [r for r in bad['review_receipts']
+                                  if '0249_PROTECTED_EVIDENCE_ADMISSION_001' not in r]
+        with self.assertRaisesRegex(ValueError, 'exact protected custody packet'):
+            mod.validate_manifest(bad, self.schema)
+
+    def test_249_final_custody_cannot_promote_full_original_series(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/admissions/'
+             '0249_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(p))
+        forged['scope_checks']['original_s_claim'] = True
+        def inject(path, *args, **kwargs):
+            return forged if path == p else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact T-only theorem and open S'):
+                mod.validate_manifest(copy.deepcopy(self.good), self.schema)
+
+    def test_249_final_custody_rejects_stale_protected_referee(self):
+        from unittest.mock import patch
+        p = ('governance/erdos_proof_verification/admissions/'
+             '0249_PROTECTED_EVIDENCE_ADMISSION_001.json')
+        real = mod.load
+        forged = copy.deepcopy(real(p))
+        forged['protected_adversarial_referee_commit'] = '0' * 40
+        def inject(path, *args, **kwargs):
+            return forged if path == p else real(path, *args, **kwargs)
+        with patch.object(mod, 'load', side_effect=inject):
+            with self.assertRaisesRegex(ValueError, 'exact T-only theorem and open S'):
                 mod.validate_manifest(copy.deepcopy(self.good), self.schema)
 
     def test_no_proof_of_open_series_from_bounded_green(self):
