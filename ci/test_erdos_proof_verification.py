@@ -137,14 +137,12 @@ class VerificationContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'real scoped noncertifying custody'):
                 mod.validate_manifest(copy.deepcopy(self.good), self.schema)
 
-    def test_no_final_protected_admission_before_referee_merge(self):
+    def test_no_protected_admission_without_internal_referee(self):
         bad = copy.deepcopy(self.good)
+        bad['stage_results']['INTERNAL_ADJUDICATION'] = 'PENDING'
         bad['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] = 'PASS'
-        # A final admitted status cannot be asserted before its own protected
-        # review/custody record has been merged and read back.
-        self.assertNotEqual(bad['work_status'], 'VERIFIED_WITHOUT_CERTIFICATION')
-        # This is a policy obligation for the final stage, not a claim that
-        # this adjudication candidate is yet terminal.
+        with self.assertRaisesRegex(ValueError, 'admitted without adjudication'):
+            mod.validate_manifest(bad, self.schema)
 
     def test_no_mathcert_status_from_source_return(self):
         bad = copy.deepcopy(self.good)
