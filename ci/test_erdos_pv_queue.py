@@ -69,10 +69,19 @@ class QueueTests(unittest.TestCase):
 
     def test_selected_560_562_enter_existing_phase_b_only(self):
         x=q.candidates('B',after=559,cohort='0501-0600',limit=10)
-        self.assertEqual([r['problem_id'] for r in x],[560,561,562])
+        self.assertEqual([r['problem_id'] for r in x],[561,562])  # 560 now has B evidence
         self.assertTrue(all(r['queue_issue']==3230 for r in x))
         self.assertTrue(all(r['triage_decision']=='SELECTED_WITH_MANIFEST' for r in x))
         self.assertFalse(any(xi['problem_id'] in (563,564) for xi in x))
+
+    def test_560_c_not_enabled_until_exact_b_protected_admission(self):
+        cohort=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][560-501]
+        self.assertEqual(row['stage_work_items']['B']['work_status'],'VERIFIED_BOUNDED')
+        self.assertFalse(q.permitted(row,'B'))
+        self.assertFalse(q.permitted(row,'C'))
+        self.assertNotIn(560,[x['problem_id'] for x in
+                               q.candidates('C',after=559,cohort='0501-0600',limit=10)])
 
     def test_pending_triage_never_enters_phase_b(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')['items'][62]

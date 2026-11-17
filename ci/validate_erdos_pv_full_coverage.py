@@ -76,12 +76,47 @@ def validate_five_source_scope(row, root=ROOT):
            and r['scope_review']==('SOURCE_READY_FOR_BOUNDED_VERIFICATION' if expected_selected
                                     else ('SOURCE_CONFLICT_REPAIR_REQUIRED' if n==563 else 'EVIDENCE_BLOCKED')),
            f'problem {n}: invalid Phase A triage, evidence or blocker')
-    for later in 'BCD':
+    # Phase A was an immutable prerequisite, not a permanent B/C/D freeze.
+    # A future stage may advance only if source-selected, previous evidence
+    # is reviewed, and its own stage-specific receipts exist. This preserves
+    # the original no-promotion gate without deadlocking legitimate Phase B.
+    admitted={'VERIFIED_BOUNDED','PROTECTED_ADMITTED','REUSED_SCOPE_VERIFIED',
+              'NOT_APPLICABLE_REVIEWED'}
+    for later, predecessor in (('B','A'),('C','B'),('D','C')):
         v=row['stage_work_items'][later]
-        ensure(v['work_status']=='UNEXECUTED' and not v['evidence_refs']
-               and v['formal_replay_receipt'] is None
-               and v['protected_admission_ref'] is None,
-               f'problem {n}: downstream phase was promoted without proof')
+        if v['work_status']=='UNEXECUTED':
+            ensure(not v['evidence_refs'] and v['formal_replay_receipt'] is None
+                   and v['protected_admission_ref'] is None,
+                   f'problem {n}: unexecuted stage contains false completion evidence')
+            continue
+        prior=row['stage_work_items'][predecessor]
+        ensure(expected_selected and prior['work_status'] in admitted,
+               f'problem {n}: downstream phase not source-selected/reviewed')
+        if later in ('C','D'):
+            ensure(prior['work_status']=='PROTECTED_ADMITTED',
+                   f'problem {n}: {later} requires previous protected admission')
+        evidence=v['evidence_refs']
+        ensure(isinstance(evidence,list) and bool(evidence)
+               and all(isinstance(x,str) and x.startswith(
+                   f'governance/erdos_proof_verification/evidence/{n:04}/') for x in evidence)
+               and v['source_lock_receipt']==TRIAGE_FIVE_PATH,
+               f'problem {n}: downstream evidence/source lock not scoped')
+        # The named evidence files must exist in this exact checked-out
+        # candidate, not merely be strings that resemble paths.
+        ensure(all((root / ref).resolve().is_relative_to(root.resolve())
+                   and (root / ref).is_file() for ref in evidence),
+               f'problem {n}: downstream proof evidence file missing')
+        if v['work_status'] in admitted:
+            ensure(v['review_status'] not in ('NOT_REVIEWED','PENDING','')
+                   and v['adversarial_review_receipt'] in evidence
+                   and v['semantic_equivalence_receipt'] in evidence,
+                   f'problem {n}: bounded result lacks semantic/adversarial review')
+        if v['work_status']=='PROTECTED_ADMITTED':
+            ensure(bool(v['protected_admission_ref']),
+                   f'problem {n}: unbound protected admission')
+        else:
+            ensure(v['protected_admission_ref'] is None,
+                   f'problem {n}: protected admission claimed before merge')
 
 def validate_row(row,source,phase_issues,root=ROOT):
     n=source['problem_id'];tag=f'problem {n}'
