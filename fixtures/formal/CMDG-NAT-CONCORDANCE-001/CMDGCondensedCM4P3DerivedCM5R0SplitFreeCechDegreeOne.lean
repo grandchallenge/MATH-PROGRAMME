@@ -179,6 +179,10 @@ theorem splitFreeCechDegreeOne_exact
     (p : X → Y) (s : Y → X) (hs : ∀ y, p (s y) = y) :
     (splitFreeCechDegreeOneComplex p).Exact := by
   rw [ShortComplex.moduleCat_exact_iff]
+  change ∀ (c : (ModuleCat.free Coeff).obj (splitFreeCechPair p)),
+    (splitFreeCechD1 p) c = 0 →
+      ∃ z : (ModuleCat.free Coeff).obj (splitFreeCechTriple p),
+        (splitFreeCechD2 p) z = c
   intro c hc
   refine ⟨-(splitFreeCechH1 p s hs c), ?_⟩
   have hcon := congrArg
