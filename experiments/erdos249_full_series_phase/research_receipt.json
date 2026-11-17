@@ -1,0 +1,104 @@
+{
+  "record_type": "GCL-ERDOS249-FULL-S-MOVING-DEPTH-RESEARCH/1",
+  "run_id": "ERDOS249-S-MOVING-DEPTH-001",
+  "date_utc": "2026-11-17",
+  "parent_issue": 3201,
+  "auxiliary_work_issue": 3205,
+  "auxiliary_work_completed_not_reopened": true,
+  "scope": "ORIGINAL_FULL_TOTIENT_SERIES_S",
+  "erdos_problem_status": "OPEN",
+  "certification_status": "NOT_SUBMITTED",
+  "research_status": "ELEMENTARY_HAND_PROOF_AND_FINITE_DIAGNOSTICS__NOT_IRRATIONALITY_PROOF",
+  "novelty_status": "NOT_ESTABLISHED",
+  "independent_human_review": false,
+  "lean_kernel_checked": false,
+  "mathematical_claims": {
+    "fixed_depth_totient_divisibility_density_one": "ELEMENTARY_ARGUMENT_PRESENT_NOT_LEAN_VERIFIED",
+    "fixed_depth_phase_mean_uniform_over_integer_h_to_one": "ELEMENTARY_ARGUMENT_PRESENT_NOT_LEAN_VERIFIED",
+    "totient_lower_bound_phi_squared_ge_n_over_two": "ELEMENTARY_ARGUMENT_PRESENT_NOT_LEAN_VERIFIED",
+    "actual_tail_lower_and_upper_bounds": "ELEMENTARY_ARGUMENT_PRESENT_NOT_LEAN_VERIFIED",
+    "original_full_series_irrationality": "NOT_PROVED"
+  },
+  "prior_work": {
+    "formal_source_commit": "85f863718beeec7b58a3a1926ee92e3472bc2020",
+    "source_catalogue_issue": 1518,
+    "known_mobius_squared_identity": "W. Cook, The Binary Totient Series, revised October 2026",
+    "existing_conditional_harmonic_criteria": true,
+    "full_conjecture_open": true
+  },
+  "phase_probe": {
+    "l": 48,
+    "x": [
+      1024,
+      4096,
+      16384,
+      65536
+    ],
+    "h": [
+      32,
+      32,
+      64,
+      64
+    ],
+    "maximum_observed_moduli": [
+      0.07430713,
+      0.032810778,
+      0.017717088,
+      0.007857192
+    ],
+    "theoretical_phase_truncation_bounds": [
+      1.498633852686768e-09,
+      5.8873880904882465e-09,
+      4.688481008338833e-08,
+      1.8732494569303564e-07
+    ],
+    "trigonometric_precision": "ordinary_double_not_certified_interval",
+    "asymptotic_conclusion": false
+  },
+  "rational_control": {
+    "formula": "a_n=2*floor(n/2)",
+    "exact_generating_value": "4/3",
+    "first_harmonic_mean_exact_for_even_block": "-1/2",
+    "third_harmonic_mean_exact": "1",
+    "finite_run_controls_pass": true
+  },
+  "source_files_sha256": {
+    "README.md": "b9464ad13a40949025e89698c8e11a4f27f96430c35c647dd39200ab2172f6f1",
+    "fourier_probe.py": "99e3717af0ae9adb8465efe8321f885f1a72405860c24b9590a05e5c238ac76e",
+    "depth_stress.py": "d65208cb5fb430a9fd22737361ed040e9b7c9111917d1db2ea04c95ef7873f05",
+    "tests/test_erdos249_full_series_phase.py": "d0e623c31a83a1e8919d451c8b700cd46e40da8431ed2b63da7204b254f57908"
+  },
+  "result_files_sha256": {
+    "result_1024.json": "6c907fb0245817d73c941da3b4a93aafbb00629ecdbccea1971279ee0b57e753",
+    "result_4096.json": "0bf9d87df44bfcb045929ba0a84142761ac76a4fe3ddece4513906284bcb2e57",
+    "result_16384.json": "cc34b005e989debfba3c66c261d23749944c2d346c737ce54801e751e3ce5e6c",
+    "result_65536.json": "a9da923c1b6bd73161de6b6295ed9ef7b822fc59d3627933918c68888f227caf",
+    "depth_stress_results.json": "368db4b6674c75b915fa103f8287d8347a6c07dc83b7ddf34afd5d5633201d33"
+  },
+  "tests": {
+    "passed": 7,
+    "failed": 0,
+    "stages": [
+      "totient-versus-gcd",
+      "elementary-lower-bound-finite-check",
+      "modular-recurrence-vs-direct",
+      "exact-rational-control",
+      "mobius-squared-lambert-finite-identity",
+      "output-and-rational-controls",
+      "depth-stress-module-exact-replay"
+    ],
+    "mishap": "M\u00f6bius sieve prime detection initially failed a rational-identity test; diagnosed and corrected before source admission",
+    "actual_test_capture": "e6d1d4500dce49eba8e65b6548577d2f",
+    "artifact_byte_readback_capture": "PENDING_EXACT_CANDIDATE_PUSH_READBACK",
+    "artifact_byte_readback_capture_pre_refactor": "04727bad2d644763bad4f899702da368"
+  },
+  "next_research_obligation": "Construct or refute moving-depth arithmetic nonconcentration estimate with universal positive-denominator quantifier; compare to Cook 2026 conditional bounds; preserve exact full-series scope.",
+  "repository_contract_repair": {
+    "reason": "ci/validate_repository_execution.py enforces experiments as importable library-only modules reachable from tests/test_*.py",
+    "execution_entrypoints": "import library main from Python -c, governed unittest discovery",
+    "separate_independent_human_review": false,
+    "source_code_relocated": "experiments/erdos249_full_series_phase/",
+    "unittest_path": "tests/test_erdos249_full_series_phase.py",
+    "original_full_series_status": "OPEN"
+  }
+}
