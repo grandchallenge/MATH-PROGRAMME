@@ -38,7 +38,7 @@ jobs:
         run: |
           set -euo pipefail
           if [[ "${{ startsWith(github.event.comment.body, 'GCL-RETURN-EXCEPTION/1') }}" == "true" ]]; then
-            python ci/erdos_late_exception_recovery.py capture \
+            python ci/erdos_catalogue_queue_projection.py --late-exception capture \
               --event "$GITHUB_EVENT_PATH" --out fastpath
           else
             python ci/erdos_return_fastpath.py capture \
@@ -64,7 +64,7 @@ jobs:
           if [[ "${{ startsWith(github.event.comment.body, 'GCL-RETURN-EXCEPTION/1') }}" == "true" ]]; then
             # The guarded Python controller performs gh api PATCH and Project item-edit;
             # preserve explicit WRITE_CAPABLE routing for this Clerk token.
-            python ci/erdos_late_exception_recovery.py restore \
+            python ci/erdos_catalogue_queue_projection.py --late-exception restore \
               --event "$GITHUB_EVENT_PATH" --out fastpath
           else
             python ci/erdos_return_fastpath.py apply \
