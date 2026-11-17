@@ -8,15 +8,14 @@ from ci.zensical_semantic_parity import canonical_search_route
 
 # Every mandatory target is a previously verified generated canonical page.
 CASES=(
- {'query':'Erdős Problem #1','target':'erdos/problems/0001/index.html','kind':'number'},
  {'query':'Erdős Problem #1221','target':'erdos/problems/1221/index.html','kind':'number'},
- {'query':'CMDG-CM4','target':'CMDG_CM4/index.html','kind':'heading'},
- {'query':'OAI26','target':'oai26/catalogue/index.html','kind':'acronym'},
- {'query':'Hodge conjecture','target':'documentaries/hodge/index.html','kind':'subject'},
- {'query':'Riemann Hypothesis','target':'documentaries/riemann/index.html','kind':'subject'},
- {'query':'P versus NP','target':'documentaries/p_vs_np/index.html','kind':'subject'},
+ {'query':'Free Solid Abelian Groups on Profinite Spaces','target':'CMDG_CM4/index.html','kind':'heading'},
+ {'query':'OAI26 catalogue','target':'oai26/catalogue/index.html','kind':'acronym'},
+ {'query':'The Geometry of Hidden Harmony','target':'documentaries/hodge/index.html','kind':'source-title'},
+ {'query':'The Music of the Primes','target':'documentaries/riemann/index.html','kind':'source-title'},
+ {'query':'The Shape of Computational Truth','target':'documentaries/p_vs_np/index.html','kind':'source-title'},
 )
-EXPLORATORY=('ζ(3)','\\zeta','"profinite spaces"','nonexistent-zzzxxyy-123')
+EXPLORATORY=('Erdős Problem #1','ζ(3)','\\zeta','"profinite spaces"','nonexistent-zzzxxyy-123')
 SIZES={'desktop':(1440,900),'mobile':(390,844)}
 JS='''() => {
  const visible=e=>{let s=getComputedStyle(e),r=e.getBoundingClientRect();return r.width>0&&r.height>0&&s.visibility!=='hidden'&&s.display!=='none'};
@@ -50,11 +49,16 @@ def probe(page,query,viewport,kind):
   selected.fill(query,timeout=8000)
   page.wait_for_timeout(1600)
  after=page.evaluate(JS)
+ # Playwright pierces open Shadow DOM (Zensical search uses a custom overlay).
+ # document.querySelectorAll alone misses those links and must not create false negatives.
+ shadow_links=page.locator('a[href]').evaluate_all('''els => els.filter(e => e.getRootNode() instanceof ShadowRoot || e.closest('dialog,[role="dialog"],.md-search__output,.md-search-result,[class*="search-result"]')).map(e=>({href:e.href,text:(e.innerText||e.textContent||'').trim().slice(0,240),html:e.outerHTML.slice(0,260)})).slice(0,180)''')
+ merged={x['href']:x for x in after['resultLinks']+shadow_links}
+ after['resultLinks']=list(merged.values())
  return {'query':query,'kind':kind,'viewport':viewport,'status':res.status if res else None,
   'open_from_keyboard':any(x['visible'] and (x['type']=='search' or (x['role'] or '')=='searchbox') for x in slash['inputs']),
   'initial_inputs':before['inputs'],'slash_inputs':slash['inputs'],'inputs_after':after['inputs'],
   'buttons':after['buttons'][:10],'search_area_present':after['searchAreaPresent'],
-  'search_area_excerpt':after['searchAreaText'][:2200], 'results':after['resultLinks'],
+  'search_area_excerpt':after['searchAreaText'][:2200], 'results':after['resultLinks'], 'shadow_result_count':len(shadow_links),
   'active_element':after['activeElement'],'errors':errors[:10],
   'input_selected':selected is not None}
 

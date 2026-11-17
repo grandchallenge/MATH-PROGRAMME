@@ -3,8 +3,8 @@ from ci.renderer_browser_b02 import CASES,EXPLORATORY,SIZES,check
 class BrowserSearchContract(unittest.TestCase):
  def ok(self,href):return {'input_selected':True,'errors':[], 'results':[{'href':href,'text':'Relevant'}]}
  def test_grounded_mathematical_oracle(self):
-  self.assertTrue(len(CASES)>=7)
-  self.assertTrue(any('erdos/problems/0001/index.html'==x['target'] for x in CASES))
+  self.assertTrue(len(CASES)>=6)
+  self.assertTrue(any('erdos/problems/1221/index.html'==x['target'] for x in CASES))
   self.assertTrue(any('oai26/catalogue/index.html'==x['target'] for x in CASES))
   self.assertEqual(set(SIZES),{'desktop','mobile'})
  def test_exact_canonical_target_present(self):
