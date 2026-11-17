@@ -2,6 +2,7 @@
 """Fail-closed structural/claim-boundary checks for source-locked Erdős verification."""
 from __future__ import annotations
 import json
+import hashlib
 from pathlib import Path
 import re
 import sys
@@ -64,6 +65,49 @@ def validate_manifest(data: dict, schema: dict) -> None:
             ), 'Erdos248 replay PASS requires a real pinned GREEN kernel/axiom receipt')
     if data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS':
         require(data['review_receipts'], f'review PASS missing independent receipt: {n}')
+        if n == 248:
+            # A generic label or earlier RED receipt is insufficient. The source
+            # critical role pass expressly EXCLUDES the paper's stronger Omega
+            # theorem and never represents a human-independent certification.
+            path = 'governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.json'
+            require(path in data['review_receipts'],
+                    'Erdos248 adversarial PASS requires exact qualified review receipt')
+            r = load(path)
+            expected_md = 'governance/erdos_proof_verification/reviews/0248_SOURCE_CRITICAL_REVIEW_001.md'
+            p = (ROOT / expected_md).resolve()
+            require(p.is_relative_to(ROOT.resolve()) and p.is_file(),
+                    'missing exact Erdos248 source-critical review document')
+            actual_md_hash = hashlib.sha256(p.read_bytes()).hexdigest()
+            flags = r.get('checks', {})
+            authority = r.get('authority_effects', {})
+            require(
+                r.get('record_type') == 'GCL-ERDOS-248-SOURCE-CRITICAL-REVIEW/1'
+                and r.get('review_id') == 'ERDOS-PV-0248-R001'
+                and r.get('review_scope') == 'FORMAL_ERDOS_248_DISTINCT_PRIME_OMEGA_ONLY'
+                and r.get('disposition') == 'QUALIFIED_PASS'
+                and r.get('provider_commit') == '8822f7ddef30fadbd92e1c6ab4ed897af356af5e'
+                and r.get('source_sha256') ==
+                    '292041372e8f0e45a2ac06fb78dafc32d79cdc4638253139ea4f495a3334a267'
+                and r.get('kernel_receipt_sha256') ==
+                    '708fb9a104231e8d6a07f425226808a26c4a0227239a50ea139cb2777cd78f28'
+                and r.get('module_bundle_sha256') ==
+                    '7a4e16be1ef119996a7e3ee773a6a9abb0e6c041791565e679cab8cf1c28f815'
+                and r.get('review_document') == expected_md
+                and r.get('review_document_sha256') == actual_md_hash
+                and r.get('independent_human_attestation') is False
+                and flags.get('one_C_outside_all_k') is True
+                and flags.get('one_n_for_every_k') is True
+                and flags.get('uniform_T_independent_of_K_and_k') is True
+                and flags.get('omega_le_Omega_elementary_bridge') is True
+                and flags.get('full_paper_Omega_proved_in_lean') is False
+                and flags.get('original_author_leanization_map_present') is False
+                and flags.get('independent_analytic_rederivation_complete') is False
+                and authority.get('adversarial_review_pass_for_scoped_formal_statement') is True
+                and authority.get('internal_adjudication') is False
+                and authority.get('mathematical_certification') is False
+                and authority.get('issue_closure') is False,
+                'Erdos248 adversarial PASS requires exact qualified scope and no certification'
+            )
     if data['stage_results']['INTERNAL_ADJUDICATION'] == 'PASS':
         require(data['stage_results']['ADVERSARIAL_REVIEW'] == 'PASS', f'adjudication without adverse pass: {n}')
     if data['stage_results']['PROTECTED_EVIDENCE_ADMISSION'] == 'PASS':
