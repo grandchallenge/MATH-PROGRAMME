@@ -9,10 +9,15 @@ else:
 ROUTES=('index.html','erdos/problems/1221/index.html','oai26/catalogue/index.html','oai26/families/001/index.html','CMDG_CM4/index.html','documentaries/bsd/index.html','documentaries/hodge/index.html','documentaries/p_vs_np/index.html')
 VIEWS={'desktop':(1440,900),'mobile':(390,844),'reflow200':(720,900)}
 def new_severe(a,b):
- baseline={(x['id'],x['impact']) for x in a}
- return [{'rule':x['id'],'impact':x['impact'],'nodes':x.get('examples',[])[:3], 'affected_nodes':x.get('nodes',0)} for x in b if x['impact'] in ('serious','critical') and (x['id'],x['impact']) not in baseline]
+ """Include increased node counts, even when the rule exists in baseline."""
+ baseline={(x['id'],x['impact']):x.get('nodes',0) for x in a}
+ return [{'rule':x['id'],'impact':x['impact'],'nodes':x.get('examples',[])[:3],
+          'candidate_count':x.get('nodes',0),'baseline_count':baseline.get((x['id'],x['impact']),0)}
+         for x in b if x['impact'] in ('serious','critical')
+         and x.get('nodes',0)>baseline.get((x['id'],x['impact']),0)]
+
 def inspect(page):
- return page.evaluate('''() => {let m=document.querySelector('main,article');let f=document.activeElement;return {heading:(document.querySelector('h1')?.innerText||'').trim().slice(0,150),main:!!m,chars:(m?.innerText||'').length,overflow:Math.max(0,document.documentElement.scrollWidth-innerWidth),lang:document.documentElement.lang,focus_tag:f?.tagName,focus_visible:!!f?.matches(':focus-visible'),focus_outer:f?.outerHTML.slice(0,250),skip_links:[...document.querySelectorAll('a[href^="#"]')].filter(x=>/skip/i.test(x.textContent)).map(x=>x.getAttribute('href')).slice(0,8),headings:[...document.querySelectorAll('h1,h2,h3')].slice(0,20).map(x=>[x.tagName,(x.innerText||'').trim().slice(0,70)])}}''')
+ return page.evaluate('''() => {let m=document.querySelector('main,article');let f=document.activeElement;let d=f;for(let n=0;n<5&&d?.shadowRoot?.activeElement;n++)d=d.shadowRoot.activeElement;return {heading:(document.querySelector('h1')?.innerText||'').trim().slice(0,150),main:!!m,chars:(m?.innerText||'').length,overflow:Math.max(0,document.documentElement.scrollWidth-innerWidth),lang:document.documentElement.lang,focus_tag:f?.tagName,focus_visible:!!f?.matches(':focus-visible'),focus_outer:f?.outerHTML.slice(0,250),deep_focus_tag:d?.tagName,deep_focus_outer:d?.outerHTML.slice(0,300),deep_focus_visible:!!d?.matches(':focus-visible'),skip_links:[...document.querySelectorAll('a[href^="#"]')].filter(x=>/skip/i.test(x.textContent)).map(x=>x.getAttribute('href')).slice(0,8),headings:[...document.querySelectorAll('h1,h2,h3')].slice(0,20).map(x=>[x.tagName,(x.innerText||'').trim().slice(0,70)])}}''')
 def run(args):
  from playwright.sync_api import sync_playwright
  roots={'mkdocs':args.mkdocs.resolve(),'zensical':args.zensical.resolve()};out=args.out.resolve();out.mkdir(parents=True,exist_ok=True)
