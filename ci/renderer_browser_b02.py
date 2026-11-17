@@ -30,7 +30,7 @@ JS='''() => {
  return {inputs,buttons,searchAreaPresent:!!searchArea,searchAreaText:(searchArea?.innerText||'').slice(0,3500),resultLinks:resultLinks.map(x=>({href:x.href,text:(x.innerText||x.textContent||'').trim().slice(0,240),html:x.outerHTML.slice(0,260)})).slice(0,35),activeElement:document.activeElement?.outerHTML.slice(0,270),url:location.href};
 }'''
 
-def probe(page,query,viewport,kind):
+def probe(page,query,viewport,kind,engine):
  errors=[];page.on('pageerror',lambda e:errors.append(str(e)[:300]))
  res=page.goto(page._gcl_base,wait_until='domcontentloaded',timeout=30000)
  page.wait_for_timeout(700)
@@ -51,6 +51,13 @@ def probe(page,query,viewport,kind):
  if selected is not None:
   selected.fill(query,timeout=8000)
   page.wait_for_timeout(1600)
+  # MkDocs Material search uses a worker; a 10MB index can take seconds to
+  # initialize. Do not turn transient loading into a false findability defect.
+  if engine=='mkdocs':
+   try:
+    page.locator('.md-search-result__link').first.wait_for(state='attached',timeout=7500)
+   except Exception:
+    pass  # Genuine no-hit search and worker errors remain observable evidence.
  after=page.evaluate(JS)
  # Playwright pierces open Shadow DOM (Zensical search uses a custom overlay).
  # document.querySelectorAll alone misses those links and must not create false negatives.
@@ -114,7 +121,7 @@ def run(a):
    for case in list(matrix)+([{'query':q,'kind':'exploratory','target':None} for q in EXPLORATORY] if viewport=='desktop' else []):
     for label,url in (('mkdocs',bm),('zensical',bz)):
      cx=browser.new_context(viewport={'width':w,'height':h});page=cx.new_page();page._gcl_base=url
-     result=probe(page,case['query'],viewport,case['kind']);result['engine']=label
+     result=probe(page,case['query'],viewport,case['kind'],label);result['engine']=label
      shot=out/(label+'-'+viewport+'-'+str(len(observations))+'.png');page.screenshot(path=str(shot));result['search_screenshot']=shot.name;result['search_screenshot_sha256']=hashlib.sha256(shot.read_bytes()).hexdigest()
      failures=check(result,case['target'])
      if case['target'] and not failures:
