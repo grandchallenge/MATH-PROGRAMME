@@ -114,6 +114,22 @@ def validate_five_source_scope(row, root=ROOT):
         if v['work_status']=='PROTECTED_ADMITTED':
             ensure(bool(v['protected_admission_ref']),
                    f'problem {n}: unbound protected admission')
+            if n==560 and later=='B':
+                locked='grandchallenge/MATH-PROGRAMME@997a3d8068c3b2a036d5811bfabfce2b92a4be15'
+                cust='governance/erdos_proof_verification/evidence/0560/B_PROTECTED_CUSTODY_BINDING_001.json'
+                ensure(v['protected_admission_ref']==locked and cust in evidence,
+                       'problem 560: exact bounded evidence admission identity drift')
+                binding=read(cust,root)
+                ensure(binding.get('record_type')=='ERDOS_PV_B_ADMISSION_CUSTODY_BINDING/1'
+                       and binding.get('assignment_id')=='ERDOS-PV-0560-B'
+                       and binding.get('protected_evidence_merge_commit')==locked.split('@')[1]
+                       and binding.get('protected_evidence_head')=='1c8797ead93d27dbb5f036c17bbcd78921b1139b'
+                       and binding.get('claim_sha')=='321bcc27a63b0732b7154cc7dd0aa6d1fe3549f5'
+                       and binding.get('source_issue_body_sha256')==row['source_issue_body_sha256']
+                       and binding.get('unique_result_sha256')=='f5c282e50bef75522ba306f10126c5ff7763f8dd92076eb7e69b3162e60258b3'
+                       and binding.get('protected_exact_byte_readback')=='MATCHED_EIGHT_FILES'
+                       and all(x is False for x in binding.get('nonclaims',{}).values()),
+                       'problem 560: protected bounded source evidence or claim boundary drift')
         else:
             ensure(v['protected_admission_ref'] is None,
                    f'problem {n}: protected admission claimed before merge')

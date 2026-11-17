@@ -74,14 +74,21 @@ class QueueTests(unittest.TestCase):
         self.assertTrue(all(r['triage_decision']=='SELECTED_WITH_MANIFEST' for r in x))
         self.assertFalse(any(xi['problem_id'] in (563,564) for xi in x))
 
-    def test_560_c_not_enabled_until_exact_b_protected_admission(self):
+    def test_560_c_eligible_only_after_b_protected_admission(self):
+        from copy import deepcopy
         cohort=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
         row=cohort['items'][560-501]
-        self.assertEqual(row['stage_work_items']['B']['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(row['stage_work_items']['B']['work_status'],'PROTECTED_ADMITTED')
         self.assertFalse(q.permitted(row,'B'))
-        self.assertFalse(q.permitted(row,'C'))
-        self.assertNotIn(560,[x['problem_id'] for x in
-                               q.candidates('C',after=559,cohort='0501-0600',limit=10)])
+        self.assertTrue(q.permitted(row,'C'))
+        candidate=[x for x in q.candidates('C',after=559,cohort='0501-0600',limit=10)
+                   if x['problem_id']==560]
+        self.assertEqual(len(candidate),1)
+        self.assertEqual(candidate[0]['queue_issue'],3243)
+        premature=deepcopy(row)
+        premature['stage_work_items']['B']['work_status']='VERIFIED_BOUNDED'
+        premature['stage_work_items']['B']['protected_admission_ref']=None
+        self.assertFalse(q.permitted(premature,'C'))
 
     def test_pending_triage_never_enters_phase_b(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')['items'][62]
