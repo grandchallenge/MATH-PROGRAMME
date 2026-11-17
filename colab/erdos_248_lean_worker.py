@@ -255,9 +255,23 @@ def perform(source, worker, receipt, workdir):
         # Original replay failed because the pinned provider's compatibility
         # hook had never executed before compilation. Run that exact hook.
         data["compatibility_patch_plan"] = verify_provider_patch_locks(project)
-        data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "update"],
-                                 project, logdir, "compat-post-update",
-                                 TIMEOUTS["compat-post-update"]))
+        # Execute precisely the provider post_update hook's nine pinned
+        # git-apply operations in declaration order. A generic lake update
+        # regenerates lake-manifest.json, violating the source lock even when
+        # all nine compatibility patches themselves succeed.
+        for index, (dep, name, _blob) in enumerate(COMPATIBILITY_PATCHES):
+            dependency = project / ".lake" / "packages" / dep
+            patch_file = project / "patches" / name
+            data["steps"].append(run(
+                ["git", "apply", "--check", str(patch_file)],
+                dependency, logdir, f"compat-{index:02d}-check", 60))
+            data["steps"].append(run(
+                ["git", "apply", str(patch_file)],
+                dependency, logdir, f"compat-{index:02d}-apply", 60))
+        data["steps"].append(run(
+            ["git", "-C", str(project / ".lake" / "packages" / "BoundedGaps"),
+             "diff", "--check"],
+            project, logdir, "compat-post-update", 60))
         data["compatibility_patch_effects"] = verify_provider_post_update(project)
         data["source_mode"] = "PINNED_PROVIDER_WITH_DECLARED_COMPATIBILITY_PATCHES"
         data["steps"].append(run([elan, "run", TOOLCHAIN, "lake", "build", "ErdosProblems.Erdos248"], project,
