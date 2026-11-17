@@ -159,12 +159,12 @@ theorem splitFreeCech_contraction
     apply Subtype.ext
     apply Prod.ext
     · rfl
-    · exact congrArg s xy.2.symm
+    · exact congrArg s xy.2
   unfold splitFreeCechH1 splitFreeCechD2
     splitFreeCechD1 splitFreeCechH0
   simp only [Preadditive.comp_sub, Preadditive.sub_comp,
     ← Functor.map_comp]
-  rw [hxz, hxy, hyz, Functor.map_id]
+  rw [hxz, hxy, hyz, (ModuleCat.free Coeff).map_id]
   abel
 
 /-- The actual split-Čech two-step complex. -/
