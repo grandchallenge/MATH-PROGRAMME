@@ -85,14 +85,13 @@ theorem stoneanCechDegreeOneExact_of_stoneanPresheafExact
     simpa only [ShortComplex.map_comp] using hTransport
   have hComp : (S.map moduleSheafification).Exact :=
     E.reflects_exact_of_faithful _ hTransport'
-  let e : S.map moduleSheafification ≅
-      stoneanCechDegreeOneComplex T :=
-    ShortComplex.isoMk (Iso.refl _) (Iso.refl _) (Iso.refl _)
-      (by simpa only [Iso.refl_hom, Category.id_comp, Category.comp_id]
-        using (presheafStoneanCechDegreeOneComplex_sheafify_f T).symm)
-      (by simpa only [Iso.refl_hom, Category.id_comp, Category.comp_id]
-        using (presheafStoneanCechDegreeOneComplex_sheafify_g T).symm)
-  exact ShortComplex.exact_of_iso e hComp
+  change (ShortComplex.mk
+    (moduleSheafification.map (presheafStoneanCechTripleBoundary T))
+    (moduleSheafification.map (presheafStoneanCechDifference T))
+    _).Exact at hComp
+  rw [presheafStoneanCechTripleBoundary_sheafify T,
+    presheafStoneanCechDifference_sheafify T] at hComp
+  exact hComp
 
 /-- The authentic second-relation epi follows from exactness
 on the dense Stonean PRESHEAF site. -/
