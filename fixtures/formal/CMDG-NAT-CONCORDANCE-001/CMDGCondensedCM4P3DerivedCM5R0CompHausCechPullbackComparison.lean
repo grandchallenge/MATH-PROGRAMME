@@ -77,13 +77,15 @@ noncomputable def compHausHomProfinitePullbackEquiv
     apply (cancel_mono e.hom).1
     rw [Category.assoc, e.inv_hom_id, Category.comp_id]
     apply pullback.hom_ext
-    · calc
+    · rw [pullback.lift_fst]
+      calc
         z ≫ F.map (pullback.fst f g) =
             z ≫ (e.hom ≫ pullback.fst (F.map f) (F.map g)) :=
           congrArg (fun k => z ≫ k) he_fst.symm
         _ = (z ≫ e.hom) ≫ pullback.fst (F.map f) (F.map g) :=
           (Category.assoc _ _ _).symm
-    · calc
+    · rw [pullback.lift_snd]
+      calc
         z ≫ F.map (pullback.snd f g) =
             z ≫ (e.hom ≫ pullback.snd (F.map f) (F.map g)) :=
           congrArg (fun k => z ≫ k) he_snd.symm
