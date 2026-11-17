@@ -125,7 +125,7 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(len(custody['protected_source_and_artifact_blob_ids']),15)
         self.assertTrue(custody['formalization_work_required'])
         self.assertTrue(all(flag is False for flag in custody['nonclaims'].values()))
-        self.assertEqual(row['stage_work_items']['D']['work_status'],'UNEXECUTED')
+        self.assertEqual(row['stage_work_items']['D']['work_status'],'VERIFIED_BOUNDED')
         self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
         for mutation in (
             lambda b:b.__setitem__('protected_admission_ref','grandchallenge/MATH-PROGRAMME@'+'f'*40),
@@ -153,6 +153,36 @@ class CoverageTests(unittest.TestCase):
         ):
             bad=copy.deepcopy(row)
             mutation(bad['stage_work_items']['C'])
+            with self.assertRaises(ValueError):
+                v.validate_row(bad,self.source[559],cohort['phase_issues'])
+
+    def test_560_documentary_candidate_is_exact_reviewed_nonterminal(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][59]
+        d=row['stage_work_items']['D']
+        self.assertEqual(d['work_status'],'VERIFIED_BOUNDED')
+        self.assertEqual(d['review_status'],'ROLE_SCOPED_CRITICAL_PASS')
+        self.assertEqual(d['protected_admission_ref'],None)
+        self.assertEqual(row['closure_status'],'IN_PROGRESS')
+        self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
+        self.assertEqual(len(d['evidence_refs']),4)
+        proof=v.read('governance/erdos_proof_verification/evidence/0560/D_DOCUMENTARY_REVIEW_001.json')
+        self.assertEqual(proof['original_problem_status'],'OPEN')
+        self.assertFalse(proof['full_primary_proposition_in_lean'])
+        self.assertEqual(proof['kernel_checked_auxiliary_declarations'],12)
+        for mutation in (
+            lambda r:r.__setitem__('closure_status','ADMITTED_BOUNDED_COMPLETE'),
+            lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
+            lambda r:r.__setitem__('mathcert_status','CERTIFIED'),
+            lambda r:r['stage_work_items']['D'].__setitem__('blocker',None),
+            lambda r:r['stage_work_items']['D'].__setitem__('review_status','NOT_REVIEWED'),
+            lambda r:r['stage_work_items']['D'].__setitem__('adversarial_review_receipt',None),
+            lambda r:r['stage_work_items']['D'].__setitem__('evidence_refs',[]),
+            lambda r:r['stage_work_items']['D'].__setitem__('protected_admission_ref','main@forged'),
+            lambda r:r['stage_work_items']['C'].__setitem__('work_status','VERIFIED_BOUNDED'),
+        ):
+            bad=copy.deepcopy(row)
+            mutation(bad)
             with self.assertRaises(ValueError):
                 v.validate_row(bad,self.source[559],cohort['phase_issues'])
 
