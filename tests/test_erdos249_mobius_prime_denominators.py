@@ -88,6 +88,26 @@ class MobiusPrimeDenominatorsTests(unittest.TestCase):
             self.assertEqual(w - tail, Fraction(2, 3 * 4**n))
             self.assertGreater(w, tail)
 
+    def test_full_totient_series_reconciles_with_mobius_truncation(self):
+        # Independently enumerate coprime integers, without using the mu sieve
+        # for totient values. Compare two independent convergent enclosures.
+        N = 70
+        mu = mobius_values(N)
+        phi = lambda n: sum(math.gcd(n, k) == 1 for k in range(1, n + 1))
+        for n in range(1, 51):
+            mobius_convolution = sum(
+                (n // d) * mu[d] for d in range(1, n + 1) if n % d == 0
+            )
+            self.assertEqual(phi(n), mobius_convolution)
+        prefix = sum((Fraction(phi(n), 1 << n) for n in range(1, N + 1)),
+                     Fraction())
+        positive_tail_bound = Fraction(N + 2, 1 << N)
+        for D in [1, 2, 5, 10, 18, 24]:
+            self.assertLess(
+                abs(prefix - truncation(D)),
+                positive_tail_bound + absolute_tail_upper(D),
+            )
+
     def test_receipt_is_exact_and_claim_bounded(self):
         receipt = reduced_denominator_receipt(24)
         self.assertEqual(receipt["claim_boundary"], "FULL_S_OPEN__FINITE_ARITHMETIC_ONLY")
