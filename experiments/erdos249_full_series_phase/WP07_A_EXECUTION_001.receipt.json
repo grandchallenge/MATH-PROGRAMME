@@ -1,0 +1,83 @@
+{
+  "record_type": "ERDOS249_S_WP07_A_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-18",
+  "claim_scope": "MOVING_LOGLOG_DEPTH_TOTIENT_FINITE_INTEGRALITY_AND_POSITIVE_TAIL_DIVERGENCE_ONLY",
+  "original_problem": "ERDOS_249_FULL_IRRATIONALITY_OPEN",
+  "programme_parent": "grandchallenge/MATH-PROGRAMME#3201",
+  "workstream_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "wp07_core_producer": "OPEN__COFINAL_GOOD_BASE_HARMONIC_SAVING_NOT_ESTABLISHED",
+  "mathematical_dependencies": {
+    "external": "Classical Selberg–Delange fixed-parameter moment bound sum_{n<=Y} z^{omega(n)} <<_z Y(log Y)^(z-1), 0<z<1",
+    "prior_gcl": "GCL full-series 001 fixed-depth density-one and phi(n)^2>=n/2; WP06 bounded rational prime-pulse adversary",
+    "source_attribution": "Will Cook, The Binary Totient Series (revised 2026-10-01), Theorem 3.5(b), independent open cofinal condition",
+    "external_input_reproved_here": false
+  },
+  "material_closure": {
+    "exact_replayed_candidate_head": "26ee1b741d46237943e39e61f1833a8a913657fc",
+    "reconciliation": {
+      "exact_relevant_protected_merge": "f064108998ddad1c3099be1020aa415cb542f1ae",
+      "two_parent_topic_commit": "26ee1b741d46237943e39e61f1833a8a913657fc",
+      "parents": [
+        "1c258c714c328294db1c9a94617204aeca58698e",
+        "f064108998ddad1c3099be1020aa415cb542f1ae"
+      ],
+      "outcome": "Both exact WP06 and WP07 test routes retained; five WP06 files included byte-identically; only five WP07 material diff paths before this receipt"
+    },
+    "files_sha256": {
+      "manuscript": "06d5338a44f0c455f1977cd8b656de95c6ab676fd77388f26c10ee7bcea86c3f",
+      "python_module": "193830f789c3178b9bbdfbe4dcf4226d86c6f6cf0bca4b68248849e466bc437e",
+      "hostile_tests": "b0eefc16d624d50f3dc48b48cf3f08bf4a54d1954cbc1c2e896534cf5def1063",
+      "source_critical_review": "9648c2ca7655c373d1239e722415a10782fcfa54abe610de68dcec375f14ce39"
+    }
+  },
+  "execution": {
+    "tool": "GCL_CONTROL.run_bash on CHAD OS account",
+    "evidence_capture_id": "1b17fb9df8334f139d12afc84f7e0c9f",
+    "capture_receipt_sha256": "a14c1c66ea144bc6c2551bf8424fddf7717e6f5df6948a1bf9ac7036d8bd99b4",
+    "OS_ACCOUNT_ONLY": true,
+    "independent_execution_attested": false,
+    "checks": [
+      {
+        "name": "WP07-A affected exact arithmetic",
+        "tests": 11,
+        "errors": 0,
+        "exit_code": 0,
+        "stdout_sha256": "f66ecf2fd39c78294e5733a793b9d3c8a82548922e9602439d3e4baa4ac23d14"
+      },
+      {
+        "name": "WP06 source dependency regression",
+        "tests": 11,
+        "errors": 0,
+        "exit_code": 0,
+        "stdout_sha256": "cf0553e2c15bd9d95f49e1f7f3e77ced151a2430c0b49b85e39369109ea6c1a4"
+      },
+      {
+        "name": "WP07-A manuscript mathematical Markdown",
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+      },
+      {
+        "name": "WP07-A critical review mathematical Markdown",
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+      }
+    ]
+  },
+  "critical_review": {
+    "type": "same-agent logically distinct non-authoring adversarial pass",
+    "separately_authenticated": false,
+    "independent_human": false,
+    "mathematical_certification": false,
+    "verdict": "ACCEPT_WITH_SCOPE"
+  },
+  "explicitly_unproved": [
+    "The open original irrationality of S",
+    "The cofinal good-base real-part saving in Cook's Theorem 3.5(b)",
+    "Any analytic tail replacement at L approximately log2 X derived from the shallow loglog X result",
+    "Novelty or priority of classical Selberg–Delange",
+    "Formal Lean proof of WP07-A and MATHCERT certificate"
+  ],
+  "next_action": "Submit bounded WP07-A proof record through protected checks and exact-head merge queue; after admission preserve WP07 #3500 OPEN and continue searching for actual totient-specific cofinal harmonic saving. Do not convert shallow integrality theorem into an irrationality proof."
+}
