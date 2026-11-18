@@ -1,0 +1,47 @@
+{
+  "record_type": "ERDOS249_S_WP07_C_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-18",
+  "workstream": "grandchallenge/MATH-PROGRAMME#3500",
+  "original_problem_status": "OPEN",
+  "bounded_claim": "UNCONDITIONAL_NEAR_MAXIMAL_TOTIENT_2ADIC_VALUATION_SUBPOLYNOMIAL_RARITY",
+  "mathematical_novelty_claim": false,
+  "independent_human_review": false,
+  "certification": "NOT_SUBMITTED",
+  "antecedents": [
+    "Jun-Jia Zhao (2025), p-Adic Valuation of Euler's Totient Function, DOI 10.1007/s40840-025-01869-7, valuation extremality",
+    "GCL WP07-A (moving shallow depths) and WP07-B (rational nearlog comparator)",
+    "Will Cook 2026 source-locked positive cofinal good-base Fourier criterion remains open"
+  ],
+  "proof_summary": "For fixed C>=0, v2(phi(n))>=floor(log2 n)-C implies oddpart(phi(n))<B=2^(C+1). Then every odd prime factor has p=1+d*2^r, odd d<B. Large p>B appear only to exponent one. For n<=X, sum r<=R=floor(log2 X). Subset count bounded by prod_r(1+t^r)^B and Chernoff exp(2 sqrt(BR)). Small prime exponent choices D_B and power of 2 choices R+1 complete the explicit count. A nearlog termwise-integer totient window gives a nearmax final-index witness, hence at most X^o(1) starts. Finite *sum* integrality is not controlled.",
+  "exact_replayed_candidate_head": "546ad61087395c01b29c6524c7174d453cb145c9",
+  "sources_sha256": {
+    "manuscript": "f1ba9a64d53b516a0985589a86fbe78a24f3dd42e40a3121273ab3f6d8fa55d",
+    "module": "887bf3bc85972b6fdb5647b3ff36edc9b8dc8c546e83e55a83d2197399bb38c2",
+    "existing_test_module_extended": "1e4c394fa3825eb09a290fc089e94239bbfb1278e61142b198b0329505f7e7c7",
+    "critical_review": "7b96b0a81e909db3967fcf6f95117df73aa2e7325dbcbc374ca5eef37aff1f8a"
+  },
+  "runtime": {
+    "execution_type": "CHAD_OS_ACCOUNT_ONLY",
+    "independent_execution_attested": false,
+    "source_test_capture_id": "e652dd0c0cd4458ababaff0149d98cb1",
+    "affected_new_tests": 9,
+    "affected_new_failures": 0,
+    "affected_stdout_sha256": "76f1807fe6565385ad6770928bf8eb33fa7b522eb01adc10698b64d",
+    "full_registered_suite_tests": 16,
+    "full_registered_suite_failures": 0,
+    "full_registered_suite_capture_id": "a6e906165186412397dfb6cea9eb77cc",
+    "full_registered_suite_stdout_sha256": "f088f269a7c34084e92b659bb189828a7f15c54d11c464baab01adc10698b64d",
+    "manuscript_math_gate": "PASS",
+    "critic_math_gate": "PASS",
+    "math_gate_log_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+  },
+  "reviewer": {
+    "same_authenticated_agent_logical_critic": true,
+    "separately_independent": false,
+    "disposition": "ACCEPT_WITH_SCOPE",
+    "informal_external_certification": false
+  },
+  "CI_impact": "Extended exact registered tests/test_erdos249_full_series_phase.py; no manifest, workflow or security policy changes",
+  "next_positive_obligation": "Convert totient-specific rarity of termwise 2-adic integral windows to an actual cofinal finite-sum residue gap or good-base Fourier saving at analytic depth; cancellation across summands is currently unbounded.",
+  "claim_barrier": "FULL_SERIES_IRRATIONALITY_OPEN__COFINAL_TOTIENT_RESIDUE_GAP_UNPROVED"
+}
