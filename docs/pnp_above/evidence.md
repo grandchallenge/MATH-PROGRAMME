@@ -165,7 +165,7 @@ m(G)=\sum_x \mu(x,x)\,\mathbf{1}\bigl[\exists a: D(x,x,a,a)=\mathrm{true}\bigr].
 WP17 constructs an original upstream one-dimensional **question-dependent deterministic `SyncStrategy`**: choose a winning equal answer for each feasible diagonal question, or an arbitrary answer when none exists. Its exact original Born-rule value is `m(G)`. Independent proofs using original tensor-product positivity/normalization and commuting-tracial positivity/normalization show **every** original quantum or commuting strategy has value at most `m(G)`. Consequently,
 
 [
-\boxed{\operatorname{syncValue}(G)=\operatorname{quantumValue}(G.\mathrm{toGame})=\operatorname{commValue}(G)=m(G).}
+\omega_{\mathrm{sync}}(G)=\omega_{\mathrm{quantum}}(G)=\omega_{\mathrm{commuting}}(G)=m(G).
 ]
 
 The common value can be **strictly less than one** if some positively sampled diagonal questions are unwinnable. This is **not** a perfect-strategy assumption; it removes WP16's former requirement of an accepted diagonal answer at each sampled question.
