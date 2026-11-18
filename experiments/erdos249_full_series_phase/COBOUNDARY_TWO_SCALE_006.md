@@ -190,7 +190,7 @@ The deterministic test suite uses independent trial-division primality checks, e
 | ID | Result | Evidence and limit |
 | --- | --- | --- |
 | WP06-A | Cofinal finite-family prime pulses compatible with rational full value $8/255$ and $0\le a_n\le n$ | Complete manuscript proof; finite exact fixtures; no novelty asserted |
-| WP06-B | Positive $2^K$-divisible totient endpoint forces the standard tail bound above one when $L\le K$ | Complete elementary proof; not a lower bound on actual tail |
+| WP06-B | A positive totient endpoint divisible by $2^K$ forces the standard tail bound above one if $L\le K$ | Complete elementary proof; not a lower bound on actual tail |
 | WP06-C | Exact binary coboundary partial sum $-b_N/2^N$ | Telescoping equality; exact-fraction checks |
 | WP06-D | Universal cofinal shifted-tail residue exclusion for the **actual totient** series | **NOT PROVED** |
 | ORIGINAL-249 | Irrationality of $S$ | **OPEN** |
