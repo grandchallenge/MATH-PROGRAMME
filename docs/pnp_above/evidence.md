@@ -2,6 +2,8 @@
 
 <p class="page-deck">An auditable register of source mathematics, GCL finite checks, conditional deductions, editorial admission, and work still required.</p>
 
+**Current research coverage: WP00–WP17, 18 November 2026.** For all 72 source files, each work package's primary artifact, execution receipt, and the separate cross-repository governance/certification records, see the [complete documentary coverage ledger](coverage.md). Earlier work-package paragraphs below retain their historical at-the-time limitations, even when a later package closes one of those specific technical obligations.
+
 ## How to interpret the evidence grades
 
 | Grade | Meaning |
@@ -9,12 +11,21 @@
 | **EXT** | Established mathematical theorem imported with attribution |
 | **CAL** | Finite calculation or elementary argument, with a written proof or executable check |
 | **SRC** | Source transcription, theorem-interface audit, or parameter ledger |
+| **LEAN** | Original source-native Lean theorem replay with pinned dependencies and an axiom audit where stated; not public independent mathematical certification |
 | **COND** | A conditional deduction from a published theorem under explicitly stated hypotheses |
 | **OPEN** | No proof or complete implementation currently admitted |
 
 A document merge or public MkDocs page certifies neither mathematical truth nor independence. The independent specialist certification route remains separate.
 
 **Source-semantic update, 1 November 2026:** [WP01 source erratum and classical transfer results](wp01_erratum.md) distinguishes the printed statement of Theorem 12.1 from its final displayed proof chain. The published printed theorem has a stronger second branch; the record uses the proof-backed bound pending reconciliation. Exact-code regression checks and a restricted explicit-table SAT transfer are recorded in [MATHSOLVE PR #1152](https://github.com/grandchallenge/MATHSOLVE/pull/1152). Neither a full quantum compression implementation nor an unrestricted SAT implication has been established.
+
+## WP00–WP02: original calibration, classical transfer audit and source-interface lock
+
+**WP00** produced the [symbolic compression-parameter ledger](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP00_COMPRESSION_PARAMETER_LEDGER.md), an [explicit nine-level identity reference verifier](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_AND_TRANSFER.md), and a finite [512-vector emulator](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_EMULATOR.py). These calibrate source resource semantics. They do **not** execute positive-parameter compression or establish a classical decision lower bound.
+
+**WP01** established a restricted classical strategy transfer for **explicit finite game tables** and a classical sampling-resource bound, together with the [source Theorem 12.1 statement/proof discrepancy audit](wp01_erratum.md). Its [source research record](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP01_EXPLICIT_CLASSICAL_TRANSFER_AND_SOURCE_AUDIT.md) does **not** transfer succinct quantum verification to polynomial-time SAT computation. **WP02** [pinned the original Lean compiler interfaces](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP02_LEAN_COMPRESSION_SOURCE_INTERFACE.md) as an implementation target without falsely claiming that the full compiler had been run.
+
+The source-locked names and all companion files are inventoried separately in the [WP00–WP17 coverage ledger](coverage.md). The original PNP-001 definition/encoding/false-proof packages are a **different campaign lane** and must not be conflated with this PNP-ABOVE WP numbering.
 
 ## WP03: executable parameter-recurrence slice (1 November 2026)
 
@@ -32,7 +43,9 @@ The source is pinned to [upstream commit 5926bdff](https://github.com/vidick/MIP
 
 The required Lean version has now been installed. **This dependency blocker was subsequently resolved in WP05**. WP05 has since imported the actual `MIPRE.Cost.Prog` and built the upstream introspection compiler. Instantiating `DecisionCompiler.compute` on concrete positive parameters and testing a compressed verifier remain separate implementation tasks. No SAT transfer beyond the explicit-game result has been established.
 
-**WP05 update (2 November 2026):** [Research PR #1162](https://github.com/grandchallenge/MATHSOLVE/pull/1162) records successful builds of the upstream native model (1,219 jobs) and introspection-decider module (3,978 jobs). The imported `Prog` replay passed. Positive-parameter compression remains unexecuted.
+## WP05: imported native Prog and source compiler build (2 November 2026)
+
+**Result:** [Research PR #1162](https://github.com/grandchallenge/MATHSOLVE/pull/1162) records successful builds of the upstream native model (1,219 jobs) and introspection-decider module (3,978 jobs). The imported `Prog` replay passed. Positive-parameter compression remains unexecuted.
 
 ## WP06: imported compiler theorem replay (2 November 2026)
 
@@ -46,11 +59,17 @@ The tested [Lean source](https://github.com/grandchallenge/MATHSOLVE/blob/main/r
 
 **WP06 source-audit update (2 November 2026):** [MATHSOLVE WP06](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP06_PARAMETER_ERASURE_AND_SAT_TRANSFER_BOUNDARY.md) records the zero-parameter and oversized-description erasure behavior of the pinned introspection decider compiler. The resulting non-injectivity is a source-budget constraint, not a general SAT lower bound. Its companion Lean corollaries were subsequently **replayed successfully** against the imported source in WP07 (exit 0); the earlier description was accurate only at initial publication.
 
-**WP07 (2 November 2026):** [The source-erasure proof replay and adequacy theorem](https://github.com/grandchallenge/MATHSOLVE/pull/1171) distinguish two cases. Descriptions whose encoded sizes exceed the selected budget can collapse to identical compiled decider programs. A positive budget at least `max(esize S, esize D)+1` preserves both source descriptions through the compiler's clamp. Both are Lean-checked results against the pinned upstream compiler, but **preservation of source descriptions is not compiler injectivity or a polynomial SAT transfer**. The full quantum compressor and asymptotic classical lower bounds remain open.
+## WP07: original source erasure and clamp adequacy (2 November 2026)
 
-**WP08 (2 November 2026):** [MATHSOLVE native nine-bit decider and evidence](https://github.com/grandchallenge/MATHSOLVE/pull/1174) implement the identity input game's **decider component** using actual imported `MIPRE.Cost.Prog` and `MIPRE.Decider` types. The exact Lean 4.35.0-rc3 file (Git blob `45b9fa687fad92bf1b1d4be2809473e0c4f9957d`) compiles with a source-native binding/scoping proof, evaluates to an encoded program size of **145,459 nodes**, and passes 512 diagonal nine-bit question checks, answer/length boundary tests, and malformed bit-tree rejection. One accepting example returns `true` in **63 source-model cost units**. The fuel-based interpreter is independently implemented. Its **soundness** against the imported `Eval` relation was subsequently proved in WP09, but completeness, a formal `TimeBoundAt` bound, and a complete `Sampler 9`/`Verifier 9` are **not** established. This remains a finite **CAL** result, not a compressed output, classical lower bound, or SAT transfer. See [WP08's exact execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP08_NINE_BIT_DECIDER_EXECUTION_RECEIPT.md).
+**Result:** [The source-erasure proof replay and adequacy theorem](https://github.com/grandchallenge/MATHSOLVE/pull/1171) distinguish two cases. Descriptions whose encoded sizes exceed the selected budget can collapse to identical compiled decider programs. A positive budget at least `max(esize S, esize D)+1` preserves both source descriptions through the compiler's clamp. Both are Lean-checked results against the pinned upstream compiler, but **preservation of source descriptions is not compiler injectivity or a polynomial SAT transfer**. The full quantum compressor and asymptotic classical lower bounds remain open.
 
-**WP09 (3 November 2026):** [MATHSOLVE PR #1179](https://github.com/grandchallenge/MATHSOLVE/pull/1179) adds a Lean-checked general **soundness theorem** for the same seven-constructor native `Prog` interpreter. For all fuel limits, environments, programs, results and source cost units, `runFuel f e p = some (r,t)` implies the imported `MIPRE.Cost.Eval e p r t`. Its [exact source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP09_InterpreterSoundness.lean) (Git blob `3b64353814fd70a77810e51f2d04cbcfb4271def`) passed Lean 4.35.0-rc3 against the pinned upstream MIPRE library, with exit code zero and no diagnostics. The [execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP09_INTERPRETER_SOUNDNESS_EXECUTION_RECEIPT.md) records exact hashes, initial proof repairs and the local OS execution limits. This establishes valid source `Eval` witnesses for successful interpreter calls, **not** completeness of the interpreter, source `Decider.Accepts` equivalence, a nine-level sampler, positive-parameter quantum compression, or a SAT-to-classical strategy lower bound.
+## WP08: source-native nine-bit identity decider (2 November 2026)
+
+**Result:** [MATHSOLVE native nine-bit decider and evidence](https://github.com/grandchallenge/MATHSOLVE/pull/1174) implement the identity input game's **decider component** using actual imported `MIPRE.Cost.Prog` and `MIPRE.Decider` types. The exact Lean 4.35.0-rc3 file (Git blob `45b9fa687fad92bf1b1d4be2809473e0c4f9957d`) compiles with a source-native binding/scoping proof, evaluates to an encoded program size of **145,459 nodes**, and passes 512 diagonal nine-bit question checks, answer/length boundary tests, and malformed bit-tree rejection. One accepting example returns `true` in **63 source-model cost units**. The fuel-based interpreter is independently implemented. Its **soundness** against the imported `Eval` relation was subsequently proved in WP09, but completeness, a formal `TimeBoundAt` bound, and a complete `Sampler 9`/`Verifier 9` are **not** established. This remains a finite **CAL** result, not a compressed output, classical lower bound, or SAT transfer. See [WP08's exact execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP08_NINE_BIT_DECIDER_EXECUTION_RECEIPT.md).
+
+## WP09: fuel-interpreter soundness against original source Eval (3 November 2026)
+
+**Result:** [MATHSOLVE PR #1179](https://github.com/grandchallenge/MATHSOLVE/pull/1179) adds a Lean-checked general **soundness theorem** for the same seven-constructor native `Prog` interpreter. For all fuel limits, environments, programs, results and source cost units, `runFuel f e p = some (r,t)` implies the imported `MIPRE.Cost.Eval e p r t`. Its [exact source](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP09_InterpreterSoundness.lean) (Git blob `3b64353814fd70a77810e51f2d04cbcfb4271def`) passed Lean 4.35.0-rc3 against the pinned upstream MIPRE library, with exit code zero and no diagnostics. The [execution receipt](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP09_INTERPRETER_SOUNDNESS_EXECUTION_RECEIPT.md) records exact hashes, initial proof repairs and the local OS execution limits. This establishes valid source `Eval` witnesses for successful interpreter calls, **not** completeness of the interpreter, source `Decider.Accepts` equivalence, a nine-level sampler, positive-parameter quantum compression, or a SAT-to-classical strategy lower bound.
 
 ## WP10: source-native acceptance bridge and succinct-explicitization negative control (17 November 2026)
 
@@ -189,6 +208,15 @@ The [WP17 source-lock and replay receipt](https://github.com/grandchallenge/MATH
 | 512-pair exhaustive test | [Finite emulator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_EMULATOR.py) | CAL | Reproducible finite local behavior |
 | Double-exponential entanglement bound for compressed family | [Source theorem and WP00 note](https://github.com/grandchallenge/MATHSOLVE/pull/1147) | COND | Requires encoded input satisfying the source theorem |
 | Indexed language is cofinite and in P | [WP00 note](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_AND_TRANSFER.md) | COND | Existence argument for a *selected unary language*, not arbitrary game-value computation |
+| WP03–WP04 local controls | [Source receipts](coverage.md#complete-original-source-work-package-matrix) | CAL | Bounded Lean/finite parameter and semantics checks; not imported full compressor |
+| WP05–WP07 original-source controls | [Source inventory](coverage.md#complete-original-source-work-package-matrix) | LEAN | Imported Prog, zero-parameter compiler, source erasure/adequacy; no positive-parameter compressed output |
+| WP08–WP11 original decider/interpreter | [Source inventory](coverage.md#complete-original-source-work-package-matrix) | LEAN | Bounded nine-bit source decider; fuel soundness/completeness and original acceptance at specified scope |
+| WP12 quantified typed parser | [Protected Lean receipt](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP12_IMPORT_REPLAY_RECEIPT.md) | LEAN | All canonical typed inputs proved; malformed raw-index witness outside typed verifier contract |
+| WP13–WP14 conditional nine-stage verifier | [Source inventory](coverage.md#complete-original-source-work-package-matrix) | LEAN | Original source-bounded reference and occupied conditional CL stages; shared-player question distribution still diagonal |
+| WP15 deterministic perfect strategy | [Source PR #1244](https://github.com/grandchallenge/MATHSOLVE/pull/1244) | LEAN | Original WP14 game synchronous, tensor quantum and commuting values each 1 |
+| WP16 original diagonal distribution | [Source PR #1245](https://github.com/grandchallenge/MATHSOLVE/pull/1245) | LEAN | Shared-CL sampler has no unequal question mass; conditional predicate-only no-gap |
+| WP17 unconditional diagonal-value theorem | [Source PR #1246](https://github.com/grandchallenge/MATHSOLVE/pull/1246) | LEAN | For every finite diagonal-supported original synchronous game with nonempty answers, all three optimal values equal feasible-diagonal mass; this does not prove hard-game separation |
+| PNP-001 Formal Conjectures definition bridges | [Separate bridge status](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_BRIDGE_001/bridge_status.json) | LEAN | Carrier and polynomial-bound bridges checked; machine, NP verifier and endpoint still open |
 | General SAT-to-classical strategy-cost transfer | [Research issue #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) | OPEN | No such implication proved |
 | P = NP or P ≠ NP | [Parent PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162) | OPEN | Neither proposition proved |
 
@@ -214,15 +242,17 @@ A claimed full compressed-game execution fails its evidence gate until there are
 
 Finite experiments may suggest lemmas but do not justify asymptotic lower bounds.
 
-## Open obligations and stopping conditions
+## Open obligations and stopping conditions (updated 18 November 2026)
 
-1. **Source machine representation:** Compile the nine-level input into the source's actual Turing-machine encoding, including malformed-input behavior and step bounds.
-2. **Numerical constructivity:** Obtain explicit sufficient values of $\lambda$ and $C_0$, or document why they cannot currently be extracted.
-3. **Classical invariant:** Define a nontrivial restricted model and one falsifiable quantitative lower-bound target.
-4. **Uniform transfer:** Supply the direction and complexity of a SAT-to-realization reduction, or demonstrate the exact obstruction.
-5. **Barrier audit:** Check relativization, natural-proofs, and algebrization assumptions before novelty promotion.
-6. **Editorial continuity:** Update [the preprint record](preprint.md) if the claims or source identities change. The parent programme's original formal-conjecture definition-level concordance issue remains outstanding.
+The exact WP00–WP17 file, replay, review and protected-documentary trail is in [GCL documentary coverage](coverage.md). The historical evidence paragraphs above are intentionally not restated as if an intermediate blocker remained after its later Lean closure.
 
-A negative result with a precise counterexample and exact scope is a legitimate terminal for a bounded investigation. Neither documentation nor a closed work package implies the Millennium problem has been solved.
+1. **Non-diagonal native sampler:** WP17 now rules out every predicate-only quantum gap on WP14's shared Alice/Bob diagonal distribution. Construct and formally verify an asymmetric/non-diagonal original conditional-linear sampler, with positive unequal-question mass, all source query interface conditions, true typed-data contracts, and worst-case termination and size bounds.
+2. **Discriminating executable verifier:** implement an answer-sensitive original `Cost.Prog` decider and prove native input parsing, source correctness, all-input time bounds and `Verifier.IsBounded` for the *new* candidate. The reference WP13–WP14 boundedness result does not establish this for any replacement.
+3. **Actual game gap:** establish nontrivial completeness, soundness and quantum-versus-classical game-value bounds, against the original native models. Non-diagonal support and a different Boolean predicate are not themselves a gap proof.
+4. **Positive-parameter compression:** construct and replay the source's introspection, answer reduction and repetition for a genuinely compliant positive-parameter verifier; reconcile Theorem 12.1's stated inequality with its displayed proof and source-effective numerical constants.
+5. **Uniform classical transfer:** prove or refute the full succinct SAT-to-classical-strategy-cost reduction with machine/encoding costs. The explicit-game WP01 SAT transfer is insufficient for unrestricted classical lower bounds.
+6. **Separate PNP-001 definition bridges:** the Formal Conjectures/Programme carrier and polynomial-bound conversions are kernel-checked, but machine-model, NP-verifier and concrete endpoint bridges remain open. Preserve the [MATHCERT pending handoff](https://github.com/grandchallenge/MATHSOLVE/blob/main/cert_handoffs/PNP-001.json), plus relativization, natural-proofs and algebrization barrier review.
 
-For an accessible explanation of these cautions, see the [reader's primer](primer.md). For formulas and proof interfaces, see the [technical spine](technical.md).
+Neither a protected merge, a completed source inventory nor a verified no-gap theorem implies the Millennium problem is solved. The parent issues remain **OPEN**; the exact evidentiary boundary is `NONDIAGONAL_SAMPLER_AND_GAME_VALUE_GAP_UNPROVED`, alongside distinct compression, classical-transfer and definition-equivalence obligations.
+
+For a general reader, see the [primer](primer.md). For mathematical formulations, see the [technical spine](technical.md). For source names, receipts and the cross-GCL authority map, see [complete documentary coverage](coverage.md).
