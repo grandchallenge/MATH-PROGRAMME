@@ -24,6 +24,48 @@ All GCL workers and persistent controllers must follow [cross-project authentica
 
 Follow [operation-scoped recovery](docs/governance/OPERATION_SCOPED_RECOVERY_POLICY.md). A failed or explicitly denied mutation affects the exact invocation, not the entire research programme. Maintain the hold on a specifically denied operation without replaying or rerouting it; continue other genuinely independent authorized work, mathematical validation and read-only evidence gathering. Do not impose routine support escalation or renewed Human Steward approval on such independent work. Report mathematical checking, specialist review and protected admission as distinct states.
 
+## Research-first execution under CONTROL transport latency
+
+**Do mathematics rather than repeatedly diagnose the same infrastructure delay.**
+CONTROL [issue #79](https://github.com/grandchallenge/CONTROL/issues/79)
+tracks an independently evidenced upstream connector-to-CHAD arrival delay.
+A blocked CONTROL stability gate applies to CONTROL features and affected
+operations; it does **not** suspend independently authorized mathematical
+reasoning, source review, Lean checking, bounded GitHub work, or programme
+execution. Follow operation-scoped recovery above. Do not initiate fresh
+transport benchmarking, reconnect, daemon replacement, or speculative service
+repairs during an unrelated mathematics assignment.
+
+For ordinary GCL worker tasks:
+
+1. **GitHub first:** use the authenticated GitHub integration for issues,
+   repository reads, commits, reviews, PRs, statuses, and evidence readback.
+   Pass canonical `grandchallenge/<repo>` names. Do not route routine GitHub
+   operations through CHAD solely for convenience. Use the existing authenticated
+   CHAD path only when local files, compiler state, shell execution, or an
+   operation unavailable through GitHub are genuinely necessary.
+2. **Pay per boundary crossing:** collect related read-only repository facts in
+   a bounded set of calls, reuse current exact-head evidence, and avoid
+   re-fetching unchanged state. Batch independent, idempotent local diagnostics
+   in a single bounded CHAD command when permissible, without treating the
+   batch as independent remote attestation. Do **not** batch unrelated protected
+   mutations, source-sensitive proof checks, ambiguous-effect retries, or
+   evidence whose acceptance requires separate authenticated calls.
+3. **Preserve forward progress:** if the authorized next action hits an actual
+   CONTROL, remote-provider, safety, or protected-admission boundary, record
+   the exact blocked operation and continue the next independent mathematical
+   obligation. Do not multiply repair tickets, repeatedly probe the same
+   known defect, or let an infrastructure acceptance loop displace research.
+4. **Honest evidence:** a successful local command is not an independent Lean
+   replay; CI is not protected admission; source-locked math is not MATHCERT.
+   Do not relax source hashes, logical review, branch protection, or the
+   CONTROL #79 freeze to avoid latency. Protect the actual mathematical
+   certification gate while avoiding unrelated infrastructure gate coupling.
+
+This section is a worker-routing and resource-economy correction, not a
+change to CONTROL #79 admission or a new persistent service. It carries no
+authority to disable, reschedule, or retire standing automations.
+
 ## Governed Lean/Colab compute skill
 
 For source-locked Lean work, discover .agents/skills/gcl-lean-colab/SKILL.md.
