@@ -48,8 +48,11 @@ class QueueTests(unittest.TestCase):
             self.assertTrue(q.permitted(row,'C'))
             self.assertIn(row['stage_work_items']['B']['work_status'],q.READY)
             self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
-    def test_documentary_candidate_not_dispatched_twice(self):
-        self.assertEqual(q.candidates('D',limit=5),[])
+    def test_documentary_selection_after_exact_c_protected_admission(self):
+        candidates=q.candidates('D',limit=5)
+        self.assertEqual([r['task_id'] for r in candidates],['ERDOS-PV-0561-D'])
+        self.assertTrue(all(r['task_id']!='ERDOS-PV-0560-D' for r in candidates))
+        self.assertEqual(candidates[0]['queue_issue'],3256)
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]
         self.assertEqual(x['problem_id'],246)
