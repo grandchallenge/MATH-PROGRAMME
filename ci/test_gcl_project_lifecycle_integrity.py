@@ -23,7 +23,9 @@ class IntegrityTests(unittest.TestCase):
                 "pageInfo":{"hasNextPage":not cursor,"endCursor":"cursor-1" if not cursor else None}}}
             if not cursor:
                 project.update(fields={"nodes":FIELDS},views={"nodes":VIEWS})
-            return SimpleNamespace(stdout=json.dumps({"data":{"organization":{"projectV2":project}}}))
+            return SimpleNamespace(stdout=json.dumps({"data":{
+                "rateLimit":{"cost":2 if cursor else 3,"remaining":4500},
+                "organization":{"projectV2":project}}}))
         with patch.object(integrity.subprocess,"run",side_effect=response) as run:
             with patch("builtins.print") as output:
                 self.assertEqual(integrity.main(),0)
@@ -32,6 +34,9 @@ class IntegrityTests(unittest.TestCase):
         self.assertIn("includeMetadata=true",first)
         self.assertIn("includeMetadata=false",second)
         self.assertIn("after=cursor-1",second)
+        report=json.loads(output.call_args.args[0])
+        self.assertEqual(report["graphql_usage"]["measured_points"],5)
+        self.assertEqual(report["graphql_usage"]["measured_pages"],2)
 
     def test_healthy_available(self):
         r=validate(FIELDS,VIEWS,[row(labels=["gcl-state:available"])])
