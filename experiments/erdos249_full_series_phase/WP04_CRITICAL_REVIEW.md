@@ -2,9 +2,9 @@
 
 **Date:** 2026-11-18 UTC  
 **Review mode:** non-authoring logical adversarial pass by the same authenticated GCL agent/account; not independently authenticated, not an external referee, not MATHCERT certification  
-**Reviewed mathematical input:** \`MOBIUS_SIGNED_TAIL_DENOMINATOR_004.md\`, source SHA-256 \`83113072c269ed5a461bf31460d73fab460311d1bdcb1b1cc34828ffcb81f385\`  
+**Reviewed mathematical input:** \`MOBIUS_SIGNED_TAIL_DENOMINATOR_004.md\`, source SHA-256 \`67a15c89191e74a6422805a457ca4223a140498dfbcd0a55e8745b6ae47a06bf\`  
 **Code SHA-256:** \`51deaab6c42e4b273917afafaa6317435778c2868423d8c49fd1ac58f5afb065\`  
-**Test SHA-256:** \`ed44da32670fab8239d96862ba5af06a7e9460bebf510962cf7af7798b05d5a2\`
+**Test SHA-256:** \`3491140f1a4d7f59ac05ea10a7279b09bd151dedc69f18a592dbc779a7b001d2\`
 
 ## Challenge 1: is the leading term really larger than all later weights?
 
