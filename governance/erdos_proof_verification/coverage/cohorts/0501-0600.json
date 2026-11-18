@@ -5363,16 +5363,23 @@
           "kind": "BOUNDED_MATHEMATICAL_VERIFICATION",
           "issue_number": 3230,
           "cohort_issue_number": 3230,
-          "work_status": "UNEXECUTED",
-          "review_status": "NOT_REVIEWED",
-          "evidence_refs": [],
-          "source_lock_receipt": null,
-          "semantic_equivalence_receipt": null,
+          "work_status": "VERIFIED_BOUNDED",
+          "review_status": "ROLE_SCOPED_CRITICAL_PASS",
+          "evidence_refs": [
+            "governance/erdos_proof_verification/evidence/0561/B_FACTOR_GATE_RECONSTRUCTION_001.md",
+            "governance/erdos_proof_verification/evidence/0561/B_SOURCE_SCOPE_LOCK_001.json",
+            "governance/erdos_proof_verification/evidence/0561/B_SEMANTIC_EQUIVALENCE_001.md",
+            "governance/erdos_proof_verification/evidence/0561/B_ADVERSARIAL_REVIEW_001.md",
+            "governance/erdos_proof_verification/evidence/0561/B_FINITE_FACTOR_ORACLE_001.json",
+            "governance/erdos_proof_verification/evidence/0561/B_RETURN_BINDING_001.json"
+          ],
+          "source_lock_receipt": "governance/erdos_proof_verification/triage/0560-0564.json",
+          "semantic_equivalence_receipt": "governance/erdos_proof_verification/evidence/0561/B_SEMANTIC_EQUIVALENCE_001.md",
           "formal_replay_receipt": null,
           "axiom_report_receipt": null,
-          "adversarial_review_receipt": null,
+          "adversarial_review_receipt": "governance/erdos_proof_verification/evidence/0561/B_ADVERSARIAL_REVIEW_001.md",
           "protected_admission_ref": null,
-          "blocker": null
+          "blocker": "PRECURSOR_CLAIMS_3_2_TO_3_8_NOT_INDEPENDENTLY_REPLAYED"
         },
         "C": {
           "task_id": "ERDOS-PV-0561-C",
