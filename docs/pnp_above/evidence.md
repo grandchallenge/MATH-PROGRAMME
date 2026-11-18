@@ -116,6 +116,28 @@ The [WP14 source-lock and replay receipt](https://github.com/grandchallenge/MATH
 
 **Next source-level research obligation:** Construct a source-native **discriminating** decider and a game whose actual entangled/classical value gap is mathematically established. Only then test the positive-parameter quantum compressor and the separately required uniform succinct SAT-to-classical resource transfer. Theorem 12.1 quantitative source reconciliation and original Formal Conjectures encoding concordance remain open; PNP-001 and MATHSOLVE #1136 remain open.
 
+## WP15: exact original game-value no-go for WP14 (18 November 2026)
+
+[Protected MATHSOLVE PR #1244](https://github.com/grandchallenge/MATHSOLVE/pull/1244) admits a source-native Lean proof to protected `main` at `64a6a47ad6a289ac1321a20cf4c396a909e1611a`. The [exact WP15 proof](https://github.com/grandchallenge/MATHSOLVE/blob/64a6a47ad6a289ac1321a20cf4c396a909e1611a/research/PNP-ABOVE/WP15_PerfectClassicalNoGap.lean) is Git blob `3e7d4905f6483acbbbafd173c735da17671dcc67`, SHA-256 `3694b66fb09bbeecf133f89cb419901e05ecf726a8ea81f308e6314e416fccb0`. It imports the original pinned upstream `vidick/MIPRE-formalization@5926bdff5db621f44682a101007ef2fe3ae8d970` (Lean 4.35.0-rc3) through protected source WP08–WP14, with no copied replacement game-value definitions.
+
+**Exact original-game value — formal negative theorem (LEAN-REPLAYED):** For **every positive index `n`** and **every natural answer-length budget `T`** (including `T=0`), consider the actual original `MIPRE.Verifier.syncGame` of WP14's fully conditional nine-stage reference verifier. WP15 defines an original upstream `SyncStrategy` with Hilbert-space dimension **one**: both players always return the empty answer. It proves the projective measurement axioms, computes the original Born-rule strategy value exactly **1**, and uses the original formal game-value upper bounds and strategy lifts to prove
+
+```text
+syncValue (wp14Game n T) = 1
+quantumValue (wp14Game n T).toGame = 1
+commValue (wp14Game n T) = 1
+quantumValue (wp14Game n T).toGame - syncValue (wp14Game n T) = 0
+commValue (wp14Game n T) - syncValue (wp14Game n T) = 0
+```
+
+These are **universal, exact mathematical proofs in the original native game/strategy models**, not sample acceptance checks or estimates of numerical game values. In particular a one-dimensional deterministic (classical) strategy already achieves the highest possible winning probability. No entanglement can improve that value.
+
+**Research interpretation:** The nine nonempty prefix-dependent CL stages admitted in WP14 are genuine mathematical structure, but WP14's *unchanged* WP08 decider accepts empty answers on every positive-index question pair. WP15 closes the question **whether that specific verifier is hard**: it is not. A nontrivial sampling geometry by itself gives no positive game-value/soundness gap. This result does **not** prove that all conditional-linear games are easy or rule out a successful replacement verifier. It cannot support quantum compression, P-versus-NP separation, or a uniform succinct SAT-to-classical complexity lower bound.
+
+The [exact source replay receipt](https://github.com/grandchallenge/MATHSOLVE/blob/64a6a47ad6a289ac1321a20cf4c396a909e1611a/research/PNP-ABOVE/WP15_IMPORT_REPLAY_RECEIPT.md) identifies original upstream, protected WP14 ancestor and exact proof source blob. A **final receipt-bearing candidate** replay compiled WP08–WP15 and audited **16 distinct WP15 theorem axioms**, all restricted to `propext`, `Classical.choice`, `Quot.sound`, exit 0. All 10 required/related MATHSOLVE checks passed and exact protected source and receipt were read back. This is protected research-source evidence; independent public mathematical certification is not claimed.
+
+**Next actual research obligation:** Construct an **answer-sensitive source-native decider** and a suitable player-question distribution with an independently proved nonzero classical-versus-quantum *game-value gap*, plus bounded source execution. Only then attempt positive-parameter compression or classical resource transfer. Theorem 12.1 quantitative discrepancy, the original Formal Conjectures encoding concordance, and the succinct SAT reduction remain OPEN. Retain PNP-001 and MATHSOLVE #1136 OPEN.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
