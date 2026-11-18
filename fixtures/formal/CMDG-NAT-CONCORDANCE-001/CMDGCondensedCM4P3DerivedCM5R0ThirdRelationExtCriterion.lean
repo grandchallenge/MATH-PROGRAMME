@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3DerivedCM5R0ExtThreeSecondRelationReduction
+import CMDGCondensedCM4P3DerivedCM5R0FourthPointRelationBoundary
 import Mathlib.Algebra.Homology.DerivedCategory.Ext.ExactSequences
 
 /-!
@@ -41,6 +42,42 @@ theorem stoneanCechThirdRelationShortExact (T : Profinite.{u}) :
   letI : Epi (stoneanCechTripleToSecondRelation T) :=
     stoneanCechTripleToSecondRelation_epi_unconditional T
   exact {exact := ShortComplex.exact_kernel _}
+
+/-- For any four points in the same presentation fibre, the
+actual alternating four-face free-module morphism canonically factors
+through the genuine third relation M_T (the kernel of F_Q→L_T). -/
+noncomputable def fourthPointMapToThirdRelation
+    (T : Profinite.{u})
+    (x y z w : Stonean.toProfinite.obj T.presentation)
+    (hxy : (Profinite.presentation.π T).hom.hom x =
+      (Profinite.presentation.π T).hom.hom y)
+    (hyz : (Profinite.presentation.π T).hom.hom y =
+      (Profinite.presentation.π T).hom.hom z)
+    (hzw : (Profinite.presentation.π T).hom.hom z =
+      (Profinite.presentation.π T).hom.hom w) :
+    ((Condensed.profiniteFree Coeff).obj
+      (Profinite.of PUnit.{u + 1})) ⟶
+      stoneanCechThirdRelationKernel T :=
+  kernel.lift (stoneanCechTripleToSecondRelation T)
+    (fourthPointAlternatingFreeMap T x y z w hxy hyz hzw)
+    (fourthPointAlternatingFreeMap_comp_secondRelation_zero
+      T x y z w hxy hyz hzw)
+
+/-- This genuine kernel factorization recovers the exact four-face
+combination under the inclusion of the third relation into F_Q. -/
+theorem fourthPointMapToThirdRelation_comp_inclusion
+    (T : Profinite.{u})
+    (x y z w : Stonean.toProfinite.obj T.presentation)
+    (hxy : (Profinite.presentation.π T).hom.hom x =
+      (Profinite.presentation.π T).hom.hom y)
+    (hyz : (Profinite.presentation.π T).hom.hom y =
+      (Profinite.presentation.π T).hom.hom z)
+    (hzw : (Profinite.presentation.π T).hom.hom z =
+      (Profinite.presentation.π T).hom.hom w) :
+    fourthPointMapToThirdRelation T x y z w hxy hyz hzw ≫
+      kernel.ι (stoneanCechTripleToSecondRelation T) =
+        fourthPointAlternatingFreeMap T x y z w hxy hyz hzw := by
+  simp only [fourthPointMapToThirdRelation, kernel.lift_ι]
 
 private abbrev ThirdGS (S : Profinite.{u}) : Ambient :=
   (Condensed.profiniteSolid CMDG.CondensedCM4P2D.R.{u}).obj S
@@ -115,6 +152,7 @@ theorem freeSolid_extThree_vanishes_iff_thirdRelation_hom_extends
   exact (freeSolid_extThree_vanishes_iff_secondRelation_extOne_vanishes
     T S).trans (thirdRelation_extOne_vanishes_iff_hom_extends T S)
 
+#print axioms fourthPointMapToThirdRelation_comp_inclusion
 #print axioms stoneanCechThirdRelationShortExact
 #print axioms thirdRelation_extOne_vanishes_iff_hom_extends
 #print axioms freeSolid_extThree_vanishes_iff_thirdRelation_hom_extends
