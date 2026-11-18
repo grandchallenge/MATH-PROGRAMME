@@ -47,7 +47,8 @@ def audit(reader, now=None):
               'checked_at_utc': now.isoformat(), 'alerts': [],
               'inconclusive': [], 'observations': [],
               'scope': {'max_rest_calls': reader.maximum, 'graphql_calls': 0,
-                        'max_pr_runs': 6, 'max_pages_runs': 12}}
+                        'max_pr_runs': 6, 'max_pages_runs': 12,
+                        'max_project_workflow_runs': 100}}
     alerts, gaps, obs = report['alerts'], report['inconclusive'], report['observations']
     try:
         runs = reader.get('/actions/workflows/gcl-conformance.yml/runs?per_page=18')['workflow_runs']
@@ -104,6 +105,23 @@ def audit(reader, now=None):
                              if sum(x['sha'] == d['sha'] for x in deployments) > 1})
         if duplicates:
             gaps.append({'reason':'REPEATED_DEPLOYMENT_SHA_REVIEW','heads':duplicates})
+        # Workflow-run counts are a bounded proxy for demand, not proof of
+        # GraphQL points spent. GitHub rate_limit is actor/token-scoped.
+        projection = reader.get('/actions/workflows/erdos-catalogue-queue-projection.yml/runs?per_page=100')
+        project_runs = projection.get('workflow_runs', [])
+        if projection.get('total_count', 0) > 100:
+            gaps.append({'reason':'PROJECT_WORKFLOW_HISTORY_TRUNCATED',
+                         'total_count':projection['total_count']})
+        event_counts = {}
+        for run in project_runs:
+            event = run.get('event', 'unknown')
+            event_counts[event] = event_counts.get(event, 0) + 1
+        report['project_workflow_recent_runs'] = {
+            'sampled':len(project_runs), 'events':event_counts,
+            'note':'Last 100 workflow runs, not a time-window rate or GraphQL attribution'}
+        if event_counts.get('issue_comment', 0) >= 80:
+            gaps.append({'reason':'HIGH_COMMENT_TRIGGER_VOLUME_REVIEW',
+                         'sampled_comment_runs':event_counts['issue_comment']})
         limits = reader.get('https://api.github.com/rate_limit')['resources']['graphql']
         report['graphql_budget'] = {k:limits.get(k) for k in ('remaining','limit','reset')}
         remaining, reset = limits.get('remaining'), limits.get('reset')

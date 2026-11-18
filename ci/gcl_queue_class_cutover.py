@@ -67,15 +67,15 @@ VIEW_FILTERS = {
 }
 
 QUERY = """
-query($owner:String!,$number:Int!,$after:String){
+query($owner:String!,$number:Int!,$after:String,$includeMetadata:Boolean!){
   organization(login:$owner){
     projectV2(number:$number){
       id
-      fields(first:100){
+      fields(first:100) @include(if:$includeMetadata){
         pageInfo{hasNextPage}
         nodes{... on ProjectV2SingleSelectField{id name options{id name}}}
       }
-      views(first:100){
+      views(first:100) @include(if:$includeMetadata){
         pageInfo{hasNextPage}
         nodes{id name filter}
       }
@@ -144,17 +144,17 @@ def read_full_project() -> tuple[dict,list[dict]]:
     total=None
     metadata=None
     while True:
-        result=graphql(QUERY,owner=OWNER,number=NUMBER,after=after)
+        result=graphql(QUERY,owner=OWNER,number=NUMBER,after=after,includeMetadata=metadata is None)
         project=(result.get("organization") or {}).get("projectV2")
         if not project or project.get("id") != PROJECT_ID:
             raise ValueError("Project #2 identity mismatch")
-        for name in ("fields","views"):
-            if project[name]["pageInfo"]["hasNextPage"]:
-                raise ValueError(name+" pagination unsupported; refuse incomplete metadata")
         if metadata is None:
+            for name in ("fields", "views"):
+                if name not in project or project[name]["pageInfo"]["hasNextPage"]:
+                    raise ValueError(name+" pagination unsupported; refuse incomplete metadata")
             metadata=project
-        elif (project["fields"] != metadata["fields"] or project["views"] != metadata["views"]):
-            raise ValueError("Project metadata changed while reading pages")
+        elif "fields" in project or "views" in project:
+            raise ValueError("unexpected repeated Project metadata")
         block=project["items"]
         if total is None:
             total=block["totalCount"]
