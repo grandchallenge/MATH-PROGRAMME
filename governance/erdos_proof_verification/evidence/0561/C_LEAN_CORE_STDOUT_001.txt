@@ -1,0 +1,29 @@
+ErdosPV0561.degree_minus_lower_eq_min (d beta : Nat) : d - factorLower d beta = min d beta
+ErdosPV0561.tight_degree_iff (d alpha beta : Nat) (ha : 0 < alpha) (_hd : d ≤ alpha + beta) :
+  factorLower d beta = alpha ↔ d = alpha + beta
+ErdosPV0561.split_budget_iff (d j alpha beta : Nat) (hjd : j ≤ d) :
+  factorLower d beta ≤ j ∧ j ≤ alpha ↔ j ≤ alpha ∧ d - j ≤ beta
+ErdosPV0561.factor_bounds (d alpha beta : Nat) (h : d ≤ alpha + beta) : factorLower d beta ≤ alpha
+ErdosPV0561.min_degree_ratio (d D beta : Nat) (hd : d ≤ D) (hb : beta ≤ D) : beta * d ≤ D * min d beta
+ErdosPV0561.weighted_to_unweighted (alpha beta D A eSY eTY : Nat) (hbeta : alpha ≤ beta)
+  (hw : alpha * eSY + beta * eTY ≤ D * A) : alpha * (eSY + eTY) ≤ D * A
+ErdosPV0561.all_small_components_impossible (alpha D A B r : Nat) (ha : 1 ≤ alpha) (hD : 0 < D) (hA : A < r)
+  (hupper : alpha * B ≤ D * A) (hsmall : r * D ≤ B) : False
+ErdosPV0561.strict_factor_slope (alpha beta D : Nat) (ha : 2 ≤ alpha) (hb : 2 * (alpha + 1) ≤ beta)
+  (hD : D = alpha + beta) : D < alpha * beta
+ErdosPV0561.large_component_impossible (alpha beta D A B r : Nat) (ha : 2 ≤ alpha) (hb : 2 * (alpha + 1) ≤ beta)
+  (hD : D = alpha + beta) (hr : 1 ≤ r) (hA : A < r) (hupper : alpha * B ≤ D * A) (hlarge : beta * (D + r - 2) + 2 ≤ B) :
+  False
+ErdosPV0561.odd_odd_product_odd (a b : Nat) (ha : a % 2 = 1) (hb : b % 2 = 1) : a * b % 2 = 1
+ErdosPV0561.component_parity_flips (m alpha e : Nat) (hodd : (alpha * m + e) % 2 = 1) : (alpha * m + (e + 1)) % 2 = 0
+'ErdosPV0561.degree_minus_lower_eq_min' depends on axioms: [propext, Quot.sound]
+'ErdosPV0561.tight_degree_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ErdosPV0561.split_budget_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ErdosPV0561.factor_bounds' depends on axioms: [propext, Quot.sound]
+'ErdosPV0561.min_degree_ratio' depends on axioms: [propext]
+'ErdosPV0561.weighted_to_unweighted' depends on axioms: [propext]
+'ErdosPV0561.all_small_components_impossible' depends on axioms: [propext, Quot.sound]
+'ErdosPV0561.strict_factor_slope' depends on axioms: [propext, Quot.sound]
+'ErdosPV0561.large_component_impossible' depends on axioms: [propext, Quot.sound]
+'ErdosPV0561.odd_odd_product_odd' depends on axioms: [propext]
+'ErdosPV0561.component_parity_flips' depends on axioms: [propext, Quot.sound]

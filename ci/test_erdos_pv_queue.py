@@ -48,8 +48,11 @@ class QueueTests(unittest.TestCase):
             self.assertTrue(q.permitted(row,'C'))
             self.assertIn(row['stage_work_items']['B']['work_status'],q.READY)
             self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
-    def test_documentary_candidate_not_dispatched_twice(self):
-        self.assertEqual(q.candidates('D',limit=5),[])
+    def test_documentary_selection_after_exact_c_protected_admission(self):
+        candidates=q.candidates('D',limit=5)
+        self.assertEqual([r['task_id'] for r in candidates],['ERDOS-PV-0561-D'])
+        self.assertTrue(all(r['task_id']!='ERDOS-PV-0560-D' for r in candidates))
+        self.assertEqual(candidates[0]['queue_issue'],3256)
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]
         self.assertEqual(x['problem_id'],246)
@@ -79,9 +82,20 @@ class QueueTests(unittest.TestCase):
         b=row['stage_work_items']['B']
         self.assertIn(b['work_status'],('VERIFIED_BOUNDED','PROTECTED_ADMITTED'))
         self.assertFalse(q.permitted(row,'B'))
-        self.assertEqual(q.permitted(row,'C'),b['work_status']=='PROTECTED_ADMITTED')
+        self.assertEqual(q.permitted(row,'C'),b['work_status']=='PROTECTED_ADMITTED' and row['stage_work_items']['C']['work_status']=='UNEXECUTED')
         self.assertNotIn(561,[x['problem_id'] for x in
             q.candidates('B',after=559,cohort='0501-0600',limit=10)])
+
+    def test_561_c_candidate_cannot_be_dispatched_or_bypass_d_gate(self):
+        cohort=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][60]
+        c=row['stage_work_items']['C']
+        self.assertIn(c['work_status'],('VERIFIED_BOUNDED','PROTECTED_ADMITTED'))
+        self.assertEqual(c['review_status'],'ROLE_SCOPED_CRITICAL_PASS')
+        self.assertFalse(q.permitted(row,'C'))
+        self.assertEqual(q.permitted(row,'D'),c['work_status']=='PROTECTED_ADMITTED')
+        self.assertNotIn(561,[x['problem_id'] for x in
+             q.candidates('C',after=560,cohort='0501-0600',limit=10)])
 
     def test_560_d_reviewed_candidate_not_dispatched_without_reclaiming_c(self):
         from copy import deepcopy
