@@ -190,6 +190,42 @@ class CoverageTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 v.validate_row(bad,self.source[560],cohort['phase_issues'])
 
+    def test_561_c_arithmetic_kernel_scope_no_full_graph_factor(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][60]
+        c=row['stage_work_items']['C']
+        self.assertIn(c['work_status'],('VERIFIED_BOUNDED','PROTECTED_ADMITTED'))
+        self.assertEqual(c['blocker'],'FORMALIZATION_WORK_REQUIRED__GRAPH_FACTOR_AND_PRECURSOR_CLAIMS')
+        self.assertEqual(c['review_status'],'ROLE_SCOPED_CRITICAL_PASS')
+        self.assertEqual(row['scope'],'OPEN_BOUNDED_LEMMA_ONLY')
+        self.assertEqual(row['closure_status'],'IN_PROGRESS')
+        self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
+        self.assertEqual(row['stage_work_items']['D']['work_status'],'UNEXECUTED')
+        r=v.read('governance/erdos_proof_verification/evidence/0561/C_LEAN_CORE_REPLAY_001.json')
+        self.assertEqual(len(r['axioms']),11)
+        self.assertEqual(len(r['types_sha256']),11)
+        self.assertEqual(len(r['hostile']),5)
+        self.assertFalse(r['full_factor_theorem_kernel_checked'])
+        self.assertFalse(r['full_you_theorem_1_2_kernel_checked'])
+        self.assertFalse(r['original_erdos_561_conjecture_solved'])
+        for mutation in (
+            lambda x:x.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
+            lambda x:x.__setitem__('closure_status','ADMITTED_BOUNDED_COMPLETE'),
+            lambda x:x.__setitem__('mathcert_status','CERTIFIED'),
+            lambda x:x['stage_work_items']['C'].__setitem__('formal_replay_receipt',None),
+            lambda x:x['stage_work_items']['C'].__setitem__('axiom_report_receipt',None),
+            lambda x:x['stage_work_items']['C'].__setitem__('adversarial_review_receipt',None),
+            lambda x:x['stage_work_items']['C'].__setitem__('review_status','NOT_REVIEWED'),
+            lambda x:x['stage_work_items']['C'].__setitem__('blocker',None),
+            lambda x:x['stage_work_items']['C'].__setitem__('evidence_refs',[]),
+            lambda x:x['stage_work_items']['C'].__setitem__('protected_admission_ref','main@forged'),
+            lambda x:x['stage_work_items']['B'].__setitem__('work_status','VERIFIED_BOUNDED'),
+            lambda x:x['stage_work_items']['D'].__setitem__('work_status','PROTECTED_ADMITTED'),
+        ):
+            bad=copy.deepcopy(row);mutation(bad)
+            with self.assertRaises(ValueError):
+                v.validate_row(bad,self.source[560],cohort['phase_issues'])
+
     def test_560_documentary_protected_bounded_closure_not_original_solved(self):
         cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
         row=cohort['items'][59]

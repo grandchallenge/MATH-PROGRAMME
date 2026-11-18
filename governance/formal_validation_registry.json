@@ -10,7 +10,8 @@
     "fixtures/formal/CMDG-NAT-CONCORDANCE-001",
     "fixtures/formal/LOG-GCD-001",
     "fixtures/formal/PC-WP04",
-    "experiments/erdos_proof_verification/0560"
+    "experiments/erdos_proof_verification/0560",
+    "experiments/erdos_proof_verification/0561"
   ],
   "control_plane": {
     "full_fanout_patterns": [
@@ -282,6 +283,37 @@
       ],
       "formal_sources": [
         "Erdos560Core.lean"
+      ]
+    },
+    {
+      "id": "erdos-pv-0561-core",
+      "family": "ERDOS-PV",
+      "execution_kind": "lake-build",
+      "package_dir": "experiments/erdos_proof_verification/0561",
+      "material_patterns": [
+        "experiments/erdos_proof_verification/0561/Erdos561Core.lean",
+        "experiments/erdos_proof_verification/0561/lean-toolchain",
+        "experiments/erdos_proof_verification/0561/lakefile.toml",
+        "experiments/erdos_proof_verification/0561/lake-manifest.json",
+        "ci/erdos_pv_0561_formal_replay.py",
+        "ci/test_erdos_pv_0561_formal_replay.py",
+        "governance/erdos_proof_verification/evidence/0561/C_*"
+      ],
+      "validator_commands": [
+        [
+          "python3",
+          "ci/erdos_pv_0561_formal_replay.py"
+        ],
+        [
+          "python3",
+          "ci/test_erdos_pv_0561_formal_replay.py"
+        ]
+      ],
+      "development_targets": [
+        "Erdos561Core.lean"
+      ],
+      "formal_sources": [
+        "Erdos561Core.lean"
       ]
     }
   ]

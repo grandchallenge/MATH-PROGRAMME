@@ -38,6 +38,8 @@ KNOWN_PYTHON_SPAWN = frozenset({
     # Exact source-scoped Lean core replay, reached only by the governed
     # erdos-pv-0560-core formal lane. Unknown future subprocesses still fail.
     'ci/erdos_pv_0560_formal_replay.py',
+    # Exact Init-only #561 source/type/axiom replay, governed by its own lane.
+    'ci/erdos_pv_0561_formal_replay.py',
 })
 
 

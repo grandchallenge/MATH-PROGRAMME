@@ -289,6 +289,81 @@ def validate_five_source_scope(row, root=ROOT):
                     gitblob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
                     ensure(blobs[path]==gitblob,
                            'problem 561 B: immutable protected proof bytes drift: '+path)
+        if n==561 and later=='C' and v['work_status'] in admitted:
+            prefix='governance/erdos_proof_verification/evidence/0561/'
+            expected={
+                'C_FORMAL_APPLICABILITY_001.md':
+                  '124c887260709e5618125b3d34a12a7fdc63540d9cf589a554be935814eef923',
+                'C_ADVERSARIAL_REVIEW_001.md':
+                  '8a838165cf14b2b8fcb5dd201f9d5e112705224602bced7ccebafed5ef3b8cad',
+                'C_SOURCE_SCOPE_LOCK_001.json':
+                  '625ff10a7c184661e42b988a466759b40b410100aa12e6eeee9dc9a67c2ebbc7',
+                'C_LEAN_CORE_REPLAY_001.json':
+                  'f86f90c8096c1ca8cd35b630f37fa4bc0f5101d01d6cbc8b50f1ddc182da0a6e',
+                'C_LEAN_CORE_STDOUT_001.txt':
+                  '7663b11dbbb604efd36982fad51c2436e355d37d2b64fa67dfa17bc1a0489c68',
+                'C_RETURN_BINDING_001.json':
+                  'e714a47ebd3b62e3fd3a66f1072ea0b30eb608ad7cd364716e0150ad8df89fc1',
+            }
+            cust=prefix+'C_PROTECTED_CUSTODY_BINDING_001.json'
+            paths={prefix+name for name in expected}
+            if v['work_status']=='PROTECTED_ADMITTED':paths.add(cust)
+            ensure(set(evidence)==paths
+                   and v['review_status']=='ROLE_SCOPED_CRITICAL_PASS'
+                   and v['source_lock_receipt']==TRIAGE_FIVE_PATH
+                   and v['semantic_equivalence_receipt']==prefix+'C_FORMAL_APPLICABILITY_001.md'
+                   and v['formal_replay_receipt']==prefix+'C_LEAN_CORE_REPLAY_001.json'
+                   and v['axiom_report_receipt']==prefix+'C_LEAN_CORE_STDOUT_001.txt'
+                   and v['adversarial_review_receipt']==prefix+'C_ADVERSARIAL_REVIEW_001.md'
+                   and v['blocker']=='FORMALIZATION_WORK_REQUIRED__GRAPH_FACTOR_AND_PRECURSOR_CLAIMS'
+                   and row['scope']=='OPEN_BOUNDED_LEMMA_ONLY'
+                   and row['closure_status']=='IN_PROGRESS'
+                   and row['mathcert_status']=='NOT_SUBMITTED'
+                   and row['certification_ref'] is None
+                   and row['stage_work_items']['D']['work_status']=='UNEXECUTED',
+                   'problem 561 C: false scope, review or protected admission')
+            for name,digest in expected.items():
+                ensure(hashlib.sha256((root/prefix/name).read_bytes()).hexdigest()==digest,
+                       'problem 561 C: immutable source, receipt, type or review drift: '+name)
+            lean=read(prefix+'C_LEAN_CORE_REPLAY_001.json',root)
+            source=read(prefix+'C_SOURCE_SCOPE_LOCK_001.json',root)
+            ret=read(prefix+'C_RETURN_BINDING_001.json',root)
+            ensure(lean.get('record_type')=='ERDOS_PV_0561_C_LEAN_CORE_REPLAY/1'
+                   and lean.get('source_sha256')=='f07d1acfa07ff4b61a60f31646cc77a04eb56330c748feaa4dea7b064d8b6e16'
+                   and lean.get('claim_sha')=='a5496eb0bdc1199ce0330de45abc26f05d90e0cd'
+                   and lean.get('import_closure')==['Init']
+                   and lean.get('positive_exit_code')==0
+                   and lean.get('scope')=='ELEVEN_KERNEL_CHECKED_ARITHMETIC_AUXILIARIES_ONLY'
+                   and lean.get('lean_version','').startswith('Lean (version 4.33.0')
+                   and len(lean.get('types_sha256',{}))==11
+                   and len(lean.get('axioms',{}))==11
+                   and len(lean.get('hostile',{}))==5
+                   and all(set(a)<={'propext','Quot.sound','Classical.choice'}
+                           for a in lean['axioms'].values())
+                   and all(lean.get(k) is False for k in (
+                       'full_factor_theorem_kernel_checked',
+                       'star_center_structural_hypotheses_kernel_checked',
+                       'full_you_theorem_1_2_kernel_checked',
+                       'original_erdos_561_conjecture_solved','mathcert_certified'))
+                   and hashlib.sha256((root/lean['source_path']).read_bytes()).hexdigest()
+                       ==lean['source_sha256'],
+                   'problem 561 C: unacceptable Lean proof or axiom report')
+            ensure(source.get('assignment_id')=='ERDOS-PV-0561-C'
+                   and source.get('source_issue_body_sha256')==row['source_issue_body_sha256']
+                   and source.get('frozen_formal_provider',{}).get('read_status')=='HTTP_404_ABSENT_AT_PINNED_REVISION'
+                   and source.get('exact_prior_phase_b',{}).get('evidence_protected_merge')
+                       =='070f9a9d71b22132d48d7c1dc0c05671c11c0a90'
+                   and source.get('formalization_work_required') is True
+                   and source.get('mathcert_status')=='NOT_SUBMITTED'
+                   and ret.get('record_type')=='ERDOS_PV_0561_C_CLAIM_AND_WORKER_RETURN/1'
+                   and ret.get('claim_sha')=='a5496eb0bdc1199ce0330de45abc26f05d90e0cd'
+                   and ret.get('claim_source_manifest_blob')=='a4ea49fe9927d66db70b50a465148082677006d5'
+                   and ret.get('return_comment_id')==6973794423
+                   and ret.get('return_body_sha256')=='48d1ddbb6cbb0929a4fc74cd741a3580bf58c9c6319643c5deb7f6b41e7c72be'
+                   and ret.get('single_result_readback') is True
+                   and all(ret.get(k) is False for k in (
+                       'full_graph_factor_formalized','whole_erdos_561_solved','mathcert_certified')),
+                   'problem 561 C: source or authenticated return mismatch')
         if n==560 and later=='C' and v['work_status'] in admitted:
             prefix='governance/erdos_proof_verification/evidence/0560/'
             required={prefix+x for x in (

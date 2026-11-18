@@ -18,7 +18,7 @@ def expect(paths: list[str], lanes: list[str]) -> None:
 def main() -> int:
     registry = formal.load_registry(ROOT)
     lane_ids = [lane["id"] for lane in registry["lanes"]]
-    assert len(lane_ids) == 16
+    assert len(lane_ids) == 17
     assert len(lane_ids) == len(set(lane_ids))
 
     # The live reproduction from PR #919 must instantiate exactly one substantive
@@ -55,6 +55,27 @@ def main() -> int:
     ):
         expect([source], ["erdos-pv-0560-core"])
     expect([erdos_core+"Erdos560Core.lean", "README.md"], ["erdos-pv-0560-core"])
+    # The second Init-only Erdős proof gets its own bounded lane, not a
+    # fallback to #560 or Mathlib-backed CMDG.
+    erdos_561_core = "experiments/erdos_proof_verification/0561/"
+    for source in (
+        erdos_561_core + "Erdos561Core.lean",
+        erdos_561_core + "lakefile.toml",
+        erdos_561_core + "lean-toolchain",
+        "ci/erdos_pv_0561_formal_replay.py",
+        "ci/test_erdos_pv_0561_formal_replay.py",
+        "governance/erdos_proof_verification/evidence/0561/C_LEAN_CORE_REPLAY_001.json",
+    ):
+        expect([source], ["erdos-pv-0561-core"])
+    try:
+        formal.classify_paths([erdos_561_core + "UnregisteredNewLemma.lean"], registry)
+    except formal.FormalValidationError as exc:
+        assert "unclassified executable/formal path" in str(exc)
+    else:
+        raise AssertionError("unreviewed #561 formal source was silently accepted")
+    expect([erdos_561_core + "Erdos561Core.lean", erdos_core + "Erdos560Core.lean"],
+           ["erdos-pv-0560-core", "erdos-pv-0561-core"])
+
     # Source additions under the managed Erdős proof root that are not
     # explicitly compiled by the registered Lake target must fail closed.
     try:
@@ -178,7 +199,7 @@ def main() -> int:
     assert "use-github-cache: false" in generic
     # All Mathlib-dependent lanes keep cache retrieval.
     # An Init-only core does not provide the Mathlib cache executable.
-    assert "use-mathlib-cache: ${{ matrix.lane != 'erdos-pv-0560-core' }}" in generic
+    assert "use-mathlib-cache: ${{ matrix.lane != 'erdos-pv-0560-core' && matrix.lane != 'erdos-pv-0561-core' }}" in generic
 
     print("formal validation routing and security acceptance matrix passed")
     return 0

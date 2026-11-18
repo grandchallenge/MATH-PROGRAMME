@@ -1,0 +1,117 @@
+{
+  "assignment_id": "ERDOS-PV-0561-C",
+  "axioms": {
+    "all_small_components_impossible": [
+      "propext",
+      "Quot.sound"
+    ],
+    "component_parity_flips": [
+      "propext",
+      "Quot.sound"
+    ],
+    "degree_minus_lower_eq_min": [
+      "propext",
+      "Quot.sound"
+    ],
+    "factor_bounds": [
+      "propext",
+      "Quot.sound"
+    ],
+    "large_component_impossible": [
+      "propext",
+      "Quot.sound"
+    ],
+    "min_degree_ratio": [
+      "propext"
+    ],
+    "odd_odd_product_odd": [
+      "propext"
+    ],
+    "split_budget_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "strict_factor_slope": [
+      "propext",
+      "Quot.sound"
+    ],
+    "tight_degree_iff": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "weighted_to_unweighted": [
+      "propext"
+    ]
+  },
+  "claim_sha": "a5496eb0bdc1199ce0330de45abc26f05d90e0cd",
+  "execution_origin": "CHAD_LOCAL_OS_ONLY_NOT_INDEPENDENTLY_ATTESTED",
+  "formalization_work_required": true,
+  "full_factor_theorem_kernel_checked": false,
+  "full_you_theorem_1_2_kernel_checked": false,
+  "hostile": {
+    "false_strict_slope_at_equal_budgets": {
+      "diagnostic": "/tmp/erdos561-c-ib5nm6cs/false_strict_slope_at_equal_budgets.lean:2:28: error: Tactic `decide` proved that the proposition\n  4 < 2 * 2\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "338205a96ccb12f2814cc6dcca6863af7ab187b139bbf477564f77770663ce5f",
+      "source_sha256": "8eb3dccc11515d2d9a47194c25277818c912b53ce379da01a01161489c6f293b"
+    },
+    "invalid_min_rewrite": {
+      "diagnostic": "/tmp/erdos561-c-ib5nm6cs/invalid_min_rewrite.lean:2:38: error: Tactic `decide` proved that the proposition\n  3 - (3 - 5) = max 3 5\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "97f3b82b98322a6b44f501054dc14c5c760cad771095e9355397c1fa63e21bc0",
+      "source_sha256": "d26dbfd8b156ad6a120c6ba0b7dab3e130e7a216e9fa07833a43b1a5642ba761"
+    },
+    "missing_positive_alpha_saturation": {
+      "diagnostic": "/tmp/erdos561-c-ib5nm6cs/missing_positive_alpha_saturation.lean:2:44: error: Tactic `decide` proved that the proposition\n  0 - 2 = 0 \u2192 0 = 0 + 2\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "9fc31d16b05a5695a04bf275ef5007c42243d711257efa570c7bf6ba578d654c",
+      "source_sha256": "45d0cb7b50c835dbeddfd86eab7913105681121943995750cdd1c3ae599ffcfd"
+    },
+    "omitted_edge_to_T_parity": {
+      "diagnostic": "/tmp/erdos561-c-ib5nm6cs/omitted_edge_to_T_parity.lean:2:34: error: Tactic `decide` proved that the proposition\n  (1 * 1 + 1) % 2 = 1\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "5309a421a2d36a0f757e12144f34d123f46ad83112364738f0e12c681318f3ae",
+      "source_sha256": "b1f629340538d1db6a7171ce70eb56936213320c92536712c24d4f7ae4c259c4"
+    },
+    "wrong_large_boundary_direction": {
+      "diagnostic": "/tmp/erdos561-c-ib5nm6cs/wrong_large_boundary_direction.lean:2:48: error: Tactic `decide` proved that the proposition\n  2 * (6 * (8 + 1 - 2) + 2) \u2264 8 * (1 - 1)\nis false\n",
+      "exit_code": 1,
+      "log_sha256": "8bfe728f8e3fdd04b4eab4e8485e5d1ec570cfc866fe78daa7f5a7c9cbe02a3e",
+      "source_sha256": "756f97bc8bb97b2ef1b0ba5cde7e0780c4eb4e0e54029231c216126a5a113a42"
+    }
+  },
+  "import_closure": [
+    "Init"
+  ],
+  "init_olean_sha256": "26523a3af45a445bdbae0b9070334c12856c650808276348189e2999fa1d07aa",
+  "lean_binary_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+  "lean_version": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "mathcert_certified": false,
+  "original_erdos_561_conjecture_solved": false,
+  "phase": "C",
+  "positive_exit_code": 0,
+  "positive_stdout_sha256": "7663b11dbbb604efd36982fad51c2436e355d37d2b64fa67dfa17bc1a0489c68",
+  "predecessor_phase_B_admission": "070f9a9d71b22132d48d7c1dc0c05671c11c0a90",
+  "predecessor_protected_main": "3fd1d27e4d0d3942d2d7fe7f0ec72409f653ad99",
+  "problem_id": 561,
+  "record_type": "ERDOS_PV_0561_C_LEAN_CORE_REPLAY/1",
+  "scope": "ELEVEN_KERNEL_CHECKED_ARITHMETIC_AUXILIARIES_ONLY",
+  "source_path": "experiments/erdos_proof_verification/0561/Erdos561Core.lean",
+  "source_sha256": "f07d1acfa07ff4b61a60f31646cc77a04eb56330c748feaa4dea7b064d8b6e16",
+  "star_center_structural_hypotheses_kernel_checked": false,
+  "types_sha256": {
+    "all_small_components_impossible": "080f5b7218260bf2efde492029f18aa32c6309d201e231881cc9d6cab10a8890",
+    "component_parity_flips": "2ed21149c9a6983cf3ed685f0d1087b3e23dd485e7c204a03e7d09d548b5ca66",
+    "degree_minus_lower_eq_min": "f53ed65d9e20633de7cd7118984d3ac32fa48a745441ba2d75eb9476d8e60724",
+    "factor_bounds": "4acaa7bb98198308fa70f04af54124a5bf8c8d6510d296a45b3ae2163b268f61",
+    "large_component_impossible": "05449c8e24f5f79d3531fbdc5f203af700e2e69347d044520b0cd172ffa3c6a9",
+    "min_degree_ratio": "dcfe6a367bcec5ad6510e3c7a1bf143072e07a55280504096d48eaa11ad2a89b",
+    "odd_odd_product_odd": "6868963804e753e9a4ee6c89ea9ddd7c2d0df56b8ace272526466a96901d541e",
+    "split_budget_iff": "679e7fb8ec66d5687543db14ecb9e73d3fe1bd1ca239403a0e772edda3d057ea",
+    "strict_factor_slope": "348ec43a6b756fb70d1ae693a1242efcd0b31feaa2289ecbb58c729511c98be8",
+    "tight_degree_iff": "5dcf0caceff77bc1fbb5dd1ff0b5ce91efaaf635b367d7fc2279ceb23354f3da",
+    "weighted_to_unweighted": "ad688f68b9d0ca709348fc960851084df75f1067d0712025c8e5411876d4fa18"
+  }
+}
