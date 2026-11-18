@@ -13,11 +13,12 @@ split-free Čech degree-two contracting homotopy.
 The equivalence is assembled via the preserved genuine CompHaus
 pullback, actual triple-pullback comparison, one generic set-level
 nested-quadruple equivalence, and the explicit ULift of compatible
-quadruples. The last/XYZ face comparison is verified.
+quadruples. All four faces XYW, XZW, YZW, XYZ are proved compatible with the
+genuine categorical CompHaus pullback face maps.
 
-Compatibility of the three other face maps, free-module
-differential comparison, exactness transfer to every Stonean probe,
-and sheafification into genuine CondensedMod remain OPEN. In
+Free-module differential comparison and exactness at every
+Stonean probe are proved in the adjacent separate module.
+Sheafification into genuine CondensedMod and global epi remain OPEN. In
 particular the map F_{P(T)^4_T}→M_T is NOT proved epimorphic and
 no Ext³ vanishing is asserted.
 -/
@@ -201,8 +202,218 @@ theorem stoneanCompHausProbeCechQuadrupleUlift_xyz
   rfl
 
 
+private noncomputable abbrev quadProbeW (T : Profinite.{u}) :
+    stoneanPresentationCechQuadruples T ⟶
+    Stonean.toProfinite.obj T.presentation :=
+  pullback.snd
+    (stoneanCechTripleXY T ≫
+      pullback.fst (Profinite.presentation.π T)
+        (Profinite.presentation.π T) ≫
+      Profinite.presentation.π T)
+    (Profinite.presentation.π T)
+
+/-- The genuine fourfold XYW face commutes with the same actual
+universe-lifted CompHaus representation equivalence. -/
+theorem stoneanCompHausProbeCechQuadrupleUlift_xyw
+    (T : Profinite.{u}) (U : Stonean.{u})
+    (z : ULift.{u + 1}
+      (U.compHaus ⟶ profiniteToCompHaus.obj
+        (stoneanPresentationCechQuadruples T))) :
+    splitFreeCechQuadXYW (stoneanCompHausProbePresentationMap T U)
+      (stoneanCompHausProbeCechQuadrupleUliftEquiv T U z) =
+    stoneanCompHausProbeCechTripleUliftEquiv T U
+      (ULift.up (z.down ≫ profiniteToCompHaus.map (quadFaceXYW T))) := by
+  let p := stoneanCompHausProbePresentationMap T U
+  let eT := stoneanCompHausProbeCechTripleUliftEquiv T U
+  let q0 : ULift.{u + 1} (U.compHaus ⟶ profiniteToCompHaus.obj
+    (stoneanPresentationCechTriples T)) :=
+      ULift.up (z.down ≫ profiniteToCompHaus.map (quadProbeXYZ T))
+  let q1 : ULift.{u + 1} (U.compHaus ⟶ profiniteToCompHaus.obj
+    (stoneanPresentationCechTriples T)) :=
+      ULift.up (z.down ≫ profiniteToCompHaus.map (quadFaceXYW T))
+  have hMorph : quadProbeXYZ T ≫ stoneanCechTripleXY T =
+      quadFaceXYW T ≫ stoneanCechTripleXY T := by
+    unfold quadFaceXYW
+    rw [pullback.lift_fst]
+    rfl
+  have hpair : splitFreeCechTripleXY p (eT q0) =
+      splitFreeCechTripleXY p (eT q1) := by
+    rw [stoneanCompHausProbeCechTripleUlift_xy,
+      stoneanCompHausProbeCechTripleUlift_xy]
+    apply congrArg (stoneanCompHausProbeCechPairUliftEquiv T U)
+    apply congrArg ULift.up
+    change
+      z.down ≫ profiniteToCompHaus.map (quadProbeXYZ T) ≫
+        profiniteToCompHaus.map (stoneanCechTripleXY T) =
+      z.down ≫ profiniteToCompHaus.map (quadFaceXYW T) ≫
+        profiniteToCompHaus.map (stoneanCechTripleXY T)
+    simpa only [Category.assoc, ← Functor.map_comp] using
+      congrArg
+        (fun m : stoneanPresentationCechQuadruples T ⟶
+          stoneanPresentationCechPairs T =>
+          z.down ≫ profiniteToCompHaus.map m) hMorph
+  have h0 := stoneanCompHausProbeCechQuadrupleUlift_xyz T U z
+  apply Subtype.ext
+  apply Prod.ext
+  · exact (congrArg (fun t : splitFreeCechTriple p => t.val.1) h0).trans
+      (congrArg (fun xy : splitFreeCechPair p => xy.val.1) hpair)
+  · apply Prod.ext
+    · exact (congrArg (fun t : splitFreeCechTriple p => t.val.2.1) h0).trans
+        (congrArg (fun xy : splitFreeCechPair p => xy.val.2) hpair)
+    · change ULift.up (z.down ≫ profiniteToCompHaus.map (quadProbeW T)) =
+        ULift.up ((z.down ≫ profiniteToCompHaus.map (quadFaceXYW T)) ≫
+          profiniteToCompHaus.map (stoneanCechTripleZ T))
+      apply congrArg ULift.up
+      change z.down ≫ profiniteToCompHaus.map (quadProbeW T) =
+        (z.down ≫ profiniteToCompHaus.map (quadFaceXYW T)) ≫
+          profiniteToCompHaus.map (stoneanCechTripleZ T)
+      have hw : quadProbeW T =
+          quadFaceXYW T ≫ stoneanCechTripleZ T := by
+        unfold quadFaceXYW
+        rw [pullback.lift_snd]
+        rfl
+      simpa only [Category.assoc, ← Functor.map_comp] using
+        congrArg
+          (fun m : stoneanPresentationCechQuadruples T ⟶
+            Stonean.toProfinite.obj T.presentation =>
+            z.down ≫ profiniteToCompHaus.map m) hw
+
+theorem stoneanCompHausProbeCechQuadrupleUlift_xzw
+    (T : Profinite.{u}) (U : Stonean.{u})
+    (z : ULift.{u + 1}
+      (U.compHaus ⟶ profiniteToCompHaus.obj
+        (stoneanPresentationCechQuadruples T))) :
+    splitFreeCechQuadXZW (stoneanCompHausProbePresentationMap T U)
+      (stoneanCompHausProbeCechQuadrupleUliftEquiv T U z) =
+    stoneanCompHausProbeCechTripleUliftEquiv T U
+      (ULift.up (z.down ≫ profiniteToCompHaus.map (quadFaceXZW T))) := by
+  let p := stoneanCompHausProbePresentationMap T U
+  let eT := stoneanCompHausProbeCechTripleUliftEquiv T U
+  let q0 : ULift.{u + 1} (U.compHaus ⟶ profiniteToCompHaus.obj
+    (stoneanPresentationCechTriples T)) :=
+      ULift.up (z.down ≫ profiniteToCompHaus.map (quadProbeXYZ T))
+  let q1 : ULift.{u + 1} (U.compHaus ⟶ profiniteToCompHaus.obj
+    (stoneanPresentationCechTriples T)) :=
+      ULift.up (z.down ≫ profiniteToCompHaus.map (quadFaceXZW T))
+  have hMorph : quadProbeXYZ T ≫ stoneanCechTripleXZ T =
+      quadFaceXZW T ≫ stoneanCechTripleXY T := by
+    unfold quadFaceXZW
+    rw [pullback.lift_fst]
+    rfl
+  have hpair : splitFreeCechTripleXZ p (eT q0) =
+      splitFreeCechTripleXY p (eT q1) := by
+    rw [stoneanCompHausProbeCechTripleUlift_xz,
+      stoneanCompHausProbeCechTripleUlift_xy]
+    apply congrArg (stoneanCompHausProbeCechPairUliftEquiv T U)
+    apply congrArg ULift.up
+    change
+      z.down ≫ profiniteToCompHaus.map (quadProbeXYZ T) ≫
+        profiniteToCompHaus.map (stoneanCechTripleXZ T) =
+      z.down ≫ profiniteToCompHaus.map (quadFaceXZW T) ≫
+        profiniteToCompHaus.map (stoneanCechTripleXY T)
+    simpa only [Category.assoc, ← Functor.map_comp] using
+      congrArg
+        (fun m : stoneanPresentationCechQuadruples T ⟶
+          stoneanPresentationCechPairs T =>
+          z.down ≫ profiniteToCompHaus.map m) hMorph
+  have h0 := stoneanCompHausProbeCechQuadrupleUlift_xyz T U z
+  apply Subtype.ext
+  apply Prod.ext
+  · exact (congrArg (fun t : splitFreeCechTriple p => t.val.1) h0).trans
+      (congrArg (fun xy : splitFreeCechPair p => xy.val.1) hpair)
+  · apply Prod.ext
+    · exact (congrArg (fun t : splitFreeCechTriple p => t.val.2.2) h0).trans
+        (congrArg (fun xy : splitFreeCechPair p => xy.val.2) hpair)
+    · change ULift.up (z.down ≫ profiniteToCompHaus.map (quadProbeW T)) =
+        ULift.up ((z.down ≫ profiniteToCompHaus.map (quadFaceXZW T)) ≫
+          profiniteToCompHaus.map (stoneanCechTripleZ T))
+      apply congrArg ULift.up
+      change z.down ≫ profiniteToCompHaus.map (quadProbeW T) =
+        (z.down ≫ profiniteToCompHaus.map (quadFaceXZW T)) ≫
+          profiniteToCompHaus.map (stoneanCechTripleZ T)
+      have hw : quadProbeW T =
+          quadFaceXZW T ≫ stoneanCechTripleZ T := by
+        unfold quadFaceXZW
+        rw [pullback.lift_snd]
+        rfl
+      simpa only [Category.assoc, ← Functor.map_comp] using
+        congrArg
+          (fun m : stoneanPresentationCechQuadruples T ⟶
+            Stonean.toProfinite.obj T.presentation =>
+            z.down ≫ profiniteToCompHaus.map m) hw
+
+
+theorem stoneanCompHausProbeCechQuadrupleUlift_yzw
+    (T : Profinite.{u}) (U : Stonean.{u})
+    (z : ULift.{u + 1}
+      (U.compHaus ⟶ profiniteToCompHaus.obj
+        (stoneanPresentationCechQuadruples T))) :
+    splitFreeCechQuadYZW (stoneanCompHausProbePresentationMap T U)
+      (stoneanCompHausProbeCechQuadrupleUliftEquiv T U z) =
+    stoneanCompHausProbeCechTripleUliftEquiv T U
+      (ULift.up (z.down ≫ profiniteToCompHaus.map (quadFaceYZW T))) := by
+  let p := stoneanCompHausProbePresentationMap T U
+  let eT := stoneanCompHausProbeCechTripleUliftEquiv T U
+  let q0 : ULift.{u + 1} (U.compHaus ⟶ profiniteToCompHaus.obj
+    (stoneanPresentationCechTriples T)) :=
+      ULift.up (z.down ≫ profiniteToCompHaus.map (quadProbeXYZ T))
+  let q1 : ULift.{u + 1} (U.compHaus ⟶ profiniteToCompHaus.obj
+    (stoneanPresentationCechTriples T)) :=
+      ULift.up (z.down ≫ profiniteToCompHaus.map (quadFaceYZW T))
+  have hMorph : quadProbeXYZ T ≫ stoneanCechTripleYZ T =
+      quadFaceYZW T ≫ stoneanCechTripleXY T := by
+    unfold quadFaceYZW
+    rw [pullback.lift_fst]
+    rfl
+  have hpair : splitFreeCechTripleYZ p (eT q0) =
+      splitFreeCechTripleXY p (eT q1) := by
+    rw [stoneanCompHausProbeCechTripleUlift_yz,
+      stoneanCompHausProbeCechTripleUlift_xy]
+    apply congrArg (stoneanCompHausProbeCechPairUliftEquiv T U)
+    apply congrArg ULift.up
+    change
+      z.down ≫ profiniteToCompHaus.map (quadProbeXYZ T) ≫
+        profiniteToCompHaus.map (stoneanCechTripleYZ T) =
+      z.down ≫ profiniteToCompHaus.map (quadFaceYZW T) ≫
+        profiniteToCompHaus.map (stoneanCechTripleXY T)
+    simpa only [Category.assoc, ← Functor.map_comp] using
+      congrArg
+        (fun m : stoneanPresentationCechQuadruples T ⟶
+          stoneanPresentationCechPairs T =>
+          z.down ≫ profiniteToCompHaus.map m) hMorph
+  have h0 := stoneanCompHausProbeCechQuadrupleUlift_xyz T U z
+  apply Subtype.ext
+  apply Prod.ext
+  · exact (congrArg (fun t : splitFreeCechTriple p => t.val.2.1) h0).trans
+      (congrArg (fun xy : splitFreeCechPair p => xy.val.1) hpair)
+  · apply Prod.ext
+    · exact (congrArg (fun t : splitFreeCechTriple p => t.val.2.2) h0).trans
+        (congrArg (fun xy : splitFreeCechPair p => xy.val.2) hpair)
+    · change ULift.up (z.down ≫ profiniteToCompHaus.map (quadProbeW T)) =
+        ULift.up ((z.down ≫ profiniteToCompHaus.map (quadFaceYZW T)) ≫
+          profiniteToCompHaus.map (stoneanCechTripleZ T))
+      apply congrArg ULift.up
+      change z.down ≫ profiniteToCompHaus.map (quadProbeW T) =
+        (z.down ≫ profiniteToCompHaus.map (quadFaceYZW T)) ≫
+          profiniteToCompHaus.map (stoneanCechTripleZ T)
+      have hw : quadProbeW T =
+          quadFaceYZW T ≫ stoneanCechTripleZ T := by
+        unfold quadFaceYZW
+        rw [pullback.lift_snd]
+        rfl
+      simpa only [Category.assoc, ← Functor.map_comp] using
+        congrArg
+          (fun m : stoneanPresentationCechQuadruples T ⟶
+            Stonean.toProfinite.obj T.presentation =>
+            z.down ≫ profiniteToCompHaus.map m) hw
+
+
+
 #print axioms compatibleNestedQuadrupleEquiv
 #print axioms uliftCompatibleQuadrupleEquiv
 #print axioms stoneanCompHausProbeCechQuadrupleUliftEquiv
 #print axioms stoneanCompHausProbeCechQuadrupleUlift_xyz
+#print axioms stoneanCompHausProbeCechQuadrupleUlift_xyw
+#print axioms stoneanCompHausProbeCechQuadrupleUlift_xzw
+#print axioms stoneanCompHausProbeCechQuadrupleUlift_yzw
 end CMDG.CondensedCM5R0
