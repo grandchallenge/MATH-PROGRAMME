@@ -7,6 +7,11 @@
 
 ## New dependency closure: 1994 full text no longer needed
 
+## Pinned constructive source for Vizing's adjacency lemma
+
+P. M. D. Woodall, *Edge-Colourings of Simple Graphs*, postgraduate lecture notes (2006/07), pp. 1-4, Theorem 3 (p. 4), with an explicit proof from fan sequences and Lemmas 2.1/3.1. https://www.maths.nottingham.ac.uk/plp/pmadw/PG/edgecol.pdf . CHAD source-lock 2026-11-18: HTTP 200, application/pdf, **78,683 bytes**, SHA-256 **`8aaf86605054ed8ebc78a29a44f960b29fe9e9864a373f79db8e9e1b59622ae1`**. This is a full written proof of the classical theorem invoked in `CRITICAL5_REPLACEMENT_PROOF.md`; it is not a copy of Vizing's original 1965 publication. The exact graph6 finite datasets and source hashes are pinned below.
+
+
 The proof now uses `CRITICAL5_REPLACEMENT_PROOF.md`: a direct derivation of `e(C)>=2|V(C)|` from Vizing's adjacency lemma and a complete seven/eight-vertex classification. This proves the *only critical-graph bound actually needed* for the fixed 24-edge theorem without relying on a full 1994 Kayathri proof. Original 1994 provenance below is retained for historical reference; its unavailability is **not** a mathematical dependency blocker for this revised proof.
 
 - McKay `graph7.g6` SHA256 `5a878f1a46606da4733df250bf9a412d6ae0b3c73c2112e25d66ba00ae565b56`, 1,044 classes.
