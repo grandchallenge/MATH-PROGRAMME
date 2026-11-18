@@ -1,0 +1,48 @@
+{
+  "record_type": "ERDOS249_S_WP04_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-18",
+  "issue": "grandchallenge/MATH-PROGRAMME#3473",
+  "claim_scope": "SIGNED_MOBIUS_TAIL_AND_REDUCED_DENOMINATOR_ONLY",
+  "full_series_status": "OPEN",
+  "certification": "NOT_SUBMITTED",
+  "run": {
+    "execution_origin": "GCL_CONTROL.run_bash on CHAD OS account",
+    "authority": "OS_ACCOUNT_ONLY",
+    "independent_execution_attested": false,
+    "capture_id": "1a2eb4e69e8947d7b8edf2725e40f978",
+    "capture_receipt_sha256": "2d748ea671cf59f0683ca288d9163cc6c1d0e0593900c7d4c32f937f2846ebd2",
+    "exact_source_branch_head": "483f71ce57d1cdb5da983722fe34d6fe34bc41f1",
+    "python": "3.10.12",
+    "tests": {
+      "command": "python3 -m unittest discover -s tests -p 'test_erdos249_mobius_prime_denominators.py' -v",
+      "exit_code": 0,
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "combined_output_sha256": "c3f4f08deb88babe16af54856f888dbc607aca8ddb5618495ba6aedc55ad65d8"
+    },
+    "mathematical_markdown": {
+      "files": [
+        "experiments/erdos249_full_series_phase/MOBIUS_SIGNED_TAIL_DENOMINATOR_004.md",
+        "experiments/erdos249_full_series_phase/WP04_CRITICAL_REVIEW.md"
+      ],
+      "result": "PASS",
+      "exit_code": 0,
+      "each_output_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+    }
+  },
+  "sources": {
+    "module_sha256": "51deaab6c42e4b273917afafaa6317435778c2868423d8c49fd1ac58f5afb065",
+    "tests_sha256": "3491140f1a4d7f59ac05ea10a7279b09bd151dedc69f18a592dbc779a7b001d2",
+    "manuscript_sha256": "67a15c89191e74a6422805a457ca4223a140498dfbcd0a55e8745b6ae47a06bf",
+    "critical_review_git_blob": "41c61c0ea9ecdab68d5a7cb43cd5f23c30717755"
+  },
+  "strict_boundaries": [
+    "does not prove original Erdős #249 irrationality",
+    "not Lean-verified or MATHCERT-certified",
+    "no external independent mathematical review",
+    "no claim of mathematical novelty",
+    "source-critical logical review by same authenticated agent; not independently authenticated"
+  ],
+  "next_action": "Verify protected PR checks and readback for WP04; after admission continue cofinal totient-specific arithmetic cancellation search rather than finite range extensions."
+}
