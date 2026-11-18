@@ -63,3 +63,9 @@ primary remaining quota, so do not diagnose primary exhaustion from an error
 message alone. The CI efficiency sentinel samples the last 100 queue-projection
 workflow runs, records event distribution, and flags high comment-trigger
 volume for investigation without alleging that each trigger made a full scan.
+
+GraphQL page queries now include GitHub's own `rateLimit.cost` response field.
+The live audit records `graphql_usage.measured_points` and `measured_pages`;
+the queue-class controller prints its own measured inventory-read cost.
+These figures are actor- and operation-specific, not organization-wide totals.
+Missing cost evidence is reported as unknown, never estimated as zero.
