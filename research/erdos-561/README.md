@@ -8,7 +8,7 @@ This directory makes the evidence from [GCL research #3490](https://github.com/g
 
 - `ERDOS_561_FULL_422_431_PROOF.md` — original fixed 24-edge proof reconstruction.
 - `EXACT_JOINT_422_431_PROOF.md` — exact 17-edge coupled residual proof.
-- `exact_degree5_residual.py` — exact Python 11,197-case classifier (historical hardcoded output removed for portability).
+- `exact_degree5_residual.py` — standard-library Python 11,197-case classifier (historical hardcoded output removed for portability).
 - `exact_degree5_cpp_replay.cpp` — independently implemented standard C++17 classification.
 - `exact_joint_upper.py`, `exact_original_upper.py` — exhaustive 630- and 5,040-case upper host checks.
 - `K_APEX_THEOREM.md`, `k_apex_colouring.py` — new general independent-`k`-apex colouring theorem and stdlib-only constructive tests.
@@ -19,15 +19,12 @@ This directory makes the evidence from [GCL research #3490](https://github.com/g
 
 ```bash
 cd research/erdos-561
-python3 exact_degree5_residual.py
-c++ -std=c++17 -O2 -o /tmp/erdos561-cpp exact_degree5_cpp_replay.cpp
-/tmp/erdos561-cpp
-python3 exact_joint_upper.py
-python3 exact_original_upper.py
-python3 k_apex_colouring.py
+bash run_certificates.sh
 ```
 
 Expected: the Python and C++ classifiers each test 11,197 extensions, finding two labelled isomorphic survivors; upper-host checks pass 630 and 5,040 assignments; `k_apex_colouring.py` passes 3,000 deterministic cases for `k=1..4`.
+
+The replay is deliberately a research-directory script rather than a new GitHub Actions workflow: additional workflows require protected GH-OS routing registration and cannot be introduced by this ordinary research PR. The run can be executed in existing runner environments, including CHAD, without GitHub Actions configuration changes.
 
 ## Promotion restrictions
 

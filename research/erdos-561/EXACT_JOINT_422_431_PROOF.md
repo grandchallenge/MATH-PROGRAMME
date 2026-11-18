@@ -16,9 +16,9 @@ Let
 
 Then
 
-\[
+$$
 \boxed{\min\{|E(G)|:\ G\text{ satisfies R1 and R2}\}=17.}
-\]
+$$
 
 In the formulation of issue #3490, this is `J((4,2,2),(4,3,1))=17`, the full antidiagonal-tail sum `(6,5,4,2)`. Each individual residual minimum is 16, under the two-component theorem in the October 2026 paper, so the joint result recovers the one-edge switching surplus. **This proof of the joint minimum does not invoke that paper's two-component theorem.** The proof uses only elementary matching facts, Vizing's classical edge-colouring theorem, and an exhaustively certified finite lemma.
 
@@ -28,9 +28,9 @@ Assume for contradiction that a finite simple graph `G` with 16 edges satisfies 
 
 **Step A — every vertex deletion leaves a constrained graph.** Fix any vertex `v`. R1 implies
 
-\[
+$$
 G-v \to (K_{1,2},F(4,3,1)). \tag{A}
-\]
+$$
 
 To see this, start with an arbitrary colouring of `G-v` without a blue `F(4,3,1)` and colour every edge incident to `v` red. R1 forces two disjoint red `K_{1,2}`. At most one contains `v`, so at least one red `K_{1,2}` lies in `G-v`, proving (A).
 
@@ -38,15 +38,15 @@ Let `H=F(4,3,1)`, with `e(H)=8` and matching number `ν(H)=3`. **Any** `Q -> (K_
 
 Therefore `e(G-v)>=11` for every vertex, i.e. `16-d_G(v)>=11` and
 
-\[
+$$
 \Delta(G)\le 5. \tag{B}
-\]
+$$
 
 **Step B — the second relation forces the opposite inequality.** R2 implies the weaker one-star arrowing `G -> (K_{1,4},K_{1,3})`. If `Δ(G)<=4`, Vizing's edge-colouring theorem splits `E(G)` into at most five matchings. Colour any three matching classes red and the remaining at most two blue, obtaining red degree at most three and blue degree at most two, avoiding both target stars. Contradiction. Consequently `Δ(G)>=5`, and with (B),
 
-\[
+$$
 \boxed{\Delta(G)=5.}\tag{C}
-\]
+$$
 
 **Step C — extremal vertex-deletion rigidity.** Choose a vertex `v` of degree five; put `Q=G-v`. It has exactly eleven edges and satisfies (A). Take a maximum matching `M` in `Q`. As above, `ν(Q)>=3`, and the all-red-matching colouring implies `e(Q)-ν(Q)>=8`, so `ν(Q)=3`. The blue remainder `Q-M` has exactly eight edges and contains `H`, hence equals `H` plus isolated vertices.
 
@@ -84,15 +84,15 @@ This also rules out graphs with fewer than sixteen edges, since any such graph c
 
 Take the vertex-disjoint union
 
-\[
+$$
 U=F(6,5,4,2),\qquad e(U)=6+5+4+2=17.
-\]
+$$
 
 It satisfies R1 and R2. Because each component is a star and components are disjoint, the existence of a red/blue star forest depends **only** on the red/blue edge counts at the four centres. Every red/blue edge colouring therefore reduces to one of
 
-\[
+$$
 (6+1)(5+1)(4+1)(2+1)=630
-\]
+$$
 
 integer allocations. The small `exact_joint_upper.py` independently enumerates all 630, and for each confirms `red F(2,2) OR blue F(4,3,1)` and `red F(4,2,2) OR blue F(3,1)`. Every allocation passes. Therefore `J<=17`; together with the lower bound, `J=17`.
 

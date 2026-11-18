@@ -7,11 +7,11 @@ Hence every Q is F plus three pairwise disjoint edges, each incident to a vertex
 """
 from itertools import combinations
 from collections import Counter
-import time,json,networkx as nx
+import time,json
 
-H=nx.disjoint_union_all([nx.star_graph(4),nx.star_graph(3),nx.star_graph(1)])
-assert H.number_of_nodes()==11 and H.number_of_edges()==8
-base={tuple(sorted(e)) for e in H.edges()}
+# Three disjoint stars on vertex ranges 0..4, 5..8, 9..10.
+base={(0,i) for i in range(1,5)} | {(5,i) for i in range(6,9)} | {(9,10)}
+assert len(base)==8
 old=tuple(range(11))
 
 def pairings(vertices):
@@ -90,8 +90,8 @@ for M in addmatchings():
  yes,k=Q_arrows_single_star(edges)
  if yes:
   vertices=max(max(e) for e in edges)+1
-  G=nx.Graph();G.add_nodes_from(range(vertices));G.add_edges_from(edges)
-  passed.append({'base_matching':M,'graph6':nx.to_graph6_bytes(G,header=False).decode().strip(),'q_max_degree':max(dict(G.degree()).values()),'good_H_complements':k})
+  degrees=Counter(v for edge in edges for v in edge)
+  passed.append({'base_matching':M,'edge_list':edges,'q_max_degree':max(degrees.values()),'good_H_complements':k})
   kind[vertices]+=1
 print(json.dumps({'candidate_M':cnt,'passed':len(passed),'by_vertices':dict(kind),'seconds':round(time.monotonic()-start,2),'first':passed[:30]},indent=2))
 # For portability, CI prints the result; it does not mutate an absolute path.

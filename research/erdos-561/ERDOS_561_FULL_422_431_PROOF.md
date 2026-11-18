@@ -11,9 +11,9 @@ Let `F(n_1,...,n_s)` denote the vertex-disjoint union of stars `K_{1,n_i}`. For 
 
 **Theorem.**
 
-\[
+$$
 \boxed{\widehat r(F(4,2,2),F(4,3,1))=24.}
-\]
+$$
 
 The original Erdős #561 antidiagonal formula gives 7+6+5+4+2=**24** for these parameters. The theorem is one of the first nontrivial three-star-vs-three-star parameter instances attacked by this GCL workstream, but **no claim of historical priority or novelty** is made.
 
@@ -23,9 +23,9 @@ The original Erdős #561 antidiagonal formula gives 7+6+5+4+2=**24** for these p
 
 **F2 — exact joint residual instance.** The previous `ERDOS_561_exact_joint_422_431_release.zip` proves, with a complete 11,197-candidate enumeration independently replayed in C++17 and Python, that
 
-\[
+$$
 J:=\min\{e(Q):Q\to(F(2,2),F(4,3,1))\ \text{and}\ Q\to(F(4,2,2),F(3,1))\}=17.
-\]
+$$
 
 Moreover, it proves the **11-edge rigidity lemma**: every `Q` with eleven edges arrowing `(K_{1,2},F(4,3,1))` is, up to isolates, `F(5,4,2)`. The finite certificate has been cross-checked by different code paths: Python complement signature enumeration and C++ direct blue-star embedding for all red matchings. Complete proof in `EXACT_JOINT_422_431_PROOF.md` included in this release.
 
@@ -33,9 +33,9 @@ Moreover, it proves the **11-edge rigidity lemma**: every `Q` with eleven edges 
 
 **F4 — a published theorem for critical graphs.** Every simple **edge-5-critical** graph `C` of order `n` satisfies
 
-\[
+$$
 e(C)\geq\tfrac12(4n+3).
-\]
+$$
 
 This is the Δ=5 case of Vizing's average-degree conjecture **already proved for Δ≤5**, not the general open conjecture. For source verification: Rong Luo and Cun-Quan Zhang, *Edge coloring of graphs with small average degrees*, Discrete Mathematics **275** (2004), 207–218, DOI `10.1016/S0012-365X(03)00107-9`, introduction pp.207–208, Conjecture 1.1 and explicit note that it is verified for Δ≤5; Yan Cao and Guantao Chen, *On the average degree of edge chromatic critical graphs*, Journal of Combinatorial Theory B **147** (2021), 299–338, DOI `10.1016/j.jctb.2020.04.004`, introduction notes verified status for Δ≤6. This proof **invokes** that established theorem, it does not reprove its external literature.
 
@@ -45,9 +45,9 @@ A graph is edge-5-critical here if `χ′(C)=6`, `Δ(C)=5`, and deleting any edg
 
 **Theorem (two-apex star-forest edge-colouring).** Let `G` be any finite simple graph with `Δ(G)=D>=6`. Suppose `u,v` are **nonadjacent** vertices each of degree `D`, and `G-{u,v}` is a vertex-disjoint union of stars and isolated vertices. Then
 
-\[
+$$
 \boxed{\chi'(G)=D.}
-\]
+$$
 
 **Proof.** Use a palette `P` of exactly `D` colours. Colour the `D` edges incident with `u` bijectively with `P`. Assign colours bijectively to the `D` edges incident with `v` such that, at any common neighbour `x` of `u` and `v`, the colours on `ux` and `vx` are different.
 
@@ -55,9 +55,9 @@ This is a standard application of Hall's marriage theorem. Each `v`-edge has all
 
 Now consider a single star component of `G-{u,v}`. Let `c` be its centre with `h` leaves. Let `P_c` be the colours not used on the apex edges `uc` and `vc`, when present. There are at most two such exclusions, so
 
-\[
+$$
 |P_c|\geq D-2\geq4,\qquad |P_c|\geq h,
-\]
+$$
 
 where the second inequality follows because the degree of `c` in `G` is at most `D`. For each leaf `x`, the colour of edge `cx` is chosen from `P_c` excluding the colours already used on `ux` and `vx`, when present. Hence every leaf list has at least `|P_c|-2>=2` colours.
 
@@ -71,31 +71,31 @@ Suppose for contradiction `G -> (F(4,2,2),F(4,3,1))` with `e(G)<=23`.
 
 **1. Vertex deletion confines its degree.** By F1, for every vertex `x`, the graph `G-x` satisfies **both** joint residual arrowing relations defining `J`. F2 gives `e(G-x)>=17`. Therefore
 
-\[
+$$
  e(G)-d_G(x)\ge17\quad(\forall x),\qquad\Delta(G)\le e(G)-17\le6.\tag{1}
-\]
+$$
 
 The original arrowing relation implies the weaker one `G->(K_{1,4},K_{1,4})`. If `Δ(G)<=5`, F3 gives a proper edge-colouring in at most six colours; partition the colours into three red and three blue classes. The resulting colouring has both red and blue degree at most three and avoids **both** target forests, a contradiction. Hence `Δ(G)>=6`. Combining with (1),
 
-\[
+$$
 \boxed{e(G)=23,\qquad \Delta(G)=6.}\tag{2}
-\]
+$$
 
 **2. A 17-edge joint residual extremizer must have degree six.** Choose `v` with degree six, and set `Q=G-v`. Then `e(Q)=17`, `Δ(Q)<=6`, and `Q` satisfies both residual conditions R1 and R2.
 
 R2 implies `Q->(K_{1,4},K_{1,3})`. By F3, `Δ(Q)>=5`. Suppose `Δ(Q)=5`. If `Q` were properly 5-edge-colourable, splitting three classes red and two blue would avoid both `K_{1,4}` and `K_{1,3}`; hence `χ′(Q)=6`. Choose an edge-minimal subgraph `C` of `Q` with `χ′(C)=6`. By Vizing and `Δ(Q)=5`, we have `Δ(C)=5`, and `C` is 5-critical. The published theorem F4 gives
 
-\[
+$$
  e(C)\ge (4|V(C)|+3)/2.
-\]
+$$
 
 Since `e(C)<=17`, we get `|V(C)|<=7`. On at most six vertices, every graph is a subgraph of `K_6`, and `K_6` has a proper five-edge-colouring (its one-factorization), so a six-edge-chromatic graph requires at least seven vertices. Thus `|V(C)|=7` and `e(C)>=16`.
 
 Since `Q` has only seventeen edges, there is at most **one** edge of `Q` outside `C`. Thus `Q` has at most `7+2=9` nonisolated vertices. But R1 implies that the all-blue colouring of `Q` contains `F(4,3,1)`, which has **11 nonisolated vertices**. Contradiction. Therefore `Δ(Q)!=5`, and hence
 
-\[
+$$
 \boxed{\Delta(Q)=6.}\tag{3}
-\]
+$$
 
 **3. Two nonadjacent apices expose the rigid star forest.** Choose `w` in `Q` with degree six. Since `G` has maximum degree six, `w` is **not adjacent to** `v`, otherwise its degree in `G` would be seven. The first residual arrowing relation R1 implies, by F1, that `Q-w -> (K_{1,2},F(4,3,1))`. Because `e(Q)=17` and `d_Q(w)=6`, the remainder `Q-w` has exactly eleven edges. By F2's complete finite rigidity theorem, `Q-w`, apart from isolates, is `F(5,4,2)`.
 
@@ -103,17 +103,17 @@ Therefore `G-{v,w}` is a disjoint star forest and `v,w` are nonadjacent vertices
 
 No graph with at most 23 edges arrows the original pair; hence
 
-\[
+$$
 \widehat r(F(4,2,2),F(4,3,1))\ge24.
-\]
+$$
 
 ## Upper bound: 24-edge explicit witness
 
 Take `U=F(7,6,5,4,2)`, which has `7+6+5+4+2=24` edges. It arrows `(F(4,2,2),F(4,3,1))`. This is the standard antidiagonal star construction, but it has also been checked completely without relying on that general construction: because `U` is a disjoint union of five stars, every red/blue colouring is equivalent, for the question of monochromatic star-forest containment, to the numbers of red edges at its five centres. The number of cases is
 
-\[
+$$
 (7+1)(6+1)(5+1)(4+1)(2+1)=5040.
-\]
+$$
 
 The CPU-only script `exact_original_upper.py` checks all 5,040 possibilities and finds that **every one** contains a red `F(4,2,2)` or a blue `F(4,3,1)`. Hence `\hat r<=24`. Together with the lower bound, this proves the theorem.
 
