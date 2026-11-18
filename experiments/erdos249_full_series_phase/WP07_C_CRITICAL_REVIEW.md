@@ -28,11 +28,7 @@ Yes. Let $k=\lfloor\log_2X\rfloor$, $L=k-C$ and $N\in[X,2X)$. If the finite wind
 
 ## E. Does the new adjacent-integrality proof validly handle cancellation in the *finite sum*?
 
-Yes. **Termwise integrality** implies integrality of the sum, but the converse is false due to cancellation: $\varphi(2)/2+\varphi(3)/4=1$. The new theorem instead exploits the exact integer numerator recurrence
-
-\[
-A_{N+1,L}=2A_{N,L}-2^L\varphi(N+1)+\varphi(N+L+1).
-\]
+Yes. **Termwise integrality** implies integrality of the sum, but the converse is false due to cancellation: $\varphi(2)/2+\varphi(3)/4=1$. The new theorem instead exploits the exact integer numerator recurrence $A_{N+1,L}=2A_{N,L}-2^L\varphi(N+1)+\varphi(N+L+1)$.
 
 If the whole finite sums at *both* $N$ and $N+1$ are integers, the two numerators vanish modulo $2^L$, forcing $2^L\mid\varphi(N+L+1)$. With $L=\lfloor\log_2 X\rfloor-C$ and $N\in[X,2X)$ this puts the final index $N+L+1$ in $E_{C+2}(3X)$, except for an irrelevant finitely bounded range of small $X$. Injectivity gives at most $X^{o(1)}$ adjacent-integral pairs. Grouping starts into disjoint consecutive pairs proves an upper density of at most one-half for **integral whole finite sums**. Both the recurrence and direct finite-sum arithmetic were independently checked in the new tests. This argument *does not* need any independence hypothesis about neighboring totients.
 
