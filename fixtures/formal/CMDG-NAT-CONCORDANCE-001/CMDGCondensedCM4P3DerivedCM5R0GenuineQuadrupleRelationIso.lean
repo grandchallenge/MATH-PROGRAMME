@@ -324,6 +324,258 @@ noncomputable def stoneanCechExplicitQuadrupleIso (T : Profinite.{u}) :
   hom_inv_id := stoneanCechExplicitQuadruple_roundtrip T
   inv_hom_id := stoneanCechCategoricalQuadruple_roundtrip T
 
+
+/-- Face omitting the fourth vertex respects the actual iterated
+categorical pullback and the actual closed-relation inclusion. -/
+theorem stoneanCechExplicitQuadruple_xyz_natural
+    (T : Profinite.{u}) :
+    stoneanCechExplicitQuadrupleToAbstract T ≫
+      pullback.fst
+        (stoneanCechTripleXY T ≫
+          pullback.fst (Profinite.presentation.π T)
+            (Profinite.presentation.π T) ≫
+          Profinite.presentation.π T)
+        (Profinite.presentation.π T) =
+    explicitQuadrupleToTriple T ≫
+      stoneanCechExplicitTripleToAbstract T := by
+  unfold stoneanCechExplicitQuadrupleToAbstract
+  exact pullback.lift_fst _ _ _
+
+/-- The fourth vertex is preserved by the actual fourth pullback map. -/
+theorem stoneanCechExplicitQuadruple_w_natural
+    (T : Profinite.{u}) :
+    stoneanCechExplicitQuadrupleToAbstract T ≫
+      pullback.snd
+        (stoneanCechTripleXY T ≫
+          pullback.fst (Profinite.presentation.π T)
+            (Profinite.presentation.π T) ≫
+          Profinite.presentation.π T)
+        (Profinite.presentation.π T) =
+      explicitQuadrupleFourth T := by
+  unfold stoneanCechExplicitQuadrupleToAbstract
+  exact pullback.lift_snd _ _ _
+
+
+private theorem stoneanCechTriple_eq_of_xy_z
+    (T : Profinite.{u}) (a b : stoneanPresentationCechTriples T)
+    (hxy : (stoneanCechTripleXY T).hom.hom a =
+      (stoneanCechTripleXY T).hom.hom b)
+    (hz : (stoneanCechTripleZ T).hom.hom a =
+      (stoneanCechTripleZ T).hom.hom b) : a = b := by
+  let Q := stoneanPresentationCechTriples T
+  let U := Profinite.of PUnit.{u + 1}
+  let fa := cm5SingletonPointMap Q a
+  let fb := cm5SingletonPointMap Q b
+  have hh : fa = fb := by
+    apply pullback.hom_ext
+    · change fa ≫ stoneanCechTripleXY T =
+          fb ≫ stoneanCechTripleXY T
+      rw [cm5SingletonPointMap_comp, cm5SingletonPointMap_comp, hxy]
+    · change fa ≫ stoneanCechTripleZ T =
+          fb ≫ stoneanCechTripleZ T
+      rw [cm5SingletonPointMap_comp, cm5SingletonPointMap_comp, hz]
+  exact congrArg (fun f : U ⟶ Q => f.hom.hom PUnit.unit) hh
+
+
+private noncomputable abbrev stoneanCechTrueQuadFirst (T : Profinite.{u}) :
+    stoneanPresentationCechQuadruples T ⟶
+    stoneanPresentationCechTriples T :=
+  pullback.fst
+    (stoneanCechTripleXY T ≫
+      pullback.fst (Profinite.presentation.π T)
+        (Profinite.presentation.π T) ≫
+      Profinite.presentation.π T)
+    (Profinite.presentation.π T)
+
+private noncomputable abbrev stoneanCechTrueQuadFourth (T : Profinite.{u}) :
+    stoneanPresentationCechQuadruples T ⟶
+    Stonean.toProfinite.obj T.presentation :=
+  pullback.snd
+    (stoneanCechTripleXY T ≫
+      pullback.fst (Profinite.presentation.π T)
+        (Profinite.presentation.π T) ≫
+      Profinite.presentation.π T)
+    (Profinite.presentation.π T)
+
+theorem stoneanCechExplicitQuadruple_xyz_atPoint
+    (T : Profinite.{u})
+    (r : stoneanCechExplicitQuadrupleProfinite T) :
+    (stoneanCechTrueQuadFirst T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    stoneanCechTripleOfRelated T
+      r.val.1 r.val.2.1 r.val.2.2.1 r.property.1 r.property.2.1 := by
+  have h := congrArg
+    (fun f : stoneanCechExplicitQuadrupleProfinite T ⟶
+      stoneanPresentationCechTriples T => f.hom.hom r)
+    (stoneanCechExplicitQuadruple_xyz_natural T)
+  change (stoneanCechTrueQuadFirst T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    (stoneanCechExplicitTripleToAbstract T).hom.hom
+      ((explicitQuadrupleToTriple T).hom.hom r) at h
+  have hr : (explicitQuadrupleToTriple T).hom.hom r =
+      (⟨(r.val.1,(r.val.2.1,r.val.2.2.1)),
+        ⟨r.property.1,r.property.2.1⟩⟩ :
+          stoneanCechExplicitTripleProfinite T) := by
+    unfold explicitQuadrupleToTriple
+    rfl
+  rw [hr, stoneanCechExplicitTripleToAbstract_ofRelated] at h
+  exact h
+
+theorem stoneanCechExplicitQuadruple_fourth_atPoint
+    (T : Profinite.{u})
+    (r : stoneanCechExplicitQuadrupleProfinite T) :
+    (stoneanCechTrueQuadFourth T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+        r.val.2.2.2 := by
+  have h := congrArg
+    (fun f : stoneanCechExplicitQuadrupleProfinite T ⟶
+      Stonean.toProfinite.obj T.presentation => f.hom.hom r)
+    (stoneanCechExplicitQuadruple_w_natural T)
+  change (stoneanCechTrueQuadFourth T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    (explicitQuadrupleFourth T).hom.hom r at h
+  have hw : (explicitQuadrupleFourth T).hom.hom r = r.val.2.2.2 := by
+    unfold explicitQuadrupleFourth
+    rfl
+  exact h.trans hw
+
+
+/-- The *actual categorical* fourth Čech face deleting z sends the
+canonical closed quadruple to the canonical categorical triple (x,y,w).
+This is not just an equality in a pointwise surrogate. -/
+theorem stoneanCechExplicitQuadruple_xyw_atPoint
+    (T : Profinite.{u})
+    (r : stoneanCechExplicitQuadrupleProfinite T) :
+    (quadFaceXYW T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    stoneanCechTripleOfRelated T
+      r.val.1 r.val.2.1 r.val.2.2.2
+      r.property.1 (r.property.2.1.trans r.property.2.2) := by
+  let a := (quadFaceXYW T).hom.hom
+    ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r)
+  let b := stoneanCechTripleOfRelated T
+    r.val.1 r.val.2.1 r.val.2.2.2
+    r.property.1 (r.property.2.1.trans r.property.2.2)
+  apply stoneanCechTriple_eq_of_xy_z T a b
+  · have h := congrArg (fun m : stoneanPresentationCechQuadruples T ⟶
+        stoneanPresentationCechPairs T =>
+        m.hom.hom ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))
+      (quadFaceXYW_xy T)
+    change (stoneanCechTripleXY T).hom.hom a =
+      (stoneanCechTripleXY T).hom.hom
+        ((stoneanCechTrueQuadFirst T).hom.hom
+          ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r)) at h
+    rw [stoneanCechExplicitQuadruple_xyz_atPoint,
+      stoneanCechTripleOfRelated_xy] at h
+    change (stoneanCechTripleXY T).hom.hom a =
+      stoneanCechPairOfRelated T r.val.1 r.val.2.1 r.property.1 at h
+    rw [stoneanCechTripleOfRelated_xy]
+    exact h
+  · have h := congrArg (fun m : stoneanPresentationCechQuadruples T ⟶
+        Stonean.toProfinite.obj T.presentation =>
+        m.hom.hom ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))
+      (quadFaceXYW_w T)
+    change (stoneanCechTripleZ T).hom.hom a =
+      (stoneanCechTrueQuadFourth T).hom.hom
+        ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) at h
+    rw [stoneanCechExplicitQuadruple_fourth_atPoint] at h
+    rw [stoneanCechTripleOfRelated_z]
+    exact h
+
+#print axioms stoneanCechExplicitQuadruple_xyw_atPoint
+/-- The *actual categorical* fourth Čech face deleting y sends the
+canonical closed quadruple to the canonical categorical triple (x,y,w).
+This is not just an equality in a pointwise surrogate. -/
+theorem stoneanCechExplicitQuadruple_xzw_atPoint
+    (T : Profinite.{u})
+    (r : stoneanCechExplicitQuadrupleProfinite T) :
+    (quadFaceXZW T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    stoneanCechTripleOfRelated T
+      r.val.1 r.val.2.2.1 r.val.2.2.2
+      (r.property.1.trans r.property.2.1) r.property.2.2 := by
+  let a := (quadFaceXZW T).hom.hom
+    ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r)
+  let b := stoneanCechTripleOfRelated T
+    r.val.1 r.val.2.2.1 r.val.2.2.2
+    (r.property.1.trans r.property.2.1) r.property.2.2
+  apply stoneanCechTriple_eq_of_xy_z T a b
+  · have h := congrArg (fun m : stoneanPresentationCechQuadruples T ⟶
+        stoneanPresentationCechPairs T =>
+        m.hom.hom ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))
+      (quadFaceXZW_xz T)
+    change (stoneanCechTripleXY T).hom.hom a =
+      (stoneanCechTripleXZ T).hom.hom
+        ((stoneanCechTrueQuadFirst T).hom.hom
+          ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r)) at h
+    rw [stoneanCechExplicitQuadruple_xyz_atPoint,
+      stoneanCechTripleOfRelated_xz] at h
+    change (stoneanCechTripleXY T).hom.hom a =
+      stoneanCechPairOfRelated T r.val.1 r.val.2.2.1 (r.property.1.trans r.property.2.1) at h
+    rw [stoneanCechTripleOfRelated_xy]
+    exact h
+  · have h := congrArg (fun m : stoneanPresentationCechQuadruples T ⟶
+        Stonean.toProfinite.obj T.presentation =>
+        m.hom.hom ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))
+      (quadFaceXZW_w T)
+    change (stoneanCechTripleZ T).hom.hom a =
+      (stoneanCechTrueQuadFourth T).hom.hom
+        ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) at h
+    rw [stoneanCechExplicitQuadruple_fourth_atPoint] at h
+    rw [stoneanCechTripleOfRelated_z]
+    exact h
+
+
+#print axioms stoneanCechExplicitQuadruple_xzw_atPoint
+/-- The *actual categorical* fourth Čech face deleting x sends the
+canonical closed quadruple to the canonical categorical triple (x,y,w).
+This is not just an equality in a pointwise surrogate. -/
+theorem stoneanCechExplicitQuadruple_yzw_atPoint
+    (T : Profinite.{u})
+    (r : stoneanCechExplicitQuadrupleProfinite T) :
+    (quadFaceYZW T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    stoneanCechTripleOfRelated T
+      r.val.2.1 r.val.2.2.1 r.val.2.2.2
+      r.property.2.1 r.property.2.2 := by
+  let a := (quadFaceYZW T).hom.hom
+    ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r)
+  let b := stoneanCechTripleOfRelated T
+    r.val.2.1 r.val.2.2.1 r.val.2.2.2
+    r.property.2.1 r.property.2.2
+  apply stoneanCechTriple_eq_of_xy_z T a b
+  · have h := congrArg (fun m : stoneanPresentationCechQuadruples T ⟶
+        stoneanPresentationCechPairs T =>
+        m.hom.hom ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))
+      (quadFaceYZW_yz T)
+    change (stoneanCechTripleXY T).hom.hom a =
+      (stoneanCechTripleYZ T).hom.hom
+        ((stoneanCechTrueQuadFirst T).hom.hom
+          ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r)) at h
+    rw [stoneanCechExplicitQuadruple_xyz_atPoint,
+      stoneanCechTripleOfRelated_yz] at h
+    change (stoneanCechTripleXY T).hom.hom a =
+      stoneanCechPairOfRelated T r.val.2.1 r.val.2.2.1 r.property.2.1 at h
+    rw [stoneanCechTripleOfRelated_xy]
+    exact h
+  · have h := congrArg (fun m : stoneanPresentationCechQuadruples T ⟶
+        Stonean.toProfinite.obj T.presentation =>
+        m.hom.hom ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))
+      (quadFaceYZW_w T)
+    change (stoneanCechTripleZ T).hom.hom a =
+      (stoneanCechTrueQuadFourth T).hom.hom
+        ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) at h
+    rw [stoneanCechExplicitQuadruple_fourth_atPoint] at h
+    rw [stoneanCechTripleOfRelated_z]
+    exact h
+
+
+#print axioms stoneanCechExplicitQuadruple_yzw_atPoint
+
+#print axioms stoneanCechExplicitQuadruple_xyz_atPoint
+#print axioms stoneanCechExplicitQuadruple_fourth_atPoint
+#print axioms stoneanCechExplicitQuadruple_xyz_natural
+#print axioms stoneanCechExplicitQuadruple_w_natural
 #print axioms stoneanCechExplicitQuadrupleIso
 #print axioms stoneanCechCategoricalQuadrupleToExplicit
 #print axioms stoneanCechExplicitQuadrupleToAbstract
