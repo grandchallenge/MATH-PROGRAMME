@@ -61,7 +61,7 @@ class CoverageTests(unittest.TestCase):
                 self.assertEqual(row['source_issue_live_state'],'OPEN_RETURNED')
                 self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
                 self.assertEqual(row['stage_work_items']['B']['work_status'],
-                                 'PROTECTED_ADMITTED' if n==560 else 'UNEXECUTED')
+                                 'PROTECTED_ADMITTED' if n==560 else ('VERIFIED_BOUNDED' if n==561 else 'UNEXECUTED'))
                 if n<=562:
                     self.assertEqual(row['triage_decision'],'SELECTED_WITH_MANIFEST')
                     self.assertEqual(row['stage_work_items']['A']['work_status'],'VERIFIED_BOUNDED')
@@ -155,6 +155,40 @@ class CoverageTests(unittest.TestCase):
             mutation(bad['stage_work_items']['C'])
             with self.assertRaises(ValueError):
                 v.validate_row(bad,self.source[559],cohort['phase_issues'])
+
+    def test_561_b_scope_locked_factor_gate_never_full_problem_certified(self):
+        cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
+        row=cohort['items'][60]
+        b=row['stage_work_items']['B']
+        self.assertEqual(b['review_status'],'ROLE_SCOPED_CRITICAL_PASS')
+        self.assertIn(b['work_status'],('VERIFIED_BOUNDED','PROTECTED_ADMITTED'))
+        self.assertEqual(b['blocker'],'PRECURSOR_CLAIMS_3_2_TO_3_8_NOT_INDEPENDENTLY_REPLAYED')
+        self.assertEqual(row['closure_status'],'IN_PROGRESS')
+        self.assertEqual(row['scope'],'OPEN_BOUNDED_LEMMA_ONLY')
+        self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
+        self.assertIn(b['semantic_equivalence_receipt'],b['evidence_refs'])
+        self.assertIn(b['adversarial_review_receipt'],b['evidence_refs'])
+        source=v.read('governance/erdos_proof_verification/evidence/0561/B_SOURCE_SCOPE_LOCK_001.json')
+        oracle=v.read('governance/erdos_proof_verification/evidence/0561/B_FINITE_FACTOR_ORACLE_001.json')
+        self.assertFalse(source['original_general_conjecture_solved'])
+        self.assertFalse(oracle['full_theorem_1_2_verified'])
+        self.assertEqual(oracle['independent_cut_vs_direct_coloring_graph_budget_comparisons'],1004)
+        for mutate in (
+            lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
+            lambda r:r.__setitem__('closure_status','ADMITTED_BOUNDED_COMPLETE'),
+            lambda r:r.__setitem__('mathcert_status','CERTIFIED'),
+            lambda r:r['stage_work_items']['B'].__setitem__('blocker',None),
+            lambda r:r['stage_work_items']['B'].__setitem__('review_status','NOT_REVIEWED'),
+            lambda r:r['stage_work_items']['B'].__setitem__('adversarial_review_receipt',None),
+            lambda r:r['stage_work_items']['B'].__setitem__('semantic_equivalence_receipt',None),
+            lambda r:r['stage_work_items']['B'].__setitem__('evidence_refs',[]),
+            lambda r:r['stage_work_items']['B'].__setitem__('protected_admission_ref','main@forged'),
+            lambda r:r['stage_work_items']['A'].__setitem__('work_status','UNEXECUTED'),
+        ):
+            bad=copy.deepcopy(row)
+            mutate(bad)
+            with self.assertRaises(ValueError):
+                v.validate_row(bad,self.source[560],cohort['phase_issues'])
 
     def test_560_documentary_protected_bounded_closure_not_original_solved(self):
         cohort=v.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')
