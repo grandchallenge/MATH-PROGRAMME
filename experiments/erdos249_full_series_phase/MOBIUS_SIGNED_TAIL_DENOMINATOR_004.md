@@ -68,7 +68,7 @@ Subtract. The $k=1$ coefficient vanishes. Every $k\ge2$ coefficient is positive;
 **Theorem A.2 (first nonzero signed-tail term).** Let $D\ge1$ and let $m>D$ be the least integer with $\mu(m)\ne0$ (it exists because primes are squarefree). Then
 
 $$
-\operatorname{sgn}(S-R_D)=\mu(m)
+\mathrm{sgn}(S-R_D)=\mu(m)
 $$
 
 and
@@ -127,7 +127,7 @@ $$
 \gcd(2^p-1,2^d-1)=2^{\gcd(p,d)}-1=1.
 $$
 
-Thus every other summand has reduced denominator coprime to $2^p-1$. Adding them to the isolated index-$p$ summand cannot cancel any prime-power factor of $(2^p-1)^2$ in the reduced denominator. This holds simultaneously for every $p\in\mathcal P_D$; distinct $p$ have pairwise coprime $(2^p-1)$. Their squared product therefore divides $q_D$. QED.
+Thus every other summand has reduced denominator coprime to $2^p-1$. Adding them to the isolated index $p$ summand cannot cancel any prime-power factor of $(2^p-1)^2$ in the reduced denominator. This holds simultaneously for every $p\in\mathcal P_D$; distinct $p$ have pairwise coprime $(2^p-1)$. Their squared product therefore divides $q_D$. QED.
 
 **Conditional dependency on a standard external theorem, not new.** The prime number theorem implies
 
