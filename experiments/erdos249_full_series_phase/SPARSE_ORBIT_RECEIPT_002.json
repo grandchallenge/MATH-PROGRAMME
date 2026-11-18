@@ -1,0 +1,63 @@
+{
+  "record_type": "GCL-ERDOS249-SPARSE-ORBIT-OBSTRUCTION/1",
+  "id": "ERDOS249-FULL-S-FOURIER-OBSTRUCTION-002",
+  "parent_issue": 3201,
+  "original_problem": "Erdos #249: irrationality of sum phi(n)/2^n",
+  "original_problem_status": "OPEN",
+  "auxiliary_proof_source": "experiments/erdos_proof_verification/0249/Erdos249Lacunary.lean",
+  "auxiliary_proof_protected_merge_sha": "62ffaa1db3e2d1a5d120611e86fc189f1c24b50e",
+  "prior_full_series_research_merge_sha": "06c7603e13dde0699cc172dc7bdf5e0d602cad2e",
+  "theorem_type": "QUANTIFIED_ELEMENTARY_MANUSCRIPT_NEGATIVE_CONTROL",
+  "claim": "For every fixed nonnegative integer c, the mean of exp(2 pi i h 2^N T) over X<=N<2X tends uniformly to one for all integers |h|<=X^c, at O_c((log X)^2/X); T is source-locked Lean-verified irrational.",
+  "lean_formalization_new": false,
+  "independent_human_review": false,
+  "novelty_priority_assessed": false,
+  "mathcert_status": "NOT_SUBMITTED",
+  "source_locked_input_irrational_T": true,
+  "full_totient_S_irrationality_proved": false,
+  "literature_comparison": "W. Cook, The Binary Totient Series, revised 2026-10-01: phase criteria are sufficient and remain unproved for actual totients; no originality asserted.",
+  "exact_binary_support_exponents": [
+    2,
+    3,
+    6,
+    13,
+    28,
+    59,
+    122
+  ],
+  "explicit_uniform_bound": "2*pi*H/2^K + 2*K*(2*X+K).bit_length()/X",
+  "polynomial_choice": "K=(c+2)*ceil(log2 X), H=X^c, X>=2",
+  "test_command": "python3 -m unittest discover -s tests -p test_erdos249_sparse_orbit.py -q",
+  "test_count": 7,
+  "test_result": "PASS",
+  "policy_source_gate": "PASS",
+  "repository_execution_gate": "PASS",
+  "test_route_added": "tests/test_erdos249_sparse_orbit.py",
+  "source_sha256": {
+    "experiments/erdos249_full_series_phase/sparse_orbit.py": "315a1cb5e4efd32636aa1e9c4f46915b93b7b8fb11784654c718b127d2214131",
+    "experiments/erdos249_full_series_phase/SPARSE_ORBIT_OBSTRUCTION.md": "c3e5f28c2e87d93d8d30e4288b7461008a447eaa1117734c02ee8ec564395915",
+    "tests/test_erdos249_sparse_orbit.py": "39358eeb3e0ec95664b3e6554ea45b499069237c7fc31a6def379409ba49100c",
+    "governance/policy_components/erdos249_full_series_phase.json": "cac69d8192418cd40097fd2d1d05234c2bd3a380eee0297428d0c0d2bcc28827"
+  },
+  "finite_samples": {
+    "X": 8192,
+    "L": 48,
+    "h": [
+      1,
+      3,
+      7,
+      31,
+      64
+    ],
+    "observed_phase_gap_to_one_approx": [
+      0.0005132655,
+      0.00071119,
+      0.0007813401,
+      0.0008191388,
+      0.0005132655
+    ],
+    "max_analytic_phase_truncation_error_at_h_64": 1.4286309367843356e-12,
+    "precision": "double; not interval-certified; no asymptotic conclusion"
+  },
+  "next_obligation": "Use actual totient-specific arithmetic to establish a cofinal residue/phase gap. Sparse irrationality and generic Fourier means do not suffice. The original conjecture remains open."
+}
