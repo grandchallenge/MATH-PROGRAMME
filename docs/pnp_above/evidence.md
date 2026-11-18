@@ -152,6 +152,30 @@ The [source-locked reproducibility receipt](https://github.com/grandchallenge/MA
 
 **Next substantive obligation:** Develop a player-asymmetric or otherwise non-diagonal **source-native sampler** together with an answer-sensitive, executable original `Cost.Prog` decider; then establish a quantified positive game-value/soundness gap before considering positive-parameter compression. A uniform succinct SAT-to-classical resource transfer, source Theorem 12.1 quantitative reconciliation and original Formal Conjectures encoding concordance remain **OPEN**. PNP-001 and MATHSOLVE #1136 remain open; no P-versus-NP theorem is claimed.
 
+## WP17: unconditional diagonal-source no quantum or commuting advantage (18 November 2026)
+
+[Protected MATHSOLVE PR #1246](https://github.com/grandchallenge/MATHSOLVE/pull/1246) admitted WP17 to protected `main` at `d741a85572cd99a1f8e206d1211543ef72445da2`. The [general original-game Lean theorem](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP17_UnconditionalDiagonalNoGap.lean) has Git blob `86ece0db534e18327ad380a542e7636bc0d746fa` and SHA-256 `218d9252d9490fcfd3e2a2aaad185b4d7ae8d86f281ccd88b9a2416cb2b5eed5`. This imports the original pinned `vidick/MIPRE-formalization@5926bdff5db621f44682a101007ef2fe3ae8d970` (Lean 4.35.0-rc3) via original protected WP08–WP16 modules. No alternative game-value semantics were substituted.
+
+**General unconditional original-game theorem (LEAN-REPLAYED):** Let `G : MIPRE.SynchronousGame X A` be **any finite original synchronous game with a nonempty answer alphabet**, such that `G.μ x y = 0` whenever `x ≠ y`. Neither diagonal feasibility nor full sampling support is assumed. Define the precisely accessible optimum as the probability mass of **feasible diagonal questions**:
+
+[
+m(G)=\sum_x \mu(x,x)\,\mathbf{1}\bigl[\exists a: D(x,x,a,a)=\mathrm{true}\bigr].
+]
+
+WP17 constructs an original upstream one-dimensional **question-dependent deterministic `SyncStrategy`**: choose a winning equal answer for each feasible diagonal question, or an arbitrary answer when none exists. Its exact original Born-rule value is `m(G)`. Independent proofs using original tensor-product positivity/normalization and commuting-tracial positivity/normalization show **every** original quantum or commuting strategy has value at most `m(G)`. Consequently,
+
+[
+\omega_{\mathrm{sync}}(G)=\omega_{\mathrm{quantum}}(G)=\omega_{\mathrm{commuting}}(G)=m(G).
+]
+
+The common value can be **strictly less than one** if some positively sampled diagonal questions are unwinnable. This is **not** a perfect-strategy assumption; it removes WP16's former requirement of an accepted diagonal answer at each sampled question.
+
+**Exact WP14 sampler implication (LEAN-REPLAYED):** Protected WP16 already proved that the unchanged WP14 nine-level shared Alice/Bob conditional CL sampler has **zero probability for unequal question pairs**, directly from the original `MIPRE.CL.clDist` fiber definition. WP17 therefore proves that **any** replacement synchronous Boolean decision predicate, while retaining that original question distribution, gives equal original synchronous, tensor-product quantum and commuting values at **every index and answer budget**, **irrespective of feasibility**. An answer-sensitive decision rule alone cannot create the target quantum advantage. Non-diagonal player-question support is mathematically necessary *within this source-native synchronous-game setting*. The arbitrary predicate is **not** claimed to be an implemented original `Cost.Prog` decider.
+
+The [WP17 source-lock and replay receipt](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP17_IMPORT_REPLAY_RECEIPT.md) records the final exact candidate `e8f2fc0987d8ebfcd125ddb7d42612c6381b3a0d`, pinned original upstream and every protected WP08–WP16 blob. All ten native WP08–WP17 modules compiled; exactly **17 distinct WP17 theorem axiom reports** passed, limited to standard `propext`, `Classical.choice`, `Quot.sound` with no `sorryAx`, native-generated axioms or custom source axioms. All 10 source PR checks passed; exact protected source and receipt were read back.
+
+**Research boundary and next obligation:** This is an **unconditional no-advantage theorem for diagonal-supported original synchronous games with nonempty answers**, not an impossibility result for all nonlocal games or conditional-linear distributions, and not a hard-game, compressor, SAT complexity separation or P-versus-NP theorem. The next true construction must use **player-asymmetric/non-diagonal source-native sampling**, a discriminating bounded executable decider and a rigorously certified game-value/soundness gap. Positive-parameter compression, Theorem 12.1 quantitative source reconciliation, Formal Conjectures source encoding concordance, and the uniform succinct SAT-to-classical resource transfer remain open. Retain both parent issues open. Independent public mathematical certification is not claimed.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
