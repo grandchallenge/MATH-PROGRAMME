@@ -1,0 +1,169 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-18T11:44:27Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-18T11:44:27Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+    "exact_head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+    "pr_number": 3494,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5: finite closed-family \u010cech H\u00b3 cocycles are coboundaries"
+  },
+  "integration": {
+    "merge_commit_sha": "ee8df80fc329226175c454eb18b3240ee7969f83",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 0407:14FA4A:D6EB71:2B71CED:6AFD8FAE and timestamp 2026-11-18 11:44:46 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 134777984280,
+          "conclusion": null,
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134777986066,
+          "conclusion": null,
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134778026017,
+          "conclusion": null,
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134777986295,
+          "conclusion": null,
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134777992932,
+          "conclusion": "success",
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 134777993052,
+          "conclusion": null,
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134777984675,
+          "conclusion": "success",
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 134777995532,
+          "conclusion": "skipped",
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 134777984840,
+          "conclusion": null,
+          "head_sha": "44b09f24eb6ca84a3772fbc048b22452bc4456d2",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-18T11:44:45Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "a0ca5f06b9ecbce38ce33b1c0ecef20a056a88dff397f72e26078a9a0548a8df"
+  },
+  "report_id": "PRVSR-LIVE-PR3494-44b09f24eb6c-20261118114445",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
