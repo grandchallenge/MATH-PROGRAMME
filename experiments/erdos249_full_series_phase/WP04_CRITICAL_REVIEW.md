@@ -25,7 +25,7 @@ The index $m$ is explicitly the *first later nonzero Möbius coefficient*; squar
 
 ## Challenge 3: could a shared Mersenne factor cancel the claimed squared denominator?
 
-For $p>D/2$, no other $1\le d\le D$ is a positive multiple of $p$. With $p$ prime, $\gcd(p,d)=1$ for all other $d$. Hence $\gcd(2^p-1,2^d-1)=1$, including at repeated prime factors of $2^p-1$. After removing the index-$p$ term from the sum, the remaining rational denominator is coprime to $2^p-1$ (explicit hostile test). Therefore no cancellation of the $(2^p-1)^2$ denominator is possible at any prime-power valuation. Distinct window primes have coprime Mersenne factors, so their product survives.
+For $p>D/2$, no other $1\le d\le D$ is a positive multiple of $p$. With $p$ prime, $\gcd(p,d)=1$ for all other $d$. Hence $\gcd(2^p-1,2^d-1)=1$, including at repeated prime factors of $2^p-1$. After removing the index $p$ term from the sum, the remaining rational denominator is coprime to $2^p-1$ (explicit hostile test). Therefore no cancellation of the $(2^p-1)^2$ denominator is possible at any prime-power valuation. Distinct window primes have coprime Mersenne factors, so their product survives.
 
 ## Challenge 4: any false inference about the irrationality of the original series?
 
