@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run hostile and positive tests
-        run: python -m unittest ci.test_gcl_project_lifecycle_integrity -v
+        run: python ci/test_gcl_project_lifecycle_integrity.py -v
       - name: Acquire existing Council Clerk project-read credential
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         id: clerk

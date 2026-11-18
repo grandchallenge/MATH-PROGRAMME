@@ -191,3 +191,6 @@ A machine-readable documentary record is retained as `governance/GCL-WORKER-QUEU
 This documentary page promotes the existence and legibility of the mechanism. It does not promote any returned mathematical claim.
 
 The mechanism may establish that a contribution was discoverable, reserved, returned, bound to an authenticated actor, and preserved through controlled intake. Mathematical correctness, synthesis, advancement, certification, novelty, priority, and publication remain separate governed questions.
+
+
+For Project #2 field/label authority, Status schema, and lifecycle audit, see [GCL Project lifecycle integrity](operations/GCL_PROJECT_LIFECYCLE_INTEGRITY.md).
