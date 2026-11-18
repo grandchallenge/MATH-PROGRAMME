@@ -32,6 +32,6 @@ No. **Termwise integrality** implies integrality of the sum, but the converse is
 
 ## F. Is the antecedent and implementation scope honest?
 
-The 2025 Zhao paper treats extremal $p$-adic totient valuations, so no priority or novelty assertion follows merely from the near-maximal valuation formulation. GCL WP07-A's loglog-depth totient theorem and WP07-B's rational nearlog-depth comparator provide context, but neither is logically used as a premise in this proof. The exact suite performs a bounded independent factorization audit and verifies full prior registered totient regression. Formal publication/certification is not implied.
+The 2025 Zhao paper treats extremal prime-adic totient valuations, so no priority or novelty assertion follows merely from the near-maximal valuation formulation. GCL WP07-A's loglog-depth totient theorem and WP07-B's rational nearlog-depth comparator provide context, but neither is logically used as a premise in this proof. The exact suite performs a bounded independent factorization audit and verifies full prior registered totient regression. Formal publication/certification is not implied.
 
 **Disposition:** ACCEPT_WITH_SCOPE for the elementary self-contained counting theorem, its strictly termwise nearlog corollary, exact finite hostile tests and explicit open-claim firewall. No independent mathematical certification, no claim that Erdős #249 is solved, and no permission to close #3500 or #3201.
