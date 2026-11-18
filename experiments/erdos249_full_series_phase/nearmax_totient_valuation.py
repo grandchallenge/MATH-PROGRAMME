@@ -143,6 +143,44 @@ def termwise_nearlog_starts(X: int, C: int,
                         for j in range(1, L + 1)))
 
 
+
+def finite_scaled_numerator(N: int, L: int, phi: list[int]) -> int:
+    """Exact 2^L-scaled sum, independent direct definition."""
+    if N < 1 or L < 1 or len(phi) <= N + L:
+        raise ValueError("invalid source/depth")
+    return sum(phi[N + j] << (L - j) for j in range(1, L + 1))
+
+
+def nearlog_integral_sums_and_adjacent_pairs(
+    X: int, C: int, phi: list[int] | None = None
+) -> tuple[tuple[int, ...], tuple[int, ...]]:
+    """Rolling exact residue recurrence for actual totient finite sums.
+
+    Returns starting positions with integral finite sum and those with
+    both the sum at N and at N+1 integral, including N=2X-1.
+    """
+    if X < 2 or C < 0:
+        raise ValueError("X>=2 and C>=0")
+    L = X.bit_length() - 1 - C
+    if not 1 <= L <= X:
+        raise ValueError("nearlog depth positive and <=X required")
+    values = phi if phi is not None else totients(2 * X + L)
+    if len(values) <= 2 * X + L:
+        raise ValueError("totient source too short for next-start comparison")
+    modulus = 1 << L
+    A = finite_scaled_numerator(X, L, values)
+    starts, adjacent = [], []
+    for N in range(X, 2 * X):
+        next_A = 2 * A - modulus * values[N + 1] + values[N + L + 1]
+        integral = A % modulus == 0
+        next_integral = next_A % modulus == 0
+        if integral:
+            starts.append(N)
+        if integral and next_integral:
+            adjacent.append(N)
+        A = next_A
+    return tuple(starts), tuple(adjacent)
+
 def research_receipt(X: int, C: int) -> dict[str, object]:
     """A finite control; no finite sample is a proof of X^{o(1)}."""
     if X < 2 or C < 0:
@@ -155,12 +193,19 @@ def research_receipt(X: int, C: int) -> dict[str, object]:
     eligible = set(nearmax_witnesses(3 * X, C + 2, values))
     if any((N + L) not in eligible for N in starts):
         raise AssertionError("termwise window implication falsified")
+    integral_sums, adjacent_pairs = nearlog_integral_sums_and_adjacent_pairs(X, C, values)
+    if any(N+L+1 not in eligible for N in adjacent_pairs):
+        raise AssertionError("adjacent-integrality nearmax implication falsified")
+    if len(integral_sums) > ((X+1)//2 + len(adjacent_pairs)):
+        raise AssertionError("adjacent pair combinatorial density bound falsified")
     finite_bound = finite_shape_envelope(3 * X, C + 2)
     if len(eligible) > finite_bound:
         raise AssertionError("finite combinatorial bound falsified")
     return {
         "X": X, "C": C, "L": L,
         "termwise_integer_starts": len(starts),
+        "integral_finite_sum_starts": len(integral_sums),
+        "adjacent_integral_sum_pairs": len(adjacent_pairs),
         "nearmax_eligible_until_3X": len(eligible),
         "exact_integer_combinatorial_envelope": str(finite_bound),
         "all_implications_checked": True,
