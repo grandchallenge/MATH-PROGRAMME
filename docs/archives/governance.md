@@ -104,3 +104,5 @@ These are supporting records, not necessarily current research instructions or c
 ## Historical audits
 
 - [Integration Audit 2026-06-21](../INTEGRATION_AUDIT_2026_06_21.md)
+
+- [GCL Project lifecycle integrity](../operations/GCL_PROJECT_LIFECYCLE_INTEGRITY.md) — Project #2 status and availability semantics, audit and recovery.
