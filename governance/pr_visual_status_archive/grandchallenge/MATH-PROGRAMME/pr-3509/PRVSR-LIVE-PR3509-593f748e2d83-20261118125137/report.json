@@ -1,0 +1,192 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-18T12:50:30Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-18T12:51:31Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+    "exact_head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+    "pr_number": 3509,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "[Erd\u0151s #561] Fixed 24-edge evidence and independent-k-apex colouring theorem (review only)"
+  },
+  "integration": {
+    "merge_commit_sha": "51a5853706871d3c466cfe265086d1c5756a7629",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 13,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 46DD:2AC8E4:B7F0F:123C41:6AFD9F5B and timestamp 2026-11-18 12:51:39 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 134814273684,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "Classify material formal closure",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134814278112,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 134814275259,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "Classify policy impact",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 134814266388,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134814269021,
+          "conclusion": "skipped",
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 134814266044,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "Observe material closure (no admission authority)",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 134814275732,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134814266340,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "admit",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 134814274272,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "exact-certificate",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134814278555,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "policy / policy",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 134814268130,
+          "conclusion": "skipped",
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 134814278698,
+          "conclusion": null,
+          "head_sha": "593f748e2d83f382a1df21636782459e59c1778b",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-18T12:51:37Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "37041ed9acd12811f77ff1fafa807d070c8b393ad77c1ca02e5e0a83b4f71810"
+  },
+  "report_id": "PRVSR-LIVE-PR3509-593f748e2d83-20261118125137",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay",
+      "repository_policy_or_workflow",
+      "material_nonclaims_blockers_or_residuals"
+    ]
+  }
+}
