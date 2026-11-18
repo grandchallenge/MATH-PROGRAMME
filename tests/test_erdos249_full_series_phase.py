@@ -137,7 +137,7 @@ class NearMaxTotientValuationTests(unittest.TestCase):
         for R,B in ((3,2),(4,2),(4,3)):
             # B independent distinguishable candidate slots at each level.
             brute=sum(
-                sum((r+1)*bit for r in range(R) for bit in bits)<=R
+                sum((i//B+1)*bit for i,bit in enumerate(bits))<=R
                 for bits in product((0,1), repeat=R*B)
             )
             self.assertEqual(weighted_subset_envelope(R,B),brute)
