@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS-561-422431-CLAIMS",
+  "claims": [
+    {
+      "claim_id": "ERDOS561-ORIGINAL-422431",
+      "short_name": "Exact original 24-edge special case",
+      "claim_text": "The asymmetric size Ramsey number of F(4,2,2) vs F(4,3,1) equals 24.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph_theory_size_ramsey",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Bounded paper-level argument with explicit external and computational dependencies; see accompanying files.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "ERDOS_561_FULL_422_431_PROOF.md",
+        "EXACT_JOINT_422_431_PROOF.md",
+        "SOURCE_LOCK.md"
+      ],
+      "assumptions": [
+        "finite simple host graphs",
+        "non-induced copies",
+        "published edge-5-critical density theorem",
+        "complete 11-edge rigidity enumeration"
+      ],
+      "promotion_condition": "Independent substantive proof audit, primary density-source lock and CI replay; no self-certification.",
+      "related_files": [
+        "ERDOS_561_FULL_422_431_PROOF.md",
+        "EXACT_JOINT_422_431_PROOF.md",
+        "exact_degree5_residual.py",
+        "exact_degree5_cpp_replay.cpp"
+      ],
+      "knowledge_graph_refs": [
+        "GCL-MATH-PROGRAMME-ISSUE-3502",
+        "GCL-MATH-PROGRAMME-ISSUE-3490"
+      ]
+    },
+    {
+      "claim_id": "ERDOS561-RIGIDITY-11",
+      "short_name": "Eleven-edge rigidity finite lemma",
+      "claim_text": "Any eleven-edge Q arrowing K1,2 versus F(4,3,1) is F(5,4,2) up to isolated vertices.",
+      "claim_class": "COMPUTED_EXACTLY",
+      "mathematical_domain": "graph_theory_size_ramsey",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Bounded paper-level argument with explicit external and computational dependencies; see accompanying files.",
+      "status": "UNDER_REVIEW",
+      "certainty": "EXACTLY_COMPUTED",
+      "source_or_artifact": [
+        "EXACT_JOINT_422_431_PROOF.md",
+        "exact_degree5_residual.py",
+        "exact_degree5_cpp_replay.cpp"
+      ],
+      "assumptions": [
+        "non-induced subgraphs",
+        "finite simple graphs",
+        "maximum matching enumeration exhaustiveness"
+      ],
+      "promotion_condition": "An independently checked certificate verifier or third independently derived enumeration logic.",
+      "related_files": [
+        "exact_degree5_residual.py",
+        "exact_degree5_cpp_replay.cpp"
+      ],
+      "knowledge_graph_refs": [
+        "GCL-MATH-PROGRAMME-ISSUE-3502",
+        "GCL-MATH-PROGRAMME-ISSUE-3490"
+      ]
+    },
+    {
+      "claim_id": "ERDOS561-KAPEX-STAR",
+      "short_name": "General independent-apex colouring theorem",
+      "claim_text": "If U is an independent set of k degree-D vertices, G-U is a star forest and D>=3k, then edge-chromatic number equals D.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph_theory_size_ramsey",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Bounded paper-level argument with explicit external and computational dependencies; see accompanying files.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "K_APEX_THEOREM.md",
+        "k_apex_colouring.py"
+      ],
+      "assumptions": [
+        "finite simple graph",
+        "D>=3k",
+        "all apices degree D and independent",
+        "residual star forest"
+      ],
+      "promotion_condition": "Separate mathematical review and, preferably, formal checking of Hall cases.",
+      "related_files": [
+        "K_APEX_THEOREM.md",
+        "k_apex_colouring.py"
+      ],
+      "knowledge_graph_refs": [
+        "GCL-MATH-PROGRAMME-ISSUE-3502",
+        "GCL-MATH-PROGRAMME-ISSUE-3490"
+      ]
+    },
+    {
+      "claim_id": "ERDOS561-DELTA5-CRITICAL",
+      "short_name": "Published five-critical density theorem",
+      "claim_text": "A simple edge-5-critical graph C on n vertices has 2e(C)>=4n+3.",
+      "claim_class": "LITERATURE_DERIVED",
+      "mathematical_domain": "graph_theory_size_ramsey",
+      "support_type": "SOURCE_CITATION",
+      "support_summary": "Bounded paper-level argument with explicit external and computational dependencies; see accompanying files.",
+      "status": "UNDER_REVIEW",
+      "certainty": "STRONGLY_SUPPORTED",
+      "source_or_artifact": [
+        "SOURCE_LOCK.md",
+        "https://doi.org/10.1007/BF02986658",
+        "https://doi.org/10.1016/S0012-365X(03)00107-9"
+      ],
+      "assumptions": [
+        "edge-5-critical definition",
+        "simple graph",
+        "nonisolated connected critical component"
+      ],
+      "promotion_condition": "Acquire full 1994 primary proof and check critical definitions and inequality, or derive standalone replacement.",
+      "related_files": [
+        "SOURCE_LOCK.md"
+      ],
+      "knowledge_graph_refs": [
+        "GCL-MATH-PROGRAMME-ISSUE-3502",
+        "GCL-MATH-PROGRAMME-ISSUE-3490"
+      ]
+    },
+    {
+      "claim_id": "ERDOS561-UNRESTRICTED",
+      "short_name": "Unrestricted Erdos 561 conjecture",
+      "claim_text": "The antidiagonal-maxima formula holds for every pair of star forests with positive nonincreasing sizes.",
+      "claim_class": "CONJECTURAL",
+      "mathematical_domain": "graph_theory_size_ramsey",
+      "support_type": "HEURISTIC_ARGUMENT",
+      "support_summary": "Bounded paper-level argument with explicit external and computational dependencies; see accompanying files.",
+      "status": "OPEN_PROBLEM",
+      "certainty": "UNKNOWN",
+      "source_or_artifact": [
+        "https://www.erdosproblems.com/561",
+        "https://github.com/google-deepmind/formal-conjectures/blob/2f91d251c07f/FormalConjectures/ErdosProblems/561.lean"
+      ],
+      "assumptions": [
+        "s,t>=1",
+        "finite simple graphs",
+        "noninduced star forests"
+      ],
+      "promotion_condition": "Prove unrestricted conjecture with a dependency-closed theorem or formal proof; partial numerical cases do not suffice.",
+      "related_files": [
+        "README.md"
+      ],
+      "knowledge_graph_refs": [
+        "GCL-MATH-PROGRAMME-ISSUE-3502",
+        "GCL-MATH-PROGRAMME-ISSUE-3490"
+      ]
+    }
+  ]
+}

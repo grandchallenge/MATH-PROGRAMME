@@ -1,0 +1,36 @@
+name: Erdős 561 fixed-instance certificate replay
+
+on:
+  pull_request:
+    paths:
+      - 'research/erdos-561/**'
+      - '.github/workflows/erdos561-certificate-replay.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-certificate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run independent exact verifiers and all upper-host checks
+        working-directory: research/erdos-561
+        run: |
+          set -euo pipefail
+          python3 exact_degree5_residual.py | tee /tmp/erdos561-python.txt
+          grep -q '"candidate_M": 11197' /tmp/erdos561-python.txt
+          grep -q '"passed": 2' /tmp/erdos561-python.txt
+          c++ -std=c++17 -O2 -o /tmp/erdos561-cpp exact_degree5_cpp_replay.cpp
+          /tmp/erdos561-cpp | tee /tmp/erdos561-cpp.txt
+          grep -q 'TOTAL tested=11197 arrows=2' /tmp/erdos561-cpp.txt
+          python3 exact_joint_upper.py
+          python3 exact_original_upper.py
+          python3 k_apex_colouring.py | tee /tmp/erdos561-k-apex.txt
+          grep -q '"total": 3000' /tmp/erdos561-k-apex.txt
+          grep -q '"failures": 0' /tmp/erdos561-k-apex.txt
