@@ -48,3 +48,18 @@ projection, not an outstanding mismatch. Preserve its return custody.
 
 The generic queue-class audit reporting zero semantic changes
 is not a complete lifecycle-integrity audit. Use both checks.
+
+## GraphQL efficiency boundary
+
+The full Project scan is 100 items per GraphQL page (15 pages at 1,450
+items). Both the queue-class controller and the lifecycle audit now request
+field/view metadata only on the first page. The queue-class controller must
+continue to read every item before mutations; this is a safety requirement,
+not an optimization target. The read-only audit similarly retains complete
+item and label coverage. Workflow run counts are demand indicators, not
+measured GraphQL points. Actor-specific rate-limit readings cannot attribute
+usage across installation tokens. Secondary rate-limit errors can occur with
+primary remaining quota, so do not diagnose primary exhaustion from an error
+message alone. The CI efficiency sentinel samples the last 100 queue-projection
+workflow runs, records event distribution, and flags high comment-trigger
+volume for investigation without alleging that each trigger made a full scan.

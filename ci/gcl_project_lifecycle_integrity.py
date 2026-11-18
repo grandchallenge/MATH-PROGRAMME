@@ -13,10 +13,10 @@ import sys
 PROJECT = "PVT_kwDOB9Ao_c4Blwur"
 EXPECTED_STATUS = {"Todo", "In Progress", "Done", "RETURNED"}
 AVAILABLE_FILTER = "is:open label:gcl-state:available"
-QUERY = """query($after:String){
+QUERY = """query($after:String,$includeMetadata:Boolean!){
  organization(login:"grandchallenge"){projectV2(number:2){
- id fields(first:100){nodes{... on ProjectV2SingleSelectField{name options{name}}}}
- views(first:100){nodes{name filter}}
+ id fields(first:100) @include(if:$includeMetadata){nodes{... on ProjectV2SingleSelectField{name options{name}}}}
+ views(first:100) @include(if:$includeMetadata){nodes{name filter}}
  items(first:100,after:$after){pageInfo{hasNextPage endCursor} nodes{
  id content{... on Issue{number state repository{nameWithOwner}
  labels(first:100){totalCount nodes{name}}}}
@@ -86,7 +86,8 @@ def main():
     fields = views = None
     project_id = None
     while True:
-        args = ["gh", "api", "graphql", "-f", "query=" + QUERY]
+        args = ["gh", "api", "graphql", "-f", "query=" + QUERY,
+                "-F", "includeMetadata=" + ("true" if fields is None else "false")]
         if cursor:
             args += ["-f", "after=" + cursor]
         result = subprocess.run(args, capture_output=True, text=True, check=True)
@@ -97,8 +98,13 @@ def main():
         if project_id is not None and project["id"] != project_id:
             raise RuntimeError("project identity drift")
         project_id = project["id"]
-        fields = project["fields"]["nodes"]
-        views = project["views"]["nodes"]
+        if fields is None:
+            if "fields" not in project or "views" not in project:
+                raise RuntimeError("first-page Project metadata absent")
+            fields = project["fields"]["nodes"]
+            views = project["views"]["nodes"]
+        elif "fields" in project or "views" in project:
+            raise RuntimeError("unexpected repeated Project metadata")
         page = project["items"]
         rows.extend(page["nodes"])
         if not page["pageInfo"]["hasNextPage"]:

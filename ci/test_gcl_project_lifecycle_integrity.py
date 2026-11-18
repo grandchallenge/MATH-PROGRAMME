@@ -1,4 +1,8 @@
 import unittest
+from unittest.mock import patch
+import json
+from types import SimpleNamespace
+import ci.gcl_project_lifecycle_integrity as integrity
 from ci.gcl_project_lifecycle_integrity import validate, EXPECTED_STATUS, AVAILABLE_FILTER
 
 FIELDS = [{"name":"Status","options":[{"name":s} for s in EXPECTED_STATUS]},
@@ -12,6 +16,23 @@ def row(number=1, state="OPEN", status="Todo", labels=(), duplicate=None):
         "fieldValueByName":{"name":status}, "duplicate":duplicate}
 
 class IntegrityTests(unittest.TestCase):
+    def test_metadata_once_across_paginated_graphql(self):
+        def response(args, **kwargs):
+            cursor = "after=" in " ".join(args)
+            project = {"id":integrity.PROJECT,"items":{"nodes":[row(number=2 if cursor else 1)],
+                "pageInfo":{"hasNextPage":not cursor,"endCursor":"cursor-1" if not cursor else None}}}
+            if not cursor:
+                project.update(fields={"nodes":FIELDS},views={"nodes":VIEWS})
+            return SimpleNamespace(stdout=json.dumps({"data":{"organization":{"projectV2":project}}}))
+        with patch.object(integrity.subprocess,"run",side_effect=response) as run:
+            with patch("builtins.print") as output:
+                self.assertEqual(integrity.main(),0)
+        self.assertEqual(run.call_count,2)
+        first,second=[x.args[0] for x in run.call_args_list]
+        self.assertIn("includeMetadata=true",first)
+        self.assertIn("includeMetadata=false",second)
+        self.assertIn("after=cursor-1",second)
+
     def test_healthy_available(self):
         r=validate(FIELDS,VIEWS,[row(labels=["gcl-state:available"])])
         self.assertEqual(r["status"],"PASS")
