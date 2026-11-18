@@ -29,6 +29,13 @@ class IntegrityTests(unittest.TestCase):
         r=validate(FIELDS,VIEWS,[row(status="Done")])
         self.assertFalse(r["errors"])
         self.assertTrue(any("OPEN_DONE" in x for x in r["notices"]))
+    def test_open_done_returned_is_valid_custody(self):
+        r=validate(FIELDS,VIEWS,[row(status="Done",labels=["gcl-state:returned"])])
+        self.assertEqual(r["status"],"PASS")
+        self.assertEqual(r["counts"]["returned"],1)
+    def test_closed_active_returned_still_rejected(self):
+        r=validate(FIELDS,VIEWS,[row(state="CLOSED",status="In Progress",labels=["gcl-state:returned"])])
+        self.assertTrue(any("CLOSED_ACTIVE_STATUS" in x for x in r["errors"]))
     def test_conflicting_labels(self):
         self.assertTrue(any("CONFLICTING" in x for x in validate(FIELDS,VIEWS,
             [row(labels=["gcl-state:available","gcl-state:returned"])])["errors"]))

@@ -28,7 +28,9 @@ Project GCL State values/options, lifecycle label consistency,
 closed/active mismatches, and truncation.
 
 An open GitHub issue does not imply unfinished mathematical work:
-OPEN+Done is a review notice, not an automatic mutation.
+OPEN+Done is a review notice only if the issue is not labeled returned.
+A returned worker dispatch can remain OPEN for controlled intake while its
+Project workflow is Done. Neither case authorizes automatic mutation.
 
 Tests: python -m unittest ci.test_gcl_project_lifecycle_integrity -v
 
@@ -40,9 +42,9 @@ if missing. No recurring mutation is permitted.
 
 1,449 Project items; 130 issues with gcl-state:available label;
 502 closed issues. Closed MATHSOLVE #1218 was Todo and was
-corrected to Done with exact item/state readback. The remaining
-OPEN+Done MATHSOLVE #1082 is a staged, returned QFT dispatch; preserve
-its return custody and do not automatically reopen, close, or reset it.
+corrected to Done with exact item/state readback. MATHSOLVE #1082 is an OPEN+Done staged, returned QFT dispatch with
+RESULT/1 and an intake receipt; this is a legitimate terminal worker
+projection, not an outstanding mismatch. Preserve its return custody.
 
 The generic queue-class audit reporting zero semantic changes
 is not a complete lifecycle-integrity audit. Use both checks.
