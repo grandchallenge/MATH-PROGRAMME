@@ -69,7 +69,9 @@ def validate(fields, views, rows):
             counts["closed"] += 1
             if available: errors.append(f"CLOSED_AVAILABLE:{key}")
             if s in ("Todo", "In Progress"): errors.append(f"CLOSED_ACTIVE_STATUS:{key}:{s}")
-        if c["state"] == "OPEN" and s == "Done":
+        # A returned worker dispatch may remain OPEN for intake while its
+        # Project workflow is Done. Do not treat that as inconsistent.
+        if c["state"] == "OPEN" and s == "Done" and not returned:
             notices.append(f"OPEN_DONE_REQUIRES_DISPOSITION_REVIEW:{key}")
         if available and c["state"] != "OPEN":
             errors.append(f"NONOPEN_AVAILABLE:{key}")
