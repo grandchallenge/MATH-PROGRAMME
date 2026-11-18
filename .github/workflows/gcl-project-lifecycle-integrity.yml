@@ -23,6 +23,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-24.04
+    environment: release-trust
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -41,6 +42,8 @@ jobs:
           app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
           private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
           owner: grandchallenge
+          repositories: MATH-PROGRAMME
+          permission-organization-projects: read
       - name: Live read-only Project audit
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         env:
