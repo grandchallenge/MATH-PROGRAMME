@@ -115,6 +115,26 @@ The source completeness clause ensures every sufficiently large unary index is p
 
 Source: [protected input note](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_AND_TRANSFER.md) and [Python emulator](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_EMULATOR.py).
 
+## Original-source nine-level verifier and unconditional diagonal no-gap
+
+By 18 November 2026, WP08–WP14 had gone beyond the original finite emulator: the source-native `MIPRE.Cost.Prog` identity decider, an interpreter soundness/completeness chain, a typed parser theorem, and an actual original `Verifier 9` with bounded conditional stages were replayed with their pinned upstream. These are **real source-native formal results**, not a completed quantum compressor.
+
+However, the paired source sampler is of the form `(L(z),L(z))`, so its question law has **zero off-diagonal mass**. The WP15 actual game accepts fixed empty answers, yielding exact value 1 across the original synchronous, tensor-product quantum and commuting models. WP16 proves the diagonal distribution directly from original `MIPRE.CL.clDist`. WP17 proves a stronger general theorem: for *any* original finite synchronous game with nonempty answers and diagonal-only question support, define
+
+$$
+m(G)=\sum_x \mu(x,x)\,\mathbf{1}[\exists a,\ D(x,x,a,a)].
+$$
+
+Then the original model's three optimal values satisfy
+
+$$
+\omega_{\mathrm{sync}}(G)=\omega_{\mathrm{quantum}}(G)=\omega_{\mathrm{commuting}}(G)=m(G).
+$$
+
+The common value may be **below one** when some sampled diagonals are unwinnable. This is proved by an original one-dimensional question-dependent deterministic strategy attaining `m(G)` and separate native Born-rule and commuting-tracial upper bounds. It does **not** assert that arbitrary non-synchronous games have equal values, nor that the next sampler/decider or a positive gap has been built. It proves that **changing only the decision predicate with WP14's question law cannot create a quantum advantage**.
+
+See [WP17 source/receipts](coverage.md#status-of-the-source-native-theorem-chain), the [evidence register](evidence.md) and the original-source [MATHSOLVE proof](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP17_UnconditionalDiagonalNoGap.lean).
+
 ## A proved restricted SAT transfer — and its limitation
 
 For finite explicitly tabulated two-prover games, existence of a perfect deterministic classical local strategy is equivalent to satisfiability of an explicitly constructed CNF formula. If SAT is polynomial-time decidable, self-reduction then produces the strategy in polynomial time in the **explicit table size**, with at most one SAT query per Boolean variable plus an initial feasibility query. This establishes a valid restricted classical strategy-extraction transfer.
@@ -141,12 +161,12 @@ with exact construction and overhead accounting. No such transfer is presently p
 
 The required additional audit includes relativization, natural proofs and algebrization, with their precise hypotheses. Neither quantum entanglement nor self-reference automatically bypasses those barriers.
 
-## Exact next obligations
+## Exact next obligations (updated 18 November 2026)
 
-1. Produce the paper-faithful encoded Turing machines for the nine-level input and establish their worst-case step and description-length bounds.
-2. Determine the source-effective numerical values of $\lambda$ and $C_0$, or isolate the exact nonconstructive obstacle.
-3. Identify a nontrivial *classical* finite game-cost invariant and a corresponding ordinary classical decision predicate.
-4. Prove a restricted lower bound or furnish a counterexample; do not extrapolate from sampled game sizes.
-5. Formulate and test a uniform classical transfer lemma with explicit SAT reduction and strategy-construction directions.
+1. Construct a **source-native, non-diagonal/player-asymmetric conditional-linear sampler** with genuine positive probability on unequal questions, all original query-interface conditions and uniform source execution/size bounds. The existing shared-map reference is mathematically incapable of giving the target value gap.
+2. Implement an **answer-sensitive executable original `Cost.Prog` decider**, establish its typed-input/malformed-data semantics and worst-case source bounds, and prove a bounded `Verifier` for the new sampled game.
+3. Prove a quantitative, nonzero **quantum/classical value or soundness gap** using the original source strategy models and independent upper/lower bounds; source compilation or positive off-diagonal mass alone does not suffice.
+4. Only after that, execute the positive-parameter introspection, answer-reduction and repetition stages on an evidenced input, quantify `\lambda` and `C_0`, and resolve Theorem 12.1's printed statement/proof discrepancy.
+5. Independently establish or refute the **uniform succinct SAT-to-classical-resource transfer** with fixed machine/encoding, or expose a counterexample. Keep the separate PNP-001 Formal Conjectures model, NP-verifier and endpoint bridges open.
 
-**What remains open:** the classical bridge and P versus NP itself. Continue to [Evidence and status](evidence.md).
+**What remains open:** the hard-game gap, source-effective full compressor, general classical transfer and P versus NP itself. Continue to [GCL documentary coverage](coverage.md) and [Evidence and status](evidence.md).
