@@ -213,3 +213,62 @@ class NearMaxTotientValuationTests(unittest.TestCase):
             termwise_nearlog_starts(64,8)
         with self.assertRaises(ValueError):
             restricted_factor_shape(9,0,nearmax_totients(15))
+
+
+    def test_exact_rolling_integral_sum_recurrence_vs_direct_definition(self):
+        from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+            finite_scaled_numerator, nearlog_integral_sums_and_adjacent_pairs,
+        )
+        for X,C in ((32,1),(64,0),(128,2),(256,2),(512,3)):
+            L=X.bit_length()-1-C
+            phi=nearmax_totients(3*X)
+            starts, adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
+            expected=[]
+            expected_adj=[]
+            for N in range(X,2*X):
+                A=finite_scaled_numerator(N,L,phi)
+                next_A=finite_scaled_numerator(N+1,L,phi)
+                self.assertEqual(next_A,2*A-(1<<L)*phi[N+1]+phi[N+L+1])
+                if A % (1<<L)==0:
+                    expected.append(N)
+                    if next_A % (1<<L)==0:
+                        expected_adj.append(N)
+            self.assertEqual(starts,tuple(expected))
+            self.assertEqual(adjacent,tuple(expected_adj))
+
+    def test_adjacent_integral_sums_force_nearmax_last_coefficient(self):
+        from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+            nearlog_integral_sums_and_adjacent_pairs,
+        )
+        for X,C in ((64,0),(128,1),(512,2),(2048,2),(4096,3)):
+            phi=nearmax_totients(3*X)
+            L=X.bit_length()-1-C
+            starts,adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
+            eligible=set(nearmax_witnesses(3*X,C+2,phi))
+            self.assertTrue(all(N+L+1 in eligible for N in adjacent))
+            self.assertLessEqual(len(adjacent),len(eligible))
+            self.assertLessEqual(len(starts),(X+1)//2+len(adjacent))
+
+    def test_nearlog_rational_control_not_replicated_by_totient_recurrence(self):
+        # Independent local synthetic recurrence: no dependency on the WP07-B
+        # branch, which might still be in the protected merge queue.
+        X,C=128,5
+        L=X.bit_length()-1-C
+        a=[0]*512
+        b=[0]*512
+        for n in range(1,512):
+            M=1<<max(0,n.bit_length()-6)
+            q=n//2+2*b[n-1]
+            b[n]=q%M
+            a[n]=q-b[n]
+        self.assertTrue(all(
+            sum(a[N+j] << (L-j) for j in range(1,L+1)) % (1<<L)==0
+            for N in range(X,2*X+1)
+        ))
+        from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+            nearlog_integral_sums_and_adjacent_pairs,
+        )
+        phi=nearmax_totients(3*X)
+        actual_starts,adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
+        self.assertLessEqual(len(adjacent),len(nearmax_witnesses(3*X,C+2,phi)))
+        self.assertLessEqual(len(actual_starts),(X+1)//2+len(adjacent))
