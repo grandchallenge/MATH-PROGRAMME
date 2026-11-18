@@ -12,4 +12,6 @@ python3 exact_original_upper.py
 python3 k_apex_colouring.py | tee /tmp/erdos561_kapex.txt
 grep -q '"total": 3000' /tmp/erdos561_kapex.txt
 grep -q '"failures": 0' /tmp/erdos561_kapex.txt
+python3 critical5_atlas_verify.py | tee /tmp/erdos561_critical5.txt
+grep -q '"status": "PASS"' /tmp/erdos561_critical5.txt
 printf 'ERDOS561_CERTIFICATE_REPLAY_PASS\n'

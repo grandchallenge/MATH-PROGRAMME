@@ -21,15 +21,17 @@
       "assumptions": [
         "finite simple host graphs",
         "non-induced copies",
-        "published edge-5-critical density theorem",
+        "Vizing adjacency lemma and pinned 7/8-vertex critical census",
         "complete 11-edge rigidity enumeration"
       ],
-      "promotion_condition": "Independent substantive proof audit, primary density-source lock and CI replay; no self-certification.",
+      "promotion_condition": "Independently review both exact finite certificates, general reductions and source contracts; CI replay; no self-certification.",
       "related_files": [
         "ERDOS_561_FULL_422_431_PROOF.md",
         "EXACT_JOINT_422_431_PROOF.md",
         "exact_degree5_residual.py",
-        "exact_degree5_cpp_replay.cpp"
+        "exact_degree5_cpp_replay.cpp",
+        "CRITICAL5_REPLACEMENT_PROOF.md",
+        "critical5_atlas_verify.py"
       ],
       "knowledge_graph_refs": [
         "GCL-MATH-PROGRAMME-ISSUE-3502",
@@ -100,11 +102,11 @@
       "claim_id": "ERDOS561-DELTA5-CRITICAL",
       "short_name": "Published five-critical density theorem",
       "claim_text": "A simple edge-5-critical graph C on n vertices has 2e(C)>=4n+3.",
-      "claim_class": "LITERATURE_DERIVED",
+      "claim_class": "SUPERSEDED",
       "mathematical_domain": "graph_theory_size_ramsey",
       "support_type": "SOURCE_CITATION",
       "support_summary": "Bounded paper-level argument with explicit external and computational dependencies; see accompanying files.",
-      "status": "UNDER_REVIEW",
+      "status": "SUPERSEDED",
       "certainty": "STRONGLY_SUPPORTED",
       "source_or_artifact": [
         "SOURCE_LOCK.md",
@@ -116,13 +118,45 @@
         "simple graph",
         "nonisolated connected critical component"
       ],
-      "promotion_condition": "Acquire full 1994 primary proof and check critical definitions and inequality, or derive standalone replacement.",
+      "promotion_condition": "Not invoked by the updated 24-edge proof. Historical verification optional; use ERDOS561-DELTA5-FINITE instead.",
       "related_files": [
         "SOURCE_LOCK.md"
       ],
       "knowledge_graph_refs": [
         "GCL-MATH-PROGRAMME-ISSUE-3502",
         "GCL-MATH-PROGRAMME-ISSUE-3490"
+      ]
+    },
+    {
+      "claim_id": "ERDOS561-DELTA5-FINITE",
+      "short_name": "Small five-critical obstruction, without 1994 proof",
+      "claim_text": "Every simple 5-edge-critical graph with at most 17 edges has exactly seven nonisolated vertices and at least sixteen edges.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph_theory_edge_colouring",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Vizing adjacency-lemma discharging proves e>=2n; complete graph6 finite enumeration of 7- and 8-vertex cases with exact five-edge-colouring backtracking; all 10 eight-vertex class-II exceptions have pendant vertices.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "CRITICAL5_REPLACEMENT_PROOF.md",
+        "critical5_atlas_verify.py",
+        "fixtures/graph7.g6",
+        "fixtures/graph8.g6",
+        "https://users.cecs.anu.edu.au/~bdm/data/graphs.html"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "Vizing adjacency lemma",
+        "complete McKay graph6 catalogues and pinned source hashes"
+      ],
+      "promotion_condition": "Independent mathematical review of charging proof, exhaustive graph6 class coverage and colour-symmetry backtracking; no self-certification.",
+      "related_files": [
+        "CRITICAL5_REPLACEMENT_PROOF.md",
+        "critical5_atlas_verify.py",
+        "SOURCE_LOCK.md"
+      ],
+      "knowledge_graph_refs": [
+        "GCL-MATH-PROGRAMME-ISSUE-3502"
       ]
     },
     {

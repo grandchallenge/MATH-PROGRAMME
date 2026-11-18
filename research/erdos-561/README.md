@@ -12,7 +12,9 @@ This directory makes the evidence from [GCL research #3490](https://github.com/g
 - `exact_degree5_cpp_replay.cpp` — independently implemented standard C++17 classification.
 - `exact_joint_upper.py`, `exact_original_upper.py` — exhaustive 630- and 5,040-case upper host checks.
 - `K_APEX_THEOREM.md`, `k_apex_colouring.py` — new general independent-`k`-apex colouring theorem and stdlib-only constructive tests.
-- `SOURCE_LOCK.md` — precise external input contract and **still open** primary source-lock gap.
+- `CRITICAL5_REPLACEMENT_PROOF.md`, `critical5_atlas_verify.py` — replacement for the unavailable 1994 density-proof dependency; Vizing adjacency lemma plus exact seven/eight-vertex atlas census.
+- `fixtures/graph7.g6`, `fixtures/graph8.g6` — original McKay complete unlabeled graph catalogues, CC BY 4.0 with attribution and fail-closed source hashes.
+- `SOURCE_LOCK.md` — precise external input contract and historically open but mathematically superseded 1994 source-lock gap.
 - `claim_ledger.json` — schema 1.1.0 source- and scope-aware claims, not a certification stamp.
 
 ## Reproducibility
@@ -28,4 +30,4 @@ The replay is deliberately a research-directory script rather than a new GitHub 
 
 ## Promotion restrictions
 
-These scripts contain exact finite computations and a paper-level reduction using a published edge-critical graph theorem. There is **no** Lean proof, external second-author review, proof of original Kayathri source in this PR, or proof of the unrestricted conjecture. Follow `CERTIFICATION_LADDER.md` and the protected review gates before substantive mathematical acceptance.
+These scripts contain exact finite computations and a paper-level reduction using a Vizing's adjacency lemma and the pinned finite critical-graph census. There is **no** Lean proof, external second-author review, proof of the superseded original Kayathri 1994 text (no longer required), or proof of the unrestricted conjecture. Follow `CERTIFICATION_LADDER.md` and the protected review gates before substantive mathematical acceptance.

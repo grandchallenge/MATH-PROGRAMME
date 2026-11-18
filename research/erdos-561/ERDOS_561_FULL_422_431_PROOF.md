@@ -3,7 +3,7 @@
 **Date:** 2026-11-18  
 **Programme:** Grand Challenge Labs, MATH-PROGRAMME, Erdős #561  
 **Claim scope:** One fixed **original asymmetric size-Ramsey number**, not the unrestricted conjecture.  
-**Verification tier:** Self-contained paper-level reduction to two classical graph theorems (Vizing, and the established Δ=5 critical-graph edge-density bound) and one independently replayed finite 11,197-case certificate. **No Lean kernel replay or independent public peer review claimed.**
+**Verification tier:** Self-contained paper-level reduction to classical edge-colouring results (Vizing and the adjacency lemma) and independently replayable finite 11,197-case and seven/eight-vertex certificates. **No Lean kernel replay or independent public peer review claimed.**
 
 ## Main theorem
 
@@ -31,15 +31,15 @@ Moreover, it proves the **11-edge rigidity lemma**: every `Q` with eleven edges 
 
 **F3 — Vizing's theorem.** A finite simple graph of maximum degree `D` has a proper edge-colouring in at most `D+1` colours. In particular, if `D<=5`, it can have its edges divided into at most six matchings, three red and three blue, so **cannot** arrow `(K_{1,4},K_{1,4})`.
 
-**F4 — a published theorem for critical graphs.** Every simple **edge-5-critical** graph `C` of order `n` satisfies
+**F4 — a finite, independently replayable critical-graph restriction.** Every simple edge-5-critical graph C with at most seventeen edges has exactly seven nonisolated vertices and at least sixteen edges. Thus, in the sole regime needed below, it also satisfies
 
 $$
-e(C)\geq\tfrac12(4n+3).
+e(C)\ge\tfrac12(4|V(C)|+3).
 $$
 
-This is the Δ=5 case of Vizing's average-degree conjecture **already proved for Δ≤5**, not the general open conjecture. For source verification: Rong Luo and Cun-Quan Zhang, *Edge coloring of graphs with small average degrees*, Discrete Mathematics **275** (2004), 207–218, DOI `10.1016/S0012-365X(03)00107-9`, introduction pp.207–208, Conjecture 1.1 and explicit note that it is verified for Δ≤5; Yan Cao and Guantao Chen, *On the average degree of edge chromatic critical graphs*, Journal of Combinatorial Theory B **147** (2021), 299–338, DOI `10.1016/j.jctb.2020.04.004`, introduction notes verified status for Δ≤6. This proof **invokes** that established theorem, it does not reprove its external literature.
+This is proved in `CRITICAL5_REPLACEMENT_PROOF.md`, using only **Vizing's adjacency lemma** for the general density inequality `e(C)>=2|V(C)|` and an exact complete census of all connected seven- and eight-vertex graph classes of maximum degree five and the required edge bounds. The certificate `critical5_atlas_verify.py` uses original graph6 datasets stored under `fixtures/`, whose SHA-256 values are pinned and checked. It finds no seven-vertex six-edge-chromatic graph with at most fifteen edges, and ten eight-vertex six-edge-chromatic graph classes with at most seventeen edges, all of which have a pendant vertex and therefore are not edge-critical. This **replaces** the formerly necessary 1994 Kayathri full-text dependency for this fixed problem; the stronger historical theorem is retained as provenance in `SOURCE_LOCK.md` but not invoked.
 
-A graph is edge-5-critical here if `χ′(C)=6`, `Δ(C)=5`, and deleting any edge makes it 5-edge-colourable. Any graph with `Δ=5` and `χ′=6` contains an edge-minimal such critical subgraph (remove edges until the property fails).
+A graph is edge-5-critical if `χ′(C)=6`, `Δ(C)=5`, and deleting any edge makes it five-edge-colourable. Any graph with `Δ=5` and `χ′=6` contains an edge-minimal such critical subgraph.
 
 ## New structural lemma: two nonadjacent maximum-degree apices
 
@@ -83,7 +83,7 @@ $$
 
 **2. A 17-edge joint residual extremizer must have degree six.** Choose `v` with degree six, and set `Q=G-v`. Then `e(Q)=17`, `Δ(Q)<=6`, and `Q` satisfies both residual conditions R1 and R2.
 
-R2 implies `Q->(K_{1,4},K_{1,3})`. By F3, `Δ(Q)>=5`. Suppose `Δ(Q)=5`. If `Q` were properly 5-edge-colourable, splitting three classes red and two blue would avoid both `K_{1,4}` and `K_{1,3}`; hence `χ′(Q)=6`. Choose an edge-minimal subgraph `C` of `Q` with `χ′(C)=6`. By Vizing and `Δ(Q)=5`, we have `Δ(C)=5`, and `C` is 5-critical. The published theorem F4 gives
+R2 implies `Q->(K_{1,4},K_{1,3})`. By F3, `Δ(Q)>=5`. Suppose `Δ(Q)=5`. If `Q` were properly 5-edge-colourable, splitting three classes red and two blue would avoid both `K_{1,4}` and `K_{1,3}`; hence `χ′(Q)=6`. Choose an edge-minimal subgraph `C` of `Q` with `χ′(C)=6`. By Vizing and `Δ(Q)=5`, we have `Δ(C)=5`, and `C` is 5-critical. The exact critical-graph lemma F4 gives
 
 $$
  e(C)\ge (4|V(C)|+3)/2.
@@ -141,14 +141,14 @@ python3 exact_original_upper.py
 # 5040/5040 centre-colour allocations, original upper bound 24
 ```
 
-**Scientific acceptance condition:** Independently review both finite 11-edge enumeration programs, check the reported external critical-graph theorem against a source-locked primary proof, and optionally formalize the short mathematical lemmas in Lean. The current result is **computer-assisted proof with published external input**, not a formally kernel-checked proof, protected mathematical certification, or a claim of historical novelty.
+**Scientific acceptance condition:** Independently review the 11-edge rigidity enumerators, the seven/eight-vertex critical-graph census and the Vizing adjacency-lemma reduction, and optionally formalize the short mathematical lemmas in Lean. The current result is **computer-assisted proof with named classical graph-theory input**, not a formally kernel-checked proof, protected mathematical certification, or a claim of historical novelty.
 
 ## Implications and limitations
 
-The original problem has a genuine three-star-versus-three-star **nonuniform exact instance** with a complete conditional-on-established-literature proof. The critical technique is a two-stage rigidity cascade:
+The original problem has a genuine three-star-versus-three-star **nonuniform exact instance** with a complete paper-level proof depending on classical Vizing results and exact finite certificates. The critical technique is a two-stage rigidity cascade:
 
 1. The joint residual bound forces a hypothetical original counterexample to have fixed maximum degree.
-2. A critical-graph density inequality forces the residual graph to have a second maximum-degree vertex.
+2. A critical-graph finite-census restriction forces the residual graph to have a second maximum-degree vertex.
 3. Deleting the two vertices exposes the rigid star forest, and an explicit Hall colouring then rules out arrowing.
 
 This is a promising mechanism to attempt on additional parameter families. **It does not prove Erdős #561 for arbitrary numbers or sizes of stars**; general joint-residual inequalities and critical-graph structure remain unproved outside the restricted classes already documented.
