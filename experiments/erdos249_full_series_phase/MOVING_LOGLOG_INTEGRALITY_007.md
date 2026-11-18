@@ -37,7 +37,7 @@ $$
 =\zeta(s)^zG_z(s),
 $$
 
-where the Euler product for $G_z$ converges absolutely for $\operatorname{Re}s>1/2$ locally away from singularities. The asymptotic (SD) is **cited as an external established theorem** and is not formally or independently reproved by this work package. One published discussion of the classical method is the Selberg–Delange literature; its original theorem and attribution are not GCL results.
+where the Euler product for $G_z$ converges absolutely when the real part of $s$ is greater than $1/2$, away from any chosen branch singularities. The asymptotic (SD) is **cited as an external established theorem** and is not formally or independently reproved by this work package. One published discussion of the classical method is the Selberg–Delange literature; its original theorem and attribution are not GCL results.
 
 ## Theorem A — moving-depth density-one integrality with a quantitative rate
 
