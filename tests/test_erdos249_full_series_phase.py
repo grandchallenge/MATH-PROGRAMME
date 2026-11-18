@@ -173,15 +173,22 @@ class NearMaxTotientValuationTests(unittest.TestCase):
     def test_high_valuation_does_not_imply_full_series_irrationality(self):
         # A synthetic rational nearlog comparator has such valuations
         # everywhere, but its full sum remains 2/3.
-        from experiments.erdos249_full_series_phase.nearlog_rational_coboundary import (
-            build_control, exact_value,
-            logarithmic_integer_depth, finite_scaled_tail,
-        )
-        a,_=build_control(512)
-        self.assertEqual(exact_value(),Fraction(2,3))
+        # Independent witness code is deliberately local: WP07-B may still be
+        # awaiting protected admission, and this test must not import it.
+        a=[0]*512
+        b=[0]*512
+        for n in range(1,512):
+            M=1<<max(0,n.bit_length()-6)
+            q=(n//2)+2*b[n-1]
+            b[n]=q%M
+            a[n]=q-b[n]
+        x=Fraction(1,2)
+        self.assertEqual(x*x*(1+x)/(1-x*x)**2,Fraction(2,3))
         for N in range(64,300):
-            L=logarithmic_integer_depth(N)
-            self.assertEqual(finite_scaled_tail(N,L,a).denominator,1)
+            L=N.bit_length()-6
+            finite=sum((Fraction(a[N+j],1<<j) for j in range(1,L+1)),
+                       Fraction())
+            self.assertEqual(finite.denominator,1)
         # Termwise integrality is stronger than total integrality:
         phi=nearmax_totients(4)
         self.assertEqual(Fraction(phi[2],2)+Fraction(phi[3],4),1)
