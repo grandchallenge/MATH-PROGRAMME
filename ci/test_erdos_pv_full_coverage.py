@@ -61,7 +61,7 @@ class CoverageTests(unittest.TestCase):
                 self.assertEqual(row['source_issue_live_state'],'OPEN_RETURNED')
                 self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
                 self.assertEqual(row['stage_work_items']['B']['work_status'],
-                                 'PROTECTED_ADMITTED' if n==560 else ('VERIFIED_BOUNDED' if n==561 else 'UNEXECUTED'))
+                                 'PROTECTED_ADMITTED' if n in (560,561) else 'UNEXECUTED')
                 if n<=562:
                     self.assertEqual(row['triage_decision'],'SELECTED_WITH_MANIFEST')
                     self.assertEqual(row['stage_work_items']['A']['work_status'],'VERIFIED_BOUNDED')
@@ -76,7 +76,7 @@ class CoverageTests(unittest.TestCase):
             for mutation in (
                 lambda r:r.__setitem__('triage_decision','SELECTED_WITH_MANIFEST' if n>562 else 'PENDING'),
                 lambda r:r['stage_work_items']['A'].__setitem__('evidence_refs',[]),
-                lambda r:r['stage_work_items']['B'].__setitem__('work_status','VERIFIED_BOUNDED' if n==560 else 'PROTECTED_ADMITTED'),
+                lambda r:r['stage_work_items']['B'].__setitem__('work_status','VERIFIED_BOUNDED' if n in (560,561) else 'PROTECTED_ADMITTED'),
                 lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
             ):
                 with self.subTest(problem=n,mutation=str(mutation)):

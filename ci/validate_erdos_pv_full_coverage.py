@@ -220,6 +220,75 @@ def validate_five_source_scope(row, root=ROOT):
                    and refs['adversarial_review']['path']==prefix+'B_ADVERSARIAL_REVIEW_001.md'
                    and refs['source_lock']['path']==prefix+'B_SOURCE_SCOPE_LOCK_001.json',
                    'problem 561 B: protected proof path substitution')
+            if v['work_status']=='PROTECTED_ADMITTED':
+                merge='070f9a9d71b22132d48d7c1dc0c05671c11c0a90'
+                custody_path=prefix+'B_PROTECTED_CUSTODY_BINDING_001.json'
+                c=read(custody_path,root)
+                c_sha=hashlib.sha256((root/custody_path).read_bytes()).hexdigest()
+                pathset={
+                    'ci/erdos_pv_0561_factor_gate.py',
+                    'ci/test_erdos_pv_0561_factor_gate.py',
+                    'ci/test_erdos_pv_full_coverage.py',
+                    'ci/test_erdos_pv_queue.py',
+                    'ci/validate_erdos_pv_full_coverage.py',
+                    'governance/policy_shard_registry.json',
+                    'governance/erdos_proof_verification/coverage/cohorts/0501-0600.json',
+                    prefix+'B_FACTOR_GATE_RECONSTRUCTION_001.md',
+                    prefix+'B_SEMANTIC_EQUIVALENCE_001.md',
+                    prefix+'B_ADVERSARIAL_REVIEW_001.md',
+                    prefix+'B_SOURCE_SCOPE_LOCK_001.json',
+                    prefix+'B_FINITE_FACTOR_ORACLE_001.json',
+                    prefix+'B_RETURN_BINDING_001.json',
+                }
+                blobs=c.get('protected_source_and_artifact_blob_ids',{})
+                ensure(
+                    v['protected_admission_ref']=='grandchallenge/MATH-PROGRAMME@'+merge
+                    and c_sha=='3dfa7f37eeb334d14703abce8f7bf071b6e0af6d8bd883b625de045b74a8afd3'
+                    and c.get('record_type')=='ERDOS_PV_B_ADMISSION_CUSTODY_BINDING/1'
+                    and c.get('assignment_id')=='ERDOS-PV-0561-B'
+                    and c.get('phase')=='B' and c.get('problem_id')==561
+                    and c.get('source_issue_body_sha256')==row['source_issue_body_sha256']
+                    and c.get('source_catalogue_commit')=='536408716724a2402bdfa7c1d764bf83d64a8c89'
+                    and c.get('source_catalogue_blob')=='4e60263a80af6207aca494d2e1388e44fa372889'
+                    and c.get('protected_evidence_pull_request')=='https://github.com/grandchallenge/MATH-PROGRAMME/pull/3458'
+                    and c.get('protected_evidence_head')=='0a5c5624d6a865223eea2404d9286b5323e4d2f3'
+                    and c.get('protected_evidence_merge_commit')==merge
+                    and c.get('protected_exact_byte_readback')=='MATCHED_THIRTEEN_FILES_AGAINST_GIT_FETCHED_PROTECTED_MERGE'
+                    and set(blobs)==pathset and len(blobs)==13
+                    and all(re.fullmatch('[0-9a-f]{40}',blob) for blob in blobs.values())
+                    and c.get('claim_ref')=='refs/heads/gcl-pv-claims/ERDOS-PV-0561-B'
+                    and c.get('claim_sha')=='9de9ed70bab495645e5d0bc501441cd2e4935512'
+                    and c.get('claim_actor')=='fyremael'
+                    and c.get('claim_source_manifest_blob')=='7bdd13ac702be3ca6c9e409401088536ab0e99e4'
+                    and c.get('unique_result_sha256')=='40773b15a10b06ee2c4d842f36c8f424b39031debd6cafd4513ec4066e302870'
+                    and c.get('bounded_disposition')=='VERIFIED_CONDITIONAL_FACTOR_GATE__PRECURSOR_REDUCTIONS_UNVERIFIED'
+                    and c.get('original_problem_status')=='OPEN'
+                    and c.get('mathcert_status')=='NOT_SUBMITTED'
+                    and c.get('formalization_work_required') is True
+                    and c.get('formalization_residual')=='PRECURSOR_CLAIMS_3_2_TO_3_8_NOT_INDEPENDENTLY_REPLAYED'
+                    and c.get('next_phase')=='ERDOS-PV-0561-C'
+                    and c.get('release_state')=='PENDING_EXACT_PROTECTED_CUSTODY_MERGE_AND_AUTHENTICATED_READBACK'
+                    and all(c.get(flag) is False for flag in (
+                        'mathcert_certified','full_you_theorem_1_2_verified',
+                        'whole_original_erdos_561_solved',
+                        'lean_kernel_proof_present',
+                        'external_independent_mathematical_review_attested',
+                        'phase_C_automatically_certified',
+                        'phase_D_automatically_closed',
+                        'cohort_100_problems_complete')),
+                    'problem 561 B: protected custody identity or claim-boundary drift')
+                # Only immutable original mathematical evidence is byte-stable
+                # across subsequent main revisions. Controller/tests can change.
+                for path in (prefix+'B_FACTOR_GATE_RECONSTRUCTION_001.md',
+                             prefix+'B_SEMANTIC_EQUIVALENCE_001.md',
+                             prefix+'B_ADVERSARIAL_REVIEW_001.md',
+                             prefix+'B_SOURCE_SCOPE_LOCK_001.json',
+                             prefix+'B_FINITE_FACTOR_ORACLE_001.json',
+                             prefix+'B_RETURN_BINDING_001.json'):
+                    data=(root/path).read_bytes()
+                    gitblob=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+                    ensure(blobs[path]==gitblob,
+                           'problem 561 B: immutable protected proof bytes drift: '+path)
         if n==560 and later=='C' and v['work_status'] in admitted:
             prefix='governance/erdos_proof_verification/evidence/0560/'
             required={prefix+x for x in (
