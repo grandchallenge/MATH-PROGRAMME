@@ -1,4 +1,4 @@
-import CMDGCondensedCM4P3DerivedCM5R0FourthRelationClosedExtension
+import CMDGCondensedCM4P3DerivedCM5R0FiniteClosedCoverGluing
 
 /-!
 # CMDG CM5 — all finite Čech arities have closed relation spaces
