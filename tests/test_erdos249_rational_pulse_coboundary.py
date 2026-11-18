@@ -120,5 +120,126 @@ class RationalPulseCoboundaryTests(unittest.TestCase):
                             != 0 for p in self.primes for h in self.shifts))
 
 
+
+
+from experiments.erdos249_full_series_phase.nearlog_rational_coboundary import (
+    build_control as nearlog_build_control,
+    exact_value as nearlog_exact_value,
+    modulus as nearlog_modulus,
+    finite_scaled_tail as nearlog_finite_scaled_tail,
+    first_omitted_term as nearlog_first_omitted_term,
+    exact_full_scaled_tail as nearlog_exact_full_scaled_tail,
+    logarithmic_integer_depth as nearlog_depth,
+    fractional_part as nearlog_fractional_part,
+    receipt as nearlog_receipt,
+)
+
+
+class NearLogRationalAdversaryTests(unittest.TestCase):
+    """Exact same-route hostile tests for WP07-B; no policy map expansion."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.a, cls.b = nearlog_build_control(12000)
+
+    def test_variable_modulus_is_power_of_two_at_expected_depth(self):
+        self.assertEqual(nearlog_modulus(1), 1)
+        self.assertEqual(nearlog_modulus(63), 1)
+        self.assertEqual(nearlog_modulus(64), 2)
+        self.assertEqual(nearlog_modulus(127), 2)
+        self.assertEqual(nearlog_modulus(128), 4)
+        for n in range(1, 12001):
+            self.assertEqual(nearlog_modulus(n),
+                             1 << max(0, n.bit_length() - 6))
+
+    def test_recurrence_and_all_coefficients_linear_and_positive(self):
+        a, b = self.a, self.b
+        self.assertEqual(a[1], 0)
+        self.assertEqual(b[0], 0)
+        for n in range(1, 12001):
+            c = n // 2
+            self.assertEqual(a[n] + b[n], c + 2 * b[n-1])
+            self.assertTrue(0 <= b[n] < nearlog_modulus(n))
+            self.assertEqual(a[n] % nearlog_modulus(n), 0)
+            self.assertLessEqual(a[n], n)
+            self.assertGreaterEqual(a[n], n // 4)
+            if n >= 2:
+                self.assertGreaterEqual(4 * a[n], n)
+
+    def test_exact_coboundary_telescopes_even_across_modulus_jumps(self):
+        a, b = self.a, self.b
+        for N in (1, 13, 62, 63, 64, 65, 127, 128, 129, 255,
+                  256, 511, 512, 1023, 1024, 11999):
+            coboundary = sum(
+                (Fraction(2*b[n-1] - b[n], 1 << n)
+                 for n in range(1, N + 1)),
+                Fraction(),
+            )
+            self.assertEqual(coboundary, -Fraction(b[N], 1 << N))
+            self.assertLessEqual(Fraction(b[N], 1 << N),
+                                 Fraction(nearlog_modulus(N)-1, 1 << N))
+
+    def test_rational_full_sum_analytical_generating_identity(self):
+        x = Fraction(1, 2)
+        baseline = x*x*(1+x) / (1-x*x)**2
+        self.assertEqual(baseline, Fraction(2, 3))
+        self.assertEqual(nearlog_exact_value(), baseline)
+        self.assertEqual(nearlog_exact_value().denominator, 3)
+
+    def test_termwise_near_log_depth_integrality_at_every_start(self):
+        a = self.a
+        for N in range(64, 3000):
+            L = nearlog_depth(N)
+            self.assertEqual(L, N.bit_length() - 6)
+            for j in range(1, L + 1):
+                self.assertEqual(a[N+j] % (1 << j), 0)
+            self.assertEqual(nearlog_finite_scaled_tail(N, L, a).denominator, 1)
+
+    def test_positive_discarded_tail_lower_bound_is_four(self):
+        a = self.a
+        for N in (64, 65, 127, 128, 256, 511, 1024, 2047,
+                  2048, 4095, 4096, 8100, 11100):
+            L = nearlog_depth(N)
+            term = nearlog_first_omitted_term(N, L, a)
+            self.assertGreaterEqual(term, 4)
+            # Compare to *analytical positive tail* given by rational value.
+            full_tail = nearlog_exact_full_scaled_tail(N, a)
+            finite = nearlog_finite_scaled_tail(N, L, a)
+            self.assertGreaterEqual(full_tail - finite, term)
+
+    def test_rational_full_scaled_tail_fraction_alternates(self):
+        a = self.a
+        for N in (1, 2, 63, 64, 65, 127, 128, 256, 511,
+                  512, 1023, 2048, 4095, 8100):
+            full = nearlog_exact_full_scaled_tail(N, a)
+            expected = Fraction(2 if N % 2 == 0 else 1, 3)
+            self.assertEqual(nearlog_fractional_part(full), expected)
+            if N >= 64:
+                self.assertEqual(nearlog_fractional_part(
+                    full - nearlog_finite_scaled_tail(N, nearlog_depth(N), a)),
+                    expected)
+
+    def test_exact_reconstruction_receipt_and_hostile_inputs(self):
+        a, b = self.a, self.b
+        for N in (64, 127, 128, 512, 2048, 4096):
+            row = nearlog_receipt(N, a, b)
+            self.assertEqual(row["boundary"],
+                             "RATIONAL_CONTROL_ONLY__ORIGINAL_ERDOS_249_OPEN")
+            self.assertEqual(row["series_value"], "2/3")
+            self.assertEqual(row["L"], N.bit_length() - 6)
+        with self.assertRaises(ValueError):
+            nearlog_build_control(0)
+        with self.assertRaises(ValueError):
+            nearlog_modulus(0)
+        with self.assertRaises(ValueError):
+            nearlog_depth(63)
+        with self.assertRaises(ValueError):
+            nearlog_finite_scaled_tail(5, 30, a[:12])
+        with self.assertRaises(ValueError):
+            nearlog_exact_full_scaled_tail(12001, a)
+        with self.assertRaises(ValueError):
+            nearlog_receipt(4096, a[:15], b[:15])
+
+
 if __name__ == "__main__":
     unittest.main()
