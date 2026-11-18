@@ -15,11 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Run independent exact verifiers and all upper-host checks
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Run exact finite verifiers and upper-host checks
         working-directory: research/erdos-561
         run: |
           set -euo pipefail
