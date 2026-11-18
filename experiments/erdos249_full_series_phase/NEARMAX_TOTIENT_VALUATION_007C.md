@@ -159,7 +159,67 @@ hence $n\in E_{C+2}(3X)$. Distinct starting positions give distinct $n=N+L$. App
 
 **Crucial scope firewall.** This says **termwise** integrality in an almost-logarithmic window is extremely rare for actual totients. It does not assert rarity of an **integral sum** $\sum_{j=1}^L\varphi(N+j)/2^j$: distinct nonintegral rational summands may cancel modulo one. Indeed the previously protected [WP07-A exact tests](../../tests/test_erdos249_moving_loglog_integrality.py) show such cancellation already at $N=1,L=2$. Neither (A) nor (B) establishes a fractional-part gap for the infinite scaled tail.
 
-## 4. Quantitative comparison with the rational control and what remains open
+## 4. Theorem C — rare adjacent integral *finite sums* at near-logarithmic depth
+
+Corollary B concerns individual terms, and by itself does not control cancellation among fractions. The following result directly constrains **integrality of the entire finite sum**.
+
+For $X$ large, fix $C\ge0$ and $L=\lfloor\log_2X\rfloor-C\ge1$. Define the exact integer numerator
+
+$
+A_{N,L}=\sum_{j=1}^{L}2^{L-j}\varphi(N+j),
+\qquad U_{N,L}=\frac{A_{N,L}}{2^L}.
+$
+
+**Theorem C (adjacent-integrality obstruction).** Among starting positions $N\in[X,2X)$, the number of indices for which **both** $U_{N,L}$ and $U_{N+1,L}$ are integers is at most
+
+$
+\boxed{
+\#E_{C+2}(3X)=X^{o(1)}.
+}
+\tag{C1}
+$
+
+Consequently the number of starts at which the **whole** finite sum $U_{N,L}$ is an integer satisfies
+
+$
+\boxed{
+\#\{N\in[X,2X): U_{N,L}\in\mathbb Z\}
+\le\frac X2+X^{o(1)}+O(1).
+}
+\tag{C2}
+$
+
+Thus at least half of these starting positions, asymptotically, have a **nonintegral finite sum** at the near-logarithmic depth, regardless of cancellation among individual terms.
+
+**Proof.** The numerator has an exact sliding-window recurrence, obtained by multiplying by two and removing the first summand:
+
+$
+\boxed{
+A_{N+1,L}=2A_{N,L}-2^L\varphi(N+1)+\varphi(N+L+1).
+}
+\tag{4}
+$
+
+If both neighboring finite tails are integral, then both numerators are divisible by $2^L$. Reducing (4) modulo $2^L$ gives
+
+$
+2^L\mid\varphi(N+L+1).
+$
+
+Set $k=\lfloor\log_2X\rfloor$ and $n=N+L+1$. Since $N<2X$, and $L+1\le X$ for all sufficiently large $X$, we have $n<3X$ and $\lfloor\log_2n\rfloor\le k+2$. Consequently
+
+$
+\nu_2(\varphi(n))\ge L=k-C
+\ge\lfloor\log_2n\rfloor-(C+2).
+$
+
+Thus $n\in E_{C+2}(3X)$ and the map $N\mapsto n=N+L+1$ is injective. Theorem A proves (C1).
+
+For (C2), divide the $X+O(1)$ integer starting positions into disjoint consecutive pairs (and at most one singleton). Each pair contains **at most one** integral sum unless that adjacent pair belongs to the exceptional family counted in (C1). Therefore the total number of integral finite sums is at most $\lceil X/2\rceil+\#E_{C+2}(3X)$ for integer $X$, and the stated asymptotic follows for real $X$ after endpoint adjustment. QED.
+
+**Exact scope and remaining obstruction.** The theorem proves actual **nonintegrality**, not a uniform lower bound on the distance of the finite sum from the nearest integer. The smallest possible nonzero fractional part has denominator $2^L$ and can be as small as $2^{-L}$, which tends to zero at the present depth. The standard bound on the discarded **infinite** tail is not yet smaller than this distance, and no total infinite-tail residue gap has been proved. No all-harmonic Fourier saving follows just from nonintegrality at half the starts.
+
+## 5. Quantitative comparison with the rational control and what remains open
 
 The synthetic rational sequence in [WP07-B](NEARLOG_RATIONAL_CONTROL_007B.md) has coefficient valuations $\nu_2(a_n)\ge\lfloor\log_2n\rfloor-5$ **for all sufficiently large $n$**, and its full sum is rational $2/3$. Theorem A proves that the actual totient function can reach valuations within five of $\lfloor\log_2n\rfloor$ at only $X^{o(1)}$ indices up to $X$.
 
@@ -171,7 +231,7 @@ $$
 
 not the density of isolated high-valuation coefficients. To exploit the distinction, a new argument must transfer sparse high valuations to a **nontrivial cofinal residue gap** for the complete moving-depth sum, or directly to the good-base Fourier cancellation specified in Will Cook's 2026 sufficient conditions. Such a transfer is **not provided** by this theorem and must not be inserted by analogy.
 
-## 5. Executable tests, review and claim ledger
+## 6. Executable tests, review and claim ledger
 
 Implementation: [nearmax_totient_valuation.py](nearmax_totient_valuation.py). Tests extend the **already registered** [full-series test module](../../tests/test_erdos249_full_series_phase.py), keeping existing tests intact and avoiding a new full-fanout policy manifest modification. The module uses exact integer arithmetic, independent Euler-totient reconstruction, prime-factor enumeration, finite generating-function counting and explicit hostile bounds. Finite tests do not prove an $X\to\infty$ asymptotic; the manuscript proof does.
 
@@ -179,7 +239,8 @@ Implementation: [nearmax_totient_valuation.py](nearmax_totient_valuation.py). Te
 | --- | --- | --- |
 | WP07-C-A | Count near-maximal $\nu_2(\varphi(n))$ by bounded odd part and weighted prime-factor choices | Self-contained elementary manuscript theorem |
 | WP07-C-B | Actual totient termwise integrality at $L=\lfloor\log_2 X\rfloor-C$ occurs on at most $X^{o(1)}$ starting positions | Consequence of WP07-C-A |
-| WP07-C-N | This strongly distinguishes actual totients from WP07-B's rational high-valuation comparator, but does not bound the finite-sum residue | Explicit mathematical scope qualification |
+| WP07-C-C | Adjacent integral full finite sums at near-log depth occur at only $X^{o(1)}$ starts; at most half of starts have an integral finite sum asymptotically | Exact sliding-window recurrence plus WP07-C-A |
+| WP07-C-N | A nonintegral finite sum may still lie within $2^{-L}$ of an integer; the discarded infinite tail is not controlled to that precision | Explicit mathematical scope qualification |
 | WP07-OPEN | Totient-specific cofinal harmonic saving or full infinite-tail residue exclusion | **OPEN** |
 | ORIGINAL-249 | Irrationality of original full binary totient sum | **OPEN** |
 
