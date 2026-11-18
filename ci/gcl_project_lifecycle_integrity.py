@@ -14,6 +14,7 @@ PROJECT = "PVT_kwDOB9Ao_c4Blwur"
 EXPECTED_STATUS = {"Todo", "In Progress", "Done", "RETURNED"}
 AVAILABLE_FILTER = "is:open label:gcl-state:available"
 QUERY = """query($after:String,$includeMetadata:Boolean!){
+ rateLimit{cost remaining resetAt}
  organization(login:"grandchallenge"){projectV2(number:2){
  id fields(first:100) @include(if:$includeMetadata){nodes{... on ProjectV2SingleSelectField{name options{name}}}}
  views(first:100) @include(if:$includeMetadata){nodes{name filter}}
@@ -85,6 +86,8 @@ def main():
     rows = []
     fields = views = None
     project_id = None
+    measured_cost = 0
+    cost_pages = 0
     while True:
         args = ["gh", "api", "graphql", "-f", "query=" + QUERY,
                 "-F", "includeMetadata=" + ("true" if fields is None else "false")]
@@ -94,6 +97,11 @@ def main():
         payload = json.loads(result.stdout)
         if payload.get("errors"):
             raise RuntimeError(payload["errors"])
+        rate = payload["data"].get("rateLimit") or {}
+        cost = rate.get("cost")
+        if isinstance(cost, int) and cost >= 0:
+            measured_cost += cost
+            cost_pages += 1
         project = payload["data"]["organization"]["projectV2"]
         if project_id is not None and project["id"] != project_id:
             raise RuntimeError("project identity drift")
@@ -115,6 +123,10 @@ def main():
     if project_id != PROJECT:
         raise RuntimeError("unexpected project identity")
     report = validate(fields, views, rows)
+    report["graphql_usage"] = {"pages": len(rows) // 100 + bool(len(rows) % 100),
+                               "measured_points": measured_cost if cost_pages else None,
+                               "measured_pages": cost_pages,
+                               "cost_scope": "this audit actor and its Project page queries only"}
     print(json.dumps(report, indent=2))
     return 1 if report["errors"] else 0
 
