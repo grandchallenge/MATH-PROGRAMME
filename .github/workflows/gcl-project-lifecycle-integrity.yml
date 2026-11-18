@@ -1,0 +1,62 @@
+name: GCL Project lifecycle integrity
+on:
+  pull_request:
+    paths:
+      - 'ci/gcl_project_lifecycle_integrity.py'
+      - 'ci/test_gcl_project_lifecycle_integrity.py'
+      - '.github/workflows/gcl-project-lifecycle-integrity.yml'
+      - 'docs/operations/GCL_PROJECT_LIFECYCLE_INTEGRITY.md'
+  push:
+    branches: [main]
+    paths:
+      - 'ci/gcl_project_lifecycle_integrity.py'
+      - 'ci/test_gcl_project_lifecycle_integrity.py'
+      - '.github/workflows/gcl-project-lifecycle-integrity.yml'
+  schedule:
+    - cron: '23 12 * * 3'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: gcl-project-lifecycle-integrity
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - name: Run hostile and positive tests
+        run: PYTHONPATH=. python ci/test_gcl_project_lifecycle_integrity.py -v
+      - name: Acquire existing Council Clerk project-read credential
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        id: clerk
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+      - name: Live read-only Project audit
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ steps.clerk.outputs.token }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::Council Clerk token unavailable; cannot assert integrity"
+            exit 1
+          fi
+          python ci/gcl_project_lifecycle_integrity.py > lifecycle-integrity.json
+          cat lifecycle-integrity.json
+      - name: Upload evidence
+        if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: gcl-project-lifecycle-integrity
+          path: lifecycle-integrity.json
+          if-no-files-found: warn
+          retention-days: 30
