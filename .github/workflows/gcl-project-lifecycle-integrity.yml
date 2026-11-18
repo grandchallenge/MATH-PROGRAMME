@@ -1,0 +1,58 @@
+name: GCL Project lifecycle integrity
+on:
+  pull_request:
+    paths:
+      - 'ci/gcl_project_lifecycle_integrity.py'
+      - 'ci/test_gcl_project_lifecycle_integrity.py'
+      - '.github/workflows/gcl-project-lifecycle-integrity.yml'
+      - 'docs/operations/GCL_PROJECT_LIFECYCLE_INTEGRITY.md'
+  push:
+    branches: [main]
+    paths:
+      - 'ci/gcl_project_lifecycle_integrity.py'
+      - 'ci/test_gcl_project_lifecycle_integrity.py'
+      - '.github/workflows/gcl-project-lifecycle-integrity.yml'
+  schedule:
+    - cron: '23 12 * * 3'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run hostile and positive tests
+        run: python -m unittest ci.test_gcl_project_lifecycle_integrity -v
+      - name: Acquire existing Council Clerk project-read credential
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        id: clerk
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
+          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
+          owner: grandchallenge
+      - name: Live read-only Project audit
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ steps.clerk.outputs.token }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::Council Clerk token unavailable; cannot assert integrity"
+            exit 1
+          fi
+          python ci/gcl_project_lifecycle_integrity.py > lifecycle-integrity.json
+          cat lifecycle-integrity.json
+      - name: Upload evidence
+        if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcl-project-lifecycle-integrity
+          path: lifecycle-integrity.json
+          if-no-files-found: warn
+          retention-days: 30
