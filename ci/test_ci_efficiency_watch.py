@@ -27,6 +27,8 @@ class FakeReader:
         if path.endswith('/pulls/3391'):return PR
         if path.endswith('/pulls/3391/files?per_page=100'):
             return [{'filename':p} for p in self.paths]
+        if 'erdos-catalogue-queue-projection.yml' in path:
+            return {'total_count':2,'workflow_runs':[{'event':'schedule'},{'event':'issue_comment'}]}
         if 'pages.yml' in path:return {'workflow_runs':[{'conclusion':'skipped'}]}
         if 'deployments?' in path:return [{'sha':'b'*40}]
         if 'rate_limit' in path:return {'resources':{'graphql':{
@@ -76,6 +78,19 @@ class WatchTests(unittest.TestCase):
         report=watch.audit(Duplicate(pilot='skipped'),NOW)
         self.assertEqual(report['status'],'INCONCLUSIVE')
         self.assertFalse(report['alerts'])
+    def test_comment_trigger_pressure_is_inconclusive_not_attributed(self):
+        class Flood(FakeReader):
+            def get(self,path):
+                if 'erdos-catalogue-queue-projection.yml' in path:
+                    self.calls+=1
+                    return {'total_count':200,'workflow_runs':[{'event':'issue_comment'}]*100}
+                return super().get(path)
+        report=watch.audit(Flood(pilot='skipped'),NOW)
+        self.assertEqual(report['status'],'INCONCLUSIVE')
+        self.assertTrue(any(x['reason']=='HIGH_COMMENT_TRIGGER_VOLUME_REVIEW'
+                            for x in report['inconclusive']))
+        self.assertFalse(report['alerts'])
+
     def test_graphql_pressure_reset_aware(self):
         class Pressure(FakeReader):
             def get(self,path):
