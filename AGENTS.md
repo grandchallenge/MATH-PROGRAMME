@@ -12,6 +12,33 @@ One Codex system may staff multiple non-reserved roles through distinct,
 role-scoped logical audit passes. Identity, session, account, or generic human
 approval multiplication is not intrinsically required.
 
+## GCL Project #2 pickup eligibility — do not confuse Status with AVAILABLE
+
+**Binding worker-selection rule:** The Project #2 **AVAILABLE saved view** is named
+`AVAILABLE`, but its authoritative filter is **`is:open label:gcl-state:available`**.
+`AVAILABLE` is **not** a value to query in the Project `Status` single-select
+field. Before calling a direct-editorial issue unavailable, query the actual
+issue's `state` and labels (and its required pickup route), or inspect that
+saved view. A Project `Status` of `Todo` **or an unset Status** does not, by
+itself, prevent an open, `gcl-state:available`-labelled issue from being picked
+up. Conversely, `Todo`, `In Progress`, or an unset Status does not by itself
+authorize pickup when the availability label or route is absent.
+
+Project `Status` (`Todo`, `In Progress`, `RETURNED`, `Done`, or unset) tracks
+workflow/projection progress; `gcl-state:available` is the **issue-label
+eligibility signal**. An optional organization Issue Field `GCL State` is a
+third surface and must not be conflated with either one. For direct-editorial
+pickup, check `is:open` + `gcl-state:available` +
+`gcl-pickup:direct-editorial` and the issue's current return/claim custody.
+Reservation-controlled work must follow its own lease protocol; an available
+label is not a substitute for a reservation. Consult
+[`docs/operations/GCL_QUEUE_PICKUP_SEMANTICS.md`](docs/operations/GCL_QUEUE_PICKUP_SEMANTICS.md).
+Never bulk-edit Project Status to `AVAILABLE`, invent an `AVAILABLE` Status
+option, or report zero available workers by grouping Project Status values.
+Do not perform a full Project inventory merely to check one issue; use the
+exact issue and saved view first. A complete inventory needs a distinct
+reconciliation/audit justification and an adequate GraphQL budget.
+
 ## Recurring operations: run failure is not schedule retirement
 
 A failed, blocked, empty, or interrupted run must not unilaterally disable, delete, pause, or reschedule its recurring automation. Treat run status and desired schedule state separately. Retire only on an explicit authenticated user instruction or a protected governed terminal disposition with readback; preserve actor, reason, authority source, UTC transition and scheduler readback. A safety-denied action may not be retried or routed around without independently verified remediation; continue other permitted work on subsequent runs. Unknown disable actor or cause remains UNKNOWN, not an inferred fact. A drifted scheduler must be flagged and reconciled through real authority, not silently accepted. See `docs/governance/RECURRING_TASK_CONTINUITY_CONTRACT.md` and `governance/recurring_queue_continuity.json`. The repository guard is not itself a hosted-scheduler adapter.
