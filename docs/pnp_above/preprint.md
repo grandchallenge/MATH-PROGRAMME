@@ -17,6 +17,12 @@
 
 **Companion correction (1 November 2026):** [Theorem 12.1 statement/proof factor-of-two discrepancy and WP01 classical results](wp01_erratum.md). The fixed v0.1 PDF is an archival edition and has **not** been silently changed. The correction distinguishes the stronger printed theorem inequality from the weaker final proof chain and records a finite classical SAT strategy compiler. It does not modify the PNP-001 claim status.
 
+## Research since the archival version 0.1 edition (18 November 2026)
+
+The published **1 November 2026 version 0.1 PDF/TeX and release checksums remain unchanged**. They do not contain the later proofs. Separate protected GCL research from WP03 through WP17 now includes an imported source-native bounded reference verifier and a rigorous *negative* result about its value: WP15 shows a perfect deterministic original-game strategy, WP16 proves its shared-player conditional CL distribution has only identical questions, and WP17 proves the **general** original synchronous/quantum/commuting value equality for any finite diagonal-supported synchronous game with nonempty answers, including questions that are unwinnable.
+
+The full exact [GCL documentary coverage ledger](coverage.md) records every work package, 72 source artifacts, proof receipts, the separate Formal Conjectures definition-bridge lane, and outstanding obligations. This is **supplementary research evidence**, not an amended version 0.1 paper or an independently certified new preprint edition. No new journal, DOI, arXiv, source paper endorsement, compression construction or P-versus-NP claim is implied.
+
 ## Abstract
 
 We examine a possible “from above” approach to the P versus NP problem motivated by the equality MIP* = RE. Recursive compression of quantum multiprover verification might expose a structural invariant with a classical lower-bound interpretation. The principal obstacle is an invalid identification of verifier computation, entanglement resources, strategy synthesis, and deterministic decision time.

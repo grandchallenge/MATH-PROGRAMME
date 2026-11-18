@@ -17,6 +17,8 @@ GCL has organized precise definitions, useful equivalences and common mistakes i
 **New research accompaniment (November 2026):** [P versus NP from Above](../pnp_above/index.md) explores whether MIP* = RE verification compression can produce a transferable classical lower-bound principle. Read the [educated-lay primer](../pnp_above/primer.md), [technical spine](../pnp_above/technical.md), [evidence register](../pnp_above/evidence.md), and [working preprint record](../pnp_above/preprint.md). This is an exploratory approach, not a proof of P = NP or P != NP.
 
 
+**Documentary audit, 18 November 2026:** [Complete GCL PNP-ABOVE coverage through WP17](../pnp_above/coverage.md) includes 18 bounded packages, exact source and receipt pointers, and the proven diagonal-game no-advantage theorem. The separate PNP-001 Formal Conjectures [bridge ledger](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_BRIDGE_001/bridge_status.json) has two kernel-checked bridges and three open. Neither result resolves P versus NP.
+
 !!! info "Research surface authority"
     **LIVE:** https://github.com/grandchallenge/MATH-PROGRAMME/issues/162  
     **AUTHORITY:** `PNP-WP00-source-definition-equivalence-audit.md`.  

@@ -73,6 +73,14 @@ For a properly encoded input satisfying the published theorem's hypotheses, the 
 
 Again, deciding a selected indexed proposition can be easy even when successfully performing the corresponding interactive task requires an enormous resource.
 
+## Why identical questions make the current quantum game easy
+
+The more recent GCL formalization provides a useful negative lesson. Imagine a referee who **always gives both provers exactly the same question**. For a *synchronous* game, they win on that question only when they give the same acceptable answer. If a winning answer exists, the provers can agree in advance what to return for each question. Sharing entanglement cannot improve that best possible response. If no acceptable answer exists for a sampled question, neither classical nor quantum provers can win it.
+
+WP16 proves that the current nine-stage conditional reference sampler **really does send identical questions**. WP17 then proves in the original MIP* formal game model that for *every* finite synchronous game supported only on equal questions, the best deterministic, tensor-product quantum and commuting strategies have **the same winning probability**. This remains true when some questions are impossible to answer correctly. It does not imply that all quantum games are classically easy: the magic-square game above deliberately sends the two players different, related questions and has a real quantum advantage.
+
+Consequently simply modifying the verifier's acceptance test while leaving this sampler unchanged cannot create the required quantum/classical value gap. GCL must first build a suitable **non-diagonal question sampler**, then a discriminating executable verifier, and *independently prove* its nontrivial game gap. This is a mathematically checked design limitation, **not** a solution to P versus NP. See the [full original-source WP00–WP17 coverage](coverage.md) and [exact proof grades](evidence.md).
+
 ## What would count as progress?
 
 The programme's missing bridge is a new, explicitly **classical** cost measure together with a proof that a hypothetical polynomial-time SAT solver would produce a cheap implementation of the measured structure. Only then could a matching classical lower bound lead toward P versus NP.

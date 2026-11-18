@@ -1,0 +1,47 @@
+{
+  "record_type": "ERDOS249_S_WP07_C_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-18",
+  "workstream": "grandchallenge/MATH-PROGRAMME#3500",
+  "original_problem_status": "OPEN",
+  "bounded_claim": "NEARMAX_TOTIENT_VALUATION_RARITY_PLUS_RARE_ADJACENT_INTEGER_FINITE_SUMS",
+  "mathematical_novelty_claim": false,
+  "independent_human_review": false,
+  "certification": "NOT_SUBMITTED",
+  "antecedents": [
+    "Jun-Jia Zhao (2025), p-Adic Valuation of Euler's Totient Function, DOI 10.1007/s40840-025-01869-7, valuation extremality",
+    "GCL WP07-A (moving shallow depths) and WP07-B (rational nearlog comparator)",
+    "Will Cook 2026 source-locked positive cofinal good-base Fourier criterion remains open"
+  ],
+  "proof_summary": "For fixed C>=0, v2(phi(n))>=floor(log2 n)-C forces oddpart(phi(n))<B=2^(C+1). Distinct odd prime factors have p=1+d*2^r with odd d<B; large p>B appear only once. A weighted partition bound gives #E_C(X)<=(R+1)D_B exp(2 sqrt(BR))=X^o(1). Termwise integrality of a near-log window implies a nearmax endpoint. More substantially the exact sliding-window numerator recurrence A_(N+1,L)=2A_(N,L)-2^L phi(N+1)+phi(N+L+1) implies that *adjacent integral full finite sums* force 2^L|phi(N+L+1), hence at most X^o(1) such pairs and at most X/2+X^o(1)+O(1) starts with an integral whole finite sum. This does not bound distance of a nonintegral finite sum to Z or the infinite tail error.",
+  "exact_replayed_candidate_head": "7928839394220c3c80055ebb33c1df223ce4616d",
+  "sources_sha256": {
+    "manuscript": "b8176e32a2ed43108dcd7608381e8d6774aeb492e3ca6b490fa1465e52d29b6b",
+    "module": "661e37d6d837a5a0d1df433d60f33fcd875db4b6f3f8eb427ef91aa61568072c",
+    "existing_test_module_extended": "35b33bb22d6597b0a8b263b6c20dc3c7b580ec407e4e004756cf599b0be4a5c0",
+    "critical_review": "155cd8931cf9fef3b19b7f6e4cddab6bcb7491eb1c27844472f8f77be021e094"
+  },
+  "runtime": {
+    "execution_type": "CHAD_OS_ACCOUNT_ONLY",
+    "independent_execution_attested": false,
+    "exact_source_capture_id": "b91eea71807e460ca7dea7a3598b7a45",
+    "affected_new_tests": 12,
+    "affected_new_failures": 0,
+    "full_registered_suite_tests": 19,
+    "full_registered_suite_failures": 0,
+    "full_registered_suite_stdout_sha256": "af509a2f152696990df7f0e32f8e4a224a72f12139587c24c73f2482dc3333c6",
+    "manuscript_math_gate": "PASS",
+    "critic_math_gate": "PASS",
+    "math_gate_log_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc",
+    "math_gate_review_capture_id": "e28cc76686f4436d9202aa5296e9344c",
+    "current_exact_branch_head_replay_required_after_receipt_write": true
+  },
+  "reviewer": {
+    "same_authenticated_agent_logical_critic": true,
+    "separately_independent": false,
+    "disposition": "ACCEPT_WITH_SCOPE",
+    "informal_external_certification": false
+  },
+  "CI_impact": "Extended exact registered tests/test_erdos249_full_series_phase.py; no manifest, workflow or security policy changes",
+  "next_positive_obligation": "Convert the quantified rarity of adjacent integral complete *finite* sums into a cofinal, positive lower bound on distance to integers strong enough to dominate the analytic error on the *infinite* shifted totient tail, for all hypothetical rational periods. The proof supplies a nonzero fraction on >=half of starts but no quantitative fractional gap.",
+  "claim_barrier": "FULL_SERIES_IRRATIONALITY_OPEN__DYADIC_FINITE_SUM_DISTANCE_AND_FULL_TAIL_GAP_UNPROVED"
+}
