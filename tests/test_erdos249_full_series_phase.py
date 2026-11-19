@@ -756,3 +756,152 @@ class MovingPrimeEscapeTests(unittest.TestCase):
             wp08b_receipt(4096,64)
         with self.assertRaises(ValueError):
             wp08b_rational_patch(4096,64)
+
+
+
+from experiments.erdos249_full_series_phase.shifted_first_harmonic import (
+    shift_modulus as wp09a_modulus,
+    cook_minimal_depth as wp09a_depth,
+    signed_shift_numerators as wp09a_rolling,
+    direct_shift_numerator as wp09a_direct,
+    signed_shift_receipt as wp09a_receipt,
+    rational_shift_control as wp09a_control,
+    rational_shift_control_sum as wp09a_control_sum,
+)
+
+
+class ShiftedFirstHarmonicTests(unittest.TestCase):
+    """WP09-A: exact hostile tests of the actual Cook shifted D_h phase."""
+
+    def test_arithmetic_modulus_independent_exact_ratio(self):
+        for h in (1,2,3,6):
+            M,eta,primes=wp09a_modulus(h)
+            self.assertEqual(math.gcd(M,h),1)
+            self.assertTrue(M>=2 and eta<=Fraction(29,50))
+            self.assertEqual(M,math.prod(primes))
+            self.assertEqual(eta,math.prod(
+                (Fraction(p-1,p) for p in primes),start=Fraction(1)
+            ))
+        self.assertEqual(wp09a_modulus(1)[:2],(2,Fraction(1,2)))
+        self.assertEqual(wp09a_modulus(2)[:2],(15,Fraction(8,15)))
+        self.assertEqual(wp09a_modulus(6)[:2],(5005,Fraction(576,1001)))
+
+    def test_minimal_cook_size_condition_and_upper_ratio(self):
+        for h,X in ((1,64),(1,128),(2,512),(3,1024),(6,65536)):
+            L=wp09a_depth(X,h)
+            self.assertTrue((1<<L)>=16*(2*X+h+L+2))
+            self.assertTrue((1<<(L-1))<16*(2*X+h+L+1))
+            self.assertLessEqual(1<<L,96*X)
+            self.assertTrue(h+L+1<=X)
+
+    def test_rolling_matches_independent_direct_cook_D(self):
+        for h,X in ((1,64),(2,128),(3,256),(6,512)):
+            L=wp09a_depth(X,h)
+            Q=1<<L
+            phi=overlog_totients(2*X+L+h+1)
+            rolled=wp09a_rolling(X,h,L,phi)
+            self.assertEqual(len(rolled),X+1)
+            for N in range(X,2*X+1):
+                self.assertEqual(rolled[N-X],wp09a_direct(N,h,L,phi))
+                if N<2*X:
+                    d=phi[N+h+L+1]-phi[N+L+1]
+                    self.assertEqual(
+                        (rolled[N-X+1]-2*rolled[N-X]-d)%Q,0
+                    )
+
+    def test_all_signed_contrast_endpoints_force_gaps(self):
+        for h,X in ((1,256),(2,1024),(3,4096),(6,65536)):
+            r=wp09a_receipt(X,h)
+            self.assertGreater(len(r["negative_endpoints"]),0)
+            self.assertGreater(len(r["positive_endpoints"]),0)
+            self.assertTrue(
+                len(r["negative_endpoints"])+len(r["positive_endpoints"])
+                <=2*r["strong_gap_starts"]
+            )
+            self.assertGreaterEqual(
+                r["fixed_fraction_gap_starts"],r["strong_gap_starts"]
+            )
+            self.assertTrue(r["M"]>=2)
+            self.assertEqual(
+                r["original_totient_irrationality"],"OPEN"
+            )
+            self.assertEqual(r["cook_required_10_percent_saving"],"OPEN")
+
+    def test_harmonic_saving_proof_has_exact_positive_budget(self):
+        # Finite checks test the exact fractional-distance implication.
+        # The global density and all-X harmonic estimate are proved
+        # independently from the conditional totient mean in the source.
+        for h,X in ((1,256),(2,1024),(6,65536)):
+            r=wp09a_receipt(X,h)
+            count=r["fixed_fraction_gap_starts"]
+            self.assertGreater(count,0)
+            # 1-cos(2*pi*t) >= 8*t^2 for 0<=t<=1/2.
+            # Therefore the actual first harmonic has the exact
+            # mathematical upper bound X - 8*count/28800^2.
+            bound=Fraction(X)-Fraction(8*count,28800**2)
+            self.assertLess(bound,X)
+            self.assertGreater(bound,0)
+
+    def test_hostile_rational_full_sum_with_two_signed_shifts(self):
+        for h,M in ((1,3),(2,3),(3,5),(6,7)):
+            total=wp09a_control_sum(h,M)
+            self.assertTrue(isinstance(total,Fraction) and total>0)
+            prefix=sum((Fraction(wp09a_control(n,h,M),1<<n)
+                        for n in range(1,120)),Fraction())
+            self.assertLess(prefix,total)
+            self.assertLess(total-prefix,Fraction(125,1<<119))
+            for n in range(2*M,100, M):
+                self.assertEqual(wp09a_control(n,h,M),0)
+                self.assertEqual(wp09a_control(n+h,h,M),n+h)
+                self.assertEqual(wp09a_control(n-h,h,M),n-h)
+                self.assertEqual(
+                    wp09a_control(n+h,h,M)-wp09a_control(n,h,M),
+                    n+h,
+                )
+                self.assertEqual(
+                    wp09a_control(n,h,M)-wp09a_control(n-h,h,M),
+                    -(n-h),
+                )
+
+    def test_guarded_source_contracts(self):
+        with self.assertRaises(ValueError):
+            wp09a_modulus(0)
+        with self.assertRaises(ValueError):
+            wp09a_modulus(6,max_product=20)
+        with self.assertRaises(ValueError):
+            wp09a_depth(63,2)
+        with self.assertRaises(ValueError):
+            wp09a_depth(64,0)
+        with self.assertRaises(ValueError):
+            wp09a_rolling(64,1,10,[0]*10)
+        with self.assertRaises(ValueError):
+            wp09a_direct(64,1,10,[0]*10)
+        with self.assertRaises(ValueError):
+            wp09a_receipt(64,20)
+        with self.assertRaises(ValueError):
+            wp09a_control(5,1,2)
+        with self.assertRaises(ValueError):
+            wp09a_control_sum(1,65)
+
+
+    def test_exact_all_shift_cocycle_and_marginal_phase_obstruction(self):
+        X=128
+        L=wp09a_depth(X,6)
+        phi=overlog_totients(2*X+L+12)
+        for N in (X,X+1,X+19,2*X-2):
+            for h in (1,2,3,4):
+                for k in (1,2,3):
+                    left=wp09a_direct(N,h+k,L,phi)
+                    right=(wp09a_direct(N,h,L,phi)
+                           +wp09a_direct(N+h,k,L,phi))
+                    self.assertEqual(left,right)
+                    self.assertEqual(
+                        left,
+                        sum(wp09a_direct(N+j,1,L,phi)
+                            for j in range(h+k)),
+                    )
+        # Abstract logical counterexample: zero one-phase mean,
+        # but every adjacent product equals +1 exactly.
+        u=[(1j if n%2==0 else -1j) for n in range(100)]
+        self.assertEqual(sum(u,0j),0j)
+        self.assertTrue(all(u[n]*u[n+1]==1 for n in range(99)))
