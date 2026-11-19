@@ -272,7 +272,7 @@ $$
 
 Together with the exact rationality of $S_y$ in (3), this is a complete infinite approximation statement, but the denominator of $S_y$ is **not** bounded at a useful scale for a rationality contradiction. QED.
 
-**Hostile rational patch.** For any fixed finite $X,y$, define a comparator $a^{X,y}_n$ equal to $\varphi(n)$ on the finite index interval $[X+1,\,2X+L]$ and equal to $g_y(n)$ elsewhere. It differs from the **rational** $g_y$ sequence at only finitely many indices, so the full series $\sum_n a^{X,y}_n2^{-n}$ is still rational. Yet all length-$L$ finite tails starting at $N\in[X,2X)$ agree with those of the **actual** totient **exactly as real numbers**, not only in phase. This adversary depends on $X,y$ and does **not** disprove a single cofinal all-$X$ irrationality criterion; it prevents the finite-block observation (9) from being promoted to an unconditional irrationality proof.
+**Hostile rational patch.** For any fixed finite $X,y$, define a comparator $a^{X,y}_n$ equal to $\varphi(n)$ on the finite index interval $[X+1,\,2X+L]$ and equal to $g_y(n)$ elsewhere. It differs from the **rational** $g_y$ sequence at only finitely many indices, so the full series $\sum_n a^{X,y}_n2^{-n}$ is still rational. Yet all finite tails of length $L$ starting at $N\in[X,2X)$ agree with those of the **actual** totient **exactly as real numbers**, not only in phase. This adversary depends on $X,y$ and does **not** disprove a single cofinal irrationality criterion for all $X$; it prevents the finite-block observation (9) from being promoted to an unconditional irrationality proof.
 
 ## 6. Remaining genuine boundary
 
