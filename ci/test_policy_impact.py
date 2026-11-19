@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
 import tempfile
 from pathlib import Path
 from unittest import mock
@@ -10,8 +11,102 @@ from unittest import mock
 import policy_impact as impact
 
 
+def test_verified_effective_merge_scope() -> None:
+    """Hostile real-Git divergence: no unrelated main changes in PR scope."""
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        def git(*args: str) -> str:
+            result = subprocess.run(
+                ["git", "-C", str(root), *args], text=True,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True,
+            )
+            return result.stdout.strip()
+
+        git("init", "-q", "-b", "main")
+        git("config", "user.email", "ci-scope-fixture@example.invalid")
+        git("config", "user.name", "CI scope fixture")
+        (root / "README.md").write_text("baseline\\n", encoding="utf-8")
+        git("add", "README.md")
+        git("commit", "-q", "-m", "synthetic baseline")
+        git("checkout", "-q", "-b", "feature")
+        erdos = "experiments/erdos249_full_series_phase/SYNTHETIC_SCOPE.md"
+        (root / "experiments/erdos249_full_series_phase").mkdir(parents=True)
+        (root / erdos).write_text("bounded Erdős research\\n", encoding="utf-8")
+        git("add", erdos)
+        git("commit", "-q", "-m", "actual PR change")
+        head = git("rev-parse", "HEAD")
+        git("checkout", "-q", "main")
+        cmdg = "fixtures/formal/CMDG-NAT-CONCORDANCE-001/CONCURRENT.lean"
+        (root / "fixtures/formal/CMDG-NAT-CONCORDANCE-001").mkdir(parents=True)
+        (root / cmdg).write_text("-- unrelated protected-main update\\n", encoding="utf-8")
+        git("add", cmdg)
+        git("commit", "-q", "-m", "unrelated main update")
+        base = git("rev-parse", "HEAD")
+        git("merge", "-q", "--no-ff", "-m", "GitHub effective merge fixture", "feature")
+        effective = git("rev-parse", "HEAD")
+        event = {
+            "pull_request": {
+                "base": {"sha": base},
+                "head": {"sha": head},
+                "merge_commit_sha": effective,
+            },
+        }
+        with mock.patch.object(impact, "ROOT", root):
+            # Legacy tree-vs-tree comparison falsely reverses an unrelated
+            # protected-main CMDG change, triggering two extra shards.
+            legacy = impact.git_changed_paths(base, head)
+            assert legacy == [erdos, cmdg], legacy
+            assert impact.verified_pull_request_transition(event["pull_request"]) == (
+                base, effective, "verified_effective_merge"
+            )
+            selected = impact.changed_paths_from_event("pull_request", event)
+            assert selected == [erdos], selected
+            assert impact.newly_added_test_paths(base, effective) == []
+            # Absent or unverifiable merge: conservative behavior remains.
+            missing = {"base": {"sha": base}, "head": {"sha": head}}
+            assert impact.verified_pull_request_transition(missing) == (
+                base, head, "conservative_missing_effective_merge"
+            )
+            assert impact.changed_paths_from_event(
+                "pull_request", {"pull_request": missing}
+            ) == legacy
+            forged = dict(event["pull_request"])
+            forged["merge_commit_sha"] = head  # one parent, not exact two
+            assert impact.verified_pull_request_transition(forged) == (
+                base, head, "conservative_invalid_effective_merge"
+            )
+            assert impact.changed_paths_from_event(
+                "pull_request", {"pull_request": forged}
+            ) == legacy
+            unavailable = dict(event["pull_request"])
+            unavailable["merge_commit_sha"] = "f" * 40
+            assert impact.changed_paths_from_event(
+                "pull_request", {"pull_request": unavailable}
+            ) == legacy
+
+        # The real versioned research manifest owns the scoped file.
+        routed = impact.classify_paths(selected, event_name="pull_request")
+        assert routed["policy_shards"] == [
+            "core", "contracts", "docs", "repository-regression"
+        ]
+        assert routed["unknown_paths"] == []
+        legacy_routed = impact.classify_paths(legacy, event_name="pull_request")
+        assert legacy_routed["policy_shards"] == [
+            "core", "fixtures", "cmdg", "contracts", "docs", "repository-regression"
+        ]
+        # Native merge-group full validation, scheduled sentinel and protected
+        # control-plane changes retain their original full-fanout semantics.
+        assert impact.classify_paths(selected, event_name="merge_group")[
+            "policy_shards"
+        ] == list(impact.ALL_SHARDS)
+        assert impact.classify_paths(["ci/policy_impact.py"], event_name="pull_request")[
+            "policy_shards"
+        ] == list(impact.ALL_SHARDS)
+
+
 def main() -> int:
     impact.validate_control()
+    test_verified_effective_merge_scope()
 
     docs = impact.classify_paths(["docs/governance/example.md"])
     assert docs["policy_shards"] == ["core", "docs"]
