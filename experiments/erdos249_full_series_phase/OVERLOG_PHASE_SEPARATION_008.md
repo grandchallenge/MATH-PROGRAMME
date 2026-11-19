@@ -260,7 +260,92 @@ For every multiple of six, $v_n-\lfloor n/2\rfloor=-n/6$, so the **entire** elem
 
 Neither R1 nor R2 asserts equality with Euler's totient coefficients. They are adversarial controls for unsupported inference, not approximations to the unknown full value.
 
-## 7. Why these proven bounds still do not settle Erdős #249
+## 7. Theorem D — finite-prime Euler approximants admit quantitative prime escape
+
+This theorem uses the **multiplicative structure of the actual totient**, not merely a generic mean estimate. Let $P$ be any fixed finite set of distinct primes (possibly empty), put $M_P=\prod_{p\in P}p$, and define
+
+$
+g_P(n)=n\prod_{\substack{p\mid n\\p\in P}}(1-1/p),
+\qquad c_P=\prod_{p\in P}(1-1/p)>0.
+$
+
+The coefficient $g_P(n)$ is a positive integer because it can also be written as a sum over divisors, and $c_Pn\le g_P(n)\le n$. It is a *finite-prime approximation* to $\varphi(n)$; the missing prime factors are deliberately excluded.
+
+**Theorem D1 (exact rational full comparator).** The complete binary sum of $g_P(n)$ is exactly the finite rational number
+
+$
+\boxed{
+S_P=\sum_{n\ge1}\frac{g_P(n)}{2^n}
+=\sum_{d\mid M_P}\mu(d)\frac{2^d}{(2^d-1)^2}
+\in\mathbb Q.
+}
+\tag{D1}
+$
+
+**Proof.** Expand the finite Euler product by inclusion-exclusion:
+
+$
+g_P(n)=\sum_{\substack{d\mid M_P\\d\mid n}}\mu(d)\frac nd.
+$
+
+The finite sum may be exchanged with the absolutely convergent binary series, and writing $n=dk$ gives
+
+$
+\sum_{\substack{n\ge1\\d\mid n}}\frac{n/d}{2^n}
+=\sum_{k\ge1}k\,2^{-dk}
+=\frac{2^d}{(2^d-1)^2}.
+$
+
+This establishes (D1). It is a specialization of the already established Möbius representation, not an assertion of mathematical priority. QED.
+
+**Theorem D2 (each missing prime causes a positive-density over-log phase gap).** Fix any prime $p\notin P$. For sufficiently large integer $X$, with the same $L=\lfloor\log_2X\rfloor+4$ and $Q=2^L$, let
+
+$
+V^P_N=\sum_{j=1}^{L}\frac{g_P(N+j)}{2^j}.
+$
+
+Then
+
+$
+\boxed{
+\#\left\{N\in[X,2X):
+\|U^\varphi_N-V^P_N\|_{\mathbb R/\mathbb Z}
+\ge\frac{c_P}{48p}
+\right\}\ge\frac Xp-O(1).
+}
+\tag{D2}
+$
+
+The implicit constant in the count is absolute for the fixed choice of $p$; no distribution theorem for primes is required.
+
+**Proof.** For every $n$ divisible by $p$, Euler's product for the *actual* totient contains all factors of $g_P(n)$ and also $(1-1/p)$. Therefore
+
+$
+\varphi(n)\le(1-1/p)g_P(n),
+\qquad
+g_P(n)-\varphi(n)\ge g_P(n)/p\ge c_P n/p.
+\tag{9}
+$
+
+Set $\delta_n=\varphi(n)-g_P(n)$. On $p\mid n$ in $I_X$, (9) gives $\delta_n\le-c_P X/p<0$, while $|\delta_n|\le n<3X$. Define the centered difference numerator
+
+$
+w_N=\mathrm{cen}_Q(A^\varphi_N-A^{g_P}_N).
+$
+
+The difference recurrence yields $w_{N+1}-2w_N\equiv\delta_{N+L+1}\pmod Q$. If $n=N+L+1$ is divisible by $p$ and both $|w_N|<c_P X/(3p)$ and $|w_{N+1}|<c_P X/(3p)$, then the linear combination has absolute value below $c_P X/p$, strictly less than $|\delta_n|$. Their difference cannot be zero. Its magnitude is at most
+
+$
+|\delta_n|+c_P X/p<3X+X<4X<Q,
+$
+
+so it also cannot be a nonzero multiple of $Q$. Contradiction. Hence one of the two neighboring windows has centered residue at least $c_P X/(3p)$ and fractional distance at least $c_P X/(3pQ)\ge c_P/(48p)$, using $Q\le16X$.
+
+The relevant multiples of the fixed missing prime $p$ occupy $X/p-O(1)$ indices of $I_X$. They are spaced at least two apart, so their neighboring two-start pairs are disjoint. Therefore they yield at least $X/p-O(1)$ **distinct** phase-separated starts. QED.
+
+**Scientific interpretation.** Each fixed finite-prime Euler approximation has a rational infinite sum yet differs from the actual totient at a quantitatively detectable positive proportion of *over-logarithmic finite-tail phases*. This proves an **infinite hierarchy of prime-escape obstructions**, one for each omitted prime. It does *not* imply that the original infinite sum is irrational: as $P$ grows, $c_P$ shrinks and the first missing prime may grow, so the constants in (D2) are **not uniform in the approximation level**. The denominators of the rational values (D1) also grow; no cofinal rational-denominator exclusion is obtained. An irrationality proof would need a uniform cross-prime amplification or a stronger full-tail separation than the present fixed-prime estimate.
+
+## 8. Why these proven bounds still do not settle Erdős #249
 
 The exact positive omitted tail obeys
 
@@ -275,11 +360,11 @@ $$
 
 Theorem A proves a centered fractional distance at least $X/(6Q)$ for a positive proportion of starts, while (8) permits an omitted correction of size up to $(2X+L+2)/Q$. The proven lower bound is **too small** to prevent an integer crossing. Moreover a rationality contradiction requires handling an arbitrary hypothetical denominator, not just a comparison to integer zero; the signed one-sided residue requirements are more demanding.
 
-Theorems A–C therefore establish **over-logarithmic finite arithmetic phase separation and rigidity**, but **not** a cofinal full-series residue gap. Controls R1 and R2 prove that their core generic mechanisms are compatible with rational infinite sums. An actual proof of irrationality must exploit arithmetic structure not present in these rational controls, or strengthen the residue-versus-remainder inequality beyond the present constants.
+Theorems A–C therefore establish **over-logarithmic finite arithmetic phase separation and rigidity**, but **not** a cofinal full-series residue gap. Controls R1 and R2 prove that their core generic mechanisms are compatible with rational infinite sums. The finite-prime comparison in Theorem D uses genuine totient multiplicativity but its separation constants deteriorate as new primes enter the approximation, so it too cannot yet exclude a hypothetical rational full value. An actual proof of irrationality must exploit arithmetic structure not present in these rational controls, or strengthen the residue-versus-remainder inequality beyond the present constants.
 
 The successor mathematical target remains the problem-specific **totient multiplicative correlation needed for a denominator-uniform, one-sided, over-logarithmic finite residue gap**—the kind of unproved input already isolated by Cook's cofinal tests. No additional finite sweep alone can settle it.
 
-## 8. Claim ledger and exact evidence
+## 9. Claim ledger and exact evidence
 
 | Claim | Disposition |
 | --- | --- |
@@ -287,6 +372,7 @@ The successor mathematical target remains the problem-specific **totient multipl
 | WP08-A-B: at least $X/6-O(1)$ full finite totient phases differ from the rational baseline by at least $1/288$ | Complete elementary proof using exact $6\mid n$ totient inequality |
 | WP08-A-C: identical neighboring deep finite phases force equal last coefficient for linearly bounded sequences | Exact recurrence and magnitude rigidity |
 | WP08-A-R1/R2: both separation phenomena can also occur with **rational complete binary sums** | Exact generating-function constructions |
+| WP08-A-D1/D2: every finite-prime Euler approximation has a rational full sum but a quantitative positive-density over-log finite-phase gap from actual totient for each fixed missing prime | Elementary finite Euler product and exact sliding-window proof |
 | WP08-A-FULL: original full Euler-totient binary series irrational | **OPEN, NOT CLAIMED** |
 | External novelty, independent theorem referee, Lean checking, MATHCERT | **NOT CLAIMED / NOT_SUBMITTED** |
 
