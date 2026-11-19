@@ -379,3 +379,70 @@ class ExactTotientResidueRationalMimicTests(unittest.TestCase):
             wp07e_infinite(12001,self.a)
         with self.assertRaises(ValueError):
             wp07e_receipt(7)
+
+
+    def test_universal_interpolation_on_independent_bounded_targets(self):
+        from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+            arbitrary_residue_rational_mimic,
+        )
+        limit=4096
+        targets=[
+            [0]+list(range(1,limit+1)),
+            [0]+[n%2 for n in range(1,limit+1)],
+            [0]+[(37*n)%(n+1) for n in range(1,limit+1)],
+            [0]+[n//3 for n in range(1,limit+1)],
+        ]
+        for K in (2,3,5):
+            for target in targets:
+                a,b=arbitrary_residue_rational_mimic(limit,target,K)
+                self.assertEqual(a[1],0)
+                for n in range(2,limit+1):
+                    M=1<<max(0,n.bit_length()-1-K)
+                    self.assertEqual((a[n]-target[n])%M,0)
+                    self.assertTrue(4*a[n]>=n and a[n]<=n)
+                for N in (1<<(K+1),100,255,256,512,1024,2048):
+                    if N < (1<<(K+1)):
+                        continue
+                    L=N.bit_length()-1-K
+                    self.assertGreaterEqual(L,1)
+                    da=wp07e_numerator(N,L,a)
+                    dt=wp07e_numerator(N,L,target)
+                    self.assertEqual((da-dt)%(1<<L),0)
+                # The carry's finite correction must telescope exactly.
+                for N in (16,127,256):
+                    err=sum(
+                        (Fraction(2*b[n-1]-b[n],1<<n)
+                         for n in range(1,N+1)),
+                        Fraction(),
+                    )
+                    self.assertEqual(err,-Fraction(b[N],1<<N))
+
+    def test_universal_interpolation_without_target_growth_hypothesis(self):
+        from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+            arbitrary_residue_rational_mimic,
+        )
+        # Modulo copying and rationality of the constructed a-series
+        # do not require the target itself to define a convergent series.
+        limit=1024
+        target=[0]+[(n**5 if n%2 else -n**6)
+                    for n in range(1,limit+1)]
+        a,b=arbitrary_residue_rational_mimic(limit,target,2)
+        for n in range(1,limit+1):
+            M=1<<max(0,n.bit_length()-3)
+            self.assertEqual((a[n]-target[n])%M,0)
+            if n>=2:
+                self.assertTrue(4*a[n]>=n and a[n]<=n)
+        self.assertEqual(wp07e_rational(),Fraction(2,3))
+        self.assertTrue(all(b[n]<wp07e_modulus(n) for n in range(1,limit+1)))
+
+    def test_universal_invalid_input_prevents_unguarded_runs(self):
+        from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+            arbitrary_residue_rational_mimic,
+        )
+        target=list(range(100))
+        with self.assertRaises(ValueError):
+            arbitrary_residue_rational_mimic(99,target,1)
+        with self.assertRaises(ValueError):
+            arbitrary_residue_rational_mimic(100,target,2)
+        with self.assertRaises(ValueError):
+            arbitrary_residue_rational_mimic(0,target,2)
