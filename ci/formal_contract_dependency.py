@@ -172,13 +172,10 @@ def audited_code_paths(root: Path, registry: dict) -> set[str]:
 
 
 def contract_only_safe(root: Path, registry: dict) -> tuple[bool, str]:
-    """Unknown identities, path changes or dynamic dependencies require full replay."""
-    try:
-        _check_policy_contracts(root)
-        dependencies = audited_code_paths(root, registry)
-        intersection = dependencies & CONTRACT_FILES
-        if intersection:
-            raise DependencyUnproved('formal validator imports contract code: ' + ','.join(sorted(intersection)))
-        return True, 'CONTRACT_CODE_DISJOINT_FROM_FORMAL_EXECUTION'
-    except (OSError, ValueError, SyntaxError, KeyError, TypeError, RuntimeError, subprocess.TimeoutExpired) as exc:
-        return False, type(exc).__name__ + ':' + str(exc)[:180]
+    """Do not exempt contract-file changes while runtime independence is unproved.
+
+    An authorized formal subprocess can construct a guarded script name from
+    fragments without importing it. Static import tracing is not a safety
+    proof. Keep the existing routing API but require all formal lanes.
+    """
+    return False, "CONTRACT_NONINTERFERENCE_UNPROVED__FULL_FORMAL_REPLAY"
