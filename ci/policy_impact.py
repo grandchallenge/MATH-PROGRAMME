@@ -425,6 +425,52 @@ def git_changed_paths(base: str, head: str) -> list[str]:
     return [line for line in completed.stdout.splitlines() if line.strip()]
 
 
+def verified_pull_request_transition(pr: dict) -> tuple[str, str, str]:
+    """Use an exact checked-out GitHub merge with ordered base/head parents.
+
+    pull_request.merge_commit_sha in webhook payloads can lag the SHA actually
+    checked out by actions/checkout. In that case, also examine GITHUB_SHA,
+    but only if it is the checked-out HEAD and has *exactly* the expected
+    protected-base and PR-head parents. Never trust a candidate branch SHA as
+    an effective merge. When no exact identity resolves, preserve the former
+    conservative base-versus-head tree comparison (never an empty diff).
+
+    merge_group remains unconditional full nine-shard validation.
+    """
+    base = str(pr.get("base", {}).get("sha") or "")
+    head = str(pr.get("head", {}).get("sha") or "")
+    event_merge = str(pr.get("merge_commit_sha") or "")
+    workflow_sha = str(os.environ.get("GITHUB_SHA") or "")
+    if not base or not head:
+        raise ImpactError("pull-request diff base/head is unavailable")
+
+    current = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    checkout_head = current.stdout.strip() if current.returncode == 0 else ""
+    for source, merge in (("event", event_merge), ("workflow", workflow_sha)):
+        if not merge or merge != checkout_head:
+            continue
+        completed = subprocess.run(
+            ["git", "rev-list", "--parents", "-n", "1", merge],
+            cwd=ROOT,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        if completed.returncode == 0 and completed.stdout.strip().split() == [merge, base, head]:
+            return base, merge, f"verified_{source}_effective_merge"
+    if not event_merge and not workflow_sha:
+        return base, head, "conservative_missing_effective_merge"
+    return base, head, "conservative_invalid_effective_merge"
+
+
 def newly_added_test_paths(base: str, head: str) -> list[str]:
     """Find added test modules in the exact transition (not existing edits)."""
     if not base or not head or base == ZERO_SHA:
@@ -461,11 +507,8 @@ def validate_new_test_routing(paths: Iterable[str]) -> None:
 
 def changed_paths_from_event(event_name: str, event: dict) -> list[str]:
     if event_name == "pull_request":
-        pr = event.get("pull_request", {})
-        return git_changed_paths(
-            str(pr.get("base", {}).get("sha") or ""),
-            str(pr.get("head", {}).get("sha") or ""),
-        )
+        base, effective, _ = verified_pull_request_transition(event.get("pull_request", {}))
+        return git_changed_paths(base, effective)
     if event_name == "push":
         return git_changed_paths(
             str(event.get("before") or ""),
@@ -562,9 +605,8 @@ def main() -> int:
         # and head; no separate workflow or broader authority is introduced.
         if args.event_name in {"pull_request", "push"} and paths:
             if args.event_name == "pull_request":
-                entity = event["pull_request"]
-                base = entity["base"]["sha"]
-                head = entity["head"]["sha"]
+                base, head, scope_mode = verified_pull_request_transition(event["pull_request"])
+                print(f"POLICY_IMPACT_PR_SCOPE_MODE={scope_mode} base={base} candidate={head}")
             else:
                 base = event["before"]
                 head = event.get("after") or os.environ.get("GITHUB_SHA")
@@ -577,9 +619,7 @@ def main() -> int:
             print("mathematical Markdown source gate: PASS")
         if args.event_name in {"pull_request", "push"}:
             if args.event_name == "pull_request":
-                entity = event["pull_request"]
-                base = str(entity["base"]["sha"])
-                head = str(entity["head"]["sha"])
+                base, head, _ = verified_pull_request_transition(event["pull_request"])
             else:
                 base = str(event.get("before") or "")
                 head = str(event.get("after") or os.environ.get("GITHUB_SHA") or "")
