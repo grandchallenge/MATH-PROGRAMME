@@ -1,0 +1,112 @@
+{
+  "record_type": "ERDOS249_S_WP09_B_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-19",
+  "research_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "protected_base_head_at_authorization": "91a22c07f08da23b009e98f35f6d5279ee1748b7",
+  "exact_source_head_of_review_and_replay": "5dcf3af7634091a1a9c61a034d39103cbc7fce1e",
+  "scientific_status": "BOUNDED_UNCONDITIONAL_L2_COOK_HARMONIC_SAVING_NOT_CERTIFICATION",
+  "original_erdos249": "OPEN",
+  "MATHCERT": "NOT_SUBMITTED",
+  "reviewer_independent": false,
+  "historical_priority": "NOT_CLAIMED",
+  "source_provenance": {
+    "cook": {
+      "name": "Will Cook, The Binary Totient Series, 2026 revised October",
+      "commit": "3368d1e69467aec111eb3244843ad3542171ff96",
+      "source_blob": "547ed9ed83500181a2e55047ce5df569b7cb49ac",
+      "url": "https://github.com/wcook04/plectis-erdos/blob/3368d1e69467aec111eb3244843ad3542171ff96/paper/249/erdos-249-binary-totient-series.tex",
+      "weighted_first_harmonic_status": "OPEN"
+    },
+    "shifted_multiplicative_correlations": {
+      "authors": "R. Balasubramanian, Sumit Giri, Priyamvad Srivastav",
+      "journal": "Journal of Number Theory 174 (2017) 221-238",
+      "arxiv": "https://arxiv.org/abs/1511.02221",
+      "role": "Classical antecedent for normalized shifted totient correlation. No novelty claim."
+    }
+  },
+  "source_sha256": {
+    "mathematical_proof": "2480c324a22fa45f22574421e71c13b2050e4f269cd75ca9416b4bcfa2c5015e",
+    "exact_euler_and_phase_engine": "df2b194e3c7f98c717bbabf7c4328de6a3e7c0f40b80b69a54ad2a7f7ed6b101",
+    "same_agent_qualified_critical_review": "ea9a2b22540a1a774730028bbf3e68560ec14945966bf2b1d7c3b6083be9f16e",
+    "existing_governed_tests_extended": "c7ef2672734df668c9097d496e157089c3ddc377da8ab4899b586b72045cc4fe"
+  },
+  "claims": {
+    "theorem_A": "For f(n)=phi(n)/n, fixed h, B_h=prod_(p|h)(1-2/p^2+1/p^3)*prod_(p not dividing h)(1-2/p^2), A=prod_p(1-2/p^2+1/p^3), V_h=2(A-B_h); sum_(n<=T)(f(n+h)-f(n))^2=V_h*T+O_h(log^2(2T)); classical shifted correlation. Every prime p not dividing h gives V_h>1/(9p^3).",
+    "theorem_B": "At the least Cook-admissible L, sum_(n=X+L+1)^(2X+L-1)[phi(n+h)-phi(n)]^2=(7/3)V_h*X^3+O_h(X^2 log^2(2X)).",
+    "theorem_C": "For ANY integer coefficient sequence with |a(n+h)-a(n)|<Q/2 at the endpoint interval, exact finite phase-energy inequality X-Re sum_N exp(2pi i D^a_(h,N,L)/Q)>=(8/(9Q^2))*sum_n[a(n+h)-a(n)]^2. Proof uses minimal congruence representative and finite (shift-2I) operator norm at most 3.",
+    "theorem_D": "For every fixed h, least L with Q=2^L>=16(2X+h+L+2), liminf_(X->infty)[X-Re sum_N E_(h,N,L)]/X >= 7 V_h/13824. Consequently for all sufficiently large X, Re sum_N E_(h,N,L) <= (1-V_h/2500)X, V_h/2500 > 1/(22500 p^3) for any prime p not dividing h. Does NOT establish Cook required 10% saving.",
+    "method_ceiling": "The exact particular L2 certificate (8/(9Q^2))*sum d_h^2 <= (1/288+o(1))*X for 0<=a(n)<=n and Cook depth. To guarantee X/10 from this particular certificate would require > (576/5) X^3 arithmetic squared energy, but envelope <= (4+o(1))X^3: >28.8-fold deficit. Not a bound on actual cancellation.",
+    "rational_hostile": "Previously source-locked affine-periodic 0..n rational-complete-series comparators have positive shifted squared energy and satisfy the same exact finite phase-energy inequality. Thus no irrationality promotion.",
+    "missing_math": [
+      "Cook weighted prime/cofactor residual exponential correlation bound <=14X/25 OPEN",
+      "Strong entire first harmonic bound <=0.9X for every fixed shift OPEN",
+      "One-sided denominator-uniform full-tail residue separation OPEN",
+      "Original binary totient series irrationality OPEN"
+    ]
+  },
+  "execution": {
+    "engine": "CHAD authenticated OS account, no independently authenticated mathematical referee",
+    "exact_source_review_replay_capture": "92d392c9fbce4a83abd51f565690981b",
+    "tests_full_suite": 61,
+    "prior_tests_retained": 53,
+    "new_exact_hostile_tests": 8,
+    "failed": 0,
+    "test_stdout_sha256": "8c838841ccfe175c1576fc336eb830a45d475de1163b0fe6eddaba6548aaa6f4",
+    "mathematical_manuscript_source_gate": "PASS",
+    "mathematical_critical_review_source_gate": "PASS",
+    "gate_stdout_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc",
+    "finite_harmonic_diagnostics_stdout_sha256": "ae03e93585f8d476d2a63767bc4aeac8d2010a683f52fd306e918143de167070",
+    "finite_diagnostics_are_not_certification": true,
+    "finite_controls": [
+      {
+        "h": 1,
+        "X": 4096,
+        "V_prime_truncation_127": 0.211782177,
+        "rigorous_fixed_prime_V_lower": 0.013888889,
+        "finite_L2_deficit_lower_per_index": 0.000107609,
+        "observed_real_phase_mean": 0.00500113
+      },
+      {
+        "h": 2,
+        "X": 4096,
+        "V_prime_truncation_127": 0.050040453,
+        "rigorous_fixed_prime_V_lower": 0.004115226,
+        "finite_L2_deficit_lower_per_index": 0.000025404,
+        "observed_real_phase_mean": -0.021209674
+      },
+      {
+        "h": 3,
+        "X": 4096,
+        "V_prime_truncation_127": 0.18097423,
+        "rigorous_fixed_prime_V_lower": 0.013888889,
+        "finite_L2_deficit_lower_per_index": 0.000091927,
+        "observed_real_phase_mean": -0.004666102
+      },
+      {
+        "h": 6,
+        "X": 8192,
+        "V_prime_truncation_127": 0.011530518,
+        "rigorous_fixed_prime_V_lower": 0.000888889,
+        "finite_L2_deficit_lower_per_index": 0.000005838,
+        "observed_real_phase_mean": -0.007600835
+      },
+      {
+        "h": 30,
+        "X": 8192,
+        "V_prime_truncation_127": 0.0041634,
+        "rigorous_fixed_prime_V_lower": 0.000323939,
+        "finite_L2_deficit_lower_per_index": 0.000002118,
+        "observed_real_phase_mean": 0.000964361
+      }
+    ]
+  },
+  "review": {
+    "role": "Same-agent GCL logical Axiomatist/Adversary/Referee pass",
+    "disposition": "ACCEPT_WITH_SCOPE",
+    "independent_external_theorem_verification": false,
+    "lean_formalization": false,
+    "human_authority_impersonation": false
+  },
+  "policy": "Ordinary protected PR and mandatory checks. Enqueue native GitHub merge queue with exact expectedHeadOid. Verify protected merge ancestry, file blobs, check runs and source continuity, post bounded receipt to existing issue #3500. Keep research #3500 OPEN/GCL Project #2 In Progress, parent #3201 and original #249 OPEN, MATHCERT NOT_SUBMITTED.",
+  "next_obligation": "Actual-totient multi-step phase correlation or Cook weighted prime/cofactor exponential cancellation; pairwise normalized second moment alone quantitatively insufficient."
+}
