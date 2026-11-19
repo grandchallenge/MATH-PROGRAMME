@@ -620,3 +620,139 @@ class OverlogTotientPhaseSeparationTests(unittest.TestCase):
             prime_escape_phase_gaps(64,(2,3),2)
         with self.assertRaises(ValueError):
             prime_escape_phase_gaps(64,(2,),9)
+
+
+
+from experiments.erdos249_full_series_phase.moving_prime_escape import (
+    primes_to as wp08b_primes,
+    finite_prime_euler_sieve as wp08b_euler,
+    unique_large_prime_sieve as wp08b_large,
+    moving_prime_receipt as wp08b_receipt,
+    rational_finite_patch as wp08b_rational_patch,
+)
+
+
+class MovingPrimeEscapeTests(unittest.TestCase):
+    """WP08-B exact hostile arithmetic; no numerical asymptotic claim."""
+
+    def test_independent_small_prime_support_oracle(self):
+        from math import gcd
+        self.assertEqual(wp08b_primes(1),())
+        self.assertEqual(wp08b_primes(32),
+                         (2,3,5,7,11,13,17,19,23,29,31))
+        for y in (2,5,11,29):
+            values=wp08b_euler(350,y)
+            ps=wp08b_primes(y)
+            for n in range(1,351):
+                smallfactor=math.prod(p for p in ps if n%p==0)
+                independent=sum(gcd(k,smallfactor)==1
+                                for k in range(1,n+1))
+                self.assertEqual(values[n],independent)
+                self.assertLessEqual(values[n],n)
+
+    def test_exact_unique_large_prime_pulse_vs_totient(self):
+        for X,y in ((1024,64),(4096,128),(16384,256)):
+            L=overlog_depth(X)
+            limit=2*X+L+1
+            phi=overlog_totients(limit)
+            g=wp08b_euler(limit,y)
+            factors=wp08b_large(limit,y)
+            self.assertGreater(y*y,3*X)
+            for n in range(1,limit+1):
+                p=factors[n]
+                self.assertEqual(g[n]-phi[n],
+                                 phi[n//p] if p else 0)
+                if p:
+                    self.assertGreater(p,y)
+                    self.assertLess(n//p,y)
+                    self.assertEqual(n%p,0)
+
+    def test_exact_all_prime_phase_certificate_and_count(self):
+        for X,y in ((1024,64),(4096,128),(16384,256)):
+            r=wp08b_receipt(X,y)
+            endpoints=r["good_prime_endpoints"]
+            self.assertGreater(len(endpoints),0)
+            self.assertGreaterEqual(len(r["strong_gap_starts"])*2,
+                                    len(endpoints))
+            self.assertGreaterEqual(len(r["theorem_gap_starts"]),
+                                    len(r["strong_gap_starts"]))
+            self.assertEqual(r["theorem_gap_threshold"],
+                             f"1/{192*y}")
+            self.assertEqual(r["full_series_irrationality"],"OPEN")
+            self.assertEqual(len(set(r["all_prime_endpoints"])),
+                             len(r["all_prime_endpoints"]))
+            self.assertEqual(len(set(n for n,p,m in endpoints)),
+                             len(endpoints))
+
+    def test_all_missing_prime_pulses_are_genuinely_aggregated(self):
+        for X,y in ((1024,64),(4096,128),(16384,256)):
+            r=wp08b_receipt(X,y)
+            selected=r["good_prime_endpoints"]
+            by_prime={}
+            for n,p,m in selected:
+                by_prime[p]=by_prime.get(p,0)+1
+                self.assertTrue(y<p<=2*y)
+                self.assertEqual(n,p*m)
+            self.assertGreater(len(by_prime),1)
+            self.assertGreater(sum(by_prime.values()),max(by_prime.values()))
+            self.assertEqual(sum(by_prime.values()),len(selected))
+
+    def test_independent_direct_finite_sum_matches_rolling_phase(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            finite_numerator, rolling_numerators, centered,
+        )
+        X,y=1024,64
+        L=overlog_depth(X)
+        Q=1<<L
+        limit=2*X+L+1
+        p=overlog_totients(limit)
+        g=wp08b_euler(limit,y)
+        delta=[p[n]-g[n] for n in range(limit+1)]
+        rolled=rolling_numerators(X,delta)
+        r=wp08b_receipt(X,y)
+        strong=set(r["strong_gap_starts"])
+        for N in list(range(X,X+24))+list(range(2*X-24,2*X)):
+            direct=finite_numerator(N,L,p)-finite_numerator(N,L,g)
+            self.assertEqual(rolled[N-X],direct)
+            v=centered(direct,Q)
+            self.assertEqual(N in strong,12*y*abs(v)>=X)
+            self.assertEqual((direct-v)%Q,0)
+
+    def test_rational_finite_patch_cannot_certify_irrationality(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            finite_numerator,
+        )
+        for X,y in ((128,32),(1024,64)):
+            patched,phi=wp08b_rational_patch(X,y)
+            L=overlog_depth(X)
+            gy=wp08b_euler(3*X-1,y)
+            self.assertTrue(any(patched[n]!=gy[n]
+                                for n in range(X+1,2*X+L+1)))
+            for N in range(X,2*X):
+                self.assertEqual(finite_numerator(N,L,patched),
+                                 finite_numerator(N,L,phi))
+            # The full patched infinite sum is rational because it is
+            # a finite dyadic modification of the rational full g_y sum.
+            finite_correction=sum(
+                (Fraction(patched[n]-gy[n],1<<n)
+                 for n in range(X+1,2*X+L+1)),
+                Fraction(),
+            )
+            self.assertLessEqual(finite_correction,0)
+            self.assertIsInstance(finite_correction,Fraction)
+
+    def test_malformed_and_duplicate_support_fail_closed(self):
+        with self.assertRaises(ValueError):
+            wp08b_euler(0,3)
+        with self.assertRaises(ValueError):
+            wp08b_euler(50,1)
+        with self.assertRaises(ValueError):
+            wp08b_large(50,3)
+        with self.assertRaises(ValueError):
+            wp08b_large(0,100)
+        with self.assertRaises(ValueError):
+            wp08b_receipt(63,64)
+        with self.assertRaises(ValueError):
+            wp08b_receipt(4096,64)
+        with self.assertRaises(ValueError):
+            wp08b_rational_patch(4096,64)
