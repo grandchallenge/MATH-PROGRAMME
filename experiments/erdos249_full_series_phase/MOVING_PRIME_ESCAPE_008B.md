@@ -9,6 +9,8 @@
 
 Protected [WP08-A](OVERLOG_PHASE_SEPARATION_008.md) proved that each **fixed** omitted prime produces a phase discrepancy between the actual totient and a finite-prime rational Euler approximation. Its constants deteriorate as the prime support grows. This packet attacks precisely that loss by **moving the prime cutoff with the observation scale** and combining *many* omitted primes simultaneously.
 
+**Specific prior-art lock:** Will Cook, *The Binary Totient Series* (July 2026; revised October 2026), already isolates the largest prime factor and a small cofactor, uses the condition that the cofactor has a substantial totient ratio, and counts suitable bases with a prime-number-theorem input. His first-harmonic argument identifies a genuinely unproved **weighted cancellation** estimate even after the unweighted group-mean bounds. See the [pinned short-paper source](https://github.com/wcook04/plectis-erdos/blob/main/paper/249/erdos-249-binary-totient-series.tex), first-harmonic section. This WP08-B does **not** originate the prime-cofactor method: it proves a distinct bounded exact residual identity and a finite-prime-comparator phase inequality. It neither establishes Cook's weighted bound nor claims mathematical priority.
+
 The principal output is an explicit, growing-prime, over-logarithmic phase-escape bound on $\asymp X/\log y$ starting positions, with a gap at least $1/(192y)$. It is a quantitative arithmetic result about the **actual** Euler totient. It is not yet a uniform positive constant as $y\to\infty$, not a one-sided gap against the complete infinite tail, and not a proof of original irrationality.
 
 The only external classical inputs to the asymptotic corollary are the well-known prime number theorem and the elementary mean
@@ -285,7 +287,7 @@ $$
 
 Theorem C forces a **growing number** of large-prime phase discrepancies at over-logarithmic depth, but their guaranteed magnitude is only $1/(192y)$, which tends to zero, while the generic omitted-tail bound remains of constant order at $L=\lfloor\log_2X\rfloor+4$. The growing finite-prime comparator $S_y$ is rational for each $y$ and its denominator grows without a usable uniform bound. This does **not** produce the denominator-uniform, one-sided cofinal separation necessary for the original irrationality proof.
 
-The next positive task is to combine the exact pulse decomposition with a **joint distributional bound** on the *discarded* prime-pulse tail, or extract a phase-sign condition that survives the full shifted totient remainder for **each hypothetical rational denominator**. This must be proved for the actual full sequence and checked against the rational patch and WP07-E universal phase mimic. Only then could one promote beyond WP08-B.
+The next positive task is to attack **Cook's explicitly isolated weighted first-harmonic cancellation obligation**, which already incorporates large-prime cofactors, unweighted prime-group averages and a denominator-uniform conditional route. An alternative is to combine the exact pulse decomposition with a **joint distributional bound** on the discarded prime-pulse tail, or a phase-sign condition surviving the full shifted totient remainder for **each hypothetical rational denominator**. This must be proved for the actual full sequence and checked against the rational patch and WP07-E universal phase mimic. Only then could one promote beyond WP08-B.
 
 ## 7. Claim ledger
 
