@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -57,7 +58,7 @@ def test_verified_effective_merge_scope() -> None:
             legacy = impact.git_changed_paths(base, head)
             assert legacy == [erdos, cmdg], legacy
             assert impact.verified_pull_request_transition(event["pull_request"]) == (
-                base, effective, "verified_effective_merge"
+                base, effective, "verified_event_effective_merge"
             )
             selected = impact.changed_paths_from_event("pull_request", event)
             assert selected == [erdos], selected
@@ -83,6 +84,23 @@ def test_verified_effective_merge_scope() -> None:
             assert impact.changed_paths_from_event(
                 "pull_request", {"pull_request": unavailable}
             ) == legacy
+            # GitHub may send a stale merge_commit_sha while the action
+            # checked out an up-to-date synthetic merge at GITHUB_SHA.
+            # Both the checked-out identity and exact two parents are needed.
+            with mock.patch.dict(os.environ, {"GITHUB_SHA": effective}):
+                assert impact.verified_pull_request_transition(forged) == (
+                    base, effective, "verified_workflow_effective_merge"
+                )
+                assert impact.changed_paths_from_event(
+                    "pull_request", {"pull_request": forged}
+                ) == [erdos]
+                assert impact.verified_pull_request_transition(missing) == (
+                    base, effective, "verified_workflow_effective_merge"
+                )
+            with mock.patch.dict(os.environ, {"GITHUB_SHA": head}):
+                assert impact.verified_pull_request_transition(forged) == (
+                    base, head, "conservative_invalid_effective_merge"
+                )
 
         # The real versioned research manifest owns the scoped file.
         routed = impact.classify_paths(selected, event_name="pull_request")
