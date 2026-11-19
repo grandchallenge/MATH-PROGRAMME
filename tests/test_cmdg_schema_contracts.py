@@ -77,6 +77,15 @@ class CMDGSchemaContractTests(unittest.TestCase):
                 with self.assertRaises(ContractError):
                     contracts.validate_schema({"x": 7}, primary, "changed_dep")
                 contracts.validate_schema({"x": "valid"}, primary, "new_type")
+                # Even a malformed referenced schema must be rechecked,
+                # rather than reusing the earlier valid registry.
+                from jsonschema.exceptions import SchemaError
+                broken = dict(child, type=[])
+                dependency.write_text(json.dumps(broken), encoding="utf-8")
+                with self.assertRaises(SchemaError):
+                    contracts.validate_schema({"x": "valid"}, primary, "invalid_dep")
+                dependency.write_text(json.dumps(child), encoding="utf-8")
+                contracts.validate_schema({"x": "valid"}, primary, "repaired_dep")
                 # Mutating the primary schema also invalidates its compiled
                 # validator, even when referenced dependency bytes are stable.
                 main["required"] = ["x", "new_required_field"]
@@ -86,7 +95,7 @@ class CMDGSchemaContractTests(unittest.TestCase):
                 with self.assertRaises(ContractError):
                     contracts.validate_schema({"x": "valid"}, primary, "changed_primary")
 
-    def test_schema_cache_rejects_invalid_dependency_after_warmup(self):
+    def test_schema_cache_rejects_invalid_primary_and_missing_files(self):
         """A cached valid graph must not conceal malformed replacement schemas."""
         from jsonschema.exceptions import SchemaError
         with tempfile.TemporaryDirectory(prefix="cmdg-schema-invalid-drift-") as tmp:
@@ -104,6 +113,10 @@ class CMDGSchemaContractTests(unittest.TestCase):
                 source.write_text(json.dumps(invalid), encoding="utf-8")
                 with self.assertRaises(SchemaError):
                     contracts.validate_schema(1, source, "schema_corrupted")
+                source.unlink()
+                with self.assertRaises(ContractError) as caught:
+                    contracts.validate_schema(1, source, "schema_missing")
+                self.assertIn("cannot load JSON", str(caught.exception))
 
     def test_valid_node_edge_manifest(self):
         node = load("valid_node.json")
