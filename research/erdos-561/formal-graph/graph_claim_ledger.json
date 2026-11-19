@@ -4,7 +4,7 @@
   "ledger_id": "ERDOS561-GRAPH-LEAN-20261119",
   "claims": [
     {
-      "mathematical_domain": "finite graph combinatorics / Erd\u0151s #561 dependencies",
+      "mathematical_domain": "finite graph combinatorics / Erdős #561 dependencies",
       "status": "CHECKED",
       "certainty": "CERTIFIED",
       "assumptions": [
@@ -32,7 +32,7 @@
       ]
     },
     {
-      "mathematical_domain": "finite graph combinatorics / Erd\u0151s #561 dependencies",
+      "mathematical_domain": "finite graph combinatorics / Erdős #561 dependencies",
       "status": "CHECKED",
       "certainty": "CERTIFIED",
       "assumptions": [
@@ -48,7 +48,7 @@
       ],
       "claim_id": "ERDOS561-GRAPH-SATURATED-002",
       "short_name": "Graph-level high-degree edge/vertex budgets and low-slack bound",
-      "claim_text": "If at least D+1 vertices have degree D, then D(D+1)\u22642e, (D\u22121)(D+1)+v_pos\u22642e, and the stated degree-excess budget with s<D\u22121, D\u22652 forces exactly D+1 such vertices.",
+      "claim_text": "If at least D+1 vertices have degree D, then D(D+1)≤2e, (D−1)(D+1)+v_pos≤2e, and the stated degree-excess budget with s<D−1, D≥2 forces exactly D+1 such vertices.",
       "claim_class": "FORMALIZED",
       "support_type": "LEAN_PROOF",
       "support_summary": "Unbounded finite edge-list graph proofs deriving the arithmetic from an internally proved handshake theorem and degree-excess sum; finite four-vertex red/blue-cap canary separately checked.",
@@ -59,6 +59,66 @@
       "related_files": [
         "research/erdos-561/formal-graph/Erdos561GraphHandshake.lean",
         "research/erdos-561/formal-graph/Erdos561FourVertexCore.lean"
+      ]
+    },
+    {
+      "mathematical_domain": "graph theory / ordinary Lovász (g,f) factors and degree-capped edge partitions",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs for theorem interpretation",
+        "alpha,beta positive integers, D=alpha+beta",
+        "ordinary Lovász (g,f)-factor theorem is accepted as a published classical theorem; it is not formalized here"
+      ],
+      "promotion_condition": "Do not promote unformalized Lovász theorem or downstream Ramsey claims as Lean-verified; specialist review must adjudicate the paper proof and its cited theorem.",
+      "claim_id": "ERDOS561-FACTORCUT-NAT-003",
+      "short_name": "Six Lean-checked general Lovász cut arithmetic prerequisites",
+      "claim_text": "For natural parameters, six Lean theorems prove the local proportional g/f envelopes, small D-core boundary formula, weighted boundary and its component-list sum, and the scaled ordinary factor cut certificate subject to explicit component-boundary premises.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_PROOF",
+      "support_summary": "Pinned Lean #print axioms: small_core_boundary, weighted_boundary, weighted_boundary_sum, cut_certificate, local_upper_envelope, local_lower_envelope all use only standard propext and Quot.sound; no source-level new axioms or placeholders.",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "source_or_artifact": [
+        "research/erdos-561/formal-graph/Erdos561FactorCut.lean"
+      ],
+      "related_files": [
+        "research/erdos-561/formal-graph/Erdos561FactorCut.lean",
+        "research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md"
+      ]
+    },
+    {
+      "mathematical_domain": "graph theory / ordinary Lovász (g,f) factors and degree-capped edge partitions",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs for theorem interpretation",
+        "alpha,beta positive integers, D=alpha+beta",
+        "ordinary Lovász (g,f)-factor theorem is accepted as a published classical theorem; it is not formalized here"
+      ],
+      "promotion_condition": "Do not promote unformalized Lovász theorem or downstream Ramsey claims as Lean-verified; specialist review must adjudicate the paper proof and its cited theorem.",
+      "claim_id": "ERDOS561-FACTORBRIDGE-PAPER-004",
+      "short_name": "Connected maximum-degree core necessity for failed capped edge partitions",
+      "claim_text": "If finite simple G has Delta(G)=alpha+beta=D with positive caps and no red/blue edge partition with maximum degrees alpha,beta, then a connected component of G[degree-D vertices] has at least D+1 vertices.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Complete paper derivation from the ordinary Lovász (g,f)-factor criterion with g(v)=max(0,d(v)-beta), f(v)=min(alpha,d(v)); component boundary r(D-r+1)>=D, summing weighted crossings eliminates every cut defect. Lean verifies six numeric lemmas; independent C++17 checks 91,727 finite cap instances and exact q-parity factor criterion in 2,809 cases.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md",
+        "https://link.springer.com/article/10.1007/s00373-020-02266-6"
+      ],
+      "related_files": [
+        "research/erdos-561/formal-graph/Erdos561FactorCut.lean",
+        "research/erdos-561/formal-graph/verify_factor_bridge.cpp",
+        "research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md"
       ]
     }
   ]
