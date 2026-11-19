@@ -882,3 +882,26 @@ class ShiftedFirstHarmonicTests(unittest.TestCase):
             wp09a_control(5,1,2)
         with self.assertRaises(ValueError):
             wp09a_control_sum(1,65)
+
+
+    def test_exact_all_shift_cocycle_and_marginal_phase_obstruction(self):
+        X=128
+        L=wp09a_depth(X,6)
+        phi=overlog_totients(2*X+L+12)
+        for N in (X,X+1,X+19,2*X-2):
+            for h in (1,2,3,4):
+                for k in (1,2,3):
+                    left=wp09a_direct(N,h+k,L,phi)
+                    right=(wp09a_direct(N,h,L,phi)
+                           +wp09a_direct(N+h,k,L,phi))
+                    self.assertEqual(left,right)
+                    self.assertEqual(
+                        left,
+                        sum(wp09a_direct(N+j,1,L,phi)
+                            for j in range(h+k)),
+                    )
+        # Abstract logical counterexample: zero one-phase mean,
+        # but every adjacent product equals +1 exactly.
+        u=[(1j if n%2==0 else -1j) for n in range(100)]
+        self.assertEqual(sum(u,0j),0j)
+        self.assertTrue(all(u[n]*u[n+1]==1 for n in range(99)))
