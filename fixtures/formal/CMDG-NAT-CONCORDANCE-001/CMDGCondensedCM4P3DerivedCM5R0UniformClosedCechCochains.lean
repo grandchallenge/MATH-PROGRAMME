@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3DerivedCM5R0FiniteClosedCoverGluing
+import Mathlib.Data.Fin.Tuple.Basic
 
 /-!
 # CM5: degree-uniform finite closed-intersection cochain interfaces
@@ -108,6 +109,57 @@ theorem uniformClosedCechFaceRestrict_ambient
   rfl
 
 
+/-- General simplicial identity behind the closed-intersection complex. -/
+def scalarCechDifferential {I : Type u} (n : ℕ)
+    (c : (Fin (n + 1) → I) → ℤ) : (Fin (n + 2) → I) → ℤ :=
+  fun σ => ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) * c (i.removeNth σ)
+
+/-- Signed cofaces square to zero for any integer-valued tuple cochain. -/
+theorem scalarCechDifferential_sq_zero {I : Type u} (n : ℕ)
+    (c : (Fin (n + 1) → I) → ℤ) :
+    scalarCechDifferential (n + 1) (scalarCechDifferential n c) = 0 := by
+  funext σ
+  change (∑ j : Fin (n + 3), (-1 : ℤ) ^ (j : ℕ) *
+    ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) *
+      c (i.removeNth (j.removeNth σ))) = 0
+  simp only [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  simp only [← Finset.sum_product']
+  let P := Fin (n + 2) × Fin (n + 3)
+  let S : Finset P := {ij : P | (ij.2 : ℕ) ≤ (ij.1 : ℕ)}
+  rw [Finset.univ_product_univ, ← Finset.sum_add_sum_compl S, ← eq_neg_iff_add_eq_zero,
+    ← Finset.sum_neg_distrib]
+  let φ : ∀ ij : P, ij ∈ S → P := fun ij hij =>
+    (Fin.castLT ij.2 (lt_of_le_of_lt (Finset.mem_filter.mp hij).right (Fin.is_lt ij.1)), ij.1.succ)
+  apply Finset.sum_bij φ
+  · intro ij hij
+    simp_rw [S, φ, Finset.compl_filter, Finset.mem_filter_univ, not_le,
+      Fin.val_succ, Fin.val_castLT] at hij ⊢
+    lia
+  · rintro ⟨i, j⟩ hij ⟨i', j'⟩ hij' h
+    rw [Prod.mk_inj]
+    exact ⟨by simpa [φ] using! congr_arg Prod.snd h,
+      by simpa [φ, Fin.castSucc_castLT] using! congr_arg Fin.castSucc (congr_arg Prod.fst h)⟩
+  · rintro ⟨i', j'⟩ hij'
+    simp_rw [S, Finset.compl_filter, Finset.mem_filter_univ, not_le] at hij'
+    refine ⟨(j'.pred <| ?_, Fin.castSucc i'), ?_, ?_⟩
+    · rintro rfl
+      simp only [Fin.val_zero, not_lt_zero] at hij'
+    · simpa [S] using! Nat.le_sub_one_of_lt hij'
+    · simp only [φ, Fin.castLT_castSucc, Fin.succ_pred]
+  · rintro ⟨i, j⟩ hij
+    dsimp
+    simp only [φ, Fin.val_succ, pow_add, pow_one, mul_neg, mul_one]
+    have hjval : (j : ℕ) ≤ (i : ℕ) :=
+      (Finset.mem_filter.mp hij).2
+    have hjle : j ≤ i.castSucc := Fin.le_iff_val_le_val.mpr hjval
+    rw [Fin.removeNth_removeNth_eq_swap,
+      Fin.predAbove_of_le_castSucc i j hjle,
+      Fin.succAbove_of_le_castSucc j i hjle]
+    simp only [Fin.castPred, Fin.val_castLT]
+    ring
+
+
 /-- The genuine all-tuples closed-intersection Čech differential.
 It uses the continuous face maps and signed integer coefficients. -/
 def uniformClosedCechDifferential
@@ -125,6 +177,50 @@ def uniformClosedCechAmbientDifferential
       uniformClosedCechAmbientCochain X I (n + 1) :=
   fun C σ => ∑ j : Fin (n + 2),
     (-1 : ℤ) ^ (j : ℕ) • C (σ ∘ j.succAbove)
+
+
+/-- Evaluation of the ambient signed Čech differential is exactly the
+integer-valued simplicial differential, in every degree. -/
+theorem uniformClosedCechAmbientDifferential_apply
+    (X : Profinite.{u}) (I : Type v) (n : ℕ)
+    (C : uniformClosedCechAmbientCochain X I n)
+    (σ : Fin (n + 2) → I) (x : X) :
+    (uniformClosedCechAmbientDifferential X I n C σ) x =
+    scalarCechDifferential n (fun τ => C τ x) σ := by
+  change (LocallyConstant.evalₗ ℤ x)
+    (∑ j : Fin (n + 2), (-1 : ℤ) ^ (j : ℕ) • C (σ ∘ j.succAbove)) =
+    ∑ j : Fin (n + 2), (-1 : ℤ) ^ (j : ℕ) * C (σ ∘ j.succAbove) x
+  simp only [map_sum, map_smul, LocallyConstant.evalₗ_apply, smul_eq_mul]
+
+
+/-- The actual ambient all-tuples differential squares to zero in every
+degree, by pointwise reduction to the signed simplicial identity. -/
+theorem uniformClosedCechAmbientDifferential_sq_zero
+    (X : Profinite.{u}) (I : Type v) (n : ℕ)
+    (C : uniformClosedCechAmbientCochain X I n) :
+    uniformClosedCechAmbientDifferential X I (n + 1)
+      (uniformClosedCechAmbientDifferential X I n C) = 0 := by
+  funext σ
+  apply DFunLike.ext
+  intro x
+  change (uniformClosedCechAmbientDifferential X I (n + 1)
+    (uniformClosedCechAmbientDifferential X I n C) σ) x = 0
+  have hcomp :
+      (fun τ : Fin (n + 2) → I =>
+        (uniformClosedCechAmbientDifferential X I n C τ) x) =
+        scalarCechDifferential n (fun τ => C τ x) := by
+    funext τ
+    exact uniformClosedCechAmbientDifferential_apply X I n C τ x
+  calc
+    _ = scalarCechDifferential (n + 1)
+      (fun τ => (uniformClosedCechAmbientDifferential X I n C τ) x) σ :=
+        uniformClosedCechAmbientDifferential_apply X I (n + 1)
+          (uniformClosedCechAmbientDifferential X I n C) σ x
+    _ = scalarCechDifferential (n + 1)
+      (scalarCechDifferential n (fun τ => C τ x)) σ := by rw [hcomp]
+    _ = 0 := by
+      have hs := congrFun (scalarCechDifferential_sq_zero n (fun τ => C τ x)) σ
+      simpa using hs
 
 /-- The local differential agrees with the ambient differential after
 restriction to genuine closed intersections, in every degree. -/
@@ -189,13 +285,37 @@ theorem uniformClosedCechProduct_hasAmbientRepresentative
   choose C hC using h
   exact ⟨C, hC⟩
 
+#print axioms scalarCechDifferential_sq_zero
+#print axioms uniformClosedCechAmbientDifferential_apply
+#print axioms uniformClosedCechAmbientDifferential_sq_zero
 #print axioms uniformClosedCechIntersection_face_subset
 #print axioms uniformClosedCechFaceRestrict_apply
 #print axioms uniformClosedCechFaceRestrict_ambient
 #print axioms uniformClosedCechDifferential_restrict
 #print axioms uniformClosedCechProduct_hasAmbientRepresentative
 
+
+/-- Main degree-uniform structural result: on the genuine closed
+intersections of any closed family, the all-tuples signed Čech
+differential squares to zero. The proof does not assert acyclicity. -/
+theorem uniformClosedCechDifferential_sq_zero
+    (X : Profinite.{u}) {I : Type v} (E : I → Set X)
+    (hclosed : ∀ i, IsClosed (E i)) (n : ℕ)
+    (c : uniformClosedCechLocalCochain X E n) :
+    uniformClosedCechDifferential X E (n + 1)
+      (uniformClosedCechDifferential X E n c) = 0 := by
+  obtain ⟨C, hC⟩ := uniformClosedCechRestrict_surjective X E hclosed n c
+  rw [← hC]
+  rw [uniformClosedCechDifferential_restrict X E n C]
+  rw [uniformClosedCechDifferential_restrict X E (n + 1)
+    (uniformClosedCechAmbientDifferential X I n C)]
+  rw [uniformClosedCechAmbientDifferential_sq_zero X I n C]
+  funext σ
+  apply DFunLike.ext
+  intro x
+  rfl
+
+#print axioms uniformClosedCechDifferential_sq_zero
 #print axioms uniformClosedCechIntersection_isClosed
 #print axioms uniformClosedCechRestrict_surjective
 end CMDG.CondensedCM5R0
-
