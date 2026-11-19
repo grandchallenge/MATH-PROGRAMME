@@ -272,3 +272,123 @@ class NearMaxTotientValuationTests(unittest.TestCase):
         actual_starts,adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
         self.assertLessEqual(len(adjacent),len(nearmax_witnesses(3*X,C+2,phi)))
         self.assertLessEqual(len(actual_starts),(X+1)//2+len(adjacent))
+
+
+
+from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+    odd_part_budget as wp07d_odd_budget,
+    fermat_exponent_slots as wp07d_fermat_slots,
+    polylog_fermat_envelope as wp07d_polylog_bound,
+    fermat_prime_shape_check as wp07d_prime_shape,
+    fermat_equality_criterion as wp07d_equality,
+    polylog_research_receipt as wp07d_receipt,
+)
+
+
+class FermatPolylogNearmaxTests(unittest.TestCase):
+    """Independent arithmetical checks of WP07-D's proved bounds.
+
+    The tests do not establish a new asymptotic, novelty or irrationality.
+    """
+
+    def test_exact_odd_factor_budget_and_fermat_exponent_levels(self):
+        for B in (2, 3, 4, 8, 9, 10, 16, 32, 64, 128):
+            expected = 0
+            while 3 ** (expected + 1) < B:
+                expected += 1
+            self.assertEqual(wp07d_odd_budget(B), expected)
+        for R in range(1, 150):
+            brute = sum(1 for r in range(1, R + 1)
+                        if (r & (r-1)) == 0)
+            self.assertEqual(wp07d_fermat_slots(R), brute)
+            self.assertLessEqual(1 << brute, 2*R)
+
+    def test_fermat_product_identity_without_primality_assumption(self):
+        for m in range(6):
+            factors_list = [(1 << (1 << j)) + 1 for j in range(m + 1)]
+            product = math.prod(factors_list)
+            self.assertEqual(product, (1 << (1 << (m + 1))) - 1)
+            total_r = sum(1 << j for j in range(m + 1))
+            self.assertGreaterEqual(product, 1 << total_r)
+            self.assertLess(product, 1 << (total_r+1))
+
+    def test_extremal_totient_classification_independently_to_100000(self):
+        phi = nearmax_totients(100000)
+        actual = [n for n in range(1, 100001)
+                  if nearmax_v2(phi[n]) >= n.bit_length()-1]
+        expected = [1,3,5,15,17,51,85,255,257,771,1285,3855,
+                    4369,13107,21845,65535,65537]
+        self.assertEqual(actual, expected)
+        for n in range(1, 100001):
+            # This follows from the *actual* independent factorization,
+            # rather than from the WP07-D bound or the source dataset.
+            self.assertEqual(wp07d_equality(n), n in set(expected))
+
+    def test_large_fermat_prime_forces_power_two_exponent(self):
+        phi = nearmax_totients(12000)
+        for C in (0,1,2,3,4):
+            for n in nearmax_witnesses(12000,C,phi):
+                row = wp07d_prime_shape(n,C,phi)
+                self.assertEqual(
+                    row["claim_boundary"],
+                    "NECESSARY_SHAPE_ONLY__ORIGINAL_249_OPEN",
+                )
+                self.assertGreaterEqual(row["odd_part"],
+                                        row["odd_d_product"])
+                for p in row["large_fermat_factors"]:
+                    r = nearmax_v2(p-1)
+                    self.assertEqual((p-1)>>r,1)
+                    self.assertEqual(r & (r-1), 0)
+                self.assertLessEqual(len(row["large_nonfermat_factors"]),
+                                     wp07d_odd_budget(1 << (C+1)))
+
+    def test_polylog_envelope_bounds_exhaustive_totient_counts(self):
+        for X in (100,1000,10000,30000):
+            phi = nearmax_totients(X)
+            for C in range(5):
+                count = len(nearmax_witnesses(X,C,phi))
+                self.assertLessEqual(count, wp07d_polylog_bound(X,C))
+                self.assertGreaterEqual(wp07d_polylog_bound(X,C),1)
+        self.assertLessEqual(wp07d_polylog_bound(100000,0),
+                             4*(100000).bit_length()**2)
+
+    def test_exact_polylog_endpoints_for_adjacent_integral_sums(self):
+        for X,C in ((128,0),(512,1),(1024,2),(4096,3)):
+            result = wp07d_receipt(X,C)
+            self.assertEqual(result["full_series_status"],"OPEN")
+            self.assertEqual(result["claim_boundary"],
+                             "FINITE_CHECK_ONLY__EXACT_MANUSCRIPT_PROOF__NOT_MATHCERT")
+            self.assertLessEqual(result["eligible_count"],
+                                 int(result["exact_polylog_envelope"]))
+            self.assertLessEqual(result["adjacent_integral_pairs"],
+                                 wp07d_polylog_bound(3*X,C+2))
+
+    def test_rational_comparator_has_even_stronger_finite_nonintegrality(self):
+        # The *rational* sequence floor(n/2) has sum 2/3 and only
+        # O_C(1) integral complete nearlog finite sums in dyadic blocks.
+        x=Fraction(1,2)
+        self.assertEqual(x*x*(1+x)/(1-x*x)**2, Fraction(2,3))
+        for X,C in ((64,0),(256,1),(1024,2),(4096,3)):
+            L=X.bit_length()-1-C
+            modulus=1<<L
+            actual=0
+            for N in range(X,2*X):
+                whole=sum((N+j)//2 << (L-j) for j in range(1,L+1))
+                if whole % modulus == 0:
+                    actual+=1
+            self.assertLessEqual(actual,(1 << (C+1))+2)
+
+    def test_resource_and_invalid_input_contracts(self):
+        for args in ((1,0),(100,-1),(100,11)):
+            with self.assertRaises(ValueError):
+                wp07d_polylog_bound(*args)
+        with self.assertRaises(ValueError):
+            wp07d_odd_budget(1)
+        with self.assertRaises(ValueError):
+            wp07d_fermat_slots(0)
+        with self.assertRaises(ValueError):
+            wp07d_equality(0)
+        with self.assertRaises(ValueError):
+            wp07d_receipt(1,0)
+        with self.assertRaises(ValueError):
+            wp07d_prime_shape(9,0,nearmax_totients(15))

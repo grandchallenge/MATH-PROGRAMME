@@ -211,3 +211,142 @@ def research_receipt(X: int, C: int) -> dict[str, object]:
         "all_implications_checked": True,
         "claim_boundary": "FINITE_CHECK_ONLY__EXACT_ELEMENTARY_PROOF__FULL_S_OPEN",
     }
+
+
+
+def odd_part_budget(B: int) -> int:
+    """Largest K>=0 with 3**K < B, for B>=2; exact integer arithmetic."""
+    if B < 2:
+        raise ValueError("B>=2 required")
+    k, power = 0, 1
+    while 3 * power < B:
+        power *= 3
+        k += 1
+    return k
+
+
+def fermat_exponent_slots(R: int) -> int:
+    """Count r in {1,2,4,8,...} satisfying r<=R."""
+    if R < 1:
+        raise ValueError("R>=1 required")
+    return R.bit_length()
+
+
+def polylog_fermat_envelope(X: int, C: int) -> int:
+    """Theorem WP07-D(A), exact integer upper bound, *not* empirical proof.
+
+    Evaluator limited to C<=10 to avoid unbounded exponentially large
+    candidate registries in constrained runs. The *manuscript* theorem has
+    no fixed-C ceiling; symbolic proof is independent of this evaluator.
+    """
+    if X < 2 or C < 0 or C > 10:
+        raise ValueError("X>=2 and 0<=C<=10 required by finite evaluator")
+    from math import comb
+    R = X.bit_length() - 1
+    B = 1 << (C + 1)
+    K = odd_part_budget(B)
+    subset_choices = sum(comb(B * R, j)
+                         for j in range(min(K, B * R) + 1))
+    return ((R + 1) * small_odd_exponent_patterns(B)
+            * (1 << fermat_exponent_slots(R)) * subset_choices)
+
+
+def fermat_prime_shape_check(n: int, C: int, phi: list[int]) -> dict[str, object]:
+    """Check 2-adic nearmax necessity with independently factored n."""
+    if not is_nearmax(n, C, phi):
+        raise ValueError("not nearmax")
+    B = 1 << (C + 1)
+    u = odd_part(phi[n])
+    if not 1 <= u < B:
+        raise AssertionError("bounded odd part falsified")
+    non_fermat_large = []
+    fermat_large = []
+    small_odd = []
+    odd_d_product = 1
+    for p, a in factors(n):
+        if p == 2:
+            continue
+        r = v2(p - 1)
+        d = (p - 1) >> r
+        if not (r >= 1 and d & 1 and d < B):
+            raise AssertionError("restricted prime factor shape falsified")
+        odd_d_product *= d
+        if d == 1:
+            if r & (r - 1):
+                raise AssertionError("composite Fermat-exponent candidate")
+            if p > B:
+                fermat_large.append(p)
+        elif p > B:
+            if a != 1:
+                raise AssertionError("large odd prime repeated")
+            non_fermat_large.append(p)
+        if p <= B:
+            small_odd.append((p, a))
+    if odd_d_product > u or u % odd_d_product:
+        raise AssertionError("oddpart budget product falsified")
+    if len(non_fermat_large) > odd_part_budget(B):
+        raise AssertionError("non-Fermat large-prime count budget falsified")
+    if C == 0:
+        if n % 2 == 0:
+            raise AssertionError("even equality witness")
+        if any(a != 1 for p, a in factors(n) if p != 2):
+            raise AssertionError("repeated Fermat prime equality witness")
+    return {
+        "n": n, "C": C,
+        "odd_part": u, "odd_d_product": odd_d_product,
+        "large_fermat_factors": tuple(fermat_large),
+        "large_nonfermat_factors": tuple(non_fermat_large),
+        "small_odd_exponent_patterns": tuple(small_odd),
+        "claim_boundary": "NECESSARY_SHAPE_ONLY__ORIGINAL_249_OPEN",
+    }
+
+
+def fermat_equality_criterion(n: int) -> bool:
+    """Independent factorization criterion from Zhao's known C=0 theorem.
+
+    No inference that currently unknown Fermat numbers are prime.
+    """
+    if n < 1:
+        raise ValueError("positive integer required")
+    if n % 2 == 0:
+        return False
+    for p, exponent in factors(n):
+        if exponent != 1 or p == 2:
+            return False
+        r = v2(p - 1)
+        if r < 1 or ((p - 1) >> r) != 1 or (r & (r - 1)):
+            return False
+    return True
+
+
+def polylog_research_receipt(X: int, C: int) -> dict[str, object]:
+    """Finite exact cross-checks; the asymptotic is established by proof."""
+    if X < 2 or C < 0 or C > 8:
+        raise ValueError("finite receipt requires X>=2, 0<=C<=8")
+    phi = totients(3 * X)
+    near = nearmax_witnesses(X, C, phi)
+    bound = polylog_fermat_envelope(X, C)
+    if len(near) > bound:
+        raise AssertionError("new upper bound falsified")
+    if C == 0:
+        if any(is_nearmax(n, 0, phi) != fermat_equality_criterion(n)
+               for n in range(1, X + 1)):
+            raise AssertionError("Zhao equality criterion falsified")
+    for n in near:
+        fermat_prime_shape_check(n, C, phi)
+    L = X.bit_length() - 1 - C
+    adjacent = ()
+    if L >= 1 and L <= X:
+        _, adjacent = nearlog_integral_sums_and_adjacent_pairs(X, C, phi)
+        relevant = set(nearmax_witnesses(3 * X, C + 2, phi))
+        if any(N+L+1 not in relevant for N in adjacent):
+            raise AssertionError("nearmax adjacent endpoint implication")
+        if len(adjacent) > polylog_fermat_envelope(3*X, C+2):
+            raise AssertionError("nearlog adjacent polylog upper bound")
+    return {
+        "X": X, "C": C, "eligible_count": len(near),
+        "exact_polylog_envelope": str(bound),
+        "adjacent_integral_pairs": len(adjacent),
+        "full_series_status": "OPEN",
+        "claim_boundary": "FINITE_CHECK_ONLY__EXACT_MANUSCRIPT_PROOF__NOT_MATHCERT",
+    }
