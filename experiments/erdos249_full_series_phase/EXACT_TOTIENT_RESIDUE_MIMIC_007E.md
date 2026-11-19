@@ -60,7 +60,7 @@ a_1=0,\qquad
 \tag{A}
 $$
 
-**Proof of bounds.** For $1\le n<8$, the modulus $M_n$ can equal one or two; at $n<8$ the recurrence may be checked directly using the known totients of $1,\ldots,7$. More generally, for $n\ge5$ we have
+**Proof of bounds.** For $1\le n<8$, the modulus $M_n$ equals one, so $b_n=0$ and $a_n=c_n$; in particular, the small-index bounds are immediate. More generally, for $n\ge5$ we have
 
 $$
 0\le b_n<M_n\le n/4,
@@ -166,7 +166,7 @@ $$
 
 Indeed, if $v=\nu_2(\varphi(n))$ is strictly less than $k_n$, then $a_n/2^v\equiv\varphi(n)/2^v\pmod2$.
 
-Therefore the mismatch set is contained in the nearmaximal exceptional set $E_2(X)$, up to finitely many small indices. The fixed-$C$ Fermat/odd-budget estimate proved in [WP07-D PR #3520](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3520) gives, **subject to the separately governed WP07-D admission and its self-contained proof**,
+Therefore the mismatch set is contained in the nearmaximal exceptional set $E_2(X)$, up to finitely many small indices. The Fermat/odd-budget estimate for fixed $C$ proved in [WP07-D PR #3520](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3520) gives, **subject to the separately governed WP07-D admission and its self-contained proof**,
 
 $$
 \boxed{
