@@ -3,6 +3,10 @@
 **Role:** qualified, separately scoped GCL Adversary/Referee logical pass, **same authenticated agent as author**. This is not independent externally authenticated mathematical review, Lean checking, MATHCERT certification or historical priority adjudication.  
 **Research issue:** [#3500](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3500), OPEN; original full-series irrationality conjecture OPEN.
 
+## Prior-art adversarial cross-check
+
+Will Cook's *The Binary Totient Series* (2026, revised October 2026), [first-harmonic source](https://github.com/wcook04/plectis-erdos/blob/main/paper/249/erdos-249-binary-totient-series.tex), already separates the largest prime factor from its small cofactor, imposes a lower totient ratio on the cofactor, and obtains prime-number-theorem group estimates. Crucially, Cook isolates a **weighted first-harmonic correlation** as an unproved obligation after controlling unweighted group means. This WP does **not** claim that its prime-cofactor grouping or PNT count is novel, nor that the exact residual identity for a finite-prime rational Euler comparator proves Cook's outstanding weighted bound. The present bounded phase-difference theorem should be judged only for its exact stated contents; external theorem priority remains unassessed.
+
 ## A. Does the unique-large-prime identity really hold?
 
 Yes, under the exact strict inequality $y^2>3X$ and $n<3X$. If $n$ had two prime factors exceeding $y$, with multiplicity, their product would exceed $3X$, a contradiction. For its unique omitted prime $p$, the cofactor $m=n/p<3X/y<y$, and all prime factors of $m$ are therefore included in the cutoff. In particular $p$ is coprime to $m$ and appears only once, so
@@ -49,4 +53,4 @@ The natural successor is a **joint prime-pulse and discarded-tail correlation** 
 
 The code reuses the already protected totient/finite-window recurrence implementation and adds a dedicated efficient finite-Euler sieve, a unique-large-prime witness sieve, exact integer numerator/centered-residue certificates, prime union count, and an explicit rational-patch adversary. It **does not compute enormous rational denominator products** and therefore avoids unnecessary CPU/RAM use. The seven new hostile tests supplement the 38 preexisting governed full-series tests. Exact source replay and SHA256s are frozen in the associated execution receipt; success of tests or workflow is not independent mathematical certification.
 
-**Verdict:** ACCEPT_WITH_SCOPE for four bounded manuscript results (exact sparse pulse, exact effective phase escape, prime-number-theorem asymptotic aggregation, and strict rational finite-prime approximation), plus the rational finite-patch hostile control. **Reject promotion to irrationality.** Keep research issue #3500 OPEN / In Progress, original Erdős #249 OPEN and MATHCERT NOT_SUBMITTED.
+**Verdict:** ACCEPT_WITH_SCOPE, subject to Cook 2026 prior-art attribution, for four bounded manuscript results (exact sparse pulse, exact effective phase escape, prime-number-theorem asymptotic aggregation, and strict rational finite-prime approximation), plus the rational finite-patch hostile control. **Reject promotion to irrationality.** Keep research issue #3500 OPEN / In Progress, original Erdős #249 OPEN and MATHCERT NOT_SUBMITTED.
