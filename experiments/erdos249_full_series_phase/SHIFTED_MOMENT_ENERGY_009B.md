@@ -313,11 +313,11 @@ $$
 
 as $X\to\infty$. Equivalently, for the right side of (10) alone to certify a $0.1X$ deficit, the squared coefficient energy would need to satisfy
 
-$
+$$
 \sum_{n\in I_{X,L}}[d_h^a(n)]^2
 \ge\frac{9Q^2X}{80}
 >\frac{576}{5}X^3,
-$
+$$
 
 whereas the linear coefficient envelope limits the same quantity to at most $(4+o(1))X^3$. The missing factor exceeds $144/5=28.8$ asymptotically. No refinement of the **two-point arithmetic second-moment estimate alone** can supply that factor within the exact inequality (10).
 
