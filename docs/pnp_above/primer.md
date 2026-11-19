@@ -73,7 +73,7 @@ For a properly encoded input satisfying the published theorem's hypotheses, the 
 
 Again, deciding a selected indexed proposition can be easy even when successfully performing the corresponding interactive task requires an enormous resource.
 
-## Why identical questions make the current quantum game easy
+## Why diagonal and star-shaped question patterns cannot give quantum advantage
 
 The more recent GCL formalization provides a useful negative lesson. Imagine a referee who **always gives both provers exactly the same question**. For a *synchronous* game, they win on that question only when they give the same acceptable answer. If a winning answer exists, the provers can agree in advance what to return for each question. Sharing entanglement cannot improve that best possible response. If no acceptable answer exists for a sampled question, neither classical nor quantum provers can win it.
 
@@ -81,7 +81,7 @@ WP16 proves that the current nine-stage conditional reference sampler **really d
 
 Consequently simply modifying the verifier's acceptance test while leaving that **diagonal** sampler unchanged cannot create the required quantum/classical value gap. WP18 has now built and proved an original source-native non-diagonal two-player sampler, so that first necessary condition is no longer missing. But the **old referee still accepts empty answers to every question**. Changing the questions alone also does not help: the optimal classical, quantum and commuting winning probabilities remain one.
 
-An intuition is that handing two students different exam questions does not make the exam difficult if every question is marked correct when the students leave their answer sheets blank. For genuine quantum advantage, the *questions and the consistency checks on their answers* must jointly create a classical impossibility that quantum resources can overcome. WP18's unequal questions also have a sparse, star-shaped pattern whose ultimate limitations have yet to be proved. A hard game and a P-versus-NP theorem are **not** established. See the [complete original-source coverage through WP18](coverage.md) and [proof grades](evidence.md).
+An intuition is that handing two students different exam questions does not make the exam difficult if every question is marked correct when the students leave their answer sheets blank. For genuine quantum advantage, the *questions and the consistency checks on their answers* must jointly create a classical impossibility that quantum resources can overcome. WP19 now **proves those limitations**, not merely suspects them. Imagine the referee always giving Alice one central question, while Bob may receive one of 256 different leaf questions. The players can agree in advance on Alice's answer and independently choose Bob's optimal reply for each leaf. The other 256 question pairs involve separate identical questions and can likewise be answered independently. There is no network of mutually competing consistency checks that might give quantum correlations an advantage. The original source proof shows that this reasoning holds for **every synchronous acceptance rule**, even if some questions are impossible to win. Therefore a new *joint question distribution* is required; changing only WP18's marking rules cannot work. A hard game and a P-versus-NP theorem are **not** established. See the [complete source coverage through WP19](coverage.md) and [proof grades](evidence.md).
 
 ## What would count as progress?
 

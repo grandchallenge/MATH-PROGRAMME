@@ -620,3 +620,468 @@ class OverlogTotientPhaseSeparationTests(unittest.TestCase):
             prime_escape_phase_gaps(64,(2,3),2)
         with self.assertRaises(ValueError):
             prime_escape_phase_gaps(64,(2,),9)
+
+
+
+from experiments.erdos249_full_series_phase.moving_prime_escape import (
+    primes_to as wp08b_primes,
+    finite_prime_euler_sieve as wp08b_euler,
+    unique_large_prime_sieve as wp08b_large,
+    moving_prime_receipt as wp08b_receipt,
+    rational_finite_patch as wp08b_rational_patch,
+)
+
+
+class MovingPrimeEscapeTests(unittest.TestCase):
+    """WP08-B exact hostile arithmetic; no numerical asymptotic claim."""
+
+    def test_independent_small_prime_support_oracle(self):
+        from math import gcd
+        self.assertEqual(wp08b_primes(1),())
+        self.assertEqual(wp08b_primes(32),
+                         (2,3,5,7,11,13,17,19,23,29,31))
+        for y in (2,5,11,29):
+            values=wp08b_euler(350,y)
+            ps=wp08b_primes(y)
+            for n in range(1,351):
+                smallfactor=math.prod(p for p in ps if n%p==0)
+                independent=sum(gcd(k,smallfactor)==1
+                                for k in range(1,n+1))
+                self.assertEqual(values[n],independent)
+                self.assertLessEqual(values[n],n)
+
+    def test_exact_unique_large_prime_pulse_vs_totient(self):
+        for X,y in ((1024,64),(4096,128),(16384,256)):
+            L=overlog_depth(X)
+            limit=2*X+L+1
+            phi=overlog_totients(limit)
+            g=wp08b_euler(limit,y)
+            factors=wp08b_large(limit,y)
+            self.assertGreater(y*y,3*X)
+            for n in range(1,limit+1):
+                p=factors[n]
+                self.assertEqual(g[n]-phi[n],
+                                 phi[n//p] if p else 0)
+                if p:
+                    self.assertGreater(p,y)
+                    self.assertLess(n//p,y)
+                    self.assertEqual(n%p,0)
+
+    def test_exact_all_prime_phase_certificate_and_count(self):
+        for X,y in ((1024,64),(4096,128),(16384,256)):
+            r=wp08b_receipt(X,y)
+            endpoints=r["good_prime_endpoints"]
+            self.assertGreater(len(endpoints),0)
+            self.assertGreaterEqual(len(r["strong_gap_starts"])*2,
+                                    len(endpoints))
+            self.assertGreaterEqual(len(r["theorem_gap_starts"]),
+                                    len(r["strong_gap_starts"]))
+            self.assertEqual(r["theorem_gap_threshold"],
+                             f"1/{192*y}")
+            self.assertEqual(r["full_series_irrationality"],"OPEN")
+            self.assertEqual(len(set(r["all_prime_endpoints"])),
+                             len(r["all_prime_endpoints"]))
+            self.assertEqual(len(set(n for n,p,m in endpoints)),
+                             len(endpoints))
+
+    def test_all_missing_prime_pulses_are_genuinely_aggregated(self):
+        for X,y in ((1024,64),(4096,128),(16384,256)):
+            r=wp08b_receipt(X,y)
+            selected=r["good_prime_endpoints"]
+            by_prime={}
+            for n,p,m in selected:
+                by_prime[p]=by_prime.get(p,0)+1
+                self.assertTrue(y<p<=2*y)
+                self.assertEqual(n,p*m)
+            self.assertGreater(len(by_prime),1)
+            self.assertGreater(sum(by_prime.values()),max(by_prime.values()))
+            self.assertEqual(sum(by_prime.values()),len(selected))
+
+    def test_independent_direct_finite_sum_matches_rolling_phase(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            finite_numerator, rolling_numerators, centered,
+        )
+        X,y=1024,64
+        L=overlog_depth(X)
+        Q=1<<L
+        limit=2*X+L+1
+        p=overlog_totients(limit)
+        g=wp08b_euler(limit,y)
+        delta=[p[n]-g[n] for n in range(limit+1)]
+        rolled=rolling_numerators(X,delta)
+        r=wp08b_receipt(X,y)
+        strong=set(r["strong_gap_starts"])
+        for N in list(range(X,X+24))+list(range(2*X-24,2*X)):
+            direct=finite_numerator(N,L,p)-finite_numerator(N,L,g)
+            self.assertEqual(rolled[N-X],direct)
+            v=centered(direct,Q)
+            self.assertEqual(N in strong,12*y*abs(v)>=X)
+            self.assertEqual((direct-v)%Q,0)
+
+    def test_rational_finite_patch_cannot_certify_irrationality(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            finite_numerator,
+        )
+        for X,y in ((128,32),(1024,64)):
+            patched,phi=wp08b_rational_patch(X,y)
+            L=overlog_depth(X)
+            gy=wp08b_euler(3*X-1,y)
+            self.assertTrue(any(patched[n]!=gy[n]
+                                for n in range(X+1,2*X+L+1)))
+            for N in range(X,2*X):
+                self.assertEqual(finite_numerator(N,L,patched),
+                                 finite_numerator(N,L,phi))
+            # The full patched infinite sum is rational because it is
+            # a finite dyadic modification of the rational full g_y sum.
+            finite_correction=sum(
+                (Fraction(patched[n]-gy[n],1<<n)
+                 for n in range(X+1,2*X+L+1)),
+                Fraction(),
+            )
+            self.assertLessEqual(finite_correction,0)
+            self.assertIsInstance(finite_correction,Fraction)
+
+    def test_malformed_and_duplicate_support_fail_closed(self):
+        with self.assertRaises(ValueError):
+            wp08b_euler(0,3)
+        with self.assertRaises(ValueError):
+            wp08b_euler(50,1)
+        with self.assertRaises(ValueError):
+            wp08b_large(50,3)
+        with self.assertRaises(ValueError):
+            wp08b_large(0,100)
+        with self.assertRaises(ValueError):
+            wp08b_receipt(63,64)
+        with self.assertRaises(ValueError):
+            wp08b_receipt(4096,64)
+        with self.assertRaises(ValueError):
+            wp08b_rational_patch(4096,64)
+
+
+
+from experiments.erdos249_full_series_phase.shifted_first_harmonic import (
+    shift_modulus as wp09a_modulus,
+    cook_minimal_depth as wp09a_depth,
+    signed_shift_numerators as wp09a_rolling,
+    direct_shift_numerator as wp09a_direct,
+    signed_shift_receipt as wp09a_receipt,
+    rational_shift_control as wp09a_control,
+    rational_shift_control_sum as wp09a_control_sum,
+)
+
+
+class ShiftedFirstHarmonicTests(unittest.TestCase):
+    """WP09-A: exact hostile tests of the actual Cook shifted D_h phase."""
+
+    def test_arithmetic_modulus_independent_exact_ratio(self):
+        for h in (1,2,3,6):
+            M,eta,primes=wp09a_modulus(h)
+            self.assertEqual(math.gcd(M,h),1)
+            self.assertTrue(M>=2 and eta<=Fraction(29,50))
+            self.assertEqual(M,math.prod(primes))
+            self.assertEqual(eta,math.prod(
+                (Fraction(p-1,p) for p in primes),start=Fraction(1)
+            ))
+        self.assertEqual(wp09a_modulus(1)[:2],(2,Fraction(1,2)))
+        self.assertEqual(wp09a_modulus(2)[:2],(15,Fraction(8,15)))
+        self.assertEqual(wp09a_modulus(6)[:2],(5005,Fraction(576,1001)))
+
+    def test_minimal_cook_size_condition_and_upper_ratio(self):
+        for h,X in ((1,64),(1,128),(2,512),(3,1024),(6,65536)):
+            L=wp09a_depth(X,h)
+            self.assertTrue((1<<L)>=16*(2*X+h+L+2))
+            self.assertTrue((1<<(L-1))<16*(2*X+h+L+1))
+            self.assertLessEqual(1<<L,96*X)
+            self.assertTrue(h+L+1<=X)
+
+    def test_rolling_matches_independent_direct_cook_D(self):
+        for h,X in ((1,64),(2,128),(3,256),(6,512)):
+            L=wp09a_depth(X,h)
+            Q=1<<L
+            phi=overlog_totients(2*X+L+h+1)
+            rolled=wp09a_rolling(X,h,L,phi)
+            self.assertEqual(len(rolled),X+1)
+            for N in range(X,2*X+1):
+                self.assertEqual(rolled[N-X],wp09a_direct(N,h,L,phi))
+                if N<2*X:
+                    d=phi[N+h+L+1]-phi[N+L+1]
+                    self.assertEqual(
+                        (rolled[N-X+1]-2*rolled[N-X]-d)%Q,0
+                    )
+
+    def test_all_signed_contrast_endpoints_force_gaps(self):
+        for h,X in ((1,256),(2,1024),(3,4096),(6,65536)):
+            r=wp09a_receipt(X,h)
+            self.assertGreater(len(r["negative_endpoints"]),0)
+            self.assertGreater(len(r["positive_endpoints"]),0)
+            self.assertTrue(
+                len(r["negative_endpoints"])+len(r["positive_endpoints"])
+                <=2*r["strong_gap_starts"]
+            )
+            self.assertGreaterEqual(
+                r["fixed_fraction_gap_starts"],r["strong_gap_starts"]
+            )
+            self.assertTrue(r["M"]>=2)
+            self.assertEqual(
+                r["original_totient_irrationality"],"OPEN"
+            )
+            self.assertEqual(r["cook_required_10_percent_saving"],"OPEN")
+
+    def test_harmonic_saving_proof_has_exact_positive_budget(self):
+        # Finite checks test the exact fractional-distance implication.
+        # The global density and all-X harmonic estimate are proved
+        # independently from the conditional totient mean in the source.
+        for h,X in ((1,256),(2,1024),(6,65536)):
+            r=wp09a_receipt(X,h)
+            count=r["fixed_fraction_gap_starts"]
+            self.assertGreater(count,0)
+            # 1-cos(2*pi*t) >= 8*t^2 for 0<=t<=1/2.
+            # Therefore the actual first harmonic has the exact
+            # mathematical upper bound X - 8*count/28800^2.
+            bound=Fraction(X)-Fraction(8*count,28800**2)
+            self.assertLess(bound,X)
+            self.assertGreater(bound,0)
+
+    def test_hostile_rational_full_sum_with_two_signed_shifts(self):
+        for h,M in ((1,3),(2,3),(3,5),(6,7)):
+            total=wp09a_control_sum(h,M)
+            self.assertTrue(isinstance(total,Fraction) and total>0)
+            prefix=sum((Fraction(wp09a_control(n,h,M),1<<n)
+                        for n in range(1,120)),Fraction())
+            self.assertLess(prefix,total)
+            self.assertLess(total-prefix,Fraction(125,1<<119))
+            for n in range(2*M,100, M):
+                self.assertEqual(wp09a_control(n,h,M),0)
+                self.assertEqual(wp09a_control(n+h,h,M),n+h)
+                self.assertEqual(wp09a_control(n-h,h,M),n-h)
+                self.assertEqual(
+                    wp09a_control(n+h,h,M)-wp09a_control(n,h,M),
+                    n+h,
+                )
+                self.assertEqual(
+                    wp09a_control(n,h,M)-wp09a_control(n-h,h,M),
+                    -(n-h),
+                )
+
+    def test_guarded_source_contracts(self):
+        with self.assertRaises(ValueError):
+            wp09a_modulus(0)
+        with self.assertRaises(ValueError):
+            wp09a_modulus(6,max_product=20)
+        with self.assertRaises(ValueError):
+            wp09a_depth(63,2)
+        with self.assertRaises(ValueError):
+            wp09a_depth(64,0)
+        with self.assertRaises(ValueError):
+            wp09a_rolling(64,1,10,[0]*10)
+        with self.assertRaises(ValueError):
+            wp09a_direct(64,1,10,[0]*10)
+        with self.assertRaises(ValueError):
+            wp09a_receipt(64,20)
+        with self.assertRaises(ValueError):
+            wp09a_control(5,1,2)
+        with self.assertRaises(ValueError):
+            wp09a_control_sum(1,65)
+
+
+    def test_exact_all_shift_cocycle_and_marginal_phase_obstruction(self):
+        X=128
+        L=wp09a_depth(X,6)
+        phi=overlog_totients(2*X+L+12)
+        for N in (X,X+1,X+19,2*X-2):
+            for h in (1,2,3,4):
+                for k in (1,2,3):
+                    left=wp09a_direct(N,h+k,L,phi)
+                    right=(wp09a_direct(N,h,L,phi)
+                           +wp09a_direct(N+h,k,L,phi))
+                    self.assertEqual(left,right)
+                    self.assertEqual(
+                        left,
+                        sum(wp09a_direct(N+j,1,L,phi)
+                            for j in range(h+k)),
+                    )
+        # Abstract logical counterexample: zero one-phase mean,
+        # but every adjacent product equals +1 exactly.
+        u=[(1j if n%2==0 else -1j) for n in range(100)]
+        self.assertEqual(sum(u,0j),0j)
+        self.assertTrue(all(u[n]*u[n+1]==1 for n in range(99)))
+
+
+
+from experiments.erdos249_full_series_phase.shifted_moment_energy import (
+    prime_list as wp09b_primes,
+    finite_euler_moments as wp09b_euler,
+    exact_finite_crt_period as wp09b_crt,
+    first_omitted_prime as wp09b_omitted,
+    euler_moment_bounds as wp09b_bounds,
+    exact_phase_energy as wp09b_energy,
+    rational_hostile_phase_energy as wp09b_hostile,
+)
+
+
+class ShiftedSecondMomentEnergyTests(unittest.TestCase):
+    """WP09-B exact CRT correlation and Cook-phase energy hostiles."""
+
+    def test_prime_support_and_local_euler_products(self):
+        self.assertEqual(wp09b_primes(2),(2,))
+        self.assertEqual(
+            wp09b_primes(31),(2,3,5,7,11,13,17,19,23,29,31)
+        )
+        a=wp09b_euler(1,(2,3))
+        self.assertEqual(a["A_f_squared"],
+                         Fraction(5,8)*Fraction(22,27))
+        self.assertEqual(a["B_shifted_correlation"],
+                         Fraction(1,2)*Fraction(7,9))
+        self.assertEqual(
+            a["V_squared_difference"],
+            2*(a["A_f_squared"]-a["B_shifted_correlation"])
+        )
+        self.assertEqual(
+            wp09b_euler(30,(2,3,5))["V_squared_difference"],
+            0,
+        )
+        self.assertEqual(
+            wp09b_euler(1,(2,3,5))["Bstar_baseline"],
+            Fraction(1,2)*Fraction(7,9)*Fraction(23,25),
+        )
+
+    def test_independent_exact_full_period_crt_correlations(self):
+        for ps in ((2,3),(2,3,5),(2,3,5,7)):
+            for h in (1,2,3,6,30,210):
+                got=wp09b_crt(h,ps)
+                expected=wp09b_euler(h,ps)
+                self.assertEqual(got["A_exact_period"],
+                                 expected["A_f_squared"])
+                self.assertEqual(got["B_exact_period"],
+                                 expected["B_shifted_correlation"])
+                self.assertEqual(got["V_exact_period"],
+                                 expected["V_squared_difference"])
+                self.assertGreaterEqual(got["V_exact_period"],0)
+                self.assertEqual(got["period"],math.prod(ps))
+
+    def test_rigorous_infinite_euler_tail_envelopes(self):
+        for h in (1,2,3,6,30,210,2310):
+            p=wp09b_omitted(h)
+            self.assertEqual(h%p!=0,True)
+            for k in range(2,p):
+                if all(k%d for d in range(2,math.isqrt(k)+1)):
+                    self.assertEqual(h%k,0)
+            low=wp09b_bounds(h,31)
+            high=wp09b_bounds(h,127)
+            trunc=wp09b_euler(h,wp09b_primes(257))
+            v=trunc["V_squared_difference"]
+            self.assertTrue(
+                low["lower_V_from_tail"] <= v <=
+                low["upper_V_from_tail"]
+            )
+            self.assertTrue(
+                high["lower_V_from_tail"] <= v <=
+                high["upper_V_from_tail"]
+            )
+            self.assertGreater(
+                high["upper_V_from_tail"],
+                high["unconditional_strict_V_lower"]
+            )
+            self.assertEqual(
+                high["unconditional_strict_V_lower"],
+                Fraction(1,9*p**3),
+            )
+            self.assertEqual(
+                high["rigorous_harmonic_saving_lower"],
+                Fraction(1,22500*p**3),
+            )
+
+    def test_exact_all_shift_phase_energy_transfer(self):
+        for X,h in ((512,1),(1024,2),(4096,3),(8192,6)):
+            got=wp09b_energy(X,h)
+            self.assertEqual(got["source"],"ACTUAL_EULER_TOTIENT")
+            self.assertLessEqual(
+                got["arithmetic_squared_energy"],
+                9*got["centered_residual_squared_energy"],
+            )
+            self.assertGreater(got["arithmetic_squared_energy"],0)
+            self.assertGreater(got["rigorous_harmonic_deficit_lower"],0)
+            self.assertEqual(got["original_irrationality"],"OPEN")
+            self.assertEqual(got["single_step_Cook_ten_percent"],
+                             "NOT_CERTIFIED")
+            self.assertGreater(got["Q"],32*X)
+
+    def test_cook_energy_differences_vs_independent_direct_oracle(self):
+        for h,X in ((1,128),(2,256),(3,512)):
+            L=wp09a_depth(X,h)
+            Q=1<<L
+            phi=overlog_totients(2*X+L+h+1)
+            got=wp09b_energy(X,h)
+            self.assertEqual(got["L"],L)
+            self.assertEqual(got["Q"],Q)
+            r2=sum(
+                overlog_centered(
+                    wp09a_direct(N,h,L,phi),Q
+                )**2
+                for N in range(X,2*X)
+            )
+            d2=sum(
+                (phi[n+h]-phi[n])**2
+                for n in range(X+L+1,2*X+L)
+            )
+            self.assertEqual(
+                got["centered_residual_squared_energy"],r2
+            )
+            self.assertEqual(got["arithmetic_squared_energy"],d2)
+            self.assertEqual(
+                got["rigorous_harmonic_deficit_lower"],
+                Fraction(8*d2,9*Q*Q),
+            )
+
+    def test_hostile_rational_series_still_has_shifted_energy(self):
+        for X,h,M in ((512,1,3),(1024,2,3),(1024,6,7)):
+            got=wp09b_hostile(X,h,M)
+            self.assertEqual(got["source"],"EXPLICIT_INTEGER_COMPARATOR")
+            self.assertGreater(got["arithmetic_squared_energy"],0)
+            self.assertGreater(got["rigorous_harmonic_deficit_lower"],0)
+            # WP09-A independently established the FULL series is rational.
+            self.assertIsInstance(wp09a_control_sum(h,M),Fraction)
+            self.assertEqual(got["original_irrationality"],"OPEN")
+
+    def test_methodological_10_percent_ceiling_exact_finite(self):
+        for X,h in ((512,1),(1024,2),(4096,6)):
+            got=wp09b_energy(X,h)
+            L=got["L"]
+            Q=got["Q"]
+            cap=Fraction(8*(X-1)*(2*X+L+h)**2,9*Q**2)
+            self.assertLessEqual(
+                got["rigorous_harmonic_deficit_lower"],cap
+            )
+            self.assertLess(cap,Fraction(X,10))
+            self.assertLessEqual(
+                got["arithmetic_squared_energy"],
+                (X-1)*(2*X+L+h)**2,
+            )
+
+    def test_truncation_and_source_fail_closed(self):
+        with self.assertRaises(ValueError):
+            wp09b_primes(1)
+        with self.assertRaises(ValueError):
+            wp09b_euler(0,(2,3))
+        with self.assertRaises(ValueError):
+            wp09b_euler(1,(2,2,3))
+        with self.assertRaises(ValueError):
+            wp09b_euler(1,(4,))
+        with self.assertRaises(ValueError):
+            wp09b_crt(1,(2,3,5,7),max_period=100)
+        with self.assertRaises(ValueError):
+            wp09b_bounds(0,127)
+        with self.assertRaises(ValueError):
+            wp09b_bounds(1,2)
+        with self.assertRaises(ValueError):
+            wp09b_bounds(1,4097)
+        with self.assertRaises(ValueError):
+            wp09b_omitted(0)
+        with self.assertRaises(ValueError):
+            wp09b_energy(63,1)
+        with self.assertRaises(ValueError):
+            wp09b_energy(512,0)
+        with self.assertRaises(ValueError):
+            wp09b_energy(512,1,coefficients=[0]*10)
+        with self.assertRaises(ValueError):
+            wp09b_hostile(512,1,2)
