@@ -17,6 +17,7 @@ Read `JOINT_3x3_AND_DEGREE_CORE_PROOF.md` first, then run the certificate script
 ```bash
 python verify_joint3_finite.py > /tmp/joint3.json
 python verify_original_remaining.py > /tmp/original_remaining.json
+python verify_odd_core.py > /tmp/oddcore.json
 python verify_core_and_switching.py > /tmp/core_checks.json
 sha256sum -c SHA256SUMS.txt
 ```
