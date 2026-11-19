@@ -1,0 +1,80 @@
+{
+  "record_type": "ERDOS561_GRAPH_LEAN_REPLAY/1",
+  "status": "LOCAL_LEAN_COMPILER_PASS",
+  "toolchain": "Lean 4.33.0-rc1 commit 62eed1db4d67327ec8120be05f1a1b0847d74561",
+  "compiler": "lean",
+  "local_execution_attested_independent": false,
+  "graph_theorems": [
+    "handshake",
+    "saturated_edge_budget",
+    "saturated_vertex_budget",
+    "low_slack_exact_core"
+  ],
+  "finite_canary": [
+    "four_vertex_degree_core",
+    "triangle_has_no_1_1_split",
+    "triangle_saturates_three"
+  ],
+  "axioms": {
+    "graph": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice (low_slack_only)"
+    ],
+    "four_vertex_canary": [
+      "propext"
+    ]
+  },
+  "unproved_bridge": "Failed capped partition ⇒ D+1 connected maximum-degree vertices; not formalized",
+  "source_sha256": {
+    "Erdos561GraphHandshake.lean": "32acf8386a87d9db8590b940f9188051456bb1dab8daad1a5fec0ca1495b6eb3",
+    "Erdos561FourVertexCore.lean": "7172bce52c19889c6a6a1617380e3b3187ada8f3174970e99d09c73d1b2961d7"
+  },
+  "compiler_stdout_sha256": "8b4e7bd46b47edc46730d11fa640c745a13c559d1666ed62b6e1362802f09548",
+  "previous_local_replay_capture": "98313b9eb3c74d76b109818b66c6e82b",
+  "latest_local_replay_capture": "d84159d3b41f4399a6aa3b4b5546e65a",
+  "latest_local_replay_exit_code": 0,
+  "factor_cut_lean_theorems": [
+    "small_core_boundary",
+    "weighted_boundary",
+    "weighted_boundary_sum",
+    "local_upper_envelope",
+    "local_lower_envelope",
+    "cut_certificate"
+  ],
+  "factor_cut_lean_axioms": [
+    "propext",
+    "Quot.sound"
+  ],
+  "factor_bridge_theorem_status": "PAPER_PROOF_FROM_PUBLISHED_ORDINARY_LOVASZ_GF_FACTOR__UNDER_REVIEW",
+  "full_factor_theorem_lean_formalized": false,
+  "component_parity_graph_semantics_lean_formalized": false,
+  "factor_cut_exact_graph_evidence": {
+    "C++_ISO": "C++17",
+    "compile_flags": "-std=c++17 -O2 -Wall -Wextra -Werror",
+    "graphs_all_n2_to_n6": 33866,
+    "cap_split_instances_all_n2_to_n6": 91727,
+    "actual_cap_obstructions": 273,
+    "exact_lovasz_parity_cut_comparisons": 2809,
+    "counterexamples": 0,
+    "full_n6_parity_cut_exhaustive": false
+  },
+  "additional_source_sha256": {
+    "Erdos561FactorCut.lean": "7e75b7b190e5c67cf7244d78b34c90f273e3fef3ae5a1e446b4186798effea52",
+    "LOVASZ_CAP_PARTITION_BRIDGE.md": "5a7e88393221690b7dfef47dcdb9190292066d726269afa913d46edad66d0182",
+    "verify_factor_bridge.cpp": "36ff4fc68de5e0ea467fc960413f487916b99fa8b31dbfc37605087d40fc2372",
+    "run_bridge.sh": "bbd29831a0c9e1ca1cbaff3ea309684e7b46d0bcd6a3149ab59a2241e564e34f",
+    "factor_bridge_results.txt": "4211a53cb05951621bde6b827b4e1f52d02cd9205c38f06676122a9bdf342b0a",
+    "FORMAL_SCOPE.md": "7b332e69a3f7a302cd3d76206622c4e5ea58429047b83051413d576f7735cd4c"
+  },
+  "source_parity_discrepancy": {
+    "status": "RECONCILED_IN_MANUSCRIPT",
+    "issue": "Brewster et al. Theorem 1.2 prints S-boundary in q; independent Lovasz statements use T-boundary",
+    "theorem_formula_used": "f(C)+e(C,T) odd",
+    "chosen_references": [
+      "Decomposition of graphs with constraint on minimum degree, Theorem 1.10, 2022",
+      "Factors and Factorizations of Graphs, equation (3.1)"
+    ],
+    "change_class": "source-semantic correction only; Lean/C++ source unchanged"
+  }
+}
