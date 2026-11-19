@@ -198,44 +198,44 @@ The rational comparator above is actually a specialization of an elementary **un
 
 **Theorem D (universal near-logarithmic finite-phase interpolation).** Fix any integer deficit $K\ge2$, and let $(t_n)_{n\ge1}$ be an *arbitrary integer sequence*. If one wishes to compare complete binary sums, assume additionally $|t_n|\le n$, which guarantees convergence of $\sum t_n2^{-n}$. Define
 
-$
+$$
 M_n^{(K)}=2^{\max(0,\lfloor\log_2n\rfloor-K)},
 \qquad c_n=\lfloor n/2\rfloor.
-$
+$$
 
 Construct $b_0=0$, let $b_n$ be the least nonnegative residue of $c_n+2b_{n-1}-t_n$ modulo $M_n^{(K)}$, and put $a_n=c_n+2b_{n-1}-b_n$. Then
 
-$
+$$
 \boxed{
 a_1=0,\quad n/4\le a_n\le n\ (n\ge2),\quad
 \sum_{n\ge1}a_n2^{-n}=2/3.
 }
 \tag{D1}
-$
+$$
 
 Moreover $a_n\equiv t_n\pmod{M_n^{(K)}}$ for **every** $n$. Thus for every integer $N\ge2^{K+1}$, at depth $L_N=\lfloor\log_2N\rfloor-K$,
 
-$
+$$
 \boxed{
 \sum_{j=1}^{L_N}\frac{a_{N+j}-t_{N+j}}{2^j}\in\mathbb Z.
 }
 \tag{D2}
-$
+$$
 
 In particular *all* finite-tail integer-harmonic Fourier phases coincide exactly at the same index and depth, yet the complete series of $a_n$ is rational **regardless of the target sequence**.
 
 **Proof.** The least-residue definition makes the congruence exact, and bounds every carry by $0\le b_n<M_n^{(K)}$. When $n<2^{K+1}$, the modulus is one, the carry vanishes and $a_n=\lfloor n/2\rfloor$. When $n\ge2^{K+1}$, we have $M_n^{(K)}\le n/2^K$ and $M_{n-1}^{(K)}\le(n-1)/2^K$. Since $K\ge2$,
 
-$
+$$
 a_n\ge\lfloor n/2\rfloor-(M_n^{(K)}-1)
 \ge n/2-1/2-n/2^K+1>n/4
-$
+$$
 
 and
 
-$
+$$
 a_n< n/2+2(n-1)/2^K\le n/2+(n-1)/2<n.
-$
+$$
 
 The small indices satisfy the same bounds for $n\ge2$. Since $b_n=O(n)$ regardless of the target, the exact telescoping correction tends to zero, and the full series equals that of $c_n$, namely $2/3$. Finally monotonicity of $M_n^{(K)}$ implies that for $j\le L_N$, $M_{N+j}^{(K)}\ge M_N^{(K)}=2^{L_N}\ge2^j$, so each summand of the difference in (D2) is an integer. QED.
 
