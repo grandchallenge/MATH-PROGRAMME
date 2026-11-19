@@ -782,5 +782,210 @@ class DocumentaryNoApprovalTests(unittest.TestCase):
         self.assertFalse(self.eligible(sample))
         with self.assertRaisesRegex(mod.RoutineReviewError, "unresolved or mixed"):
             mod.specialist_domain_for_file_manifest(sample)
+
+
+class ResearchHandoffRoutingTests(unittest.TestCase):
+    """Positive and hostile tests for NON-APPROVING research archival routing."""
+
+    def setUp(self):
+        self.handoff = "docs/handoffs/ERDOS-602-ESSENTIAL-DISJOINTNESS-001.md"
+        self.handoff_sha = "1" * 40
+        self.handoff_text = (
+            b"# Erd\\xc5\\x91s 602\\n"
+            b"**Status:** PROVED_ON_PAPER_UNADJUDICATED\\n"
+            b"No mathematical certification is claimed.\\n"
+        )
+        self.index = "docs/archives/research.md"
+        self.line = (
+            "- [Erdos 602 - unadjudicated handoff]"
+            "(../handoffs/ERDOS-602-ESSENTIAL-DISJOINTNESS-001.md)"
+        )
+        self.files = [
+            {
+                "filename": self.index, "sha": "2" * 40,
+                "status": "modified", "additions": 1, "deletions": 0,
+                "patch": "@@ -2,1 +2,2 @@\n context\n+" + self.line + "\n",
+            },
+            {
+                "filename": self.handoff, "sha": self.handoff_sha,
+                "status": "added", "additions": 64, "deletions": 0,
+            },
+        ]
+        self.head = "a" * 40
+        self.base = "b" * 40
+        self.pr = {
+            "state": "open", "draft": False, "changed_files": 2,
+            "head": {
+                "sha": self.head,
+                "repo": {"full_name": mod.REPOSITORY},
+            },
+            "base": {"ref": "main", "sha": self.base},
+            "user": {"login": "fyremael"},
+        }
+
+    def eligible(self, *, files=None, pr=None, head=None, source=None, blob=None):
+        with patch.object(
+            mod, "fetch_exact_file",
+            return_value=(
+                self.handoff_text if source is None else source,
+                self.handoff_sha if blob is None else blob,
+            ),
+        ):
+            return mod.bounded_research_handoff_not_applicable(
+                self.pr if pr is None else pr,
+                self.files if files is None else files,
+                self.head if head is None else head,
+                token="read-token", prefix=f"/repos/{mod.REPOSITORY}",
+            )
+
+    def test_exact_two_file_indexed_handoff_routes_without_approval(self):
+        self.assertTrue(self.eligible())
+        # This does not extend the routine approval profile nor
+        # classify the mixed handoff/index bundle as specialist evidence.
+        self.assertFalse(
+            mod.bounded_documentary_not_applicable(
+                self.pr, self.files, self.head)
+        )
+        with self.assertRaisesRegex(
+            mod.RoutineReviewError, "unresolved or mixed"
+        ):
+            mod.specialist_domain_for_file_manifest(self.files)
+
+    def test_changed_index_link_must_target_exact_handoff(self):
+        for bad in (
+            "+- [Other](../handoffs/ERDOS-602-DIFFERENT.md)\n",
+            "+- [Other](https://example.org/false.md)\n",
+            "+No markdown link here\n",
+            "+- [One](../handoffs/ERDOS-602-ESSENTIAL-DISJOINTNESS-001.md)\n"
+            "+- [Two](../handoffs/ERDOS-602-ESSENTIAL-DISJOINTNESS-001.md)\n",
+            "-prior prose\n+- [New](../handoffs/ERDOS-602-ESSENTIAL-DISJOINTNESS-001.md)\n",
+        ):
+            changed = copy.deepcopy(self.files)
+            changed[0]["patch"] = "@@ -1 +1 @@\n" + bad
+            self.assertFalse(self.eligible(files=changed))
+
+    def test_invalid_status_blob_or_file_counts_rejected(self):
+        for idx, mutation in (
+            (0, {"status": "added"}),
+            (0, {"additions": 2}),
+            (0, {"deletions": 1}),
+            (0, {"sha": "invalid"}),
+            (0, {"previous_filename": "docs/previous.md"}),
+            (1, {"status": "modified"}),
+            (1, {"deletions": 2}),
+            (1, {"sha": "X" * 40}),
+            (1, {"filename": "docs/handoffs/OTHER-602.md"}),
+            (1, {"filename": ".github/workflows/agent-routine-review.yml"}),
+            (1, {"filename": self.index}),
+        ):
+            with self.subTest(mutation=mutation):
+                changed = copy.deepcopy(self.files)
+                changed[idx].update(mutation)
+                self.assertFalse(self.eligible(files=changed))
+
+    def test_extra_file_mixed_controller_or_rename_rejected(self):
+        changed = copy.deepcopy(self.files) + [
+            {"filename": "ci/agent_routine_review.py", "sha": "3" * 40,
+             "status": "modified"}
+        ]
+        self.assertFalse(self.eligible(
+            files=changed, pr={**self.pr, "changed_files": 3}))
+        self.assertFalse(self.eligible(
+            files=self.files[:1], pr={**self.pr, "changed_files": 1}))
+
+    def test_source_is_exact_head_bound_and_cannot_claim_certification(self):
+        with self.assertRaisesRegex(mod.RoutineReviewError, "Git blob changed"):
+            self.eligible(blob="f" * 40)
+        self.assertFalse(self.eligible(source=b"# Erdos 602\nCertified proof.\n"))
+        self.assertFalse(self.eligible(source=b"**Status:** PROVED_ON_PAPER_UNADJUDICATED"))
+        self.assertFalse(self.eligible(source=b"# Erd" + b"X" * 100001))
+        with patch.object(
+            mod, "fetch_exact_file",
+            return_value=(self.handoff_text, self.handoff_sha),
+        ) as source:
+            self.assertTrue(mod.bounded_research_handoff_not_applicable(
+                self.pr, self.files, self.head,
+                token="read-token", prefix="/repos/grandchallenge/MATH-PROGRAMME",
+            ))
+            source.assert_called_once_with(
+                "/repos/grandchallenge/MATH-PROGRAMME",
+                self.handoff, self.head, "read-token")
+
+    def test_hostile_envelopes_and_stale_sha_rejected(self):
+        for mutation in (
+            {"state": "closed"}, {"draft": True},
+            {"base": {"ref": "not-main", "sha": self.base}},
+            {"user": {"login": mod.APP_REVIEWER}},
+            {"head": {"sha": self.head,
+                      "repo": {"full_name": "untrusted/fork"}}},
+            {"changed_files": 3},
+        ):
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(mod.RoutineReviewError):
+                    self.eligible(pr={**self.pr, **mutation})
+        with self.assertRaisesRegex(mod.RoutineReviewError, "head mismatch"):
+            self.eligible(head="9" * 40)
+
+    def test_nonapproval_receipt_has_no_authority_effect(self):
+        import io
+        from contextlib import redirect_stdout
+        with tempfile.TemporaryDirectory() as temp:
+            summary = Path(temp) / "summary.md"
+            with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(summary)}):
+                with redirect_stdout(io.StringIO()) as output:
+                    mod.report_research_handoff_not_applicable(
+                        self.head, self.files)
+            emitted = output.getvalue()
+            note = summary.read_text()
+            self.assertIn("NOT_APPLICABLE_NO_APPROVAL", emitted)
+            self.assertIn('"review_posted": false', emitted)
+            self.assertIn('"mathematical_certification": false', emitted)
+            self.assertIn('"protected_checks_waived": false', emitted)
+            self.assertIn("PENDING_BEFORE_CLAIM_PROMOTION", note)
+            self.assertIn(self.head, note)
+
+    def test_runtime_reads_exact_head_without_posting_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            event = Path(tmp) / "event.json"
+            summary = Path(tmp) / "summary.md"
+            event.write_text(json.dumps(
+                {"inputs": {"pr_number": 3562}}), encoding="utf-8")
+            requests = []
+            def api(method, path, *, token, payload=None):
+                requests.append((method, path))
+                self.assertEqual(method, "GET")
+                if path.endswith("/pulls/3562/files?per_page=100"):
+                    return copy.deepcopy(self.files)
+                if path.endswith("/pulls/3562"):
+                    return copy.deepcopy(self.pr)
+                raise AssertionError("unexpected API request: " + path)
+            with patch.dict(os.environ, {
+                "GITHUB_EVENT_PATH": str(event),
+                "GITHUB_EVENT_NAME": "workflow_dispatch",
+                "GITHUB_TOKEN": "read-token",
+                "GITHUB_STEP_SUMMARY": str(summary),
+            }):
+                with patch.object(mod, "api", side_effect=api):
+                    with patch.object(
+                        mod, "delegated_classification",
+                        side_effect=mod.RoutineReviewError(
+                            "unknown or multifile material closure"),
+                    ):
+                        with patch.object(
+                            mod, "fetch_exact_file",
+                            return_value=(self.handoff_text, self.handoff_sha),
+                        ):
+                            with patch.object(
+                                mod, "exact_specialist_disposition",
+                            ) as specialist:
+                                self.assertEqual(mod.main(), 0)
+                                specialist.assert_not_called()
+            self.assertEqual(len(requests), 3)
+            self.assertTrue(all(method == "GET" for method, _ in requests))
+            text = summary.read_text()
+            self.assertIn("PENDING_BEFORE_CLAIM_PROMOTION", text)
+            self.assertIn("no automated GitHub approval", text)
+
+
 if __name__ == "__main__":
     unittest.main()
