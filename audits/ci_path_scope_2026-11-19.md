@@ -40,10 +40,10 @@ The previous event path function extracted `pull_request.base.sha` and `pull_req
 
 The bounded correction:
 
-1. Reads GitHub event `pull_request.merge_commit_sha` only for `pull_request` classification.
-2. Uses `git rev-list --parents -n 1 <merge>` and accepts the merge only if its identity and ordered parents are **exactly** `[merge_sha, base_sha, head_sha]`.
+1. For `pull_request` only, examines the event's `pull_request.merge_commit_sha`; because that webhook field may be stale, it also considers GitHub Actions' runner-provided `GITHUB_SHA` as a recovery candidate.
+2. First requires the candidate SHA to equal the **actual checked-out Git HEAD**; then uses `git rev-list --parents -n 1 <merge>` and accepts it only if its ordered identity and parents are **exactly** `[merge_sha, base_sha, head_sha]`. A stale webhook SHA is never treated as valid merely because GitHub supplied it.
 3. On success, derives changed paths from `git diff --name-only base_sha merge_sha`.
-4. On a missing, unavailable, one-parent, stale-parent or otherwise invalid merge, **falls back to the original broad** `git diff base head`. It never treats missing evidence as a no-op.
+4. If neither the event's merge nor `GITHUB_SHA` passes both checkout identity and exact-parent tests, **falls back to the original broad** `git diff base head`. It never treats missing evidence as a no-op.
 5. Uses the **same selected exact tree transition** for the mathematical Markdown source gate and newly added test-route registration check. This avoids inconsistent paths being classified, source-checked and registered.
 6. Does not modify `classify_paths` shard ownership, unknown-path `FULL_FANOUT`, control-plane full invalidation, any protected rule, the `merge_group` full fanout, main-push Pages building, or full-policy sentinel.
 
@@ -55,7 +55,7 @@ The updated `ci/test_policy_impact.py` constructs a **real temporary Git DAG** w
 
 - The old two-tree comparison incorrectly includes both the Erdős and CMDG paths.
 - The verified exact merge includes **only** the genuine Erdős material path, selecting `core`, `contracts`, `docs`, `repository-regression` with zero unknown paths.
-- Missing merge, one-parent substituted head and unresolvable merge SHA all revert to the original broad comparison, never to an empty/no-op path set.
+- Missing merge, one-parent substituted head and unresolvable merge SHA without a valid workflow SHA all revert to the original broad comparison, never to an empty/no-op path set. A stale event merge with a correct checked-out `GITHUB_SHA` recovers the narrow exact route; an incorrect workflow SHA cannot.
 - Full nine-shard `merge_group` routing and full fanout on changed classifier/control-plane source remain enforced.
 - All original policy-routing and mutation-hostile controls remain exercised.
 
@@ -63,7 +63,7 @@ The updated `ci/test_policy_impact.py` constructs a **real temporary Git DAG** w
 
 ## Residual risks, no-op paths and follow-on options
 
-- **Risk 1 — GitHub merge-ref staleness or absence:** The identity check will reject it and use broad fallback. The control does not optimize such an event, but preserves coverage. The separate GH-OS effective-candidate controller and native merge group still enforce exact current-state admission.
+- **Risk 1 — GitHub event merge-ref staleness or absence:** The source-locked first protected replay ([PR #3549 candidate run 44508055825](https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/44508055825)) reported `conservative_invalid_effective_merge` even though `actions/checkout` checked out exact synthetic merge `eb0ad6f68f40a6581fce49b55381f8953f9bb813` with ordered parents `cda5317a42b101746cdac8bccd5d019ac9783198` and `799310dc6db5c86a94a8fe2cc2e39017ea68f4b9`. This confirms webhook merge metadata can be inconsistent with checkout. The corrected selector recovers by examining runner `GITHUB_SHA`, requiring that SHA to be the exact checked-out Git HEAD **and** to have the exact expected parents. If both input channels fail, it retains the full conservative old diff. The separate GH-OS controller and native merge group still enforce exact admission.
 - **Risk 2 — real cross-programme source changes:** Correctly selected; no source change is omitted when its exact merged tree differs from base. The existing policy manifest dependency closure remains active.
 - **Risk 3 — unregistered new tests or unknown material:** The new-test route guard and `FULL_FANOUT` remain; protection fails rather than silently accepting an unregistered test route.
 - **Risk 4 — unconditional full merge group:** It is the largest structural remaining expense. Any eventual selective merge-group policy would require a separately governed proof of equivalent coverage, replay of hostile drift and dependency cases, preservation of `validate-json` and matching required rulesets. **Not authorized or attempted here.**
