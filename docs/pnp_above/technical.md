@@ -139,9 +139,33 @@ See [WP17 source/receipts](coverage.md#status-of-the-source-native-theorem-chain
 
 The original source-pinned WP18 construction lets Alice retain the full conditional nine-stage map and Bob use a full-depth unconditional nine-stage singleton-register map. At seed (0,1,0,...,0), the original conditional-linear outputs differ. A kernel-checked source theorem establishes **positive original CL distribution mass on that unequal question pair**, with every native query-interface proof, raw-input halting and verifier runtime bound. The complete original Sampler 9 and Verifier 9 records are formally compiled; the latter has polynomial-bound parameter **145469**.
 
-This **does not** give a value gap. The unchanged original identity decider accepts empty answers on every positive-index question pair. A dimension-one deterministic strategy wins perfectly, and the original synchronous, tensor-product quantum and commuting values are all exactly 1. The support of the newly asymmetric law is also a sparse star centered on the all-zero Alice question when the first seed bit vanishes, plus diagonal pairs when it does not; no theorem yet asserts that even a redesigned predicate can yield a nonlocal advantage on that exact support.
+This **does not** give a value gap. The unchanged original identity decider accepts empty answers on every positive-index question pair. A dimension-one deterministic strategy wins perfectly, and the original synchronous, tensor-product quantum and commuting values are all exactly 1. The support of the newly asymmetric law is also a sparse star centered on the all-zero Alice question when the first seed bit vanishes, plus diagonal pairs when it does not; WP19 now proves the stronger obstruction: **no synchronous predicate on this exact support can produce a quantum advantage at all**.
 
 The two proven no-go results are complementary: WP17 eliminates *predicate-only* changes on a diagonal question law; WP18 eliminates *sampler-only* changes with an always-winning predicate. The next candidate must construct a genuinely coupled sampling/answer-sensitive verification system and **prove** a nonzero original-model game gap. [Source-locked WP18 and detailed limits](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026).
+
+## WP19: the original WP18 sampler cannot become quantum-hard under any decider
+
+In the original source-native `CL.clDist` model, WP19 proves the exact two-player mapping for each uniformly chosen nine-bit seed `z`:
+
+$$
+L^{\mathsf A}(z)=
+egin{cases}z,&z_0=1,\0,&z_0=0,\end{cases}
+\qquad L^{\mathsf B}(z)=z.
+$$
+
+Thus the sampled question law has precisely **512 support pairs**, each with probability `1/512`, forming a 256-edge star and 256 isolated diagonal pairs. [The original-source exact probability theorem](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_ExactOriginalQuestionProbability.lean) is proved symbolically for every seed and pair.
+
+The stronger theorem concerns a *general* finite synchronous game supported on such a star and disjoint diagonal matching. Each no-signalling correlation with nonnegative normalized probabilities is bounded by a convex combination of actual dimension-one deterministic strategies: first select a center answer, then optimize each spoke conditionally, and optimize each isolated diagonal separately. Original tensor-product Born probabilities and tracial commuting probabilities satisfy this bound as proved in Lean.
+
+For **every** synchronous replacement predicate `D` on WP18's original question distribution, including predicates with unsatisfiable sampled pairs,
+
+$$
+\omega_{\mathrm{sync}}(G_D)
+=\omega_{\mathrm{quantum}}(G_D)
+=\omega_{\mathrm{commuting}}(G_D).
+$$
+
+This equal optimum need **not be one**. The arbitrary replacement predicate is quantified mathematically, not claimed to be a compiled original `Cost.Prog`. Hence WP19 rules out *any decider-only repair of WP18*. A new source-native sampler with interacting two-sided question choices is required before a quantum gap is even possible. The [full theorem statement and scope](evidence.md#wp19-universal-star-support-no-quantum-advantage-19-november-2026) do not claim a hard game, quantum compression or P-versus-NP separation.
 
 ## A proved restricted SAT transfer — and its limitation
 
@@ -169,9 +193,9 @@ with exact construction and overhead accounting. No such transfer is presently p
 
 The required additional audit includes relativization, natural proofs and algebrization, with their precise hypotheses. Neither quantum entanglement nor self-reference automatically bypasses those barriers.
 
-## Exact next obligations (updated 18 November 2026)
+## Exact next obligations (updated 19 November 2026)
 
-1. **Source-native asymmetric sampler completed in WP18.** The original Sampler 9 has positive off-diagonal question mass, all source query-interface conditions, and original source execution/size bounds. Its support may be too sparse for nonlocality: prove or refute a stronger star-support no-gap theorem, then develop a richer source CL distribution where required.
+1. **WP19 universal sampler no-gap theorem complete.** The original WP18 law has positive unequal-question mass but its star-plus-isolated-diagonal support precludes *all* synchronous quantum/classical advantage, irrespective of the decision predicate. Build a **different, richer two-sided original source-native CL sampler** with overlapping questions and prove the actual four query families, time and size bounds. Cycles are a design clue, not a sufficient certificate of quantum advantage.
 2. Implement an **answer-sensitive executable original `Cost.Prog` decider**, establish its typed-input/malformed-data semantics and worst-case source bounds, and prove a bounded `Verifier` for the new sampled game.
 3. Prove a quantitative, nonzero **quantum/classical value or soundness gap** using the original source strategy models and independent upper/lower bounds; source compilation or positive off-diagonal mass alone does not suffice.
 4. Only after that, execute the positive-parameter introspection, answer-reduction and repetition stages on an evidenced input, quantify `\lambda` and `C_0`, and resolve Theorem 12.1's printed statement/proof discrepancy.
