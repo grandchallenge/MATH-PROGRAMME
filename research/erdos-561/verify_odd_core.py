@@ -53,7 +53,7 @@ for D in (3,5,7,9):
         incident=[c for (u,w),c in color.items() if v in (u,w)]
         assert len(incident)==D and len(set(incident))==D
 
-print(json.dumps({"counts":dict(counts),"newly_resolved":new},indent=2))
+
 
 
 # Independent 1..10 parameter enumeration for the strengthened core-threshold corollary.
@@ -77,4 +77,4 @@ for n in T10:
             else: bounded["core_threshold_positive_switch"]+=1
 assert bounded==Counter(all_pairs=47961,zero_switch=44893,core_threshold=46120,
                         core_threshold_zero_switch=43066,core_threshold_positive_switch=3054),bounded
-print(json.dumps({"bounded_1_to_10":dict(bounded)},indent=2))
+print(json.dumps({"counts":dict(counts),"newly_resolved":new,"bounded_1_to_10":dict(bounded)},indent=2))
