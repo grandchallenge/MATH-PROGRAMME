@@ -258,7 +258,7 @@ The additional obstruction is quantitative: a bounded-coefficient, one-step resi
 | B: every fixed $h$ has both positive-density $\Omega_h(X)$ and negative-density $\Omega_h(X)$ linear shifted-totient contrasts | Elementary CRT and totient mean proof; related earlier sign-contrast literature |
 | B2: at the actual Cook-admissible depth, positive-density shifted finite phases are at a fixed distance from integers | Exact centered-residue recurrence proof |
 | C: for each $h$ an explicit $c_h>0$ gives $\mathrm{Re}\sum E\le(1-c_h)X$ for all large blocks | Unconditional elementary proof, **far weaker** than Cook's needed $0.1X$ |
-| D: exact shifted integer and unit-phase multiplicative cocycle for any coefficient sequence; all-$h$ harmonic is a consecutive correlation of shift-one phases | Elementary telescoping proof; no mixing asserted |
+| D: exact shifted integer and unit-phase multiplicative cocycle for any coefficient sequence; harmonic for all $h$ is a consecutive correlation of shift-one phases | Elementary telescoping proof; no mixing asserted |
 | Strong Cook weighted correlation / $0.9X$ whole harmonic / denominator-uniform complete-tail exclusion | **OPEN** |
 | Original full binary totient-series irrationality, novelty, independent proof certification | **OPEN / NOT_CLAIMED / MATHCERT NOT_SUBMITTED** |
 
