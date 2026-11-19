@@ -7,7 +7,7 @@ import CMDGCondensedCM4P3DerivedCM5R0GenuineQuadrupleRelationIso
 The fifth Čech source is the genuine closed relation of all five
 presentation points mapping to the same base point. Its five face
 maps land in the already-proved actual fourth categorical pullback.
-The signed fifth boundary and d4*d3=0 are proven below. The source is the closed five-point profinite relation; an explicit isomorphism to the iterated categorical fivefold pullback and global epimorphy remain separate obligations.
+The signed fifth boundary and d4*d3=0 are proven below. The source is the closed five-point profinite relation; the explicit isomorphism to the iterated categorical fivefold pullback is proved below; global epimorphy remains separate.
 -/
 
 noncomputable section
@@ -53,7 +53,7 @@ noncomputable def stoneanCechExplicitQuintupleProfinite
       (profiniteCechQuintupleRelatedSet_isClosed P T p).isCompact
   exact Profinite.of (↥(profiniteCechQuintupleRelatedSet P T p))
 
-private noncomputable def quintupleFace0 (T : Profinite.{u}) :
+noncomputable def quintupleFace0 (T : Profinite.{u}) :
     stoneanCechExplicitQuintupleProfinite T ⟶
       stoneanCechExplicitQuadrupleProfinite T := by
   let P := Stonean.toProfinite.obj T.presentation
@@ -74,7 +74,7 @@ private noncomputable def quintupleFace0 (T : Profinite.{u}) :
       C(stoneanCechExplicitQuintupleProfinite T,
         ↥(profiniteCechQuadrupleRelatedSet P T p)))
 
-private noncomputable def quintupleFace1 (T : Profinite.{u}) :
+noncomputable def quintupleFace1 (T : Profinite.{u}) :
     stoneanCechExplicitQuintupleProfinite T ⟶
       stoneanCechExplicitQuadrupleProfinite T := by
   let P := Stonean.toProfinite.obj T.presentation
@@ -97,7 +97,7 @@ private noncomputable def quintupleFace1 (T : Profinite.{u}) :
         ↥(profiniteCechQuadrupleRelatedSet P T p)))
 
 
-private noncomputable def quintupleFace2 (T : Profinite.{u}) :
+noncomputable def quintupleFace2 (T : Profinite.{u}) :
     stoneanCechExplicitQuintupleProfinite T ⟶
       stoneanCechExplicitQuadrupleProfinite T := by
   let P := Stonean.toProfinite.obj T.presentation
@@ -120,7 +120,7 @@ private noncomputable def quintupleFace2 (T : Profinite.{u}) :
         ↥(profiniteCechQuadrupleRelatedSet P T p)))
 
 
-private noncomputable def quintupleFace3 (T : Profinite.{u}) :
+noncomputable def quintupleFace3 (T : Profinite.{u}) :
     stoneanCechExplicitQuintupleProfinite T ⟶
       stoneanCechExplicitQuadrupleProfinite T := by
   let P := Stonean.toProfinite.obj T.presentation
@@ -143,7 +143,7 @@ private noncomputable def quintupleFace3 (T : Profinite.{u}) :
         ↥(profiniteCechQuadrupleRelatedSet P T p)))
 
 
-private noncomputable def quintupleFace4 (T : Profinite.{u}) :
+noncomputable def quintupleFace4 (T : Profinite.{u}) :
     stoneanCechExplicitQuintupleProfinite T ⟶
       stoneanCechExplicitQuadrupleProfinite T := by
   let P := Stonean.toProfinite.obj T.presentation
@@ -443,6 +443,308 @@ theorem stoneanCechFifthToFourthRelation_comp_inclusion
 
 #print axioms stoneanCechFifthBoundary_comp_thirdRelation_zero
 #print axioms stoneanCechFifthToFourthRelation_comp_inclusion
+
+/-- The first vertex of the genuine fourth categorical Čech pullback. -/
+noncomputable def stoneanCechQuadrupleVertexFirst (T : Profinite.{u}) :
+    stoneanPresentationCechQuadruples T ⟶
+      Stonean.toProfinite.obj T.presentation :=
+  stoneanCechQuadFaceXYZ T ≫ stoneanCechTripleXY T ≫
+    pullback.fst (Profinite.presentation.π T)
+      (Profinite.presentation.π T)
+
+/-- The actual fifth iterated categorical Čech pullback object. -/
+noncomputable def stoneanPresentationCechQuintuples (T : Profinite.{u}) :
+    Profinite.{u} :=
+  pullback (stoneanCechQuadrupleVertexFirst T ≫
+    Profinite.presentation.π T)
+    (Profinite.presentation.π T)
+
+/-- The closed quadruple's first vertex is respected by its proved
+actual categorical fourth pullback isomorphism. -/
+theorem stoneanCechQuadrupleVertexFirst_atClosed
+    (T : Profinite.{u})
+    (r : stoneanCechExplicitQuadrupleProfinite T) :
+    (stoneanCechQuadrupleVertexFirst T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+        r.val.1 := by
+  change (pullback.fst (Profinite.presentation.π T)
+    (Profinite.presentation.π T)).hom.hom
+    ((stoneanCechTripleXY T).hom.hom
+      ((stoneanCechQuadFaceXYZ T).hom.hom
+        ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r))) =
+    r.val.1
+  have h := stoneanCechExplicitQuadruple_xyz_atPoint T r
+  rw [show (stoneanCechQuadFaceXYZ T).hom.hom
+    ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom r) =
+    stoneanCechTripleOfRelated T
+      r.val.1 r.val.2.1 r.val.2.2.1
+      r.property.1 r.property.2.1 from h]
+  rw [stoneanCechTripleOfRelated_xy,
+    stoneanCechPairOfRelated_fst]
+
+
+noncomputable def explicitQuintupleFifth (T : Profinite.{u}) :
+    stoneanCechExplicitQuintupleProfinite T ⟶
+      Stonean.toProfinite.obj T.presentation := by
+  let P := Stonean.toProfinite.obj T.presentation
+  let p := Profinite.presentation.π T
+  letI : CompactSpace
+      (↥(profiniteCechQuintupleRelatedSet P T p)) :=
+    isCompact_iff_compactSpace.mp
+      (profiniteCechQuintupleRelatedSet_isClosed P T p).isCompact
+  exact CompHausLike.ofHom _ (⟨fun q => q.val.2.2.2.2,
+    by fun_prop⟩ : C(stoneanCechExplicitQuintupleProfinite T, P))
+
+/-- Source normalization into the actual iterated fifth Profinite pullback. -/
+noncomputable def stoneanCechExplicitQuintupleToAbstract (T : Profinite.{u}) :
+    stoneanCechExplicitQuintupleProfinite T ⟶
+      stoneanPresentationCechQuintuples T := by
+  let p := Profinite.presentation.π T
+  let a := quintupleFace4 T ≫ stoneanCechExplicitQuadrupleToAbstract T
+  let b := explicitQuintupleFifth T
+  have h : a ≫ (stoneanCechQuadrupleVertexFirst T ≫ p) = b ≫ p := by
+    apply ConcreteCategory.hom_ext
+    intro z
+    change p.hom.hom ((stoneanCechQuadrupleVertexFirst T).hom.hom
+      ((stoneanCechExplicitQuadrupleToAbstract T).hom.hom
+        ((quintupleFace4 T).hom.hom z))) =
+      p.hom.hom ((explicitQuintupleFifth T).hom.hom z)
+    rw [stoneanCechQuadrupleVertexFirst_atClosed]
+    have hf : ((quintupleFace4 T).hom.hom z).val.1 = z.val.1 := rfl
+    have hv : (explicitQuintupleFifth T).hom.hom z = z.val.2.2.2.2 := rfl
+    rw [hf,hv]
+    exact z.property.1.trans
+      (z.property.2.1.trans
+       (z.property.2.2.1.trans z.property.2.2.2))
+  exact pullback.lift a b h
+
+theorem stoneanCechExplicitQuintupleToAbstract_first (T : Profinite.{u}) :
+    stoneanCechExplicitQuintupleToAbstract T ≫
+      pullback.fst
+        (stoneanCechQuadrupleVertexFirst T ≫ Profinite.presentation.π T)
+        (Profinite.presentation.π T) =
+      quintupleFace4 T ≫ stoneanCechExplicitQuadrupleToAbstract T := by
+  unfold stoneanCechExplicitQuintupleToAbstract
+  exact pullback.lift_fst _ _ _
+
+theorem stoneanCechExplicitQuintupleToAbstract_fifth (T : Profinite.{u}) :
+    stoneanCechExplicitQuintupleToAbstract T ≫
+      pullback.snd
+        (stoneanCechQuadrupleVertexFirst T ≫ Profinite.presentation.π T)
+        (Profinite.presentation.π T) = explicitQuintupleFifth T := by
+  unfold stoneanCechExplicitQuintupleToAbstract
+  exact pullback.lift_snd _ _ _
+
+
+/-- The reverse map from the fifth iterated *categorical* Profinite
+pullback to its compact five-vertex closed relation. -/
+noncomputable def stoneanCechCategoricalQuintupleToExplicit (T : Profinite.{u}) :
+    stoneanPresentationCechQuintuples T ⟶
+      stoneanCechExplicitQuintupleProfinite T := by
+  let P := Stonean.toProfinite.obj T.presentation
+  let p := Profinite.presentation.π T
+  let F := pullback.fst
+    (stoneanCechQuadrupleVertexFirst T ≫ p) p
+  let W := pullback.snd
+    (stoneanCechQuadrupleVertexFirst T ≫ p) p
+  let B := stoneanCechCategoricalQuadrupleToExplicit T
+  letI : CompactSpace
+      (↥(profiniteCechQuintupleRelatedSet P T p)) :=
+    isCompact_iff_compactSpace.mp
+      (profiniteCechQuintupleRelatedSet_isClosed P T p).isCompact
+  have hlast (z : stoneanPresentationCechQuintuples T) :
+      p.hom.hom ((B.hom.hom (F.hom.hom z)).val.2.2.2) =
+      p.hom.hom (W.hom.hom z) := by
+    have h := stoneanCechQuadrupleVertexFirst_atClosed T
+      (B.hom.hom (F.hom.hom z))
+    have hBA := congrArg (fun f :
+        stoneanPresentationCechQuadruples T ⟶
+        stoneanPresentationCechQuadruples T =>
+        f.hom.hom (F.hom.hom z))
+      (stoneanCechCategoricalQuadruple_roundtrip T)
+    change (stoneanCechExplicitQuadrupleToAbstract T).hom.hom
+      (B.hom.hom (F.hom.hom z)) = F.hom.hom z at hBA
+    rw [hBA] at h
+    have hf : (stoneanCechQuadrupleVertexFirst T ≫ p).hom.hom
+        (F.hom.hom z) = p.hom.hom (W.hom.hom z) := by
+      have ht := congrArg
+        (fun k : stoneanPresentationCechQuintuples T ⟶ T =>
+          k.hom.hom z)
+        (pullback.condition :
+          F ≫ (stoneanCechQuadrupleVertexFirst T ≫ p) = W ≫ p)
+      exact ht
+    change p.hom.hom
+      ((stoneanCechQuadrupleVertexFirst T).hom.hom (F.hom.hom z)) =
+      p.hom.hom (W.hom.hom z) at hf
+    exact ((B.hom.hom (F.hom.hom z)).property.1.trans
+      ((B.hom.hom (F.hom.hom z)).property.2.1.trans
+      (B.hom.hom (F.hom.hom z)).property.2.2)).symm.trans
+        ((congrArg p.hom.hom h).trans hf)
+  let c : C(stoneanPresentationCechQuintuples T,
+      ↥(profiniteCechQuintupleRelatedSet P T p)) := by
+    refine ⟨fun z =>
+      ⟨((B.hom.hom (F.hom.hom z)).val.1,
+         ((B.hom.hom (F.hom.hom z)).val.2.1,
+           ((B.hom.hom (F.hom.hom z)).val.2.2.1,
+             ((B.hom.hom (F.hom.hom z)).val.2.2.2,
+               W.hom.hom z)))),
+        ⟨(B.hom.hom (F.hom.hom z)).property.1,
+         (B.hom.hom (F.hom.hom z)).property.2.1,
+         (B.hom.hom (F.hom.hom z)).property.2.2,
+         hlast z⟩⟩, ?_⟩
+    apply Continuous.subtype_mk
+    let tr : stoneanPresentationCechQuintuples T ⟶
+      stoneanCechExplicitQuadrupleProfinite T := F ≫ B
+    have htr : Continuous (fun z : stoneanPresentationCechQuintuples T =>
+      (B.hom.hom (F.hom.hom z)).val) :=
+      continuous_subtype_val.comp tr.hom.hom.continuous
+    exact (continuous_fst.comp htr).prodMk
+      ((continuous_fst.comp (continuous_snd.comp htr)).prodMk
+        ((continuous_fst.comp
+          (continuous_snd.comp (continuous_snd.comp htr))).prodMk
+          ((continuous_snd.comp
+            (continuous_snd.comp (continuous_snd.comp htr))).prodMk
+            W.hom.hom.continuous)))
+  exact CompHausLike.ofHom _ c
+
+
+theorem stoneanCechExplicitQuintuple_roundtrip (T : Profinite.{u}) :
+    stoneanCechExplicitQuintupleToAbstract T ≫
+      stoneanCechCategoricalQuintupleToExplicit T =
+        𝟙 (stoneanCechExplicitQuintupleProfinite T) := by
+  apply ConcreteCategory.hom_ext
+  intro z
+  apply Subtype.ext
+  change ((stoneanCechCategoricalQuintupleToExplicit T).hom.hom
+    ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z)).val = z.val
+  let F := pullback.fst
+    (stoneanCechQuadrupleVertexFirst T ≫ Profinite.presentation.π T)
+    (Profinite.presentation.π T)
+  let W := pullback.snd
+    (stoneanCechQuadrupleVertexFirst T ≫ Profinite.presentation.π T)
+    (Profinite.presentation.π T)
+  let A4 := stoneanCechExplicitQuadrupleToAbstract T
+  let B4 := stoneanCechCategoricalQuadrupleToExplicit T
+  have hf := congrArg (fun f :
+      stoneanCechExplicitQuintupleProfinite T ⟶
+        stoneanPresentationCechQuadruples T => f.hom.hom z)
+      (stoneanCechExplicitQuintupleToAbstract_first T)
+  change F.hom.hom ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z) =
+    A4.hom.hom ((quintupleFace4 T).hom.hom z) at hf
+  have hw := congrArg (fun f :
+      stoneanCechExplicitQuintupleProfinite T ⟶
+        Stonean.toProfinite.obj T.presentation => f.hom.hom z)
+      (stoneanCechExplicitQuintupleToAbstract_fifth T)
+  change W.hom.hom ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z) =
+    (explicitQuintupleFifth T).hom.hom z at hw
+  have hB4 := congrArg (fun f :
+      stoneanCechExplicitQuadrupleProfinite T ⟶
+        stoneanCechExplicitQuadrupleProfinite T =>
+        f.hom.hom ((quintupleFace4 T).hom.hom z))
+      (stoneanCechExplicitQuadruple_roundtrip T)
+  change B4.hom.hom (A4.hom.hom ((quintupleFace4 T).hom.hom z)) =
+    (quintupleFace4 T).hom.hom z at hB4
+  change
+      ((B4.hom.hom (F.hom.hom
+        ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z))).val.1,
+      ((B4.hom.hom (F.hom.hom
+        ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z))).val.2.1,
+       ((B4.hom.hom (F.hom.hom
+        ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z))).val.2.2.1,
+        ((B4.hom.hom (F.hom.hom
+        ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z))).val.2.2.2,
+          W.hom.hom ((stoneanCechExplicitQuintupleToAbstract T).hom.hom z))))) =
+      z.val
+  rw [hf,hB4,hw]
+  have h4 : ((quintupleFace4 T).hom.hom z).val =
+    (z.val.1,(z.val.2.1,(z.val.2.2.1,z.val.2.2.2.1))) := rfl
+  have h5 : (explicitQuintupleFifth T).hom.hom z = z.val.2.2.2.2 := rfl
+  rw [h4,h5]
+
+
+theorem stoneanCechCategoricalQuintuple_roundtrip (T : Profinite.{u}) :
+    stoneanCechCategoricalQuintupleToExplicit T ≫
+      stoneanCechExplicitQuintupleToAbstract T =
+        𝟙 (stoneanPresentationCechQuintuples T) := by
+  let p := Profinite.presentation.π T
+  let F := pullback.fst (stoneanCechQuadrupleVertexFirst T ≫ p) p
+  let W := pullback.snd (stoneanCechQuadrupleVertexFirst T ≫ p) p
+  let A := stoneanCechExplicitQuintupleToAbstract T
+  let B := stoneanCechCategoricalQuintupleToExplicit T
+  let A4 := stoneanCechExplicitQuadrupleToAbstract T
+  let B4 := stoneanCechCategoricalQuadrupleToExplicit T
+  let E := quintupleFace4 T
+  let V := explicitQuintupleFifth T
+  have hf : B ≫ E = F ≫ B4 := by
+    apply ConcreteCategory.hom_ext
+    intro z
+    apply Subtype.ext
+    change (E.hom.hom (B.hom.hom z)).val =
+      (B4.hom.hom (F.hom.hom z)).val
+    rfl
+  have hw : B ≫ V = W := by
+    apply ConcreteCategory.hom_ext
+    intro z
+    change V.hom.hom (B.hom.hom z) = W.hom.hom z
+    rfl
+  apply pullback.hom_ext
+  · apply ConcreteCategory.hom_ext
+    intro z
+    change F.hom.hom (A.hom.hom (B.hom.hom z)) = F.hom.hom z
+    have h := congrArg (fun m :
+        stoneanCechExplicitQuintupleProfinite T ⟶
+        stoneanPresentationCechQuadruples T =>
+          m.hom.hom (B.hom.hom z))
+       (stoneanCechExplicitQuintupleToAbstract_first T)
+    change F.hom.hom (A.hom.hom (B.hom.hom z)) =
+        A4.hom.hom (E.hom.hom (B.hom.hom z)) at h
+    rw [h]
+    have he := congrArg (fun m :
+      stoneanPresentationCechQuintuples T ⟶
+      stoneanCechExplicitQuadrupleProfinite T =>
+        m.hom.hom z) hf
+    change E.hom.hom (B.hom.hom z) =
+      B4.hom.hom (F.hom.hom z) at he
+    rw [he]
+    have hr := congrArg (fun m :
+      stoneanPresentationCechQuadruples T ⟶
+      stoneanPresentationCechQuadruples T =>
+        m.hom.hom (F.hom.hom z))
+      (stoneanCechCategoricalQuadruple_roundtrip T)
+    exact hr
+  · apply ConcreteCategory.hom_ext
+    intro z
+    change W.hom.hom (A.hom.hom (B.hom.hom z)) = W.hom.hom z
+    have h := congrArg (fun m :
+        stoneanCechExplicitQuintupleProfinite T ⟶
+        Stonean.toProfinite.obj T.presentation =>
+          m.hom.hom (B.hom.hom z))
+       (stoneanCechExplicitQuintupleToAbstract_fifth T)
+    change W.hom.hom (A.hom.hom (B.hom.hom z)) =
+      V.hom.hom (B.hom.hom z) at h
+    rw [h]
+    have he := congrArg (fun m :
+      stoneanPresentationCechQuintuples T ⟶
+      Stonean.toProfinite.obj T.presentation =>
+        m.hom.hom z) hw
+    exact he
+
+noncomputable def stoneanCechExplicitQuintupleIso (T : Profinite.{u}) :
+    stoneanCechExplicitQuintupleProfinite T ≅
+      stoneanPresentationCechQuintuples T where
+  hom := stoneanCechExplicitQuintupleToAbstract T
+  inv := stoneanCechCategoricalQuintupleToExplicit T
+  hom_inv_id := stoneanCechExplicitQuintuple_roundtrip T
+  inv_hom_id := stoneanCechCategoricalQuintuple_roundtrip T
+
+#print axioms stoneanCechCategoricalQuintuple_roundtrip
+#print axioms stoneanCechExplicitQuintupleIso
+#print axioms stoneanCechExplicitQuintuple_roundtrip
+#print axioms stoneanCechCategoricalQuintupleToExplicit
+#print axioms stoneanCechExplicitQuintupleToAbstract_first
+#print axioms stoneanCechExplicitQuintupleToAbstract_fifth
+#print axioms stoneanCechQuadrupleVertexFirst_atClosed
+
 #print axioms stoneanCechFifthBoundary_comp_fourthBoundary_zero
 
 #print axioms stoneanCechFifthFace01_commute
