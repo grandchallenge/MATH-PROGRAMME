@@ -79,20 +79,22 @@
       ],
       "promotion_condition": "Admit source-locked research evidence separately from mathematical certification. No MATHCERT/public certification or unrestricted Erdős #561 closure without additional mathematical review and proof.",
       "claim_id": "ERDOS561-UNIQUECORE-3X3-003",
-      "short_name": "New 186 ordered three-star exclusions through odd-regular-core gate",
-      "claim_text": "Assuming the current paper-level three-star joint residual theorem, the unique-large-core classification and explicit exterior-edge avoiding-colouring exclude 186 additional ordered 3x3 parameter pairs beyond the prior 339-case method shortlist, leaving 153 method-survivors.",
+      "short_name": "249 ordered three-star exclusions through unique core and split-colouring gates",
+      "claim_text": "Assuming the current paper-level three-star joint residual theorem, the unique-large-core classification and two explicit exterior-colouring constructions exclude 249 additional ordered 3x3 parameter pairs beyond the prior 339-case method shortlist, leaving 90 method-survivors.",
       "claim_class": "PROVED_IN_PACKAGE",
       "status": "UNDER_REVIEW",
       "certainty": "PROVED_NOT_FORMALIZED",
       "support_type": "EXACT_RATIONAL_COMPUTATION",
-      "support_summary": "Fresh independent exact Python enumeration with all 4,566 bounded ordered pairs, reproducing the baseline 851 and previous 512 exclusions, then 176 new parity exclusions and 10 explicit-colouring exclusions. All integer arithmetic; full ordered lists in JSON. No claim that 153 are all genuinely open.",
+      "support_summary": "Fresh independent exact Python enumeration of 4,566 bounded ordered pairs, reproducing baseline 851 and previous 512 exclusions, then 176 parity exclusions, 10 leaf-edge outside-colouring exclusions and 63 whole-core red/blue opposite outside-colouring exclusions. Full ordered lists in JSON; no assertion that the 90 survivors are genuinely open. A second self-contained exhaustive integer verifier independently regenerates and matches all 249 excluded and 90 surviving ordered pairs.",
       "source_or_artifact": [
         "research/erdos-561/general-core/verify_parameter_gate.py",
-        "research/erdos-561/general-core/GENERAL_CORE_PARAMETER_CERTIFICATE.json"
+        "research/erdos-561/general-core/GENERAL_CORE_PARAMETER_CERTIFICATE.json",
+        "research/erdos-561/unique-core/verify_independent_gate.py"
       ],
       "related_files": [
         "research/erdos-561/general-core/GENERAL_SATURATED_CORE_UNIQUENESS_THEOREM.md",
-        "research/erdos-561/general-core/GENERAL_CORE_PARAMETER_CERTIFICATE.json"
+        "research/erdos-561/general-core/GENERAL_CORE_PARAMETER_CERTIFICATE.json",
+        "research/erdos-561/unique-core/verify_independent_gate.py"
       ]
     }
   ]

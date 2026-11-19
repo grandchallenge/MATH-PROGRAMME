@@ -69,10 +69,45 @@ assert old_pass==512,old_pass
 assert len(new)==186,(len(new),grounds)
 assert len(kept)==153,(len(kept),grounds)
 assert old_pass+len(new)+len(kept)==851
+# Stronger split-colouring witness: colour isolated core monochromatically
+# and ALL outside edges in the opposite colour. One side cannot fit into
+# the c-vertex core, while the other requires more than t outside edges.
+stage1_new=list(new)
+stage1_keep=list(kept)
+stage2_new=[]
+final_kept=[]
+for item in stage1_keep:
+ x,y,d,reason,*extras=item
+ if reason=='very_high_core':
+  final_kept.append(item)
+  continue
+ assert reason=='possible_odd_core'
+ e=sum(max(x[i]+y[j]-1 for i in range(3) for j in range(3) if i+j==z)
+       for z in range(5))-1
+ remaining_core_orders=[]
+ for c in extras[0]:
+  outside=e-c*d//2
+  # Red core, blue outside; or blue core, red outside.
+  avoid_red_core=(sum(x)+3>c and outside<sum(y))
+  avoid_blue_core=(sum(y)+3>c and outside<sum(x))
+  if not(avoid_red_core or avoid_blue_core):
+   remaining_core_orders.append(c)
+ if remaining_core_orders:
+  final_kept.append([x,y,d,reason,remaining_core_orders])
+ else:
+  stage2_new.append([x,y,d,'monochrome_core_exterior_edge_count'])
+  grounds['monochrome_core_exterior_edge_count']+=1
+new.extend(stage2_new)
+kept=final_kept
+assert len(stage2_new)==63,(len(stage2_new),grounds)
+assert len(new)==249,(len(new),grounds)
+assert len(kept)==90,(len(kept),grounds)
+assert len(new)+len(kept)==339
 new_ids=sorted((tuple(x),tuple(y)) for x,y,*_ in new)
 cert={'domain_total':4566,'baseline':851,'old_Dplus2_closed':512,
-      'previous_survivors':339,'new_excluded':len(new),'remaining':len(kept),
-      'new_reason_counts':dict(grounds),
+      'previous_survivors':339,'stage1_excluded':len(stage1_new),'stage2_excluded':len(stage2_new),
+      'new_excluded':len(new),'remaining':len(kept),
+      'classification_reason_counts':dict(grounds),
       'new_by_D':dict(Counter(v[2] for v in new)),
       'remaining_by_D':dict(Counter(v[2] for v in kept)),
       'new_exact_sha256':hashlib.sha256(json.dumps(new_ids,separators=(',',':')).encode()).hexdigest(),

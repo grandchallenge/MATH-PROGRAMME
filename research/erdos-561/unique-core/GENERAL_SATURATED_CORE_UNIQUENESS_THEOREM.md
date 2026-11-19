@@ -90,20 +90,36 @@ $$
 
 Thus we can exclude the counterexample if the caps fail the odd/odd parity test, **or** the last inequality holds for every feasible odd component order `c` from `D+1` to `2D+1` with `cD/2≤E`.
 
+### Stronger elementary split-colouring exclusion
+
+There is a second, independent way to defeat an isolated regular core. Colour **every edge of that core red** and **every remaining edge blue**. The red target cannot occur if its required number of vertices exceeds the core order `c`. The blue target cannot occur if its total number of edges exceeds the `t=E−cD/2` edges outside the core. Interchange the colours to obtain the symmetric alternative. Thus, for each possible odd core order `c`, either of the following conditions provides an explicit counter-colouring:
+
+$$
+\sum n_i+3>c\quad	ext{and}\quad t<\sum m_j,
+$$
+
+or
+
+$$
+\sum m_j+3>c\quad	ext{and}\quad t<\sum n_i.
+$$
+
+This does not rely on the shape of the outside graph. It improves the bound beyond the earlier leaf-edge construction, especially when the outside edge budget is too small even to contain the opposite target forest. For the residual case list it excludes **63 additional ordered pairs**. All colourings avoid the respective targets directly, rather than only avoiding a degree-capped partition.
+
 ## 3. Exact bounded results
 
-The fresh, independent integer implementation `verify_parameter_gate.py` reproduces the 851-case earlier shortlist and the 512 earlier D+2 exclusions. It eliminates **186 additional ordered pairs**, leaving **153** research-filter survivors. Of the 186, **176** fail the new parity/unique-core test and **10** fail the explicit exterior-colouring test.
+The fresh, independent integer implementation `verify_parameter_gate.py` reproduces the 851-case earlier shortlist and the 512 earlier D+2 exclusions. It eliminates **249 additional ordered pairs**, leaving **90** research-filter survivors. The exclusions comprise **176** parity/unique-core contradictions, **10** leaf-edge exterior colourings, and **63** whole-core-monochromatic exterior-edge colourings.
 
 | Forced degree D | Excluded now | Surviving filter entries |
 | --- | ---: | ---: |
 | 2 | 0 | 9 |
 | 3 | 4 | 32 |
-| 4 | 22 | 70 |
+| 4 | 46 | 46 |
 | 5 | 118 | 0 |
-| 6 | 40 | 42 |
+| 6 | 79 | 3 |
 | 7 | 2 | 0 |
-| Total | **186** | **153** |
+| Total | **249** | **90** |
 
 `verify_general_core.cpp` independently examines every simple labelled graph on 2 through 6 vertices: 33,866 graphs, 91,727 degree-cap tests. In the 91,657 cases below the `k≤2D+1` threshold, **every** result matches the isolated odd-order regular-component characterization. The program also tests the connected `K_(D+3)`-minus-Hamilton-cycle family for D=2,4,6. The checked general Lovász criterion agrees with explicit red/blue edge searches on 2,809 selected instances. These finite tests corroborate, but do not prove, the unbounded theorem.
 
-**The 153 remaining entries are not 153 new established open problems:** they are only entries not eliminated by the specific tests above. Full Erdős #561, four-or-more-component residual results, and the high-degree-core regime beyond `2D+1` remain open.
+**The 90 remaining entries are not 90 new established open problems:** they are only entries not eliminated by the specific tests above. Full Erdős #561, four-or-more-component residual results, and the high-degree-core regime beyond `2D+1` remain open.

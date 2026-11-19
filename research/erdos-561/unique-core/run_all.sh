@@ -16,5 +16,6 @@ actual="$("$exe")"
 expected='PASS {graphs:33866,cap_instances:91727,obstructions:273,exact_lovasz_comparisons:2809,general_cases:91657,general_obstructions:263}'
 [ "$actual" = "$expected" ] || { printf '%s\n' "$actual"; echo 'FAIL graph corpus changed'; exit 23; }
 python3 verify_parameter_gate.py
+python3 verify_independent_gate.py
 printf '%s\n' "$actual"
-echo 'REPLAY_PASS: kernel arithmetic, graph obstructions, exact 186/153 parameter certificate'
+echo 'REPLAY_PASS: kernel arithmetic, graph obstructions, exact 249/90 parameter certificate'
