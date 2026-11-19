@@ -1,7 +1,8 @@
 # Erdős #249 — WP09-A: signed shifted-totient contrast and a first-harmonic saving
 
 **Scientific issue:** [MATH-PROGRAMME #3500](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3500).  
-**Source lock:** Will Cook, *The Binary Totient Series* (2026, revised October 2026), [exact source](https://github.com/wcook04/plectis-erdos/blob/main/paper/249/erdos-249-binary-totient-series.tex), section *An exponential-sum question*.  
+**Source lock:** Will Cook, *The Binary Totient Series* (2026, revised October 2026), [exact source](https://github.com/wcook04/plectis-erdos/blob/3368d1e69467aec111eb3244843ad3542171ff96/paper/249/erdos-249-binary-totient-series.tex), section *An exponential-sum question*.  
+**Pinned Cook source Git blob:** 547ed9ed83500181a2e55047ce5df569b7cb49ac.  
 **State:** BOUNDED MATHEMATICAL RESULT; NOT A PROOF OF IRRATIONALITY. Original Erdős #249 OPEN; MATHCERT NOT_SUBMITTED.
 
 ## 1. Target: Cook's actual first harmonic, not a surrogate
