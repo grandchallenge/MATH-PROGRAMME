@@ -13,3 +13,5 @@
 **Resources:** CPU-only, standard Python for JOI/ORI; NetworkX for COR. No GPU, no GraphQL polling, no repeated Monte Carlo.
 
 **Boundaries:** The 851 remaining parameter entries are not 851 certified-open instances. No claim beyond the exact theorems in the accompanying manuscript.
+| EVE-01 | `python verify_even_core.py` | Constructive 1-factor/Hamilton-cycle cap partitions at exact degree-core equality | 20,433 checked cases, exactly 10 pure-complete odd/odd failures; parameter list 851→845→835 |
+| EVI-01 | `python verify_even_core_independent.py` | Separate exhaustive cap-partition feasibility, no decomposition code | 3,608 bounded cases, 3,605 split-capable and 3 genuine exceptions |
