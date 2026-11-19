@@ -1,0 +1,54 @@
+{
+  "record_type": "ERDOS249_S_WP07_D_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-18",
+  "research_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "bounded_claim": "FERMAT_POLYLOG_NEARMAX_TOTIENT_VALUATION_COUNT_AND_GROWING_DEFICIT",
+  "exact_replayed_source_head": "c14182d9baec9fcaa55ff43d5f3e25bc30c1ffd9",
+  "exact_reviewed_source_head": "d35c0e2bd963d59713b81227cffb84218c85ba06",
+  "source_sha256": {
+    "manuscript": "19aa6355ea93e7fa60307079fb6c0856324528c4990f8c5c8705b2c7af4737d2",
+    "extended_module": "8e12dd5480d13046530b392635b7a7161848fa414b13498874ed776341aff305",
+    "extended_registered_tests": "30b8263cf8b8858c4dcca37ba84d07b27e610e452faa0e3e23f98c2ef146923d",
+    "qualified_critical_review": "dcb25b61acf63416dd94b9a31ef6737442410fec89beae0e1c0d0ab01698f79e"
+  },
+  "theorem": {
+    "C": "fixed integer C>=0, or uniformly growing with 2^(C+1)<=R^(1-delta)",
+    "B": "2^(C+1)",
+    "R": "floor(log2 X)",
+    "K": "largest nonnegative integer with 3^K<B",
+    "explicit_count": "(R+1) D_B 2^(1+floor(log2 R)) sum_{j=0}^K binom(BR,j)",
+    "fixed_deficit": "O_C((1+log X)^(K+2))",
+    "growing_deficit": "exp(o(R))=X^o(1), for B<=R^(1-delta)",
+    "C0": "Exact Fermat-prime product equality rederived and attributed to Zhao 2025",
+    "adjacent_integral_pair_bound": "O_C((1+log X)^(K_{2^(C+3)}+2))",
+    "finite_total_integral_bound": "X/2+polylog(X)+O(1)",
+    "depth_firewall": "At L<=floor(log2 X), centered dyadic residue <=2^(L-1)<=X/2, so cannot exceed q(N+L+2)>X for positive q,N>=X"
+  },
+  "source_attribution": [
+    "Jun-Jia Zhao (2025), p-Adic Valuation of Euler's Totient Function, DOI 10.1007/s40840-025-01869-7; C=0 exact equality characterization is established antecedent",
+    "Will Cook, The Binary Totient Series (2026), revised 2026-10-01; cofinal positive Fourier criterion already source-locked",
+    "GCL WP07-C protected nearmax bound and adjacent full-finite-sum recurrence"
+  ],
+  "checks": {
+    "location": "CHAD local OS account, no independent execution attestation",
+    "exact_source_capture_id": "7bfbaf10e5214a34b28bfcafc595778b",
+    "full_registered_tests": 27,
+    "new_tests": 8,
+    "full_suite_failures": 0,
+    "suite_stdout_sha256": "4fa4d2ad64e7914a926826c2298699fa177c2ffc32a3b55fd0e1019cef9c090d",
+    "manuscript_math_gate": "PASS",
+    "reviewer_math_gate": "PASS",
+    "math_gate_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+  },
+  "reviewer": {
+    "same_authenticated_agent_distinct_logical_role": true,
+    "independent_mathematical_review": false,
+    "certification": "NOT_SUBMITTED",
+    "novelty_or_priority_claimed": false,
+    "verdict": "ACCEPT_WITH_SCOPE"
+  },
+  "original_erdos249": "OPEN",
+  "positive_scientific_gap": "UNPROVED__COFINAL_TOTIENT_QUANTITATIVE_RESIDUE_SEPARATION_AT_ANALYTIC_DEPTH",
+  "governance": "Protected PR with currently required checks and native merge queue only; on admission leave #3500 OPEN and GCL Worker Queue Project #2 In Progress.",
+  "next_research_action": "Construct exact rational countermodel preserving actual totient low-order bits at every index; test which residue-based criteria can distinguish actual totient from this rational mimic, then seek genuinely higher-depth totient-specific correlation."
+}
