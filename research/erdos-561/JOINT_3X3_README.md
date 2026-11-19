@@ -40,3 +40,7 @@ The role-separated adversarial audit is in `ODD_CORE_PARITY_AND_REVIEW.md` and i
 ## Even-degree core equality refinement (2026-11-18)
 
 `EVEN_CORE_CAP_PARTITION_THEOREM.md` completely classifies the cap-partition obstruction when the degree-core vertex budget is attained. The only non-partitionable configuration is a complete `K_(D+1)` core with even `D` and odd/odd degree caps; an absent core edge always restores a cap partition. This proves 10 additional ordered 3×3 size-Ramsey instances via the full 3×3 joint-residual result, changing the current arithmetic-gate shortlist `851→845→835`. All new mathematics remains `UNDER_REVIEW`.
+
+## One-slack stability refinement
+
+The standalone mathematical manuscript `ONE_SLACK_CORE_THEOREM.md` proves the exact cap-partition classification when the degree-core vertex bound has one unit of slack, provided `D>=3`. It excludes **80 further ordered** original three-star cases, conditional on the underlying joint residual theorem. The arithmetic research shortlist is now `851→845→835→755`; this is a count of parameters not excluded by the specified gates, **not** a claim of 755 open problems. The case `D=2` is expressly excluded from the stability theorem. Run `python verify_one_slack.py` to replay 29,685 independent finite cap tests and the integer parameters. All mathematics retains `UNDER_REVIEW`.

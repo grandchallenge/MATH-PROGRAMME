@@ -15,3 +15,5 @@
 **Boundaries:** The 851 remaining parameter entries are not 851 certified-open instances. No claim beyond the exact theorems in the accompanying manuscript.
 | EVE-01 | `python verify_even_core.py` | Constructive 1-factor/Hamilton-cycle cap partitions at exact degree-core equality | 20,433 checked cases, exactly 10 pure-complete odd/odd failures; parameter list 851→845→835 |
 | EVI-01 | `python verify_even_core_independent.py` | Separate exhaustive cap-partition feasibility, no decomposition code | 3,608 bounded cases, 3,605 split-capable and 3 genuine exceptions |
+
+| STB-01 | `python verify_one_slack.py` | Independent exhaustive near-equality cap feasibility for all D=3,4 missing-core patterns and bounded D=5,6; exact 3×3 parameter gate | 29,685 feasible near-core tests; 80 additional ordered exclusions; surviving filter 755 |

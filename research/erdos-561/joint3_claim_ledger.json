@@ -215,6 +215,38 @@
         "MATH-PROGRAMME#3490",
         "MATH-PROGRAMME#3502"
       ]
+    },
+    {
+      "claim_id": "ERDOS561-ONE-SLACK-0008",
+      "short_name": "One-slack high-degree-core capped-partition stability",
+      "claim_text": "For D=α+β≥3, Δ(G)=D, at least D+1 degree-D vertices, and v_+=2e−D², the (α,β) cap partition fails exactly for even D with odd/odd caps and a complete K_(D+1) degree-D core; in that case the remaining graph is P₃ plus disjoint K₂. Conditional on the three-star joint residual theorem, this excludes 80 further original three-star ordered parameter pairs.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph theory / size Ramsey numbers",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Degree-excess budget yields one degree-two noncore vertex; extend exact core split via factor/Hamilton-path flipping to prevent a cap-1 collision at that vertex; complete-core exception admits an explicit Ramsey-avoiding two-colouring. Separate exact exhaustive feasibility check 29,685 cases, plus 80-case integer filter.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/ONE_SLACK_CORE_THEOREM.md",
+        "research/erdos-561/EVEN_CORE_CAP_PARTITION_THEOREM.md"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "D≥3, α,β positive",
+        "at least D+1 maximum-degree vertices",
+        "v_+=2e−D²",
+        "joint three-star residual theorem additionally required for Ramsey corollary"
+      ],
+      "promotion_condition": "Role-separated adversarial proof review of the cap-1 edge cases, exact parameter gate and direct avoiding colouring; certification requires separately justified mathematical independence or formal verification.",
+      "related_files": [
+        "research/erdos-561/ONE_SLACK_CORE_THEOREM.md",
+        "research/erdos-561/verify_one_slack.py",
+        "research/erdos-561/one_slack_results.json"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ]
     }
   ]
 }
