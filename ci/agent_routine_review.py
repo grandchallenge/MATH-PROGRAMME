@@ -299,6 +299,121 @@ def bounded_documentary_not_applicable(
     return len(sections) >= 2
 
 
+# A non-approving route for bounded research handoffs plus their mandatory
+# reference-index link. This deliberately does NOT extend the App's routine
+# material-approval profiles or protected specialist-domain admission registry.
+RESEARCH_HANDOFF_RE = re.compile(
+    r"^docs/handoffs/ERDOS-[0-9]{3,4}-[A-Z0-9-]+\.md$"
+)
+RESEARCH_INDEX_PATH = "docs/archives/research.md"
+
+
+def bounded_research_handoff_not_applicable(
+    pr: dict, files: list[dict], head: str, *, token: str, prefix: str,
+) -> bool:
+    """Recognize only one unadjudicated Erdős handoff + one matching index link.
+
+    True authorizes a negative routing receipt, NEVER review or admission.
+    All content is read by exact commit and Git blob rather than PR prose.
+    """
+    verify_specialist_envelope(pr, files, head)
+    if len(files) != 2:
+        return False
+    handoffs = [
+        row for row in files
+        if isinstance(row.get("filename"), str)
+        and RESEARCH_HANDOFF_RE.fullmatch(row["filename"])
+    ]
+    indexes = [
+        row for row in files
+        if row.get("filename") == RESEARCH_INDEX_PATH
+    ]
+    if len(handoffs) != 1 or len(indexes) != 1:
+        return False
+    handoff, index = handoffs[0], indexes[0]
+    for row, status in ((handoff, "added"), (index, "modified")):
+        path = row["filename"]
+        if (protected_path(path) or row.get("status") != status
+                or row.get("previous_filename")
+                or not isinstance(row.get("sha"), str)
+                or not re.fullmatch(r"[0-9a-f]{40}", row["sha"])):
+            return False
+    if (handoff.get("additions", 0) < 1
+            or handoff.get("deletions") != 0
+            or index.get("additions") != 1
+            or index.get("deletions") != 0):
+        return False
+    patch = index.get("patch")
+    if not isinstance(patch, str):
+        return False
+    added = [
+        line[1:] for line in patch.splitlines()
+        if line.startswith("+") and not line.startswith("+++")
+    ]
+    deleted = [
+        line for line in patch.splitlines()
+        if line.startswith("-") and not line.startswith("---")
+    ]
+    # Exactly one navigational link to the same new handoff; no rewritten
+    # index content, arbitrary link, or additional path can pass this route.
+    target = "](../handoffs/" + handoff["filename"].rsplit("/", 1)[1] + ")"
+    if (deleted or len(added) != 1 or not added[0].startswith("- [")
+            or not added[0].endswith(target)):
+        return False
+    raw, actual_blob = fetch_exact_file(
+        prefix, handoff["filename"], head, token,
+    )
+    if actual_blob != handoff["sha"]:
+        raise RoutineReviewError("research handoff Git blob changed at exact head")
+    # Only explicitly UNADJUDICATED research is eligible. This marker is a
+    # scope restriction, not evidence that any mathematical assertion is true.
+    if (len(raw) > 100_000 or not raw.startswith(b"# Erd")
+            or b"**Status:** PROVED_ON_PAPER_UNADJUDICATED" not in raw[:1000]):
+        return False
+    return True
+
+
+def report_research_handoff_not_applicable(head: str, files: list[dict]) -> None:
+    """Refer mathematical claims for specialist review; post NO approval."""
+    record = {
+        "record_type": "GCL_RESEARCH_HANDOFF_SPECIALIST_ROUTING/1",
+        "candidate_head": head,
+        "source_file": next(
+            row["filename"] for row in files
+            if RESEARCH_HANDOFF_RE.fullmatch(row["filename"])
+        ),
+        "index_file": RESEARCH_INDEX_PATH,
+        "disposition": "NOT_APPLICABLE_NO_APPROVAL",
+        "specialist_domain": "MATHEMATICAL",
+        "specialist_review": "PENDING_BEFORE_CLAIM_PROMOTION",
+        "source_semantic_review": "NOT_PERFORMED",
+        "review_posted": False,
+        "editorial_admission": "SUBJECT_TO_EXISTING_PROTECTED_CHECKS",
+        "mathematical_certification": False,
+        "claim_promotion": False,
+        "protected_checks_waived": False,
+    }
+    message = (
+        "RESEARCH_HANDOFF_SPECIALIST_ROUTE: matched exact-head unadjudicated "
+        "research note with its one-line index reference. App abstains: "
+        "no automated GitHub approval, mathematical certification, or source-"
+        "semantic adjudication. Specialist review is required before claim "
+        "promotion; protected branch checks and merge queue remain binding."
+    )
+    print("::notice title=Unadjudicated research handoff::" + message)
+    print(json.dumps(record, sort_keys=True))
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as out:
+            out.write(
+                "### Research handoff — specialist claim review pending\n\n"
+                + message + "\n\n"
+                + "This is a non-approval routing receipt; it does not "
+                "waive any protected check or authorize publication.\n\n"
+                + json.dumps(record, indent=2, sort_keys=True) + "\n"
+            )
+
+
 def report_documentary_review_not_applicable(head: str, files: list[dict]) -> None:
     """Record a non-authoritative abstention, never a GitHub review or pass."""
     record = {
@@ -529,6 +644,21 @@ def main() -> int:
                     or current.get("changed_files") != len(files)):
                 raise RoutineReviewError("documentary candidate changed during abstention")
             report_documentary_review_not_applicable(head, files)
+            return 0
+        if bounded_research_handoff_not_applicable(
+            pr, files, head, token=read_token, prefix=prefix,
+        ):
+            # Recheck source identity before returning a non-approval receipt.
+            current = api("GET", f"{prefix}/pulls/{number}", token=read_token)
+            if (current.get("state") != "open" or current.get("draft")
+                    or (current.get("head") or {}).get("sha") != head
+                    or (current.get("base") or {}).get("sha")
+                        != (pr.get("base") or {}).get("sha")
+                    or current.get("changed_files") != len(files)):
+                raise RoutineReviewError(
+                    "research handoff changed during specialist routing"
+                )
+            report_research_handoff_not_applicable(head, files)
             return 0
         evidence = exact_specialist_disposition(
             pr, files, head, read_token=read_token,
