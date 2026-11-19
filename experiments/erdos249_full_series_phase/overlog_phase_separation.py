@@ -180,3 +180,99 @@ def adjacent_phase_rigidity(X: int,
         "rigidity_violations": len(violations),
         "conjecture_status": "OPEN",
     }
+
+
+
+def canonical_prime_set(primes: tuple[int, ...]) -> tuple[int, ...]:
+    """Reject malformed finite Euler support (no silent deduplication)."""
+    if len(set(primes)) != len(primes):
+        raise ValueError("prime support must have distinct members")
+    for p in primes:
+        if p < 2 or any(p % k == 0 for k in range(2, int(p**0.5)+1)):
+            raise ValueError("prime support must contain only primes")
+    return tuple(sorted(primes))
+
+
+def prime_euler_coefficients(limit: int,
+                             primes: tuple[int, ...]) -> list[int]:
+    """g_P(n)=n * prod_{p|n,p in P}(1-1/p), as exact integers."""
+    if limit < 1:
+        raise ValueError("positive limit required")
+    ps=canonical_prime_set(primes)
+    values=[]
+    for n in range(limit+1):
+        if n==0:
+            values.append(0)
+            continue
+        v=n
+        for p in ps:
+            if n%p==0:
+                if v%p!=0:
+                    raise AssertionError("internal Euler factor calculation")
+                v=(v//p)*(p-1)
+        values.append(v)
+    return values
+
+
+def finite_prime_weight(primes: tuple[int, ...]) -> Fraction:
+    ps=canonical_prime_set(primes)
+    w=Fraction(1)
+    for p in ps:
+        w*=Fraction(p-1,p)
+    return w
+
+
+def finite_prime_rational_sum(primes: tuple[int, ...]) -> Fraction:
+    """Exact finite Möbius formula Σ_{d|prod(P)} μ(d) 2^d/(2^d-1)^2."""
+    ps=canonical_prime_set(primes)
+    terms=[(1,1)]
+    for p in ps:
+        terms += [(d*p,-sign) for d,sign in tuple(terms)]
+    return sum((sign*Fraction(1<<d,((1<<d)-1)**2)
+                for d,sign in terms),Fraction())
+
+
+def prime_escape_phase_gaps(
+    X: int, primes: tuple[int, ...], escape_prime: int
+) -> dict[str, object]:
+    """Finite integer check of Theorem D (prime not included in P)."""
+    ps=canonical_prime_set(primes)
+    if escape_prime in ps or escape_prime < 2:
+        raise ValueError("escape prime must be omitted")
+    if any(escape_prime%k==0
+           for k in range(2,int(escape_prime**0.5)+1)):
+        raise ValueError("escape prime must be prime")
+    L=overlog_depth(X)
+    Q=1<<L
+    w=finite_prime_weight(ps)
+    phi=totients(2*X+L+1)
+    gp=prime_euler_coefficients(2*X+L+1,ps)
+    A=rolling_numerators(X,phi)
+    B=rolling_numerators(X,gp)
+    affected=tuple(
+        n for n in range(X+L+1,2*X+L)
+        if n%escape_prime==0
+    )
+    good=set(
+        N for N in range(X,2*X)
+        if 48*escape_prime*w.denominator*
+        abs(centered(A[N-X]-B[N-X],Q)) >= w.numerator*Q
+    )
+    for n in affected:
+        N=n-L-1
+        if N not in good and N+1 not in good:
+            raise AssertionError("prime escape local phase bound falsified")
+        if escape_prime*(gp[n]-phi[n])*w.denominator < w.numerator*n:
+            raise AssertionError("missing-prime Euler factor inequality falsified")
+    if len(good) < len(affected):
+        raise AssertionError("disjoint-pair prime escape count falsified")
+    return {
+        "X": X, "L":L, "prime_support":ps,
+        "omitted_prime":escape_prime,
+        "support_weight":str(w),
+        "rational_full_sum":str(finite_prime_rational_sum(ps)),
+        "omitted_prime_endpoints":len(affected),
+        "phase_separated_starts":len(good),
+        "all_prime_escape_implications":True,
+        "actual_full_totient_sum_status":"OPEN",
+    }
