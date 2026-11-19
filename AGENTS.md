@@ -93,6 +93,19 @@ This section is a worker-routing and resource-economy correction, not a
 change to CONTROL #79 admission or a new persistent service. It carries no
 authority to disable, reschedule, or retire standing automations.
 
+## Compute placement — Colab first for substantial GCL workloads
+
+**Binding worker default (Steward instruction, 2026-11-19):** For computation that exceeds a local smoke test, first use the existing GCL Colab runner and owned-session supervisor. Do not require the Human Steward to remind the worker or to name Colab again.
+
+- Route multi-shard, long-running, memory-heavy, accelerator-dependent, or repeated experimental campaigns to Colab by default. As a practical preflight, any estimated single run over roughly five minutes or an experiment spanning multiple workers/shards merits explicit Colab sizing. The cutoff is guidance, not a license to evade a stricter programme resource rule.
+- Reuse the authenticated `colab` CLI, the CHAD-owned `gcl_commander.colab_supervisor`, and the affected repository's existing Colab job scripts, protected manifests, and receipt validators. CHAD is the control/transfer, packaging, source-lock, receipt verification, and small-test host. GitHub Actions is for bounded CI and review, **not** bulk scientific execution.
+- Distinguish CPU-bound algorithms from accelerated kernels. Choose a Colab CPU/high-memory shape for CPU-only native evaluation where it fits; choose T4/L4/A100/H100 or TPU only when the workload actually uses that accelerator and the required equivalence/qualification exists. Verify actual memory/CPU, quota, availability, runtime limits, data staging, and expected compute-unit cost before significant provisioning.
+- Every scientific job must bind exact source commit and payload hash, original frozen inputs and digests, requested/observed hardware, job ID, lease and budget, resumable checkpoints, returned evidence checksums, and post-run session release/readback. Use small Colab hardware smoke tests before escalating. Keep output and scientific claim status distinct.
+- If Colab cannot accommodate the **declared** workload, first diagnose capacity, missing credentials, transport or policy. Choose a previously governed alternate external compute provider when appropriate; **never silently fall back to long-running CHAD CPU execution or a mass GitHub Actions matrix**. Do not bypass an explicit provider safety/authority denial or change frozen scientific methodology just to obtain a run.
+- A complete job has authoritative externally computed output and readback, not merely a source-level handoff, simulation, queue entry, or healthy supervisor process. Pending or failed Colab attempts must be reported with the exact blocker and next recovery action.
+
+This is an execution-placement rule, **not** new authority to incur unbounded compute charges, provision a new worker service, modify source-locked research, promote claims, or override existing guarded programme policy.
+
 ## Governed Lean/Colab compute skill
 
 For source-locked Lean work, discover .agents/skills/gcl-lean-colab/SKILL.md.
