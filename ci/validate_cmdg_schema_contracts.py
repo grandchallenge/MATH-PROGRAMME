@@ -45,10 +45,13 @@ def load_json(path: Path) -> Any:
 
 def _schema_snapshot() -> tuple[tuple[str, bytes], ...]:
     """Exact schema bytes, not mtimes: every in-process mutation is visible."""
-    return tuple(
-        (str(path), path.read_bytes())
-        for path in sorted(SCHEMAS.glob("cmdg_*.schema.json"))
-    )
+    sources = []
+    for path in sorted(SCHEMAS.glob("cmdg_*.schema.json")):
+        try:
+            sources.append((str(path), path.read_bytes()))
+        except OSError as exc:
+            fail(f"{path}: cannot load JSON: {exc}")
+    return tuple(sources)
 
 
 def _decode_schema(path: str, content: bytes) -> Any:
@@ -87,7 +90,10 @@ def validate_schema(instance: Any, schema_path: Path, label: str) -> None:
     # Read the exact content on each call. Schema caches are process-local and
     # bounded: no untrusted branch, PR, artifact or cross-run cache is used.
     snapshot = _schema_snapshot()
-    content = schema_path.read_bytes()
+    try:
+        content = schema_path.read_bytes()
+    except OSError as exc:
+        fail(f"{schema_path}: cannot load JSON: {exc}")
     validator = _compiled_validator(str(schema_path), content, snapshot)
     errors = sorted(validator.iter_errors(instance), key=lambda err: list(err.absolute_path))
     if errors:
