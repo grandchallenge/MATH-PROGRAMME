@@ -353,7 +353,7 @@ class ExactTotientResidueRationalMimicTests(unittest.TestCase):
                 L=wp07e_depth(N)
                 finite=Fraction(wp07e_numerator(N,L,a),1<<L)
                 self.assertEqual(wp07e_frac(whole-finite),
-                                 wp07e_frac(whole-finite))
+                                 wp07e_frac(expected-finite))
                 # The actual totient infinite fractional part is NOT
                 # assumed to equal this rational period.
 
@@ -374,7 +374,7 @@ class ExactTotientResidueRationalMimicTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             wp07e_depth(7)
         with self.assertRaises(ValueError):
-            wp07e_numerator(5,20,self.a)
+            wp07e_numerator(11990,20,self.a)
         with self.assertRaises(ValueError):
             wp07e_infinite(12001,self.a)
         with self.assertRaises(ValueError):
