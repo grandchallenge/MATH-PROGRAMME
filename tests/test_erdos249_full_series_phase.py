@@ -392,3 +392,231 @@ class FermatPolylogNearmaxTests(unittest.TestCase):
             wp07d_receipt(1,0)
         with self.assertRaises(ValueError):
             wp07d_prime_shape(9,0,nearmax_totients(15))
+
+
+
+from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+    totients as overlog_totients,
+    direct_totient as overlog_direct_totient,
+    overlog_depth,
+    centered as overlog_centered,
+    finite_numerator as overlog_finite_numerator,
+    rolling_numerators as overlog_rolling,
+    rational_baseline_half as overlog_half,
+    rational_baseline_three_quarters as overlog_three,
+    rational_six_defect as overlog_six,
+    rational_sum_half, rational_sum_three_quarters,
+    rational_sum_six_defect, exact_phase_gaps,
+    adjacent_phase_rigidity,
+)
+
+
+class OverlogTotientPhaseSeparationTests(unittest.TestCase):
+    """WP08-A: finite hostile cross-checks for all-X manuscript theorems."""
+
+    def test_totient_against_independent_coprime_oracle(self):
+        values = overlog_totients(600)
+        for n in range(1,601):
+            self.assertEqual(values[n],overlog_direct_totient(n))
+            self.assertTrue(1 <= values[n] <= n)
+
+    def test_exact_overlog_depth_and_centered_modulus(self):
+        for X in (64,65,127,128,129,255,256,511,512,1024):
+            L=overlog_depth(X)
+            Q=1<<L
+            self.assertEqual(L,X.bit_length()+3)
+            self.assertTrue(8*X < Q <= 16*X)
+            self.assertLessEqual(L+1,X)
+            self.assertLess(2*X+L,3*X)
+            for z in (-Q-3,-Q//2,-1,0,1,Q//2,Q+3):
+                r=overlog_centered(z,Q)
+                self.assertTrue(-Q//2 <= r < Q//2)
+                self.assertEqual((r-z)%Q,0)
+        with self.assertRaises(ValueError):
+            overlog_depth(63)
+
+    def test_direct_vs_independent_rolling_full_integer_numerators(self):
+        for X in (64,128,256):
+            L=overlog_depth(X)
+            phi=overlog_totients(2*X+L+1)
+            roll=overlog_rolling(X,phi)
+            self.assertEqual(len(roll),X+1)
+            for N in range(X,2*X+1):
+                direct=overlog_finite_numerator(N,L,phi)
+                self.assertEqual(roll[N-X],direct)
+                if N<2*X:
+                    self.assertEqual(
+                        roll[N-X+1],
+                        2*roll[N-X]-(1<<L)*phi[N+1]+phi[N+L+1],
+                    )
+
+    def test_mean_ratio_endpoint_anti_concentration_pairwise(self):
+        for X in (64,128,256,512,1024,4096):
+            e=exact_phase_gaps(X)
+            L,Q=e["L"],e["Q"]
+            phi=overlog_totients(2*X+L+1)
+            roll=overlog_rolling(X,phi)
+            good=set(e["totient_intrinsic_phase_gap_starts"])
+            endpoint=e["high_ratio_endpoint_indices"]
+            self.assertGreater(len(endpoint),0)
+            self.assertGreaterEqual(len(good)*2,len(endpoint))
+            for n in endpoint:
+                N=n-L-1
+                r=overlog_centered(roll[N-X],Q)
+                t=overlog_centered(roll[N-X+1],Q)
+                self.assertGreaterEqual(max(6*abs(r),6*abs(t)),X)
+                self.assertTrue(N in good or N+1 in good)
+            self.assertGreaterEqual(len(good),int(X*0.08))
+
+    def test_multiples_six_multiplicative_difference_large_phase(self):
+        for X in (64,128,512,2048):
+            e=exact_phase_gaps(X)
+            L,Q=e["L"],e["Q"]
+            phi=overlog_rolling(X,overlog_totients(2*X+L+1))
+            half=overlog_rolling(X,overlog_half(2*X+L+1))
+            good=set(e["totient_vs_half_phase_gap_starts"])
+            multiple=e["multiple_six_endpoint_indices"]
+            self.assertGreaterEqual(len(multiple),X//6-1)
+            # Spacing of 6 forces disjoint adjacent two-start pairs.
+            self.assertGreaterEqual(len(good),len(multiple))
+            for n in multiple:
+                N=n-L-1
+                self.assertLessEqual(
+                    overlog_totients(n)[n],n//3
+                )
+                r=overlog_centered(phi[N-X]-half[N-X],Q)
+                t=overlog_centered(phi[N-X+1]-half[N-X+1],Q)
+                self.assertGreaterEqual(max(18*abs(r),18*abs(t)),X)
+
+    def test_hostile_rational_full_series_closed_forms(self):
+        self.assertEqual(rational_sum_half(),Fraction(2,3))
+        self.assertEqual(rational_sum_three_quarters(),Fraction(14,15))
+        self.assertEqual(rational_sum_six_defect(),Fraction(2582,3969))
+        x=Fraction(1,2)
+        self.assertEqual(
+            Fraction(3,4)*x/(1-x)**2-
+            Fraction(1,4)*(3*x+2*x*x+x*x*x)/(1-x**4),
+            Fraction(14,15),
+        )
+        self.assertEqual(
+            Fraction(2,3)-x**6/(1-x**6)**2,
+            Fraction(2582,3969),
+        )
+        for X in (64,128,512,1024):
+            e=exact_phase_gaps(X)
+            self.assertGreaterEqual(
+                len(e["rational_three_quarters_phase_gap_starts"]),
+                (X-1)//2,
+            )
+            self.assertGreaterEqual(
+                len(e["rational_six_defect_phase_gap_starts"]),
+                len(e["multiple_six_endpoint_indices"]),
+            )
+
+    def test_overlog_phase_rigidity_and_actual_difference(self):
+        for X in (64,128,512,2048):
+            L=overlog_depth(X)
+            phi=overlog_totients(2*X+L+1)
+            half=overlog_half(2*X+L+1)
+            self.assertEqual(
+                adjacent_phase_rigidity(X,phi,phi)["rigidity_violations"],0
+            )
+            out=adjacent_phase_rigidity(X,phi,half)
+            self.assertEqual(out["rigidity_violations"],0)
+            # On n divisible by six, phi(n) != floor(n/2).
+            for n in range(X+L+1,2*X+L):
+                if n%6==0:
+                    self.assertNotEqual(phi[n],half[n])
+            self.assertEqual(out["conjecture_status"],"OPEN")
+
+    def test_bad_sources_fail_closed(self):
+        with self.assertRaises(ValueError):
+            overlog_totients(0)
+        with self.assertRaises(ValueError):
+            overlog_direct_totient(0)
+        with self.assertRaises(ValueError):
+            overlog_centered(6,9)
+        with self.assertRaises(ValueError):
+            overlog_finite_numerator(32,100,[0]*50)
+        with self.assertRaises(ValueError):
+            overlog_rolling(64,[0]*50)
+        with self.assertRaises(ValueError):
+            adjacent_phase_rigidity(64,[0]*50,[0]*50)
+        L=overlog_depth(64)
+        phi=overlog_totients(128+L+1)
+        bad=list(phi)
+        bad[65]=-5
+        with self.assertRaises(ValueError):
+            adjacent_phase_rigidity(64,bad,phi)
+
+
+    def test_exact_finite_prime_euler_coefficients_and_rational_sums(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            prime_euler_coefficients, finite_prime_rational_sum,
+            finite_prime_weight,
+        )
+        self.assertEqual(finite_prime_rational_sum(()),Fraction(2))
+        self.assertEqual(finite_prime_rational_sum((2,)),Fraction(14,9))
+        for ps in ((),(2,),(2,3),(2,3,5),(2,3,5,7)):
+            a=prime_euler_coefficients(1000,ps)
+            phi=overlog_totients(1000)
+            self.assertEqual(a[0],0)
+            weight=finite_prime_weight(ps)
+            for n in range(1,1001):
+                independent=Fraction(n)
+                for p in ps:
+                    if n%p==0:
+                        independent*=Fraction(p-1,p)
+                self.assertEqual(a[n],independent.numerator)
+                self.assertEqual(independent.denominator,1)
+                self.assertGreaterEqual(a[n],phi[n])
+                self.assertGreaterEqual(Fraction(a[n],n),weight)
+            result=finite_prime_rational_sum(ps)
+            self.assertGreater(result,0)
+            # An exact rational lower prefix, not a floating approximation.
+            prefix=sum((Fraction(a[n],1<<n) for n in range(1,100)),
+                       Fraction())
+            self.assertGreater(result,prefix)
+
+    def test_missing_prime_escapes_at_many_independent_supports(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            prime_escape_phase_gaps,
+        )
+        for X,ps,p in (
+            (128,(),2),
+            (128,(2,),3),
+            (512,(2,3),5),
+            (1024,(2,3,5),7),
+            (2048,(2,3,5,7),11),
+        ):
+            result=prime_escape_phase_gaps(X,ps,p)
+            self.assertTrue(result["all_prime_escape_implications"])
+            self.assertGreaterEqual(
+                result["phase_separated_starts"],
+                result["omitted_prime_endpoints"],
+            )
+            self.assertGreaterEqual(
+                result["omitted_prime_endpoints"],
+                (X-1)//p,
+            )
+            self.assertEqual(result["actual_full_totient_sum_status"],"OPEN")
+
+    def test_bad_finite_prime_sets_and_omitted_prime_fail_closed(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            prime_euler_coefficients, finite_prime_rational_sum,
+            prime_escape_phase_gaps, finite_prime_weight,
+        )
+        with self.assertRaises(ValueError):
+            prime_euler_coefficients(50,(2,2))
+        with self.assertRaises(ValueError):
+            finite_prime_weight((4,))
+        with self.assertRaises(ValueError):
+            finite_prime_rational_sum((1,))
+        with self.assertRaises(ValueError):
+            finite_prime_rational_sum((2,3,5,7,11))
+        with self.assertRaises(ValueError):
+            prime_euler_coefficients(0,(2,))
+        with self.assertRaises(ValueError):
+            prime_escape_phase_gaps(64,(2,3),2)
+        with self.assertRaises(ValueError):
+            prime_escape_phase_gaps(64,(2,),9)
