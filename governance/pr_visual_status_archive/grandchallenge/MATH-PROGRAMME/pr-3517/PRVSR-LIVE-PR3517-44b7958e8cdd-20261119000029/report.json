@@ -1,0 +1,208 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+      "name": "formal-validation / formal-validation",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 135228869463,
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 135228868642,
+      "status": "in_progress"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "4 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-19T00:00:06Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-19T00:00:06Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+    "exact_head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+    "pr_number": 3517,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5: unconditional Ext\u00b3 vanishing into actual free-solid modules"
+  },
+  "integration": {
+    "merge_commit_sha": "88cdf003083609fc90e568fb4ff9e70795c1bea1",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 135228868317,
+          "conclusion": null,
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135228865945,
+          "conclusion": null,
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135228866117,
+          "conclusion": null,
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135228865481,
+          "conclusion": null,
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135228870553,
+          "conclusion": "success",
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135228869015,
+          "conclusion": null,
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135228869463,
+          "conclusion": "success",
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135228873046,
+          "conclusion": "skipped",
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135228868642,
+          "conclusion": null,
+          "head_sha": "44b7958e8cdd2b9d0a80b591cfc5fa1e6d4ff72a",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-19T00:00:29Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "55546b0205358eda41876636186e46a555168906e15cebe09a5c37ba3d4c5c06"
+  },
+  "report_id": "PRVSR-LIVE-PR3517-44b7958e8cdd-20261119000029",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
