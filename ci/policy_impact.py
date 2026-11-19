@@ -426,33 +426,48 @@ def git_changed_paths(base: str, head: str) -> list[str]:
 
 
 def verified_pull_request_transition(pr: dict) -> tuple[str, str, str]:
-    """Use only a GitHub-supplied effective merge with exact base/head parents.
+    """Use an exact checked-out GitHub merge with ordered base/head parents.
 
-    The base-versus-head tree diff includes unrelated protected-main changes
-    when a PR head is stale. The exact effective merge diff avoids those false
-    impact routes while preserving *every* file the merge will change.
+    pull_request.merge_commit_sha in webhook payloads can lag the SHA actually
+    checked out by actions/checkout. In that case, also examine GITHUB_SHA,
+    but only if it is the checked-out HEAD and has *exactly* the expected
+    protected-base and PR-head parents. Never trust a candidate branch SHA as
+    an effective merge. When no exact identity resolves, preserve the former
+    conservative base-versus-head tree comparison (never an empty diff).
 
-    Failure to resolve or validate the effective merge is NOT a permission to
-    skip any route: use the historical conservative base-versus-head diff.
-    The merge_group policy remains unconditional full fanout.
+    merge_group remains unconditional full nine-shard validation.
     """
     base = str(pr.get("base", {}).get("sha") or "")
     head = str(pr.get("head", {}).get("sha") or "")
-    merge = str(pr.get("merge_commit_sha") or "")
+    event_merge = str(pr.get("merge_commit_sha") or "")
+    workflow_sha = str(os.environ.get("GITHUB_SHA") or "")
     if not base or not head:
         raise ImpactError("pull-request diff base/head is unavailable")
-    if not merge:
-        return base, head, "conservative_missing_effective_merge"
-    completed = subprocess.run(
-        ["git", "rev-list", "--parents", "-n", "1", merge],
+
+    current = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
         cwd=ROOT,
         check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
     )
-    if completed.returncode == 0 and completed.stdout.strip().split() == [merge, base, head]:
-        return base, merge, "verified_effective_merge"
+    checkout_head = current.stdout.strip() if current.returncode == 0 else ""
+    for source, merge in (("event", event_merge), ("workflow", workflow_sha)):
+        if not merge or merge != checkout_head:
+            continue
+        completed = subprocess.run(
+            ["git", "rev-list", "--parents", "-n", "1", merge],
+            cwd=ROOT,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        if completed.returncode == 0 and completed.stdout.strip().split() == [merge, base, head]:
+            return base, merge, f"verified_{source}_effective_merge"
+    if not event_merge and not workflow_sha:
+        return base, head, "conservative_missing_effective_merge"
     return base, head, "conservative_invalid_effective_merge"
 
 
