@@ -189,12 +189,12 @@ $$
 
 The saving can be bounded **without any floating-point trigonometry**. The elementary inequality $1-\cos(2\pi t)=2\sin^2(\pi t)\ge8t^2$ for $0\le t\le1/2$ yields
 
-$
+$$
 \boxed{
 c_h\ge\frac{4\kappa}{M_h(28800)^2}>0.
 }
 \tag{13a}
-$
+$$
 
 This lower bound is algebraic apart from the classical exact constant $\pi^2$ in the mean totient ratio; no empirical phase average enters it.
 
