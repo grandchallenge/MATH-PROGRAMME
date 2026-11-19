@@ -243,3 +243,206 @@ class NearLogRationalAdversaryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+
+from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+    phi_sieve as wp07e_phi,
+    phi_independent as wp07e_phi_independent,
+    power2_modulus as wp07e_modulus,
+    v2_positive as wp07e_v2,
+    rational_totient_residue_mimic as wp07e_build,
+    finite_scaled_numerator as wp07e_numerator,
+    nearlog_depth as wp07e_depth,
+    finite_tail_integer_difference as wp07e_difference,
+    exact_rational_sum as wp07e_rational,
+    exact_scaled_infinite_tail as wp07e_infinite,
+    frac as wp07e_frac,
+    finite_receipt as wp07e_receipt,
+)
+
+
+class ExactTotientResidueRationalMimicTests(unittest.TestCase):
+    """WP07-E hostile exact tests for a rational full-series phase mimic."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.phi = wp07e_phi(12000)
+        cls.a, cls.b = wp07e_build(12000, cls.phi)
+
+    def test_independent_phi_coprime_source(self):
+        self.assertEqual(self.phi[1], 1)
+        for n in range(1, 1001):
+            self.assertEqual(self.phi[n], wp07e_phi_independent(n))
+
+    def test_exact_all_coefficient_residues_and_linear_bounds(self):
+        a, b, phi = self.a, self.b, self.phi
+        self.assertEqual(a[1], 0)
+        self.assertEqual(b[0], 0)
+        for n in range(1, 12001):
+            M=wp07e_modulus(n)
+            self.assertTrue(0 <= b[n] < M)
+            self.assertEqual(a[n], n//2+2*b[n-1]-b[n])
+            self.assertEqual((a[n]-phi[n])%M,0)
+            self.assertLessEqual(M, max(1,n//4))
+            if n>=2:
+                self.assertGreaterEqual(4*a[n],n)
+                self.assertLessEqual(a[n],n)
+
+    def test_telescoping_at_all_modulus_jumps(self):
+        a,b=self.a,self.b
+        for N in (1,2,3,4,7,8,15,16,31,32,63,64,127,128,
+                  255,256,1023,1024,4095,4096,8191):
+            identity=sum((Fraction(2*b[n-1]-b[n],1<<n)
+                          for n in range(1,N+1)),Fraction())
+            self.assertEqual(identity,-Fraction(b[N],1<<N))
+            self.assertLessEqual(b[N],max(1,N//4))
+
+    def test_analytical_full_sum_exactly_rational(self):
+        x=Fraction(1,2)
+        baseline=x*x*(1+x)/(1-x*x)**2
+        self.assertEqual(baseline,Fraction(2,3))
+        self.assertEqual(wp07e_rational(),baseline)
+
+    def test_all_start_nearlog_fractional_parts_identical(self):
+        a,phi=self.a,self.phi
+        for N in range(8,4100):
+            L=wp07e_depth(N)
+            self.assertEqual(L,N.bit_length()-3)
+            diff=wp07e_difference(N,a,phi)
+            expected=(wp07e_numerator(N,L,a)
+                      -wp07e_numerator(N,L,phi))//(1<<L)
+            self.assertEqual(diff,expected)
+            for j in range(1,L+1):
+                self.assertEqual((a[N+j]-phi[N+j]) % (1<<j),0)
+
+    def test_blockwise_phase_identity_for_arbitrary_integer_harmonics(self):
+        a,phi=self.a,self.phi
+        for X in (64,127,128,256,511,512,1024,2048):
+            L=X.bit_length()-3
+            modulus=1<<L
+            for N in range(X,2*X):
+                ra=wp07e_numerator(N,L,a)%modulus
+                rp=wp07e_numerator(N,L,phi)%modulus
+                self.assertEqual(ra,rp)
+                for h in (-11,1,2,7,101):
+                    self.assertEqual((h*ra)%modulus,(h*rp)%modulus)
+                self.assertEqual(ra==0,rp==0)
+
+    def test_valuation_disagreements_only_on_exact_E2_candidates(self):
+        phi,a=self.phi,self.a
+        exceptions=[]
+        eligible=[]
+        for n in range(2,12001):
+            vphi=wp07e_v2(phi[n])
+            va=wp07e_v2(a[n])
+            if va!=vphi:
+                exceptions.append(n)
+            if vphi >= n.bit_length()-3:
+                eligible.append(n)
+        self.assertTrue(set(exceptions).issubset(set(eligible)))
+        self.assertLessEqual(len(exceptions),len(eligible))
+
+    def test_full_rational_tail_fraction_not_forced_on_totient(self):
+        a=self.a
+        for N in (1,2,7,8,9,15,16,127,128,1024,4095):
+            whole=wp07e_infinite(N,a)
+            expected=Fraction(2 if N%2==0 else 1,3)
+            self.assertEqual(wp07e_frac(whole),expected)
+            if N>=8:
+                L=wp07e_depth(N)
+                finite=Fraction(wp07e_numerator(N,L,a),1<<L)
+                self.assertEqual(wp07e_frac(whole-finite),
+                                 wp07e_frac(expected-finite))
+                # The actual totient infinite fractional part is NOT
+                # assumed to equal this rational period.
+
+    def test_finite_receipts_and_hostile_inputs(self):
+        for X in (8,64,128,512):
+            receipt=wp07e_receipt(X)
+            self.assertTrue(receipt["all_starts_identical_residue"])
+            self.assertEqual(receipt["starts_checked"],X)
+            self.assertLessEqual(receipt["valuation_mismatches"],
+                                 receipt["nearmax2_candidates"])
+            self.assertEqual(receipt["rational_full_series"],"2/3")
+            self.assertEqual(receipt["claim_boundary"],
+                             "EXACT_FINITE_CONTROL_ONLY__ACTUAL_TOTIENT_S_OPEN")
+        with self.assertRaises(ValueError):
+            wp07e_build(0)
+        with self.assertRaises(ValueError):
+            wp07e_modulus(0)
+        with self.assertRaises(ValueError):
+            wp07e_depth(7)
+        with self.assertRaises(ValueError):
+            wp07e_numerator(11990,20,self.a)
+        with self.assertRaises(ValueError):
+            wp07e_infinite(12001,self.a)
+        with self.assertRaises(ValueError):
+            wp07e_receipt(7)
+
+
+    def test_universal_interpolation_on_independent_bounded_targets(self):
+        from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+            arbitrary_residue_rational_mimic,
+        )
+        limit=4096
+        targets=[
+            [0]+list(range(1,limit+1)),
+            [0]+[n%2 for n in range(1,limit+1)],
+            [0]+[(37*n)%(n+1) for n in range(1,limit+1)],
+            [0]+[n//3 for n in range(1,limit+1)],
+        ]
+        for K in (2,3,5):
+            for target in targets:
+                a,b=arbitrary_residue_rational_mimic(limit,target,K)
+                self.assertEqual(a[1],0)
+                for n in range(2,limit+1):
+                    M=1<<max(0,n.bit_length()-1-K)
+                    self.assertEqual((a[n]-target[n])%M,0)
+                    self.assertTrue(4*a[n]>=n and a[n]<=n)
+                for N in (1<<(K+1),100,255,256,512,1024,2048):
+                    if N < (1<<(K+1)):
+                        continue
+                    L=N.bit_length()-1-K
+                    self.assertGreaterEqual(L,1)
+                    da=wp07e_numerator(N,L,a)
+                    dt=wp07e_numerator(N,L,target)
+                    self.assertEqual((da-dt)%(1<<L),0)
+                # The carry's finite correction must telescope exactly.
+                for N in (16,127,256):
+                    err=sum(
+                        (Fraction(2*b[n-1]-b[n],1<<n)
+                         for n in range(1,N+1)),
+                        Fraction(),
+                    )
+                    self.assertEqual(err,-Fraction(b[N],1<<N))
+
+    def test_universal_interpolation_without_target_growth_hypothesis(self):
+        from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+            arbitrary_residue_rational_mimic,
+        )
+        # Modulo copying and rationality of the constructed a-series
+        # do not require the target itself to define a convergent series.
+        limit=1024
+        target=[0]+[(n**5 if n%2 else -n**6)
+                    for n in range(1,limit+1)]
+        a,b=arbitrary_residue_rational_mimic(limit,target,2)
+        for n in range(1,limit+1):
+            M=1<<max(0,n.bit_length()-3)
+            self.assertEqual((a[n]-target[n])%M,0)
+            if n>=2:
+                self.assertTrue(4*a[n]>=n and a[n]<=n)
+        self.assertEqual(wp07e_rational(),Fraction(2,3))
+        self.assertTrue(all(b[n]<wp07e_modulus(n) for n in range(1,limit+1)))
+
+    def test_universal_invalid_input_prevents_unguarded_runs(self):
+        from experiments.erdos249_full_series_phase.totient_residue_rational_mimic import (
+            arbitrary_residue_rational_mimic,
+        )
+        target=list(range(100))
+        with self.assertRaises(ValueError):
+            arbitrary_residue_rational_mimic(99,target,1)
+        with self.assertRaises(ValueError):
+            arbitrary_residue_rational_mimic(100,target,2)
+        with self.assertRaises(ValueError):
+            arbitrary_residue_rational_mimic(0,target,2)
