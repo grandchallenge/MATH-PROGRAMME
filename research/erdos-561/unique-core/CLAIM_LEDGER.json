@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS561-UNIQUE-CORE-20261119",
+  "claims": [
+    {
+      "mathematical_domain": "graph factors / star-forest size Ramsey / Erdős #561",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive degree caps alpha,beta and maximum degree at most alpha+beta",
+        "ordinary Lovasz (g,f)-factor theorem as stated by Kano and Saito",
+        "separate unpromoted joint three-star residual theorem for Ramsey corollaries"
+      ],
+      "promotion_condition": "Admit source-locked research evidence separately from mathematical certification. No MATHCERT/public certification or unrestricted Erdős #561 closure without additional mathematical review and proof.",
+      "claim_id": "ERDOS561-UNIQUECORE-LEAN-001",
+      "short_name": "Four Lean general numeric unique-core lemmas",
+      "claim_text": "For natural D, k, q, A and slack, Lean proves the one-large-core count, zero weighted boundary under a Lovasz cut defect, degree-excess threshold preventing 2D+2 saturated vertices and (D-1)(D+1)=D^2-1.",
+      "claim_class": "FORMALIZED",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "LEAN_PROOF",
+      "support_summary": "Lean 4.33.0-rc1 elaborates four general numeric theorems; #print axioms returns only propext, Quot.sound, Classical.choice from standard Lean foundations. This is not a proof of the ordinary Lovasz factor theorem.",
+      "source_or_artifact": [
+        "research/erdos-561/general-core/Erdos561UniqueLargeCore.lean"
+      ],
+      "related_files": [
+        "research/erdos-561/general-core/Erdos561UniqueLargeCore.lean",
+        "research/erdos-561/general-core/GENERAL_SATURATED_CORE_UNIQUENESS_THEOREM.md"
+      ]
+    },
+    {
+      "mathematical_domain": "graph factors / star-forest size Ramsey / Erdős #561",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive degree caps alpha,beta and maximum degree at most alpha+beta",
+        "ordinary Lovasz (g,f)-factor theorem as stated by Kano and Saito",
+        "separate unpromoted joint three-star residual theorem for Ramsey corollaries"
+      ],
+      "promotion_condition": "Admit source-locked research evidence separately from mathematical certification. No MATHCERT/public certification or unrestricted Erdős #561 closure without additional mathematical review and proof.",
+      "claim_id": "ERDOS561-UNIQUECORE-PAPER-002",
+      "short_name": "Unique large maximum-degree obstruction up to 2D+1 vertices",
+      "claim_text": "If a finite simple graph has maximum degree at most D=alpha+beta, positive caps and at most 2D+1 degree-D vertices, an alpha/beta-capped edge split fails iff both caps are odd and there is an isolated connected odd-order D-regular component.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "General paper proof from the ordinary Lovasz tight-component parity factor criterion; all small counted components pay at least D weighted boundary, so with one large component it must have zero boundary and be isolated. Independent C++17 verification 91,657 capped instances below the threshold.",
+      "source_or_artifact": [
+        "research/erdos-561/general-core/GENERAL_SATURATED_CORE_UNIQUENESS_THEOREM.md",
+        "research/erdos-561/general-core/verify_general_core.cpp"
+      ],
+      "related_files": [
+        "research/erdos-561/general-core/GENERAL_SATURATED_CORE_UNIQUENESS_THEOREM.md",
+        "research/erdos-561/general-core/verify_general_core.cpp"
+      ]
+    },
+    {
+      "mathematical_domain": "graph factors / star-forest size Ramsey / Erdős #561",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive degree caps alpha,beta and maximum degree at most alpha+beta",
+        "ordinary Lovasz (g,f)-factor theorem as stated by Kano and Saito",
+        "separate unpromoted joint three-star residual theorem for Ramsey corollaries"
+      ],
+      "promotion_condition": "Admit source-locked research evidence separately from mathematical certification. No MATHCERT/public certification or unrestricted Erdős #561 closure without additional mathematical review and proof.",
+      "claim_id": "ERDOS561-UNIQUECORE-3X3-003",
+      "short_name": "264 new ordered three-star exclusions; all forced degrees >=5 covered conditionally",
+      "claim_text": "Assuming the current paper-level joint three-star residual theorem, unique-large-core classification and three explicit exterior-colouring constructions exclude 264 additional ordered 3x3 parameter pairs beyond the prior 339-case method shortlist, leaving 75 survivors, all with forced degree at most 4. Combined with the earlier analytic large-degree theorem, the original conjectured formula holds conditionally for all 3-star pairs with both leading sizes >=2 and their sum >=7.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Two fresh independent whole-domain exact Python enumerations agree on all 264 exclusions and 75 survivors: 176 parity, 10 leaf-edge exterior, 63 core/exterior monochrome, and 15 minimal exterior recolouring. The paper theorem is explicitly conditional on the earlier joint three-star residual proof; no unrestricted conjecture solution.",
+      "source_or_artifact": [
+        "research/erdos-561/general-core/verify_parameter_gate.py",
+        "research/erdos-561/general-core/GENERAL_CORE_PARAMETER_CERTIFICATE.json",
+        "research/erdos-561/unique-core/verify_independent_gate.py"
+      ],
+      "related_files": [
+        "research/erdos-561/general-core/GENERAL_SATURATED_CORE_UNIQUENESS_THEOREM.md",
+        "research/erdos-561/general-core/GENERAL_CORE_PARAMETER_CERTIFICATE.json",
+        "research/erdos-561/unique-core/verify_independent_gate.py"
+      ]
+    }
+  ]
+}
