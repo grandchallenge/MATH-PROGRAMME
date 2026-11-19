@@ -1,6 +1,6 @@
-# PNP-ABOVE — GCL documentary coverage through WP18
+# PNP-ABOVE — GCL documentary coverage through WP19
 
-<p class="page-deck">WP00–WP17 immutable source inventory, separate WP18 extension, review receipts, claim boundaries and open mathematical obligations, audited on 18 November 2026.</p>
+<p class="page-deck">WP00–WP17 immutable source inventory, separate WP18–WP19 extensions, review receipts, claim boundaries and open mathematical obligations, audited on 19 November 2026.</p>
 
 **Governing records:** [MATHSOLVE research #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) and [MATH-PROGRAMME PNP-001 #162](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162). Both remain **OPEN**. This page is an evidence/navigation ledger, not a mathematical certificate or a P-versus-NP claim.
 
@@ -47,6 +47,14 @@ The **WP00–WP17 inventory above is deliberately immutable** at 18 packages/72 
 
 The **game-value result is negative**: keeping the earlier identity decider means a fixed deterministic empty answer still wins against every pair, so original synchronous, tensor-quantum and commuting values all equal 1. WP18 clears the diagonal-sampler obstruction while isolating the answer-sensitive hard-game obligation and the sparse support limitation. This is not positive nonlocality, compression, P-versus-NP separation or public certification. [Detailed evidence and the open obligations](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026).
 
+## WP19: universal no-advantage for every synchronous decider on WP18's source law
+
+**New source admission:** [MATHSOLVE WP19 theorem](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_ArbitraryPredicateSourceNoGap.lean), [eight-module exact source lock](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_SOURCE_LOCK.json), [full WP08–WP19 original-source replay receipt](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_IMPORT_REPLAY_RECEIPT.md), and [complete scoped report](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_RESULT.md). WP19 is a **separate eight-file source-locked extension**; it does not change the original WP00–WP17 **72-source-artifact** snapshot or the nine WP18 source modules.
+
+WP19 proves the original WP18 conditional-linear question distribution exactly: **512** equally weighted nonzero ordered pairs, comprising a **256-edge star** from the Alice zero question to Bob first-bit-zero questions, plus **256 isolated diagonal edges** on first-bit-one questions. A general original-model theorem proves that any finite synchronous game on a star-plus-isolated-diagonal support has **no advantage** for normalized nonnegative no-signalling correlations over dimension-one deterministic synchronous strategies. Exact original MIPRE tensor-product Born-rule and commuting tracial correlations satisfy that bound.
+
+Therefore **changing only the decision predicate cannot fix WP18**, even if it is an arbitrary mathematical synchronous predicate and the value is below 1. The original WP18 value-one result relied on its old accepting decider; WP19's no-gap statement **does not**. This is a rigorous new mathematical obstruction, not positive hardness, full-compressor execution, classical complexity transfer, independent MATHCERT certification or P-versus-NP resolution. [See exact evidence and remaining WP20 construction obligations](evidence.md#wp19-universal-star-support-no-quantum-advantage-19-november-2026).
+
 ## Cross-GCL documentary and authority coverage
 
 | Record | Authoritative scope | Current disposition |
@@ -65,7 +73,7 @@ The **game-value result is negative**: keeping the earlier identity decider mean
 
 ## Still open and required for a hard-game route
 
-1. **Completed in WP18:** an original non-diagonal/player-asymmetric source-native conditional-linear sampler has positive unequal-question mass, all four source query conditions, uniform termination, and runtime/description bounds. **Remaining:** analyze whether its sparse star-shaped support can support any synchronous game-value gap, or construct and prove a richer two-sided question law.
+1. **Completed in WP18–WP19:** a real bounded non-diagonal/player-asymmetric sampler exists, and WP19 proves its exact star-plus-matching support **cannot produce a synchronous/quantum/commuting advantage for any synchronous acceptance predicate**. **Remaining:** construct a **different, richer two-sided source-native CL question law** with interacting question choices and prove all source query, termination and polynomial bounds. Graph cycles are a useful nonlocality design screen, not a proof of a quantum advantage.
 2. Provide an **answer-sensitive executable source `Cost.Prog` decider**, plus typed-input correctness, malformed-data behavior and source execution-time bounds.
 3. Prove a **genuine positive quantum/classical game-value or soundness gap** in the original source game model. Positive off-diagonal mass alone is insufficient.
 4. Only after that, validate source-effective positive-parameter introspection, answer reduction, repetition, and the quantitative Theorem 12.1 statement/proof discrepancy. Do not infer full compression from imported compiler source compilation.
