@@ -4,7 +4,7 @@
 
 **Programme:** PNP-ABOVE, under [PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162)  
 **Solve research obligation:** [PNP-ABOVE-WP00](https://github.com/grandchallenge/MATHSOLVE/issues/1136)  
-**Documentary evidence:** updated through WP17, 18 November 2026; the 1 November version 0.1 **preprint is archival and unchanged**.
+**Documentary evidence:** updated through WP18, 18 November 2026; the 1 November version 0.1 **preprint is archival and unchanged**.
 
 **Claim status:** Exploratory. No proof of P = NP or P ≠ NP, no new unrestricted classical lower bound.
 
@@ -42,6 +42,8 @@ The original exploratory [lay manuscript](../research/pnp_above_lay_manuscript.m
 **November 2026 research update:** A classical-sampler randomness bound and a constructive SAT-to-perfect-classical-strategy transfer for **explicit finite game tables** have been proved and tested in a bounded WP01 candidate. This does not transfer to succinct quantum compression or P versus NP. A [source erratum and technical update](wp01_erratum.md) also records a factor-of-two discrepancy between the printed Theorem 12.1 and its displayed proof.
 
 **Source-native research result, 18 November 2026:** Protected WP08–WP14 now construct and check an original source-bounded nine-stage reference verifier with fully occupied conditional CL stages. WP15 proves the actual reference game has a perfect deterministic strategy. WP16 proves its shared Alice/Bob sampling yields identical questions. WP17 establishes the general original-game no-advantage theorem: **on any diagonal-supported finite synchronous game with nonempty answers, synchronous, quantum and commuting optimal values coincide**, even if some questions are unwinnable. Consequently merely changing WP14's decision rule cannot produce quantum advantage. This is a rigorous negative design result, not a hard game or P-versus-NP theorem. Read the [exact source/receipt inventory](coverage.md) and [full evidence audit](evidence.md).
+
+**WP18 construction (18 November 2026):** GCL has now formally built the complementary missing sampler: a genuinely **player-asymmetric nine-stage** conditional-linear distribution with positive probability on unequal questions, an executable original source query interface, and a bounded original verifier. However the **old identity decider** remains trivially classically winnable, and original synchronous, quantum and commuting game values still equal 1. A quantum gap requires new question structure and an answer-sensitive decision predicate; merely fixing one component is insufficient. The [complete evidence ledger](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026) documents the actual verified scope.
 
 ## The missing classical bridge
 

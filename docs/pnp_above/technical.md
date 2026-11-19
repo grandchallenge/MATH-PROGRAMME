@@ -135,6 +135,14 @@ The common value may be **below one** when some sampled diagonals are unwinnable
 
 See [WP17 source/receipts](coverage.md#status-of-the-source-native-theorem-chain), the [evidence register](evidence.md) and the original-source [MATHSOLVE proof](https://github.com/grandchallenge/MATHSOLVE/blob/d741a85572cd99a1f8e206d1211543ef72445da2/research/PNP-ABOVE/WP17_UnconditionalDiagonalNoGap.lean).
 
+## WP18: escaping diagonal support without producing hardness
+
+The original source-pinned WP18 construction lets Alice retain the full conditional nine-stage map and Bob use a full-depth unconditional nine-stage singleton-register map. At seed (0,1,0,...,0), the original conditional-linear outputs differ. A kernel-checked source theorem establishes **positive original CL distribution mass on that unequal question pair**, with every native query-interface proof, raw-input halting and verifier runtime bound. The complete original Sampler 9 and Verifier 9 records are formally compiled; the latter has polynomial-bound parameter **145469**.
+
+This **does not** give a value gap. The unchanged original identity decider accepts empty answers on every positive-index question pair. A dimension-one deterministic strategy wins perfectly, and the original synchronous, tensor-product quantum and commuting values are all exactly 1. The support of the newly asymmetric law is also a sparse star centered on the all-zero Alice question when the first seed bit vanishes, plus diagonal pairs when it does not; no theorem yet asserts that even a redesigned predicate can yield a nonlocal advantage on that exact support.
+
+The two proven no-go results are complementary: WP17 eliminates *predicate-only* changes on a diagonal question law; WP18 eliminates *sampler-only* changes with an always-winning predicate. The next candidate must construct a genuinely coupled sampling/answer-sensitive verification system and **prove** a nonzero original-model game gap. [Source-locked WP18 and detailed limits](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026).
+
 ## A proved restricted SAT transfer — and its limitation
 
 For finite explicitly tabulated two-prover games, existence of a perfect deterministic classical local strategy is equivalent to satisfiability of an explicitly constructed CNF formula. If SAT is polynomial-time decidable, self-reduction then produces the strategy in polynomial time in the **explicit table size**, with at most one SAT query per Boolean variable plus an initial feasibility query. This establishes a valid restricted classical strategy-extraction transfer.
@@ -163,7 +171,7 @@ The required additional audit includes relativization, natural proofs and algebr
 
 ## Exact next obligations (updated 18 November 2026)
 
-1. Construct a **source-native, non-diagonal/player-asymmetric conditional-linear sampler** with genuine positive probability on unequal questions, all original query-interface conditions and uniform source execution/size bounds. The existing shared-map reference is mathematically incapable of giving the target value gap.
+1. **Source-native asymmetric sampler completed in WP18.** The original Sampler 9 has positive off-diagonal question mass, all source query-interface conditions, and original source execution/size bounds. Its support may be too sparse for nonlocality: prove or refute a stronger star-support no-gap theorem, then develop a richer source CL distribution where required.
 2. Implement an **answer-sensitive executable original `Cost.Prog` decider**, establish its typed-input/malformed-data semantics and worst-case source bounds, and prove a bounded `Verifier` for the new sampled game.
 3. Prove a quantitative, nonzero **quantum/classical value or soundness gap** using the original source strategy models and independent upper/lower bounds; source compilation or positive off-diagonal mass alone does not suffice.
 4. Only after that, execute the positive-parameter introspection, answer-reduction and repetition stages on an evidenced input, quantify `\lambda` and `C_0`, and resolve Theorem 12.1's printed statement/proof discrepancy.
