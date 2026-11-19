@@ -1,0 +1,51 @@
+{
+  "record_type": "ERDOS249_S_WP07_B_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-18",
+  "research_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "bounded_scope": "NEAR_LOG_DEPTH_ALL_POSITION_RATIONAL_BINARY_COBOUNDARY_CONTROL",
+  "original_erdos249_status": "OPEN",
+  "mathematical_certification": "NOT_SUBMITTED",
+  "priority": "NOT_CLAIMED",
+  "external_source": "Will Cook, The Binary Totient Series (2026), and existing GCL WP06 rational-coboundary negative controls",
+  "source_at_exact_head": "c2abeee252ee70646d654de355f7876e5ed9efbb",
+  "source_sha256": {
+    "module": "e6cac7124cb5246282c333db6a7b460b68f9787531f75997aef459b6e533e681",
+    "tests_extended_existing_governed_route": "ea48d72304e7b512ad6558d26a00e47f93b50d8f0d1d6022357893f7d1275033",
+    "proof_manuscript": "8fef87759b231d2172463a66315c69d8add1abe1837063c3ddd43fef7161a1a8",
+    "critical_review": "ac89e677ab2daeaa835974d21c4419f83d058de3a7d6a66144e4ca0a708826a2"
+  },
+  "executed": {
+    "GCL_CHAD_OS_ACCOUNT_ONLY": true,
+    "independent_execution_attested": false,
+    "capture_id": "dc036cabd05b442b8586ac24b199f95c",
+    "capture_receipt_sha256": "7fb39477062e19d39842e95bf86168f282e4c331a319670969ecf5740f691154",
+    "total_tests": 19,
+    "existing_WP06_tests": 11,
+    "new_WP07_B_tests": 8,
+    "failures": 0,
+    "stdout_sha256": "07672ed2b2673699cdc8d086fd00059d5a76c2f6a74017d44e2aeb54c4f7483c",
+    "manuscript_markdown_gate": "PASS",
+    "manuscript_gate_log_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc",
+    "critical_review_markdown_gate": "PASS",
+    "review_gate_log_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+  },
+  "proof": {
+    "a_n": "floor(n/2)+2*b_(n-1)-b_n, with b_n congruent floor(n/2)+2*b_(n-1) modulo M_n",
+    "M_n": "2^max(0,floor(log2 n)-5)",
+    "full_sum": "2/3",
+    "bounds": "n/4<=a_n<=n for n>=2; a_1=0",
+    "all_start_depth": "L_N=floor(log2 N)-5 for all N>=64; each a_(N+j)/2^j integer for j<=L_N",
+    "discarded_positive_tail": ">=4",
+    "discarded_fractional_part": "2/3 if N even and 1/3 if N odd"
+  },
+  "epistemic_limits": [
+    "Coefficient sequence is synthetic and not Euler totient",
+    "This does not establish or refute Cook's actual cofinal totient-specific hypothesis",
+    "No theorem novelty assertion",
+    "Same-agent logical critic role, no independent external mathematical review",
+    "No formal Lean replay",
+    "Original Erdős #249 irrationality is still open"
+  ],
+  "CI_impact": "Extended existing exact registered test file rather than modifying governance/policy_components; no policy authority changed",
+  "successor": "Find a new unproved arithmetic property specific to actual Euler totient with cofinal residue separation for all potential rational periods, robust against both rational coboundary and irrational lacunary countermodels."
+}

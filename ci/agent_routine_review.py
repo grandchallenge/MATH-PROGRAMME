@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Protected, deliberately narrow machine reviewer for a reversible MkDocs image removal.
+"""Protected scoped reviewer and explicit, nonauthoritative abstention classifier.
 
-This is a routine delegated mechanical disposition, NOT independent mathematical review.
-Unknown changes fail closed. GitHub's review rule and native merge queue remain active.
+Only source-proved narrow transformations or independently protected specialist
+receipts can issue App approval. Bounded public-documentary mixtures may
+produce an exact-head NOT_APPLICABLE *without* posting a review. All other
+unknown material fails closed; GitHub review rules and merge queue remain active.
 """
 from __future__ import annotations
 
@@ -253,6 +255,84 @@ def bounded_research_not_applicable(pr: dict, files: list[dict], head: str) -> b
     return has_proof_note
 
 
+
+# This is an abstention-only classifier. It does not add any authority to the
+# protected routine App material profiles or to the specialist-domain registry.
+# Restrict it to known public explanatory directories, excluding governance,
+# code, executable inputs, routing, campaign admission and protected workflows.
+DOCUMENTARY_ONLY_PATH = re.compile(
+    r"^docs/(archives|domains|pnp_above)/[A-Za-z0-9][A-Za-z0-9_-]*\.md$"
+)
+DOCUMENTARY_ONLY_MAX_FILES = 20
+
+
+def bounded_documentary_not_applicable(
+    pr: dict, files: list[dict], head: str,
+) -> bool:
+    """Identify an exact-head public documentary mixture for *non-approval*.
+
+    True means the App must abstain; it never means that content, mathematical
+    claims, source semantics, or public publication have been approved.
+    Everything outside this narrow negative classification follows the
+    existing specialist/protection fail-closed routes.
+    """
+    verify_specialist_envelope(pr, files, head)
+    if not (2 <= len(files) <= DOCUMENTARY_ONLY_MAX_FILES):
+        return False
+    seen: set[str] = set()
+    sections: set[str] = set()
+    for entry in files:
+        path = entry.get("filename")
+        if not isinstance(path, str):
+            return False
+        matched = DOCUMENTARY_ONLY_PATH.fullmatch(path)
+        if (matched is None or path in seen or protected_path(path)
+                or entry.get("status") not in ("added", "modified")
+                or entry.get("previous_filename")
+                or not isinstance(entry.get("sha"), str)
+                or not re.fullmatch(r"[a-f0-9]{40}", entry["sha"])):
+            return False
+        seen.add(path)
+        sections.add(matched.group(1))
+    # The pre-existing failed example spans multiple nonprivileged editorial
+    # surfaces. Single-surface and non-documentary changes remain untouched.
+    return len(sections) >= 2
+
+
+def report_documentary_review_not_applicable(head: str, files: list[dict]) -> None:
+    """Record a non-authoritative abstention, never a GitHub review or pass."""
+    record = {
+        "record_type": "GCL_DELEGATED_REVIEW_APPLICABILITY/1",
+        "candidate_head": head,
+        "file_count": len(files),
+        "disposition": "NOT_APPLICABLE_NO_APPROVAL",
+        "review_posted": False,
+        "mathematical_certification": False,
+        "claim_promotion": False,
+        "protected_checks_waived": False,
+        "scope": "mixed_public_documentary_markdown_only",
+    }
+    message = (
+        "NOT_APPLICABLE_NO_APPROVAL: exact-head public documentary mixture "
+        "is outside this narrow automated reviewer's approval authority. "
+        "No GitHub review, certification, protected-check waiver, or claim "
+        "promotion was issued. Existing protected policy and any substantive "
+        "review remain authoritative."
+    )
+    print("::notice title=Delegated review abstained::" + message)
+    print(json.dumps(record, sort_keys=True))
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as out:
+            out.write(
+                "### Delegated review applicability: NOT_APPLICABLE_NO_APPROVAL\n\n"
+                + message + "\n\n"
+                + "This is not an approval check, specialist receipt, "
+                "or evidence of mathematical validity.\n\n"
+                + "```json\n" + json.dumps(record, indent=2, sort_keys=True)
+                + "\n```\n"
+            )
+
 def exact_head_nonauthor_review(
     pr: dict, number: int, head: str, *, token: str, prefix: str,
 ) -> str:
@@ -311,7 +391,7 @@ def report_delegated_review_not_applicable(
                 "### Delegated-review applicability: NOT_APPLICABLE\n\n"
                 "This candidate contains bounded Erdős #41 research and tests. "
                 "**No automated approval or mathematical certification was "
-                "issued.** Its exact head is \`" + head + "\` and it changes "
+                "issued.** Its exact head is `" + head + "` and it changes "
                 + str(len(files)) + " files. A distinct authenticated "
                 "GitHub non-author APPROVED review exists at this exact head "
                 "(reviewer: " + reviewer + "). This is source-review provenance "
@@ -436,6 +516,19 @@ def main() -> int:
                 pr, number, head, token=read_token, prefix=prefix,
             )
             report_delegated_review_not_applicable(head, files, reviewer)
+            return 0
+        if bounded_documentary_not_applicable(pr, files, head):
+            # This route is a no-approval diagnostic, not a replacement
+            # source-semantic or mathematical reviewer. Recheck exact head,
+            # base, and file count before reporting the observed manifest.
+            current = api("GET", f"{prefix}/pulls/{number}", token=read_token)
+            if (current.get("state") != "open" or current.get("draft")
+                    or (current.get("head") or {}).get("sha") != head
+                    or (current.get("base") or {}).get("sha")
+                        != (pr.get("base") or {}).get("sha")
+                    or current.get("changed_files") != len(files)):
+                raise RoutineReviewError("documentary candidate changed during abstention")
+            report_documentary_review_not_applicable(head, files)
             return 0
         evidence = exact_specialist_disposition(
             pr, files, head, read_token=read_token,

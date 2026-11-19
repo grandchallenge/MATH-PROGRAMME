@@ -26,6 +26,7 @@ These are supporting records, not necessarily current research instructions or c
 - [GCL Agent Continuity Phase D0](../governance/GCL_AGENT_CONTINUITY_PHASE_D0_001.md)
 - [GCL Controlled Epistemic Interface](../governance/GCL_CONTROLLED_EPISTEMIC_INTERFACE.md)
 - [GCL Worker Queue and Collaboration](../governance/GCL_WORKER_QUEUE_COLLABORATION_OPERATING_DESIGN.md)
+- [GCL Queue AVAILABLE Pickup Semantics](../operations/GCL_QUEUE_PICKUP_SEMANTICS.md) — issue-label eligibility versus Project Status.
 - [Erdős Source-Return Queue Projection Runbook](../operations/ERDOS_QUEUE_RETURN_PROJECTION.md)
 - [Erdős Proof Worker One-Shot Dispatch Contract](../governance/ERDOS_PV_DISPATCH_ONCE_001.md)
 - [Erdős Return Exceptions and Arbitration](../operations/ERDOS_RETURN_EXCEPTION_HANDLING.md)

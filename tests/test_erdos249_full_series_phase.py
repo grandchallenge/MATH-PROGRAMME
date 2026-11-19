@@ -75,3 +75,200 @@ class PhaseProbeTests(unittest.TestCase):
         self.assertEqual(len(ds['rows']),32)
         self.assertEqual([(r['integral_fraction']) for r in ds['rows'] if r['L']==2],
                 sorted([r['integral_fraction'] for r in ds['rows'] if r['L']==2]))
+
+
+from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+    totients as nearmax_totients,
+    factors as nearmax_factors,
+    v2 as nearmax_v2,
+    odd_part as nearmax_odd_part,
+    is_nearmax,
+    restricted_factor_shape,
+    small_odd_exponent_patterns,
+    weighted_subset_envelope,
+    finite_shape_envelope,
+    nearmax_witnesses,
+    termwise_nearlog_starts,
+    research_receipt as nearmax_receipt,
+)
+
+
+class NearMaxTotientValuationTests(unittest.TestCase):
+    """WP07-C elementary shape and nearlog counting controls."""
+
+    def test_independent_factor_oracle_and_totient_sieve(self):
+        phi = nearmax_totients(720)
+        for n in range(1, 721):
+            self.assertEqual(phi[n], sum(math.gcd(n,j)==1 for j in range(1,n+1)))
+            reconstruction = n
+            for p, a in nearmax_factors(n):
+                self.assertGreaterEqual(a, 1)
+                self.assertEqual(reconstruction % (p**a), 0)
+                reconstruction //= p**a
+            self.assertEqual(reconstruction, 1)
+
+    def test_oddpart_and_prime_shape_at_all_eligible_small_indices(self):
+        X=6000
+        phi=nearmax_totients(X)
+        for C in (0, 1, 2, 3, 5):
+            B=1 << (C+1)
+            eligible=nearmax_witnesses(X,C,phi)
+            self.assertTrue(1 in eligible)
+            for n in eligible:
+                cert=restricted_factor_shape(n,C,phi)
+                self.assertLess(cert["bounded_odd_part"], B)
+                self.assertEqual(cert["boundary"],
+                                 "SHAPE_NECESSARY_ONLY__FULL_S_OPEN")
+                for p,a,r,d in cert["odd_primes"]:
+                    self.assertEqual(p,1+d*(1<<r))
+                    self.assertEqual(nearmax_odd_part(p-1),d)
+                    self.assertLess(d,B)
+                    if p>B:
+                        self.assertEqual(a,1)
+
+    def test_small_prime_exponent_choices(self):
+        self.assertEqual(small_odd_exponent_patterns(2),1)
+        self.assertEqual(small_odd_exponent_patterns(4),3)
+        self.assertEqual(small_odd_exponent_patterns(8),27)
+        self.assertEqual(small_odd_exponent_patterns(16),4*3**4)
+
+    def test_partition_majorant_against_independent_subset_enumeration(self):
+        from itertools import product
+        for R,B in ((3,2),(4,2),(4,3)):
+            # B independent distinguishable candidate slots at each level.
+            brute=sum(
+                sum((i//B+1)*bit for i,bit in enumerate(bits))<=R
+                for bits in product((0,1), repeat=R*B)
+            )
+            self.assertEqual(weighted_subset_envelope(R,B),brute)
+
+    def test_all_nearmax_counts_below_exact_combinatorial_envelope(self):
+        for X,C in ((100,0),(1000,1),(10000,2),(10000,3)):
+            count=len(nearmax_witnesses(X,C))
+            self.assertLessEqual(count,finite_shape_envelope(X,C))
+            self.assertGreaterEqual(count,1)
+
+    def test_nearlog_termwise_windows_imply_nearmax_last_term(self):
+        for X,C in ((64,0),(128,1),(512,2),(2048,2),(4096,3)):
+            L=X.bit_length()-1-C
+            phi=nearmax_totients(3*X)
+            good=termwise_nearlog_starts(X,C,phi)
+            eligible=set(nearmax_witnesses(3*X,C+2,phi))
+            self.assertTrue(all(N+L in eligible for N in good))
+            for N in good:
+                self.assertEqual(phi[N+L] % (1<<L),0)
+
+    def test_finite_receipts_have_correct_epistemic_boundary(self):
+        for X,C in ((64,1),(256,2),(1024,3)):
+            r=nearmax_receipt(X,C)
+            self.assertEqual(r["X"],X)
+            self.assertEqual(r["C"],C)
+            self.assertLessEqual(r["termwise_integer_starts"],
+                                 r["nearmax_eligible_until_3X"])
+            self.assertEqual(
+                r["claim_boundary"],
+                "FINITE_CHECK_ONLY__EXACT_ELEMENTARY_PROOF__FULL_S_OPEN",
+            )
+
+    def test_high_valuation_does_not_imply_full_series_irrationality(self):
+        # A synthetic rational nearlog comparator has such valuations
+        # everywhere, but its full sum remains 2/3.
+        # Independent witness code is deliberately local: WP07-B may still be
+        # awaiting protected admission, and this test must not import it.
+        a=[0]*512
+        b=[0]*512
+        for n in range(1,512):
+            M=1<<max(0,n.bit_length()-6)
+            q=(n//2)+2*b[n-1]
+            b[n]=q%M
+            a[n]=q-b[n]
+        x=Fraction(1,2)
+        self.assertEqual(x*x*(1+x)/(1-x*x)**2,Fraction(2,3))
+        for N in range(64,300):
+            L=N.bit_length()-6
+            finite=sum((Fraction(a[N+j],1<<j) for j in range(1,L+1)),
+                       Fraction())
+            self.assertEqual(finite.denominator,1)
+        # Termwise integrality is stronger than total integrality:
+        phi=nearmax_totients(4)
+        self.assertEqual(Fraction(phi[2],2)+Fraction(phi[3],4),1)
+        self.assertEqual(phi[2]%2,1)
+
+    def test_malformed_contracts_fail(self):
+        with self.assertRaises(ValueError):
+            nearmax_totients(0)
+        with self.assertRaises(ValueError):
+            nearmax_factors(0)
+        with self.assertRaises(ValueError):
+            nearmax_v2(0)
+        with self.assertRaises(ValueError):
+            nearmax_odd_part(0)
+        with self.assertRaises(ValueError):
+            finite_shape_envelope(1,0)
+        with self.assertRaises(ValueError):
+            finite_shape_envelope(100,-1)
+        with self.assertRaises(ValueError):
+            weighted_subset_envelope(0,2)
+        with self.assertRaises(ValueError):
+            termwise_nearlog_starts(64,8)
+        with self.assertRaises(ValueError):
+            restricted_factor_shape(9,0,nearmax_totients(15))
+
+
+    def test_exact_rolling_integral_sum_recurrence_vs_direct_definition(self):
+        from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+            finite_scaled_numerator, nearlog_integral_sums_and_adjacent_pairs,
+        )
+        for X,C in ((32,1),(64,0),(128,2),(256,2),(512,3)):
+            L=X.bit_length()-1-C
+            phi=nearmax_totients(3*X)
+            starts, adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
+            expected=[]
+            expected_adj=[]
+            for N in range(X,2*X):
+                A=finite_scaled_numerator(N,L,phi)
+                next_A=finite_scaled_numerator(N+1,L,phi)
+                self.assertEqual(next_A,2*A-(1<<L)*phi[N+1]+phi[N+L+1])
+                if A % (1<<L)==0:
+                    expected.append(N)
+                    if next_A % (1<<L)==0:
+                        expected_adj.append(N)
+            self.assertEqual(starts,tuple(expected))
+            self.assertEqual(adjacent,tuple(expected_adj))
+
+    def test_adjacent_integral_sums_force_nearmax_last_coefficient(self):
+        from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+            nearlog_integral_sums_and_adjacent_pairs,
+        )
+        for X,C in ((64,0),(128,1),(512,2),(2048,2),(4096,3)):
+            phi=nearmax_totients(3*X)
+            L=X.bit_length()-1-C
+            starts,adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
+            eligible=set(nearmax_witnesses(3*X,C+2,phi))
+            self.assertTrue(all(N+L+1 in eligible for N in adjacent))
+            self.assertLessEqual(len(adjacent),len(eligible))
+            self.assertLessEqual(len(starts),(X+1)//2+len(adjacent))
+
+    def test_nearlog_rational_control_not_replicated_by_totient_recurrence(self):
+        # Independent local synthetic recurrence: no dependency on the WP07-B
+        # branch, which might still be in the protected merge queue.
+        X,C=128,5
+        L=X.bit_length()-1-C
+        a=[0]*512
+        b=[0]*512
+        for n in range(1,512):
+            M=1<<max(0,n.bit_length()-6)
+            q=n//2+2*b[n-1]
+            b[n]=q%M
+            a[n]=q-b[n]
+        self.assertTrue(all(
+            sum(a[N+j] << (L-j) for j in range(1,L+1)) % (1<<L)==0
+            for N in range(X,2*X+1)
+        ))
+        from experiments.erdos249_full_series_phase.nearmax_totient_valuation import (
+            nearlog_integral_sums_and_adjacent_pairs,
+        )
+        phi=nearmax_totients(3*X)
+        actual_starts,adjacent=nearlog_integral_sums_and_adjacent_pairs(X,C,phi)
+        self.assertLessEqual(len(adjacent),len(nearmax_witnesses(3*X,C+2,phi)))
+        self.assertLessEqual(len(actual_starts),(X+1)//2+len(adjacent))

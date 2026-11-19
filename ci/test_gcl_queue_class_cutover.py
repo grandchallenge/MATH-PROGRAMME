@@ -30,6 +30,21 @@ def project():
     }
 
 class Contract(unittest.TestCase):
+    def test_available_view_is_issue_label_not_project_status(self):
+        from gcl_queue_class_cutover import AVAILABLE_FILTER
+        self.assertEqual(AVAILABLE_FILTER, "is:open label:gcl-state:available")
+        self.assertEqual(project()["views"]["nodes"][0]["filter"], AVAILABLE_FILTER)
+        contract = (Path(__file__).resolve().parents[1] /
+                    "docs/operations/GCL_QUEUE_PICKUP_SEMANTICS.md").read_text()
+        agents = (Path(__file__).resolve().parents[1] / "AGENTS.md").read_text()
+        for text in (contract, agents):
+            self.assertIn("is:open label:gcl-state:available", text)
+            self.assertIn("Status", text)
+            self.assertIn("unset", text.lower())
+        # No Project Status = AVAILABLE query is part of the governed contract.
+        self.assertNotIn("Status:AVAILABLE", AVAILABLE_FILTER)
+        self.assertNotIn("Status=AVAILABLE", AVAILABLE_FILTER)
+
     def test_exact_closed_documentary_is_editorial_without_forged_pickup(self):
         title="Seven-documentary GitHub math rendering parity"
         good=make_item(2757,"grandchallenge/MATH-PROGRAMME",title,

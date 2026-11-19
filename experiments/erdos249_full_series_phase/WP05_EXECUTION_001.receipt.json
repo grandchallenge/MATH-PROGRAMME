@@ -1,0 +1,50 @@
+{
+  "record_type": "ERDOS249_S_WP05_EXECUTION_RECEIPT/1",
+  "status": "RESEARCH_EVIDENCE_EXECUTED__PROTECTED_ADMISSION_PENDING",
+  "date_utc": "2026-11-18",
+  "source_issue": "grandchallenge/MATH-PROGRAMME#3478",
+  "programme_parent": "grandchallenge/MATH-PROGRAMME#3201",
+  "original_series": "S=sum_{n>=1} phi(n)/2^n",
+  "original_status": "OPEN",
+  "claim_scope": "FINITE_FAMILY_COFINAL_CRT_CONGRUENCES_AND_COOK_PROP_6_92_SAME_DEPTH_CERTIFICATE_IMPOSSIBILITY_ONLY",
+  "prior_work": "Will Cook, The Binary Totient Series, 2026 rev 2026-10-01, Proposition 6.69/6.70/6.91/6.92",
+  "exact_run": {
+    "candidate_head_at_execution": "cfa063ae3cfcb6d9a07ef6a0ed2a762953605ea5",
+    "chad_command_capture_id": "c71ea6d7a698453e9403dbd357fe47ea",
+    "chad_receipt_sha256": "e06640fdd8edd7e218df81b0cc5e4b1a09299414f34fd8117d786c14f167a105",
+    "independent_execution_attested": false,
+    "execution_origin": "OS_ACCOUNT_ONLY",
+    "python_version": "Python3, standard library",
+    "tests_command": "python3 -m unittest discover -s tests -p 'test_erdos249_prime_pulse_crt.py' -v",
+    "tests_run": 12,
+    "tests_failure_count": 0,
+    "tests_exit_code": 0,
+    "tests_stdout_sha256": "f6fb36880d4f930052e9c6d6ad31bb3b4105ea2901758d79ec5be9e7cbccdafe",
+    "math_markdown_gate_exit_code": 0,
+    "math_markdown_gate_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc"
+  },
+  "exact_bytes_sha256": {
+    "module": "c885a1b83899003e6b7957a22b7fb109ee2cb9ed63f7e6ab4cfbcfdab8946f8f",
+    "tests": "0bf21b79437e3a079e260841f190f9ee7c1c178920ff609036d0e7ddae9271f6",
+    "manuscript": "56b75a6bda4ed0aabe1bc2e38f3d3f37b52c6a330a6d14fad6d4f2be3359afd8",
+    "critical_review": "771c510fcf2611633495ca3976b74911e7bc1417f80bf5c0e802ad1494a62778"
+  },
+  "review": {
+    "mode": "NON_AUTHORING_LOGICAL_PASS_BY_SAME_AUTHENTICATED_AGENT",
+    "external_independent": false,
+    "referee_human_independent": false,
+    "disposition": "ACCEPT_WITH_SCOPE",
+    "completed_at_candidate_head": "61c939ff77385daa20df7faf38cc6063e537616c",
+    "review_markdown_gate": "PASS"
+  },
+  "epistemic_boundaries": [
+    "The original Erdős 249 irrationality remains open",
+    "No novelty or priority asserted",
+    "No Lean replay or formal theorem certificate for new results",
+    "No MATHCERT certification",
+    "Finite prime scanning is not a proof of Dirichlet",
+    "Divergent bound is only an upper bound, not proof of true tail divergence",
+    "Cook midpoint result is prior art; only the same-depth impossibility deduction is assessed"
+  ],
+  "next_action": "After protected native merge and exact file readback, close only research issue 3478; set WP06 target to prove a two-scale K/L arithmetic-tail separation with cofinal period quantifiers and rational countermodels."
+}
