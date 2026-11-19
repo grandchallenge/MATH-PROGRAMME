@@ -2,10 +2,10 @@
 
 **Review type:** non-authoring *logical* adversarial pass by the same authenticated GCL agent. **Not** independently credentialed mathematical review, not Lean-checking, not MATHCERT.  
 **Workstream:** [#3500](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3500) OPEN; original Erdős #249 OPEN.  
-**Exact manuscript SHA-256:** 623a2bb5fe2c3faa077dd549bddcdd599e0b62be8d335a9eb4ab2553b9461350.  
-**Exact source SHA-256:** c23608cef5794558c164f07bd29dd5cf3212478009dec5230d0507b19bde14e5.  
-**Exact registered hostile suite SHA-256:** baa1289edd79dfa68e3b8429a679811c03041cf0012a09cfd5c4049496d3e73c.  
-**Replayed exact topic head:** 2ed3e0ca942dbc7fa1fbd6c0a39a8035fbc4c48d; **28/28 source tests PASS**, source math gate PASS.
+**Exact manuscript SHA-256:** 75fc5b86739f55c5753f041743961be6f511a681ee5c2b0e4569924cc36c85b9.  
+**Exact source SHA-256:** 11f09bb1d201d2ef58164c36c94f98398160ce2d6204878d05543b4fc5e8ac5f.  
+**Exact registered hostile suite SHA-256:** 561b3f059fafb1ac4a7a44f8b7cc30d9d64c7141038d4bca521747c9fd74f45f.  
+**Replayed exact topic head:** f7a20f8012a1672726bd062576b1b3d6e7a0bd07; **31/31 source tests PASS**, source math gate PASS.
 
 ## A. Is the modulus interpolation circular, or does it prove rationality independently?
 
@@ -27,8 +27,14 @@ No. Congruence modulo $2^{k_n}$ preserves the exact two-adic valuation when that
 
 No. The model matches only the selected coefficient residues and the linear envelope. The synthetic function $a_n$ is not asserted to be multiplicative, to be Euler's totient, or to satisfy a higher-depth or cofinal condition. It therefore **does not refute** Cook's actual good-base Fourier hypothesis or any proof using authentic multiplicative correlations. It **does** reject a generic inference that those particular nearlog finite phases, even with positive linear coefficients, imply irrationality. A later positive proof must identify the additional hypothesis the countermodel does not satisfy.
 
-## F. Are the source claims and execution independent?
+## F. Does the interpolation actually hold for arbitrary integer targets?
 
-The module uses a totient sieve, a separately implemented direct coprime-count oracle, explicit integer modular arithmetic and exact rational arithmetic. The 28/28 tests include all existing WP06/WP07-B regression tests, plus nine new hostile tests. They cannot certify an infinite theorem, but both infinite conclusions were proved algebraically in the manuscript. The qualified reviewer is the same agent and no independent theorem-referee identity, novelty or source priority is being manufactured. The underlying dyadic carry method is already present in GCL WP06/WP07-B; the present specialization needs external literature comparison before a novelty claim.
+Yes. The proof of the carry bound and the rational full sum uses **only** that $b_n$ is a canonical residue modulo $M_n^{(K)}$, not any arithmetic property of the target $t_n$. For each fixed integer deficit $K\ge2$, $M_n^{(K)}\le n/2^K$ once $n\ge2^{K+1}$, and $b_n<M_n^{(K)}$, so $n/4\le a_n\le n$ with the same rational full sum $2/3$. The coefficient congruence and exact complete finite-tail fractional-phase match at depth $\lfloor\log_2N\rfloor-K$ then follow for **every** target. Restricting the target to $|t_n|\le n$ is needed only to know its own complete binary series converges, not for the construction or modular identity. This stronger universal statement avoids falsely attributing the countermodel's behavior to a special coincidence involving totient arithmetic.
 
-**Disposition:** ACCEPT_WITH_SCOPE for the rational entire-series identity, the all-position exact finite totient-phase mimic, the valuation-exception deduction and its exact tests. The **scientific** cofinal actual-totient residue-vs-remainder separation is still unproved; maintain #3500 and the original #249 OPEN.
+The three new hostile tests independently exercise four bounded target classes for deficits 2, 3 and 5, including dyadic boundaries, as well as a deliberately unbounded signed target that tests carry independence from target growth. Exact modulo checks, rational telescoping, linear envelopes and invalid-input guards all pass. This is an algebraic theorem, not an empirical induction.
+
+## G. Are the source claims and execution independent?
+
+The module uses a totient sieve, a separately implemented direct coprime-count oracle, explicit integer modular arithmetic and exact rational arithmetic. The 31/31 tests include all existing WP06/WP07-B regression tests, the original nine WP07-E hostile tests, and three additional universal interpolation tests. They cannot certify an infinite theorem, but both infinite conclusions were proved algebraically in the manuscript. The qualified reviewer is the same agent and no independent theorem-referee identity, novelty or source priority is being manufactured. The underlying dyadic carry method is already present in GCL WP06/WP07-B; the present specialization needs external literature comparison before a novelty claim.
+
+**Disposition:** ACCEPT_WITH_SCOPE for the rational entire-series identity, the all-position exact finite totient-phase mimic, the universal arbitrary-target interpolation theorem, the valuation-exception deduction and its exact tests. The **scientific** cofinal actual-totient residue-vs-remainder separation is still unproved; maintain #3500 and the original #249 OPEN.
