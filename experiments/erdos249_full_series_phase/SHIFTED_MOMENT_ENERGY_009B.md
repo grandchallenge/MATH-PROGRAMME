@@ -94,7 +94,7 @@ indices. Summing the errors with coefficient $1/(de)$ up to $d\le T$ and $e\le T
 The infinite main series is absolutely convergent:
 
 $$
-B_h=\sum_{\substack{d,e\ge1\\(d,e)\mid h}}
+B_h=\sum_{d,e\ge1\,;\,(d,e)\mid h}
 \frac{\mu(d)\mu(e)}{de[d,e]}.
 \tag{6}
 $$
@@ -333,7 +333,7 @@ remains open. Our two-point normalized correlation cannot control the exponentia
 | --- | --- |
 | A: classical normalized shifted totient second moment with explicit positive Euler-product constant and fixed-shift logarithmic error | Complete elementary source proof; no novelty |
 | B: actual shifted unnormalized totient-difference mass $(7/3)V_h X^3+O_h(X^2\log^2 X)$ on Cook's moving-depth block | Partial summation proof |
-| C: exact finite phase-energy transfer for any integer coefficients with local differences below $Q/2$ | Algebraic modulo-$Q$ and operator-norm proof; exact finite hostiles |
+| C: exact finite phase-energy transfer for any integer coefficients with local differences below $Q/2$ | Algebraic modulo $Q$ and operator-norm proof; exact finite hostiles |
 | D: actual Cook first-harmonic saving at least $V_hX/2500$ for every fixed $h$ and all sufficiently large $X$ | Unconditional bounded theorem, **far weaker** than Cook's 10% |
 | Ceiling: the stated single-step $\ell^2$ certificate cannot itself reach a 10% deficit | Exact envelope and admissibility comparison, no claim about actual phase behavior |
 | Strong Cook weighted correlation, first-harmonic 10%, complete-tail irrationality contradiction | **OPEN** |
