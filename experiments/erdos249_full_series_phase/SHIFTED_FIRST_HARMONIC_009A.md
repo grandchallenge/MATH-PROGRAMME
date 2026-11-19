@@ -187,6 +187,17 @@ $$
 
 **Proof.** For each of the at least $\kappa X/(2M)$ exceptional starting positions, the fractional distance of $D/Q$ to the nearest integer is at least $1/28800$. Hence the real part of its unit phase is at most $\cos(2\pi/28800)$. For every other position it is at most one. Sum the two upper bounds and substitute (12). QED.
 
+The saving can be bounded **without any floating-point trigonometry**. The elementary inequality $1-\cos(2\pi t)=2\sin^2(\pi t)\ge8t^2$ for $0\le t\le1/2$ yields
+
+$
+\boxed{
+c_h\ge\frac{4\kappa}{M_h(28800)^2}>0.
+}
+\tag{13a}
+$
+
+This lower bound is algebraic apart from the classical exact constant $\pi^2$ in the mean totient ratio; no empirical phase average enters it.
+
 The theorem gives a rigorously proved **positive cancellation deficit** at the exact object, scale, and quantifier order of Cook's first-harmonic route. It uses only CRT, Euler's product, the elementary conditional totient mean, and the exact phase recurrence. No prime number theorem, independence model, or conjectural correlation estimate is needed.
 
 But the saving is far below Cook's required $1/10$; at the universal parameter choice of (1), its explicit lower estimate is of order $10^{-10}/M_h$, not $10^{-1}$. Taking the depth larger does **not** bridge the gap by itself: the phase separation forced by (9) scales as $X/Q$, while Cook's discarded-tail error scales as $X/Q$. The ratio of these two scales is independent of depth.
