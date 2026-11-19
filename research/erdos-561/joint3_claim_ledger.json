@@ -122,6 +122,68 @@
         "MATH-PROGRAMME#3490",
         "MATH-PROGRAMME#3502"
       ]
+    },
+    {
+      "mathematical_domain": "graph theory / size Ramsey numbers",
+      "support_type": "HUMAN_PROOF",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/JOINT_3x3_AND_DEGREE_CORE_PROOF.md",
+        "research/erdos-561/ODD_CORE_PARITY_AND_REVIEW.md"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "ordinary noninduced Ramsey arrowing",
+        "proved joint 3x3 residual theorem under review",
+        "Lovász factor and Vizing edge-colouring theorems"
+      ],
+      "promotion_condition": "Non-author substantive mathematical review or formal verified proof; preserve current review-policy independence boundary.",
+      "related_files": [
+        "research/erdos-561/verify_odd_core.py",
+        "research/erdos-561/JOINT_3x3_AND_DEGREE_CORE_PROOF.md",
+        "research/erdos-561/ODD_CORE_PARITY_AND_REVIEW.md"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ],
+      "claim_id": "ERDOS561-CORE-ODD-0005",
+      "short_name": "Odd-degree core equality forces Class I",
+      "claim_text": "If Δ(G)=D is odd, at least D+1 vertices have degree D, and v_+(G)=2e(G)-D²+1, then χ'(G)=D, by a one-factorization of K_(D+1) extended over pendant edges.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_summary": "Independent constructive core-and-leaf edge-colouring lemma; exact parameter check eliminates six ordered cases (851 to 845)."
+    },
+    {
+      "mathematical_domain": "graph theory / size Ramsey numbers",
+      "support_type": "HUMAN_PROOF",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/JOINT_3x3_AND_DEGREE_CORE_PROOF.md",
+        "research/erdos-561/ODD_CORE_PARITY_AND_REVIEW.md"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "ordinary noninduced Ramsey arrowing",
+        "proved joint 3x3 residual theorem under review",
+        "Lovász factor and Vizing edge-colouring theorems"
+      ],
+      "promotion_condition": "Non-author substantive mathematical review or formal verified proof; preserve current review-policy independence boundary.",
+      "related_files": [
+        "research/erdos-561/verify_odd_core.py",
+        "research/erdos-561/JOINT_3x3_AND_DEGREE_CORE_PROOF.md",
+        "research/erdos-561/ODD_CORE_PARITY_AND_REVIEW.md"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ],
+      "claim_id": "ERDOS561-3X3-CORETHRESH-0006",
+      "short_name": "3x3 original size-Ramsey formula below core threshold",
+      "claim_text": "For every pair of 3-star forests with leading star sizes at least two, if predicted W≤D(D+1)/2 for D=n1+m1-2, the original Erdős formula holds without any zero-switching assumption.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_summary": "Theorem B supplies both residual bounds for all switching regimes; theorem A handles the forced degree-D cap obstruction. Removes an unnecessary zero-switching premise from earlier paper-level corollary."
     }
   ]
 }
