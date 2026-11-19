@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -42,19 +43,58 @@ def load_json(path: Path) -> Any:
         fail(f"{path}: cannot load JSON: {exc}")
 
 
-def build_registry() -> Registry:
-    resources = []
+def _schema_snapshot() -> tuple[tuple[str, bytes], ...]:
+    """Exact schema bytes, not mtimes: every in-process mutation is visible."""
+    sources = []
     for path in sorted(SCHEMAS.glob("cmdg_*.schema.json")):
-        schema = load_json(path)
+        try:
+            sources.append((str(path), path.read_bytes()))
+        except OSError as exc:
+            fail(f"{path}: cannot load JSON: {exc}")
+    return tuple(sources)
+
+
+def _decode_schema(path: str, content: bytes) -> Any:
+    try:
+        return json.loads(content.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        fail(f"{path}: cannot load JSON: {exc}")
+
+
+@lru_cache(maxsize=8)
+def _registry_for_snapshot(snapshot: tuple[tuple[str, bytes], ...]) -> Registry:
+    """Reuse checked references only while ALL exact schema bytes match."""
+    resources = []
+    for path, content in snapshot:
+        schema = _decode_schema(path, content)
         Draft202012Validator.check_schema(schema)
         resources.append((schema["$id"], Resource.from_contents(schema)))
     return Registry().with_resources(resources)
 
 
-def validate_schema(instance: Any, schema_path: Path, label: str) -> None:
-    schema = load_json(schema_path)
+@lru_cache(maxsize=32)
+def _compiled_validator(
+    path: str, content: bytes, snapshot: tuple[tuple[str, bytes], ...]
+) -> Draft202012Validator:
+    schema = _decode_schema(path, content)
     Draft202012Validator.check_schema(schema)
-    validator = Draft202012Validator(schema, registry=build_registry())
+    return Draft202012Validator(schema, registry=_registry_for_snapshot(snapshot))
+
+
+def build_registry() -> Registry:
+    """Public registry construction retains content-drift invalidation."""
+    return _registry_for_snapshot(_schema_snapshot())
+
+
+def validate_schema(instance: Any, schema_path: Path, label: str) -> None:
+    # Read the exact content on each call. Schema caches are process-local and
+    # bounded: no untrusted branch, PR, artifact or cross-run cache is used.
+    snapshot = _schema_snapshot()
+    try:
+        content = schema_path.read_bytes()
+    except OSError as exc:
+        fail(f"{schema_path}: cannot load JSON: {exc}")
+    validator = _compiled_validator(str(schema_path), content, snapshot)
     errors = sorted(validator.iter_errors(instance), key=lambda err: list(err.absolute_path))
     if errors:
         first = errors[0]
