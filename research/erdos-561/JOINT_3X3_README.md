@@ -8,7 +8,7 @@
 2. Exact simultaneous joint residual Ramsey bound for **all** pairs of three-star forests, using a bounded 82-instance arithmetic certificate (not a search over arbitrary graphs).
 3. An original Erdős #561 theorem for all three-star pairs with `n_1+m_1 >=12`, including asymmetric, nonuniform forests.
 4. A complete ordinary mathematical proof (with finite integer-bound certificate) for `rhat(F(4,2,2),F(4,3,1))=24` replacing the earlier 11,197-graph classification and Δ=5 critical graph density dependence.
-5. A finite parameter shortlist of 851 ordered small pairs **not excluded by these particular gates**; do not treat the list as a list of unresolved problems without literature reconciliation.
+5. A finite parameter shortlist of 851 originally, narrowed to **845** by the new odd-degree equality-colouring lemma ordered small pairs **not excluded by these particular gates**; do not treat the list as a list of unresolved problems without literature reconciliation.
 
 Read `JOINT_3x3_AND_DEGREE_CORE_PROOF.md` first, then run the certificate scripts. The theorem relies on standard Lovász `(g,f)` factor and Vizing edge-colouring theorems and on You's 2026 two-component preprint for the no-switch case.
 
@@ -30,3 +30,6 @@ sha256sum -c SHA256SUMS.txt
 - Vizing's edge-colouring theorem: standard classical theorem; no conjectural density bound used.
 
 Research tracking: `grandchallenge/MATH-PROGRAMME` issues #3490 (joint residual) and #3502 (exact fixed instance). This packet does **not** supersede draft PR #3509's records until internal adjudication accepts the shorter derivation.
+## Separate review addendum (2026-11-18)
+
+The role-separated adversarial audit is in `ODD_CORE_PARITY_AND_REVIEW.md` and its standalone verifier is `verify_odd_core.py`. The joint-residual deletion directions are now specified explicitly in the manuscript. Theorem C no longer requires zero switching surplus: `W≤D(D+1)/2` suffices for any 3×3 pair with both leading sizes ≥2. This review is performed by the same assistant in a separate logical pass; it is **not independent external certification**. No theorem has been promoted to protected-certified status.
