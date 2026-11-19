@@ -1,0 +1,86 @@
+{
+  "record_type": "ERDOS249_S_WP08_B_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-19",
+  "research_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "status": "BOUNDED_MATHEMATICAL_SOURCE_PROOF_AND_TESTS_NONCERTIFYING",
+  "original_erdos249": "OPEN",
+  "MATHCERT": "NOT_SUBMITTED",
+  "priority_or_novelty": "NOT_CLAIMED",
+  "current_source_base_head": "24de2a363a4f086a0a00f67794dd03a25d73d07a",
+  "exact_tested_source_head": "9d1faf15596b1151c1388f8c9725a497ed66e10a",
+  "exact_critical_review_head": "c35d36fb2e3e8e22224a73ccc9ef44869f8e8f61",
+  "source_sha256": {
+    "manuscript": "2e597603e9bb9d6e369f28e996a15007cea9f2626cefab5e60a01368f64dafe0",
+    "module": "3a614a72fa066cfb9297bc27b41acb343803bcaed5bcba011e0a732d7bab5d57",
+    "registered_extended_test_file": "2e9fab8c7a96e9668da76575201a1fc8b6df4b9324bb15e672791d8d003f5d66",
+    "same_agent_qualified_review": "9765fc47a84250b6157f5ff327f787cfd8daaadce9e889591955d90e12c874f3"
+  },
+  "proof_ledger": {
+    "theorem_A": "For y*y>3X and n<3X, the residual g_y(n)-phi(n) equals exactly phi(n/p) at unique omitted prime p>y dividing n, else zero. Uniqueness includes multiplicity.",
+    "theorem_B": "Effective: for X>=64 y*y>3X, count of N in [X,2X) with distance of finite tail(phi-g_y) to Z >=1/(192y) is at least half the exact count of n=pm in I_X with y<p<=2y and 2phi(m)>=m.",
+    "theorem_C": "For 0<eps<1/4 and X^(1/2+eps)<=y<=X^(1-eps), moving cutoff gives at least ((12/pi²-1)*log(2)/2+o(1))*X/log(y) overlog finite phase gap starts at threshold 1/(192y), uniformly over y. Uses classical PNT and mean phi(m)/m.",
+    "theorem_D": "For every integer y>=2, finite prime Euler sum S_y is rational, and 0<S_y-S<(y+2)/2^y. No denominator uniformity.",
+    "hostile_rational_patch": "For each bounded X,y, replacing rational g_y coefficients on [X+1,2X+L] by actual phi is a finite modification of rational full series, yet matches actual finite tails at all N in [X,2X). Depends on scale; no cofinal irrationality inference."
+  },
+  "execution": {
+    "location": "CHAD authenticated OS-account local command; no separate independent mathematical attestation",
+    "exact_full_source_test_capture_id": "5bbe17e5313e4bd8b96331f8519923e3",
+    "full_governed_suite_tests": 45,
+    "prior_tests_retained": 38,
+    "new_hostile_tests": 7,
+    "failures": 0,
+    "test_stdout_sha256": "f5592424084464b9b5dda7655a5957f54e76599bb89de8bac0298842c102cfd9",
+    "mathematical_manuscript_gate": "PASS",
+    "mathematical_review_gate": "PASS",
+    "gate_stdout_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc",
+    "finite_controls_log_sha256": "e8bdffbd1702298cefaf0724ea423f1103c4677f0171f55dac1c90b487da530a",
+    "finite_controls": [
+      {
+        "X": 1024,
+        "y": 64,
+        "missing_primes_in_dyadic_interval": 13,
+        "distinct_omitted_prime_endpoints": 148,
+        "good_pulse_endpoints": 86,
+        "effective_proven_min_starts": 43,
+        "observed_exact_gap_starts": 1024
+      },
+      {
+        "X": 4096,
+        "y": 128,
+        "missing_primes_in_dyadic_interval": 23,
+        "distinct_omitted_prime_endpoints": 516,
+        "good_pulse_endpoints": 280,
+        "effective_proven_min_starts": 140,
+        "observed_exact_gap_starts": 4096
+      },
+      {
+        "X": 16384,
+        "y": 256,
+        "missing_primes_in_dyadic_interval": 43,
+        "distinct_omitted_prime_endpoints": 1918,
+        "good_pulse_endpoints": 992,
+        "effective_proven_min_starts": 496,
+        "observed_exact_gap_starts": 16383
+      }
+    ],
+    "finite_sample_is_not_an_infinite_proof": true,
+    "independent_authentication": false,
+    "lean_checked": false
+  },
+  "independent_mathematical_review": false,
+  "reviewer": {
+    "role": "logical Adversary/Referee",
+    "same_agent_as_author": true,
+    "disposition": "ACCEPT_WITH_SCOPE",
+    "noncertification": true
+  },
+  "governance": "Protected ordinary PR + required checks + native GitHub merge queue exact-head expectedHeadOid. On actual merge verify exact file blobs and merge-group checks, leave issue #3500 OPEN and GCL Worker Queue Project #2 In Progress. Do not manufacture human independence.",
+  "boundary": "MOVING_PRIME_ESCAPES_AGGREGATED_BUT_GAP_DECAYS_AND_FULL_TOTIENT_TAIL_UNCONTROLLED",
+  "successor": "Attack Cook 2026 explicitly isolated weighted first-harmonic correlation after unweighted prime-group mean, or prove totient-specific joint prime-pulse and discarded-tail sign at denominator-uniform depth. Hostile tests include rational finite patch and WP07-E universal interpolation.",
+  "source_provenance": {
+    "will_cook_2026": "Will Cook, The Binary Totient Series, July 2026 revised October 2026, first-harmonic section: already uses largest-prime/small-cofactor good-base condition, PNT group estimates, and explicitly leaves weighted first-harmonic correlation unproved.",
+    "pinned_public_source": "https://github.com/wcook04/plectis-erdos/blob/main/paper/249/erdos-249-binary-totient-series.tex",
+    "priority_claim": "NONE; neither largest-prime cofactor grouping nor PNT count asserted new",
+    "specific_wp08b_scope": "Finite-prime Euler rational approximation exact residual identity and overlog moving-prime finite phase discrepancy, not Cook weighted harmonic estimate."
+  }
+}

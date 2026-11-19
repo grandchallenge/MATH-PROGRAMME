@@ -4,7 +4,7 @@
 
 **Programme:** PNP-ABOVE, under [PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162)  
 **Solve research obligation:** [PNP-ABOVE-WP00](https://github.com/grandchallenge/MATHSOLVE/issues/1136)  
-**Documentary evidence:** updated through WP18, 18 November 2026; the 1 November version 0.1 **preprint is archival and unchanged**.
+**Documentary evidence:** updated through WP19, 19 November 2026; the 1 November version 0.1 **preprint is archival and unchanged**.
 
 **Claim status:** Exploratory. No proof of P = NP or P ≠ NP, no new unrestricted classical lower bound.
 
@@ -45,6 +45,8 @@ The original exploratory [lay manuscript](../research/pnp_above_lay_manuscript.m
 
 **WP18 construction (18 November 2026):** GCL has now formally built the complementary missing sampler: a genuinely **player-asymmetric nine-stage** conditional-linear distribution with positive probability on unequal questions, an executable original source query interface, and a bounded original verifier. However the **old identity decider** remains trivially classically winnable, and original synchronous, quantum and commuting game values still equal 1. A quantum gap requires new question structure and an answer-sensitive decision predicate; merely fixing one component is insufficient. The [complete evidence ledger](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026) documents the actual verified scope.
 
+**WP19 universal obstruction (19 November 2026):** The next original-source theorem proves the precise 512-pair distribution of WP18: **256 star edges** from a single Alice question and **256 isolated diagonal edges**, each with weight `1/512`. More strongly, it proves that **no synchronous decision predicate whatsoever** can produce a quantum advantage on that source law: the original synchronous, finite-dimensional quantum and commuting optima are *always equal*, even when the common winning probability is less than one. Thus WP18's question sampler itself must be replaced with a richer two-sided law; changing its decider cannot help. The [mathematical proof and evidence](evidence.md#wp19-universal-star-support-no-quantum-advantage-19-november-2026) distinguish the actual source models from an executable hard-game construction, which remains OPEN.
+
 ## The missing classical bridge
 
 Let $G_n$ be a uniform family of games and let $\mathcal C_{\mathcal A}(G_n)$ be the cost of implementing a precisely specified classical strategy or circuit model $\mathcal A$. A quantum-strategy Schmidt-rank lower bound is not automatically a lower bound on this classical cost.
@@ -63,7 +65,7 @@ No such general transfer theorem has been established. The programme is designed
 
 **External mathematics:** Ji et al. proved MIP* = RE and the gap-preserving compression theorem. The latter concerns nine-level normal-form verification and a lower bound on quantum Schmidt rank under stated hypotheses.
 
-**GCL source and finite-model work:** The magic-square calibration, symbolic compression-parameter ledger, explicit nine-level identity input and finite emulator clarify resource distinctions. The subsequently admitted original-source WP08–WP17 Lean proofs establish a bounded but classically easy nine-level verifier and a general diagonal-support no-advantage theorem; they do not establish a nontrivial compressed hard game.
+**GCL source and finite-model work:** The magic-square calibration, symbolic compression-parameter ledger, explicit nine-level identity input and finite emulator clarify resource distinctions. The subsequently admitted original-source WP08–WP19 Lean proofs establish bounded but classically easy nine-level verifiers, the general diagonal-support no-advantage theorem, and now the universal star-support no-advantage theorem for every synchronous predicate on WP18's exact law. They do not establish a nontrivial compressed hard game.
 
 **Unproved bridge:** No new lower bound for unrestricted classical SAT or circuits; no uniformly controlled SAT-to-strategy reduction; no numerical execution of the entire MIP* compression construction.
 
