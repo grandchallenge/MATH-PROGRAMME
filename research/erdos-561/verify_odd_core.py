@@ -54,3 +54,27 @@ for D in (3,5,7,9):
         assert len(incident)==D and len(set(incident))==D
 
 print(json.dumps({"counts":dict(counts),"newly_resolved":new},indent=2))
+
+
+# Independent 1..10 parameter enumeration for the strengthened core-threshold corollary.
+def general_weights(a,b):
+    return [max(a[i]+b[j]-1 for i in range(len(a)) for j in range(len(b)) if i+j==k)
+            for k in range(len(a)+len(b)-1)]
+
+T10=[tuple(reversed(x)) for x in combinations_with_replacement(range(1,11),3) if x[-1]>=2]
+bounded=Counter()
+for n in T10:
+    for m in T10:
+        w=general_weights(n,m)
+        W=sum(w)
+        sigma=W-w[0]-max(sum(general_weights(n[1:],m)),sum(general_weights(n,m[1:])))
+        assert sigma>=0
+        bounded["all_pairs"]+=1
+        if sigma==0: bounded["zero_switch"]+=1
+        if W<=(n[0]+m[0]-2)*(n[0]+m[0]-1)//2:
+            bounded["core_threshold"]+=1
+            if sigma==0: bounded["core_threshold_zero_switch"]+=1
+            else: bounded["core_threshold_positive_switch"]+=1
+assert bounded==Counter(all_pairs=47961,zero_switch=44893,core_threshold=46120,
+                        core_threshold_zero_switch=43066,core_threshold_positive_switch=3054),bounded
+print(json.dumps({"bounded_1_to_10":dict(bounded)},indent=2))
