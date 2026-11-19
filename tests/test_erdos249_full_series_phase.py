@@ -548,3 +548,73 @@ class OverlogTotientPhaseSeparationTests(unittest.TestCase):
         bad[65]=-5
         with self.assertRaises(ValueError):
             adjacent_phase_rigidity(64,bad,phi)
+
+
+    def test_exact_finite_prime_euler_coefficients_and_rational_sums(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            prime_euler_coefficients, finite_prime_rational_sum,
+            finite_prime_weight,
+        )
+        self.assertEqual(finite_prime_rational_sum(()),Fraction(2))
+        self.assertEqual(finite_prime_rational_sum((2,)),Fraction(14,9))
+        for ps in ((),(2,),(2,3),(2,3,5),(2,3,5,7)):
+            a=prime_euler_coefficients(1000,ps)
+            phi=overlog_totients(1000)
+            self.assertEqual(a[0],0)
+            weight=finite_prime_weight(ps)
+            for n in range(1,1001):
+                independent=Fraction(n)
+                for p in ps:
+                    if n%p==0:
+                        independent*=Fraction(p-1,p)
+                self.assertEqual(a[n],independent.numerator)
+                self.assertEqual(independent.denominator,1)
+                self.assertGreaterEqual(a[n],phi[n])
+                self.assertGreaterEqual(Fraction(a[n],n),weight)
+            result=finite_prime_rational_sum(ps)
+            self.assertGreater(result,0)
+            # An exact rational lower prefix, not a floating approximation.
+            prefix=sum((Fraction(a[n],1<<n) for n in range(1,100)),
+                       Fraction())
+            self.assertGreater(result,prefix)
+
+    def test_missing_prime_escapes_at_many_independent_supports(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            prime_escape_phase_gaps,
+        )
+        for X,ps,p in (
+            (128,(),2),
+            (128,(2,),3),
+            (512,(2,3),5),
+            (1024,(2,3,5),7),
+            (2048,(2,3,5,7),11),
+        ):
+            result=prime_escape_phase_gaps(X,ps,p)
+            self.assertTrue(result["all_prime_escape_implications"])
+            self.assertGreaterEqual(
+                result["phase_separated_starts"],
+                result["omitted_prime_endpoints"],
+            )
+            self.assertGreaterEqual(
+                result["omitted_prime_endpoints"],
+                (X-1)//p,
+            )
+            self.assertEqual(result["actual_full_totient_sum_status"],"OPEN")
+
+    def test_bad_finite_prime_sets_and_omitted_prime_fail_closed(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            prime_euler_coefficients, finite_prime_rational_sum,
+            prime_escape_phase_gaps, finite_prime_weight,
+        )
+        with self.assertRaises(ValueError):
+            prime_euler_coefficients(50,(2,2))
+        with self.assertRaises(ValueError):
+            finite_prime_weight((4,))
+        with self.assertRaises(ValueError):
+            finite_prime_rational_sum((1,))
+        with self.assertRaises(ValueError):
+            prime_euler_coefficients(0,(2,))
+        with self.assertRaises(ValueError):
+            prime_escape_phase_gaps(64,(2,3),2)
+        with self.assertRaises(ValueError):
+            prime_escape_phase_gaps(64,(2,),9)
