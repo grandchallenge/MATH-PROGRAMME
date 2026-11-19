@@ -247,6 +247,66 @@
         "MATH-PROGRAMME#3490",
         "MATH-PROGRAMME#3502"
       ]
+    },
+    {
+      "claim_id": "ERDOS561-SATCORE-0009",
+      "short_name": "Exactly D+1 saturated vertices force isolated odd clique",
+      "claim_text": "For alpha,beta positive with D=alpha+beta, max degree D and exactly D+1 vertices of degree D, a capped red/blue partition fails iff the graph contains an isolated K_(D+1), D is even and alpha,beta are odd.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph theory / edge partitions",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Lovasz non-parity (g,f) factor cut; q>=1 and unique D+1 saturated component force zero boundary and an isolated clique; Vizing, one-factorization and parity classify sufficiency.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/LOW_SLACK_CORE_STABILITY_THEOREM.md",
+        "https://gorogoro.cis.ibaraki.ac.jp/web/papers/kano1983-b.pdf"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "alpha,beta>=1; D=alpha+beta; exactly D+1 degree-D vertices"
+      ],
+      "promotion_condition": "Specialist non-author review or formal proof of Lovasz specialization and the unique saturating component argument.",
+      "related_files": [
+        "research/erdos-561/LOW_SLACK_CORE_STABILITY_THEOREM.md",
+        "research/erdos-561/verify_core_isolation_atlas.py"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ]
+    },
+    {
+      "claim_id": "ERDOS561-LOWSLACK-0010",
+      "short_name": "Low-slack saturation and 316 ordered 3x3 exclusions",
+      "claim_text": "For failed alpha/beta capped partition with slack 0<=s<=D-2, an isolated odd-order complete core is necessary. Conditional on complete joint 3x3 residual theorem, if 0<=B-R<=D-2 and E-D(D+1)/2>B-R then original 3x3 Erdős formula is exact; 316 ordered prior-filter cases satisfy it.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph theory / size Ramsey numbers",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Degree-sum stability gives exactly D+1 saturated vertices, hence isolated clique; one pendant edge in each tree component of the remainder gives a blue matching and bounds red nonisolated vertices by D+1+t. Two independent exact integer checks agree on the 316-case set.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/LOW_SLACK_CORE_STABILITY_THEOREM.md",
+        "research/erdos-561/LOW_SLACK_RUN_MATRIX.md",
+        "https://arxiv.org/abs/2610.25958"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "both target largest star sizes >=2",
+        "upstream joint three-star residual theorem UNDER_REVIEW",
+        "bounded count refers to the prior 851-case arithmetic filter"
+      ],
+      "promotion_condition": "Non-author mathematical review of clique isolation and pendant-edge colouring; source-locked independent replay of both integer enumerators; upstream joint theorem adjudication.",
+      "related_files": [
+        "research/erdos-561/verify_low_slack_316.py",
+        "research/erdos-561/verify_low_slack_independent.py",
+        "research/erdos-561/LOW_SLACK_CORE_STABILITY_THEOREM.md"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ]
     }
   ]
 }

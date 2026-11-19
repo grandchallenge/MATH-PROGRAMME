@@ -17,3 +17,7 @@
 | EVI-01 | `python verify_even_core_independent.py` | Separate exhaustive cap-partition feasibility, no decomposition code | 3,608 bounded cases, 3,605 split-capable and 3 genuine exceptions |
 
 | STB-01 | `python verify_one_slack.py` | Independent exhaustive near-equality cap feasibility for all D=3,4 missing-core patterns and bounded D=5,6; exact 3×3 parameter gate | 29,685 feasible near-core tests; 80 additional ordered exclusions; surviving filter 755 |
+
+| LOW-01 | `python verify_low_slack_316.py` | Two-star-residual-conditional low-slack criterion over 4,566 ordered three-star pairs | 851 baseline, 316 excluded, 535 remain; exact sorted-set SHA-256 |
+| LOW-02 | `python verify_low_slack_independent.py` | Separate antidiagonal implementation and pair-list digest | Exactly the same 316 ordered pairs; digest verified |
+| LOW-03 | `python verify_core_isolation_atlas.py` | Brute-force capped colourings of all eligible graph atlas classes through 7 vertices | 77 graphs; 172 cap cases; 20 precisely characterized parity obstructions |

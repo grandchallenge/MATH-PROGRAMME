@@ -44,3 +44,7 @@ The role-separated adversarial audit is in `ODD_CORE_PARITY_AND_REVIEW.md` and i
 ## One-slack stability refinement
 
 The standalone mathematical manuscript `ONE_SLACK_CORE_THEOREM.md` proves the exact cap-partition classification when the degree-core vertex bound has one unit of slack, provided `D>=3`. It excludes **80 further ordered** original three-star cases, conditional on the underlying joint residual theorem. The arithmetic research shortlist is now `851→845→835→755`; this is a count of parameters not excluded by the specified gates, **not** a claim of 755 open problems. The case `D=2` is expressly excluded from the stability theorem. Run `python verify_one_slack.py` to replay 29,685 independent finite cap tests and the integer parameters. All mathematics retains `UNDER_REVIEW`.
+
+## Low-slack core classification (2026-11-18)
+
+`LOW_SLACK_CORE_STABILITY_THEOREM.md` replaces the separate odd/even equality- and one-slack structural derivations with an exact isolated-complete-core obstruction whenever the core vertex-budget slack is `s<=D-2`. Together with a pendant-edge red/blue avoidance construction, the joint 3×3 residual theorem implies the original size-Ramsey formula for **316** of the 851 originally filtered ordered small cases. The arithmetic gate now leaves **535** not excluded by these methods; do not add the earlier 6+10+80 exclusions to 316 (they are subsets). No protected mathematical certification, general #561 remains OPEN.

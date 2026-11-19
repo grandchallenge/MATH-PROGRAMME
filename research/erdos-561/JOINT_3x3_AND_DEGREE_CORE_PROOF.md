@@ -134,3 +134,8 @@ The new proof `EVEN_CORE_CAP_PARTITION_THEOREM.md` classifies **all** graphs att
 ## One-slack extension (post-review)
 
 `ONE_SLACK_CORE_THEOREM.md` shows that when `D>=3`, `v_+=2e−D²`, and at least `D+1` vertices have degree `D`, exactly `D+1` vertices attain that degree and there is exactly one noncore vertex of degree two. A one-factorization/Hamilton-path recolouring extends the exact equality cap-partition classifier to this one-slack class; the sole failing split is again a complete odd-order core under odd/odd caps, now with a disjoint two-edge path. Its explicit Ramsey-avoiding colouring excludes all original 3×3 `E=W−1>T`, `B−R=1` candidates, conditional on Theorem B. The research shortlist drops by another 80 ordered pairs, `835→755` after the earlier odd/even equality refinements. Full constructive proof, hypotheses and independent finite verifier are in the standalone addendum, and these mathematical statements remain `UNDER_REVIEW`.
+
+
+## Low-slack core classification (2026-11-18)
+
+`LOW_SLACK_CORE_STABILITY_THEOREM.md` replaces the separate odd/even equality- and one-slack structural derivations with an exact isolated-complete-core obstruction whenever the core vertex-budget slack is `s<=D-2`. Together with a pendant-edge red/blue avoidance construction, the joint 3×3 residual theorem implies the original size-Ramsey formula for **316** of the 851 originally filtered ordered small cases. The arithmetic gate now leaves **535** not excluded by these methods; do not add the earlier 6+10+80 exclusions to 316 (they are subsets). No protected mathematical certification, general #561 remains OPEN.
