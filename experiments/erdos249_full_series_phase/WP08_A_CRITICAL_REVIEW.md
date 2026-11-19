@@ -73,7 +73,7 @@ The exact finite-prime approximants also have rational full sums while themselve
 
 ## 7. Numerical evidence, provenance and resource usage
 
-The governed exact test file is **already registered** and retains 27 previous cases plus 11 new cases; no protected policy route, workflow or branch protection is changed. Tests independently check phi by direct coprime counts, direct versus rolling finite numerator arithmetic, the centered modulus, actual totient phase gaps, modular six-factor gaps, rational full-sum closed forms, exact finite-prime Euler product coefficients and sums, a sequence of omitted-prime examples, and invalid-source controls. A finite sample does not establish an all-$X$ density asymptotic; the manuscript proof does.
+The governed exact test file is **already registered** and retains 27 previous cases plus 11 new cases; no protected policy route, workflow or branch protection is changed. Tests independently check phi by direct coprime counts, direct versus rolling finite numerator arithmetic, the centered modulus, actual totient phase gaps, modular six-factor gaps, rational full-sum closed forms, exact finite-prime Euler product coefficients and sums, a sequence of omitted-prime examples, and invalid-source controls. A finite sample does not establish an all $X$ density asymptotic; the manuscript proof does.
 
 The exact finite-prime rational evaluator deliberately stops if the product of supported primes exceeds 512, to avoid expensive giant-integer denominators in constrained execution. This **implementation guard** does not restrict the symbolic Theorem D, and there is no policy authority change to remove the guard.
 
