@@ -24,7 +24,7 @@ These satisfy `0≤g(v)≤f(v)≤d_G(v)`, so we may use the standard form of Lov
 
 `A(S,T)=Σ_{s∈S} min(d_G(s),α) + Σ_{t∈T}min(d_G(t),β) − e_G(S,T)`.
 
-Lovász's theorem says the capped partition exists if and only if `A(S,T)≥q(S,T)` for every such `S,T`, where `q` counts components `C` of `G[Y]` whose vertices all satisfy `g=f` and `α|C|+e_G(C,T)` is odd. The equality `g=f` occurs only at vertices with degree `D`, **or isolated vertices**; isolated components are parity-even and never counted. Thus every counted component consists entirely of degree-`D` vertices.
+Lovász's theorem says the capped partition exists if and only if `A(S,T)≥q(S,T)` for every such `S,T`, where `q` counts components `C` of `G[Y]` whose vertices all satisfy `g=f` and `Σ_{v∈C}f(v)+e_G(C,T)` is odd. Equality `g=f` occurs only at vertices of degree `D`, **or isolated vertices**. An isolated component has `f(C)=0` and no edges to T, so its parity is even and it is never counted. Hence every counted component consists entirely of degree-`D` vertices, **and only for such a component** does the parity expression simplify to `α|C|+e_G(C,T)`.
 
 Since `D min(d,α)≥αd` and `D min(d,β)≥βd` for all `d≤D`, summing vertex degrees on S and T gives the key inequality
 
