@@ -48,3 +48,7 @@ The standalone mathematical manuscript `ONE_SLACK_CORE_THEOREM.md` proves the ex
 ## Low-slack core classification (2026-11-18)
 
 `LOW_SLACK_CORE_STABILITY_THEOREM.md` replaces the separate odd/even equality- and one-slack structural derivations with an exact isolated-complete-core obstruction whenever the core vertex-budget slack is `s<=D-2`. Together with a pendant-edge red/blue avoidance construction, the joint 3×3 residual theorem implies the original size-Ramsey formula for **316** of the 851 originally filtered ordered small cases. The arithmetic gate now leaves **535** not excluded by these methods; do not add the earlier 6+10+80 exclusions to 316 (they are subsets). No protected mathematical certification, general #561 remains OPEN.
+
+## Sharp D+2 maximum-degree-core theorem (2026-11-19)
+
+`DPLUS2_SATURATED_CORE_THEOREM.md` strengthens the previous low-slack bound: when at most D+2 vertices have maximum degree D=alpha+beta, an (alpha,beta) capped split fails **if and only if** an isolated K_(D+1) occurs with D even and odd/odd caps. `K_(D+3)` minus a Hamilton cycle (D even) proves the threshold is exact. With the currently reviewed but uncertified joint 3×3 residual theorem, the new gate excludes **512 of the original 851** low-degree parameter pairs, including **196 beyond the earlier low-slack result**; **339** remain outside these gates, not necessarily new open problems. The result is under review; original unrestricted Erdős #561 remains open. Run the three `verify_dplus2_*.py` scripts; all are bounded CPU jobs.

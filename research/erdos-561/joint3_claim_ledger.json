@@ -307,6 +307,40 @@
         "MATH-PROGRAMME#3490",
         "MATH-PROGRAMME#3502"
       ]
+    },
+    {
+      "claim_id": "ERDOS561-DPLUS2-0011",
+      "short_name": "Sharp D+2 maximum-degree core partition theorem",
+      "claim_text": "In any finite simple graph with maximum degree at most D=alpha+beta, positive alpha,beta, and at most D+2 vertices of degree D, the (alpha,beta) degree-capped edge partition fails iff G has an isolated K_(D+1), D even and alpha,beta odd. The bound D+2 is sharp via K_(D+3) minus a Hamilton cycle. Conditional on the pending full 3x3 joint residual theorem, the new condition excludes 512 of 851 previously shortlisted small original 3x3 star-forest parameter pairs, leaving 339 not excluded by these gates.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "mathematical_domain": "graph theory / Ramsey theory / factors",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Lovasz standard (g,f) factor with f=min(degree,alpha) and g=max(0,degree-beta); bound DA≥min(alpha,beta) counted-component boundary; no cap split with k_D≤D+2 forces a detached parity clique. Exact atlas 4,100 cases, complement-census D2/D3/D4, independent arithmetic filter verified.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "source_or_artifact": [
+        "research/erdos-561/DPLUS2_SATURATED_CORE_THEOREM.md",
+        "https://gorogoro.cis.ibaraki.ac.jp/web/papers/newKanoSaitoFactor1984.pdf"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive integer alpha,beta",
+        "D=alpha+beta≥2",
+        "k_D≤D+2",
+        "upstream 3x3 joint residual theorem additionally required only for size-Ramsey corollaries"
+      ],
+      "promotion_condition": "Non-author specialist review of Lovasz q=1/q=2 proof and independent arithmetic/source replay; do not mark full conjecture certified.",
+      "related_files": [
+        "research/erdos-561/DPLUS2_SATURATED_CORE_THEOREM.md",
+        "research/erdos-561/verify_dplus2_atlas.py",
+        "research/erdos-561/verify_dplus2_core_exhaustive.py",
+        "research/erdos-561/verify_dplus2_parameters.py",
+        "research/erdos-561/DPLUS2_PARAMETER_COUNTS.json"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ]
     }
   ]
 }

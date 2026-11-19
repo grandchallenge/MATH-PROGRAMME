@@ -139,3 +139,8 @@ The new proof `EVEN_CORE_CAP_PARTITION_THEOREM.md` classifies **all** graphs att
 ## Low-slack core classification (2026-11-18)
 
 `LOW_SLACK_CORE_STABILITY_THEOREM.md` replaces the separate odd/even equality- and one-slack structural derivations with an exact isolated-complete-core obstruction whenever the core vertex-budget slack is `s<=D-2`. Together with a pendant-edge red/blue avoidance construction, the joint 3×3 residual theorem implies the original size-Ramsey formula for **316** of the 851 originally filtered ordered small cases. The arithmetic gate now leaves **535** not excluded by these methods; do not add the earlier 6+10+80 exclusions to 316 (they are subsets). No protected mathematical certification, general #561 remains OPEN.
+
+
+## Exact saturated-core size D+2 and a sharp small-parameter gate
+
+See `DPLUS2_SATURATED_CORE_THEOREM.md` for a new theorem: an (alpha,beta) capped partition with D=alpha+beta fails in a graph with at most D+2 degree-D vertices precisely when D is even, both caps odd, and an isolated K_(D+1) component is present. The proof uses the unextended Lovász (g,f) factor criterion, with g=max(0,d-beta) and f=min(alpha,d); its odd-component boundary inequalities classify q=1 and q=2. K_(D+3) minus a Hamilton cycle proves that D+2 is the optimal threshold. Combined with the conditional joint 3×3 residual result, this reduces the arithmetic-filter shortlist from its original 851 to 339 (the earlier low-slack gate left 535). This is a paper-level structural result, and the Ramsey corollary depends on the upstream unpromoted theorem.

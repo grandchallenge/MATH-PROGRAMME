@@ -21,3 +21,7 @@
 | LOW-01 | `python verify_low_slack_316.py` | Two-star-residual-conditional low-slack criterion over 4,566 ordered three-star pairs | 851 baseline, 316 excluded, 535 remain; exact sorted-set SHA-256 |
 | LOW-02 | `python verify_low_slack_independent.py` | Separate antidiagonal implementation and pair-list digest | Exactly the same 316 ordered pairs; digest verified |
 | LOW-03 | `python verify_core_isolation_atlas.py` | Brute-force capped colourings of all eligible graph atlas classes through 7 vertices | 77 graphs; 172 cap cases; 20 precisely characterized parity obstructions |
+
+| D+2-ATL | `python verify_dplus2_atlas.py` | Complete NetworkX atlas n<=7, 4,100 cap cases below threshold | All 22 failures are isolated parity cliques; 9 nonclique failures occur above threshold |
+| D+2-CORE | `python verify_dplus2_core_exhaustive.py` | All k=D+2 core+leaf complement constructions at D=2,3,4 | 41, 768, 27,449 graphs respectively, only isolated parity clique failures |
+| D+2-PAR | `python verify_dplus2_parameters.py` | Exactly 4,566 low-D 3×3 ordered pairs under same baseline filter | 851 baseline, 512 excluded, 416 beyond previous odd/even/one-slack, 339 retained |
