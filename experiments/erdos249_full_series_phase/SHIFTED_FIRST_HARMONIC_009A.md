@@ -17,7 +17,7 @@ $$
 His sufficient target, for every fixed $h$ on arbitrarily large blocks at a common admissible depth, is
 
 $$
-\operatorname{Re}\sum_{N=X}^{2X-1}E_{h,N,L}\le\frac9{10}X,
+\mathrm{Re}\sum_{N=X}^{2X-1}E_{h,N,L}\le\frac9{10}X,
 \qquad 2^L\ge16(2X+h+L+2).
 \tag{C}
 $$
@@ -109,7 +109,7 @@ $$
 
 when $n\ge X\ge58h$. For $n\in\mathcal N_+$, the analogous inequalities give $\varphi(n)\le\eta_Mn$ and $\varphi(n+h)\ge\tau(n+h)$, so the difference is at least $n/50\ge X/50$. QED.
 
-The two signs are not a heuristic fluctuation: each is forced on a positive, explicit $M$-dependent proportion of every sufficiently large dyadic interval. The modulus may be large when $h$ contains many small prime factors; no uniform lower bound independent of $h$ is claimed.
+The two signs are not a heuristic fluctuation: each is forced on a positive, explicit proportion depending on $M$ of every sufficiently large dyadic interval. The modulus may be large when $h$ contains many small prime factors; no uniform lower bound independent of $h$ is claimed.
 
 ## 3. Exact sliding recurrence for Cook's shifted phase
 
@@ -147,7 +147,7 @@ Each starting index belongs to at most two adjacent pairs, and the two sets of c
 $$
 \boxed{
 \#\left\{N\in[X,2X):
-\operatorname{dist}(D_{h,N,L}/Q,\mathbb Z)\ge\frac{X}{300Q}
+\mathrm{dist}(D_{h,N,L}/Q,\mathbb Z)\ge\frac{X}{300Q}
 \right\}
 \ge\frac{\kappa X}{M}-O_{M,h}(\log X).
 }
@@ -178,7 +178,7 @@ $$
 
 $$
 \boxed{
-\operatorname{Re}\sum_{N=X}^{2X-1}
+\mathrm{Re}\sum_{N=X}^{2X-1}
 \exp\left(\frac{2\pi iD_{h,N,L}}{2^L}\right)
 \le(1-c_h)X.
 }
@@ -218,7 +218,7 @@ The additional obstruction is quantitative: a bounded-coefficient, one-step resi
 | A: conditional mean of $\varphi(n)/n$ on an invertible fixed progression, with $O_M(\log X)$ error | Elementary proof |
 | B: every fixed $h$ has both positive-density $\Omega_h(X)$ and negative-density $\Omega_h(X)$ linear shifted-totient contrasts | Elementary CRT and totient mean proof; related earlier sign-contrast literature |
 | B2: at the actual Cook-admissible depth, positive-density shifted finite phases are at a fixed distance from integers | Exact centered-residue recurrence proof |
-| C: for each $h$ an explicit $c_h>0$ gives $\operatorname{Re}\sum E\le(1-c_h)X$ for all large blocks | Unconditional elementary proof, **far weaker** than Cook's needed $0.1X$ |
+| C: for each $h$ an explicit $c_h>0$ gives $\mathrm{Re}\sum E\le(1-c_h)X$ for all large blocks | Unconditional elementary proof, **far weaker** than Cook's needed $0.1X$ |
 | Strong Cook weighted correlation / $0.9X$ whole harmonic / denominator-uniform complete-tail exclusion | **OPEN** |
 | Original full binary totient-series irrationality, novelty, independent proof certification | **OPEN / NOT_CLAIMED / MATHCERT NOT_SUBMITTED** |
 
