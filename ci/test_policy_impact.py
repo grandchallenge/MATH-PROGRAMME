@@ -52,7 +52,11 @@ def test_verified_effective_merge_scope() -> None:
                 "merge_commit_sha": effective,
             },
         }
-        with mock.patch.object(impact, "ROOT", root):
+        # GitHub Actions supplies a real GITHUB_SHA globally; isolate it
+        # from this synthetic Git DAG until each explicit forged/stale test.
+        with mock.patch.object(impact, "ROOT", root), mock.patch.dict(
+            os.environ, {"GITHUB_SHA": ""}
+        ):
             # Legacy tree-vs-tree comparison falsely reverses an unrelated
             # protected-main CMDG change, triggering two extra shards.
             legacy = impact.git_changed_paths(base, head)
