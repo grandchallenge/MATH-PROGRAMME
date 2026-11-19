@@ -49,19 +49,21 @@
       ],
       "promotion_condition": "Admit source-only reproducible mathematics independently from public certification. The unbounded uniqueness theorem is a paper proof using classical Lovasz factor theorem and remains UNDER_REVIEW; the original three-star consequence depends on an unpromoted upstream joint residual reduction. Unrestricted Erdős #561 remains OPEN.",
       "claim_id": "ERDOS561-UNIQUE16-CLASSIFICATION-002",
-      "short_name": "Only one 16-edge obstruction for the mixed caps 1 and 2",
-      "claim_text": "Every finite simple graph of maximum degree at most three and exactly sixteen edges failing a (1,2) degree-capped two-colouring is, up to isolated vertices, uniquely the two seven-edge five-vertex blocks sharing a degree-two central attachment vertex.",
+      "short_name": "16–18 edge subcubic cap obstructions contain the unique sixteen-edge motif",
+      "claim_text": "Every finite simple graph of maximum degree at most three and 16, 17 or 18 edges failing a (1,2) degree-capped two-colouring contains the unique sixteen-edge two-block obstruction as a subgraph, with any remaining edges avoiding the ten saturated block vertices. With exactly 16 edges, the obstruction is unique up to isomorphism and isolates.",
       "claim_class": "PROVED_IN_PACKAGE",
       "status": "UNDER_REVIEW",
       "certainty": "PROVED_NOT_FORMALIZED",
       "support_type": "HUMAN_PROOF",
-      "support_summary": "Complete paper deduction from ordinary Lovasz tight-component criterion and earlier subcubic at-least-10-saturated theorem, with parity-forced cut weights, exhausted 10-saturated-size profiles, exact 16-edge budget and block uniqueness. Not full Lean-checked theorem.",
+      "support_summary": "Complete paper deduction from ordinary Lovasz tight-component criterion and earlier subcubic at-least-10-saturated theorem, with parity-forced cut weights, 34 tight-component size profiles checked separately for each E=16,17,18, cut-budget uniqueness, and exact 16-edge motif subgraph. No full Lean checker of the Lovasz theorem.",
       "source_or_artifact": [
-        "research/erdos-561/unique16/UNIQUE_16EDGE_SUBCUBIC_OBSTRUCTION.md"
+        "research/erdos-561/unique16/UNIQUE_16EDGE_SUBCUBIC_OBSTRUCTION.md",
+        "research/erdos-561/unique16/SIXTEEN_TO_EIGHTEEN_CORE_THEOREM.md"
       ],
       "related_files": [
         "research/erdos-561/unique16/verify_cut_profiles.py",
-        "research/erdos-561/unique16/verify_five_vertex_block.py"
+        "research/erdos-561/unique16/verify_five_vertex_block.py",
+        "research/erdos-561/unique16/verify_16to18_cut_profiles.py"
       ]
     },
     {
@@ -79,19 +81,21 @@
       ],
       "promotion_condition": "Admit source-only reproducible mathematics independently from public certification. The unbounded uniqueness theorem is a paper proof using classical Lovasz factor theorem and remains UNDER_REVIEW; the original three-star consequence depends on an unpromoted upstream joint residual reduction. Unrestricted Erdős #561 remains OPEN.",
       "claim_id": "ERDOS561-UNIQUE16-RAMSEY-003",
-      "short_name": "Four further ordered 3-star parameter exclusions via 16-edge core recolouring",
-      "claim_text": "Conditionally on the admitted paper-level 3x3 joint-residual reduction, the unique 16-edge obstruction can be red/blue coloured so each colour has at most six nonisolated vertices, avoiding every three-positive-star target with largest star ≥2; hence four additional ordered parameter pairs are excluded and the prior 39 method survivors reduce to 35 (18 unordered).",
+      "short_name": "Fourteen ordered 3-star exclusions through 18-edge motif recolouring",
+      "claim_text": "Conditionally on the admitted paper-level 3x3 joint-residual reduction, the unique 16-edge obstruction can be red/blue coloured so each colour has at most six nonisolated vertices, avoiding every three-positive-star target with largest star ≥2; hence fourteen ordered parameter pairs are excluded (four at E=16 and ten further at E=17 or 18), reducing the prior 39 method survivors to 25 (13 unordered), all in forced degree 4.",
       "claim_class": "PROVED_IN_PACKAGE",
       "status": "UNDER_REVIEW",
       "certainty": "PROVED_NOT_FORMALIZED",
       "support_type": "EXACT_RATIONAL_COMPUTATION",
-      "support_summary": "Independent exact canonical motif construction and six-vertex-support red/blue colouring; four-case output compared against the SHA-256 pinned 39-case upstream ledger. Original three-star upper/lower formula conditional on the upstream unpromoted paper-level joint-residual theorem.",
+      "support_summary": "Independent exact canonical motif construction and six-vertex-support red/blue colouring; complete enumeration of 216 exterior-edge graph/target assignments at E=17,18; fourteen-case output compared against the SHA-256 pinned 39-case upstream ledger. Original three-star upper/lower formula conditional on the upstream unpromoted paper-level joint-residual theorem.",
       "source_or_artifact": [
         "research/erdos-561/unique16/verify_motif_colorings.py",
-        "research/erdos-561/unique16/CANONICAL_MOTIF_CLOSURES.json"
+        "research/erdos-561/unique16/verify_16to18_colorings.py",
+        "research/erdos-561/unique16/SIXTEEN_TO_EIGHTEEN_PARAMETER_CERTIFICATE.json"
       ],
       "related_files": [
         "research/erdos-561/unique16/UNIQUE_16EDGE_SUBCUBIC_OBSTRUCTION.md",
+        "research/erdos-561/unique16/SIXTEEN_TO_EIGHTEEN_CORE_THEOREM.md",
         "research/erdos-561/unique16/README.md"
       ]
     }
