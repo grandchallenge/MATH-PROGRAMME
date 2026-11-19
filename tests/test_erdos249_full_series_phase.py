@@ -905,3 +905,183 @@ class ShiftedFirstHarmonicTests(unittest.TestCase):
         u=[(1j if n%2==0 else -1j) for n in range(100)]
         self.assertEqual(sum(u,0j),0j)
         self.assertTrue(all(u[n]*u[n+1]==1 for n in range(99)))
+
+
+
+from experiments.erdos249_full_series_phase.shifted_moment_energy import (
+    prime_list as wp09b_primes,
+    finite_euler_moments as wp09b_euler,
+    exact_finite_crt_period as wp09b_crt,
+    first_omitted_prime as wp09b_omitted,
+    euler_moment_bounds as wp09b_bounds,
+    exact_phase_energy as wp09b_energy,
+    rational_hostile_phase_energy as wp09b_hostile,
+)
+
+
+class ShiftedSecondMomentEnergyTests(unittest.TestCase):
+    """WP09-B exact CRT correlation and Cook-phase energy hostiles."""
+
+    def test_prime_support_and_local_euler_products(self):
+        self.assertEqual(wp09b_primes(2),(2,))
+        self.assertEqual(
+            wp09b_primes(31),(2,3,5,7,11,13,17,19,23,29,31)
+        )
+        a=wp09b_euler(1,(2,3))
+        self.assertEqual(a["A_f_squared"],
+                         Fraction(5,8)*Fraction(22,27))
+        self.assertEqual(a["B_shifted_correlation"],
+                         Fraction(1,2)*Fraction(7,9))
+        self.assertEqual(
+            a["V_squared_difference"],
+            2*(a["A_f_squared"]-a["B_shifted_correlation"])
+        )
+        self.assertEqual(
+            wp09b_euler(30,(2,3,5))["V_squared_difference"],
+            0,
+        )
+        self.assertEqual(
+            wp09b_euler(1,(2,3,5))["Bstar_baseline"],
+            Fraction(1,2)*Fraction(7,9)*Fraction(23,25),
+        )
+
+    def test_independent_exact_full_period_crt_correlations(self):
+        for ps in ((2,3),(2,3,5),(2,3,5,7)):
+            for h in (1,2,3,6,30,210):
+                got=wp09b_crt(h,ps)
+                expected=wp09b_euler(h,ps)
+                self.assertEqual(got["A_exact_period"],
+                                 expected["A_f_squared"])
+                self.assertEqual(got["B_exact_period"],
+                                 expected["B_shifted_correlation"])
+                self.assertEqual(got["V_exact_period"],
+                                 expected["V_squared_difference"])
+                self.assertGreaterEqual(got["V_exact_period"],0)
+                self.assertEqual(got["period"],math.prod(ps))
+
+    def test_rigorous_infinite_euler_tail_envelopes(self):
+        for h in (1,2,3,6,30,210,2310):
+            p=wp09b_omitted(h)
+            self.assertEqual(h%p!=0,True)
+            for k in range(2,p):
+                if all(k%d for d in range(2,math.isqrt(k)+1)):
+                    self.assertEqual(h%k,0)
+            low=wp09b_bounds(h,31)
+            high=wp09b_bounds(h,127)
+            trunc=wp09b_euler(h,wp09b_primes(257))
+            v=trunc["V_squared_difference"]
+            self.assertTrue(
+                low["lower_V_from_tail"] <= v <=
+                low["upper_V_from_tail"]
+            )
+            self.assertTrue(
+                high["lower_V_from_tail"] <= v <=
+                high["upper_V_from_tail"]
+            )
+            self.assertGreater(
+                high["upper_V_from_tail"],
+                high["unconditional_strict_V_lower"]
+            )
+            self.assertEqual(
+                high["unconditional_strict_V_lower"],
+                Fraction(1,9*p**3),
+            )
+            self.assertEqual(
+                high["rigorous_harmonic_saving_lower"],
+                Fraction(1,22500*p**3),
+            )
+
+    def test_exact_all_shift_phase_energy_transfer(self):
+        for X,h in ((512,1),(1024,2),(4096,3),(8192,6)):
+            got=wp09b_energy(X,h)
+            self.assertEqual(got["source"],"ACTUAL_EULER_TOTIENT")
+            self.assertLessEqual(
+                got["arithmetic_squared_energy"],
+                9*got["centered_residual_squared_energy"],
+            )
+            self.assertGreater(got["arithmetic_squared_energy"],0)
+            self.assertGreater(got["rigorous_harmonic_deficit_lower"],0)
+            self.assertEqual(got["original_irrationality"],"OPEN")
+            self.assertEqual(got["single_step_Cook_ten_percent"],
+                             "NOT_CERTIFIED")
+            self.assertGreater(got["Q"],32*X)
+
+    def test_cook_energy_differences_vs_independent_direct_oracle(self):
+        for h,X in ((1,128),(2,256),(3,512)):
+            L=wp09a_depth(X,h)
+            Q=1<<L
+            phi=overlog_totients(2*X+L+h+1)
+            got=wp09b_energy(X,h)
+            self.assertEqual(got["L"],L)
+            self.assertEqual(got["Q"],Q)
+            r2=sum(
+                overlog_centered(
+                    wp09a_direct(N,h,L,phi),Q
+                )**2
+                for N in range(X,2*X)
+            )
+            d2=sum(
+                (phi[n+h]-phi[n])**2
+                for n in range(X+L+1,2*X+L)
+            )
+            self.assertEqual(
+                got["centered_residual_squared_energy"],r2
+            )
+            self.assertEqual(got["arithmetic_squared_energy"],d2)
+            self.assertEqual(
+                got["rigorous_harmonic_deficit_lower"],
+                Fraction(8*d2,9*Q*Q),
+            )
+
+    def test_hostile_rational_series_still_has_shifted_energy(self):
+        for X,h,M in ((512,1,3),(1024,2,3),(1024,6,7)):
+            got=wp09b_hostile(X,h,M)
+            self.assertEqual(got["source"],"EXPLICIT_INTEGER_COMPARATOR")
+            self.assertGreater(got["arithmetic_squared_energy"],0)
+            self.assertGreater(got["rigorous_harmonic_deficit_lower"],0)
+            # WP09-A independently established the FULL series is rational.
+            self.assertIsInstance(wp09a_control_sum(h,M),Fraction)
+            self.assertEqual(got["original_irrationality"],"OPEN")
+
+    def test_methodological_10_percent_ceiling_exact_finite(self):
+        for X,h in ((512,1),(1024,2),(4096,6)):
+            got=wp09b_energy(X,h)
+            L=got["L"]
+            Q=got["Q"]
+            cap=Fraction(8*(X-1)*(2*X+L+h)**2,9*Q**2)
+            self.assertLessEqual(
+                got["rigorous_harmonic_deficit_lower"],cap
+            )
+            self.assertLess(cap,Fraction(X,10))
+            self.assertLessEqual(
+                got["arithmetic_squared_energy"],
+                (X-1)*(2*X+L+h)**2,
+            )
+
+    def test_truncation_and_source_fail_closed(self):
+        with self.assertRaises(ValueError):
+            wp09b_primes(1)
+        with self.assertRaises(ValueError):
+            wp09b_euler(0,(2,3))
+        with self.assertRaises(ValueError):
+            wp09b_euler(1,(2,2,3))
+        with self.assertRaises(ValueError):
+            wp09b_euler(1,(4,))
+        with self.assertRaises(ValueError):
+            wp09b_crt(1,(2,3,5,7),max_period=100)
+        with self.assertRaises(ValueError):
+            wp09b_bounds(0,127)
+        with self.assertRaises(ValueError):
+            wp09b_bounds(1,2)
+        with self.assertRaises(ValueError):
+            wp09b_bounds(1,4097)
+        with self.assertRaises(ValueError):
+            wp09b_omitted(0)
+        with self.assertRaises(ValueError):
+            wp09b_energy(63,1)
+        with self.assertRaises(ValueError):
+            wp09b_energy(512,0)
+        with self.assertRaises(ValueError):
+            wp09b_energy(512,1,coefficients=[0]*10)
+        with self.assertRaises(ValueError):
+            wp09b_hostile(512,1,2)
