@@ -43,11 +43,11 @@ A^a_N=\sum_{j=1}^L2^{L-j}a_{N+j},
 U^a_N=A^a_N/Q.
 $$
 
-Let $\operatorname{cen}_Q(m)$ denote a centered representative of an integer $m$ modulo $Q$, chosen in the interval $[-Q/2,Q/2]$. The choice at the two tied endpoints does not affect absolute values, and
+Let $\mathrm{cen}_Q(m)$ denote a centered representative of an integer $m$ modulo $Q$, chosen in the interval $[-Q/2,Q/2]$. The choice at the two tied endpoints does not affect absolute values, and
 
 $$
 \left\|U^a_N\right\|_{\mathbb R/\mathbb Z}
-=\frac{|\operatorname{cen}_Q(A^a_N)|}{Q}.
+=\frac{|\mathrm{cen}_Q(A^a_N)|}{Q}.
 $$
 
 The exact integer recurrence is
@@ -59,7 +59,7 @@ A^a_{N+1}=2A^a_N-Qa_{N+1}+a_{N+L+1}.
 \tag{2}
 $$
 
-In particular, setting $r^a_N=\operatorname{cen}_Q(A^a_N)$,
+In particular, setting $r^a_N=\mathrm{cen}_Q(A^a_N)$,
 
 $$
 \boxed{r^a_{N+1}\equiv2r^a_N+a_{N+L+1}\pmod Q.}
@@ -174,7 +174,7 @@ $$
 Let $c_n=\lfloor n/2\rfloor$, and define the centered numerator for the **difference** of the two complete finite tails,
 
 $$
-s_N=\operatorname{cen}_Q(A^\varphi_N-A^c_N).
+s_N=\mathrm{cen}_Q(A^\varphi_N-A^c_N).
 $$
 
 **Theorem B.** At the same $L=k+4$ and every integer $X\ge64$,
@@ -290,6 +290,6 @@ The successor mathematical target remains the problem-specific **totient multipl
 | WP08-A-FULL: original full Euler-totient binary series irrational | **OPEN, NOT CLAIMED** |
 | External novelty, independent theorem referee, Lean checking, MATHCERT | **NOT CLAIMED / NOT_SUBMITTED** |
 
-The standard-library implementation is [overlog_phase_separation.py](overlog_phase_separation.py), with exact hostile tests appended to the existing governed [full-series test module](../../tests/test_erdos249_full_series_phase.py), without modifying routing or protected policy. The finite tests supplement, rather than substitute for, the full all-$X$ manuscript derivations.
+The standard-library implementation is [overlog_phase_separation.py](overlog_phase_separation.py), with exact hostile tests appended to the existing governed [full-series test module](../../tests/test_erdos249_full_series_phase.py), without modifying routing or protected policy. The finite tests supplement, rather than substitute for, the full all $X$ manuscript derivations.
 
 **Continuity:** Record a bounded protected admission receipt in [#3500](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3500) only after native merge queue admission, exact protected head / five-file blob readback and required merge-group checks. Keep issue #3500 **OPEN/In Progress**, parent #3201 and original Erdős #249 **OPEN**, MATHCERT **NOT_SUBMITTED**.
