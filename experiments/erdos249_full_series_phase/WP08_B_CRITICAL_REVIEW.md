@@ -37,7 +37,7 @@ By the **classical prime number theorem**, the reciprocal prime sum is $(\log2+o
 
 For finite $y$, $g_y$ has a complete exactly rational binary series by the finite Möbius Euler formula already proved and protected-admitted in WP08-A. The residual is nonnegative and vanishes for all $n\le y$, so the strict upper approximation $0<S_y-S<(y+2)/2^y$ follows from an elementary geometric tail and the existence of primes above any fixed $y$. There is **no useful common denominator bound**, and no conclusion that a limit of rationals is irrational.
 
-The additional hostile rational patch is **not the same comparator at every scale**. For each finite $X,y$ it agrees with the actual totient exactly on every coefficient used by the length-$L$ finite tails in $[X,2X)$ and equals $g_y$ elsewhere. It is a **finite modification** of an already rational full series, hence is itself rational. This demonstrates that observing the finite prime escape on one scale cannot by itself exclude rational full sums, while leaving cofinal all-scale hypotheses entirely open. Claiming otherwise would be mathematically false.
+The additional hostile rational patch is **not the same comparator at every scale**. For each fixed finite pair of parameters $X$ and $y$, it agrees with the actual totient exactly on every coefficient used by the length-$L$ finite tails in $[X,2X)$ and equals $g_y$ elsewhere. It is a **finite modification** of an already rational full series, hence is itself rational. This demonstrates that observing the finite prime escape on one scale cannot by itself exclude rational full sums, while leaving cofinal all-scale hypotheses entirely open. Claiming otherwise would be mathematically false.
 
 ## E. Does this solve the analytic-tail or denominator obstacle?
 
