@@ -1,21 +1,9 @@
 import CMDGCondensedCM4P3DerivedCM5R0DiscreteProductCechDifferential
+import CMDGCondensedCM4P3DerivedCM5R0GSCondensedProduct
 import CMDGCondensedCM4P3DerivedCM5R0UniformProfiniteRelationDsq
 
 /-!
-# Degree-uniform genuine categorical Čech Hom exactness
-
-All statements use real profinite equal-image relation objects and
-the real free condensed-module functor, uniformly in all degrees.
-The categorical Hom differential is the alternating sum of actual
-free-module face maps, and its natural scalar comparison is proved.
-The Hom complex is exact in positive degrees for the actual discrete
-integer coefficient object and arbitrary categorical products of it.
-
-For the genuine underived free-solid coefficient target, exactness
-is formally proved only CONDITIONAL on a supplied categorical product
-isomorphism. No such product model is claimed to exist globally.
-No all-degree Ext, relation epimorphism, derived solidity, or public
-independent mathematical certification is asserted by this module.
+# Degree-uniform categorical Čech Hom bridge on actual closed relations
 -/
 noncomputable section
 universe u
@@ -392,6 +380,25 @@ theorem uniformFreeRelationBoundary_solidHom_exact_of_discreteProductModel
           rw [Category.assoc]
     _ = (g ≫ e.hom) ≫ e.inv := by rw [hf]
     _ = g := by simp
+
+/-- **Unconditional** all-positive-degree genuine free-solid Čech
+Hom exactness: the required coefficient product model is the
+ALREADY PROTECTED theorem gsFreeSolidToCoefficientProductIso.
+No invented coefficient isomorphism or arbitrary external axiom. -/
+theorem uniformFreeRelationBoundary_genuineSolidHom_exact
+    (P T S : Profinite.{u}) (p : P ⟶ T) (n : ℕ)
+    (g : (Condensed.profiniteFree Coeff).obj
+      (uniformRelationProfinite P T p (n + 1)) ⟶
+      (Condensed.profiniteSolid CMDG.CondensedCM4P2D.R.{u}).obj S)
+    (hg : uniformFreeRelationBoundary P T p (n + 1) ≫ g = 0) :
+    ∃ f : (Condensed.profiniteFree Coeff).obj
+        (uniformRelationProfinite P T p n) ⟶
+        (Condensed.profiniteSolid CMDG.CondensedCM4P2D.R.{u}).obj S,
+      uniformFreeRelationBoundary P T p n ≫ f = g := by
+  exact uniformFreeRelationBoundary_solidHom_exact_of_discreteProductModel
+    P T S p n (gsFreeSolidToCoefficientProductIso S) g hg
+
+#print axioms uniformFreeRelationBoundary_genuineSolidHom_exact
 
 #print axioms uniformFreeRelationBoundary_solidHom_exact_of_discreteProductModel
 
