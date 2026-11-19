@@ -7,7 +7,7 @@ by assuming a finite experiment establishes an asymptotic.
 Original infinite Euler-totient binary-series irrationality remains OPEN.
 """
 from fractions import Fraction
-from math import gcd
+from math import gcd, isqrt
 
 
 def totients(limit: int) -> list[int]:
@@ -188,7 +188,7 @@ def canonical_prime_set(primes: tuple[int, ...]) -> tuple[int, ...]:
     if len(set(primes)) != len(primes):
         raise ValueError("prime support must have distinct members")
     for p in primes:
-        if p < 2 or any(p % k == 0 for k in range(2, int(p**0.5)+1)):
+        if p < 2 or any(p % k == 0 for k in range(2, isqrt(p)+1)):
             raise ValueError("prime support must contain only primes")
     return tuple(sorted(primes))
 
@@ -225,6 +225,11 @@ def finite_prime_weight(primes: tuple[int, ...]) -> Fraction:
 def finite_prime_rational_sum(primes: tuple[int, ...]) -> Fraction:
     """Exact finite Möbius formula Σ_{d|prod(P)} μ(d) 2^d/(2^d-1)^2."""
     ps=canonical_prime_set(primes)
+    product=1
+    for p in ps:
+        product*=p
+        if product>512:
+            raise ValueError("finite exact evaluator limited to prime product <=512")
     terms=[(1,1)]
     for p in ps:
         terms += [(d*p,-sign) for d,sign in tuple(terms)]
@@ -240,7 +245,7 @@ def prime_escape_phase_gaps(
     if escape_prime in ps or escape_prime < 2:
         raise ValueError("escape prime must be omitted")
     if any(escape_prime%k==0
-           for k in range(2,int(escape_prime**0.5)+1)):
+           for k in range(2,isqrt(escape_prime)+1)):
         raise ValueError("escape prime must be prime")
     L=overlog_depth(X)
     Q=1<<L
