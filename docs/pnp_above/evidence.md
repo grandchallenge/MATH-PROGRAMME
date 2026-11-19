@@ -2,7 +2,7 @@
 
 <p class="page-deck">An auditable register of source mathematics, GCL finite checks, conditional deductions, editorial admission, and work still required.</p>
 
-**Current research coverage: WP00–WP17, 18 November 2026.** For all 72 source files, each work package's primary artifact, execution receipt, and the separate cross-repository governance/certification records, see the [complete documentary coverage ledger](coverage.md). Earlier work-package paragraphs below retain their historical at-the-time limitations, even when a later package closes one of those specific technical obligations.
+**Current research coverage: WP00–WP18, 18 November 2026; the immutable historical source inventory covers WP00–WP17 separately.** For all 72 source files, each work package's primary artifact, execution receipt, and the separate cross-repository governance/certification records, see the [complete documentary coverage ledger](coverage.md). Earlier work-package paragraphs below retain their historical at-the-time limitations, even when a later package closes one of those specific technical obligations.
 
 ## How to interpret the evidence grades
 
@@ -195,6 +195,16 @@ The [WP17 source-lock and replay receipt](https://github.com/grandchallenge/MATH
 
 **Research boundary and next obligation:** This is an **unconditional no-advantage theorem for diagonal-supported original synchronous games with nonempty answers**, not an impossibility result for all nonlocal games or conditional-linear distributions, and not a hard-game, compressor, SAT complexity separation or P-versus-NP theorem. The next true construction must use **player-asymmetric/non-diagonal source-native sampling**, a discriminating bounded executable decider and a rigorously certified game-value/soundness gap. Positive-parameter compression, Theorem 12.1 quantitative source reconciliation, Formal Conjectures source encoding concordance, and the uniform succinct SAT-to-classical resource transfer remain open. Retain both parent issues open. Independent public mathematical certification is not claimed.
 
+## WP18: native asymmetric nine-stage CL sampler and second no-gap control (18 November 2026)
+
+**Source status:** [MATHSOLVE WP18 source PR #1248](https://github.com/grandchallenge/MATHSOLVE/pull/1248); original Lean replay completed, protected source admission verified separately. [Exact WP18 mathematical report](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_RESULT.md), [original-source proof and receipt](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_IMPORT_REPLAY_RECEIPT.md), [nine-module source lock](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_SOURCE_LOCK.json).
+
+**What is actually proved:** the player-aware original source program implements every required native dimension, marginal, stage-linear and factor query for both players, constructs a complete original Sampler 9 with two different nine-stage CL functions, and supplies a **strictly positive original CL-distribution probability on unequal questions**. Every stage has a nonempty singleton register. Source scope, arbitrary raw-query halting, original bounded execution time and original Verifier.IsBounded are proved. Source coefficient is 53, sampler description size 24,221, verifier size 145,459, conservative polynomial parameter 145,469.
+
+**Negative control:** the new normal-form verifier retains the source-native WP08 identity decider. Its original synch, tensor-quantum and commuting values are **all 1** for each positive index and every answer budget: fixed empty answers always win. Thus changing only the sampler does not solve the hard-game requirement, complementing WP17's proof that changing only the decision predicate with a diagonal sampler also cannot help. The new unequal-pair support is sparse and star-shaped; the extent of this further structural obstruction remains **unproved** and requires study before a hard-game claim. All **36 WP18 Lean theorems** passed the standard axiom audit (propext, Classical.choice and Quot.sound only). These are mathematical source-replay results, not public MATHCERT certification.
+
+**Required next work:** establish a sufficiently nonlocal original source question law, a bounded executable **answer-sensitive** original decision predicate, and a **quantified nonzero quantum/classical or soundness gap**. Then, separately, validate positive-parameter compression, the quantitative Theorem 12.1 source issue, uniform succinct SAT-to-classical transfer, and PNP-001 formal definition bridges. Both trackers remain OPEN.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
@@ -217,6 +227,7 @@ The [WP17 source-lock and replay receipt](https://github.com/grandchallenge/MATH
 | WP16 original diagonal distribution | [Source PR #1245](https://github.com/grandchallenge/MATHSOLVE/pull/1245) | LEAN | Shared-CL sampler has no unequal question mass; conditional predicate-only no-gap |
 | WP17 unconditional diagonal-value theorem | [Source PR #1246](https://github.com/grandchallenge/MATHSOLVE/pull/1246) | LEAN | For every finite diagonal-supported original synchronous game with nonempty answers, all three optimal values equal feasible-diagonal mass; this does not prove hard-game separation |
 | PNP-001 Formal Conjectures definition bridges | [Separate bridge status](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_BRIDGE_001/bridge_status.json) | LEAN | Carrier and polynomial-bound bridges checked; machine, NP verifier and endpoint still open |
+| WP18 source-native asymmetric sampler and second no-gap theorem | [Protected source PR #1248](https://github.com/grandchallenge/MATHSOLVE/pull/1248) and [source manifest](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_SOURCE_LOCK.json) | LEAN | Original source Sampler 9, bounded Verifier 9, positive unequal-question mass; with old decider original sync/tensor/commuting values all 1 |
 | General SAT-to-classical strategy-cost transfer | [Research issue #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) | OPEN | No such implication proved |
 | P = NP or P ≠ NP | [Parent PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162) | OPEN | Neither proposition proved |
 
@@ -246,7 +257,7 @@ Finite experiments may suggest lemmas but do not justify asymptotic lower bounds
 
 The exact WP00–WP17 file, replay, review and protected-documentary trail is in [GCL documentary coverage](coverage.md). The historical evidence paragraphs above are intentionally not restated as if an intermediate blocker remained after its later Lean closure.
 
-1. **Non-diagonal native sampler:** WP17 now rules out every predicate-only quantum gap on WP14's shared Alice/Bob diagonal distribution. Construct and formally verify an asymmetric/non-diagonal original conditional-linear sampler, with positive unequal-question mass, all source query interface conditions, true typed-data contracts, and worst-case termination and size bounds.
+1. **WP18 resolved the first sampler obstruction:** the bounded original asymmetric nine-level sampler and positive unequal-question mass have now been formally proved, but its sparse question support may impose a stronger nonlocality obstruction. Determine whether **this exact support can ever yield a synchronous quantum/classical gap** for any predicate, and if not construct a genuinely richer source-native two-sided question law.
 2. **Discriminating executable verifier:** implement an answer-sensitive original `Cost.Prog` decider and prove native input parsing, source correctness, all-input time bounds and `Verifier.IsBounded` for the *new* candidate. The reference WP13–WP14 boundedness result does not establish this for any replacement.
 3. **Actual game gap:** establish nontrivial completeness, soundness and quantum-versus-classical game-value bounds, against the original native models. Non-diagonal support and a different Boolean predicate are not themselves a gap proof.
 4. **Positive-parameter compression:** construct and replay the source's introspection, answer reduction and repetition for a genuinely compliant positive-parameter verifier; reconcile Theorem 12.1's stated inequality with its displayed proof and source-effective numerical constants.

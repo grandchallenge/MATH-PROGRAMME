@@ -1,6 +1,6 @@
-# PNP-ABOVE — GCL documentary coverage through WP17
+# PNP-ABOVE — GCL documentary coverage through WP18
 
-<p class="page-deck">Source inventory, review receipts, programme context, claim boundaries and open mathematical obligations, audited on 18 November 2026.</p>
+<p class="page-deck">WP00–WP17 immutable source inventory, separate WP18 extension, review receipts, claim boundaries and open mathematical obligations, audited on 18 November 2026.</p>
 
 **Governing records:** [MATHSOLVE research #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) and [MATH-PROGRAMME PNP-001 #162](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162). Both remain **OPEN**. This page is an evidence/navigation ledger, not a mathematical certificate or a P-versus-NP claim.
 
@@ -41,6 +41,12 @@ WP17 proves a stronger **general original-game theorem**, without the answer-fea
 
 Original-source Lean checking, source-locked replay, protected PR admission and mathematical certification are distinct grades. The WP11–WP17 native-source theorem reports were inspected for nonstandard axioms; they do **not** create independent mathematical certification or a new complexity-class theorem. Archived early receipts describe what was proven **at their date**; later closure of an intermediate source obligation does not retroactively edit an old receipt.
 
+## WP18 extension: nine newly source-locked Lean modules
+
+The **WP00–WP17 inventory above is deliberately immutable** at 18 packages/72 files, and none of its original Git blob identities is changed by this later result. WP18 is a **separately source-locked new tranche**, admitted in [MATHSOLVE source PR #1248](https://github.com/grandchallenge/MATHSOLVE/pull/1248). Its [nine-file source-lock manifest](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_SOURCE_LOCK.json), [full original-source WP08–WP18 replay](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_IMPORT_REPLAY_RECEIPT.md) and [scientific result](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_RESULT.md) establish a **genuinely off-diagonal original native Sampler 9** and a polynomially bounded native verifier. Thirty-six source theorems have standard-only Lean axiom reports.
+
+The **game-value result is negative**: keeping the earlier identity decider means a fixed deterministic empty answer still wins against every pair, so original synchronous, tensor-quantum and commuting values all equal 1. WP18 clears the diagonal-sampler obstruction while isolating the answer-sensitive hard-game obligation and the sparse support limitation. This is not positive nonlocality, compression, P-versus-NP separation or public certification. [Detailed evidence and the open obligations](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026).
+
 ## Cross-GCL documentary and authority coverage
 
 | Record | Authoritative scope | Current disposition |
@@ -59,10 +65,10 @@ Original-source Lean checking, source-locked replay, protected PR admission and 
 
 ## Still open and required for a hard-game route
 
-1. Design a **non-diagonal/player-asymmetric source-native conditional-linear sampler** that places positive probability on unequal question pairs, and prove the original sampling semantics, four source query conditions, uniform termination, and runtime/description bounds.
+1. **Completed in WP18:** an original non-diagonal/player-asymmetric source-native conditional-linear sampler has positive unequal-question mass, all four source query conditions, uniform termination, and runtime/description bounds. **Remaining:** analyze whether its sparse star-shaped support can support any synchronous game-value gap, or construct and prove a richer two-sided question law.
 2. Provide an **answer-sensitive executable source `Cost.Prog` decider**, plus typed-input correctness, malformed-data behavior and source execution-time bounds.
 3. Prove a **genuine positive quantum/classical game-value or soundness gap** in the original source game model. Positive off-diagonal mass alone is insufficient.
 4. Only after that, validate source-effective positive-parameter introspection, answer reduction, repetition, and the quantitative Theorem 12.1 statement/proof discrepancy. Do not infer full compression from imported compiler source compilation.
 5. Independently establish or refute the **uniform succinct SAT-to-classical-strategy cost transfer** and close PNP-001's separate machine-model, NP-verifier and endpoint bridges before proposing any classical-complexity claim. Retain the relevant barrier and MATHCERT reviews.
 
-**Coverage disposition:** `WP00_WP17_SOURCE_ARTIFACT_INVENTORY_COMPLETE__PUBLIC_NAV_AND_REVIEW_TRACEABLE__SCIENTIFIC_AND_CERTIFICATION_OBLIGATIONS_OPEN`. There is no proof of `P=NP` or `P≠NP`, new unrestricted classical lower bound, executable full positive-parameter compressor, or independent public theorem certification. Later source revisions and WP18+ need new provenance and public-record updates.
+**Coverage disposition:** Source inventory WP00–WP17 complete; WP18 added as a separately pinned nine-module source tranche. `WP00_WP17_SOURCE_ARTIFACT_INVENTORY_COMPLETE__PUBLIC_NAV_AND_REVIEW_TRACEABLE__SCIENTIFIC_AND_CERTIFICATION_OBLIGATIONS_OPEN`. There is no proof of `P=NP` or `P≠NP`, new unrestricted classical lower bound, executable full positive-parameter compressor, or independent public theorem certification. Later source revisions and WP18+ need new provenance and public-record updates.
