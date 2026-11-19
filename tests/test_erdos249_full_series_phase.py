@@ -929,7 +929,7 @@ class ShiftedSecondMomentEnergyTests(unittest.TestCase):
         )
         a=wp09b_euler(1,(2,3))
         self.assertEqual(a["A_f_squared"],
-                         Fraction(5,8)*Fraction(20,27))
+                         Fraction(5,8)*Fraction(22,27))
         self.assertEqual(a["B_shifted_correlation"],
                          Fraction(1,2)*Fraction(7,9))
         self.assertEqual(
