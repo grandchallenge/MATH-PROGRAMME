@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS561-GRAPH-LEAN-20261119",
+  "claims": [
+    {
+      "mathematical_domain": "finite graph combinatorics / Erd\u0151s #561 dependencies",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "assumptions": [
+        "finite edge list with endpoints in Fin n",
+        "pinned Lean 4.33.0-rc1",
+        "core cardinality premise explicitly assumed; no Lovasz factor proof"
+      ],
+      "promotion_condition": "Formal certification attaches only to exact Lean statements, never the unformalized cap-partition implication, size-Ramsey formula or unrestricted conjecture.",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3535"
+      ],
+      "claim_id": "ERDOS561-GRAPH-INCIDENCE-001",
+      "short_name": "Unbounded finite incidence-graph handshake theorem",
+      "claim_text": "For every n and finite list of Fin n endpoint pairs, the sum of incidence degrees is twice the edge-list length.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_PROOF",
+      "support_summary": "Kernel-checked finite vertex enumeration, indicator counting, and list-sum induction; standard Lean foundations only.",
+      "source_or_artifact": [
+        "research/erdos-561/formal-graph/Erdos561GraphHandshake.lean"
+      ],
+      "related_files": [
+        "research/erdos-561/formal-graph/Erdos561GraphHandshake.lean"
+      ]
+    },
+    {
+      "mathematical_domain": "finite graph combinatorics / Erd\u0151s #561 dependencies",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "assumptions": [
+        "finite edge list with endpoints in Fin n",
+        "pinned Lean 4.33.0-rc1",
+        "core cardinality premise explicitly assumed; no Lovasz factor proof"
+      ],
+      "promotion_condition": "Formal certification attaches only to exact Lean statements, never the unformalized cap-partition implication, size-Ramsey formula or unrestricted conjecture.",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3535"
+      ],
+      "claim_id": "ERDOS561-GRAPH-SATURATED-002",
+      "short_name": "Graph-level high-degree edge/vertex budgets and low-slack bound",
+      "claim_text": "If at least D+1 vertices have degree D, then D(D+1)\u22642e, (D\u22121)(D+1)+v_pos\u22642e, and the stated degree-excess budget with s<D\u22121, D\u22652 forces exactly D+1 such vertices.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_PROOF",
+      "support_summary": "Unbounded finite edge-list graph proofs deriving the arithmetic from an internally proved handshake theorem and degree-excess sum; finite four-vertex red/blue-cap canary separately checked.",
+      "source_or_artifact": [
+        "research/erdos-561/formal-graph/Erdos561GraphHandshake.lean",
+        "research/erdos-561/formal-graph/Erdos561FourVertexCore.lean"
+      ],
+      "related_files": [
+        "research/erdos-561/formal-graph/Erdos561GraphHandshake.lean",
+        "research/erdos-561/formal-graph/Erdos561FourVertexCore.lean"
+      ]
+    }
+  ]
+}

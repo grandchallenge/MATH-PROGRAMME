@@ -1,0 +1,34 @@
+{
+  "record_type": "ERDOS561_GRAPH_LEAN_REPLAY/1",
+  "status": "LOCAL_LEAN_COMPILER_PASS",
+  "toolchain": "Lean 4.33.0-rc1 commit 62eed1db4d67327ec8120be05f1a1b0847d74561",
+  "compiler": "lean",
+  "local_execution_attested_independent": false,
+  "graph_theorems": [
+    "handshake",
+    "saturated_edge_budget",
+    "saturated_vertex_budget",
+    "low_slack_exact_core"
+  ],
+  "finite_canary": [
+    "four_vertex_degree_core",
+    "triangle_has_no_1_1_split",
+    "triangle_saturates_three"
+  ],
+  "axioms": {
+    "graph": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice (low_slack_only)"
+    ],
+    "four_vertex_canary": [
+      "propext"
+    ]
+  },
+  "unproved_bridge": "Failed capped partition \u21d2 D+1 connected maximum-degree vertices; not formalized",
+  "source_sha256": {
+    "Erdos561GraphHandshake.lean": "32acf8386a87d9db8590b940f9188051456bb1dab8daad1a5fec0ca1495b6eb3",
+    "Erdos561FourVertexCore.lean": "7172bce52c19889c6a6a1617380e3b3187ada8f3174970e99d09c73d1b2961d7"
+  },
+  "compiler_stdout_sha256": "8b4e7bd46b47edc46730d11fa640c745a13c559d1666ed62b6e1362802f09548"
+}
