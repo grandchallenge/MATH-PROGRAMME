@@ -1,0 +1,169 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-19T11:51:38Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-19T11:51:38Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+    "exact_head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+    "pr_number": 3555,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5 Ext\u2075: genuine categorical sixth differential and represented last face"
+  },
+  "integration": {
+    "merge_commit_sha": "60fc67546393d97aa0c54921695ab6b2f8c9d621",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 9C10:5291:418AB60:D10B87A:6AFEE2DD and timestamp 2026-11-19 11:51:58 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 135540934789,
+          "conclusion": null,
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135540933454,
+          "conclusion": null,
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135540954505,
+          "conclusion": null,
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135540933801,
+          "conclusion": null,
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135540936964,
+          "conclusion": "success",
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135540937750,
+          "conclusion": null,
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135540935375,
+          "conclusion": "success",
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135540939181,
+          "conclusion": "skipped",
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135540935343,
+          "conclusion": null,
+          "head_sha": "9aeba78a57094002e4b86dbc24d0da59f534a247",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-19T11:51:56Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "2c0e243035f6cb619e85386772797a08185d989a8b3505c113f0d0f0f283ef7c"
+  },
+  "report_id": "PRVSR-LIVE-PR3555-9aeba78a5709-20261119115156",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
