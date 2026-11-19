@@ -9,6 +9,10 @@
 
 P versus NP remains open. The campaign has a protected machine/encoding/source baseline, an executable false-proof atlas, and a theorem/barrier/lower-bound ledger. No terminal theorem packet is ready.
 
+**Current documentary addendum (18 November 2026).** The *separate* [PNP-ABOVE source archive and complete WP00–WP17 coverage](../pnp_above/coverage.md) now records 18 bounded research packages and 72 exact source artifacts. Its original-source WP17 theorem rules out a quantum advantage for diagonal-only synchronous games, including the current WP14 shared-player sampler. A non-diagonal sampled hard-game construction, full source compression and classical SAT resource transfer remain open.
+
+In the Formal Conjectures **PNP-001 definition-bridge lane**, the [source audit](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_DEFINITION_CONCORDANCE_001/concordance.json) is complete *as an audit*, while [carrier and polynomial-bound bridges](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_BRIDGE_001/bridge_status.json) are kernel-checked. The machine-model, NP-verifier and endpoint bridges remain open. Earlier sections of this guide preserve the historical WP00 challenge progression and do not supersede these live source records. P versus NP remains open and MATHCERT has not certified a terminal claim.
+
 ## 2. Plain object
 
 The target is the exact uniform language-theoretic proposition comparing deterministic and nondeterministic polynomial time under locked Turing-machine, encoding, malformed-input, bit-length, and many-one reduction conventions.
@@ -25,7 +29,7 @@ The target is the exact uniform language-theoretic proposition comparing determi
 
 ## 3. Exact obstruction
 
-The current blocker is definition-level concordance: any imported formal statement or restricted result must be shown to match the Programme machine-and-encoding lock before it can serve as a theorem interface. Restricted circuit, proof-complexity, oracle, or nonuniform results cannot be silently upgraded.
+The definition-level concordance **audit** has been completed, but a theorem-level imported-to-Programme equivalence remains open. Any imported formal statement or restricted result must have a proved carrier, machine-model, polynomial-bound and verifier bridge before it can serve as the Programme terminal theorem interface. Restricted circuit, proof-complexity, oracle, or nonuniform results cannot be silently upgraded.
 
 ## 4. Working model
 

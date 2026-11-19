@@ -67,15 +67,16 @@ VIEW_FILTERS = {
 }
 
 QUERY = """
-query($owner:String!,$number:Int!,$after:String){
+query($owner:String!,$number:Int!,$after:String,$includeMetadata:Boolean!){
+  rateLimit{cost remaining resetAt}
   organization(login:$owner){
     projectV2(number:$number){
       id
-      fields(first:100){
+      fields(first:100) @include(if:$includeMetadata){
         pageInfo{hasNextPage}
         nodes{... on ProjectV2SingleSelectField{id name options{id name}}}
       }
-      views(first:100){
+      views(first:100) @include(if:$includeMetadata){
         pageInfo{hasNextPage}
         nodes{id name filter}
       }
@@ -143,18 +144,24 @@ def read_full_project() -> tuple[dict,list[dict]]:
     seen=set()
     total=None
     metadata=None
+    measured_cost=0
+    cost_pages=0
     while True:
-        result=graphql(QUERY,owner=OWNER,number=NUMBER,after=after)
+        result=graphql(QUERY,owner=OWNER,number=NUMBER,after=after,includeMetadata=metadata is None)
+        rate=result.get("rateLimit") or {}
+        if isinstance(rate.get("cost"),int) and rate["cost"] >= 0:
+            measured_cost+=rate["cost"]
+            cost_pages+=1
         project=(result.get("organization") or {}).get("projectV2")
         if not project or project.get("id") != PROJECT_ID:
             raise ValueError("Project #2 identity mismatch")
-        for name in ("fields","views"):
-            if project[name]["pageInfo"]["hasNextPage"]:
-                raise ValueError(name+" pagination unsupported; refuse incomplete metadata")
         if metadata is None:
+            for name in ("fields", "views"):
+                if name not in project or project[name]["pageInfo"]["hasNextPage"]:
+                    raise ValueError(name+" pagination unsupported; refuse incomplete metadata")
             metadata=project
-        elif (project["fields"] != metadata["fields"] or project["views"] != metadata["views"]):
-            raise ValueError("Project metadata changed while reading pages")
+        elif "fields" in project or "views" in project:
+            raise ValueError("unexpected repeated Project metadata")
         block=project["items"]
         if total is None:
             total=block["totalCount"]
@@ -173,6 +180,10 @@ def read_full_project() -> tuple[dict,list[dict]]:
         after=cursor
     if len(all_items) != total or not all_items:
         raise ValueError(f"incomplete Project inventory {len(all_items)}/{total}")
+    print("PROJECT_GRAPHQL_READ_COST",json.dumps({
+        "measured_points":measured_cost if cost_pages else None,
+        "measured_pages":cost_pages,"pages":(len(all_items)+99)//100,
+        "scope":"this controller actor and its inventory read only"}),flush=True)
     return metadata, all_items
 
 

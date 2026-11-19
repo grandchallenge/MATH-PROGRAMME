@@ -215,8 +215,6 @@ class RoutineAgentReviewTests(unittest.TestCase):
 
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 # GCL-ARC-001: protection-grade role evidence, one real transport login.
 from agent_role_receipt import AgentRoleError, LEGACY_V1, verify_agent_role_receipt  # noqa: E402
@@ -605,3 +603,184 @@ class ResearchOnlyDelegatedReviewAbstentionTests(unittest.TestCase):
                     self.assertEqual(api_mock.call_count, 3)
             with open(summary, encoding="utf-8") as src:
                 self.assertIn("NOT_APPLICABLE", src.read())
+
+# Exact-head documentary abstention negative-control tests.
+import json
+import os
+import tempfile
+from unittest.mock import patch
+import agent_routine_review as mod
+
+HEAD = "9bafbcb46c2898b6a9a1e9801c2ce741644d8961"
+BASE = "fd8524f136499c3dbe58c11d59fff06f77d1417b"
+FILE_BLOBS = {
+    "docs/archives/research.md": "43f723883c1eec46dddaef71553b13b48401c3e3",
+    "docs/domains/PNP_001_RESEARCH_GUIDE.md": "bdbbc60a4dd9f42f85301469ed3b097b935854da",
+    "docs/domains/p_vs_np.md": "e517081668c1d7943b697315b6d08aacf5c01289",
+    "docs/pnp_above/coverage.md": "a96f5cbbce594e224b0560ac2ed27c5f1da3ff97",
+    "docs/pnp_above/evidence.md": "bdc93b382cd0fa527019969897cf411298f532b1",
+    "docs/pnp_above/index.md": "fb528a9902c60aa7ff9ac429b15b254caef454ca",
+    "docs/pnp_above/preprint.md": "154c3e1a37cc4ed831e6b301a513064a2e195522",
+    "docs/pnp_above/primer.md": "27b1c93c65e4d3e898a012a981cb601f4a7ba6c0",
+    "docs/pnp_above/technical.md": "0a56c7ced07abf76b8b3129729b08aa201d09ae6",
+}
+
+
+class DocumentaryNoApprovalTests(unittest.TestCase):
+    def setUp(self):
+        self.files = [
+            {"filename": path, "sha": sha, "status":
+             "added" if path.endswith("/coverage.md") else "modified"}
+            for path, sha in FILE_BLOBS.items()
+        ]
+        self.pr = {
+            "state": "open", "draft": False, "changed_files": len(self.files),
+            "head": {"sha": HEAD, "repo": {"full_name": mod.REPOSITORY}},
+            "base": {"ref": "main", "sha": BASE},
+            "user": {"login": "fyremael"},
+        }
+
+    def eligible(self, files=None, pr=None, head=HEAD):
+        return mod.bounded_documentary_not_applicable(
+            pr or self.pr, files if files is not None else self.files, head)
+
+    def test_exact_original_nine_file_manifest_abstains(self):
+        self.assertEqual(len(FILE_BLOBS), 9)
+        self.assertTrue(self.eligible())
+
+    def test_protected_code_governance_unknown_or_nested_paths_rejected(self):
+        for bad in (
+            "mkdocs.yml", ".github/workflows/agent-routine-review.yml",
+            ".ghos-routing/workflows.json", "ci/agent_routine_review.py",
+            "tests/test_agent_routine_review.py",
+            "governance/specialist_admission_domains.json",
+            "docs/governance/CLAIM_POLICY.md", "docs/pnp_above/model.py",
+            "docs/pnp_above/requirements.yml", "docs/pnp_above/sub/page.md",
+            "docs/other/comment.md", "fixtures/formal/fact.lean",
+            "docs/archives/../index.md", "docs/pnp_above/\x00bad.md",
+        ):
+            with self.subTest(path=bad):
+                sample = copy.deepcopy(self.files)
+                sample[1]["filename"] = bad
+                self.assertFalse(self.eligible(sample))
+
+    def test_bad_status_identity_duplicate_and_size_rejected(self):
+        for mutation in (
+            {"status": "removed"},
+            {"status": "renamed", "previous_filename": "old.md"},
+            {"previous_filename": "old.md"},
+            {"sha": None}, {"sha": "X"*40}, {"sha": "0"*39},
+            {"filename": self.files[0]["filename"]},
+        ):
+            with self.subTest(mutation=mutation):
+                sample = copy.deepcopy(self.files)
+                sample[1].update(mutation)
+                self.assertFalse(self.eligible(sample))
+        extended = self.files + [
+            {"filename": f"docs/pnp_above/extra{i}.md",
+             "sha": "a"*40, "status": "added"}
+            for i in range(12)
+        ]
+        self.assertFalse(self.eligible(
+            extended, {**self.pr, "changed_files": len(extended)}))
+
+    def test_single_folder_or_single_file_rejected(self):
+        same = copy.deepcopy(self.files)
+        for i, row in enumerate(same):
+            row["filename"] = f"docs/pnp_above/page{i}.md"
+        self.assertFalse(self.eligible(same))
+        self.assertFalse(self.eligible(
+            self.files[:1], {**self.pr, "changed_files": 1}))
+
+    def test_hostile_envelopes_rejected(self):
+        for mutation in (
+            {"state": "closed"}, {"draft": True},
+            {"base": {"ref": "develop", "sha": BASE}},
+            {"user": {"login": mod.APP_REVIEWER}},
+            {"head": {"sha": HEAD, "repo": {"full_name": "other/repo"}}},
+            {"changed_files": 10},
+        ):
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(mod.RoutineReviewError):
+                    self.eligible(pr={**self.pr, **mutation})
+        with self.assertRaisesRegex(mod.RoutineReviewError, "head mismatch"):
+            self.eligible(head="0"*40)
+
+    def invoke(self, *, change_on_second_read=False):
+        with tempfile.TemporaryDirectory() as temp:
+            event = Path(temp)/"event.json"
+            summary = Path(temp)/"summary.md"
+            event.write_text(json.dumps(
+                {"inputs": {"pr_number": 3512}}), encoding="utf-8")
+            requests = []
+            def api(method, path, *, token, payload=None):
+                requests.append((method, path))
+                self.assertEqual(method, "GET", "no GitHub review POST permitted")
+                if path.endswith("/pulls/3512/files?per_page=100"):
+                    return copy.deepcopy(self.files)
+                if path.endswith("/pulls/3512"):
+                    result = copy.deepcopy(self.pr)
+                    if change_on_second_read and len(
+                            [p for _, p in requests if p.endswith("/pulls/3512")]) == 2:
+                        result["head"]["sha"] = "b"*40
+                    return result
+                raise AssertionError("unexpected external read: "+path)
+            with patch.dict(os.environ, {
+                "GITHUB_EVENT_PATH": str(event),
+                "GITHUB_EVENT_NAME": "workflow_dispatch",
+                "GITHUB_TOKEN": "read-only-test",
+                "GITHUB_STEP_SUMMARY": str(summary),
+            }):
+                with patch.object(mod, "api", side_effect=api):
+                    with patch.object(mod, "delegated_classification",
+                                      side_effect=mod.RoutineReviewError(
+                                          "unknown or multifile material closure")):
+                        with patch.object(mod, "exact_specialist_disposition") as specialist:
+                            with patch.object(mod, "required_contexts_green") as eligibility:
+                                if change_on_second_read:
+                                    with self.assertRaisesRegex(
+                                        mod.RoutineReviewError,
+                                        "changed during abstention"):
+                                        mod.main()
+                                else:
+                                    self.assertEqual(mod.main(), 0)
+                                specialist.assert_not_called()
+                                eligibility.assert_not_called()
+            return requests, summary.read_text() if summary.exists() else ""
+
+    def test_runtime_abstains_without_approval_or_specialist(self):
+        calls, text = self.invoke()
+        self.assertEqual(len(calls), 3)
+        self.assertTrue(all(method == "GET" for method, _ in calls))
+        self.assertIn("NOT_APPLICABLE_NO_APPROVAL", text)
+        self.assertIn(HEAD, text)
+        self.assertIn('"review_posted": false', text)
+        self.assertIn('"mathematical_certification": false', text)
+        self.assertIn('"protected_checks_waived": false', text)
+
+    def test_mutated_exact_head_never_reports_nonapproval(self):
+        calls, text = self.invoke(change_on_second_read=True)
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(text, "")
+
+    def test_classifier_does_not_expand_auto_approve_profiles(self):
+        import agent_material_profiles as profiles
+        registry = profiles.load_registry()
+        self.assertEqual(registry["paths"]["max_files"], 1)
+        self.assertEqual(
+            registry["paths"]["kind"], "TOP_LEVEL_DOCS_MARKDOWN")
+        with self.assertRaises(profiles.MaterialAdmissionError):
+            profiles.classify_text(
+                "docs/pnp_above/coverage.md", b"one\n", b"two\n",
+                registry)
+
+    def test_unclassified_mixed_and_protected_still_call_original_gate(self):
+        # A malformed mixture stays in original specialist router; no
+        # success-shaped abstention substitutes for a missing review packet.
+        sample = copy.deepcopy(self.files)
+        sample[-1]["filename"] = "ci/agent_routine_review.py"
+        self.assertFalse(self.eligible(sample))
+        with self.assertRaisesRegex(mod.RoutineReviewError, "unresolved or mixed"):
+            mod.specialist_domain_for_file_manifest(sample)
+if __name__ == "__main__":
+    unittest.main()

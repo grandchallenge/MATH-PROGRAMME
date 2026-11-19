@@ -1,0 +1,70 @@
+{
+  "record_type": "ERDOS249_S_WP08_A_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-19",
+  "research_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "original_erdos249": "OPEN",
+  "scientific_status": "BOUNDED_MANUSCRIPT_PROOFS__NONCERTIFYING",
+  "MATHCERT": "NOT_SUBMITTED",
+  "priority": "NOT_CLAIMED",
+  "original_source_base_main": "c8d031624537e6b860c56f7928c662a58015220b",
+  "exact_source_head_replayed": "1ff10c1b7cda620b1a0372a97273aaa044701fce",
+  "exact_reviewed_source_head": "91f186dd0f018fa92bb5387222eb519e6bbb86b5",
+  "source_sha256": {
+    "manuscript": "7242a78dccfca9f7fefb2c52d7d17ac49f99bcd1c9ca9063d25a5158fe1b12f6",
+    "exact_module": "2040f7374a13260706060edfcca8ba00ecfac5ab88198c8ce67435ff62f86059",
+    "existing_governed_registered_test_extension": "15967b6f9cb8d796fd61a487b890e55ac627f7be98ba89174aaf82c33149bbb1",
+    "qualified_critical_review": "2f0c3562415caa9fa13a3b121b7c3241a9c55fc68635e9a9540757c849ef54b7"
+  },
+  "proof": {
+    "common_depth": "L=floor(log2 X)+4, Q=2^L, X>=64; 8X<Q<=16X",
+    "sliding_recurrence": "A_(N+1,L)=2 A_(N,L)-2^L a_(N+1)+a_(N+L+1)",
+    "theorem_A": "For actual Euler phi, # starts N in [X,2X) with distance of U_(N,L) from Z >=1/96 is at least (6/pi^2-1/2)X-O(log X), via exact totient mean and adjacent recurrence",
+    "theorem_B": "For actual phi versus rational floor(n/2), # starts N with finite-tail fractional distance >=1/288 is >= X/6-O(1), using every multiple of 6",
+    "theorem_C": "For any a,t in [0,n] integers, exact finite-phase equality at both adjacent N,N+1 at this overlog depth forces a_(N+L+1)=t_(N+L+1), thus all-start agreement forces equality on entire internal coefficient interval",
+    "theorem_D1": "For every finite prime set P, g_P(n)=n prod_{p in P,p|n}(1-1/p) and its entire sum is exactly rational S_P=sum_{d|prod P}mu(d)2^d/(2^d-1)^2",
+    "theorem_D2": "For any fixed P and missing prime p, # starts N whose actual phi finite tail differs mod Z from rational g_P finite tail by >=c_P/(48p) is >=X/p-O(1), where c_P=prod_{q in P}(1-1/q)>0",
+    "rational_counter_R1": "u_n=floor(3n/4); whole binary sum=14/15 rational yet same generic positive-density finite-gap mechanism",
+    "rational_counter_R2": "v_n=floor(n/2)-(n/6)*1_{6|n}; whole binary sum=2582/3969 rational yet same modular-six gap",
+    "analytic_tail_limitation": "0<sum_{j>L}phi(N+j)/2^j<(N+L+2)/2^L; proven phase gap smaller than tail uncertainty, and hypothetical denominators arbitrary",
+    "nonuniformity": "Prime escape gap c_P/(48p) and density 1/p shrink when finite prime support grows; no unbounded denominator exclusion"
+  },
+  "execution": {
+    "CHAD_OS_ACCOUNT_ONLY": true,
+    "independent_execution_attested": false,
+    "capture_id": "fb0f768769c34954af8e622d2cc2896a",
+    "full_registered_suite_tests": 38,
+    "previous_tests_retained": 27,
+    "new_exact_hostile_tests": 11,
+    "failures": 0,
+    "stdout_sha256": "7419f7707f8232363c55cb27c8ac328a1007aff888b8d139b008d90d6b0d1cdf",
+    "manuscript_math_source_gate": "PASS",
+    "reviewer_math_source_gate": "PASS",
+    "both_gate_stdout_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc",
+    "additional_finite_controls": {
+      "X": 4096,
+      "intrinsic_phi_gap_starts": 4018,
+      "count_endpoint_high_ratio": 2002,
+      "phi_vs_half_gap_starts": 4074,
+      "multiples_six_endpoints": 682,
+      "rational_3n_over4_gap_starts": 4096,
+      "prime_escape_case_P_2_3_5_missing_7": {
+        "gap_starts": 4086,
+        "required_endpoints": 585
+      },
+      "finite_sample_is_not_proof": true
+    }
+  },
+  "reviewer": {
+    "logical_pass_role": "GCL Adversary/Referee separate pass",
+    "same_agent_as_author": true,
+    "independently_authenticated": false,
+    "independent_human": false,
+    "Lean_proof": false,
+    "MATHCERT": "NOT_SUBMITTED",
+    "disposition": "ACCEPT_WITH_SCOPE"
+  },
+  "CI_scope": "Extend existing registered tests/test_erdos249_full_series_phase.py only; no workflow, routing or governance protection changes",
+  "next_scientific_boundary": "ACTUAL_TOTIENT_COFunctional_MISSING_PRIME_ESCAPE_NOT_UNIFORM__DENOMINATOR_UNIFORM_ONE_SIDED_INFINITE_TAIL_SEPARATION_UNPROVED",
+  "next_positive_target": "Find a totient-specific uniform cross-prime arithmetic correlation at overlog depth that amplifies c_P/p escape for growing P into a denominator-independent one-sided dyadic residue gap beating the exact infinite-tail remainder; alternatively prove Cook's source-locked cofinal harmonic estimate",
+  "authorized_admission": "Protected checks, native GitHub merge queue with expectedHeadOid, exact protected merge and five-file readback; post a bounded receipt on #3500, leave scientific issue and Project #2 In Progress"
+}

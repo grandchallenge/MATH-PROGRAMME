@@ -4,7 +4,8 @@
 
 **Programme:** PNP-ABOVE, under [PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162)  
 **Solve research obligation:** [PNP-ABOVE-WP00](https://github.com/grandchallenge/MATHSOLVE/issues/1136)  
-**Documentary edition:** 1 November 2026, version 0.1  
+**Documentary evidence:** updated through WP18, 18 November 2026; the 1 November version 0.1 **preprint is archival and unchanged**.
+
 **Claim status:** Exploratory. No proof of P = NP or P ≠ NP, no new unrestricted classical lower bound.
 
 !!! warning "Research is not certification"
@@ -31,6 +32,7 @@ Our research question is narrower: can a finite *structural invariant* of this v
 | Educated general reader | [The reader's primer](primer.md) | Verification, interactive proofs, entanglement, compression and concrete examples |
 | Complexity researcher | [Technical spine](technical.md) | Theorem 12.1, resource semantics, quantitative compression and the classical transfer theorem |
 | Contributor or reviewer | [Evidence and status](evidence.md) | Exact source versions, finite tests, protected artifacts, pending mathematical obligations |
+| Documentary auditor | [Full GCL coverage](coverage.md) | All 18 work packages and 72 source artifacts, exact receipts and cross-repository authority |
 | Preprint reader | [Preprint record](preprint.md) | Abstract, scholarly structure, PDF/source edition status and citation policy |
 
 **Preprint now available:** [Download the seven-page version 0.1 PDF](https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf) or consult the [versioned release and checksum record](preprint.md). This remains a working, uncertified research exposition, not an arXiv deposit.
@@ -38,6 +40,10 @@ Our research question is narrower: can a finite *structural invariant* of this v
 The original exploratory [lay manuscript](../research/pnp_above_lay_manuscript.md) remains preserved. This documentary edition incorporates work completed afterward.
 
 **November 2026 research update:** A classical-sampler randomness bound and a constructive SAT-to-perfect-classical-strategy transfer for **explicit finite game tables** have been proved and tested in a bounded WP01 candidate. This does not transfer to succinct quantum compression or P versus NP. A [source erratum and technical update](wp01_erratum.md) also records a factor-of-two discrepancy between the printed Theorem 12.1 and its displayed proof.
+
+**Source-native research result, 18 November 2026:** Protected WP08–WP14 now construct and check an original source-bounded nine-stage reference verifier with fully occupied conditional CL stages. WP15 proves the actual reference game has a perfect deterministic strategy. WP16 proves its shared Alice/Bob sampling yields identical questions. WP17 establishes the general original-game no-advantage theorem: **on any diagonal-supported finite synchronous game with nonempty answers, synchronous, quantum and commuting optimal values coincide**, even if some questions are unwinnable. Consequently merely changing WP14's decision rule cannot produce quantum advantage. This is a rigorous negative design result, not a hard game or P-versus-NP theorem. Read the [exact source/receipt inventory](coverage.md) and [full evidence audit](evidence.md).
+
+**WP18 construction (18 November 2026):** GCL has now formally built the complementary missing sampler: a genuinely **player-asymmetric nine-stage** conditional-linear distribution with positive probability on unequal questions, an executable original source query interface, and a bounded original verifier. However the **old identity decider** remains trivially classically winnable, and original synchronous, quantum and commuting game values still equal 1. A quantum gap requires new question structure and an answer-sensitive decision predicate; merely fixing one component is insufficient. The [complete evidence ledger](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026) documents the actual verified scope.
 
 ## The missing classical bridge
 
@@ -57,7 +63,7 @@ No such general transfer theorem has been established. The programme is designed
 
 **External mathematics:** Ji et al. proved MIP* = RE and the gap-preserving compression theorem. The latter concerns nine-level normal-form verification and a lower bound on quantum Schmidt rank under stated hypotheses.
 
-**GCL source and finite-model work:** The magic-square calibration, symbolic compression-parameter ledger, explicit nine-level identity input and finite emulator clarify the gap between quantum strategy resources and classical decision complexity.
+**GCL source and finite-model work:** The magic-square calibration, symbolic compression-parameter ledger, explicit nine-level identity input and finite emulator clarify resource distinctions. The subsequently admitted original-source WP08–WP17 Lean proofs establish a bounded but classically easy nine-level verifier and a general diagonal-support no-advantage theorem; they do not establish a nontrivial compressed hard game.
 
 **Unproved bridge:** No new lower bound for unrestricted classical SAT or circuits; no uniformly controlled SAT-to-strategy reduction; no numerical execution of the entire MIP* compression construction.
 

@@ -73,6 +73,16 @@ For a properly encoded input satisfying the published theorem's hypotheses, the 
 
 Again, deciding a selected indexed proposition can be easy even when successfully performing the corresponding interactive task requires an enormous resource.
 
+## Why identical questions make the current quantum game easy
+
+The more recent GCL formalization provides a useful negative lesson. Imagine a referee who **always gives both provers exactly the same question**. For a *synchronous* game, they win on that question only when they give the same acceptable answer. If a winning answer exists, the provers can agree in advance what to return for each question. Sharing entanglement cannot improve that best possible response. If no acceptable answer exists for a sampled question, neither classical nor quantum provers can win it.
+
+WP16 proves that the current nine-stage conditional reference sampler **really does send identical questions**. WP17 then proves in the original MIP* formal game model that for *every* finite synchronous game supported only on equal questions, the best deterministic, tensor-product quantum and commuting strategies have **the same winning probability**. This remains true when some questions are impossible to answer correctly. It does not imply that all quantum games are classically easy: the magic-square game above deliberately sends the two players different, related questions and has a real quantum advantage.
+
+Consequently simply modifying the verifier's acceptance test while leaving that **diagonal** sampler unchanged cannot create the required quantum/classical value gap. WP18 has now built and proved an original source-native non-diagonal two-player sampler, so that first necessary condition is no longer missing. But the **old referee still accepts empty answers to every question**. Changing the questions alone also does not help: the optimal classical, quantum and commuting winning probabilities remain one.
+
+An intuition is that handing two students different exam questions does not make the exam difficult if every question is marked correct when the students leave their answer sheets blank. For genuine quantum advantage, the *questions and the consistency checks on their answers* must jointly create a classical impossibility that quantum resources can overcome. WP18's unequal questions also have a sparse, star-shaped pattern whose ultimate limitations have yet to be proved. A hard game and a P-versus-NP theorem are **not** established. See the [complete original-source coverage through WP18](coverage.md) and [proof grades](evidence.md).
+
 ## What would count as progress?
 
 The programme's missing bridge is a new, explicitly **classical** cost measure together with a proof that a hypothetical polynomial-time SAT solver would produce a cheap implementation of the measured structure. Only then could a matching classical lower bound lead toward P versus NP.

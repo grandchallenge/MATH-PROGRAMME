@@ -21,6 +21,7 @@ These are supporting records, not necessarily current research instructions or c
 - [VGSE-001 Research Guide](../campaigns/VGSE_001_RESEARCH_GUIDE.md)
 - [P versus NP from Above — lay research manuscript](../research/pnp_above_lay_manuscript.md)
 - [PNP-ABOVE WP01 source erratum and classical transfer](../pnp_above/wp01_erratum.md)
+- [PNP-ABOVE GCL documentary coverage WP00–WP17 — source inventory, theorem receipts and open work](../pnp_above/coverage.md)
 
 - [CMDG CM4 — independent specialist review handoff](../CMDG_CM4_SPECIALIST_REVIEW_EXECUTION_001.md)
 

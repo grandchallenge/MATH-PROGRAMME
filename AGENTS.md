@@ -12,6 +12,33 @@ One Codex system may staff multiple non-reserved roles through distinct,
 role-scoped logical audit passes. Identity, session, account, or generic human
 approval multiplication is not intrinsically required.
 
+## GCL Project #2 pickup eligibility — do not confuse Status with AVAILABLE
+
+**Binding worker-selection rule:** The Project #2 **AVAILABLE saved view** is named
+`AVAILABLE`, but its authoritative filter is **`is:open label:gcl-state:available`**.
+`AVAILABLE` is **not** a value to query in the Project `Status` single-select
+field. Before calling a direct-editorial issue unavailable, query the actual
+issue's `state` and labels (and its required pickup route), or inspect that
+saved view. A Project `Status` of `Todo` **or an unset Status** does not, by
+itself, prevent an open, `gcl-state:available`-labelled issue from being picked
+up. Conversely, `Todo`, `In Progress`, or an unset Status does not by itself
+authorize pickup when the availability label or route is absent.
+
+Project `Status` (`Todo`, `In Progress`, `RETURNED`, `Done`, or unset) tracks
+workflow/projection progress; `gcl-state:available` is the **issue-label
+eligibility signal**. An optional organization Issue Field `GCL State` is a
+third surface and must not be conflated with either one. For direct-editorial
+pickup, check `is:open` + `gcl-state:available` +
+`gcl-pickup:direct-editorial` and the issue's current return/claim custody.
+Reservation-controlled work must follow its own lease protocol; an available
+label is not a substitute for a reservation. Consult
+[`docs/operations/GCL_QUEUE_PICKUP_SEMANTICS.md`](docs/operations/GCL_QUEUE_PICKUP_SEMANTICS.md).
+Never bulk-edit Project Status to `AVAILABLE`, invent an `AVAILABLE` Status
+option, or report zero available workers by grouping Project Status values.
+Do not perform a full Project inventory merely to check one issue; use the
+exact issue and saved view first. A complete inventory needs a distinct
+reconciliation/audit justification and an adequate GraphQL budget.
+
 ## Recurring operations: run failure is not schedule retirement
 
 A failed, blocked, empty, or interrupted run must not unilaterally disable, delete, pause, or reschedule its recurring automation. Treat run status and desired schedule state separately. Retire only on an explicit authenticated user instruction or a protected governed terminal disposition with readback; preserve actor, reason, authority source, UTC transition and scheduler readback. A safety-denied action may not be retried or routed around without independently verified remediation; continue other permitted work on subsequent runs. Unknown disable actor or cause remains UNKNOWN, not an inferred fact. A drifted scheduler must be flagged and reconciled through real authority, not silently accepted. See `docs/governance/RECURRING_TASK_CONTINUITY_CONTRACT.md` and `governance/recurring_queue_continuity.json`. The repository guard is not itself a hosted-scheduler adapter.
@@ -23,6 +50,48 @@ All GCL workers and persistent controllers must follow [cross-project authentica
 ## Exact-operation recovery and research continuity
 
 Follow [operation-scoped recovery](docs/governance/OPERATION_SCOPED_RECOVERY_POLICY.md). A failed or explicitly denied mutation affects the exact invocation, not the entire research programme. Maintain the hold on a specifically denied operation without replaying or rerouting it; continue other genuinely independent authorized work, mathematical validation and read-only evidence gathering. Do not impose routine support escalation or renewed Human Steward approval on such independent work. Report mathematical checking, specialist review and protected admission as distinct states.
+
+## Research-first execution under CONTROL transport latency
+
+**Do mathematics rather than repeatedly diagnose the same infrastructure delay.**
+CONTROL [issue #79](https://github.com/grandchallenge/CONTROL/issues/79)
+tracks an independently evidenced upstream connector-to-CHAD arrival delay.
+A blocked CONTROL stability gate applies to CONTROL features and affected
+operations; it does **not** suspend independently authorized mathematical
+reasoning, source review, Lean checking, bounded GitHub work, or programme
+execution. Follow operation-scoped recovery above. Do not initiate fresh
+transport benchmarking, reconnect, daemon replacement, or speculative service
+repairs during an unrelated mathematics assignment.
+
+For ordinary GCL worker tasks:
+
+1. **GitHub first:** use the authenticated GitHub integration for issues,
+   repository reads, commits, reviews, PRs, statuses, and evidence readback.
+   Pass canonical `grandchallenge/<repo>` names. Do not route routine GitHub
+   operations through CHAD solely for convenience. Use the existing authenticated
+   CHAD path only when local files, compiler state, shell execution, or an
+   operation unavailable through GitHub are genuinely necessary.
+2. **Pay per boundary crossing:** collect related read-only repository facts in
+   a bounded set of calls, reuse current exact-head evidence, and avoid
+   re-fetching unchanged state. Batch independent, idempotent local diagnostics
+   in a single bounded CHAD command when permissible, without treating the
+   batch as independent remote attestation. Do **not** batch unrelated protected
+   mutations, source-sensitive proof checks, ambiguous-effect retries, or
+   evidence whose acceptance requires separate authenticated calls.
+3. **Preserve forward progress:** if the authorized next action hits an actual
+   CONTROL, remote-provider, safety, or protected-admission boundary, record
+   the exact blocked operation and continue the next independent mathematical
+   obligation. Do not multiply repair tickets, repeatedly probe the same
+   known defect, or let an infrastructure acceptance loop displace research.
+4. **Honest evidence:** a successful local command is not an independent Lean
+   replay; CI is not protected admission; source-locked math is not MATHCERT.
+   Do not relax source hashes, logical review, branch protection, or the
+   CONTROL #79 freeze to avoid latency. Protect the actual mathematical
+   certification gate while avoiding unrelated infrastructure gate coupling.
+
+This section is a worker-routing and resource-economy correction, not a
+change to CONTROL #79 admission or a new persistent service. It carries no
+authority to disable, reschedule, or retire standing automations.
 
 ## Governed Lean/Colab compute skill
 
