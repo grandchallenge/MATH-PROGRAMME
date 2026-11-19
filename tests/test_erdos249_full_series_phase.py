@@ -613,6 +613,8 @@ class OverlogTotientPhaseSeparationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             finite_prime_rational_sum((1,))
         with self.assertRaises(ValueError):
+            finite_prime_rational_sum((2,3,5,7,11))
+        with self.assertRaises(ValueError):
             prime_euler_coefficients(0,(2,))
         with self.assertRaises(ValueError):
             prime_escape_phase_gaps(64,(2,3),2)
