@@ -195,34 +195,34 @@ But the saving is far below Cook's required $1/10$; at the universal parameter c
 
 A further exact identity gives the right form of the *next* correlation problem. For any integer coefficient sequence $a(n)$, define $D^a_{h,N,L}$ using the same shifted binary-window formula. Then for any fixed positive shifts $h,k$ and **the same depth** $L$,
 
-$
+$$
 \boxed{
 D^a_{h+k,N,L}=D^a_{h,N,L}+D^a_{k,N+h,L}.
 }
 \tag{14}
-$
+$$
 
 **Proof.** Term by term in the finite sum, write
 
-$
+$$
 a(N+h+k+j)-a(N+j)
 =
 [a(N+h+k+j)-a(N+h+j)]
 +[a(N+h+j)-a(N+j)].
-$
+$$
 
 Multiply by $2^{L-j}$ and sum over $1\le j\le L$. QED.
 
 For the exact unit phases this yields the **multiplicative cocycle identity**
 
-$
+$$
 \boxed{
 E^a_{h+k,N,L}=E^a_{h,N,L}E^a_{k,N+h,L},
 \qquad
 E^a_{h,N,L}=\prod_{r=0}^{h-1}E^a_{1,N+r,L}.
 }
 \tag{15}
-$
+$$
 
 This is not an independence or mixing assertion. It states that Cook's all-shift target is precisely a family of *higher-order consecutive correlations* of the same first-shift phase process, rather than $h$ unrelated frequency tests.
 
