@@ -1,0 +1,232 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-19T22:58:50Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-19T22:58:51Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+    "exact_head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+    "pr_number": 3573,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "research(erdos561): sharp saturated matching bound; all 22 remaining 3-star cases covered conditionally"
+  },
+  "integration": {
+    "merge_commit_sha": "cdbcc70ee48b0ebe8026d20b04c3ae67a9769673",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 13,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 580F:335CF5:1CF5BC2:5CBE055:6AFF7F3A and timestamp 2026-11-19 22:59:06 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 135946251579,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946251457,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946251689,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946251982,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946256144,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Classify material formal closure",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946258366,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946256485,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946304202,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946263356,
+          "conclusion": "skipped",
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135946261348,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946263820,
+          "conclusion": "skipped",
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135946259765,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946256249,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946260842,
+          "conclusion": "success",
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135946259940,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 135946258864,
+          "conclusion": "success",
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135946262363,
+          "conclusion": "skipped",
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 135946258766,
+          "conclusion": null,
+          "head_sha": "ce414fc58909002ad1be1086cfdbe1558905c21a",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-19T22:59:05Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "19dd8d5039c8a76a9a747116c31540c23235d9f2598c2326fd74edbc6a49d74e"
+  },
+  "report_id": "PRVSR-LIVE-PR3573-ce414fc58909-20261119225905",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
