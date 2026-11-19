@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS-561-APEX-PARITY-20261118",
+  "claims": [
+    {
+      "mathematical_domain": "graph theory / size Ramsey theory",
+      "knowledge_graph_refs": [
+        "ERDOS-561",
+        "MATH-PROGRAMME#3490"
+      ],
+      "claim_id": "ERDOS561-UNIFORM-1978",
+      "short_name": "Uniform-star optimum and extremizers",
+      "claim_text": "The 1978 BEFRS theorem gives rhat(sP3,tP3)=3(s+t-1) and the complete optimal star/triangle host family.",
+      "claim_class": "LITERATURE_DERIVED",
+      "support_type": "SOURCE_CITATION",
+      "support_summary": "Original 1978 theorem PDF SHA256 b7af965c7eefa6ad427043cebe1c17d6a30a6c72e53ec3862814459df7ed9229; independently checked elementary upper bound.",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "assumptions": [
+        "finite simple graphs",
+        "positive s,t"
+      ],
+      "promotion_condition": "Source-lock and independent full examination of published 1978 proof.",
+      "source_or_artifact": [
+        "https://users.renyi.hu/~p_erdos/1978-38.pdf",
+        "https://mathweb.ucsd.edu/~erdosproblems/erdos/newproblems/SizeRamseyStars.html"
+      ],
+      "related_files": [
+        "research/erdos-561/STRUCTURAL_NO_GO_AND_REPLACEMENT.md",
+        "research/erdos-561/verify_parity_atoms.py"
+      ]
+    },
+    {
+      "mathematical_domain": "graph theory / size Ramsey theory",
+      "knowledge_graph_refs": [
+        "ERDOS-561",
+        "MATH-PROGRAMME#3490"
+      ],
+      "claim_id": "ERDOS561-APEX-FAIL",
+      "short_name": "Optimal hosts need not admit maximum-degree forest deletion",
+      "claim_text": "For c>=1 and N=s+t-1>c, G=cK3+(N-c)K1,3 is globally optimal for (sP3,tP3) but no set of maximum-degree vertices makes it acyclic; its feedback-vertex number is c.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Elementary pigeonhole and degree proof; 1978 optimality; exhaustive 239616 colourings and 246 edge-deletion witnesses on 20 small mixture cases.",
+      "status": "CHECKED",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "assumptions": [
+        "1<=c<s+t-1",
+        "global optimality uses the 1978 theorem"
+      ],
+      "promotion_condition": "Independent logical review; do not infer any counterexample to the original size Ramsey conjecture.",
+      "source_or_artifact": [
+        "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3490"
+      ],
+      "related_files": [
+        "research/erdos-561/STRUCTURAL_NO_GO_AND_REPLACEMENT.md",
+        "research/erdos-561/verify_parity_atoms.py"
+      ]
+    },
+    {
+      "mathematical_domain": "graph theory / size Ramsey theory",
+      "knowledge_graph_refs": [
+        "ERDOS-561",
+        "MATH-PROGRAMME#3490"
+      ],
+      "claim_id": "ERDOS561-LIST-SALVAGE",
+      "short_name": "Apex list-colouring criterion and pseudoforests",
+      "claim_text": "For independent k-set U, Δ(G)=D and H=G-U, χ'_l(H)<=D-2k implies χ'(G)=D. For pseudoforests with maximum degree r>=2 the bound D>=2k+max(3,r) suffices.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "König colouring, residual list edge colouring, cycle-first leaf-restoration argument; 1280 deterministic constructive checks in conversation release.",
+      "status": "CHECKED",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "assumptions": [
+        "finite simple graphs",
+        "independent U",
+        "r>=2 for pseudoforest"
+      ],
+      "promotion_condition": "Separate review or formalization plus source-controlled replay.",
+      "source_or_artifact": [
+        "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3490"
+      ],
+      "related_files": [
+        "research/erdos-561/STRUCTURAL_NO_GO_AND_REPLACEMENT.md"
+      ]
+    },
+    {
+      "mathematical_domain": "graph theory / size Ramsey theory",
+      "knowledge_graph_refs": [
+        "ERDOS-561",
+        "MATH-PROGRAMME#3490"
+      ],
+      "claim_id": "ERDOS561-CLASSII-CONDITIONAL",
+      "short_name": "Subcritical counterexamples must be Class II if joint bound holds",
+      "claim_text": "Conditional on the unproved J>=W-w2, any e(G)<=W-1 Ramsey host has e=W-1, Δ=w2-1, every max-degree deletion joint-extremal, and χ'(G)=Δ+1.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Vizing's bound and both vertex-deletion residual constraints imply equality and a Class II obstruction.",
+      "status": "CHECKED",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "assumptions": [
+        "joint residual lower bound J>=W-w2 (OPEN)",
+        "s,t>=2"
+      ],
+      "promotion_condition": "Prove or refute joint bound before removing conditional premise.",
+      "source_or_artifact": [
+        "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3490"
+      ],
+      "related_files": [
+        "research/erdos-561/STRUCTURAL_NO_GO_AND_REPLACEMENT.md"
+      ]
+    }
+  ]
+}
