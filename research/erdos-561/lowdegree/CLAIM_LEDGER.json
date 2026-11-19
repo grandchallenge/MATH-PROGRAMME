@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS561-LOWDEGREE-20261119",
+  "claims": [
+    {
+      "mathematical_domain": "Erdős #561 / star forests, finite degree-cap partitions, matching theory, and literature source integrity",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3564",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive edge-star component sizes",
+        "the admitted but unpromoted joint three-star residual theorem for any original Ramsey consequence"
+      ],
+      "promotion_condition": "Permit protected-source research evidence admission without changing the substantive original theorem or whole-conjecture status. Keep all paper-level and upstream-dependent claims UNDER_REVIEW until independently adjudicated. The general Erdős #561 conjecture is OPEN.",
+      "claim_id": "ERDOS561-LOWDEGREE-D2-EXACT-001",
+      "short_name": "Exhaustive six-pair finite maximum-degree-two host classification",
+      "claim_text": "For all six unordered target pairs among three-star profiles 211,221,222, every simple graph of maximum degree ≤2 with exactly W−1 edges (8,10,12,11,13,14 respectively) admits a red/blue colouring avoiding both targets. There are 1,356 non-isomorphic edge-bearing graph types in total.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Complete integer-partition classification into finite paths/cycles, 100%-exhaustive bitmask red/blue verification in C++17, and an independently coded Python verification from vertex-disjoint star placements; each reproduces identical 1,356 graph types and zero arrowing counterexamples. The D2 *original Ramsey* implication is conditional on upstream degree-reduction.",
+      "source_or_artifact": [
+        "research/erdos-561/lowdegree/verify_degree2_exhaustive.cpp",
+        "research/erdos-561/lowdegree/verify_degree2_independent.py"
+      ],
+      "related_files": [
+        "research/erdos-561/lowdegree/LOW_DEGREE_CLOSURE_THEOREMS.md",
+        "research/erdos-561/lowdegree/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / star forests, finite degree-cap partitions, matching theory, and literature source integrity",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3564",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive edge-star component sizes",
+        "the admitted but unpromoted joint three-star residual theorem for any original Ramsey consequence"
+      ],
+      "promotion_condition": "Permit protected-source research evidence admission without changing the substantive original theorem or whole-conjecture status. Keep all paper-level and upstream-dependent claims UNDER_REVIEW until independently adjudicated. The general Erdős #561 conjecture is OPEN.",
+      "claim_id": "ERDOS561-LOWDEGREE-D3-EDGE16-002",
+      "short_name": "Sharp sixteen-edge lower obstruction threshold for mixed degree caps 1 and 2",
+      "claim_text": "Every finite simple graph with maximum degree at most three and at most 15 edges has a red/blue edge split with maximum red degree at most one and blue at most two; a simple 16-edge graph witnesses sharpness. Every such graph with at most nine degree-three vertices is also splittable.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "General paper proof via exact ordinary Lovász cut parity and weighted boundary, plus Tutte perfect matching analysis showing a cubic graph lacking a perfect matching must have at least 16 vertices; exact 16-edge witness enumerates all 65,536 edge subsets and fails matching coverage.",
+      "source_or_artifact": [
+        "research/erdos-561/lowdegree/LOW_DEGREE_CLOSURE_THEOREMS.md",
+        "research/erdos-561/lowdegree/verify_cubic_sharpness.py"
+      ],
+      "related_files": [
+        "research/erdos-561/lowdegree/README.md",
+        "research/erdos-561/lowdegree/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / star forests, finite degree-cap partitions, matching theory, and literature source integrity",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3564",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive edge-star component sizes",
+        "the admitted but unpromoted joint three-star residual theorem for any original Ramsey consequence"
+      ],
+      "promotion_condition": "Permit protected-source research evidence admission without changing the substantive original theorem or whole-conjecture status. Keep all paper-level and upstream-dependent claims UNDER_REVIEW until independently adjudicated. The general Erdős #561 conjecture is OPEN.",
+      "claim_id": "ERDOS561-LOWDEGREE-LITERATURE-003",
+      "short_name": "Source-version correction and strict published special-case hypotheses",
+      "claim_text": "The current July 2026 arXiv:2606.04439v3 concerns uniform star forests and does not assert a solution of unrestricted #561, contrary to its original June v1 abstract; Davoodi et al. (2025), Theorem 2.6, requires all components on the opposing nonuniform side to have at least two edges. Exactly 12 of the prior 75 cases satisfy strictly verified published special-case hypotheses.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "SOURCE_CITATION",
+      "support_summary": "Version-sensitive review of current arXiv paper, 2025 primary full text Theorems 2.5–2.6 and Burr uniform theorem; checked per-case conditions in exact input certificate. Literature only, no new mathematics claimed.",
+      "source_or_artifact": [
+        "research/erdos-561/lowdegree/LOW_DEGREE_CLOSURE_THEOREMS.md",
+        "https://arxiv.org/abs/2606.04439",
+        "https://doi.org/10.26493/1855-3974.3081.d6c"
+      ],
+      "related_files": [
+        "research/erdos-561/lowdegree/LOWDEGREE_75_CASE_LEDGER.json",
+        "research/erdos-561/lowdegree/verify_lowdegree_ledger.py"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / star forests, finite degree-cap partitions, matching theory, and literature source integrity",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3564",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3548"
+      ],
+      "assumptions": [
+        "finite simple graphs",
+        "positive edge-star component sizes",
+        "the admitted but unpromoted joint three-star residual theorem for any original Ramsey consequence"
+      ],
+      "promotion_condition": "Permit protected-source research evidence admission without changing the substantive original theorem or whole-conjecture status. Keep all paper-level and upstream-dependent claims UNDER_REVIEW until independently adjudicated. The general Erdős #561 conjecture is OPEN.",
+      "claim_id": "ERDOS561-LOWDEGREE-3X3-004",
+      "short_name": "Conditional accounting: 39 low-degree ordered three-star method-survivors",
+      "claim_text": "Of 75 ordered method-survivors from the source-locked prior three-star gate, nine are covered by exact D2 graph enumeration, sixteen by the sharp subcubic 16-edge threshold, and twelve by strictly applicable already-published theorems, with one overlap, leaving 39 ordered (20 unordered) not covered by these stated methods.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Exact protected upstream 75-list SHA-256 readback, per-case joint counts verified in Python; uses published theorem hypotheses and paper-level D3 proof; does not claim 39 are genuinely open problems or that full joint three-star theorem has achieved formal certification.",
+      "source_or_artifact": [
+        "research/erdos-561/lowdegree/verify_lowdegree_ledger.py",
+        "research/erdos-561/lowdegree/LOWDEGREE_75_CASE_LEDGER.json"
+      ],
+      "related_files": [
+        "research/erdos-561/lowdegree/LOW_DEGREE_CLOSURE_THEOREMS.md",
+        "research/erdos-561/lowdegree/README.md"
+      ]
+    }
+  ]
+}
