@@ -1,0 +1,9 @@
+# Erdős #561: uniqueness of the 16-edge subcubic obstruction
+
+**Research result (2026-11-19):** The unique uncolourable simple graph with 16 edges and maximum degree at most 3 for red/blue degree caps (1,2) is two copies of a seven-edge five-vertex block connected by their one low-degree vertex to a common degree-two cut vertex.
+
+The proof is unbounded and uses the published ordinary Lovász (g,f)-factor theorem, not an exhaustive finite graph database. Its numerical tight-component classification has an independent exact 72-case check. This unique graph admits another colouring with only six red-active and six blue-active vertices, avoiding *any* pair of three-positive-star targets with largest star ≥2. It excludes **4** additional ordered small three-star cases *conditional on the earlier paper-level joint-residual theorem*. Remaining programme shortlist: **35 ordered / 18 unordered** method-survivors, D3=10,D4=25. The unrestricted conjecture remains OPEN.
+
+`UNIQUE_16EDGE_SUBCUBIC_OBSTRUCTION.md` contains the proof and limitations. `verify_cut_profiles.py`, `verify_five_vertex_block.py` and `verify_motif_colorings.py` independently check cut-pattern uniqueness, five-vertex internal graph uniqueness and explicit colour avoidance. `CANONICAL_MOTIF_CLOSURES.json` lists the four exact ordered pairs. `run_all.sh`, `RUN_MATRIX.md`, `CLAIM_LEDGER.json`, `EXECUTION_EVIDENCE.json`, and `SHA256SUMS.txt` provide reproducibility and scoped governance.
+
+**Dependency:** The motif verifier reads protected upstream `../lowdegree/LOWDEGREE_75_CASE_LEDGER.json` (GitHub source PR #3567, merged at commit `f3ffec38e4e77a1da7e9395f17fcfa8fdc5f7594`, input SHA-256 `eb9fee1ee3472b2ae7490b0b104e4a896a2be41914055057aff36db59c7201f0`); use environment variable `UPSTREAM_561_LOWDEGREE_LEDGER` in standalone execution. This is a read-only input; no existing source was changed.
