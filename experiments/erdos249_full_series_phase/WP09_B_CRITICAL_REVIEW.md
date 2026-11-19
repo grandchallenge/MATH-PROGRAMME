@@ -11,7 +11,7 @@ Yes, modulo ordinary mathematical review of the provided finite divisor algebra.
 
 $$
 \sum_{n\le T} f(n)f(n+h)
-=\sum_{\substack{d\le T,\ e\le T+h\\(d,e)\mid h}}
+=\sum_{d\le T,\ e\le T+h\,;\,(d,e)\mid h}
 \frac{\mu(d)\mu(e)}{de}
 \left(\frac{T}{[d,e]}+O(1)\right).
 $$
@@ -73,7 +73,7 @@ $$
 
 for $X\le N\le2X-2$; hence the **coefficient endpoint interval** is exactly $[X+L+1,2X+L-1]$, which has $X-1$ integers. If $|d_h(n)|<Q/2$, that coefficient is a minimal absolute representative of its congruence class and so $|d_h(n)|\le|r_{N+1}-2r_N|$.
 
-The finite operator from the length-$X$ vector $r$ to its $X-1$ adjacent differences $r_{N+1}-2r_N$ has Euclidean operator norm at most $1+2=3$ (shift/truncate norm at most one). Thus the exact integer inequality $\sum d_h^2\le9\sum r_N^2$ has **no sampling, averaging or probability** inside it.
+The finite operator from the vector of length $X$ $r$ to its $X-1$ adjacent differences $r_{N+1}-2r_N$ has Euclidean operator norm at most $1+2=3$ (shift/truncate norm at most one). Thus the exact integer inequality $\sum d_h^2\le9\sum r_N^2$ has **no sampling, averaging or probability** inside it.
 
 For centered $r_N$, the elementary concavity bound $\sin(\pi |r_N|/Q)\ge2|r_N|/Q$ holds and gives the real harmonic deficit
 
