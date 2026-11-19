@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS561-MARKED-MATCHING-20261119",
+  "claims": [
+    {
+      "mathematical_domain": "finite graph matching / even degree saturated vertices / size-Ramsey of star forests",
+      "assumptions": [
+        "finite simple graphs",
+        "nonnegative integer degrees",
+        "classical designated-vertex Tutte matching theorem (Akiyama-Kano 2007 Thm 1.4.7)",
+        "for original three-star Ramsey transfer ONLY: the earlier unpromoted joint-three-star residual theorem"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3569",
+        "MATH-PROGRAMME#3568",
+        "MATH-PROGRAMME#3567",
+        "MATH-PROGRAMME#3564"
+      ],
+      "promotion_condition": "Research-source admission is permitted under current streamlined policy. Do not promote conditional original Ramsey claims to proof of unrestricted #561. The general matching theorem is proved on paper but not formalized in Lean; dependent three-star result remains UNDER_REVIEW until the upstream joint residual result is independently proved or refuted.",
+      "claim_id": "ERDOS561-MARKED-MATCHING-001",
+      "short_name": "Sharp designated-degree even-D matching deficiency bound",
+      "claim_text": "For even D≥2 and Δ(G)≤D, a finite simple graph having k vertices of degree exactly D admits a matching leaving at most floor(k/(D+1)) of them uncovered; sharp for disjoint unions of copies of K_(D+1).",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Complete paper proof via Akiyama-Kano Theorem 1.4.7: each small odd fully-saturated component sends ≥D boundary edges into S, and each large one consumes ≥D+1 saturated vertices; add r universal helper vertices and apply the prescribed matching criterion. Tight disjoint odd-clique examples. General theorem not formally kernel checked.",
+      "source_or_artifact": [
+        "research/erdos-561/marked-matching/SHARP_SATURATED_MATCHING_DEFICIENCY_THEOREM.md"
+      ],
+      "related_files": [
+        "research/erdos-561/marked-matching/verify_marked_matching_exact.py",
+        "research/erdos-561/marked-matching/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "finite graph matching / even degree saturated vertices / size-Ramsey of star forests",
+      "assumptions": [
+        "finite simple graphs",
+        "nonnegative integer degrees",
+        "classical designated-vertex Tutte matching theorem (Akiyama-Kano 2007 Thm 1.4.7)",
+        "for original three-star Ramsey transfer ONLY: the earlier unpromoted joint-three-star residual theorem"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3569",
+        "MATH-PROGRAMME#3568",
+        "MATH-PROGRAMME#3567",
+        "MATH-PROGRAMME#3564"
+      ],
+      "promotion_condition": "Research-source admission is permitted under current streamlined policy. Do not promote conditional original Ramsey claims to proof of unrestricted #561. The general matching theorem is proved on paper but not formalized in Lean; dependent three-star result remains UNDER_REVIEW until the upstream joint residual result is independently proved or refuted.",
+      "claim_id": "ERDOS561-MARKED-MATCHING-002",
+      "short_name": "Independent finite exact marked-Tutte matching verification",
+      "claim_text": "An independent exact dynamic-programming matching solver and exhaustive all-S designated odd-component criterion agree for all 685 degree≤4 networkx atlas graphs on ≤7 vertices, 260 seeded larger graphs and disjoint one-to-four K5 examples.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Brute vertex-bitmask dynamic programming with matched-vertex reconstruction, independent all-vertex-deletion-set connected-component calculation, exact deficit equality for each graph, and sharpness up to 20 vertices; no built-in maximum-matching solver in this verification path.",
+      "source_or_artifact": [
+        "research/erdos-561/marked-matching/verify_marked_matching_exact.py"
+      ],
+      "related_files": [
+        "research/erdos-561/marked-matching/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "finite graph matching / even degree saturated vertices / size-Ramsey of star forests",
+      "assumptions": [
+        "finite simple graphs",
+        "nonnegative integer degrees",
+        "classical designated-vertex Tutte matching theorem (Akiyama-Kano 2007 Thm 1.4.7)",
+        "for original three-star Ramsey transfer ONLY: the earlier unpromoted joint-three-star residual theorem"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3569",
+        "MATH-PROGRAMME#3568",
+        "MATH-PROGRAMME#3567",
+        "MATH-PROGRAMME#3564"
+      ],
+      "promotion_condition": "Research-source admission is permitted under current streamlined policy. Do not promote conditional original Ramsey claims to proof of unrestricted #561. The general matching theorem is proved on paper but not formalized in Lean; dependent three-star result remains UNDER_REVIEW until the upstream joint residual result is independently proved or refuted.",
+      "claim_id": "ERDOS561-MARKED-COLORING-003",
+      "short_name": "Two universal matching-based avoidance colourings at Δ≤4 and E≤29",
+      "claim_text": "Every simple graph with maximum degree at most four and at most 29 edges has (A) a red matching and blue at most two degree-four vertices, and (B) a red graph with no three disjoint P3 and a blue graph of maximum degree at most three. Both avoid the designated relevant star pairs; the edge budget 29 is sharp for the corresponding simpler universal target pairs via 3K5.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Choose matching missing ≤2 originally degree-four vertices; colour matching red (A), or matching plus every edge incident to unmatched saturated vertices red (B); a red P3 in (B) must meet the two-vertex special set. Independently checked on 685 atlas graphs for both schemes and 330 target-specific exact-edge-count graphs.",
+      "source_or_artifact": [
+        "research/erdos-561/marked-matching/SHARP_SATURATED_MATCHING_DEFICIENCY_THEOREM.md",
+        "research/erdos-561/marked-matching/verify_coloring_constructions.py"
+      ],
+      "related_files": [
+        "research/erdos-561/marked-matching/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "finite graph matching / even degree saturated vertices / size-Ramsey of star forests",
+      "assumptions": [
+        "finite simple graphs",
+        "nonnegative integer degrees",
+        "classical designated-vertex Tutte matching theorem (Akiyama-Kano 2007 Thm 1.4.7)",
+        "for original three-star Ramsey transfer ONLY: the earlier unpromoted joint-three-star residual theorem"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3569",
+        "MATH-PROGRAMME#3568",
+        "MATH-PROGRAMME#3567",
+        "MATH-PROGRAMME#3564"
+      ],
+      "promotion_condition": "Research-source admission is permitted under current streamlined policy. Do not promote conditional original Ramsey claims to proof of unrestricted #561. The general matching theorem is proved on paper but not formalized in Lean; dependent three-star result remains UNDER_REVIEW until the upstream joint residual result is independently proved or refuted.",
+      "claim_id": "ERDOS561-MARKED-3STAR-004",
+      "short_name": "Conditional elimination of all 22 remaining ordered 3-star parameter-method cases",
+      "claim_text": "Conditional on the already admitted but mathematically unpromoted joint-three-star residual theorem and prior finite/high-degree gates, 18 of the final 22 ordered method-surviving 3-star pairs are ruled out by Construction B and the remaining four by Construction A, leaving zero parameter-method survivors for both leading sizes at least two.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Exact protected 22-case input source SHA-256, whole-list enumeration, checks all antidiagonal W−1 values and D=4, 18/4 partition, colour reversal, 11 unordered pairs; separate 75→39→25→22→0 source-locked nested-set reconciliation. No unconditional original conjecture proof is claimed.",
+      "source_or_artifact": [
+        "research/erdos-561/marked-matching/verify_final_three_star_gate.py",
+        "research/erdos-561/marked-matching/FINAL_22_CASE_CERTIFICATE.json"
+      ],
+      "related_files": [
+        "research/erdos-561/marked-matching/verify_chain_reconciliation.py",
+        "research/erdos-561/marked-matching/SHARP_SATURATED_MATCHING_DEFICIENCY_THEOREM.md"
+      ]
+    }
+  ]
+}
