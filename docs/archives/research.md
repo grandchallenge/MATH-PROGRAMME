@@ -13,6 +13,7 @@ These are supporting records, not necessarily current research instructions or c
 - [Prime Information Transition Problem](../PRIME_INFORMATION_TRANSITION.md)
 - [ERDOS Open Triage](../campaigns/ERDOS_OPEN_TRIAGE.md)
 - [ERDOS Catalogue Processing](../campaigns/ERDOS_CATALOGUE_PROCESSING.md)
+- [Erdős #602 — essential disjointness and sharpness obstruction (unadjudicated handoff)](../handoffs/ERDOS-602-ESSENTIAL-DISJOINTNESS-001.md)
 - [OpenMath 2026 Participant Trial](../campaigns/OPENMATH_2026_PARTICIPANT_TRIAL.md)
 - [OpenMath 2026 Campaign Charter](../campaigns/OPENMATH_2026_CHARTER.md)
 - [OpenMath 2026 Sprint Profile](../campaigns/OPENMATH_2026_SPRINT_PROFILE.md)
