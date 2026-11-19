@@ -5,13 +5,18 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "ci"))
+
+import validate_cmdg_schema_contracts as contracts  # noqa: E402
 
 from validate_cmdg_schema_contracts import (  # noqa: E402
     ContractError,
@@ -35,6 +40,83 @@ class CMDGSchemaContractTests(unittest.TestCase):
             fn(artifact)
         if needle:
             self.assertIn(needle, str(caught.exception))
+
+
+    def test_schema_cache_invalidates_exact_referenced_bytes(self):
+        """A schema dependency changing with unchanged timestamps must reject."""
+        with tempfile.TemporaryDirectory(prefix="cmdg-schema-byte-drift-") as tmp:
+            directory = Path(tmp)
+            primary = directory / "cmdg_main.schema.json"
+            dependency = directory / "cmdg_dependency.schema.json"
+            prefix = "https://gcl.invalid/cmdg-schema-cache-test/"
+            base = {"$schema": "https://json-schema.org/draft/2020-12/schema"}
+            main = {
+                **base,
+                "$id": prefix + "main",
+                "type": "object",
+                "properties": {"x": {"$ref": prefix + "dependency"}},
+                "required": ["x"],
+            }
+            child = {**base, "$id": prefix + "dependency", "type": "integer"}
+            primary.write_text(json.dumps(main), encoding="utf-8")
+            dependency.write_text(json.dumps(child), encoding="utf-8")
+            with patch.object(contracts, "SCHEMAS", directory):
+                before = contracts._compiled_validator.cache_info()
+                contracts.validate_schema({"x": 7}, primary, "initial")
+                contracts.validate_schema({"x": 8}, primary, "cache_hit")
+                after = contracts._compiled_validator.cache_info()
+                self.assertGreaterEqual(after.hits, before.hits + 1)
+                with self.assertRaises(ContractError):
+                    contracts.validate_schema({"x": "invalid"}, primary, "old_type")
+                # Hold the previous mtime fixed. Neither cache is permitted
+                # to use timestamps or file size as a substitute for bytes.
+                stamp = dependency.stat()
+                child["type"] = "string"
+                dependency.write_text(json.dumps(child), encoding="utf-8")
+                os.utime(dependency, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+                with self.assertRaises(ContractError):
+                    contracts.validate_schema({"x": 7}, primary, "changed_dep")
+                contracts.validate_schema({"x": "valid"}, primary, "new_type")
+                # Even a malformed referenced schema must be rechecked,
+                # rather than reusing the earlier valid registry.
+                from jsonschema.exceptions import SchemaError
+                broken = dict(child, type=[])
+                dependency.write_text(json.dumps(broken), encoding="utf-8")
+                with self.assertRaises(SchemaError):
+                    contracts.validate_schema({"x": "valid"}, primary, "invalid_dep")
+                dependency.write_text(json.dumps(child), encoding="utf-8")
+                contracts.validate_schema({"x": "valid"}, primary, "repaired_dep")
+                # Mutating the primary schema also invalidates its compiled
+                # validator, even when referenced dependency bytes are stable.
+                main["required"] = ["x", "new_required_field"]
+                stamp = primary.stat()
+                primary.write_text(json.dumps(main), encoding="utf-8")
+                os.utime(primary, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+                with self.assertRaises(ContractError):
+                    contracts.validate_schema({"x": "valid"}, primary, "changed_primary")
+
+    def test_schema_cache_rejects_invalid_primary_and_missing_files(self):
+        """A cached valid graph must not conceal malformed replacement schemas."""
+        from jsonschema.exceptions import SchemaError
+        with tempfile.TemporaryDirectory(prefix="cmdg-schema-invalid-drift-") as tmp:
+            directory = Path(tmp)
+            source = directory / "cmdg_root.schema.json"
+            valid = {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "https://gcl.invalid/cache-rejection-root",
+                "type": "integer",
+            }
+            source.write_text(json.dumps(valid), encoding="utf-8")
+            with patch.object(contracts, "SCHEMAS", directory):
+                contracts.validate_schema(1, source, "valid")
+                invalid = dict(valid, type=[])
+                source.write_text(json.dumps(invalid), encoding="utf-8")
+                with self.assertRaises(SchemaError):
+                    contracts.validate_schema(1, source, "schema_corrupted")
+                source.unlink()
+                with self.assertRaises(ContractError) as caught:
+                    contracts.validate_schema(1, source, "schema_missing")
+                self.assertIn("cannot load JSON", str(caught.exception))
 
     def test_valid_node_edge_manifest(self):
         node = load("valid_node.json")
