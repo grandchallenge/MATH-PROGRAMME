@@ -106,20 +106,40 @@ $$
 
 This does not rely on the shape of the outside graph. It improves the bound beyond the earlier leaf-edge construction, especially when the outside edge budget is too small even to contain the opposite target forest. For the residual case list it excludes **63 additional ordered pairs**. All colourings avoid the respective targets directly, rather than only avoiding a degree-capped partition.
 
+### Minimal recolouring of the exterior (final strengthening)
+
+The preceding construction can be sharpened when the exterior has slightly too many edges to colour it all the opposite colour. Keep the isolated `c`-vertex regular component red. Let `t=E−cD/2` denote the number of outside edges and choose exactly
+
+$$
+r=\max\{0,t-	extstyle\sum m_j+1\}
+$$
+
+of those exterior edges to be red, colouring all other exterior edges blue. Such a set of `r` edges always exists because all target edge counts are positive and `0≤r≤t`. The blue graph has fewer than `sum m_j` edges and hence no blue target. The red graph has at most `c+2r` nonisolated vertices, since its exterior red edges meet at most `2r` additional vertices. Therefore the red target is impossible whenever
+
+$$
+c+2r<	extstyle\sum n_i+3.
+$$
+
+The symmetric construction makes the core blue and uses the same formula with red and blue target roles exchanged. If either direction succeeds for **every feasible odd order `c`**, the putative arrowing graph cannot exist. This final allocation excludes **15 further ordered pairs**, including the three remaining forced-degree-six candidates. The argument requires no information about the exterior graph beyond its edge count and disjointness from the core.
+
 ## 3. Exact bounded results
 
-The fresh, independent integer implementation `verify_parameter_gate.py` reproduces the 851-case earlier shortlist and the 512 earlier D+2 exclusions. It eliminates **249 additional ordered pairs**, leaving **90** research-filter survivors. The exclusions comprise **176** parity/unique-core contradictions, **10** leaf-edge exterior colourings, and **63** whole-core-monochromatic exterior-edge colourings.
+The fresh, independent integer implementation `verify_parameter_gate.py` reproduces the 851-case earlier shortlist and the 512 earlier D+2 exclusions. It eliminates **264 additional ordered pairs**, leaving **75** research-filter survivors. The exclusions comprise **176** parity/unique-core contradictions, **10** leaf-edge exterior colourings, **63** whole-core-monochromatic exterior-edge colourings, and **15** minimal exterior recolourings.
 
 | Forced degree D | Excluded now | Surviving filter entries |
 | --- | ---: | ---: |
 | 2 | 0 | 9 |
 | 3 | 4 | 32 |
-| 4 | 46 | 46 |
+| 4 | 58 | 34 |
 | 5 | 118 | 0 |
-| 6 | 79 | 3 |
+| 6 | 82 | 0 |
 | 7 | 2 | 0 |
-| Total | **249** | **90** |
+| Total | **264** | **75** |
 
 `verify_general_core.cpp` independently examines every simple labelled graph on 2 through 6 vertices: 33,866 graphs, 91,727 degree-cap tests. In the 91,657 cases below the `k≤2D+1` threshold, **every** result matches the isolated odd-order regular-component characterization. The program also tests the connected `K_(D+3)`-minus-Hamilton-cycle family for D=2,4,6. The checked general Lovász criterion agrees with explicit red/blue edge searches on 2,809 selected instances. These finite tests corroborate, but do not prove, the unbounded theorem.
 
-**The 90 remaining entries are not 90 new established open problems:** they are only entries not eliminated by the specific tests above. Full Erdős #561, four-or-more-component residual results, and the high-degree-core regime beyond `2D+1` remain open.
+**The 75 remaining entries are not 75 new established open problems:** they are only entries not eliminated by the specific tests above. Full Erdős #561, four-or-more-component residual results, and the high-degree-core regime beyond `2D+1` remain open.
+
+### Large-leading-size three-star consequence
+
+All the 75 remaining ordered method-survivors have forced degree at most four. More precisely, the verifier eliminates **every** bounded three-by-three instance with both leading sizes at least two and forced degree `5≤D≤9`; for `D≥10` the earlier admitted three-star large-degree theorem applies directly without a finite search. Consequently, **assuming the paper-level joint three-star residual theorem**, the conjectured original size-Ramsey formula holds for every pair of three-star forests with leading sizes `n₁,m₁≥2` and `n₁+m₁≥7`. This is a conditional paper-level theorem and is not yet MATHCERT or external mathematical certification. The 75 method-survivors all have `D≤4`; one-sided largest-star-size-one cases are not included in this new statement.

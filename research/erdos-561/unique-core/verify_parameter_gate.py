@@ -97,15 +97,47 @@ for item in stage1_keep:
  else:
   stage2_new.append([x,y,d,'monochrome_core_exterior_edge_count'])
   grounds['monochrome_core_exterior_edge_count']+=1
+# Third independent witness: keep the isolated core monochromatic,
+# recolour the *minimum number* of exterior edges to the core colour.
+# This forces too few edges in the other colour, while c+2r remains
+# smaller than the core-colour target's required vertex count.
+stage3_new=[]
+third_kept=[]
+for item in final_kept:
+ x,y,d,reason,*extras=item
+ if reason=='very_high_core':
+  third_kept.append(item)
+  continue
+ assert reason=='possible_odd_core'
+ e=sum(max(x[i]+y[j]-1 for i in range(3) for j in range(3) if i+j==z)
+       for z in range(5))-1
+ surviving_orders=[]
+ for c in extras[0]:
+  outside=e-c*d//2
+  minimum_red=max(0,outside-sum(y)+1)
+  minimum_blue=max(0,outside-sum(x)+1)
+  avoid_by_red_core=(c+2*minimum_red<sum(x)+3)
+  avoid_by_blue_core=(c+2*minimum_blue<sum(y)+3)
+  if not(avoid_by_red_core or avoid_by_blue_core):
+   surviving_orders.append(c)
+ if surviving_orders:
+  third_kept.append([x,y,d,reason,surviving_orders])
+ else:
+  stage3_new.append([x,y,d,'minimal_exterior_recolouring'])
+  grounds['minimal_exterior_recolouring']+=1
 new.extend(stage2_new)
 kept=final_kept
+new.extend(stage3_new)
+kept=third_kept
 assert len(stage2_new)==63,(len(stage2_new),grounds)
-assert len(new)==249,(len(new),grounds)
-assert len(kept)==90,(len(kept),grounds)
+assert len(stage3_new)==15,(len(stage3_new),grounds)
+assert len(new)==264,(len(new),grounds)
+assert len(kept)==75,(len(kept),grounds)
 assert len(new)+len(kept)==339
 new_ids=sorted((tuple(x),tuple(y)) for x,y,*_ in new)
 cert={'domain_total':4566,'baseline':851,'old_Dplus2_closed':512,
       'previous_survivors':339,'stage1_excluded':len(stage1_new),'stage2_excluded':len(stage2_new),
+      'stage3_excluded':len(stage3_new),
       'new_excluded':len(new),'remaining':len(kept),
       'classification_reason_counts':dict(grounds),
       'new_by_D':dict(Counter(v[2] for v in new)),

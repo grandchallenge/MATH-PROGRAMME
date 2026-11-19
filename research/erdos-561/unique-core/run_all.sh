@@ -18,4 +18,4 @@ expected='PASS {graphs:33866,cap_instances:91727,obstructions:273,exact_lovasz_c
 python3 verify_parameter_gate.py
 python3 verify_independent_gate.py
 printf '%s\n' "$actual"
-echo 'REPLAY_PASS: kernel arithmetic, graph obstructions, exact 249/90 parameter certificate'
+echo 'REPLAY_PASS: kernel arithmetic, graph obstructions, exact 264/75 parameter certificate'

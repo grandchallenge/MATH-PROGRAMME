@@ -41,14 +41,23 @@ for u,v in itertools.product(all_trip,repeat=2):
   leaf=(L>c+h)
   coreRed=(sum(u)+3>c and h<sum(v))
   coreBlue=(sum(v)+3>c and h<sum(u))
-  if not(leaf or coreRed or coreBlue):possible=True;break
+  # Minimal outside-edge recolouring: enough to reduce other-colour
+  # edge count below target total, without providing enough vertices
+  # to the core-colour target.
+  rr=max(0,h-sum(v)+1)
+  bb=max(0,h-sum(u)+1)
+  mixedRed=(c+2*rr<sum(u)+3)
+  mixedBlue=(c+2*bb<sum(v)+3)
+  if not(leaf or coreRed or coreBlue or mixedRed or mixedBlue):
+   possible=True
+   break
  if possible:last.append((u,v))
  else:second.append((u,v))
 
 assert len(base)==851,(len(base),len(all_trip))
 assert len(first)==339,len(first)
-assert len(second)==249,len(second)
-assert len(last)==90,len(last)
+assert len(second)==264,len(second)
+assert len(last)==75,len(last)
 prior=json.load(open(Path(__file__).with_name('GENERAL_CORE_PARAMETER_CERTIFICATE.json')))
 main_new={(tuple(p[0]),tuple(p[1])) for p in prior['new_pairs']}
 main_last={(tuple(p[0]),tuple(p[1])) for p in prior['remaining_pairs']}
