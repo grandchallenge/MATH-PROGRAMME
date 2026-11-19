@@ -14,7 +14,7 @@ $$
 
 of the form $\exp(O_C(\sqrt{\log X}))$. This WP improves that estimate to a **polynomial in $\log X$ for every fixed integer $C\ge0$**. It also extends the range to a specified slowly growing $C=C(X)$ without requiring an unproved theorem.
 
-**Prior mathematical literature:** Jun-Jia Zhao, *p-Adic Valuation of Euler's Totient Function* (2025), DOI: [10.1007/s40840-025-01869-7](https://doi.org/10.1007/s40840-025-01869-7), states the exact equality characterization at $C=0$: $\nu_2\varphi(n)=\lfloor\log_2n\rfloor$ precisely for products of distinct Fermat primes. The equality classification in Section 3 is included as a self-contained derivation and a hostile consistency check, **not claimed as new or GCL-priority mathematics**. The fixed-$C$ quantitative strengthening should also receive a dedicated literature review before any novelty claim.
+**Prior mathematical literature:** Jun-Jia Zhao, *p-Adic Valuation of Euler's Totient Function* (2025), DOI: [10.1007/s40840-025-01869-7](https://doi.org/10.1007/s40840-025-01869-7), states the exact equality characterization at $C=0$: $\nu_2\varphi(n)=\lfloor\log_2n\rfloor$ precisely for products of distinct Fermat primes. The equality classification in Section 3 is included as a self-contained derivation and a hostile consistency check, **not claimed as new or GCL-priority mathematics**. The quantitative strengthening for fixed $C$ should also receive a dedicated literature review before any novelty claim.
 
 Will Cook's *The Binary Totient Series* (2026, revised October 1) supplies much stronger source-locked conditional criteria for the original irrationality conjecture. No consequence of this packet is presented as satisfying those open criteria.
 
