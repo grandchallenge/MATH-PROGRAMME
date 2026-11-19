@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS561-LEAN-PREREQ-20261119",
+  "claims": [
+    {
+      "mathematical_domain": "graph theory / size Ramsey numbers, finite parameter and arithmetic prerequisites",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "assumptions": [
+        "Lean 4.33.0-rc1 (pinned by exact commit)",
+        "ordinary Lean kernel",
+        "finite simple graphs only as an *intended downstream interpretation*; these theorems themselves quantify natural numbers or finite tuples"
+      ],
+      "promotion_condition": "Only these narrow Lean statements are kernel checked; grant no general Erdős #561 theorem, joint-residual theorem, or protected MATHCERT status without separate formalization and valid non-author mathematical review.",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523"
+      ],
+      "claim_id": "ERDOS561-LEAN-FINITE-001",
+      "short_name": "Lean kernel-checked 3×3 joint residual finite arithmetic gate",
+      "claim_text": "For each of 7,056 ordered triples with positive sizes at most seven, if switching is positive and forced maximum degree is ≤7 then one of the two core arithmetic contradictions holds; exactly 82 bounded candidates, 74 edge failures and 8 additional vertex failures.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_KERNEL_CHECKED_CERTIFICATE",
+      "support_summary": "Lean definitions triple_count, bounded_parameter_gate, relevant_candidate_count, edge_exclusions_count and vertex_exclusions_count all elaborated by decide; #print axioms confirms no axioms on the finite closed theorems. The graph-to-arithmetic reduction is not formalized.",
+      "source_or_artifact": [
+        "research/erdos-561/formal/Erdos561Finite.lean"
+      ],
+      "related_files": [
+        "research/erdos-561/formal/Erdos561Finite.lean",
+        "research/erdos-561/formal/FORMAL_SCOPE.md"
+      ]
+    },
+    {
+      "mathematical_domain": "graph theory / size Ramsey numbers, finite parameter and arithmetic prerequisites",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "assumptions": [
+        "Lean 4.33.0-rc1 (pinned by exact commit)",
+        "ordinary Lean kernel",
+        "finite simple graphs only as an *intended downstream interpretation*; these theorems themselves quantify natural numbers or finite tuples"
+      ],
+      "promotion_condition": "Only these narrow Lean statements are kernel checked; grant no general Erdős #561 theorem, joint-residual theorem, or protected MATHCERT status without separate formalization and valid non-author mathematical review.",
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3523"
+      ],
+      "claim_id": "ERDOS561-LEAN-CORE-NAT-002",
+      "short_name": "Lean checked degree-core natural-number inequalities",
+      "claim_text": "General Nat inequalities: saturated_edge_budget, saturated_vertex_budget, saturation_low_slack, saturation_low_slack_from_sum, assuming explicit numerical degree-sum and saturation premises.",
+      "claim_class": "FORMALIZED",
+      "support_type": "LEAN_PROOF",
+      "support_summary": "Lean kernel checked four Nat theorems; first two axiom-free, last two rely only on standard Lean foundational axioms via omega. No Graph SimpleGraph or Lovász factor theorem is claimed formalized.",
+      "source_or_artifact": [
+        "research/erdos-561/formal/Erdos561CoreArithmetic.lean"
+      ],
+      "related_files": [
+        "research/erdos-561/formal/Erdos561CoreArithmetic.lean",
+        "research/erdos-561/formal/FORMAL_SCOPE.md"
+      ]
+    }
+  ]
+}
