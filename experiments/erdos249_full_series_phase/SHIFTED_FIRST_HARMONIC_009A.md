@@ -191,7 +191,46 @@ The theorem gives a rigorously proved **positive cancellation deficit** at the e
 
 But the saving is far below Cook's required $1/10$; at the universal parameter choice of (1), its explicit lower estimate is of order $10^{-10}/M_h$, not $10^{-1}$. Taking the depth larger does **not** bridge the gap by itself: the phase separation forced by (9) scales as $X/Q$, while Cook's discarded-tail error scales as $X/Q$. The ratio of these two scales is independent of depth.
 
-## 5. Hostile rational model and limit of the theorem
+## 5. Theorem D — an exact multiplicative cocycle across arbitrary shifts
+
+A further exact identity gives the right form of the *next* correlation problem. For any integer coefficient sequence $a(n)$, define $D^a_{h,N,L}$ using the same shifted binary-window formula. Then for any fixed positive shifts $h,k$ and **the same depth** $L$,
+
+$
+\boxed{
+D^a_{h+k,N,L}=D^a_{h,N,L}+D^a_{k,N+h,L}.
+}
+\tag{14}
+$
+
+**Proof.** Term by term in the finite sum, write
+
+$
+a(N+h+k+j)-a(N+j)
+=
+[a(N+h+k+j)-a(N+h+j)]
++[a(N+h+j)-a(N+j)].
+$
+
+Multiply by $2^{L-j}$ and sum over $1\le j\le L$. QED.
+
+For the exact unit phases this yields the **multiplicative cocycle identity**
+
+$
+\boxed{
+E^a_{h+k,N,L}=E^a_{h,N,L}E^a_{k,N+h,L},
+\qquad
+E^a_{h,N,L}=\prod_{r=0}^{h-1}E^a_{1,N+r,L}.
+}
+\tag{15}
+$
+
+This is not an independence or mixing assertion. It states that Cook's all-shift target is precisely a family of *higher-order consecutive correlations* of the same first-shift phase process, rather than $h$ unrelated frequency tests.
+
+**Hostile elementary correlation counterexample.** Take the abstract unit-phase sequence $u_N=i(-1)^N$. Its one-point mean is exactly zero on every even-length interval, yet $u_Nu_{N+1}=1$ at every position. Thus even perfect first-harmonic cancellation for shift one is **not** sufficient, without a correlation estimate, to guarantee saving for shift two. This is a logical phase-sequence counterexample, **not** a claim that these $u_N$ equal the actual totient phases or satisfy their arithmetic recurrence.
+
+The exact source test suite independently verifies both the integer cocycle and the unit-phase obstruction. A productive amplification must therefore establish actual-totient correlation or mixing of the products in (15), uniform across each **fixed** $h$ on sufficiently late blocks. The small one-point saving $c_1$ of Theorem C cannot simply be multiplied across $h$.
+
+## 6. Hostile rational model and limit of the theorem
 
 For a **fixed** shift $h$, choose an integer $M\ge3$ coprime to $h$ (so $-h,0,h$ are distinct modulo $M$) and define the integer sequence
 
@@ -211,7 +250,7 @@ Nevertheless $d_h(n)=a_{n+h}-a_n$ is at most $-n$ for $n\equiv-h\pmod M$ and at 
 
 The additional obstruction is quantitative: a bounded-coefficient, one-step residue recurrence cannot force a centered residue larger than the actual omitted-tail uncertainty $B\sim2X$ merely from a coefficient difference of magnitude at most $O(X)$. The $1/10$ saving remains a substantive arithmetic mixing problem. Cook's open **weighted first-harmonic** term has not been proved or replaced by this weak result.
 
-## 6. Claim ledger and successor
+## 7. Claim ledger and successor
 
 | Claim | Status |
 | --- | --- |
@@ -219,10 +258,11 @@ The additional obstruction is quantitative: a bounded-coefficient, one-step resi
 | B: every fixed $h$ has both positive-density $\Omega_h(X)$ and negative-density $\Omega_h(X)$ linear shifted-totient contrasts | Elementary CRT and totient mean proof; related earlier sign-contrast literature |
 | B2: at the actual Cook-admissible depth, positive-density shifted finite phases are at a fixed distance from integers | Exact centered-residue recurrence proof |
 | C: for each $h$ an explicit $c_h>0$ gives $\mathrm{Re}\sum E\le(1-c_h)X$ for all large blocks | Unconditional elementary proof, **far weaker** than Cook's needed $0.1X$ |
+| D: exact shifted integer and unit-phase multiplicative cocycle for any coefficient sequence; all-$h$ harmonic is a consecutive correlation of shift-one phases | Elementary telescoping proof; no mixing asserted |
 | Strong Cook weighted correlation / $0.9X$ whole harmonic / denominator-uniform complete-tail exclusion | **OPEN** |
 | Original full binary totient-series irrationality, novelty, independent proof certification | **OPEN / NOT_CLAIMED / MATHCERT NOT_SUBMITTED** |
 
-**Next substantive target:** Establish an arithmetic **amplification** of Cook's first-harmonic saving from the current tiny $c_h$ to a constant exceeding $0.1$, by controlling overlap of shifted totient values inside the residual weights $w_N$ rather than merely exhibiting large individual shifts. Any future amplification must survive the rational quasipolynomial comparator above and WP07-E exact near-log rational imitation.
+**Next substantive target:** Establish an arithmetic **amplification** of Cook's first-harmonic saving from the current tiny $c_h$ to a constant exceeding $0.1$, by controlling overlap of shifted totient values inside the residual weights $w_N$ **or** proving the actual-totient consecutive phase-product correlation in (15), rather than merely exhibiting large individual shifts. Any future amplification must survive the rational quasipolynomial comparator above and WP07-E exact near-log rational imitation.
 
 The executable witness engine is [shifted_first_harmonic.py](shifted_first_harmonic.py) and the hostile tests extend the **existing governed** [test_erdos249_full_series_phase.py](../../tests/test_erdos249_full_series_phase.py); they do not change protected policy, routes or workflows. The finite experiments validate exact arithmetic identities and counts, not the infinite asymptotics. Qualified same-agent logical review is not independent authentication.
 
