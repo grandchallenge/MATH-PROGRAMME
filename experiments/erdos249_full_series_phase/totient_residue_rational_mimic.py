@@ -67,6 +67,35 @@ def rational_totient_residue_mimic(limit: int,
     return a, b
 
 
+
+def arbitrary_residue_rational_mimic(
+    limit: int, target: list[int], deficit: int = 2
+) -> tuple[list[int], list[int]]:
+    """Universal bounded dyadic interpolation at depth log2(n)-deficit.
+
+    The target may be ANY integer sequence (its size is not even needed
+    for the carry bound). For interpreting its full binary sum, assume
+    |target[n]|<=n so that its own binary series converges.
+
+    For deficit>=2, n/4<=a[n]<=n for all n>=2.  The resulting complete
+    infinite series is rational 2/3, independently of the target.
+    """
+    if limit < 1 or deficit < 2 or len(target) <= limit:
+        raise ValueError("limit>=1, deficit>=2 and enough target data required")
+    a = [0] * (limit + 1)
+    b = [0] * (limit + 1)
+    for n in range(1, limit + 1):
+        M = 1 << max(0, n.bit_length()-1-deficit)
+        c = n // 2
+        q = c + 2*b[n-1]
+        b[n] = (q-target[n]) % M
+        a[n] = q-b[n]
+        if (a[n]-target[n]) % M != 0:
+            raise AssertionError("universal exact modulus target mismatch")
+        if n >= 2 and not (4*a[n] >= n and a[n] <= n):
+            raise AssertionError("universal linear bounds violated")
+    return a,b
+
 def finite_scaled_numerator(N: int, L: int, coefficients: list[int]) -> int:
     if N < 1 or L < 1 or len(coefficients) <= N + L:
         raise ValueError("invalid N, L, or source")
