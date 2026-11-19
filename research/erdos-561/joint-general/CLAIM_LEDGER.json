@@ -1,0 +1,196 @@
+{
+  "schema_version": "1.1.0",
+  "ledger_contract": "canonical_claim_ledger",
+  "ledger_id": "ERDOS561-JOINT-GENERAL-20261119",
+  "claims": [
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-STAR-IFF-001",
+      "short_name": "Complete coordinatewise characterisation of star-host Ramsey arrowing",
+      "claim_text": "A disjoint union of stars with sorted component sizes h_i arrows (F(n),F(m)) iff at least s+t-1 nontrivial stars exist and h_i dominates the corresponding antidiagonal max for every i. Consequently the minimum star-host simultaneous joint-residual edge count is exactly J=Σ_{k>=3}w_k for all lengths s,t.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Necessity by explicit adversarial split of the first i-1 red and j-1 blue star-components and constrained tail; sufficiency by monotone greedy lattice-path allocation. Complete independent exhaustive check of 7,954 single-pair and 5,917 simultaneous star-host/target tests with all red arm-count colourings.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md",
+        "research/erdos-561/joint-general/verify_star_host_iff.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/README.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-GENERAL-PEELING-002",
+      "short_name": "Unconditional two-hub iterative peeling bound for arbitrary simple graph hosts",
+      "claim_text": "For all s>=3,t>=4, if G simultaneously arrows both joint residual pairs then e(G)>=2*m1+sum(n_i)+(t-4)*n1. If s>=4 also e(G)>=2*n1+sum(m_j)+(s-4)*m1. No star-host assumption. Below the threshold a constructive red/blue colouring defeats one residual relation.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Complete direct paper proof: blue edge classes covered by at most t-2 vertices cannot contain t-1 disjoint blue stars; all such deletions force a red full forest and degree≥n1. If a non-v vertex has post-v degree≥m1, peel t-4 fresh red leading-star centres, requiring 2m1+(t-4)n1+sum n edges. Else all blue-dangerous vertices touch v, yielding a one-centre red avoiding-colouring. Test 1,162 explicit arbitrary graph/target cases with independently enumerated star embeddings.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md",
+        "research/erdos-561/joint-general/verify_iterated_peeling.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/exact_arbitrary_host.py",
+        "research/erdos-561/joint-general/README.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-EXACT-INF-FAMILY-003",
+      "short_name": "Exact general-host 3-versus-t family with unbounded switching surplus",
+      "claim_text": "For t>=4, red n=(a,1,1), blue m=(b,c,1,...,1), a>=c>=1,b>=a+c-1, the exact minimum edge count of a graph simultaneously arrowing the two residual pairs is J=2b+(t-3)a+2. The algebraic switching surplus can be arbitrarily large: t=4,a=2r,b=3r,c=r gives sigma=r.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Exact antidiagonal weights b,b,a repeated t-3,1,1; their sum equals the unbounded peeling theorem lower bound. The canonical disjoint-star host attains equality. The surplus identity is independent of any unproved size-Ramsey formula. Recomputed for 6,072 exact finite family examples and 199 growing-r cases.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md",
+        "research/erdos-561/joint-general/verify_unbounded_families.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/UNBOUNDED_FAMILY_PARAMETER_CERTIFICATE.json"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-OTHER-FAMILIES-004",
+      "short_name": "Exact all-spike and all-matching arbitrary-host joint residual families",
+      "claim_text": "For all s,t>=3, n=(a,1,...,1) and m=(a,1,...,1) with same leading size a>=1, the simultaneous joint residual minimum is (max(s,t)-1)*a+min(s,t)-1. The all-matching family follows as a special case. In addition, every simultaneous host satisfies elementary vertex-cover centre-selection bounds N+Σ first(t-2)m_j and M+Σ first(s-2)n_i.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Direct full-graph peeling for max(s,t)>=4; s=t=3 from direct centre-deletion lower bound; canonical star host upper. Independent exact arithmetic tests of 1,944 family instances.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/verify_unbounded_families.py"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-RIGID-3X4-006",
+      "short_name": "Two exact positive-switching 3-versus-4 original joint residual minima",
+      "claim_text": "For arbitrary finite simple graph hosts, the minimum edge count simultaneously arrowing the two residual relations for (n,m)=((3,2,1),(3,1,1,1)) is 13, and for ((3,1,1),(4,3,1,1)) is 14. In each case the separate residual antidiagonal sums are one smaller than the joint minimum.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Universal peeling theorem forces equality-edge hypothetical counterexample into a fixed residual star forest plus two nonadjacent saturated hubs. Two separately implemented COMPLETE finite attachment enumerators agree for the 12-edge instance (9,194 configs, 130 pass necessary constraints, one arrows B and fails A) and the 13-edge instance (31,667 configs, 9,225 with enough vertices, only one arrows A and fails B). Both exhaustive colouring verifiers use ordinary vertex-disjoint star embeddings. This is a complete bounded proof conditional only on the independently demonstrated unbounded peeling lower bound; no full general joint theorem claim.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/RIGID_12EDGE_FINITE_THEOREM.md",
+        "research/erdos-561/joint-general/RIGID_13EDGE_FINITE_THEOREM.md",
+        "research/erdos-561/joint-general/RIGID_12EDGE_CERTIFICATE.json",
+        "research/erdos-561/joint-general/RIGID_13EDGE_CERTIFICATE.json"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/search_rigid_12edge.py",
+        "research/erdos-561/joint-general/verify_rigid12_independent.py",
+        "research/erdos-561/joint-general/search_rigid_13edge.py",
+        "research/erdos-561/joint-general/verify_rigid13_independent.py"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-FINITE-CHECKS-005",
+      "short_name": "Complete bounded exact falsification and constructive verification",
+      "claim_text": "The package contains exactly 155,737 disjoint-star host/parameter comparisons over 420 parameter pairs, 9,250 simple one-vertex-identification nonstar host tests in a declared 12/13-edge benchmark, 7,954 plus 5,917 full-colouring iff tests, 1,162 verified constructive colourings, and independent finite parameter family checks; no counterexample found in the exact declared domains.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Two independent host-class verification algorithms, full exact 2^E colouring check crossverified against a structural fast matcher on 160 graph instances, explicit vertex-disjoint target embeddings, exact source logs and SHA256 evidence. NO global falsification/proof is asserted by finite testing.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/FALSIFICATION_SEARCH_EVIDENCE.json",
+        "research/erdos-561/joint-general/verify_star_host_iff.py",
+        "research/erdos-561/joint-general/verify_iterated_peeling.py",
+        "research/erdos-561/joint-general/verify_fast_vs_full.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RUN_MATRIX.md",
+        "research/erdos-561/joint-general/UNBOUNDED_FAMILY_PARAMETER_CERTIFICATE.json"
+      ]
+    }
+  ]
+}

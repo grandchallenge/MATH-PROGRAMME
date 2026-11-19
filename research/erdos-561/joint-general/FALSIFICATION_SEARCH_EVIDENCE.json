@@ -1,0 +1,92 @@
+{
+  "record_type": "ERDOS561_JOINT_RESIDUAL_BOUNDED_FALSIFICATION/1",
+  "status": "NO_COUNTEREXAMPLE_FOUND_IN_DECLARED_RESTRICTED_CLASSES",
+  "unrestricted_joint_residual_hypothesis_proved_by_search": false,
+  "star_host_parameter_pairs": 420,
+  "star_host_parameter_host_comparisons": 155737,
+  "star_host_max_budget_J": 18,
+  "star_host_edge_colourings": "ALL red arm counts for each tested star host",
+  "star_host_log_sha256": "57e51fa34eaed2eb995b866b83de036c12048dfdb8ffd4e5febc21b0086a8651",
+  "genuine_nonstar_benchmark": {
+    "red": [
+      2,
+      1,
+      1
+    ],
+    "blue": [
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    "joint_candidate_min_edges": 14,
+    "tested_candidate_edgecounts": [
+      12,
+      13
+    ],
+    "host_generation": "all nontrivial disjoint-star partitions of given edge count with >=5 components and a >=4 star, followed by one valid vertex identification; NOT every possible graph",
+    "simple_candidate_graph_tests": 9250,
+    "first_residual_arrowed_candidates": 286,
+    "both_residuals_arrowed_candidates": 0,
+    "all_residual_tests_exact": true
+  },
+  "nonstar_source_logs": [
+    {
+      "file": "five_fast_e12.log",
+      "last_line": "NO_REFUTATION_IN_CLASS {'simple_candidates': 3208, 'bases': 25, 'arrow_red_deleted': 11, 'fails_blue_deleted': 11} time 2.94",
+      "sha256": "f86dbad99b42c818a54fc29d3f49f82729cdfa61d14a4c3e16154296b49aa52b"
+    },
+    {
+      "file": "five_fast_0_4.log",
+      "last_line": "NO_REFUTATION_IN_CLASS {'simple_candidates': 461, 'bases': 4} time 0.7",
+      "sha256": "87cb497a66e7bad7f35bf251176fc7d6fb9f671341e997de8c8f4fee52d99383"
+    },
+    {
+      "file": "five_fast_4_41.log",
+      "last_line": "NO_REFUTATION_IN_CLASS {'simple_candidates': 5581, 'bases': 37, 'arrow_red_deleted': 275, 'fails_blue_deleted': 275} time 20.99",
+      "sha256": "0b98e1f05543e6e7454c963c761476052b42b2d92d368a53b9eecab7f9e0267d"
+    }
+  ],
+  "complete_rigid_exact_3x4_proved_cases": [
+    {
+      "red": [
+        3,
+        2,
+        1
+      ],
+      "blue": [
+        3,
+        1,
+        1,
+        1
+      ],
+      "joint_minimum": 13,
+      "candidate_edgecount": 12,
+      "complete_attachment_cases": 9194,
+      "independent_replay_checkers": 2,
+      "certificate_sha256": "7dc1c5a5794ca84d543786f4178841d4712b89cb412b1a5678acfe1cff86977c",
+      "full_proof": "RIGID_12EDGE_FINITE_THEOREM.md"
+    },
+    {
+      "red": [
+        3,
+        1,
+        1
+      ],
+      "blue": [
+        4,
+        3,
+        1,
+        1
+      ],
+      "joint_minimum": 14,
+      "candidate_edgecount": 13,
+      "complete_attachment_cases": 31667,
+      "independent_replay_checkers": 2,
+      "certificate_sha256": "dec9c0d84994721e2207cd380c6b3878bec0d76bc07e7274c2c258b0c8ea2a82",
+      "full_proof": "RIGID_13EDGE_FINITE_THEOREM.md"
+    }
+  ],
+  "interpretation": "These are finite negative searches; the benchmark is separately proved by the unbounded peeling theorem. They are not a global solution."
+}
