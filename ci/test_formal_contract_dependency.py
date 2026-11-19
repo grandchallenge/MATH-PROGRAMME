@@ -21,24 +21,25 @@ class ContractDependencyTests(unittest.TestCase):
 
     def test_current_audited_dependency_closure_disjoint(self):
         allowed, reason = guard.contract_only_safe(formal.ROOT, self.registry)
-        self.assertTrue(allowed, reason)
+        self.assertFalse(allowed)
+        self.assertIn("FULL_FORMAL_REPLAY",reason)
         paths = guard.audited_code_paths(formal.ROOT, self.registry)
         self.assertGreaterEqual(len(paths), 30)
         self.assertFalse(paths & guard.CONTRACT_FILES)
         self.assertIn('ci/formal_validation.py', paths)
         self.assertIn('campaigns/poincare_reconstruction/WP03_SURGERY_TOPOLOGY/05_ADVERSARIAL_HISTORIES/validate_histories.py', paths)
 
-    def test_known_contract_only_does_not_start_formal_lanes(self):
+    def test_known_contract_only_requires_full_formal_replay(self):
         for p in sorted(guard.CONTRACT_FILES):
             with self.subTest(p=p):
                 result = formal.classify_paths([p], self.registry)
-                self.assertEqual(result['lanes'], [])
-                self.assertEqual(result['reason'], 'nonformal_contract_only')
+                self.assertEqual(set(result['lanes']), set(formal.lane_map(self.registry)))
+                self.assertEqual(result['reason'], 'control_plane_full_fanout')
 
     def test_mixed_material_still_executes_required_lane(self):
         result = formal.classify_paths(['ci/validate_workflow_semantics.py',
             'fixtures/formal/LOG-GCD-001/lakefile.toml'], self.registry)
-        self.assertEqual(result['lanes'], ['log-gcd'])
+        self.assertEqual(set(result['lanes']), set(formal.lane_map(self.registry)))
 
     def test_new_contract_script_and_protected_control_full_fanout(self):
         all_lanes = set(formal.lane_map(self.registry))
@@ -79,7 +80,7 @@ class ContractDependencyTests(unittest.TestCase):
         with mock.patch.object(formal,'diff_paths',return_value=['ci/test_workflow_semantics.py']):
             result=formal.event_plan('merge_group',group,self.registry)
         self.assertEqual(result['mode'],'promotion')
-        self.assertEqual(result['lanes'],[])
+        self.assertEqual(set(result['lanes']), set(formal.lane_map(self.registry)))
         wf=(formal.ROOT/'.github/workflows/formal-validation.yml').read_text()
         self.assertIn('if: always()',wf)
         self.assertIn('needs: [impact, formal-lane]',wf)
@@ -99,12 +100,13 @@ class ContractDependencyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
             self.make_fixture(root)
-            self.assertTrue(guard.contract_only_safe(root,self.registry)[0])
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            guard.audited_code_paths(root,self.registry)
             target=root/'ci/validate_cmdg_nat_concordance.py'
             target.write_text(target.read_text()+'\nimport validate_workflow_semantics\n')
-            ok,reason=guard.contract_only_safe(root,self.registry)
-            self.assertFalse(ok)
-            self.assertIn('formal validator imports contract code',reason)
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            with self.assertRaisesRegex(guard.DependencyUnproved,'formal validator imports contract code'):
+                guard.audited_code_paths(root,self.registry)
 
     def test_dynamic_module_import_forces_full_fanout(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -121,7 +123,8 @@ class ContractDependencyTests(unittest.TestCase):
             unrelated=root/'campaigns/odd_zeta/unrelated/validate.py'
             unrelated.parent.mkdir(parents=True)
             unrelated.write_text('__import__("unexpected")\n')
-            self.assertTrue(guard.contract_only_safe(root,self.registry)[0])
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            self.assertNotIn('campaigns/odd_zeta/unrelated/validate.py', guard.audited_code_paths(root,self.registry))
 
     def test_guard_rejects_importlib_replay_target_drift(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -131,9 +134,9 @@ class ContractDependencyTests(unittest.TestCase):
             p.write_text(p.read_text().replace(
                 '"ci/validate_cmdg_condensed_cm4_p3.py"',
                 '"ci/validate_workflow_semantics.py"'))
-            ok,reason=guard.contract_only_safe(root,self.registry)
-            self.assertFalse(ok)
-            self.assertIn('dynamic validator source identity',reason)
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            with self.assertRaisesRegex(guard.DependencyUnproved,'dynamic validator source identity'):
+                guard.audited_code_paths(root,self.registry)
 
     def test_relative_import_is_unproved_and_fails_open(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -154,6 +157,8 @@ class ContractDependencyTests(unittest.TestCase):
                     xs.remove(['python3','ci/test_workflow_semantics.py'])
             p.write_text(json.dumps(j))
             self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            with self.assertRaisesRegex(guard.DependencyUnproved,'governed contract not executable'):
+                guard._check_policy_contracts(root)
 
     def test_unknown_python_process_spawn_remains_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -164,9 +169,49 @@ class ContractDependencyTests(unittest.TestCase):
             target=root/'ci/validate_cmdg_nat_concordance.py'
             target.write_text(target.read_text()+
                               '\nimport subprocess\nsubprocess.run(["true"])\n')
-            allowed,reason=guard.contract_only_safe(root,self.registry)
-            self.assertFalse(allowed)
-            self.assertIn('unreviewed subprocess dependency',reason)
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            with self.assertRaisesRegex(guard.DependencyUnproved,'unreviewed subprocess dependency'):
+                guard.audited_code_paths(root,self.registry)
+
+    def test_fragmented_dynamic_formal_dependency_never_exempts_contract(self):
+        # The exact adverse dependency shape that the old import audit missed.
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.make_fixture(root)
+            target=root/'ci/erdos_pv_0560_formal_replay.py'
+            target.write_text(target.read_text(encoding='utf-8') +
+                              '\nimport subprocess\n'
+                              '_FRAGMENT = "validate_workflow_" + "semantics.py"\n'
+                              '_CALL = subprocess.run(["python3", "ci/" + _FRAGMENT], check=True)\n',
+                              encoding='utf-8')
+            # The scanner still misses this form; safety must NOT rely on it.
+            scanned=guard.audited_code_paths(root,self.registry)
+            self.assertNotIn('ci/validate_workflow_semantics.py',scanned)
+            safe,reason=guard.contract_only_safe(root,self.registry)
+            self.assertFalse(safe)
+            self.assertIn('FULL_FORMAL_REPLAY',reason)
+            for path in guard.CONTRACT_FILES:
+                plan=formal.classify_paths([path],self.registry)
+                self.assertEqual(set(plan['lanes']),set(formal.lane_map(self.registry)))
+                self.assertEqual(plan['reason'],'control_plane_full_fanout')
+
+    def test_exemption_not_restored_by_missing_or_corrupt_inputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            self.make_fixture(root)
+            for relative in ['governance/policy_shard_registry.json',
+                             'ci/validate_cmdg_nat_concordance.py']:
+                with self.subTest(relative=relative):
+                    target=root/relative
+                    saved=target.read_bytes()
+                    target.unlink()
+                    try:
+                        safe,reason=guard.contract_only_safe(root,self.registry)
+                        self.assertFalse(safe)
+                        self.assertIn('FULL_FORMAL_REPLAY',reason)
+                    finally:
+                        target.parent.mkdir(parents=True,exist_ok=True)
+                        target.write_bytes(saved)
 
     def test_deleted_or_renamed_formal_source_is_not_invisible(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -209,9 +254,9 @@ class ContractDependencyTests(unittest.TestCase):
             self.make_fixture(root)
             p=root/guard._dynamic_pc_target(root)
             p.write_text(p.read_text()+'\n# unexpected drift\n')
-            ok,reason=guard.contract_only_safe(root,self.registry)
-            self.assertFalse(ok)
-            self.assertIn('blob mismatch',reason)
+            self.assertFalse(guard.contract_only_safe(root,self.registry)[0])
+            with self.assertRaisesRegex(guard.DependencyUnproved,'blob mismatch'):
+                guard._dynamic_pc_target(root)
 
 
 if __name__ == '__main__':
