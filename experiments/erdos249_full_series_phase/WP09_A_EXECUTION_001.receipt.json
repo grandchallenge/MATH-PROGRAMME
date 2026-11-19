@@ -1,0 +1,103 @@
+{
+  "record_type": "ERDOS249_S_WP09_A_EXECUTION_RECEIPT/1",
+  "date_utc": "2026-11-19",
+  "research_issue": "grandchallenge/MATH-PROGRAMME#3500",
+  "original_erdos_249": "OPEN",
+  "scientific_disposition": "BOUNDED_UNCONDITIONAL_WEAK_FIRST_HARMONIC_SAVING_ONLY",
+  "original_irrationality": "OPEN",
+  "MATHCERT": "NOT_SUBMITTED",
+  "external_novelty_priority": "NOT_CLAIMED",
+  "pinned_cook_source": {
+    "repository": "wcook04/plectis-erdos",
+    "git_commit": "3368d1e69467aec111eb3244843ad3542171ff96",
+    "path": "paper/249/erdos-249-binary-totient-series.tex",
+    "git_blob": "547ed9ed83500181a2e55047ce5df569b7cb49ac",
+    "first_harmonic_four_estimates": "The weighted prime/cofactor term <=14X/25 remains OPEN",
+    "global_required_saving": "Re sum exp(2pi i D_(h,N,L)/2^L) <= (9/10) X remains OPEN"
+  },
+  "exact_source_provenance_head": "5619154ece72c92708aede0c9982892d46d94269",
+  "source_sha256": {
+    "proof_manuscript": "8ac274ea34f9bbe2e4e98fdcd192d86149141c8ee01381dd22dc0bbf9e96c95e",
+    "exact_module": "3078fbcb733718b56674431388bf12c4a09adbc619cc4fba1ab97e8ae3206b2d",
+    "qualified_same_agent_review": "3e759c9e7032a55c7cfa4cc3b6460db0be9b532d3dbf027679dcf1ffb90e8d08",
+    "registered_extended_tests": "a2447628cdcf0f7e8dbb63378efb012d42744db57ab0f5c5bdae7bdf44418881"
+  },
+  "mathematical_ledger": {
+    "A": "For fixed squarefree M and coprime class a, sum over length X progression of phi(n)/n = (X/M)*C_M+O_M(log X), C_M=prod_(p not dividing M)(1-1/p^2)>=6/pi^2. Elementary Möbius divisor expansion plus CRT.",
+    "B": "For every fixed h, exists M_h coprime h with eta_M=prod_(p|M)(1-1/p)<=29/50. For all sufficiently large X, both signs of phi(n+h)-phi(n) have >=kappa X/M_h-O_M,h(log X) endpoints, with negative <=-X/100 and positive >=X/50; kappa=15/pi^2-3/2>0. Uses tau=3/5 progression mean.",
+    "B2": "For exact Cook D_(h,N,L) with 2^L>=16(2X+h+L+2), signed endpoints yield >=kappa X/M_h-O(log X) distinct starts with centered phase numerator >=X/300; if L is least admissible then Q<=96X for large X, so fractional gap >=1/28800.",
+    "C": "For all fixed h, least Cook-admissible L, all large X, Re sum_N exp(2pi iD_(h,N,L)/2^L) <= (1-c_h)X, c_h=kappa/(2M_h)*(1-cos(2pi/28800))>=4*kappa/(M_h*28800^2)>0. Explicit but microscopic, does NOT prove 10% saving.",
+    "D": "Shift cocycle exact: D_(h+k,N,L)=D_(h,N,L)+D_(k,N+h,L); E_(h,N,L)=prod_(r=0)^(h-1) E_(1,N+r,L). Higher-order phase correlations are necessary, not implied by one-phase marginal cancellation.",
+    "hostile_rational": "For any fixed h and M>=3 coprime h, a_n equals n on n mod M=+/-h, 0 on n mod M=0, floor(n/2) otherwise. Complete dyadic sum rational (periodic affine sequence), but exhibits large signed h contrasts and a strict harmonic saving at that selected h.",
+    "absent_claims": [
+      "Cook first weighted prime/cofactor bound 14X/25 unproved",
+      "Cook global 9X/10 saving for all fixed h unproved",
+      "Original Erdős #249 irrationality OPEN",
+      "No formal Lean or MATHCERT certification",
+      "No novelty claim regarding known totient shift inequality literature"
+    ]
+  },
+  "execution": {
+    "environment": "CHAD OS account only; NOT_INDEPENDENTLY_ATTESTED",
+    "exact_test_replay_capture_id": "67ee117c381a46849d3e25f9da54545c",
+    "tested_source_head": "5619154ece72c92708aede0c9982892d46d94269",
+    "total_registered_tests": 53,
+    "previously_existing_tests": 45,
+    "new_hostile_tests": 8,
+    "failed": 0,
+    "test_stdout_sha256": "86a37f2382fe3328c7f58edd795ba9b78b4b995c3a62cb0665b56316f26aa214",
+    "math_manuscript_source_gate": "PASS",
+    "math_qualified_review_source_gate": "PASS",
+    "source_gate_stdout_sha256": "d4e8fa67794c1c864f92783e049a32dc4a554a844b44e191677da8ccc910e1cc",
+    "diagnostics_sha256": "13f2a1a3befb06b4ad7db9fe5cb136d38b7d2ba00a04a2bd290cb32fe482a0cb",
+    "exact_finite_controls": [
+      {
+        "h": 1,
+        "X": 256,
+        "M": 2,
+        "negative": 113,
+        "positive": 112,
+        "local_pair_lower": 113,
+        "exact_strong_starts": 256
+      },
+      {
+        "h": 2,
+        "X": 1024,
+        "M": 15,
+        "negative": 34,
+        "positive": 34,
+        "local_pair_lower": 34,
+        "exact_strong_starts": 1024
+      },
+      {
+        "h": 3,
+        "X": 4096,
+        "M": 2,
+        "negative": 1807,
+        "positive": 1805,
+        "local_pair_lower": 1806,
+        "exact_strong_starts": 4095
+      },
+      {
+        "h": 6,
+        "X": 65536,
+        "M": 5005,
+        "negative": 6,
+        "positive": 6,
+        "local_pair_lower": 6,
+        "exact_strong_starts": 65532
+      }
+    ],
+    "finite_samples_not_proof_of_asymptotic": true
+  },
+  "reviewer": {
+    "separate_logical_scope": "GCL Adversary/Referee",
+    "same_agent_as_author": true,
+    "independently_authenticated_mathematician": false,
+    "lean_formalized": false,
+    "certification": "NOT_SUBMITTED",
+    "disposition": "ACCEPT_WITH_SCOPE"
+  },
+  "governance": "Normal protected checks, native merge queue with exact expectedHeadOid. On actual merge exact five-file Git blob readback and required merge_group checks, post bounded admission to issue #3500. Keep issue OPEN and Project #2 In Progress.",
+  "next_mathematical_objective": "Amplify actual shifted totient first-harmonic saving from c_h tiny to >=0.1 uniformly on arbitrarily large blocks for each fixed h; establish weighted prime/cofactor residual correlation or higher-order phase-product mixing in exact cocycle; confront hostile rational comparator."
+}
