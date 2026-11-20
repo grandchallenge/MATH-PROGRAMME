@@ -1085,3 +1085,132 @@ class ShiftedSecondMomentEnergyTests(unittest.TestCase):
             wp09b_energy(512,1,coefficients=[0]*10)
         with self.assertRaises(ValueError):
             wp09b_hostile(512,1,2)
+
+
+from experiments.erdos249_full_series_phase.joint_local_prime_law import (
+    primes_through as wp09c_primes,
+    profile as wp09c_profile,
+    exact_moment as wp09c_moment,
+    characteristic as wp09c_characteristic,
+    effective_error as wp09c_error,
+    infinite_model_truncation_bound as wp09c_tail,
+    actual_local_characteristic as wp09c_actual,
+)
+
+
+class JointLocalPrimeLawTests(unittest.TestCase):
+    """WP09-C: exact CRT oracle, effective local-law and promotion firewall."""
+
+    def test_independent_crt_shift_bundle_oracle(self):
+        terms = ((2, 1, 0), (-1, 2, 1), (1, 5, 3))
+        for y in (2, 3, 5, 7):
+            ps = wp09c_primes(y)
+            P, ds = wp09c_profile(y, terms)
+            self.assertEqual(P, math.prod(ps))
+            def oracle(n):
+                return math.prod(
+                    (Fraction(p - 1, p) for p in ps if n % p == 0),
+                    start=Fraction(1))
+            self.assertEqual(
+                ds, tuple(sum(
+                    (w * (oracle(a + u) - oracle(a + v))
+                     for w, u, v in terms), Fraction())
+                    for a in range(P)))
+            self.assertEqual(
+                wp09c_moment(y, terms, 2),
+                sum((d*d for d in ds), Fraction()) / P)
+
+    def test_finite_single_shift_moment_matches_wp09b_euler(self):
+        from experiments.erdos249_full_series_phase.shifted_moment_energy import (
+            finite_euler_moments,
+        )
+        for h in (1, 2, 3, 6):
+            for y in (3, 5, 7):
+                ps = wp09c_primes(y)
+                expected = finite_euler_moments(h, ps)[
+                    "V_squared_difference"]
+                self.assertEqual(
+                    wp09c_moment(y, ((1, h, 0),), 2), expected)
+
+    def test_single_shift_antipodal_crt_symmetry(self):
+        for h in (1, 2, 3, 5, 6):
+            P, ds = wp09c_profile(7, ((1, h, 0),))
+            for a in range(P):
+                self.assertEqual(ds[a], -ds[(-a-h) % P])
+            self.assertEqual(sum(ds, Fraction()), 0)
+
+    def test_nontrivial_joint_characteristic_finite_formula(self):
+        terms = ((1, 1, 0), (-2, 3, 1))
+        P, ds = wp09c_profile(7, terms)
+        from cmath import exp
+        from math import sin, pi
+        for rho in (32.0, 45.0, 128.0):
+            direct = 0j
+            for d in ds:
+                theta = pi * float(d) / rho
+                direct += exp(3j * theta) * (
+                    sin(theta)/theta if theta else 1)
+            self.assertLess(
+                abs(wp09c_characteristic(7, terms, rho)-direct/P),
+                2e-13)
+            self.assertLessEqual(abs(wp09c_characteristic(
+                7, terms, rho)), 1 + 1e-12)
+
+    def test_actual_totients_vs_effective_uniform_error_envelope(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            totients,
+        )
+        X = 4096
+        y = 7
+        for terms in (((1, 1, 0),), ((1, 2, 0), (-1, 3, 1))):
+            H = max(max(u, v) for _, u, v in terms)
+            phi = totients(2*X + H + 1)
+            Q = 64*X
+            actual = wp09c_actual(X, Q, terms, phi)
+            modeled = wp09c_characteristic(y, terms, Q/X)
+            bound = wp09c_error(X, Q, y, terms)
+            self.assertGreater(bound, 0)
+            self.assertLessEqual(abs(actual-modeled), bound + 1e-12)
+
+    def test_truncation_bound_and_real_shift_characteristic(self):
+        for h in (1, 2, 3):
+            terms = ((1, h, 0),)
+            c7 = wp09c_characteristic(7, terms, 32.0)
+            c11 = wp09c_characteristic(11, terms, 32.0)
+            self.assertLess(abs(c7-c11), wp09c_tail(7, terms, 32.0))
+            self.assertLess(abs(c11.imag), 1e-12)
+            self.assertGreater(1-c11.real, 0)
+
+    def test_does_not_replace_full_cook_phase(self):
+        from experiments.erdos249_full_series_phase.overlog_phase_separation import (
+            totients,
+        )
+        X, h = 64, 1
+        L = wp09a_depth(X, h)
+        Q = 1 << L
+        phi = totients(2*X + L + h + 3)
+        differences = []
+        for N in range(X, 2*X):
+            cook = wp09a_direct(N, h, L, phi)
+            local = phi[N+L+h+1] - phi[N+L+1]
+            differences.append((cook-local) % Q)
+        self.assertTrue(any(z != 0 for z in differences))
+
+    def test_malformed_period_and_triples_fail_closed(self):
+        terms = ((1, 1, 0),)
+        for bad in ((), ((0, 1, 0),), ((1, -1, 0),),
+                    ((True, 1, 0),), [(1, 1, 0)]):
+            with self.assertRaises(ValueError):
+                wp09c_profile(5, bad)
+        with self.assertRaises(ValueError):
+            wp09c_primes(1)
+        with self.assertRaises(ValueError):
+            wp09c_profile(11, terms, max_period=100)
+        with self.assertRaises(ValueError):
+            wp09c_moment(5, terms, -1)
+        with self.assertRaises(ValueError):
+            wp09c_characteristic(5, terms, 31.0)
+        with self.assertRaises(ValueError):
+            wp09c_actual(64, 2047, terms, [0] * 200)
+        with self.assertRaises(ValueError):
+            wp09c_error(64, 2048, 11, terms, max_period=100)
