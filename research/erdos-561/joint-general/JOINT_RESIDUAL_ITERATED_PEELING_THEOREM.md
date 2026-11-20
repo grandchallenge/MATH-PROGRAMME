@@ -191,9 +191,21 @@ $$
 
 The larger separate residual star-host threshold is only 14. Every hypothetical fourteen-edge joint host necessarily has two nonadjacent degree-four vertices and a six-edge `F(3,2,1)` remainder: this follows **directly** from the two Ramsey conditions, without assuming the general issue. Two independent exhaustive graph generators enumerate all **74,553** permitted old/neighbour attachment descriptions. Each is defeated by one of three exact avoiding-colouring certificates: a two-vertex deletion (72,512), a single red star (1,914), or a red matching (127). The Python certificate includes the exact edges of all 127 red matchings; the independently written C++ implementation additionally tests the complete 2^14 colour space in its residual cases. No fourteen-edge joint host exists; the canonical fifteen-edge star host attains the minimum. This is a valid parameter-specific result, **not a proof of the full joint-residual hypothesis**.
 
+## Theorem G — a direct infinite strict-switch family with three saturated stars
+
+The companion paper `RIGID_15EDGE_THEOREM.md` proves **without graph-host restrictions or any computer enumeration** that for each integer `a≥4`,
+
+$$
+J((a,2,1),(a,1,1,1))=3a+4.
+$$
+
+More generally for `a≥4` and `2≤b<a`, every graph arrowing the corresponding two residuals satisfies `e≥3a+b+2`, one edge stronger than the general two-hub peeling theorem. The key is that equality at `3a+b+1` would leave exactly three degree-a star centres with no shared neighbours: deleting any two vertices must retain an F(a,b,1), forcing the hubs to be disjoint from the smaller residual stars and each other. The resulting disjoint-star host F(a,a,a,b,1) has an explicit colouring with one red edge on each a-star; red is a matching and blue has maximum degree below a, defeating the first residual relation. For b=2, the antidiagonal star host F(a+1,a,a,2,1) meets the strengthened lower bound.
+
+At a=4,b=2, two independent exact finite checkers also confirm all **84,653** possible fifteen-edge configurations: 84,652 fail the necessary two-vertex-deletion condition, and the sole surviving graph fails the first Ramsey relation. The finite tests independently corroborate the unbounded proof rather than establishing it by extrapolation.
+
 ## What remains genuinely unproved
 
-The original proposed inequality for **arbitrary simple graph hosts and arbitrary positive star-size sequences** remains unresolved. Theorem B and D are necessary bounds; when their maximum is strictly **less** than `J`, they do not yet recover all antidiagonal switching surplus. Three positive-switching 3-versus-4 cases are now settled by complete, independently implemented finite equality-case classifications: `(3,2,1)` vs `(3,1,1,1)` at J=13, `(3,1,1)` vs `(4,3,1,1)` at J=14, and `(3,2,1)` vs `(4,1,1,1)` at J=15. The next small unresolved candidate is `(4,2,1)` vs `(4,1,1,1)`, with proposed J=16 and proven general lower bound 15. More general positive-switching patterns beyond these subtheorems still require proof or refutation. Our success in C1/C2 and the three finite exact cases must **not** be promoted to a proof for all `s,t≥3`.
+The original proposed inequality for **arbitrary simple graph hosts and arbitrary positive star-size sequences** remains unresolved. Theorem B and D are necessary bounds; when their maximum is strictly **less** than `J`, they do not yet recover all antidiagonal switching surplus. Three earlier positive-switching 3-versus-4 cases are settled by complete, independently implemented finite equality-case classifications: `(3,2,1)` vs `(3,1,1,1)` at J=13, `(3,1,1)` vs `(4,3,1,1)` at J=14, and `(3,2,1)` vs `(4,1,1,1)` at J=15. The `(4,2,1)` vs `(4,1,1,1)` case is now resolved at J=16 as part of the exact infinite family in Theorem G. The next small unresolved case is `(3,1,1)` vs `(5,2,2,1)`, with proposed J=16 and proved general lower bound 15. More general positive-switching patterns beyond these subtheorems still require proof or refutation. Our success in C1/C2 and the finite exact cases and new infinite family must **not** be promoted to a proof for all `s,t≥3`.
 
 The finite tests below try to falsify the conjecture, but their negative results cover only stated graph classes. The currently outstanding mathematical step is to control **overlapping star centres in arbitrary hosts** sufficiently to recover the missing difference between `J` and the proved universal bounds, not the previously resolved three-by-three low-degree case classification.
 

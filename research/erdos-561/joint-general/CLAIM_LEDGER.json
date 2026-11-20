@@ -225,6 +225,40 @@
         "research/erdos-561/joint-general/RIGID_14EDGE_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3578"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-EQUAL-LEAD-INFINITE-008",
+      "short_name": "Exact infinite 3×4 equal-leading joint residual values and strengthened lower bound",
+      "claim_text": "For every a>=4, every finite simple graph simultaneously arrowing residuals for red n=(a,2,1) and blue m=(a,1,1,1) has at least 3a+4 edges, and canonical host F(a+1,a,a,2,1) attains that bound. For every a>=4 and 2<=b<a, corresponding residuals for n=(a,b,1) and m=(a,1,1,1) require at least 3a+b+2 edges. General joint residual hypothesis remains OPEN/PARTIAL.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Direct all-host proof: A forces a high-degree vertex; unless another high-degree vertex survives deletion of the first, a one-centre red star avoids A. B forces F(a,b,1) after every 2-vertex deletion. At equality 3a+b+1, two nonadjacent degree-a hubs and the exact residual forest are forced; deletion of the third saturated centre and one hub shows both hubs avoid the small F(b,1); a>=4 ensures only three saturated centres; two-vertex deletion forbids any shared neighbour, leaving only three disjoint a-stars and F(b,1), which fails A via explicit red matching. Sharp antidiagonal host when b=2. Separate C++/Python full finite enumeration of all 84653 a4b2 attachments; no full Lean formalization claimed.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/RIGID_15EDGE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_rigid15_exact.cpp",
+        "research/erdos-561/joint-general/verify_rigid15_structural.py",
+        "research/erdos-561/joint-general/RIGID_15EDGE_STRUCTURAL_CERTIFICATE.json"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RIGID_15EDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
