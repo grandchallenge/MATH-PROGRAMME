@@ -21,9 +21,15 @@ trap 'rm -f "$exe" "$exe15"' EXIT
 c++ -std=c++17 -O3 -Wall -Wextra -Werror -o "$exe15" verify_rigid15_exact.cpp
 "$exe15" 0 386
 python3 verify_rigid15_structural.py
+python3 verify_profile_mismatch.py
+python3 verify_profile_mismatch_15edge.py
+exe_profile="$(mktemp /tmp/gcl-erdos561-profile-XXXXXX)"
+trap 'rm -f "$exe" "$exe15" "$exe_profile"' EXIT
+c++ -std=c++17 -O3 -Wall -Wextra -Werror -o "$exe_profile" verify_profile_mismatch_cpp.cpp
+"$exe_profile"
 python3 make_falsification_evidence.py
 out="$(mktemp /tmp/gcl-erdos561-joint-star-XXXXXX)"
-trap 'rm -f "$out" "$exe" "$exe15"' EXIT
+trap 'rm -f "$out" "$exe" "$exe15" "$exe_profile"' EXIT
 python3 star_host_falsifier.py --level 3 --max-e 18 --max-hosts 4000 > "$out"
 python3 - "$out" <<'PY'
 import json,sys
