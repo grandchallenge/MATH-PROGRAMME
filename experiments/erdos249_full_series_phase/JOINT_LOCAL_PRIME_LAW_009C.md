@@ -190,7 +190,7 @@ $$
 
 Thus the whole one-step *local* complex characteristic, not merely its variance, has a fully characterized arithmetic limit. The integral $\int_1^2t^2dt=7/3$ explains the coefficient in (12). This is a refinement of the arithmetic input to WP09-B, **not a solution of its transfer loss**.
 
-For example the independently calculable finite-prime model at $h=1$, $y=11$, $\rho=32$ gives approximately $1-\operatorname{Re}C_y=0.00986529$. The displayed decimal is illustrative and **not** an independently certified bound on the true limit; (6) supplies the rigorous truncation envelope.
+For example the independently calculable finite-prime model at $h=1$, $y=11$, $\rho=32$ gives approximately $1-\mathrm{Re}C_y=0.00986529$. The displayed decimal is illustrative and **not** an independently certified bound on the true limit; (6) supplies the rigorous truncation envelope.
 
 ## 4. Why this cannot be promoted to Cook's needed conclusion
 
@@ -205,7 +205,7 @@ $$
 
 Theorem A gives the joint local distribution of any *fixed* finite collection of the right-hand-side terms at comparable scale $2^L\asymp X$, and can support a fixed-order cocycle analysis.
 
-It does **not** give equidistribution of the full left-side Cook phase, because the original phase contains $L\asymp\log X$ overlapping coefficients weighted by $2^{-j}$, and is not controlled to constant angular accuracy by the *elementary error estimate (9)* with a fixed finite set of primes: that estimate gives only an $O(X/y)$ bound. Making **this bound** $o(1)$ would require $y\gg X$, for which the period $P_y$ is far beyond the available $X$-block and the periodic comparison is ineffective. This does not rule out a smaller actual error from additional arithmetic cancellation.
+It does **not** give equidistribution of the full left-side Cook phase, because the original phase contains $L\asymp\log X$ overlapping coefficients weighted by $2^{-j}$, and is not controlled to constant angular accuracy by the *elementary error estimate (9)* with a fixed finite set of primes: that estimate gives only an $O(X/y)$ bound. Making **this bound** $o(1)$ would require $y\gg X$, for which the period $P_y$ is far beyond the available $X$ block and the periodic comparison is ineffective. This does not rule out a smaller actual error from additional arithmetic cancellation.
 
 This is a precise **two-scale obstruction to applying the present theorem**, not a proof that every possible arithmetic method must fail. It shows that the next positive producer must couple many scales or control Cook's source-locked weighted prime/cofactor correlation directly. A constant-saving on local differences, even on every fixed finite set, does not establish the needed one-tenth saving for $E_{h,N,L}$ or the good-base $603X/1000$ condition.
 
