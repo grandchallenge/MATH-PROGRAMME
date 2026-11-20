@@ -43,11 +43,11 @@ theorem chainAugmentation_quasiIso
     (hZero : (ShortComplex.mk (K.d 1 0) ε hε).Exact)
     [Epi ε] :
     QuasiIso (chainAugmentation K X ε hε) := by
-  rw [HomologicalComplex.quasiIso_iff]
+  rw [quasiIso_iff]
   intro n
   cases n with
   | zero =>
-    rw [HomologicalComplex.quasiIsoAt_iff]
+    rw [quasiIsoAt_iff]
     let φ := (shortComplexFunctor C (ComplexShape.down ℕ) 0).map
       (chainAugmentation K X ε hε)
     have hgK : (K.sc 0).g = 0 := by
@@ -71,7 +71,7 @@ theorem chainAugmentation_quasiIso
       HomologicalComplex.ExactAt.of_isZero
         (HomologicalComplex.isZero_single_obj_X
           (ComplexShape.down ℕ) 0 X (n + 1) (by omega))
-    exact (HomologicalComplex.quasiIsoAt_iff_exactAt'
+    exact (quasiIsoAt_iff_exactAt'
       (chainAugmentation K X ε hε) (n + 1) hL).2 (hPositive n)
 
 /-- The canonical morphism in the localized category of chain complexes. -/
