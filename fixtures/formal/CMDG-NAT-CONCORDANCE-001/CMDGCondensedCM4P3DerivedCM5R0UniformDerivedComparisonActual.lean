@@ -12,6 +12,9 @@ It is NOT the independent solidification unit F(T) -> G(T).
 noncomputable section
 universe u
 open CategoryTheory Limits HomologicalComplex
+-- The localized category of nonnegative chains requires an explicit
+-- chosen localization. Do not postulate it as a new axiom.
+attribute [local instance] MorphismProperty.HasLocalization.standard
 
 namespace CMDG.CondensedCM5R0
 
