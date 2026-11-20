@@ -17,6 +17,7 @@
 | Restricted 311 versus 5221 16-edge proof | python3 verify_rigid15_311_5221.py | Two 864-allocation upper checks PASS; two 648-allocation lower checks with nine R2-avoiding allocations; full arbitrary-host lower proof analytical |
 | Unrestricted-host residual-profile mismatch, arbitrary s≥3,t≥4 | `python3 verify_profile_mismatch.py` | 2,416 independent equal-total, unequal-profile parameter cases and 814 sharp two-parameter test points, 396 additional original-case parameters; no violation of the proved paper bound |
 | Complete 15-edge 311 versus 5221 explicit red-star colouring verification | `python3 verify_profile_mismatch_15edge.py` and `c++ -std=c++17 -O3 -Wall -Wextra -Werror -o /tmp/gcl561_profile verify_profile_mismatch_cpp.cpp && /tmp/gcl561_profile` | Two independent full enumeration procedures agree on 84,630 equality attachment descriptions, 84,108 non-star blue graphs and 522 wrong blue star profiles; every host has the displayed avoiding red-star colouring. This corroborates a case already solved in prior claim 009. |
+| Complementary unique-max rigidity proof of existing 311/b221 family | python3 verify_unique_max_311_b221_family.py | Complete arm-allocation scans for b=4..14; injective embedding cross-check b=4..6; explicit b=3 failure and b=2 unique-max obstruction; no new claim ID |
 | Claim ledger schema | Validate `CLAIM_LEDGER.json` with `schemas/claim_ledger.schema.json` | Full problem OPEN; proved subclaims UNDER_REVIEW; bounded exact checks CHECKED |
 | Integrity | `sha256sum -c SHA256SUMS.txt` | Exact files all match |
 

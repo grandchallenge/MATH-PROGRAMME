@@ -98,6 +98,41 @@ claims=[
                           'research/erdos-561/joint-general/verify_rigid15_311_5221.py'],
    'related_files': ['research/erdos-561/joint-general/RIGID_16EDGE_311_5221_EVIDENCE.json',
                      'research/erdos-561/joint-general/RUN_MATRIX.md']}),
+ dict(common,**{'knowledge_graph_refs': ['MATH-PROGRAMME#3490',
+                            'MATH-PROGRAMME#3573',
+                            'MATH-PROGRAMME#3523',
+                            'MATH-PROGRAMME#3578'],
+   'claim_id': 'ERDOS561-JOINT-PROFILE-MISMATCH-INFINITE-010',
+   'short_name': 'Unrestricted graph-host residual-profile mismatch and sharp two-parameter family',
+   'claim_text': 'For all s>=3,t>=4 and positive nonincreasing n,m with b=m1 and N=sum(n)=sum(m2,...,mt), '
+                 'if F(n) and F(m2,...,mt) are nonisomorphic positive-edge star forests, then every '
+                 'finite simple graph simultaneously arrowing both residual pairs has at least 2b+N+1 '
+                 'edges. Sharp family: n=(a,1,1), m=(b,a-1,2,1), a>=3,b>=2a-2, has exact joint minimum '
+                 'J=2b+a+3 over arbitrary simple hosts. The single n311,m5221 instance was already '
+                 'independently established in earlier claim 009 and is not counted as a new discovery.',
+   'claim_class': 'PROVED_IN_PACKAGE',
+   'status': 'UNDER_REVIEW',
+   'certainty': 'PROVED_NOT_FORMALIZED',
+   'support_type': 'HUMAN_PROOF',
+   'support_summary': 'Self-contained unbounded proof: first Ramsey property forces a maximum degree >=b '
+                      'vertex v plus a vertex u of degree >=b after removing v, otherwise explicit '
+                      'red-star colouring defeats it. Second Ramsey condition forces G-{u,v} to contain '
+                      'full F(n) with N edges, yielding e>=2b+N. At equality both hubs have degree b, are '
+                      'nonadjacent, and the residual is exactly F(n). Colouring every edge at u red '
+                      'forces all b+N remaining edges of G-u to form precisely F(m) because its edge '
+                      'count equals M=b+N. Deleting its other degree-b hub v yields F(m_tail), '
+                      'contradicting profile mismatch. Sharp canonical antidiagonal host has weights '
+                      '(b,b,a,2,1). Complete 84630 candidate 15-edge profiles independently checked in '
+                      'Python and C++ by explicit red-hub colouring, plus independent exact integer '
+                      'profile checks. No Lean kernel proof, no global conjecture proof.',
+   'source_or_artifact': ['research/erdos-561/joint-general/JOINT_PROFILE_MISMATCH_THEOREM.md',
+                          'research/erdos-561/joint-general/verify_profile_mismatch.py',
+                          'research/erdos-561/joint-general/PROFILE_MISMATCH_PARAMETER_CERTIFICATE.json'],
+   'related_files': ['research/erdos-561/joint-general/verify_profile_mismatch_15edge.py',
+                     'research/erdos-561/joint-general/verify_profile_mismatch_cpp.cpp',
+                     'research/erdos-561/joint-general/RIGID_15EDGE_MISMATCH_CERTIFICATE.json',
+                     'research/erdos-561/joint-general/PROFILE_MISMATCH_EVIDENCE.json',
+                     'research/erdos-561/joint-general/RUN_MATRIX.md']}),
 ]
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
