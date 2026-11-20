@@ -32,7 +32,7 @@ negative *source* shift morphism in the genuine derived category. -/
 noncomputable def extPositiveToNegativeSourceHomEquiv
     (X Y : Ambient) (q : ℕ) :
     Abelian.Ext X Y (q + 1) ≃
-      ((shiftFunctor (DerivedCategory Ambient) (-(((q + 1 : ℕ) : ℤ))).obj
+      ((shiftFunctor (DerivedCategory Ambient) (-(((q + 1 : ℕ) : ℤ)))).obj
         ((DerivedCategory.singleFunctor Ambient 0).obj X)) ⟶
         ((DerivedCategory.singleFunctor Ambient 0).obj Y)) := by
   let A := (DerivedCategory.singleFunctor Ambient 0).obj X
