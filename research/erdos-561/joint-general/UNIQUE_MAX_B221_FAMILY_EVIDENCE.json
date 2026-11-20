@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "record_type": "ERDOS561_B221_RIGIDITY_COMPANION_EVIDENCE/1",
+  "disposition": "COMPANION_PAPER_PROOF_UNDER_REVIEW__NO_NEW_CLAIM",
+  "parent_protected_main_sha": "018471dd8ffb60a88ce17e2f0966c8f931f17919",
+  "research_scope": "all finite simple graph hosts for original n=(3,1,1), m=(b,2,2,1), b>=4",
+  "theorem": {
+    "parameter": "b integer >=4",
+    "exact_joint_residual": "2*b+6",
+    "canonical_star_host": "(b,b,3,2,1)",
+    "R1_red": [
+      1,
+      1
+    ],
+    "R1_blue": "(b,2,2,1)",
+    "R2_red": [
+      3,
+      1,
+      1
+    ],
+    "R2_blue": [
+      2,
+      2,
+      1
+    ]
+  },
+  "arbitrary_host_lower_proof": "previously protected unique-maximum saturated rigidity; equality host F(b,b,2,2,1) fails R2 with red (2,2,2,2,1), blue (b-2,b-2,0,0,0)",
+  "upper_proof": "uniform two-case blue-active star-component argument, not finite extrapolation",
+  "bounded_replay": {
+    "b_min": 4,
+    "b_max": 14,
+    "results": [
+      {
+        "b": 4,
+        "upper_allocations": 600,
+        "forced_lower_allocations": 450,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 5,
+        "upper_allocations": 864,
+        "forced_lower_allocations": 648,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 6,
+        "upper_allocations": 1176,
+        "forced_lower_allocations": 882,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 7,
+        "upper_allocations": 1536,
+        "forced_lower_allocations": 1152,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 8,
+        "upper_allocations": 1944,
+        "forced_lower_allocations": 1458,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 9,
+        "upper_allocations": 2400,
+        "forced_lower_allocations": 1800,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 10,
+        "upper_allocations": 2904,
+        "forced_lower_allocations": 2178,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 11,
+        "upper_allocations": 3456,
+        "forced_lower_allocations": 2592,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 12,
+        "upper_allocations": 4056,
+        "forced_lower_allocations": 3042,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 13,
+        "upper_allocations": 4704,
+        "forced_lower_allocations": 3528,
+        "forced_lower_R2_avoiders": 9
+      },
+      {
+        "b": 14,
+        "upper_allocations": 5400,
+        "forced_lower_allocations": 4050,
+        "forced_lower_R2_avoiders": 9
+      }
+    ],
+    "independently_cross_checked_embedding_all_allocations_b": [
+      4,
+      5,
+      6
+    ],
+    "source_command": "python3 verify_unique_max_311_b221_family.py",
+    "execution_capture": "b1446925833f492cb5221e1b2a0ed9ae"
+  },
+  "boundary": {
+    "b3": {
+      "unique_maximum_still_holds": true,
+      "proved_lower": 12,
+      "canonical_star_host_upper": 14,
+      "exact_open": true,
+      "naive_12edge_host": [
+        3,
+        3,
+        3,
+        2,
+        1
+      ],
+      "R2_avoiding_red": [
+        2,
+        2,
+        2,
+        1,
+        0
+      ],
+      "R2_avoiding_blue": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "b2": {
+      "unique_maximum_hypothesis": false,
+      "maximum_centres": 3
+    }
+  },
+  "source_sha256": {
+    "UNIQUE_MAX_311_B221_INFINITE_THEOREM.md": "d2e46b6f390ce7259a10cdb74df63d509ada053e9646ab951a18c6484690ea1a",
+    "verify_unique_max_311_b221_family.py": "b5b0179bbe684d62768613deb7cb6ab7708fae3d16971ad6fce206bec75b8baa"
+  },
+  "execution_origin": "CHAD_OS_ACCOUNT_ONLY_NOT_INDEPENDENTLY_ATTESTED",
+  "certification": "NO_LEAN_OR_MATHCERT; unbounded theorem under mathematical review",
+  "unrestricted_erdos_561": "OPEN",
+  "supporting_existing_claim_id": "ERDOS561-JOINT-PROFILE-MISMATCH-INFINITE-010",
+  "prior_existing_source": "JOINT_PROFILE_MISMATCH_THEOREM.md",
+  "scientific_novelty_boundary": "General result already protected in preceding concurrent PR #3587; companion provides separate rigidity mechanism, boundary and corroboration; no new theorem claim ID."
+}
