@@ -205,7 +205,7 @@ $$
 
 Theorem A gives the joint local distribution of any *fixed* finite collection of the right-hand-side terms at comparable scale $2^L\asymp X$, and can support a fixed-order cocycle analysis.
 
-It does **not** give equidistribution of the full left-side Cook phase, because the original phase contains $L\asymp\log X$ overlapping coefficients weighted by $2^{-j}$, and cannot be approximated to constant angular accuracy by a fixed finite set of primes through (9): a direct replacement incurs an error of order $X/y$. To make that basic error $o(1)$ would require $y\gg X$, for which the period $P_y$ is far beyond the available $X$-block and the periodic comparison is ineffective.
+It does **not** give equidistribution of the full left-side Cook phase, because the original phase contains $L\asymp\log X$ overlapping coefficients weighted by $2^{-j}$, and is not controlled to constant angular accuracy by the *elementary error estimate (9)* with a fixed finite set of primes: that estimate gives only an $O(X/y)$ bound. Making **this bound** $o(1)$ would require $y\gg X$, for which the period $P_y$ is far beyond the available $X$-block and the periodic comparison is ineffective. This does not rule out a smaller actual error from additional arithmetic cancellation.
 
 This is a precise **two-scale obstruction to applying the present theorem**, not a proof that every possible arithmetic method must fail. It shows that the next positive producer must couple many scales or control Cook's source-locked weighted prime/cofactor correlation directly. A constant-saving on local differences, even on every fixed finite set, does not establish the needed one-tenth saving for $E_{h,N,L}$ or the good-base $603X/1000$ condition.
 
