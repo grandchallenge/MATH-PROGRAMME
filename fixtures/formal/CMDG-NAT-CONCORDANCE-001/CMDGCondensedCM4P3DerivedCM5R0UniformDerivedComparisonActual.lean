@@ -43,10 +43,14 @@ noncomputable def cechDerivedMap (T : Profinite.{u}) :
 /-- Every strictly positive term of the genuine Cech chain is exact. -/
 theorem cechChain_exactAt_positive (T : Profinite.{u}) (n : ℕ) :
     (cechChain T).ExactAt (n + 1) := by
-  change (ShortComplex.mk
-    (cechD T (n + 1)) (cechD T n)
-    (uniformFreeRelationBoundary_sq_zero (P T) T (p T) n)).Exact
-  exact (uniformStoneanFreeCechFullAugmentedExact T).1 n
+  apply ((cechChain T).exactAt_iff'
+    (n + 2) (n + 1) n (by simp) (by simp)).2
+  have hSucc : n + 2 = (n + 1) + 1 := by omega
+  rw [hSucc]
+  simpa [cechChain, cechD, uniformFreeRelationChainComplex,
+    HomologicalComplex.sc', HomologicalComplex.shortComplexFunctor',
+    ChainComplex.of_d] using
+    (uniformStoneanFreeCechFullAugmentedExact T).1 n
 
 /-- The actual degree-zero augmentation is exact in the real category. -/
 theorem cechChain_augmentation_exact (T : Profinite.{u}) :
@@ -60,13 +64,12 @@ theorem cechChain_augmentation_exact (T : Profinite.{u}) :
 /-- The actual Cech augmentation is a quasi-isomorphism in all degrees. -/
 theorem cechDerivedMap_quasiIso (T : Profinite.{u}) :
     QuasiIso (cechDerivedMap T) := by
-  letI : Epi (cechAug T) :=
-    (uniformStoneanFreeCechFullAugmentedExact T).2.2
   exact CMDG.DerivedComparison.chainAugmentation_quasiIso
-    (cechChain T) ((Condensed.profiniteFree Coeff).obj T)
-    (cechAug T) (cechChain_aug_zero T)
+    (K := cechChain T) (X := ((Condensed.profiniteFree Coeff).obj T))
+    (ε := cechAug T) (hε := cechChain_aug_zero T)
     (cechChain_exactAt_positive T)
     (cechChain_augmentation_exact T)
+    (uniformStoneanFreeCechFullAugmentedExact T).2.2
 
 /-- An actual isomorphism in the localization of the
 nonnegative chain-complex category at quasi-isomorphisms. -/
@@ -80,3 +83,4 @@ theorem cechDerivedMap_localized_isIso (T : Profinite.{u}) :
 #print axioms cechDerivedMap_localized_isIso
 #print axioms cechDerivedMap_quasiIso
 end CMDG.CondensedCM5R0
+

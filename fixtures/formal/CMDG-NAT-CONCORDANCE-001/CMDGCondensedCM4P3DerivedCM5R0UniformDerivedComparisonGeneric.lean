@@ -41,31 +41,30 @@ object it resolves. This is a map-of-complexes theorem, not an Ext statement. -/
 theorem chainAugmentation_quasiIso
     (hPositive : ∀ n : ℕ, K.ExactAt (n + 1))
     (hZero : (ShortComplex.mk (K.d 1 0) ε hε).Exact)
-    [Epi ε] :
+    (hEpi : Epi ε) :
     QuasiIso (chainAugmentation K X ε hε) := by
   rw [quasiIso_iff]
   intro n
   cases n with
   | zero =>
-    rw [quasiIsoAt_iff]
-    let φ := (shortComplexFunctor C (ComplexShape.down ℕ) 0).map
+    rw [quasiIsoAt_iff' (chainAugmentation K X ε hε)
+      1 0 0 (by simp) (by simp)]
+    let φ := (shortComplexFunctor' C (ComplexShape.down ℕ) 1 0 0).map
       (chainAugmentation K X ε hε)
-    have hgK : (K.sc 0).g = 0 := by
+    have hgK : (K.sc' 1 0 0).g = 0 := by
       change K.d 0 0 = 0
       exact K.shape 0 0 (by simp)
-    have hfL :
-        (((ChainComplex.single₀ C).obj X).sc 0).f = 0 := by
-      simp [ChainComplex.single₀, HomologicalComplex.single]
-    have hgL :
-        (((ChainComplex.single₀ C).obj X).sc 0).g = 0 := by
-      simp [ChainComplex.single₀, HomologicalComplex.single]
+    have hfL : (((ChainComplex.single₀ C).obj X).sc' 1 0 0).f = 0 := by
+      rfl
+    have hgL : (((ChainComplex.single₀ C).obj X).sc' 1 0 0).g = 0 := by
+      rfl
     change ShortComplex.QuasiIso φ
     apply (ShortComplex.quasiIso_iff_of_zeros' φ hgK hfL hgL).2
     constructor
-    · simpa [φ, chainAugmentation, HomologicalComplex.sc,
-        shortComplexFunctor, ChainComplex.single₀] using hZero
-    · change Epi ε
-      infer_instance
+    · simpa [φ, HomologicalComplex.shortComplexFunctor'] using hZero
+    · change Epi ((chainAugmentation K X ε hε).f 0)
+      rw [chainAugmentation_f_zero]
+      exact hEpi
   | succ n =>
     have hL : ((ChainComplex.single₀ C).obj X).ExactAt (n + 1) :=
       HomologicalComplex.ExactAt.of_isZero
@@ -84,13 +83,14 @@ noncomputable def localizedDerivedComparison :
 theorem localizedDerivedComparison_isIso
     (hPositive : ∀ n : ℕ, K.ExactAt (n + 1))
     (hZero : (ShortComplex.mk (K.d 1 0) ε hε).Exact)
-    [Epi ε] :
+    (hEpi : Epi ε) :
     IsIso (localizedDerivedComparison K X ε hε) := by
   apply (HomologicalComplexUpToQuasiIso.isIso_Q_map_iff_mem_quasiIso
     (chainAugmentation K X ε hε)).2
   exact (HomologicalComplex.mem_quasiIso_iff
     (chainAugmentation K X ε hε)).2
-    (chainAugmentation_quasiIso K X ε hε hPositive hZero)
+    (chainAugmentation_quasiIso K X ε hε hPositive hZero hEpi)
 
 #print axioms localizedDerivedComparison_isIso
 end CMDG.DerivedComparison
+

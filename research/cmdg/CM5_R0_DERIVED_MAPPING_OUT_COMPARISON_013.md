@@ -1,6 +1,6 @@
 # CMDG CM5 R0 — actual derived comparison morphisms and mapping-out equivalence
 
-**Status:** `MATHEMATICAL_DERIVATION_COMPLETE__NEW_LEAN_COMPILER_PENDING__MATHCERT_PENDING`. A substantive derived-equivalence claim must not be promoted to a completed Lean certificate until its exact new source compiles and is read back. The standing upstream exact augmented resolution and all-positive Ext-acyclicity certificate are in PR #3584, exact head `94e65cd5c8c6ee75262080113c430352cb381b2b`; its formal-validation run `44697822181` succeeded. Protected admission and MATHCERT are separate.
+**Status:** `LOCAL_LEAN_VERIFIED__EXACT_HEAD_CI_REPLAY_PENDING__MATHCERT_PENDING`. A substantive derived-equivalence claim must not be promoted to a completed Lean certificate until its exact new source compiles and is read back. The standing upstream exact augmented resolution and all-positive Ext-acyclicity certificate are in PR #3584, exact head `94e65cd5c8c6ee75262080113c430352cb381b2b`; its formal-validation run `44697822181` succeeded. Protected admission and MATHCERT are separate.
 
 ## Objects and actual maps
 
@@ -27,7 +27,7 @@ Q(\epsilon_T^{\mathrm{chain}}):
 Q(C_*(T))\xrightarrow{\ \cong\ } Q(F_T[0]).
 $$
 
-This is a genuine map and actual derived-localized equivalence, not only an equality of Ext groups. The Lean theorem targets are `chainAugmentation_quasiIso`, `localizedDerivedComparison_isIso`, `cechDerivedMap_quasiIso`, and `cechDerivedMap_localized_isIso`. The last is an isomorphism in the localization of NONNEGATIVE chain complexes; transfer to the usual unrestricted `D(Ambient)` via the appropriate canonical functor is a distinct API bridge, not silently presumed.
+This is a genuine map and actual derived-localized equivalence, not only an equality of Ext groups. The locally compiled Lean theorems are `chainAugmentation_quasiIso`, `localizedDerivedComparison_isIso`, `cechDerivedMap_quasiIso`, and `cechDerivedMap_localized_isIso`. The last is an isomorphism in the localization of NONNEGATIVE chain complexes; transfer to the usual unrestricted `D(Ambient)` via the appropriate canonical functor is a distinct API bridge, not silently presumed.
 
 ## Mapping-out comparison: explicit roof and why it is an equivalence
 
@@ -65,4 +65,5 @@ Its inverse is represented by the reverse roof. Independence of the chosen injec
 4. No genuine projectivity is assumed for `C_n` when `n>0`; the prior proof gives Ext-acyclicity RELATIVE to `G_S` instead.
 5. Source-semantic independent MATHCERT review, protected merge, and unrestricted derived solidification remain separate gates.
 
-**Operational:** Source-locked Lean modules `CMDGCondensedCM4P3DerivedCM5R0UniformDerivedComparisonGeneric.lean` and `CMDGCondensedCM4P3DerivedCM5R0UniformDerivedComparisonActual.lean` are proposed for the `cmdg-cm4-p3` formal lane; the routing classifies new formal files in that fixture tree. Their exact-head compilation and standard-axiom readback must be recorded before any `LEAN_VERIFIED` status. Treat compiler failures as repair and replay targets, not as proof of this theorem.
+**Operational:** Source-locked Lean modules `CMDGCondensedCM4P3DerivedCM5R0UniformDerivedComparisonGeneric.lean` and `CMDGCondensedCM4P3DerivedCM5R0UniformDerivedComparisonActual.lean` are pinned to the `cmdg-cm4-p3` formal lane; the routing classifies new formal files in that fixture tree. The local compiler was successful; exact-GitHub-head replay is independently required before protected admission. Treat compiler failures as repair and replay targets, not as proof of this theorem.
+
