@@ -1,0 +1,60 @@
+{
+  "record_type": "ERDOS561_JOINT_EQUAL_LEAD_INFINITE_RESEARCH_EVIDENCE/1",
+  "material_date": "2026-11-20",
+  "canonical_repository": "grandchallenge/MATH-PROGRAMME",
+  "canonical_path": "research/erdos-561/joint-general/",
+  "protected_main_before_this_tranche": "d5f5621343f713c10756c10f45a5cf6ce608c64d",
+  "predecessor_merged_pr": 3580,
+  "mathematical_claim": {
+    "theorem": "for all a>=4 J((a,2,1),(a,1,1,1))=3a+4",
+    "stronger_lower_bound": "for all a>=4, 2<=b<a, every simultaneous joint-residual host for (a,b,1),(a,1,1,1) has e>=3a+b+2",
+    "graph_scope": "ALL_FINITE_SIMPLE_HOST_GRAPHS",
+    "proof": "RIGID_15EDGE_THEOREM.md",
+    "paper_status": "UNDER_REVIEW",
+    "formally_kernel_checked": false
+  },
+  "bounded_independent_evidence": {
+    "specialization_a": 4,
+    "specialization_b": 2,
+    "total_15_edge_attachment_configurations": 84653,
+    "complete_cpp_enumeration_pass": true,
+    "complete_independent_python_structural_enumeration_pass": true,
+    "cpp_two_vertex_B_necessary_failures": 84652,
+    "surviving_B_necessary_graphs": 1,
+    "survivor": "F(4,4,4,2,1)",
+    "survivor_arrows_B_via_full_coloring_check": true,
+    "survivor_fails_A_via_explicit_matching_red_coloring": true,
+    "simultaneous_joint_15_edge_counterexamples": 0,
+    "python_deletion_classification": {
+      "generated": 84653,
+      "unique_two_vertex_deletion_survivor": 1,
+      "B_fails_by_deleting_base_centre_plus_common_fresh_neighbour": 4,
+      "B_fails_by_deleting_opposite_hub_plus_shared_base_leaf": 623,
+      "B_fails_by_deleting_hub_plus_base_centre": 84025
+    }
+  },
+  "full_integrated_replay_execution_capture": "6c06ae3201864357951e626199124fd4",
+  "independent_execution_identity_attested": false,
+  "execution_origin": "CHAD_LOCAL_OS_ONLY",
+  "full_integrated_replay_stdout_sha256": "3c9551409acd1709ae526192b803ff3116b79cf39ebf01cbf8766e98a957af9b",
+  "prior_historical_execution_receipts_unchanged_sha256": {
+    "EXECUTION_EVIDENCE.json": "0c136f36be994e12736c5de3a5d6abc903c2ec3912e5b45bffcc9addf427a25e",
+    "RIGID_14EDGE_EVIDENCE.json": "91c5f8c0e954ce619d14bfb1ba0062240c73d38d0f73a2c902d9b6985778f3d4"
+  },
+  "new_source_sha256": {
+    "RIGID_15EDGE_THEOREM.md": "7666a6a859029beff6afa8aa37dc369695ae09eef4425db1091b6a847cb83965",
+    "verify_rigid15_exact.cpp": "1ab95551e91512cfa91d947b1247fc7e8a5a9d9ab15ec574b702e45a83cb06db",
+    "verify_rigid15_structural.py": "a1d610d37cf1da9276e3952ff28c6629e1e5e784a7c558d37e466c596fc2f841",
+    "RIGID_15EDGE_STRUCTURAL_CERTIFICATE.json": "5a058637a242fb7b918e80abf8c5b94266438079195e166f157838dde8ee8f00"
+  },
+  "updated_existing_sha256": {
+    "CLAIM_LEDGER.json": "f230d4aaf8b2367187b2575918d1d6d5d93e99065bddbf372d6784cfed230fd5",
+    "JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md": "4d93e2665a63e8073d24e61ffa309490849daba6ee434fb22b93cead20f2988e",
+    "README.md": "4d2452ff3e0381781cea80f7cb755eef10d0c6bb1ffc8982279a2cd2dd80336b",
+    "RUN_MATRIX.md": "003cc6a2c0ac506ddc09801099a7f80be4b54fc745fb78dbb3dcdc2923935202",
+    "run_all.sh": "8c92ab93f80d3feae267300ae48b519161e5230fa8de1d7f0e38ec6d6229253c"
+  },
+  "unrestricted_joint_residual_status": "OPEN_PARTIAL",
+  "unrestricted_erdos_561_status": "OPEN",
+  "no_extra_download_artifact": true
+}
