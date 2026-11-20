@@ -10,9 +10,14 @@ python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py
 python3 search_rigid_13edge.py 0 163
 python3 verify_rigid13_independent.py
+exe="$(mktemp /tmp/gcl-erdos561-rigid14-XXXXXX)"
+trap 'rm -f "$exe"' EXIT
+c++ -std=c++17 -O3 -Wall -Wextra -Werror -o "$exe" verify_rigid14_exact.cpp
+"$exe" 0 256
+python3 verify_rigid14_independent.py 0 256
 python3 make_falsification_evidence.py
 out="$(mktemp /tmp/gcl-erdos561-joint-star-XXXXXX)"
-trap 'rm -f "$out"' EXIT
+trap 'rm -f "$out" "$exe"' EXIT
 python3 star_host_falsifier.py --level 3 --max-e 18 --max-hosts 4000 > "$out"
 python3 - "$out" <<'PY'
 import json,sys

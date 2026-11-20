@@ -191,6 +191,40 @@
         "research/erdos-561/joint-general/RUN_MATRIX.md",
         "research/erdos-561/joint-general/UNBOUNDED_FAMILY_PARAMETER_CERTIFICATE.json"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3578"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-RIGID-3X4-007",
+      "short_name": "Exact 15-edge nonuniform joint residual case with general-host finite classification",
+      "claim_text": "For all finite simple graphs G, simultaneous arrowing of (red F(2,1), blue F(4,1,1,1)) and (red F(3,2,1), blue F(1,1,1)) requires at least 15 edges; the canonical star host F(5,4,3,2,1) with 15 edges attains it. This establishes J((3,2,1),(4,1,1,1))=15, not the general conjecture.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Self-contained two-centre argument forces any 14-edge hypothetical host to be F(3,2,1) plus two nonadjacent degree-four hubs. All 74,553 remaining simple attachments independently enumerated by full C++ and Python implementations; 72,512 fail B via two-vertex deletion; 1,914 fail A by red star; 127 fail A by explicit red matching. C++ also independently exhausts all 2^14 two-colourings for residual hard cases. Canonical 15-edge upper host verified by antidiagonal greedy Ramsey proof. Mathematical source review pending; full s,t>=3 question remains OPEN/PARTIAL.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/RIGID_14EDGE_FINITE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_rigid14_exact.cpp",
+        "research/erdos-561/joint-general/verify_rigid14_independent.py",
+        "research/erdos-561/joint-general/RIGID_14EDGE_CERTIFICATE.json"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RIGID_14EDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
