@@ -10,6 +10,94 @@ claims=[
  dict(common,claim_id='ERDOS561-JOINT-EXACT-INF-FAMILY-003',short_name='Exact general-host 3-versus-t family with unbounded switching surplus',claim_text='For t>=4, red n=(a,1,1), blue m=(b,c,1,...,1), a>=c>=1,b>=a+c-1, the exact minimum edge count of a graph simultaneously arrowing the two residual pairs is J=2b+(t-3)a+2. The algebraic switching surplus can be arbitrarily large: t=4,a=2r,b=3r,c=r gives sigma=r.',claim_class='PROVED_IN_PACKAGE',status='UNDER_REVIEW',certainty='PROVED_NOT_FORMALIZED',support_type='HUMAN_PROOF',support_summary='Exact antidiagonal weights b,b,a repeated t-3,1,1; their sum equals the unbounded peeling theorem lower bound. The canonical disjoint-star host attains equality. The surplus identity is independent of any unproved size-Ramsey formula. Recomputed for 6,072 exact finite family examples and 199 growing-r cases.',source_or_artifact=[root+'JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md',root+'verify_unbounded_families.py'],related_files=[root+'UNBOUNDED_FAMILY_PARAMETER_CERTIFICATE.json']),
  dict(common,claim_id='ERDOS561-JOINT-OTHER-FAMILIES-004',short_name='Exact all-spike and all-matching arbitrary-host joint residual families',claim_text='For all s,t>=3, n=(a,1,...,1) and m=(a,1,...,1) with same leading size a>=1, the simultaneous joint residual minimum is (max(s,t)-1)*a+min(s,t)-1. The all-matching family follows as a special case. In addition, every simultaneous host satisfies elementary vertex-cover centre-selection bounds N+Σ first(t-2)m_j and M+Σ first(s-2)n_i.',claim_class='PROVED_IN_PACKAGE',status='UNDER_REVIEW',certainty='PROVED_NOT_FORMALIZED',support_type='HUMAN_PROOF',support_summary='Direct full-graph peeling for max(s,t)>=4; s=t=3 from direct centre-deletion lower bound; canonical star host upper. Independent exact arithmetic tests of 1,944 family instances.',source_or_artifact=[root+'JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md'],related_files=[root+'verify_unbounded_families.py']),
  dict(common,claim_id='ERDOS561-JOINT-RIGID-3X4-006',short_name='Two exact positive-switching 3-versus-4 original joint residual minima',claim_text='For arbitrary finite simple graph hosts, the minimum edge count simultaneously arrowing the two residual relations for (n,m)=((3,2,1),(3,1,1,1)) is 13, and for ((3,1,1),(4,3,1,1)) is 14. In each case the separate residual antidiagonal sums are one smaller than the joint minimum.',claim_class='PROVED_IN_PACKAGE',status='UNDER_REVIEW',certainty='PROVED_NOT_FORMALIZED',support_type='EXACT_RATIONAL_COMPUTATION',support_summary='Universal peeling theorem forces equality-edge hypothetical counterexample into a fixed residual star forest plus two nonadjacent saturated hubs. Two separately implemented COMPLETE finite attachment enumerators agree for the 12-edge instance (9,194 configs, 130 pass necessary constraints, one arrows B and fails A) and the 13-edge instance (31,667 configs, 9,225 with enough vertices, only one arrows A and fails B). Both exhaustive colouring verifiers use ordinary vertex-disjoint star embeddings. This is a complete bounded proof conditional only on the independently demonstrated unbounded peeling lower bound; no full general joint theorem claim.',source_or_artifact=[root+'RIGID_12EDGE_FINITE_THEOREM.md',root+'RIGID_13EDGE_FINITE_THEOREM.md',root+'RIGID_12EDGE_CERTIFICATE.json',root+'RIGID_13EDGE_CERTIFICATE.json'],related_files=[root+'search_rigid_12edge.py',root+'verify_rigid12_independent.py',root+'search_rigid_13edge.py',root+'verify_rigid13_independent.py']),
- dict(common,claim_id='ERDOS561-JOINT-FINITE-CHECKS-005',short_name='Complete bounded exact falsification and constructive verification',claim_text='The package contains exactly 155,737 disjoint-star host/parameter comparisons over 420 parameter pairs, 9,250 simple one-vertex-identification nonstar host tests in a declared 12/13-edge benchmark, 7,954 plus 5,917 full-colouring iff tests, 1,162 verified constructive colourings, and independent finite parameter family checks; no counterexample found in the exact declared domains.',claim_class='PROVED_IN_PACKAGE',status='CHECKED',certainty='CERTIFIED',support_type='EXACT_RATIONAL_COMPUTATION',support_summary='Two independent host-class verification algorithms, full exact 2^E colouring check crossverified against a structural fast matcher on 160 graph instances, explicit vertex-disjoint target embeddings, exact source logs and SHA256 evidence. NO global falsification/proof is asserted by finite testing.',source_or_artifact=[root+'FALSIFICATION_SEARCH_EVIDENCE.json',root+'verify_star_host_iff.py',root+'verify_iterated_peeling.py',root+'verify_fast_vs_full.py'],related_files=[root+'RUN_MATRIX.md',root+'UNBOUNDED_FAMILY_PARAMETER_CERTIFICATE.json'])]
+ dict(common,claim_id='ERDOS561-JOINT-FINITE-CHECKS-005',short_name='Complete bounded exact falsification and constructive verification',claim_text='The package contains exactly 155,737 disjoint-star host/parameter comparisons over 420 parameter pairs, 9,250 simple one-vertex-identification nonstar host tests in a declared 12/13-edge benchmark, 7,954 plus 5,917 full-colouring iff tests, 1,162 verified constructive colourings, and independent finite parameter family checks; no counterexample found in the exact declared domains.',claim_class='PROVED_IN_PACKAGE',status='CHECKED',certainty='CERTIFIED',support_type='EXACT_RATIONAL_COMPUTATION',support_summary='Two independent host-class verification algorithms, full exact 2^E colouring check crossverified against a structural fast matcher on 160 graph instances, explicit vertex-disjoint target embeddings, exact source logs and SHA256 evidence. NO global falsification/proof is asserted by finite testing.',source_or_artifact=[root+'FALSIFICATION_SEARCH_EVIDENCE.json',root+'verify_star_host_iff.py',root+'verify_iterated_peeling.py',root+'verify_fast_vs_full.py'],related_files=[root+'RUN_MATRIX.md',root+'UNBOUNDED_FAMILY_PARAMETER_CERTIFICATE.json']),
+ dict(common,**{'knowledge_graph_refs': ['MATH-PROGRAMME#3490',
+                            'MATH-PROGRAMME#3573',
+                            'MATH-PROGRAMME#3523',
+                            'MATH-PROGRAMME#3578'],
+   'claim_id': 'ERDOS561-JOINT-RIGID-3X4-007',
+   'short_name': 'Exact 15-edge nonuniform joint residual case with general-host finite '
+                 'classification',
+   'claim_text': 'For all finite simple graphs G, simultaneous arrowing of (red F(2,1), blue '
+                 'F(4,1,1,1)) and (red F(3,2,1), blue F(1,1,1)) requires at least 15 edges; the '
+                 'canonical star host F(5,4,3,2,1) with 15 edges attains it. This establishes '
+                 'J((3,2,1),(4,1,1,1))=15, not the general conjecture.',
+   'claim_class': 'PROVED_IN_PACKAGE',
+   'status': 'UNDER_REVIEW',
+   'certainty': 'PROVED_NOT_FORMALIZED',
+   'support_type': 'EXACT_RATIONAL_COMPUTATION',
+   'support_summary': 'Self-contained two-centre argument forces any 14-edge hypothetical host to be '
+                      'F(3,2,1) plus two nonadjacent degree-four hubs. All 74,553 remaining simple '
+                      'attachments independently enumerated by full C++ and Python implementations; '
+                      '72,512 fail B via two-vertex deletion; 1,914 fail A by red star; 127 fail A '
+                      'by explicit red matching. C++ also independently exhausts all 2^14 '
+                      'two-colourings for residual hard cases. Canonical 15-edge upper host verified '
+                      'by antidiagonal greedy Ramsey proof. Mathematical source review pending; full '
+                      's,t>=3 question remains OPEN/PARTIAL.',
+   'source_or_artifact': ['research/erdos-561/joint-general/RIGID_14EDGE_FINITE_THEOREM.md',
+                          'research/erdos-561/joint-general/verify_rigid14_exact.cpp',
+                          'research/erdos-561/joint-general/verify_rigid14_independent.py',
+                          'research/erdos-561/joint-general/RIGID_14EDGE_CERTIFICATE.json'],
+   'related_files': ['research/erdos-561/joint-general/RIGID_14EDGE_EVIDENCE.json',
+                     'research/erdos-561/joint-general/RUN_MATRIX.md']}),
+ dict(common,**{'knowledge_graph_refs': ['MATH-PROGRAMME#3490',
+                            'MATH-PROGRAMME#3573',
+                            'MATH-PROGRAMME#3523',
+                            'MATH-PROGRAMME#3578'],
+   'claim_id': 'ERDOS561-JOINT-EQUAL-LEAD-INFINITE-008',
+   'short_name': 'Exact infinite 3×4 equal-leading joint residual values and strengthened lower '
+                 'bound',
+   'claim_text': 'For every a>=4, every finite simple graph simultaneously arrowing residuals for '
+                 'red n=(a,2,1) and blue m=(a,1,1,1) has at least 3a+4 edges, and canonical host '
+                 'F(a+1,a,a,2,1) attains that bound. For every a>=4 and 2<=b<a, corresponding '
+                 'residuals for n=(a,b,1) and m=(a,1,1,1) require at least 3a+b+2 edges. General '
+                 'joint residual hypothesis remains OPEN/PARTIAL.',
+   'claim_class': 'PROVED_IN_PACKAGE',
+   'status': 'UNDER_REVIEW',
+   'certainty': 'PROVED_NOT_FORMALIZED',
+   'support_type': 'HUMAN_PROOF',
+   'support_summary': 'Direct all-host proof: A forces a high-degree vertex; unless another '
+                      'high-degree vertex survives deletion of the first, a one-centre red star '
+                      'avoids A. B forces F(a,b,1) after every 2-vertex deletion. At equality '
+                      '3a+b+1, two nonadjacent degree-a hubs and the exact residual forest are '
+                      'forced; deletion of the third saturated centre and one hub shows both hubs '
+                      'avoid the small F(b,1); a>=4 ensures only three saturated centres; two-vertex '
+                      'deletion forbids any shared neighbour, leaving only three disjoint a-stars '
+                      'and F(b,1), which fails A via explicit red matching. Sharp antidiagonal host '
+                      'when b=2. Separate C++/Python full finite enumeration of all 84653 a4b2 '
+                      'attachments; no full Lean formalization claimed.',
+   'source_or_artifact': ['research/erdos-561/joint-general/RIGID_15EDGE_THEOREM.md',
+                          'research/erdos-561/joint-general/verify_rigid15_exact.cpp',
+                          'research/erdos-561/joint-general/verify_rigid15_structural.py',
+                          'research/erdos-561/joint-general/RIGID_15EDGE_STRUCTURAL_CERTIFICATE.json'],
+   'related_files': ['research/erdos-561/joint-general/RIGID_15EDGE_EVIDENCE.json',
+                     'research/erdos-561/joint-general/RUN_MATRIX.md']}),
+ dict(common,**{'knowledge_graph_refs': ['MATH-PROGRAMME#3490',
+                            'MATH-PROGRAMME#3573',
+                            'MATH-PROGRAMME#3523',
+                            'MATH-PROGRAMME#3578'],
+   'claim_id': 'ERDOS561-JOINT-RIGID-3X4-009',
+   'short_name': 'Exact arbitrary-host 16-edge joint residual for 311 versus 5221',
+   'claim_text': 'Every finite simple graph simultaneously arrowing red F(1,1) versus blue '
+                 'F(5,2,2,1), and red F(3,1,1) versus blue F(2,2,1), has at least 16 edges. '
+                 'Canonical disjoint-star host F(5,5,3,2,1) arrows both. This proves '
+                 'J((3,1,1),(5,2,2,1))=16; the unrestricted joint residual hypothesis remains OPEN.',
+   'claim_class': 'PROVED_IN_PACKAGE',
+   'status': 'UNDER_REVIEW',
+   'certainty': 'PROVED_NOT_FORMALIZED',
+   'support_type': 'HUMAN_PROOF',
+   'support_summary': 'A self-contained rigidity lemma shows any (2K2,H)-arrowing G at '
+                      'h+maxdegree(H) edges, for unique maximal star centre degree >=3, is precisely '
+                      'H disjoint union K1,d. In the candidate 15-edge case H=F(5,2,2,1), that '
+                      'forced graph fails the second residual via explicit colouring; a 16-edge '
+                      'disjoint-star host satisfies both by an elementary two-case argument. Full '
+                      'finite upper corroboration: 864 arm allocations per residual; lower forced '
+                      'host has 648 allocations and nine avoiding the second relation. No '
+                      'unrestricted-host enumeration replaces the lower proof.',
+   'source_or_artifact': ['research/erdos-561/joint-general/RIGID_15EDGE_311_5221_THEOREM.md',
+                          'research/erdos-561/joint-general/verify_rigid15_311_5221.py'],
+   'related_files': ['research/erdos-561/joint-general/RIGID_16EDGE_311_5221_EVIDENCE.json',
+                     'research/erdos-561/joint-general/RUN_MATRIX.md']}),
+]
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))

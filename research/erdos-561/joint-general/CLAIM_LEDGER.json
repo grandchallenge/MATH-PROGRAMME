@@ -259,6 +259,38 @@
         "research/erdos-561/joint-general/RIGID_15EDGE_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3578"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-RIGID-3X4-009",
+      "short_name": "Exact arbitrary-host 16-edge joint residual for 311 versus 5221",
+      "claim_text": "Every finite simple graph simultaneously arrowing red F(1,1) versus blue F(5,2,2,1), and red F(3,1,1) versus blue F(2,2,1), has at least 16 edges. Canonical disjoint-star host F(5,5,3,2,1) arrows both. This proves J((3,1,1),(5,2,2,1))=16; the unrestricted joint residual hypothesis remains OPEN.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "A self-contained rigidity lemma shows any (2K2,H)-arrowing G at h+maxdegree(H) edges, for unique maximal star centre degree >=3, is precisely H disjoint union K1,d. In the candidate 15-edge case H=F(5,2,2,1), that forced graph fails the second residual via explicit colouring; a 16-edge disjoint-star host satisfies both by an elementary two-case argument. Full finite upper corroboration: 864 arm allocations per residual; lower forced host has 648 allocations and nine avoiding the second relation. No unrestricted-host enumeration replaces the lower proof.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/RIGID_15EDGE_311_5221_THEOREM.md",
+        "research/erdos-561/joint-general/verify_rigid15_311_5221.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RIGID_16EDGE_311_5221_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
