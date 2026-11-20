@@ -17,6 +17,9 @@ identify an independent solidification unit as an isomorphism.
 noncomputable section
 universe u v
 open CategoryTheory Limits HomologicalComplex
+-- The localized category of nonnegative chains requires an explicit
+-- chosen localization. Do not postulate it as a new axiom.
+attribute [local instance] MorphismProperty.HasLocalization.standard
 
 namespace CMDG.DerivedComparison
 
