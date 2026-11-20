@@ -56,3 +56,14 @@ for b in range(5,25):
 print("PLATEAU_TRANSFER_VERIFIED",{"J15_cases":len(case15),
      "J13_cases":2,"a_samples":21,"b_samples":20,
      "new_infinite_families":2})
+
+cert=json.loads(Path(__file__).with_name("MONOTONE_PLATEAU_CERTIFICATE.json").read_text())
+assert cert["record_type"]=="ERDOS561_MONOTONE_PLATEAU_CLOSURE/1"
+assert len(cert["fixed_J15"])==5 and len(cert["fixed_J13"])==2
+assert cert["bounded_grid"]["added_inherited_cases"]==9
+assert len(cert["inherited_cases"])==9
+for record in cert["inherited_cases"]:
+    n0,m0=tuple(record["parent_n"]),tuple(record["parent_m"])
+    n,m=tuple(record["n"]),tuple(record["m"])
+    lift(n0,m0,n,m,record["J"])
+print("MONOTONE_PLATEAU_SOURCE_CERTIFICATE_PASS",len(cert["inherited_cases"]))
