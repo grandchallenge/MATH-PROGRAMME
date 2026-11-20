@@ -327,6 +327,42 @@
         "research/erdos-561/joint-general/PROFILE_MISMATCH_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+      "assumptions": [
+        "all target stars have positive integer edge sizes",
+        "all host graphs finite and simple",
+        "ordinary non-induced and vertex-disjoint forest subgraphs",
+        "s,t>=3 unless a more general star-host theorem states otherwise"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3573",
+        "MATH-PROGRAMME#3523",
+        "MATH-PROGRAMME#3578"
+      ],
+      "promotion_condition": "Do not change full unrestricted joint-residual hypothesis from OPEN/PARTIAL; the constructive full-graph peeling theorem and exact infinite families are paper proofs UNDER_REVIEW, not Lean full graph formalizations. Source-only admission may proceed through ordinary protected CI/queue under delegated GCL policy; public MATHCERT must not follow by inference.",
+      "claim_id": "ERDOS561-JOINT-MONOTONE-PLATEAU-011",
+      "short_name": "Monotone antidiagonal plateau closure and inherited exact multistar residual cases",
+      "claim_text": "For arbitrary finite simple host graphs, coordinatewise larger red/blue star targets inherit a proved exact joint-residual value H=J whenever their antidiagonal sum J is unchanged. This closes n=(3,2,1),m=(4,c,d,1) for 1<=d<=min(c,2),1<=c<=3 at J=15; n=(3,2,1),m=(3,2,1,1) at J=13; and infinite families n=(a,2,1),m=(a,2,1,1),a>=4, at J=3a+4 and n=(3,1,1),m=(b,3,2,1),b>=5, at J=2b+6. The parent mathematical proofs remain UNDER_REVIEW and the unrestricted joint residual hypothesis remains OPEN/PARTIAL.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Unconditional monotonicity transfer lemma: every larger star forest contains its coordinatewise smaller version, so simultaneous Ramsey arrowing of stronger residual pairs implies arrowing of weaker pairs. As J is coordinatewise nondecreasing and the canonical star-host construction gives H<=J, equality of J along a dominance plateau lifts any established parent H=J. Parent results are the admitted 13-edge, 15-edge rigid cases and two sharp infinite families. Direct explicit antidiagonal algebra proves the listed tail weights; independent source script crosschecks W using two indexings and enumerates nine inherited cases in a declared bounded grid. No new graph enumeration or unrestricted-conjecture proof claimed.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/MONOTONE_PLATEAU_CLOSURE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_joint_monotone_plateaus.py",
+        "research/erdos-561/joint-general/MONOTONE_PLATEAU_CERTIFICATE.json"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RIGID_12EDGE_FINITE_THEOREM.md",
+        "research/erdos-561/joint-general/RIGID_14EDGE_FINITE_THEOREM.md",
+        "research/erdos-561/joint-general/RIGID_15EDGE_THEOREM.md",
+        "research/erdos-561/joint-general/JOINT_PROFILE_MISMATCH_THEOREM.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
