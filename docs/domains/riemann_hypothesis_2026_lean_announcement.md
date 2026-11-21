@@ -103,7 +103,7 @@ Andrew Sutherland's [MIT verification dossier](https://math.mit.edu/~drew/grh/),
 | `lean4lean` | All compiled modules accepted | Separate formal checker; five modules required increased checking limits |
 | Official `lake comparator` and separate Lean export replay | **Still running** at edition time | No completion claim may be inferred from the other successful checks |
 
-This is exceptionally substantial **external proof-check evidence**. It is not correct to say that nobody has checked the submission. Equally, GCL must not turn an external verification report into a GCL-native MATHCERT receipt.
+This is exceptionally substantial **external proof-check evidence**.
 
 The MIT record identifies the 14-part assembled original source as 239,275,554 bytes, SHA-256:
 
