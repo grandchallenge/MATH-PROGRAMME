@@ -722,17 +722,47 @@
       "promotion_condition": "New unrestricted-host restricted theorem UNDER_REVIEW. Finite standard-library verifier CHECKED. Full all-profiles joint-residual conjecture and original Erdős #561 remain OPEN/PARTIAL; not MATHCERT.",
       "claim_id": "ERDOS561-SATURATED-MATCHING-CHECK-023",
       "short_name": "Matching-star saturated-prefix exact parameter and complete upper-host arm colouring tests",
-      "claim_text": "Two independent antidiagonal indexing conventions and exact matching lower calculations agree across 14203 general parameter profiles, with 3385 satisfying the saturated-maximal-prefix exact family and 4651 general lower-bound equalities. Seven fixed canonical star hosts satisfy both residual arrowing properties for every one of 116386 complete red-arm allocations. Finite checks do not establish all-host theorem by extrapolation.",
+      "claim_text": "Two independent antidiagonal indexing conventions and exact matching lower calculations agree across 14203 general parameter profiles, with 3385 satisfying the saturated-maximal-prefix exact family and 4651 general lower-bound equalities. Seven fixed canonical star hosts satisfy both residual arrowing properties for every one of 116386 complete red-arm allocations. Finite checks do not establish all-host theorem by extrapolation. The same finite checker also exhaustively verifies the original upper host for three saturated matching examples across 14742 full red-arm allocations, without extrapolating finite cases to unbounded arbitrary hosts.",
       "claim_class": "PROVED_IN_PACKAGE",
       "status": "CHECKED",
       "certainty": "CERTIFIED",
       "support_type": "EXACT_RATIONAL_COMPUTATION",
-      "support_summary": "Standard-library deterministic parameter enumeration over 3<=s<=7, max(3,s-1)<=t<=8 and positive stars<=6; independent zero-/one-index original and residual antidiagonal arrays plus exact lower arithmetic; seven canonical star forests exhaust every full-arm red/blue allocation. Exact source and evidence JSON under joint-general.",
+      "support_summary": "Standard-library deterministic parameter enumeration over 3<=s<=7, max(3,s-1)<=t<=8 and positive stars<=6; independent zero-/one-index original and residual antidiagonal arrays plus exact lower arithmetic; seven canonical star forests exhaust every full-arm red/blue allocation. Exact source and evidence JSON under joint-general. Three explicit original canonical star hosts are also exhaustively checked for all 14742 arm allocations.",
       "source_or_artifact": [
         "research/erdos-561/joint-general/verify_saturated_matching_joint.py"
       ],
       "related_files": [
         "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / matching versus arbitrary star forests joint residual",
+      "assumptions": [
+        "s,t>=3,s-1<=t",
+        "red original n=(1 repeated s), blue original m1>=...>=mt positive",
+        "ordinary non-induced, vertex-disjoint star-forest embeddings; arbitrary finite simple graph hosts"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3617"
+      ],
+      "promotion_condition": "General matching-leading transfer is valid under individually proved sharp residual. Claim 024 and its saturated matching original corollary remain paper-level UNDER_REVIEW; not independent MATHCERT certification. Original unrestricted Erdős #561 stays OPEN/PARTIAL.",
+      "claim_id": "ERDOS561-MATCHING-ORIGINAL-TRANSFER-024",
+      "short_name": "General matching-leading sharp-residual-to-original transfer and exact saturated matching original family",
+      "claim_text": "For any nonincreasing positive star lists n,m with lengths s,t>=3, if the individual sharp joint residual J=W-(n1+m1-1) has been proved and either n1=1 or m1=1, then the unrestricted-host ORIGINAL size Ramsey value equals W. Any hypothetically smaller original-arrowing G would have every vertex deletion satisfying both residuals, hence degree Delta(G)<=n1+m1-2; if n1=1 all-blue forces Delta(G)>=m1, contradiction, and if m1=1 all-red forces Delta(G)>=n1, contradiction. Applying to claim 022 yields exact original rhat(F(1^s),F(b^(s-1),c1,...,cL))=(2s-2)b+sum ci for all s>=3, t=s-1+L>=3 and arbitrary b>=c1>=...>=cL>=1. This is a theorem conditional on individually proved residual bounds, not on the unresolved general residual conjecture.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Any original host G gives both vertex-deletion residual arrows in G-v, since extending any avoiding residual colouring with red or blue v-star yields an original avoiding colouring; if an original target copy used v, discarding its one v-containing component leaves all other s-1 or t-1 components coordinatewise dominating the respective deleted-largest profile. Sharp J therefore forces d(v)<=W-1-J=n1+m1-2 in a hypothetical E<W host. For a matching on either side, all-monochromatic colouring forces a larger leading star than that degree bound, impossible. Combining with claim 022 exact J from elementary matching edge-charge yields the stated original formula. Finite original canonical hosts are checked as corroboration, not the unrestricted-host lower proof.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_THEOREM.md",
+        "research/erdos-561/joint-general/verify_saturated_matching_joint.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_EVIDENCE.json",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
     }
