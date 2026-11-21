@@ -17,6 +17,8 @@
 
 **GCL research-surface authority:** **LIVE** — [RH-001 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163); **AUTHORITY** — [protected RH-WP00 audit](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md), [RH-R080 protected state](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/rh_001_authority_transition_r080.json), and the canonical protected campaign registry; **EXPOSITION** — this page. This page does not change any of those authority records.
 
+**Computational companion:** [Run the Wolfram Language exhibits](../assets/wolfram/rh_pedagogical_exhibits.wl). They reproduce the finite examples and check the exact algebra below; they neither replay the submitted Lean proof nor establish RH.
+
 ## 1. The object: what would RH actually say?
 
 Prime numbers occur in a pattern that seems irregular locally but has a global analytic structure. Riemann's zeta function is a device for translating statements about primes into statements about the zeros of a complex function.
@@ -30,6 +32,21 @@ $$
 $$
 
 This is a statement about **all** such complex numbers, not about the first billion or trillion zeros. A related Dirichlet GRH asks for the same critical-line phenomenon for the Dirichlet $L$ functions of characters. In this announcement, **GRH refers to the Dirichlet family**. Broader Artin, Dedekind, or other extensions are not established by the five headline declarations reviewed here.
+
+### Wolfram exhibit A: five known zeros, not all possible zeros
+
+The following are the imaginary parts \(t\) of five known zeros \(s=\tfrac12+it\), evaluated with Wolfram Language's [\`ZetaZero\`](https://reference.wolfram.com/language/ref/ZetaZero.html):
+
+| Known zero | Height \(t\) |
+| --- | ---: |
+| 1 | 14.134725 |
+| 2 | 21.022040 |
+| 3 | 25.010858 |
+| 4 | 30.424876 |
+| 5 | 32.935062 |
+
+These samples help locate zeros in the complex plane. The \`ZetaZero\` computation **enumerates known zeros on the critical line**: it does not certify that no other zeros occur elsewhere in the strip. Finitely many values cannot establish a universal assertion.
+
 
 The author [reports](https://alpo.ge/remark.pdf) that a collaboration with Claude produced formal arguments for RH and Dirichlet GRH. The four-page note is **an account of the discovery**, not a conventional readable proof. It points to [14 original Lean archive parts](https://alpo.ge/lean.tar.gz.part01). The author explicitly anticipates a later, shorter mathematical exposition.
 
@@ -47,6 +64,28 @@ is unchanged under reflection $x\mapsto1-x$, yet neither element equals $1/2$. T
 
 This small example is a **working model**, not a counterexample to RH. It identifies the missing logical force in a common naive route.
 
+### Wolfram exhibit B: an exact four-zero countermodel
+
+The symmetry obstruction survives even when complex conjugation is included. Consider
+
+$
+P(s)=\left((s-\tfrac13)^2+4\right)
+     \left((s-\tfrac23)^2+4\right).
+$
+
+Its zeros are \(\tfrac13\pm2i\) and \(\tfrac23\pm2i\), **all off the critical line**. Yet it has real coefficients and satisfies the exact identity \(P(s)=P(1-s)\). Its zero set therefore has both reflection and conjugation symmetry.
+
+Wolfram symbolic algebra also verifies that, for every real \(t\),
+
+$
+P(\tfrac12+it)
+=\left(\tfrac{145}{36}-t^2\right)^2+\frac{t^2}{9}
+>0.
+$
+
+Thus **even those two symmetries together do not force zeros onto the line**. This is a proved fact about the explicit polynomial, **not** a counterexample to RH: \(P\) is not the zeta function. [Reproduce the exact checks](../assets/wolfram/rh_pedagogical_exhibits.wl).
+
+
 ## 3. The working model: multiplicity as a resource
 
 The announcement's proposed mathematical narrative begins with an analogy to **Stepanov's method over function fields**, where vanishing with multiplicity is a powerful tool for bounding zeros or arithmetic points. Over integers, one cannot simply differentiate integer arithmetic to obtain the same multiplicity device.
@@ -58,6 +97,40 @@ m\asymp\sqrt X.
 $$
 
 The note also refers to positivity and sign arguments, weighted von Mangoldt sums, Guinand–Weil, periods and seesaw identities, Bost slope inequalities, Iwasawa towers, arithmetic divisibility, and a calculation of the cost of each lift.
+
+### Wolfram exhibit C: from prime powers to the announced weighted sum
+
+The *von Mangoldt function* \(\Lambda(n)\) equals \(\log p\) when \(n\) is a positive power of a prime \(p\), and zero otherwise. The simpler cumulative sum
+
+$
+\psi(X)=\sum_{n\le X}\Lambda(n)
+$
+
+is a staircase with a jump of \(\log p\) at every prime power \(p^k\). For positive integer \(X\), an exact identity makes this concrete:
+
+$
+\psi(X)=\log\bigl(\mathrm{lcm}(1,2,\ldots,X)\bigr).
+$
+
+The [announcement](https://alpo.ge/remark.pdf) discusses a more specific **weighted and centered** sum. For integer \(X\ge1\), denote its displayed arithmetic expression by
+
+$
+F(X)=\sum_{n\le X}\Lambda(n)
+\left(\frac{X}{n}-1\right)
+-X\log X+(1+\gamma)X,
+$
+
+where \(\gamma\) is the Euler–Mascheroni constant. A Wolfram Language calculation using [\`MangoldtLambda\`](https://reference.wolfram.com/language/ref/MangoldtLambda.html) gives:
+
+| \(X\) | \(\psi(X)\) | \(F(X)\) |
+| ---: | ---: | ---: |
+| 10 | 7.832014 | 1.860798 |
+| 20 | 19.265658 | 1.861944 |
+| 50 | 49.485381 | 1.879515 |
+| 100 | 94.045311 | 1.721687 |
+
+The table distinguishes **what is elementary and directly calculable** from what the proposed argument would need to prove about such sums. Four positive values of \(F(X)\) do not establish positivity for every \(X\), an analytic bound, a theta-lift construction, or RH. [Reproduce all four rows](../assets/wolfram/rh_pedagogical_exhibits.wl).
+
 
 These are **source-attributed route descriptions**, not independently derived lemmas on this page. In particular, the short note does not supply the inequalities, constants, conductor bookkeeping, or bridges needed to reconstruct its proof from prose alone. A successful mechanical check of the Lean source is a different form of evidence.
 
@@ -170,6 +243,7 @@ The active proof-debt register is:
 - [Primary four-page announcement, 20 November 2026](https://alpo.ge/remark.pdf); its original 14-part Lean release is referenced in the PDF's first footnote.
 - [MIT independent verification dossier](https://math.mit.edu/~drew/grh/), observed edition 20 November 2026, 22:05 UTC.
 - [Pinned third-party source mirror, commit `e50d098`](https://github.com/Deicyde/riemann-hypothesis/tree/e50d09817ad81469f737e8f637561e6ccf86c670), used for inspection, not substituted for the author's original source.
+- [Reproducible Wolfram Language companion](../assets/wolfram/rh_pedagogical_exhibits.wl): exact polynomial symmetry/positivity checks, five known zero heights, and finite von Mangoldt sums. These are pedagogical calculations, not validation of the submitted proof.
 - [GCL protected RH-WP00](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md), [RH-001 live tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), [Chaidez Pedagogical Protocol](../CHAIDEZ_PEDAGOGICAL_PROTOCOL.md), and [Claim Boundary Doctrine](../CLAIM_BOUNDARY_DOCTRINE.md).
 
 **Editorial classification:** dated external-source analysis and pedagogical exposition. Neither this edition nor its publication constitutes the mathematical theorem, an independent GCL proof replay, or a change to the current protected RH claim state.
