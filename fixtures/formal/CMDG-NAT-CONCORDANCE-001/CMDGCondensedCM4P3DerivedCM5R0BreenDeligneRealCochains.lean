@@ -152,6 +152,34 @@ theorem circleTorus_doubling_homotopy_degreeOne
         f + f - doubleStar1 (I → UnitAddCircle) P f :=
   homotopy1 (I → UnitAddCircle) P f
 
+/-- Every degree-zero real cochain cocycle is zero for a compact
+abelian group: doubling forces an exact factor two whereas pullback
+does not enlarge the supremum norm. This is a genuine H⁰=0 result
+for the explicit Breen–Deligne real cochain differential. -/
+theorem degreeZero_realCochain_cocycle_zero
+    (f : C0 A S) (hf : differential0 A S f = 0) : f = 0 := by
+  have h := homotopy0 A S f
+  rw [hf, map_zero] at h
+  have htwo : f + f = doubleStar0 A S f := by
+    have hh : (0 : C0 A S) = f + f - doubleStar0 A S f := h
+    exact (sub_eq_zero.mp hh.symm)
+  have hbound : ‖doubleStar0 A S f‖ ≤ ‖f‖ := by
+    change ‖f.comp (pDouble0 A S)‖ ≤ ‖f‖
+    apply (ContinuousMap.norm_le (f.comp (pDouble0 A S)) (norm_nonneg f)).2
+    intro p
+    exact f.norm_coe_le_norm ((pDouble0 A S) p)
+  have hnorm : ‖f + f‖ = 2 * ‖f‖ := by
+    rw [← two_smul ℝ f, norm_smul]
+    norm_num
+  have hn : ‖f‖ = 0 := by
+    have hle : 2 * ‖f‖ ≤ ‖f‖ := by
+      rw [← hnorm, htwo]
+      exact hbound
+    nlinarith [norm_nonneg f]
+  exact norm_eq_zero.mp hn
+
+#print axioms degreeZero_realCochain_cocycle_zero
+
 #print axioms circleTorus_differential_sq_zero
 #print axioms circleTorus_doubling_homotopy_degreeOne
 
