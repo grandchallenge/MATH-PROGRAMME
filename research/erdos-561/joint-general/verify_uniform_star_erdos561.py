@@ -20,14 +20,15 @@ for s in range(3,12):
     assert W==(s+t-1)*R and J==(s+t-2)*R
     assert J==(t+1)*R+(s-3)*R
     assert W==J+R
-    if (a%2==1 and b%2==1) or a==b:
+    if a%2==b%2:
      counts['exact_covered']+=1
     counts['all_uniform_profiles']+=1
 
 sample=[
  (3,3,2,2),(4,3,2,2),(3,4,2,2),
  (4,4,2,2),(3,3,3,5),(4,3,3,5),
- (3,4,3,3),(3,3,4,4),(4,3,4,4)
+ (3,4,3,3),(3,3,4,4),(4,3,4,4),
+ (3,3,2,4),(3,3,4,2),(4,3,2,4),(3,3,4,6)
 ]
 for s,t,a,b in sample:
  R=a+b-1;n=(a,)*s;m=(b,)*t
@@ -80,6 +81,6 @@ counts['source_profile_cases']=counts['all_uniform_profiles']
 assert counts['all_uniform_profiles']==11664
 assert counts['complete_host_instances']==2*len(sample)
 print('ERDOS561_UNIFORM_PROFILE_GRID_11664_PASS')
-print('ERDOS561_UNIFORM_EXACT_COVERED',counts['exact_covered'])
+print('ERDOS561_UNIFORM_EXACT_SAME_PARITY_CASES',counts['exact_covered'])
 print('ERDOS561_UNIFORM_CANONICAL_COMPLETE_HOSTS',counts['complete_host_instances'],'ARM_COLOURS',counts['complete_upper_arm_allocations'])
 print('ERDOS561_UNIFORM_EULER_SMALL_SIMPLE_GRAPH_CHECKS',counts['bounded_euler_component_graph_checks'])
