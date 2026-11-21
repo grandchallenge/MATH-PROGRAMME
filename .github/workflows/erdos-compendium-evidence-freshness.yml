@@ -28,8 +28,8 @@ jobs:
           python-version: "3.12"
       - name: Run offline source-identity unit tests
         run: |
-          python3 -m unittest discover -s ci -p test_erdos_compendium_evidence_freshness.py -q
-          python3 -m unittest discover -s ci -p test_erdos_compendium_research_activity.py -q
+          python3 ci/test_erdos_compendium_evidence_freshness.py
+          python3 ci/test_erdos_compendium_research_activity.py
       - name: Fetch current protected MATHCERT authority in one bounded read
         env:
           GH_TOKEN: ${{ github.token }}
