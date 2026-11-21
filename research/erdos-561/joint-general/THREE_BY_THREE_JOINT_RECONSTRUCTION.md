@@ -158,9 +158,9 @@ $$
 D(D+1)\le2(W-1)\le10(D+1)-2.
 $$
 
-This is impossible for $D\ge10$. Therefore no original-arrowing host has fewer than $W$ edges; the canonical $W$-edge star forest arrows the original pair, proving equality. QED.
+This is impossible whenever $D$ is at least ten. Therefore no original-arrowing host has fewer than $W$ edges; the canonical $W$-edge star forest arrows the original pair, proving equality. QED.
 
-If either $a=1$ or $c=1$, the separate fully proved matching-side theorem in \`MATCHING_DEGREE_PEELING_THEOREM.md\` already gives the ORIGINAL exact value for every profile without the $D\ge10$ condition. If both leading values are odd, the classical even-cap degree split likewise transfers the jointly proved $J$ without any size restriction. Neither observation is a claim that the other low-leading-size configurations have all been independently checked here.
+If either $a=1$ or $c=1$, the separate fully proved matching-side theorem in `MATCHING_DEGREE_PEELING_THEOREM.md` already gives the ORIGINAL exact value for every profile without the $D\ge10$ condition. If both leading values are odd, the classical even-cap degree split likewise transfers the jointly proved $J$ without any size restriction. Neither observation is a claim that the other low-leading-size configurations have all been independently checked here.
 
 ### Explicit unbounded genuine switching-surplus family
 
@@ -192,6 +192,6 @@ The joint formula holds also for $r=1$. The original $r=1$ case requires the sep
 
 ## What is actually verified
 
-The independent standard-library script \`verify_three_by_three_joint_induction.py\` checks the two component maxima formulas, four-term induction decrement, two-star residual bridge identity and the exact boundary reductions for every bounded ordered positive three-star profile in its declared grid; cross-checks six arithmetic exceptional original parameter profiles from the public proposal; verifies the genuine switching family; and exhausts all red-arm allocations for selected canonical joint star hosts. These checks test formulas and the star-host upper, **not** the all-host matching/Gallai argument by finite enumeration.
+The independent standard-library script `verify_three_by_three_joint_induction.py` checks the two component maxima formulas, four-term induction decrement, two-star residual bridge identity and the exact boundary reductions for every bounded ordered positive three-star profile in its declared grid; cross-checks six arithmetic exceptional original parameter profiles from the public proposal; verifies the genuine switching family; and exhausts all red-arm allocations for selected canonical joint star hosts. These checks test formulas and the star-host upper, **not** the all-host matching/Gallai argument by finite enumeration.
 
 **Claim governance:** mathematical Theorem A and large-leader original Theorem B are paper-level UNDER_REVIEW and depend explicitly on the independently published two-component result, classical Gallai/Vizing/Győri–Schelp graph theorems, and source semantics. This reconstructs a prior public argument, rather than establishing independent novelty or MATHCERT certification. The all-component-count Erdős #561 conjecture still requires proof for general $s,t\ge3$, and the ORIGINAL $3\times3$ low-degree boundary (beyond separately source-proved subfamilies) is not marked closed here.
