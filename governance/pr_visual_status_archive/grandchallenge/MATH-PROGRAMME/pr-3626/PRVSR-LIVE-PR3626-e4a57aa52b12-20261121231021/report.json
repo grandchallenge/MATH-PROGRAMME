@@ -1,0 +1,168 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-21T23:02:11Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-21T23:10:05Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+    "exact_head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+    "pr_number": 3626,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "research(erdos561): exact ALL same-parity uniform star forests for any s,t"
+  },
+  "integration": {
+    "merge_commit_sha": "1f8433d396cd1abeb84c88d43b7a0ce722ea1c36",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 9,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 280E:2D2DE5:89469A3:1BBD071D:6B0224DF and timestamp 2026-11-21 23:10:23 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 137017845396,
+          "conclusion": null,
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017896799,
+          "conclusion": null,
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "Classify policy impact",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 137017844578,
+          "conclusion": null,
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017896956,
+          "conclusion": null,
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 137017836633,
+          "conclusion": "success",
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017836475,
+          "conclusion": null,
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017845604,
+          "conclusion": "success",
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017837558,
+          "conclusion": "skipped",
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017845696,
+          "conclusion": null,
+          "head_sha": "e4a57aa52b12c80f34a0aa11606f8d7402937822",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-21T23:10:21Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "c8f2d8d36c79349a142f5e6cf541dc1e6df081c0d6de61fdf1a713d60054f340"
+  },
+  "report_id": "PRVSR-LIVE-PR3626-e4a57aa52b12-20261121231021",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification"
+    ]
+  }
+}
