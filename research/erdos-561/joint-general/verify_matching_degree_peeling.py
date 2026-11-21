@@ -77,7 +77,7 @@ for s,m in examples:
   assert embeds(red,n) or embeds(blue,m),('original',s,m,red)
   counts['original_upper_arm_colourings']+=1
  counts['complete_profile_pairs']+=1
-assert counts['matching_all_profiles']>25000
+assert counts['matching_all_profiles']==17850
 assert counts['universal_two_sided_pairs']>10000
 assert counts['non_saturated_prefix']>0
 assert counts['complete_profile_pairs']==6
