@@ -909,6 +909,66 @@
         "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 complete ORIGINAL three-component versus three-component size Ramsey",
+      "assumptions": [
+        "Original lists x=(a,b,e),y=(c,d,f), a>=b>=e>=1,c>=d>=f>=1",
+        "arbitrary finite simple host graphs, ordinary non-induced vertex-disjoint star forest copies",
+        "prior public 2026-10-21 three-part original proposal with precedence and pinned 2026 two-component result; ordinary Tutte-Berge, Vizing and degree-split theorems"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502",
+        "MATH-PROGRAMME#3475"
+      ],
+      "promotion_condition": "All-positive 3x3 original theorem is paper-level reconstruction of publicly proposed result; source review required for Tutte-Berge matching criterion, 3K2 vs 2P3+K2 matching-number five lemma, six boundary core colourings and imported 2-component theorem. No independent MATHCERT/public priority or all s,t certification.",
+      "claim_id": "ERDOS561-THREE-BY-THREE-ORIGINAL-ALL-030",
+      "short_name": "Complete original arbitrary-host 3×3 formula including all low-degree boundary profiles",
+      "claim_text": "For every two ordered positive original triples x=(a,b,e),y=(c,d,f), the exact asymmetric size Ramsey number over arbitrary finite simple graph hosts equals the sum of all five original antidiagonal maxima W=sum_{k=2}^6 max_{i+j=k}(x_i+y_j-1). The proof reconstructs the public 2026-10-21 complete three-part argument and independently closes the low-leader cases omitted by claim 028, under its named pinned/classical graph-theory imports. It first derives E=W-1 and Delta=D=a+c-2 for a hypothetical smaller Ramsey host using sharp joint 3x3 claim 027; Vizing degree cap and Gyori-Schelp saturation imply h>=D+1 degree-D vertices and D<=9, while both leaders odd exclude by even cap split. If either minimum original arm>=2, a Tutte-Berge matching-number-five obstruction for (3K2,2P3 disjoint K2) permits deletion of a >=5-edge matching and induction on all five antidiagonals. At the minimum-one boundary b=d=1, finite seven leader pairs are eliminated by degree/vertex budgets, prescribed-vertex matching saturation lemma and explicit max-degree-four core colourings. With b>=2, the pinned two-component theorem after removing a five-edge matching covers all but six quadruples; those are eliminated by saturated-vertex matching, Vizing missing-class absorption, or explicit induced core colourings. Canonical five-star host attains W. Not a proof for s>3 or t>3, nor an independent mathematical certificate.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Full detailed proof in THREE_BY_THREE_ORIGINAL_FULL_BOUNDARY.md; imported exact joint theorem in THREE_BY_THREE_JOINT_RECONSTRUCTION.md; Tutte-Berge matching-number-five lemma enumerates all witness partitions of matching number four, constructing avoiding two-colourings; induction on minimum arm uses 5-edge matching removal; b=d=1 h>=D+1 implies seven low leading pairs, eliminated using vertex budgets, odd-D matching-cover of saturated vertices, degree-4 core explicit colourings and max-degree-2 cycle case; b>=2 isolates six other parameter quadruples handled by Vizing class recolouring or induced saturated-core colourings. Explicit provenance 2026-10-21 publicly proposed proof, not claimed novel.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_FULL_BOUNDARY.md",
+        "research/erdos-561/joint-general/verify_three_by_three_original_boundary.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_EVIDENCE.json",
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 complete ORIGINAL three-component versus three-component size Ramsey",
+      "assumptions": [
+        "Original lists x=(a,b,e),y=(c,d,f), a>=b>=e>=1,c>=d>=f>=1",
+        "arbitrary finite simple host graphs, ordinary non-induced vertex-disjoint star forest copies",
+        "prior public 2026-10-21 three-part original proposal with precedence and pinned 2026 two-component result; ordinary Tutte-Berge, Vizing and degree-split theorems"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502",
+        "MATH-PROGRAMME#3475"
+      ],
+      "promotion_condition": "All-positive 3x3 original theorem is paper-level reconstruction of publicly proposed result; source review required for Tutte-Berge matching criterion, 3K2 vs 2P3+K2 matching-number five lemma, six boundary core colourings and imported 2-component theorem. No independent MATHCERT/public priority or all s,t certification.",
+      "claim_id": "ERDOS561-THREE-BY-THREE-ORIGINAL-CHECK-031",
+      "short_name": "Full original 3×3 boundary exact arithmetic and complete canonical star-host arm audits",
+      "claim_text": "Exact bounded finite script checks 81225 original 3x3 ordered positive profile pairs; 62700 red and 62700 blue five-term matching decrement identities; 2255 two-component boundary subtraction identities; seven low-leader pairs, six last boundary quadruples, Vizing missing-class bound, and all full red-arm allocation classes of five small canonical original upper hosts (2552). These checks establish their declared finite arithmetic and upper bounds, not every arbitrary-host lower by computation.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Deterministic Python script computes original antidiagonal formula for every sorted positive 3x3 pair with leading sizes up to 11, independently validates each matching-decrement identity, boundary arithmetic, six exceptions and seven leader pairs, complete antidiagonal upper host arm-allocation enumeration. The unbounded all-host lower uses a separate paper matching/core proof; not certified from finite data.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_three_by_three_original_boundary.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
