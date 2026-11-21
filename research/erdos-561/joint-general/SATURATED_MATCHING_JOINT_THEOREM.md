@@ -138,19 +138,19 @@ Theorem A also gives a valid new partial lower bound for **any** nonincreasing b
 
 Let $n,m$ be arbitrary nonincreasing positive lists of lengths $s,t\ge3$, and suppose that the **individual sharp joint residual inequality** has already been established:
 
-$
+$$
 G\to(F(n_2,\ldots,n_s),F(m)),
 \quad
 G\to(F(n),F(m_2,\ldots,m_t))
 \quad\Longrightarrow\quad
 e(G)\ge J,
-$
+$$
 
 where $W=\sum_{k=2}^{s+t}w_k(n,m)$ is the canonical original antidiagonal edge budget and $J=W-(n_1+m_1-1)$. If **either** $n_1=1$ or $m_1=1$, then
 
-$
+$$
 \boxed{\widehat r(F(n),F(m))=W.}
-$
+$$
 
 This transfer holds over arbitrary finite simple graph hosts. It needs no Lovász factor theorem, parity restriction, bounded enumeration, or assumption of the unrestricted joint residual hypothesis.
 
@@ -162,9 +162,9 @@ As usual, the canonical disjoint-star host of $W$ edges arrows the original pair
 
 By the individually proved sharp joint residual inequality, $e(G-v)\ge J$. Hence every vertex satisfies
 
-$
+$$
 d_G(v)=e(G)-e(G-v)\le W-1-J=n_1+m_1-2.
-$
+$$
 
 If $n_1=1$, then $n$ is a matching and the bound becomes $\Delta(G)\le m_1-1$. But original arrowing applied to the all-blue colouring forces a blue copy of $F(m)$, which contains a star of degree $m_1$ and therefore requires $\Delta(G)\ge m_1$. Contradiction.
 
@@ -174,18 +174,18 @@ If $m_1=1$, then $m$ is a matching and the bound becomes $\Delta(G)\le n_1-1$. A
 
 Combine Theorem C with the exact individual joint residual in Theorem B. For all $s\ge3$, all $L\ge0$ with $t=s-1+L\ge3$, all $b\ge1$, and all arbitrary positive nonincreasing tail lists $b\ge c_1\ge\cdots\ge c_L$,
 
-$
+$$
 \boxed{
 \widehat r\big(F(1^s),F(b^{s-1},c_1,\ldots,c_L)\big)
 =(2s-2)b+\sum_{\ell=1}^{L}c_\ell.
 }
-$
+$$
 
 The exact original antidiagonal list has $s$ initial copies of $b$, followed by the remaining $s-2$ copies of $b$ and the arbitrary tail; its sum is the displayed value. The case $L=0$ is permitted whenever $s\ge4$ so $t\ge3$. In particular, for every $b\ge1$ and $1\le c\le b$,
 
-$
+$$
 \widehat r(F(1,1,1,1),F(b,b,b,c))=6b+c.
-$
+$$
 
 These are exact over unrestricted finite simple hosts, but the source-level mathematical status remains UNDER_REVIEW, not MATHCERT certification.
 
