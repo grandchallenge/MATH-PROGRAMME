@@ -18,7 +18,7 @@
   "phase": "Reviewed off-diagonal source theorem and remaining retained-collision mapping problem",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "0719940a7132d506cc78f9bccd721039e9b38c0c",
+    "protected_base_sha": "741a4bc2ce18464bf26e107a7f7122b6c77f4cac",
     "candidate_head_sha": "ed22096de8d77dc46866fe740eec8374077364cb",
     "issue_number": 2657,
     "pr_number": null,
@@ -48,6 +48,11 @@
         "kind": "review",
         "identity": "ed22096de8d77dc46866fe740eec8374077364cb proof 8e41e847116a32452cdba4da80387d1dcb555a5a",
         "status": "Distinct same-system acceptance with 0 primary corrections. Whole localized remainder away from retained diagonal has exact finite lifts for arbitrary coupled scalar stages. Full 150.L and integration remain open. Protected admission and tracker readback are separate."
+      },
+      {
+        "kind": "artifact",
+        "identity": "741a4bc2ce18464bf26e107a7f7122b6c77f4cac",
+        "status": "Refreshed protected admission baseline. PR 3597 adds four unrelated CMDG formal sources and changes none of the mathematical inputs or workflow controls of this proof. The original scientific input and frozen review references are retained."
       },
       {
         "kind": "artifact",
@@ -2067,7 +2072,7 @@
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-21T12:20:27.505536+00:00"
+    "observed_at": "2026-11-21T12:22:22.086114+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
