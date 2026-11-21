@@ -1,0 +1,211 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-21T23:02:05Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-21T23:02:54Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+    "exact_head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+    "pr_number": 3625,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5: continuous linear right inverse on degree-two compact real cocycles"
+  },
+  "integration": {
+    "merge_commit_sha": "b979f5e44b4dea4e1a1f1c731f64b1bbab59f15e",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID A01E:4D59:52033:107BB6:6B022334 and timestamp 2026-11-21 23:03:16 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 137015740778,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015740067,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015740276,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015815611,
+          "conclusion": "skipped",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015815621,
+          "conclusion": "skipped",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015800796,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Policy shard / cmdg",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015800745,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Policy shard / core",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015800668,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Policy shard / fixtures",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015739876,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015742017,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015742642,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "advisory-report",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015741086,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015743601,
+          "conclusion": "skipped",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015740989,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "security / action-policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137015912137,
+          "conclusion": "success",
+          "head_sha": "b533a673d4f83a709e0ef4e129b21faefefe02af",
+          "name": "validate-json",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-21T23:03:14Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "067ab42b2b4616b863548484ba535db2aabab24736a71bc7599b29a95ad45a43"
+  },
+  "report_id": "PRVSR-LIVE-PR3625-b533a673d4f8-20261121230314",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
