@@ -5,6 +5,7 @@
 | General mathematical proof | Inspect `EVEN_CAP_DEGREE_SPLITTING_THEOREM.md` | Even regular completion, Euler orientation, bipartite factorization, delete fake edges |
 | Constructive degree-four replay | `python3 verify_even_caps_constructive.py` | 685 graph atlas classes + 200 larger seeded examples, zero cap failures |
 | Exact three-star parameter audit | `python3 verify_even_cap_parameters.py` | 25 prior entries, three even-cap exclusions, 22 ordered / 11 unordered remaining |
+| Even-cap transfer of four infinite ORIGINAL star-forest families | `python3 verify_even_cap_original_transfer.py` | Two antidiagonal index conventions and exact arithmetic for four finite parameter grids; universal transfer analytic, upstream residual proofs retain UNDER_REVIEW |
 | Complete replay | `bash run_all.sh` | `EVEN_CAPS_RESEARCH_REPLAY_PASS` |
 | Mathematical Markdown preflight | `python3 ci/math_markdown_gate.py --file EVEN_CAP_DEGREE_SPLITTING_THEOREM.md` | PASS |
 | Canonical claim ledger | Validate `CLAIM_LEDGER.json` with `schemas/claim_ledger.schema.json` | Exact computation CHECKED; broad graph theorem and conditional Ramsey implications scoped |
