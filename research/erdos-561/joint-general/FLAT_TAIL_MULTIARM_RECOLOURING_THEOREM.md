@@ -1,6 +1,6 @@
 # Erdős #561 — exact multi-arm flat-tail joint residual by recolouring budget
 
-**Research date:** 2026-11-21. **Scope:** arbitrary finite simple host graphs with ordinary, non-induced, vertex-disjoint star-forest embeddings. **Mathematical status:** paper-level theorem \`UNDER_REVIEW\`, bounded deterministic corroboration \`CHECKED\`. The general joint-residual inequality (issue #3490) and unrestricted original Erdős #561 conjecture remain OPEN; no MATHCERT certificate is claimed.
+**Research date:** 2026-11-21. **Scope:** arbitrary finite simple host graphs with ordinary, non-induced, vertex-disjoint star-forest embeddings. **Mathematical status:** paper-level theorem `UNDER_REVIEW`, bounded deterministic corroboration `CHECKED`. The general joint-residual inequality (issue #3490) and unrestricted original Erdős #561 conjecture remain OPEN; no MATHCERT certificate is claimed.
 
 Write $F(x_1,\ldots,x_s)$ for disjoint positive-edge stars, and $G\to(R,B)$ for ordinary two-colour Ramsey arrowing. For nonincreasing original lists $n,m$, denote by $\mathcal J(n,m)$ the **minimum number of edges in any finite simple graph jointly satisfying** the two residual relations
 
@@ -43,13 +43,13 @@ $$
 
 for the number of *extra edges* outside this particular fixed copy.
 
-Construct a new red/blue colouring of **all** $G$ as follows: in each of the $t-1$ secondary $c$-stars, colour exactly $r$ of its edges red; colour every other edge of $G$ blue, including those incident to $v$, the primary $b$-star edges, and the $q$ extra edges. This is an actual edge colouring: the stars in the fixed forest copy are edge-disjoint and vertex-disjoint.
+Construct a new red/blue colouring of **all** $G$ as follows: in each of the $t-1$ secondary stars of size $c$, colour exactly $r$ of its edges red; colour every other edge of $G$ blue, including those incident to $v$, the primary star of size $b$ edges, and the $q$ extra edges. This is an actual edge colouring: the stars in the fixed forest copy are edge-disjoint and vertex-disjoint.
 
 The red graph is a disjoint union of stars of size exactly $r$ (plus isolates), so its maximum red degree is $r\le a-1$. It therefore **cannot** contain a red $F(a,1,1)$, the red target in the *second* residual relation.
 
-Suppose nevertheless that this colouring contains a blue copy of $F(c^{t-1})$. Its $t-1$ stars are vertex-disjoint. At most **one** of these stars uses vertex $v$. At most **one other** of the remaining stars uses an edge of the primary $b$-star: any two edges of that primary star meet at its centre, so two vertex-disjoint blue stars cannot both use its edges.
+Suppose nevertheless that this colouring contains a blue copy of $F(c^{t-1})$. Its $t-1$ stars are vertex-disjoint. At most **one** of these stars uses vertex $v$. At most **one other** of the remaining stars uses an edge of the primary star of size $b$: any two edges of that primary star meet at its centre, so two vertex-disjoint blue stars cannot both use its edges.
 
-Therefore **at least $t-3$** of the vertex-disjoint blue $c$-stars both avoid $v$ and use **no primary-star edge**. For each such blue star, the only available edges from the fixed forest copy are in its secondary components, and after recolouring those have maximum degree at most $c-r$. A $c$-edge star has one centre with $c$ incident selected blue edges. **At least $r$ of those edges must therefore be outside the fixed copy**, belonging to the $q$ extra edges. Because the selected blue stars are vertex-disjoint, the extra edges they use are all distinct. Consequently
+Therefore at least $t-3$ of the vertex-disjoint blue stars of size $c$ both avoid $v$ and use **no primary-star edge**. For each such blue star, the only available edges from the fixed forest copy are in its secondary components, and after recolouring those have maximum degree at most $c-r$. A star containing $c$ edges has one centre with $c$ incident selected blue edges. At least $r$ of those edges must therefore be outside the fixed copy, belonging to the $q$ extra edges. Because the selected blue stars are vertex-disjoint, the extra edges they use are all distinct. Consequently
 
 $$
 q\ge r(t-3).
@@ -96,7 +96,7 @@ $$
 U=F\big(b,b,\underbrace{a+c-1,\ldots,a+c-1}_{t-3},c,c\big).
 $$
 
-Its size is precisely the claimed bound. We check directly why it simultaneously arrows both residual pairs, using the already source-proved exact star-host antidiagonal criterion (\`JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md\`, Theorem A).
+Its size is precisely the claimed bound. We check directly why it simultaneously arrows both residual pairs, using the already source-proved exact star-host antidiagonal criterion (`JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md`, Theorem A).
 
 The first residual pair $(F(1,1),F(b,c^{t-1}))$ has canonical antidiagonal list
 
@@ -133,7 +133,7 @@ W=\mathcal J+(a+b-1)
 =3b+(t-3)(a+c-1)+2c+a-1.
 $$
 
-Let $D=a+b-2$. The original full size-Ramsey equality follows from the separately source-locked core transfer in \`GENERAL_CORE_ORIGINAL_TRANSFER.md\` whenever any of the following sufficient conditions holds:
+Let $D=a+b-2$. The original full size-Ramsey equality follows from the separately source-locked core transfer in `GENERAL_CORE_ORIGINAL_TRANSFER.md` whenever any of the following sufficient conditions holds:
 
 - Both $a$ and $b$ are odd.
 - $W\le D(D+1)/2$ (regardless of parity).
@@ -154,8 +154,8 @@ This is an additional safe bound, **not** a claim that the general antidiagonal 
 
 ## Finite verification and provenance
 
-\`verify_flat_tail_multiarm.py\` independently recomputes original and residual antidiagonal maxima with distinct zero- and one-based formulas. It verifies the algebraic equalities and the precise lower-bound budget for **4,662** parameter instances, including **2,772** exact-family instances and **1,890** general lower-only instances. It also tests **complete red-arm allocations** of a small declared collection of canonical star hosts, separately checking both residual arrowing properties. The verifier uses the standard library and is fully deterministic. These bounded checks corroborate formulas and upper hosts; the **all-host lower proof is the mathematical counting argument above, not the finite grid**.
+`verify_flat_tail_multiarm.py` independently recomputes original and residual antidiagonal maxima with distinct zero- and one-based formulas. It verifies the algebraic equalities and the precise lower-bound budget for **4,662** parameter instances, including **2,772** exact-family instances and **1,890** general lower-only instances. It also tests **complete red-arm allocations** of a small declared collection of canonical star hosts, separately checking both residual arrowing properties. The verifier uses the standard library and is fully deterministic. These bounded checks corroborate formulas and upper hosts; the **all-host lower proof is the mathematical counting argument above, not the finite grid**.
 
-The source of the previously known exact canonical disjoint-star-host criterion and old two-hub peeling lower is \`JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md\`; the new budget proof does not assume its unproved general conjecture. This is new claim 018, \`UNDER_REVIEW\`, with finite corroboration claim 019 \`CHECKED\`. Substantive mathematical review must examine both the "one primary star" exception and the $r$-extra-edge charge, and validate the antidiagonal coordinatewise maximum independently.
+The source of the previously known exact canonical disjoint-star-host criterion and old two-hub peeling lower is `JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md`; the new budget proof does not assume its unproved general conjecture. This is new claim 018, `UNDER_REVIEW`, with finite corroboration claim 019 `CHECKED`. Substantive mathematical review must examine both the "one primary star" exception and the charge of $r$ extra edges, and validate the antidiagonal coordinatewise maximum independently.
 
 **Outstanding boundary for unrestricted Erdős #561:** extending this recolouring charge beyond flat equal tails and $(a,1,1)$ red profiles without assuming a uniform per-target-star deficit, and the remaining general asymmetric joint residual inequality. The special $(a,1,1)$ / $(b,c^{t-1})$ joint theorem stated here is complete on paper; the unrestricted conjecture is not.
