@@ -1,4 +1,4 @@
-import CMDGCondensedCM5R0BreenDeligneH2Universal
+import CMDGCondensedCM4P3DerivedCM5R0BreenDeligneH2Universal
 import CMDGCondensedCM4P3DerivedCM5R0BreenDeligneRealPentagon
 import CMDGCondensedCM4P3DerivedCM5R0BreenDeligneRealHexagon
 
