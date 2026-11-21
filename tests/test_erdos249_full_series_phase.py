@@ -1363,3 +1363,180 @@ class JointCovarianceGapTests(unittest.TestCase):
         self.assertGreater(
             1 - sum(exp(2j*pi*v/Q).real for v in diffs)/len(diffs),
             0)
+
+
+from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+    fixed_separating_prime as wp09e_prime,
+    cook_minimal_depth as wp09e_depth,
+    dyadic_residue_weights as wp09e_alias,
+    exact_finite_crt_projection as wp09e_crt,
+    projection_certificate as wp09e_certificate,
+    cook_numerator_direct as wp09e_direct,
+    cook_numerators_rolling as wp09e_rolling,
+    exact_actual_window_energy as wp09e_energy,
+)
+
+
+class FullWindowPrimeProjectionTests(unittest.TestCase):
+    """WP09-E: full actual Cook logarithmic window and exact fixed-prime CRT."""
+
+    def test_fixed_prime_nondivisor_depends_on_h_not_L(self):
+        self.assertEqual(
+            [wp09e_prime(h) for h in (1, 2, 3, 4, 6, 30, 210)],
+            [2, 3, 2, 3, 5, 7, 11])
+        for h in (1, 2, 6, 30):
+            p = wp09e_prime(h)
+            for L in (1, 2, 7, 30, 96):
+                a = wp09e_alias(h, L)
+                self.assertEqual(a["p"], p)
+                self.assertEqual(a["Q"], 1 << L)
+                self.assertEqual(sum(a["t_numerators"]), 0)
+                self.assertGreaterEqual(
+                    6*a["t_numerators"][a["positive_class"]], a["Q"])
+                self.assertGreaterEqual(
+                    -6*a["t_numerators"][a["negative_class"]], a["Q"])
+                self.assertNotEqual(
+                    a["positive_class"], a["negative_class"])
+
+    def test_exact_aliased_residue_vectors_and_l2_lower(self):
+        self.assertEqual(wp09e_alias(1, 4)["q_numerators"], (5, 10))
+        self.assertEqual(wp09e_alias(1, 4)["t_numerators"], (5, -5))
+        self.assertEqual(wp09e_alias(2, 4)["q_numerators"], (2, 9, 4))
+        self.assertEqual(wp09e_alias(2, 4)["t_numerators"], (7, -5, -2))
+        for h, L in ((1, 7), (2, 9), (6, 11), (30, 50)):
+            a = wp09e_alias(h, L)
+            self.assertGreaterEqual(
+                18*a["alias_l2_numerator"], a["Q"]**2)
+
+    def test_independent_finite_crt_overlapping_shifts(self):
+        from experiments.erdos249_full_series_phase.joint_local_prime_law import primes_through
+        from math import prod
+        cases = ((1, 4, 3), (2, 5, 5), (6, 10, 7), (30, 12, 7))
+        for h, L, y in cases:
+            r = wp09e_crt(h, L, y)
+            p, P = r["p"], r["period"]
+            self.assertEqual(P, prod(primes_through(y)))
+            self.assertLess(p, L+h)  # Genuine overlapping prime residues
+            self.assertEqual(r["observed"], r["predicted"])
+            self.assertEqual(sum(r["observed"], Fraction()), 0)
+            self.assertGreater(r["l2_mean_projection"], 0)
+            self.assertGreaterEqual(
+                18 * sum(k*k for k in r["fixed_prime_alias_vector"]),
+                (1 << L)**2)
+
+    def test_real_full_window_decomposition_exact_fraction(self):
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        for h, L in ((1, 4), (2, 6), (6, 9)):
+            phi = totients(150)
+            ratio = [Fraction(0) if n == 0
+                     else Fraction(phi[n], n) for n in range(len(phi))]
+            for N in (50, 57, 63):
+                G = sum((Fraction(1, 1 << j) *
+                         (ratio[N+h+j]-ratio[N+j])
+                         for j in range(1, L+1)), Fraction())
+                R = sum((Fraction(1, 1 << j) *
+                         ((h+j)*ratio[N+h+j]-j*ratio[N+j])
+                         for j in range(1, L+1)), Fraction())
+                A = Fraction(wp09e_direct(phi, N, h, L), 1 << L)
+                self.assertEqual(A, N*G+R)
+                self.assertLessEqual(abs(R), h+4)
+                self.assertLessEqual(abs(G), 1)
+
+    def test_exact_rolling_vs_independent_direct_at_several_depths(self):
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        X = 96
+        for h, L in ((1, 3), (1, 9), (2, 7), (6, 12)):
+            phi = totients(2*X+h+L+2)
+            vals = wp09e_rolling(phi, X, h, L)
+            self.assertEqual(len(vals), X)
+            for i, D in enumerate(vals):
+                self.assertEqual(D, wp09e_direct(phi, X+i, h, L))
+            with self.assertRaises(ValueError):
+                wp09e_rolling(phi[:100], X, h, L)
+
+    def test_explicit_true_cook_eligible_depths(self):
+        for X, h, p in ((4096, 1, 2), (8192, 2, 3), (32768, 6, 5)):
+            c = wp09e_certificate(X, h)
+            self.assertEqual(c["L"], wp09e_depth(X, h))
+            self.assertEqual(c["p"], p)
+            self.assertTrue(c["eligible"])
+            self.assertLessEqual(
+                16*(2*X+h+c["L"]+2), c["Q"])
+            self.assertGreater(
+                16*(2*X+h+c["L"]+1), c["Q"]//2)
+            self.assertGreater(c["Q"], 32*X)
+            self.assertLessEqual(c["H"], X)
+            self.assertLessEqual(c["required_min_X"], X)
+            self.assertEqual(
+                c["normalized_ratio_mean_square_lower"],
+                Fraction(1, 400*p**3))
+            self.assertEqual(
+                c["unwrapped_phase_sum_square_lower"],
+                Fraction(X**3, 1600*p**3))
+            self.assertFalse(c["weighted_first_harmonic_tenth_saving"])
+            self.assertEqual(c["original_irrationality"], "OPEN")
+
+    def test_actual_totient_full_cook_integer_energy(self):
+        for X, h in ((4096, 1), (8192, 2), (32768, 6)):
+            c = wp09e_energy(X, h)
+            self.assertTrue(c["eligible"])
+            self.assertTrue(c["energy_bound_passed"])
+            self.assertGreaterEqual(
+                1600*c["p"]**3*c["sum_D_squared"],
+                X**3*c["Q"]**2)
+            self.assertEqual(c["source"],
+                             "actual Euler totient, exact integer rolling")
+        # Independent exact-rational test of the OTHER primary theorem (G),
+        # at a genuine Cook least depth where the finite bound is nonvacuous.
+        X, h = 4096, 1
+        c = wp09e_certificate(X, h)
+        p = c["p"]
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        phi = totients(2*X+c["H"]+1)
+        f = [Fraction(0)] + [Fraction(phi[n], n) for n in range(1,len(phi))]
+        residue_sums = [Fraction() for _ in range(p)]
+        squared = Fraction()
+        for N in range(X, 2*X):
+            G = sum((Fraction(1, 1 << j) *
+                     (f[N+h+j]-f[N+j]) for j in range(1,c["L"]+1)),
+                    Fraction())
+            residue_sums[N % p] += G
+            squared += G*G
+        self.assertGreaterEqual(squared, Fraction(X, 400*p**3))
+        for a in ((-1) % p, (-1-h) % p):
+            self.assertGreaterEqual(abs(residue_sums[a]),
+                                    Fraction(X, 20*p*p))
+
+    def test_exact_ineligible_and_bad_parameters_fail_closed(self):
+        for X, h in ((64, 1), (128, 2), (512, 6)):
+            c = wp09e_certificate(X, h)
+            self.assertFalse(c["eligible"])
+            self.assertIsNone(c["unwrapped_phase_sum_square_lower"])
+            self.assertIsNone(c["normalized_ratio_mean_square_lower"])
+        for h, L, p in ((1, 5, 2), (2, 6, 2), (6, 10, 3)):
+            if h % p == 0:
+                with self.assertRaises(ValueError):
+                    wp09e_alias(h, L, p)
+        with self.assertRaises(ValueError):
+            wp09e_alias(1, 3, 9)
+        with self.assertRaises(ValueError):
+            wp09e_crt(6, 8, 3)
+        with self.assertRaises(ValueError):
+            wp09e_crt(1, 5, 11, max_period=200)
+        with self.assertRaises(ValueError):
+            wp09e_energy(4096, 1, max_X=128)
+        with self.assertRaises(ValueError):
+            wp09e_depth(0, 1)
+        with self.assertRaises(ValueError):
+            wp09e_prime(-2)
+
+    def test_unwrapped_cubic_energy_cannot_imply_modular_cancellation(self):
+        # Purely mathematical hostile example A_N=N has huge real energy
+        # yet e(A_N) is identically 1. Not a constructed totient sequence.
+        for X in (16, 32, 64):
+            arr = tuple(range(X, 2*X))
+            self.assertGreaterEqual(
+                sum(a*a for a in arr), X**3)
+            self.assertTrue(all(a % 1 == 0 for a in arr))
+            self.assertEqual(
+                sum(1 for a in arr if a % 1 != 0), 0)
