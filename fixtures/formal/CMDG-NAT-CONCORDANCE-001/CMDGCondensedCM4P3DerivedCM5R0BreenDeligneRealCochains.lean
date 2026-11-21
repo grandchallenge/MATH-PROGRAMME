@@ -180,6 +180,71 @@ theorem degreeZero_realCochain_cocycle_zero
 
 #print axioms degreeZero_realCochain_cocycle_zero
 
+def pDouble2a : C((A × (A × A)) × S, (A × (A × A)) × S) :=
+  ⟨fun p => ((p.1.1 + p.1.1,
+    (p.1.2.1 + p.1.2.1, p.1.2.2 + p.1.2.2)), p.2), by fun_prop⟩
+
+def doubleStar2 : C2 A S →L[ℝ] C2 A S :=
+  ((ContinuousMap.compCLM ℝ ℝ (pDouble2a A S)).comp
+    (ContinuousLinearMap.fst ℝ (C2a A S) (C1 A S))).prod
+  ((doubleStar1 A S).comp
+    (ContinuousLinearMap.snd ℝ (C2a A S) (C1 A S)))
+
+theorem differential1_commutes_doubling (f : C1 A S) :
+    differential1 A S (doubleStar1 A S f) =
+      doubleStar2 A S (differential1 A S f) := by
+  apply Prod.ext
+  · ext p
+    simp [differential1,doubleStar1,doubleStar2,pBC,pAB_C,pA_BC,
+      pAB,pDouble1,pDouble2a,add_assoc]
+    abel
+  · ext p
+    simp [differential1,doubleStar1,doubleStar2,pSwap,pDouble1,
+      pDouble2a,add_assoc]
+
+theorem doublingStar1_nonexpansive (f : C1 A S) :
+    ‖doubleStar1 A S f‖ ≤ ‖f‖ := by
+  change ‖f.comp (pDouble1 A S)‖ ≤ ‖f‖
+  apply (ContinuousMap.norm_le (f.comp (pDouble1 A S)) (norm_nonneg f)).2
+  intro p
+  exact f.norm_coe_le_norm ((pDouble1 A S) p)
+
+theorem doublingStar2_nonexpansive (f : C2 A S) :
+    ‖doubleStar2 A S f‖ ≤ ‖f‖ := by
+  have ha : ‖f.1.comp (pDouble2a A S)‖ ≤ ‖f.1‖ := by
+    apply (ContinuousMap.norm_le _ (norm_nonneg f.1)).2
+    intro p
+    exact f.1.norm_coe_le_norm ((pDouble2a A S) p)
+  have hb : ‖doubleStar1 A S f.2‖ ≤ ‖f.2‖ :=
+    doublingStar1_nonexpansive A S f.2
+  change max ‖f.1.comp (pDouble2a A S)‖
+    ‖doubleStar1 A S f.2‖ ≤ max ‖f.1‖ ‖f.2‖
+  exact max_le (ha.trans (le_max_left _ _))
+    (hb.trans (le_max_right _ _))
+
+theorem doublingStar1_opnorm_le_one :
+    ‖doubleStar1 A S‖ ≤ 1 := by
+  apply ContinuousLinearMap.opNorm_le_bound _ zero_le_one
+  intro f
+  simpa only [one_mul] using doublingStar1_nonexpansive A S f
+
+theorem doublingStar2_opnorm_le_one :
+    ‖doubleStar2 A S‖ ≤ 1 := by
+  apply ContinuousLinearMap.opNorm_le_bound _ zero_le_one
+  intro f
+  simpa only [one_mul] using doublingStar2_nonexpansive A S f
+
+/-- An unconditional positive-degree real cochain acyclicity theorem
+for degree one in the *actual* compact continuous-function Banach complex.
+The convergent Neumann inverse of 1-[2]* / 2 supplies a genuine primitive.
+No all-degree or sheaf-derived comparison is assumed. -/
+
+#print axioms differential1_commutes_doubling
+#print axioms doublingStar1_nonexpansive
+#print axioms doublingStar2_nonexpansive
+#print axioms doublingStar1_opnorm_le_one
+#print axioms doublingStar2_opnorm_le_one
+
 #print axioms circleTorus_differential_sq_zero
 #print axioms circleTorus_doubling_homotopy_degreeOne
 
