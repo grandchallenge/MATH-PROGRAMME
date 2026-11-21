@@ -1,5 +1,6 @@
 import CMDGCondensedCM4P3DerivedCM5R0BreenDeligneCondensed
 import Mathlib.Tactic.Abel
+set_option backward.isDefEq.respectTransparency false
 
 /-!
 # CMDG CM5: true condensed Breen–Deligne chain identities and first doubling identity
@@ -161,5 +162,86 @@ theorem condensed_d2_comp_d1_zero :
 
 #print axioms polyMap_comp
 
+
+/-!
+The following explicit source maps and biproduct projection identities
+complete the exact categorical expansion of the degree-one doubling
+homotopy LHS. The final finite polynomial cancellation identity
+h1≫d2 + d1≫h0 = 2id−[2] remains an independent open theorem.
+-/
+
+noncomputable def q1 : C(A × A, A × (A × A)) :=
+  ⟨fun p => (p.1,(p.1,p.2+p.2)),
+      continuous_fst.prodMk (continuous_fst.prodMk
+        (continuous_snd.add continuous_snd))⟩
+
+noncomputable def q2 : C(A × A, A × (A × A)) :=
+  ⟨fun p => (p.1,(p.2,p.2)),
+      continuous_fst.prodMk (continuous_snd.prodMk continuous_snd)⟩
+
+noncomputable def q3 : C(A × A, A × (A × A)) :=
+  ⟨fun p => (p.1,(p.2,p.1+p.2)),
+      continuous_fst.prodMk
+        (continuous_snd.prodMk (continuous_fst.add continuous_snd))⟩
+
+noncomputable def qc : C(A × A,A × A) :=
+  ⟨fun p => (p.1+p.2,p.2),
+       (continuous_fst.add continuous_snd).prodMk continuous_snd⟩
+
+theorem h1_projection_assoc :
+    h1 A ≫ biprod.fst = polyMap (q1 A) -
+      polyMap (q2 A) - polyMap (q3 A) := by
+  dsimp only [src1,src2,src2assoc] at *
+  change ((polyMap (q1 A) ≫ biprod.inl) -
+    (polyMap (q2 A) ≫ biprod.inl) -
+    (polyMap (q3 A) ≫ biprod.inl) -
+    (polyMap (qc A) ≫ biprod.inr)) ≫ biprod.fst = _
+  simp [Preadditive.sub_comp, Category.assoc,biprod.inl_fst,
+    biprod.inr_fst]
+
+theorem h1_projection_comm :
+    h1 A ≫ biprod.snd = -polyMap (qc A) := by
+  dsimp only [src1,src2,src2assoc] at *
+  change ((polyMap (q1 A) ≫ biprod.inl) -
+    (polyMap (q2 A) ≫ biprod.inl) -
+    (polyMap (q3 A) ≫ biprod.inl) -
+    (polyMap (qc A) ≫ biprod.inr)) ≫ biprod.snd = _
+  simp [Preadditive.sub_comp, Category.assoc,biprod.inl_snd,
+    biprod.inr_snd]
+
+#print axioms h1_projection_assoc
+#print axioms h1_projection_comm
+
+private theorem generic_split {C : Type*} [Category C] [Preadditive C]
+    {X Y W : C} [HasBinaryBiproduct X Y]
+    (h : W ⟶ X ⊞ Y) (f : X ⟶ W) (g : Y ⟶ W) :
+    h ≫ biprod.desc f g =
+      (h ≫ biprod.fst) ≫ f + (h ≫ biprod.snd) ≫ g := by
+  rw [biprod.desc_eq, Preadditive.comp_add]
+  simp only [Category.assoc]
+
+theorem h1_comp_d2_eq_split :
+    h1 A ≫ d2 A =
+      (h1 A ≫ biprod.fst) ≫ d2assoc A +
+      (h1 A ≫ biprod.snd) ≫ d2comm A := by
+  dsimp only [src2,src1,src2assoc] at *
+  change h1 A ≫ biprod.desc (d2assoc A) (d2comm A) = _
+  exact generic_split (h1 A) (d2assoc A) (d2comm A)
+
+#print axioms h1_comp_d2_eq_split
+
+theorem h1_comp_d2_expanded :
+    h1 A ≫ d2 A =
+      (polyMap (q1 A) - polyMap (q2 A) - polyMap (q3 A)) ≫ d2assoc A -
+        polyMap (qc A) ≫ d2comm A := by
+  have hsplit := h1_comp_d2_eq_split A
+  have hassoc := h1_projection_assoc A
+  have hcomm := h1_projection_comm A
+  dsimp only [src1,src2assoc] at *
+  rw [hassoc,hcomm] at hsplit
+  rw [Preadditive.neg_comp] at hsplit
+  simpa only [sub_eq_add_neg] using hsplit
+
+#print axioms h1_comp_d2_expanded
 
 end CMDG.CondensedCM5R0.BreenDeligneCondensed
