@@ -99,8 +99,11 @@ def construct(components,case,r,u):
    blue.extend(edge for j,edge in enumerate(edges) if j%2==0)
    red.extend(edge for j,edge in enumerate(edges) if j%2)
   else:
-   red.extend(edge for j,edge in enumerate(edges) if j%2==0)
-   blue.extend(edge for j,edge in enumerate(edges) if j%2)
+   if k==r+u-1:  # boundary: every spare exterior edge is BLUE
+    blue.extend(edges)
+   else:
+    red.extend(edge for j,edge in enumerate(edges) if j%2==0)
+    blue.extend(edge for j,edge in enumerate(edges) if j%2)
   position+=verts
  return tuple(red),tuple(blue)
 
