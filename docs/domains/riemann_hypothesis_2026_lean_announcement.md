@@ -24,12 +24,12 @@ Prime numbers occur in a pattern that seems irregular locally but has a global a
 The classical Riemann Hypothesis says that every zero of the analytically continued zeta function in the critical strip lies on its middle line:
 
 $$
-\zeta(s)=0,\qquad 0<\operatorname{Re}(s)<1
+\zeta(s)=0,\qquad 0<\Re(s)<1
 \quad\Longrightarrow\quad
-\operatorname{Re}(s)=\frac12.
+\Re(s)=\frac12.
 $$
 
-This is a statement about **all** such complex numbers, not about the first billion or trillion zeros. A related Dirichlet GRH asks for the same critical-line phenomenon for the Dirichlet $L$-functions of characters. In this announcement, **GRH refers to the Dirichlet family**. Broader Artin, Dedekind, or other extensions are not established by the five headline declarations reviewed here.
+This is a statement about **all** such complex numbers, not about the first billion or trillion zeros. A related Dirichlet GRH asks for the same critical-line phenomenon for the Dirichlet $L$ functions of characters. In this announcement, **GRH refers to the Dirichlet family**. Broader Artin, Dedekind, or other extensions are not established by the five headline declarations reviewed here.
 
 The author [reports](https://alpo.ge/remark.pdf) that a collaboration with Claude produced formal arguments for RH and Dirichlet GRH. The four-page note is **an account of the discovery**, not a conventional readable proof. It points to [14 original Lean archive parts](https://alpo.ge/lean.tar.gz.part01). The author explicitly anticipates a later, shorter mathematical exposition.
 
@@ -72,7 +72,7 @@ theorem riemannHypothesis : RiemannHypothesis := rhOfAll
 theorem LFunction_eq_zero_re : DirichletLZerosOnLine := claimAll.2.1
 ```
 
-The mirror's [`Statements.lean`](https://github.com/Deicyde/riemann-hypothesis/blob/e50d09817ad81469f737e8f637561e6ccf86c670/src/Statements.lean) contains explicit Dirichlet $L$-function claims. The first headline theorem uses Mathlib's own `RiemannHypothesis` definition, not a newly defined local proposition bearing an impressive name.
+The mirror's [`Statements.lean`](https://github.com/Deicyde/riemann-hypothesis/blob/e50d09817ad81469f737e8f637561e6ccf86c670/src/Statements.lean) contains explicit Dirichlet $L$ function claims. The first headline theorem uses Mathlib's own `RiemannHypothesis` definition, not a newly defined local proposition bearing an impressive name.
 
 These observations identify the formal targets **as displayed in the external mirror**. GCL has read these declarations but has **not independently established byte identity of the mirror against the original author's archive**. The [MIT verification record](https://math.mit.edu/~drew/grh/) reports that the source archive and one mirror agree under the recorded hash.
 
