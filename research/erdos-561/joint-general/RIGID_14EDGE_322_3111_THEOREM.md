@@ -46,13 +46,13 @@ Consequently, for any hypothetical 14-edge joint host, every vertex has degree a
 
 **Statement.** If a finite simple graph $H$ has maximum degree at most three and **at most seven degree-three vertices**, it admits a matching meeting every degree-three vertex. Equivalently its edges can be coloured red/blue with red degree at most one and blue degree at most two.
 
-**External input and exact scope.** Apply the *ordinary* Lovász $(g,f)$-factor theorem, using
+**External input and exact scope.** Apply the *ordinary* Lovász $(g,f)$ factor theorem, using
 
 $$
 g(v)=\max(0,d(v)-2),\qquad f(v)=\min(1,d(v)).
 $$
 
-A $(g,f)$-factor is precisely the required matching. The ordinary theorem states that a factor exists iff, for every disjoint vertex sets $S,T$,
+A $(g,f)$ factor is precisely the required matching. The ordinary theorem states that a factor exists iff, for every disjoint vertex sets $S,T$,
 
 $$
 A=f(S)+\sum_{v\in T}\min(2,d(v))-e(S,T)\ \ge\ q(S,T),
