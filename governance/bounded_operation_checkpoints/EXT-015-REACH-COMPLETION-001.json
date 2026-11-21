@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP263",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP264",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,38 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed retained-collision lift with smooth integrated graph dependence",
+  "phase": "Moving-delta cusp with the actual coupled Gaussian at retained collision",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "cf0be0f3012ff88faf57ad09f8dbfcb94718d114",
-    "candidate_head_sha": "02ceae2378d28b15671117632537b6e777ad13cf",
+    "protected_base_sha": "05771e70b4fa5f23e8df0bdd5d30bbe7c982cf3f",
+    "candidate_head_sha": "05771e70b4fa5f23e8df0bdd5d30bbe7c982cf3f",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-ordered-green-uc028-review-20261121",
+    "branch": "research/reach-moving-delta-uc031-input-20261121",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "readback-ordered-fibre-and-address-distributional-dependence",
-      "description": "Complete native protected admission and exact readback of UC028–030 and reconcile integration and parent trackers. The exact ordered-cut lift through retained collision uses one fixed graph stage in which the integrated-coordinate slicing is smooth. The old partition-cone condition allows the moving delta excluded by this additional hypothesis. The next construction requires a genuinely new mixed-source mechanism supporting distributional integrated-coordinate dependence. In particular test the actual coupled moving-delta graph at the retained collision with a common stage across the supplied rows, keeping the original rapid rule and hidden histories. This control does not decide general source membership. No original obligation closes on this return."
+      "id": "construct-moving-delta-green-lift-uc031",
+      "description": "Construct and freeze the exact Green lift of the moving-delta history concentrated on u+c=0 with a genuinely coupled Gaussian. Check conic splitting through the retained midpoint, exact densities, radial scalar pullback through all three-vertex heat faces, and a hidden Gaussian bridge control. Verify common stages for the claimed supplied rows and the original rapid relation. Proceed to distinct nonauthor review of the immutable result. Keep universal 150.L open unless its unrestricted contract is met."
     }
   ],
   "next_action": {
-    "id": "readback-ordered-fibre-and-address-distributional-dependence",
-    "description": "Complete native protected admission and exact readback of UC028–030 and reconcile integration and parent trackers. The exact ordered-cut lift through retained collision uses one fixed graph stage in which the integrated-coordinate slicing is smooth. The old partition-cone condition allows the moving delta excluded by this additional hypothesis. The next construction requires a genuinely new mixed-source mechanism supporting distributional integrated-coordinate dependence. In particular test the actual coupled moving-delta graph at the retained collision with a common stage across the supplied rows, keeping the original rapid rule and hidden histories. This control does not decide general source membership. No original obligation closes on this return.",
+    "id": "construct-moving-delta-green-lift-uc031",
+    "description": "Construct and freeze the exact Green lift of the moving-delta history concentrated on u+c=0 with a genuinely coupled Gaussian. Check conic splitting through the retained midpoint, exact densities, radial scalar pullback through all three-vertex heat faces, and a hidden Gaussian bridge control. Verify common stages for the claimed supplied rows and the original rapid relation. Proceed to distinct nonauthor review of the immutable result. Keep universal 150.L open unless its unrestricted contract is met.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_LIFT_UC028.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_ORDERED_FIBRE_UC029.md",
-      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_ACCEPTANCE_UC030.md"
+      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_LIFT_UC031.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "05771e70b4fa5f23e8df0bdd5d30bbe7c982cf3f",
+        "status": "Protected UC028–030 at d54596e0c5f40155da7b2186679a3b15025a5049. No intervening REACH science or control changes."
+      },
       {
         "kind": "review",
         "identity": "02ceae2378d28b15671117632537b6e777ad13cf corrected proof d89187423a60abbfb263758fa3b4137890050627",
@@ -2073,21 +2076,18 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedOrderedFibreLift",
-    "result": "Bounded collision lift reviewed, protected admission pending",
+    "action": "BindMovingDeltaGreenLift",
+    "result": "User-authorized concrete construction bound at refreshed protected main",
     "evidence_refs": [
-      "research/reach-ordered-green-uc028-corrected-20261121",
-      "research/reach-ordered-green-uc028-review-20261121",
-      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_LIFT_UC028.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_ORDERED_FIBRE_UC029.md",
-      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_ACCEPTANCE_UC030.md"
+      "research/reach-moving-delta-uc031-input-20261121",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3612"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-21T12:54:29.493276+00:00"
+    "observed_at": "2026-11-21T23:13:29.408736+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2308,9 +2308,11 @@
       "research/reach-ordered-green-uc028-corrected-20261121",
       "research/reach-ordered-green-uc028-review-20261121",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_ORDERED_FIBRE_UC029.md",
-      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_ACCEPTANCE_UC030.md"
+      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_ACCEPTANCE_UC030.md",
+      "research/reach-moving-delta-uc031-input-20261121",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3612"
     ],
-    "instructions": "Complete native protected admission and exact readback of UC028–030 and reconcile integration and parent trackers. The exact ordered-cut lift through retained collision uses one fixed graph stage in which the integrated-coordinate slicing is smooth. The old partition-cone condition allows the moving delta excluded by this additional hypothesis. The next construction requires a genuinely new mixed-source mechanism supporting distributional integrated-coordinate dependence. In particular test the actual coupled moving-delta graph at the retained collision with a common stage across the supplied rows, keeping the original rapid rule and hidden histories. This control does not decide general source membership. No original obligation closes on this return."
+    "instructions": "Construct and freeze the exact Green lift of the moving-delta history concentrated on u+c=0 with a genuinely coupled Gaussian. Check conic splitting through the retained midpoint, exact densities, radial scalar pullback through all three-vertex heat faces, and a hidden Gaussian bridge control. Verify common stages for the claimed supplied rows and the original rapid relation. Proceed to distinct nonauthor review of the immutable result. Keep universal 150.L open unless its unrestricted contract is met."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
