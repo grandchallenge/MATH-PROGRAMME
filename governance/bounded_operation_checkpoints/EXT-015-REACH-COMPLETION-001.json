@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP260",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP261",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,38 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed off-diagonal source theorem and remaining retained-collision mapping problem",
+  "phase": "Order-cut Green pushforward at the retained collision",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "741a4bc2ce18464bf26e107a7f7122b6c77f4cac",
-    "candidate_head_sha": "ed22096de8d77dc46866fe740eec8374077364cb",
+    "protected_base_sha": "cf0be0f3012ff88faf57ad09f8dbfcb94718d114",
+    "candidate_head_sha": "cf0be0f3012ff88faf57ad09f8dbfcb94718d114",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-cluster-green-uc025-review-20261121",
+    "branch": "research/reach-ordered-green-uc028-input-20261121",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "readback-cluster-green-and-test-retained-collision",
-      "description": "Complete protected admission, exact eight-blob native readback and integration/parent tracker reconciliation of UC025–027. For every fixed complete original source collection the off-diagonal part has exact original-source lifts with unchanged rapid estimates; the entire full remainder is still unresolved. Continue at the part cut off near the retained diagonal, where both retained vertices can belong to one collision cluster. Require a genuinely new construction with a common completed scalar/graph stage across all supplied rows, or a genuine obstruction to every permitted lift modulo the original rapid ideal. A colliding-cluster translation would move both outputs and is below this threshold. The original conditional support comparison verdict and the separate R3 integration dependency check remain in scope. No original-obligation closure follows from this localization, and general R4/M5 and overall REACH remain open."
+      "id": "construct-ordered-fibre-green-lift-uc028",
+      "description": "Construct and freeze one primary near-diagonal Green source candidate by splitting the augmented heat space on the Green displacement wall. Check the two restricted b-fibrations, scalar density and all face indices. Extend through the original completed sources wherever the integrated-coordinate coefficient separation is proved. Test that hypothesis against the original distributional graph domain and retain the universal claim open if the extension fails. Preserve the supplied parameter rows and the original rapid rule. Continue to distinct nonauthor review of the immutable result."
     }
   ],
   "next_action": {
-    "id": "readback-cluster-green-and-test-retained-collision",
-    "description": "Complete protected admission, exact eight-blob native readback and integration/parent tracker reconciliation of UC025–027. For every fixed complete original source collection the off-diagonal part has exact original-source lifts with unchanged rapid estimates; the entire full remainder is still unresolved. Continue at the part cut off near the retained diagonal, where both retained vertices can belong to one collision cluster. Require a genuinely new construction with a common completed scalar/graph stage across all supplied rows, or a genuine obstruction to every permitted lift modulo the original rapid ideal. A colliding-cluster translation would move both outputs and is below this threshold. The original conditional support comparison verdict and the separate R3 integration dependency check remain in scope. No original-obligation closure follows from this localization, and general R4/M5 and overall REACH remain open.",
+    "id": "construct-ordered-fibre-green-lift-uc028",
+    "description": "Construct and freeze one primary near-diagonal Green source candidate by splitting the augmented heat space on the Green displacement wall. Check the two restricted b-fibrations, scalar density and all face indices. Extend through the original completed sources wherever the integrated-coordinate coefficient separation is proved. Test that hypothesis against the original distributional graph domain and retain the universal claim open if the extension fails. Preserve the supplied parameter rows and the original rapid rule. Continue to distinct nonauthor review of the immutable result.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_ACCEPTANCE_UC027.md",
-      "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_GREEN_LOCALIZATION_UC025.md",
-      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md"
+      "research/condensed-qft/EXT-015/ORDERED_FIBRE_GREEN_LIFT_UC028.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "cf0be0f3012ff88faf57ad09f8dbfcb94718d114",
+        "status": "Protected UC025–027 read back at d7e1cade174d99892fcfa0a7b57f569d32ebdedc. The two subsequent merges change only unrelated Erdos work."
+      },
       {
         "kind": "review",
         "identity": "ed22096de8d77dc46866fe740eec8374077364cb proof 8e41e847116a32452cdba4da80387d1dcb555a5a",
@@ -2058,21 +2061,18 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedClusterTranslation",
-    "result": "Bounded off-diagonal theorem reviewed, native admission pending",
+    "action": "BindOrderCutGreenAtRetainedCollision",
+    "result": "User-authorized next primary construction bound to exact sources",
     "evidence_refs": [
-      "research/reach-cluster-green-uc025-primary-20261121",
-      "research/reach-cluster-green-uc025-review-20261121",
-      "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_GREEN_LOCALIZATION_UC025.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_CLUSTER_TRANSLATION_UC026.md",
-      "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_ACCEPTANCE_UC027.md"
+      "research/reach-ordered-green-uc028-input-20261121",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3603"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-21T12:22:22.086114+00:00"
+    "observed_at": "2026-11-21T12:47:41.030310+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2285,9 +2285,11 @@
       "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_GREEN_LOCALIZATION_UC025.md",
       "research/reach-cluster-green-uc025-review-20261121",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_CLUSTER_TRANSLATION_UC026.md",
-      "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_ACCEPTANCE_UC027.md"
+      "research/condensed-qft/EXT-015/CLUSTER_TRANSLATION_ACCEPTANCE_UC027.md",
+      "research/reach-ordered-green-uc028-input-20261121",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3603"
     ],
-    "instructions": "Complete protected admission, exact eight-blob native readback and integration/parent tracker reconciliation of UC025–027. For every fixed complete original source collection the off-diagonal part has exact original-source lifts with unchanged rapid estimates; the entire full remainder is still unresolved. Continue at the part cut off near the retained diagonal, where both retained vertices can belong to one collision cluster. Require a genuinely new construction with a common completed scalar/graph stage across all supplied rows, or a genuine obstruction to every permitted lift modulo the original rapid ideal. A colliding-cluster translation would move both outputs and is below this threshold. The original conditional support comparison verdict and the separate R3 integration dependency check remain in scope. No original-obligation closure follows from this localization, and general R4/M5 and overall REACH remain open."
+    "instructions": "Construct and freeze one primary near-diagonal Green source candidate by splitting the augmented heat space on the Green displacement wall. Check the two restricted b-fibrations, scalar density and all face indices. Extend through the original completed sources wherever the integrated-coordinate coefficient separation is proved. Test that hypothesis against the original distributional graph domain and retain the universal claim open if the extension fails. Preserve the supplied parameter rows and the original rapid rule. Continue to distinct nonauthor review of the immutable result."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
