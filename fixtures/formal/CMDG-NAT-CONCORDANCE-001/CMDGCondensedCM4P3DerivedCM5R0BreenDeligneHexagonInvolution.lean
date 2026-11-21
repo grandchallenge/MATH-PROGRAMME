@@ -3,28 +3,31 @@ import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Abel
 set_option backward.isDefEq.respectTransparency false
 
-
 /-!
-# CMDG CM5: genuine degree-three hexagon and symmetric-involution syzygies
+# CMDG CM5: genuine hexagon, symmetry, and diagonal degree-three syzygies
 
-The actual Breen–Deligne free condensed abelian source terms satisfy
-the hexagon relation connecting associativity with commutativity:
-  A(a,b,c) - A(b,a,c) + A(b,c,a)
-    = C(a,b+c) - C(a,b) - C(a,c),
-where A and C are the genuine prior categorical boundaries.
-Nine exact polynomial-face pairings are proved as CondensedAb
-morphism equalities. The second syzygy is C(a,b)+C(b,a)=0, proved
-via the involution of pair swapping. Combining these yields a genuine
-partial degree-three coherence chain
-    Z[A³] ⊕ Z[A²] → F₂(A) → F₁(A)
-with zero composition for any compact Hausdorff abelian group A,
-including arbitrary products of circles.
+Define the explicit hexagon relation
+ A(a,b,c) − A(b,a,c) + A(b,c,a)
+ = C(a,b+c) − C(a,b) − C(a,c)
+on genuine free compact-polynomial condensed modules, with nine verified
+finite face cancellations. Independently prove pair-swap involution
+C(a,b)+C(b,a)=0.
 
-This is a partial degree-three chain, NOT proof of exactness at F₂,
-a full degree-three generator basis, an all-degree finite-type
-resolution, the analytic derived-real/circle comparisons, or the
-canonical solidification-unit evaluation map.
+Crucially, also adjoin the *strict commutativity diagonal*
+C(a,a)=0, represented by a genuine free condensed term Z[A].
+The missing diagonal leaves torsion in a finite cyclic group
+sanity test: pentagon + hexagon + symmetry alone gives H₂=Z/2
+for A=Z/2, whereas adjoining the diagonal kills that residual.
+This computational observation is not a general exactness theorem.
+
+The combined genuine low-degree partial complex
+  (Z[A³] ⊕ Z[A²]) ⊕ Z[A] → F₂(A) → F₁(A)
+has zero composition for every compact Hausdorff abelian A,
+including arbitrary product circles. It does not prove exactness,
+the full all-degree Breen–Deligne resolution, real/circle derived
+comparison or canonical solidification-unit compatibility.
 -/
+
 noncomputable section
 universe u
 open CategoryTheory Limits
@@ -185,6 +188,54 @@ theorem circleTorus_hexSymBoundary_comp_d2_zero (I : Type u) :
 
 #print axioms hexSymBoundary_comp_d2_zero
 #print axioms circleTorus_hexSymBoundary_comp_d2_zero
+
+/-- Strict commutativity coherence: the diagonal commutator
+C(a,a) has zero lower boundary. Its omission leaves 2-torsion
+in the partial F₃ test at A=ℤ/2. -/
+def diagonalPair : C(A, A × A) :=
+  ⟨fun a => (a,a), continuous_id.prodMk continuous_id⟩
+
+def diagonalBoundary : src0 A ⟶ src2 A :=
+  polyMap (diagonalPair A) ≫ biprod.inr
+
+theorem diagonalBoundary_comp_d2_zero :
+    diagonalBoundary A ≫ d2 A = 0 := by
+  change (polyMap (diagonalPair A) ≫ biprod.inr) ≫
+    biprod.desc (d2assoc A) (d2comm A) = 0
+  rw [Category.assoc,biprod.inr_desc]
+  change polyMap (diagonalPair A) ≫
+      (𝟙 (src1 A) - polyMap (hexSwapPair A)) = 0
+  simp only [Preadditive.comp_sub,Category.comp_id,polyMap_comp]
+  have hh : (hexSwapPair A).comp (diagonalPair A) =
+      diagonalPair A := by
+    ext a <;> rfl
+  rw [hh]
+  abel
+
+/-- Three explicitly checked degree-three relation classes:
+hexagon, symmetry involution, and diagonal strict-commutativity. -/
+noncomputable abbrev hexSymDiagonalSource : CondensedAb.{u} :=
+  hexSymSource A ⊞ src0 A
+
+def hexSymDiagonalBoundary : hexSymDiagonalSource A ⟶ src2 A :=
+  biprod.desc (hexSymBoundary A) (diagonalBoundary A)
+
+theorem hexSymDiagonalBoundary_comp_d2_zero :
+    hexSymDiagonalBoundary A ≫ d2 A = 0 := by
+  change biprod.desc (hexSymBoundary A) (diagonalBoundary A) ≫ d2 A = 0
+  rw [biprod.desc_eq,Preadditive.add_comp]
+  simp only [Category.assoc,hexSymBoundary_comp_d2_zero,
+    diagonalBoundary_comp_d2_zero,comp_zero,add_zero]
+
+theorem circleTorus_hexSymDiagonalBoundary_comp_d2_zero
+    (I : Type u) :
+    hexSymDiagonalBoundary (I → UnitAddCircle) ≫
+      d2 (I → UnitAddCircle) = 0 :=
+  hexSymDiagonalBoundary_comp_d2_zero (I → UnitAddCircle)
+
+#print axioms diagonalBoundary_comp_d2_zero
+#print axioms hexSymDiagonalBoundary_comp_d2_zero
+#print axioms circleTorus_hexSymDiagonalBoundary_comp_d2_zero
 
 #print axioms hexBoundary_comp_d2_zero
 end CMDG.CondensedCM5R0.BreenDeligneCondensed
