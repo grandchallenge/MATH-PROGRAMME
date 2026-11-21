@@ -120,11 +120,11 @@ $$
 (\underbrace{m_1,\ldots,m_1}_{s-1},m_2,\ldots,m_t).
 $$
 
-For our saturated maximal prefix, this list equals $(b^{2s-3},c_1,\ldots,c_L)$, whose sum is exactly the lower bound above. The source-proved antidiagonal star-host Ramsey criterion (\`JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md\`, Theorem A) shows the canonical host simultaneously arrows R1 and R2. Hence its edge count is attained, proving equality. QED.
+For our saturated maximal prefix, this list equals $(b^{2s-3},c_1,\ldots,c_L)$, whose sum is exactly the lower bound above. The source-proved antidiagonal star-host Ramsey criterion (`JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md`, Theorem A) shows the canonical host simultaneously arrows R1 and R2. Hence its edge count is attained, proving equality. QED.
 
 ### Concrete families, including the formerly two-tier case
 
-For $s=4$ and any $t\ge3$, original red is a four-edge matching, original blue can be **three largest $b$-stars followed by any sorted positive tail**; the exact joint minimum is
+For $s=4$ and any $t\ge3$, original red is a four-edge matching, original blue can be **three largest stars of size $b$ followed by any sorted positive tail**; the exact joint minimum is
 
 $$
 \mathcal J((1,1,1,1),(b,b,b,c_1,\ldots,c_L))=5b+\sum_\ell c_\ell.
@@ -136,6 +136,6 @@ Theorem A also gives a valid new partial lower bound for **any** nonincreasing b
 
 ## Verification and exact mathematical boundary
 
-The deterministic verifier \`verify_saturated_matching_joint.py\` independently computes the complete original and both residual antidiagonals using zero- and one-based conventions; it checks **14,203** bounded matching-versus-blue-profile cases, including **3,385** saturated-prefix exact-family instances, and exhaustive all-arm red/blue allocations across seven specified canonical hosts (**116,386** allocations). The finite checks corroborate the separate analytical proof; no finite graph-topology census proves the theorem.
+The deterministic verifier `verify_saturated_matching_joint.py` independently computes the complete original and both residual antidiagonals using zero- and one-based conventions; it checks **14,203** bounded matching-versus-blue-profile cases, including **3,385** saturated-prefix exact-family instances, and exhaustive all-arm red/blue allocations across seven specified canonical hosts (**116,386** allocations). The finite checks corroborate the separate analytical proof; no finite graph-topology census proves the theorem.
 
 New unbounded claim 022 remains UNDER_REVIEW. Bounded exact arithmetic/arm-class claim 023 is CHECKED. This does not promote unrestricted Erdős #561, issue #3490, or MATHCERT.
