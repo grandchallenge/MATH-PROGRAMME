@@ -573,5 +573,63 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary-host universal vertex-cover peeling and matching-side exact solution",
+  "assumptions": [
+    "s,t>=3; positive nonincreasing star lists n and m",
+    "finite simple host graphs, ordinary non-induced vertex-disjoint star forest embeddings",
+    "matching exact specialization: n=(1 repeated s), blue m completely arbitrary"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3618"
+  ],
+  "promotion_condition": "Paper theorem UNDER_REVIEW; numerical checker CHECKED only after exact-head replay. No full nonmatching/nonmatching theorem, no MATHCERT certification.",
+  "claim_id": "ERDOS561-UNIVERSAL-MATCHING-PEELING-025",
+  "short_name": "Universal vertex-cover deletion lower and exact matching-side joint and original Ramsey formulas",
+  "claim_text": "For arbitrary positive nonincreasing original lists n,m of lengths s,t>=3, any joint residual host Q has e(Q)>=max((s-2)m1+sum(m),(t-2)n1+sum(n)); any original Ramsey host G has e(G)>=max((s-1)m1+sum(m),(t-1)n1+sum(n)). In particular, if n=(1^s) is a matching, the exact joint residual minimum for ANY m is J=(s-2)m1+sum(m) and the exact original size Ramsey value is W=(s-1)m1+sum(m) over arbitrary finite simple graphs, with no saturation or parity conditions. Colour all edges meeting up to s-2 (joint) or s-1 (original) deleted vertices red; matching number red<=|S| excludes red target. Surviving graph contains full blue m for all S, allowing sequential deletion of a new degree>=m1 centre and disjoint edge accounting before final surviving full forest. Canonical antidiagonal host matches. Same by symmetry if m is a matching. Full unrestricted nonmatching/nonnmatching conjecture OPEN.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "For any arrow G->(F(a),F(b)) with p=length(a), red every edge touching a vertex set S of <=p-1 vertices; red vertex cover S gives matching number <p, while F(a) has p vertex-disjoint positive stars. Thus G-S contains F(b). Sequentially select p-1 centres of b1-stars in successive remaining graphs, each removing >=b1 distinct edges, and leave at least B=sum(b) edges in final graph. Apply to each residual and original arrow; for n=1^s canonical antidiagonal exactly has s copies of m1 followed by m2..mt, hence matches peeled bounds. Does not require mathematical factor theorem or bounded full-graph search.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/MATCHING_DEGREE_PEELING_THEOREM.md",
+    "research/erdos-561/joint-general/verify_matching_degree_peeling.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/MATCHING_PEELING_EVIDENCE.json",
+    "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_THEOREM.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary-host universal vertex-cover peeling and matching-side exact solution",
+  "assumptions": [
+    "s,t>=3; positive nonincreasing star lists n and m",
+    "finite simple host graphs, ordinary non-induced vertex-disjoint star forest embeddings",
+    "matching exact specialization: n=(1 repeated s), blue m completely arbitrary"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3618"
+  ],
+  "promotion_condition": "Paper theorem UNDER_REVIEW; numerical checker CHECKED only after exact-head replay. No full nonmatching/nonmatching theorem, no MATHCERT certification.",
+  "claim_id": "ERDOS561-UNIVERSAL-MATCHING-PEELING-CHECK-026",
+  "short_name": "Independent antidiagonal verification of all matching-side profiles and complete canonical hosts",
+  "claim_text": "Exact finite tests compare both antidiagonal indexing conventions for matching original lists versus every enumerated nonincreasing blue profile, check the universal two-sided peeling bounds on bounded arbitrary positive list pairs, and exhaust complete red-arm allocations on six joint and original matching-side canonical hosts. The finite checker is corroboration, not the analytic arbitrary-host proof.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Standard library enumeration and two indexing methods; original and both joint residual antidiagonal profiles, universal certificate lower-vs-upper inequalities, complete star-host red-arm colour allocations for six nonuniform examples, deterministic bounded results.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_matching_degree_peeling.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/MATCHING_PEELING_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))

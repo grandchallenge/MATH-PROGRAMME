@@ -1,0 +1,20 @@
+{
+  "record_type": "GCL_ERDOS561_UNIVERSAL_VERTEX_COVER_PEELING/1",
+  "date": "2026-11-21",
+  "claim": "For every n,m positive lengths s,t>=3, e(Q)>=max((s-2)m1+sum(m),(t-2)n1+sum(n)) for joint residual, and any original Ramsey host satisfies e(G)>=max((s-1)m1+sum(m),(t-1)n1+sum(n)). In particular for red matching n=1^s, exact joint J=(s-2)m1+sum(m), exact original W=(s-1)m1+sum(m), regardless of m profile and parity.",
+  "proof": "For every vertex set S of size <=length(red_target)-1, red all edges touching S; red graph matching number<=|S| so no red star forest; blue full opposing star forest must lie in G-S. Sequentially choose and delete maximum blue-star centre with degree >=m1 in current residual; count disjoint m1 edges per step, then full surviving forest edges.",
+  "context": "Strict strengthening of previous saturated matching prefix theorem; no dependence on source-proved Lovasz/core transfer needed for original matching result.",
+  "status": "UNBOUNDED_PAPER_UNDER_REVIEW",
+  "finite_status": "CHECKED_AT_EXACT_SOURCE_HEAD_AFTER_MANIFEST_REPLAY",
+  "full_problem_status": "OPEN/PARTIAL",
+  "certification": "NOT_MATHCERT",
+  "finite_replay": {
+    "matching_all_profiles": 17850,
+    "non_saturated_prefix_profiles": 14378,
+    "universal_two_sided_parameter_pairs": 38025,
+    "joint_peeling_exact_profiles": 2102,
+    "complete_joint_canonical_arm_colourings": 4140,
+    "complete_original_canonical_arm_colourings": 18036,
+    "complete_profile_pairs": 6
+  }
+}
