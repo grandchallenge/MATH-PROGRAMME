@@ -95,9 +95,40 @@ theorem compactParametricDoubling_realCochain_norm_le_one
   realCompactCochain_compCLM_norm_le_one
     (compactParametricDoublingMap A S)
 
+
+/-- A finite integer/real linear combination of actual pullbacks is a
+bounded operator. This is the degreewise analytic boundedness mechanism
+for the finite-support homotopies in a Breen–Deligne resolution.
+The quantitative operator bound is the sum of the absolute coefficients. -/
+theorem realCompactCochain_finiteWeightedPullbacks_norm_le
+    {ι : Type*} (s : Finset ι) (c : ι → ℝ) (g : ι → C(X, Y)) :
+    ‖∑ i ∈ s, c i •
+        (ContinuousMap.compCLM ℝ ℝ (g i) :
+          C(Y, ℝ) →L[ℝ] C(X, ℝ))‖ ≤ ∑ i ∈ s, |c i| := by
+  calc
+    ‖∑ i ∈ s, c i •
+        (ContinuousMap.compCLM ℝ ℝ (g i) :
+          C(Y, ℝ) →L[ℝ] C(X, ℝ))‖
+        ≤ ∑ i ∈ s, ‖c i •
+          (ContinuousMap.compCLM ℝ ℝ (g i) :
+            C(Y, ℝ) →L[ℝ] C(X, ℝ))‖ := norm_sum_le _ _
+    _ ≤ ∑ i ∈ s, |c i| := by
+      apply Finset.sum_le_sum
+      intro i hi
+      rw [norm_smul, Real.norm_eq_abs]
+      calc
+        |c i| * ‖(ContinuousMap.compCLM ℝ ℝ (g i) :
+            C(Y, ℝ) →L[ℝ] C(X, ℝ))‖
+            ≤ |c i| * 1 :=
+              mul_le_mul_of_nonneg_left
+                (realCompactCochain_compCLM_norm_le_one (g i))
+                (abs_nonneg _)
+        _ = |c i| := mul_one _
+
 #print axioms realCompactCochain_comp_norm_le
 #print axioms realCompactCochain_compCLM_norm_le_one
 #print axioms realCompactCochain_compCLM_comp
+#print axioms realCompactCochain_finiteWeightedPullbacks_norm_le
 #print axioms compactDoubling_realCochain_norm_le_one
 #print axioms compactParametricDoubling_realCochain_norm_le_one
 
