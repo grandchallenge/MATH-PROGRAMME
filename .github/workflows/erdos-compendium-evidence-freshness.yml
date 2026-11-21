@@ -1,0 +1,105 @@
+name: Erdős Compendium evidence freshness and editorial queue
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "21 */6 * * *"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: erdos-compendium-evidence-freshness
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.12"
+      - name: Run offline source-identity unit tests
+        run: python3 -m unittest discover -s ci -p test_erdos_compendium_evidence_freshness.py -q
+      - name: Fetch current protected MATHCERT authority in one bounded read
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/grandchallenge/MATHCERT/contents/governance/certification_routes.json?ref=main --jq .content | base64 -d > "$RUNNER_TEMP/active-cert-routes.json"
+          test -s "$RUNNER_TEMP/active-cert-routes.json"
+      - name: Compare certified results with Compendium authoring and admission
+        run: |
+          set -euo pipefail
+          python3 ci/erdos_compendium_evidence_freshness.py \
+            --registry governance/erdos_catalogue/REGISTRY.json \
+            --admissions governance/erdos_compendium/EDITORIAL_ADMISSIONS.json \
+            --routes "$RUNNER_TEMP/active-cert-routes.json" \
+            --editorial-dir governance/erdos_compendium/editorial \
+            --output "$RUNNER_TEMP/erdos-compendium-freshness.json"
+          python3 - "$RUNNER_TEMP/erdos-compendium-freshness.json" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          print(f"### Erdős Compendium certified-result editorial drift\n\nChecked {d['certified_routes_scanned']} certified route(s); {d['unreconciled_certified_results']} await reviewed article/admission.\n")
+          print("This is an **editorial triage queue**, not a theorem-verification or publication decision.\n")
+          for row in d["review_candidates"]:
+              n=row["problem_id"]
+              print(f"- [Problem #{n}](https://grandchallenge.ai/MATH-PROGRAMME/erdos/problems/{n:04d}/): draft={row['manuscript_exists']}; admitted={row['editorial_admitted']}; {row['campaign_id']}")
+          PY
+      - name: Reconcile one durable editorial-drift issue without duplicate comments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 - "$RUNNER_TEMP/erdos-compendium-freshness.json" "$RUNNER_TEMP/freshness-issue.md" <<'PY'
+          import hashlib,json,sys
+          from pathlib import Path
+          raw=Path(sys.argv[1]).read_bytes()
+          d=json.loads(raw)
+          digest=hashlib.sha256(raw).hexdigest()
+          lines=[
+              "# Erdős Compendium — certified-result editorial drift",
+              "",
+              f"Evidence SHA-256: `{digest}`",
+              "",
+              f"Certified routes: {d['certified_routes_scanned']}; missing manuscript or editorial admission: {d['unreconciled_certified_results']}.",
+              "",
+              "This is an **automated read-only evidence comparison**; it DOES NOT approve editorial admission, claim certification, novelty, or public release.",
+              "Historical catalogue status remains a pinned snapshot; a draft does not count as published.",
+              "",
+          ]
+          for row in d["review_candidates"]:
+              n=row["problem_id"]
+              lines.append(f"- [#{n}](https://grandchallenge.ai/MATH-PROGRAMME/erdos/problems/{n:04d}/): {row['campaign_id']}; manuscript={row['manuscript_exists']}; admitted={row['editorial_admitted']}; [MATHCERT output](https://github.com/grandchallenge/MATHCERT/blob/main/{row['certificate_path']})")
+          if not d["review_candidates"]:
+              lines.append("No certified-route editorial discrepancies in this bounded scan.")
+          lines.append("")
+          lines.append("Remediation: source audit → exact reviewable manuscript → protected draft merge → public HTML/MathJax check → separate protected editorial-admission evidence and readback. A certification route is not public-publication authority.")
+          Path(sys.argv[2]).write_text("\n".join(lines)+"\n",encoding="utf-8")
+          PY
+          title="Erdős Compendium — certified-result editorial drift"
+          existing="$(gh issue list -R "$GITHUB_REPOSITORY" --state open --search "in:title certified-result editorial drift" --limit 20 --json number,title --jq '[.[]|select(.title=="Erdős Compendium — certified-result editorial drift")|.number]|first // empty')"
+          if [ -z "$existing" ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/freshness-issue.md"
+          else
+            previous="$(gh issue view "$existing" -R "$GITHUB_REPOSITORY" --json body --jq .body | grep -m1 'Evidence SHA-256:' || true)"
+            current="$(grep -m1 'Evidence SHA-256:' "$RUNNER_TEMP/freshness-issue.md")"
+            if [ "$previous" != "$current" ]; then
+              gh issue edit "$existing" -R "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/freshness-issue.md"
+            else
+              echo "No editorial drift change; no API write"
+            fi
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: erdos-compendium-freshness-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/erdos-compendium-freshness.json
+          retention-days: 30
+          if-no-files-found: warn
