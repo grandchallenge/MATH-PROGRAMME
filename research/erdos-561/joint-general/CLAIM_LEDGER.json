@@ -823,6 +823,92 @@
         "research/erdos-561/joint-general/MATCHING_PEELING_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / all positive three-star-versus-three-star joint residual",
+      "assumptions": [
+        "a>=b>=e>=1,c>=d>=f>=1, originals x=(a,b,e), y=(c,d,f)",
+        "arbitrary finite simple host graphs, ordinary non-induced and vertex-disjoint positive star-forest copies",
+        "imported pinned two-component 2026 theorem and ordinary Gallai, Vizing, Győri-Schelp classical results"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ],
+      "promotion_condition": "A prior October 2026 public three-component proposed proof is explicitly acknowledged; this is an internal paper reconstruction and algebraic review, not priority, independent referee certification, MATHCERT, or proof of all s,t.",
+      "claim_id": "ERDOS561-THREE-BY-THREE-JOINT-027",
+      "short_name": "Exact arbitrary-host 3x3 joint residual via matching deletion and two-component bridge",
+      "claim_text": "For all ordered positive triples x=(a,b,e), y=(c,d,f), a>=b>=e>=1,c>=d>=f>=1, the exact unrestricted-host simultaneous residual minimum equals J=w3+w4+w5+w6 with antidiagonal maxima w_k=max_{i+j=k}(x_i+y_j-1). Proof reconstructs the Oct 2026 publicly proposed three-component argument, with a two-star residual bridge from a pinned exact two-component result, one-vertex deletion forcing copies of full x,y, a Gallai factor-critical matching-number>=4 lemma when e>=2 or f>=2, induction stripping a maximum matching and lowering all four w terms by one, and a complete e=f=1 boundary of individually forced two-star bounds, four-edge matching recursion, or sole matching-number-three core 3K3. Canonical four-star host attains J. This is not the unrestricted s,t conjecture.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Every Q-v contains full original x and y via red-/blue-star monochromatic deletion; ν(Q)=3 gives factor-critical components and at most nine nonisolated vertices, contradicting any min arm>=2. If min arm>=2, maximum matching of at least4 decreases every term of joint tail by exactly1 and preserves residuals. For both min1, b>=d, if b=d=1 two individual two-star bounds suffice; if c>max(a,b+d-1) first residual is sharp; else ν>=4 and two-star residual bridge yields L-4 after matching deletion; ν=3 forces 3K3 and c<=2. Imported two-star theorem pinned arXiv:2610.25958v1; public three-component antecedent https://botnet.com/posts/2ca6bbad-89fa-450c-91ea-ea82e142e0b1 .",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+        "research/erdos-561/joint-general/verify_three_by_three_joint_induction.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / all positive three-star-versus-three-star joint residual",
+      "assumptions": [
+        "a>=b>=e>=1,c>=d>=f>=1, originals x=(a,b,e), y=(c,d,f)",
+        "arbitrary finite simple host graphs, ordinary non-induced and vertex-disjoint positive star-forest copies",
+        "imported pinned two-component 2026 theorem and ordinary Gallai, Vizing, Győri-Schelp classical results"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ],
+      "promotion_condition": "A prior October 2026 public three-component proposed proof is explicitly acknowledged; this is an internal paper reconstruction and algebraic review, not priority, independent referee certification, MATHCERT, or proof of all s,t.",
+      "claim_id": "ERDOS561-THREE-BY-THREE-LARGE-LEADER-028",
+      "short_name": "Original 3x3 size Ramsey exact when sum of leading star sizes at least 12",
+      "claim_text": "For any positive ordered original triples x=(a,b,e),y=(c,d,f) with a,c>=2 and a+c>=12, the original unrestricted-host size Ramsey number equals the five-antidiagonal W=sum_{k=2}^6w_k. Via claim027 every original Ramsey graph G with E<W has every vertex deletion satisfying joint residual e>=J=W-(a+c-1), hence Delta(G)<=a+c-2=D. Vizing forces Delta=D, and Győri-Schelp saturation necessity forces at least D+1 saturated vertices, so D(D+1)<=2E<=2(W-1)<=10(D+1)-2, impossible for D>=10. Canonical host yields upper. Also for x=(3r,r,r), y=(4r,3r,r), exact joint J=17r-4 all r>=1 and original W=24r-5 for r>=2, with switching surplus r.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Exact 3x3 joint residual claim027 plus source-locked every-vertex deletion implication bounds max degree in hypothetical E<W graph by D=a+c-2. Vizing edge-colour partition shows Delta>=D; Győri-Schelp degree cap theorem forces at least D+1 vertices degree D to prevent avoiding cap colouring. Sum degrees at least D(D+1), yet five canonical antidiagonal entries all <=D+1 imply 2E<=10(D+1)-2, contradiction for D>=10. This leaves small leading a+c<=11 untouched by this theorem; public proposed proof has additional case-specific arguments under independent review.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / all positive three-star-versus-three-star joint residual",
+      "assumptions": [
+        "a>=b>=e>=1,c>=d>=f>=1, originals x=(a,b,e), y=(c,d,f)",
+        "arbitrary finite simple host graphs, ordinary non-induced and vertex-disjoint positive star-forest copies",
+        "imported pinned two-component 2026 theorem and ordinary Gallai, Vizing, Győri-Schelp classical results"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3502"
+      ],
+      "promotion_condition": "A prior October 2026 public three-component proposed proof is explicitly acknowledged; this is an internal paper reconstruction and algebraic review, not priority, independent referee certification, MATHCERT, or proof of all s,t.",
+      "claim_id": "ERDOS561-THREE-BY-THREE-CHECK-029",
+      "short_name": "All three-star antidiagonal/induction arithmetic and six exception profiles finite verification",
+      "claim_text": "Exact finite script checks 27225 ordered 3x3 pair profiles and both antidiagonal indexing conventions, 19800 red and 19800 blue four-term matching decrement identities, 860 boundary residual bridge identities, 22330 large-leader degree saturation arithmetic cases, exact set of six published exceptional (a,b,c,d) boundary profiles, 100 scale-switch family identities, and all 1301 red-arm allocations of six canonical joint hosts. These checks support but do not replace the unbounded matching/Gallai proof.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Two independently coded index conventions for 3x3 antidiagonal lists, algebraic direct bridge identities and matching-decrement equations for bounded positive star size grid, boundary parameter exact comparisons, complete red-arm host allocations. Finite checks are not a graph-topology proof.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_three_by_three_joint_induction.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
