@@ -1421,8 +1421,7 @@ class FullWindowPrimeProjectionTests(unittest.TestCase):
             self.assertEqual(sum(r["observed"], Fraction()), 0)
             self.assertGreater(r["l2_mean_projection"], 0)
             self.assertGreaterEqual(
-                18*r["fixed_prime_alias_vector"].__len__() *
-                sum(k*k for k in r["fixed_prime_alias_vector"]),
+                18 * sum(k*k for k in r["fixed_prime_alias_vector"]),
                 (1 << L)**2)
 
     def test_real_full_window_decomposition_exact_fraction(self):
