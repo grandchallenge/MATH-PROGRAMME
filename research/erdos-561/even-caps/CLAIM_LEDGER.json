@@ -92,6 +92,41 @@
         "research/erdos-561/even-caps/EVEN_CAP_DEGREE_SPLITTING_THEOREM.md",
         "research/erdos-561/even-caps/README.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / original size-Ramsey general sharp-residual transfer / infinite families",
+      "assumptions": [
+        "finite simple graph hosts",
+        "nonincreasing positive star sizes and ordinary disjoint non-induced subgraphs",
+        "at least three components per target",
+        "leading sizes n1,m1 odd and >=3",
+        "source-proved exact joint residual inequalities for four family applications"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3569",
+        "MATH-PROGRAMME#3578",
+        "MATH-PROGRAMME#3583",
+        "MATH-PROGRAMME#3587"
+      ],
+      "promotion_condition": "The general transfer is a paper proof, not resolution of unrestricted Erdős #561. Four original family applications inherit UNDER_REVIEW status from their exact joint-residual parent proofs; no independent mathematical adjudication or MATHCERT certificate is asserted. Do not promote global conjecture.",
+      "claim_id": "ERDOS561-EVEN-CAPS-ORIGINAL-TRANSFER-004",
+      "short_name": "General odd-leading sharp-residual transfer and four infinite original size-Ramsey families",
+      "claim_text": "If both leading star sizes n1,m1 are odd >=3 and every arbitrary simple host satisfying both residual Ramsey relations has >=J=W-(n1+m1-1) edges, then the original size Ramsey number equals W. As corollaries of already proved paper-level residual cases: B1 n=(a,1,1),m=(b,c,1^(t-2)), odd a,b, 1<=c<=a, b>=a+c-1,t>=4: rhat=3b+(t-2)a+1; B2 n=(a,1^(s-1)),m=(a,1^(t-1)), odd a>=3,s,t>=3: rhat=(max(s,t)+1)a+min(s,t)-2; B3 n=(a,2,1),m=(a,1,1,1), odd a>=5: rhat=5a+3; B4 n=(a,1,1),m=(b,a-1,2,1), odd a,b>=3,b>=2a-2: rhat=3b+2a+2. Global conjecture OPEN.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "For any original-arrowing G, every G-v arrows both residual pairs; sharp joint bound forces Delta(G)<=n1+m1-2 when e(G)<W. Even leading-degree caps alpha=n1-1,beta=m1-1 are positive even, so the protected classical regular-multigraph factorization theorem gives an avoiding red/blue capped split. The canonical antidiagonal host supplies upper W. Previously protected all-host joint residual proofs for families C1,C2, equal-leading (a,2,1), and profile mismatch yield four infinite original formulas; source script independently recomputes both antidiagonal index conventions over bounded grids. No global arbitrary-host residual result assumed as proved.",
+      "source_or_artifact": [
+        "research/erdos-561/even-caps/EVEN_CAP_JOINT_TO_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/even-caps/verify_even_cap_original_transfer.py"
+      ],
+      "related_files": [
+        "research/erdos-561/even-caps/EVEN_CAP_ORIGINAL_TRANSFER_EVIDENCE.json",
+        "research/erdos-561/even-caps/EVEN_CAP_DEGREE_SPLITTING_THEOREM.md",
+        "research/erdos-561/even-caps/RUN_MATRIX.md"
+      ]
     }
   ]
 }

@@ -8,5 +8,40 @@ claims=[
  dict(common,claim_id='ERDOS561-EVEN-CAPS-FACTOR-001',short_name='Every even pair of degree caps can split any suitably bounded graph',claim_text='For all positive even alpha,beta, every finite simple graph with maximum degree at most alpha+beta has an edge red/blue split with red maximum degree at most alpha and blue at most beta.',claim_class='PROVED_IN_PACKAGE',status='UNDER_REVIEW',certainty='PROVED_NOT_FORMALIZED',support_type='HUMAN_PROOF',support_summary='Classical explicit proof: augment to D-regular multigraph with loops permitted, Euler-orient in=out=D/2, decompose the corresponding D/2-regular bipartite multigraph into perfect matchings by Hall, pull back 2-factors and erase fake edges. Not asserted novel or fully Lean-checked.',source_or_artifact=[root+'EVEN_CAP_DEGREE_SPLITTING_THEOREM.md'],related_files=[root+'README.md',root+'RUN_MATRIX.md']),
  dict(common,claim_id='ERDOS561-EVEN-CAPS-CONSTRUCT-002',short_name='Constructive 2+2 split across all atlas max-degree-four graphs',claim_text='The explicit 4-regular completion and Euler/bipartite matching splitting algorithm yields a valid (2,2) capped edge split for all 685 NetworkX graph atlas isomorphism types with degree at most 4 on at most 7 vertices, and 200 independent larger seeded graphs.',claim_class='PROVED_IN_PACKAGE',status='CHECKED',certainty='CERTIFIED',support_type='EXACT_RATIONAL_COMPUTATION',support_summary='Deterministic constructive Python verifier 685 atlas graphs and 200 larger seeded tests, actual original-edge readback checked vertex by vertex; finite corpus only.',source_or_artifact=[root+'verify_even_caps_constructive.py'],related_files=[root+'RUN_MATRIX.md']),
  dict(common,claim_id='ERDOS561-EVEN-CAPS-3X3-003',short_name='Three symmetric degree-four three-star parameter pairs excluded; 22 remain',claim_text='Under the existing paper-level joint-three-star residual theorem, three of the previously source-locked 25 ordered method-survivors with D=4 have cap profile (2,2), so the general even-cap partition theorem eliminates these, leaving exactly 22 ordered or 11 unordered method-survivors, all with cap profile (1,3) up to red/blue swap.',claim_class='PROVED_IN_PACKAGE',status='UNDER_REVIEW',certainty='PROVED_NOT_FORMALIZED',support_type='EXACT_RATIONAL_COMPUTATION',support_summary='Exact integer pair classification of pinned prior 25-case list: 321 vs333, 332vs332 and reverse of first removed. Protected upstream input SHA-256 pinned. Conditional Ramsey application not independently certified.',source_or_artifact=[root+'verify_even_cap_parameters.py',root+'EVEN_CAP_PARAMETER_CERTIFICATE.json'],related_files=[root+'EVEN_CAP_DEGREE_SPLITTING_THEOREM.md',root+'README.md'])]
+claims.append({
+  "mathematical_domain": "Erdős #561 / original size-Ramsey general sharp-residual transfer / infinite families",
+  "assumptions": [
+    "finite simple graph hosts",
+    "nonincreasing positive star sizes and ordinary disjoint non-induced subgraphs",
+    "at least three components per target",
+    "leading sizes n1,m1 odd and >=3",
+    "source-proved exact joint residual inequalities for four family applications"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3569",
+    "MATH-PROGRAMME#3578",
+    "MATH-PROGRAMME#3583",
+    "MATH-PROGRAMME#3587"
+  ],
+  "promotion_condition": "The general transfer is a paper proof, not resolution of unrestricted Erdős #561. Four original family applications inherit UNDER_REVIEW status from their exact joint-residual parent proofs; no independent mathematical adjudication or MATHCERT certificate is asserted. Do not promote global conjecture.",
+  "claim_id": "ERDOS561-EVEN-CAPS-ORIGINAL-TRANSFER-004",
+  "short_name": "General odd-leading sharp-residual transfer and four infinite original size-Ramsey families",
+  "claim_text": "If both leading star sizes n1,m1 are odd >=3 and every arbitrary simple host satisfying both residual Ramsey relations has >=J=W-(n1+m1-1) edges, then the original size Ramsey number equals W. As corollaries of already proved paper-level residual cases: B1 n=(a,1,1),m=(b,c,1^(t-2)), odd a,b, 1<=c<=a, b>=a+c-1,t>=4: rhat=3b+(t-2)a+1; B2 n=(a,1^(s-1)),m=(a,1^(t-1)), odd a>=3,s,t>=3: rhat=(max(s,t)+1)a+min(s,t)-2; B3 n=(a,2,1),m=(a,1,1,1), odd a>=5: rhat=5a+3; B4 n=(a,1,1),m=(b,a-1,2,1), odd a,b>=3,b>=2a-2: rhat=3b+2a+2. Global conjecture OPEN.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "For any original-arrowing G, every G-v arrows both residual pairs; sharp joint bound forces Delta(G)<=n1+m1-2 when e(G)<W. Even leading-degree caps alpha=n1-1,beta=m1-1 are positive even, so the protected classical regular-multigraph factorization theorem gives an avoiding red/blue capped split. The canonical antidiagonal host supplies upper W. Previously protected all-host joint residual proofs for families C1,C2, equal-leading (a,2,1), and profile mismatch yield four infinite original formulas; source script independently recomputes both antidiagonal index conventions over bounded grids. No global arbitrary-host residual result assumed as proved.",
+  "source_or_artifact": [
+    "research/erdos-561/even-caps/EVEN_CAP_JOINT_TO_ORIGINAL_TRANSFER.md",
+    "research/erdos-561/even-caps/verify_even_cap_original_transfer.py"
+  ],
+  "related_files": [
+    "research/erdos-561/even-caps/EVEN_CAP_ORIGINAL_TRANSFER_EVIDENCE.json",
+    "research/erdos-561/even-caps/EVEN_CAP_DEGREE_SPLITTING_THEOREM.md",
+    "research/erdos-561/even-caps/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-EVEN-CAPS-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CLAIM_COUNT',len(claims))
