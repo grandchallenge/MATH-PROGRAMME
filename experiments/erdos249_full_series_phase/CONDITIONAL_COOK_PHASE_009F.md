@@ -331,7 +331,7 @@ $$
 \mathrm{Re}\sum_{N\in\mathcal G}w_N(z_N-\bar z_{m_N})\le14X/25,
 $$
 
-nor the alternative good-set bound $603X/1000$. These involve strongly overlapping, exponentially weighted phases and cannot be inferred from the finite one-step cocycle transfer. The $5$-norm inequality and restricted source moment intrinsically consume most of the possible gain.
+nor the alternative good set bound $603X/1000$. These involve strongly overlapping, exponentially weighted phases and cannot be inferred from the finite one-step cocycle transfer. The $5$-norm inequality and restricted source moment intrinsically consume most of the possible gain.
 
 **Independent progress relative to WP09-E:** WP09-E showed substantial *unwrapped* cubic real energy across the full growing window. The present theorem proves actual **modulo-one nonconcentration**, conditional on a fixed prime, at the same genuine Cook depths. This removes the specific *all phases are integers* generic countermodel for this Euler-totient setting but does not preclude rational-comparator countermodels with small yet nonzero phase deficits.
 
