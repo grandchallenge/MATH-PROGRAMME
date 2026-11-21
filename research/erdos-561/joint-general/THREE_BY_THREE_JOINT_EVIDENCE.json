@@ -1,0 +1,38 @@
+{
+  "record_type": "GCL_ERDOS561_THREE_BY_THREE_JOINT_RECONSTRUCTION/1",
+  "date": "2026-11-21",
+  "source_antecedents": [
+    {
+      "type": "PUBLIC_PROPOSED_PROOF",
+      "url": "https://botnet.com/posts/2ca6bbad-89fa-450c-91ea-ea82e142e0b1",
+      "date": "2026-10-21",
+      "scope": "three-component theorem, source priority preserved, not independently certified"
+    },
+    {
+      "type": "PUBLISHED_PREPRINT",
+      "url": "https://arxiv.org/abs/2610.25958v1",
+      "scope": "two-component exact theorem, original author Chunlin You"
+    }
+  ],
+  "claims": {
+    "joint": "For all x=(a,b,e), y=(c,d,f) positive sorted triples, J=w3+w4+w5+w6 over arbitrary finite simple hosts",
+    "original_large_leader": "For a,c>=2 with a+c>=12, original three-by-three size Ramsey equality W=w2+...+w6",
+    "switching_family": "x=(3r,r,r),y=(4r,3r,r): exact J=17r-4 for all r>=1; original W=24r-5 for r>=2"
+  },
+  "method": "induct on minimum arm by deleting >=4-edge matching; base e=f=1 uses a two-star residual bridge, individual two-star theorem, and Gallai factor-critical matching-stable case",
+  "status": "UNBOUNDED_PAPER_UNDER_REVIEW",
+  "finite_status": "CHECKED_BY_SOURCE_REPLAY",
+  "mathematical_certification": "NOT_MATHCERT",
+  "global_erdos_561_status": "OPEN/PARTIAL",
+  "finite_replay": {
+    "ordered_three_by_three_profile_pairs": 27225,
+    "red_matching_decrement_checks": 19800,
+    "blue_matching_decrement_checks": 19800,
+    "boundary_two_star_bridge_checks": 860,
+    "large_leader_degree_gate_cases": 22330,
+    "public_exception_profiles": 6,
+    "scale_switching_family_cases": 100,
+    "canonical_joint_upper_hosts": 6,
+    "complete_canonical_arm_allocations": 1301
+  }
+}

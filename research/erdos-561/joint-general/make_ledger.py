@@ -631,5 +631,151 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 / all positive three-star-versus-three-star joint residual",
+  "assumptions": [
+    "a>=b>=e>=1,c>=d>=f>=1, originals x=(a,b,e), y=(c,d,f)",
+    "arbitrary finite simple host graphs, ordinary non-induced and vertex-disjoint positive star-forest copies",
+    "imported pinned two-component 2026 theorem and ordinary Gallai, Vizing, Győri-Schelp classical results"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3502"
+  ],
+  "promotion_condition": "A prior October 2026 public three-component proposed proof is explicitly acknowledged; this is an internal paper reconstruction and algebraic review, not priority, independent referee certification, MATHCERT, or proof of all s,t.",
+  "claim_id": "ERDOS561-THREE-BY-THREE-JOINT-027",
+  "short_name": "Exact arbitrary-host 3x3 joint residual via matching deletion and two-component bridge",
+  "claim_text": "For all ordered positive triples x=(a,b,e), y=(c,d,f), a>=b>=e>=1,c>=d>=f>=1, the exact unrestricted-host simultaneous residual minimum equals J=w3+w4+w5+w6 with antidiagonal maxima w_k=max_{i+j=k}(x_i+y_j-1). Proof reconstructs the Oct 2026 publicly proposed three-component argument, with a two-star residual bridge from a pinned exact two-component result, one-vertex deletion forcing copies of full x,y, a Gallai factor-critical matching-number>=4 lemma when e>=2 or f>=2, induction stripping a maximum matching and lowering all four w terms by one, and a complete e=f=1 boundary of individually forced two-star bounds, four-edge matching recursion, or sole matching-number-three core 3K3. Canonical four-star host attains J. This is not the unrestricted s,t conjecture.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Every Q-v contains full original x and y via red-/blue-star monochromatic deletion; ν(Q)=3 gives factor-critical components and at most nine nonisolated vertices, contradicting any min arm>=2. If min arm>=2, maximum matching of at least4 decreases every term of joint tail by exactly1 and preserves residuals. For both min1, b>=d, if b=d=1 two individual two-star bounds suffice; if c>max(a,b+d-1) first residual is sharp; else ν>=4 and two-star residual bridge yields L-4 after matching deletion; ν=3 forces 3K3 and c<=2. Imported two-star theorem pinned arXiv:2610.25958v1; public three-component antecedent https://botnet.com/posts/2ca6bbad-89fa-450c-91ea-ea82e142e0b1 .",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+    "research/erdos-561/joint-general/verify_three_by_three_joint_induction.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 / all positive three-star-versus-three-star joint residual",
+  "assumptions": [
+    "a>=b>=e>=1,c>=d>=f>=1, originals x=(a,b,e), y=(c,d,f)",
+    "arbitrary finite simple host graphs, ordinary non-induced and vertex-disjoint positive star-forest copies",
+    "imported pinned two-component 2026 theorem and ordinary Gallai, Vizing, Győri-Schelp classical results"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3502"
+  ],
+  "promotion_condition": "A prior October 2026 public three-component proposed proof is explicitly acknowledged; this is an internal paper reconstruction and algebraic review, not priority, independent referee certification, MATHCERT, or proof of all s,t.",
+  "claim_id": "ERDOS561-THREE-BY-THREE-LARGE-LEADER-028",
+  "short_name": "Original 3x3 size Ramsey exact when sum of leading star sizes at least 12",
+  "claim_text": "For any positive ordered original triples x=(a,b,e),y=(c,d,f) with a,c>=2 and a+c>=12, the original unrestricted-host size Ramsey number equals the five-antidiagonal W=sum_{k=2}^6w_k. Via claim027 every original Ramsey graph G with E<W has every vertex deletion satisfying joint residual e>=J=W-(a+c-1), hence Delta(G)<=a+c-2=D. Vizing forces Delta=D, and Győri-Schelp saturation necessity forces at least D+1 saturated vertices, so D(D+1)<=2E<=2(W-1)<=10(D+1)-2, impossible for D>=10. Canonical host yields upper. Also for x=(3r,r,r), y=(4r,3r,r), exact joint J=17r-4 all r>=1 and original W=24r-5 for r>=2, with switching surplus r.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Exact 3x3 joint residual claim027 plus source-locked every-vertex deletion implication bounds max degree in hypothetical E<W graph by D=a+c-2. Vizing edge-colour partition shows Delta>=D; Győri-Schelp degree cap theorem forces at least D+1 vertices degree D to prevent avoiding cap colouring. Sum degrees at least D(D+1), yet five canonical antidiagonal entries all <=D+1 imply 2E<=10(D+1)-2, contradiction for D>=10. This leaves small leading a+c<=11 untouched by this theorem; public proposed proof has additional case-specific arguments under independent review.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
+    "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 / all positive three-star-versus-three-star joint residual",
+  "assumptions": [
+    "a>=b>=e>=1,c>=d>=f>=1, originals x=(a,b,e), y=(c,d,f)",
+    "arbitrary finite simple host graphs, ordinary non-induced and vertex-disjoint positive star-forest copies",
+    "imported pinned two-component 2026 theorem and ordinary Gallai, Vizing, Győri-Schelp classical results"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3502"
+  ],
+  "promotion_condition": "A prior October 2026 public three-component proposed proof is explicitly acknowledged; this is an internal paper reconstruction and algebraic review, not priority, independent referee certification, MATHCERT, or proof of all s,t.",
+  "claim_id": "ERDOS561-THREE-BY-THREE-CHECK-029",
+  "short_name": "All three-star antidiagonal/induction arithmetic and six exception profiles finite verification",
+  "claim_text": "Exact finite script checks 27225 ordered 3x3 pair profiles and both antidiagonal indexing conventions, 19800 red and 19800 blue four-term matching decrement identities, 860 boundary residual bridge identities, 22330 large-leader degree saturation arithmetic cases, exact set of six published exceptional (a,b,c,d) boundary profiles, 100 scale-switch family identities, and all 1301 red-arm allocations of six canonical joint hosts. These checks support but do not replace the unbounded matching/Gallai proof.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Two independently coded index conventions for 3x3 antidiagonal lists, algebraic direct bridge identities and matching-decrement equations for bounded positive star size grid, boundary parameter exact comparisons, complete red-arm host allocations. Finite checks are not a graph-topology proof.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_three_by_three_joint_induction.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 complete ORIGINAL three-component versus three-component size Ramsey",
+  "assumptions": [
+    "Original lists x=(a,b,e),y=(c,d,f), a>=b>=e>=1,c>=d>=f>=1",
+    "arbitrary finite simple host graphs, ordinary non-induced vertex-disjoint star forest copies",
+    "prior public 2026-10-21 three-part original proposal with precedence and pinned 2026 two-component result; ordinary Tutte-Berge, Vizing and degree-split theorems"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3502",
+    "MATH-PROGRAMME#3475"
+  ],
+  "promotion_condition": "All-positive 3x3 original theorem is paper-level reconstruction of publicly proposed result; source review required for Tutte-Berge matching criterion, 3K2 vs 2P3+K2 matching-number five lemma, six boundary core colourings and imported 2-component theorem. No independent MATHCERT/public priority or all s,t certification.",
+  "claim_id": "ERDOS561-THREE-BY-THREE-ORIGINAL-ALL-030",
+  "short_name": "Complete original arbitrary-host 3×3 formula including all low-degree boundary profiles",
+  "claim_text": "For every two ordered positive original triples x=(a,b,e),y=(c,d,f), the exact asymmetric size Ramsey number over arbitrary finite simple graph hosts equals the sum of all five original antidiagonal maxima W=sum_{k=2}^6 max_{i+j=k}(x_i+y_j-1). The proof reconstructs the public 2026-10-21 complete three-part argument and independently closes the low-leader cases omitted by claim 028, under its named pinned/classical graph-theory imports. It first derives E=W-1 and Delta=D=a+c-2 for a hypothetical smaller Ramsey host using sharp joint 3x3 claim 027; Vizing degree cap and Gyori-Schelp saturation imply h>=D+1 degree-D vertices and D<=9, while both leaders odd exclude by even cap split. If either minimum original arm>=2, a Tutte-Berge matching-number-five obstruction for (3K2,2P3 disjoint K2) permits deletion of a >=5-edge matching and induction on all five antidiagonals. At the minimum-one boundary b=d=1, finite seven leader pairs are eliminated by degree/vertex budgets, prescribed-vertex matching saturation lemma and explicit max-degree-four core colourings. With b>=2, the pinned two-component theorem after removing a five-edge matching covers all but six quadruples; those are eliminated by saturated-vertex matching, Vizing missing-class absorption, or explicit induced core colourings. Canonical five-star host attains W. Not a proof for s>3 or t>3, nor an independent mathematical certificate.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Full detailed proof in THREE_BY_THREE_ORIGINAL_FULL_BOUNDARY.md; imported exact joint theorem in THREE_BY_THREE_JOINT_RECONSTRUCTION.md; Tutte-Berge matching-number-five lemma enumerates all witness partitions of matching number four, constructing avoiding two-colourings; induction on minimum arm uses 5-edge matching removal; b=d=1 h>=D+1 implies seven low leading pairs, eliminated using vertex budgets, odd-D matching-cover of saturated vertices, degree-4 core explicit colourings and max-degree-2 cycle case; b>=2 isolates six other parameter quadruples handled by Vizing class recolouring or induced saturated-core colourings. Explicit provenance 2026-10-21 publicly proposed proof, not claimed novel.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_FULL_BOUNDARY.md",
+    "research/erdos-561/joint-general/verify_three_by_three_original_boundary.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_EVIDENCE.json",
+    "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 complete ORIGINAL three-component versus three-component size Ramsey",
+  "assumptions": [
+    "Original lists x=(a,b,e),y=(c,d,f), a>=b>=e>=1,c>=d>=f>=1",
+    "arbitrary finite simple host graphs, ordinary non-induced vertex-disjoint star forest copies",
+    "prior public 2026-10-21 three-part original proposal with precedence and pinned 2026 two-component result; ordinary Tutte-Berge, Vizing and degree-split theorems"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3502",
+    "MATH-PROGRAMME#3475"
+  ],
+  "promotion_condition": "All-positive 3x3 original theorem is paper-level reconstruction of publicly proposed result; source review required for Tutte-Berge matching criterion, 3K2 vs 2P3+K2 matching-number five lemma, six boundary core colourings and imported 2-component theorem. No independent MATHCERT/public priority or all s,t certification.",
+  "claim_id": "ERDOS561-THREE-BY-THREE-ORIGINAL-CHECK-031",
+  "short_name": "Full original 3×3 boundary exact arithmetic and complete canonical star-host arm audits",
+  "claim_text": "Exact bounded finite script checks 81225 original 3x3 ordered positive profile pairs; 62700 red and 62700 blue five-term matching decrement identities; 2255 two-component boundary subtraction identities; seven low-leader pairs, six last boundary quadruples, Vizing missing-class bound, and all full red-arm allocation classes of five small canonical original upper hosts (2552). These checks establish their declared finite arithmetic and upper bounds, not every arbitrary-host lower by computation.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Deterministic Python script computes original antidiagonal formula for every sorted positive 3x3 pair with leading sizes up to 11, independently validates each matching-decrement identity, boundary arithmetic, six exceptions and seven leader pairs, complete antidiagonal upper host arm-allocation enumeration. The unbounded all-host lower uses a separate paper matching/core proof; not certified from finite data.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_three_by_three_original_boundary.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
