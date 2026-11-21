@@ -49,7 +49,7 @@ $$
 
 Put the proposed red and blue maximum-degree caps $\alpha=n_1-1$ and $\beta=m_1-1$, so $\alpha+\beta=D$. If $G$ admits an $(\alpha,\beta)$ edge partition, that colouring contains no full original target in either colour, a contradiction. Therefore $G$ has **no** capped partition.
 
-We use two independently source-locked classical consequences of the **ordinary Lovász $(g,f)$-factor theorem**:
+We use two independently source-locked classical consequences of the **ordinary Lovász $(g,f)$ factor theorem**:
 
 - The degree-core necessity theorem in \`research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md\`: failure of a capped partition with $\Delta(G)\le D$ forces a connected degree $D$ core of at least $D+1$ vertices.
 - The sharp $2D+1$ uniqueness theorem in \`research/erdos-561/unique-core/GENERAL_SATURATED_CORE_UNIQUENESS_THEOREM.md\`: if at most $2D+1$ vertices have degree $D$, capped-partition failure can occur **only when both caps are odd**, in which case there is an isolated odd-order connected degree $D$ regular component. The statement is a paper proof dependent on the ordinary factor theorem, not a complete Lean formalization.
