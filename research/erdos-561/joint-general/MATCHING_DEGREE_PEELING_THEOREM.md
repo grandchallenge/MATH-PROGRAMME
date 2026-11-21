@@ -87,7 +87,7 @@ w_2,\ldots,w_{s+t}
 =(\underbrace{m_1,\ldots,m_1}_{s},m_2,\ldots,m_t).
 $$
 
-The original canonical star forest with this list arrows both targets and has $(s-1)m_1+M$ edges. Removing its first $m_1$-star leaves the canonical joint-residual antidiagonal host, of edge-size list
+The original canonical star forest with this list arrows both targets and has $(s-1)m_1+M$ edges. Removing its first star of size $m_1$ leaves the canonical joint-residual antidiagonal host, of edge-size list
 
 $$
 (\underbrace{m_1,\ldots,m_1}_{s-1},m_2,\ldots,m_t),
@@ -129,6 +129,6 @@ This explicit check is a theorem-to-theorem reduction and does not close issue #
 
 ## Reproducibility and review boundary
 
-The deterministic checker \`verify_matching_degree_peeling.py\` independently evaluates the antidiagonal maxima in zero- and one-based indices; checks every declared finite parameter tuple; independently audits the two-sided universal lower is no larger than the canonical joint upper; and exhausts complete star-arm red/blue allocation classes on selected original and joint canonical hosts with **nonuniform blue tails**. It verifies finite arithmetic and upper-host semantics, not the unbounded graph-topology proof, which is the vertex-cover argument above.
+The deterministic checker `verify_matching_degree_peeling.py` independently evaluates the antidiagonal maxima in zero- and one-based indices; checks every declared finite parameter tuple; independently audits the two-sided universal lower is no larger than the canonical joint upper; and exhausts complete star-arm red/blue allocation classes on selected original and joint canonical hosts with **nonuniform blue tails**. It verifies finite arithmetic and upper-host semantics, not the unbounded graph-topology proof, which is the vertex-cover argument above.
 
 Claim 025 records the mathematical unrestricted-host theorem UNDER_REVIEW. Claim 026 records exact bounded checks CHECKED. The source proof is complete on paper for the stated matching-side cases; it has no Lean kernel certificate, independent MATHCERT review, or claim of unrestricted all-profiles Erdős #561.
