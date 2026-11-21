@@ -67,12 +67,12 @@ These are **source-attributed route descriptions**, not independently derived le
 
 A [byte-mirrored, third-party source snapshot](https://github.com/Deicyde/riemann-hypothesis/blob/e50d09817ad81469f737e8f637561e6ccf86c670/src/Main.lean) displays five headline declarations. Among them:
 
-\`\`\`lean
+```lean
 theorem riemannHypothesis : RiemannHypothesis := rhOfAll
 theorem LFunction_eq_zero_re : DirichletLZerosOnLine := claimAll.2.1
-\`\`\`
+```
 
-The mirror's [\`Statements.lean\`](https://github.com/Deicyde/riemann-hypothesis/blob/e50d09817ad81469f737e8f637561e6ccf86c670/src/Statements.lean) contains explicit Dirichlet $L$-function claims. The first headline theorem uses Mathlib's own \`RiemannHypothesis\` definition, not a newly defined local proposition bearing an impressive name.
+The mirror's [`Statements.lean`](https://github.com/Deicyde/riemann-hypothesis/blob/e50d09817ad81469f737e8f637561e6ccf86c670/src/Statements.lean) contains explicit Dirichlet $L$-function claims. The first headline theorem uses Mathlib's own `RiemannHypothesis` definition, not a newly defined local proposition bearing an impressive name.
 
 These observations identify the formal targets **as displayed in the external mirror**. GCL has read these declarations but has **not independently established byte identity of the mirror against the original author's archive**. The [MIT verification record](https://math.mit.edu/~drew/grh/) reports that the source archive and one mirror agree under the recorded hash.
 
@@ -95,23 +95,23 @@ Andrew Sutherland's [MIT verification dossier](https://math.mit.edu/~drew/grh/),
 | Check | Reported result | Meaning and limit |
 | --- | --- | --- |
 | Lean 4.33.1 / Mathlib 4.33.1 source | 175,187 modules compile | No compilation errors for the examined source; compilation itself is not semantic reconciliation |
-| Five theorem axiom audit | \`propext\`, \`Classical.choice\`, \`Quot.sound\` only | No nonstandard axioms reported for the headline theorems |
-| Lean \`leanchecker\` | All modules accepted | Independent replay through the Lean kernel |
-| Independent \`nanoda\` kernel | Full export accepted | Strong additional evidence against implementation-specific checking errors |
-| Independent \`con-leche\` kernel | Full export accepted | A second implementation accepted 1,468,418 declarations |
-| \`con-leche --compare\` | Five challenge statements accepted | The formal targets match that independent comparator's challenge definition |
-| \`lean4lean\` | All compiled modules accepted | Separate formal checker; five modules required increased checking limits |
-| Official \`lake comparator\` and separate Lean export replay | **Still running** at edition time | No completion claim may be inferred from the other successful checks |
+| Five theorem axiom audit | `propext`, `Classical.choice`, `Quot.sound` only | No nonstandard axioms reported for the headline theorems |
+| Lean `leanchecker` | All modules accepted | Independent replay through the Lean kernel |
+| Independent `nanoda` kernel | Full export accepted | Strong additional evidence against implementation-specific checking errors |
+| Independent `con-leche` kernel | Full export accepted | A second implementation accepted 1,468,418 declarations |
+| `con-leche --compare` | Five challenge statements accepted | The formal targets match that independent comparator's challenge definition |
+| `lean4lean` | All compiled modules accepted | Separate formal checker; five modules required increased checking limits |
+| Official `lake comparator` and separate Lean export replay | **Still running** at edition time | No completion claim may be inferred from the other successful checks |
 
 This is exceptionally substantial **external proof-check evidence**. It is not correct to say that nobody has checked the submission. Equally, GCL must not turn an external verification report into a GCL-native MATHCERT receipt.
 
 The MIT record identifies the 14-part assembled original source as 239,275,554 bytes, SHA-256:
 
-\`\`\`text
+```text
 9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc
-\`\`\`
+```
 
-This digest is **quoted from the MIT record**, not a digest independently recomputed by GCL in this edition. The public four-page PDF has been read visually and textually; local byte-retention and hashing remain pending. The [State of Proof intake](https://stateofproof.org/paper-watch/paper-2026-11-20-a-claimed-proof-of-the-riemann-hypothesis) independently reports PDF SHA-256 \`3fc97784b71ddd44ff8aa0a177e99622a1c61b13cfa843a0989ee4a7a0cfeb8d\`, also **not yet GCL-recomputed**.
+This digest is **quoted from the MIT record**, not a digest independently recomputed by GCL in this edition. The public four-page PDF has been read visually and textually; local byte-retention and hashing remain pending. The [State of Proof intake](https://stateofproof.org/paper-watch/paper-2026-11-20-a-claimed-proof-of-the-riemann-hypothesis) independently reports PDF SHA-256 `3fc97784b71ddd44ff8aa0a177e99622a1c61b13cfa843a0989ee4a7a0cfeb8d`, also **not yet GCL-recomputed**.
 
 ## 7. The debt audit and the trust quartet
 
@@ -155,7 +155,7 @@ The active proof-debt register is:
 
 **RH-A26-WP00 — source-locked statement concordance**, owned by MATHFORGE with an RH-001 MATHSOLVE handoff only after reviewed source semantics.
 
-**Input:** the exact \`remark.pdf\`; the 14 original archive parts; \`Main.lean\`, \`Statements.lean\`, the complete dependency manifests, Lean 4.33.1, Mathlib 4.33.1, and the dated MIT verification report.
+**Input:** the exact `remark.pdf`; the 14 original archive parts; `Main.lean`, `Statements.lean`, the complete dependency manifests, Lean 4.33.1, Mathlib 4.33.1, and the dated MIT verification report.
 
 **Bounded output:** one immutable source manifest, five declaration-level statement cards, a side-by-side comparison with protected RH-WP00, a list of assumptions and imported definitions, an audit of syntactic shortcuts and metaprogramming, and a budgeted independent-replay matrix.
 
@@ -163,7 +163,7 @@ The active proof-debt register is:
 
 **Stopping condition:** a specific missing original source object, legal redistribution boundary, semantic mismatch, or reproducible checking failure. Otherwise continue toward selective independent replay and readable theorem-spine reconstruction.
 
-**Challenge ladder for readers:** (a) verify the reflection example; (b) read Mathlib's \`RiemannHypothesis\` definition; (c) compare it with the classical critical-strip formulation; (d) read the five Lean declarations; (e) classify each externally reported check by what it actually establishes; (f) pick one source-named analytic lemma and attempt a direct mathematical reconstruction.
+**Challenge ladder for readers:** (a) verify the reflection example; (b) read Mathlib's `RiemannHypothesis` definition; (c) compare it with the classical critical-strip formulation; (d) read the five Lean declarations; (e) classify each externally reported check by what it actually establishes; (f) pick one source-named analytic lemma and attempt a direct mathematical reconstruction.
 
 ---
 
@@ -171,7 +171,7 @@ The active proof-debt register is:
 
 - [Primary four-page announcement, 20 November 2026](https://alpo.ge/remark.pdf); its original 14-part Lean release is referenced in the PDF's first footnote.
 - [MIT independent verification dossier](https://math.mit.edu/~drew/grh/), observed edition 20 November 2026, 22:05 UTC.
-- [Pinned third-party source mirror, commit \`e50d098\`](https://github.com/Deicyde/riemann-hypothesis/tree/e50d09817ad81469f737e8f637561e6ccf86c670), used for inspection, not substituted for the author's original source.
+- [Pinned third-party source mirror, commit `e50d098`](https://github.com/Deicyde/riemann-hypothesis/tree/e50d09817ad81469f737e8f637561e6ccf86c670), used for inspection, not substituted for the author's original source.
 - [GCL protected RH-WP00](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md), [RH-001 live tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), [Chaidez Pedagogical Protocol](../CHAIDEZ_PEDAGOGICAL_PROTOCOL.md), and [Claim Boundary Doctrine](../CLAIM_BOUNDARY_DOCTRINE.md).
 
 **Editorial classification:** dated external-source analysis and pedagogical exposition. Neither this edition nor its publication constitutes the mathematical theorem, an independent GCL proof replay, or a change to the current protected RH claim state.
