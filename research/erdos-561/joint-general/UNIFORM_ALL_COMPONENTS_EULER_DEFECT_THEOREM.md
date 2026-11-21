@@ -82,15 +82,15 @@ The lemma makes no assumption of connectedness, absence of bridges, bipartitenes
 
 Let $a,b\ge2$ be **arbitrary even integers**, possibly unequal, and write
 
-$
+$$
 A=a-1,\quad B=b-1,\quad D=A+B,\quad R=D+1=a+b-1.
-$
+$$
 
 Then for any positive integers $p,q$ and **any finite simple graph** $G$ satisfying
 
-$
+$$
 \Delta(G)\le D,\qquad e(G)<(p+q-1)R,
-$
+$$
 
 there is a red/blue edge colouring avoiding red $F(a^p)$ and blue $F(b^q)$.
 
@@ -113,28 +113,28 @@ Otherwise, if the odd cycle visits an **unsaturated original vertex** $v$ with $
 
 Only odd leftover cycles whose **every vertex lies in the first copy and was saturated at degree $D$ in $G$** remain unabsorbed. Such an odd cycle has **at least three vertices**, because $G$ is simple and has neither loops nor parallel edges in its original first copy. Different cycles of one two-factor are vertex-disjoint. Therefore, if $k$ is the number of unabsorbed odd cycles and $Z$ is the set of vertices of degree $D$ in the original graph,
 
-$
+$$
 |Z|\ge3k.
-$
+$$
 
 The original degree sum yields
 
-$
+$$
 2e(G)\ge D|Z|\ge3Dk,
-$
+$$
 
 hence
 
-$
+$$
 e(G)\ge \frac{3D}{2}k\ge(D+1)k=Rk,
-$
+$$
 
 since $D\ge2$ gives $3D/2\ge D+1$. Using the assumed strict edge budget,
 
-$
+$$
 kR\le e(G)<(p+q-1)R,
 \qquad k\le p+q-2.
-$
+$$
 
 Choose the independent exception colours of these $k$ unabsorbed odd cycles so that **at most $p-1$ are red exceptions** and **at most $q-1$ are blue exceptions**. Every other original vertex has red degree at most $A=a-1$ and blue degree at most $B=b-1$. Each unabsorbed red exception is the **only possible centre of an $a$-edge red star in its leftover odd cycle**, and each blue exception similarly the only possible centre of a $b$-edge blue star. With fewer than $p$ red eligible centres and fewer than $q$ blue eligible centres, neither requested vertex-disjoint star forest can exist. This proves the avoiding colouring on the arbitrary original simple graph $G$. QED.
 
