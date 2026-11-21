@@ -1,0 +1,31 @@
+{
+  "record_type": "GCL_ERDOS561_VARIABLE_TAIL_DEFICIT_EVIDENCE/1",
+  "date": "2026-11-21",
+  "scope": "all finite simple hosts, n=(a,1,1),m=(b,c1,...,ck)",
+  "theorem": "J>=2b+sum(ci)+sum_{i=1..k-2}(c[i+2]-max(0,c[i]-a+1))_+; exact when b>=a+c1-1 and c[k-2]>=a-1",
+  "mechanism": "vertex deletion -> fixed H; recolour secondary arms; select k-2 blue stars; injective matching to secondary host components; Monge sorted deficit lower",
+  "example": {
+    "a": 4,
+    "b": 8,
+    "c": [
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "exact_J": 34
+  },
+  "arithmetics": {
+    "exact_grid": 24500,
+    "lower_grid": 19305,
+    "independent_indexing": true
+  },
+  "star_hosts": {
+    "six_nonuniform": 6,
+    "all_red_arm_allocations": 147188
+  },
+  "status": "UNBOUNDED_UNDER_REVIEW;FINITE_CHECKED",
+  "unrestricted_problem": "OPEN",
+  "certification": "NOT_MATHCERT"
+}
