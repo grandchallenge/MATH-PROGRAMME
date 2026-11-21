@@ -35,9 +35,9 @@ This is a statement about **all** such complex numbers, not about the first bill
 
 ### Wolfram exhibit A: five known zeros, not all possible zeros
 
-The following are the imaginary parts \(t\) of five known zeros \(s=\tfrac12+it\), evaluated with Wolfram Language's [`ZetaZero`](https://reference.wolfram.com/language/ref/ZetaZero.html):
+The following are the imaginary parts $t$ of five known zeros $s=\tfrac12+it$, evaluated with Wolfram Language's [`ZetaZero`](https://reference.wolfram.com/language/ref/ZetaZero.html):
 
-| Known zero | Height \(t\) |
+| Known zero | Height $t$ |
 | --- | ---: |
 | 1 | 14.134725 |
 | 2 | 21.022040 |
@@ -72,9 +72,9 @@ P(s)=\left((s-\tfrac13)^2+4\right)
      \left((s-\tfrac23)^2+4\right).
 $$
 
-Its zeros are \(\tfrac13\pm2i\) and \(\tfrac23\pm2i\), **all off the critical line**. Yet it has real coefficients and satisfies the exact identity \(P(s)=P(1-s)\). Its zero set therefore has both reflection and conjugation symmetry.
+Its zeros are $\tfrac13\pm2i$ and $\tfrac23\pm2i$, **all off the critical line**. Yet it has real coefficients and satisfies the exact identity $P(s)=P(1-s)$. Its zero set therefore has both reflection and conjugation symmetry.
 
-Wolfram symbolic algebra also verifies that, for every real \(t\),
+Wolfram symbolic algebra also verifies that, for every real $t$,
 
 $$
 P(\tfrac12+it)
@@ -82,7 +82,7 @@ P(\tfrac12+it)
 >0.
 $$
 
-Thus **even those two symmetries together do not force zeros onto the line**. This is a proved fact about the explicit polynomial, **not** a counterexample to RH: \(P\) is not the zeta function. [Reproduce the exact checks](../assets/wolfram/rh_pedagogical_exhibits.wl).
+Thus **even those two symmetries together do not force zeros onto the line**. This is a proved fact about the explicit polynomial, **not** a counterexample to RH: $P$ is not the zeta function. [Reproduce the exact checks](../assets/wolfram/rh_pedagogical_exhibits.wl).
 
 ## 3. The working model: multiplicity as a resource
 
@@ -98,19 +98,19 @@ The note also refers to positivity and sign arguments, weighted von Mangoldt sum
 
 ### Wolfram exhibit C: from prime powers to the announced weighted sum
 
-The *von Mangoldt function* \(\Lambda(n)\) equals \(\log p\) when \(n\) is a positive power of a prime \(p\), and zero otherwise. The simpler cumulative sum
+The *von Mangoldt function* $\Lambda(n)$ equals $\log p$ when $n$ is a positive power of a prime $p$, and zero otherwise. The simpler cumulative sum
 
 $$
 \psi(X)=\sum_{n\le X}\Lambda(n)
 $$
 
-is a staircase with a jump of \(\log p\) at every prime power \(p^k\). For positive integer \(X\), an exact identity makes this concrete:
+is a staircase with a jump of $\log p$ at every prime power $p^k$. For positive integer $X$, an exact identity makes this concrete:
 
 $$
 \psi(X)=\log\bigl(\mathrm{lcm}(1,2,\ldots,X)\bigr).
 $$
 
-The [announcement](https://alpo.ge/remark.pdf) discusses a more specific **weighted and centered** sum. For integer \(X\ge1\), denote its displayed arithmetic expression by
+The [announcement](https://alpo.ge/remark.pdf) discusses a more specific **weighted and centered** sum. For integer $X\ge1$, denote its displayed arithmetic expression by
 
 $$
 F(X)=\sum_{n\le X}\Lambda(n)
@@ -118,16 +118,16 @@ F(X)=\sum_{n\le X}\Lambda(n)
 -X\log X+(1+\gamma)X,
 $$
 
-where \(\gamma\) is the Euler–Mascheroni constant. A Wolfram Language calculation using [`MangoldtLambda`](https://reference.wolfram.com/language/ref/MangoldtLambda.html) gives:
+where $\gamma$ is the Euler–Mascheroni constant. A Wolfram Language calculation using [`MangoldtLambda`](https://reference.wolfram.com/language/ref/MangoldtLambda.html) gives:
 
-| \(X\) | \(\psi(X)\) | \(F(X)\) |
+| $X$ | $\psi(X)$ | $F(X)$ |
 | ---: | ---: | ---: |
 | 10 | 7.832014 | 1.860798 |
 | 20 | 19.265658 | 1.861944 |
 | 50 | 49.485381 | 1.879515 |
 | 100 | 94.045311 | 1.721687 |
 
-The table distinguishes **what is elementary and directly calculable** from what the proposed argument would need to prove about such sums. Four positive values of \(F(X)\) do not establish positivity for every \(X\), an analytic bound, a theta-lift construction, or RH. [Reproduce all four rows](../assets/wolfram/rh_pedagogical_exhibits.wl).
+The table distinguishes **what is elementary and directly calculable** from what the proposed argument would need to prove about such sums. Four positive values of $F(X)$ do not establish positivity for every $X$, an analytic bound, a theta-lift construction, or RH. [Reproduce all four rows](../assets/wolfram/rh_pedagogical_exhibits.wl).
 
 These are **source-attributed route descriptions**, not independently derived lemmas on this page. In particular, the short note does not supply the inequalities, constants, conductor bookkeeping, or bridges needed to reconstruct its proof from prose alone. A successful mechanical check of the Lean source is a different form of evidence.
 
