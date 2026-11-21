@@ -969,6 +969,68 @@
         "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 uniform star forest original and joint results for arbitrary component counts",
+      "assumptions": [
+        "uniform original n=(a repeated s),m=(b repeated t), all s,t>=3 and positive a,b>=1",
+        "NO parity, equality or star-size assumptions on a,b; arbitrary finite simple hosts",
+        "Chunlin You 2026 pinned two-star size Ramsey formula, Vizing's classical edge colouring theorem",
+        "The uniform-original exact result is PRIOR PUBLISHED: Fu, Luo, Ni, Size Ramsey minimal graphs for uniform star forests, arXiv:2606.04439v3 (2026), not claimed novel"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3624",
+        "MATH-PROGRAMME#3622"
+      ],
+      "promotion_condition": "Known published uniform formula, do not claim GCL novelty. Paper-level independent proof reconstruction UNDER_REVIEW. General nonuniform all-profile Erdős #561 OPEN; no MATHCERT issued.",
+      "claim_id": "ERDOS561-UNIFORM-ALL-LENGTHS-032",
+      "short_name": "Known all-parity uniform star-forest Ramsey theorem, independently reconstructed via Vizing spare class",
+      "claim_text": "KNOWN PUBLISHED uniform-family formula, independently proved by a shorter Vizing smallest-class method: for ALL s,t>=3 and a,b>=1, unrestricted simple-host joint J=(s+t-2)(a+b-1), original size Ramsey W=(s+t-1)(a+b-1). Fix A=a-1,B=b-1,D=A+B,R=D+1. If maxdeg G<=D and e(G)<(p+q-1)R, Vizing yields R matching classes; reserve the smallest M with |M|<=p+q-2 and give A base classes red/B blue. Each endpoint of a spare edge misses at least one base class, hence has a safe red or blue option. If endpoints lack a common safe colour, whichever colour assigned to that spare edge creates at most ONE red or blue overcap centre; spare edges form a matching, so each of <=p+q-2 conflicts permits independent red/blue exception assignment with <p red and<q blue centres. Therefore a graph arrowing uniform red F(a^p) and blue F(b^q) below canonical threshold must have degree >=R. Base sharp joint s=3,t arbitrary follows from pinned published two-component formula; delete a degree>=R vertex to induct joint in red count, then use every-deletion joint implication to prove original W. Previous Euler and twofactor proofs remain optional special-case explanations, not logical prerequisites. The uniform formula is known in previous literature and not GCL's first discovery. Full arbitrary nonuniform conjecture OPEN.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Complete independent Vizing colour-class proof at start of UNIFORM_ALL_COMPONENTS_EULER_DEFECT_THEOREM.md. Each G maximum degree D edge-decomposes into R=D+1 matchings; smallest spare class M <=e/R, each edge's endpoints miss at least one of D base class colours, allowing freely selectable single overcap defect if safe sets conflict. Assign at most p-1 red defects and q-1 blue defects, obtaining avoiding colouring for every G with maxdeg<=D and E<(p+q-1)R. Use published pinned two-component result for s=3 and joint vertex-deletion induction, then original deletion. Formula's novelty explicitly DISCLAIMED: Fu/Luo/Ni arxiv:2606.04439v3. Other longer Euler/Hall proofs remain restricted alternative cases.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EULER_DEFECT_THEOREM.md",
+        "research/erdos-561/joint-general/verify_uniform_star_erdos561.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EVIDENCE.json",
+        "research/erdos-561/joint-general/EVEN_CAP_DEGREE_SPLITTING_THEOREM.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 uniform star forest original and joint results for arbitrary component counts",
+      "assumptions": [
+        "uniform original n=(a repeated s),m=(b repeated t), all s,t>=3 and positive a,b>=1",
+        "NO parity, equality or star-size assumptions on a,b; arbitrary finite simple hosts",
+        "Chunlin You 2026 pinned two-star size Ramsey formula, Vizing's classical edge colouring theorem",
+        "The uniform-original exact result is PRIOR PUBLISHED: Fu, Luo, Ni, Size Ramsey minimal graphs for uniform star forests, arXiv:2606.04439v3 (2026), not claimed novel"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3624",
+        "MATH-PROGRAMME#3622"
+      ],
+      "promotion_condition": "Unbounded uniform theorem paper-level UNDER_REVIEW, deterministic finite arithmetic/graph checks CHECKED. General unequal-even or heterogeneous star-size conjecture remains OPEN/PARTIAL. No MATHCERT.",
+      "claim_id": "ERDOS561-UNIFORM-ALL-LENGTHS-CHECK-033",
+      "short_name": "All-uniform all-parity exact numeric and canonical host checks",
+      "claim_text": "Deterministic arithmetic checks all 13689 uniform pairs with s,t=3..11,a,b=1..13, including ALL mixed-parity/unit edge cases, and complete red-arm allocations on 36 canonical original/joint hosts totalling 974916 colourings. An additional 36030 bounded simple-graph Euler component checks validate a narrower alternative proof. These exact finite checks corroborate but do not replace the unrestricted-host Vizing argument. Uniform exact formula is already established in published literature.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Standard-library checker computes original and joint uniform antidiagonal sums over all 13689 bounded pairs and complete original/joint canonical upper host colour allocations over 36 cases. Earlier Euler component mini-atlas remains regression, not requirement for general Vizing proof. Source and claim remain independently reviewed before any certification.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_uniform_star_erdos561.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }

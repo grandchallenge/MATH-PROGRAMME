@@ -19,6 +19,7 @@ python3 verify_saturated_matching_joint.py
 python3 verify_matching_degree_peeling.py
 python3 verify_three_by_three_joint_induction.py
 python3 verify_three_by_three_original_boundary.py
+python3 verify_uniform_star_erdos561.py
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py
