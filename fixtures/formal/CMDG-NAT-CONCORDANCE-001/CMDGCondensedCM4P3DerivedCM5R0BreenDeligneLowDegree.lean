@@ -1,4 +1,5 @@
 import Mathlib.GroupTheory.FreeAbelianGroup
+import Mathlib.Tactic.Abel
 
 /-!
 # CMDG CM5: actual finite-free Breen–Deligne first three terms and doubling homotopy
@@ -20,7 +21,6 @@ comparison. Those require subsequent categorical and stable-homotopy
 work. The displayed ingredients are the low-degree part of Scholze
 Theorem 4.5 and Proposition 4.17, May 2026 notes pp. 25, 30–32.
 -/
-import Mathlib.Tactic.Abel
 
 noncomputable section
 universe u
