@@ -134,8 +134,63 @@ This strictly extends the special $(b,b,b,1)$ case from the prior turn. For arbi
 
 Theorem A also gives a valid new partial lower bound for **any** nonincreasing blue target (even when the first $s-1$ blue sizes differ). Its exactness under a saturated maximal tier is proved here, but it does not assert all arbitrary-profile cases.
 
+## Theorem C — automatic transfer to the ORIGINAL problem when either original forest is a matching
+
+Let $n,m$ be arbitrary nonincreasing positive lists of lengths $s,t\ge3$, and suppose that the **individual sharp joint residual inequality** has already been established:
+
+$
+G\to(F(n_2,\ldots,n_s),F(m)),
+\quad
+G\to(F(n),F(m_2,\ldots,m_t))
+\quad\Longrightarrow\quad
+e(G)\ge J,
+$
+
+where $W=\sum_{k=2}^{s+t}w_k(n,m)$ is the canonical original antidiagonal edge budget and $J=W-(n_1+m_1-1)$. If **either** $n_1=1$ or $m_1=1$, then
+
+$
+\boxed{\widehat r(F(n),F(m))=W.}
+$
+
+This transfer holds over arbitrary finite simple graph hosts. It needs no Lovász factor theorem, parity restriction, bounded enumeration, or assumption of the unrestricted joint residual hypothesis.
+
+### Proof of Theorem C
+
+As usual, the canonical disjoint-star host of $W$ edges arrows the original pair, so only the lower bound is at issue. Suppose an original-arrowing graph $G$ has $e(G)\le W-1$.
+
+**First, every vertex deletion produces both residual arrowing relations.** Fix an arbitrary vertex $v$. If $G-v$ admitted a colouring avoiding red $F(n_2,\ldots,n_s)$ and blue $F(m)$, extend it by colouring all edges at $v$ red. A blue copy of $F(m)$ is then impossible. A red copy of $F(n)$ is also impossible: if such a vertex-disjoint forest exists, at most one of its components meets $v$. Discarding that component leaves $s-1$ red stars entirely in $G-v$, whose sorted sizes necessarily dominate the list $(n_2,\ldots,n_s)$, because deleting any one entry from a nonincreasing list leaves a coordinatewise larger sequence than deleting its largest entry. This contradicts the chosen red-residual-avoiding colouring. Thus $G-v$ arrows the first residual pair. Interchanging the two colours and recolouring all edges at $v$ blue proves the second residual arrowing relation in exactly the same way.
+
+By the individually proved sharp joint residual inequality, $e(G-v)\ge J$. Hence every vertex satisfies
+
+$
+d_G(v)=e(G)-e(G-v)\le W-1-J=n_1+m_1-2.
+$
+
+If $n_1=1$, then $n$ is a matching and the bound becomes $\Delta(G)\le m_1-1$. But original arrowing applied to the all-blue colouring forces a blue copy of $F(m)$, which contains a star of degree $m_1$ and therefore requires $\Delta(G)\ge m_1$. Contradiction.
+
+If $m_1=1$, then $m$ is a matching and the bound becomes $\Delta(G)\le n_1-1$. Applying original arrowing to the all-red colouring similarly forces $\Delta(G)\ge n_1$. Contradiction. Thus the canonical $W$-edge host is optimal. QED.
+
+### New parity-free ORIGINAL infinite family
+
+Combine Theorem C with the exact individual joint residual in Theorem B. For all $s\ge3$, all $L\ge0$ with $t=s-1+L\ge3$, all $b\ge1$, and all arbitrary positive nonincreasing tail lists $b\ge c_1\ge\cdots\ge c_L$,
+
+$
+\boxed{
+\widehat r\big(F(1^s),F(b^{s-1},c_1,\ldots,c_L)\big)
+=(2s-2)b+\sum_{\ell=1}^{L}c_\ell.
+}
+$
+
+The exact original antidiagonal list has $s$ initial copies of $b$, followed by the remaining $s-2$ copies of $b$ and the arbitrary tail; its sum is the displayed value. The case $L=0$ is permitted whenever $s\ge4$ so $t\ge3$. In particular, for every $b\ge1$ and $1\le c\le b$,
+
+$
+\widehat r(F(1,1,1,1),F(b,b,b,c))=6b+c.
+$
+
+These are exact over unrestricted finite simple hosts, but the source-level mathematical status remains UNDER_REVIEW, not MATHCERT certification.
+
 ## Verification and exact mathematical boundary
 
 The deterministic verifier `verify_saturated_matching_joint.py` independently computes the complete original and both residual antidiagonals using zero- and one-based conventions; it checks **14,203** bounded matching-versus-blue-profile cases, including **3,385** saturated-prefix exact-family instances, and exhaustive all-arm red/blue allocations across seven specified canonical hosts (**116,386** allocations). The finite checks corroborate the separate analytical proof; no finite graph-topology census proves the theorem.
 
-New unbounded claim 022 remains UNDER_REVIEW. Bounded exact arithmetic/arm-class claim 023 is CHECKED. This does not promote unrestricted Erdős #561, issue #3490, or MATHCERT.
+New unbounded claim 022 remains UNDER_REVIEW; the distinct general matching-leading original transfer and its original infinite-family consequence are source claim 024 UNDER_REVIEW. Bounded exact arithmetic/arm-class claim 023 is CHECKED. This does not promote unrestricted Erdős #561, issue #3490, or MATHCERT.
