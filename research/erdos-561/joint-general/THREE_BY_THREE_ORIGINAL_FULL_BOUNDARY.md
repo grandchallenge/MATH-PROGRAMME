@@ -155,7 +155,7 @@ $$
 
 contradicting $e(G)<D(D+2)$. The matching exists. QED.
 
-For $(a,c)=(3,2)$ the hypothetical counterexample has $D=3$ and $E=11<15$; for $(5,2)$ it has $D=5$ and $E=17<35$. In either case take a matching covering all saturated vertices; colour it BLUE and all other edges red. Blue degree at most one, so it contains no leading blue two-edge star. Red degree at most $a-1$, because every vertex of degree $D$ loses a blue matching edge and $D=a$ when $c=2$, so it contains no leading red $a$-star. Contradiction.
+For $(a,c)=(3,2)$ the hypothetical counterexample has $D=3$ and $E=11<15$; for $(5,2)$ it has $D=5$ and $E=17<35$. In either case take a matching covering all saturated vertices; colour it BLUE and all other edges red. Blue degree at most one, so it contains no leading blue two-edge star. Red degree at most $a-1$, because every vertex of degree $D$ loses a blue matching edge and $D=a$ when $c=2$, so it contains no leading red star with $a$ edges. Contradiction.
 
 ### Explicit remaining even-degree cases
 
@@ -163,7 +163,7 @@ For $(a,c)=(3,2)$ the hypothetical counterexample has $D=3$ and $E=11<15$; for $
 
 If $h=7$, its saturated degrees consume the entire $2E=28$ degree sum, so the graph has only seven nonisolated vertices. Red $F(4,1,1)$ needs nine vertices, so original arrowing fails in the all-red colouring.
 
-If $h=6$, the degree sum outside $Z$ is four. If $G[Z]$ has no isolated vertex, colour every edge of $G[Z]$ blue and all others red. Blue is supported on only six vertices (blue $F(2,1,1)$ needs seven), and each saturated vertex has at least one blue edge so red maximum degree at most three. If $G[Z]$ has an isolated vertex, all four of its incident edges leave $Z$ and exhaust the outside degree sum; the remaining five saturated vertices induce $K_5$ and the isolated-in-$Z$ vertex is the centre of an isolated $K_{1,4}$. Thus $G=K_5\sqcup K_{1,4}$ up to isolates. Colour the clique red and the star blue; each colour supports too few vertices for its target.
+If $h=6$, the degree sum outside $Z$ is four. If $G[Z]$ has no isolated vertex, colour every edge of $G[Z]$ blue and all others red. Blue is supported on only six vertices (blue $F(2,1,1)$ needs seven), and each saturated vertex has at least one blue edge so red maximum degree at most three. If $G[Z]$ has an isolated vertex, all four of its incident edges leave $Z$ and exhaust the outside degree sum; the remaining five saturated vertices induce $K_5$ and the vertex isolated within $G[Z]$ is the centre of an isolated $K_{1,4}$. Thus $G=K_5\sqcup K_{1,4}$ up to isolates. Colour the clique red and the star blue; each colour supports too few vertices for its target.
 
 If $h=5$, the degree sum outside $Z$ is eight. Two isolated vertices in $G[Z]$ would exhaust all eight degrees outside $Z$, leaving the three other saturated vertices to obtain degree four within a three-vertex graph, impossible. So $G[Z]$ has at most one isolated vertex. If there is one, choose one of its neighbours outside $Z$ and add it to the set $Z$ to obtain $Z'$; otherwise set $Z'=Z$. Every saturated vertex now has a neighbour in $Z'$, and $|Z'|\le6$. Colour $G[Z']$ blue and all other edges red. Blue is supported on at most six vertices, and red maximum degree is at most three, so both original targets are avoided.
 
@@ -221,7 +221,7 @@ $$
 h\le8\ (c=4),\qquad h\le7\ (c=5),\qquad h\le7\ (c=6).
 $$
 
-Apply Vizing's proper edge-colouring theorem with $c+1$ matching classes. Each vertex of degree $c$ misses **exactly one** of the $c+1$ classes. Because $h<2(c+1)$, the pigeonhole principle gives a matching colour class that misses at most one saturated vertex. Colour this matching RED. If a saturated vertex is missed, colour one additional edge at that vertex red. Every saturated vertex now has a red incident edge, so blue maximum degree is at most $c-1$. The red graph is a matching with at most one added edge; any red two-edge star must use that single extra edge, so there cannot be **two vertex-disjoint red two-edge stars**. It avoids red $F(2,2,1)$, while blue avoids its leading $c$-star. Contradiction.
+Apply Vizing's proper edge-colouring theorem with $c+1$ matching classes. Each vertex of degree $c$ misses **exactly one** of the $c+1$ classes. Because $h<2(c+1)$, the pigeonhole principle gives a matching colour class that misses at most one saturated vertex. Colour this matching RED. If a saturated vertex is missed, colour one additional edge at that vertex red. Every saturated vertex now has a red incident edge, so blue maximum degree is at most $c-1$. The red graph is a matching with at most one added edge; any red two-edge star must use that single extra edge, so there cannot be **two vertex-disjoint red two-edge stars**. It avoids red $F(2,2,1)$, while blue avoids its leading star with $c$ edges. Contradiction.
 
 ### Last two cases: saturated-core edge budget
 
