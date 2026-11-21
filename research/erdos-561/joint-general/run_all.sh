@@ -13,6 +13,7 @@ python3 verify_original20_322_3111_3211.py
 python3 verify_core_original_transfer.py
 python3 verify_d2_original_211_2111.py
 python3 verify_flat_tail_rigidity_family.py
+python3 verify_flat_tail_multiarm.py
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py

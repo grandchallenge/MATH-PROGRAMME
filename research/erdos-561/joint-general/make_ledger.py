@@ -367,5 +367,65 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary finite simple host joint residual and flat-tail star-forest Ramsey",
+  "assumptions": [
+    "t>=4,a>=2,b>=c>=1, original n=(a,1,1),m=(b,c repeated t-1)",
+    "ordinary non-induced, vertex-disjoint positive star-forest embeddings",
+    "first residual arrowing relation G->(F(1,1),F(b,c^{t-1})), second G->(F(a,1,1),F(c^{t-1}))"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3609",
+    "MATH-PROGRAMME#3606"
+  ],
+  "promotion_condition": "New all-host theorem paper-level UNDER_REVIEW. Finite complete star-arm-colouring checks and bounded arithmetic CHECKED only; no MATHCERT or unrestricted Erdős #561 closure.",
+  "claim_id": "ERDOS561-MULTIARM-FLAT-TAIL-JOINT-018",
+  "short_name": "Sharp multi-arm recolouring budget gives exact flat-tail joint residual for all t",
+  "claim_text": "For t>=4,a>=2,b>=c>=1, every arbitrary finite simple joint residual host for n=(a,1,1),m=(b,c^{t-1}) has at least 2b+(t-1)c+(t-3)min(a-1,c) edges. When c>=a-1 and b>=a+c-1 this exactly equals the canonical antidiagonal host J=2b+(t-3)(a+c-1)+2c. In particular the formerly one-edge-open t=5,a=2 family has J=2b+4c+2 for all c>=1,b>=c+1. The general conjecture remains unresolved.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "R1 all-blue forces degree>=b vertex v, and red v-star forces H=F(b,c^{t-1}) in G-v, with q=e(G-v)-h extra edges. Colour r=min(a-1,c) arms in each secondary c-star red and all other edges blue. Red maximum degree r<a avoids original red n. A blue F(c^{t-1}) can use v in at most one star and primary b-star edges in at most one more. At least t-3 remaining vertex-disjoint c-stars each need r distinct extra edges since residual secondary base degree<=c-r. Thus q>=r(t-3), proving lower. The exact antidiagonal lists A=(b,b,c^{t-1}),B=((a+c-1)^{t-1},c,c) and b>=a+c-1 give canonical upper equality. Does not rely on universal joint conjecture or finite-host enumeration.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/FLAT_TAIL_MULTIARM_RECOLOURING_THEOREM.md",
+    "research/erdos-561/joint-general/verify_flat_tail_multiarm.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/FLAT_TAIL_MULTIARM_EVIDENCE.json",
+    "research/erdos-561/joint-general/JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary finite simple host joint residual and flat-tail star-forest Ramsey",
+  "assumptions": [
+    "t>=4,a>=2,b>=c>=1, original n=(a,1,1),m=(b,c repeated t-1)",
+    "ordinary non-induced, vertex-disjoint positive star-forest embeddings",
+    "first residual arrowing relation G->(F(1,1),F(b,c^{t-1})), second G->(F(a,1,1),F(c^{t-1}))"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3609",
+    "MATH-PROGRAMME#3606"
+  ],
+  "promotion_condition": "New all-host theorem paper-level UNDER_REVIEW. Finite complete star-arm-colouring checks and bounded arithmetic CHECKED only; no MATHCERT or unrestricted Erdős #561 closure.",
+  "claim_id": "ERDOS561-MULTIARM-FLAT-TAIL-CHECK-019",
+  "short_name": "Multi-arm antidiagonal arithmetic and complete small upper-host colouring audit",
+  "claim_text": "Independent zero/one-based index conventions confirm 2772 exact flat-tail family parameter cases and 1890 general lower-only pairs. Seven declared canonical star hosts have been checked across every one of their 177482 red-arm colour allocation classes, each arrowing both residual pairs. These finite checks corroborate the analytic theorem but do not establish the universal arbitrary-host result by sampling.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Standard-library deterministic verifier independently recomputes original and two residual antidiagonal arrays, exact lower and upper formulas and full colour allocation classes of seven finite star-forest hosts. All finite tests are complete within their explicitly enumerated classes; unrestricted host lower is proven separately by the combinatorial recolouring argument.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_flat_tail_multiarm.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/FLAT_TAIL_MULTIARM_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
