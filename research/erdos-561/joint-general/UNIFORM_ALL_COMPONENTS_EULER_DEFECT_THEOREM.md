@@ -74,9 +74,9 @@ $$
 
 Assign the exceptional colours independently among these components so that at most $p-1$ exceptional vertices have red degree $u$ and at most $q-1$ have blue degree $u$. This is possible because $(p-1)+(q-1)\ge k$.
 
-Every vertex outside these exceptional centres has **both** red and blue degrees at most $u-1$. Hence every red $u$-edge star must be centred at a red exceptional centre, of which there are fewer than $p$, while every blue $u$-edge star must be centred at a blue exceptional centre, of which there are fewer than $q$. Neither target forest can occur. QED.
+Every vertex outside these exceptional centres has **both** red and blue degrees at most $u-1$. Hence every red star with $u$ edges must be centred at a red exceptional centre, of which there are fewer than $p$, while every blue star with $u$ edges must be centred at a blue exceptional centre, of which there are fewer than $q$. Neither target forest can occur. QED.
 
-The lemma makes no assumption of connectedness, absence of bridges, bipartiteness, factor criticality, or existence of a proper $D$-edge-colouring. **Odd cycles for $u=2$ are the simplest exceptional components**; for higher even $u$, the proof automatically charges an odd-sized saturated $D$-regular component at least $(u-1)R$ edges.
+The lemma makes no assumption of connectedness, absence of bridges, bipartiteness, factor criticality, or existence of a proper edge colouring with $D$ colours. **Odd cycles for $u=2$ are the simplest exceptional components**; for higher even $u$, the proof automatically charges an odd-sized saturated regular component of degree $D$ at least $(u-1)R$ edges.
 
 ### Lemma C — a uniform leading-degree gate
 
@@ -124,7 +124,7 @@ $$
 
 Apply Lemma C with $p=s-1$, $q=t$ and threshold $(p+q-1)R=(s+t-2)R=J$. Since $e(Q)<J$, there exists a vertex $v$ of degree at least $R$.
 
-For *every* vertex $v$, the two residual arrowing relations survive deletion in the appropriate form when all edges at $v$ are coloured RED: the first red target of $s-1$ disjoint $a$-stars loses at most one component, leaving at least $s-2$ red $a$-stars in $Q-v$, while the second red target of $s$ such stars leaves at least $s-1$. Thus
+For *every* vertex $v$, the two residual arrowing relations survive deletion in the appropriate form when all edges at $v$ are coloured RED: the first red target of $s-1$ disjoint $a$-stars loses at most one component, leaving at least $s-2$ red stars of size $a$ in $Q-v$, while the second red target of $s$ such stars leaves at least $s-1$. Thus
 
 $$
 Q-v\to(F(a^{s-2}),F(b^t)),
@@ -138,7 +138,7 @@ $$
 e(Q-v)\ge(s+t-3)R.
 $$
 
-Adding the at least $R$ distinct edges incident to $v$ gives $e(Q)\ge(s+t-2)R=J$, a contradiction. Hence the lower is proved for all $s$. The canonical antidiagonal star host of $s+t-2$ disjoint $R$-edge stars arrows both residuals and supplies the upper. QED.
+Adding the at least $R$ distinct edges incident to $v$ gives $e(Q)\ge(s+t-2)R=J$, a contradiction. Hence the lower is proved for all $s$. The canonical antidiagonal star host of $s+t-2$ disjoint stars of size $R$ arrows both residuals and supplies the upper. QED.
 
 ### ORIGINAL size Ramsey proof
 
