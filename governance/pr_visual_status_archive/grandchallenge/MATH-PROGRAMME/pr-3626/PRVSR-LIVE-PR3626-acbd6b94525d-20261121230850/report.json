@@ -1,0 +1,238 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-21T23:02:11Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-21T23:08:06Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+    "exact_head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+    "pr_number": 3626,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "research(erdos561): exact uniform all-component-count Ramsey via Euler deficit"
+  },
+  "integration": {
+    "merge_commit_sha": "d6681c6274b820b8c8ab3c7faea5d5677a4606bb",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 9,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 116D:46E1B:622BE2:A0B8D6:6B022483 and timestamp 2026-11-21 23:08:51 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 137017322979,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017393551,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017400594,
+          "conclusion": "skipped",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017400786,
+          "conclusion": "skipped",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017481236,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / administrative",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481266,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / campaigns",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481431,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / cmdg",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481234,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / contracts",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481220,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / core",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481240,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / docs",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481225,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / fixtures",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481265,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / oz",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017481254,
+          "conclusion": null,
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Policy shard / repository-regression",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137017393286,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017319350,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017336912,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "advisory-report",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017323328,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017320418,
+          "conclusion": "skipped",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137017323345,
+          "conclusion": "success",
+          "head_sha": "acbd6b94525df9931480523fce5563052a1c6cc6",
+          "name": "security / action-policy",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-21T23:08:50Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "ac5d0f997d9d35aa63f5dcda9819a820a9c6912920f2e4bcdac1840fac053a30"
+  },
+  "report_id": "PRVSR-LIVE-PR3626-acbd6b94525d-20261121230850",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification"
+    ]
+  }
+}
