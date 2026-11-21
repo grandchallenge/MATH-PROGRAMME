@@ -1,21 +1,24 @@
 import Mathlib.Topology.ContinuousMap.Compact
 import Mathlib.Topology.ContinuousMap.Algebra
 import Mathlib.Analysis.Normed.Operator.Basic
+import Mathlib.Analysis.Normed.Operator.Banach
+import Mathlib.Analysis.SpecificLimits.Normed
 import Mathlib.Tactic.Abel
+import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.FunProp
 import Mathlib.Topology.Instances.AddCircle.Real
 import Mathlib.Condensed.Functors
 
 /-!
-# Breen–Deligne low-degree real Banach cochains on actual compact-torus probes
+# CMDG CM5: actual Breen–Deligne torus real cochains and first positive-degree acyclicity
 
-This is the genuine continuous-real cochain model C(A^r × P, ℝ) used
-in the source derivation of Scholze's Theorem 4.3. We define actual
-continuous linear differentials and homotopies in degrees zero and one,
-prove d¹d⁰=0 and dH+Hd=2 id−[2]* for all cochains, and specialize
-to A=(ℝ/ℤ)^I with arbitrary profinite P. The maps are bounded by their
-ContinuousLinearMap types. The all-degree Breen–Deligne resolution and
-comparison to derived internal Hom in CondensedAb are NOT proved here.
+For any compact Hausdorff abelian A and compact probe P, defines the genuine
+continuous real cochain Banach spaces C(A^r × P, ℝ), the first two cochain
+differentials, explicit bounded doubling homotopy, and degree-one Neumann
+contraction. Specializes to A=(ℝ/ℤ)^I and arbitrary profinite P. Proves
+cochain H⁰=H¹=0 without new axioms. These cochain calculations do **not**
+by themselves constitute the all-degree Breen–Deligne resolution or the
+actual derived condensed RHom comparison, which remain distinct obligations.
 -/
 
 noncomputable section
@@ -178,8 +181,6 @@ theorem degreeZero_realCochain_cocycle_zero
     nlinarith [norm_nonneg f]
   exact norm_eq_zero.mp hn
 
-#print axioms degreeZero_realCochain_cocycle_zero
-
 def pDouble2a : C((A × (A × A)) × S, (A × (A × A)) × S) :=
   ⟨fun p => ((p.1.1 + p.1.1,
     (p.1.2.1 + p.1.2.1, p.1.2.2 + p.1.2.2)), p.2), by fun_prop⟩
@@ -234,11 +235,106 @@ theorem doublingStar2_opnorm_le_one :
   intro f
   simpa only [one_mul] using doublingStar2_nonexpansive A S f
 
-#print axioms differential1_commutes_doubling
-#print axioms doublingStar1_nonexpansive
-#print axioms doublingStar2_nonexpansive
+/-- An unconditional positive-degree real cochain acyclicity theorem
+for degree one in the *actual* compact continuous-function Banach complex.
+The convergent Neumann inverse of 1-[2]* / 2 supplies a genuine primitive.
+No all-degree or sheaf-derived comparison is assumed. -/
+theorem degreeOne_realCochain_closed_exact (f : C1 A S)
+    (hf : differential1 A S f = 0) :
+    ∃ g : C0 A S, differential0 A S g = f := by
+  let T : C1 A S →L[ℝ] C1 A S :=
+    (1/2 : ℝ) • doubleStar1 A S
+  let U : C2 A S →L[ℝ] C2 A S :=
+    (1/2 : ℝ) • doubleStar2 A S
+  have hT : ‖T‖ < 1 := by
+    have hle : ‖T‖ ≤ (1/2 : ℝ) := by
+      apply ContinuousLinearMap.opNorm_le_bound _ (by norm_num)
+      intro x
+      calc
+        ‖T x‖ = (1/2 : ℝ) * ‖doubleStar1 A S x‖ := by
+          simp [T, norm_smul]
+        _ ≤ (1/2 : ℝ) * ‖x‖ :=
+          mul_le_mul_of_nonneg_left
+            (doublingStar1_nonexpansive A S x) (by norm_num)
+    exact lt_of_le_of_lt hle (by norm_num)
+  have hU : ‖U‖ < 1 := by
+    have hle : ‖U‖ ≤ (1/2 : ℝ) := by
+      apply ContinuousLinearMap.opNorm_le_bound _ (by norm_num)
+      intro x
+      calc
+        ‖U x‖ = (1/2 : ℝ) * ‖doubleStar2 A S x‖ := by
+          simp [U, norm_smul]
+        _ ≤ (1/2 : ℝ) * ‖x‖ :=
+          mul_le_mul_of_nonneg_left
+            (doublingStar2_nonexpansive A S x) (by norm_num)
+    exact lt_of_le_of_lt hle (by norm_num)
+  have hsurj : Function.Surjective
+      ((1 - T) : C1 A S →L[ℝ] C1 A S) :=
+    (ContinuousLinearMap.isUnit_iff_bijective.mp
+      (isUnit_one_sub_of_norm_lt_one hT)).2
+  obtain ⟨x,hx⟩ := hsurj f
+  have hx' : x - T x = f := by
+    simpa only [ContinuousLinearMap.sub_apply,
+      ContinuousLinearMap.one_apply] using hx
+  have hcomm_x : differential1 A S (T x) =
+      U (differential1 A S x) := by
+    simp only [T,U,ContinuousLinearMap.smul_apply,
+      map_smul]
+    rw [differential1_commutes_doubling]
+  have hzero : differential1 A S x -
+      U (differential1 A S x) = 0 := by
+    calc
+      differential1 A S x - U (differential1 A S x) =
+        differential1 A S (x-T x) := by rw [map_sub,hcomm_x]
+      _ = differential1 A S f := by rw [hx']
+      _ = 0 := hf
+  have hinj : Function.Injective
+      ((1-U) : C2 A S →L[ℝ] C2 A S) :=
+    (ContinuousLinearMap.isUnit_iff_bijective.mp
+      (isUnit_one_sub_of_norm_lt_one hU)).1
+  have hd1x : differential1 A S x = 0 := by
+    apply hinj
+    simpa only [ContinuousLinearMap.sub_apply,
+      ContinuousLinearMap.one_apply,map_zero,sub_zero] using hzero
+  refine ⟨(1/2 : ℝ) • (hStar0 A S x), ?_⟩
+  have hh := homotopy1 A S x
+  rw [hd1x,map_zero,zero_add] at hh
+  calc
+    differential0 A S ((1/2 : ℝ) • (hStar0 A S x)) =
+        (1/2 : ℝ) • differential0 A S (hStar0 A S x) := by
+          rw [map_smul]
+    _ = (1/2 : ℝ) • (x+x-doubleStar1 A S x) := by rw [hh]
+    _ = x - T x := by
+      rw [smul_sub, smul_add]
+      have ht : (1/2 : ℝ) • x + (1/2 : ℝ) • x = x := by
+        rw [← add_smul]
+        norm_num
+      rw [ht]
+      rfl
+    _ = f := hx'
+
 #print axioms doublingStar1_opnorm_le_one
 #print axioms doublingStar2_opnorm_le_one
+/-- Explicit circle-torus degree-one real cochain acyclicity, uniform in
+the circle-product index I and profinite parameter P. -/
+theorem circleTorus_degreeOne_realCochain_closed_exact
+    (I : Type u) (P : Profinite.{v})
+    (f : C(((I → UnitAddCircle) × (I → UnitAddCircle)) × P, ℝ))
+    (hf : differential1 (I → UnitAddCircle) P f = 0) :
+    ∃ g : C((I → UnitAddCircle) × P, ℝ),
+      differential0 (I → UnitAddCircle) P g = f :=
+  degreeOne_realCochain_closed_exact (I → UnitAddCircle) P f hf
+
+#print axioms circleTorus_degreeOne_realCochain_closed_exact
+
+#print axioms degreeOne_realCochain_closed_exact
+
+#print axioms doublingStar1_nonexpansive
+#print axioms doublingStar2_nonexpansive
+
+#print axioms differential1_commutes_doubling
+
+#print axioms degreeZero_realCochain_cocycle_zero
 
 #print axioms circleTorus_differential_sq_zero
 #print axioms circleTorus_doubling_homotopy_degreeOne
