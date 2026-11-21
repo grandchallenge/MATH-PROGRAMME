@@ -1,6 +1,118 @@
-# Erdős #561 — exact all-component-count uniform star forests by Euler defect budgeting
+# Erdős #561 — exact ALL uniform star forests via one spare Vizing class
 
-**Research date:** 2026-11-21. **Status:** new paper theorem UNDER_REVIEW, bounded arithmetic checks CHECKED. All hosts are arbitrary finite simple graphs; forest copies are ordinary, non-induced, and vertex-disjoint. This establishes an infinite class with **both component counts unbounded and every star nontrivial**, but NOT the unrestricted Erdős #561 conjecture for heterogeneous original star sizes. It is independent of the public 2026-10-21 three-component proposed proof and uses only the published pinned two-component result (Chunlin You, arXiv:2610.25958v1) plus the existing protected even-cap splitting theorem for odd arm sizes. The equal-even-arm case has an elementary Euler-tour proof, and the unequal-even-arm case has an independent constructive two-factor/Hall-theorem extension, both given in full below.
+**Research date:** 2026-11-21. **Status:** independently reconstructed **KNOWN uniform-family theorem**, paper-level proof UNDER_REVIEW, bounded checks CHECKED, NOT MATHCERT. All original host graphs are finite simple, and star forests have ordinary non-induced, vertex-disjoint component embeddings. This source establishes a concise independent proof route, **NOT mathematical novelty or priority for the uniform formula**. Explicit published precedence: Pingting Fu, Zhidan Luo, Zhenyu Ni, *Size Ramsey minimal graphs for uniform star forests*, arXiv:2606.04439v3 (2026-07-04), https://arxiv.org/abs/2606.04439v3 , and prior uniform results cited therein. The base two-component case is Chunlin You, *Size Ramsey numbers of star forests with two components on one side*, arXiv:2610.25958v1 (2026-10-19), https://arxiv.org/abs/2610.25958v1 . Our proof is an additional self-contained **Vizing smallest-class** argument reducing the higher-component case to that pinned base. The full heterogeneous Erdős #561 conjecture remains OPEN.
+
+## Theorem 0 — EVERY pair of uniform positive star sizes, all component counts
+
+Let $a,b\ge1$ and $s,t\ge3$ be arbitrary integers. Let $F(a^s)$ denote $s$ vertex-disjoint stars, each with exactly $a$ edges. Write
+
+$$
+R=a+b-1.
+$$
+
+Then for **all** such parameter values, with no parity, equality, or graph topology restriction,
+
+$$
+\boxed{
+\mathcal J((a^s),(b^t))=(s+t-2)R,
+\qquad
+\widehat r(F(a^s),F(b^t))=(s+t-1)R.
+}
+$$
+
+This is exactly the established uniform-star-forest formula, together with a sharp simultaneous joint-residual statement. Below is an independent constructive proof for arbitrary simple host graphs.
+
+### Lemma 0.A — universal smallest-spare-matching degree gate
+
+Let $a,b\ge1$, $A=a-1$, $B=b-1$, $D=A+B$, and $R=D+1=a+b-1$. For any $p,q\ge1$, any finite simple graph $G$ with
+
+$$
+\Delta(G)\le D,
+\qquad
+e(G)<(p+q-1)R,
+$$
+
+admits a red/blue edge colouring containing **neither** red $F(a^p)$ nor blue $F(b^q)$.
+
+**Proof.** Vizing's edge-colouring theorem gives a proper edge colouring of $G$ with at most $\Delta(G)+1\le D+1=R$ classes. Adjoin empty classes if necessary to obtain **exactly $R$ named matching classes**. Select a **smallest** class $M$ and reserve it as the *spare class*. Since the $R$ classes partition the edges,
+
+$$
+|M|\le\frac{e(G)}{R}<p+q-1
+\quad\Longrightarrow\quad
+|M|\le p+q-2.
+$$
+
+Arbitrarily divide the remaining $D=A+B$ matching classes into $A$ **RED base classes** and $B$ **BLUE base classes**. This base colouring has red degree at most $A$ and blue degree at most $B$ at EVERY vertex.
+
+Consider a spare edge $xy\in M$. Because $M$ is a matching, no other spare edge touches either endpoint. At either endpoint $v\in\{x,y\}$, the original graph has at most $D$ incident edges and one belongs to $M$. Thus at most $D-1$ of the $D$ base matching classes occur at $v$. **At least one base class is missing.** Therefore $v$ has at least ONE *safe spare colour*: colour $xy$ red if it is missing a red base class (red degree stays at most $A$), or blue if it is missing a blue base class (blue degree stays at most $B$). When $A=0$ or $B=0$, the corresponding empty group cannot be missing, but the nonempty group necessarily supplies a safe colour whenever a spare edge exists; the same reasoning applies.
+
+If the two endpoints share a safe colour, assign it to $xy$ and create **no cap violation**.
+
+Otherwise their safe-colour sets are disjoint: one endpoint permits only RED safely and the other only BLUE. We may choose either colour for $xy$:
+- Colouring it RED exceeds the red cap at exactly ONE endpoint, by one (red degree becomes $A+1=a$), while staying below the blue cap everywhere.
+- Colouring it BLUE exceeds the blue cap at exactly ONE endpoint, by one (blue degree becomes $B+1=b$), while staying below the red cap everywhere.
+
+Each *conflicting* spare edge therefore produces **at most one forbidden-size star centre in a freely chosen colour**, and distinct spare edges have no common endpoints. There are at most $|M|\le p+q-2$ such independently assignable defects.
+
+Assign their chosen colours so that **at most $p-1$ centres have red degree $a$** and **at most $q-1$ centres have blue degree $b$**. This is always possible because the sum of these two capacities is $p+q-2$. Every other vertex has red degree at most $a-1$ and blue degree at most $b-1$.
+
+A red copy of $F(a^p)$ would need $p$ distinct centres having at least $a$ red incident edges; a blue copy of $F(b^q)$ would need $q$ distinct centres having at least $b$ blue incident edges. Both are excluded. This constructs the required avoiding colouring of the original arbitrary simple graph. QED.
+
+**Key invariant:** the smallest proper-colour class costs at most $e(G)/(a+b-1)$ edges; each spare edge can create at most ONE dangerous degree-cap violation, and its colour is independently selectable. This removes **every parity obstruction**, even in nonbipartite class-two graphs.
+
+### Corollary 0.B — necessary large degree below the canonical budget
+
+Under the preceding hypotheses, if $G\to(F(a^p),F(b^q))$ and $e(G)<(p+q-1)R$, then necessarily
+
+$$
+\boxed{\Delta(G)\ge R=a+b-1.}
+$$
+
+Otherwise Lemma 0.A supplies a colouring avoiding both target forests, contradicting arrowing.
+
+### Proof of sharp JOINT residual for all uniform lengths
+
+The canonical joint host is $s+t-2$ disjoint stars, each with $R$ edges. Its arrowing is established by the ordinary antidiagonal star-host criterion, and its edge count provides the upper bound.
+
+For the lower bound, induct on $s\ge3$ with **arbitrary fixed $t\ge3$**. The base case $s=3$ follows directly from Chunlin You's pinned **two-component** theorem: the first residual relation is
+
+$$
+Q\to(F(a^2),F(b^t)),
+$$
+
+whose size Ramsey lower bound is $(t+1)R=(s+t-2)R$. Thus the joint statement is already sharp for $s=3$, independently of any proposed full three-component proof.
+
+Now suppose $s\ge4$ and $Q$ jointly arrows the residuals of $(a^s),(b^t)$. Write $J=(s+t-2)R$. Assume for contradiction that $e(Q)<J$. The **first** residual arrows red $F(a^{s-1})$ against blue $F(b^t)$, so Lemma 0.B with $p=s-1,q=t$ forces a vertex $v$ of degree at least $R$.
+
+For either of the two residual relations, colour all edges touching $v$ red in a hypothetical extension of a colouring of $Q-v$. Any red copy of the relevant forest contains at most one component meeting $v$, so the remaining red components yield the corresponding smaller residual target entirely within $Q-v$. Blue cannot use an edge touching $v$. Consequently
+
+$$
+Q-v\to(F(a^{s-2}),F(b^t)),
+\qquad
+Q-v\to(F(a^{s-1}),F(b^{t-1})).
+$$
+
+These are precisely the two residual relations for uniform original lengths $(s-1,t)$. Induction gives $e(Q-v)\ge(s+t-3)R$. Therefore
+
+$$
+e(Q)=d_Q(v)+e(Q-v)\ge R+(s+t-3)R=J,
+$$
+
+a contradiction. The joint residual theorem is proved for every $s,t$.
+
+### Proof of the ORIGINAL uniform formula
+
+Let $G$ arrow the ORIGINAL pair $F(a^s),F(b^t)$, and put $W=(s+t-1)R$. If $e(G)<W$, Lemma 0.B applied with $p=s,q=t$ forces a vertex $v$ of degree at least $R$. Every one-vertex deletion of an ORIGINAL Ramsey host arrows BOTH residual pairs (extend a violating residual colouring by colouring all edges at $v$ red or blue; a putative original copy loses at most one component). Hence $G-v$ satisfies the newly proved sharp joint residual and has at least $(s+t-2)R$ edges. Thus
+
+$$
+e(G)=d_G(v)+e(G-v)\ge R+(s+t-2)R=W,
+$$
+
+contradiction. The canonical original host of $s+t-1$ disjoint $R$-edge stars supplies the matching upper bound. QED.
+
+## Alternative structural proofs for equal and same-parity arm sizes
+
+The elementary Euler-tour and two-factor/Hall constructions in the remainder are additional **independent degree-defect budget arguments** for the narrower same-parity subfamilies. They are not needed for the general uniform theorem above. They remain useful as explicit structural explanations of what proper edge-colour class defects measure in saturated regular components.
 
 Write $F(u^p)$ for $p$ vertex-disjoint copies of a star having $u$ edges. Let $s,t\ge3$ and $a,b\ge2$. Put
 
@@ -10,7 +122,7 @@ $$
 
 The canonical antidiagonal weights for original $n=(a^s)$ and $m=(b^t)$ are all equal to $R$, with $s+t-1$ original diagonals and $s+t-2$ joint-residual diagonals.
 
-## Theorem A — exact arbitrary-host all-length uniform families
+## Theorem A — alternative exact same-parity uniform families
 
 Assume **either** of these independent conditions:
 
