@@ -394,6 +394,38 @@
         "research/erdos-561/joint-general/RIGID_14EDGE_322_3111_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / original two-colour size Ramsey equality, fixed 3-by-4 positive star-forest cases",
+      "assumptions": [
+        "all host graphs finite and simple",
+        "ordinary vertex-disjoint, non-induced positive-edge stars",
+        "red F(3,2,2)",
+        "blue either F(3,1,1,1) or F(3,2,1,1)"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3569",
+        "MATH-PROGRAMME#3591"
+      ],
+      "promotion_condition": "The new original 20-edge results depend on upstream paper-level claim 012 and elementary even-cap splitting, with no independent mathematical certification. Keep this claim UNDER_REVIEW, and global Erdős #561 OPEN. Protected source-only admission is not MATHCERT.",
+      "claim_id": "ERDOS561-ORIGINAL-322-3111-3211-013",
+      "short_name": "Two exact original 20-edge size Ramsey values for 322 versus 3111/3211",
+      "claim_text": "For c=1,2, rhat(F(3,2,2),F(3,c,1,1))=20 over arbitrary finite simple host graphs. Canonical host F(5,4,4,3,2,2) attains each bound. Any original host with <=19 edges would, by vertex deletion and upstream sharp 15-edge joint residual (claim 012), have maximum degree <=4. The elementary universal (2,2)-capped edge partition then avoids both original forests. No full Erdős #561 conjecture is claimed.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Sharp joint 15-edge residual for blue (3,1,1,1) proved analytically (claim 012), transferred by monotone plateau to blue (3,2,1,1). Original arrowing yields both residual relations after any vertex deletion, bounding degree at most 4 for a 19-edge host. Complete constructive proof that every subquartic graph splits into two degree<=2 colours via two-copy 4-regular multigraph completion, Euler orientation and bipartite cycle alternating. Direct complete 5400 arm allocations for each of the two exact 20-edge canonical hosts corroborate the upper; no arbitrary-host finite extrapolation.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/ORIGINAL_20EDGE_322_3111_3211_THEOREM.md",
+        "research/erdos-561/joint-general/verify_original20_322_3111_3211.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/ORIGINAL_20EDGE_322_3111_3211_EVIDENCE.json",
+        "research/erdos-561/joint-general/RIGID_14EDGE_322_3111_THEOREM.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }

@@ -20,6 +20,7 @@
 | Complementary unique-max rigidity proof of existing 311/b221 family | python3 verify_unique_max_311_b221_family.py | Complete arm-allocation scans for b=4..14; injective embedding cross-check b=4..6; explicit b=3 failure and b=2 unique-max obstruction; no new claim ID |
 | Exact monotone plateau and inherited case audit | `python3 verify_joint_monotone_plateaus.py` | Two independently indexed antidiagonal computations, five fixed J=15 cases, two fixed J=13 cases, finite parameter samples of two exact infinite families, and nine additional source-linked grid cases; no global conjecture claim |
 | Exact analytic 322/3111 strict-switch case | `python3 verify_rigid14_322_3111.py` | Both antidiagonal conventions agree; all 900 star host red-arm colour classes PASS; lower proof paper-level via Lovász factor and deletion, not finite-host extrapolation |
+| Two exact original 322/3111 and 322/3211 size-Ramsey cases | `python3 verify_original20_322_3111_3211.py` | Both canonical original antidiagonal lists exactly (5,4,4,3,2,2), 5,400/5,400 red-arm allocation classes per blue profile PASS. Original lower bound analytical using claim 012 + universal (2,2) split |
 | Claim ledger schema | Validate `CLAIM_LEDGER.json` with `schemas/claim_ledger.schema.json` | Full problem OPEN; proved subclaims UNDER_REVIEW; bounded exact checks CHECKED |
 | Integrity | `sha256sum -c SHA256SUMS.txt` | Exact files all match |
 
