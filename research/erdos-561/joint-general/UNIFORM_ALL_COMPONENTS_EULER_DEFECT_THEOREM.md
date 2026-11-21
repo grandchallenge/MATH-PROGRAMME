@@ -111,7 +111,7 @@ If the odd leftover cycle visits a vertex of the **second copy**, select such a 
 
 Otherwise, if the odd cycle visits an **unsaturated original vertex** $v$ with $d_G(v)<D$, choose $v$ as the exception. This vertex has at least one incident completion edge. If one such edge belongs to a previously red or blue two-factor, choose the **same colour** for the exception: the full degree surplus of one in that colour disappears when the completion edge is removed. If all its completion edges lie in the leftover cycle, choose either exception colour; both leftover cycle edges at the exception are coloured with that selected colour, and at least one is removed. Consequently the restricted original colour degrees at $v$ are at most $(A,B)$.
 
-Only odd leftover cycles whose **every vertex lies in the first copy and was saturated at degree $D$ in $G$** remain unabsorbed. Such an odd cycle has **at least three vertices**, because $G$ is simple and has neither loops nor parallel edges in its original first copy. Different cycles of one two-factor are vertex-disjoint. Therefore, if $k$ is the number of unabsorbed odd cycles and $Z$ is the set of degree-$D$ vertices in the original graph,
+Only odd leftover cycles whose **every vertex lies in the first copy and was saturated at degree $D$ in $G$** remain unabsorbed. Such an odd cycle has **at least three vertices**, because $G$ is simple and has neither loops nor parallel edges in its original first copy. Different cycles of one two-factor are vertex-disjoint. Therefore, if $k$ is the number of unabsorbed odd cycles and $Z$ is the set of vertices of degree $D$ in the original graph,
 
 $
 |Z|\ge3k.
@@ -138,7 +138,7 @@ $
 
 Choose the independent exception colours of these $k$ unabsorbed odd cycles so that **at most $p-1$ are red exceptions** and **at most $q-1$ are blue exceptions**. Every other original vertex has red degree at most $A=a-1$ and blue degree at most $B=b-1$. Each unabsorbed red exception is the **only possible centre of an $a$-edge red star in its leftover odd cycle**, and each blue exception similarly the only possible centre of a $b$-edge blue star. With fewer than $p$ red eligible centres and fewer than $q$ blue eligible centres, neither requested vertex-disjoint star forest can exist. This proves the avoiding colouring on the arbitrary original simple graph $G$. QED.
 
-This strengthens the equal-even Euler argument of Lemma B: the odd-cycle exceptions in the last two-factor need not correspond to entire regular connected components, but **each surviving exception is charged to three degree-$D$ vertices and costs at least $R$ distinct original edge incidences in the handshake bound**. The completion's second copy is a proof device; no parallel edge is introduced into the original host or either Ramsey target.
+This strengthens the equal-even Euler argument of Lemma B: the odd-cycle exceptions in the last two-factor need not correspond to entire regular connected components, but **each surviving exception is charged to three vertices of degree $D$ and costs at least $R$ distinct original edge incidences in the handshake bound**. The completion's second copy is a proof device; no parallel edge is introduced into the original host or either Ramsey target.
 
 ### Lemma D — a uniform leading-degree gate
 
