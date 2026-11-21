@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 concurrency:
   group: erdos-compendium-evidence-freshness
@@ -15,6 +14,9 @@ concurrency:
 
 jobs:
   reconcile:
+    permissions:
+      contents: read
+      issues: write
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
