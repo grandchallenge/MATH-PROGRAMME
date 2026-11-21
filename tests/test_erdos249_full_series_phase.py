@@ -1486,6 +1486,26 @@ class FullWindowPrimeProjectionTests(unittest.TestCase):
                 X**3*c["Q"]**2)
             self.assertEqual(c["source"],
                              "actual Euler totient, exact integer rolling")
+        # Independent exact-rational test of the OTHER primary theorem (G),
+        # at a genuine Cook least depth where the finite bound is nonvacuous.
+        X, h = 4096, 1
+        c = wp09e_certificate(X, h)
+        p = c["p"]
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        phi = totients(2*X+c["H"]+1)
+        f = [Fraction(0)] + [Fraction(phi[n], n) for n in range(1,len(phi))]
+        residue_sums = [Fraction() for _ in range(p)]
+        squared = Fraction()
+        for N in range(X, 2*X):
+            G = sum((Fraction(1, 1 << j) *
+                     (f[N+h+j]-f[N+j]) for j in range(1,c["L"]+1)),
+                    Fraction())
+            residue_sums[N % p] += G
+            squared += G*G
+        self.assertGreaterEqual(squared, Fraction(X, 400*p**3))
+        for a in ((-1) % p, (-1-h) % p):
+            self.assertGreaterEqual(abs(residue_sums[a]),
+                                    Fraction(X, 20*p*p))
 
     def test_exact_ineligible_and_bad_parameters_fail_closed(self):
         for X, h in ((64, 1), (128, 2), (512, 6)):
