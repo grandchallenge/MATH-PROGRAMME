@@ -1,6 +1,6 @@
 # Erdős #561 — exact all-component-count uniform star forests by Euler defect budgeting
 
-**Research date:** 2026-11-21. **Status:** new paper theorem UNDER_REVIEW, bounded arithmetic checks CHECKED. All hosts are arbitrary finite simple graphs; forest copies are ordinary, non-induced, and vertex-disjoint. This establishes an infinite class with **both component counts unbounded and every star nontrivial**, but NOT the unrestricted Erdős #561 conjecture for heterogeneous original star sizes. It is independent of the public 2026-10-21 three-component proposed proof and uses only the published pinned two-component result (Chunlin You, arXiv:2610.25958v1) plus the existing protected even-cap splitting theorem for odd arm sizes. The equal-even-arm case has an elementary Euler-tour proof given in full below.
+**Research date:** 2026-11-21. **Status:** new paper theorem UNDER_REVIEW, bounded arithmetic checks CHECKED. All hosts are arbitrary finite simple graphs; forest copies are ordinary, non-induced, and vertex-disjoint. This establishes an infinite class with **both component counts unbounded and every star nontrivial**, but NOT the unrestricted Erdős #561 conjecture for heterogeneous original star sizes. It is independent of the public 2026-10-21 three-component proposed proof and uses only the published pinned two-component result (Chunlin You, arXiv:2610.25958v1) plus the existing protected even-cap splitting theorem for odd arm sizes. The equal-even-arm case has an elementary Euler-tour proof, and the unequal-even-arm case has an independent constructive two-factor/Hall-theorem extension, both given in full below.
 
 Write $F(u^p)$ for $p$ vertex-disjoint copies of a star having $u$ edges. Let $s,t\ge3$ and $a,b\ge2$. Put
 
@@ -15,7 +15,7 @@ The canonical antidiagonal weights for original $n=(a^s)$ and $m=(b^t)$ are all 
 Assume **either** of these independent conditions:
 
 1. $a$ and $b$ are both odd, not necessarily equal; **or**
-2. $a=b$ is even.
+2. $a$ and $b$ are both even, **not necessarily equal**.
 
 Then **for all integers $s,t\ge3$**, and for arbitrary finite simple graph hosts,
 
@@ -78,7 +78,69 @@ Every vertex outside these exceptional centres has **both** red and blue degrees
 
 The lemma makes no assumption of connectedness, absence of bridges, bipartiteness, factor criticality, or existence of a proper edge colouring with $D$ colours. **Odd cycles for $u=2$ are the simplest exceptional components**; for higher even $u$, the proof automatically charges an odd-sized saturated regular component of degree $D$ at least $(u-1)R$ edges.
 
-### Lemma C — a uniform leading-degree gate
+### Lemma C — unequal EVEN star sizes by two-factor defect budgeting
+
+Let $a,b\ge2$ be **arbitrary even integers**, possibly unequal, and write
+
+$
+A=a-1,\quad B=b-1,\quad D=A+B,\quad R=D+1=a+b-1.
+$
+
+Then for any positive integers $p,q$ and **any finite simple graph** $G$ satisfying
+
+$
+\Delta(G)\le D,\qquad e(G)<(p+q-1)R,
+$
+
+there is a red/blue edge colouring avoiding red $F(a^p)$ and blue $F(b^q)$.
+
+**Proof (fully constructive).**
+
+Because $a,b$ are even, $A$ and $B$ are positive **odd** integers, so $D$ is even. Form a loopless **regular multigraph completion** $\widetilde G$ by taking two disjoint copies of $G$ and adding exactly $D-d_G(v)$ parallel edges between corresponding vertices $v$ and $v'$ across the two copies. Every vertex of $\widetilde G$ has degree exactly $D$, and **each vertex of the first copy of $G$ with original degree below $D$ is incident to at least one added completion edge**. Vertices originally saturated at degree $D$ have no completion edges.
+
+A regular multigraph of even degree $D$ decomposes into exactly $D/2$ spanning two-factors. For completeness, orient the edges of each connected component along Euler circuits. Every vertex then has indegree and outdegree $D/2$. Replace vertex $v$ by a left and right copy; represent each directed edge $v\to w$ by a bipartite edge $v_L w_R$. This is a regular bipartite multigraph of degree $D/2$, which decomposes into $D/2$ perfect matchings by Hall's theorem. Each matching corresponds to a directed cycle cover and therefore a spanning two-factor of $\widetilde G$. Two-cycles made of parallel edges are permitted and are **even**, so they cause no parity exception.
+
+Colour every edge in $(A-1)/2$ of these two-factors RED and every edge in $(B-1)/2$ other two-factors BLUE. Exactly ONE spanning two-factor remains uncoloured. Each of its components is a cycle. Along **each** leftover cycle, colour its edges alternately red and blue:
+
+- On an even cycle, every vertex receives one additional red and one additional blue edge. Its degrees in the complete multigraph are exactly $(A,B)$.
+- On an odd cycle, choose any vertex of that cycle as an exception and begin the alternation there. Every other vertex receives one additional edge of each colour and has full multigraph degrees $(A,B)$. At the exceptional vertex the full degrees are **either** $(A+1,B-1)$ **or** $(A-1,B+1)$, at our independent choice by reversing the alternating colours.
+
+We now choose the exception for each odd cycle so that, after deleting all completion edges and the entire second copy, only a small number of potentially forbidden star centres remain in the original $G$.
+
+If the odd leftover cycle visits a vertex of the **second copy**, select such a vertex as its exception. It does not matter that this vertex may exceed a colour cap, because we ultimately restrict the colouring to the first copy.
+
+Otherwise, if the odd cycle visits an **unsaturated original vertex** $v$ with $d_G(v)<D$, choose $v$ as the exception. This vertex has at least one incident completion edge. If one such edge belongs to a previously red or blue two-factor, choose the **same colour** for the exception: the full degree surplus of one in that colour disappears when the completion edge is removed. If all its completion edges lie in the leftover cycle, choose either exception colour; both leftover cycle edges at the exception are coloured with that selected colour, and at least one is removed. Consequently the restricted original colour degrees at $v$ are at most $(A,B)$.
+
+Only odd leftover cycles whose **every vertex lies in the first copy and was saturated at degree $D$ in $G$** remain unabsorbed. Such an odd cycle has **at least three vertices**, because $G$ is simple and has neither loops nor parallel edges in its original first copy. Different cycles of one two-factor are vertex-disjoint. Therefore, if $k$ is the number of unabsorbed odd cycles and $Z$ is the set of degree-$D$ vertices in the original graph,
+
+$
+|Z|\ge3k.
+$
+
+The original degree sum yields
+
+$
+2e(G)\ge D|Z|\ge3Dk,
+$
+
+hence
+
+$
+e(G)\ge \frac{3D}{2}k\ge(D+1)k=Rk,
+$
+
+since $D\ge2$ gives $3D/2\ge D+1$. Using the assumed strict edge budget,
+
+$
+kR\le e(G)<(p+q-1)R,
+\qquad k\le p+q-2.
+$
+
+Choose the independent exception colours of these $k$ unabsorbed odd cycles so that **at most $p-1$ are red exceptions** and **at most $q-1$ are blue exceptions**. Every other original vertex has red degree at most $A=a-1$ and blue degree at most $B=b-1$. Each unabsorbed red exception is the **only possible centre of an $a$-edge red star in its leftover odd cycle**, and each blue exception similarly the only possible centre of a $b$-edge blue star. With fewer than $p$ red eligible centres and fewer than $q$ blue eligible centres, neither requested vertex-disjoint star forest can exist. This proves the avoiding colouring on the arbitrary original simple graph $G$. QED.
+
+This strengthens the equal-even Euler argument of Lemma B: the odd-cycle exceptions in the last two-factor need not correspond to entire regular connected components, but **each surviving exception is charged to three degree-$D$ vertices and costs at least $R$ distinct original edge incidences in the handshake bound**. The completion's second copy is a proof device; no parallel edge is introduced into the original host or either Ramsey target.
+
+### Lemma D — a uniform leading-degree gate
 
 Under either condition of Theorem A, a graph $G$ of fewer than $(p+q-1)R$ edges satisfying
 
@@ -90,7 +152,7 @@ must have a vertex of degree at least $R=a+b-1$.
 
 **If both $a,b$ are odd:** the two positive degree caps $a-1$ and $b-1$ are even, with sum $D$. The previously protected universal even-cap splitting theorem, \`EVEN_CAP_DEGREE_SPLITTING_THEOREM.md\`, partitions the edges of EVERY graph of maximum degree at most $D$ into red degree at most $a-1$ and blue degree at most $b-1$. Such a colouring avoids BOTH leading star sizes, regardless of edge count. Therefore any arrowing graph must have degree at least $D+1=R$.
 
-**If $a=b=u$ is even:** a graph with degree at most $D=2u-2$ and fewer than $(p+q-1)R$ edges admits the avoiding colouring constructed in Lemma B. Therefore any arrowing graph with fewer edges has degree at least $R$.
+**If both $a,b$ are even:** a graph with degree at most $D=a+b-2$ and fewer than $(p+q-1)R$ edges admits the avoiding colouring constructed in Lemma C. This includes the earlier equal-even Lemma B as a special case. Therefore any arrowing graph with fewer edges has degree at least $R$.
 
 This is a **strictly scoped degree gate**. In particular, for even equal star arms, we do not claim that a general bounded-degree graph at a much larger edge count admits such a partition: sufficiently many exceptional odd regular components can force the coloured star-forest property.
 
@@ -122,7 +184,7 @@ $$
 Q\to(F(a^{s-1}),F(b^t)).
 $$
 
-Apply Lemma C with $p=s-1$, $q=t$ and threshold $(p+q-1)R=(s+t-2)R=J$. Since $e(Q)<J$, there exists a vertex $v$ of degree at least $R$.
+Apply Lemma D with $p=s-1$, $q=t$ and threshold $(p+q-1)R=(s+t-2)R=J$. Since $e(Q)<J$, there exists a vertex $v$ of degree at least $R$.
 
 For *every* vertex $v$, the two residual arrowing relations survive deletion in the appropriate form when all edges at $v$ are coloured RED: the first red target of $s-1$ disjoint stars of size $a$ loses at most one component, leaving at least $s-2$ red stars of size $a$ in $Q-v$, while the second red target of $s$ such stars leaves at least $s-1$. Thus
 
@@ -142,7 +204,7 @@ Adding the at least $R$ distinct edges incident to $v$ gives $e(Q)\ge(s+t-2)R=J$
 
 ### ORIGINAL size Ramsey proof
 
-Take any $G\to(F(a^s),F(b^t))$, and put $W=(s+t-1)R$. Suppose $e(G)<W$. Lemma C with $p=s,q=t$ forces $\Delta(G)\ge R$. Pick a vertex $v$ of degree at least $R$.
+Take any $G\to(F(a^s),F(b^t))$, and put $W=(s+t-1)R$. Suppose $e(G)<W$. Lemma D with $p=s,q=t$ forces $\Delta(G)\ge R$. Pick a vertex $v$ of degree at least $R$.
 
 The standard all-incident-edge monochromatic extension argument shows **every** one-vertex deletion of an original Ramsey graph arrows both residual relations for the original lists $(a^s),(b^t)$: an original red/blue forest copy meeting $v$ loses at most one component, and the remaining vertices contain the corresponding residual forest. Our sharp JOINT theorem, already proved for these lengths, therefore gives
 
@@ -160,8 +222,8 @@ contradicting the assumed smaller edge count. The canonical original disjoint-st
 
 ## Relevance, checks and exact boundary
 
-This theorem proves complete original and joint formulas for **arbitrarily large, genuinely nonmatching star forests on BOTH sides**, including every pair of identical uniform arm sizes and also **unequal odd uniform sizes**. The new mechanism is a *budgeted Euler-tour one-defect cap splitter*: each exceptional odd saturated regular component contributes at most one centre of a potentially forbidden monochromatic star, and costs at least the full canonical leading weight in edges. It converts a local degree-cap obstruction into an explicit global edge lower bound and then into a component-count induction.
+This theorem proves complete original and joint formulas for **arbitrarily large, genuinely nonmatching star forests on BOTH sides**, including **all same-parity uniform arm pairs**: identical or unequal, even-even or odd-odd. For equal even arms, the new mechanism is a *budgeted Euler-tour one-defect cap splitter*. For unequal even arms, a two-factorization of an even-regular multigraph completion charges each unabsorbable odd-cycle defect to at least three saturated original vertices, recovering the same leading-weight edge budget. It converts a local degree-cap obstruction into an explicit global edge lower bound and then into a component-count induction.
 
 The verifier \`verify_uniform_star_erdos561.py\` independently computes all original/joint antidiagonal sums over a declared broad grid in $s,t,a,b$, validates the exact inductive thresholds and exceptional component cost inequalities, and exhausts complete red-arm allocations for several small canonical original and joint star hosts. A separate bounded graph-atlas audit checks the Euler defect splitter on all simple graphs of at most six vertices with maximum degree at most $2u-2$, and checks its exceptional-core count prediction, using a standard-library exhaustive simple-graph enumerator. These checks are corroborative of the proof, not a finite substitute for its graph-theoretic universal quantifier.
 
-**Paper theorem claim UNDER_REVIEW; finite source checks CHECKED.** Original all-component-count Erdős #561 for arbitrary nonuniform star lists remains unresolved, as do the parity-mixed uniform and unequal-even-uniform families not explicitly included here. No MATHCERT certificate or external novelty claim is issued.
+**Paper theorem claim UNDER_REVIEW; finite source checks CHECKED.** Original all-component-count Erdős #561 for arbitrary nonuniform star lists remains unresolved, as do the mixed-parity uniform families not explicitly included here. No MATHCERT certificate or external novelty claim is issued.
