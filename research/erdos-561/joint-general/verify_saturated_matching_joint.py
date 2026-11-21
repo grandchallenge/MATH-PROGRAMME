@@ -34,6 +34,7 @@ for s in range(3,8):
    if lower==J:count['bound_exact']+=1
    if all(x==m[0] for x in m[:s-1]):
     assert lower==J==(2*s-3)*m[0]+sum(m[s-1:])
+    assert sum(w)==(2*s-2)*m[0]+sum(m[s-1:])
     count['saturated_exact']+=1
 cases=[
  (3,(3,2,1)),(3,(3,3,2,1)),(4,(2,2,2,1)),
@@ -50,10 +51,24 @@ for s,m in cases:
   assert includes(red,n) or includes(blue,m[1:]),('R2',s,m,red)
   count['complete_arm_colours']+=1
  count['upper_hosts']+=1
+original_examples=[
+ (3,(2,2,1)),(4,(2,2,2,1)),(5,(2,2,2,2,1))
+]
+for s,m in original_examples:
+ n=(1,)*s
+ full=(m[0],)*s+m[1:]
+ assert len(full)==s+len(m)-1
+ for red in product(*(range(x+1) for x in full)):
+  blue=tuple(x-y for x,y in zip(full,red))
+  assert includes(red,n) or includes(blue,m),('original',s,m,red)
+  count['original_upper_arm_colours']+=1
+ count['original_upper_hosts']+=1
 assert count==Counter({'general':14203,'bound_exact':4651,
                        'saturated_exact':3385,'complete_arm_colours':116386,
-                       'upper_hosts':7}),count
+                       'upper_hosts':7,'original_upper_hosts':3,
+                       'original_upper_arm_colours':14742}),count
 print('ERDOS561_MATCHING_GENERAL_14203_PARAMETER_GRID_PASS')
 print('ERDOS561_MATCHING_SATURATED_EXACT_3385_PARAMETER_GRID_PASS')
 print('ERDOS561_MATCHING_COMPLETE_UPPER_HOSTS_7_PASS')
 print('ERDOS561_MATCHING_COMPLETE_ARM_COLOURS_116386_PASS')
+print('ERDOS561_MATCHING_ORIGINAL_3_HOSTS_14742_ARM_COLOURS_PASS')
