@@ -52,7 +52,8 @@ theorem shortExact_realCircleConnecting_bijective
       Abelian.Ext.contravariant_sequence_exact₃ hS A e hkill
         (by omega : 1 + 0 = 1)
     refine ⟨x, ?_⟩
-    simpa only [shortExact_realCircleConnecting] using hx
+    change hS.extClass.comp x (by omega : 1 + 0 = 1) = e
+    exact hx
 
 #print axioms shortExact_realCircleConnecting_bijective
 end CMDG.CondensedCM5R0
