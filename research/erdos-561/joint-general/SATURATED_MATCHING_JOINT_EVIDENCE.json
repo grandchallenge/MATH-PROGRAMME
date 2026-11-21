@@ -1,0 +1,22 @@
+{
+  "record_type": "GCL_ERDOS561_SATURATED_MATCHING_JOINT/1",
+  "date": "2026-11-21",
+  "all_host_lower": "For n=(1^s), m nonincreasing with t>=max(3,s-1), J>=m1+sum(mj)+sum_{j=3..s-1}mj",
+  "exact_family": "For any s>=3 and t>=max(3,s-1), if m1=...=m_(s-1)=b then J=(2s-3)b+sum_{j=s..t}mj, with arbitrarily nonuniform tail",
+  "proof": "First residual red vertex-star produces full F(m) after deleting vertex v. Colour s-1 largest H star components red, remaining edges blue. This avoids red s-edge matching. Blue residual target needs M-m1 edges; at most m2 use v; outside v there are only H tail M-sum first s-1 plus q extras, hence q>=sum m3..m_(s-1). Canonical antidiagonal supplies upper.",
+  "finite_replay": {
+    "general_parameter_checks": 14203,
+    "saturated_exact_parameter_checks": 3385,
+    "general_lower_equality_count": 4651,
+    "seven_canonical_host_checks": 7,
+    "complete_arm_colouring_allocations": 116386,
+    "independent_indexing": true,
+    "complete_original_upper_hosts": 3,
+    "complete_original_arm_colourings": 14742
+  },
+  "status": "UNDER_REVIEW for unbounded proof; CHECKED for bounded verification",
+  "unrestricted_conjecture": "OPEN/PARTIAL",
+  "certification": "NOT_MATHCERT",
+  "original_transfer": "Given an individually proved sharp J, if original n1=1 or m1=1, hypothetical original E<W forces Delta<=n1+m1-2 while all-blue/all-red implies Delta>=other leader; contradiction. Hence matching-leading original value equals W.",
+  "original_exact_family": "rhat(F(1^s),F(b^(s-1),c1,...,cL))=(2s-2)b+sum ci for s>=3,t=s-1+L>=3, arbitrary b>=c1>=...>=cL>=1"
+}
