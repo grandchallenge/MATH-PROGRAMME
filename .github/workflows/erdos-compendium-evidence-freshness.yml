@@ -1,0 +1,97 @@
+name: Erdős Compendium evidence freshness and editorial queue
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "21 */6 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erdos-compendium-evidence-freshness
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.12"
+      - name: Run offline source-identity unit tests
+        run: |
+          python3 ci/test_erdos_compendium_evidence_freshness.py
+          python3 ci/test_erdos_compendium_research_activity.py
+      - name: Fetch current protected MATHCERT authority in one bounded read
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/grandchallenge/MATHCERT/contents/governance/certification_routes.json?ref=main --jq .content | base64 -d > "$RUNNER_TEMP/active-cert-routes.json"
+          test -s "$RUNNER_TEMP/active-cert-routes.json"
+      - name: Fetch recent research issue metadata with three bounded searches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          since="$(date -u -d '1 day ago' +%Y-%m-%d)"
+          for mapping in MATH-PROGRAMME:programme MATHSOLVE:solve MATHCERT:cert; do
+            repo="${mapping%%:*}"
+            key="${mapping##*:}"
+            gh api -X GET search/issues -f q="repo:grandchallenge/$repo is:issue updated:>=$since" -f per_page=100 > "$RUNNER_TEMP/$key-issues.json"
+          done
+      - name: Compare certified results with Compendium authoring and admission
+        run: |
+          set -euo pipefail
+          python3 ci/erdos_compendium_evidence_freshness.py \
+            --registry governance/erdos_catalogue/REGISTRY.json \
+            --admissions governance/erdos_compendium/EDITORIAL_ADMISSIONS.json \
+            --routes "$RUNNER_TEMP/active-cert-routes.json" \
+            --editorial-dir governance/erdos_compendium/editorial \
+            --output "$RUNNER_TEMP/erdos-compendium-freshness.json"
+          python3 - "$RUNNER_TEMP/erdos-compendium-freshness.json" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          print(f"### Erdős Compendium certified-result editorial drift\n\nChecked {d['certified_routes_scanned']} certified route(s); {d['unreconciled_certified_results']} await reviewed article/admission.\n")
+          print("This is an **editorial triage queue**, not a theorem-verification or publication decision.\n")
+          for row in d["review_candidates"]:
+              n=row["problem_id"]
+              print(f"- [Problem #{n}](https://grandchallenge.ai/MATH-PROGRAMME/erdos/problems/{n:04d}/): draft={row['manuscript_exists']}; admitted={row['editorial_admitted']}; {row['campaign_id']}")
+          PY
+      - name: Classify recent issues as research leads, never theorem claims
+        run: |
+          set -euo pipefail
+          python3 ci/erdos_compendium_research_activity.py \
+            --registry governance/erdos_catalogue/REGISTRY.json \
+            --programme-issues "$RUNNER_TEMP/programme-issues.json" \
+            --solve-issues "$RUNNER_TEMP/solve-issues.json" \
+            --cert-issues "$RUNNER_TEMP/cert-issues.json" \
+            --output "$RUNNER_TEMP/erdos-research-activity.json"
+          python3 - "$RUNNER_TEMP/erdos-research-activity.json" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          print(f"Recent Erdős issue activity: {d['matching_source_issues_observed']} matched; truncated={d['truncated_input']}.")
+          print("Activity is NOT a claim-admission or proof verdict.")
+          PY
+      - name: Publish read-only editorial drift disposition
+        run: |
+          set -euo pipefail
+          echo "Review evidence in the bounded artifacts and [existing editorial issue #3610](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3610)." >> "$GITHUB_STEP_SUMMARY"
+          echo "No public claim, issue modification or publication is authorized by this read-only controller." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: erdos-compendium-freshness-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/erdos-compendium-freshness.json
+            ${{ runner.temp }}/erdos-research-activity.json
+          retention-days: 30
+          if-no-files-found: warn
