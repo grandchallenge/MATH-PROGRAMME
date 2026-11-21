@@ -40,7 +40,7 @@ Fix any prime $p$ with $p\nmid h$; for the strongest easily reproducible bound c
 
 $$
 H=L+h,\qquad
-E_X=3+\operatorname{bitlength}(3X)
+E_X=3+\mathrm{bitlength}(3X)
 =4+\lfloor\log_2(3X)\rfloor.
 \tag{4}
 $$
@@ -146,7 +146,7 @@ X\sum_{d>M}\frac1{d^2}
 \le\frac XM\le1.
 $$
 
-The infinite main term factors exactly: among divisors prime to p it is $(X/p)\mu_p$; the additional $p$-divisible squarefree divisors, only when $r+s\equiv0$, contribute $-(X/p^2)\mu_p$. This is the stated expression. The total error is at most $2+\log(3X)<E_X$, proving (10). All steps use counting and the absolutely convergent Euler product; no prime equidistribution, PNT, or probabilistic independence is assumed. QED.
+The infinite main term factors exactly: among divisors prime to p it is $(X/p)\mu_p$; the additional squarefree divisors divisible by $p$, only when $r+s\equiv0$, contribute $-(X/p^2)\mu_p$. This is the stated expression. The total error is at most $2+\log(3X)<E_X$, proving (10). All steps use counting and the absolutely convergent Euler product; no prime equidistribution, PNT, or probabilistic independence is assumed. QED.
 
 ## 4. Key new step: a prime smaller than the growing window still detects the whole window
 
