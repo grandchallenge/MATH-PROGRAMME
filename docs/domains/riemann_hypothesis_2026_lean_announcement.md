@@ -33,6 +33,10 @@ $$
 
 This is a statement about **all** such complex numbers, not about the first billion or trillion zeros. A related Dirichlet GRH asks for the same critical-line phenomenon for the Dirichlet $L$ functions of characters. In this announcement, **GRH refers to the Dirichlet family**. Broader Artin, Dedekind, or other extensions are not established by the five headline declarations reviewed here.
 
+![GCL visual history of the Riemann Hypothesis: ten dated milestones from Euler's product to the 2026 externally reported Lean proof claim](../assets/rh-history-gcl.svg)
+
+*Figure 1. Historical perspective, 1737–2026. The final milestone is a reported proof claim, not an independently certified settlement. Historical anchors: [Sutherland's L-function history](https://math.mit.edu/~drew/LatticesLFN.pdf), [Turing (1953)](https://doi.org/10.1112/plms/s3-3.1.99), [Levinson (1974)](https://doi.org/10.1073/pnas.71.4.1013), and [Conrey (1989)](https://doi.org/10.1515/crll.1989.399.1). [Open full-size vector](../assets/rh-history-gcl.svg).*
+
 ### Wolfram exhibit A: five known zeros, not all possible zeros
 
 The following are the imaginary parts $t$ of five known zeros $s=\tfrac12+it$, evaluated with Wolfram Language's [`ZetaZero`](https://reference.wolfram.com/language/ref/ZetaZero.html):
@@ -62,6 +66,10 @@ $$
 is unchanged under reflection $x\mapsto1-x$, yet neither element equals $1/2$. Thus an argument that only pairs zeros by reflection cannot prove RH. One needs an extra mechanism that rules out an entire off-line pair (or quartet), not merely an explanation of why the pair is mirrored.
 
 This small example is a **working model**, not a counterexample to RH. It identifies the missing logical force in a common naive route.
+
+![GCL symmetry countermodel with accurately plotted known zeta zeros and four off-line polynomial roots; different imaginary scales indicated](../assets/rh-symmetry-gcl.svg)
+
+*Figure 2. At left, three actual known zeta zeros on the critical line, sampled at heights about 14.13, 21.02, and 25.01. At right, the four zeros of an exact reflection-symmetric polynomial lie off the line; the two diagrams use different imaginary scales. For the classical zero symmetries see [NIST DLMF §25.10](https://dlmf.nist.gov/25.10). [Open full-size vector](../assets/rh-symmetry-gcl.svg).*
 
 ### Wolfram exhibit B: an exact four-zero countermodel
 
@@ -172,6 +180,10 @@ Andrew Sutherland's [MIT verification dossier](https://math.mit.edu/~drew/grh/),
 | `con-leche --compare` | Five challenge statements accepted | The formal targets match that independent comparator's challenge definition |
 | `lean4lean` | All compiled modules accepted | Separate formal checker; five modules required increased checking limits |
 | Official `lake comparator` and separate Lean export replay | **Still running** at edition time | No completion claim may be inferred from the other successful checks |
+
+![GCL public evidence map of the 2026 RH and Dirichlet GRH proof claim, independently reported formal checks, and distinct outstanding interpretive questions](../assets/rh-verification-gcl.svg)
+
+*Figure 3. Public evidence map, sourced to [Andrew Sutherland's MIT verification dossier](https://math.mit.edu/~drew/grh/) (snapshot: 21 November 2026, 12:55 UTC). “Accepted by a checker” and “explained in readable mathematics” answer different questions. [Open full-size vector](../assets/rh-verification-gcl.svg).*
 
 This is exceptionally substantial **external proof-check evidence**.
 
