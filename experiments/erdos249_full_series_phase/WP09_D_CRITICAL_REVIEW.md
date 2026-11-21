@@ -9,7 +9,7 @@
 - Offsets and coefficients are fixed for the limiting $X\to\infty$ result. Inputs are a nonzero integer zero-sum signature. Real coefficients also obey the analytic conditional-variance proof.
 - $p>H$ is necessary for the simple isolated-coordinate projection; an arbitrary smaller prime can alias two shifts and invalidate the displayed $\ell^2$ lower bound.
 - The finite-CRT inequality is unconditional for every $y\ge p$ and does not require $P_y\ll X$. The actual-asymptotic variance uses the previously proved WP09-B fixed-shift pair-correlation estimate.
-- The actual phase gap is valid uniformly in the modulus only when $Q_X\ge6BX$ and $X\ge H$. It is **not** the original Cook depth-$L$ weighted phase.
+- The actual phase gap is valid uniformly in the modulus only when $Q_X\ge6BX$ and $X\ge H$. It is **not** the original Cook depth $L$ weighted phase.
 
 ## Verifier — arithmetic and constants
 
