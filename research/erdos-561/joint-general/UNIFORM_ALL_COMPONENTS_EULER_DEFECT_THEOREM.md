@@ -124,7 +124,7 @@ $$
 
 Apply Lemma C with $p=s-1$, $q=t$ and threshold $(p+q-1)R=(s+t-2)R=J$. Since $e(Q)<J$, there exists a vertex $v$ of degree at least $R$.
 
-For *every* vertex $v$, the two residual arrowing relations survive deletion in the appropriate form when all edges at $v$ are coloured RED: the first red target of $s-1$ disjoint $a$-stars loses at most one component, leaving at least $s-2$ red stars of size $a$ in $Q-v$, while the second red target of $s$ such stars leaves at least $s-1$. Thus
+For *every* vertex $v$, the two residual arrowing relations survive deletion in the appropriate form when all edges at $v$ are coloured RED: the first red target of $s-1$ disjoint stars of size $a$ loses at most one component, leaving at least $s-2$ red stars of size $a$ in $Q-v$, while the second red target of $s$ such stars leaves at least $s-1$. Thus
 
 $$
 Q-v\to(F(a^{s-2}),F(b^t)),
