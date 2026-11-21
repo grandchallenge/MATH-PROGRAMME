@@ -158,7 +158,7 @@ $$
 D(D+1)\le2(W-1)\le10(D+1)-2.
 $$
 
-This is impossible whenever $D$ is at least ten. Therefore no original-arrowing host has fewer than $W$ edges; the canonical $W$-edge star forest arrows the original pair, proving equality. QED.
+This is impossible whenever $D$ is at least ten. Therefore no original-arrowing host has fewer than $W$ edges; the canonical star forest of size $W$ arrows the original pair, proving equality. QED.
 
 If either $a=1$ or $c=1$, the separate fully proved matching-side theorem in `MATCHING_DEGREE_PEELING_THEOREM.md` already gives the ORIGINAL exact value for every profile without the $D\ge10$ condition. If both leading values are odd, the classical even-cap degree split likewise transfers the jointly proved $J$ without any size restriction. Neither observation is a claim that the other low-leading-size configurations have all been independently checked here.
 
