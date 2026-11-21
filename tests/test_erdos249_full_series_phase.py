@@ -1214,3 +1214,152 @@ class JointLocalPrimeLawTests(unittest.TestCase):
             wp09c_actual(64, 2047, terms, [0] * 200)
         with self.assertRaises(ValueError):
             wp09c_error(64, 2048, 11, terms, max_period=100)
+
+
+from experiments.erdos249_full_series_phase.joint_covariance_gap import (
+    signature as wp09d_signature,
+    signature_norms as wp09d_norms,
+    first_separating_prime as wp09d_prime,
+    conditional_projection as wp09d_projection,
+    finite_product_covariance as wp09d_product,
+    finite_cos_gap_bound as wp09d_cos_gap,
+    actual_phase_energy as wp09d_actual,
+)
+from experiments.erdos249_full_series_phase.joint_local_prime_law import (
+    profile as wp09d_profile,
+)
+
+
+class JointCovarianceGapTests(unittest.TestCase):
+    """WP09-D: exact all-signature arithmetic, phases, hostile controls."""
+
+    def test_signed_offset_canonicalization_and_separating_prime(self):
+        cases = [
+            (((1, 1, 0),), ((0, -1), (1, 1)), 2),
+            (((2, 3, 1), (-1, 1, 0)),
+             ((0, 1), (1, -3), (3, 2)), 5),
+            (((1, 4, 2), (-1, 2, 0)),
+             ((0, 1), (2, -2), (4, 1)), 5),
+        ]
+        for terms, expected, p in cases:
+            self.assertEqual(wp09d_signature(terms), expected)
+            self.assertEqual(wp09d_prime(terms), p)
+            n = wp09d_norms(terms)
+            self.assertEqual(n["squared"], sum(c*c for _, c in expected))
+            self.assertEqual(n["B"], sum(abs(c) for _, c in expected))
+            self.assertEqual(sum(c for _, c in expected), 0)
+
+    def test_independent_prime_conditional_crt_oracle(self):
+        for terms, y in (
+            (((1, 1, 0),), 3),
+            (((1, 2, 0), (-1, 3, 1)), 7),
+            (((1, 4, 2), (-1, 2, 0)), 7),
+        ):
+            r = wp09d_projection(terms, y)
+            P, ds = wp09d_profile(y, terms)
+            p = r["separating_prime"]
+            self.assertEqual(P, r["period"])
+            self.assertEqual(r["exact_variance"],
+                             sum((v*v for v in ds), Fraction()) / P)
+            self.assertEqual(r["conditional_means"], tuple(
+                sum((ds[k] for k in range(a, P, p)), Fraction())/(P//p)
+                for a in range(p)))
+            self.assertEqual(
+                r["conditional_energy"],
+                sum((v*v for v in r["conditional_means"]), Fraction())/p)
+            self.assertGreaterEqual(
+                r["exact_variance"], r["conditional_energy"])
+            self.assertGreaterEqual(
+                r["conditional_energy"], r["simple_uniform_lower"])
+
+    def test_strict_positive_higher_rank_and_exact_sample(self):
+        signature = ((1, 3, 0), (2, 3, 1))
+        r = wp09d_projection(signature, 7)
+        self.assertEqual(r["separating_prime"], 5)
+        self.assertGreater(r["conditional_energy"], 0)
+        self.assertGreater(r["exact_variance"], 0)
+        self.assertEqual(r["exact_variance"], Fraction(9559, 22050))
+        self.assertEqual(r["conditional_energy"], Fraction(2048, 42875))
+
+    def test_independent_finite_euler_pair_vs_crt(self):
+        for terms in (
+            ((1, 1, 0),),
+            ((1, 3, 0), (2, 3, 1)),
+            ((1, 4, 2), (-1, 2, 0)),
+        ):
+            for y in (5, 7):
+                direct_P, direct_ds = wp09d_profile(y, terms)
+                exact = sum((z*z for z in direct_ds),
+                            Fraction()) / direct_P
+                self.assertEqual(wp09d_product(terms, y), exact)
+
+    def test_quantitative_local_phase_gap_all_signature(self):
+        for terms, y, rho in (
+            (((1, 1, 0),), 5, 32),
+            (((1, 3, 0), (2, 3, 1)), 7, 64),
+            (((1, 4, 2), (-1, 2, 0)), 7, 48),
+        ):
+            gap = wp09d_cos_gap(terms, y, rho)
+            r = wp09d_projection(terms, y)
+            self.assertEqual(gap,
+                             Fraction(56, 3*rho*rho)*r["exact_variance"])
+            self.assertGreaterEqual(gap,
+                                    Fraction(56, 3*rho*rho) *
+                                    r["simple_uniform_lower"])
+            self.assertGreater(gap, 0)
+            self.assertLess(gap, 2)
+
+    def test_actual_totient_exact_phase_energy_bound(self):
+        for terms, X in (
+            (((1, 1, 0),), 128),
+            (((1, 3, 0), (2, 3, 1)), 256),
+            (((1, 4, 2), (-1, 2, 0)), 512),
+        ):
+            B = wp09d_norms(terms)["B"]
+            Q = max(32, 6*B)*X
+            r = wp09d_actual(X, Q, terms)
+            self.assertGreater(r["local_difference_energy"], 0)
+            self.assertGreater(r["exact_phase_gap_lower"], 0)
+            self.assertGreaterEqual(
+                r["numeric_actual_phase_gap"] + 1e-12,
+                float(r["exact_phase_gap_lower"]))
+            self.assertFalse(r["full_cook_harmonic"])
+            self.assertEqual(r["irrationality_status"], "OPEN")
+
+    def test_hostile_signature_and_modulus_rejection(self):
+        bad = (
+            (), ((0, 1, 0),),
+            ((1, 3, 1), (1, 1, 3)), ((1, 2, 2),),
+            ((True, 1, 0),), ((1, -1, 0),),
+            [(1, 1, 0)],
+        )
+        for terms in bad:
+            with self.assertRaises(ValueError):
+                wp09d_signature(terms)
+        with self.assertRaises(ValueError):
+            wp09d_projection(((1, 3, 0),), 3)
+        with self.assertRaises(ValueError):
+            wp09d_projection(((1, 1, 0),), 11, max_period=200)
+        with self.assertRaises(ValueError):
+            wp09d_cos_gap(((1, 3, 0), (2, 3, 1)), 7, 20)
+        with self.assertRaises(ValueError):
+            wp09d_actual(128, 100, ((1, 1, 0),))
+
+    def test_rational_full_series_can_have_local_phase_variance(self):
+        # Exact generating function:
+        # sum floor(n/2) * x**n = x²(1+x)/(1-x²)².
+        x = Fraction(1, 2)
+        rational_total = x*x*(1+x)/(1-x*x)**2
+        self.assertEqual(rational_total, Fraction(2, 3))
+        diffs = tuple((n+1)//2-n//2 for n in range(128, 256))
+        self.assertEqual(set(diffs), {0, 1})
+        self.assertEqual(sum(diffs), 64)
+        self.assertEqual(sum((2*v-1)**2 for v in diffs), 128)
+        # The strict positive finite local gap is not enough to
+        # infer an irrational full sum for a generic coefficient model.
+        Q = 4096
+        from cmath import exp
+        from math import pi
+        self.assertGreater(
+            1 - sum(exp(2j*pi*v/Q).real for v in diffs)/len(diffs),
+            0)
