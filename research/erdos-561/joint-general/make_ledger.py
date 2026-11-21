@@ -777,5 +777,67 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 uniform star forest original and joint results for arbitrary component counts",
+  "assumptions": [
+    "uniform original n=(a repeated s),m=(b repeated t), all positive a,b>=2, lengths s,t>=3",
+    "either a=b (any parity), OR both a,b odd (not necessarily equal)",
+    "arbitrary finite simple graph hosts with ordinary vertex-disjoint non-induced star forest embeddings",
+    "pinned Chunlin You 2026 two-component theorem; protected even-cap splitter for both a,b odd"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3624",
+    "MATH-PROGRAMME#3622"
+  ],
+  "promotion_condition": "Unbounded uniform theorem paper-level UNDER_REVIEW, deterministic finite arithmetic/graph checks CHECKED. General unequal-even or heterogeneous star-size conjecture remains OPEN/PARTIAL. No MATHCERT.",
+  "claim_id": "ERDOS561-UNIFORM-ALL-LENGTHS-032",
+  "short_name": "Exact arbitrary-host joint and original uniform star forests with unbounded component counts",
+  "claim_text": "For every s,t>=3 and a,b>=2 such that a=b OR both a,b are odd, the exact arbitrary finite simple host joint residual minimum is J=(s+t-2)(a+b-1), and exact ORIGINAL size Ramsey number is W=(s+t-1)(a+b-1). The equal-even case has an elementary Euler-tour one-exception lemma: when maxdegree<=2a-2 and e<(p+q-1)(2a-1), alternate-colour Euler components, putting at most one degree-a red-or-blue exception in each odd-edge saturated connected (2a-2)-regular component; each such component costs >=(a-1)(2a-1), so number of exceptions <=p+q-2 and red/blue exception colours may be assigned to avoid red F(a^p) and blue F(a^q). Odd a,b cases use protected even-cap edge partition to show arrowing requires degree >=a+b-1. For s=3,t arbitrary the pinned published two-component exact formula gives J=(t+1)(a+b-1). For s>=4, first residual forces degree >=a+b-1 below canonical budget, and deleting this vertex reduces s by1 preserving both residual arrows; induction proves all joint lengths. Original bound follows from the same degree gate plus sharp joint residual on every vertex deletion. Does NOT claim nonuniform full #561.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Detailed Euler-tour construction: augment connected components with odd-degree vertices using one dummy vertex, alternate Euler traversal colours with any defect confined to the dummy; for all-even components of odd edge count, choose low degree start to absorb the single +/-2 discrepancy, unless component is fully D-regular, where one exceptional vertex has a-degree in one selectable colour. Each exceptional connected simple D-regular component contains at least D+1 vertices and costs >=D(D+1)/2 edges. For e<(p+q-1)(D+1), number of exceptional comps <=p+q-2, allowing partition of defects under separate red/blue star component targets. Even-cap split handles both odd leaders. Sharpened first-residual degree gate permits sequential induction in s anchored to published two-component formula, and original vertex deletion transfer closes all original lengths. Source includes full proof, not inferred from bounded experiments.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EULER_DEFECT_THEOREM.md",
+    "research/erdos-561/joint-general/verify_uniform_star_erdos561.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EVIDENCE.json",
+    "research/erdos-561/joint-general/EVEN_CAP_DEGREE_SPLITTING_THEOREM.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 uniform star forest original and joint results for arbitrary component counts",
+  "assumptions": [
+    "uniform original n=(a repeated s),m=(b repeated t), all positive a,b>=2, lengths s,t>=3",
+    "either a=b (any parity), OR both a,b odd (not necessarily equal)",
+    "arbitrary finite simple graph hosts with ordinary vertex-disjoint non-induced star forest embeddings",
+    "pinned Chunlin You 2026 two-component theorem; protected even-cap splitter for both a,b odd"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3624",
+    "MATH-PROGRAMME#3622"
+  ],
+  "promotion_condition": "Unbounded uniform theorem paper-level UNDER_REVIEW, deterministic finite arithmetic/graph checks CHECKED. General unequal-even or heterogeneous star-size conjecture remains OPEN/PARTIAL. No MATHCERT.",
+  "claim_id": "ERDOS561-UNIFORM-ALL-LENGTHS-CHECK-033",
+  "short_name": "Uniform all-length exact arithmetic, canonical host exhaustive colours, bounded Euler component validation",
+  "claim_text": "Deterministic exact checker covers 11664 uniform parameter combinations s,t in 3..11, a,b in 2..13, including 3402 falling within the exact theorem family; 18 declared canonical original/joint star forests across 749984 complete red-arm colour allocations; 36030 simple graph/even-degree component checks for vertices up to six, verifying exceptional core edge costs. Finite checks are complete in declared classes but do not prove unbounded host theorem by sampling.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Independent zero-index original/residual antidiagonal lists for each bounded uniform parameter; algebraic original and joint exact formulas for all, including marked proved family; exhaustive arm-allocation enumeration on nine sample original/joint pairs; graph catalogue up to six vertices and two even-star caps checks that every odd-edge all-even connected component has a low-degree start or is saturated D-regular with cost >=(a-1)(2a-1). Analytic arbitrary-host proof remains separate.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_uniform_star_erdos561.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
