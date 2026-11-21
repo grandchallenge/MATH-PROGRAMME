@@ -56,7 +56,7 @@ $$
 
 up to isolated vertices.
 
-This forced host **fails the second residual relation**. Colour exactly one edge of each of the three stars of size $c$ red and all other edges blue, leaving both $b$-stars wholly blue. The red graph is a matching and hence contains no two-edge star; in particular it has no red $F(2,1,1)$. The blue component edge counts are
+This forced host **fails the second residual relation**. Colour exactly one edge of each of the three stars of size $c$ red and all other edges blue, leaving both stars of size $b$ wholly blue. The red graph is a matching and hence contains no two-edge star; in particular it has no red $F(2,1,1)$. The blue component edge counts are
 
 $$
 (b,b,c-1,c-1,c-1).
