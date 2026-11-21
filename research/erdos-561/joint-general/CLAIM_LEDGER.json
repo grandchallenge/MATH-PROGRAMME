@@ -426,6 +426,76 @@
         "research/erdos-561/joint-general/RIGID_14EDGE_322_3111_THEOREM.md",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / original asymmetric size Ramsey for star forests / sharp-residual transfer",
+      "assumptions": [
+        "all host graphs finite and simple",
+        "ordinary non-induced vertex-disjoint star forest embeddings",
+        "source-proved sharp joint residual J for stated target pairs",
+        "ordinary Lovasz (g,f) factor theorem classical input"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3564",
+        "MATH-PROGRAMME#3578",
+        "MATH-PROGRAMME#3587",
+        "MATH-PROGRAMME#3591",
+        "MATH-PROGRAMME#3600"
+      ],
+      "promotion_condition": "Unrestricted Erdős #561 and unrestricted joint-residual hypothesis remain OPEN/PARTIAL; paper-level new theorem and infinite-family applications UNDER_REVIEW pending substantive mathematical adjudication. Bounded exact finite certificates may be CHECKED without making independent MATHCERT claims.",
+      "claim_id": "ERDOS561-GENERAL-CORE-ORIGINAL-014",
+      "short_name": "General core transfer and three parity-free infinite original star-forest families",
+      "claim_text": "Given a source-proved sharp joint residual J=W-(n1+m1-1), the original size Ramsey value equals W when both n1,m1 odd, or W<=D(D+1)/2 for any parity, or W<=D(D+1) if at least one n1,m1 odd, or for opposite-parity leading sizes with 2W<2D^2+R. Combined with source-proved joint residuals, exact original all-host parity-free results are: (a,1,1)/(b,c,1,1) for a>=2,1<=c<=a,b>=a+c-1 at 3b+2a+1; (a,2,1)/(a,1,1,1) for a>=4 at 5a+3; (a,1,1)/(b,a-1,2,1) for a>=3,b>=2a-2 at 3b+2a+2; and five (3,2,1)/(4,c,d,1) original cases at 21.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Original vertex deletion forces every G-v to satisfy the two sharp residual relations, hence Delta<=D in any E<=W-1 host. Classical Lovasz degree-core necessity gives >=D+1 saturated vertices for failed cap splits; uniqueness up to 2D+1 saturated vertices forces both caps odd; therefore if at least one cap even failure requires >=2D+2 saturated vertices and E>=D(D+1). Vertex-budget refinement gives 2E>=R+2D^2-2. A (1,2) subcubic matching lemma improves the cubic threshold to nine saturated vertices; isolated odd regular core/exterior avoiding colourings handle b=4,6 and a=4 exceptions; a complete exact 106-class finite degree-two proof handles (211)/(2111). Residual parent results are admitted but still paper-level; full conjecture remains open.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/verify_core_original_transfer.py",
+        "research/erdos-561/joint-general/verify_d2_original_211_2111.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md",
+        "research/erdos-561/joint-general/CLAIM_LEDGER.json"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / original asymmetric size Ramsey for star forests / sharp-residual transfer",
+      "assumptions": [
+        "all host graphs finite and simple",
+        "ordinary non-induced vertex-disjoint star forest embeddings",
+        "source-proved sharp joint residual J for stated target pairs",
+        "ordinary Lovasz (g,f) factor theorem classical input"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3564",
+        "MATH-PROGRAMME#3578",
+        "MATH-PROGRAMME#3587",
+        "MATH-PROGRAMME#3591",
+        "MATH-PROGRAMME#3600"
+      ],
+      "promotion_condition": "Unrestricted Erdős #561 and unrestricted joint-residual hypothesis remain OPEN/PARTIAL; paper-level new theorem and infinite-family applications UNDER_REVIEW pending substantive mathematical adjudication. Bounded exact finite certificates may be CHECKED without making independent MATHCERT claims.",
+      "claim_id": "ERDOS561-D2-211-2111-015",
+      "short_name": "Complete 106-class ten-edge max-degree-two original Ramsey avoidance certificate",
+      "claim_text": "Every finite simple maximum-degree-two graph with exactly ten edges admits a red/blue edge-colouring avoiding red F(2,1,1) and blue F(2,1,1,1). Up to isolates, exactly 106 canonical path/cycle component multisets exist. All 108544 colourings were compared between two independent exact ordinary vertex-disjoint subgraph oracles, with at least one avoiding colouring for each class. The complete finite result, combined with upstream sharp residual J=8 and degree bound Delta<=2, proves the single original 11-edge size Ramsey lower bound, without classifying arbitrary general-degree hosts by sampling.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Source generator enumerates partitions of ten into positive edge-size path components and cycle components of length >=3, canonicalized to 106 isomorphism-type multisets; both an explicit red two-edge-star plus disjoint matching search and a fully separate generic noninduced star-forest edge-mask embedding enumeration/upward DP agree for all 106*1024 colourings. Every type has a constructed avoiding red bitmask, with 106-witness JSON digest SHA256 2840d4d0a16690272b3052a33e21d8b487ce717e982879899735af3577680aaf; no external mathematical attestation. The universal degree reduction is separately paper-level UNDER_REVIEW.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_d2_original_211_2111.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }

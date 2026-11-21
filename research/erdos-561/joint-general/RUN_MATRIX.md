@@ -21,6 +21,8 @@
 | Exact monotone plateau and inherited case audit | `python3 verify_joint_monotone_plateaus.py` | Two independently indexed antidiagonal computations, five fixed J=15 cases, two fixed J=13 cases, finite parameter samples of two exact infinite families, and nine additional source-linked grid cases; no global conjecture claim |
 | Exact analytic 322/3111 strict-switch case | `python3 verify_rigid14_322_3111.py` | Both antidiagonal conventions agree; all 900 star host red-arm colour classes PASS; lower proof paper-level via Lovász factor and deletion, not finite-host extrapolation |
 | Two exact original 322/3111 and 322/3211 size-Ramsey cases | `python3 verify_original20_322_3111_3211.py` | Both canonical original antidiagonal lists exactly (5,4,4,3,2,2), 5,400/5,400 red-arm allocation classes per blue profile PASS. Original lower bound analytical using claim 012 + universal (2,2) split |
+| General degree-core transfer and parity-free original family arithmetic | `python3 verify_core_original_transfer.py` | Two independent antidiagonal conventions and 8,749 exact tested parameters across 3 infinite families + five fixed plateau cases; general source theorem paper-level |
+| Complete ten-edge degree-two original 211/2111 witness certificate | `python3 verify_d2_original_211_2111.py` | Exactly 106 unlabeled path/cycle graph types; two independent ordinary forest embedding oracles agree for all 108,544 red/blue colourings; every type has an explicit avoiding colouring; SHA256 witness digest pinned |
 | Claim ledger schema | Validate `CLAIM_LEDGER.json` with `schemas/claim_ledger.schema.json` | Full problem OPEN; proved subclaims UNDER_REVIEW; bounded exact checks CHECKED |
 | Integrity | `sha256sum -c SHA256SUMS.txt` | Exact files all match |
 
