@@ -1,0 +1,204 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-21T12:31:04Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-21T12:31:05Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+    "exact_head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+    "pr_number": 3604,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5 E3: Lean-prove full genuine condensed F\u2081 doubling homotopy"
+  },
+  "integration": {
+    "merge_commit_sha": "4ace97b0a9e8a3a5807c73819d73d49ea40219be",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 3,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 1FB8:6BB18:3D5EE4:63B5A7:6B018F21 and timestamp 2026-11-21 12:31:29 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 136846513253,
+          "conclusion": "success",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846511519,
+          "conclusion": "success",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846577686,
+          "conclusion": null,
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136846594062,
+          "conclusion": "skipped",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846593582,
+          "conclusion": "skipped",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846592436,
+          "conclusion": null,
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Policy shard / cmdg",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136846592452,
+          "conclusion": null,
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Policy shard / core",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136846592539,
+          "conclusion": null,
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Policy shard / fixtures",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136846511255,
+          "conclusion": null,
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136846513836,
+          "conclusion": "success",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846513732,
+          "conclusion": null,
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136846513511,
+          "conclusion": "success",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846514808,
+          "conclusion": "skipped",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136846513520,
+          "conclusion": "success",
+          "head_sha": "0f0270013a7d1c748074d3fe5cc037f762f7a7fb",
+          "name": "security / action-policy",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-21T12:31:28Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "8212967676f8f2677e54bee56792ecc810ba60294deddab48f440ce745a7cd62"
+  },
+  "report_id": "PRVSR-LIVE-PR3604-0f0270013a7d-20261121123128",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
