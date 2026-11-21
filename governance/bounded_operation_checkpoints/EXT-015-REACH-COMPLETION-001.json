@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP265",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP266",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,26 +15,26 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Frozen UC031 coupled moving-delta collision solution for distinct review",
+  "phase": "Reviewed coupled moving-delta collision solution and remaining general lift",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "05771e70b4fa5f23e8df0bdd5d30bbe7c982cf3f",
-    "candidate_head_sha": "d908b816d810b6473740b4c83da4a067a9b84b3d",
+    "candidate_head_sha": "bc1cb924941e9d3811e78cecc21e1377e2c67c25",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-moving-delta-uc031-primary-20261121",
+    "branch": "research/reach-moving-delta-uc031-review-20261121",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "review-moving-delta-green-lift-uc031",
-      "description": "Review frozen UC031 d908b816d810b6473740b4c83da4a067a9b84b3d blob c0b632314cc2f68864878e9cee6653bfa491b794. Check the midpoint conic split and the complete scalar estimates for arbitrary fixed Schwartz profiles after the original radial/full heat comparison. Verify the actual normalization, both augmented histories, hidden bridge, finite derivatives, supplied family scope, and original rapid quotient. One correction maximum. Admit the narrow result only after distinct review, protected readback and tracker reconciliation. Universal 150.L remains open."
+      "id": "readback-moving-delta-and-test-general-source-mechanism",
+      "description": "Complete native protected admission and exact readback of UC031–033 and reconcile integration and parent trackers. The formerly excluded moving-delta graph now has an exact retained-collision lift for its coupled Gaussian, fixed Schwartz shape family and the tested two-edge hidden bridge, with the original rapid relation. Universal 150.L still needs a continuous source mechanism for a general distribution in the integrated variable and freely coupled old scalar stages. Any broader construction must verify the common complete graph and scalar stages, simultaneous hidden collisions, exact positive-regulator evaluation or actual rapid equivalence, and common supplied rows. A finite collection of affine concentrated examples alone cannot close the original obligation. The independent conditional R3 results and integration state retain their exact scopes."
     }
   ],
   "next_action": {
-    "id": "review-moving-delta-green-lift-uc031",
-    "description": "Review frozen UC031 d908b816d810b6473740b4c83da4a067a9b84b3d blob c0b632314cc2f68864878e9cee6653bfa491b794. Check the midpoint conic split and the complete scalar estimates for arbitrary fixed Schwartz profiles after the original radial/full heat comparison. Verify the actual normalization, both augmented histories, hidden bridge, finite derivatives, supplied family scope, and original rapid quotient. One correction maximum. Admit the narrow result only after distinct review, protected readback and tracker reconciliation. Universal 150.L remains open.",
+    "id": "readback-moving-delta-and-test-general-source-mechanism",
+    "description": "Complete native protected admission and exact readback of UC031–033 and reconcile integration and parent trackers. The formerly excluded moving-delta graph now has an exact retained-collision lift for its coupled Gaussian, fixed Schwartz shape family and the tested two-edge hidden bridge, with the original rapid relation. Universal 150.L still needs a continuous source mechanism for a general distribution in the integrated variable and freely coupled old scalar stages. Any broader construction must verify the common complete graph and scalar stages, simultaneous hidden collisions, exact positive-regulator evaluation or actual rapid equivalence, and common supplied rows. A finite collection of affine concentrated examples alone cannot close the original obligation. The independent conditional R3 results and integration state retain their exact scopes.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_LIFT_UC031.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_MOVING_DELTA_UC032.md",
@@ -44,6 +44,11 @@
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "bc1cb924941e9d3811e78cecc21e1377e2c67c25 exact proof d908b816d810b6473740b4c83da4a067a9b84b3d",
+        "status": "Distinct same-system acceptance after 0 post-freeze corrections. Exact concrete coupled moving-delta representation. Full mixed mapping and integration remain open."
+      },
       {
         "kind": "artifact",
         "identity": "d908b816d810b6473740b4c83da4a067a9b84b3d c0b632314cc2f68864878e9cee6653bfa491b794",
@@ -2083,18 +2088,21 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindFrozenUC031ForReview",
-    "result": "Concrete candidate immutable for separate scrutiny",
+    "action": "IntegrateReviewedMovingDeltaLift",
+    "result": "Concrete moving-delta lift reviewed, native admission pending",
     "evidence_refs": [
       "research/reach-moving-delta-uc031-primary-20261121",
-      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_LIFT_UC031.md"
+      "research/reach-moving-delta-uc031-review-20261121",
+      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_LIFT_UC031.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_MOVING_DELTA_UC032.md",
+      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_ACCEPTANCE_UC033.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-21T23:16:49.320583+00:00"
+    "observed_at": "2026-11-21T23:22:35.546751+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2319,9 +2327,12 @@
       "research/reach-moving-delta-uc031-input-20261121",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3612",
       "research/reach-moving-delta-uc031-primary-20261121",
-      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_LIFT_UC031.md"
+      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_LIFT_UC031.md",
+      "research/reach-moving-delta-uc031-review-20261121",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_MOVING_DELTA_UC032.md",
+      "research/condensed-qft/EXT-015/MOVING_DELTA_GREEN_ACCEPTANCE_UC033.md"
     ],
-    "instructions": "Review frozen UC031 d908b816d810b6473740b4c83da4a067a9b84b3d blob c0b632314cc2f68864878e9cee6653bfa491b794. Check the midpoint conic split and the complete scalar estimates for arbitrary fixed Schwartz profiles after the original radial/full heat comparison. Verify the actual normalization, both augmented histories, hidden bridge, finite derivatives, supplied family scope, and original rapid quotient. One correction maximum. Admit the narrow result only after distinct review, protected readback and tracker reconciliation. Universal 150.L remains open."
+    "instructions": "Complete native protected admission and exact readback of UC031–033 and reconcile integration and parent trackers. The formerly excluded moving-delta graph now has an exact retained-collision lift for its coupled Gaussian, fixed Schwartz shape family and the tested two-edge hidden bridge, with the original rapid relation. Universal 150.L still needs a continuous source mechanism for a general distribution in the integrated variable and freely coupled old scalar stages. Any broader construction must verify the common complete graph and scalar stages, simultaneous hidden collisions, exact positive-regulator evaluation or actual rapid equivalence, and common supplied rows. A finite collection of affine concentrated examples alone cannot close the original obligation. The independent conditional R3 results and integration state retain their exact scopes."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
