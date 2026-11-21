@@ -41,7 +41,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          since="$(date -u -d '7 days ago' +%Y-%m-%d)"
+          since="$(date -u -d '1 day ago' +%Y-%m-%d)"
           for mapping in MATH-PROGRAMME:programme MATHSOLVE:solve MATHCERT:cert; do
             repo="${mapping%%:*}"
             key="${mapping##*:}"
