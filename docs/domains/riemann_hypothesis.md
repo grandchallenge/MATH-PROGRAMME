@@ -2,6 +2,9 @@
 
 **Millennium status, 20 October 2026:** Clay continues to classify the Riemann Hypothesis as **Unsolved**. An [October release](https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/README.md) reports a zero-free region **Re(s) > 7/8**, with an accompanying Lean formalization. This is strictly weaker than proving that **all nontrivial zeros lie on Re(s) = 1/2**. The announcement does not discharge GCL’s retained review blockers. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
 
+!!! warning "20 November 2026 external proof announcement"
+    Levent Alpöge reports a Lean-formalized proof of RH and Dirichlet GRH developed with Claude. An [MIT independent verification dossier](https://math.mit.edu/~drew/grh/) reports successful compilation, axiom audits, independent-kernel replay, and statement comparison. GCL has **not** issued a mathematical certification or promoted its RH-001 claim. Read the [Chaidez-style source, verification, and implications guide](riemann_hypothesis_2026_lean_announcement.md) for the precise distinction.
+
 ## The question in everyday language
 
 Prime numbers seem irregular, yet their distribution is connected to a remarkable mathematical function called the Riemann zeta function. The Riemann Hypothesis predicts where certain zeros of this function must lie. It is one of the most important unsolved questions in mathematics.
