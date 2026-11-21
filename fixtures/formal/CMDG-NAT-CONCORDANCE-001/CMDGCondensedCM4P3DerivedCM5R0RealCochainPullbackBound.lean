@@ -38,7 +38,7 @@ theorem realCompactCochain_comp_norm_le (g : C(X, Y)) (f : C(Y, ℝ)) :
 is bounded by one in operator norm. This is the genuine analytic input to
 the Banach doubling contraction, not a bare pointwise boundedness claim. -/
 theorem realCompactCochain_compCLM_norm_le_one (g : C(X, Y)) :
-    ‖(ContinuousMap.compCLM ℝ g : C(Y, ℝ) →L[ℝ] C(X, ℝ))‖ ≤ 1 := by
+    ‖(ContinuousMap.compCLM ℝ ℝ g : C(Y, ℝ) →L[ℝ] C(X, ℝ))‖ ≤ 1 := by
   apply ContinuousLinearMap.opNorm_le_bound _ zero_le_one
   intro f
   simpa only [one_mul, ContinuousMap.compCLM_apply] using
@@ -48,9 +48,9 @@ theorem realCompactCochain_compCLM_norm_le_one (g : C(X, Y)) :
 to transport simplicial face identities to compact real cochains. -/
 theorem realCompactCochain_compCLM_comp
     (f : C(X, Y)) (g : C(Y, Z)) :
-    (ContinuousMap.compCLM ℝ (g.comp f) :
+    (ContinuousMap.compCLM ℝ ℝ (g.comp f) :
       C(Z, ℝ) →L[ℝ] C(X, ℝ)) =
-      (ContinuousMap.compCLM ℝ f).comp (ContinuousMap.compCLM ℝ g) := by
+      (ContinuousMap.compCLM ℝ ℝ f).comp (ContinuousMap.compCLM ℝ ℝ g) := by
   ext h x
   rfl
 
@@ -68,7 +68,7 @@ is chosen. No derived-Hom vanishing is inferred. -/
 theorem compactDoubling_realCochain_norm_le_one
     (A : Type u) [TopologicalSpace A] [CompactSpace A]
     [AddCommGroup A] [ContinuousAdd A] :
-    ‖(ContinuousMap.compCLM ℝ (compactDoublingMap A) :
+    ‖(ContinuousMap.compCLM ℝ ℝ (compactDoublingMap A) :
       C(A, ℝ) →L[ℝ] C(A, ℝ))‖ ≤ 1 :=
   realCompactCochain_compCLM_norm_le_one (compactDoublingMap A)
 
