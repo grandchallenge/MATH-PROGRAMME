@@ -26,9 +26,9 @@ namespace CMDG.CondensedCM5R0.BreenDeligneCondensed
 variable (A : Type u) [TopologicalSpace A] [CompactSpace A] [T2Space A]
 variable [AddCommGroup A] [ContinuousAdd A]
 
-noncomputable def src0 : CondensedAb.{u} :=
+noncomputable abbrev src0 : CondensedAb.{u} :=
     (Condensed.freeAb).obj ((CompHaus.of A).toCondensed)
-noncomputable def src1 : CondensedAb.{u} :=
+noncomputable abbrev src1 : CondensedAb.{u} :=
     (Condensed.freeAb).obj ((CompHaus.of (A × A)).toCondensed)
 
 noncomputable def polyMap {X Y : Type u}
@@ -47,10 +47,10 @@ noncomputable def d1 : src1 A ⟶ src0 A :=
     polyMap (X := A × A) (Y := A) (⟨fun p : A × A => p.1, continuous_fst⟩) -
     polyMap (X := A × A) (Y := A) (⟨fun p : A × A => p.2, continuous_snd⟩)
 
-noncomputable def src2assoc : CondensedAb.{u} :=
+noncomputable abbrev src2assoc : CondensedAb.{u} :=
   (Condensed.freeAb).obj ((CompHaus.of (A × (A × A))).toCondensed)
 
-noncomputable def src2 : CondensedAb.{u} :=
+noncomputable abbrev src2 : CondensedAb.{u} :=
   src2assoc A ⊞ src1 A
 
 noncomputable def assocBC : C(A × (A × A), A × A) :=
