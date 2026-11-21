@@ -1690,8 +1690,7 @@ class ConditionalCookModularPhaseTests(unittest.TestCase):
         for p in (2,3,4,9):
             with self.assertRaises(ValueError):
                 wp09f_certificate(8192,6,p=p)
-        with self.assertRaises(ValueError):
-            wp09f_certificate(8192,2,L=1)
+        self.assertFalse(wp09f_certificate(8192,2,L=1)["eligible"])
         with self.assertRaises(ValueError):
             wp09f_certificate(0,1)
         with self.assertRaises(ValueError):
