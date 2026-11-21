@@ -304,5 +304,68 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 / sharp unrestricted-host joint residual and original size Ramsey for nonuniform star forests",
+  "assumptions": [
+    "finite simple arbitrary host graphs; ordinary non-induced and vertex-disjoint positive star forests",
+    "c>=1, b>=c+1, original n=(2,1,1),m=(b,c,c,c)",
+    "published ordinary graph-factor results only through source-locked prior GCL structural lemmas"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3585",
+    "MATH-PROGRAMME#3578",
+    "MATH-PROGRAMME#3606"
+  ],
+  "promotion_condition": "Do not promote full joint residual or unrestricted Erdős #561. Paper theorem inherits under-review source lemma; only deterministic bounded arithmetic and star-host scans CHECKED. Source admission is not mathematical certification.",
+  "claim_id": "ERDOS561-JOINT-FLAT-TAIL-RIGIDITY-016",
+  "short_name": "Exact all-host 211 versus (b,c,c,c) joint residual and unbounded +1 switching surplus",
+  "claim_text": "For every c>=1 and b>=c+1 the exact minimum edges for simultaneous arrowing (F(1,1),F(b,c,c,c)) and (F(2,1,1),F(c,c,c)) equals J=2b+3c+1 over arbitrary finite simple graphs. For b>=3, sharp single-matching Ramsey equality rigidity forces every hypothetical J-1 host to be F(b,b,c,c,c), defeated in the second relation by colouring one arm of each c-star red; b=2,c=1 is already covered by the peeling theorem. Canonical host F(b,b,c+1,c,c) attains J. Switching surplus is exactly one for b>=c+2. Moreover the ORIGINAL size Ramsey number rhat(F(2,1,1),F(b,c,c,c)) equals W=3b+3c+2 for ALL c>=1,b>=c+1 regardless of parity. The odd b result follows from core transfer or the nine-cubic matching lemma; even b>=6 from isolated regular core versus blue forest edge budget, b=4 from explicit u=5/7 core exclusions, b=2 from the prior 106-class exact certificate. General conjecture OPEN.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Unrestricted host first residual (2K2,H) with H unique maximal b-star implies e>=h+b; equality forces H disjoint union K1,b by a source-proved rigidity theorem. A red matching on the c-star components defeats the second residual relation, yielding exact J=h+b+1. Original vertex deletion forces Delta<=b at E<W. Odd b handled by source-proved core transfer or nine-cubic matching lemma. Even b cap obstruction must have isolated odd-order b-regular C, u>=b+1; all-blue forest H with M=b+3c edges uses at most u-1 internal forest edges, so E>=M+u(b/2-1)+1 >W-1 for b>=6. At b=4 only u=5/7 and explicit avoiding colourings or impossibility of all-blue H eliminate them. At b=2,c=1 the complete 106-class earlier certificate applies. Finite 360-pair verifier is corroborating arithmetic, not unbounded proof.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/FLAT_TAIL_SINGLE_MATCHING_RIGIDITY_THEOREM.md",
+    "research/erdos-561/joint-general/verify_flat_tail_rigidity_family.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/FLAT_TAIL_RIGIDITY_EVIDENCE.json",
+    "research/erdos-561/joint-general/RIGID_15EDGE_311_5221_THEOREM.md",
+    "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 / sharp unrestricted-host joint residual and original size Ramsey for nonuniform star forests",
+  "assumptions": [
+    "finite simple arbitrary host graphs; ordinary non-induced and vertex-disjoint positive star forests",
+    "c>=1, b>=c+1, original n=(2,1,1),m=(b,c,c,c)",
+    "published ordinary graph-factor results only through source-locked prior GCL structural lemmas"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3585",
+    "MATH-PROGRAMME#3578",
+    "MATH-PROGRAMME#3606"
+  ],
+  "promotion_condition": "Do not promote full joint residual or unrestricted Erdős #561. Paper theorem inherits under-review source lemma; only deterministic bounded arithmetic and star-host scans CHECKED. Source admission is not mathematical certification.",
+  "claim_id": "ERDOS561-JOINT-FLAT-TAIL-CHECK-017",
+  "short_name": "Exact flat-tail antidiagonal and complete star-arm corroboration",
+  "claim_text": "The deterministic parameter verifier proves exact finite arithmetic for 360 admissible flat-tail pairs (345 with +1 switching surplus and 15 without) and exhausts 233018 red-arm allocation classes on forced lower R1 star hosts plus 271548 red-arm allocation classes on canonical upper joint hosts, all matching the proved claims in their declared classes. It is not an unrestricted-host finite enumeration or certification of the analytic rigidity lemma.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Two distinct index conventions for antidiagonal maxima; exact arm allocation conditions are necessary and sufficient for disjoint-star hosts. Source script checks entire declared finite rectangle and records zero mismatches, with no random seeds or network access.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_flat_tail_rigidity_family.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/FLAT_TAIL_RIGIDITY_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
