@@ -107,57 +107,94 @@ $$
 
 Thus the theorem recovers exactly **one extra edge of switching surplus in an infinite nonuniform family**, without restricting graph topology or relying on the unproved general joint hypothesis.
 
-## Theorem B — original size-Ramsey consequences, with exact parity scope
+## Theorem B — full parity-free ORIGINAL size-Ramsey family
 
-The corresponding **original** antidiagonal edge list is
-
-$$
-(b+1,b,b,c+1,c,c)
-$$
-
-and its sum is
-
-$$
-W=3b+3c+2.
-$$
-
-For every odd $b\ge3$ and $1\le c\le b-1$,
+For every pair of integers $c\ge1$, $b\ge c+1$, with **NO parity restriction**,
 
 $$
 \boxed{\widehat r(F(2,1,1),F(b,c,c,c))=3b+3c+2.}
 $$
 
-This is an ORIGINAL, all-finite-simple-host size-Ramsey equality, not merely a joint-residual value.
+This original size-Ramsey equality holds over **all finite simple graph hosts**, not only disjoint-star hosts. The original antidiagonal star sizes are $(b+1,b,b,c+1,c,c)$ and sum to $W=3b+3c+2$. By Theorem A, the individually proved sharp joint residual lower is $J=2b+3c+1$. For any proposed original-arrowing graph with $e(G)\le W-1$, deleting any vertex gives both residual relations, hence $\Delta(G)\le W-1-J=b=:D$.
 
-For odd $b\ge5$, the leading sizes $2$ and $b$ have opposite parity and $D=2+b-2=b$. Since $c\le b-1$,
+### Odd leading b
+
+For odd $b\ge5$, the leading sizes two and $b$ have opposite parity. Since $c\le b-1$,
 
 $$
 W=3b+3c+2\le6b-1\le b(b+1)=D(D+1).
 $$
 
-The last inequality holds for all $b\ge5$ because $b^2-5b+1\ge1$. Apply the general core transfer theorem already source-locked in \`GENERAL_CORE_ORIGINAL_TRANSFER.md\`, which deduces the exact original value from the sharp joint residual bound whenever $W\le D(D+1)$ and at least one leading size is odd.
+The final inequality holds for all $b\ge5$ since $b^2-5b+1\ge1$. Apply the general core transfer theorem in \`GENERAL_CORE_ORIGINAL_TRANSFER.md\`.
 
-For $b=3$, the permitted $c$ are one and two. Any hypothetical original Ramsey host with at most $W-1$ edges would have maximum degree at most $D=3$ by the sharp joint residual lower bound and vertex deletion. Let $k$ be its number of degree-three vertices. The original blue target $F(3,c,c,c)$ needs $7+3c$ nonisolated vertices, and the degree handshake gives
-
-$$
-2e(G)\ge3k+(v_+(G)-k)\ge 2k+7+3c.
-$$
-
-Since $e(G)\le W-1=10+3c$,
+For $b=3$, the permitted $c$ are one and two. Any hypothetical original Ramsey host has $e(G)\le W-1=10+3c$, $\Delta(G)\le3$, and at least $7+3c$ nonisolated vertices because its all-blue colouring contains the original forest $F(3,c,c,c)$. If $k$ vertices have degree three,
 
 $$
-2k\le20+6c-(7+3c)=13+3c.
+2k+7+3c\le2e(G)\le20+6c,
+\qquad
+2k\le13+3c.
 $$
 
-For $c=1$ we obtain $k\le8$; for $c=2$ we obtain $k\le9$. The **nine-cubic-vertex saturated matching lemma**, proved independently in \`GENERAL_CORE_ORIGINAL_TRANSFER.md\` from ordinary Lovász $(g,f)$ factor theory, supplies a red degree-one / blue degree-two edge partition. Such a partition avoids both original leading stars of sizes two and three, contradicting original arrowing. Thus the original equality holds also for $b=3$.
+Thus $k\le8$ for $c=1$ and $k\le9$ for $c=2$. The source-locked **nine-cubic-vertex saturated matching lemma** in \`GENERAL_CORE_ORIGINAL_TRANSFER.md\`, proved from the ordinary Lovász $(g,f)$ theorem, supplies a red degree-one / blue degree-two partition, avoiding both original leading stars. This contradicts original arrowing.
 
-For **even** $b$, the general core-transfer density criterion supplies a separate infinite subfamily whenever
+### Even leading b: regular-core edge-budget exclusion
+
+For $b=2$, the only admissible value is $c=1$. The original exact eleven-edge equality was already proved by the complete 106-class maximum-degree-two certificate in \`GENERAL_CORE_ORIGINAL_TRANSFER.md\`; it is not asserted afresh from the unique-core theorem.
+
+Now suppose $b\ge4$ is even. The proposed capped degrees are $(1,b-1)$, both odd. In an original-arrowing $G$ with $e(G)\le W-1=3b+3c+1$ and $\Delta(G)\le b$, **no** such capped partition can exist, since it would avoid the original leading star of size two in red and size $b$ in blue.
+
+Let $k$ count the degree $b$ vertices and $v_+(G)$ the nonisolated vertices. All-blue arrowing requires a blue copy of $F(b,c,c,c)$, with $b+3c+4$ nonisolated vertices, so $v_+\ge b+3c+4$. The handshake estimate gives
 
 $$
-3b+3c+2\le b(b+1)/2.
+2e(G)\ge v_+(G)+(b-1)k.
 $$
 
-In particular, the inequality holds for **all** $1\le c\le b-1$ when even $b\ge12$, because its worst-case left side is $6b-1$ and $b(b+1)/2-(6b-1)=(b^2-11b+2)/2>0$ for $b\ge12$. We do not assert full coverage of smaller even $b$ from this theorem.
+Consequently,
+
+$$
+(b-1)k
+\le 2(W-1)-(b+3c+4)
+=5b+3c-2
+\le8b-5.
+$$
+
+For every even $b\ge4$,
+
+$$
+8b-5 < 2b^2-2 = (b-1)(2b+2),
+$$
+
+since $2b^2-8b+3>0$. Therefore $k\le2b+1$. The previously source-locked **unique large core** theorem, derived from the ordinary Lovász $(g,f)$ criterion, now applies: a non-partitionable $G$ must contain an *isolated connected odd-order degree $b$ regular component* $C$. Write $u=|V(C)|$. Then $u$ is odd, $u\ge b+1$, and the core consumes exactly $bu/2$ edges.
+
+The all-blue colouring must contain the original blue forest $H=F(b,c,c,c)$, with $M=b+3c$ edges. Because $C$ is isolated, the copy of $H$ splits its components between $C$ and the exterior. The portion inside $C$ is a **forest on at most $u$ vertices** and therefore uses **at most $u-1$ edges**. The exterior must contribute at least $M-(u-1)$ edges. Consequently, a *necessary condition* for an all-blue copy of $H$ is
+
+$$
+e(G)\ge\frac{bu}{2}+M-(u-1)
+=M+u\left(\frac b2-1\right)+1.
+$$
+
+But the counterexample budget gives $e(G)\le W-1=M+2b+1$. Therefore
+
+$$
+u\left(\frac b2-1\right)\le2b.
+$$
+
+For every even $b\ge6$, this is impossible because $u\ge b+1$ and
+
+$$
+(b+1)\left(\frac b2-1\right)>2b
+\quad\Longleftrightarrow\quad
+b^2-5b-2>0.
+$$
+
+Thus **no original counterexample exists for any even $b\ge6$**, irrespective of $c$. This exclusion uses only the edge cost of the isolated regular core and the acyclicity of the required blue target forest; it does not assume a special exterior graph topology.
+
+It remains to handle $b=4$. The necessary inequality becomes $u\le8$; combined with odd $u\ge5$, it leaves **only $u=5$ or $u=7$**.
+
+- If $u=5$, the core consumes ten edges; the exterior has at most $(W-1)-10=(13+3c)-10=3c+3=M-1$ edges. Colour all core edges red and all exterior edges blue. The red target $F(2,1,1)$ needs seven vertices, more than the five in the core; the blue target needs $M=4+3c$ edges, more than the exterior has. Thus this explicit colouring avoids both targets.
+- If $u=7$, the core has fourteen edges and the exterior has at most $(W-1)-14=3c-1$ edges. An all-blue copy of $F(4,c,c,c)$ would therefore require at least $M-(3c-1)=5$ of its edges inside the seven-vertex core. For $c=2$ or $c=3$, this is impossible: a four-edge star occupies five vertices and cannot be accompanied by a vertex-disjoint $c$-edge star (which needs at least three more vertices). If no four-edge star lies inside, at most two $c$-edge stars can fit in seven vertices; when $c=2$ these provide at most four edges, and when $c=3$ only one such star fits, providing three edges. Hence no all-blue copy exists. For $c=1$, colour the core blue and exterior red. Blue is then confined to seven vertices, fewer than the eleven needed by $F(4,1,1,1)$, and red has at most two edges, fewer than the four in $F(2,1,1)$. Again both targets are avoided.
+
+Every even $b$ is now excluded from a smaller original Ramsey host, completing the proof for all parities. The canonical antidiagonal star forest gives the required $W$-edge upper bound. QED.
 
 ## Reproducibility and review boundary
 

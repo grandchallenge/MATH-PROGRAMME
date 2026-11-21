@@ -61,8 +61,33 @@ for c in range(1,16):
             else:
                 assert b==3 and c in (1,2)
             counts['odd_b']+=1
+        else:
+            E=sum(w)-1
+            M=b+3*c
+            if b==2:
+                assert c==1 and W==11
+                counts['even_b_d2']+=1
+            else:
+                R=M+4
+                assert 2*E-R < (b-1)*(2*b+2), (b,c)
+                if b>=6:
+                    assert (b+1)*(b//2-1)>2*b
+                    counts['even_b_regular_budget']+=1
+                else:
+                    assert b==4 and c in (1,2,3)
+                    for u in (5,7):
+                        assert u*(b//2-1)<=2*b
+                        if u==5:
+                            assert E-10==M-1
+                        elif c==1:
+                            assert E-14==2
+                        else:
+                            assert c in (2,3) and M-(E-14)==5
+                    counts['even_b_4']+=1
+            counts['even_b']+=1
 assert counts==Counter({'parameter_pairs':360,'strict_switch':345,'zero_switch':15,
-                        'lower_A_colourings':233018,'upper_both_colourings':271548,'odd_b':180}),counts
+                        'lower_A_colourings':233018,'upper_both_colourings':271548,'odd_b':180,
+                        'even_b':180,'even_b_d2':1,'even_b_4':3,'even_b_regular_budget':176}),counts
 print('ERDOS561_FLAT_TAIL_360_PARAMETER_PAIRS_PASS')
 print('ERDOS561_FLAT_TAIL_STRICT_SURPLUS_345_ZERO_15_PASS')
 print('ERDOS561_FLAT_TAIL_FORCED_LOWER_A_233018_ARM_COLOURS_PASS')

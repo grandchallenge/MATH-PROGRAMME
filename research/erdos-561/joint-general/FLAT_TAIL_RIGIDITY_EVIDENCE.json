@@ -15,15 +15,20 @@
   "upper_host": "F(b,b,c+1,c,c)",
   "strict_switch": "one extra edge for b>=c+2",
   "original_corollary": {
-    "odd_b_gte3": "3b+3c+2 for all c<=b-1",
-    "even_b": "same if 3b+3c+2 <= b(b+1)/2; all even b>=12"
+    "all_parities": "rhat(F(2,1,1),F(b,c,c,c))=3b+3c+2 for ALL integers c>=1,b>=c+1",
+    "odd_b": "core transfer b>=5 and nine-cubic matching for b=3",
+    "even_b": "unique core k<=2b+1; isolated odd-order b-regular core edge cost plus target forest interior at most u-1 edges excludes b>=6; b4 u=5,7 explicit; b2,c1 complete 106-class certificate"
   },
   "bounded_audit": {
     "pair_count": 360,
     "positive_switch": 345,
     "zero_switch": 15,
     "forced_lower_first_residual_arm_colourings": 233018,
-    "canonical_upper_both_residual_arm_colourings": 271548
+    "canonical_upper_both_residual_arm_colourings": 271548,
+    "even_leading_parameters": 180,
+    "even_b_d2": 1,
+    "even_b_four": 3,
+    "even_b_regular_budget": 176
   },
   "claim_status": "UNDER_REVIEW for unbounded theorem; CHECKED for deterministic finite arithmetic",
   "general_joint_residual_status": "OPEN/PARTIAL",
