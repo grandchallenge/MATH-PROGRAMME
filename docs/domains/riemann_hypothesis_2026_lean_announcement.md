@@ -82,7 +82,7 @@ These observations identify the formal targets **as displayed in the external mi
 | --- | --- | --- | --- |
 | RH-A26-SOURCE | External source lock | **Pending local admission** | Hash and retain PDF and all original archive parts; check rights, exact toolchain, provenance |
 | RH-A26-STATEMENT | Formal-to-human semantic bridge | **Externally checked, locally pending** | Compare RH and Dirichlet GRH definitions, assumptions, quantifiers and exception cases with protected RH-WP00 |
-| RH-A26-REPLAY | Mechanical proof validation | **Externally reported passing** | Repeat a bounded independent audit on locked original bytes; retain exact logs and hardware profile |
+| RH-A26-REPLAY | Mechanical proof validation | **Externally reported passing** | Repeat a bounded independent audit on locked original bytes; retain exact logs, verifier identities, and toolchain revisions |
 | RH-A26-MECHANISM | Human mathematical reconstruction | **Open** | Produce a readable dependency skeleton and prove selected analytic/arithmetic bridging lemmas |
 | RH-A26-GCL-CERT | GCL claim disposition | **Not issued** | GCL-controlled evidence, non-author adjudication under current policy, and a scoped MATHCERT decision |
 
@@ -135,7 +135,7 @@ The active proof-debt register is:
 | RH-A26-D06 | FOUNDATIONAL_PROFILE_GAP | Record exact classical foundations, imported Mathlib definitions, and their equivalence to the intended analytic objects |
 | RH-A26-D07 | EXTERNAL_SOURCE | Track formal and mathematical follow-up by the author and independent reviewers, without importing status automatically |
 
-**Downgrade rule:** any source-hash mismatch, nonstandard hidden assumption, semantic mismatch, untrusted proof shortcut, or independent checking rejection reopens the relevant node. A failed local hardware run is infrastructure evidence, not a mathematical refutation.
+**Downgrade rule:** any source-hash mismatch, nonstandard hidden assumption, semantic mismatch, untrusted proof shortcut, or independent checking rejection reopens the relevant node. A failed or incomplete verification attempt is not, by itself, a mathematical refutation.
 
 ## 8. Contextual consequences for GCL
 
@@ -149,15 +149,13 @@ The active proof-debt register is:
 
 **Agentic mathematics / AETHER.** The account credits a human collaborator with choosing structural analogies and an AI with substantial mathematical innovations. This raises a useful practical test: can GCL preserve role attribution, source lineage, proposal history, independent checking, and public explanation when neither partner possesses a short understanding of the final formal corpus? These are research and institutional implications, not evidence about AI autonomy or a general guarantee that AI-generated proofs are correct.
 
-**Resource governance.** A full recheck is not a CHAD/desktop smoke test. The MIT record describes a roughly 7.7-GB compressed export, tens of gigabytes uncompressed, and an independent comparator requiring about 100 GB RAM and 70 GB disk. GCL should size and budget a governed Colab or otherwise authorized high-memory worker **before** attempting that check, using source-bound resumable receipts. A small statement/axiom review is immediately viable without downloading the full export.
-
 ## 9. First executable move
 
 **RH-A26-WP00 — source-locked statement concordance**, owned by MATHFORGE with an RH-001 MATHSOLVE handoff only after reviewed source semantics.
 
 **Input:** the exact `remark.pdf`; the 14 original archive parts; `Main.lean`, `Statements.lean`, the complete dependency manifests, Lean 4.33.1, Mathlib 4.33.1, and the dated MIT verification report.
 
-**Bounded output:** one immutable source manifest, five declaration-level statement cards, a side-by-side comparison with protected RH-WP00, a list of assumptions and imported definitions, an audit of syntactic shortcuts and metaprogramming, and a budgeted independent-replay matrix.
+**Bounded output:** one immutable source manifest, five declaration-level statement cards, a side-by-side comparison with protected RH-WP00, a list of assumptions and imported definitions, an audit of syntactic shortcuts and metaprogramming, and an independent-replay evidence matrix.
 
 **Acceptance test:** all five formal targets identified by pinned path and hashes; equivalence or precise mismatch established for each intended human target; all source bytes and toolchain versions accounted for; external check results preserved as *external*; no certification or proof claim inferred from an unchecked dependency.
 
