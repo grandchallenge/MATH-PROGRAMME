@@ -63,8 +63,8 @@ def compactDoublingMap (A : Type u)
 /-- The exact source-shaped doubling pullback has operator norm <= 1
 on the compact-space supremum Banach real cochains. This applies to
 every compact torus A = (ℝ/ℤ)^I and to its finite powers times S,
-once the corresponding compact topological abelian-group instance
-is chosen. No derived-Hom vanishing is inferred. -/
+by the compact doubling map. For the external probe S, use the
+separate parameter-preserving doubling theorem below. No derived-Hom vanishing is inferred. -/
 theorem compactDoubling_realCochain_norm_le_one
     (A : Type u) [TopologicalSpace A] [CompactSpace A]
     [AddCommGroup A] [ContinuousAdd A] :
@@ -72,9 +72,33 @@ theorem compactDoubling_realCochain_norm_le_one
       C(A, ℝ) →L[ℝ] C(A, ℝ))‖ ≤ 1 :=
   realCompactCochain_compCLM_norm_le_one (compactDoublingMap A)
 
+
+/-- Doubling on a compact abelian group while keeping an arbitrary compact
+parameter S unchanged. This is the exact map on A^r × S used by the
+Breen–Deligne real cochains. The probe S need not carry a group structure. -/
+def compactParametricDoublingMap
+    (A : Type u) (S : Type v)
+    [TopologicalSpace A] [AddCommGroup A] [ContinuousAdd A]
+    [TopologicalSpace S] : C(A × S, A × S) :=
+  ⟨fun p => (p.1 + p.1, p.2),
+    (continuous_fst.add continuous_fst).prodMk continuous_snd⟩
+
+/-- The source-shaped doubling operator on C(A^r × S, ℝ) is
+nonexpansive for every compact parameter S, not just the group itself. -/
+theorem compactParametricDoubling_realCochain_norm_le_one
+    (A : Type u) (S : Type v)
+    [TopologicalSpace A] [CompactSpace A]
+    [AddCommGroup A] [ContinuousAdd A]
+    [TopologicalSpace S] [CompactSpace S] :
+    ‖(ContinuousMap.compCLM ℝ ℝ (compactParametricDoublingMap A S) :
+      C(A × S, ℝ) →L[ℝ] C(A × S, ℝ))‖ ≤ 1 :=
+  realCompactCochain_compCLM_norm_le_one
+    (compactParametricDoublingMap A S)
+
 #print axioms realCompactCochain_comp_norm_le
 #print axioms realCompactCochain_compCLM_norm_le_one
 #print axioms realCompactCochain_compCLM_comp
 #print axioms compactDoubling_realCochain_norm_le_one
+#print axioms compactParametricDoubling_realCochain_norm_le_one
 
 end CMDG.CondensedCM5R0
