@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from cmath import exp
 from fractions import Fraction
-from math import pi, prod
+from math import isqrt, pi, prod
 
 from experiments.erdos249_full_series_phase.joint_local_prime_law import (
     profile, primes_through,
@@ -59,7 +59,7 @@ def first_separating_prime(terms: tuple[tuple[int, int, int], ...]) -> int:
     H = signature_norms(terms)["H"]
     p = max(2, H + 1)
     while True:
-        isprime = all(p % d for d in range(2, int(p**0.5) + 1))
+        isprime = all(p % d for d in range(2, isqrt(p) + 1))
         if isprime:
             return p
         p += 1
