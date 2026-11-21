@@ -40,7 +40,7 @@ $$
 \boxed{E=W-1.}
 $$
 
-By the Győri–Schelp degree-cap splitting theorem, if $G$ has at most $D$ vertices of degree $D$ it can be partitioned into red degree at most $a-1$ and blue degree at most $c-1$, also contradicting original arrowing. Hence the number $h$ of degree-$D$ vertices satisfies
+By the Győri–Schelp degree-cap splitting theorem, if $G$ has at most $D$ vertices of degree $D$ it can be partitioned into red degree at most $a-1$ and blue degree at most $c-1$, also contradicting original arrowing. Hence the number $h$ of vertices of degree $D$ satisfies
 
 $$
 \boxed{h\ge D+1.}
@@ -143,9 +143,9 @@ For $(6,2),(4,3),(4,4)$, this upper bound is strictly less than the $a+5$ noniso
 
 ### Lemma B — matching saturating all odd-maximum-degree vertices
 
-If $D$ is odd, $\Delta(G)=D$, and $e(G)<D(D+2)$, then there exists a matching covering every degree-$D$ vertex of $G$.
+If $D$ is odd, the maximum degree of $G$ equals $D$, and its edge count satisfies $e(G)<D(D+2)$, then there exists a matching covering every vertex of degree $D$ of $G$.
 
-**Proof.** Let $Z$ be the set of degree-$D$ vertices. The standard prescribed-vertex matching criterion, derived from Tutte's perfect-matching theorem by adding a sufficiently large complete graph adjacent only to vertices outside $Z$, asserts that a matching saturates $Z$ if and only if for every vertex set $S$ the number of odd components of $G-S$ whose vertices all lie in $Z$ is at most $|S|$.
+**Proof.** Let $Z$ be the set of vertices of degree $D$. The standard prescribed-vertex matching criterion, derived from Tutte's perfect-matching theorem by adding a sufficiently large complete graph adjacent only to vertices outside $Z$, asserts that a matching saturates $Z$ if and only if for every vertex set $S$ the number of odd components of $G-S$ whose vertices all lie in $Z$ is at most $|S|$.
 
 Suppose this fails. Fix a set $S$ with more than $|S|$ such odd components. A counted component with odd order $r\le D$ sends at least $r(D-r+1)\ge D$ edges into $S$: its $r$ vertices each have degree $D$ and at most $r(r-1)$ internal edge incidences. A larger counted odd component has order at least $D+2$ and sends at least one edge into $S$, because its total degree sum $rD$ is odd and its internal degree sum is even. The total number of these boundary edges is at most $D|S|$. It follows that there cannot be $|S|$ or more small counted components when at least one large component exists, nor $|S|+1$ small components on their own. Therefore at least **two** large counted components must exist. They are vertex-disjoint, each with at least $D+2$ vertices all of degree $D$. Thus
 
@@ -155,7 +155,7 @@ $$
 
 contradicting $e(G)<D(D+2)$. The matching exists. QED.
 
-For $(a,c)=(3,2)$ the hypothetical counterexample has $D=3,E=11<15$; for $(5,2)$ it has $D=5,E=17<35$. In either case take a matching covering all saturated vertices; colour it BLUE and all other edges red. Blue degree at most one, so it contains no leading blue two-edge star. Red degree at most $a-1$, because every degree-$D$ vertex loses a blue matching edge and $D=a$ when $c=2$, so it contains no leading red $a$-star. Contradiction.
+For $(a,c)=(3,2)$ the hypothetical counterexample has $D=3$ and $E=11<15$; for $(5,2)$ it has $D=5$ and $E=17<35$. In either case take a matching covering all saturated vertices; colour it BLUE and all other edges red. Blue degree at most one, so it contains no leading blue two-edge star. Red degree at most $a-1$, because every vertex of degree $D$ loses a blue matching edge and $D=a$ when $c=2$, so it contains no leading red $a$-star. Contradiction.
 
 ### Explicit remaining even-degree cases
 
@@ -221,7 +221,7 @@ $$
 h\le8\ (c=4),\qquad h\le7\ (c=5),\qquad h\le7\ (c=6).
 $$
 
-Apply Vizing's proper edge-colouring theorem with $c+1$ matching classes. Each degree-$c$ vertex misses **exactly one** of the $c+1$ classes. Because $h<2(c+1)$, the pigeonhole principle gives a matching colour class that misses at most one saturated vertex. Colour this matching RED. If a saturated vertex is missed, colour one additional edge at that vertex red. Every saturated vertex now has a red incident edge, so blue maximum degree is at most $c-1$. The red graph is a matching with at most one added edge; any red two-edge star must use that single extra edge, so there cannot be **two vertex-disjoint red two-edge stars**. It avoids red $F(2,2,1)$, while blue avoids its leading $c$-star. Contradiction.
+Apply Vizing's proper edge-colouring theorem with $c+1$ matching classes. Each vertex of degree $c$ misses **exactly one** of the $c+1$ classes. Because $h<2(c+1)$, the pigeonhole principle gives a matching colour class that misses at most one saturated vertex. Colour this matching RED. If a saturated vertex is missed, colour one additional edge at that vertex red. Every saturated vertex now has a red incident edge, so blue maximum degree is at most $c-1$. The red graph is a matching with at most one added edge; any red two-edge star must use that single extra edge, so there cannot be **two vertex-disjoint red two-edge stars**. It avoids red $F(2,2,1)$, while blue avoids its leading $c$-star. Contradiction.
 
 ### Last two cases: saturated-core edge budget
 
