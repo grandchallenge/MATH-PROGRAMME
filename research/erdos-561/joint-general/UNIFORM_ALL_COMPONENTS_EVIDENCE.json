@@ -1,18 +1,20 @@
 {
   "record_type": "GCL_ERDOS561_UNIFORM_ALL_COMPONENT_COUNTS/1",
   "date": "2026-11-21",
-  "claim": "For all s,t>=3 and a,b>=2 of the SAME PARITY (both odd OR both even, including unequal even), exact arbitrary-host joint J=(s+t-2)(a+b-1) and original W=(s+t-1)(a+b-1).",
-  "new_proof": "Both odd: protected even-cap splitter. Both even: two-copy even D-regular multigraph completion, 2-factorization via Euler orientation and Hall, (A-1)/2 red2factors and (B-1)/2 blue factors, alternation on last 2factor. Place odd-cycle degree excess at auxiliary or unsaturated vertices and absorb with removed completion edges, or charge each surviving odd cycle to >=3 distinct D-saturated original vertices. Edge cost >=3D/2 >=D+1 per surviving defect; below canonical host budget defect red/blue colours can avoid p red a-stars and q blue b-stars. Published two-component theorem supplies base s=3,t arbitrary; high-degree vertex peeling proves all s, original follows deleting vertex.",
+  "claim": "KNOWN published uniform star-forest formula for ALL a,b>=1 and s,t>=3, independently reconstructed by Vizing spare-class: J=(s+t-2)(a+b-1), W=(s+t-1)(a+b-1) over arbitrary finite simple hosts",
+  "new_proof": "Vizing R=a+b-1 proper matching classes under Delta<=R-1; smallest spare M has <=p+q-2 edges for E<(p+q-1)R. A=a-1 red classes, B=b-1 blue classes give base caps. At each spare edge both endpoints each have >=1 safe colour because they miss a base class. If no common safe colour, either assignment creates exactly one freely assigned red or blue overcap centre; every spare edge is independent. Allocate <=p-1 red, <=q-1 blue overcap centres so uniform forests absent. Therefore a subcanonical arrowing graph must have Delta>=R. Sharp s=3 joint base via Chunlin You pinned 2026 two-component theorem and induction in s by deletion of high-degree vertex; original from high-degree deletion and sharp joint.",
   "base_import": "Chunlin You arXiv:2610.25958v1; GCL protected even-cap splitting theorem; no reliance on public Botnet 3x3 proposal",
   "full_problem": "OPEN/PARTIAL for arbitrary nonuniform original lists",
   "math_status": "PAPER_UNDER_REVIEW",
   "finite_status": "CHECKED_AFTER_EXACT_SOURCE_REPLAY",
   "certification": "NOT_MATHCERT",
   "finite_replay": {
-    "all_uniform_parameters": 11664,
-    "same_parity_exact_family_parameters": 5832,
-    "canonical_joint_and_original_host_classes": 26,
-    "complete_canonical_arm_colourings": 932560,
-    "bounded_simple_graph_component_cases": 36030
-  }
+    "all_uniform_parameters": 13689,
+    "all_parity_exact_family_parameters": 13689,
+    "canonical_joint_and_original_host_classes": 36,
+    "complete_canonical_arm_colourings": 974916,
+    "bounded_simple_graph_Euler_cases": 36030
+  },
+  "novelty_status": "NOT_NEW; prior published Fu-Luo-Ni arXiv:2606.04439v3 and cited earlier uniform theorems",
+  "published_precedent": "https://arxiv.org/abs/2606.04439v3"
 }
