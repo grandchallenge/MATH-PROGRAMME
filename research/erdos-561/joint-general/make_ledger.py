@@ -485,5 +485,63 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 / matching versus arbitrary star forests joint residual",
+  "assumptions": [
+    "s,t>=3,s-1<=t",
+    "red original n=(1 repeated s), blue original m1>=...>=mt positive",
+    "ordinary non-induced, vertex-disjoint star-forest embeddings; arbitrary finite simple graph hosts"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3617"
+  ],
+  "promotion_condition": "New unrestricted-host restricted theorem UNDER_REVIEW. Finite standard-library verifier CHECKED. Full all-profiles joint-residual conjecture and original Erdős #561 remain OPEN/PARTIAL; not MATHCERT.",
+  "claim_id": "ERDOS561-SATURATED-MATCHING-022",
+  "short_name": "Exact all-host matching versus arbitrary-tail star forest with saturated largest tier",
+  "claim_text": "For s,t>=3,s-1<=t, original red matching n=(1^s) and arbitrary sorted positive blue m=(m1,...,mt) satisfy universal joint residual lower J>=m1+sum(m)+sum_{j=3}^{s-1}m_j. If the first s-1 blue star sizes are equal b=m1, the exact arbitrary-host minimum is J=(2s-3)b+sum_{j=s}^t m_j, attained by canonical U=F(b^(2s-3),m_s,...,m_t), with completely nonuniform remaining blue tail. The unrestricted conjecture remains open.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "All-blue R1 gives vertex v degree>=m1. Red colour on v-star forces full H=F(m) in G-v. Colour the s-1 largest H components entirely red and all other edges blue. Red matching number<=s-1 avoids red original F(1^s), so R2 forces blue F(m2..mt) with M-m1 edges. At most one blue target star uses v and it has <=m2 edges; >=M-m1-m2 target edges therefore outside v. Available blue edges outside v are exactly q extra edges plus M-sum_{j=1}^{s-1}m_j edges from untouched H tail. This yields q>=sum_{j=3}^{s-1}m_j and e>=m1+M+q. When m1..m_{s-1}=b the bound matches the exact canonical antidiagonal list (b repeated s-1, m2..mt), proving all-host sharpness. No bounded graph search or unproved general hypothesis in proof.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_THEOREM.md",
+    "research/erdos-561/joint-general/verify_saturated_matching_joint.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_EVIDENCE.json",
+    "research/erdos-561/joint-general/JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 / matching versus arbitrary star forests joint residual",
+  "assumptions": [
+    "s,t>=3,s-1<=t",
+    "red original n=(1 repeated s), blue original m1>=...>=mt positive",
+    "ordinary non-induced, vertex-disjoint star-forest embeddings; arbitrary finite simple graph hosts"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3617"
+  ],
+  "promotion_condition": "New unrestricted-host restricted theorem UNDER_REVIEW. Finite standard-library verifier CHECKED. Full all-profiles joint-residual conjecture and original Erdős #561 remain OPEN/PARTIAL; not MATHCERT.",
+  "claim_id": "ERDOS561-SATURATED-MATCHING-CHECK-023",
+  "short_name": "Matching-star saturated-prefix exact parameter and complete upper-host arm colouring tests",
+  "claim_text": "Two independent antidiagonal indexing conventions and exact matching lower calculations agree across 14203 general parameter profiles, with 3385 satisfying the saturated-maximal-prefix exact family and 4651 general lower-bound equalities. Seven fixed canonical star hosts satisfy both residual arrowing properties for every one of 116386 complete red-arm allocations. Finite checks do not establish all-host theorem by extrapolation.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Standard-library deterministic parameter enumeration over 3<=s<=7, max(3,s-1)<=t<=8 and positive stars<=6; independent zero-/one-index original and residual antidiagonal arrays plus exact lower arithmetic; seven canonical star forests exhaust every full-arm red/blue allocation. Exact source and evidence JSON under joint-general.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_saturated_matching_joint.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/SATURATED_MATCHING_JOINT_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
