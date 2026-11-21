@@ -66,14 +66,12 @@ theorem condensed_homotopy0 :
       ext a
       rfl
     rw [heq,polyMap_id]
-    rfl
   have hc : polyMap diag ≫ polyMap snd = 𝟙 (src0 A) := by
     rw [polyMap_comp]
     have heq : snd.comp diag = ContinuousMap.id A := by
       ext a
       rfl
     rw [heq,polyMap_id]
-    rfl
   change (-polyMap diag) ≫
       (polyMap plus - polyMap fst - polyMap snd) =
       (𝟙 ((Condensed.freeAb).obj ((CompHaus.of A).toCondensed))) +
