@@ -168,7 +168,7 @@ $$
 
 If $n_1=1$, then $n$ is a matching and the bound becomes $\Delta(G)\le m_1-1$. But original arrowing applied to the all-blue colouring forces a blue copy of $F(m)$, which contains a star of degree $m_1$ and therefore requires $\Delta(G)\ge m_1$. Contradiction.
 
-If $m_1=1$, then $m$ is a matching and its degree bound is $\Delta(G)\le n_1-1$. Applying original arrowing to the all-red colouring similarly forces $\Delta(G)\ge n_1$. Contradiction. Thus the canonical $W$-edge host is optimal. QED.
+If the leading blue star size is one, then the blue target is a matching. The displayed degree bound makes the maximum degree of G at most the leading red star size minus one. But the all-red colouring must contain the original red forest, including a star of that leading size. This is impossible. Thus the canonical host of W edges is optimal. QED.
 
 ### New parity-free ORIGINAL infinite family
 
