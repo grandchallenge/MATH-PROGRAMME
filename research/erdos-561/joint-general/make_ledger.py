@@ -171,5 +171,36 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 / exact star host Ramsey order / multistar residual Ramsey lower bounds",
+  "assumptions": [
+    "all target stars have positive integer edge sizes",
+    "all host graphs finite and simple",
+    "ordinary non-induced and vertex-disjoint forest subgraphs",
+    "n=(3,2,2),m=(3,1,1,1)"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3578",
+    "MATH-PROGRAMME#3591"
+  ],
+  "promotion_condition": "Full Erdős #561 and unrestricted joint residual issue #3490 stay OPEN/PARTIAL. This is a paper theorem depending on the published ordinary Lovasz (g,f) factor theorem. Protected source-only admission is not mathematical certification. Retain UNDER_REVIEW until substantive independent mathematical adjudication.",
+  "claim_id": "ERDOS561-JOINT-322-3111-012",
+  "short_name": "Exact 15-edge arbitrary-host 322/3111 joint residual by Lovasz factor and deletion",
+  "claim_text": "Every finite simple G satisfying both G->(F(2,2),F(3,1,1,1)) and G->(F(3,2,2),F(1,1,1)) has at least 15 edges, and F(4,4,3,2,2) attains it. Thus J((3,2,2),(3,1,1,1))=15. This solves one strict-switch 3x4 residual case, not the unrestricted conjecture.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Two-vertex deletion forces a ten-vertex full F(3,2,2). A single-vertex deletion forces arrowing (K1,2,F(3,1,1,1)), requiring at least ten edges. The degree-4 case then leaves a ten-edge subcubic residual with <=5 cubic vertices, which the specialized ordinary Lovasz (g,f)-factor matching lemma makes colourable to avoid the residual arrowing. The degree-3 case needs >=8 cubic vertices; handshake plus >=12 nonisolated vertices at 14 edges forces four leaves and a contradiction from deleting a leaf-neighbour and one other vertex. Canonical 15-edge upper forest checked under all 900 arm-colouring classes; no brute-force arbitrary host extrapolation.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/RIGID_14EDGE_322_3111_THEOREM.md",
+    "research/erdos-561/joint-general/verify_rigid14_322_3111.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/RIGID_14EDGE_322_3111_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))

@@ -8,6 +8,7 @@ python3 verify_unbounded_families.py
 python3 verify_rigid15_311_5221.py
 python3 verify_unique_max_311_b221_family.py
 python3 verify_joint_monotone_plateaus.py
+python3 verify_rigid14_322_3111.py
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py
