@@ -62,7 +62,8 @@ for c in range(1,16):
                 assert b==3 and c in (1,2)
             counts['odd_b']+=1
         else:
-            E=sum(w)-1
+            W=sum(w)
+            E=W-1
             M=b+3*c
             if b==2:
                 assert c==1 and W==11
