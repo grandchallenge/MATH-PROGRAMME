@@ -1,8 +1,8 @@
 {
   "record_type": "GCL_ERDOS561_UNIFORM_ALL_COMPONENT_COUNTS/1",
   "date": "2026-11-21",
-  "claim": "For all s,t>=3, if arms a,b both odd or a=b>=2 (including equal even), exact unrestricted-host JOINT J=(s+t-2)(a+b-1) and ORIGINAL W=(s+t-1)(a+b-1).",
-  "new_proof": "Equal even arm u uses Euler tour alternating red/blue, with at most one degree-u exception in any connected odd-sized (2u-2)-regular component; each exceptional component costs at least (u-1)(2u-1)>=2u-1 edges, and exceptional colours can be assigned to avoid p red/q blue stars for E<(p+q-1)(2u-1). Both odd a,b use protected universal even-cap split. Published pinned two-component theorem proves s=3,t arbitrary; induction on s via deleting a degree >=a+b-1 vertex proves all joint cases; original via vertex deletion.",
+  "claim": "For all s,t>=3 and a,b>=2 of the SAME PARITY (both odd OR both even, including unequal even), exact arbitrary-host joint J=(s+t-2)(a+b-1) and original W=(s+t-1)(a+b-1).",
+  "new_proof": "Both odd: protected even-cap splitter. Both even: two-copy even D-regular multigraph completion, 2-factorization via Euler orientation and Hall, (A-1)/2 red2factors and (B-1)/2 blue factors, alternation on last 2factor. Place odd-cycle degree excess at auxiliary or unsaturated vertices and absorb with removed completion edges, or charge each surviving odd cycle to >=3 distinct D-saturated original vertices. Edge cost >=3D/2 >=D+1 per surviving defect; below canonical host budget defect red/blue colours can avoid p red a-stars and q blue b-stars. Published two-component theorem supplies base s=3,t arbitrary; high-degree vertex peeling proves all s, original follows deleting vertex.",
   "base_import": "Chunlin You arXiv:2610.25958v1; GCL protected even-cap splitting theorem; no reliance on public Botnet 3x3 proposal",
   "full_problem": "OPEN/PARTIAL for arbitrary nonuniform original lists",
   "math_status": "PAPER_UNDER_REVIEW",
@@ -10,9 +10,9 @@
   "certification": "NOT_MATHCERT",
   "finite_replay": {
     "all_uniform_parameters": 11664,
-    "exact_family_parameters": 3402,
-    "canonical_joint_and_original_host_classes": 18,
-    "complete_canonical_arm_colourings": 749984,
+    "same_parity_exact_family_parameters": 5832,
+    "canonical_joint_and_original_host_classes": 26,
+    "complete_canonical_arm_colourings": 932560,
     "bounded_simple_graph_component_cases": 36030
   }
 }
