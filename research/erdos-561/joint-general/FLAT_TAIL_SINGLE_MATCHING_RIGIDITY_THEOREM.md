@@ -56,13 +56,13 @@ $$
 
 up to isolated vertices.
 
-This forced host **fails the second residual relation**. Colour exactly one edge of each of the three $c$-stars red and all other edges blue, leaving both $b$-stars wholly blue. The red graph is a matching and hence contains no two-edge star; in particular it has no red $F(2,1,1)$. The blue component edge counts are
+This forced host **fails the second residual relation**. Colour exactly one edge of each of the three stars of size $c$ red and all other edges blue, leaving both $b$-stars wholly blue. The red graph is a matching and hence contains no two-edge star; in particular it has no red $F(2,1,1)$. The blue component edge counts are
 
 $$
 (b,b,c-1,c-1,c-1).
 $$
 
-Since $c-1<c$, only the two $b$-stars have enough blue edges to contain a $c$-edge star; three vertex-disjoint blue $c$-stars are impossible. Therefore this colouring avoids both second-residual targets, contradicting joint arrowing. Every joint host must have at least $2b+3c+1$ edges.
+Since $c-1$ is strictly less than $c$, only the two stars of size $b$ have enough blue edges to contain a star with $c$ edges; three vertex-disjoint blue stars of size $c$ are impossible. Therefore this colouring avoids both second-residual targets, contradicting joint arrowing. Every joint host must have at least $2b+3c+1$ edges.
 
 The degenerate boundary $(b,c)=(2,1)$ has $J=8$ by the independent previously protected two-hub peeling family, Theorem C1 of \`JOINT_RESIDUAL_ITERATED_PEELING_THEOREM.md\` (its parameters $a=2,b=2,c=1,t=4$). This is the only admissible pair with $b<3$. No unsupported extension of the unique-degree theorem to degree two is made.
 
