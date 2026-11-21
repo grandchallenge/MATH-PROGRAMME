@@ -69,7 +69,7 @@ This small example is a **working model**, not a counterexample to RH. It identi
 
 ![GCL symmetry countermodel with accurately plotted known zeta zeros and four off-line polynomial roots; different imaginary scales indicated](../assets/rh-symmetry-gcl.svg)
 
-*Figure 2. At left, three actual known zeta zeros on the critical line, sampled at heights about 14.13, 21.02, and 25.01. At right, the four zeros of an exact reflection-symmetric polynomial lie off the line; the two diagrams use different imaginary scales. [Open full-size vector](../assets/rh-symmetry-gcl.svg).*
+*Figure 2. At left, three actual known zeta zeros on the critical line, sampled at heights about 14.13, 21.02, and 25.01. At right, the four zeros of an exact reflection-symmetric polynomial lie off the line; the two diagrams use different imaginary scales. For the classical zero symmetries see [NIST DLMF §25.10](https://dlmf.nist.gov/25.10). [Open full-size vector](../assets/rh-symmetry-gcl.svg).*
 
 ### Wolfram exhibit B: an exact four-zero countermodel
 
