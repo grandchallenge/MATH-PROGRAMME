@@ -159,7 +159,7 @@ $$
 
 $$
 \boxed{
-1-\operatorname{Re} C_{c,y}(\rho)
+1-\mathrm{Re} C_{c,y}(\rho)
 \ge\frac{56 V_{c,y}}{3\rho^2}
 \ge\frac{168 M_2}{25p^3\rho^2}>0.
 }
@@ -204,7 +204,7 @@ $$
 \boxed{
 \liminf_{X\to\infty}
 \left(\frac{Q_X}{X}\right)^2
-\left(1-\operatorname{Re} Z_{c,X}(Q_X)\right)
+\left(1-\mathrm{Re} Z_{c,X}(Q_X)\right)
 \ge\frac{56}{3}V_c
 \ge\frac{168M_2}{25p^3}>0.
 }
@@ -239,7 +239,7 @@ $0\le\varphi(n+s)\le n+s\le3X$
 implies $|A_c(n)|\le3BX\le Q_X/2$. The same chord bound used in Theorem B now applies **pointwise**:
 
 $$
-1-\operatorname{Re} Z_{c,X}(Q_X)
+1-\mathrm{Re} Z_{c,X}(Q_X)
 \ge\frac8{XQ_X^2}\sum_{n=X}^{2X-1}A_c(n)^2.
 \tag{16}
 $$
@@ -250,7 +250,7 @@ The error is uniform in all admissible $Q_X$, proving (14). QED.
 
 ## 5. Adversarial boundary: why this is not Cook's 10% saving
 
-The genuine problem in the pinned Cook paper is the length-$L$ phase
+The genuine problem in the pinned Cook paper is the length $L$ phase
 
 $$
 E_{h,N,L}=
@@ -268,7 +268,7 @@ There is also a generic rational control. The integer sequence $a_n=\lfloor n/2\
 $\sum_{n\ge1}a_n2^{-n}=2/3$, yet its first shifted difference $a_{n+1}-a_n$ alternates between 0 and 1 and therefore has positive variance and a strict local-phase gap for suitable moduli. Any argument turning **local difference variance alone** into irrationality is false. This control does not share Euler totient's multiplicative structure or the prime-conditional projection (6).
 
 **Open work:** a totient-specific cancellation or correlation bound involving the **entire exponentially weighted phase** in (17), or Cook's source-locked prime/cofactor *weighted* correlation
-$\operatorname{Re}\sum_{N\in\mathcal G}w_N(z_N-\bar z_{m_N})\le14X/25$
+$\mathrm{Re}\sum_{N\in\mathcal G}w_N(z_N-\bar z_{m_N})\le14X/25$
 on arbitrarily late admissible blocks. The present fixed-order covariance theorem supplies arithmetic input but does not deliver that bound. Do not close #3500, certify the original Erdős #249 irrationality, or claim theorem priority.
 
 ## 6. Evidence and reproducibility
