@@ -148,4 +148,17 @@ theorem condensed_homotopy1 :
   abel
 
 #print axioms condensed_homotopy1
+/-- Genuine infinite-dimensional circle-torus specialization of the
+categorical degree-one Breen–Deligne doubling homotopy. -/
+theorem torus_degreeOne_condensed_homotopy
+    (I : Type u) :
+    h1 (I → UnitAddCircle) ≫ d2 (I → UnitAddCircle) +
+      d1 (I → UnitAddCircle) ≫ h0 (I → UnitAddCircle) =
+      (𝟙 (src1 (I → UnitAddCircle))) +
+      (𝟙 (src1 (I → UnitAddCircle))) -
+        double1 (I → UnitAddCircle) :=
+  condensed_homotopy1 (I → UnitAddCircle)
+
+#print axioms torus_degreeOne_condensed_homotopy
+
 end CMDG.CondensedCM5R0.BreenDeligneCondensed
