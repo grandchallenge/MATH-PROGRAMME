@@ -1,0 +1,231 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-21T14:29:51Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-21T14:29:51Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+    "exact_head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+    "pr_number": 3618,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "research(erdos561): exact saturated matching versus arbitrary blue tails"
+  },
+  "integration": {
+    "merge_commit_sha": "9507fbb2bf88dd0ecff1bf2ddb16887606c54569",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 9,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 5808:3F3EA6:47395A8:E3C939D:6B01AAF2 and timestamp 2026-11-21 14:30:11 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 136876280949,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136876280045,
+          "conclusion": "success",
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136876279958,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136876336938,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / administrative",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136876336945,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / campaigns",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876336965,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / cmdg",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876336931,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / contracts",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876336904,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / core",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876336930,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / docs",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876336890,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / fixtures",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876336877,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / oz",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876337065,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Policy shard / repository-regression",
+          "status": "queued"
+        },
+        {
+          "check_run_id": 136876280311,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136876281857,
+          "conclusion": "success",
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136876281769,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 136876281011,
+          "conclusion": "success",
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136876283102,
+          "conclusion": "skipped",
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 136876280972,
+          "conclusion": null,
+          "head_sha": "748ffa450f42d6b5d1eb41bb79b4c326ccb40127",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-21T14:30:09Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "d53dbce9e3c71bea8d5d9e82992147a4eb35a5a75f0f6dfa6c6a1a8dff7d48b5"
+  },
+  "report_id": "PRVSR-LIVE-PR3618-748ffa450f42-20261121143009",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification"
+    ]
+  }
+}
