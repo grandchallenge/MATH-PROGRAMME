@@ -15,6 +15,7 @@ python3 verify_d2_original_211_2111.py
 python3 verify_flat_tail_rigidity_family.py
 python3 verify_flat_tail_multiarm.py
 python3 verify_variable_tail_deficit.py
+python3 verify_saturated_matching_joint.py
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py
