@@ -108,7 +108,7 @@ $$
 e(G)=d_G(v)+e(G-v)\ge R+(s+t-2)R=W,
 $$
 
-contradiction. The canonical original host of $s+t-1$ disjoint $R$-edge stars supplies the matching upper bound. QED.
+contradiction. The canonical original host of $s+t-1$ disjoint stars of size $R$ supplies the matching upper bound. QED.
 
 ## Alternative structural proofs for equal and same-parity arm sizes
 
@@ -338,4 +338,4 @@ This theorem proves complete original and joint formulas for **arbitrarily large
 
 The verifier \`verify_uniform_star_erdos561.py\` independently computes all original/joint antidiagonal sums over a declared broad grid in $s,t,a,b$, validates the exact inductive thresholds and exceptional component cost inequalities, and exhausts complete red-arm allocations for several small canonical original and joint star hosts. A separate bounded graph-atlas audit checks the Euler defect splitter on all simple graphs of at most six vertices with maximum degree at most $2u-2$, and checks its exceptional-core count prediction, using a standard-library exhaustive simple-graph enumerator. These checks are corroborative of the proof, not a finite substitute for its graph-theoretic universal quantifier.
 
-**Paper theorem claim UNDER_REVIEW; finite source checks CHECKED.** Original all-component-count Erdős #561 for arbitrary nonuniform star lists remains unresolved, as do the mixed-parity uniform families not explicitly included here. No MATHCERT certificate or external novelty claim is issued.
+**Paper theorem claim UNDER_REVIEW; finite source checks CHECKED.** Theorem 0 above now covers ALL uniform pairs (including mixed parity) and supersedes the narrower alternate parity-specific methods in this source. The full Erdős #561 conjecture for arbitrary nonuniform star-size lists remains unresolved. The uniform formula was previously established in the cited literature; no independent priority is claimed. No MATHCERT certificate or external novelty claim is issued.
