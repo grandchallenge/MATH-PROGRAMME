@@ -16,7 +16,6 @@ jobs:
   reconcile:
     permissions:
       contents: read
-      issues: write
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
@@ -82,57 +81,11 @@ jobs:
           print(f"Recent Erdős issue activity: {d['matching_source_issues_observed']} matched; truncated={d['truncated_input']}.")
           print("Activity is NOT a claim-admission or proof verdict.")
           PY
-      - name: Reconcile one durable editorial-drift issue without duplicate comments
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Publish read-only editorial drift disposition
         run: |
           set -euo pipefail
-          python3 - "$RUNNER_TEMP/erdos-compendium-freshness.json" "$RUNNER_TEMP/freshness-issue.md" "$RUNNER_TEMP/erdos-research-activity.json" <<'PY'
-          import hashlib,json,sys
-          from pathlib import Path
-          raw=Path(sys.argv[1]).read_bytes()
-          d=json.loads(raw)
-          digest=hashlib.sha256(raw+Path(sys.argv[3]).read_bytes()).hexdigest()
-          lines=[
-              "# Erdős Compendium — certified-result editorial drift",
-              "",
-              f"Evidence SHA-256: `{digest}`",
-              "",
-              f"Certified routes: {d['certified_routes_scanned']}; missing manuscript or editorial admission: {d['unreconciled_certified_results']}.",
-              "",
-              "This is an **automated read-only evidence comparison**; it DOES NOT approve editorial admission, claim certification, novelty, or public release.",
-              "Historical catalogue status remains a pinned snapshot; a draft does not count as published.",
-              "",
-          ]
-          for row in d["review_candidates"]:
-              n=row["problem_id"]
-              lines.append(f"- [#{n}](https://grandchallenge.ai/MATH-PROGRAMME/erdos/problems/{n:04d}/): {row['campaign_id']}; manuscript={row['manuscript_exists']}; admitted={row['editorial_admitted']}; [MATHCERT output](https://github.com/grandchallenge/MATHCERT/blob/main/{row['certificate_path']})")
-          if not d["review_candidates"]:
-              lines.append("No certified-route editorial discrepancies in this bounded scan.")
-          lines.append("")
-          activity=json.loads(Path(sys.argv[3]).read_text())
-          lines.append("")
-          lines.append("## Recent investigation updates (metadata only)")
-          lines.append(f"Observed {activity['matching_source_issues_observed']} issues; sampled results truncated={activity['truncated_input']}.")
-          for entry in activity["activity_candidates"][:20]:
-              lines.append(f"- [#{entry['problem_id']}: {entry['repository']} issue {entry['issue_number']}]({entry['source_url']}) — updated {entry['source_updated_at']}; editorial assessment required")
-          lines.append("")
-          lines.append("Remediation: source audit → exact reviewable manuscript → protected draft merge → public HTML/MathJax check → separate protected editorial-admission evidence and readback. A certification route is not public-publication authority.")
-          Path(sys.argv[2]).write_text("\n".join(lines)+"\n",encoding="utf-8")
-          PY
-          title="Erdős Compendium — certified-result editorial drift"
-          existing="$(gh issue list -R "$GITHUB_REPOSITORY" --state open --search "in:title certified-result editorial drift" --limit 20 --json number,title --jq '[.[]|select(.title=="Erdős Compendium — certified-result editorial drift")|.number]|first // empty')"
-          if [ -z "$existing" ]; then
-            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/freshness-issue.md"
-          else
-            previous="$(gh issue view "$existing" -R "$GITHUB_REPOSITORY" --json body --jq .body | grep -m1 'Evidence SHA-256:' || true)"
-            current="$(grep -m1 'Evidence SHA-256:' "$RUNNER_TEMP/freshness-issue.md")"
-            if [ "$previous" != "$current" ]; then
-              gh issue edit "$existing" -R "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/freshness-issue.md"
-            else
-              echo "No editorial drift change; no API write"
-            fi
-          fi
+          echo "Review evidence in the bounded artifacts and [existing editorial issue #3610](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3610)." >> "$GITHUB_STEP_SUMMARY"
+          echo "No public claim, issue modification or publication is authorized by this read-only controller." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
