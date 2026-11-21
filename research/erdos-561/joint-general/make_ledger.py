@@ -427,5 +427,63 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary-host joint residual / nonuniform blue star tails",
+  "assumptions": [
+    "a>=2,k>=3,b>=c1>=...>=ck>=1; original n=(a,1,1),m=(b,c1,...,ck)",
+    "ordinary non-induced vertex-disjoint star-forest embeddings in arbitrary finite simple graphs",
+    "exact regime b>=a+c1-1, c_(k-2)>=a-1"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3615"
+  ],
+  "promotion_condition": "New unbounded theorem UNDER_REVIEW; deterministic finite nonuniform star-host checks CHECKED only. Full joint-residual conjecture OPEN/PARTIAL and no MATHCERT certification.",
+  "claim_id": "ERDOS561-VARIABLE-TAIL-ORDERED-DEFICIT-020",
+  "short_name": "Exact unrestricted-host joint residual for unequal blue tails via ordered deficits",
+  "claim_text": "For every a>=2,k>=3,b>=c1>=...>=ck>=1, let d_i=max(0,c_i-a+1). Every arbitrary finite simple graph jointly arrowing the two residuals of n=(a,1,1),m=(b,c1,...,ck) has at least 2b+sum_i c_i+sum_{i=1}^{k-2}max(0,c_{i+2}-d_i) edges. If b>=a+c1-1 and c_{k-2}>=a-1, this lower equals the canonical joint antidiagonal host edge sum; the star-size host is (b,b,max(c1,a+c3-1),...,max(c_{k-2},a+ck-1),c_{k-1},ck). In particular J((4,1,1),(8,5,4,3,2,1))=34. This is an all-finite-simple-host exact theorem in the stated family, not unrestricted #561.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "All-blue first residual supplies vertex v degree>=b, red star at v forces H=F(b,c1,...,ck) inside G-v. Colour min(a-1,c_i) arms in each secondary H star red, avoiding F(a,1,1). Any blue F(c1,...,ck) has k-2 stars avoiding v and edges of primary b-star. Each uses H secondary base edges in at most one component; distinct selected target stars using H secondary edges belong to distinct secondary components since all host-star edges meet at the same centre. Injectively assign no-base stars to unused components, and count distinct extra edges at least (p-d_j)_+. Monge rearrangement sorted demand-capacity injection plus order statistics p_i>=c_{i+2} gives exact deficit lower L. Under c_(k-2)>=a-1, d_i=c_i-a+1 for i<=k-2 and matches the independently derived residual antidiagonal max when b>=a+c1-1. No reliance on full conjecture or finite graph enumeration.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/VARIABLE_TAIL_ORDERED_DEFICIT_THEOREM.md",
+    "research/erdos-561/joint-general/verify_variable_tail_deficit.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/VARIABLE_TAIL_DEFICIT_EVIDENCE.json",
+    "research/erdos-561/joint-general/FLAT_TAIL_MULTIARM_RECOLOURING_THEOREM.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary-host joint residual / nonuniform blue star tails",
+  "assumptions": [
+    "a>=2,k>=3,b>=c1>=...>=ck>=1; original n=(a,1,1),m=(b,c1,...,ck)",
+    "ordinary non-induced vertex-disjoint star-forest embeddings in arbitrary finite simple graphs",
+    "exact regime b>=a+c1-1, c_(k-2)>=a-1"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3615"
+  ],
+  "promotion_condition": "New unbounded theorem UNDER_REVIEW; deterministic finite nonuniform star-host checks CHECKED only. Full joint-residual conjecture OPEN/PARTIAL and no MATHCERT certification.",
+  "claim_id": "ERDOS561-VARIABLE-TAIL-CHECK-021",
+  "short_name": "Exact nonuniform antidiagonal grid and complete six-host red-arm colour audit",
+  "claim_text": "Two distinct antidiagonal index conventions agree over 24500 exact variable-tail and 19305 lower-only parameter cases, and six concrete nonuniform canonical joint star hosts satisfy both residual arrowing properties for all 147188 individual red-arm allocations. These declared finite checks are complete in their classes but do not certify the unbounded all-host paper theorem by extrapolation.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Standard-library deterministic bounded parameter generator; independent zero- and one-index antidiagonal routines; exact complete red-arm allocation enumeration on six grounded nonuniform star forests. Source script and retained evidence record pass.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_variable_tail_deficit.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/VARIABLE_TAIL_DEFICIT_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
