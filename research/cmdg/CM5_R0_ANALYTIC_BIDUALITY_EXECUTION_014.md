@@ -1,6 +1,6 @@
 # CMDG CM5 E3 — analytic doubling and derived biduality execution ledger 014
 
-**Status:** ANALYTIC_CONTRACTION_LEAN_VERIFIED; CATEGORICAL_REAL_CIRCLE_EXT_TRANSFER_REPLAY_PENDING; GENUINE_DERIVED_BIDUALITY_OPEN. This ledger distinguishes a verified analytic reduction from instantiation on the genuine condensed real/circle objects. It is not a public MATHCERT assertion.
+**Status:** ANALYTIC_CONTRACTION_LEAN_VERIFIED; CATEGORICAL_EXT_TRANSFER_AND_CANONICAL_CONNECTING_REPLAY_PENDING; GENUINE_DERIVED_BIDUALITY_OPEN. This ledger distinguishes a verified analytic reduction from instantiation on the genuine condensed real/circle objects. It is not a public MATHCERT assertion.
 
 ## Exact authority and source
 
@@ -38,6 +38,10 @@ $$
 
 The new Lean module *CMDGCondensedCM4P3DerivedCM5R0UniformRealCircleExtTransfer.lean* constructs this using the actual extension class and exactness theorem of the existing pinned derived-category implementation. The new source is awaiting final exact-head CI. It does not assume a real/circle exact sequence is already available.
 
+The companion module *CMDGCondensedCM4P3DerivedCM5R0UniformRealCircleCanonicalConnecting.lean* defines the canonical connecting additive homomorphism from $\\mathrm{Ext}^0(K,Z)$ to $\\mathrm{Ext}^1(C,Z)$ using the **actual extension class** of the short exact sequence. It proves that this very map is bijective whenever both $\\mathrm{Ext}^0(R,Z)$ and $\\mathrm{Ext}^1(R,Z)$ vanish. This pins the map, not just its source and target groups. The new source requires exact-head Lean replay and does **not** assume the real vanishing inputs.
+
+**Independent underived real/circle exactness argument (not Lean-certified):** For an extremally disconnected compact test space $S$, any continuous map $S\\to\\mathbb R/\\mathbb Z$ lifts locally to $\\mathbb R$ along the standard covering map. Compactness gives finitely many local trivializations; a disjoint clopen refinement permits the lifts to glue continuously. Apply this independently to each coordinate of a map $S\\to(\\mathbb R/\\mathbb Z)^I$, then use continuity of maps into products to obtain a lift $S\\to\\mathbb R^I$. The kernel of coordinatewise reduction consists of continuous integer-valued functions in each coordinate. This gives the intended sheaf-level exactness by testing on Stonean covers. It does not construct the requisite condensed-module objects or a machine-checkable sheaf-exactness theorem.
+
 ## E3C: exact bridge to genuine derived biduality
 
 The published argument requires the following *not yet independently Lean-certified* objects and theorems:
@@ -47,6 +51,8 @@ The published argument requires the following *not yet independently Lean-certif
 3. **Infinite coordinates:** Prove finite-subset directed-colimit comparison for derived-Hom from arbitrary products of circles, including the site/Sheaf-Cech cohomology bridge.
 4. **Circle-to-integer derived Hom:** Construct the canonical connecting morphism induced by the genuine real/circle short exact sequence, and prove the resulting equivalence of the shifted direct sum of discrete integers with the actual derived-Hom object.
 5. **Biduality with the correct arrow:** Prove that the resulting isomorphism $\bigoplus_I\mathbb Z\simeq\mathbf R\mathrm{Hom}(\prod_I\mathbb Z,\mathbb Z)$ is the *evaluation/biduality map*, not an abstract isomorphism.
+**Protected underived canonical-map evidence:** The existing theorem *weightedFiniteBooleanMeasureLimitLift_measureSolidification_evaluationWeight_allTrue* (in the protected CM4 P3 PointFunctional fixture) identifies the finite-Boolean evaluation-weight map with the actual measure-solidification image of a point probe. This is a verified ingredient for checking the required unit/evaluation diagram after derived duality is constructed. It is not itself a derived diagram.
+
 6. **Genuine unit and product-target transport:** Identify the already established canonical $G_T$ product isomorphism with the correct double-dual evaluation of $F_T$, and prove the required derived-Hom-to-product comparison for the genuine coefficient target $G_S$.
 
 The current pinned Mathlib supplies a topological-space-to-condensed-*set* functor, but a ready-made fully typed real/circle *condensed abelian group* with derived realization was not located in the source audit. This is a concrete missing interface, not a claim of mathematical nonexistence.
