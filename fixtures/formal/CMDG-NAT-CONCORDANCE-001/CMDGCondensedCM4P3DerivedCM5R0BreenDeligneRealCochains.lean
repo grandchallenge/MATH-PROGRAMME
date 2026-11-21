@@ -234,11 +234,6 @@ theorem doublingStar2_opnorm_le_one :
   intro f
   simpa only [one_mul] using doublingStar2_nonexpansive A S f
 
-/-- An unconditional positive-degree real cochain acyclicity theorem
-for degree one in the *actual* compact continuous-function Banach complex.
-The convergent Neumann inverse of 1-[2]* / 2 supplies a genuine primitive.
-No all-degree or sheaf-derived comparison is assumed. -/
-
 #print axioms differential1_commutes_doubling
 #print axioms doublingStar1_nonexpansive
 #print axioms doublingStar2_nonexpansive
