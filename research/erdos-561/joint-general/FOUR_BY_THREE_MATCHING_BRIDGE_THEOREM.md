@@ -228,77 +228,77 @@ The preceding bound uses the red matching-colour extension. The opposite extensi
 
 Assume the blue second-largest star size satisfies $e\ge2$. For the reduced red values $(A,B,C)$ from Theorem B put
 
-$
+$$
 X=\max(B+e-1,C+d-1),\qquad Z=\max(C+e-1,d)
-$
+$$
 
 and define the **blue matching-deletion deficit**
 
-$
+$$
 \boxed{
 P_{\mathrm B}(n,m)
 =(A-X)_+ +(B-Z)_+ +(C-e)_+.
 }
-$
+$$
 
 **Theorem C (dual joint reduction).** Under the exact sorted-positive hypotheses of Theorem B, with $e\ge2$, EVERY arbitrary finite simple joint residual host satisfies
 
-$
+$$
 \boxed{e(Q)\ge J_{\rm can}(n,m)-P_{\mathrm B}(n,m).}
-$
+$$
 
 In particular the full canonical joint formula is **exact** whenever
 
-$
+$$
 A\le\max(B+e-1,C+d-1),\quad
 B\le\max(C+e-1,d),\quad
 C\le e.
-$
+$$
 
 **Proof, base $f=1$.** Lemma A already proves $\nu(Q)\ge5$. Choose a maximum matching $M$ and this time colour every edge in $M$ **BLUE**, rather than red. The two original residual relations imply that $Q-M$ satisfies
 
-$
+$$
 Q-M\to(F(b,c,1),F(d-1,e-1)),
-$
+$$
 
-$
+$$
 Q-M\to(F(a,b,c,1),F(e-1)).
-$
+$$
 
 The first follows from the original first residual by deleting its blue final single-edge component and decrementing the other two blue stars; the second follows in exactly the same way from the original second residual. Every blue original star loses at most one edge from the removed matching, while all red edges are unchanged.
 
 These are the two JOINT residual relations for original lists **red** $n=(a,b,c,1)$ and **blue** $m'=(d-1,e-1)$, of lengths four and two. The source-proved two-component residual bridge in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, Lemma 1, applies after exchanging the colours. It proves an unrestricted-host lower
 
-$
+$$
 e(Q-M)\ge J_{\rm can}(n,(d-1,e-1)).
-$
+$$
 
 The relevant original five joint antidiagonal entries for $(n,(d,e,1))$ are
 
-$
+$$
 \begin{aligned}
 w_3&=\max(a+e-1,b+d-1),\\
 w_4&=\max(a,b+e-1,c+d-1)=\max(a,X),\\
 w_5&=\max(b,c+e-1,d)=\max(b,Z),\\
 w_6&=\max(c,e),\qquad w_7=1.
 \end{aligned}
-$
+$$
 
 The FOUR joint antidiagonal entries for the shortened blue pair $(d-1,e-1)$ are
 
-$
+$$
 (w_3-1,\ X-1,\ Z-1,\ e-1).
-$
+$$
 
 Summing them proves the **exact dual algebraic identity**
 
-$
+$$
 \boxed{
 J_{\rm can}(n,m)
 =5+J_{\rm can}(n,(d-1,e-1))
  +(a-X)_+ +(b-Z)_+ +(c-e)_+.
 }
-$
+$$
 
 Hence $e(Q)\ge |M|+e(Q-M)\ge5+J_{\rm can}(n,m')=J_{\rm can}(n,m)-P_{\mathrm B}$.
 
@@ -308,22 +308,22 @@ Hence $e(Q)\ge |M|+e(Q-M)\ge5+J_{\rm can}(n,m')=J_{\rm can}(n,m)-P_{\mathrm B}$.
 
 Retain $P_{\mathrm R}=P$ from Theorem B and the switching surplus $\sigma$ from Section 4. For $e\ge2$ define
 
-$
+$$
 \boxed{
 \Delta_{\rm joint}=\min(P_{\mathrm R},P_{\mathrm B},\sigma).
 }
-$
+$$
 
 For $e=1$ omit the blue reduction and define $\Delta_{\rm joint}=\min(P_{\mathrm R},\sigma)$.
 
 The sharpest combined lower bound established by these three independent methods is now
 
-$
+$$
 \boxed{
 J_{\rm can}(n,m)-\Delta_{\rm joint}
 \ \le\ \mathcal J(n,m)\ \le\ J_{\rm can}(n,m).
 }
-$
+$$
 
 Thus if **ANY** of the explicitly computable quantities $P_{\mathrm R}$, $P_{\mathrm B}$ (when legal), or $\sigma$ vanishes, we have proved the full JOINT equality for arbitrary graph hosts. In the declared exact 14,520-parameter base grid, this additional BLUE reduction resolves **838** profiles that survived the previous RED matching and individual-residual bounds; **458** base profiles remain open under all three routes. These counts are FINITE arithmetic classification within the declared grid, not a claim about all integer parameters.
 
@@ -331,46 +331,46 @@ Thus if **ANY** of the explicitly computable quantities $P_{\mathrm R}$, $P_{\ma
 
 For every $h\ge1$, take
 
-$
+$$
 \widetilde n_h=(4h,2h,2h,1),\qquad
 \widetilde m_h=(4h,3h,1).
-$
+$$
 
 The original antidiagonal weights are
 
-$
+$$
 (8h-1,\,7h-1,\,6h-1,\,5h-1,\,3h,\,1).
-$
+$$
 
 The direct RED matching bridge loses $P_{\mathrm R}=h$ edges, and each separate residual bound also loses $\sigma=h$ edges. **Nevertheless the BLUE matching deficit is exactly zero** for every $h$:
 
-$
+$$
 P_{\mathrm B}=0.
-$
+$$
 
 Theorem C therefore establishes the full unrestricted-host JOINT value
 
-$
+$$
 \boxed{\mathcal J(\widetilde n_h,\widetilde m_h)=21h-2,}
-$
+$$
 
 although each separate residual value is only $20h-2$.
 
 The ORIGINAL canonical size is $W=29h-3$. For $h\ge2$, the protected degree-core transfer applies with $D=8h-2$, because
 
-$
+$$
 D(D+1)-2(W-1)=64h^2-82h+10>0
 \qquad (h\ge2).
-$
+$$
 
 Therefore
 
-$
+$$
 \boxed{
 \widehat r(F(4h,2h,2h,1),F(4h,3h,1))=29h-3
 \quad\text{for all }h\ge2.
 }
-$
+$$
 
 The JOINT formula is proved also for $h=1$; **the ORIGINAL $h=1$ value is not promoted by this particular transfer**. This is a second unbounded-switching, genuinely nonuniform four-versus-three family, complementary to the RED bridge family in Section 7.
 
