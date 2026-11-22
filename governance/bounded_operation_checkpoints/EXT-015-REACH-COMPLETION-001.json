@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP273",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP274",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed original distinct-block closure and independent family recovery criterion",
+  "phase": "Residual weight-two comparison and explicit original lifting tests",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "4a88f82656f76dda8873d3ab49016beee5e6c68e",
@@ -28,17 +28,16 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "readback-150l-and-compute-weight-two-residual",
-      "description": "Complete native readback and trackers for the whole original distinct-block 150.L Green lift. Construct and freeze the projected contraction of the actual residual weight-two complex W using 150.7 and 150.10–11, with the three established diagonal classes retained. Independently test actual C.5 sequence and projection lifting by the even vacuum summands, and continue the two-slot family recovery criterion. The broader cross-category and multiplicative comparisons retain their original scope and the conditional R3 dependency rules."
+      "id": "construct-residual-cone-and-test-actual-lifts",
+      "description": "Use the exact reviewed full 150.L to construct the original residual weight-two homotopy and compute the full scalar-relative cone. Test the actual raw C.5 sequence and projection lifting via vacuum retracts. Keep the separate reviewed family criterion and its unresolved source seminorm implication in scope."
     }
   ],
   "next_action": {
-    "id": "readback-150l-and-compute-weight-two-residual",
-    "description": "Complete native readback and trackers for the whole original distinct-block 150.L Green lift. Construct and freeze the projected contraction of the actual residual weight-two complex W using 150.7 and 150.10–11, with the three established diagonal classes retained. Independently test actual C.5 sequence and projection lifting by the even vacuum summands, and continue the two-slot family recovery criterion. The broader cross-category and multiplicative comparisons retain their original scope and the conditional R3 dependency rules.",
+    "id": "construct-residual-cone-and-test-actual-lifts",
+    "description": "Use the exact reviewed full 150.L to construct the original residual weight-two homotopy and compute the full scalar-relative cone. Test the actual raw C.5 sequence and projection lifting via vacuum retracts. Keep the separate reviewed family criterion and its unresolved source seminorm implication in scope.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md",
-      "research/condensed-qft/EXT-015/ACTUAL_PROJECTIVE_SEQUENCE_OBSTRUCTION_UC048.md",
-      "research/condensed-qft/EXT-015/TWO_SLOT_FAMILY_RECOVERY_UC043.md"
+      "research/condensed-qft/EXT-015/ACTUAL_PROJECTIVE_SEQUENCE_OBSTRUCTION_UC048.md"
     ]
   },
   "external_evidence": {
@@ -2118,25 +2117,18 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedOriginalGreenLemma",
-    "result": "Frozen reviewed result prepared for native admission",
+    "action": "BindWeightTwoAndActualLifting",
+    "result": "Reviewed original 150.L supplies analytic premise",
     "evidence_refs": [
       "research/reach-incident-scalar-uc044-reviewed-20261122",
-      "research/reach-incident-scalar-uc044-primary-20261122",
-      "research/reach-incident-scalar-uc044-corrected-20261122",
-      "research/reach-two-slot-uc043-reviewed-20261122",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3635",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3636",
-      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_INCIDENT_SCALAR_UC045.md",
-      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_ACCEPTANCE_UC046.md"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3637"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-22T11:39:23.651792+00:00"
+    "observed_at": "2026-11-22T11:41:48.042563+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2395,7 +2387,7 @@
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_INCIDENT_SCALAR_UC045.md",
       "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_ACCEPTANCE_UC046.md"
     ],
-    "instructions": "Complete native readback and trackers for the whole original distinct-block 150.L Green lift. Construct and freeze the projected contraction of the actual residual weight-two complex W using 150.7 and 150.10–11, with the three established diagonal classes retained. Independently test actual C.5 sequence and projection lifting by the even vacuum summands, and continue the two-slot family recovery criterion. The broader cross-category and multiplicative comparisons retain their original scope and the conditional R3 dependency rules."
+    "instructions": "Use the exact reviewed full 150.L to construct the original residual weight-two homotopy and compute the full scalar-relative cone. Test the actual raw C.5 sequence and projection lifting via vacuum retracts. Keep the separate reviewed family criterion and its unresolved source seminorm implication in scope."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
