@@ -1,4 +1,5 @@
 import CMDGCondensedCM4P3DerivedCM5R0BreenDeligneH2Exact
+import Mathlib.Tactic.Linarith
 
 
 /-!
@@ -157,6 +158,146 @@ theorem h2PrimitiveOperator_right_inverse_on_cocycles
     _ = f := h2HalfInverse_equation A S f
 
 #print axioms h2PrimitiveOperator_right_inverse_on_cocycles
+
+/-- The finite degree-one Breen–Deligne homotopy consists of
+three associativity pullbacks and one commutativity pullback. Its
+actual Banach operator norm is therefore at most four. -/
+theorem hStar1_norm_le_four (f : C2 A S) :
+    ‖hStar1 A S f‖ ≤ 4 * ‖f‖ := by
+  apply (ContinuousMap.norm_le _ (by positivity)).2
+  intro p
+  have h1 := f.1.norm_coe_le_norm ((qAssoc1 A S) p)
+  have h2 := f.1.norm_coe_le_norm ((qAssoc2 A S) p)
+  have h3 := f.1.norm_coe_le_norm ((qAssoc3 A S) p)
+  have h4 := f.2.norm_coe_le_norm ((qComm A S) p)
+  have ha : ‖f.1‖ ≤ ‖f‖ := le_max_left _ _
+  have hb : ‖f.2‖ ≤ ‖f‖ := le_max_right _ _
+  change ‖f.1 ((qAssoc1 A S) p) -
+      f.1 ((qAssoc2 A S) p) -
+      f.1 ((qAssoc3 A S) p) -
+      f.2 ((qComm A S) p)‖ ≤ 4 * ‖f‖
+  linarith [norm_sub_le (f.1 ((qAssoc1 A S) p))
+      (f.1 ((qAssoc2 A S) p)),
+    norm_sub_le
+      (f.1 ((qAssoc1 A S) p) - f.1 ((qAssoc2 A S) p))
+      (f.1 ((qAssoc3 A S) p)),
+    norm_sub_le
+      (f.1 ((qAssoc1 A S) p) - f.1 ((qAssoc2 A S) p) -
+        f.1 ((qAssoc3 A S) p))
+      (f.2 ((qComm A S) p))]
+
+/-- The inverse of 1−[2]*/2 has norm at most two, without
+needing an additional geometric-series norm theorem: the exact
+inverse equation and the nonexpansive doubling estimate suffice. -/
+theorem h2HalfInverse_norm_le_two (f : C2 A S) :
+    ‖h2HalfInverse A S f‖ ≤ 2 * ‖f‖ := by
+  let x := h2HalfInverse A S f
+  have hx := h2HalfInverse_equation A S f
+  have hdouble : ‖h2HalfDoubling A S x‖ ≤ (1/2 : ℝ) * ‖x‖ := by
+    change ‖(1/2 : ℝ) • doubleStar2 A S x‖ ≤ _
+    rw [norm_smul]
+    simp only [Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0:ℝ) ≤ 1/2)]
+    exact mul_le_mul_of_nonneg_left
+      (doublingStar2_nonexpansive A S x) (by norm_num)
+  have hnorm : ‖x‖ ≤ ‖f‖ + ‖h2HalfDoubling A S x‖ := by
+    have hh : x = f + h2HalfDoubling A S x := by
+      have h := hx
+      exact (sub_eq_iff_eq_add.mp h)
+    calc
+      ‖x‖ = ‖f + h2HalfDoubling A S x‖ := congrArg norm hh
+      _ ≤ ‖f‖ + ‖h2HalfDoubling A S x‖ :=
+        norm_add_le f (h2HalfDoubling A S x)
+  linarith
+
+theorem h2PrimitiveOperator_norm_le_four (f : C2 A S) :
+    ‖h2PrimitiveOperator A S f‖ ≤ 4 * ‖f‖ := by
+  have h1 := hStar1_norm_le_four A S (h2HalfInverse A S f)
+  have h2 := h2HalfInverse_norm_le_two A S f
+  change ‖(1/2 : ℝ) • hStar1 A S (h2HalfInverse A S f)‖ ≤ 4 * ‖f‖
+  rw [norm_smul]
+  simp only [Real.norm_eq_abs, abs_of_nonneg (by norm_num : (0:ℝ) ≤ 1/2)]
+  linarith
+
+theorem h2PrimitiveOperator_opNorm_le_four :
+    ‖h2PrimitiveOperator A S‖ ≤ 4 := by
+  apply ContinuousLinearMap.opNorm_le_bound _ (by norm_num)
+  intro f
+  exact h2PrimitiveOperator_norm_le_four A S f
+
+#print axioms hStar1_norm_le_four
+#print axioms h2HalfInverse_norm_le_two
+#print axioms h2PrimitiveOperator_opNorm_le_four
+
+/-- A genuine bounded continuous-linear projection of all degree-two
+cochains onto the actual four-relation degree-two cocycle space. -/
+def h2CocycleProjection : C2 A S →L[ℝ] C2 A S :=
+  (differential1 A S).comp (h2PrimitiveOperator A S)
+
+theorem h2CocycleProjection_closed (f : C2 A S) :
+    differential2 A S (h2CocycleProjection A S f) = 0 := by
+  exact differential2_comp_differential1_zero A S
+    (h2PrimitiveOperator A S f)
+
+theorem h2CocycleProjection_eq_of_closed (f : C2 A S)
+    (hf : differential2 A S f = 0) :
+    h2CocycleProjection A S f = f := by
+  exact h2PrimitiveOperator_right_inverse_on_cocycles A S f hf
+
+/-- The full degree-two Banach cochain space splits by a bounded
+idempotent whose range consists exactly of the cocycles. -/
+theorem h2CocycleProjection_idempotent (f : C2 A S) :
+    h2CocycleProjection A S (h2CocycleProjection A S f) =
+      h2CocycleProjection A S f :=
+  h2CocycleProjection_eq_of_closed A S _
+    (h2CocycleProjection_closed A S f)
+
+theorem h2CocycleProjection_norm_le :
+    ‖h2CocycleProjection A S‖ ≤
+      ‖differential1 A S‖ * 4 := by
+  calc
+    ‖h2CocycleProjection A S‖ ≤
+        ‖differential1 A S‖ * ‖h2PrimitiveOperator A S‖ :=
+        ContinuousLinearMap.opNorm_comp_le _ _
+    _ ≤ ‖differential1 A S‖ * 4 :=
+      mul_le_mul_of_nonneg_left
+        (h2PrimitiveOperator_opNorm_le_four A S)
+        (norm_nonneg (differential1 A S))
+
+theorem circleTorus_h2CocycleProjection_idempotent
+    (I : Type u) (P : Profinite.{v})
+    (f : C2 (I → UnitAddCircle) P) :
+    h2CocycleProjection (I → UnitAddCircle) P
+      (h2CocycleProjection (I → UnitAddCircle) P f) =
+      h2CocycleProjection (I → UnitAddCircle) P f :=
+  h2CocycleProjection_idempotent (I → UnitAddCircle) P f
+
+#print axioms h2CocycleProjection_idempotent
+#print axioms h2CocycleProjection_eq_of_closed
+#print axioms h2CocycleProjection_norm_le
+#print axioms circleTorus_h2CocycleProjection_idempotent
+
+/-- Quantitative degree-two exactness: a compact real cocycle has a
+primitive whose supremum norm is uniformly bounded by four times the
+cocycle norm, including arbitrary circle products. -/
+theorem degreeTwo_quantitative_exact (f : C2 A S)
+    (hf : differential2 A S f = 0) :
+    ∃ g : C1 A S,
+      differential1 A S g = f ∧ ‖g‖ ≤ 4 * ‖f‖ :=
+  ⟨h2PrimitiveOperator A S f,
+    h2PrimitiveOperator_right_inverse_on_cocycles A S f hf,
+    h2PrimitiveOperator_norm_le_four A S f⟩
+
+theorem circleTorus_degreeTwo_quantitative_exact
+    (I : Type u) (P : Profinite.{v})
+    (f : C2 (I → UnitAddCircle) P)
+    (hf : differential2 (I → UnitAddCircle) P f = 0) :
+    ∃ g : C1 (I → UnitAddCircle) P,
+      differential1 (I → UnitAddCircle) P g = f ∧
+      ‖g‖ ≤ 4 * ‖f‖ :=
+  degreeTwo_quantitative_exact (I → UnitAddCircle) P f hf
+
+#print axioms degreeTwo_quantitative_exact
+#print axioms circleTorus_degreeTwo_quantitative_exact
 
 #print axioms h2HalfInverse_equation
 #print axioms h2PrimitiveOperator
