@@ -220,9 +220,161 @@ J_{\rm can}(n,m)-\min\{P(n,m),\sigma(n,m)\}
 }
 $$
 
-Hence **either** $P=0$ **or** $\sigma=0$ suffices for sharp joint equality. Only parameters with BOTH $P>0$ and $\sigma>0$ remain unresolved by the two mechanisms. These are explicit, computable integer inequalities, not a vague claim of a missing proof. They also preserve the sharp original-transfer conclusions wherever the actual joint minimum is established.
+Hence **either** $P=0$ **or** $\sigma=0$ suffices for sharp joint equality. The two-method positive-deficit region is further reduced by the DUAL BLUE matching bridge in Section 5; see its three-way minimum. These are explicit, computable integer inequalities, not a vague claim of a missing proof. They also preserve the sharp original-transfer conclusions wherever the actual joint minimum is established.
 
-## 5. ORIGINAL size-Ramsey transfer, with no extra induction
+## 5. DUAL blue-matching bridge to the two-component joint theorem
+
+The preceding bound uses the red matching-colour extension. The opposite extension supplies a genuinely different sharp theorem.
+
+Assume the blue second-largest star size satisfies $e\ge2$. For the reduced red values $(A,B,C)$ from Theorem B put
+
+$
+X=\max(B+e-1,C+d-1),\qquad Z=\max(C+e-1,d)
+$
+
+and define the **blue matching-deletion deficit**
+
+$
+\boxed{
+P_{\mathrm B}(n,m)
+=(A-X)_+ +(B-Z)_+ +(C-e)_+.
+}
+$
+
+**Theorem C (dual joint reduction).** Under the exact sorted-positive hypotheses of Theorem B, with $e\ge2$, EVERY arbitrary finite simple joint residual host satisfies
+
+$
+\boxed{e(Q)\ge J_{\rm can}(n,m)-P_{\mathrm B}(n,m).}
+$
+
+In particular the full canonical joint formula is **exact** whenever
+
+$
+A\le\max(B+e-1,C+d-1),\quad
+B\le\max(C+e-1,d),\quad
+C\le e.
+$
+
+**Proof, base $f=1$.** Lemma A already proves $\nu(Q)\ge5$. Choose a maximum matching $M$ and this time colour every edge in $M$ **BLUE**, rather than red. The two original residual relations imply that $Q-M$ satisfies
+
+$
+Q-M\to(F(b,c,1),F(d-1,e-1)),
+$
+
+$
+Q-M\to(F(a,b,c,1),F(e-1)).
+$
+
+The first follows from the original first residual by deleting its blue final single-edge component and decrementing the other two blue stars; the second follows in exactly the same way from the original second residual. Every blue original star loses at most one edge from the removed matching, while all red edges are unchanged.
+
+These are the two JOINT residual relations for original lists **red** $n=(a,b,c,1)$ and **blue** $m'=(d-1,e-1)$, of lengths four and two. The source-proved two-component residual bridge in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, Lemma 1, applies after exchanging the colours. It proves an unrestricted-host lower
+
+$
+e(Q-M)\ge J_{\rm can}(n,(d-1,e-1)).
+$
+
+The relevant original five joint antidiagonal entries for $(n,(d,e,1))$ are
+
+$
+\begin{aligned}
+w_3&=\max(a+e-1,b+d-1),\\
+w_4&=\max(a,b+e-1,c+d-1)=\max(a,X),\\
+w_5&=\max(b,c+e-1,d)=\max(b,Z),\\
+w_6&=\max(c,e),\qquad w_7=1.
+\end{aligned}
+$
+
+The FOUR joint antidiagonal entries for the shortened blue pair $(d-1,e-1)$ are
+
+$
+(w_3-1,\ X-1,\ Z-1,\ e-1).
+$
+
+Summing them proves the **exact dual algebraic identity**
+
+$
+\boxed{
+J_{\rm can}(n,m)
+=5+J_{\rm can}(n,(d-1,e-1))
+ +(a-X)_+ +(b-Z)_+ +(c-e)_+.
+}
+$
+
+Hence $e(Q)\ge |M|+e(Q-M)\ge5+J_{\rm can}(n,m')=J_{\rm can}(n,m)-P_{\mathrm B}$.
+
+**For $f>1$**, colour and delete a five-or-more-edge matching RED, as in Theorem B, to obtain a smaller four-by-three JOINT host with all four red sizes decremented by one. Repeat until the final red arm becomes one. This takes $f-1$ steps, subtracting exactly five from the canonical joint tail at each step. The final red profile is $(A,B,C,1)$ with the **same** $(d,e,1)$ blue list, to which the dual base proof just established applies. Since $P_{\mathrm B}$ depends only on $A,B,C,d,e$, it is unchanged during this red decrement sequence. Summing the distinct edges removed proves the exact claimed bound for arbitrary $f$. QED.
+
+### The three-way coupled deficit
+
+Retain $P_{\mathrm R}=P$ from Theorem B and the switching surplus $\sigma$ from Section 4. For $e\ge2$ define
+
+$
+\boxed{
+\Delta_{\rm joint}=\min(P_{\mathrm R},P_{\mathrm B},\sigma).
+}
+$
+
+For $e=1$ omit the blue reduction and define $\Delta_{\rm joint}=\min(P_{\mathrm R},\sigma)$.
+
+The sharpest combined lower bound established by these three independent methods is now
+
+$
+\boxed{
+J_{\rm can}(n,m)-\Delta_{\rm joint}
+\ \le\ \mathcal J(n,m)\ \le\ J_{\rm can}(n,m).
+}
+$
+
+Thus if **ANY** of the explicitly computable quantities $P_{\mathrm R}$, $P_{\mathrm B}$ (when legal), or $\sigma$ vanishes, we have proved the full JOINT equality for arbitrary graph hosts. In the declared exact 14,520-parameter base grid, this additional BLUE reduction resolves **838** profiles that survived the previous RED matching and individual-residual bounds; **458** base profiles remain open under all three routes. These counts are FINITE arithmetic classification within the declared grid, not a claim about all integer parameters.
+
+### A second genuinely heterogeneous family with unbounded switching surplus, closed by BLUE matching
+
+For every $h\ge1$, take
+
+$
+\widetilde n_h=(4h,2h,2h,1),\qquad
+\widetilde m_h=(4h,3h,1).
+$
+
+The original antidiagonal weights are
+
+$
+(8h-1,\,7h-1,\,6h-1,\,5h-1,\,3h,\,1).
+$
+
+The direct RED matching bridge loses $P_{\mathrm R}=h$ edges, and each separate residual bound also loses $\sigma=h$ edges. **Nevertheless the BLUE matching deficit is exactly zero** for every $h$:
+
+$
+P_{\mathrm B}=0.
+$
+
+Theorem C therefore establishes the full unrestricted-host JOINT value
+
+$
+\boxed{\mathcal J(\widetilde n_h,\widetilde m_h)=21h-2,}
+$
+
+although each separate residual value is only $20h-2$.
+
+The ORIGINAL canonical size is $W=29h-3$. For $h\ge2$, the protected degree-core transfer applies with $D=8h-2$, because
+
+$
+D(D+1)-2(W-1)=64h^2-82h+10>0
+\qquad (h\ge2).
+$
+
+Therefore
+
+$
+\boxed{
+\widehat r(F(4h,2h,2h,1),F(4h,3h,1))=29h-3
+\quad\text{for all }h\ge2.
+}
+$
+
+The JOINT formula is proved also for $h=1$; **the ORIGINAL $h=1$ value is not promoted by this particular transfer**. This is a second unbounded-switching, genuinely nonuniform four-versus-three family, complementary to the RED bridge family in Section 7.
+
+## 6. ORIGINAL size-Ramsey transfer, with no extra induction
 
 Write $W=W(n,m)$, $J=J_{\rm can}(n,m)$, and $D=a+d-2$. In the parameter range of Theorem B with $P=0$, the existing protected \`GENERAL_CORE_ORIGINAL_TRANSFER.md\` proves the ORIGINAL equality under any of its independent sufficient conditions. In particular, for $a,d\ge2$,
 
@@ -236,7 +388,7 @@ A convenient unrestricted parameter criterion is $a+d\ge14$, because here the or
 
 For clarity, the degree-core argument is this. A hypothetical original-arrowing host with $E\le W-1$ has every one-vertex deletion jointly arrowing the two residual relations. Sharp joint lower $e(G-v)\ge J$ therefore gives $d_G(v)\le E-J\le D$. If a red/blue partition with degree caps $(a-1,d-1)$ existed, the colouring would avoid both leading stars. The protected degree-cap splitting theorem ensures that **failure** of such a partition requires at least $D+1$ vertices of degree $D$. Handshaking forces $2E\ge D(D+1)$, contradicting $E\le W-1$ whenever $W\le D(D+1)/2$. Canonical original star host gives the upper bound. For blue leading $d=1$, the complete matching-side original formula already applies separately and no use of a positive blue degree cap is needed.
 
-## 6. A genuinely heterogeneous four-by-three infinite family with UNBOUNDED switching surplus
+## 7. A genuinely heterogeneous four-by-three infinite family with UNBOUNDED switching surplus
 
 For every integer $h\ge1$, take the original lists
 
@@ -299,7 +451,7 @@ $$
 
 This is an **unbounded, nonuniform FOUR-BY-THREE original Ramsey family** with proven switching surplus increasing linearly. It is not an all-profile theorem.
 
-## 7. Reproducibility and independent-review requirements
+## 8. Reproducibility and independent-review requirements
 
 The deterministic checker \`verify_four_by_three_matching_bridge.py\` independently computes both original and residual antidiagonal arrays in two indexing conventions; checks the EXACT positive-part deficit for every declared bounded base profile; checks the five-edge red decrement for all declared lifted profiles; validates the sharp parameter region and original core gate; tests $\sigma_h=h$ and all closed forms for a scale grid; and checks a concrete avoiding colouring of the unique matching-four factor-critical candidate $4K_3$ against the **minimal** target forests using a separate exact ordinary, vertex-disjoint star-embedding oracle. The arithmetic and explicit colouring are CHECKED only after replay of the exact committed candidate head.
 
