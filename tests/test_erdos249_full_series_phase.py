@@ -1540,3 +1540,310 @@ class FullWindowPrimeProjectionTests(unittest.TestCase):
             self.assertTrue(all(a % 1 == 0 for a in arr))
             self.assertEqual(
                 sum(1 for a in arr if a % 1 != 0), 0)
+
+
+from experiments.erdos249_full_series_phase.conditional_cook_phase import (
+    conditional_certificate as wp09f_certificate,
+    exact_conditional_replay as wp09f_replay,
+    centered_representative as wp09f_center,
+    source_integer_delta as wp09f_delta,
+)
+
+
+class ConditionalCookModularPhaseTests(unittest.TestCase):
+    """WP09-F: true source-locked Cook modulo-one residue-class deficits."""
+
+    def test_exact_conditional_constants_and_distinct_classes(self):
+        for X, h, p in ((4096, 1, 2), (8192, 2, 3),
+                        (16384, 3, 2), (32768, 6, 5)):
+            c = wp09f_certificate(X, h)
+            self.assertTrue(c["eligible"])
+            self.assertTrue(c["cook_depth_admissible"])
+            self.assertTrue(c["least_depth_absolute_eligible"])
+            self.assertEqual(c["p"], p)
+            self.assertEqual(c["Q"], 1 << c["L"])
+            self.assertGreater(c["Q"], 32*X)
+            self.assertLess(c["Q"], 96*X)
+            self.assertNotEqual(c["prime_positive_class"],
+                                c["prime_negative_class"])
+            self.assertEqual(c["source_square_energy_lower"],
+                             Fraction(X**3, 32*p**3))
+            self.assertEqual(c["cocycle_real_deficit_lower"],
+                             Fraction(X**3, 4*p**3*c["Q"]**2))
+            self.assertEqual(c["pair_original_cook_real_deficit_lower"],
+                             Fraction(X**3, 20*p**3*c["Q"]**2))
+            self.assertEqual(
+                c["exists_single_original_class_average_gap_lower"],
+                Fraction(X**2, 80*p**2*c["Q"]**2))
+            self.assertEqual(c["least_depth_cocycle_relative_gap"],
+                             Fraction(1, 73728*p*p))
+            self.assertEqual(c["least_depth_pair_block_deficit"],
+                             Fraction(X, 184320*p**3))
+            self.assertEqual(c["least_depth_exists_class_relative_gap"],
+                             Fraction(1, 737280*p*p))
+            self.assertFalse(c["cook_full_global_tenth_saving_proved"])
+            self.assertEqual(c["original_irrationality"], "OPEN")
+
+    def test_both_signs_genuine_full_cook_integer_replay(self):
+        for X, h, p in ((4096, 1, 2), (8192, 2, 3), (32768, 6, 5)):
+            c = wp09f_replay(X, h)
+            self.assertEqual(c["exact_integer_replay"], "PASS")
+            self.assertEqual(c["p"], p)
+            self.assertEqual(len(c["reports"]), 2)
+            self.assertEqual(
+                set(row["sign"] for row in c["reports"]),
+                {"positive", "negative"})
+            for row in c["reports"]:
+                sg = 1 if row["sign"] == "positive" else -1
+                self.assertGreaterEqual(
+                    2*p*p*sg*row["full_signed_delta_sum"], X**2)
+                self.assertGreaterEqual(
+                    4*p*p*sg*row["source_signed_delta_sum"], X**2)
+                self.assertGreaterEqual(
+                    32*p**3*row["source_delta_squared"], X**3)
+                self.assertGreaterEqual(
+                    5*row["pair_centered_residue_squared"],
+                    row["source_delta_squared"])
+                self.assertGreaterEqual(
+                    160*p**3*row["pair_centered_residue_squared"], X**3)
+                self.assertTrue(row["exact_cocycle_and_phase_transfer_pass"])
+            self.assertTrue(c["phase_representatives_all_centered"])
+
+    def test_exact_prime_residue_class_source_oracle(self):
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        for X, h in ((4096, 1), (8192, 2), (32768, 6)):
+            c = wp09f_certificate(X, h)
+            p, s = c["p"], c["s"]
+            phi = totients(2*X+s+h+3)
+            for sign, r in ((1, c["prime_positive_class"]),
+                            (-1, c["prime_negative_class"])):
+                a = [N for N in range(X, 2*X) if N % p == r]
+                d = [wp09f_delta(phi, N, h, s) for N in a]
+                self.assertGreaterEqual(
+                    2*p*p*sign*sum(d), X**2)
+                self.assertGreaterEqual(
+                    4*p*p*sign*sum(d[:len(d)-(a[-1] == 2*X-1)]),
+                    X**2)
+
+    def test_centered_representative_and_wrap_hostiles(self):
+        Q = 256
+        self.assertEqual(
+            [wp09f_center(v, Q) for v in
+             (-2*Q, -Q//2, -1, 0, 1, Q//2-1, Q//2, Q, Q+1)],
+            [0, -128, -1, 0, 1, 127, -128, 0, 1])
+        for D, mod in ((4, 0), (4, 3), (3.5, 256), (True, 256)):
+            with self.assertRaises(ValueError):
+                wp09f_center(D, mod)
+
+    def test_true_cook_cocycle_plus_phase_deficits_numerically(self):
+        # Numerical trig is a *diagnostic*; proof tests above use integers.
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+            cook_numerators_rolling,
+        )
+        from math import sin, pi
+        X, h = 4096, 1
+        c = wp09f_certificate(X, h)
+        Q, p, s, L = c["Q"], c["p"], c["s"], c["L"]
+        phi = totients(2*X+s+h+3)
+        Ds = cook_numerators_rolling(phi, X, h, L)
+        centers = [wp09f_center(d, Q) for d in Ds]
+        for r in (c["prime_positive_class"], c["prime_negative_class"]):
+            S = [i for i in range(X-1) if (X+i) % p == r]
+            T = [i for i in range(X) if (X+i) % p in {r, (r+1)%p}]
+            real_cocycle_deficit = sum(
+                2*sin(pi*wp09f_delta(phi,X+i,h,s)/Q)**2 for i in S)
+            real_pair_deficit = sum(
+                2*sin(pi*centers[i]/Q)**2 for i in T)
+            self.assertGreaterEqual(
+                real_cocycle_deficit + 1e-11,
+                float(c["cocycle_real_deficit_lower"]))
+            self.assertGreaterEqual(
+                real_pair_deficit + 1e-11,
+                float(c["pair_original_cook_real_deficit_lower"]))
+            one_classes = [sum(2*sin(pi*centers[i]/Q)**2
+                               for i in range(X) if (X+i)%p==a)
+                           for a in (r,(r+1)%p)]
+            self.assertAlmostEqual(sum(one_classes),real_pair_deficit,places=7)
+            self.assertGreaterEqual(max(one_classes),
+                                    real_pair_deficit/2-1e-10)
+
+    def test_nonminimal_depth_has_only_scale_dependent_bound(self):
+        X, h = 8192, 2
+        minimum = wp09f_certificate(X, h)
+        c = wp09f_certificate(X, h, minimum["L"]+3)
+        self.assertTrue(c["eligible"])
+        self.assertFalse(c["least_depth_absolute_eligible"])
+        self.assertIsNone(c["least_depth_pair_block_deficit"])
+        self.assertGreater(c["pair_original_cook_real_deficit_lower"], 0)
+        replay = wp09f_replay(X, h, minimum["L"]+3)
+        self.assertEqual(replay["exact_integer_replay"], "PASS")
+
+    def test_ineligible_and_invalid_prime_fail_closed(self):
+        for X,h in ((64,1),(128,2),(512,6)):
+            c = wp09f_certificate(X,h)
+            self.assertFalse(c["eligible"])
+            self.assertIsNone(c["cocycle_real_deficit_lower"])
+            self.assertIsNone(c["exists_single_original_class_average_gap_lower"])
+            with self.assertRaises(ValueError):
+                wp09f_replay(X,h)
+        for p in (2,3,4,9):
+            with self.assertRaises(ValueError):
+                wp09f_certificate(8192,6,p=p)
+        self.assertFalse(wp09f_certificate(8192,2,L=1)["eligible"])
+        with self.assertRaises(ValueError):
+            wp09f_certificate(0,1)
+        with self.assertRaises(ValueError):
+            wp09f_replay(4096,1,max_X=512)
+
+    def test_unwrapped_winding_falsification_and_cocycle_diagnosis(self):
+        # Generic model theta_N=N: huge unwrapped energy but phase=1.
+        # Its modulo-Q one-step forcing must be identically 0 and so
+        # cannot satisfy WP09-F's fixed-prime signed source lower bound.
+        for X, Q in ((64,4096),(128,8192)):
+            D = [N*Q for N in range(X,2*X)]
+            self.assertGreaterEqual(
+                sum(Fraction(d*d, Q*Q) for d in D), X**3)
+            self.assertTrue(all(wp09f_center(d,Q)==0 for d in D))
+            self.assertTrue(all(
+                (D[i+1]-2*D[i]) % Q == 0
+                for i in range(X-1)))
+            self.assertFalse(any(
+                wp09f_center(D[i],Q) != 0 for i in range(X)))
+
+
+from experiments.erdos249_full_series_phase.two_prime_phase_discriminator import (
+    adversarial_rational_comparator as wp09g_a,
+    exact_comparator_series as wp09g_exact_series,
+    two_prime_certificate as wp09g_certificate,
+    rational_hostile_replay as wp09g_hostile,
+    actual_two_prime_replay as wp09g_actual,
+    two_prime_hostile_comparison as wp09g_compare,
+)
+
+
+class TwoPrimeCookPhaseDiscriminatorTests(unittest.TestCase):
+    """WP09-G: rational hostile and true 2x3 actual totient cocycle."""
+
+    def test_exact_infinite_geometric_series_is_one(self):
+        c = wp09g_exact_series()
+        self.assertEqual(c["odd"], Fraction(4,9))
+        self.assertEqual(c["even"], Fraction(5,9))
+        self.assertEqual(c["total"], Fraction(1))
+        for M in (32,64,128):
+            prefix = sum(
+                (Fraction(wp09g_a(n),1<<n) for n in range(1,M+1)),
+                Fraction())
+            self.assertLessEqual(prefix,1)
+            # Exact geometric tail bound: sum_(n>M) n/2^n=(M+2)/2^M.
+            self.assertLessEqual(Fraction(1)-prefix,Fraction(M+2,1<<M))
+
+    def test_comparator_even_parity_and_linear_envelope(self):
+        vals = [wp09g_a(n) for n in range(1,8193)]
+        self.assertTrue(all(0<=v<=n and v%2==0
+                            for n,v in enumerate(vals,start=1)))
+        self.assertEqual(
+            [wp09g_a(n) for n in range(1,17)],
+            [0,2,2,0,4,2,6,6,8,0,10,2,12,6,14,0])
+        for n in range(32,200):
+            d=wp09g_a(n+1)-wp09g_a(n)
+            self.assertGreaterEqual((1 if n%2==0 else -1)*d,n-7)
+        for n in (0,-1,True,1.5):
+            with self.assertRaises(ValueError):
+                wp09g_a(n)
+
+    def test_rational_hostile_strong_wp09f_source_and_all_phases(self):
+        for X in (128,4096,16384):
+            z=wp09g_hostile(X)
+            self.assertEqual(z["binary_sum_exact"],1)
+            self.assertEqual(z["every_phase_within_one_sixteenth"],
+                             "PROVED_EXACT_INTEGER_TAIL")
+            self.assertGreater(z["observed_real_average_diagnostic"],.9)
+            self.assertEqual(z["cook_tenth_saving_for_comparator"],
+                             "FAILS_AT_EVERY_ADMISSIBLE_BLOCK")
+            for row in z["source_signed"]:
+                sign=row["sign"]
+                self.assertGreaterEqual(
+                    8*sign*row["full_source_signed_sum"],X*X)
+                self.assertGreaterEqual(
+                    16*sign*row["truncated_source_signed_sum"],X*X)
+                self.assertGreaterEqual(
+                    256*row["source_square_energy"],X**3)
+
+    def test_rational_hostile_exact_multistep_cocycle(self):
+        from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+            cook_minimal_depth,
+        )
+        X,h=192,1
+        L=wp09g_hostile(X)["L"]
+        Q=1<<L
+        ds = lambda n: wp09g_a(n+1)-wp09g_a(n)
+        values=[
+            sum((Q>>j)*ds(N+j) for j in range(1,L+1))
+            for N in range(X,2*X)
+        ]
+        for k in (1,2,3,5,10):
+            for i in range(X-k):
+                N=X+i
+                f=sum((1<<(k-1-t))*ds(N+L+1+t) for t in range(k))
+                self.assertEqual((values[i+k]-(1<<k)*values[i]-f)%Q,0)
+
+    def test_actual_two_prime_cofinal_integer_gate(self):
+        for X in (32768,65536,131072):
+            a=wp09g_certificate(X)
+            self.assertTrue(a["eligible"])
+            self.assertEqual(a["Q"],2**a["L"])
+            self.assertGreaterEqual(a["Q"],64*X)
+            self.assertLess(a["Q"],256*X)
+            self.assertEqual(a["L"],a["cook_minimum_depth"]+1)
+            self.assertEqual(a["full_source_two_prime_contrast_lower"],
+                             Fraction(X*X,32))
+            self.assertEqual(a["truncated_source_two_prime_contrast_lower"],
+                             Fraction(X*X,64))
+            self.assertEqual(
+                a["imag_cocycle_contrast_lower_coefficient_of_pi"],
+                Fraction(X*X,64*a["Q"]))
+            self.assertEqual(a["cook_tenth_saving"],"OPEN")
+
+    def test_actual_phi_exact_twoprime_source_and_cocycle(self):
+        for X in (32768,65536):
+            a=wp09g_actual(X)
+            self.assertEqual(a["finite_integer_two_prime_contrast"],"PASS")
+            self.assertEqual(a["actual_cook_exact_modular_recurrence"],"PASS")
+            self.assertGreaterEqual(
+                32*a["full_source_contrast"],X*X)
+            self.assertGreaterEqual(
+                64*a["truncated_source_contrast"],X*X)
+            from math import pi
+            self.assertGreaterEqual(
+                a["imag_cocycle_contrast_diagnostic"]+1e-8,
+                pi*float(a["imag_cocycle_contrast_lower_coefficient_of_pi"]))
+
+    def test_genuine_2x3_signature_rejects_parity_rational_model(self):
+        a=wp09g_compare(32768)
+        self.assertGreaterEqual(a["full_source_contrast"],32768**2//32)
+        self.assertLessEqual(
+            abs(a["comparator_full_source_contrast"]),8*32768)
+        self.assertLess(
+            abs(a["comparator_imag_cocycle_contrast_diagnostic"]),3)
+        self.assertGreater(
+            a["imag_cocycle_contrast_diagnostic"],
+            10*abs(a["comparator_imag_cocycle_contrast_diagnostic"]))
+
+    def test_source_gates_and_invalids_fail_closed(self):
+        for X in (64,512,4096):
+            c=wp09g_certificate(X)
+            self.assertFalse(c["eligible"])
+            self.assertIsNone(c["truncated_source_two_prime_contrast_lower"])
+            self.assertIsNone(c["imag_cocycle_contrast_lower_coefficient_of_pi"])
+            with self.assertRaises(ValueError):
+                wp09g_actual(X)
+        with self.assertRaises(ValueError):
+            wp09g_certificate(0)
+        self.assertFalse(wp09g_certificate(32768,L=1)["eligible"])
+        with self.assertRaises(ValueError):
+            wp09g_hostile(4)
+        with self.assertRaises(ValueError):
+            wp09g_hostile(128,max_X=64)
+        with self.assertRaises(ValueError):
+            wp09g_actual(32768,max_X=1000)
