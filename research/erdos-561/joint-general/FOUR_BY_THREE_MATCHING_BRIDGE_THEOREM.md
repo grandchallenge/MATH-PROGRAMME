@@ -191,34 +191,34 @@ Adding $|M|\ge5$ yields the asserted lower bound. Induction closes for every $f\
 
 For ANY positive ordered four-star list $n$ and three-star list $m$, define the two separately known exact original size-Ramsey values
 
-$
+$$
 S_1=\widehat r(F(n_2,n_3,n_4),F(m))
      =\sum_k w_k(n_{2:},m),
-$
+$$
 
-$
+$$
 S_2=\widehat r(F(n),F(m_2,m_3))
      =\sum_k w_k(n,m_{2:}).
-$
+$$
 
 Here $S_1$ is the **complete source-reconstructed three-by-three ORIGINAL theorem**, while $S_2$ is the **pinned published two-component size-Ramsey theorem**, with the two-component forest on the BLUE side and colour symmetry. Both are unrestricted-host results.
 
 The exact source-proved antidiagonal switching identity says
 
-$
+$$
 \sigma(n,m)=J_{\rm can}(n,m)-\max(S_1,S_2)\ge0.
-$
+$$
 
 Any joint residual graph arrows both separate targets, so $e(Q)\ge\max(S_1,S_2)=J_{\rm can}-\sigma$. Thus the JOINT residual is automatically **exact** for EVERY four-by-three profile with $\sigma=0$, even where the matching-deletion deficit $P$ above is positive.
 
 For the profile domain of Theorem B, combining this independent bound with the five-edge matching transfer yields the stronger **coupled-deficit theorem**
 
-$
+$$
 \boxed{
 J_{\rm can}(n,m)-\min\{P(n,m),\sigma(n,m)\}
 \ \le\ \mathcal J(n,m)\ \le\ J_{\rm can}(n,m).
 }
-$
+$$
 
 Hence **either** $P=0$ **or** $\sigma=0$ suffices for sharp joint equality. Only parameters with BOTH $P>0$ and $\sigma>0$ remain unresolved by the two mechanisms. These are explicit, computable integer inequalities, not a vague claim of a missing proof. They also preserve the sharp original-transfer conclusions wherever the actual joint minimum is established.
 
