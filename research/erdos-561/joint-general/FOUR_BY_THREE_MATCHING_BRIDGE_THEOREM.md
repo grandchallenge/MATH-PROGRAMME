@@ -187,7 +187,42 @@ Adding $|M|\ge5$ yields the asserted lower bound. Induction closes for every $f\
 
 **Important distinction.** Where $P>0$, we have proved the **quantified lower bound** $J_{\rm can}-P$, NOT equality with the canonical joint minimum. We do not silently discard this deficit or assert the unrestricted all-profile joint conjecture.
 
-## 4. ORIGINAL size-Ramsey transfer, with no extra induction
+## 4. Complementary exact regime and the precise remaining coupled deficit
+
+For ANY positive ordered four-star list $n$ and three-star list $m$, define the two separately known exact original size-Ramsey values
+
+$
+S_1=\widehat r(F(n_2,n_3,n_4),F(m))
+     =\sum_k w_k(n_{2:},m),
+$
+
+$
+S_2=\widehat r(F(n),F(m_2,m_3))
+     =\sum_k w_k(n,m_{2:}).
+$
+
+Here $S_1$ is the **complete source-reconstructed three-by-three ORIGINAL theorem**, while $S_2$ is the **pinned published two-component size-Ramsey theorem**, with the two-component forest on the BLUE side and colour symmetry. Both are unrestricted-host results.
+
+The exact source-proved antidiagonal switching identity says
+
+$
+\sigma(n,m)=J_{\rm can}(n,m)-\max(S_1,S_2)\ge0.
+$
+
+Any joint residual graph arrows both separate targets, so $e(Q)\ge\max(S_1,S_2)=J_{\rm can}-\sigma$. Thus the JOINT residual is automatically **exact** for EVERY four-by-three profile with $\sigma=0$, even where the matching-deletion deficit $P$ above is positive.
+
+For the profile domain of Theorem B, combining this independent bound with the five-edge matching transfer yields the stronger **coupled-deficit theorem**
+
+$
+\boxed{
+J_{\rm can}(n,m)-\min\{P(n,m),\sigma(n,m)\}
+\ \le\ \mathcal J(n,m)\ \le\ J_{\rm can}(n,m).
+}
+$
+
+Hence **either** $P=0$ **or** $\sigma=0$ suffices for sharp joint equality. Only parameters with BOTH $P>0$ and $\sigma>0$ remain unresolved by the two mechanisms. These are explicit, computable integer inequalities, not a vague claim of a missing proof. They also preserve the sharp original-transfer conclusions wherever the actual joint minimum is established.
+
+## 5. ORIGINAL size-Ramsey transfer, with no extra induction
 
 Write $W=W(n,m)$, $J=J_{\rm can}(n,m)$, and $D=a+d-2$. In the parameter range of Theorem B with $P=0$, the existing protected \`GENERAL_CORE_ORIGINAL_TRANSFER.md\` proves the ORIGINAL equality under any of its independent sufficient conditions. In particular, for $a,d\ge2$,
 
@@ -201,7 +236,7 @@ A convenient unrestricted parameter criterion is $a+d\ge14$, because here the or
 
 For clarity, the degree-core argument is this. A hypothetical original-arrowing host with $E\le W-1$ has every one-vertex deletion jointly arrowing the two residual relations. Sharp joint lower $e(G-v)\ge J$ therefore gives $d_G(v)\le E-J\le D$. If a red/blue partition with degree caps $(a-1,d-1)$ existed, the colouring would avoid both leading stars. The protected degree-cap splitting theorem ensures that **failure** of such a partition requires at least $D+1$ vertices of degree $D$. Handshaking forces $2E\ge D(D+1)$, contradicting $E\le W-1$ whenever $W\le D(D+1)/2$. Canonical original star host gives the upper bound. For blue leading $d=1$, the complete matching-side original formula already applies separately and no use of a positive blue degree cap is needed.
 
-## 5. A genuinely heterogeneous four-by-three infinite family with UNBOUNDED switching surplus
+## 6. A genuinely heterogeneous four-by-three infinite family with UNBOUNDED switching surplus
 
 For every integer $h\ge1$, take the original lists
 
@@ -264,7 +299,7 @@ $$
 
 This is an **unbounded, nonuniform FOUR-BY-THREE original Ramsey family** with proven switching surplus increasing linearly. It is not an all-profile theorem.
 
-## 6. Reproducibility and independent-review requirements
+## 7. Reproducibility and independent-review requirements
 
 The deterministic checker \`verify_four_by_three_matching_bridge.py\` independently computes both original and residual antidiagonal arrays in two indexing conventions; checks the EXACT positive-part deficit for every declared bounded base profile; checks the five-edge red decrement for all declared lifted profiles; validates the sharp parameter region and original core gate; tests $\sigma_h=h$ and all closed forms for a scale grid; and checks a concrete avoiding colouring of the unique matching-four factor-critical candidate $4K_3$ against the **minimal** target forests using a separate exact ordinary, vertex-disjoint star-embedding oracle. The arithmetic and explicit colouring are CHECKED only after replay of the exact committed candidate head.
 
