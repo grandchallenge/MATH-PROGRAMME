@@ -1,0 +1,231 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-22T11:00:46Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-22T11:06:01Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+    "exact_head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+    "pr_number": 3633,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "research(erdos561): heterogeneous 4\u00d73 matching bridge with unbounded switching surplus"
+  },
+  "integration": {
+    "merge_commit_sha": "ecbd18cb060dba1dcf8bea530d2e7eb621ad4889",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 9,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID 0407:B1165:9EBB4B:201B0D5:6B02CCAE and timestamp 2026-11-22 11:06:22 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 137187145527,
+          "conclusion": "success",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187171172,
+          "conclusion": "success",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187205076,
+          "conclusion": "skipped",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187204570,
+          "conclusion": "skipped",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187234145,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / administrative",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234099,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / campaigns",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234130,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / cmdg",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234143,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / contracts",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234107,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / core",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234082,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / docs",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234096,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / fixtures",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234122,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / oz",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187234101,
+          "conclusion": null,
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Policy shard / repository-regression",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187171306,
+          "conclusion": "success",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187137936,
+          "conclusion": "success",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187145714,
+          "conclusion": "success",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187139079,
+          "conclusion": "skipped",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187145748,
+          "conclusion": "success",
+          "head_sha": "6d295b06e303979a70f0c7ce5bfea986a1bd605e",
+          "name": "security / action-policy",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-22T11:06:20Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "c419c1a831bc404d01bbb3f22cab8973dd830b0f417a244b012293fc2dbe3edb"
+  },
+  "report_id": "PRVSR-LIVE-PR3633-6d295b06e303-20261122110620",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification"
+    ]
+  }
+}
