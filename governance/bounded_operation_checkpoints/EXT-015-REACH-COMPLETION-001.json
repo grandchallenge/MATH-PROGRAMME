@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP269",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP270",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,39 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed whole-stage Gaussian lift and original R3 integration dependency map",
+  "phase": "Uniform Wick lift and independent two-slot family recovery attempt",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "dedb9534247758611acc216c1cd7cef4da329c17",
-    "candidate_head_sha": "97db8f1b73aea5e0a6c4e755e16b50aff336a9a1",
+    "protected_base_sha": "aa3ea5cddbb12f3525bac2711ae19e0be7133f96",
+    "candidate_head_sha": "aa3ea5cddbb12f3525bac2711ae19e0be7133f96",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-uniform-gaussian-uc034-review-20261121",
+    "branch": "research/reach-wick-uc040-input-20261122",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "readback-gaussian-stage-and-test-incident-scalar",
-      "description": "Complete native protected admission and exact source readback of UC034–039 and reconcile integration and parent tracker records. Proceed next to the fixed-stage scalar kernel theorem for a genuinely coupled incident non-Gaussian scalar, starting with the original regulated Wick factor. Require exact evaluation or proved original rapid equivalence on the whole compatible source stage, including every actual collision corner and the supplied rows. Pure incident Gaussian networks already have an exact lift. Universal 150.L, the residual cohomology, full recovery and remaining integration arrows stay open. Use the R3 dependency audit and apply its conditional verdicts only to the original support arrow unless actual transfer maps are proved."
+      "id": "construct-wick-and-two-slot-family-recovery",
+      "description": "Construct and freeze one exact whole-stage lift for the regulated incident Wick propagator, with every differentiated cutoff and the original rapid relation. Review it distinctly before extending the incident factors. In parallel attempt actual local two-slot family recovery (126.14) through whole-source witnesses or give the precise unresolved inference or a genuine obstruction. Preserve the original typed R3 and M5 gates."
     }
   ],
   "next_action": {
-    "id": "readback-gaussian-stage-and-test-incident-scalar",
-    "description": "Complete native protected admission and exact source readback of UC034–039 and reconcile integration and parent tracker records. Proceed next to the fixed-stage scalar kernel theorem for a genuinely coupled incident non-Gaussian scalar, starting with the original regulated Wick factor. Require exact evaluation or proved original rapid equivalence on the whole compatible source stage, including every actual collision corner and the supplied rows. Pure incident Gaussian networks already have an exact lift. Universal 150.L, the residual cohomology, full recovery and remaining integration arrows stay open. Use the R3 dependency audit and apply its conditional verdicts only to the original support arrow unless actual transfer maps are proved.",
+    "id": "construct-wick-and-two-slot-family-recovery",
+    "description": "Construct and freeze one exact whole-stage lift for the regulated incident Wick propagator, with every differentiated cutoff and the original rapid relation. Review it distinctly before extending the incident factors. In parallel attempt actual local two-slot family recovery (126.14) through whole-source witnesses or give the precise unresolved inference or a genuine obstruction. Preserve the original typed R3 and M5 gates.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/HIDDEN_GAUSSIAN_GREEN_LIFT_UC036.md",
-      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md",
-      "research/condensed-qft/EXT-015/UNIFORM_GAUSSIAN_ACCEPTANCE_UC039.md"
+      "research/condensed-qft/EXT-015/UNIFORM_WICK_GREEN_LIFT_UC040.md",
+      "research/condensed-qft/EXT-015/TWO_SLOT_FAMILY_RECOVERY_UC043.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "artifact",
+        "identity": "aa3ea5cddbb12f3525bac2711ae19e0be7133f96",
+        "status": "Protected UC034–039 native readback and tracker reconciliation verified. The intervening Erdős and bounded-coefficient CMDG merges did not modify REACH sources or governance."
+      },
       {
         "kind": "review",
         "identity": "97db8f1b73aea5e0a6c4e755e16b50aff336a9a1 UC034–039",
@@ -2103,24 +2107,18 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedUniformGaussianAndR3Audit",
-    "result": "Frozen reviewed results prepared for native admission",
+    "action": "BindUniformWickAndFamilyRecovery",
+    "result": "User-approved bounded next attempts bound before durable construction",
     "evidence_refs": [
-      "research/reach-uniform-gaussian-uc034-review-20261121",
-      "research/reach-uniform-gaussian-uc037-corrected-20261121",
-      "research/condensed-qft/EXT-015/UNIFORM_GAUSSIAN_GREEN_LIFT_UC034.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_UNIFORM_GAUSSIAN_UC035.md",
-      "research/condensed-qft/EXT-015/HIDDEN_GAUSSIAN_GREEN_LIFT_UC036.md",
-      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_HIDDEN_AND_R3_UC038.md",
-      "research/condensed-qft/EXT-015/UNIFORM_GAUSSIAN_ACCEPTANCE_UC039.md"
+      "research/reach-wick-uc040-input-20261122",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3629"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-21T23:50:38.189784+00:00"
+    "observed_at": "2026-11-22T11:19:41.455739+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2360,9 +2358,11 @@
       "research/reach-uniform-gaussian-uc037-corrected-20261121",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_UNIFORM_GAUSSIAN_UC035.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_HIDDEN_AND_R3_UC038.md",
-      "research/condensed-qft/EXT-015/UNIFORM_GAUSSIAN_ACCEPTANCE_UC039.md"
+      "research/condensed-qft/EXT-015/UNIFORM_GAUSSIAN_ACCEPTANCE_UC039.md",
+      "research/reach-wick-uc040-input-20261122",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3629"
     ],
-    "instructions": "Complete native protected admission and exact source readback of UC034–039 and reconcile integration and parent tracker records. Proceed next to the fixed-stage scalar kernel theorem for a genuinely coupled incident non-Gaussian scalar, starting with the original regulated Wick factor. Require exact evaluation or proved original rapid equivalence on the whole compatible source stage, including every actual collision corner and the supplied rows. Pure incident Gaussian networks already have an exact lift. Universal 150.L, the residual cohomology, full recovery and remaining integration arrows stay open. Use the R3 dependency audit and apply its conditional verdicts only to the original support arrow unless actual transfer maps are proved."
+    "instructions": "Construct and freeze one exact whole-stage lift for the regulated incident Wick propagator, with every differentiated cutoff and the original rapid relation. Review it distinctly before extending the incident factors. In parallel attempt actual local two-slot family recovery (126.14) through whole-source witnesses or give the precise unresolved inference or a genuine obstruction. Preserve the original typed R3 and M5 gates."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
