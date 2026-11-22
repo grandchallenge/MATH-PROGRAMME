@@ -1840,8 +1840,7 @@ class TwoPrimeCookPhaseDiscriminatorTests(unittest.TestCase):
                 wp09g_actual(X)
         with self.assertRaises(ValueError):
             wp09g_certificate(0)
-        with self.assertRaises(ValueError):
-            wp09g_certificate(32768,L=1)
+        self.assertFalse(wp09g_certificate(32768,L=1)["eligible"])
         with self.assertRaises(ValueError):
             wp09g_hostile(4)
         with self.assertRaises(ValueError):
