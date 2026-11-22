@@ -38,6 +38,17 @@ for a in range(2,12):
      assert len(w)==6 and sum(w[1:])==joint(n,m)
      A,B=separate(n,m)
      assert joint(n,m)>=A and joint(n,m)>=B
+     sigma=joint(n,m)-max(A,B)
+     assert sigma>=0
+     # Independent exact separate residual theorems give the sharp
+     # complementary lower Jcan-sigma.
+     combined_deficit=min(P,sigma)
+     assert 0<=combined_deficit<=P
+     assert joint(n,m)-combined_deficit==max(joint(n,m)-P,A,B)
+     ct['combined_exact_covered']+=(combined_deficit==0)
+     ct['sigma_zero']+=(sigma==0)
+     ct['positive_P_and_sigma']+=(P>0 and sigma>0)
+     ct['positive_P_sigma_zero']+=(P>0 and sigma==0)
      ct['base_all']+=1
      if P==0:
       ct['base_sharp']+=1
@@ -122,11 +133,16 @@ ct['gallai_extremal_actual_graph_witness']+=1
 
 assert ct['base_all']>10000 and ct['base_sharp']>1000
 assert ct['base_switching']>0
+assert ct['combined_exact_covered']==ct['base_all']-ct['positive_P_and_sigma']
 assert ct['unbounded_switching_scale']==150
 print('ERDOS561_4X3_BASE_EXACT_DEFICIT_CASES',ct['base_all'])
 print('ERDOS561_4X3_JOINT_SHARP_PARAMETER_CASES',ct['base_sharp'])
 print('ERDOS561_4X3_POSITIVE_SWITCHING_SHARP_CASES',ct['base_switching'])
 print('ERDOS561_4X3_QUANTIFIED_DEFICIT_NONZERO_CASES',ct['positive_deficit'])
+print('ERDOS561_4X3_COMBINED_EXACT_P_OR_SIGMA_ZERO',ct['combined_exact_covered'])
+print('ERDOS561_4X3_SIGMA_ZERO_CASES',ct['sigma_zero'])
+print('ERDOS561_4X3_POSITIVE_P_ZERO_SIGMA_NEW_CASES',ct['positive_P_sigma_zero'])
+print('ERDOS561_4X3_EXACT_REMAINING_COUPLED_P_SIGMA_POSITIVE_CASES',ct['positive_P_and_sigma'])
 print('ERDOS561_4X3_LIFTED_ALL_POSITIVE_ARM_CASES',ct['lifted_sharp'])
 print('ERDOS561_4X3_ORIGINAL_CORE_SUFFICIENT_CASES',ct['base_original_core'])
 print('ERDOS561_4X3_GALLAI_FACTORCRITICAL_MATCHING_PARTITIONS',ct['factorcritical_matching_partition_shapes'])
