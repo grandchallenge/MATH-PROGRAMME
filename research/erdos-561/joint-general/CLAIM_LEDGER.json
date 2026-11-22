@@ -1031,6 +1031,63 @@
         "research/erdos-561/joint-general/UNIFORM_ALL_COMPONENTS_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / nonuniform two-arm stars with exactly one single-edge tail, arbitrary component counts",
+      "assumptions": [
+        "original red n=(2 repeated s-1,1), s>=3, original blue m=(2 repeated t) OR (2 repeated t-1,1), t>=3",
+        "finite simple arbitrary host graphs; ordinary non-induced vertex-disjoint star-forest embeddings",
+        "published pinned Chunlin You 2026 two-component size Ramsey exact base for first residual at s=3"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3626"
+      ],
+      "promotion_condition": "New paper-level unbounded proof UNDER_REVIEW, finite complete path/cycle witnesses CHECKED. Source imports pinned two-component theorem. Full nonuniform Erdős #561 OPEN/PARTIAL; novelty not independently established and no MATHCERT.",
+      "claim_id": "ERDOS561-NONUNIFORM-UNIT-TAIL-ALL-LENGTHS-034",
+      "short_name": "Exact arbitrary-host nonuniform one-edge-tail two-edge-star families for all s,t",
+      "claim_text": "For all s,t>=3, original n=(2^(s-1),1) and blue m=(2^t), sharp JOINT J=3(s+t-3)+2 and original W=3(s+t-2)+2. If both red n=(2^(s-1),1) and blue m=(2^(t-1),1) have one-edge tails, sharp JOINT J=3(s+t-3) and original W=3(s+t-2). All claims are for arbitrary finite simple host graphs, not just disjoint-star hosts. The exact proof gives a degree-two avoiding colouring below these canonical thresholds and then inducts on s using first-residual high-degree vertex and published two-component theorem for s=3. The full problem for other arbitrary nonuniform lists remains OPEN.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "For Δ<=2, components are paths/cycles. Proper alternating colours of paths/even cycles yield no monochromatic P3; odd cycles yield exactly one red OR blue P3 centre. Under edge thresholds, if number k odd cycles <=r+u-2, distribute defects to cap the number of monochromatic P3 centres below target counts. If k=r+u-1, edge budget forces ALL triangle components with <=1 extra edge in red-tail/blue-uniform case, or all triangles with <=2 extra edges OR one C5 with no extras in both-tail case. Choose r triangles wholly red and the others blue, extra edges blue, or colour the C5 blue, to prevent the required additional disjoint K2 or enough P3. Therefore any arrowing original or first residual subcanonical graph has degree >=3. First residual at s=3 is the pinned full two-component size Ramsey theorem, giving sharp J. Delete an appropriate degree>=3 vertex in both residuals to reduce red component count; canonical J attained. Original host E<W has degree>=3 and every deletion has the proven sharp J, giving E>=W. Explicit complete graph-class oracle supports but is not an unbounded proof.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/UNIT_TAIL_TWO_STAR_ALL_LENGTHS_THEOREM.md",
+        "research/erdos-561/joint-general/verify_unit_tail_two_stars.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/UNIT_TAIL_TWO_STAR_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 / nonuniform two-arm stars with exactly one single-edge tail, arbitrary component counts",
+      "assumptions": [
+        "original red n=(2 repeated s-1,1), s>=3, original blue m=(2 repeated t) OR (2 repeated t-1,1), t>=3",
+        "finite simple arbitrary host graphs; ordinary non-induced vertex-disjoint star-forest embeddings",
+        "published pinned Chunlin You 2026 two-component size Ramsey exact base for first residual at s=3"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3626"
+      ],
+      "promotion_condition": "New paper-level unbounded proof UNDER_REVIEW, finite complete path/cycle witnesses CHECKED. Source imports pinned two-component theorem. Full nonuniform Erdős #561 OPEN/PARTIAL; novelty not independently established and no MATHCERT.",
+      "claim_id": "ERDOS561-NONUNIFORM-UNIT-TAIL-CHECK-035",
+      "short_name": "Two nonuniform all-length family algebra and actual degree-two graph avoiding colouring oracle",
+      "claim_text": "Deterministic source checker independently validates original and both residual antidiagonal maxima for 242 bounded s,t/case pairs, verifies both residual and original Ramsey upper on 24 canonical star hosts across all 82080 red-arm allocation classes, and exhausts all 3460 declared path/cycle component multisets under Lemma 3/4 bounds using a true ordinary vertex-disjoint P3/K2 graph-embedding search to confirm explicit avoiding colourings. This finite validation corroborates the unbounded analytic proof.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Standard-library verifier exhaustively enumerates path/cycle component multiset isomorphism representatives under edge limits for six (lemma, r,u) instances, builds explicit avoiding edge-colouring witnesses including triangle and five-cycle boundary cases, then tests exact vertex-disjoint non-induced P3 and extra K2 embedding by DFS. Independent antidiagonal formulas and all red-arm canonical host allocations checked, no extrapolation to arbitrary topology from finite enumeration.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_unit_tail_two_stars.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/UNIT_TAIL_TWO_STAR_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
