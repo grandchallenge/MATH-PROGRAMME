@@ -451,10 +451,167 @@ $$
 
 This is an **unbounded, nonuniform FOUR-BY-THREE original Ramsey family** with proven switching surplus increasing linearly. It is not an all-profile theorem.
 
-## 8. Reproducibility and independent-review requirements
+## 8. BLUE-minimum induction: remove the one-edge-tail restriction from the four-by-three theorem
+
+The preceding RED and BLUE matching bridges were stated with smallest blue arm equal to one. This restriction is unnecessary for the **joint-residual inequality** and all of its sharp-parameter consequences.
+
+**Theorem D (general BLUE terminal arm).** Let original red and blue profiles be
+
+$
+n=(a,b,c,f),\qquad m=(d,e,g),
+$
+
+with both lists positive and nonincreasing, $c\ge f+1$ and $d\ge e\ge g\ge1$. Define the **reduced blue list**
+
+$
+m^{\flat}=(d-g+1,e-g+1,1).
+$
+
+Form the old RED and BLUE matching deficits $P_{\mathrm R}(n,m^{\flat})$, $P_{\mathrm B}(n,m^{\flat})$ (when $e-g+1\ge2$), and the exact separate-residual switching surplus $\sigma(n,m^{\flat})$ as in Sections 4–5. Set
+
+$
+\Delta^{\flat}=
+\begin{cases}
+\min(P_{\mathrm R},P_{\mathrm B},\sigma),& e-g+1\ge2,\\
+\min(P_{\mathrm R},\sigma),& e-g+1=1.
+\end{cases}
+$
+
+Then for every finite simple **joint residual** host $Q$ for $(n,m)$,
+
+$
+\boxed{e(Q)\ge J_{\rm can}(n,m)-\Delta^{\flat}.}
+$
+
+In particular, if **any** of the reduced-profile deficits is zero, the exact full antidiagonal JOINT formula holds even when **all three blue arms are at least two**. No assumption is placed on the topology of $Q$.
+
+**Proof by induction on the smallest blue arm $g$.** The base $g=1$ is Theorems B/C together with the separate-residual lower in Sections 3–5.
+
+Assume $g\ge2$. The SECOND joint-residual arrowing relation reads
+
+$
+Q\to(F(a,b,c,f),F(e,g)).
+$
+
+Colour all edges at an arbitrary vertex $v$ blue and all others red. The blue graph has a vertex cover of size one, while the blue target has TWO vertex-disjoint positive stars and therefore a matching of size two. Consequently every $Q-v$ contains the entire red original four-star forest $F(n)$, implying $\nu(Q-v)\ge4$. If $\nu(Q)=4$, Gallai's matching-stability theorem again bounds the nonisolated vertex count by twelve. Since $c\ge f+1\ge2$, the red forest requires at least eleven distinct vertices after every nonisolated vertex deletion; exactly as in Lemma A, the only possible graph is $4K_3$, up to isolates. Colour three triangles wholly red and one wholly blue. The red support has only nine vertices, and the blue support only three; $F(e,g)$ needs at least four vertices, so this colouring avoids BOTH targets. This contradiction proves
+
+$
+\boxed{\nu(Q)\ge5\quad\text{also for every }g\ge2.}
+$
+
+Remove a maximum matching $M$ of at least five edges and colour every removed edge BLUE. For any two-colouring of $Q-M$, a blue star in a copy of either residual target uses at most one matching edge, so removing $M$ reduces each blue star size by at most one. The red targets are unchanged. Thus the two arrowing relations for $Q$ imply exactly the two residual relations for the same original red $n$ and the shortened blue list
+
+$
+m^-=(d-1,e-1,g-1).
+$
+
+All three blue arm sizes remain positive because $g\ge2$. Therefore $Q-M$ is a JOINT host for $(n,m^-)$, to which the induction hypothesis applies. Its reduced blue list is unchanged:
+
+$
+(d-1-(g-1)+1,\ e-1-(g-1)+1,\ 1)
+=m^{\flat}.
+$
+
+Hence the deficit $\Delta^{\flat}$ is the SAME at each step. Each of the five non-leading original antidiagonal weights drops by exactly one under a uniform decrement of all blue sizes, so
+
+$
+J_{\rm can}(n,m^-)=J_{\rm can}(n,m)-5.
+$
+
+It follows that
+
+$
+e(Q)\ge |M|+e(Q-M)
+\ge5+[J_{\rm can}(n,m)-5-\Delta^{\flat}]
+=J_{\rm can}(n,m)-\Delta^{\flat}.
+$
+
+Induction proves the theorem for all $g\ge1$. Canonical joint disjoint-star hosts give the matching upper bound in every zero-deficit case. QED.
+
+### New three-parameter ORIGINAL family with NO one-edge components on either side
+
+For integers $h\ge1$, $r,k\ge0$, let
+
+$
+n_{h,r}=(6h+r,4h+r,4h+r,1+r),
+\qquad
+m_{h,k}=(4h+k,3h+k,1+k).
+$
+
+Uniform RED increments of all four arms by $r$ and uniform BLUE increments of all three arms by $k$ preserve the reduced-profile penalties and the exact switching surplus $\sigma=h$. The red bridge remains sharp after red lifting by Theorem B, and Theorem D propagates sharpness through all blue lifts. The five JOINT weights each increase by $r+k$, and the six ORIGINAL weights each increase by $r+k$. Therefore, for all $h\ge1,r,k\ge0$,
+
+$
+\boxed{
+\mathcal J(n_{h,r},m_{h,k})
+=28h-2+5(r+k),\qquad
+W_{\rm can}=38h-3+6(r+k),\qquad
+\sigma=h.
+}
+$
+
+For the original size-Ramsey equality, put $x=r+k$ and $D=10h+x-2$. The exact degree-core excess is
+
+$
+\begin{aligned}
+D(D+1)-2(W_{\rm can}-1)
+&=(h-1)(100h-6)+4\\
+&\quad +(20h-15)x+x^2>0.
+\end{aligned}
+$
+
+This is strictly positive for **every** $h\ge1,r,k\ge0$. The source-locked original degree-core transfer therefore proves
+
+$
+\boxed{
+\widehat r\big(F(n_{h,r}),F(m_{h,k})\big)
+=38h-3+6(r+k)
+\quad \text{for ALL }h\ge1,r,k\ge0.
+}
+$
+
+If $r,k\ge1$, **every original star component on BOTH sides has at least two edges**. Thus this is an exact genuinely nonuniform four-versus-three family with neither forest having a one-edge terminal component and with arbitrarily large switching surplus. It is a strict structural extension of the previous one-edge-tail examples.
+
+### Dual-BLUE-switching family, also with all-positive shifts
+
+For $h\ge1,r,k\ge0$, let
+
+$
+\widetilde n_{h,r}=(4h+r,2h+r,2h+r,1+r),
+\qquad
+\widetilde m_{h,k}=(4h+k,3h+k,1+k).
+$
+
+The BLUE bridge has zero reduced deficit. The joint result and canonical original value become
+
+$
+\boxed{
+\mathcal J(\widetilde n_{h,r},\widetilde m_{h,k})
+=21h-2+5(r+k),\qquad
+\widetilde W_{\rm can}=29h-3+6(r+k),\qquad
+\sigma=h.
+}
+$
+
+Here $D=8h+r+k-2$ and $x=r+k$ give
+
+$
+D(D+1)-2(\widetilde W_{\rm can}-1)
+=64h^2-82h+10+(16h-15)x+x^2.
+$
+
+The ORIGINAL formula is therefore proved when $h\ge2$ (all $r,k\ge0$), or when $h=1$ and $r+k\ge3$. In those regimes,
+
+$
+\widehat r\big(F(\widetilde n_{h,r}),F(\widetilde m_{h,k})\big)
+=29h-3+6(r+k).
+$
+
+The original $h=1,r+k\le2$ cases are NOT claimed sharp from this degree-core argument, although the full JOINT formula is established there.
+
+## 9. Reproducibility and independent-review requirements
 
 The deterministic checker \`verify_four_by_three_matching_bridge.py\` independently computes both original and residual antidiagonal arrays in two indexing conventions; checks the EXACT positive-part deficit for every declared bounded base profile; checks the five-edge red decrement for all declared lifted profiles; validates the sharp parameter region and original core gate; tests $\sigma_h=h$ and all closed forms for a scale grid; and checks a concrete avoiding colouring of the unique matching-four factor-critical candidate $4K_3$ against the **minimal** target forests using a separate exact ordinary, vertex-disjoint star-embedding oracle. The arithmetic and explicit colouring are CHECKED only after replay of the exact committed candidate head.
 
 The all-host proof uses the **classical Gallai factor-critical matching-stability theorem**, the three-by-three JOINT paper reconstruction in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, the source-locked \`GENERAL_CORE_ORIGINAL_TRANSFER.md\`, and canonical antidiagonal star-host upper results. These dependencies and precise ordinary/non-induced semantics require mathematical review before certification. A passing CI/merging source package is NOT independent mathematical adjudication or MATHCERT.
 
-**Next remaining boundary:** for four red stars and three blue stars outside the vanishing-deficit region, the matching bridge leaves exactly $P>0$ unaccounted edges. A sharper coupled residual lemma must recover these edges or exhibit a genuine counterexample. For general $s,t\ge4$, a corresponding large-matching guarantee beyond the four-by-three geometry is also unresolved.
+**Next remaining boundary:** for four red stars and three blue stars outside the vanishing-deficit region, the matching bridge leaves exactly $P>0$ unaccounted edges. A sharper coupled residual lemma must recover these edges or exhibit a genuine counterexample. For general $s,t\ge4$, a corresponding large-matching guarantee beyond the four-by-three geometry is also unresolved. The BLUE-terminal lifting theorem above removes the unit blue-tail limitation in the four-by-three domain but not the explicit positive coupled deficits.
