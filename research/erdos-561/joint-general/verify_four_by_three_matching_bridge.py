@@ -61,6 +61,17 @@ for a in range(2,12):
      ct['sigma_zero']+=(sigma==0)
      ct['positive_P_and_sigma']+=(P>0 and sigma>0)
      ct['positive_P_sigma_zero']+=(P>0 and sigma==0)
+     # Theorem D: each uniform BLUE size shift is carried by a 5-edge BLUE
+     # matching, preserving the reduced lower-bound deficits and switching.
+     for g in (2,4):
+      lifted_blue=(d+g-1,e+g-1,g)
+      wb=diag_zero(n,lifted_blue)
+      assert wb==diag_one(n,lifted_blue)
+      assert joint(n,lifted_blue)==joint(n,m)+5*(g-1)
+      assert sum(wb)==sum(w)+6*(g-1)
+      sepLb,sepRb=separate(n,lifted_blue)
+      assert joint(n,lifted_blue)-max(sepLb,sepRb)==sigma
+      ct['blue_terminal_arm_lifts']+=1
      ct['base_all']+=1
      if P==0:
       ct['base_sharp']+=1
@@ -71,7 +82,7 @@ for a in range(2,12):
       ct['positive_deficit']+=1
      # Uniform red arm shifts raise each of the six antidiagonal weights by
      # f-1, preserving the exact base deficit and switching surplus.
-     if P==0 or Pb==0:
+     if combined_deficit==0:
       for f in (2,3,5):
        lifted=(a+f-1,b+f-1,c+f-1,f)
        wl=diag_zero(lifted,m)
@@ -109,6 +120,41 @@ for h in range(1,151):
   D=8*h-2;W=29*h-3
   assert D*(D+1)-2*(W-1)==64*h*h-82*h+10>0
  ct['dual_unbounded_switching_scale']+=1
+ # New 3-parameter h,r,k families. All original components >=2 when r,k>=1.
+ for r,k in ((0,0),(1,1),(2,3),(5,0),(0,6)):
+  x=r+k
+  nr=(6*h+r,4*h+r,4*h+r,1+r)
+  mr=(4*h+k,3*h+k,1+k)
+  wr=diag_zero(nr,mr)
+  assert wr==tuple(z+x for z in w)
+  assert wr==diag_one(nr,mr)
+  jr=joint(nr,mr)
+  assert jr==28*h-2+5*x and sum(wr)==38*h-3+6*x
+  sep1,sep2=separate(nr,mr)
+  assert sep1==sep2==27*h-2+5*x
+  assert jr-max(sep1,sep2)==h
+  Dr=10*h+x-2
+  assert Dr*(Dr+1)-2*(sum(wr)-1)==(h-1)*(100*h-6)+4+(20*h-15)*x+x*x>0
+  ct['all_positive_shift_red_bridge']+=1
+  nb=(4*h+r,2*h+r,2*h+r,1+r)
+  mb=(4*h+k,3*h+k,1+k)
+  wb=diag_zero(nb,mb)
+  assert wb==tuple(z+x for z in ww)
+  assert wb==diag_one(nb,mb)
+  jb=joint(nb,mb)
+  assert jb==21*h-2+5*x and sum(wb)==29*h-3+6*x
+  sep1,sep2=separate(nb,mb)
+  assert sep1==sep2==20*h-2+5*x
+  assert jb-max(sep1,sep2)==h
+  Db=8*h+x-2
+  gap=Db*(Db+1)-2*(sum(wb)-1)
+  assert gap==64*h*h-82*h+10+(16*h-15)*x+x*x
+  if h>=2 or x>=3:
+   assert gap>0
+   ct['all_positive_shift_blue_original_core']+=1
+  else:
+   assert h==1 and x<3
+  ct['all_positive_shift_blue_bridge_joint']+=1
 
 # Independently check the Gallai equality-profile argument:
 # if nu(Q)=4, matching-stable nontrivial factor-critical components C_i have
@@ -167,6 +213,11 @@ assert ct['blue_newly_exact']==838
 assert ct['combined_exact_covered']==14062
 assert ct['triple_positive_remaining']==458
 assert ct['combined_exact_covered']==ct['base_all']-ct['triple_positive_remaining']
+assert ct['blue_terminal_arm_lifts']==2*ct['base_all']
+assert ct['lifted_sharp']==3*ct['combined_exact_covered']
+assert ct['all_positive_shift_red_bridge']==750
+assert ct['all_positive_shift_blue_bridge_joint']==750
+assert ct['all_positive_shift_blue_original_core']==748
 assert ct['unbounded_switching_scale']==150
 print('ERDOS561_4X3_BASE_EXACT_DEFICIT_CASES',ct['base_all'])
 print('ERDOS561_4X3_JOINT_SHARP_PARAMETER_CASES',ct['base_sharp'])
@@ -185,3 +236,8 @@ print('ERDOS561_4X3_GALLAI_FACTORCRITICAL_MATCHING_PARTITIONS',ct['factorcritica
 print('ERDOS561_4X3_K3_QUADRUPLE_AVOIDING_COLOURING_PASS')
 print('ERDOS561_4X3_UNBOUNDED_RED_BRIDGE_150_SCALES_PASS')
 print('ERDOS561_4X3_UNBOUNDED_BLUE_BRIDGE_150_SCALES_PASS')
+print('ERDOS561_4X3_UNIFORM_BLUE_MINIMUM_LIFT_PARAMS',ct['blue_terminal_arm_lifts'])
+print('ERDOS561_4X3_TWO_SIDED_RED_ARM_LIFT_PARAMS',ct['lifted_sharp'])
+print('ERDOS561_4X3_ALL_POSITIVE_RED_FAMILY_3PARAM_TESTS',ct['all_positive_shift_red_bridge'])
+print('ERDOS561_4X3_ALL_POSITIVE_BLUE_FAMILY_JOINT_3PARAM_TESTS',ct['all_positive_shift_blue_bridge_joint'])
+print('ERDOS561_4X3_ALL_POSITIVE_BLUE_FAMILY_ORIGINAL_CORE_TESTS',ct['all_positive_shift_blue_original_core'])
