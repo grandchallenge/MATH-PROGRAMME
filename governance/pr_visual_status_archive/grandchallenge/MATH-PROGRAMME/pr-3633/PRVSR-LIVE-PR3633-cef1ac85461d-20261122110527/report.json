@@ -1,0 +1,168 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-22T11:00:46Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-22T11:05:06Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+    "exact_head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+    "pr_number": 3633,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "research(erdos561): heterogeneous 4\u00d73 matching bridge with unbounded switching surplus"
+  },
+  "integration": {
+    "merge_commit_sha": "2e6c3c50a414bea51315de5f3ea7d832fec409f9",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 9,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID A18D:EDE7D:A49F32:2151E35:6B02CC78 and timestamp 2026-11-22 11:05:28 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 137187003313,
+          "conclusion": "success",
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187001904,
+          "conclusion": null,
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187074829,
+          "conclusion": "skipped",
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187075295,
+          "conclusion": "skipped",
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137186998194,
+          "conclusion": "success",
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137186996526,
+          "conclusion": null,
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 137187003580,
+          "conclusion": "success",
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137186999209,
+          "conclusion": "skipped",
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137187003626,
+          "conclusion": null,
+          "head_sha": "cef1ac85461d12d962601d82b8bdda074957a379",
+          "name": "security / action-policy",
+          "status": "in_progress"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-22T11:05:27Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "d806364f2ff5d6125a0bfc4e7c9374254bcb639d6ad39b60203615eb5ef001b9"
+  },
+  "report_id": "PRVSR-LIVE-PR3633-cef1ac85461d-20261122110527",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification"
+    ]
+  }
+}
