@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP271",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP272",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,7 +15,7 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed single-edge Wick lift; general scalar kernel and independent family recovery next",
+  "phase": "General incident scalar pushforward and frozen parallel family recovery proof",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "aa3ea5cddbb12f3525bac2711ae19e0be7133f96",
@@ -28,13 +28,13 @@
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "readback-wick-and-test-general-incident-scalar",
-      "description": "Complete protected admission and exact readback of UC040–042 and reconcile the trackers. Conduct the already authorized finite hidden and mixed-edge tests through a candidate general fixed-stage kernel theorem, with distinct review. Continue the original two-slot recovery criterion or exact obstruction separately. The weight-two residual calculation requires the original full 150.L domain."
+      "id": "construct-general-incident-scalar-kernel",
+      "description": "The single Wick edge passed its bounded mathematical review. Construct one fixed-stage scalar kernel for the actual arbitrary incident scalar, including the hidden Wick, mixed Gaussian/Wick and two-Wick controls. Verify auxiliary blowups, actual b-fibration, radial Taylor descent and the original analytic quotient. Freeze and review separately from the independent two-slot family recovery result."
     }
   ],
   "next_action": {
-    "id": "readback-wick-and-test-general-incident-scalar",
-    "description": "Complete protected admission and exact readback of UC040–042 and reconcile the trackers. Conduct the already authorized finite hidden and mixed-edge tests through a candidate general fixed-stage kernel theorem, with distinct review. Continue the original two-slot recovery criterion or exact obstruction separately. The weight-two residual calculation requires the original full 150.L domain.",
+    "id": "construct-general-incident-scalar-kernel",
+    "description": "The single Wick edge passed its bounded mathematical review. Construct one fixed-stage scalar kernel for the actual arbitrary incident scalar, including the hidden Wick, mixed Gaussian/Wick and two-Wick controls. Verify auxiliary blowups, actual b-fibration, radial Taylor descent and the original analytic quotient. Freeze and review separately from the independent two-slot family recovery result.",
     "evidence_targets": [
       "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
       "research/condensed-qft/EXT-015/TWO_SLOT_FAMILY_RECOVERY_UC043.md"
@@ -2112,21 +2112,18 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedSingleWickLift",
-    "result": "Frozen reviewed result prepared for native admission",
+    "action": "BindGeneralIncidentScalarLift",
+    "result": "Single Wick theorem passed mathematical review; broader candidate authorized",
     "evidence_refs": [
-      "research/reach-wick-uc040-primary-20261122",
       "research/reach-wick-uc040-review-20261122",
-      "research/condensed-qft/EXT-015/UNIFORM_WICK_GREEN_LIFT_UC040.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_UNIFORM_WICK_UC041.md",
-      "research/condensed-qft/EXT-015/UNIFORM_WICK_ACCEPTANCE_UC042.md"
+      "research/reach-two-slot-uc043-primary-20261122"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-22T11:28:38.498256+00:00"
+    "observed_at": "2026-11-22T11:30:30.270996+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2373,9 +2370,10 @@
       "research/reach-wick-uc040-review-20261122",
       "research/condensed-qft/EXT-015/UNIFORM_WICK_GREEN_LIFT_UC040.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_UNIFORM_WICK_UC041.md",
-      "research/condensed-qft/EXT-015/UNIFORM_WICK_ACCEPTANCE_UC042.md"
+      "research/condensed-qft/EXT-015/UNIFORM_WICK_ACCEPTANCE_UC042.md",
+      "research/reach-two-slot-uc043-primary-20261122"
     ],
-    "instructions": "Complete protected admission and exact readback of UC040–042 and reconcile the trackers. Conduct the already authorized finite hidden and mixed-edge tests through a candidate general fixed-stage kernel theorem, with distinct review. Continue the original two-slot recovery criterion or exact obstruction separately. The weight-two residual calculation requires the original full 150.L domain."
+    "instructions": "The single Wick edge passed its bounded mathematical review. Construct one fixed-stage scalar kernel for the actual arbitrary incident scalar, including the hidden Wick, mixed Gaussian/Wick and two-Wick controls. Verify auxiliary blowups, actual b-fibration, radial Taylor descent and the original analytic quotient. Freeze and review separately from the independent two-slot family recovery result."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
