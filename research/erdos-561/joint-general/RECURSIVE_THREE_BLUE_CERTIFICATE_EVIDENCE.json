@@ -1,0 +1,38 @@
+{
+  "record_type": "GCL_ERDOS561_RECURSIVE_THREEBLUE_PROOF_CERTIFICATES/1",
+  "date": "2026-11-23",
+  "scope": "arbitrary finite simple hosts; RED star forest any positive sorted length>=3, BLUE exactly three positive sorted stars",
+  "paper_status": "UNDER_REVIEW",
+  "finite_status": "CHECKED_EXACT_REPLAY_PENDING_FINAL_LOCK",
+  "mathcert": "NOT_ISSUED",
+  "full_conjecture": "OPEN/PARTIAL",
+  "canonical_sha256_classification": "adef49db40fed21300afe1bccc2ef85c6f06278be2856f7ff9a3c0c132c4906b",
+  "claim_ids": [
+    47,
+    48
+  ],
+  "proof_sources": [
+    "admitted 3x3 JOINT / ORIGINAL complete source reconstructions",
+    "pinned published two-component ORIGINAL source",
+    "admitted all-s single BLUE matching joint lower under support and zero P_BLUE",
+    "admitted three sufficient ORIGINAL degree-core/even-cap transfer criteria"
+  ],
+  "certificate_rules": [
+    "base s2 two-component, s3 full 3x3",
+    "JOINT one-blue-matching P_BLUE0; second original residual exact equality; recursively certified first original residual equality",
+    "ORIGINAL after JOINT via half core; odd/odd even caps; one odd full saturated core",
+    "induction terminates on strictly decreasing red component length"
+  ],
+  "bounded_replay": {
+    "profiles": 179928,
+    "joint_3by3_base": 1008,
+    "joint_direct_blue_zero_penalty": 133949,
+    "joint_second_two_component": 13924,
+    "joint_recursive_first_original": 13958,
+    "joint_exact_proved": 162839,
+    "joint_unknown": 17089,
+    "original_exact_proved": 129885
+  },
+  "specific_proof_trace": "python3 verify_recursive_three_blue_certificates.py --red 2,2,1,1,1 --blue 8,2,1",
+  "assertion_boundary": "Proof-tree correctness depends on source-proved mathematical lemmas which remain under review, not a formally independently checked Lean theorem. UNKNOWN is not a counterexample."
+}
