@@ -54,7 +54,7 @@ for s in range(3,18):
    if s>=4 and not r and not k:
     q=tuple(z-1 for z in n[:-1]);short=A(s-1,h)
     assert tail_loss(n,m)==0 and J(n,m)==(s+1)+J(q,m)
-    assert J(q,m)-J(short,m)==(s-1)*(2*h-1)
+    assert J(q,m)-J(short,m)==s*(2*h-1)
     assert J(n,m)-J(short,m)==2*s*h+1
     for z in range(2*h):
      t=tuple(v-z for v in q)
