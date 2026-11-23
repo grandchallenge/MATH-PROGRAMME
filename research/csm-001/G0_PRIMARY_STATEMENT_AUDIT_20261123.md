@@ -44,6 +44,12 @@ The CSM-01 matrices and their partition-function scalars belong to a weighted ca
 
 Existing high-level results subsume unqualified claims that finite-state positive Markov observations admit smooth one-sided conditionals or Gibbs reconstructions. Birkhoff/Hopf projective contraction for positive matrices is also prior mathematics, not a new CSM lemma. See [positive-matrix projective contraction](https://doi.org/10.1016/j.laa.2003.11.005) as a literature entry point; verify bibliographic identity before source locking.
 
+### S07: higher-dimensional preservation already has a substantial prior theorem
+
+Christof Külske and Alex A. Opoku, [*The Posterior Metric and the Goodness of Gibbsianness for Transforms of Gibbs Measures*](https://arxiv.org/abs/0711.3764), *Electronic Journal of Probability* 13 (2008), 1307–1344, gives a two-layer conditional continuity treatment for local transformations using Dobrushin uniqueness and a posterior metric. This directly undercuts any generic claim that **uniform conditional first-layer Dobrushin uniqueness implies Gibbsianity of the observed layer** as a new GCL result. The full numbered theorem and all assumptions remain for source-lock audit; this observation is supported by its primary abstract and publisher metadata, not independent proof replay.
+
+Accordingly a higher-dimensional uniform-Dobrushin preservation statement is a **known positive-control target**, not a candidate for G2 originality. A genuinely novel route must demonstrate a stronger conclusion, weaker hypotheses, new admissible transformation class, or a quantitative bound not implied by this prior source. The negative-novelty filter must be performed before theorem promotion.
+
 ## Deliberate negative novelty verdicts
 
 - **Not novel:** Markov categories of finite stochastic matrices; operadic entropy maximization; categorical Gibbs specification and phase-invariance; non-Gibbsian decimation examples; the fact that positive one-dimensional hidden Markov images have exponentially continuous conditionals and Gibbs representations.
