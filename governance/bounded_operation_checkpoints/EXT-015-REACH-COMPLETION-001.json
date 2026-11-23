@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP281",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP283",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,36 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed actual separated mixed tensor equivalence through weight two",
+  "phase": "Reviewed collision plus spectator tensor equivalence through weight three",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "df2a66ceabc2abb368cc7aef0dfdfa86af762871",
-    "candidate_head_sha": "626de5608277984eaa0ccdf6ffb386cf58f2534f",
+    "protected_base_sha": "f250d459a2a7ff85603498d5a7b3d694c98fd692",
+    "candidate_head_sha": "4767644d06d0953f2535ed5121854a52afb0d4df",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-separated-mixed-tensor-uc061-reviewed-20261123",
+    "branch": "research/reach-collision-spectator-uc064-reviewed-20261123",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-collision-plus-spectator-tensor",
-      "description": "Test the actual separated bidegree (2,1) tensor comparison, with two slots in one interval and an independent spectator in the other. Keep the actual same-block diagonal sector from 147 and the common vacuum base, and check whether compact homotopies and whole-history source representations preserve that partial collision while respecting both supports and the original rapid relation. Prove the comparison or compute an actual obstruction. The original R3 verdict is independent subject to the transfer test of UC037."
+      "id": "test-two-separated-pairs-tensor",
+      "description": "Test the actual bidegree (2,2) relative completed tensor with two slots in each of two disjoint intervals. Use the common vacuum base and matching Wick maps. Construct the whole-source partial diagonal extraction and compact Green homotopies in one interval with the other interval retained as a pair, including simultaneous disjoint collision faces, or identify the exact obstruction. Verify the four diagonal and complementary sector combinations and the original rapid relation. The separate original R3 comparison is usable only through the transfer test of UC037."
     }
   ],
   "next_action": {
-    "id": "test-collision-plus-spectator-tensor",
-    "description": "Test the actual separated bidegree (2,1) tensor comparison, with two slots in one interval and an independent spectator in the other. Keep the actual same-block diagonal sector from 147 and the common vacuum base, and check whether compact homotopies and whole-history source representations preserve that partial collision while respecting both supports and the original rapid relation. Prove the comparison or compute an actual obstruction. The original R3 verdict is independent subject to the transfer test of UC037.",
+    "id": "test-two-separated-pairs-tensor",
+    "description": "Test the actual bidegree (2,2) relative completed tensor with two slots in each of two disjoint intervals. Use the common vacuum base and matching Wick maps. Construct the whole-source partial diagonal extraction and compact Green homotopies in one interval with the other interval retained as a pair, including simultaneous disjoint collision faces, or identify the exact obstruction. Verify the four diagonal and complementary sector combinations and the original rapid relation. The separate original R3 comparison is usable only through the transfer test of UC037.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
+      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
       "research/condensed-qft/EXT-015/WEIGHT_TWO_DIAGONAL_JET_COMPARISON_147.md",
-      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md",
-      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md"
+      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "4767644d06d0953f2535ed5121854a52afb0d4df",
+        "status": "UC065 accepts the source-controlled spectator tensor, the twelve actual bidegree (2,1) classes, and the full relative two-input comparison through weight three."
+      },
       {
         "kind": "review",
         "identity": "626de5608277984eaa0ccdf6ffb386cf58f2534f",
@@ -2139,29 +2144,32 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedSeparatedMixedTensor",
+    "action": "IntegrateReviewedCollisionSpectatorTensor",
     "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
-      "research/reach-separated-mixed-tensor-uc061-reviewed-20261123",
-      "research/reach-separated-mixed-tensor-uc061-input-20261123",
-      "research/reach-separated-mixed-tensor-uc061-primary-20261123",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3664",
+      "research/reach-collision-spectator-uc064-reviewed-20261123",
+      "research/reach-collision-spectator-uc064-input-20261123",
+      "research/reach-collision-spectator-uc064-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3665",
       "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_MIXED_TENSOR_UC062.md",
-      "research/condensed-qft/EXT-015/SEPARATED_MIXED_TENSOR_ACCEPTANCE_UC063.md"
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_SPECTATOR_TENSOR_UC065.md",
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_ACCEPTANCE_UC066.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-23T10:25:31.235717+00:00"
+    "observed_at": "2026-11-23T10:41:55.879557+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
+      "research/reach-collision-spectator-uc064-input-20261123",
+      "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
       "research/reach-separated-mixed-tensor-uc061-input-20261123",
       "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
@@ -2440,11 +2448,16 @@
       "research/reach-separated-mixed-tensor-uc061-reviewed-20261123",
       "research/reach-separated-mixed-tensor-uc061-primary-20261123",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3664",
-      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_MIXED_TENSOR_UC062.md",
-      "research/condensed-qft/EXT-015/SEPARATED_MIXED_TENSOR_ACCEPTANCE_UC063.md"
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_TENSOR_ACCEPTANCE_UC063.md",
+      "research/reach-collision-spectator-uc064-reviewed-20261123",
+      "research/reach-collision-spectator-uc064-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3665",
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_SPECTATOR_TENSOR_UC065.md",
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_ACCEPTANCE_UC066.md"
     ],
-    "instructions": "Test the actual separated bidegree (2,1) tensor comparison, with two slots in one interval and an independent spectator in the other. Keep the actual same-block diagonal sector from 147 and the common vacuum base, and check whether compact homotopies and whole-history source representations preserve that partial collision while respecting both supports and the original rapid relation. Prove the comparison or compute an actual obstruction. The original R3 verdict is independent subject to the transfer test of UC037."
+    "instructions": "Test the actual bidegree (2,2) relative completed tensor with two slots in each of two disjoint intervals. Use the common vacuum base and matching Wick maps. Construct the whole-source partial diagonal extraction and compact Green homotopies in one interval with the other interval retained as a pair, including simultaneous disjoint collision faces, or identify the exact obstruction. Verify the four diagonal and complementary sector combinations and the original rapid relation. The separate original R3 comparison is usable only through the transfer test of UC037."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
