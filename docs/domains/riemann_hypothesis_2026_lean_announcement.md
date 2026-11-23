@@ -1,6 +1,8 @@
 # The November 2026 Riemann Hypothesis announcement
 
-**A source-critical, Chaidez-style guide to the Alpöge–Claude Lean submission**
+**A source-critical guide to the Alpöge–Claude Lean submission**
+
+**Latest GCL audit (22 November 2026):** [What the independent cohomology audit establishes, and what remains open](rh_a26_audit_explained.md). The earlier announcement and external replay status below remain historical source reports, not current GCL certification.
 
 !!! warning "Status at 2026-11-20 22:05 UTC"
     **Result status:** external proof claim with substantial independently reported formal-check evidence; **not** a GCL-certified RH or GRH theorem.
@@ -253,6 +255,6 @@ The active proof-debt register is:
 - [MIT independent verification dossier](https://math.mit.edu/~drew/grh/), observed edition 20 November 2026, 22:05 UTC.
 - [Pinned third-party source mirror, commit `e50d098`](https://github.com/Deicyde/riemann-hypothesis/tree/e50d09817ad81469f737e8f637561e6ccf86c670), used for inspection, not substituted for the author's original source.
 - [Reproducible Wolfram Language companion](../assets/wolfram/rh_pedagogical_exhibits.wl): exact polynomial symmetry/positivity checks, five known zero heights, and finite von Mangoldt sums. These are pedagogical calculations, not validation of the submitted proof.
-- [GCL protected RH-WP00](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md), [RH-001 live tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), [Chaidez Pedagogical Protocol](../CHAIDEZ_PEDAGOGICAL_PROTOCOL.md), and [Claim Boundary Doctrine](../CLAIM_BOUNDARY_DOCTRINE.md).
+- [GCL protected RH-WP00](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/RH-WP00-source-normalization-equivalence-audit.md), [RH-001 live tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163), [GCL Pedagogy Standard](../GRAND_CHALLENGE_PEDAGOGY_STANDARD.md), and [Claim Boundary Doctrine](../CLAIM_BOUNDARY_DOCTRINE.md).
 
 **Editorial classification:** dated external-source analysis and pedagogical exposition. Neither this edition nor its publication constitutes the mathematical theorem, an independent GCL proof replay, or a change to the current protected RH claim state.
