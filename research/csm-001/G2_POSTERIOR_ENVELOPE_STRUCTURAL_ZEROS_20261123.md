@@ -27,7 +27,7 @@ $$
 \sum_{a\in A}r_{a,u}=r_u.
 $$
 
-Also, whenever the $j$-th coordinate of $r_u$ is zero, every corresponding numerator coordinate $r_{a,u}(j)$ is zero. On the positive support
+Also, whenever the coordinate indexed by $j$ of $r_u$ is zero, every corresponding numerator coordinate $r_{a,u}(j)$ is zero. On the positive support
 
 $$
 J_u=\{j:r_u(j)>0\},
