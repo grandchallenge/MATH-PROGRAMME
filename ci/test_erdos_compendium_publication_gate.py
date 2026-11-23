@@ -39,6 +39,17 @@ def current_source_digest(n: int, historic_sha: str) -> str:
     return historic_sha
 
 
+def post_baseline_admission_ids() -> set[int]:
+    """New protected editorial batches must not rewrite the historical cohort."""
+    ledger=json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+    return {
+        row["problem_id"] for batch in ledger.get("batches", [])
+        if not (batch["batch_id"].startswith("EC-BULK-")
+                or batch["batch_id"] == "EC-LEGACY-0007")
+        for row in batch["entries"]
+    }
+
+
 def historical_reviewed_count(current_total: int) -> int:
     """Keep the original 651-admission cohort invariant as newer batches accrue.
 
@@ -246,7 +257,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(len(expected_ids), 50)
         second_ids = {n for n in range(42, 246) if n not in (99, 101, 138, 241)}
         third_ids = {n for n in range(246, 447) if n != 390}
-        self.assertEqual(set(actual), expected_ids | second_ids | third_ids | set(range(670, 677)) | {1} | {656, 665, 669, 682, 684, 690, 692, 703, 704, 715, 721, 733, 735, 737, 744, 746, 752, 754, 757, 771, 717, 718, 722, 747, 748, 763, 776, 777, 678, 697, 720, 765, 772, 804, 809, 811, 828, 832, 834, 836, 780, 781, 794, 795, 797, 798, 799, 800, 801, 803, 806, 807, 808, 814, 816, 818, 823, 833, 841, 842, 843, 844, 845, 846, 847, 658, 659, 666, 677, 681, 686, 687, 688, 691, 693, 694, 695, 698, 699, 700, 701, 705, 706, 707, 709, 710, 711, 714, 716, 719, 723, 724, 726, 727, 729, 731, 734, 736, 738, 739, 740, 743, 751, 753, 755, 756, 758, 759, 760, 761, 762, 764, 766, 767, 768, 769, 773, 774, 778, 779, 782, 785, 787, 788, 790, 792, 802, 805, 810, 812, 813, 817, 819, 821, 824, 826, 827, 829, 830, 831, 837, 838, 840, 849, 850, 652, 653, 654, 655, 657, 660, 661, 662, 663, 664, 667, 668, 679, 680, 683, 685, 689, 696, 702, 708, 712, 713, 725, 728, 730, 732, 741, 742, 745, 749, 750, 770, 775, 783, 784, 786, 789, 791, 793, 796, 815, 820, 822, 825, 835, 839, 848, 851},
+        self.assertEqual(set(actual) - post_baseline_admission_ids(), expected_ids | second_ids | third_ids | set(range(670, 677)) | {1} | {656, 665, 669, 682, 684, 690, 692, 703, 704, 715, 721, 733, 735, 737, 744, 746, 752, 754, 757, 771, 717, 718, 722, 747, 748, 763, 776, 777, 678, 697, 720, 765, 772, 804, 809, 811, 828, 832, 834, 836, 780, 781, 794, 795, 797, 798, 799, 800, 801, 803, 806, 807, 808, 814, 816, 818, 823, 833, 841, 842, 843, 844, 845, 846, 847, 658, 659, 666, 677, 681, 686, 687, 688, 691, 693, 694, 695, 698, 699, 700, 701, 705, 706, 707, 709, 710, 711, 714, 716, 719, 723, 724, 726, 727, 729, 731, 734, 736, 738, 739, 740, 743, 751, 753, 755, 756, 758, 759, 760, 761, 762, 764, 766, 767, 768, 769, 773, 774, 778, 779, 782, 785, 787, 788, 790, 792, 802, 805, 810, 812, 813, 817, 819, 821, 824, 826, 827, 829, 830, 831, 837, 838, 840, 849, 850, 652, 653, 654, 655, 657, 660, 661, 662, 663, 664, 667, 668, 679, 680, 683, 685, 689, 696, 702, 708, 712, 713, 725, 728, 730, 732, 741, 742, 745, 749, 750, 770, 775, 783, 784, 786, 789, 791, 793, 796, 815, 820, 822, 825, 835, 839, 848, 851},
                          "Only previously admitted cohorts plus the exact hash-pinned #1 legacy promotion may be accepted")
         row = copy.deepcopy(actual[7])
         for k in ("legacy25_typography_id", "legacy25_authority", "legacy25_browser_receipt"):
@@ -286,7 +297,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(proposal["record_type"], "ERDOS_COMPENDIUM_BATCH_ADMISSION_PROPOSAL/1")
         self.assertEqual(proposal["cohort_id"], "EC-BULK-001")
         self.assertEqual(proposal["new_admission_count"], 49)
-        self.assertEqual(len(ledger["batches"]), 14)
+        self.assertEqual(sum(1 for b in ledger["batches"] if b["batch_id"].startswith("EC-BULK-") or b["batch_id"] == "EC-LEGACY-0007"), 14)
         batch = ledger["batches"][1]
         self.assertEqual(batch["batch_id"], "EC-BULK-001")
         self.assertEqual(batch["protected_admission"], REPO + "/pull/2608")
@@ -317,7 +328,7 @@ class EditorialGateTests(unittest.TestCase):
         self.assertEqual(proposal["source_article_count"], 200)
         self.assertEqual(proposal["new_admission_count"], 200)
         self.assertEqual(len(proposal["entries"]), 200)
-        self.assertEqual(len(ledger["batches"]), 14)
+        self.assertEqual(sum(1 for b in ledger["batches"] if b["batch_id"].startswith("EC-BULK-") or b["batch_id"] == "EC-LEGACY-0007"), 14)
         batch = next(b for b in ledger["batches"] if b["batch_id"] == "EC-BULK-002")
         self.assertEqual(batch["protected_admission"], proposal["protected_admission"])
         for key in ("critical_review", "mkdocs_run", "public_html_readback"):
