@@ -7,10 +7,12 @@
     "For d>=2 and P=0, original W exact whenever W<=D(D+1)/2, D=a+d-2; automatically when a+d>=14.",
     "For all h>=1, red (6h,4h,4h,1),blue(4h,3h,1) exact J=28h-2 and ORIGINAL W=38h-3, switching surplus sigma=h unbounded.",
     "DUAL BLUE five-matching transfer, e>=2, reduces 4x3 joint to sharp 4x2 joint by two-component residual bridge after colour swap. P_B=(A-max(B+e-1,C+d-1))_++(B-max(C+e-1,d))_++(C-e)_+. Exact J whenever P_R=0 OR P_B=0 OR sigma=0, otherwise lower Jcan-min(P_R,P_B,sigma).",
-    "For n=(4h,2h,2h,1),m=(4h,3h,1) exact JOINT J=21h-2 for all h>=1, sigma=h, ORIGINAL W=29h-3 for h>=2. Historical priority unassessed."
+    "For n=(4h,2h,2h,1),m=(4h,3h,1) exact JOINT J=21h-2 for all h>=1, sigma=h, ORIGINAL W=29h-3 for h>=2. Historical priority unassessed.",
+    "General BLUE terminal g>=1 induction for 4x3 c>=f+1: reduce blue stars uniformly using 5-edge BLUE matching and preserve canonical joint deficit; exact 3parameter all-positive shifts of two unbounded-switching scale families.",
+    "NEW tied-bottom-red n=(a,b,f,f),blue m=(d,e,g), A+B>=5,E>=2: joint lower Jcan-min(P_tie,sigma), P_tie=(A-max(B+E-1,D))_++(B-D)_+. Exact when zero. Third unbounded switching family n=(4h+r,h+r,1+r,1+r),m=(4h+k,2h+k,1+k) has J=16h+5(r+k), sigma=h, W=24h-1+6(r+k) sharp for h>=2 or h=1,r+k>=2."
   ],
   "unrestricted_host_proof": "Joint condition second arrow implies after deleting any vertex a full red four-star forest remains. Gallai matching stable decomposition if maximum matching4 forces <=12 nonisolated vertices and exactly 4 triangles. Colour 3 triangles red, 1 blue avoids second arrow; hence matching≥5. Remove red maximum matching to reduce joint residual from 4x3 to full established 3x3 for f1, and induct red uniform decrement when f>=2. Antidiagonal deficit exactly two positive terms. Original follows protected degree core transfer.",
-  "finite_status": "CHECKED_BY_EXACT_HEAD_REPLAY_PENDING_FINAL_SOURCE_LOCK",
+  "finite_status": "CHECKED_UNCERTIFIED_PENDING_FRESH_EXACT_HEAD_REPLAY",
   "paper_status": "UNDER_REVIEW",
   "full_conjecture": "OPEN/PARTIAL",
   "mathcert": "NOT_ISSUED",
@@ -24,6 +26,17 @@
     "factorcritical_nu4_partition_checks": 8,
     "red_bridge_scale_family_h": 150,
     "blue_bridge_scale_family_h": 150,
-    "explicit_4K3_avoiding_colouring": true
+    "explicit_4K3_avoiding_colouring": true,
+    "blue_terminal_older_parameter_lifts": 29040,
+    "tied_red_base_profiles": 4884,
+    "tied_red_blue_bridge_zero": 3160,
+    "tied_red_separate_zero": 3212,
+    "tied_red_union_sharp": 4053,
+    "tied_red_positive_switching_closed_by_blue": 841,
+    "tied_red_terminal_shifts": 43956,
+    "tied_red_original_core_eligible": 35920,
+    "third_unbounded_switching_scale_cases": 2400,
+    "third_family_original_core_eligible": 2397,
+    "actual_4K3_tied_red_avoiding_witness": true
   }
 }
