@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP278",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP279",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,36 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Actual regulator-valued derived pairing and split completed tensor test",
+  "phase": "Reviewed regulator-valued derived pairing and completed field tensor",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "4a6e513b6fa4d87c87c28c985c2149cd5cea32a3",
-    "candidate_head_sha": "4a6e513b6fa4d87c87c28c985c2149cd5cea32a3",
+    "protected_base_sha": "dcad0e113ea8f36e70ed2fc58e8bd2d38c1bd193",
+    "candidate_head_sha": "b8eb74f9c53264dc118d5d67601f618bb8fa391d",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-derived-completed-pairing-uc058-input-20261123",
+    "branch": "research/reach-derived-completed-pairing-uc058-reviewed-20261123",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "type-derived-comparison-and-completed-multiplication",
-      "description": "Type the remaining actual derived liquid-to-differentiable and completed multiplicative tensor comparisons on the source-controlled model. Track the exact scopes that use family recovery, which fails on the two-slot real parameter chart by UC055. Any extension to the broader prior sheaf needs a direct construction and its own proofs. Apply an original R3 verdict only through the morphisms and witness test in UC037."
+      "id": "test-actual-separated-one-slot-tensor",
+      "description": "Test the actual bidegree (1,1) relative completed tensor comparison for the source-controlled model on two disjoint nonempty intervals. After Wick classicalization, use the actual mixed-support two-slot complex and the scalar-relative derived tensor of its two one-slot complexes over the common vacuum base. Prove that the moment homotopies preserve the separate physical supports, whole histories and original rapid relation, or compute a surviving obstruction. The proved affine-solution tensor is the comparison target. Apply an R3 verdict only through the transfer square and witness test of UC037."
     }
   ],
   "next_action": {
-    "id": "type-derived-comparison-and-completed-multiplication",
-    "description": "Type the remaining actual derived liquid-to-differentiable and completed multiplicative tensor comparisons on the source-controlled model. Track the exact scopes that use family recovery, which fails on the two-slot real parameter chart by UC055. Any extension to the broader prior sheaf needs a direct construction and its own proofs. Apply an original R3 verdict only through the morphisms and witness test in UC037.",
+    "id": "test-actual-separated-one-slot-tensor",
+    "description": "Test the actual bidegree (1,1) relative completed tensor comparison for the source-controlled model on two disjoint nonempty intervals. After Wick classicalization, use the actual mixed-support two-slot complex and the scalar-relative derived tensor of its two one-slot complexes over the common vacuum base. Prove that the moment homotopies preserve the separate physical supports, whole histories and original rapid relation, or compute a surviving obstruction. The proved affine-solution tensor is the comparison target. Apply an R3 verdict only through the transfer square and witness test of UC037.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md",
-      "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
-      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md",
-      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_UC055.md"
+      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
+      "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
+      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
+      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "b8eb74f9c53264dc118d5d67601f618bb8fa391d",
+        "status": "UC059 accepts the actual regulator-valued derived comparison, the named completed relative tensor and its scope, and the exact weight-two diagonal fibre."
+      },
       {
         "kind": "review",
         "identity": "4127dfbd8c650ab00e96259661e3c81925126eba",
@@ -2129,17 +2134,24 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindDerivedCompletedPairingTest",
-    "result": "Bound primary construction; proof and review pending",
+    "action": "IntegrateReviewedDerivedCompletedPairing",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
-      "research/reach-derived-completed-pairing-uc058-input-20261123"
+      "research/reach-derived-completed-pairing-uc058-reviewed-20261123",
+      "research/reach-derived-completed-pairing-uc058-input-20261123",
+      "research/reach-derived-completed-pairing-uc058-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3662",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_DERIVED_COMPLETED_PAIRING_UC059.md",
+      "research/condensed-qft/EXT-015/DERIVED_COMPLETED_PAIRING_ACCEPTANCE_UC060.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-23T10:01:03.6895637Z"
+    "observed_at": "2026-11-23T10:10:04.576825+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2412,9 +2424,15 @@
       "research/reach-family-bounds-uc055-primary-20261123",
       "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_UC055.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_TWO_SLOT_UNIFORM_BOUNDS_UC056.md",
-      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_ACCEPTANCE_UC057.md"
+      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_ACCEPTANCE_UC057.md",
+      "research/reach-derived-completed-pairing-uc058-reviewed-20261123",
+      "research/reach-derived-completed-pairing-uc058-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3662",
+      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_DERIVED_COMPLETED_PAIRING_UC059.md",
+      "research/condensed-qft/EXT-015/DERIVED_COMPLETED_PAIRING_ACCEPTANCE_UC060.md"
     ],
-    "instructions": "Type the remaining actual derived liquid-to-differentiable and completed multiplicative tensor comparisons on the source-controlled model. Track the exact scopes that use family recovery, which fails on the two-slot real parameter chart by UC055. Any extension to the broader prior sheaf needs a direct construction and its own proofs. Apply an original R3 verdict only through the morphisms and witness test in UC037."
+    "instructions": "Test the actual bidegree (1,1) relative completed tensor comparison for the source-controlled model on two disjoint nonempty intervals. After Wick classicalization, use the actual mixed-support two-slot complex and the scalar-relative derived tensor of its two one-slot complexes over the common vacuum base. Prove that the moment homotopies preserve the separate physical supports, whole histories and original rapid relation, or compute a surviving obstruction. The proved affine-solution tensor is the comparison target. Apply an R3 verdict only through the transfer square and witness test of UC037."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
