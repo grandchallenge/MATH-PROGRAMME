@@ -1,6 +1,6 @@
 # The November 2026 Riemann Hypothesis announcement
 
-**A source-critical guide to the Alpöge–Claude Lean submission**
+**A guide to the Alpöge–Claude Lean submission**
 
 **Latest GCL audit (22 November 2026):** [What the independent cohomology audit establishes, and what remains open](rh_a26_audit_explained.md). The earlier announcement and external replay status below remain historical source reports, not current GCL certification.
 
