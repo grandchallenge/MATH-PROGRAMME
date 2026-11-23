@@ -25,8 +25,9 @@ def transfer_cylinder(word, p):
     row = (1-Q(p), Q(p))
     for z in word:
         matrix = matrices[z]
-        row = (sum(row[i]*matrix[i][j] for i in (0,1)) for j in (0,1))
-        row = tuple(row)
+        prior = row
+        row = tuple(sum(prior[i]*matrix[i][j] for i in (0,1))
+                    for j in (0,1))
     return sum(row)
 
 
