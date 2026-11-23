@@ -89,6 +89,19 @@ Accordingly a higher-dimensional uniform-Dobrushin preservation statement is a *
 
 The elementary [G2 support-only no-go corollary](G2_SUPPORT_ONLY_CLASSIFICATION_NO_GO_20261123.md) compares the **same** XOR-labelled support matrices at $p=1/2$ (iid Gibbs output) and $p=3/4$ (non-Gibbsian output). Therefore a Boolean-semigroup/support-only test cannot furnish a necessary-and-sufficient Gibbs characterization. This is a known-counterexample corollary and **not an original result**. Weight-sensitive posterior information is essential for any complete criterion.
 
+### S11: October 2026 sofic-measure rank theorem closes finite-order novelty
+
+Marie-Pierre Béal, Eugene Gilburg, Vincent Jugé, Jean Mairesse and Dominique Perrin, [*Sofic measures*, arXiv:2604.11212v2](https://arxiv.org/html/2604.11212v2), dated 19 October 2026. This version is materially newer than the CSM founding source register and was **read at the numbered primary statement interfaces**, not inferred from a secondary summary.
+
+- **Section 4, Theorem 4.4 (attributed to Holland):** For an invariant sofic measure in its **minimal linear representation**, the measure is Markov of order $k$ exactly when every word matrix of length $k$ has rank at most one. The minimality qualification is essential; a redundant hidden presentation can have much larger ranks.
+- **Section 5, Theorem 5.1:** If the invariant sofic measure has **any finite Markov order**, then it has order at most $\binom{n}{2}$, where $n$ is its **minimal** linear-representation dimension. This proves a finite global recognition cutoff. The paper also gives a sharpness construction, with at least three observed symbols.
+- **CSM negative novelty verdict:** A generic claim that hidden Markov processes of known dimension have decidable finite Markov order, or that the rank-one test itself is new, is **NOT ORIGINAL**. G2-WP04's rational observable-subspace cutoff and exact witness construction are proof/implementation reconstructions of this established linear-representation framework. The **finite-window reduction at a specified order** is proved internally, but no novel mathematical claim is made.
+- **Scope caveat:** Finite Markov order and Gibbsianity are not synonymous: a strictly positive finite-memory process is a finite-range Gibbs case, but an infinite-memory process may still be Gibbsian. Neither theorem gives a necessary-and-sufficient **Gibbs** classifier for all nonnegative labelled matrices.
+
+**Pinned bytes and evidence:** Exact v2 PDF [locator](https://arxiv.org/pdf/2604.11212v2), 402865 bytes, SHA-256 `ac30dc52a667075cbd0fd6ddc73021ab2cc57828ef726859b3a0e44f094ed75d`; PDF header checked in CHAD local source acquisition `GCL_CONTROL_BASH_RESULT/1 b39ec3ad0af34b36bb7c3b6116a5b2dd`; `independent_execution_attested=false`. No independent proof replay or formal theorem translation has been completed.
+
+**Next research gap:** Weight-sensitive asymptotic continuity of posterior conditionals under structural zeros **beyond all finite orders**, not mere finite-order recognition.
+
 ## Deliberate negative novelty verdicts
 
 - **Not novel:** Markov categories of finite stochastic matrices; operadic entropy maximization; categorical Gibbs specification and phase-invariance; non-Gibbsian decimation examples; the fact that positive one-dimensional hidden Markov images have exponentially continuous conditionals and Gibbs representations.
