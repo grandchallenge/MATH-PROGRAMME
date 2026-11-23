@@ -169,7 +169,7 @@ so the **canonical** switching surplus is $J_{\rm can}-\max(S_1,S_2)=h$.
 
 First set $r=k=0$. The base $s=3$ is the existing FULL three-by-three arbitrary-host JOINT theorem in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, not an unproved extension.
 
-Assume the main $s-1$ case sharp. In the $s$-case the smallest red arm is one and the penultimate red arm is $2h+1$. The third-last red arm is at least $2h+1$, and the blue arms are $(4h+1,2h+1,1)$. Consequently the exact Theorem B penalty is ZERO:
+Assume the main $s-1$ case sharp. In the case of length $s$ the smallest red arm is one and the penultimate red arm is $2h+1$. The third-last red arm is at least $2h+1$, and the blue arms are $(4h+1,2h+1,1)$. Consequently the exact Theorem B penalty is ZERO:
 
 $$
 P_s
@@ -183,7 +183,7 @@ $$
 q=(n_1-1,\ldots,n_{s-1}-1),
 $$
 
-whose final arm is $2h$. Remove another $2h-1$ RED matchings of at least $s$ edges each. Lemma A remains applicable because every intermediate red $s-1$-component forest has at least $3(s-1)-1$ vertices and the blue second residual has two positive stars. The resulting RED list is **exactly** $A^{(s-1)}_{h,0}$, and the blue list is unchanged. Thus the total number of removed edges is at least
+whose final arm is $2h$. Remove another $2h-1$ RED matchings of at least $s$ edges each. Lemma A remains applicable because every intermediate red forest of $s-1$ components has at least $3(s-1)-1$ vertices and the blue second residual has two positive stars. The resulting RED list is **exactly** $A^{(s-1)}_{h,0}$, and the blue list is unchanged. Thus the total number of removed edges is at least
 
 $$
 (s+1)+s(2h-1)=2sh+1.
@@ -248,7 +248,7 @@ D_B(D_B+1)-2W_B
  +\bigl(4Lh-2L-3\bigr)x+x^2.
 $$
 
-At $h=1,x=0$ this equals $2(L^2-3L-2)$, which is POSITIVE for $L\ge4$ (its smallest value is $4$ at $L=4$). The polynomial is increasing in $h\ge1$ and $x\ge0$ for $L\ge4$, because its $h$-derivative is at least $6L^2-4L>0$ and the coefficient of $x$ is at least $2L-3>0$. Thus the core transfer yields exact ORIGINAL for every such $L$. The case $L=2$ is the pinned TWO-component theorem.
+At $h=1,x=0$ this equals $2(L^2-3L-2)$, which is POSITIVE for $L\ge4$ (its smallest value is $4$ at $L=4$). The polynomial is increasing in $h\ge1$ and $x\ge0$ for $L\ge4$, because its derivative with respect to $h$ is at least $6L^2-4L>0$ and the coefficient of $x$ is at least $2L-3>0$. Thus the core transfer yields exact ORIGINAL for every such $L$. The case $L=2$ is the pinned TWO-component theorem.
 
 Hence **both individually required unrestricted-host residual minimum edge counts are exactly** $S_1=S_2$, rather than merely having those canonical upper bounds. Thus the **actual** coupled switching surplus is
 
