@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP283",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP285",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,36 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed collision plus spectator tensor equivalence through weight three",
+  "phase": "Reviewed simultaneous pair tensor equivalence through weight five",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "f250d459a2a7ff85603498d5a7b3d694c98fd692",
-    "candidate_head_sha": "4767644d06d0953f2535ed5121854a52afb0d4df",
+    "protected_base_sha": "d2a3ff9a224065ee754859d86ce17bb9585364ae",
+    "candidate_head_sha": "62cb783a40f64fabc9f37eebf087a0fa485ddbc4",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-collision-spectator-uc064-reviewed-20261123",
+    "branch": "research/reach-separated-pairs-uc067-reviewed-20261123",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-two-separated-pairs-tensor",
-      "description": "Test the actual bidegree (2,2) relative completed tensor with two slots in each of two disjoint intervals. Use the common vacuum base and matching Wick maps. Construct the whole-source partial diagonal extraction and compact Green homotopies in one interval with the other interval retained as a pair, including simultaneous disjoint collision faces, or identify the exact obstruction. Verify the four diagonal and complementary sector combinations and the original rapid relation. The separate original R3 comparison is usable only through the transfer test of UC037."
+      "id": "test-three-plus-three-partition-tensor",
+      "description": "Test the first uncovered mixed occupancy, (3,3) at total weight six. First verify compatible actual same-block projections for the three labels of one interval with the other interval retained. Decompose the triple into its disjoint, pair-plus-singleton and triple-block strata on complete histories, and test the normal Koszul reduction and support-controlled primitives on the first such strata. Preserve the simultaneous collision faces, common vacuum, matching Wick maps and original rapid relation. A comparison or obstruction must use the actual source quotients. Keep the original R3 transfer boundary of UC037."
     }
   ],
   "next_action": {
-    "id": "test-two-separated-pairs-tensor",
-    "description": "Test the actual bidegree (2,2) relative completed tensor with two slots in each of two disjoint intervals. Use the common vacuum base and matching Wick maps. Construct the whole-source partial diagonal extraction and compact Green homotopies in one interval with the other interval retained as a pair, including simultaneous disjoint collision faces, or identify the exact obstruction. Verify the four diagonal and complementary sector combinations and the original rapid relation. The separate original R3 comparison is usable only through the transfer test of UC037.",
+    "id": "test-three-plus-three-partition-tensor",
+    "description": "Test the first uncovered mixed occupancy, (3,3) at total weight six. First verify compatible actual same-block projections for the three labels of one interval with the other interval retained. Decompose the triple into its disjoint, pair-plus-singleton and triple-block strata on complete histories, and test the normal Koszul reduction and support-controlled primitives on the first such strata. Preserve the simultaneous collision faces, common vacuum, matching Wick maps and original rapid relation. A comparison or obstruction must use the actual source quotients. Keep the original R3 transfer boundary of UC037.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
+      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_UC067.md",
       "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
       "research/condensed-qft/EXT-015/WEIGHT_TWO_DIAGONAL_JET_COMPARISON_147.md",
-      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md"
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "62cb783a40f64fabc9f37eebf087a0fa485ddbc4",
+        "status": "UC068 accepts the actual separated two-pair tensor, the four joint groups of nine, the arbitrary-passive-arity extension and its through-weight-five corollary."
+      },
       {
         "kind": "review",
         "identity": "4767644d06d0953f2535ed5121854a52afb0d4df",
@@ -2144,29 +2149,33 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedCollisionSpectatorTensor",
+    "action": "IntegrateReviewedSeparatedPairsTensor",
     "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
-      "research/reach-collision-spectator-uc064-reviewed-20261123",
-      "research/reach-collision-spectator-uc064-input-20261123",
-      "research/reach-collision-spectator-uc064-primary-20261123",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3665",
+      "research/reach-separated-pairs-uc067-reviewed-20261123",
+      "research/reach-separated-pairs-uc067-input-20261123",
+      "research/reach-separated-pairs-uc067-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3666",
       "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_SPECTATOR_TENSOR_UC065.md",
-      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_ACCEPTANCE_UC066.md"
+      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_UC067.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_PAIRS_TENSOR_UC068.md",
+      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_ACCEPTANCE_UC069.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-23T10:41:55.879557+00:00"
+    "observed_at": "2026-11-23T10:59:10.946616+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
+      "research/reach-separated-pairs-uc067-input-20261123",
+      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
+      "research/condensed-qft/EXT-015/WEIGHT_TWO_DIAGONAL_JET_COMPARISON_147.md",
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
       "research/reach-collision-spectator-uc064-input-20261123",
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
       "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
@@ -2426,7 +2435,6 @@
       "research/reach-two-slot-uc043-reviewed-20261122",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3635",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3636",
-      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_INCIDENT_SCALAR_UC045.md",
       "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_ACCEPTANCE_UC046.md",
       "research/reach-residual-weight-two-uc047-reviewed-20261122",
@@ -2453,11 +2461,16 @@
       "research/reach-collision-spectator-uc064-reviewed-20261123",
       "research/reach-collision-spectator-uc064-primary-20261123",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3665",
-      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_SPECTATOR_TENSOR_UC065.md",
-      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_ACCEPTANCE_UC066.md"
+      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_ACCEPTANCE_UC066.md",
+      "research/reach-separated-pairs-uc067-reviewed-20261123",
+      "research/reach-separated-pairs-uc067-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3666",
+      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_UC067.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_PAIRS_TENSOR_UC068.md",
+      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_ACCEPTANCE_UC069.md"
     ],
-    "instructions": "Test the actual bidegree (2,2) relative completed tensor with two slots in each of two disjoint intervals. Use the common vacuum base and matching Wick maps. Construct the whole-source partial diagonal extraction and compact Green homotopies in one interval with the other interval retained as a pair, including simultaneous disjoint collision faces, or identify the exact obstruction. Verify the four diagonal and complementary sector combinations and the original rapid relation. The separate original R3 comparison is usable only through the transfer test of UC037."
+    "instructions": "Test the first uncovered mixed occupancy, (3,3) at total weight six. First verify compatible actual same-block projections for the three labels of one interval with the other interval retained. Decompose the triple into its disjoint, pair-plus-singleton and triple-block strata on complete histories, and test the normal Koszul reduction and support-controlled primitives on the first such strata. Preserve the simultaneous collision faces, common vacuum, matching Wick maps and original rapid relation. A comparison or obstruction must use the actual source quotients. Keep the original R3 transfer boundary of UC037."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
