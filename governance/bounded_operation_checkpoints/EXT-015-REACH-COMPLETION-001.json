@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP276",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP277",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Original retained-family bounds and rapid-correction test",
+  "phase": "Reviewed obstruction to original two-slot family recovery",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "4e628077b4def5aab7873cb3ee23a7f7940d1b2d",
-    "candidate_head_sha": "4e628077b4def5aab7873cb3ee23a7f7940d1b2d",
+    "candidate_head_sha": "4127dfbd8c650ab00e96259661e3c81925126eba",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-family-bounds-uc055-input-20261123",
+    "branch": "research/reach-family-bounds-uc055-reviewed-20261123",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-original-family-bounds-in-actual-history-quotient",
-      "description": "On the original two-slot retained-family rule, test whether uniform scalar-stage control and all mixed output jets bound every finite actual history-quotient seminorm after a finite graph refinement, or furnish an admitted example with no such bounds in any permissible history after every original rapid correction. Use the protected UC043 criterion on the real parameter axis. Independently type any proposed internal derived comparison and its completed multiplicative tensor in the actual categories. A transfer of the original R3 verdict requires the comparison square and witness control of UC037."
+      "id": "type-derived-comparison-and-completed-multiplication",
+      "description": "Type the remaining actual derived liquid-to-differentiable and completed multiplicative tensor comparisons on the source-controlled model. Track the exact scopes that use family recovery, which fails on the two-slot real parameter chart by UC055. Any extension to the broader prior sheaf needs a direct construction and its own proofs. Apply an original R3 verdict only through the morphisms and witness test in UC037."
     }
   ],
   "next_action": {
-    "id": "test-original-family-bounds-in-actual-history-quotient",
-    "description": "On the original two-slot retained-family rule, test whether uniform scalar-stage control and all mixed output jets bound every finite actual history-quotient seminorm after a finite graph refinement, or furnish an admitted example with no such bounds in any permissible history after every original rapid correction. Use the protected UC043 criterion on the real parameter axis. Independently type any proposed internal derived comparison and its completed multiplicative tensor in the actual categories. A transfer of the original R3 verdict requires the comparison square and witness control of UC037.",
+    "id": "type-derived-comparison-and-completed-multiplication",
+    "description": "Type the remaining actual derived liquid-to-differentiable and completed multiplicative tensor comparisons on the source-controlled model. Track the exact scopes that use family recovery, which fails on the two-slot real parameter chart by UC055. Any extension to the broader prior sheaf needs a direct construction and its own proofs. Apply an original R3 verdict only through the morphisms and witness test in UC037.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/TWO_SLOT_FAMILY_RECOVERY_UC043.md",
-      "research/condensed-qft/EXT-015/COMBINED_PARAMETER_LIQUID_REALIZATION_126.md",
-      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md"
+      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md",
+      "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
+      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md",
+      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_UC055.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "4127dfbd8c650ab00e96259661e3c81925126eba",
+        "status": "UC056 accepts UC055 without mathematical correction. Original two-slot real family recovery fails after every allowed uniform rapid correction."
+      },
       {
         "kind": "review",
         "identity": "88f7efb36be91dfb0aff9c53b81b94ca42af9642",
@@ -2123,18 +2129,25 @@
   },
   "blocking_boundary": null,
   "last_transition": {
+    "action": "IntegrateReviewedOriginalFamilyRecoveryObstruction",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
+      "research/reach-family-bounds-uc055-reviewed-20261123",
       "research/reach-family-bounds-uc055-input-20261123",
-      "governance/identifiability_preflights/EXT-015-REACH-UC055-ID-001.json"
-    ],
-    "action": "BindOriginalFamilyBoundsTest",
-    "result": "Bound first construction; proof and review pending"
+      "research/reach-family-bounds-uc055-primary-20261123",
+      "governance/identifiability_preflights/EXT-015-REACH-UC055-ID-001.json",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3636",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_UC055.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_TWO_SLOT_UNIFORM_BOUNDS_UC056.md",
+      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_ACCEPTANCE_UC057.md"
+    ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-23T09:38:27.4852432Z"
+    "observed_at": "2026-11-23T09:49:26.513806+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2401,9 +2414,14 @@
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3638",
       "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_RESIDUAL_WEIGHT_TWO_UC051.md",
-      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_ACCEPTANCE_UC053.md"
+      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_ACCEPTANCE_UC053.md",
+      "research/reach-family-bounds-uc055-reviewed-20261123",
+      "research/reach-family-bounds-uc055-primary-20261123",
+      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_UC055.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_TWO_SLOT_UNIFORM_BOUNDS_UC056.md",
+      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_ACCEPTANCE_UC057.md"
     ],
-    "instructions": "On the original two-slot retained-family rule, test whether uniform scalar-stage control and all mixed output jets bound every finite actual history-quotient seminorm after a finite graph refinement, or furnish an admitted example with no such bounds in any permissible history after every original rapid correction. Use the protected UC043 criterion on the real parameter axis. Independently type any proposed internal derived comparison and its completed multiplicative tensor in the actual categories. A transfer of the original R3 verdict requires the comparison square and witness control of UC037."
+    "instructions": "Type the remaining actual derived liquid-to-differentiable and completed multiplicative tensor comparisons on the source-controlled model. Track the exact scopes that use family recovery, which fails on the two-slot real parameter chart by UC055. Any extension to the broader prior sheaf needs a direct construction and its own proofs. Apply an original R3 verdict only through the morphisms and witness test in UC037."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
