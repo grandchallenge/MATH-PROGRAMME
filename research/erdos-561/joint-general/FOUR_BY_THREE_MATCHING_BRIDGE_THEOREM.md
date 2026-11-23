@@ -744,7 +744,7 @@ $
 The exact six original antidiagonal weights for $r=k=0$ are
 
 $
-(8h-1,\ 5h,\ 4h,\ 4h,\ 2h,\ 1).
+(8h-1,\ 6h-1,\ 4h,\ 4h,\ 2h,\ 1).
 $
 
 Thus for **ALL** $h\ge1,r,k\ge0$, Theorem E.2 proves
