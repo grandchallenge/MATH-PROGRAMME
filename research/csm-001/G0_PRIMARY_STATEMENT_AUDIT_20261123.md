@@ -61,6 +61,14 @@ Christof Külske and Alex A. Opoku, [*The Posterior Metric and the Goodness of G
 
 Accordingly a higher-dimensional uniform-Dobrushin preservation statement is a **known positive-control target**, not a candidate for G2 originality. A genuinely novel route must demonstrate a stronger conclusion, weaker hypotheses, new admissible transformation class, or a quantitative bound not implied by this prior source. The negative-novelty filter must be performed before theorem promotion.
 
+### S08: exact XOR overlapping-block result already established; G2 novelty verdict NEGATIVE
+
+**Jarkko Kari and Siamak Taati, [*Statistical Mechanics of Surjective Cellular Automata*, arXiv:1311.2319v2](https://arxiv.org/pdf/1311.2319v2), Section 3.3, Example 32 (XOR map), Proposition 33, Example 34.** Example 32 studies exactly the map $\Phi(x)(i)=x(i)+x(i+1)\pmod 2$ on a binary full shift and a biased Bernoulli source with $0<p<1$. It proves that for $p\ne1/2$ the output is **not a regular Gibbs measure**, using an equilibrium/physical-equivalence argument. The paper further credits van den Berg as an earlier origin of the strongly non-Gibbsian example (see its citation [51], Section 3.2). Proposition 33 generalizes the obstruction to non-injective image maps on invariant macroscopic measures.
+
+**Exact prior-art verdict:** the mathematical conclusion of [G2 XOR overlap reconstruction](G2_XOR_OVERLAP_NONQUASILOCALITY_20261123.md) is **KNOWN; NOT NOVEL**. The GCL contribution is an **independent explicit finite-cylinder proof and exact rational regression fixture**, not a new theorem. The local all-ones essential-discontinuity witness is consistent with, and more concrete than, the global regular-Gibbs obstruction in Example 32; additional comparison to van den Berg is needed before asserting originality even of this proof method.
+
+**Acquired source identity:** $\texttt{CSM-S08}$ at exact URL `https://arxiv.org/pdf/1311.2319v2`, 975832 bytes, SHA-256 `ea79ab911040536b5b3fe02a448a9e78e158a2f8f5716635470b8b1c1fdd6df6`; PDF header verified. Authenticated CHAD local acquisition receipt `GCL_CONTROL_BASH_RESULT/1 3e10f12b20014964bac259f521b6e26c`; output digest `c53517d3a1b81defe22a93939054ecf670b22dbb8ea11ed02183f8183b27177a`; `independent_execution_attested=false`.
+
 ## Deliberate negative novelty verdicts
 
 - **Not novel:** Markov categories of finite stochastic matrices; operadic entropy maximization; categorical Gibbs specification and phase-invariance; non-Gibbsian decimation examples; the fact that positive one-dimensional hidden Markov images have exponentially continuous conditionals and Gibbs representations.
