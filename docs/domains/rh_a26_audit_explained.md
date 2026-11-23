@@ -72,7 +72,7 @@ Here $a^m=1$ in $\mathbb F_p$. The first set contains possible cocycles; the sec
 
 Let $U'$ be a normal subgroup of $U$ with finite index $m$. Suppose $m$ is invertible in the coefficient ring and the usual continuous cohomology hypotheses hold.
 
-Then restriction identifies the first cohomology of $U$ with the $U/U'$-invariant part of the first cohomology of $U'$:
+Then restriction identifies the first cohomology of $U$ with the invariant part, under $U/U'$, of the first cohomology of $U'$:
 
 $$
 H^1(U,M)\;\cong\;H^1(U',M)^{U/U'}.
@@ -121,7 +121,7 @@ The associated `shaInfl` comparison makes an additional step: local vanishing on
 
 We tested local restriction kernels in exact finite cyclic groups, including both prime-to-index and excluded-index cases. The separate MATHFORGE fixture passed **7,448** prime-to-index comparisons and recorded **1,306** excluded-index failures.
 
-A stronger noncommutative test used $G=S_3$, its normal subgroup $N=A_3$, and quotient $G/N=C_2$, with six possible local subgroups and finite-field coefficients. All **72** tested local-Selmer comparisons matched. In one nontrivial coefficient setting, dropping the outside-$S$ inertia condition admitted **two additional cohomology classes** that could not have come from quotient inflation.
+A stronger noncommutative test used $G=S_3$, its normal subgroup $N=A_3$, and quotient $G/N=C_2$, with six possible local subgroups and finite-field coefficients. All **72** tested local-Selmer comparisons matched. In one nontrivial coefficient setting, dropping the inertia condition outside $S$ admitted **two additional cohomology classes** that could not have come from quotient inflation.
 
 The Python fixture performs this full noncommutative enumeration. The Wolfram companion independently demonstrates representative cyclic local kernels. Neither bounded test replaces the general argument or independently checks the original Lean kernel.
 
@@ -153,7 +153,7 @@ B_{k,\chi}
 \chi(a)B_k\!\left(\frac aN\right),
 $$
 
-where $B_k(x)$ is the $k$-th Bernoulli polynomial. This is an **exact algebraic expression**, not an approximation to a zeta zero.
+where $B_k(x)$ is the Bernoulli polynomial of order $k$. This is an **exact algebraic expression**, not an approximation to a zeta zero.
 
 ### Wolfram exhibit C · exact Bernoulli arithmetic
 
@@ -170,7 +170,7 @@ $$
 d(N,k)=N\prod_{p\le k+1,\;p\text{ prime}}p.
 $$
 
-The two computations demonstrate *how* a denominator multiplier can turn a rational generalized Bernoulli value into an integer. They do **not** establish the source's general integrality lemma, its $p$-adic valuation estimates, or the desired inequality on genuine cohomology groups.
+The two computations demonstrate *how* a denominator multiplier can turn a rational generalized Bernoulli value into an integer. They do **not** establish the source's general integrality lemma, its valuation estimates at the prime $p$, or the desired inequality on genuine cohomology groups.
 
 The important unresolved step, `ML.vChar`, needs a quantitative comparison between the divisibility of such arithmetic values and a cohomological length. The routine conductor reduction and denominator divisibility lemmas support this step, but they are not the step itself.
 
@@ -219,7 +219,7 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Input:** the source-locked definitions of `Rec`, `prim_case`, `lev_case`, `Bern.b_primmem`, `Bern.den_dvd`, and `Bern.b_primeq`; the actual coefficient-ring and character-conductor hypotheses.
 
-**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact $p$-adic valuation and Sha-length inequality, then check the conductor extension without hiding exceptional primes.
+**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, then check the conductor extension without hiding exceptional primes.
 
 **Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small Wolfram calculations must remain supporting exhibits, never the substitute for this proof.
 
