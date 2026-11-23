@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP280",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP281",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,36 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Actual separated mixed kernel tensor and support homotopies",
+  "phase": "Reviewed actual separated mixed tensor equivalence through weight two",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "df2a66ceabc2abb368cc7aef0dfdfa86af762871",
-    "candidate_head_sha": "df2a66ceabc2abb368cc7aef0dfdfa86af762871",
+    "candidate_head_sha": "626de5608277984eaa0ccdf6ffb386cf58f2534f",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-separated-mixed-tensor-uc061-input-20261123",
+    "branch": "research/reach-separated-mixed-tensor-uc061-reviewed-20261123",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-actual-separated-one-slot-tensor",
-      "description": "Test the actual bidegree (1,1) relative completed tensor comparison for the source-controlled model on two disjoint nonempty intervals. After Wick classicalization, use the actual mixed-support two-slot complex and the scalar-relative derived tensor of its two one-slot complexes over the common vacuum base. Prove that the moment homotopies preserve the separate physical supports, whole histories and original rapid relation, or compute a surviving obstruction. The proved affine-solution tensor is the comparison target. Apply an R3 verdict only through the transfer square and witness test of UC037."
+      "id": "test-collision-plus-spectator-tensor",
+      "description": "Test the actual separated bidegree (2,1) tensor comparison, with two slots in one interval and an independent spectator in the other. Keep the actual same-block diagonal sector from 147 and the common vacuum base, and check whether compact homotopies and whole-history source representations preserve that partial collision while respecting both supports and the original rapid relation. Prove the comparison or compute an actual obstruction. The original R3 verdict is independent subject to the transfer test of UC037."
     }
   ],
   "next_action": {
-    "id": "test-actual-separated-one-slot-tensor",
-    "description": "Test the actual bidegree (1,1) relative completed tensor comparison for the source-controlled model on two disjoint nonempty intervals. After Wick classicalization, use the actual mixed-support two-slot complex and the scalar-relative derived tensor of its two one-slot complexes over the common vacuum base. Prove that the moment homotopies preserve the separate physical supports, whole histories and original rapid relation, or compute a surviving obstruction. The proved affine-solution tensor is the comparison target. Apply an R3 verdict only through the transfer square and witness test of UC037.",
+    "id": "test-collision-plus-spectator-tensor",
+    "description": "Test the actual separated bidegree (2,1) tensor comparison, with two slots in one interval and an independent spectator in the other. Keep the actual same-block diagonal sector from 147 and the common vacuum base, and check whether compact homotopies and whole-history source representations preserve that partial collision while respecting both supports and the original rapid relation. Prove the comparison or compute an actual obstruction. The original R3 verdict is independent subject to the transfer test of UC037.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
-      "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
-      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
-      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md"
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
+      "research/condensed-qft/EXT-015/WEIGHT_TWO_DIAGONAL_JET_COMPARISON_147.md",
+      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md",
+      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "626de5608277984eaa0ccdf6ffb386cf58f2534f",
+        "status": "UC062 accepts the actual separated kernel comparison, including the compact supported homotopy, the Wick-conjugated mixed sector and the weight-two relative comparison."
+      },
       {
         "kind": "review",
         "identity": "b8eb74f9c53264dc118d5d67601f618bb8fa391d",
@@ -2134,17 +2139,24 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindActualSeparatedMixedTensor",
-    "result": "Bound primary construction; proof and review pending",
+    "action": "IntegrateReviewedSeparatedMixedTensor",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
-      "research/reach-separated-mixed-tensor-uc061-input-20261123"
+      "research/reach-separated-mixed-tensor-uc061-reviewed-20261123",
+      "research/reach-separated-mixed-tensor-uc061-input-20261123",
+      "research/reach-separated-mixed-tensor-uc061-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3664",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_MIXED_TENSOR_UC062.md",
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_TENSOR_ACCEPTANCE_UC063.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-23T10:19:04.1600830Z"
+    "observed_at": "2026-11-23T10:25:31.235717+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2424,9 +2436,15 @@
       "research/reach-derived-completed-pairing-uc058-primary-20261123",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3662",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_DERIVED_COMPLETED_PAIRING_UC059.md",
-      "research/condensed-qft/EXT-015/DERIVED_COMPLETED_PAIRING_ACCEPTANCE_UC060.md"
+      "research/condensed-qft/EXT-015/DERIVED_COMPLETED_PAIRING_ACCEPTANCE_UC060.md",
+      "research/reach-separated-mixed-tensor-uc061-reviewed-20261123",
+      "research/reach-separated-mixed-tensor-uc061-primary-20261123",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3664",
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_MIXED_TENSOR_UC062.md",
+      "research/condensed-qft/EXT-015/SEPARATED_MIXED_TENSOR_ACCEPTANCE_UC063.md"
     ],
-    "instructions": "Test the actual bidegree (1,1) relative completed tensor comparison for the source-controlled model on two disjoint nonempty intervals. After Wick classicalization, use the actual mixed-support two-slot complex and the scalar-relative derived tensor of its two one-slot complexes over the common vacuum base. Prove that the moment homotopies preserve the separate physical supports, whole histories and original rapid relation, or compute a surviving obstruction. The proved affine-solution tensor is the comparison target. Apply an R3 verdict only through the transfer square and witness test of UC037."
+    "instructions": "Test the actual separated bidegree (2,1) tensor comparison, with two slots in one interval and an independent spectator in the other. Keep the actual same-block diagonal sector from 147 and the common vacuum base, and check whether compact homotopies and whole-history source representations preserve that partial collision while respecting both supports and the original rapid relation. Prove the comparison or compute an actual obstruction. The original R3 verdict is independent subject to the transfer test of UC037."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
