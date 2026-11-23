@@ -53,12 +53,22 @@ def _sections(soup):
 
 def compare_accepted_article(*,problem_id:int,source:str,admission:dict,
                              public_html:bytes,public_url:str,
-                             source_commit:str,deploy_commit:str)->dict:
+                             source_commit:str,deploy_commit:str,site_equivalence:dict|None=None)->dict:
     if type(problem_id) is not int or problem_id<1 or problem_id>1221:_fail('PROBLEM_ID')
     if not isinstance(source,str) or not source.strip():_fail('SOURCE')
     if not isinstance(admission,dict) or admission.get('source_sha256')!=hashlib.sha256(source.strip().encode()).hexdigest():_fail('SOURCE_HASH')
     if not all(isinstance(x,str) and re.fullmatch('[0-9a-f]{40}',x) for x in (source_commit,deploy_commit)):_fail('GIT_COMMIT')
-    if source_commit!=deploy_commit:_fail('STALE_DEPLOYMENT')
+    if source_commit!=deploy_commit:
+        # The authenticated live wrapper proves exact ancestry and zero changed
+        # site inputs. The comparator checks the contract and records both SHAs.
+        if not isinstance(site_equivalence,dict) or (
+            site_equivalence.get('deployed_sha')!=deploy_commit
+            or site_equivalence.get('current_sha')!=source_commit
+            or site_equivalence.get('compare_status')!='ahead'
+            or site_equivalence.get('site_input_changes')!=[]
+            or not isinstance(site_equivalence.get('compared_paths_sha256'),str)
+            or not re.fullmatch('[0-9a-f]{64}',site_equivalence['compared_paths_sha256'])
+        ):_fail('STALE_DEPLOYMENT')
     expected=f'https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/{problem_id:04d}/'
     if public_url!=expected:_fail('PUBLIC_URL')
     if not isinstance(public_html,bytes) or len(public_html)<100:_fail('PUBLIC_HTML')
@@ -80,6 +90,7 @@ def compare_accepted_article(*,problem_id:int,source:str,admission:dict,
             'problem_id':problem_id,'public_url':public_url,
             'source_sha256':admission['source_sha256'],
             'source_commit':source_commit,'deployed_source_commit':deploy_commit,
+            'site_equivalence':site_equivalence if source_commit!=deploy_commit else None,
             'public_html_sha256':hashlib.sha256(public_html).hexdigest(),
             'verified_editorial_sections':len(expected_sections),
             'verified_math_expressions':len(expected_math),

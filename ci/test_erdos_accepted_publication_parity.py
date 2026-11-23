@@ -26,6 +26,27 @@ class AcceptedParityTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.run_case(*a,**kw)
     def test_source_modified(self):self.reject(source=SOURCE+' corrupted')
     def test_deployment_stale(self):self.reject(deploy_commit='a'*40)
+    def test_site_equivalent_descendant_positive(self):
+        evidence={'deployed_sha':'a'*40,'current_sha':BASE,'compare_status':'ahead',
+                  'site_input_changes':[],'compared_paths_sha256':'f'*64,'compared_paths_count':2}
+        result=self.run_case(deploy_commit='a'*40,site_equivalence=evidence)
+        self.assertEqual(result['deployed_source_commit'],'a'*40)
+        self.assertEqual(result['source_commit'],BASE)
+        self.assertEqual(result['site_equivalence'],evidence)
+    def test_mismatched_evidence_denied(self):
+        evidence={'deployed_sha':'a'*40,'current_sha':'c'*40,'compare_status':'ahead',
+                  'site_input_changes':[],'compared_paths_sha256':'f'*64}
+        self.reject(deploy_commit='a'*40,site_equivalence=evidence)
+    def test_changed_site_inputs_denied(self):
+        evidence={'deployed_sha':'a'*40,'current_sha':BASE,'compare_status':'ahead',
+                  'site_input_changes':['governance/erdos_compendium/editorial/0579.md'],
+                  'compared_paths_sha256':'f'*64}
+        self.reject(deploy_commit='a'*40,site_equivalence=evidence)
+    def test_unverified_diff_denied(self):
+        evidence={'deployed_sha':'a'*40,'current_sha':BASE,'compare_status':'diverged',
+                  'site_input_changes':[],'compared_paths_sha256':'f'*64}
+        self.reject(deploy_commit='a'*40,site_equivalence=evidence)
+
     def test_wrong_url(self):self.reject(public_url=URL.replace('0099','0100'))
     def test_unaccepted_draft(self):self.reject(html=page(status='UNACCEPTED DRAFT'))
     def test_uncertified_status_changed(self):self.reject(html=page(status='NOT received separate GCL editorial acceptance'))
