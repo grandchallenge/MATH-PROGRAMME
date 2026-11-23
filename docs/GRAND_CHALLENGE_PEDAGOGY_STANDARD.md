@@ -58,6 +58,21 @@ Every serious artifact should use this sequence. It may be compressed, but no st
 8. **Debt and boundary.** Separate what is proved, checked, open, imported, heuristic, or externally dependent.
 9. **First executable step.** End with one bounded action with input, output, and completion test.
 
+## Public explanation as a research deliverable
+
+A substantive source audit, mathematical reconstruction, obstruction, or verified computation is not fully communicated merely because its evidence PR has merged. Apply the existing [Research Surface Contract](RESEARCH_SURFACE_CONTRACT.md): the live issue records current progress; protected evidence fixes the permitted claim; the public MkDocs page teaches the object, obstruction, supported result, and open boundary. Do not create a second claim ledger or introduce a new publication authority.
+
+At each material protected-evidence transition, the responsible work package should check the current public page and publish a bounded reconciliation **in the same completion cycle** where possible:
+
+1. State the precise current finding and epistemic class before the explanation. Preserve old evidence as history, not as a silently rewritten claim.
+2. Show a worked example, a smallest failure case, and the assumptions under which the mechanism succeeds. Distinguish a finite regression from a mathematical or kernel-checked proof.
+3. Present the theorem dependency route, including exact source links, source identity, unverified bridges, foundation and resource constraints, and the one next test whose result could change the disposition.
+4. Where exact symbolic or numeric examples genuinely illuminate the research, supply a small **replayable Wolfram Language companion**. Use exact arithmetic when available, include expected outputs or self-checks, and state why finite evaluations do not entail universal conclusions. Reuse existing companion files rather than duplicating demonstrations.
+5. Integrate with the existing MkDocs navigation and cross-link to the live tracker and protected evidence. Validate mathematical Markdown, the generated site, and publication availability. A merged documentation PR is not by itself a live-site readback.
+6. If release must be deferred, document a concrete expository-drift obligation and completion test in the live issue; do not silently call the research work publicly explained.
+
+Do not discuss the teaching protocol by name in ordinary reader-facing mathematical exposition. Make its discipline visible through clear objects, countermodels, exact evidence, and sharply delimited claims; use the existing GCL neutral visual language.
+
 ## Accessible research handoff
 
 A serious mathematical artifact should not require a private mentor to reveal how to begin.
