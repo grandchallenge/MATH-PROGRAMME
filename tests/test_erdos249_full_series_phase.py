@@ -1847,3 +1847,187 @@ class TwoPrimeCookPhaseDiscriminatorTests(unittest.TestCase):
             wp09g_hostile(128,max_X=64)
         with self.assertRaises(ValueError):
             wp09g_actual(32768,max_X=1000)
+
+
+from experiments.erdos249_full_series_phase.bounded_dyadic_shadow import (
+    dyadic_target as wp09h_target,
+    certified_base4_prefix as wp09h_digits,
+    shadow_coefficients as wp09h_coefficients,
+    shadow_cook_replay as wp09h_replay,
+    multistep_stability_certificate as wp09h_multistep,
+    two_prime_shadow_certificate as wp09h_twoprime,
+)
+
+
+class BoundedDyadicTotientShadowTests(unittest.TestCase):
+    """WP09-H: <=6 perturbations rationalize alpha without deleting prime laws."""
+
+    def test_exact_explicit_dyadic_target_and_positive_capacity(self):
+        z=wp09h_target(8)
+        self.assertEqual(z["M"],24)
+        self.assertEqual(z["dyadic_target"],Fraction(11472523,8388608))
+        self.assertEqual(z["dyadic_denominator"],1<<24)
+        self.assertEqual(z["increasing_even_digit_capacity"],Fraction(1,32768))
+        self.assertGreater(z["positive_delta_upper"],0)
+        self.assertLess(z["positive_delta_upper"],
+                        z["increasing_even_digit_capacity"])
+        self.assertEqual(z["real_series_value_of_true_totient"],"UNDETERMINED")
+        for K in (6,7,8,12,20):
+            v=wp09h_target(K)
+            self.assertLess(v["positive_delta_upper"],
+                            v["increasing_even_digit_capacity"])
+
+    def test_certified_base_four_arithmetic_tail_oracle(self):
+        for K in (6,8,12):
+            prior=None
+            for J in (10,45,150):
+                p=wp09h_digits(K,J)
+                q=p["base4_integer_prefix"]
+                self.assertTrue(p["exact_prefix_certified"])
+                self.assertEqual(len(p["digits"]),J)
+                self.assertTrue(all(0<=d<=3 for d in p["digits"]))
+                self.assertEqual(sum(d << (2*(J-j))
+                                     for j,d in enumerate(p["digits"],start=1)),q)
+                den=p["tail_interval_denominator"]
+                lo=p["tail_scaled_interval_lower_numerator"]
+                hi=p["tail_scaled_interval_upper_numerator"]
+                self.assertEqual(lo//den,q)
+                self.assertEqual(hi//den,q)
+                if prior is not None:
+                    oldJ,oldq=prior
+                    self.assertEqual(q >> (2*(J-oldJ)),oldq)
+                prior=(J,q)
+
+    def test_exact_coefficient_envelope_and_preserved_odd_indices(self):
+        K=8
+        z=wp09h_coefficients(768,K)
+        a,phi=z["coefficients"],z["original_totients"]
+        self.assertEqual(len(a),769)
+        self.assertTrue(z["bounded_difference_verified"])
+        self.assertTrue(all(0<=a[n]-phi[n]<=6 and 0<=a[n]<=n
+                            for n in range(1,769)))
+        self.assertTrue(all(a[n]%2==0 for n in range(3,769)))
+        self.assertTrue(all(a[n]==phi[n] for n in range(1,2*K+1)))
+        self.assertTrue(all(a[n]==phi[n] for n in range(1,769,2)))
+        self.assertGreater(sum(a[n]!=phi[n] for n in range(1,769)),0)
+        self.assertEqual(set(a[n]-phi[n] for n in range(1,769))
+                         .difference({0,2,4,6}),set())
+
+    def test_true_infinite_dyadic_target_finite_prefix_enclosure(self):
+        for K in (6,8,12):
+            z=wp09h_coefficients(256,K)
+            beta=z["target"]
+            a=z["coefficients"]
+            prefix=Fraction(sum(a[n]<<(256-n) for n in range(1,257)),1<<256)
+            self.assertGreaterEqual(beta,prefix)
+            self.assertLessEqual(beta-prefix,Fraction(258,1<<256))
+            # This is an enclosure of the EXACT infinite sum, not a
+            # finite simulation of an arbitrary approximate real alpha.
+            self.assertEqual((beta*(1<<(3*K))).denominator,1)
+
+    def test_all_original_cook_shadow_phases_near_one_exact_integer(self):
+        for X,h in ((128,1),(128,3),(256,1),(256,5),(512,2)):
+            r=wp09h_replay(X,h,8)
+            self.assertEqual(r["direct_oracle_points"],3)
+            self.assertEqual(r["dyadic_target"],wp09h_target(8)["dyadic_target"])
+            self.assertTrue(r["every_full_Cook_phase_within_1_over_16"])
+            self.assertTrue(r["every_Cook_real_part_strictly_above_9_over_10"])
+            self.assertEqual(r["source_scope"],
+                             "actual phi plus certified <=6 even-index perturbations")
+            self.assertGreater(r["centered_phase_integer_energy"],0)
+            self.assertEqual(r["Cook_tenth_saving_for_original_totient"],"OPEN")
+
+    def test_multistep_character_stability_exact_integer_bounds(self):
+        X,K=256,8
+        for k in (1,2,3,5,8):
+            z=wp09h_multistep(X,K,step=k)
+            self.assertEqual(z["k"],k)
+            self.assertEqual(
+                z["single_cocycle_distance_coefficient_of_pi"],
+                Fraction(12*((1<<k)-1),z["Q"]))
+            self.assertEqual(
+                z["at_most_X_cocycle_sum_distance_coefficient_of_pi"],
+                Fraction(12*X*((1<<k)-1),z["Q"]))
+            self.assertEqual(z["real_original_Cook_harmonic_transfer"],
+                             "NOT_JUSTIFIED")
+        from experiments.erdos249_full_series_phase.fourier_probe import totients
+        L=wp09h_multistep(X,K)["L"]
+        nmax=2*X+L+20
+        a=wp09h_coefficients(nmax,K)["coefficients"]
+        phi=totients(nmax)
+        for k in (1,2,5,8):
+            for N in (X,X+1,X+X//2):
+                left=sum((1<<(k-1-i))*(a[N+L+1+i+1]-a[N+L+1+i])
+                         for i in range(k))
+                right=sum((1<<(k-1-i))*(phi[N+L+1+i+1]-phi[N+L+1+i])
+                          for i in range(k))
+                self.assertLessEqual(abs(left-right),6*((1<<k)-1))
+
+    def test_true_wp09g_two_prime_signal_survives_rational_shadow(self):
+        for X in (32768,65536):
+            z=wp09h_twoprime(X,8)
+            self.assertEqual(
+                z["true_phi_source_imag_contrast_lower_coefficient_of_pi"],
+                Fraction(X*X,64*z["Q"]))
+            self.assertEqual(
+                z["shadow_vs_true_imag_difference_upper_coefficient_of_pi"],
+                Fraction(12*X,z["Q"]))
+            self.assertEqual(
+                z["rational_shadow_imag_contrast_lower_coefficient_of_pi"],
+                Fraction(X*X,128*z["Q"]))
+            self.assertEqual(
+                z["cofinal_linear_shadow_gap_coefficient_of_pi"],
+                Fraction(X,32768))
+            self.assertTrue(z["rational_shadow_original_phase_everywhere_above_9_over_10"])
+            self.assertEqual(z["original_totient_10_percent_saving"],"OPEN")
+
+    def test_shadow_necessarily_breaks_coprime_multiplicativity(self):
+        from math import gcd
+        K=8
+        v=wp09h_coefficients(1024,K)
+        a,phi=v["coefficients"],v["original_totients"]
+        n=next(n for n in range(2*K+2,128,2) if a[n]>phi[n])
+        p=next(p for p in (7,11,13,17,19,23,29,31)
+               if gcd(p,n)==1 and n*p<=1024)
+        self.assertEqual(a[p],phi[p])
+        self.assertEqual(phi[n*p],phi[n]*phi[p])
+        defect=a[n*p]-a[n]*a[p]
+        self.assertEqual(defect,(a[n*p]-phi[n*p])
+                         -(a[n]-phi[n])*(p-1))
+        self.assertGreaterEqual(abs(defect),2*(p-1)-6)
+        self.assertNotEqual(defect,0)
+
+    def test_normalized_prime_moments_and_differences_unchanged_leading_order(self):
+        X,h,K=256,1,8
+        v=wp09h_coefficients(2*X+60,K)
+        a,phi=v["coefficients"],v["original_totients"]
+        for n in (X,X+1,2*X,2*X+55):
+            self.assertLessEqual(
+                abs(Fraction(a[n]-phi[n],n)),Fraction(6,X))
+        for mod in (2,3,5,6,10,30):
+            for r in range(mod):
+                group=[N for N in range(X,2*X-1) if (N+27)%mod==r]
+                shadow=sum(a[N+28]-a[N+27] for N in group)
+                actual=sum(phi[N+28]-phi[N+27] for N in group)
+                self.assertLessEqual(abs(shadow-actual),6*len(group))
+
+    def test_invalid_scopes_and_unverified_finite_digits_fail_closed(self):
+        for K in (0,1,5):
+            with self.assertRaises(ValueError):
+                wp09h_target(K)
+        with self.assertRaises(ValueError):
+            wp09h_digits(8,0)
+        with self.assertRaises(ValueError):
+            wp09h_digits(8,12,margin_bits=0)
+        with self.assertRaises(ValueError):
+            wp09h_coefficients(512,8,max_limit=100)
+        with self.assertRaises(ValueError):
+            wp09h_replay(8,1,8)
+        with self.assertRaises(ValueError):
+            wp09h_replay(256,1,8,max_X=128)
+        with self.assertRaises(ValueError):
+            wp09h_multistep(256,8,L=1)
+        with self.assertRaises(ValueError):
+            wp09h_multistep(256,8,step=0)
+        with self.assertRaises(ValueError):
+            wp09h_twoprime(4096,8)
