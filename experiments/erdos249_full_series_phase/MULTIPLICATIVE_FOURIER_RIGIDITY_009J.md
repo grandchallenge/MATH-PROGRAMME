@@ -82,7 +82,7 @@ $$
 $f(m)=\varphi(m)/m=\sum_{d\mid m}\mu(d)/d$. Put
 
 $$
-C_n=\sum_{\substack{d\ge1\\(d,n)=1}}\frac{\mu(d)}{d^2}
+C_n=\sum_{d\ge1,\ (d,n)=1}\frac{\mu(d)}{d^2}
 =\prod_{p\nmid n}(1-p^{-2})
 \ge6/\pi^2>3/5,
 \tag{9}
