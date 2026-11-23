@@ -457,31 +457,31 @@ The preceding RED and BLUE matching bridges were stated with smallest blue arm e
 
 **Theorem D (general BLUE terminal arm).** Let original red and blue profiles be
 
-$
+$$
 n=(a,b,c,f),\qquad m=(d,e,g),
-$
+$$
 
 with both lists positive and nonincreasing, $c\ge f+1$ and $d\ge e\ge g\ge1$. Define the **reduced blue list**
 
-$
+$$
 m^{\flat}=(d-g+1,e-g+1,1).
-$
+$$
 
 Form the old RED and BLUE matching deficits $P_{\mathrm R}(n,m^{\flat})$, $P_{\mathrm B}(n,m^{\flat})$ (when $e-g+1\ge2$), and the exact separate-residual switching surplus $\sigma(n,m^{\flat})$ as in Sections 4–5. Set
 
-$
+$$
 \Delta^{\flat}=
 \begin{cases}
 \min(P_{\mathrm R},P_{\mathrm B},\sigma),& e-g+1\ge2,\\
 \min(P_{\mathrm R},\sigma),& e-g+1=1.
 \end{cases}
-$
+$$
 
 Then for every finite simple **joint residual** host $Q$ for $(n,m)$,
 
-$
+$$
 \boxed{e(Q)\ge J_{\rm can}(n,m)-\Delta^{\flat}.}
-$
+$$
 
 In particular, if **any** of the reduced-profile deficits is zero, the exact full antidiagonal JOINT formula holds even when **all three blue arms are at least two**. No assumption is placed on the topology of $Q$.
 
@@ -489,42 +489,42 @@ In particular, if **any** of the reduced-profile deficits is zero, the exact ful
 
 Assume $g\ge2$. The SECOND joint-residual arrowing relation reads
 
-$
+$$
 Q\to(F(a,b,c,f),F(e,g)).
-$
+$$
 
 Colour all edges at an arbitrary vertex $v$ blue and all others red. The blue graph has a vertex cover of size one, while the blue target has TWO vertex-disjoint positive stars and therefore a matching of size two. Consequently every $Q-v$ contains the entire red original four-star forest $F(n)$, implying $\nu(Q-v)\ge4$. If $\nu(Q)=4$, Gallai's matching-stability theorem again bounds the nonisolated vertex count by twelve. Since $c\ge f+1\ge2$, the red forest requires at least eleven distinct vertices after every nonisolated vertex deletion; exactly as in Lemma A, the only possible graph is $4K_3$, up to isolates. Colour three triangles wholly red and one wholly blue. The red support has only nine vertices, and the blue support only three; $F(e,g)$ needs at least four vertices, so this colouring avoids BOTH targets. This contradiction proves
 
-$
+$$
 \boxed{\nu(Q)\ge5\quad\text{also for every }g\ge2.}
-$
+$$
 
 Remove a maximum matching $M$ of at least five edges and colour every removed edge BLUE. For any two-colouring of $Q-M$, a blue star in a copy of either residual target uses at most one matching edge, so removing $M$ reduces each blue star size by at most one. The red targets are unchanged. Thus the two arrowing relations for $Q$ imply exactly the two residual relations for the same original red $n$ and the shortened blue list
 
-$
+$$
 m^-=(d-1,e-1,g-1).
-$
+$$
 
 All three blue arm sizes remain positive because $g\ge2$. Therefore $Q-M$ is a JOINT host for $(n,m^-)$, to which the induction hypothesis applies. Its reduced blue list is unchanged:
 
-$
+$$
 (d-1-(g-1)+1,\ e-1-(g-1)+1,\ 1)
 =m^{\flat}.
-$
+$$
 
 Hence the deficit $\Delta^{\flat}$ is the SAME at each step. Each of the five non-leading original antidiagonal weights drops by exactly one under a uniform decrement of all blue sizes, so
 
-$
+$$
 J_{\rm can}(n,m^-)=J_{\rm can}(n,m)-5.
-$
+$$
 
 It follows that
 
-$
+$$
 e(Q)\ge |M|+e(Q-M)
 \ge5+[J_{\rm can}(n,m)-5-\Delta^{\flat}]
 =J_{\rm can}(n,m)-\Delta^{\flat}.
-$
+$$
 
 Induction proves the theorem for all $g\ge1$. Canonical joint disjoint-star hosts give the matching upper bound in every zero-deficit case. QED.
 
@@ -532,42 +532,42 @@ Induction proves the theorem for all $g\ge1$. Canonical joint disjoint-star host
 
 For integers $h\ge1$, $r,k\ge0$, let
 
-$
+$$
 n_{h,r}=(6h+r,4h+r,4h+r,1+r),
 \qquad
 m_{h,k}=(4h+k,3h+k,1+k).
-$
+$$
 
 Uniform RED increments of all four arms by $r$ and uniform BLUE increments of all three arms by $k$ preserve the reduced-profile penalties and the exact switching surplus $\sigma=h$. The red bridge remains sharp after red lifting by Theorem B, and Theorem D propagates sharpness through all blue lifts. The five JOINT weights each increase by $r+k$, and the six ORIGINAL weights each increase by $r+k$. Therefore, for all $h\ge1,r,k\ge0$,
 
-$
+$$
 \boxed{
 \mathcal J(n_{h,r},m_{h,k})
 =28h-2+5(r+k),\qquad
 W_{\rm can}=38h-3+6(r+k),\qquad
 \sigma=h.
 }
-$
+$$
 
 For the original size-Ramsey equality, put $x=r+k$ and $D=10h+x-2$. The exact degree-core excess is
 
-$
+$$
 \begin{aligned}
 D(D+1)-2(W_{\rm can}-1)
 &=(h-1)(100h-6)+4\\
 &\quad +(20h-15)x+x^2>0.
 \end{aligned}
-$
+$$
 
 This is strictly positive for **every** $h\ge1,r,k\ge0$. The source-locked original degree-core transfer therefore proves
 
-$
+$$
 \boxed{
 \widehat r\big(F(n_{h,r}),F(m_{h,k})\big)
 =38h-3+6(r+k)
 \quad \text{for ALL }h\ge1,r,k\ge0.
 }
-$
+$$
 
 If $r,k\ge1$, **every original star component on BOTH sides has at least two edges**. Thus this is an exact genuinely nonuniform four-versus-three family with neither forest having a one-edge terminal component and with arbitrarily large switching surplus. It is a strict structural extension of the previous one-edge-tail examples.
 
@@ -575,36 +575,36 @@ If $r,k\ge1$, **every original star component on BOTH sides has at least two edg
 
 For $h\ge1,r,k\ge0$, let
 
-$
+$$
 \widetilde n_{h,r}=(4h+r,2h+r,2h+r,1+r),
 \qquad
 \widetilde m_{h,k}=(4h+k,3h+k,1+k).
-$
+$$
 
 The BLUE bridge has zero reduced deficit. The joint result and canonical original value become
 
-$
+$$
 \boxed{
 \mathcal J(\widetilde n_{h,r},\widetilde m_{h,k})
 =21h-2+5(r+k),\qquad
 \widetilde W_{\rm can}=29h-3+6(r+k),\qquad
 \sigma=h.
 }
-$
+$$
 
 Here $D=8h+r+k-2$ and $x=r+k$ give
 
-$
+$$
 D(D+1)-2(\widetilde W_{\rm can}-1)
 =64h^2-82h+10+(16h-15)x+x^2.
-$
+$$
 
 The ORIGINAL formula is therefore proved when $h\ge2$ (all $r,k\ge0$), or when $h=1$ and $r+k\ge3$. In those regimes,
 
-$
+$$
 \widehat r\big(F(\widetilde n_{h,r}),F(\widetilde m_{h,k})\big)
 =29h-3+6(r+k).
-$
+$$
 
 The original $h=1,r+k\le2$ cases are NOT claimed sharp from this degree-core argument, although the full JOINT formula is established there.
 
@@ -616,15 +616,15 @@ The previous four-by-three matching bridge assumed $c\ge f+1$, because its RED m
 
 Let $n=(a,b,c,f)$ be any nonincreasing positive four-star list with
 
-$
+$$
 V(n):=a+b+c+f+4\ge11.
-$
+$$
 
 Let $y,z\ge1$. If a finite simple graph $Q$ arrows
 
-$
+$$
 Q\to(F(n),F(y,z)),
-$
+$$
 
 then $\nu(Q)\ge5$, regardless of its topology.
 
@@ -638,56 +638,56 @@ Unlike the previous form of Lemma A, this lemma also applies to **red $(A,B,1,1)
 
 Let
 
-$
+$$
 n=(a,b,f,f),\quad a\ge b\ge f\ge1,
 \qquad
 m=(d,e,g),\quad d\ge e\ge g\ge1.
-$
+$$
 
 Put
 
-$
+$$
 A=a-f+1,\quad B=b-f+1,\qquad
 D=d-g+1,\quad E=e-g+1.
-$
+$$
 
 Assume
 
-$
+$$
 A+B\ge5,\qquad E\ge2.
-$
+$$
 
 Then every arbitrary finite simple joint residual host $Q$ for $(n,m)$ satisfies
 
-$
+$$
 \boxed{
 e(Q)\ge J_{\rm can}(n,m)-P_{\rm tie},
 }
-$
+$$
 
 where the **new exact tied-tail BLUE deficit** is
 
-$
+$$
 \boxed{
 P_{\rm tie}
 =(A-\max(B+E-1,D))_+ +(B-D)_+.
 }
-$
+$$
 
 Moreover, the exact separately proved original residual lower bounds give
 
-$
+$$
 \boxed{
 J_{\rm can}(n,m)-\min(P_{\rm tie},\sigma(n,m))
 \ \le\ \mathcal J(n,m)\ \le\ J_{\rm can}(n,m).
 }
-$
+$$
 
 Therefore if either $P_{\rm tie}=0$ **or** the antidiagonal switching surplus $\sigma(n,m)=0$, then the canonical four-by-three JOINT residual formula is **sharp for all finite simple host graphs**. In particular $P_{\rm tie}=0$ whenever
 
-$
+$$
 A\le\max(B+E-1,D),\qquad B\le D.
-$
+$$
 
 **Proof.** First reduce BOTH terminal red and blue arm sizes by uniformly decrementing their entire respective profiles, using five-edge matchings.
 
@@ -699,25 +699,25 @@ Likewise, if the smallest BLUE size is $g'>1$, remove another matching and colou
 
 It suffices to bound the final JOINT host $Q_0$ for
 
-$
+$$
 n_0=(A,B,1,1),\qquad m_0=(D,E,1).
-$
+$$
 
 Since $E\ge2$, Lemma E.1 supplies a further matching $M$ of at least five edges. Colour this matching BLUE, and remove it. The result jointly arrows the original RED four-star list $(A,B,1,1)$ against the blue TWO-component list $(D-1,E-1)$, whose entries are strictly positive. The source-proved *two-component JOINT residual bridge* (Lemma 1 in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, with the colours exchanged) yields
 
-$
+$$
 e(Q_0-M)\ge J_{\rm can}((A,B,1,1),(D-1,E-1)).
-$
+$$
 
 The exact four-by-three antidiagonal expansion gives
 
-$
+$$
 \begin{aligned}
 J_{\rm can}((A,B,1,1),(D,E,1))
 &=5+J_{\rm can}((A,B,1,1),(D-1,E-1))\\
 &\quad +(A-\max(B+E-1,D))_+ +(B-D)_+.
 \end{aligned}
-$
+$$
 
 Thus $e(Q_0)\ge J_{\rm can}(n_0,m_0)-P_{\rm tie}$. Adding at least five removed edges for each uniform decrement gives the same deficit for the original $(n,m)$, because each decrement changes the canonical joint total by exactly five. The independent exact first and second **ORIGINAL** residual theorems give a simultaneous lower $J_{\rm can}-\sigma$; combining the two yields the stated minimum. The canonical joint disjoint-star host supplies the upper bound. QED.
 
@@ -727,53 +727,53 @@ Thus $e(Q_0)\ge J_{\rm can}(n_0,m_0)-P_{\rm tie}$. Adding at least five removed 
 
 For every integer $h\ge1$ and increments $r,k\ge0$, define
 
-$
+$$
 n_{h,r}=(4h+r,h+r,1+r,1+r),
 \qquad
 m_{h,k}=(4h+k,2h+k,1+k).
-$
+$$
 
 Here the reduced values are $A=4h$, $B=h$, $D=4h$, $E=2h$. We have $A+B=5h\ge5$, $E\ge2$, and
 
-$
+$$
 P_{\rm tie}
 =(4h-\max(3h-1,4h))_+ +(h-4h)_+
 =0.
-$
+$$
 
 The exact six original antidiagonal weights for $r=k=0$ are
 
-$
+$$
 (8h-1,\ 6h-1,\ 4h,\ 4h,\ 2h,\ 1).
-$
+$$
 
 Thus for **ALL** $h\ge1,r,k\ge0$, Theorem E.2 proves
 
-$
+$$
 \boxed{
 \mathcal J(n_{h,r},m_{h,k})=16h+5(r+k),
 \quad W_{\rm can}=24h-1+6(r+k),
 \quad \sigma=h.
 }
-$
+$$
 
 The positive switching surplus grows without bound and the red profile has **two equal trailing arms**, outside the strict-gap condition $c\ge f+1$ of Theorem D.
 
 For the ORIGINAL size-Ramsey number put $x=r+k$ and $D_{\rm lead}=8h+x-2$. The protected general degree-core transfer requires $W_{\rm can}\le D_{\rm lead}(D_{\rm lead}+1)/2$, equivalently
 
-$
+$$
 D_{\rm lead}(D_{\rm lead}+1)-2W_{\rm can}
 =64h^2-72h+4+(16h-15)x+x^2\ge0.
-$
+$$
 
 This inequality holds for every $h\ge2$, any $x\ge0$, and for $h=1$, every $x\ge2$. Therefore
 
-$
+$$
 \boxed{
 \widehat r(F(n_{h,r}),F(m_{h,k}))
 =24h-1+6(r+k)
 }
-$
+$$
 
 for all $h\ge2$ and $r,k\ge0$, **or** $h=1$ and $r+k\ge2$.
 
