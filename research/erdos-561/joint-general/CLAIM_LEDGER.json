@@ -1369,6 +1369,69 @@
         "research/erdos-561/joint-general/ALL_RED_LENGTHS_THREE_BLUE_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 arbitrary red component count, three-component blue list, single BLUE matching unrestricted-host joint lower bound",
+      "assumptions": [
+        "s>=3, original red n=(n1,...,ns), sorted positive, original blue m=(u,v,g), sorted positive",
+        "Normalize red ai=ni-ns+1, so as=1; normalize U=u-g+1,V=v-g+1 so third blue arm=1",
+        "V>=2; normalized red vertex support sum_i(ai+1)>=3s−1",
+        "Host arbitrary finite simple graph, ordinary non-induced vertex-disjoint star-forest embeddings",
+        "Use source-proved two-component JOINT residual bridge in THREE_BY_THREE_JOINT_RECONSTRUCTION.md Lemma 1, with colours swapped; Gallai factorcritical matching-stability"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3652"
+      ],
+      "promotion_condition": "Paper proof UNDER_REVIEW; finite deterministic check CHECKED at exact-head replay. Full all-profile Erdős #561 OPEN/PARTIAL; no MATHCERT and no novelty-priority claim.",
+      "claim_id": "ERDOS561-ALL-S-BLUE-SINGLE-MATCHING-045",
+      "short_name": "One BLUE matching proves arbitrary-length red versus three blue exact joint formula when explicit nonnegative deficit vanishes",
+      "claim_text": "For every red length s>=3, sorted positive original red n and sorted positive blue (u,v,g) with normalized red ai=ni-ns+1, BLUE U=u-g+1,V=v-g+1>=2, and normalized red support sum_i(ai+1)>=3s−1, let Ti=max(ai+1+V−1, ai+2+U−1 when i+2<=s), for i=1,...,s−1, and P_B=sum_i(max(0,ai−Ti)). Any finite simple simultaneous JOINT residual host Q for these original lists satisfies e(Q)>=Jcan(n,m)−P_B. In particular when all terms ai<=Ti, the canonical JOINT minimum is sharp over arbitrary hosts; if additionally Wcan<=D(D+1)/2, D=n1+u−2, the ORIGINAL size Ramsey is sharp by the existing protected degree-core transfer. Proof: the second residual arrowing against two positive blue stars forces full original red forest after EVERY one-vertex deletion. Gallai matching stability, red vertex support>=3s−1, and unique ν=s equality graph sK3 (explicit red s−1/blue1 triangles avoiding colouring) imply ν(Q)>=s+1. RED terminal and BLUE terminal uniform matching removal preserves both joint relations, drops all s+1 joint canonical weights by exactly one and preserves normalized parameters and red support. At terminal minima red as=1 and blue (U,V,1), remove ONE BLUE matching of >=s+1 edges. The two residuals of Q−M after swapping colours are precisely the two conditions of the previously source-proved two-component JOINT bridge, with two-RED list (U−1,V−1) and arbitrary BLUE original list a, proving e(Q−M)>=Jcan(a,(U−1,V−1)). Exact antidiagonal identity Jcan(a,(U,V,1))=(s+1)+Jcan(a,(U−1,V−1))+P_B proves lower. Thus arbitrary-length s sharp zero-penalty theorem requires neither lengthy s-induction nor global conjecture. It includes prior staircase and equal-top residual as zero-penalty subfamilies and actual switching surplus h where individually sharp. A bounded 179,928 parameter cell grid includes 134,447 red-support-valid zero-P_B cases and 11,142 of these with positive CANONICAL switching; 7,090 also meet original core sufficient condition. For arbitrary counted cases CANONICAL switching does not imply actual switching without separately sharp individual residual minima; only the staircase individual minima are separately source-proved exact.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md complete theorem for all s>=3. Unbounded-host proof uses support >=3s−1 Gallai factorcritical matching lemma, removes blue matching of >=s+1 edges, reduces all-s 3BLUE JOINT to previously source-proved two-component Lemma1 after colour swap; exact all-s independent antidiagonal identity produces P_B=sum_i(ai−Ti)_+. Uniform positive terminal decrements are legal and preserve normalized profiles. Finite sample counts are independent verification not basis of all-host proof. Arbitrary profile full conjecture unresolved.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+        "research/erdos-561/joint-general/verify_all_s_blue_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/ALL_RED_LENGTHS_THREE_BLUE_STAIRCASE_THEOREM.md",
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 arbitrary red component count, three-component blue list, single BLUE matching unrestricted-host joint lower bound",
+      "assumptions": [
+        "s>=3, original red n=(n1,...,ns), sorted positive, original blue m=(u,v,g), sorted positive",
+        "Normalize red ai=ni-ns+1, so as=1; normalize U=u-g+1,V=v-g+1 so third blue arm=1",
+        "V>=2; normalized red vertex support sum_i(ai+1)>=3s−1",
+        "Host arbitrary finite simple graph, ordinary non-induced vertex-disjoint star-forest embeddings",
+        "Use source-proved two-component JOINT residual bridge in THREE_BY_THREE_JOINT_RECONSTRUCTION.md Lemma 1, with colours swapped; Gallai factorcritical matching-stability"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3652"
+      ],
+      "promotion_condition": "Paper proof UNDER_REVIEW; finite deterministic check CHECKED at exact-head replay. Full all-profile Erdős #561 OPEN/PARTIAL; no MATHCERT and no novelty-priority claim.",
+      "claim_id": "ERDOS561-ALL-S-BLUE-MATCHING-CHECK-046",
+      "short_name": "Independent 179928-cell exact all-s BLUE penalty and real sK3 obstruction verification",
+      "claim_text": "Deterministic standard-library bounded exhaustive integer arithmetic checks the exact arbitrary-length BLUE matching identity for 179,928 sorted positive original RED profiles s=3..8, n_s=1, other RED sizes 1..8, and BLUE U,V in 2..8 (U>=V). Of these 177,856 satisfy normalized red support >=3s−1; 134,447 satisfy support and zero explicit all-s BLUE loss; 11,142 have positive canonical switching; 7,090 of these satisfy protected degree-core sufficiency. Further 7,266 two-sided normalized red/blue terminal shifts verify exact joint/original edge increases and legal source-target preservation; 680 staircase all-red-length examples and 510 equal-top residual examples verify each BLUE deficit summand zero, related closed formulas and core inequalities; seven explicit sK3 graph avoiding-colouring checks use true ordinary vertex-disjoint star-forest embedding DFS (not star-host approximation); 5,052 complete canonical JOINT arm-colour assignments across declared three bounded profiles. Finite CHECKED assertion makes no claim of independent formal proof, mathematical novelty, or full-profile Erdős #561 certification.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_all_s_blue_matching_bridge.py exact integer independent indexing zero/one-based, bounded exhaustive sorted profiles, true graph-embedding DFS of sK3 avoiding colouring, and complete arm-assignment checks in three canonical JOINT hosts. At exact source head repeated checks should pass with source SHA manifest and claim ledger. General all-host proof remains paper UNDER_REVIEW.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_all_s_blue_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RUN_MATRIX.md",
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md"
+      ]
     }
   ]
 }
