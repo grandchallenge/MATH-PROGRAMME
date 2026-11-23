@@ -608,10 +608,181 @@ $
 
 The original $h=1,r+k\le2$ cases are NOT claimed sharp from this degree-core argument, although the full JOINT formula is established there.
 
-## 9. Reproducibility and independent-review requirements
+## 9. NEW equal-bottom-RED extension: two smallest red arms may coincide
+
+The previous four-by-three matching bridge assumed $c\ge f+1$, because its RED matching deletion eventually required a positive three-star target $(a-1,b-1,c-1)$. That condition is **not necessary for the BLUE matching bridge**. When the last two red arms are equal, a different matching guarantee supplies the induction.
+
+### Lemma E.1 — a five-edge matching from eleven red support vertices
+
+Let $n=(a,b,c,f)$ be any nonincreasing positive four-star list with
+
+$
+V(n):=a+b+c+f+4\ge11.
+$
+
+Let $y,z\ge1$. If a finite simple graph $Q$ arrows
+
+$
+Q\to(F(n),F(y,z)),
+$
+
+then $\nu(Q)\ge5$, regardless of its topology.
+
+**Proof.** Colour all edges at an arbitrary vertex $v$ BLUE. The blue subgraph has matching number at most one and cannot contain two vertex-disjoint nonempty stars. Thus every $Q-v$ contains a red $F(n)$, implying $\nu(Q-v)\ge4$ for every vertex $v$. If $\nu(Q)=4$, Gallai matching stability says each nontrivial connected component is factor-critical, with $2\nu(C)+1$ nonisolated vertices. Since the matching number sums to four and each nontrivial component has matching number at least one, their total nonisolated vertex number $N$ is at most twelve.
+
+Choose any nonisolated $v$. The red forest surviving in $Q-v$ requires at least $V(n)\ge11$ nonisolated vertices, so $N\ge V(n)+1\ge12$. Consequently $N=12$ and $V(n)=11$; moreover, equality in the factor-critical vertex budget forces exactly four components of matching number one, each a triangle. Hence $Q$ has nontrivial part $4K_3$. Colour three triangles entirely RED and the fourth entirely BLUE. The red graph is supported on only nine vertices, less than $V(n)\ge11$; the blue graph is supported on only three vertices, less than the four required by $F(y,z)$ for positive $y,z$. This avoids both targets, a contradiction. Thus $\nu(Q)\ge5$. QED.
+
+Unlike the previous form of Lemma A, this lemma also applies to **red $(A,B,1,1)$**, provided $A+B\ge5$ (because $V=A+B+6\ge11$).
+
+### Theorem E.2 — full JOINT lower bound with equal final RED arms
+
+Let
+
+$
+n=(a,b,f,f),\quad a\ge b\ge f\ge1,
+\qquad
+m=(d,e,g),\quad d\ge e\ge g\ge1.
+$
+
+Put
+
+$
+A=a-f+1,\quad B=b-f+1,\qquad
+D=d-g+1,\quad E=e-g+1.
+$
+
+Assume
+
+$
+A+B\ge5,\qquad E\ge2.
+$
+
+Then every arbitrary finite simple joint residual host $Q$ for $(n,m)$ satisfies
+
+$
+\boxed{
+e(Q)\ge J_{\rm can}(n,m)-P_{\rm tie},
+}
+$
+
+where the **new exact tied-tail BLUE deficit** is
+
+$
+\boxed{
+P_{\rm tie}
+=(A-\max(B+E-1,D))_+ +(B-D)_+.
+}
+$
+
+Moreover, the exact separately proved original residual lower bounds give
+
+$
+\boxed{
+J_{\rm can}(n,m)-\min(P_{\rm tie},\sigma(n,m))
+\ \le\ \mathcal J(n,m)\ \le\ J_{\rm can}(n,m).
+}
+$
+
+Therefore if either $P_{\rm tie}=0$ **or** the antidiagonal switching surplus $\sigma(n,m)=0$, then the canonical four-by-three JOINT residual formula is **sharp for all finite simple host graphs**. In particular $P_{\rm tie}=0$ whenever
+
+$
+A\le\max(B+E-1,D),\qquad B\le D.
+$
+
+**Proof.** First reduce BOTH terminal red and blue arm sizes by uniformly decrementing their entire respective profiles, using five-edge matchings.
+
+A joint host $Q$ satisfies the second residual arrowing condition against blue $F(e,g)$; this has TWO positive stars. At each stage of the RED and BLUE decrements, the current four-star red profile has at least eleven total vertices: the minimal profile reached is $(A,B,1,1)$, with $A+B+6\ge11$. Therefore Lemma E.1 supplies a matching with at least five edges for each intermediate joint host.
+
+If the smallest RED size is $f'>1$, remove any five-or-more-edge matching and colour all its edges RED when extending a colouring. Because a matching meets each vertex at most once, every red star loses at most one edge when its edges are deleted. The result jointly arrows the original RED list with all four arms decremented by one and unchanged blue list. Every one of the five nonleading original antidiagonal weights decreases by exactly one. Induct until the red list becomes $(A,B,1,1)$.
+
+Likewise, if the smallest BLUE size is $g'>1$, remove another matching and colour it BLUE, reducing all three blue sizes uniformly by one while preserving both joint residual arrowing conditions and dropping five nonleading weights by one each. Induct until the blue list becomes $(D,E,1)$.
+
+It suffices to bound the final JOINT host $Q_0$ for
+
+$
+n_0=(A,B,1,1),\qquad m_0=(D,E,1).
+$
+
+Since $E\ge2$, Lemma E.1 supplies a further matching $M$ of at least five edges. Colour this matching BLUE, and remove it. The result jointly arrows the original RED four-star list $(A,B,1,1)$ against the blue TWO-component list $(D-1,E-1)$, whose entries are strictly positive. The source-proved *two-component JOINT residual bridge* (Lemma 1 in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, with the colours exchanged) yields
+
+$
+e(Q_0-M)\ge J_{\rm can}((A,B,1,1),(D-1,E-1)).
+$
+
+The exact four-by-three antidiagonal expansion gives
+
+$
+\begin{aligned}
+J_{\rm can}((A,B,1,1),(D,E,1))
+&=5+J_{\rm can}((A,B,1,1),(D-1,E-1))\\
+&\quad +(A-\max(B+E-1,D))_+ +(B-D)_+.
+\end{aligned}
+$
+
+Thus $e(Q_0)\ge J_{\rm can}(n_0,m_0)-P_{\rm tie}$. Adding at least five removed edges for each uniform decrement gives the same deficit for the original $(n,m)$, because each decrement changes the canonical joint total by exactly five. The independent exact first and second **ORIGINAL** residual theorems give a simultaneous lower $J_{\rm can}-\sigma$; combining the two yields the stated minimum. The canonical joint disjoint-star host supplies the upper bound. QED.
+
+**Boundary discipline:** This proof does **not** claim the RED matching reduction to three-by-three when $c=f$, because that would produce a zero-sized star. It uses only the legal BLUE matching reduction and the established two-component residual result, with the support-size matching lemma carefully re-established for the tied-tail case.
+
+### A third UNBOUNDED switching family, with two equal smallest RED arms
+
+For every integer $h\ge1$ and increments $r,k\ge0$, define
+
+$
+n_{h,r}=(4h+r,h+r,1+r,1+r),
+\qquad
+m_{h,k}=(4h+k,2h+k,1+k).
+$
+
+Here the reduced values are $A=4h$, $B=h$, $D=4h$, $E=2h$. We have $A+B=5h\ge5$, $E\ge2$, and
+
+$
+P_{\rm tie}
+=(4h-\max(3h-1,4h))_+ +(h-4h)_+
+=0.
+$
+
+The exact six original antidiagonal weights for $r=k=0$ are
+
+$
+(8h-1,\ 5h,\ 4h,\ 4h,\ 2h,\ 1).
+$
+
+Thus for **ALL** $h\ge1,r,k\ge0$, Theorem E.2 proves
+
+$
+\boxed{
+\mathcal J(n_{h,r},m_{h,k})=16h+5(r+k),
+\quad W_{\rm can}=24h-1+6(r+k),
+\quad \sigma=h.
+}
+$
+
+The positive switching surplus grows without bound and the red profile has **two equal trailing arms**, outside the strict-gap condition $c\ge f+1$ of Theorem D.
+
+For the ORIGINAL size-Ramsey number put $x=r+k$ and $D_{\rm lead}=8h+x-2$. The protected general degree-core transfer requires $W_{\rm can}\le D_{\rm lead}(D_{\rm lead}+1)/2$, equivalently
+
+$
+D_{\rm lead}(D_{\rm lead}+1)-2W_{\rm can}
+=64h^2-72h+4+(16h-15)x+x^2\ge0.
+$
+
+This inequality holds for every $h\ge2$, any $x\ge0$, and for $h=1$, every $x\ge2$. Therefore
+
+$
+\boxed{
+\widehat r(F(n_{h,r}),F(m_{h,k}))
+=24h-1+6(r+k)
+}
+$
+
+for all $h\ge2$ and $r,k\ge0$, **or** $h=1$ and $r+k\ge2$.
+
+In particular, choosing $r,k\ge1$ makes **every star on both sides have at least two edges** and proves sharp ORIGINAL and JOINT formulas for **all** $h\ge1$. The unshifted original case $h=1,r=k=0$ and single-shift original cases $h=1,r+k=1$ are **not promoted** by this degree-core proof, although their JOINT values are sharp.
+
+## 10. Reproducibility and independent-review requirements
 
 The deterministic checker \`verify_four_by_three_matching_bridge.py\` independently computes both original and residual antidiagonal arrays in two indexing conventions; checks the EXACT positive-part deficit for every declared bounded base profile; checks the five-edge red decrement for all declared lifted profiles; validates the sharp parameter region and original core gate; tests $\sigma_h=h$ and all closed forms for a scale grid; and checks a concrete avoiding colouring of the unique matching-four factor-critical candidate $4K_3$ against the **minimal** target forests using a separate exact ordinary, vertex-disjoint star-embedding oracle. The arithmetic and explicit colouring are CHECKED only after replay of the exact committed candidate head.
 
 The all-host proof uses the **classical Gallai factor-critical matching-stability theorem**, the three-by-three JOINT paper reconstruction in \`THREE_BY_THREE_JOINT_RECONSTRUCTION.md\`, the source-locked \`GENERAL_CORE_ORIGINAL_TRANSFER.md\`, and canonical antidiagonal star-host upper results. These dependencies and precise ordinary/non-induced semantics require mathematical review before certification. A passing CI/merging source package is NOT independent mathematical adjudication or MATHCERT.
 
-**Next remaining boundary:** for four red stars and three blue stars outside the vanishing-deficit region, the matching bridge leaves exactly $P>0$ unaccounted edges. A sharper coupled residual lemma must recover these edges or exhibit a genuine counterexample. For general $s,t\ge4$, a corresponding large-matching guarantee beyond the four-by-three geometry is also unresolved. The BLUE-terminal lifting theorem above removes the unit blue-tail limitation in the four-by-three domain but not the explicit positive coupled deficits.
+**Next remaining boundary:** for four red stars and three blue stars outside the vanishing-deficit region, the matching bridge leaves exactly $P>0$ unaccounted edges. A sharper coupled residual lemma must recover these edges or exhibit a genuine counterexample. For general $s,t\ge4$, a corresponding large-matching guarantee beyond the four-by-three geometry is also unresolved. The BLUE-terminal lifting and NEW tied-bottom-red BLUE matching theorem above remove the unit blue-tail limitation and cover red lists with their last two arms EQUAL, under the stated red vertex-support threshold. The positive coupled deficits and unrestricted arbitrary-length conjecture remain open.
