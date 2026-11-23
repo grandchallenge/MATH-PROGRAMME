@@ -22,7 +22,7 @@ Here "one-dependent" is a statement about unconditional correlations. "Quasiloca
 
 ## Exact finite-cylinder conditionals
 
-For positive integers $L,R$ and integer $K\ge0$, consider an exterior cylinder event $A_{L,R,K}$ in which the observed coordinates immediately to the left of site zero are a length-$L$ run of ones, preceded by $K$ zeros; and to the right are a length-$R$ run of ones, followed by $K$ zeros. Coordinates outside these four finite runs are unrestricted.
+For positive integers $L,R$ and integer $K\ge0$, consider an exterior cylinder event $A_{L,R,K}$ in which the observed coordinates immediately to the left of site zero are a run of length $L$ of ones, preceded by $K$ zeros; and to the right are a run of length $R$ of ones, followed by $K$ zeros. Coordinates outside these four finite runs are unrestricted.
 
 Explicitly:
 
