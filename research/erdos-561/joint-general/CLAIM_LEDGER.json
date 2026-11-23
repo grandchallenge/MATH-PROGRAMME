@@ -1088,6 +1088,222 @@
         "research/erdos-561/joint-general/UNIT_TAIL_TWO_STAR_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 four-by-three heterogeneous joint residual and original size Ramsey, arbitrary finite simple hosts",
+      "assumptions": [
+        "original red n=(a,b,c,f), positive a>=b>=c>=f>=1, c>=f+1",
+        "original blue m=(d,e,1), positive d>=e>=1",
+        "derived A=a-f+1,B=b-f+1,C=c-f+1>=2; penalty P=(d-max(B,C+e-1))_+ +(e-C)_+",
+        "ordinary vertex-disjoint, non-induced star-forest copies in finite simple host graphs",
+        "paper-level imported exact 3x3 joint residual; classical Gallai factor critical; source-locked original degree-core transfer"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3624",
+        "MATH-PROGRAMME#3627"
+      ],
+      "promotion_condition": "Mathematical proof source UNDER_REVIEW, nonindependent local exact finite checks CHECKED only; unbounded full all-profile Erdős #561 and full joint residual remain OPEN, no MATHCERT.",
+      "claim_id": "ERDOS561-FOUR-BY-THREE-JOINT-MATCHING-BRIDGE-036",
+      "short_name": "Exact four-by-three heterogeneous simultaneous residual under vanishing explicit matching deficit; unbounded switching surplus",
+      "claim_text": "For n=(a,b,c,f) sorted positive c>=f+1, blue m=(d,e,1), write A=a-f+1,B=b-f+1,C=c-f+1>=2 and P=(d-max(B,C+e-1))_+ +(e-C)_+. Every finite simple joint-residual host Q satisfies e(Q)>=Jcan(n,m)-P; if e<=C and d<=max(B,C+e-1), P=0 and exact arbitrary-host joint residual equals the full five-nonleading-antidiagonal canonical tail Jcan. Proof: second residual alone Q→(F(a,b,c,f),F(e,1)) implies every Q-v contains red F(n) by colouring v edges BLUE. If ν(Q)<=4, then ν=4 and matching-stability Gallai factor-critical decomposition bounds nonisolated vertices<=12; the required red F(n) after arbitrary deletion needs>=11, forcing Q=4K3. Colour three triangles red, fourth blue, avoiding both residual targets. So ν(Q)>=5. Remove a maximum matching and colour it red to reduce red arm sizes by1, with last f=1 star dropped, resulting in known sharp 3x3 joint residual. The exact algebraic difference is 5+P, giving lower Jcan-P. For f>=2, induction uniformly decrements all 4 red arms and all five joint antidiagonal weights by1, preserving deficit P. An original equality also holds when d>=2 and W<=D(D+1)/2, D=a+d-2; automatically if a+d>=14, or if both leading sizes odd by even cap transfer, or via known matching-side result when d=1. Infinite genuinely heterogeneous scale family n_h=(6h,4h,4h,1), m_h=(4h,3h,1) has sharp joint J=28h-2, two separate residual sums 27h-2, switching surplus sigma=h for ALL h>=1 and sharp ORIGINAL W=38h-3 for ALL h>=1 by degree budget D(D+1)>2(W-1). This is not an all-profile theorem. Complementary exact regime: the individual first residual has full sharp 3x3 ORIGINAL size bound S1 by source reconstruction; second residual has full sharp 4x2 ORIGINAL bound S2 by pinned You two-component result. Their max equals Jcan-sigma, sigma:=Jcan-max(S1,S2). Thus any joint host has e(Q)>=Jcan-min(P,sigma), exact Jcan whenever either P=0 OR sigma=0, including P>0 cases not covered by matching deletion alone. The remaining nonsharp region requires BOTH P>0 AND sigma>0.\n New BLUE matching reduction for e>=2: remove at least five BLUE matching edges. This produces the JOINT residual for original red four-star n and the blue TWO-component list (d-1,e-1). The independently source-proved two-component residual bridge (3x3 reconstruction, Lemma1, after swapping colours) provides sharp canonical joint lower on that shortened pair. At last red arm f=1, exact algebraic deficit P_B=(a-max(b+e-1,c+d-1))_+ +(b-max(c+e-1,d))_+ +(c-e)_+. For general f>=1 uniformly decrement all four RED arms until the last becomes one, preserving reduced A,B,C and hence P_B=(A-max(B+e-1,C+d-1))_+ +(B-max(C+e-1,d))_+ +(C-e)_+. Combined unconditional lower becomes Jcan-min(P_R,P_B,sigma) when e>=2, and Jcan-min(P_R,sigma) when e=1. Hence exact canonical JOINT whenever ANY of the three legal deficits is zero. This BLUE bridge closes 838 additional base profiles in the finite grid, leaving 458 positive in all three. A distinct scale family n=(4h,2h,2h,1),m=(4h,3h,1) has P_R=sigma=h, P_B=0, exact JOINT J=21h-2 for all h>=1, separate residuals 20h-2, and exact ORIGINAL W=29h-3 for h>=2 by core transfer, with leading D=8h-2 and D(D+1)-2(W-1)=64h²-82h+10>0 at h>=2.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "See FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md. Key new arbitrary-host matching lemma from a single two-component blue residual: after deleting ANY vertex red full 4-star n remains, forcing matching>=4. With ν=4 all components factor critical and <=12 nonisolated vertices; 11-vertex minimum red forest after each deletion forces Q=4K3, which explicit red3/blue1 triangle colouring avoids. Therefore a >=5 matching exists. Deleting it red turns 4x3 joint into full sharp 3x3 joint when last red arm=1; five-arm antidiagonal subtraction leaves only P=(d-max(b,c+e-1))_++(e-c)_+. Uniform red decrement inducts for f>1. Original from protected core-transfer. Scale family n_h=(6h,4h,4h,1),m_h=(4h,3h,1): w=(10h-1,9h-1,8h-1,7h-1,4h,1), J=28h-2, original W=38h-3, sigma=h, and D(D+1)-2(W-1)=(h-1)(100h-6)+4>0. Separately source-proved first residual exact 3x3 and second residual exact 4x2 yield Jcan-sigma lower; combine with matching bridge Jcan-P to get Jcan-min(P,sigma). BLUE matching-coloured removal reduces 4x3 JOINT to exact 4x2 JOINT (two-component residual Lemma1 with swapped colours). The corresponding three-positive-part algebraic deficit P_B is computed at red last-arm=1; red matching peeling transfers it to arbitrary f, giving exact Jcan-min(P_R,P_B,sigma) lower. Scale family (4h,2h,2h,1) vs (4h,3h,1) has exact J=21h-2, sigma=h, original W=29h-3 for h>=2.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_four_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 four-by-three heterogeneous joint residual and original size Ramsey, arbitrary finite simple hosts",
+      "assumptions": [
+        "original red n=(a,b,c,f), positive a>=b>=c>=f>=1, c>=f+1",
+        "original blue m=(d,e,1), positive d>=e>=1",
+        "derived A=a-f+1,B=b-f+1,C=c-f+1>=2; penalty P=(d-max(B,C+e-1))_+ +(e-C)_+",
+        "ordinary vertex-disjoint, non-induced star-forest copies in finite simple host graphs",
+        "paper-level imported exact 3x3 joint residual; classical Gallai factor critical; source-locked original degree-core transfer"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3624",
+        "MATH-PROGRAMME#3627"
+      ],
+      "promotion_condition": "Mathematical proof source UNDER_REVIEW, nonindependent local exact finite checks CHECKED only; unbounded full all-profile Erdős #561 and full joint residual remain OPEN, no MATHCERT.",
+      "claim_id": "ERDOS561-FOUR-BY-THREE-MATCHING-CHECK-037",
+      "short_name": "Four-by-three exact matching deficit, lifted profiles, switching and Gallai four-triangle witness arithmetic",
+      "claim_text": "Deterministic standard-library tests calculate original and both separate residual antidiagonal maxima in independent indexing conventions across 14520 positive four-by-three base profiles; among them 5496 profiles have zero explicit matching deficit (375 with positive switching surplus), 9024 have positive deficit; 16488 all-positive-arm red uniform lifts checked; 4955 base parameter settings satisfy protected original core criterion; 150 scale-family tests verify sigma=h and full joint/original formulas. Independent structural enumeration checks all 8 factor-critical matching-number-four component-multiplicity shapes, proving only four triangles saturate the required nonisolated vertex budget. A concrete 4K3 red/blue avoiding colouring is checked against the minimal red four-star and blue two-star targets by exact ordinary vertex-disjoint star embedding DFS. Finite checks do not prove the general host lemma by enumeration. Checker additionally verifies the coupled residual inequality Jcan-min(P,sigma)=max(Jcan-P,S1,S2), counts the additional P>0,sigma=0 exact cases, and isolates the explicit P>0,sigma>0 frontier. Additional independent algebraic dual 4x2 JOINT matching-decrement checks verify P_B on all profiles with e>=2; red/blue/sigma three-way certificate closes 14062 of 14520 bounded base profiles, including 838 newly closed by the blue route, with exactly 458 three-way-positive cases remaining. Lifted sharp cases verified in 34314 parameter tuples; second 150-scale family checks blue P_B=0, sigma=h, exact J=21h-2 and original core-transfer arithmetic for h>=2.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Exact Python integer maxima and index conventions for base/lifted four-by-three profiles, exact two-positive-part deficit and switching identity, independent red/blue residual sums and sufficient original edge-budget check, 150 scale cases. Enumerates positive compositions of matching number four and validates nonisolated vertex budget using factor-critical order 2ν+1; graph DFS with actual edges of 4K3 validates explicit avoiding colouring against smallest four-red-star and two-blue-star targets. Unbounded reasoning relies on paper Gallai theorem and imported 3x3 result, NOT on finite computations. The 4x2 blue residual canonical arm array is independently compared with the 4x3 five-entry tail for all allowed blue e>=2, verifying the three-positive-part P_B. Two separate unbounded switching scale families checked, 150 h each.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_four_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 general blue terminal shifts and tied-bottom red four-versus-three joint residual theorem",
+      "assumptions": [
+        "red n=(a,b,c,f), a>=b>=c>=f>=1 with c>=f+1",
+        "blue m=(d,e,g), positive d>=e>=g>=1",
+        "blue-flat m0=(d-g+1,e-g+1,1); red reduced values A=a-f+1,B=b-f+1,C=c-f+1>=2",
+        "all host graphs finite simple, stars embedded ordinarily non-induced and vertex-disjoint",
+        "source-proved Gallai 5-matching lemma, exact 3x3 and 4x2 joint residual reductions"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3633"
+      ],
+      "promotion_condition": "Paper proof UNDER_REVIEW; arithmetic and actual graph witnesses CHECKED at exact committed source head. Full all-profile Erdős #561 OPEN/PARTIAL; no independent MATHCERT.",
+      "claim_id": "ERDOS561-4X3-BLUE-TERMINAL-LIFT-038",
+      "short_name": "Unrestricted-host four-versus-three joint lower bound under arbitrary blue minimum shifts",
+      "claim_text": "For any blue terminal g>=1, n=(a,b,c,f) with c>=f+1 and m=(d,e,g) sorted positive, let mflat=(d-g+1,e-g+1,1). Form RED matching deficit P_R, BLUE matching deficit P_B (if second blue-flat arm>=2), and switching surplus sigma for pair (n,mflat) by source-locked Theorem B/C. Then every arbitrary finite simple joint host for (n,m) has e>=Jcan(n,m)-min(P_R,P_B,sigma), omitting P_B when not legal. Thus any zero deficit implies exact JOINT canonical value for ORIGINAL lists with all blue star sizes possibly >=2. Proof: the second residual blue (e,g) contains two positive stars. Blue-star incident-edge colouring around arbitrary vertex forces red full four-star forest after every deletion, giving a 5-edge matching by Gallai and the 4K3 avoiding-colour exception. Remove a BLUE matching, obtaining the two residual relations for the blue list (d-1,e-1,g-1) while keeping red unchanged. Repeat until blue terminal=1, preserving the flat parameters and dropping all five joint weights by one each step; then apply exact source-proved one-tail theorem. Independent original transfer when W<=D(D+1)/2 gives exact original; shifting both RED and BLUE profiles of red family (6h,4h,4h,1),blue(4h,3h,1) uniformly produces exact joint J=28h-2+5(r+k), W=38h-3+6(r+k) for every h>=1,r,k>=0, sigma=h, with ORIGINAL exact via protected degree-core. A second blue-family n=(4h+r,2h+r,2h+r,1+r), m=(4h+k,3h+k,1+k) has J=21h-2+5(r+k), sigma=h, original exact for h>=2 or h=1 and r+k>=3.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "BLUE-minimum induction Theorem D in FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md. Every intermediate second residual has two blue positive stars, so a minimum-5 matching exists by the Gallai four-component obstruction. Colour removed matching blue; decrements blue stars and retains red. Five joint antidiagonal weights drop exactly one per uniform blue decrement, with reduced flat blue pair invariant. Base one-edge blue joint Theorems B/C/source independent individual residual lower. Exact three-parameter all-positive shift families and core-transfer inequalities are explicitly documented; no unrestricted all-profile theorem.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_four_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 general blue terminal shifts and tied-bottom red four-versus-three joint residual theorem",
+      "assumptions": [
+        "red original n=(a,b,f,f), sorted positive a>=b>=f>=1",
+        "blue original m=(d,e,g), sorted positive d>=e>=g>=1",
+        "normalized A=a-f+1,B=b-f+1 with A+B>=5; D=d-g+1,E=e-g+1>=2",
+        "all finite simple host graphs and ordinary non-induced vertex-disjoint star forests"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3633"
+      ],
+      "promotion_condition": "Paper proof UNDER_REVIEW; arithmetic and actual graph witnesses CHECKED at exact committed source head. Full all-profile Erdős #561 OPEN/PARTIAL; no independent MATHCERT.",
+      "claim_id": "ERDOS561-4X3-TIED-RED-TAIL-BLUE-BRIDGE-039",
+      "short_name": "Tied-bottom red four-star forests against heterogeneous three-star blue lists",
+      "claim_text": "For every n=(a,b,f,f) and m=(d,e,g) satisfying A+B>=5,E>=2 as defined, any arbitrary finite simple JOINT residual host has e>=Jcan−P_tie, where P_tie=(A-max(B+E-1,D))_+ +(B-D)_+. Combined with separately known exact first/second residual size bounds, e>=Jcan−min(P_tie,sigma). Consequently P_tie=0 or sigma=0 implies exact full joint canonical value, despite red smallest TWO stars being equal. New Gallai support lemma: if red four-star forest uses >=11 nonisolated vertices, any graph arrowing it against two positive blue stars contains a matching of at least5. Colour v-edge blue forces red forest in every Q-v; ν(Q)=4 gives <=12 nonisolated vertices from Gallai factorcritical decomposition, forcing exactly 4K3 if red V=11 and impossible if larger; colour three triangles red, fourth blue to contradict. This applies to red-flat (A,B,1,1), A+B>=5, and all intermediate red shifts. Use red and blue matching deletions to reduce both minima to1; at red-flat and blue-flat base remove five BLUE matching edges and invoke source-proved 4x2 JOINT two-component residual lemma, with exact two-positive-part P_tie. A new scale family n=(4h+r,h+r,1+r,1+r),m=(4h+k,2h+k,1+k) for all h>=1,r,k>=0 has exact JOINT J=16h+5(r+k), unbounded sigma=h, Wcanonical=24h-1+6(r+k). Protected original degree-core transfer makes W exact for h>=2 or h=1 and r+k>=2; in particular all h>=1 with r,k>=1 and NO single-edge stars. Full unrestricted problem remains OPEN.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Section 9 Lemma E.1 and Theorem E.2: matching>=5 forced by red component vertex support V>=11 plus Gallai factorcritical nonisolated budget and explicit avoiding 4K3 red3/blue1 triangle colouring. No invalid red-to-zero-star reduction: only legal red decrement until tied red last=1 and blue decrement until blue last=1, then 4x2 blue matching residual bound. Direct antidiagonal algebra yields P_tie with no third positive part because C=1; separately proved residual lower gives sigma. Explicit 3param family and core formula 64h^2−72h+4+(16h−15)x+x^2 are checked and require x>=2 at h=1, or all x at h>=2.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_four_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 general blue terminal shifts and tied-bottom red four-versus-three joint residual theorem",
+      "assumptions": [
+        "red original n=(a,b,f,f), sorted positive a>=b>=f>=1",
+        "blue original m=(d,e,g), sorted positive d>=e>=g>=1",
+        "normalized A=a-f+1,B=b-f+1 with A+B>=5; D=d-g+1,E=e-g+1>=2",
+        "all finite simple host graphs and ordinary non-induced vertex-disjoint star forests"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3633"
+      ],
+      "promotion_condition": "Paper proof UNDER_REVIEW; arithmetic and actual graph witnesses CHECKED at exact committed source head. Full all-profile Erdős #561 OPEN/PARTIAL; no independent MATHCERT.",
+      "claim_id": "ERDOS561-4X3-TIED-RED-AND-BLUE-LIFT-CHECK-040",
+      "short_name": "Exact finite tied-red BLUE matching deficit, terminal shifts and third switching family checks",
+      "claim_text": "Deterministic exact finite arithmetic checks cover 4884 base tied-red profiles (A,B,1,1) against (D,E,1) for A+B>=5,E>=2, checking exact P_tie and independent red/blue residual sums. Of these, 3160 have P_tie=0; 3212 sigma=0; union 4053 exact by proved lower bounds, including 841 positive-switching cases closed specifically by blue bridge. 43956 RED/BLUE terminal shifts verify five-edge change per matching deletion, switching invariance, legal positive profiles and core arithmetic; 35920 of the sharp shifted profiles satisfy the sufficient original core condition. Third infinite h,r,k family has 2400 exact profile checks and 2397 satisfies the protected original core criterion, with known three exceptions h=1,x=0 or1. The prior established blue-minimum lift checks cover 29040 parameter instances, and prior two three-parameter families each have 750 checked cases. A real 4K3 graph-colouring embedding oracle checks new tied-red n=(4,1,1,1), blue F(2,1) avoiding example; finite validation is distinct from unbounded all-host argument.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_four_by_three_matching_bridge.py uses two indexing conventions, integer max antidiagonals, separate residual lower identities, P_tie formula, full three parameter scale identities and protected core criterion; it enumerates 4K3 explicit avoiding edge-colour graph witness by independent ordinary non-induced star-forest embedding DFS. All tests are finite and do not purport to establish unrestricted-host lemma by sampling.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_four_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 heterogeneous five-red versus three-blue unrestricted-host joint and original star forest Ramsey programme",
+      "assumptions": [
+        "red original five stars n=(a,b,c,d,f), a>=b>=c>=d>=f+1, positive",
+        "blue original three stars m=(u,v,w), u>=v>=w>=1, positive",
+        "arbitrary finite simple graph host, ordinary vertex-disjoint non-induced positive star-forest copies",
+        "Gallai matching-stability theorem; source-proved 4x3 JOINT lower (including tied-last-two RED case); protected general ORIGINAL degree-core transfer"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3633"
+      ],
+      "promotion_condition": "Unbounded paper-level theorem UNDER_REVIEW, finite deterministic check CHECKED only upon fresh exact-head replay. Full unrestricted Erdős #561 OPEN/PARTIAL; do not self-certify mathematical independence, novelty or MATHCERT.",
+      "claim_id": "ERDOS561-FIVE-BY-THREE-SIX-MATCHING-BRIDGE-041",
+      "short_name": "Six-edge matching reduction from genuine 5x3 JOINT to proved 4x3 and fourth unbounded-switching family",
+      "claim_text": "Every finite simple JOINT residual host Q for five-red n=(a,b,c,d,f) with first four red arms >=f+1 and blue m=(u,v,w) has a matching of size>=6. Specifically the second joint relation Q→(F(n),F(v,w)) forces red n inside every Q-t by colouring all t edges blue; red forest uses at least14 vertices. If ν(Q)=5, then all vertex deletions have ν=5, Gallai factorcritical decomposition bounds nonisolated vertices<=15. Red forest requires >=14 after deleting nonisolated vertex, forcing Q nontrivial part=5K3; colour four triangles red and one blue to avoid both targets, contradiction. For normalized f=w=1, RED matching deletion reduces joint to q=(a-1,b-1,c-1,d-1) vs m blue, and exact canonical tail identity Jcan5=6+Jcan4+P5 with P5=(u-max(c,d+v-1))_+ +(v-d)_+. General f,w obtained via RED and BLUE uniform matching decrements, each removing >=6 edges while preserving joint arrows and dropping each of six joint antidiagonal weights by1, giving e(Q)>=Jcan5-P5(flat)-Delta4 where Delta4 is source-proved 4x3 joint deficit. When P5=0 and reduced 4x3 JOINT is exact, original 5x3 joint is exact. Fourth heterogeneous family n=(6h+r,3h+r,3h+r,3h+r,1+r),m=(4h+k,2h+k,1+k) for all h>=1,r,k>=0 has exact JOINT J=30h-3+6(r+k), canonical switching sigma=h and exact ORIGINAL size Ramsey W=40h-4+7(r+k). Reduced q=(6h-1,3h-1,3h-1,3h-1) has tied bottom red sizes and is exact by 4x3 Theorem E.2: normalized A=3h+1,B=1,blue D=4h,E=2h, Ptie0; P5 zero. The original transfer holds since Dlead(Dlead+1)-2W=10(h-1)(10h-1)+(20h-17)(r+k)+(r+k)^2>=0 for all h,r,k. All star components >=2 when r,k>=1. This is a genuinely 5x3 all-host family and NOT all-profile closure.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Complete all-host proof in FIVE_BY_THREE_SIX_MATCHING_BRIDGE_THEOREM.md. Matching stability and red support >=14 imply ν>=6, including explicit 5K3 red4/blue1 triangle contradiction. Remove RED six-edge matching to lower five-red joint to protected 4x3 source after dropping last red1 star; exact integer tail gap P5. Reduce positive red and blue terminal sizes by legal monochromatic matching deletions retaining JOINT. Source-proved tied-bottom 4x3 exact theorem closes fourth h,r,k scale family, protected degree-core ensures original W. Canonical switching h algebraic, and individual unrestricted-host minima exact for h>=2 where protected 4x3 original transfer applies; h1 only canonical gap asserted. All full conjecture claims remain OPEN.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/FIVE_BY_THREE_SIX_MATCHING_BRIDGE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_five_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FIVE_BY_THREE_SIX_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 heterogeneous five-red versus three-blue unrestricted-host joint and original star forest Ramsey programme",
+      "assumptions": [
+        "red original five stars n=(a,b,c,d,f), a>=b>=c>=d>=f+1, positive",
+        "blue original three stars m=(u,v,w), u>=v>=w>=1, positive",
+        "arbitrary finite simple graph host, ordinary vertex-disjoint non-induced positive star-forest copies",
+        "Gallai matching-stability theorem; source-proved 4x3 JOINT lower (including tied-last-two RED case); protected general ORIGINAL degree-core transfer"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3633"
+      ],
+      "promotion_condition": "Unbounded paper-level theorem UNDER_REVIEW, finite deterministic check CHECKED only upon fresh exact-head replay. Full unrestricted Erdős #561 OPEN/PARTIAL; do not self-certify mathematical independence, novelty or MATHCERT.",
+      "claim_id": "ERDOS561-FIVE-BY-THREE-SIX-MATCHING-CHECK-042",
+      "short_name": "Exact 5x3 six-matching antidiagonal, complete canonical host and 5K3 graph witness audit",
+      "claim_text": "Standard-library exhaustive integer checker verifies the exact five-versus-three six-weight difference J5−6−J4=P5 for 10584 bounded ordered positive star-profile parameter settings using independently indexed antidiagonal calculations. It verifies 7056 red terminal-lift identities, 172480 fully enumerated red/blue arm allocations across one original and one joint canonical 5x3 host, all 16 ordered positive factor-critical matching-number-five component partition types, and an explicit 5K3 red4/blue1 triangle avoiding-colouring witness against red F(2,2,2,2,1) and blue F(1,1), via independent actual vertex-disjoint ordinary star-forest graph embedding DFS. It also checks 2400 fourth unbounded-switching h,r,k profiles (including 1350 with red and blue minimum size>=2), with exact joint/original formulas, linked proven reduced 4x3 tied-tail deficit=0, 5x3 P5=0, and protected original degree-core arithmetic. Finite checks are complete in declared restricted classes and not a proof of all-host lemma by sampling.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "Independent explicit Python checker verify_five_by_three_matching_bridge.py. Integer antidiagonal computations use two conventions and exact equality assertions; sample canonical star hosts exhaust all red-arm allocations; factorcritical compositions exact; actual 5K3 graph embedding DFS confirms red and blue absence under one concrete colouring. General all-host reasoning is separately proved in paper and pending mathematical review.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_five_by_three_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FIVE_BY_THREE_SIX_MATCHING_BRIDGE_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
