@@ -2,7 +2,7 @@
   "record_type": "GCL_ERDOS561_ALL_RED_LENGTHS_THREE_BLUE_STAIRCASE/1",
   "date": "2026-11-23",
   "mathematical_status": "UNDER_REVIEW",
-  "finite_status": "PENDING_EXACT_HEAD_REPLAY",
+  "finite_status": "CHECKED_BY_INITIAL_EXACT_REPLAY_PENDING_FINAL_SOURCE_LOCK",
   "full_conjecture": "OPEN/PARTIAL",
   "mathcert": "NOT_ISSUED",
   "scope": "arbitrary finite simple host graphs, original red component count s>=3 unbounded, three original blue stars, ordinary vertex-disjoint noninduced positive star forests",
@@ -18,5 +18,22 @@
     "Gallai factor-critical matching theorem",
     "pinned Chunlin You two-component size Ramsey"
   ],
-  "limitations": "No inference about arbitrary heterogeneous profiles outside explicit zero-penalty recursion; no independent MATHCERT."
+  "limitations": "No inference about arbitrary heterogeneous profiles outside explicit zero-penalty recursion; no independent MATHCERT.",
+  "deterministic_verifier": "verify_all_red_lengths_three_blue_staircase.py",
+  "finite_replay": {
+    "main_staircase_cases": 7200,
+    "all_s_matching_deficit_identity": 6480,
+    "equal_top_residual_family_cases": 2772,
+    "main_inductive_cases": 420,
+    "equal_top_inductive_cases": 286,
+    "canonical_host_colour_allocations": 48624,
+    "complete_canonical_host_classes": 6,
+    "factorcritical_matching_partitions": 508,
+    "actual_sK3_avoiding_colouring_graphs": 7,
+    "all_positive_red_blue_arm_cases": 4050
+  },
+  "ledger_claims": [
+    43,
+    44
+  ]
 }
