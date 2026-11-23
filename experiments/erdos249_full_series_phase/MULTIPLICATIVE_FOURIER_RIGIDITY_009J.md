@@ -22,7 +22,7 @@ This class contains the genuine totient and WP09-I's explicitly dyadic-rational 
 For a positive integer P, define
 
 $$
-X=nP,\qquad E_P=3+\operatorname{bitlength}(2P),
+X=nP,\qquad E_P=3+\mathrm{bitlength}(2P),
 \qquad
 \mathcal R=\{P\le m<2P:m\equiv1\pmod n\}.
 \tag{2}
@@ -142,7 +142,7 @@ Equivalently, the real exponential sum of **actual integer multiplicative defect
 
 $$
 \boxed{
-\operatorname{Re}\sum_{m\in\mathcal R}
+\mathrm{Re}\sum_{m\in\mathcal R}
 \exp(2\pi i\Delta_b(n,m)/Q)
 \le|\mathcal R|-\frac P{23040n^3}.
 }
@@ -154,7 +154,7 @@ There is also the **uniform normalized real saving**
 $$
 \boxed{
 \frac1{|\mathcal R|}
-\operatorname{Re}\sum_{m\in\mathcal R}
+\mathrm{Re}\sum_{m\in\mathcal R}
 \exp(2\pi i\Delta_b(n,m)/Q)
 \le1-\frac1{24000n^2}.
 }
@@ -225,7 +225,7 @@ Let $\mathscr B_2$ denote precisely the class (1). For fixed n≥3 let
 $$
 \mathcal F_b(n,P)=
 \frac1{|\mathcal R|}
-\operatorname{Re}\sum_{m\in\mathcal R}
+\mathrm{Re}\sum_{m\in\mathcal R}
 \exp\left(
 \frac{2\pi i[b(nm)-b(n)b(m)]}{2^{L_1(nP)}}
 \right).
