@@ -1369,6 +1369,71 @@
         "research/erdos-561/joint-general/ALL_RED_LENGTHS_THREE_BLUE_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 general s-red versus three-blue joint residual exactness under a single BLUE matching and normalized red vertex-support bound",
+      "assumptions": [
+        "s>=3 RED positive nonincreasing star edges n=(n1,...,ns) and blue THREE positive nonincreasing m=(u,v,g)",
+        "normalized RED a_i=n_i-n_s+1 with a_s=1; BLUE U=u-g+1,V=v-g+1>=2",
+        "normalized RED vertex support sum_i(a_i+1)>=3s−1",
+        "arbitrary finite simple host graphs and ordinary vertex-disjoint non-induced positive star-forest copies",
+        "source-proved two-component RED versus arbitrary-blue residual Lemma 1 in THREE_BY_THREE_JOINT_RECONSTRUCTION.md; apply with colours exchanged",
+        "classical Gallai matching stability / factor critical components and protected ORIGINAL degree-core transfer"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3652"
+      ],
+      "promotion_condition": "Mathematical all-host theorem UNDER_REVIEW, finite checks CHECKED after exact-head execution. Unrestricted all-profile Erdős #561 remains OPEN/PARTIAL, no MATHCERT, no unsupported novelty assertion.",
+      "claim_id": "ERDOS561-ALL-S-SINGLE-BLUE-MATCHING-045",
+      "short_name": "General s×3 joint lower bound by ONE blue matching and arbitrary red profile interference penalty",
+      "claim_text": "Let s>=3, arbitrary ordered positive RED n=(n1,...,ns), BLUE m=(u,v,g). Write a_i=n_i-n_s+1, U=u-g+1, V=v-g+1>=2 and require normalized red support sum_i(a_i+1)>=3s−1. For i=1,...,s−1 define T_i=max(a_(i+1)+V−1, a_(i+2)+U−1 when i+2<=s; omit second term otherwise). Then BLUE matching penalty P_BLUE=sum_i(a_i−T_i)_+ >=0. EVERY arbitrary finite simple JOINT residual host Q has e(Q)>=Jcan(n,m)−P_BLUE. Therefore if every a_i<=T_i, the arbitrary-host JOINT minimum is exactly Jcan(n,m), and if additionally protected Wcan<=D(D+1)/2 with D=n1+u−2, ORIGINAL size Ramsey is exactly Wcan. Proof: second residual arrows red full n vs two BLUE positive stars (v,g). Colour all edges incident to arbitrary t BLUE, forcing red F(n) in Q−t. If ν(Q)=s, Gallai factorcritical matching stability gives <=3s nonisolated vertices; normalized red needs >=3s−1 after any deletion, forces exactly s triangles; colour s−1 triangles red and one blue avoids both targets. So ν(Q)>=s+1 for all required intermediate hosts. Legitimately remove >=s+1 RED matchings to decrement red minimum to1, and >=s+1 BLUE matchings to decrement blue minimum to1; all s+1 canonical joint tail weights decrease by one per decrement and normalized profiles remain invariant. Then remove one BLUE matching from normalized joint Q; the remainder jointly arrows original RED a against blue TWO-component pair (U−1,V−1) as two residual relations. After exchanging colours, these are EXACTLY the source-proved two-component red-arbitrary-blue residual lemma hypotheses; therefore remainder has >=Jcan(a,(U−1,V−1)) edges. Exact canonical identity Jcan(a,(U,V,1))=(s+1)+Jcan(a,(U−1,V−1))+P_BLUE follows term-by-term: k3 contributes 1; k4..s+2 old maximum adds third blue arm a_(k−3) to A_k, giving 1+(a_(k−3)−A_k)_+; final k=s+3 contributes a_s=1. Combining with matching size yields quantified lower. All-lengths staircase n1=(2s−3)h+1+r,n2=2(s−3)h+1+r,ni=2(s−i)h+1+r for i>=3, blue (4h+1+k,2h+1+k,1+k) has P_BLUE=0 FOR ALL s,h,r,k, so its sharp JOINT is obtained by a SINGLE blue matching, not the older red length-induction or full 3x3 JOINT. Its first separately required equal-top residual B_L also has P_BLUE=0; actual switching surplus h follows with source-proved original core plus L3 original and L2 published two-component result. This theorem holds for arbitrary RED component count s and arbitrary ordered RED lists satisfying support and explicit zero penalty, not just staircase. Outside zero penalty only a quantitative lower, not all-profile sharpness.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md Sections 1-3 all-host Gallai sK3 obstruction and exact single BLUE matching reduction to existing TWO-component residual Lemma 1 after colour swap. Nonnegative interference penalty P_BLUE obtained from exact antidiagonal maxima (s+1 canonical tail weights versus s reduced two-blue weights). Normalization of positive RED and BLUE minimum sizes by same-size matching deletions uses fixed RED vertex support>=3s−1 and V>=2. Source Sections 4-5 reconstruct staircase JOINT in one BLUE step and independently equal-top JOINT; actual switching uses source-pinned original residual formulas. Claim strictly UNDER_REVIEW, unrestricted Erdős #561 OPEN/PARTIAL.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+        "research/erdos-561/joint-general/verify_all_s_blue_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+        "research/erdos-561/joint-general/ALL_RED_LENGTHS_THREE_BLUE_STAIRCASE_THEOREM.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 general s-red versus three-blue joint residual exactness under a single BLUE matching and normalized red vertex-support bound",
+      "assumptions": [
+        "s>=3 RED positive nonincreasing star edges n=(n1,...,ns) and blue THREE positive nonincreasing m=(u,v,g)",
+        "normalized RED a_i=n_i-n_s+1 with a_s=1; BLUE U=u-g+1,V=v-g+1>=2",
+        "normalized RED vertex support sum_i(a_i+1)>=3s−1",
+        "arbitrary finite simple host graphs and ordinary vertex-disjoint non-induced positive star-forest copies",
+        "source-proved two-component RED versus arbitrary-blue residual Lemma 1 in THREE_BY_THREE_JOINT_RECONSTRUCTION.md; apply with colours exchanged",
+        "classical Gallai matching stability / factor critical components and protected ORIGINAL degree-core transfer"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3652"
+      ],
+      "promotion_condition": "Mathematical all-host theorem UNDER_REVIEW, finite checks CHECKED after exact-head execution. Unrestricted all-profile Erdős #561 remains OPEN/PARTIAL, no MATHCERT, no unsupported novelty assertion.",
+      "claim_id": "ERDOS561-ALL-S-SINGLE-BLUE-MATCHING-CHECK-046",
+      "short_name": "Exact arbitrary-red-list BLUE matching deficit in 179928 cells and 134447 sharp-criterion cases",
+      "claim_text": "Deterministic standard-library checker verifies full exact all-s BLUE penalty identity Jcan(n,(U,V,1))−(s+1)−Jcan(n,(U−1,V−1))=sum_(i=1)^(s−1) (a_i−T_i)_+ in 179928 ordered positive RED profiles (lengths 3..8, largest s−1 arms from1..8, terminal=1) against positive BLUE (U,V,1) with 2<=V<=U<=8, using independent zero-based and one-based antidiagonal indexing. Among these exactly 177856 satisfy red support>=3s−1; 134447 also have P_BLUE=0 and hence paper theorem sharp JOINT; 11142 of those have positive canonical switching surplus and 7090 also satisfy protected sufficient ORIGINAL degree core criterion. Tests additionally cover 7266 normalized red/blue terminal lifts, 680 scale cases across red lengths3..19 with P_BLUE=0 in all-length staircase, 510 equal-top residual scale cases, seven actual sK3 avoiding-colour graph embedding oracles, and 5052 fully enumerated joint canonical-host star-arm allocations for three chosen nonuniform parameter pairs. These are FINITE exact algebra, enumeration, and graph witness checks, not an unrestricted-host proof by sampling nor MATHCERT.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_all_s_blue_matching_bridge.py, two independent antidiagonal indexing conventions and exact Python integers, complete finite parameter domain, explicit sK3 graph DFS and canonical arm-colour allocations. The generic all-host lower is proved separately in mathematical manuscript, not inferred from bounded profile counts. No independent reviewer mathematical adjudication.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_all_s_blue_matching_bridge.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
