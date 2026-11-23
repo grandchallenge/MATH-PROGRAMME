@@ -25,6 +25,7 @@ python3 verify_four_by_three_matching_bridge.py
 python3 verify_five_by_three_matching_bridge.py
 python3 verify_all_red_lengths_three_blue_staircase.py
 python3 verify_all_s_blue_matching_bridge.py
+python3 verify_recursive_three_blue_certificates.py --grid
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py

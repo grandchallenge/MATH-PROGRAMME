@@ -1434,6 +1434,67 @@
         "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 compositional exactness certification for arbitrary RED component count against three BLUE stars",
+      "assumptions": [
+        "red n sorted positive of arbitrary component count s>=3, blue m=(u,v,g) sorted positive length exactly3",
+        "ordinary non-induced vertex-disjoint stars, arbitrary finite simple host graphs",
+        "source-proved complete ORIGINAL/JOINT 3x3 theorem, pinned published two-component ORIGINAL theorem and source two-component residual bridge",
+        "source-proved single BLUE matching theorem with normalized support/penalty and protected three ORIGINAL degree-core transfer clauses"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3656"
+      ],
+      "promotion_condition": "Paper logical proof-tree composition UNDER_REVIEW; finite executable classification CHECKED; all all-profile conjecture OPEN/PARTIAL; no independent MATHCERT.",
+      "claim_id": "ERDOS561-RECURSIVE-THREEBLUE-PROOF-CERTIFICATE-047",
+      "short_name": "Well-founded source-derived JOINT and ORIGINAL exactness certificates from three residual mechanisms and protected degree core",
+      "claim_text": "For arbitrary positive sorted RED lists of length s>=3 and three positive sorted BLUE sizes, define canonical original W and simultaneous JOINT J from antidiagonal maxima. A terminating source-derived proof procedure certifies exact JOINT when (B) normalized RED support>=3s-1, normalized BLUE second arm V>=2 and all-s single BLUE matching deficit P_B=0; OR (R2) exact pinned two-BLUE original second residual W(n,m[2:])=J; OR (R1) recursively certified exact ORIGINAL first residual red n[2:] versus same BLUE satisfies W(n[2:],m)=J. For red length s=3 source complete JOINT is unconditional; for red length2 two-component bridge handles auxiliary tails. The procedure certifies exact ORIGINAL if s<=3 by source complete ORIGINAL/two-component theorem, or for longer lists after certified JOINT using any one of the three protected transfer conditions: both leading RED/BLUE sizes odd; any parity W<=D(D+1)/2; or at least one leading odd with W<=D(D+1), D=n1+u−2. Recursion is well founded because first-residual proof uses one strictly shorter RED list. Every certified JOINT/ORIGINAL value holds for arbitrary finite simple graphs; returned UNKNOWN is not a counterexample and no full all-profile conjecture is assumed. In a declared 179928-profile finite grid s=3..8, other RED sizes1..8 terminal1 and blue (U,V,1), 2<=V<=U<=8, exact JOINT certificates are 162839; 17089 remain UNKNOWN by these methods; exact ORIGINAL certificates are 129885. The proof priorities yield 1008 baseline 3x3, 133949 BLUE zero-loss, 13924 second residual and 13958 recursively sharp first residual JOINT instances. A concrete JSON proof dependency trace and SHA256 classification fingerprint make provenance machine-inspectable but do not constitute independently formally checked mathematical certification.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "RECURSIVE_THREE_BLUE_CERTIFICATE_THEOREM.md Sections 1-2 give precise well-founded inference rules and source dependencies; JOINT lower uses either all-s BLUE matching lemma, exact two-blue ORIGINAL second residual, or recursively exact first original residual with equal canonical edge number. ORIGINAL lower combines certified JOINT with exact protected degree-core transfer; base s<=3 full paper theorem. No inference from star-host upper alone. verify_recursive_three_blue_certificates.py emits named theorem source proof trees and a reproducible finite-grid fingerprint; mathematical source rules require substantive review. Full all-profile Erdős #561 OPEN.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/RECURSIVE_THREE_BLUE_CERTIFICATE_THEOREM.md",
+        "research/erdos-561/joint-general/verify_recursive_three_blue_certificates.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+        "research/erdos-561/joint-general/THREE_BY_THREE_ORIGINAL_FULL_BOUNDARY.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 compositional exactness certification for arbitrary RED component count against three BLUE stars",
+      "assumptions": [
+        "red n sorted positive of arbitrary component count s>=3, blue m=(u,v,g) sorted positive length exactly3",
+        "ordinary non-induced vertex-disjoint stars, arbitrary finite simple host graphs",
+        "source-proved complete ORIGINAL/JOINT 3x3 theorem, pinned published two-component ORIGINAL theorem and source two-component residual bridge",
+        "source-proved single BLUE matching theorem with normalized support/penalty and protected three ORIGINAL degree-core transfer clauses"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3656"
+      ],
+      "promotion_condition": "Paper logical proof-tree composition UNDER_REVIEW; finite executable classification CHECKED; all all-profile conjecture OPEN/PARTIAL; no independent MATHCERT.",
+      "claim_id": "ERDOS561-RECURSIVE-THREEBLUE-PROOF-TRACE-CHECK-048",
+      "short_name": "Deterministic 179928-profile exact finite recursive proof trace census and classification fingerprint",
+      "claim_text": "Executable standard-library verifier enumerates all 179928 sorted positive original RED profiles of lengths3..8 with final RED=1 and remaining red sizes in1..8, and BLUE (U,V,1) with2<=V<=U<=8. The proof tree classifier outputs 1008 source-complete 3x3 JOINT, 133949 zero BLUE matching, 13924 exact two-blue second residual, 13958 recursively certified exact first residual and 17089 UNKNOWN; thus 162839 sharp JOINT and 129885 sharp ORIGINAL under the stated sufficient transfer conditions. It checks canonical antidiagonal indexing by two independent conventions, all theorem branch guards, well-founded recursion and explicit inspectable JSON proof for RED (2,2,1,1,1) versus BLUE (8,2,1), and computes the deterministic complete-grid SHA256 classification digest adef49db40fed21300afe1bccc2ef85c6f06278be2856f7ff9a3c0c132c4906b. Its finite CHECKED status applies to arithmetic and trace generation only, not the mathematical truth of its imported paper-level theorems.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_recursive_three_blue_certificates.py --grid; deterministic fully enumerated RED+BLUE grid, two independently indexed canonical arrays, source theorem branch verification and source-named nested JSON proof traces for specified profiles. Fingerprint pins decision+branch+original certificate on every case; replay on exact HEAD. Finite code does not prove Gallai or core transfer or certify full conjecture.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_recursive_three_blue_certificates.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RECURSIVE_THREE_BLUE_CERTIFICATE_THEOREM.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
