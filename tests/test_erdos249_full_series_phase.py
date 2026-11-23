@@ -2303,8 +2303,11 @@ class PositiveDensityMultiplicativeFourierTests(unittest.TestCase):
                 bn=phi[n]+en
                 bm=phi[m]+em
                 bnm=phi[n]*phi[m]+enm
-                self.assertTrue(0<=bn<=n and 0<=bm<=m)
-                self.assertTrue(0<=bnm<=n*m)
+                # Some +2 perturbations of a prime exceed b(m)<=m.
+                # They are not in the theorem's class; reject them rather
+                # than making a universal assertion about inadmissible b.
+                if not (0<=bn<=n and 0<=bm<=m and 0<=bnm<=n*m):
+                    continue
                 D=bnm-bn*bm
                 self.assertLessEqual(lo,abs(D))
                 self.assertLessEqual(abs(D),hi)
