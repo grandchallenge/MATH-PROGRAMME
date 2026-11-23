@@ -156,6 +156,79 @@ for h in range(1,151):
    assert h==1 and x<3
   ct['all_positive_shift_blue_bridge_joint']+=1
 
+
+# NEW exact tied-bottom RED case: n=(A,B,1,1), A+B>=5.
+# The analytical five-matching bridge here uses the support-size >=11
+# strengthening, NOT the c>=f+1 result from the older RED proof.
+for A in range(1,13):
+ for B in range(1,A+1):
+  if A+B<5: continue
+  for D in range(2,13):
+   for E in range(2,D+1):
+    red=(A,B,1,1);blue=(D,E,1)
+    W0=diag_zero(red,blue)
+    Pb_tie=positive(A-max(B+E-1,D))+positive(B-D)
+    J0=joint(red,blue)
+    J_short=joint(red,(D-1,E-1))
+    assert J0==5+J_short+Pb_tie
+    S1,S2=separate(red,blue)
+    sigma=J0-max(S1,S2)
+    assert sigma>=0
+    assert J0-min(Pb_tie,sigma)==max(5+J_short,S1,S2)
+    ct['tied_red_base_profiles']+=1
+    ct['tied_red_base_blue_sharp']+=(Pb_tie==0)
+    ct['tied_red_base_separate_sharp']+=(sigma==0)
+    ct['tied_red_base_combined_sharp']+=(min(Pb_tie,sigma)==0)
+    ct['tied_red_base_positive_switching_blue_sharp']+=(Pb_tie==0 and sigma>0)
+    for f in (1,2,4):
+     for g in (1,2,3):
+      nr=(A+f-1,B+f-1,f,f)
+      mb=(D+g-1,E+g-1,g)
+      assert diag_zero(nr,mb)==diag_one(nr,mb)
+      assert joint(nr,mb)==J0+5*(f+g-2)
+      W=sum(diag_zero(nr,mb))
+      assert W==sum(W0)+6*(f+g-2)
+      s1,s2=separate(nr,mb)
+      assert joint(nr,mb)-max(s1,s2)==sigma
+      # Every red terminal decrement preserves red nonisolated vertex
+      # support >= A+B+6>=11, and every blue terminal decrement leaves
+      # its two residual arms positive.
+      assert A+B+6>=11
+      assert mb[1]-mb[2]+1==E>=2
+      DL=nr[0]+mb[0]-2
+      ct['tied_red_both_minima_lifts']+=1
+      ct['tied_red_original_core_eligible']+=(min(Pb_tie,sigma)==0 and W<=DL*(DL+1)//2)
+
+# Third EXACT unbounded-switching heterogeneous 4x3 family: red has
+# the two smallest arm sizes equal and both can be >=2.
+for h in range(1,151):
+ for r in range(4):
+  for k in range(4):
+   nr=(4*h+r,h+r,1+r,1+r)
+   mb=(4*h+k,2*h+k,1+k)
+   w=diag_zero(nr,mb)
+   assert w==diag_one(nr,mb)
+   x=r+k
+   assert w==(8*h-1+x,6*h-1+x,4*h+x,4*h+x,2*h+x,1+x)
+   J=joint(nr,mb)
+   assert J==16*h+5*x
+   assert sum(w)==24*h-1+6*x
+   ss1,ss2=separate(nr,mb)
+   assert J-max(ss1,ss2)==h
+   A=nr[0]-nr[-1]+1;B=nr[1]-nr[-1]+1
+   D=mb[0]-mb[-1]+1;E=mb[1]-mb[-1]+1
+   assert (A,B,D,E)==(4*h,h,4*h,2*h)
+   assert positive(A-max(B+E-1,D))+positive(B-D)==0
+   L=nr[0]+mb[0]-2
+   core=L*(L+1)-2*sum(w)
+   assert core==64*h*h-72*h+4+(16*h-15)*x+x*x
+   eligible=(h>=2 or x>=2)
+   assert (core>=0)==eligible
+   if r>=1 and k>=1:
+    assert nr[-1]>=2 and mb[-1]>=2 and eligible
+   ct['tied_red_unbounded_switching_family_checks']+=1
+   ct['tied_red_unbounded_switching_original_core']+=eligible
+
 # Independently check the Gallai equality-profile argument:
 # if nu(Q)=4, matching-stable nontrivial factor-critical components C_i have
 # order 2*nu(C_i)+1, nu(C_i)>=1, so 11 nonisolated vertices remain after
@@ -203,6 +276,9 @@ def has_forest(edgelist,profile):
  return rec(0,frozenset())
 assert not has_forest(red,(2,2,2,1))
 assert not has_forest(blue,(1,1))
+# Minimal 11-vertex RED profile of the tied-tail theorem, blue 2-star forest.
+assert not has_forest(red,(4,1,1,1))
+assert not has_forest(blue,(2,1))
 assert len(red)==9 and len(blue)==3
 ct['gallai_extremal_actual_graph_witness']+=1
 
@@ -241,3 +317,12 @@ print('ERDOS561_4X3_TWO_SIDED_RED_ARM_LIFT_PARAMS',ct['lifted_sharp'])
 print('ERDOS561_4X3_ALL_POSITIVE_RED_FAMILY_3PARAM_TESTS',ct['all_positive_shift_red_bridge'])
 print('ERDOS561_4X3_ALL_POSITIVE_BLUE_FAMILY_JOINT_3PARAM_TESTS',ct['all_positive_shift_blue_bridge_joint'])
 print('ERDOS561_4X3_ALL_POSITIVE_BLUE_FAMILY_ORIGINAL_CORE_TESTS',ct['all_positive_shift_blue_original_core'])
+print('ERDOS561_4X3_TIED_RED_BASE_PROFILES',ct['tied_red_base_profiles'])
+print('ERDOS561_4X3_TIED_RED_BLUE_BRIDGE_EXACT',ct['tied_red_base_blue_sharp'])
+print('ERDOS561_4X3_TIED_RED_INDIVIDUAL_EXACT',ct['tied_red_base_separate_sharp'])
+print('ERDOS561_4X3_TIED_RED_UNION_EXACT',ct['tied_red_base_combined_sharp'])
+print('ERDOS561_4X3_TIED_RED_POSITIVE_SWITCHING_CLOSED_BY_BLUE',ct['tied_red_base_positive_switching_blue_sharp'])
+print('ERDOS561_4X3_TIED_RED_RED_BLUE_TERMINAL_LIFTS',ct['tied_red_both_minima_lifts'])
+print('ERDOS561_4X3_TIED_RED_ORIGINAL_CORE_ELIGIBLE',ct['tied_red_original_core_eligible'])
+print('ERDOS561_4X3_THIRD_UNBOUNDED_SWITCHING_FAMILY_CHECKS',ct['tied_red_unbounded_switching_family_checks'])
+print('ERDOS561_4X3_THIRD_FAMILY_ORIGINAL_CORE_CHECKS',ct['tied_red_unbounded_switching_original_core'])
