@@ -357,7 +357,7 @@ $$
 \tag{31}
 $$
 
-For $m=m(X)$ nonnegative offsets $s_1,\ldots,s_m$, and any complex test F on the normalized m-tuple that is $\Lambda(X)$-Lipschitz in its $\ell^1$ argument, pointwise
+For $m=m(X)$ nonnegative offsets $s_1,\ldots,s_m$, and any complex test F on the normalized m-tuple with Lipschitz constant $\Lambda(X)$ in its $\ell^1$ argument, pointwise
 
 $$
 \left|
