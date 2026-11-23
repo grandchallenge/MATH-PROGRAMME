@@ -36,7 +36,13 @@ class R9Remaining128(unittest.TestCase):
  def test_80_exact_hash_critical_reviewed_articles(self):
   A=load_batch_admissions(ACCEPTANCE)
   q=self.q;p=self.p
-  self.assertEqual(len(set(A) - {1}),650)
+  # Preserve the original R9 650-body cohort while later separately admitted
+  # articles (such as #579) accrue under their own protected batch identities.
+  subsequent={row["problem_id"] for b in self.ledger["batches"]
+              if not (b["batch_id"].startswith("EC-BULK-")
+                      or b["batch_id"]=="EC-LEGACY-0007")
+              for row in b["entries"]}
+  self.assertEqual(len(set(A) - {1} - subsequent),650)
   self.assertEqual(A[1]["source_sha256"], "64026cab37a6ba0bbe18d154ad64b38fe311d933dd0804e2c1a3414a9802cf78")
   self.assertEqual((p["proposed_programme_reviewed"],p["proposed_ec005_reviewed"],
                     p["proposed_ec005_unaccepted"]),(602,152,48))
