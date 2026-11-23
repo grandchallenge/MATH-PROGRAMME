@@ -1,0 +1,211 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "UNKNOWN"
+    }
+  },
+  "blockers": [
+    {
+      "id": "PRVSR-SOURCE-RULESET-UNAVAILABLE",
+      "status": "OPEN",
+      "summary": "Required-check/review ruleset source is unavailable; advisory state fails closed."
+    }
+  ],
+  "checks": [],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "BLOCKED",
+    "reasons": [
+      "1 open blocker(s) remain"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-23T06:43:33Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-23T06:43:34Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+    "exact_head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+    "pr_number": 3654,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5: continuous-character group duality natural for arbitrary coordinate maps"
+  },
+  "integration": {
+    "merge_commit_sha": "3d2771e346de596f3a47b0244d631e8f7c90ecc0",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 1,
+      "collector_limitations": [
+        "live ruleset requiredness unavailable: GET /repos/grandchallenge/MATH-PROGRAMME/rulesets?includes_parents=true failed: 403 {\n\t\"message\": \"API rate limit exceeded for installation ID 149809343. If you reach out to GitHub Support for help, please include the request ID E176:32C16A:DD3B76:1650BDA:6B03E14F and timestamp 2026-11-23 06:46:39 UTC. For more on scraping GitHub and how it may affect your rights, please review our Terms of Service (https:\\/\\/docs.github.com\\/en\\/site-policy\\/github-terms\\/github-terms-of-service)\",\n\t\"documentation_url\": \"https://docs.github.com/en/rest/using-the-rest-api/getting-started-with-the-rest-api#rate-limiting\",\n\t\"status\": \"403\"\n}\n"
+      ],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 137531251820,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531249560,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Classify policy impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531249921,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531354864,
+          "conclusion": "skipped",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531354232,
+          "conclusion": "skipped",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531375608,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Policy shard / cmdg",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531375646,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Policy shard / core",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531375647,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Policy shard / fixtures",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531249955,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137530523252,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137530524113,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "advisory-report",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531251958,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137530524652,
+          "conclusion": "skipped",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531251994,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "security / action-policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 137531529387,
+          "conclusion": "success",
+          "head_sha": "db31b83460d48708c7ddd474a46d03322c395ac2",
+          "name": "validate-json",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [],
+      "ruleset_source_available": false
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-23T06:46:38Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "cfe227159528b0f55514acfd0cdc51d156155bada97b665bfeb37ef68d58bde4"
+  },
+  "report_id": "PRVSR-LIVE-PR3654-db31b83460d4-20261123064638",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
