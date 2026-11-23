@@ -1,6 +1,6 @@
 # CSM-00/G0 — primary-statement audit and negative-novelty decisions
 
-**Programme:** CSM-001. **Audit date:** 2026-11-23. **Status:** PARTIAL G0: four original primary-paper statement surfaces inspected; primary-document binary hashing, publication-vs-preprint line-by-line concordance, exhaustive prior-art search, and independent source-proof replay remain open. **Tracker:** [CSM-001 issue #3136](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3136). This record must not be used as a complete source lock or novelty certificate.
+**Programme:** CSM-001. **Audit date:** 2026-11-23. **Status:** PARTIAL G0: four original primary arXiv PDFs acquired with recorded exact SHA-256 and numbered theorem interfaces inspected; publisher/preprint concordance, exhaustive prior-art search, and independent source-proof replay remain open. **Tracker:** [CSM-001 issue #3136](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3136). This record must not be used as a complete source lock or novelty certificate.
 
 ## Observed primary versions and exact theorem interfaces
 
@@ -11,7 +11,18 @@
 | S03 | [Sergeant-Perthuis, arXiv:2403.16104](https://arxiv.org/pdf/2403.16104), PDF v1, 24 March 2024 | Definition 3: compatible proper specification kernels. Definition 4: Gibbs measures consistent with a specification. Theorem 1: kernels of specifications form the appropriate poset representation. Theorem 2: Gibbs marginals are compatible sections | Categorical specification/invariance and phases have prior art. Weighted finite diagrams need a precise normalization and limit bridge before they can be identified with DLR specifications. |
 | S04 | [van Enter, Fernández, Sokal, hep-lat/9210032](https://arxiv.org/pdf/hep-lat/9210032), source front matter 22 October 1992; *Journal of Statistical Physics* 72 (1993) | Theorem 4.1: for zero-field two-dimensional nearest-neighbour Ising at coupling exceeding the paper's explicit large-coupling threshold (approximately 0.764285), spacing-2 decimation produces an image measure with no quasilocal specification | The non-Gibbsian RG obstruction is already rigorous. The theorem is **not** an assertion that every finite marginal or every RG map is non-Gibbsian. The source also treats other dimensions and transformations with different conditions. |
 
-**Provenance precision:** The version numbers above are printed in the inspected originals, not inferred from current bibliography headings. The user-facing source URLs are retrieval locators. A canonical SHA-256 of the PDF bytes is **not** recorded; the review environment could read source text but could not acquire those bytes for a repeatable digest. Consequently this is a versioned theorem-interface audit, not complete source-lock G0.
+**Source-byte acquisition and exact identity (2026-11-23):** An authenticated CHAD OS shell streamed each pinned arXiv PDF, verified its `%PDF-` header, measured its length and computed its SHA-256. The hashes identify **retrieved bytes**, not proof validity, content immutability or publication-edition equivalence.
+
+| ID | Exact PDF locator | Bytes | SHA-256 |
+| --- | --- | ---: | --- |
+| S01 | https://arxiv.org/pdf/1908.07021v8 | 1040967 | `99ee420f2e620a1e40e23d7dd8b3608c01f9f07bb32850703d33b9e03d48cb4e` |
+| S02 | https://arxiv.org/pdf/2111.10315v2 | 318105 | `b1aca85a2ec860a232a72c3e132230ef1d23e5f6f362610d631b0543707abe4d` |
+| S03 | https://arxiv.org/pdf/2403.16104v1 | 326888 | `1d7e429904e88c5ec45e35c3d1fc8134f75f73efc38705096cb7611e37e902b4` |
+| S04 | https://arxiv.org/pdf/hep-lat/9210032 | 1562458 | `d7ba5ff8d006863871898b6cec7995087e8846649ebd58e94b795201e45d3c9b` |
+
+**Acquisition receipt:** `GCL_CONTROL_BASH_RESULT/1` id `9db9142ceb604e6280aea42d37d98b32`; command digest `014779556501ed3a82eac111a59d25a74c216305df021b945b330735ad44e37d`; output digest `29f100fc057a527033a1a86c708fc6a0f450d7d7986c77f317de70d3ffbd105e`; private CHAD capture `execution-captures/9db9142ceb604e6280aea42d37d98b32.json`. Receipt explicitly states `execution_origin=LOCAL_OS_ONLY_NOT_INDEPENDENTLY_AUTHENTICATED`, `independent_execution_attested=false`. These identities also appear in [tracker issue #3136, source acquisition comment](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3136#issuecomment-7097110230).
+
+**Remaining source-identity obligations:** Re-fetch and compare retained bytes in an independent replay environment where policy requires it; acquire/check published editions; then compare theorem statements and hypotheses version by version. This G0 record is **partial**, not source-proof certification.
 
 ## Finite-to-probability semantics bridge: exact boundary
 
@@ -55,8 +66,8 @@ Accordingly a higher-dimensional uniform-Dobrushin preservation statement is a *
 - **Not novel:** Markov categories of finite stochastic matrices; operadic entropy maximization; categorical Gibbs specification and phase-invariance; non-Gibbsian decimation examples; the fact that positive one-dimensional hidden Markov images have exponentially continuous conditionals and Gibbs representations.
 - **Not yet established:** a new theorem characterizing *necessary and sufficient categorical compatibility* of weighted gluing, stochastic normalization, physical locality, and infinite-volume DLR reconstruction for a previously untreated class.
 - **Scientific pivot:** Build a fully explicit finite-state, machine-checkable **positive-control certificate** for one-dimensional channel pushforward with exponential continuity and a precise proof. Use its failure modes to identify which *higher-dimensional*, *nonuniform positivity*, or *nonlocal-gluing* regimes could carry new content. A certificate implementation itself is not a novel theorem.
-- **Source-lock gap:** retain exact retrieved binary digests, verify edition agreement with published versions, audit the full S05 and S06 theorem spines and quantitative predecessors, then repeat the novelty comparison before promoting a G2 research candidate.
+- **Source-lock gap:** four pinned originals acquired and SHA-256 identified. Verify publisher-edition concordance, the full S05–S07 theorem spines, quantitative predecessors, and reproducible independent replay before promoting a G2 research candidate.
 
 ## Substantive G0 status
 
-The four original source **statement interfaces** and the two newly necessary predecessor classes are recorded. The stronger version of G0 demanding full paper proofs, source-byte digests, complete novelty matrix and source-semantic agreement is **OPEN**, with no MATHCERT authority.
+The four original source **statement interfaces** and the two newly necessary predecessor classes are recorded. The stronger version of G0 demanding independently replayed source proofs, publisher-edition concordance, a complete novelty matrix and source-semantic agreement is **OPEN**, with no MATHCERT authority.
