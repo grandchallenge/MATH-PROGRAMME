@@ -248,7 +248,7 @@ D_B(D_B+1)-2W_B
  +\bigl(4Lh-2L-3\bigr)x+x^2.
 $$
 
-At $h=1,x=0$ this equals $2(L^2-2L-2)$, which is POSITIVE for $L\ge4$. All coefficients of additional $h-1$ and $x$ are nonnegative for $L\ge4$, so the core transfer yields exact ORIGINAL for every such $L$. The case $L=2$ is the pinned TWO-component theorem.
+At $h=1,x=0$ this equals $2(L^2-3L-2)$, which is POSITIVE for $L\ge4$ (its smallest value is $4$ at $L=4$). The polynomial is increasing in $h\ge1$ and $x\ge0$ for $L\ge4$, because its $h$-derivative is at least $6L^2-4L>0$ and the coefficient of $x$ is at least $2L-3>0$. Thus the core transfer yields exact ORIGINAL for every such $L$. The case $L=2$ is the pinned TWO-component theorem.
 
 Hence **both individually required unrestricted-host residual minimum edge counts are exactly** $S_1=S_2$, rather than merely having those canonical upper bounds. Thus the **actual** coupled switching surplus is
 
