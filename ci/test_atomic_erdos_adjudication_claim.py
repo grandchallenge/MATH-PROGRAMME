@@ -34,6 +34,19 @@ class ClaimTests(unittest.TestCase):
         self.assertEqual(output["result"], "ALREADY_ADJUDICATED")
         self.assertFalse(any(m == "POST" for m, _ in calls))
 
+    def test_cohort_other_assignment_does_not_block(self):
+        comments = [{"id": 11, "body": "SOURCE-CRITICAL ADJUDICATION/1\nASSIGNMENT_ID: ERDOS-PV-0003-A"}]
+        self.assertEqual(claim.adjudications(comments, "ERDOS-PV-0004-A"), [])
+        self.assertEqual(claim.adjudications(comments, "ERDOS-PV-0003-A")[0]["id"], 11)
+
+    def test_cohort_ambiguous_adjudication_blocks(self):
+        comments = [{"id": 12, "body": "SOURCE-CRITICAL ADJUDICATION/1"}]
+        self.assertEqual(claim.adjudications(comments, "ERDOS-PV-0004-A")[0]["id"], 12)
+
+    def test_invalid_assignment_id_rejected(self):
+        with self.assertRaises(ValueError):
+            claim.adjudications([], "../../evil")
+
     def test_release_wrong_sha_preserves_ref(self):
         calls = []
         def api(method, path, fields=None):
