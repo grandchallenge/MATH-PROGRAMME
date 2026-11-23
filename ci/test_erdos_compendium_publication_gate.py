@@ -39,6 +39,22 @@ def current_source_digest(n: int, historic_sha: str) -> str:
     return historic_sha
 
 
+def historical_reviewed_count(current_total: int) -> int:
+    """Keep the original 651-admission cohort invariant as newer batches accrue.
+
+    Independent later editorial admissions must not silently rewrite the
+    pinned original EC-BULK/EC-LEGACY cohort's historical test expectations.
+    """
+    ledger=json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+    additional=sum(
+        len(batch["entries"])
+        for batch in ledger.get("batches", [])
+        if not (batch["batch_id"].startswith("EC-BULK-")
+                or batch["batch_id"] == "EC-LEGACY-0007")
+    )
+    return current_total-additional
+
+
 class EditorialGateTests(unittest.TestCase):
     def _build(self, admissions):
         with tempfile.TemporaryDirectory() as root:
@@ -253,7 +269,7 @@ class EditorialGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             root = Path(root)
             counts = build(output=root / "site", admissions_path=ACCEPTANCE)
-            self.assertEqual(counts["reviewed"], 651)
+            self.assertEqual(historical_reviewed_count(counts["reviewed"]), 651)
             self.assertEqual(counts["pending"], counts["editorial"] - counts["legacy"] - counts["reviewed"])
             accepted_page = (root / "site" / "problems" / "0007.md").read_text(encoding="utf-8")
             self.assertIn("Reviewed explanatory article", accepted_page)
@@ -362,7 +378,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertIn(row["source_check"],manuscript(row["problem_id"]))
         for k in ("critical_review","protected_admission","mkdocs_run","public_html_readback"):
             self.assertEqual(batch[k],proposal[k])
-        self.assertEqual(len(load_batch_admissions(ACCEPTANCE)),651)
+        self.assertEqual(historical_reviewed_count(len(load_batch_admissions(ACCEPTANCE))),651)
         # These historical research holds are still unproved; R10 later admitted
         # only explicitly source-contested explanatory articles for them.
         for n in (653,662,683,708,712,713,728):
@@ -399,7 +415,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256(manuscript(n).encode("utf-8")).hexdigest(),amended["source_sha256"])
             self.assertEqual(amended["status_amendment_id"],"EC005-R3-STATUS-20261015-A")
         registered=load_batch_admissions(ACCEPTANCE)
-        self.assertEqual(len(registered),651)
+        self.assertEqual(historical_reviewed_count(len(registered)),651)
         self.assertTrue(all(registered[n]["batch_id"]=="EC-BULK-005-R10-48" for n in held))
 
     def test_ec005_r3_status_amendment_exact_two_without_rewriting_history(self):
@@ -564,7 +580,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertNotIn("NOT ADMITTED",manuscript(n))
             self.assertEqual(len([line for line in manuscript(n).splitlines() if line.startswith("## ")]),6)
         admitted=load_batch_admissions(ACCEPTANCE)
-        self.assertEqual(len(admitted),651)
+        self.assertEqual(historical_reviewed_count(len(admitted)),651)
         self.assertTrue(all(admitted[n]["batch_id"]=="EC-BULK-005-R10-48" for n in held))
         self.assertTrue({804,809,811}.issubset(admitted))
 
@@ -613,7 +629,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertNotIn("UNACCEPTED",manuscript(n))
             self.assertEqual(len([line for line in manuscript(n).splitlines() if line.startswith("## ")]),6)
         accepted=load_batch_admissions(ACCEPTANCE)
-        self.assertEqual(len(accepted),651)
+        self.assertEqual(historical_reviewed_count(len(accepted)),651)
         self.assertTrue(set(ready).issubset(accepted))
         self.assertTrue(all(accepted[n]["batch_id"]=="EC-BULK-005-R10-48" for n in held))
 
@@ -883,7 +899,7 @@ class EditorialGateTests(unittest.TestCase):
         amended = load_batch_admissions(ACCEPTANCE)
         expected = {301, 311, 326, 346, 400}
         self.assertEqual({r["problem_id"] for r in doc["entries"]}, expected)
-        self.assertEqual(len(amended), 651)
+        self.assertEqual(historical_reviewed_count(len(amended)), 651)
         for row in doc["entries"]:
             n = row["problem_id"]
             old, batch = history[n]
