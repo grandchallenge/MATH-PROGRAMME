@@ -31,7 +31,7 @@ A finite support-domain check does not use the actual weights: start with all hi
 
 ## 3. Finite-window cutoff theorem
 
-For an integer $k\ge0$, say the output has *reverse memory at most* $k$ when for every output letter $a$, every length-$k$ future prefix $u$, and every further finite future word $v$,
+For an integer $k\ge0$, say the output has *reverse memory at most* $k$ when for every output letter $a$, every future prefix of length $k$ $u$, and every further finite future word $v$,
 
 $$
 \nu(a u v)\nu(u)=\nu(a u)\nu(u v).
@@ -45,17 +45,17 @@ For full-support words, (1) says that the conditional probability of the present
 **Proof.** Define the future-message space
 
 $$
-W=\operatorname{span}_{\mathbb Q}\{T_v\mathbf1:v\in A^*\}
+W=\mathrm{span}_{\mathbb Q}\{T_v\mathbf1:v\in A^*\}
 \subseteq\mathbb Q^d,
 $$
 
 and its finite-depth approximation
 
 $$
-W_\ell=\operatorname{span}_{\mathbb Q}\{T_v\mathbf1:|v|\le\ell\}.
+W_\ell=\mathrm{span}_{\mathbb Q}\{T_v\mathbf1:|v|\le\ell\}.
 $$
 
-We have $W_0=\operatorname{span}\{\mathbf1\}$, of dimension one, and
+We have $W_0=\mathrm{span}\{\mathbf1\}$, of dimension one, and
 
 $$
 W_{\ell+1}=W_\ell+\sum_{a\in A}T_aW_\ell.
@@ -89,7 +89,7 @@ The same technique builds the left row span from $\pi T_u$. The rank of their bi
 
 ## 4. Physical interpretation and the prior-art cutoff
 
-If (1) holds for a finite $k$, the stationary observed process is reverse $k$-step Markov; equivalently, the time-reversed stationary process is $k$-step Markov. With full shift support, all corresponding finite conditional probabilities are positive. The familiar reverse-chain factorization supplies a **finite-range one-dimensional Gibbs interaction** on intervals of length at most $k+1$, with a term such as
+If (1) holds for a finite $k$, the stationary observed process is reverse Markov of order $k$; equivalently, the time-reversed stationary process has Markov order $k$. With full shift support, all corresponding finite conditional probabilities are positive. The familiar reverse-chain factorization supplies a **finite-range one-dimensional Gibbs interaction** on intervals of length at most $k+1$, with a term such as
 
 $$
 -\log\frac{\nu(a u)}{\nu(u)}
@@ -151,20 +151,20 @@ A separate elementary obstruction comes from two permanently disconnected hidden
 
 $$
 \nu_\delta
-=\frac12\operatorname{Ber}(p+\delta)^{\otimes\mathbb Z}
-+\frac12\operatorname{Ber}(p-\delta)^{\otimes\mathbb Z}.
+=\frac12\mathrm{Ber}(p+\delta)^{\otimes\mathbb Z}
++\frac12\mathrm{Ber}(p-\delta)^{\otimes\mathbb Z}.
 $$
 
 Its two hidden sectors have diagonal labelled matrices
 
 $$
-T_1=\operatorname{diag}(p+\delta,p-\delta),\qquad
-T_0=\operatorname{diag}(1-p-\delta,1-p+\delta).
+T_1=\mathrm{diag}(p+\delta,p-\delta),\qquad
+T_0=\mathrm{diag}(1-p-\delta,1-p+\delta).
 $$
 
 All these matrices have the same supports for every $\delta$ in the allowed interval. For $\delta=0$, the image is an iid Gibbs measure. For every $\delta>0$, it is **not quasilocal**.
 
-**Elementary proof of non-quasilocality.** Condition on any fixed finite exterior cylinder, with $r$ observed ones and $s$ zeros. The posterior odds of the two hidden phases are positive and finite. Add, arbitrarily far outside that fixed cylinder, $N$ additional observed ones. These multiply the odds in favor of the high-$p$ phase by
+**Elementary proof of non-quasilocality.** Condition on any fixed finite exterior cylinder, with $r$ observed ones and $s$ zeros. The posterior odds of the two hidden phases are positive and finite. Add, arbitrarily far outside that fixed cylinder, $N$ additional observed ones. These multiply the odds in favor of the phase having larger $p$ by
 
 $$
 \left(\frac{p+\delta}{p-\delta}\right)^N,
@@ -176,7 +176,7 @@ Yet every finite observation horizon can be misleadingly close to the Gibbsian m
 
 $$
 \left\|(\nu_\delta)_{[1,m]}
--\operatorname{Ber}(p)^{\otimes m}\right\|_{\mathrm{TV}}
+-\mathrm{Ber}(p)^{\otimes m}\right\|_{\mathrm{TV}}
 \le m\delta.
 $$
 
