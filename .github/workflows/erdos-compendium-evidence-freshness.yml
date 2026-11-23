@@ -30,6 +30,7 @@ jobs:
         run: |
           python3 ci/test_erdos_compendium_evidence_freshness.py
           python3 ci/test_erdos_compendium_research_activity.py
+          python3 ci/test_erdos_compendium_proof_evidence_coverage.py
       - name: Fetch current protected MATHCERT authority in one bounded read
         env:
           GH_TOKEN: ${{ github.token }}
@@ -81,6 +82,29 @@ jobs:
           print(f"Recent Erdős issue activity: {d['matching_source_issues_observed']} matched; truncated={d['truncated_input']}.")
           print("Activity is NOT a claim-admission or proof verdict.")
           PY
+      - name: Reconcile all 1221 proof-verification cohort records with retained evidence
+        run: |
+          set -euo pipefail
+          python3 ci/erdos_compendium_proof_evidence_coverage.py \
+            --root . \
+            --activity "$RUNNER_TEMP/erdos-research-activity.json" \
+            --output "$RUNNER_TEMP/erdos-proof-evidence-coverage.json"
+          python3 - "$RUNNER_TEMP/erdos-proof-evidence-coverage.json" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          print(f"### Erdős proof evidence coverage (no proof claims)\n\n"
+                f"Source-locked inventory: {d['catalogue_id_count']} entries; "
+                f"{d['stage_slots_count']} stage slots; "
+                f"{d['retained_pv_evidence_problem_count']} entries with retained PV evidence; "
+                f"{d['retained_evidence_vs_unexecuted_snapshot_count']} entries with potential historical-stage drift.\n")
+          print(f"Recent activity: {d['recent_activity_problem_count']} distinct candidates; "
+                f"source sample truncated={d['recent_activity_sample_truncated']}.")
+          print("Evidence presence is not proof verification. All reconciliation findings require source-level adjudication.\n")
+          for row in d["active_editorial_delta_candidates"][:20]:
+              print(f"- #{row['problem_id']}: {row['recent_issue_count']} recent update(s); "
+                    f"editorially admitted={row['editorial_admitted']}; retained PV evidence files={row['retained_evidence_file_count']}; "
+                    f"public claim inferred=False")
+          PY
       - name: Publish read-only editorial drift disposition
         run: |
           set -euo pipefail
@@ -93,5 +117,6 @@ jobs:
           path: |
             ${{ runner.temp }}/erdos-compendium-freshness.json
             ${{ runner.temp }}/erdos-research-activity.json
+            ${{ runner.temp }}/erdos-proof-evidence-coverage.json
           retention-days: 30
           if-no-files-found: warn
