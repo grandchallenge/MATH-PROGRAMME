@@ -1051,5 +1051,66 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 heterogeneous five-red versus three-blue unrestricted-host joint and original star forest Ramsey programme",
+  "assumptions": [
+    "red original five stars n=(a,b,c,d,f), a>=b>=c>=d>=f+1, positive",
+    "blue original three stars m=(u,v,w), u>=v>=w>=1, positive",
+    "arbitrary finite simple graph host, ordinary vertex-disjoint non-induced positive star-forest copies",
+    "Gallai matching-stability theorem; source-proved 4x3 JOINT lower (including tied-last-two RED case); protected general ORIGINAL degree-core transfer"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3633"
+  ],
+  "promotion_condition": "Unbounded paper-level theorem UNDER_REVIEW, finite deterministic check CHECKED only upon fresh exact-head replay. Full unrestricted Erdős #561 OPEN/PARTIAL; do not self-certify mathematical independence, novelty or MATHCERT.",
+  "claim_id": "ERDOS561-FIVE-BY-THREE-SIX-MATCHING-BRIDGE-041",
+  "short_name": "Six-edge matching reduction from genuine 5x3 JOINT to proved 4x3 and fourth unbounded-switching family",
+  "claim_text": "Every finite simple JOINT residual host Q for five-red n=(a,b,c,d,f) with first four red arms >=f+1 and blue m=(u,v,w) has a matching of size>=6. Specifically the second joint relation Q→(F(n),F(v,w)) forces red n inside every Q-t by colouring all t edges blue; red forest uses at least14 vertices. If ν(Q)=5, then all vertex deletions have ν=5, Gallai factorcritical decomposition bounds nonisolated vertices<=15. Red forest requires >=14 after deleting nonisolated vertex, forcing Q nontrivial part=5K3; colour four triangles red and one blue to avoid both targets, contradiction. For normalized f=w=1, RED matching deletion reduces joint to q=(a-1,b-1,c-1,d-1) vs m blue, and exact canonical tail identity Jcan5=6+Jcan4+P5 with P5=(u-max(c,d+v-1))_+ +(v-d)_+. General f,w obtained via RED and BLUE uniform matching decrements, each removing >=6 edges while preserving joint arrows and dropping each of six joint antidiagonal weights by1, giving e(Q)>=Jcan5-P5(flat)-Delta4 where Delta4 is source-proved 4x3 joint deficit. When P5=0 and reduced 4x3 JOINT is exact, original 5x3 joint is exact. Fourth heterogeneous family n=(6h+r,3h+r,3h+r,3h+r,1+r),m=(4h+k,2h+k,1+k) for all h>=1,r,k>=0 has exact JOINT J=30h-3+6(r+k), canonical switching sigma=h and exact ORIGINAL size Ramsey W=40h-4+7(r+k). Reduced q=(6h-1,3h-1,3h-1,3h-1) has tied bottom red sizes and is exact by 4x3 Theorem E.2: normalized A=3h+1,B=1,blue D=4h,E=2h, Ptie0; P5 zero. The original transfer holds since Dlead(Dlead+1)-2W=10(h-1)(10h-1)+(20h-17)(r+k)+(r+k)^2>=0 for all h,r,k. All star components >=2 when r,k>=1. This is a genuinely 5x3 all-host family and NOT all-profile closure.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "Complete all-host proof in FIVE_BY_THREE_SIX_MATCHING_BRIDGE_THEOREM.md. Matching stability and red support >=14 imply ν>=6, including explicit 5K3 red4/blue1 triangle contradiction. Remove RED six-edge matching to lower five-red joint to protected 4x3 source after dropping last red1 star; exact integer tail gap P5. Reduce positive red and blue terminal sizes by legal monochromatic matching deletions retaining JOINT. Source-proved tied-bottom 4x3 exact theorem closes fourth h,r,k scale family, protected degree-core ensures original W. Canonical switching h algebraic, and individual unrestricted-host minima exact for h>=2 where protected 4x3 original transfer applies; h1 only canonical gap asserted. All full conjecture claims remain OPEN.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/FIVE_BY_THREE_SIX_MATCHING_BRIDGE_THEOREM.md",
+    "research/erdos-561/joint-general/verify_five_by_three_matching_bridge.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/FIVE_BY_THREE_SIX_MATCHING_BRIDGE_EVIDENCE.json",
+    "research/erdos-561/joint-general/FOUR_BY_THREE_MATCHING_BRIDGE_THEOREM.md",
+    "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 heterogeneous five-red versus three-blue unrestricted-host joint and original star forest Ramsey programme",
+  "assumptions": [
+    "red original five stars n=(a,b,c,d,f), a>=b>=c>=d>=f+1, positive",
+    "blue original three stars m=(u,v,w), u>=v>=w>=1, positive",
+    "arbitrary finite simple graph host, ordinary vertex-disjoint non-induced positive star-forest copies",
+    "Gallai matching-stability theorem; source-proved 4x3 JOINT lower (including tied-last-two RED case); protected general ORIGINAL degree-core transfer"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3633"
+  ],
+  "promotion_condition": "Unbounded paper-level theorem UNDER_REVIEW, finite deterministic check CHECKED only upon fresh exact-head replay. Full unrestricted Erdős #561 OPEN/PARTIAL; do not self-certify mathematical independence, novelty or MATHCERT.",
+  "claim_id": "ERDOS561-FIVE-BY-THREE-SIX-MATCHING-CHECK-042",
+  "short_name": "Exact 5x3 six-matching antidiagonal, complete canonical host and 5K3 graph witness audit",
+  "claim_text": "Standard-library exhaustive integer checker verifies the exact five-versus-three six-weight difference J5−6−J4=P5 for 10584 bounded ordered positive star-profile parameter settings using independently indexed antidiagonal calculations. It verifies 7056 red terminal-lift identities, 172480 fully enumerated red/blue arm allocations across one original and one joint canonical 5x3 host, all 16 ordered positive factor-critical matching-number-five component partition types, and an explicit 5K3 red4/blue1 triangle avoiding-colouring witness against red F(2,2,2,2,1) and blue F(1,1), via independent actual vertex-disjoint ordinary star-forest graph embedding DFS. It also checks 2400 fourth unbounded-switching h,r,k profiles (including 1350 with red and blue minimum size>=2), with exact joint/original formulas, linked proven reduced 4x3 tied-tail deficit=0, 5x3 P5=0, and protected original degree-core arithmetic. Finite checks are complete in declared restricted classes and not a proof of all-host lemma by sampling.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Independent explicit Python checker verify_five_by_three_matching_bridge.py. Integer antidiagonal computations use two conventions and exact equality assertions; sample canonical star hosts exhaust all red-arm allocations; factorcritical compositions exact; actual 5K3 graph embedding DFS confirms red and blue absence under one concrete colouring. General all-host reasoning is separately proved in paper and pending mathematical review.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_five_by_three_matching_bridge.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/FIVE_BY_THREE_SIX_MATCHING_BRIDGE_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
