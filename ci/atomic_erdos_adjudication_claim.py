@@ -6,6 +6,7 @@ refs/heads/gcl-adjudication-claims/issue-N. Never steal or auto-expire a claim.
 """
 import argparse
 import json
+import re
 import subprocess
 import sys
 import uuid
@@ -33,16 +34,34 @@ def comments(issue):
     pages = json.loads(result.stdout)
     return [c for page in pages for c in page], len(pages)
 
-def adjudications(items):
-    return [{"id": c["id"], "url": c.get("html_url")} for c in items
+def adjudications(items, assignment_id=None):
+    if assignment_id is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{2,127}", assignment_id):
+        raise ValueError("invalid assignment ID")
+    matches = [{"id": c["id"], "url": c.get("html_url")} for c in items
             if any(s in (c.get("body") or "").lower()
                    for s in ("source-critical adjudication", "source critical adjudication",
                              "adjudication disposition", "adjudication/1"))]
+    if assignment_id is None:
+        return matches
+    # A cohort issue contains many independent per-problem assignments.
+    # A different, explicitly identified assignment is not a duplicate.
+    # Ambiguous adjudication without ASSIGNMENT_ID remains blocking.
+    selected = []
+    for c in items:
+        if not any(s in (c.get("body") or "").lower() for s in
+                   ("source-critical adjudication", "source critical adjudication",
+                    "adjudication disposition", "adjudication/1")):
+            continue
+        found = re.findall(r"(?im)^ASSIGNMENT_ID:\s*([^\s]+)", c.get("body") or "")
+        if len(found) != 1 or found[0] == assignment_id:
+            selected.append({"id": c["id"], "url": c.get("html_url")})
+    return selected
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("action", choices=["acquire", "inspect", "release"])
     p.add_argument("issue", type=int)
+    p.add_argument("--assignment-id", help="Exact cohort work item; ambiguous adjudications fail closed")
     p.add_argument("--claim-sha", help="Exact claim commit SHA, mandatory for release")
     args = p.parse_args()
     if args.issue < 1310:
@@ -72,7 +91,7 @@ def main():
         print(json.dumps({"result": "INELIGIBLE", "reason": "issue not open"}))
         return 2
     before, pages = comments(args.issue)
-    found = adjudications(before)
+    found = adjudications(before, args.assignment_id)
     if found:
         print(json.dumps({"result": "ALREADY_ADJUDICATED", "comments": found,
                           "count": len(before), "pages": pages}))
@@ -97,7 +116,7 @@ def main():
     if current["object"]["sha"] != claim_commit["sha"]:
         raise RuntimeError("post-acquisition ref mismatch")
     after, pages_after = comments(args.issue)
-    duplicates = adjudications(after)
+    duplicates = adjudications(after, args.assignment_id)
     print(json.dumps({"result": "ACQUIRED" if not duplicates else "ABORT_EXISTING",
                       "issue": args.issue, "actor": actor, "claim_sha": claim_commit["sha"],
                       "ref": ref, "before_count": len(before), "after_count": len(after),
