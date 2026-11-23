@@ -22,7 +22,35 @@ def verify_live(problem_id: int,root:Path)->dict:
  if branch['protected'] is not True or branch['commit']['sha']!=source_commit:
   raise ValueError('PROTECTED_MAIN_NOT_CURRENT')
  deps=_api('repos/'+REPOSITORY+'/deployments?environment=github-pages&per_page=10')
- if not deps or deps[0]['sha']!=source_commit:raise ValueError('PAGES_DEPLOYMENT_STALE')
+ if not deps:raise ValueError('PAGES_DEPLOYMENT_MISSING')
+ deployed_sha=deps[0]['sha']
+ site_equivalence=None
+ if deployed_sha!=source_commit:
+  # A newer protected head is acceptable only if GitHub's exact comparison
+  # proves the deployed commit is its ancestor and *no* site input changed.
+  from pages_publish_gate import site_source
+  compared=_api('repos/'+REPOSITORY+'/compare/'+deployed_sha+'...'+source_commit)
+  files=compared.get('files')
+  if (compared.get('status')!='ahead' or not isinstance(files,list)
+      or len(files)>=300 or compared.get('total_commits',0)<1):
+   raise ValueError('PAGES_DEPLOYMENT_STALE_UNVERIFIABLE')
+  paths=[]
+  for row in files:
+   name=row.get('filename')
+   if not isinstance(name,str):raise ValueError('PAGES_SOURCE_DIFF_UNVERIFIABLE')
+   paths.append(name)
+   old=row.get('previous_filename')
+   if old:paths.append(old)
+  site_changes=sorted(set(x for x in paths if site_source(x)))
+  if site_changes:raise ValueError('PAGES_DEPLOYMENT_SITE_INPUTS_CHANGED')
+  site_equivalence={
+   'deployed_sha':deployed_sha,
+   'current_sha':source_commit,
+   'compare_status':'ahead',
+   'site_input_changes':[],
+   'compared_paths_sha256':hashlib.sha256(json.dumps(sorted(paths)).encode()).hexdigest(),
+   'compared_paths_count':len(paths),
+  }
  statuses=_api('repos/'+REPOSITORY+'/deployments/'+str(deps[0]['id'])+'/statuses?per_page=2')
  if not statuses or statuses[0]['state']!='success':raise ValueError('PAGES_DEPLOYMENT_NOT_SUCCESSFUL')
  sys.path.insert(0,str(root/'ci'))
@@ -33,11 +61,13 @@ def verify_live(problem_id: int,root:Path)->dict:
  url=f'https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/{problem_id:04d}/'
  req=urllib.request.Request(url,headers={'User-Agent':'GCL-PAAR-001-accepted-parity/1'})
  with urllib.request.urlopen(req,timeout=25) as resp:
-  if resp.status!=200 or resp.geturl()!=url:raise ValueError('PUBLIC_URL_REDIRECT_OR_ERROR')
+  canonical=f'https://grandchallenge.ai/MATH-PROGRAMME/erdos/problems/{problem_id:04d}/'
+  if resp.status!=200 or resp.geturl() not in (url,canonical):
+   raise ValueError('PUBLIC_URL_REDIRECT_OR_ERROR')
   page=resp.read(2_500_001)
  if len(page)>2_500_000:raise ValueError('PUBLIC_HTML_TOO_LARGE')
  record=compare_accepted_article(problem_id=problem_id,source=source,admission=admission,
-     public_html=page,public_url=url,source_commit=source_commit,deploy_commit=deps[0]['sha'])
+     public_html=page,public_url=url,source_commit=source_commit,deploy_commit=deployed_sha,site_equivalence=site_equivalence)
  from playwright.sync_api import sync_playwright
  with sync_playwright() as pw:
   browser=pw.chromium.launch(headless=True)
@@ -45,6 +75,7 @@ def verify_live(problem_id: int,root:Path)->dict:
   finally:browser.close()
  record.update(render)
  record['verified_pages_deployment_id']=deps[0]['id']
+ record['public_final_canonical_url']=canonical
  record['record_authority']='AUTHENTICATED_GITHUB_PROTECTED_MAIN_PAGES_AND_LIVE_BROWSER'
  record['theorem_certified']=False
  return record
