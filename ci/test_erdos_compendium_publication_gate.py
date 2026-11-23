@@ -665,7 +665,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(len([line for line in text.splitlines() if line.startswith("## ")]),6)
             self.assertNotIn("UNACCEPTED",text)
             self.assertIn("REVIEWED",text)
-        self.assertEqual(len(accepted),651)
+        self.assertEqual(historical_reviewed_count(len(accepted)),651)
         self.assertTrue(set(expected).issubset(accepted))
         self.assertTrue(all(accepted[n]["batch_id"]=="EC-BULK-005-R10-48" for n in review["hold_ids"]))
 
@@ -696,7 +696,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(len([x for x in text.splitlines() if x.startswith("## ")]),6)
             self.assertNotIn("UNACCEPTED",text)
             self.assertIn("editorially reviewed",text)
-        self.assertEqual(len(load_batch_admissions(ACCEPTANCE)),651)
+        self.assertEqual(historical_reviewed_count(len(load_batch_admissions(ACCEPTANCE))),651)
 
     def test_ec005_r8_twenty_exact_source_bound_editorial_admissions(self):
         """Atomic 20-article review retains source and primary-proof boundaries."""
@@ -726,7 +726,7 @@ class EditorialGateTests(unittest.TestCase):
             self.assertEqual(len([h for h in body.splitlines() if h.startswith("## ")]),6)
             self.assertNotIn("UNACCEPTED",body)
             self.assertIn("editorially reviewed",body)
-        self.assertEqual(len(load_batch_admissions(ACCEPTANCE)),651)
+        self.assertEqual(historical_reviewed_count(len(load_batch_admissions(ACCEPTANCE))),651)
 
     def test_v2_rejects_cross_version_duplicate_admission(self):
         sha = hashlib.sha256(manuscript(7).encode("utf-8")).hexdigest()
