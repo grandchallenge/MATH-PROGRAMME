@@ -2031,3 +2031,172 @@ class BoundedDyadicTotientShadowTests(unittest.TestCase):
             wp09h_multistep(256,8,step=0)
         with self.assertRaises(ValueError):
             wp09h_twoprime(4096,8)
+
+
+from experiments.erdos249_full_series_phase.two_unit_parity_shadow import (
+    two_unit_target as wp09i_target,
+    certified_binary_prefix as wp09i_digits,
+    two_unit_coefficients as wp09i_coeffs,
+    two_unit_cook_replay as wp09i_cook,
+    two_unit_phase_stability as wp09i_step,
+    two_unit_two_prime_certificate as wp09i_twoprime,
+)
+
+
+class TwoUnitParityShadowTests(unittest.TestCase):
+    """WP09-I: sharp sup-gap 2 rational source with genuine prime signatures."""
+
+    def test_exact_dyadic_lower_target_and_optimal_parity_capacity(self):
+        t=wp09i_target(8)
+        self.assertEqual(t["M"],24)
+        self.assertEqual(t["gamma"],Fraction(5736255,4194304))
+        self.assertEqual(t["dyadic_denominator"],1<<24)
+        self.assertEqual(t["correction_capacity"],Fraction(1,128))
+        self.assertEqual(t["sup_coefficient_distance"],2)
+        self.assertFalse(t["odd_prime_coefficients_preserved_exactly"])
+        for K in (6,7,8,12,32):
+            c=wp09i_target(K)
+            self.assertLess(c["positive_true_totient_tail_upper"],
+                            c["correction_capacity"])
+
+    def test_exact_binary_prefix_integer_tail_certification(self):
+        for K in (6,8,12):
+            previous=None
+            for J in (10,40,160):
+                c=wp09i_digits(K,J)
+                q=c["binary_integer_prefix"]
+                den=c["exact_interval_denominator"]
+                self.assertEqual(c["exact_interval_lower_numerator"]//den,q)
+                self.assertEqual(c["exact_interval_upper_numerator"]//den,q)
+                self.assertTrue(c["certified"])
+                self.assertEqual(len(c["digits"]),J)
+                self.assertTrue(all(v in (0,1) for v in c["digits"]))
+                self.assertEqual(sum(bit << (J-j)
+                                     for j,bit in enumerate(c["digits"],start=1)),q)
+                if previous:
+                    oldJ,oldq=previous
+                    self.assertEqual(q>>(J-oldJ),oldq)
+                previous=(J,q)
+
+    def test_phi_proximity_nonnegative_parity_and_exact_prefix(self):
+        K=8
+        c=wp09i_coeffs(1024,K)
+        a,phi=c["coefficients"],c["true_totients"]
+        self.assertEqual(c["exact_max_gap"],2)
+        self.assertTrue(all(0<=phi[n]-a[n]<=2 and 0<=a[n]<=n
+                            for n in range(1,1025)))
+        self.assertTrue(all(a[n]%2==phi[n]%2 for n in range(1,1025)))
+        self.assertTrue(all(a[n]==phi[n] for n in range(1,K+1)))
+        self.assertGreater(sum(a[n]!=phi[n] for n in range(1,1025)),0)
+        self.assertEqual(set(phi[n]-a[n] for n in range(1,1025)),{0,2})
+
+    def test_infinite_binary_series_dyadic_target_exact_enclosure(self):
+        for K in (6,8,12):
+            t=wp09i_coeffs(320,K)
+            gamma=t["gamma"]
+            a=t["coefficients"]
+            prefix=Fraction(sum(a[n]<<(320-n) for n in range(1,321)),1<<320)
+            self.assertLessEqual(prefix,gamma)
+            self.assertLessEqual(gamma-prefix,Fraction(322,1<<320))
+            self.assertEqual((gamma*(1<<(3*K))).denominator,1)
+
+    def test_every_full_original_cook_phase_near_integer(self):
+        for X,h in ((128,1),(128,3),(256,1),(256,5),(512,2)):
+            c=wp09i_cook(X,h,8)
+            self.assertEqual(c["actual_length_direct_oracle_points"],3)
+            self.assertEqual(c["exact_rational_target"],wp09i_target(8)["gamma"])
+            self.assertEqual(c["coefficient_distance_verified_max"],2)
+            self.assertTrue(c["every_real_original_cook_phase_strictly_gt_0_9"])
+            self.assertGreaterEqual(c["largest_centered_residue"],0)
+            self.assertEqual(c["true_totient_Cook_tenth_saving"],"OPEN")
+
+    def test_exact_k_step_sharp_factor_and_true_source_differences(self):
+        X,K=256,8
+        for k in (1,2,3,5,8):
+            c=wp09i_step(X,K,step=k)
+            self.assertEqual(
+                c["single_k_step_phase_distance_coefficient_of_pi"],
+                Fraction(4*((1<<k)-1),c["Q"]))
+            self.assertEqual(
+                c["at_most_X_weighted_sum_difference_coefficient_of_pi"],
+                Fraction(4*X*((1<<k)-1),c["Q"]))
+            self.assertEqual(c["original_tenth_saving_transfer"],"NO")
+        L=wp09i_step(X,K)["L"]
+        c=wp09i_coeffs(2*X+L+40,K)
+        a,phi=c["coefficients"],c["true_totients"]
+        for k in (1,2,5,8):
+            for N in (X,X+1,X+X//2):
+                weighted_a=sum((1<<(k-1-j))*
+                               (a[N+L+2+j]-a[N+L+1+j])
+                               for j in range(k))
+                weighted_phi=sum((1<<(k-1-j))*
+                                 (phi[N+L+2+j]-phi[N+L+1+j])
+                                 for j in range(k))
+                self.assertLessEqual(abs(weighted_a-weighted_phi),
+                                     2*((1<<k)-1))
+
+    def test_wp09g_two_prime_signal_still_large_in_dyadic_rational_shadow(self):
+        for X in (32768,65536):
+            c=wp09i_twoprime(X,8)
+            Q=c["Q"]
+            self.assertEqual(c["actual_phi_U_lower_coefficient_of_pi"],
+                             Fraction(X**2,64*Q))
+            self.assertEqual(c["two_unit_shadow_U_error_upper_coefficient_of_pi"],
+                             Fraction(4*X,Q))
+            self.assertEqual(c["shadow_U_lower_coefficient_of_pi"],
+                             Fraction(X*(X-256),64*Q))
+            self.assertEqual(c["half_strength_shadow_U_lower_coefficient_of_pi"],
+                             Fraction(X**2,128*Q))
+            self.assertEqual(c["cofinal_shadow_U_lower_coefficient_of_pi"],
+                             Fraction(X,32768))
+            self.assertTrue(c["rational_shadow_all_late_original_real_phases_gt_0_9"])
+            self.assertEqual(c["original_totient_tenth_saving"],"OPEN")
+
+    def test_exact_multiplicative_defect_escapes_two_units(self):
+        from math import gcd
+        c=wp09i_coeffs(2048,8)
+        a,phi=c["coefficients"],c["true_totients"]
+        n=next(n for n in range(9,128) if phi[n]-a[n]==2)
+        p=next(p for p in (31,37,41,43,47,53,59,61,67,71)
+               if p>n+2 and gcd(n,p)==1 and n*p<=2048)
+        defect=a[n*p]-a[n]*a[p]
+        self.assertEqual(phi[n*p],phi[n]*phi[p])
+        self.assertEqual(defect,(a[n*p]-phi[n*p])
+                         -(a[n]-phi[n])*(p-1)
+                         -a[n]*(a[p]-phi[p]))
+        self.assertGreaterEqual(abs(defect),2*(p-1)-2*(n+1))
+        self.assertNotEqual(defect,0)
+
+    def test_prime_progression_observables_preserved_up_to_two_per_source(self):
+        X=256
+        c=wp09i_coeffs(2*X+64,8)
+        a,phi=c["coefficients"],c["true_totients"]
+        for n in (X,X+1,2*X,2*X+63):
+            self.assertLessEqual(Fraction(abs(phi[n]-a[n]),n),Fraction(2,X))
+        for mod in (2,3,5,6,10,30):
+            for r in range(mod):
+                group=[N for N in range(X,2*X-1) if (N+27)%mod==r]
+                true_v=sum(phi[N+28]-phi[N+27] for N in group)
+                fake_v=sum(a[N+28]-a[N+27] for N in group)
+                self.assertLessEqual(abs(fake_v-true_v),2*len(group))
+
+    def test_invalid_binary_source_and_cook_gates_fail_closed(self):
+        for K in (0,2,5):
+            with self.assertRaises(ValueError):
+                wp09i_target(K)
+        with self.assertRaises(ValueError):
+            wp09i_digits(8,0)
+        with self.assertRaises(ValueError):
+            wp09i_digits(8,10,margin_bits=0)
+        with self.assertRaises(ValueError):
+            wp09i_coeffs(1024,8,max_limit=128)
+        with self.assertRaises(ValueError):
+            wp09i_cook(8,1,8)
+        with self.assertRaises(ValueError):
+            wp09i_cook(256,1,8,max_X=128)
+        with self.assertRaises(ValueError):
+            wp09i_step(256,8,L=1)
+        with self.assertRaises(ValueError):
+            wp09i_step(256,8,step=0)
+        with self.assertRaises(ValueError):
+            wp09i_twoprime(4096,8)
