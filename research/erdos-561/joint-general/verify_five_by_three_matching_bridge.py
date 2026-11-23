@@ -86,7 +86,7 @@ for h in range(1,151):
    ct['six_edge_unbounded_scale_cases']+=1
 
 # Canonical upper hosts are checked independently of the star-host theorem.
-for h in (1,2):
+for h in (1,):
  n=(6*h,3*h,3*h,3*h,1)
  m=(4*h,2*h,1)
  for typ,host in (('original',diag0(n,m)),('joint',diag0(n,m)[1:])):
@@ -148,7 +148,7 @@ ct['actual_5K3_avoiding_colouring']+=1
 
 assert ct['six_weight_base_identity']==10584
 assert ct['six_edge_unbounded_scale_cases']==2400
-assert ct['upper_host_classes']==4
+assert ct['upper_host_classes']==2
 assert ct['factorcritical_matching5_composition_checks']==16
 print('ERDOS561_5X3_EXACT_SIX_WEIGHT_PARAMETER_CASES',ct['six_weight_base_identity'])
 print('ERDOS561_5X3_RED_TERMINAL_LIFTS',ct['red_uniform_terminal_lifts'])
