@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP277",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP278",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed obstruction to original two-slot family recovery",
+  "phase": "Actual regulator-valued derived pairing and split completed tensor test",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "4e628077b4def5aab7873cb3ee23a7f7940d1b2d",
-    "candidate_head_sha": "4127dfbd8c650ab00e96259661e3c81925126eba",
+    "protected_base_sha": "4a6e513b6fa4d87c87c28c985c2149cd5cea32a3",
+    "candidate_head_sha": "4a6e513b6fa4d87c87c28c985c2149cd5cea32a3",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-family-bounds-uc055-reviewed-20261123",
+    "branch": "research/reach-derived-completed-pairing-uc058-input-20261123",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -2129,30 +2129,25 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedOriginalFamilyRecoveryObstruction",
-    "result": "Frozen reviewed result prepared for native admission",
+    "action": "BindDerivedCompletedPairingTest",
+    "result": "Bound primary construction; proof and review pending",
     "evidence_refs": [
-      "research/reach-family-bounds-uc055-reviewed-20261123",
-      "research/reach-family-bounds-uc055-input-20261123",
-      "research/reach-family-bounds-uc055-primary-20261123",
-      "governance/identifiability_preflights/EXT-015-REACH-UC055-ID-001.json",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3636",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_UC055.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_TWO_SLOT_UNIFORM_BOUNDS_UC056.md",
-      "research/condensed-qft/EXT-015/TWO_SLOT_UNIFORM_SOURCE_BOUNDS_ACCEPTANCE_UC057.md"
+      "research/reach-derived-completed-pairing-uc058-input-20261123"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-23T09:49:26.513806+00:00"
+    "observed_at": "2026-11-23T10:01:03.6895637Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
+      "research/reach-derived-completed-pairing-uc058-input-20261123",
+      "research/condensed-qft/EXT-015/VARIANCE_OBSTRUCTION_SCALAR_DUAL_BRIDGE_026.md",
+      "research/condensed-qft/EXT-015/RESIDUAL_WEIGHT_TWO_CONTRACTION_UC047.md",
       "research/reach-family-bounds-uc055-input-20261123",
       "governance/identifiability_preflights/EXT-015-REACH-UC055-ID-001.json",
       "research/condensed-qft/EXT-015/TWO_SLOT_FAMILY_RECOVERY_UC043.md",
