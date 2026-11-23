@@ -328,3 +328,35 @@ def observed_markov(P, pi):
         for symbol in range(n)
     )
     return ObservableFiniteMemory(pi, matrices)
+
+
+def phase_mixture(p_minus, p_plus, weight=Fraction(1, 2)):
+    """Stationary mixture of two iid Bernoulli output phases.
+
+    The two hidden sectors are noncommunicating, so all labelled matrices
+    have the same diagonal support for every 0<p_minus,p_plus<1.
+    The Gibbs classification changes at exact observational equality.
+    """
+    a, b, weight = Fraction(p_minus), Fraction(p_plus), Fraction(weight)
+    if not 0 < a < 1 or not 0 < b < 1 or not 0 < weight < 1:
+        raise ValueError("strict positive phases and mixture weight required")
+    T0 = ((1-a, Fraction(0)), (Fraction(0), 1-b))
+    T1 = ((a, Fraction(0)), (Fraction(0), b))
+    return ObservableFiniteMemory((weight, 1-weight), (T0, T1))
+
+
+def phase_mixture_conditional_ones(p_minus, p_plus, ones, zeros=0,
+                                   weight=Fraction(1, 2)):
+    """Exact P(Y_0=1 | an exterior cylinder has ones and zeros counts).
+
+    Both hidden phases are iid; disjoint left/right exterior positions
+    contribute multiplicatively. Counts, not their positions, are relevant.
+    """
+    if not isinstance(ones, int) or ones < 0 or not isinstance(zeros, int) or zeros < 0:
+        raise ValueError("nonnegative counts required")
+    a, b, weight = Fraction(p_minus), Fraction(p_plus), Fraction(weight)
+    if not 0 < a < 1 or not 0 < b < 1 or not 0 < weight < 1:
+        raise ValueError("strict positive phases and mixture weight required")
+    x = weight * (a ** ones) * ((1-a) ** zeros)
+    y = (1-weight) * (b ** ones) * ((1-b) ** zeros)
+    return (a*x + b*y) / (x+y)
