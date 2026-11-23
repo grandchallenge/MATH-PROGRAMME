@@ -186,7 +186,7 @@ $$
 In this case the **sharper, exact** Birkhoff coefficient is $|1-2\varepsilon|$, and the Gibbs log-variation bound becomes
 
 $$
-\operatorname{var}_k(\log g)
+\mathrm{Var}_k(\log g)
 \le2\left|\log\frac{1-\varepsilon}{\varepsilon}\right|
 |1-2\varepsilon|^{k-1}.
 $$
