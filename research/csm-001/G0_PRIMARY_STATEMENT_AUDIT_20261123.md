@@ -69,6 +69,26 @@ Accordingly a higher-dimensional uniform-Dobrushin preservation statement is a *
 
 **Acquired source identity:** $\texttt{CSM-S08}$ at exact URL `https://arxiv.org/pdf/1311.2319v2`, 975832 bytes, SHA-256 `ea79ab911040536b5b3fe02a448a9e78e158a2f8f5716635470b8b1c1fdd6df6`; PDF header verified. Authenticated CHAD local acquisition receipt `GCL_CONTROL_BASH_RESULT/1 3e10f12b20014964bac259f521b6e26c`; output digest `c53517d3a1b81defe22a93939054ecf670b22dbb8ea11ed02183f8183b27177a`; `independent_execution_attested=false`.
 
+### S09: Yayama 2026 requires version- and formulation-sensitive comparison
+
+**Yuki Yayama**, [*On Gibbs measures for almost additive sequences associated to some relative pressure functions*, arXiv:2402.10199v2](https://arxiv.org/html/2402.10199v2), revised 28 January 2025, with linked published edition [*Ergodic Theory and Dynamical Systems* 46 (2026), 1106–1124](https://doi.org/10.1017/etds.2025.10262).
+
+**Material version correction.** The original [v1 PDF](https://arxiv.org/pdf/2402.10199v1), February 2024, is titled *On Gibbs measures for almost additive potentials* and precedes the expanded v2 source. It cannot be used as direct evidence of the later paper's Theorem 4.2 in the exact revised form. The v2 primary HTML and published abstract were inspected separately.
+
+- Definition 4.1 (from Yoo and Piraino): *fiber-wise sub-positive mixing*; Theorem 4.1 (credited to Piraino) supplies the familiar sufficient Gibbs-preservation condition for such factor maps.
+- Proposition 4.1 explicitly states fiber-wise sub-positive mixing is **not necessary** for the image to be Gibbs.
+- **Theorem 4.2 is under Setting (C)**: a one-block factor from an irreducible three-symbol shift of finite type to a two-symbol full shift or specified golden-mean shift, with $\pi(1)=1$, $\pi(2)=\pi(3)=2$, and a two-coordinate potential $f$. Within that scope, almost additivity of the relative-pressure sequence is equivalent to a Borel-measurable Gibbs-potential description. Additional restrictions on the two-by-two submatrix $M_{22}$ are used to obtain a *continuous* potential. The distinction between Borel and continuous is mathematical, not editorial.
+- Corollary 4.3 and Remark 4.2 specialize to measures of maximal entropy and one-step Markov measures. Theorems outside Setting (C) must not be inferred from the abstract.
+- This work addresses relevant factor-map Gibbs classification but does **not** itself furnish an unrestricted necessary-and-sufficient theorem for all noisy two-layer overlapping channels or arbitrary higher-dimensional DLR specifications. Other literature may still subsume those special results; their originality is **not** claimed.
+
+**Exact source byte evidence:** v1 PDF: 258399 bytes, SHA-256 `fe8c2ec13b73b479117bcdd5334bee52c581f91ebb6e27e95e05f0ced88a7548`. v2 PDF: 328124 bytes, SHA-256 `312da8275ce4a60b0a23a06007349136cfa48ce038930ad0f08d9b3ff1112409`. v2 local acquisition receipt GCL_CONTROL_BASH_RESULT/1 `eca36e9df90e4e839fa3441d70e56626`; `independent_execution_attested=false`. Publication-edition line-by-line concordance is still open.
+
+**S07 acquisition update:** Külske–Opoku [arXiv:0711.3764v1](https://arxiv.org/pdf/0711.3764v1), 350573 PDF bytes, SHA-256 `26b824c5dc7f3e9777a76e88d4578288f0561bd123a55e4c54ee697aac2383c3`; authenticated local acquisition receipt `8936578f61a54622b99b30aec098788c`, independent execution not attested. Full published-edition comparison and original proof replay remain open.
+
+### S10: support pattern cannot classify Gibbsianity alone
+
+The elementary [G2 support-only no-go corollary](G2_SUPPORT_ONLY_CLASSIFICATION_NO_GO_20261123.md) compares the **same** XOR-labelled support matrices at $p=1/2$ (iid Gibbs output) and $p=3/4$ (non-Gibbsian output). Therefore a Boolean-semigroup/support-only test cannot furnish a necessary-and-sufficient Gibbs characterization. This is a known-counterexample corollary and **not an original result**. Weight-sensitive posterior information is essential for any complete criterion.
+
 ## Deliberate negative novelty verdicts
 
 - **Not novel:** Markov categories of finite stochastic matrices; operadic entropy maximization; categorical Gibbs specification and phase-invariance; non-Gibbsian decimation examples; the fact that positive one-dimensional hidden Markov images have exponentially continuous conditionals and Gibbs representations.
