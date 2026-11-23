@@ -2200,3 +2200,145 @@ class TwoUnitParityShadowTests(unittest.TestCase):
             wp09i_step(256,8,step=0)
         with self.assertRaises(ValueError):
             wp09i_twoprime(4096,8)
+
+
+from experiments.erdos249_full_series_phase.multiplicative_fourier_rigidity import (
+    first_modified_twounit_8 as wp09j_first,
+    fourier_rigidity_certificate as wp09j_certificate,
+    universal_defect_interval as wp09j_defect_interval,
+    finite_fourier_rigidity_replay as wp09j_replay,
+)
+
+
+class PositiveDensityMultiplicativeFourierTests(unittest.TestCase):
+    """WP09-J: real Fourier defect is positive density; original Cook stays open."""
+
+    def test_four_actual_totients_certify_first_shadow_index_21(self):
+        proof=wp09j_first()
+        self.assertEqual(proof["first_modified_index"],21)
+        self.assertEqual(proof["phi_first_modified"],12)
+        self.assertEqual(proof["shadow_first_modified"],10)
+        self.assertEqual(proof["scaled_tail_lower"],Fraction(1))
+        self.assertEqual(proof["scaled_tail_upper"],Fraction(143,128))
+        self.assertEqual(proof["first_13_binary_digits"],(0,)*12+(1,))
+        self.assertEqual(proof["gamma_8"],Fraction(5736255,4194304))
+        self.assertEqual(proof["true_phi_irrationality"],"OPEN")
+        from experiments.erdos249_full_series_phase.two_unit_parity_shadow import (
+            two_unit_coefficients,
+        )
+        c=two_unit_coefficients(96,8)
+        a,p=c["coefficients"],c["true_totients"]
+        self.assertTrue(all(a[n]==p[n] for n in range(1,21)))
+        self.assertEqual((p[21],a[21]),(12,10))
+
+    def test_exact_cook_least_depth_and_effective_gate(self):
+        for n,P in ((3,4096),(7,8192),(11,8192),(21,20000)):
+            c=wp09j_certificate(n,P)
+            self.assertTrue(c["eligible"])
+            self.assertEqual(c["X"],n*P)
+            self.assertEqual(c["Q"],1<<c["L"])
+            self.assertGreater(c["Q"],32*c["X"])
+            self.assertLess(c["Q"],96*c["X"])
+            self.assertGreaterEqual(P,c["P_min_crt"])
+            self.assertGreaterEqual(P,c["P_min_defect"])
+            self.assertTrue(c["legal_cook_size"])
+            self.assertGreater(c["normalized_progression_real_gap_lower"],0)
+            self.assertEqual(c["original_Cook_full_phase_bound"],"OPEN")
+
+    def test_positive_density_actual_totient_sieve_and_oneflip_replay(self):
+        for n,P in ((3,4096),(7,8192),(11,8192),(21,20000)):
+            a=wp09j_replay(n,P)
+            self.assertEqual(a["all_good_exact_defect_envelopes"],"PASS")
+            self.assertGreaterEqual(
+                5*n*a["actual_good_multipliers_count"],P)
+            self.assertGreaterEqual(
+                n*a["actual_progression_count"],P-n)
+            self.assertGreater(
+                a["one_flip_diagnostic_real_sum_gap"],
+                float(a["full_progression_real_gap_lower"]))
+            self.assertEqual(a["actual_phi_multiplicativity_defect"],
+                             "ZERO_FOR_ALL_COPRIME")
+            self.assertFalse(a["direct_WP09I_huge_index_digits_evaluated"])
+        s=wp09j_replay(21,20000)
+        self.assertEqual((s["X"],s["L"],s["Q"]),(420000,24,16777216))
+        self.assertEqual(s["actual_progression_count"],952)
+        self.assertEqual(s["actual_good_multipliers_count"],952)
+        self.assertTrue(s["bound_holds_for_WP09I_dyadic_rational_shadow"])
+
+    def test_rational_fourier_constants_and_normalization(self):
+        n,P=21,20000
+        c=wp09j_certificate(n,P)
+        self.assertEqual(c["source_progression_count_lower"],
+                         Fraction(P,n)-1)
+        self.assertEqual(c["good_multipliers_count_lower"],
+                         Fraction(P,5*n))
+        self.assertEqual(c["pointwise_defect_abs_lower_fraction_of_m"],
+                         Fraction(1,2))
+        self.assertEqual(c["pointwise_defect_abs_upper_fraction_of_m"],
+                         Fraction(3))
+        self.assertEqual(c["pointwise_fourier_real_gap_lower"],
+                         Fraction(1,4608*n*n))
+        self.assertEqual(c["full_progression_real_gap_lower"],
+                         Fraction(P,23040*n**3))
+        self.assertEqual(c["normalized_progression_real_gap_lower"],
+                         Fraction(1,24000*n*n))
+        self.assertEqual(c["erdos_249_irrationality"],"OPEN")
+        self.assertEqual(c["mathcert"],"NOT_SUBMITTED")
+
+    def test_universal_plus_minus_corrections_at_coprime_products(self):
+        from itertools import product
+        from math import gcd
+        phi=totients(2*20000)
+        n,P=21,20000
+        Q=wp09j_certificate(n,P)["Q"]
+        samples=[m for m in range(P,2*P) if m%n==1][:18]
+        self.assertEqual(len(samples),18)
+        for m in samples:
+            self.assertEqual(gcd(n,m),1)
+            self.assertGreaterEqual(phi[m]*3,m)
+            lo,hi=wp09j_defect_interval(n,m,phi[m])
+            self.assertGreaterEqual(2*lo,m)
+            self.assertLessEqual(hi,3*m)
+            for en,em,enm in product((-2,2),(-2,0,2),(-2,0,2)):
+                bn=phi[n]+en
+                bm=phi[m]+em
+                bnm=phi[n]*phi[m]+enm
+                self.assertTrue(0<=bn<=n and 0<=bm<=m)
+                self.assertTrue(0<=bnm<=n*m)
+                D=bnm-bn*bm
+                self.assertLessEqual(lo,abs(D))
+                self.assertLessEqual(abs(D),hi)
+                self.assertGreater(192*n*abs(D),Q)
+                self.assertLessEqual(2*abs(D),Q)
+
+    def test_specific_K8_shadow_defect_is_not_original_Cook_character(self):
+        c=wp09j_certificate(21,20000)
+        self.assertEqual(c["original_Cook_full_phase_bound"],"OPEN")
+        self.assertEqual(c["source_locked_weighted_prime_cofactor_correlation"],
+                         "OPEN")
+        self.assertEqual(c["erdos_249_irrationality"],"OPEN")
+        self.assertNotEqual(c["normalized_progression_real_gap_lower"],
+                            Fraction(1,10))
+        self.assertGreater(c["normalized_progression_real_gap_lower"],0)
+        self.assertLess(c["normalized_progression_real_gap_lower"],
+                        Fraction(1,1000))
+
+    def test_gates_reject_zero_wrong_type_and_undersized_scale(self):
+        for n,P in ((0,20000),(-1,20000),(21,0),(True,20000),
+                    (21,True)):
+            with self.assertRaises(ValueError):
+                wp09j_certificate(n,P)
+        with self.assertRaises(ValueError):
+            wp09j_certificate(1,20000)
+        for n,P in ((21,256),(21,4096),(3,64)):
+            a=wp09j_certificate(n,P)
+            self.assertFalse(a["eligible"])
+            self.assertIsNone(a["normalized_progression_real_gap_lower"])
+            with self.assertRaises(ValueError):
+                wp09j_replay(n,P)
+        with self.assertRaises(ValueError):
+            wp09j_replay(21,20000,max_P=1000)
+        with self.assertRaises(ValueError):
+            wp09j_defect_interval(0,20,8)
+        with self.assertRaises(ValueError):
+            wp09j_defect_interval(21,20,22)
