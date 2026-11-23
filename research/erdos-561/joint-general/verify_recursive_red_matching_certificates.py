@@ -96,9 +96,11 @@ def audit():
                         newO["proof"] if newO else "UNKNOWN")).encode())
     assert ct["total"]==179928
     assert ct["old_joint"]==162839 and ct["old_original"]==129885
-    assert ct["new_joint"]==165599 and ct["new_original"]==131028
-    assert ct["new_joint_only"]==2760 and ct["new_original_only"]==1143
-    assert ct["still_unknown"]==14329
+    assert ct["new_joint"]==165677 and ct["new_original"]==131052
+    assert ct["new_joint_only"]==2838 and ct["new_original_only"]==1167
+    assert ct["still_unknown"]==14251
+    assert ct["joint_RED_MATCHING_ZERO_DEFICIT_RECURSION"]==1871
+    assert ct["joint_FIRST_RESIDUAL_SHARP_VIA_ENHANCED_ORIGINAL"]==967
     return {"counts":dict(sorted(ct.items())),"classification_sha256":h.hexdigest(),
             "first_examples_by_method":examples}
 

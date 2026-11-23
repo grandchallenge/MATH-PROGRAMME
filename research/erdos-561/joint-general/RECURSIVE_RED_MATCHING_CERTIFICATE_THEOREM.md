@@ -112,11 +112,11 @@ Adding the RED matching rule and recursively re-evaluating ORIGINAL sharpness un
 | Value | Old certificate | Enhanced certificate |
 | --- | ---: | ---: |
 | Total profiles | 179,928 | 179,928 |
-| Sharp JOINT proven by sourced sufficient rules | 162,839 | **165,599** |
-| Sharp ORIGINAL proven by sourced sufficient rules | 129,885 | **131,028** |
-| JOINT profiles still UNKNOWN by these rules | 17,089 | **14,329** |
+| Sharp JOINT proven by sourced sufficient rules | 162,839 | **165,677** |
+| Sharp ORIGINAL proven by sourced sufficient rules | 129,885 | **131,052** |
+| JOINT profiles still UNKNOWN by these rules | 17,089 | **14,251** |
 
-Hence **2,760 additional JOINT** and **1,143 additional ORIGINAL** classifications become exact under already-established all-host mathematical lemmas. These numbers are full counts within the **declared finite arithmetic parameter grid**, not a host graph census, not an independently verified universal theorem and not evidence that any UNKNOWN profile violates the canonical formula.
+Hence **2,838 additional JOINT** and **1,167 additional ORIGINAL** classifications become exact under already-established all-host mathematical lemmas. The enhanced count includes 78 joint and 24 original classifications omitted by a preliminary unit-terminal-only check; those omissions arose when a shorter RED list still had minimum size above one and required further normalization. These numbers are full counts within the **declared finite arithmetic parameter grid**, not a host graph census, not an independently verified universal theorem and not evidence that any UNKNOWN profile violates the canonical formula.
 
 A minimal newly certified example is
 
@@ -136,6 +136,6 @@ The standalone verifier verify_recursive_red_matching_certificates.py imports th
 
 ## 4. Remaining boundary
 
-The 14,329 still UNKNOWN bounded cells do not imply a counterexample. They are profiles for which the combined direct BLUE loss, separate original residual, RED transfer, and protected ORIGINAL transfer have not established sharpness. Some exhibit genuinely positive BLUE and RED losses; others fail the vertex-support or protected degree-core criteria. Their resolution needs a stronger graph-theoretic bound, an additional legitimate transfer, or a verified counterexample.
+The 14,251 still UNKNOWN bounded cells do not imply a counterexample. They are profiles for which the combined direct BLUE loss, separate original residual, RED transfer, and protected ORIGINAL transfer have not established sharpness. Some exhibit genuinely positive BLUE and RED losses; others fail the vertex-support or protected degree-core criteria. Their resolution needs a stronger graph-theoretic bound, an additional legitimate transfer, or a verified counterexample.
 
 The all-profile Erdős #561 conjecture remains OPEN/PARTIAL. Mathematical paper claim UNDER_REVIEW; finite trace classification CHECKED after exact-head replay; MATHCERT not issued.
