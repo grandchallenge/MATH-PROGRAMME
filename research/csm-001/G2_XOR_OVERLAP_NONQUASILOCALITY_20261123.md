@@ -1,6 +1,6 @@
 # CSM-G2-XOR — sharp one-dimensional overlap obstruction from an iid source
 
-**Programme:** CSM-001. **Status:** self-contained mathematical proof **candidate**, with independent exact-rational finite-cylinder tests; source-critical novelty audit and specialist review OPEN. **Do not describe as original, mathematically certified, or externally validated.** This is distinct from the positive **single-site channel** preservation reconstruction in [G2 positive-channel certificate](G2_POSITIVE_CHANNEL_CERTIFICATE_20261123.md).
+**Programme:** CSM-001. **Status:** independently reconstructed proof candidate and exact-rational finite-cylinder tests; mathematical result **KNOWN / NOT NOVEL** by Kari–Taati Example 32; GCL internal proof review and independent replay remain open. **Do not describe as an original theorem, mathematically certified, or externally validated.** This is distinct from the positive **single-site channel** preservation reconstruction in [G2 positive-channel certificate](G2_POSITIVE_CHANNEL_CERTIFICATE_20261123.md).
 
 ## Statement
 
@@ -111,10 +111,14 @@ The same exterior with longer distant zeros forces the first probability toward 
 
 **Scientific interpretation:** This exhibits the fragility of locality under *overlapping deterministic gluing*. Even an independent microscopic state, and even an observed process with strictly finite dependence range and full finite-cylinder support, can have singular conditional behavior. Unconditional finite-range decorrelation does **not** imply quasilocality.
 
+## Definitive source comparison
+
+Kari and Taati, [*Statistical Mechanics of Surjective Cellular Automata*](https://arxiv.org/pdf/1311.2319v2) (2014), **Example 32**, proves exactly that the image of a biased Bernoulli measure under this overlapping binary XOR map fails to be a regular Gibbs measure unless the source is fair. **Proposition 33** describes an invariant-measure collapse obstruction; **Example 34** extends XOR analysis to its iterates. The source also identifies an earlier suggestion by van den Berg. Thus the XOR preservation/obstruction conclusion above is **established prior art; novelty verdict NEGATIVE**. Our independent finite-cylinder pinning argument and exact arithmetic tests are retained strictly as a reconstructive calibration/checking fixture. No originality of that alternative proof is claimed pending a source-level audit of the van den Berg predecessor.
+
 ## Novelty and authority boundary
 
-The proposition is supplied with a complete elementary proof candidate and independent finite checks. **An absence of an immediately located identical published example is not evidence of originality.** Known literature already contains pathological factors of Markov shifts, non-Gibbsian transformations, one-dependent block factors and infinite-volume hidden-phase obstructions. Before any G2 novelty claim, a source-semantic specialist audit must check this sharp XOR parameter classification against those works, especially structural-zero hidden Markov presentations and sliding-block factor results.
+The result is an **already published example**. The present note adds a proposed independently readable cylinder-ratio proof and exact-rational fixture. These must be reviewed and replayed as mathematical reconstruction; G2 novelty must instead seek a theorem with demonstrably different hypotheses or conclusion and check it against the Kari–Taati and van den Berg predecessor class.
 
 The positive single-site-channel preservation theorem is not contradicted: the XOR image observes **two overlapping hidden sites**, and its lifted hidden-state transition has structural zeros, so the strict-positivity hypothesis used for uniform projective contraction is lost. This is the intended sharp boundary diagnostic.
 
-**Status:** FINITE EXACT CERTIFICATE + PROOF CANDIDATE; novelty UNSCREENED, mathematical certification NOT ISSUED. G0 source equivalence and comprehensive G2 novelty gate remain open; no G3 general theorem is inferred.
+**Status:** FINITE EXACT CERTIFICATE + PROOF CANDIDATE; novelty **NEGATIVE (KNOWN RESULT)**, mathematical certification NOT ISSUED. G0 source equivalence and comprehensive G2 novelty gate remain open; no G3 general theorem is inferred.
