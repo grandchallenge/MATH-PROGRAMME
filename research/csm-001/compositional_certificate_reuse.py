@@ -4,7 +4,7 @@ and margin-conditional adaptive packing covers. Exact rational arithmetic.
 from fractions import Fraction as F
 from itertools import product
 from collections import deque
-from math import prod, floor
+from math import prod, floor, ceil
 
 from observable_memory_certificate import ObservableFiniteMemory
 from observable_polytope_certificate import PredictiveQuotient, solve_square, row_mul, project
@@ -443,13 +443,23 @@ def guaranteed_packing_budget(d,alphabet,b,J,H,theta):
     if d<1 or alphabet<1 or not 0<b<=1 or J<=0 or H<0 or not 0<theta<1:
         raise ValueError("invalid packing hypotheses")
     if k==0:return {"block":1,"radius":F(1,4),"rate":F(1,2),
-                   "cell_bound":1,"primitive_bound":alphabet}
+                   "cell_bound":1,"primitive_bound":alphabet,"primitive_bound_power":(alphabet,1)}
     R=min(F(1,4),b/(2*k*J))
     D=4*k*(1+2*k)*H/b**2
-    s=1
-    while D*theta**s>F(1,2):s+=1
+    # A rational, efficiently computed sufficient horizon. In t steps
+    # theta**t <= 1/2 by Bernoulli, then j halvings suffice. Avoid an
+    # iteration or giant exact power at nearly marginal inputs.
+    x=2*D
+    j=0
+    if x>1:
+        j=max(0,x.numerator.bit_length()-x.denominator.bit_length())
+        if 2**j<x:j+=1
+    t=ceil(1/(1-theta))
+    s=max(1,t*j)
     return {"block":s,"radius":R,"rate":F(1,2),
-            "cell_bound":packing_bound(k,R,F(1,2)),"primitive_bound":alphabet**s}
+            "cell_bound":packing_bound(k,R,F(1,2)),
+            "primitive_bound":alphabet**s if s*alphabet.bit_length()<=1000000 else None,
+            "primitive_bound_power":(alphabet,s)}
 
 
 def packing_budget_from_conditionals(model,b,C,L,eta):
