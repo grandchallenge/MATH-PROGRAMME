@@ -186,7 +186,28 @@ def comparison_weights(E):
     try:w=solve_square(A,(F(1),)*k)
     except ValueError:return (F(1),)*k
     if min(w)<=0:return (F(1),)*k
-    return tuple(x/min(w) for x in w)
+    return tuple(F(ceil(256*x/min(w)),256) for x in w)
+
+
+def rational_rate(eta,horizon):
+    """Rational 0<rho<1 with eta < rho**horizon, using strict checks."""
+    if not 0<=eta<1 or horizon<1:raise ValueError("invalid contraction rate")
+    rho=F(1,2)
+    while rho**horizon<=eta:rho=(1+rho)/2
+    return rho
+
+
+def scalar_potential(scalars,targets,eta,horizon):
+    """Local positive rational graph potential for a scalar horizon proof."""
+    rho=rational_rate(eta,horizon)
+    h=(F(1),)*len(scalars)
+    for _ in range(horizon-1):
+        h=tuple(max(F(1),max(l*h[q]/rho for l,q in zip(row,dest)))
+                for row,dest in zip(scalars,targets))
+    if any(l*h[q]>rho*h[p] for p,(row,dest) in enumerate(zip(scalars,targets))
+           for l,q in zip(row,dest)):
+        raise ValueError("scalar potential identity failed")
+    return {"rho":rho,"potential":h,"potential_ratio":max(h)/min(h)}
 
 
 def graph_horizon(B,targets,max_horizon,weights=None):
@@ -212,9 +233,11 @@ def graph_horizon(B,targets,max_horizon,weights=None):
                   for row,dest in zip(B,targets))
         e1=max(scalar);e2=max(column_norm(A,w) for A in mat)
         if min(e1,e2)<1:
-            return {"horizon":t,"eta":min(e1,e2),
+            data={"horizon":t,"eta":min(e1,e2),
                     "method":"scalar" if e1<=e2 else "component",
                     "weights":w,"one_step_eta":max(max(row) for row in scalars)}
+            if e1<1:data.update(scalar_potential(scalars,targets,e1,t))
+            return data
     raise ValueError("graph horizon budget")
 
 
@@ -256,7 +279,7 @@ def verify_cover(chart,block,boxes,edges,max_horizon,weights=None):
     w=result["weights"]
     diam=max(((max(box[j][1] for box in boxes)-min(box[j][0] for box in boxes))/w[j]
               for j in range(k)),default=F(0))
-    J=max(sum(w[i-1]*T[i][0].__abs__() for i in range(1,k+1))
+    J=max(sum(w[i-1]*abs(T[i][0]) for i in range(1,k+1))
           for T in chart.matrices)
     return dict(result,block=block,contraction_length=block*result["horizon"],
                 nonnull=c,diameter=diam,log_variation_constant=J*diam/c,
@@ -284,3 +307,84 @@ def discover(model,max_block=2,max_bits=10,max_depth=1,rounds=24,
                         boxes=boxes,edges=edges,bits=bits,depth=depth,widening_steps=steps,
                         attempts=attempts,failures=failures)
     return {"outcome":"undecided","attempts":attempts,"failures":failures}
+
+
+def image_cover(chart,block,bits,max_cells,max_extent=64):
+    """Adaptive topology: create a rounded local cell only for an uncovered image.
+
+    Closure is checked edge by edge, never inferred from proximity. The
+    finite budget may be exhausted even for a regular model.
+    """
+    if any(not isinstance(v,int) or v<1 for v in (block,bits,max_cells)):
+        raise ValueError("bad adaptive image budget")
+    if chart.alphabet**block>max_cells:
+        raise ValueError("primitive block budget")
+    A,seeds=block_system(chart,block)
+    boxes=list(dict.fromkeys(hull((x,)) for x in seeds))
+    if len(boxes)>max_cells:raise ValueError("cell budget")
+    edges=[];h=F(1,2**bits)
+    for box in boxes:
+        V=corners(box);row=[]
+        for T in A:
+            _,_,im=image(T,V)
+            j=next((j for j,C in enumerate(boxes) if contains(C,im)),None)
+            if j is None:
+                if len(boxes)>=max_cells:raise ValueError("cell budget")
+                C=padded(im,h)
+                if any(max(abs(l),abs(u))>max_extent for l,u in C):
+                    raise ValueError("cover extent budget")
+                j=len(boxes);boxes.append(C)
+            row.append(j)
+        edges.append(tuple(row))
+    return tuple(boxes),tuple(edges)
+
+
+def discover_images(model,max_bits=12,max_cells=48,max_horizon=24,
+                    modes=("weighted","hidden","reachable","raw"),min_bits=3):
+    """Single-letter adaptive-topology fallback; no observation words enumerated."""
+    q=PredictiveQuotient(model)
+    attempts=0;failures={}
+    for mode in modes:
+        chart=Chart(q,centered_basis(model,q,mode))
+        for bits in range(min_bits,max_bits+1):
+            attempts+=1
+            try:
+                boxes,edges=image_cover(chart,1,bits,max_cells)
+                data=verify_cover(chart,1,boxes,edges,max_horizon)
+            except ValueError as exc:
+                key=str(exc);failures[key]=failures.get(key,0)+1
+                continue
+            return dict(data,outcome="certified",mode=mode,basis=chart.basis,
+                        boxes=boxes,edges=edges,bits=bits,attempts=attempts,
+                        failures=failures)
+    return {"outcome":"undecided","attempts":attempts,"failures":failures}
+
+
+def uniform_margins(model,chart,certificate):
+    """Extract rational WP11 constants from a verified graph certificate.
+
+    Call with the output of verify_cover, not an unchecked supplied dictionary.
+    """
+    from effective_polytope_synthesis import observable_entry_bound
+    L=certificate["contraction_length"];eta=certificate["eta"]
+    c=certificate["nonnull"];C=certificate["log_variation_constant"]
+    w=certificate["weights"];diam=certificate["diameter"]
+    # Use small dyadic conservative bounds for the tail calculation.
+    eta_upper=F(1,2)
+    while eta_upper<eta:eta_upper=(1+eta_upper)/2
+    c_lower=F(1,2)
+    while c_lower>c:c_lower/=2
+    C_upper=F(ceil(C))
+    n=0;tail=C_upper*L/(1-eta_upper)
+    while tail>F(1,2):
+        n+=1;tail*=eta_upper
+    b=c_lower**(L*n)/2
+    J=observable_entry_bound(model,chart.quotient)
+    # Conversion of the weighted chart norm back to predictive probabilities.
+    d=chart.dimension
+    G=max((sum(w[i-1]*abs(chart.basis[i][j]) for i in range(1,d))
+           for j in range(1,d)),default=F(0))
+    theta=rational_rate(eta,L)
+    H=2*G*diam*J**2/theta**(L-1)
+    return {"b":b,"J":J,"H":H,"theta":theta,"tail_blocks":n,
+            "nonnull_lower":c_lower,"eta_upper":eta_upper}
