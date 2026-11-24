@@ -14,7 +14,7 @@ $$
 
 Their sum is positive stochastic with stationary row $\pi=(1/2,1/2)$. Every word has positive mass because its second diagonal entry is positive. The actual-word row and column spans each contain two independent vectors, for example the empty-word vectors and the vectors for $A$. Thus the realization is minimal, not a reducible nonobservable padding.
 
-Every word containing $B$ or $C$ has rank one; the all-$A$ word of length $n$ has singular ratio $2^{-n}$. The WP07 uniform spectral-gap condition therefore holds for **every** word, with constants 1 and 1/2, despite singular generators. But
+Every word containing $B$ or $C$ has rank one; the word consisting only of $A$ of length $n$ has singular ratio $2^{-n}$. The WP07 uniform spectral-gap condition therefore holds for **every** word, with constants 1 and 1/2, despite singular generators. But
 
 $$
 p(B\mid A^n)=\frac{p(BA^n)}{p(A^n)}
@@ -29,7 +29,7 @@ $$
 \left(\frac12+\frac14t^2,\ \frac14t^2,\ \frac14(1+t)^2\right),
 $$
 
-and tends to $(2/3,0,1/3)$. All these conditioning cylinders have positive mass. They converge to the same all-$A$ exterior, so a continuous two-sided conditional would force their conditional averages to have the same limit. This contradiction rules out quasilocality itself. It does not depend on a choice of a version on a measure-zero exterior.
+and tends to $(2/3,0,1/3)$. All these conditioning cylinders have positive mass. They converge to the same constant exterior consisting of $A$, so a continuous two-sided conditional would force their conditional averages to have the same limit. This contradiction rules out quasilocality itself. It does not depend on a choice of a version on a measure-zero exterior.
 
 **Disposition:** the spectral-only implication for singular minimal generators is REFUTED. The example is an elementary explicit probability-model obstruction, consistent with the established need for extra nondegeneracy in semi-invertible dominated splitting. No novelty of the general obstruction mechanism is claimed.
 
