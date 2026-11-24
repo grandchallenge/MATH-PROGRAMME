@@ -2507,3 +2507,169 @@ class GenuineCookPhaseWordModulusTests(unittest.TestCase):
             wp09k_anchor(phi,9,100,99,20)
         with self.assertRaises(ValueError):
             wp09k_anchor(phi,9,20,20,40)
+
+
+from experiments.erdos249_full_series_phase.cofactor_two_copy_transfer import (
+    SCALE as wp09l_scale,
+    COMPONENT_UNITS_ERROR as wp09l_error_units,
+    pi_fixed_floor as wp09l_pi,
+    root_of_unity_fixed as wp09l_root,
+    certified_actual_cofactor_transfer as wp09l_cert,
+)
+
+
+class CofactorTwoCopyCookTransferTests(unittest.TestCase):
+    """WP09-L exact original-totient cofactor source and rational roots."""
+
+    def test_machin_pi_is_proved_bracketed_at_15_digits(self):
+        d=wp09l_pi()
+        self.assertEqual(d["fixed_scale"],10**15)
+        self.assertEqual(d["pi_floor"],3141592653589793)
+        self.assertGreater(d["pi_lower"],3)
+        self.assertLess(d["pi_upper"],Fraction(22,7))
+        self.assertLess(d["pi_interval_width"],Fraction(1,10**15))
+        self.assertEqual(int(d["pi_lower"]*wp09l_scale),
+                         int(d["pi_upper"]*wp09l_scale))
+        self.assertEqual(d["component_units_error"],32)
+
+    def test_fixed_root_exact_special_quadrants_and_conjugates(self):
+        M=wp09l_scale
+        L=10
+        for r,expected in (
+            (0,(M,0)),(1<<8,(0,M)),
+            (1<<9,(-M,0)),(-(1<<8),(0,-M)),
+        ):
+            re,im=wp09l_root(r,L)
+            self.assertLessEqual(abs(re-expected[0]),wp09l_error_units)
+            self.assertLessEqual(abs(im-expected[1]),wp09l_error_units)
+            self.assertLessEqual(abs(re*re+im*im-M*M),
+                                 5*wp09l_error_units*M)
+        for L in (5,10,20,40):
+            Q=1<<L
+            for r in (1,2,3,Q//4, Q//2-1):
+                a,b=wp09l_root(r,L)
+                c,d=wp09l_root(-r,L)
+                self.assertLessEqual(abs(a-c),2*wp09l_error_units)
+                self.assertLessEqual(abs(b+d),2*wp09l_error_units)
+
+    def test_exact_actual_cofactor_source_class_and_three_Cook_oracles(self):
+        for s,count in ((8,9525),(12,9526)):
+            z=wp09l_cert(16384,h=1,s=s)
+            self.assertEqual(z["L"],20)
+            self.assertEqual(z["Q"],1<<20)
+            self.assertEqual(z["t"],21-s)
+            self.assertEqual(z["source_G_count"],count)
+            self.assertEqual(z["source_A_count"],count)
+            self.assertEqual(z["group_count"],64)
+            self.assertEqual(z["three_direct_full_Cook_numerator_oracles"],3)
+            self.assertTrue(z["finite_source_s_not_26"])
+            self.assertEqual(z["method"],
+                             "EXACT_INTEGER_RATIONAL_INTERVAL_NOT_FLOATING_DIAGNOSTIC")
+            self.assertEqual(z["root_error_per_real_imag_component"],
+                             Fraction(32,10**15))
+            self.assertEqual(z["pi_integer_certificate"],3141592653589793)
+            self.assertEqual(z["cofinal_source_14X_over_25"],"OPEN")
+            self.assertEqual(z["original_Erdos249_irrationality"],"OPEN")
+            self.assertEqual(z["MATHCERT"],"NOT_SUBMITTED")
+
+    def test_two_copy_producer_certifies_true_finite_source_weighted_first_term(self):
+        for s in (8,12):
+            a=wp09l_cert(16384,s=s)
+            X=a["X"]
+            self.assertTrue(a["two_copy_sufficient_criterion_FINITE"])
+            self.assertTrue(a["first_weighted_Cook_14X_over_25_FINITE"])
+            self.assertTrue(a["original_full_Cook_9X_over_10_FINITE"])
+            self.assertLess(a["source_z_group_absolute_mean_upper"],
+                            Fraction(14*X,25))
+            B=Fraction(14*X,25)-a["source_z_group_absolute_mean_upper"]
+            self.assertGreater(B,0)
+            self.assertLessEqual(
+                a["source_G_count"]*a["cofactor_good_E_two_copy_energy_upper"],
+                B*B)
+            self.assertLessEqual(
+                a["original_first_weighted_Cook_sum_real_upper"],
+                Fraction(14*X,25))
+            self.assertLessEqual(
+                a["original_full_Cook_real_first_harmonic_upper"],
+                Fraction(9*X,10))
+
+    def test_actual_s8_exact_outward_rational_intervals_and_adversary(self):
+        a=wp09l_cert(16384,s=8)
+        X=a["X"]
+        cases=(
+            ("original_full_Cook_real_first_harmonic_lower",
+             "original_full_Cook_real_first_harmonic_upper",71,72),
+            ("original_first_weighted_Cook_sum_real_lower",
+             "original_first_weighted_Cook_sum_real_upper",6,7),
+            ("source_z_group_absolute_mean_lower",
+             "source_z_group_absolute_mean_upper",746,747),
+            ("cofactor_good_E_two_copy_energy_lower",
+             "cofactor_good_E_two_copy_energy_upper",33,34),
+            ("adversarial_w_conjugate_z_Vz_lower",
+             "adversarial_w_conjugate_z_Vz_upper",5606,5607),
+        )
+        for left,right,lo,hi in cases:
+            self.assertLessEqual(Fraction(lo,10000),a[left]/X,left)
+            self.assertLessEqual(a[left],a[right],left)
+            self.assertLessEqual(a[right]/X,Fraction(hi,10000),right)
+        self.assertTrue(a["generic_WZ_Cauchy_certificate_INSUFFICIENT"])
+        self.assertTrue(a["adversarial_w_conjugate_z_violates_14X_over_25"])
+
+    def test_actual_s12_exact_outward_rational_intervals_and_adversary(self):
+        a=wp09l_cert(16384,s=12)
+        X=a["X"]
+        cases=(
+            ("original_full_Cook_real_first_harmonic_lower",
+             "original_full_Cook_real_first_harmonic_upper",71,72),
+            ("original_first_weighted_Cook_sum_real_lower",
+             "original_first_weighted_Cook_sum_real_upper",43,44),
+            ("source_z_group_absolute_mean_lower",
+             "source_z_group_absolute_mean_upper",292,293),
+            ("cofactor_good_E_two_copy_energy_lower",
+             "cofactor_good_E_two_copy_energy_upper",33,34),
+            ("adversarial_w_conjugate_z_Vz_lower",
+             "adversarial_w_conjugate_z_Vz_upper",5790,5791),
+        )
+        for left,right,lo,hi in cases:
+            self.assertLessEqual(Fraction(lo,10000),a[left]/X,left)
+            self.assertLessEqual(a[left],a[right],left)
+            self.assertLessEqual(a[right]/X,Fraction(hi,10000),right)
+        self.assertTrue(a["generic_WZ_Cauchy_certificate_INSUFFICIENT"])
+        self.assertTrue(a["adversarial_w_conjugate_z_violates_14X_over_25"])
+
+    def test_generic_covariance_bound_can_fail_to_certify_while_two_copy_succeeds(self):
+        a=wp09l_cert(16384,s=12)
+        G=a["source_G_count"]
+        cw_lo=a["cofactor_good_W_two_copy_energy_lower"]
+        cz_lo=a["cofactor_good_Z_two_copy_energy_lower"]
+        target=Fraction(14*a["X"],25)
+        self.assertGreater((G-cw_lo)*(G-cz_lo),target*target)
+        self.assertTrue(a["generic_WZ_Cauchy_certificate_INSUFFICIENT"])
+        self.assertTrue(a["two_copy_sufficient_criterion_FINITE"])
+        self.assertGreater(a["adversarial_w_conjugate_z_Vz_lower"],target)
+        self.assertLess(a["original_first_weighted_Cook_sum_real_upper"],target)
+
+    def test_earlier_smaller_source_block_does_not_force_adversarial_gap(self):
+        a=wp09l_cert(8192,s=8)
+        self.assertEqual(a["L"],19)
+        self.assertEqual(a["t"],12)
+        self.assertEqual(a["source_G_count"],4686)
+        self.assertTrue(a["two_copy_sufficient_criterion_FINITE"])
+        self.assertFalse(a["generic_WZ_Cauchy_certificate_INSUFFICIENT"])
+        self.assertFalse(a["adversarial_w_conjugate_z_violates_14X_over_25"])
+        self.assertTrue(a["first_weighted_Cook_14X_over_25_FINITE"])
+
+    def test_invalid_source_scope_rejected_without_modifying_original_theorem(self):
+        for k in (0,False,1.25):
+            with self.assertRaises(ValueError):
+                wp09l_root(k,10)
+        for args in (
+            (0,1,8,1,1000,20000),
+            (16384,0,8,1,1000,20000),
+            (16384,1,0,1,1000,20000),
+            (16384,1,8,0,1000,20000),
+            (16384,1,8,1000,1000,20000),
+            (16384,1,8,1,1000,1000),
+        ):
+            with self.assertRaises(ValueError):
+                wp09l_cert(*args)
