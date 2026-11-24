@@ -2,7 +2,7 @@
 
 **Research date:** 2026-11-24. **Mathematics:** new paper-level unrestricted-host deduction UNDER_REVIEW, bounded proof-tree classification CHECKED only after exact-head replay. **Scope:** arbitrary finite simple graphs, ordinary non-induced vertex-disjoint positive-star forests. This theorem is conditional on an INDIVIDUALLY proved sharp JOINT residual lower bound for the **same exact original lists**. The full Erdős #561 conjecture, the unrestricted JOINT hypothesis #3490, and MATHCERT certification remain OPEN/PARTIAL.
 
-The protected source \`GENERAL_CORE_ORIGINAL_TRANSFER.md\` contained FOUR sufficient ORIGINAL transfers but left out a simple consequence of its already proved **maximum-degree core necessity lemma** and its ORIGINAL-forest vertex support bound. This addendum proves that consequence and integrates it as a FIFTH sound, source-dependent rule. It makes **no** assertion that the general JOINT bound is known for all profiles.
+The protected source `GENERAL_CORE_ORIGINAL_TRANSFER.md` contained FOUR sufficient ORIGINAL transfers but left out a simple consequence of its already proved **maximum-degree core necessity lemma** and its ORIGINAL-forest vertex support bound. This addendum proves that consequence and integrates it as a FIFTH sound, source-dependent rule. It makes **no** assertion that the general JOINT bound is known for all profiles.
 
 ## 1. New fifth ORIGINAL transfer theorem
 
@@ -55,7 +55,7 @@ $$
 
 Let $\alpha=n_1-1\ge1$, $\beta=m_1-1\ge1$, so $\alpha+\beta=D$. If $G$ had a red/blue edge partition with red maximum degree at most $\alpha$ and blue maximum degree at most $\beta$, that colouring would avoid both full original target forests; contradiction. Hence no such capped partition exists.
 
-The independently source-proved ordinary Lovász-factor **degree-core necessity theorem**, \`research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md\`, under $\Delta(G)\le D$ and positive caps, therefore forces a connected component of the induced subgraph of **degree-$D$ vertices** with at least $D+1$ vertices. In particular, writing $k$ for the number of vertices of degree exactly $D$, we have
+Under the positive degree caps and the established degree bound, the source-proved Lovász degree-core necessity theorem in `research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md` forces a connected component of the induced subgraph of **degree-$D$ vertices** with at least $D+1$ vertices. In particular, writing $k$ for the number of vertices of degree exactly $D$, we have
 
 $$
 \boxed{k\ge D+1.}
@@ -81,7 +81,7 @@ $$
 
 a contradiction. Thus no smaller original host exists. The canonical upper host attains $W$. QED.
 
-**Important exact comparison.** The earlier ANY-parity transfer \`W<=D(D+1)/2\` uses only $k\ge D+1$ and ignores all other nonisolated vertices. The fifth criterion incorporates the required $R$ and can be strictly stronger whenever $R>D$. Conversely, the earlier parity-specific criteria remain potentially stronger elsewhere. Neither the stronger $2D+1$ saturated-core uniqueness theorem nor any new graph-factor theorem is needed here.
+**Important exact comparison.** The earlier ANY-parity transfer `W<=D(D+1)/2` uses only $k\ge D+1$ and ignores all other nonisolated vertices. The fifth criterion incorporates the required $R$ and can be strictly stronger whenever $R>D$. Conversely, the earlier parity-specific criteria remain potentially stronger elsewhere. Neither the stronger $2D+1$ saturated-core uniqueness theorem nor any new graph-factor theorem is needed here.
 
 ## 2. One newly settled simple original pair
 
@@ -104,7 +104,7 @@ The prior FOUR transfer conditions do NOT settle this example: both leading size
 
 ## 3. Executable well-founded proof-certificate composition
 
-For the existing three-BLUE original profile domain, \`verify_recursive_fifth_core_certificates.py\` imports and **does not modify** the previously protected full four-condition engine \`verify_recursive_vertex_budget_certificates.py\` and its RED matching and THREEBLUE predecessors.
+For the existing three-BLUE original profile domain, `verify_recursive_fifth_core_certificates.py` imports and **does not modify** the previously protected full four-condition engine `verify_recursive_vertex_budget_certificates.py` and its RED matching and THREEBLUE predecessors.
 
 Its fifth transfer is enabled only when ALL of the following are checked on the exact source lists:
 
@@ -115,7 +115,7 @@ Its fifth transfer is enabled only when ALL of the following are checked on the 
 
 A newly derived ORIGINAL result may recursively prove a JOINT relation for a STRICTLY shorter RED residual list if and only if its exact individually required first-residual canonical original $W(n_{2:},m)$ equals the current original JOINT canonical $J(n,m)$. The previous source-proved zero-deficit RED matching rule can also recurse on a strictly shorter RED list. Both operations strictly reduce RED list length, so recursion terminates and never consumes itself as evidence.
 
-The new engine retains all predecessor certificates, including their theorem source labels. It reports additional ORIGINAL and additional JOINT profiles separately, and emits explicit nested theorem dependency traces. An \`UNKNOWN\` result is **not** a counterexample and must not be promoted.
+The new engine retains all predecessor certificates, including their theorem source labels. It reports additional ORIGINAL and additional JOINT profiles separately, and emits explicit nested theorem dependency traces. An `UNKNOWN` result is **not** a counterexample and must not be promoted.
 
 ## 4. Exact mathematical boundary and review requirements
 
