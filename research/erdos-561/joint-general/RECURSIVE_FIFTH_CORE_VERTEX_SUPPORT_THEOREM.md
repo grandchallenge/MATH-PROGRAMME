@@ -55,7 +55,7 @@ $$
 
 Let $\alpha=n_1-1\ge1$, $\beta=m_1-1\ge1$, so $\alpha+\beta=D$. If $G$ had a red/blue edge partition with red maximum degree at most $\alpha$ and blue maximum degree at most $\beta$, that colouring would avoid both full original target forests; contradiction. Hence no such capped partition exists.
 
-Under the positive degree caps and the established degree bound, the source-proved Lovász degree-core necessity theorem in `research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md` forces a connected component of the induced subgraph of **degree-$D$ vertices** with at least $D+1$ vertices. In particular, writing $k$ for the number of vertices of degree exactly $D$, we have
+Under the positive degree caps and the established degree bound, the source-proved Lovász degree-core necessity theorem in `research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md` forces a connected component of the induced subgraph of **vertices having degree $D$** with at least $D+1$ vertices. In particular, writing $k$ for the number of vertices of degree exactly $D$, we have
 
 $$
 \boxed{k\ge D+1.}
