@@ -8,6 +8,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"research"/"csm-001"))
 from observable_polytope_certificate import (
     PredictiveQuotient, verify_polytope, balanced_source, balanced_overlap,
     balanced_vertices, coupled_kernel, row_mul, project, in_hull,
+    positive_realization,
 )
 from finite_range_block_certificate import (
     finite_range_lift, universal_block_bounds, singular_gap_counterexample, iid_binary,
@@ -95,6 +96,22 @@ class TestPredictivePolytope(unittest.TestCase):
         self.assertEqual(verify_polytope(q,((1,),),1)["eta"],0)
         with self.assertRaises(ValueError):
             verify_polytope(q,((0,),),1)
+
+    def test_strict_positive_realization_of_balanced_overlap(self):
+        out=balanced_overlap();q=PredictiveQuotient(out)
+        # Extend the physical-state interval slightly beyond the hidden simplex.
+        V=((F(1),F(9,32)),(F(1),F(21,32)))
+        pos=positive_realization(q,V)
+        self.assertEqual(pos.dimension,2)
+        self.assertTrue(all(x>0 for A in pos.matrices for row in A for x in row))
+        self.assertEqual(pos.minimal_linear_dimension,2)
+        for n in range(8):
+            for w in product((0,1),repeat=n):
+                self.assertEqual(pos.word_probability(w),out.word_probability(w))
+        # The tight original interval has a boundary-fixed zero map; positive
+        # coefficients at that vertex are impossible with those vertices.
+        with self.assertRaisesRegex(ValueError,"positive barycentric"):
+            positive_realization(q,balanced_vertices(),max_halvings=8)
 
     def test_affine_hull_membership(self):
         V=((F(1),F(0),F(0)),(F(1),F(1),F(0)),(F(1),F(0),F(1)))
