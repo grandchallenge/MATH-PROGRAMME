@@ -109,7 +109,7 @@ def check_transducer(T):
         raise ValueError("transducer shape")
     for row in rows:
         if any(not isinstance(z,int) or not isinstance(t,int) or not 0<=z<k or not 0<=t<n
-               or p<=0 for z,t,p in row) or sum(p for z,t,p in row)!=1:
+               or not isinstance(p,(int,F)) or p<=0 for z,t,p in row) or sum(p for z,t,p in row)!=1:
             raise ValueError("transducer stochasticity")
     return n,m,k
 
@@ -148,6 +148,28 @@ def serial_transducer(first,second):
     T={"states":n*r,"inputs":m,"outputs":l,"rows":tuple(rows)}
     check_transducer(T)
     return T
+
+
+def parallel_transducer(first,second):
+    """Independent side-by-side transducers with ordered product ports."""
+    n,m,k=check_transducer(first);r,b,l=check_transducer(second)
+    rows=[]
+    for i,j in product(range(n),range(r)):
+        for a,c in product(range(m),range(b)):
+            out={}
+            for z,t,p in first["rows"][i*m+a]:
+                for w,u,q in second["rows"][j*b+c]:
+                    key=(z*l+w,t*r+u)
+                    out[key]=out.get(key,F(0))+p*q
+            rows.append(tuple((v,t,p) for (v,t),p in sorted(out.items()) if p))
+    T={"states":n*r,"inputs":m*b,"outputs":k*l,"rows":tuple(rows)}
+    check_transducer(T)
+    return T
+
+
+def identity_transducer(alphabet):
+    return finite_range_transducer(alphabet,0,tuple(tuple(F(i==j) for j in range(alphabet))
+                                                     for i in range(alphabet)))
 
 
 def transducer_support(T):
@@ -276,11 +298,17 @@ def certify_transducer(margins,T,max_nodes=100000,max_weighted_words=64):
     c=max(c,min(sum(lows[a]*p for a in range(m) for z1,j,p in T["rows"][i*m+a] if z1==z)
                     for i in range(n) for z in range(k)))
     return dict(sync,outcome="certified",nonnull=c,eta=eta,
-                constant=max(1/c,1/(delta**2*eta)),delta=delta,
+                constant=max(1/c,1/(delta**2*eta)),delta=delta,b=delta,
                 baseline_delta=baseline,weighted_delta=weighted,
                 alpha=alpha,lambda_product=lam,beta_product=beta,gamma_product=gamma,
                 history_states=n,factor_dimensions=tuple(r["dimension"] for r in margins),
                 joint_lift_constructed=False)
+
+
+def replay_network(interfaces,T,max_nodes=100000,max_weighted_words=64):
+    """Recompute factor margins rather than trusting an unchecked cache."""
+    return certify_transducer(tuple(positive_margins(m) for m in interfaces),T,
+                              max_nodes,max_weighted_words)
 
 
 def compose_positive(interfaces,memory,kernel,max_nodes=100000,max_weighted_words=64):
@@ -422,3 +450,22 @@ def guaranteed_packing_budget(d,alphabet,b,J,H,theta):
     while D*theta**s>F(1,2):s+=1
     return {"block":s,"radius":R,"rate":F(1,2),
             "cell_bound":packing_bound(k,R,F(1,2)),"primitive_bound":alphabet**s}
+
+
+def packing_budget_from_conditionals(model,b,C,L,eta):
+    """Conditional budget from valid all-word margins of the *same* law.
+
+    The caller must establish these margins (e.g. by network replay).
+    Uses only the finite minimal Hankel basis beyond the supplied margins.
+    """
+    from effective_polytope_synthesis import observable_entry_bound
+    b,C,eta=map(F,(b,C,eta))
+    if not 0<b<=1 or C<0 or not isinstance(L,int) or L<1 or not 0<=eta<1:
+        raise ValueError("invalid conditional hypotheses")
+    q=PredictiveQuotient(model)
+    J=observable_entry_bound(model,q)
+    theta=rational_rate(eta,L)
+    probe_length=max(map(len,q.probes))
+    H=2*probe_length*C*J**2/theta**(L-1)
+    return dict(guaranteed_packing_budget(q.dimension,q.alphabet,b,J,H,theta),
+                J=J,H=H,theta=theta,probe_length=probe_length)
