@@ -189,3 +189,19 @@ def three_state_overlap():
           F(1,4),F(1,2),F(1,4))
     H=tuple((t,1-t) for t in zero)
     return src,H,finite_range_lift(src,1,H)[0]
+
+
+def observable_entry_bound(model,quotient):
+    """Compute a valid all-word J from a finite observable Hankel basis."""
+    from observable_memory_certificate import _rank
+    from observable_polytope_certificate import solve_square
+    p=model.word_probability
+    rows=[]
+    for u,_ in model.left_basis:
+        row=tuple(p(u+v) for v in quotient.probes)
+        if _rank(rows+[row])>len(rows):rows.append(row)
+    H=tuple(rows)
+    if len(H)!=quotient.dimension:raise ValueError("observable basis mismatch")
+    cols=tuple(solve_square(H,col) for col in identity(quotient.dimension))
+    inverse=tuple(zip(*cols))
+    return max(sum(abs(t) for t in row) for row in inverse)
