@@ -1371,5 +1371,71 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary-host three-BLUE recursive JOINT/ORIGINAL proof certificates with omitted vertex-budget transfer",
+  "assumptions": [
+    "RED original list n has sorted positive length s>=3; BLUE m has sorted positive length exactly3",
+    "any use of fourth transfer requires leading sizes n1,m1>=2, opposite parity, prior JOINT canonical sharpness proof for the exact profile",
+    "D=n1+m1-2, W=canonical full original antidiagonal sum, R=max(sum(n)+s,sum(m)+3)",
+    "fourth criterion strict inequality 2W<2D²+R, from already source-proved GENERAL_CORE_ORIGINAL_TRANSFER.md Theorem A condition4",
+    "arbitrary finite simple graph hosts, ordinary non-induced vertex-disjoint star forests"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3656",
+    "MATH-PROGRAMME#3652"
+  ],
+  "promotion_condition": "Paper mathematical theorem source UNDER_REVIEW; bounded deterministic proof-dependency and arithmetic checks CHECKED only at fresh exact committed source head. The general Erdős #561 conjecture and joint residual remain OPEN/PARTIAL; no MATHCERT issued.",
+  "claim_id": "ERDOS561-RECURSIVE-FOURTH-VERTEX-BUDGET-TRANSFER-051",
+  "short_name": "Restore opposite-parity forest-vertex core transfer to the full existing 3-BLUE recursive theorem engine",
+  "claim_text": "The existing source-proved general original degree-core transfer Theorem A has a fourth sufficient criterion not implemented in the prior recursive proof engine. If an unrestricted finite simple JOINT residual host is proved to require Jcan edges for original n,m, and n1,m1>=2 have opposite parity with 2Wcan<2D²+R, D=n1+m1−2, R=max(sum(n)+s,sum(m)+3), then the unrestricted original size-Ramsey number is exactly Wcan. Proof: hypothetical G arrowing original with e<=W-1 has all vertex-deletions jointly arrowing, hence degree Δ<=D. A red/blue split capped at n1−1,m1−1 would avoid both original forests; opposite parity caps and the protected 2D+1 saturated-core uniqueness theorem force at least 2D+2 degree-D vertices. Since G has >=R nonisolated vertices, handshake gives 2e>=R+(D−1)(2D+2)=R+2D²−2, contradicting 2e<=2W−2 and strict gate. The additional code is purely well-founded source-theorem composition: preserve the existing complete recursive 3BLUE and RED-matching rules, add fourth ORIGINAL transfer when previous ORIGINAL UNKNOWN and enhanced JOINT is independently certified; newly obtained JOINT traces may activate all THREE earlier original transfer gates. Reconsider an unknown JOINT only via a STRICTLY shorter RED first residual whose ORIGINAL is source-proved, or a certified zero-RED-matching deficit with a strictly shorter RED original. No unproved JOINT sharpness is assumed and UNKNOWN remains UNKNOWN. This exact theorem composition proves ORIGINAL formula W=31 for RED (3,3,1,1,1), BLUE (4,4,1) with J=25,D=5,R=14, because 62<64. General unrestricted Erdős #561 remains OPEN/PARTIAL.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "RECURSIVE_FOURTH_CORE_CERTIFICATE_THEOREM.md imports source-locked GENERAL_CORE_ORIGINAL_TRANSFER.md condition4 and prior `verify_recursive_three_blue_certificates.py` and `verify_recursive_red_matching_certificates.py` unmodified. Strict parity, support, leading>=2 and exact JOINT premise are enforced, with R and positive inequality margin retained. `verify_recursive_vertex_budget_certificates.py` propagates any new JOINT trace into all four ORIGINAL gates and only strictly shorter component lists recursively; never promotes UNKNOWN. The finite audit discovers 64 new source-conditional JOINT and 1341 new ORIGINAL within declared grid, contingent on correctness of imported paper theorems. No independent MATHCERT.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_THEOREM.md",
+    "research/erdos-561/joint-general/verify_recursive_vertex_budget_certificates.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md",
+    "research/erdos-561/joint-general/RECURSIVE_RED_MATCHING_CERTIFICATE_THEOREM.md",
+    "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561 arbitrary-host three-BLUE recursive JOINT/ORIGINAL proof certificates with omitted vertex-budget transfer",
+  "assumptions": [
+    "RED original list n has sorted positive length s>=3; BLUE m has sorted positive length exactly3",
+    "any use of fourth transfer requires leading sizes n1,m1>=2, opposite parity, prior JOINT canonical sharpness proof for the exact profile",
+    "D=n1+m1-2, W=canonical full original antidiagonal sum, R=max(sum(n)+s,sum(m)+3)",
+    "fourth criterion strict inequality 2W<2D²+R, from already source-proved GENERAL_CORE_ORIGINAL_TRANSFER.md Theorem A condition4",
+    "arbitrary finite simple graph hosts, ordinary non-induced vertex-disjoint star forests"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3656",
+    "MATH-PROGRAMME#3652"
+  ],
+  "promotion_condition": "Paper mathematical theorem source UNDER_REVIEW; bounded deterministic proof-dependency and arithmetic checks CHECKED only at fresh exact committed source head. The general Erdős #561 conjecture and joint residual remain OPEN/PARTIAL; no MATHCERT issued.",
+  "claim_id": "ERDOS561-RECURSIVE-FOURTH-VERTEX-BUDGET-CHECK-052",
+  "short_name": "Complete 179928-profile fifth-source-gate proof trace and strict vertex-budget guard audit",
+  "claim_text": "Deterministic exact arithmetic/proof-tree runner checks 179928 RED length3..8, sorted positive RED prefix1..8 terminal1, BLUE=(U,V,1) with 2<=V<=U<=8, against unmodified prior 50-claim proof engines. Baseline certificates exact JOINT=165677, ORIGINAL=131052; the new source-proved fourth transfer yields exact JOINT=165741 and ORIGINAL=132393, a monotone improvement +64 JOINT and +1341 ORIGINAL, JOINT UNKNOWN reduces 14251 to 14187. New JOINT routes consist of 45 FIRST_RESIDUAL_SHARP_VIA_FOURTH_CORE and 19 RED_MATCHING_VIA_FOURTH_CORE_RECURSION. Independent gate guard audit checks 107784 bounded parameter cells (including 605 with newly eligible fourth condition), exact strict inequality, opposite parity, both leaders>=2, and exclusions of previous gates and invalid heads. The exact classification fingerprint is 9de51f66f133867822961b38d2bf312a0f564fc28c75a72622249512ee4c2e6c. Concrete nested proof traces demonstrate new original n=(2,1,1,1,1),m=(5,4,1) and newly sharp joint n=(2,2,1,1,1,1),m=(5,4,1). The CHECKED finite trace certifies computation and source dependency consistency only, not mathematical independent referee approval or full all-profile conjecture.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "Standard-library deterministic `verify_recursive_vertex_budget_certificates.py`, exact integer canonical antidiagonals and source theorem guards, two-index canonical consistency from admitted `prior.canon/canon_alt`, monotonic old-certificate preservation and well-founded recursion. Full bounded grid fingerprint, an inspectable exact new proof tree and minimal guard examples. No arbitrary graph-host census; mathematical premises retain UNDER_REVIEW.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_recursive_vertex_budget_certificates.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_THEOREM.md",
+    "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
