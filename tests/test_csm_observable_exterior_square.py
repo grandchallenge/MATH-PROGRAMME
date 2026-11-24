@@ -109,7 +109,7 @@ class TestObservableExteriorSquare(unittest.TestCase):
         self.assertTrue(all(x>0 for row in m.Q for x in row))
         # The anchor certificate fails because A is a scalar identity.
         with self.assertRaisesRegex(ValueError,"block contraction"):
-            anchored_certificate(m,0,(1,3),(1,3))
+            anchored_certificate(m,0,(1,3),(1,6))
         for n in range(8):
             self.assertEqual(conditional_defect(m,(1,),(0,)*n,(1,)),F(1,18))
             # Direct two-sided conditional ratios on matching zero neighborhoods.
