@@ -31,7 +31,7 @@ The source-locked \`GENERAL_CORE_ORIGINAL_TRANSFER.md\` states its degree-factor
 
 **Proof.** Suppose an original arrowing host has fewer than $W$ edges. The previously proved vertex-deletion bound gives maximum degree at most $D$.
 
-If $n_1=1$, colour **every edge BLUE**. The RED graph has no edges, so it cannot contain the positive RED forest. The BLUE graph has maximum degree at most $D=m_1-1$, so it cannot contain the largest BLUE star of size $m_1$ and therefore cannot contain the full BLUE forest. Contradiction. If $m_1=1$, instead colour every edge RED and use $\Delta(G)\le D=n_1-1$. Both arguments also cover $n_1=m_1=1$ where $D=0$. The canonical disjoint-star original host supplies the $W$-edge upper bound. QED.
+If the largest RED star has size one, colour every edge BLUE. The RED graph is empty and avoids the positive RED target. By the vertex-deletion bound, the BLUE graph has maximum degree strictly below the largest BLUE star size, so it also avoids the BLUE target. If the largest BLUE star has size one, reverse the two colours and use the same argument. This also covers both largest star sizes equal to one. The canonical star-forest host supplies the upper bound. QED.
 
 This lemma **justifies** exact ORIGINAL outcomes previously attributed to a degree-factor theorem whose formal hypotheses exclude the zero-cap case. A provenance fix is not a permission to assert new mathematical independence or to alter earlier source-lock hashes.
 
