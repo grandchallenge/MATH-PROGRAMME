@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the decisive arithmetic argument still under examination.</p>
 
 !!! warning "Research status · 24 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. These results, and the independent denominator and conductor-change reconstruction described below, have been documented and admitted as bounded **MATHFORGE audit evidence**.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The latter retains its genuine auxiliary-system and classical-duality hypotheses.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; the Bernoulli/cohomological valuation inequality `ML.vChar` under its needed assumptions; MATHCERT certification.
 
@@ -171,6 +171,8 @@ For readers who want to see the precise source statements, the following table i
 | `shaInfl` | Match quotient-local `Sha1` with full-group `ShaAbs` | Conditional mathematical argument reconstructed, assuming standard Galois place-transitivity foundations |
 | `shaModel`, `shaLenEq` | Connect the original arithmetic `Sha` module and its Galois eigenspaces to the transported Selmer model | Genuine source-level constructions located and dependency-traced; exact implementation not independently verified |
 | `eigV`, `selUnit` | Transfer eigenspace lengths across a finite-index subgroup under an invertibility condition | Abstract and local-kernel mechanisms independently reconstructed |
+| `shaToShT` | Pass from uniformly bounded torsion layers to the full group | Independent mathematical proof under the source unit and ramification hypotheses |
+| `ML.recip`, `ML.count` | Derive local cancellation and count by a finite valuation budget | Reconstructed using classical duality and the auxiliary-system contract; construction of the latter open |
 | **`ML.vChar`** | Relate generalized Bernoulli quantities to the lengths of these arithmetic eigenspaces | **Decisive arithmetic inequality not independently established**; its source statement explicitly assumes `Rec` |
 
 The word **conditional** matters. In the source, the valuation theorem begins with a hypothesis `Rec → ...`. To obtain an unconditional consequence one must establish that hypothesis, discharge all other assumptions, and verify that the formal statements describe the claimed classical problem.
@@ -232,15 +234,45 @@ Our independent reconstruction explains why the multiplier clears denominators i
 
 For example, 24 and 48 are each divisible by 3 once. The extra factor of 2 makes no difference at prime 3. This is a precise way to prevent a change of mathematical description from silently increasing the arithmetic bound.
 
-**Evidence:** the independent [arithmetic audit PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) records the argument and exact tests: 5,100 coefficient calculations, 192 conductor cases, and 576 nonzero valuation comparisons. The proof uses standard classical Bernoulli and finite-character results; the examples are supporting checks, not a proof of the cohomology inequality. The primitive-character estimate itself still needs its reciprocity and counting argument.
+**Evidence:** the independent [arithmetic audit PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) records the argument and exact tests: 5,100 coefficient calculations, 192 conductor cases, and 576 nonzero valuation comparisons. The proof uses standard classical Bernoulli and finite-character results; the examples are supporting checks, not a proof of the cohomology inequality. The primitive-character estimate requires a genuine compatible auxiliary system and its connection to the Bernoulli value. The following section explains the independently reconstructed counting and reciprocity mechanisms.
 
-## 7. Reproducibility and technical references
+## 7. How a bound on finite pieces controls the whole group
+
+A torsion element is one that becomes zero when multiplied by some nonzero integer. In this investigation we work with successive powers of a prime, and more generally of a uniformizer in the coefficient ring. Each layer contains the elements killed at that level.
+
+Imagine that a mathematical structure has an unknown size. Every part of it can eventually be captured in a growing sequence of layers. If **each layer has the same upper bound**, the whole structure must obey that bound. Otherwise we could choose finitely many elements witnessing a violation and find one layer containing all of them.
+
+There is an important distinction: each layer being finite is not enough. The sequence of cyclic groups of orders $3,9,27,81,\ldots$ can be nested in an infinite group. Their lengths are $1,2,3,4,\ldots$; there is no common upper bound.
+
+The original arithmetic proof has an extra difficulty. A cohomology class is represented by a cocycle, and the local restrictions must survive when we put it into a torsion layer. We reconstructed the required normalization: a certain invertible difference makes one representative unique; compactness then bounds its values, and the ramification hypotheses give a common bound on its local witnesses.
+
+This proves the source's full-group transfer under its actual hypotheses. It does not assume in advance that the full group is finite.
+
+### Counting by eliminating possibilities
+
+The next argument compares two quantities: the length of the module of still-allowed cocycles and the divisibility of a number associated with an auxiliary arithmetic system. Each chosen auxiliary prime imposes another local test. If any nonzero cocycle remains, a carefully chosen prime detects one.
+
+The proof measures its progress with an integer budget:
+
+The remaining module length plus the divisibility measurement is at most the fixed budget. In symbols, $\ell(S_L)+j(L)\le J$.
+
+Here $L$ is a list of auxiliary primes, $S_L$ is the module satisfying the resulting local tests, $j(L)$ is a divisibility measurement of an annihilator, and $J$ is a fixed upper bound. At every nonzero stage the next prime strictly increases $j$, while the length lost from $S_L$ is no greater than the increase in $j$. After finitely many steps there must be no nonzero cocycles left. Running that comparison backward bounds the starting length.
+
+For an illustration, suppose $J=5$ and the starting divisibility measurement is 2. The remaining length can be at most 3. A step increasing the measurement by one can remove at most one unit of length. It cannot keep increasing beyond 5. These numbers illustrate the logic, not measured values of the actual arithmetic module.
+
+**Why reciprocity is needed:** local data at distinct primes are not independent. The proof pairs two arithmetic cocycles, obtaining a degree-two class whose local contributions must cancel globally. If every contribution except one is zero, the remaining contribution is zero too. The local duality property then converts that vanishing into the product-zero relation needed in the counting step.
+
+We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The crucial distinction is that the original construction of the auxiliary system, which supplies compatible witnesses at all these primes, still needs independent reconstruction. So do the Bernoulli divisibility witnesses and the exceptional case of the primitive estimate.
+
+The [technical audit PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) supplies the mathematical arguments and exact finite checks, with the imported theorems identified. Those checks exercise the algebra, not the global arithmetic duality theorem.
+
+## 8. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
 For specialists who wish to repeat the calculations, the [computational source](../assets/wolfram/rh_a26_audit_exhibits.wl) and [figure source](../assets/wolfram/rh_a26_visuals.wl) are retained in Wolfram Language format. The original 14 checks passed, and all five figures were generated from the retained source. The arithmetic audit additionally supplies an independent exact rational program. None of these computations constitutes a replay of the original Lean proof.
 
-It independently checks four cyclic-cohomology examples, two local-kernel examples, two Bernoulli values, two denominator products, both character parities, and two introductory prime-counting facts. The last two are orientation only. For instance, at $X=1000$:
+The computational companion independently checks four cyclic-cohomology examples, two local-kernel examples, two Bernoulli values, two denominator products, both character parities, and two introductory prime-counting facts. The last two are orientation only. For instance, at $X=1000$:
 
 $$
 \pi(1000)=168,\qquad R(1000)\approx168.359446.
@@ -258,10 +290,12 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #591](https://github.com/grandchallenge/MATHFORGE/pull/591) | Prime-to-index group cohomology transfer and excluded-index counterexample |
 | [PR #592](https://github.com/grandchallenge/MATHFORGE/pull/592) | Local Selmer restriction, source identification of `shaModel`, and 7,448 finite comparisons |
 | [PR #594](https://github.com/grandchallenge/MATHFORGE/pull/594) | Independent `InfUnram` / `shaInfl` reconstruction and 72 noncommutative local checks |
+| [PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) | General denominator and conductor-change argument, with exact arithmetic tests |
+| [PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) | Full torsion-layer transfer, conditional counting and reciprocity reconstruction |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 8. What the investigation taught us about checking extraordinary mathematical claims
+## 9. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -273,16 +307,16 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 9. The next executable mathematical step
+## 10. The next executable mathematical step
 
 **Target:** `UpperTheory.V.ML.vChar` in the original `PrimitiveFrobeniusFixed/PrimCase.lean`.
 
-**Input:** the source-locked definitions of `Rec`, `prim_case`, `lev_case`, `Bern.b_primmem`, `Bern.den_dvd`, and `Bern.b_primeq`; the actual coefficient-ring and character-conductor hypotheses.
+**Input:** the source-locked `NuSysEx`, `laxEx`, `sysOfLax`, `kolEx`, `derInv`, `kolStep`, `kolInit`, `zEval`, and `exc` statements and the exact local/global duality hypotheses.
 
-**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. First establish the transfer from bounded torsion layers to the full cohomology group, then check the counting and reciprocity inputs.
+**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. The transfer, counting mechanism and reciprocity implication are reconstructed. Next establish the genuine auxiliary system (NuSys), the exact Bernoulli divisibility witnesses (zEval), and the exceptional branch (exc), and audit the foundational duality correspondence.
 
 **Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small computational examples must remain supporting exhibits, never the substitute for this proof.
 
-**Present boundary:** `RH-A26-D05_PRIMITIVE_BERNOULLI_DENOMINATOR_AND_CONDUCTOR_COST_RECONSTRUCTED__PRIMITIVE_SHA_COUNT_ZEVAL_REC_AND_ORIGINAL_LEAN_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SHA_TORSION_TRANSFER_PROVED__COUNT_RECIP_PICK_RECONSTRUCTED_WITH_EXPLICIT_CLASSICAL_AND_NUSYS_INPUTS__NUSYS_ZEVAL_EXC_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains the protected evidence, not a certification of RH or GRH.
