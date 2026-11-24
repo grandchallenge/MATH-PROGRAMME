@@ -2345,3 +2345,165 @@ class PositiveDensityMultiplicativeFourierTests(unittest.TestCase):
             wp09j_defect_interval(0,20,8)
         with self.assertRaises(ValueError):
             wp09j_defect_interval(21,20,22)
+
+
+from experiments.erdos249_full_series_phase.cook_phase_word_modulus import (
+    cook_word_modulus_certificate as wp09k_certificate,
+    cook_oriented_word_residue as wp09k_word,
+    anchored_multiplicative_cook_word as wp09k_anchor,
+    finite_two_range_replay as wp09k_ranges,
+)
+
+
+class GenuineCookPhaseWordModulusTests(unittest.TestCase):
+    """WP09-K: universal complex modulus gap transported through actual Cook E."""
+
+    def test_effective_cook_gates_and_two_range_exact_rationals(self):
+        for n,P in ((3,300000),(9,600000),(21,1200000)):
+            c=wp09k_certificate(n,P)
+            q=c["q"]
+            self.assertTrue(c["eligible"])
+            self.assertEqual(q,n if n%2==0 else 2*n)
+            self.assertEqual(c["Q"],1<<c["L"])
+            self.assertEqual(c["X"],n*P)
+            self.assertTrue(c["legal_h1_Cook_modulus"])
+            self.assertGreater(c["Q"],32*c["X"])
+            self.assertLess(c["Q"],96*c["X"])
+            self.assertGreaterEqual(P,c["gate_P_min_CRT"])
+            self.assertGreaterEqual(P,c["gate_P_min_defect"])
+            self.assertEqual(c["low_count_lower"],Fraction(P,20*q))
+            self.assertEqual(c["high_count_lower"],Fraction(P,50*q))
+            self.assertEqual(c["low_fraction_of_all_R_lower"],Fraction(1,80))
+            self.assertEqual(c["high_fraction_of_all_R_lower"],Fraction(1,200))
+            self.assertEqual(c["unit_circle_chord_separation_lower"],
+                             Fraction(1,72*n))
+            self.assertEqual(c["normalized_modulus_squared_gap_lower"],
+                             Fraction(1,82944000*n*n))
+            self.assertEqual(c["normalized_modulus_gap_lower"],
+                             Fraction(1,165888000*n*n))
+            self.assertEqual(c["original_Cook_single_phase_tenth_saving"],"OPEN")
+            self.assertEqual(c["Cook_weighted_prime_cofactor_estimate"],"OPEN")
+            self.assertEqual(c["mathcert"],"NOT_SUBMITTED")
+
+    def test_effective_actual_totient_two_range_integer_density(self):
+        for n,P in ((3,300000),(9,600000)):
+            c=wp09k_ranges(n,P)
+            self.assertEqual(c["all_adversarial_two_unit_defects_controlled"],True)
+            self.assertGreaterEqual(20*c["q"]*c["actual_low_count"],P)
+            self.assertGreaterEqual(50*c["q"]*c["actual_high_ratio_good_count"],P)
+            self.assertGreaterEqual(3*c["exact_low_high_gap_lower"],P)
+            self.assertLess(c["one_flip_nonrational_normalized_modulus_DIAGNOSTIC"],1)
+            self.assertFalse(c["one_flip_is_dyadic_rational"])
+            self.assertFalse(c["actual_shadow_huge_index_bits_evaluated"])
+
+    def test_actual_phi_full_cook_word_identically_one_forward_reverse(self):
+        from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+            cook_minimal_depth,
+        )
+        n,P=9,100
+        L=cook_minimal_depth(n*P,1)
+        phi=totients(1200)
+        for m,m0 in ((109,100),(100,109),(100,100)):
+            z=wp09k_anchor(phi,n,m,m0,L)
+            self.assertEqual(z["anchored_full_Cook_word_residue"],0)
+            self.assertEqual(z["direct_defect_difference_residue"],0)
+            self.assertTrue(z["exact_word_equals_defect_difference"])
+            self.assertTrue(z["uses_genuine_full_Cook_numerators"])
+            self.assertTrue(z["word_can_span_O_nP_original_Cook_phases"])
+            self.assertTrue(z["does_not_prove_original_first_harmonic_cancellation"])
+
+    def test_both_admissible_oneflip_signs_and_reverse_word(self):
+        from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+            cook_minimal_depth,
+        )
+        n,P=9,100
+        L=cook_minimal_depth(n*P,1)
+        phi=totients(1200)
+        for eta in (-2,2):
+            b=phi[:]
+            b[n]+=eta
+            self.assertTrue(0<=b[n]<=n)
+            for m,m0 in ((109,100),(100,109)):
+                a=wp09k_anchor(b,n,m,m0,L)
+                expected=(-eta*(phi[m]-phi[m0]))%(1<<L)
+                self.assertEqual(a["anchored_full_Cook_word_residue"],expected)
+                self.assertEqual(a["direct_defect_difference_residue"],expected)
+                self.assertNotEqual(expected,0)
+
+    def test_oriented_full_cook_word_true_numerator_versus_direct_coefficient(self):
+        from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+            cook_minimal_depth,
+        )
+        L=cook_minimal_depth(1000,1)
+        phi=totients(1600)
+        for u,v in ((100,101),(100,119),(119,100),(701,701),
+                    (550,585),(585,550)):
+            actual=wp09k_word(phi,u,v,L)
+            self.assertEqual(actual,(phi[v]-phi[u])%(1<<L))
+            self.assertEqual((actual+wp09k_word(phi,v,u,L))%(1<<L),0)
+
+    def test_explicit_WP09I_dyadic_rational_shadow_original_phase_word(self):
+        from experiments.erdos249_full_series_phase.two_unit_parity_shadow import (
+            two_unit_coefficients,
+        )
+        from experiments.erdos249_full_series_phase.full_window_prime_projection import (
+            cook_minimal_depth, cook_numerator_direct,
+        )
+        from experiments.erdos249_full_series_phase.conditional_cook_phase import (
+            centered_representative,
+        )
+        n,P=21,40
+        L=cook_minimal_depth(n*P,1)
+        Q=1<<L
+        a=two_unit_coefficients(1450,8)["coefficients"]
+        phi=totients(1450)
+        self.assertEqual((phi[n],a[n]),(12,10))
+        for m,m0 in ((64,43),(43,64)):
+            a_word=wp09k_anchor(a,n,m,m0,L)
+            p_word=wp09k_anchor(phi,n,m,m0,L)
+            self.assertEqual(p_word["anchored_full_Cook_word_residue"],0)
+            direct=((a[n*m]-a[n]*a[m])-(a[n*m0]-a[n]*a[m0]))%Q
+            self.assertEqual(a_word["anchored_full_Cook_word_residue"],direct)
+            self.assertTrue(a_word["uses_genuine_full_Cook_numerators"])
+        # The dyadic-rational comparator has original full phases near 1
+        # *while* long products can record its multiplicative defect.
+        for N in (27,100,900,1328):
+            D=cook_numerator_direct(a,N,1,L)
+            self.assertLess(16*abs(centered_representative(D,Q)),Q)
+
+    def test_exact_modulus_identity_and_original_phase_first_harmonic_open(self):
+        c=wp09k_certificate(21,1200000)
+        self.assertEqual(80*200*72*72,82944000)
+        self.assertEqual(
+            c["normalized_modulus_gap_lower"],
+            c["normalized_modulus_squared_gap_lower"]/2)
+        self.assertGreater(c["normalized_modulus_gap_lower"],0)
+        self.assertLess(c["normalized_modulus_gap_lower"],Fraction(1,10))
+        self.assertEqual(c["actual_phi_word"],"IDENTICALLY_ONE")
+        self.assertEqual(c["WP09I_rational_shadow_first_witness"],21)
+        self.assertEqual(c["original_Cook_single_phase_tenth_saving"],"OPEN")
+        self.assertEqual(c["Cook_weighted_prime_cofactor_estimate"],"OPEN")
+        self.assertEqual(c["erdos249_irrationality"],"OPEN")
+
+    def test_invalid_gates_and_invalid_cook_phase_indexing_fail_closed(self):
+        for n,P in ((0,300000),(1,300000),(-3,300000),
+                    (3,0),(True,300000),(3,True)):
+            with self.assertRaises(ValueError):
+                wp09k_certificate(n,P)
+        for n,P in ((3,300001),(9,10000),(21,100000)):
+            c=wp09k_certificate(n,P)
+            self.assertFalse(c["eligible"])
+            self.assertIsNone(c["normalized_modulus_gap_lower"])
+            with self.assertRaises(ValueError):
+                wp09k_ranges(n,P)
+        with self.assertRaises(ValueError):
+            wp09k_ranges(3,300000,max_P=1000)
+        phi=totients(300)
+        with self.assertRaises(ValueError):
+            wp09k_word(phi,4,200,20)
+        with self.assertRaises(ValueError):
+            wp09k_word(phi,100,1,20)
+        with self.assertRaises(ValueError):
+            wp09k_anchor(phi,9,100,99,20)
+        with self.assertRaises(ValueError):
+            wp09k_anchor(phi,9,20,20,40)
