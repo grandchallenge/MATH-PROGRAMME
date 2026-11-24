@@ -132,7 +132,7 @@ This is an existential completeness theorem for exact witnesses, not a universal
 
 ## 4. Strictly positive rational realization on the original alphabet
 
-The following proof strengthens the conclusion beyond the positive realization of a blocked process. Let $P_0=P$ be a full-dimensional rational polytope from Section 3, all length-$s$ images of which lie strictly inside $P_0$. Every word denominator is positive on $P_0$ by the proof above.
+The following proof strengthens the conclusion beyond the positive realization of a blocked process. Let $P_0=P$ be a full-dimensional rational polytope from Section 3, all images of words of length $s$ of which lie strictly inside $P_0$. Every word denominator is positive on $P_0$ by the proof above.
 
 For $1\le j\le s$ let
 
