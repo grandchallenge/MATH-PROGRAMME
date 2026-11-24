@@ -8,30 +8,30 @@ The protected, previously source-proved `GENERAL_CORE_ORIGINAL_TRANSFER.md`, The
 
 For sorted positive original RED $n=(n_1,\dots,n_s)$ and BLUE $m=(m_1,m_2,m_3)$, suppose both leading edge sizes are at least two and have **opposite parity**, and suppose the exact JOINT lower is already proved for this pair:
 
-$
+$$
 e(Q)\ge J_{\mathrm{can}}(n,m)
 \quad \text{for every simultaneous JOINT residual host }Q.
-$
+$$
 
 Let
 
-$
+$$
 D=n_1+m_1-2,\qquad
 W=W_{\mathrm{can}}(n,m),\qquad
 R=\max\Bigl(\sum_{i=1}^{s}n_i+s,\ \sum_{j=1}^{3}m_j+3\Bigr).
-$
+$$
 
 The protected Theorem A's **fourth** sufficient condition is
 
-$
+$$
 \boxed{2W<2D^2+R.}
-$
+$$
 
 Under these exact hypotheses,
 
-$
+$$
 \boxed{\widehat r(F(n),F(m))=W.}
-$
+$$
 
 The two leading sizes must each be at least two; omitting this guard would apply a factor-theory premise outside its sourced domain. A parity guard and the **strict** inequality are essential and are checked explicitly in executable proof traces.
 
@@ -43,9 +43,9 @@ A red/blue edge decomposition with maximum red degree $n_1-1$ and maximum blue d
 
 The graph contains each original forest under the all-red/all-blue colouring, so its number of vertices incident with edges is at least $R$. Every nonisolated vertex outside the saturated set contributes at least one to the degree sum; consequently
 
-$
+$$
 2e(G)\ge Dk+(R-k)\ge R+(D-1)(2D+2)=R+2D^2-2.
-$
+$$
 
 But $2e(G)\le2W-2$. The strict fourth condition $2W<2D^2+R$ contradicts both inequalities. Hence the original canonical value is sharp.
 
@@ -53,7 +53,7 @@ This is **reuse of an already source-admitted all-host proof**, not a new postul
 
 ## 3. Well-founded certificate composition, retaining the prior source
 
-The new code `verify_recursive_vertex_budget_certificates.py` imports the two **unaltered** protected recursive proof engines. It first asks the existing engine for a JOINT or ORIGINAL trace. A new ORIGINAL certificate is permitted **only** if (i) the prior engine returned UNKNOWN for that ORIGINAL, (ii) this fourth transfer passes with all guards, and (iii) the enhanced engine has an actual recursive JOINT proof trace for **the same exact original profile**. It then retains the dependency tree and exact values $W,D,R$, including a positive integer strict-inequality margin.
+The new code `verify_recursive_vertex_budget_certificates.py` imports the two **unaltered** protected recursive proof engines. It first asks the existing engine for a JOINT or ORIGINAL trace. A new ORIGINAL certificate is permitted **only** if (i) the prior engine returned UNKNOWN for that ORIGINAL, (ii) this fourth transfer passes with all guards, and (iii) the enhanced engine has an actual recursive JOINT proof trace for **the same exact original profile**. The newly proved JOINT certificate can additionally activate any of the original THREE transfer gates when that prior transfer was already numerically legal but no sharp JOINT proof was previously available. It then retains the dependency tree and exact values $W,D,R$, including a positive integer strict-inequality margin.
 
 If a JOINT trace is still UNKNOWN, the enhanced engine can attempt to prove it through a **strictly shorter RED list** either by a source-proved exact first residual ORIGINAL or by the existing source-proved zero-deficit RED matching bridge. Both recursion paths reduce the number of RED components, so no cyclic inference or unproved premise is introduced.
 
@@ -73,9 +73,9 @@ Adding only the source's fourth ORIGINAL transfer and allowing already-admitted 
 
 The finite traces demonstrate how many bounded parameter profiles the **mathematical sufficient rule** reaches. They are not a finite graph-host census or proof of full Erdős #561. An illustrative new ORIGINAL profile is RED $(3,3,1,1,1)$, BLUE $(4,4,1)$: here $W=31$, $J=25$, $D=5$, and $R=14$; the older half-core and one-odd criteria do not apply, but
 
-$
+$$
 2W=62<2D^2+R=64.
-$
+$$
 
 Its JOINT lower was already source-certified, so the exact unrestricted-host ORIGINAL value is now proved to be $31$. This example does not depend on extrapolating from test cases.
 
