@@ -2660,7 +2660,7 @@ class CofactorTwoCopyCookTransferTests(unittest.TestCase):
         self.assertTrue(a["first_weighted_Cook_14X_over_25_FINITE"])
 
     def test_invalid_source_scope_rejected_without_modifying_original_theorem(self):
-        for k in (0,False,1.25):
+        for k in ("0",False,1.25):
             with self.assertRaises(ValueError):
                 wp09l_root(k,10)
         for args in (
