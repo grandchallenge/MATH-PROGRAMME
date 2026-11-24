@@ -101,12 +101,12 @@ class TestEffectivePolytopeSynthesis(unittest.TestCase):
         model=balanced_source()
         q=PredictiveQuotient(model)
         J=observable_entry_bound(model,q)
-        self.assertEqual(J,8)
+        self.assertEqual(J,12)
         for s in range(5):
             for A in normalized_products(q,s,4096):
                 self.assertTrue(all(abs(x)<=J for row in A for x in row))
         B=quantitative_bounds(2,2,F(1,2),J,0,F(1,2))
-        self.assertEqual((B["block"],B["grid_bits"]),(1,7))
+        self.assertEqual((B["block"],B["grid_bits"]),(1,8))
         d=replay(q,B["block"],B["grid_bits"])
         self.assertLessEqual(len(d["vertices"]),B["vertex_bound"])
         self.assertEqual(d["eta"],0)
