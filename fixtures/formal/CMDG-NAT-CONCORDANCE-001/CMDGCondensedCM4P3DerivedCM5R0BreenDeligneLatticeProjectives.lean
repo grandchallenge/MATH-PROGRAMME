@@ -1,5 +1,6 @@
 import Mathlib.Algebra.Category.Grp.Adjunctions
 import Mathlib.Algebra.Category.Grp.Abelian
+import Mathlib.Algebra.Category.Grp.EpiMono
 import Mathlib.CategoryTheory.Adjunction.Whiskering
 import Mathlib.CategoryTheory.InducedCategory
 import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
@@ -29,8 +30,11 @@ theorem polynomialHomEquiv_comp (n : Latt)
     (f : polynomial n ⟶ F) (g : F ⟶ G) :
     polynomialHomEquiv n G (f ≫ g) =
       g.app n (polynomialHomEquiv n F f) := by
-  unfold polynomialHomEquiv
-  rw [Equiv.trans_apply, (AddCommGrpCat.adj.whiskerRight Latt).homEquiv_naturality_right,
+  change coyonedaEquiv ((AddCommGrpCat.adj.whiskerRight Latt).homEquiv
+    (coyoneda.obj (op n)) G (f ≫ g)) =
+    g.app n (coyonedaEquiv ((AddCommGrpCat.adj.whiskerRight Latt).homEquiv
+      (coyoneda.obj (op n)) F f))
+  rw [(AddCommGrpCat.adj.whiskerRight Latt).homEquiv_naturality_right,
     coyonedaEquiv_comp]
   rfl
 
