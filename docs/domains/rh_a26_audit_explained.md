@@ -159,9 +159,9 @@ Separate exact programs perform the full noncommutative enumeration and represen
 
 These objects are not isolated puzzles. They form a *dependency structure* whose links need individual verification. The following map is a reading guide to the audit as recorded on this page, not the entire original proof or a measurement of percentage complete.
 
-![Schematic audit map from reconstructed conditional transfers through source bridges to the open Bernoulli valuation estimate](../assets/rh-a26-frontier.svg)
+![Historical schematic audit map of the earlier Bernoulli valuation frontier](../assets/rh-a26-frontier.svg)
 
-*Figure E. Where scrutiny is concentrated.* We have reconstructed rules for moving information between mathematical descriptions. We still need to verify that the source's actual arithmetic objects are faithfully represented and that the resulting numerical bound holds. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH.
+*Figure E. Earlier audit snapshot, 24 November 2026.* We have reconstructed rules for moving information between mathematical descriptions. The diagram records the earlier boundary; sections 8 and 9 explain the subsequent auxiliary-system and Bernoulli valuation advances. The complete primitive estimate and source replay remain open. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH.
 
 For readers who want to see the precise source statements, the following table identifies the named components:
 
@@ -174,6 +174,7 @@ For readers who want to see the precise source statements, the following table i
 | `shaToShT` | Pass from uniformly bounded torsion layers to the full group | Independent mathematical proof under the source unit and ramification hypotheses |
 | `ML.recip`, `ML.count` | Derive local cancellation and count by a finite valuation budget | Reconstructed using classical duality and the auxiliary-system contract; construction of the latter now independently reconstructed |
 | `NuSysEx` | Construct the compatible auxiliary arithmetic system | Independently reconstructed using stated classical number-theoretic results |
+| `zEval` | Connect the auxiliary sum to normalized generalized Bernoulli values | Exact valuation equality and both divisibilities reconstructed on the nonexceptional branch |
 | **`ML.vChar`** | Relate generalized Bernoulli quantities to the lengths of these arithmetic eigenspaces | **Decisive arithmetic inequality not independently established**; its source statement explicitly assumes `Rec` |
 
 The word **conditional** matters. In the source, the valuation theorem begins with a hypothesis `Rec → ...`. To obtain an unconditional consequence one must establish that hypothesis, discharge all other assumptions, and verify that the formal statements describe the claimed classical problem.
@@ -263,7 +264,7 @@ For an illustration, suppose $J=5$ and the starting divisibility measurement is 
 
 **Why reciprocity is needed:** local data at distinct primes are not independent. The proof pairs two arithmetic cocycles, obtaining a degree-two class whose local contributions must cancel globally. If every contribution except one is zero, the remaining contribution is zero too. The local duality property then converts that vanishing into the product-zero relation needed in the counting step.
 
-We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The construction of the compatible auxiliary system has since been independently reconstructed, as explained in the next section. The Bernoulli divisibility witnesses and the exceptional case of the primitive estimate still need independent reconstruction.
+We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The construction of the compatible auxiliary system has since been independently reconstructed, as explained in the next section. The Bernoulli divisibility witnesses have since been reconstructed; the exceptional case of the primitive estimate remains open.
 
 The [technical audit PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) supplies the mathematical arguments and exact finite checks, with the imported theorems identified. Those checks exercise the algebra, not the global arithmetic duality theorem.
 
@@ -303,9 +304,46 @@ The central achievement is not another finite computation. It is the conventiona
 
 The [technical audit PR #606](https://github.com/grandchallenge/MATHFORGE/pull/606) records the construction and the precise imported foundations. Supporting tests checked 49,560 exponent-distribution identities, 3,256 finite-field Jacobi reductions, and further derivative and character-sum identities. These are checks on the arithmetic ingredients, not a verification of the complete submitted formal proof.
 
-The remaining primitive estimate still requires the precise divisibility comparison with the generalized Bernoulli value, and the treatment of its exceptional case. We have also not independently replayed the original Lean proof or verified the exact correspondence of all its foundational imports.
+The precise divisibility comparison with the generalized Bernoulli value has now been reconstructed, as explained in the next section. The character-ramification bridge and exceptional case remain open. We have also not independently replayed the original Lean proof or verified the exact correspondence of all its foundational imports.
 
-## 9. Reproducibility and technical references
+## 9. Connecting the auxiliary system to Bernoulli values
+
+The previous sections explain how to construct a system of arithmetic objects and use it to bound the length of a cohomology group. One connection was still missing: the number governing that bound had to be related to the generalized Bernoulli value appearing in the submitted proof.
+
+We have independently reconstructed that connection, under the original nonexceptional character hypothesis. The argument compares the auxiliary integer-weighted sum with a Bernoulli polynomial expression, retaining the denominator that is necessary to control the error.
+
+### Why divisibility can be stable even when numbers differ
+
+Suppose we are measuring divisibility by 3. The numbers 24 and 51 differ by 27. Both are divisible by 3 exactly once. Adding a multiple of 27 cannot change that first nonzero level of divisibility.
+
+More generally, if two nonzero quantities agree to a precision exceeding the divisibility measurement of one of them, their measurements agree exactly. This is the decisive property of the prime-adic valuation. It replaces a familiar real-number error estimate with a different kind of precision: agreement modulo increasingly high powers of a prime.
+
+### The genuine arithmetic comparison
+
+The source uses a finite weighted sum at a modulus that grows by powers of a prime. Its weights approximate the prescribed character values at that precision. A Bernoulli polynomial expansion gives a congruence linking that sum to the normalized generalized Bernoulli value. The proof explicitly clears denominators before estimating the error.
+
+The nonexceptional hypothesis supplies a multiplier that is invertible at the chosen prime. This ensures that the comparison does not silently erase the divisibility information. Once the modulus is large enough, the error lies beyond the first nonzero valuation of the target, so the auxiliary value and normalized Bernoulli value have exactly the same valuation.
+
+For the quadratic character of conductor 5, the generalized Bernoulli value at order 2 is $4/5$, and the normalized value is $2/5$. At prime 3, the following exact integer sums occur:
+
+| Auxiliary modulus | Integer-weighted sum | Divisibility by 3 |
+| ---: | ---: | ---: |
+| 15 | 8 | 0 |
+| 45 | 8 | 0 |
+| 135 | 8 | 0 |
+| 405 | 8 | 0 |
+
+These are finite representative sums, not explicit computations of absolute Galois automorphisms. The general proof establishes that the actual auxiliary value agrees with the representative sum at the required precision. Both have valuation zero at prime 3 in this example. The conservative denominator-cleared Bernoulli quantity is 24, with valuation one. The new argument accounts for that extra factor rather than treating it as an unknown loss.
+
+A second example shows that the equality is not limited to units: for the quadratic character of conductor 8 at order 4, the normalized value is −11, with valuation one at prime 11. The high-precision finite representatives have that same valuation.
+
+**The exceptional condition is necessary.** For the trivial character at order 2 and prime 3, the normalized value is $1/12$. Its valuation is negative, whereas the auxiliary sum is integral. The invertible multiplier required by the proof does not exist in this case. The nonexceptional comparison cannot be extended to it by the same argument.
+
+The [technical audit PR #607](https://github.com/grandchallenge/MATHFORGE/pull/607) reconstructs both divisibility witnesses for every nonzero input and proves the exact valuation identity. It also identifies the precise precision threshold and the loss from the conservative denominator multiplier. The exact regression checked 18,261 pointwise identities, including 6,342 requiring the denominator, 173 level-change identities, 146 weighted congruences, 315 stable representative valuations and 528 divisibility comparisons. These are checks on the arithmetic, not a replacement for the general argument.
+
+The next work is the source's character-ramification bridge and the exceptional branch, before the primitive estimate can be independently assembled in its full original scope. The foundational correspondence and original Lean replay remain open.
+
+## 10. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -332,10 +370,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) | General denominator and conductor-change argument, with exact arithmetic tests |
 | [PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) | Full torsion-layer transfer, conditional counting and reciprocity reconstruction |
 | [PR #606](https://github.com/grandchallenge/MATHFORGE/pull/606) | Genuine auxiliary-system construction from Jacobi sums, including local compatibility and initial value |
+| [PR #607](https://github.com/grandchallenge/MATHFORGE/pull/607) | Exact Bernoulli valuation bridge and uniform divisibility witnesses |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 10. What the investigation taught us about checking extraordinary mathematical claims
+## 11. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -347,16 +386,16 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 11. The next executable mathematical step
+## 12. The next executable mathematical step
 
 **Target:** `UpperTheory.V.ML.vChar` in the original `PrimitiveFrobeniusFixed/PrimCase.lean`.
 
 **Input:** the source-locked `NuSysEx`, `laxEx`, `sysOfLax`, `kolEx`, `derInv`, `kolStep`, `kolInit`, `zEval`, and `exc` statements and the exact local/global duality hypotheses.
 
-**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. The transfer, counting mechanism and reciprocity implication are reconstructed. The genuine auxiliary system (NuSys) has also been reconstructed using explicit classical number-theoretic inputs. Next establish the exact Bernoulli divisibility witnesses (zEval) and the exceptional branch (exc), and audit the foundational correspondence.
+**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. The transfer, counting mechanism and reciprocity implication are reconstructed. The genuine auxiliary system (NuSys) has also been reconstructed using explicit classical number-theoretic inputs. The exact Bernoulli divisibility witnesses (zEval) have been reconstructed. Next establish the character-ramification bridge (primRam) and exceptional branch (exc), assemble the primitive and level-change estimates, and audit the foundational correspondence.
 
 **Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small computational examples must remain supporting exhibits, never the substitute for this proof.
 
-**Present boundary:** `RH-A26-D05_NUSYS_CONSTRUCTION_RECONSTRUCTED_WITH_EXPLICIT_CLASSICAL_FOUNDATIONS__ZEVAL_EXC_FOUNDATIONAL_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_ZEVAL_EXACT_BERNOULLI_VALUATION_RECONSTRUCTED__PRIMRAM_EXC_FOUNDATIONAL_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains the protected evidence, not a certification of RH or GRH.
