@@ -606,7 +606,56 @@ def manuscript(problem_id: int, base: Path = EDITORIAL) -> str | None:
     return text
 
 
-def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = False, legacy: bool = False) -> str:
+def load_evidence_addenda(directory: Path) -> tuple[dict, dict]:
+    """Separate dated research evidence from the exact admitted manuscripts."""
+    source = directory / "PUBLIC_EVIDENCE_UPDATES_20261124.json"
+    baseline_path = directory / "RECONCILIATION_20261124.json"
+    raw = baseline_path.read_bytes()
+    doc = json.loads(source.read_text(encoding="utf-8"))
+    baseline = json.loads(raw)
+    if (doc.get("record_type") != "ERDOS_PUBLIC_EVIDENCE_ADDENDUM/1"
+            or doc.get("as_of") != "2026-11-24"
+            or doc.get("baseline_sha256") != hashlib.sha256(raw).hexdigest()):
+        raise ValueError("Unbound public evidence addenda")
+    rows = {r["problem_id"]: r for r in baseline["assessments"]}
+    result = {}
+    for entry in doc["entries"]:
+        n = entry["problem_id"]
+        if (n not in rows or n in result or entry["anchors"] != rows[n]["anchors"]
+                or entry["manuscript_blob"] != rows[n]["manuscript_blob"]
+                or entry["publication_effect"] != "DATED_EVIDENCE_ADDENDUM_ONLY"
+                or entry["theorem_promotion"] is not False or entry["certification"] is not False
+                or not all(isinstance(entry[k], str) and entry[k].strip()
+                           and "\n" not in entry[k] and "<" not in entry[k] for k in ("title", "text"))):
+            raise ValueError(f"Unbound or inflated public evidence update #{n}")
+        for a in entry["anchors"]:
+            repo, path, blob = a["repository"], a["path"], a["blob"]
+            if (repo not in ("MATH-PROGRAMME", "MATHSOLVE", "MATHCERT")
+                    or not re.fullmatch(r"[0-9a-f]{40}", blob)
+                    or not re.fullmatch(r"[0-9a-f]{40}", baseline["protected_heads"][repo])
+                    or not re.fullmatch(r"[A-Za-z0-9_./-]+", path) or ".." in path.split("/")):
+                raise ValueError(f"Invalid pinned evidence link #{n}")
+        result[n] = entry
+    if set(result) != {2, 3, 14, 248, 249, 560, 561, 602}:
+        raise ValueError("Incomplete public evidence addendum set")
+    return result, baseline["protected_heads"]
+
+
+def evidence_addendum(entry: dict, heads: dict, source: Path) -> str:
+    raw = source.read_bytes() if source.is_file() else None
+    blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest() if raw is not None else None
+    if blob != entry["manuscript_blob"]:
+        # Do not silently attach an obsolete correction to a different manuscript.
+        return ""
+    links = [f"[Protected evidence {i+1}](https://github.com/grandchallenge/{a['repository']}/blob/{heads[a['repository']]}/{a['path']})"
+             for i, a in enumerate(entry["anchors"])]
+    return ("## Evidence update — 24 November 2026\n\n"
+            "**" + entry["title"] + "**\n\n" + entry["text"] + "\n\n"
+            + " · ".join(links) + "\n\n"
+            + "This dated evidence update is separate from article admission and mathematical certification.\n")
+
+
+def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = False, legacy: bool = False, evidence_update: str = "") -> str:
     n = row["problem_id"]
     issue = row["issue_number"]
     topics = ", ".join(clean_cell(x) for x in row["topics"]) or "not classified"
@@ -631,6 +680,8 @@ def reader_card(row: dict, curated: str | None, commit: str, *, pending: bool = 
         "are separate events.",
         "",
     ]
+    if evidence_update:
+        body.extend([evidence_update, ""])
     if curated:
         if legacy:
             body.extend([
@@ -708,6 +759,9 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
           output: Path = GENERATED, admissions_path: Path = ACCEPTANCE) -> dict:
     data, rows = load_registry(registry)
     admissions = load_batch_admissions(admissions_path)
+    addenda, evidence_heads = ({}, {})
+    if Path(editorial).resolve() == EDITORIAL.resolve() and Path(registry).resolve() == REGISTRY.resolve():
+        addenda, evidence_heads = load_evidence_addenda(ROOT / "governance/erdos_compendium/crossrepo")
     problems = output / "problems"
     catalogue = output / "catalogue"
     for directory in (problems, catalogue):
@@ -749,7 +803,9 @@ def build(*, registry: Path = REGISTRY, editorial: Path = EDITORIAL,
         if curated:
             curated_ids.append(n)
         (problems / f"{n:04d}.md").write_text(
-            reader_card(row, curated, commit, pending=pending, legacy=legacy), encoding="utf-8")
+            reader_card(row, curated, commit, pending=pending, legacy=legacy,
+                        evidence_update=evidence_addendum(addenda[n], evidence_heads, editorial / f"{n:04d}.md")
+                        if n in addenda else ""), encoding="utf-8")
     if set(admissions) - found_ids:
         raise ValueError("Admission references an absent registry manuscript")
 

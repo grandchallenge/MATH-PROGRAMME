@@ -32,6 +32,7 @@ jobs:
           python3 ci/test_erdos_compendium_research_activity.py
           python3 ci/test_erdos_compendium_proof_evidence_coverage.py
           python3 ci/test_erdos_compendium_crossrepo_reconciliation.py
+          python3 ci/test_erdos_compendium_evidence_updates.py
       - name: Fetch current protected MATHCERT authority in one bounded read
         env:
           GH_TOKEN: ${{ github.token }}
@@ -127,6 +128,7 @@ jobs:
             --trees "$d" \
             --merged-search "$d" \
             --baseline governance/erdos_compendium/crossrepo/RECONCILIATION_20261124.json \
+            --shared-map governance/erdos_compendium/crossrepo/SHARED_ARTIFACTS_20261124.json \
             --admissions "$d/admissions.json" \
             --output "$RUNNER_TEMP/erdos-crossrepo-reconciliation.json"
           python3 - "$RUNNER_TEMP/erdos-crossrepo-reconciliation.json" >> "$GITHUB_STEP_SUMMARY" <<'PY'
@@ -136,6 +138,7 @@ jobs:
           print("Named retained blobs: "+str(d["named_crossrepo_file_counts"]))
           print("Reviewed source-bound assessments:",d["assessed_problem_count"])
           print("Shared/unassigned inventory changed:",d["shared_or_unassigned_inventory_changed"])
+          print("Reviewed shared correspondence:", d["shared_path_correspondence"]["mapped_paths_current"], "current; unresolved", sum(len(v) for v in d["shared_path_correspondence"]["unresolved_current_paths"].values()))
           for repo, delta in d["merged_pr_search_delta"].items():
               print(f"{repo}: {delta['unique_matches_received']} merged-PR search matches; query complete={delta['search_complete_for_this_query']}; {len(delta['new_match_leads'])} new leads; not exhaustive history")
           for row in d["review_candidates"]:

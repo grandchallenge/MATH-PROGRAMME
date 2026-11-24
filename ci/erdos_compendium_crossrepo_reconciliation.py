@@ -143,6 +143,33 @@ def reconcile(heads,trees,baseline,admissions):
       "inventory":now,"authority":"READ_ONLY_PATH_IDENTITY_AND_REVIEW_ANCHOR_RECONCILIATION",
       "history_exhaustive":False,"semantic_assessment_automatic":False,"publication_authorized":False}
 
+def reconcile_shared_paths(trees, baseline, baseline_raw, mapping):
+    """Track reviewed many-to-many correspondence without inflating theorem authority."""
+    require(mapping.get("record_type")=="ERDOS_SHARED_ARTIFACT_RECONCILIATION/1", "wrong shared mapping type")
+    require(mapping.get("source_repository")=="grandchallenge/MATHSOLVE"
+            and mapping.get("source_head")==baseline["protected_heads"]["MATHSOLVE"]
+            and mapping.get("baseline_sha256")==hashlib.sha256(baseline_raw).hexdigest(), "wrong shared mapping baseline")
+    old={r["path"]:r["blob"] for r in baseline["inventory"]["unassigned_named_crossrepo_files"]["MATHSOLVE"]}
+    rows=mapping["entries"]
+    require(len(rows)==mapping["mapped_count"]==len(old), "incomplete shared mapping")
+    seen=set(); matched=[]; stale=[]; ids=set()
+    for r in rows:
+        p=r["path"]; ns=r["problem_ids"]
+        require(p not in seen and p in old and r["blob"]==old[p] and r["repository"]=="MATHSOLVE"
+                and re.fullmatch(r"[a-f0-9]{64}",r["sha256"]) and ns and len(set(ns))==len(ns)
+                and all(type(n) is int and n in IDS for n in ns) and r["theorem_promotion"] is False
+                and r["certification"] is False and r["claim_scope"] and r["evidence_class"], "invalid shared correspondence")
+        seen.add(p)
+        if trees["MATHSOLVE"].get(p)==r["blob"]:
+            matched.append(p); ids.update(ns)
+        else: stale.append(p)
+    require(set(mapping["problem_ids"])=={n for r in rows for n in r["problem_ids"]}, "shared problem index mismatch")
+    current=snapshot(trees)["unassigned_named_crossrepo_files"]
+    unresolved={repo:[r for r in files if repo!="MATHSOLVE" or r["path"] not in matched] for repo,files in current.items()}
+    return {"mapped_paths_current":len(matched),"mapped_problem_ids":sorted(ids),"stale_or_missing_paths":stale,
+            "unresolved_current_paths":unresolved,"theorem_authority":False,"certification":False}
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--trees",type=Path,required=True)
@@ -150,10 +177,14 @@ def main():
     p.add_argument("--admissions",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
     p.add_argument("--merged-search",type=Path,help="Directory of paginated merged-PR search metadata")
+    p.add_argument("--shared-map",type=Path,help="Reviewed shared artifact correspondence")
     a=p.parse_args()
     heads,trees=load_trees(a.trees)
-    baseline=json.loads(a.baseline.read_text())
+    baseline_raw=a.baseline.read_bytes()
+    baseline=json.loads(baseline_raw)
     d=reconcile(heads,trees,baseline,json.loads(a.admissions.read_text()))
+    if a.shared_map:
+        d["shared_path_correspondence"]=reconcile_shared_paths(trees,baseline,baseline_raw,json.loads(a.shared_map.read_text()))
     if a.merged_search:
         pages={r:json.loads((a.merged_search/f"{r}-merged-pages.json").read_text()) for r in ("MATHSOLVE","MATHCERT")}
         d["merged_pr_search_delta"]=merge_search_delta(pages,baseline["historical_merged_pr_search"])
