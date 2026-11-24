@@ -176,10 +176,10 @@ class TestInteractingSmallGain(unittest.TestCase):
             temporal_response(F(1,2),F(1,2),0,1)
 
     def test_strong_internal_memory_column_and_perturbation(self):
-        a,b=F(7,16),F(1,4096)
+        self_c,neighbor_c=F(7,16),F(1,4096)
         n=2
-        net=ring(n,a,b)
-        base=binary_network(tuple(((i,a),) for i in range(n)))
+        net=ring(n,self_c,neighbor_c)
+        base=binary_network(tuple(((i,self_c),) for i in range(n)))
         self.assertEqual(certify(net,max_dense=0,sparse_steps=0)["outcome"],"undecided")
         D=certify(net,"column",max_dense=0)
         P=certify_perturbation(net,base,max_dense=0)
@@ -217,7 +217,7 @@ class TestInteractingSmallGain(unittest.TestCase):
                                 self.assertLessEqual(max(probs)/min(probs)-1,
                                                      W["port_constants"][i]*W["rho"]**s)
         # Strong-memory certificate is independent of the size of a ring.
-        large=ring(128,a,b)
+        large=ring(128,self_c,neighbor_c)
         L=certify(large,"column",max_dense=0)
         self.assertEqual((L["rho"],L["gain"],L["port_constants"][0]),
                          (D["rho"],D["gain"],D["port_constants"][0]))
