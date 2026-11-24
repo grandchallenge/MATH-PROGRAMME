@@ -47,9 +47,10 @@ class TestInteractingSmallGain(unittest.TestCase):
         self.assertGreaterEqual(ratio_tv(4),F(1,3))
         self.assertLess(ratio_tv(4),F(34,100))
         # Multi-state child and nonbinary observation labels.
-        net=LocalNetwork((3,),((0,),),
-          (((F(1,6),F(1,6),F(1,6)),)*3,
-           ((F(1,12),F(1,6),F(1,4)),)*3))
+        table=(((F(1,9),F(1,9),F(1,9)),)*3,
+               ((F(1,12),F(1,12),F(1,6)),)*3,
+               ((F(1,6),F(1,12),F(1,12)),)*3)
+        net=LocalNetwork((3,),((0,),),(table,))
         self.assertEqual(certify(net)["constant"],0)
         self.assertEqual(factor_envelope(net,0)[0,1],1)
 
