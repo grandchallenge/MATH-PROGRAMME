@@ -30,13 +30,11 @@ theorem polynomialHomEquiv_comp (n : Latt)
     (f : polynomial n ⟶ F) (g : F ⟶ G) :
     polynomialHomEquiv n G (f ≫ g) =
       g.app n (polynomialHomEquiv n F f) := by
-  change coyonedaEquiv ((AddCommGrpCat.adj.whiskerRight Latt).homEquiv
-    (coyoneda.obj (op n)) G (f ≫ g)) =
-    g.app n (coyonedaEquiv ((AddCommGrpCat.adj.whiskerRight Latt).homEquiv
-      (coyoneda.obj (op n)) F f))
-  rw [(AddCommGrpCat.adj.whiskerRight Latt).homEquiv_naturality_right,
-    coyonedaEquiv_comp]
-  rfl
+  let adj := AddCommGrpCat.adj.whiskerRight Latt
+  change coyonedaEquiv (adj.homEquiv (coyoneda.obj (op n)) G (f ≫ g)) =
+    g.app n (coyonedaEquiv (adj.homEquiv (coyoneda.obj (op n)) F f))
+  have h := adj.homEquiv_naturality_right (X := coyoneda.obj (op n)) f g
+  exact (congrArg coyonedaEquiv h).trans (coyonedaEquiv_comp _ _)
 
 instance polynomialProjective (n : Latt) : Projective (polynomial n) where
   factors f e he := by
@@ -64,7 +62,12 @@ theorem cover_epi (F : Latt ⥤ AddCommGrpCat.{0}) : Epi (cover F) := by
   refine ⟨polynomialHomEquiv n _ a, ?_⟩
   rw [← polynomialHomEquiv_comp]
   change polynomialHomEquiv n F (Sigma.ι (coverFamily F) i ≫ cover F) = x
-  rw [cover, Sigma.ι_desc, Equiv.apply_symm_apply]
+  have h : Sigma.ι (coverFamily F) i ≫ cover F =
+      (polynomialHomEquiv i.1 F).symm i.2 :=
+    Sigma.ι_desc (f := coverFamily F)
+      (fun j => (polynomialHomEquiv j.1 F).symm j.2) i
+  exact (congrArg (polynomialHomEquiv n F) h).trans
+    ((polynomialHomEquiv n F).apply_symm_apply x)
 
 instance coverProjective (F : Latt ⥤ AddCommGrpCat.{0}) :
     Projective (∐ (coverFamily F)) := by
