@@ -4,13 +4,13 @@ and margin-conditional adaptive packing covers. Exact rational arithmetic.
 from fractions import Fraction as F
 from itertools import product
 from collections import deque
-from math import prod, floor, lcm
+from math import prod, floor
 
 from observable_memory_certificate import ObservableFiniteMemory
 from observable_polytope_certificate import PredictiveQuotient, solve_square, row_mul, project
 from adaptive_graph_certificate import (
     Chart, replay_witness, image_box, corners, contains, hull, rational_rate,
-    verify_cover, block_system,
+    linear_min, component_numerator, column_norm,
 )
 from marked_reset_spectral import multiply
 
@@ -81,6 +81,12 @@ def positive_margins(model):
                    for i in range(model.dimension) for j in range(model.dimension)),
         "gamma":max(model.Q[i][j]/model.pi[j]
                     for i in range(model.dimension) for j in range(model.dimension)),
+        "letter_lo":tuple(min(sum(row) for row in A) for A in model.matrices),
+        "letter_hi":tuple(max(sum(row) for row in A) for A in model.matrices),
+        "entry_lo":tuple(min(A[i][j]/model.pi[j] for i in range(model.dimension)
+                            for j in range(model.dimension)) for A in model.matrices),
+        "entry_hi":tuple(max(A[i][j]/model.pi[j] for i in range(model.dimension)
+                            for j in range(model.dimension)) for A in model.matrices),
     }
 
 
@@ -96,8 +102,20 @@ def revealed_product_margin(models,witnesses):
             "factor_cells":tuple(r["cells"] for r in checks)}
 
 
-def channel_support(alphabet,memory,kernel):
-    """Boolean history automaton; no microscopic lift is constructed."""
+def check_transducer(T):
+    n,m,k=(T[x] for x in ("states","inputs","outputs"))
+    rows=T["rows"]
+    if any(not isinstance(x,int) or x<1 for x in (n,m,k)) or len(rows)!=n*m:
+        raise ValueError("transducer shape")
+    for row in rows:
+        if any(not isinstance(z,int) or not isinstance(t,int) or not 0<=z<k or not 0<=t<n
+               or p<=0 for z,t,p in row) or sum(p for z,t,p in row)!=1:
+            raise ValueError("transducer stochasticity")
+    return n,m,k
+
+
+def finite_range_transducer(alphabet,memory,kernel):
+    """Finite window rule as a stochastic observation transducer."""
     if not isinstance(memory,int) or memory<0 or not isinstance(alphabet,int) or alphabet<1:
         raise ValueError("invalid history dimensions")
     histories=tuple(product(range(alphabet),repeat=memory))
@@ -107,17 +125,42 @@ def channel_support(alphabet,memory,kernel):
     k=len(H[0]);idx={h:i for i,h in enumerate(histories)}
     if any(len(row)!=k or any(t<0 for t in row) or sum(row)!=1 for row in H):
         raise ValueError("kernel stochasticity")
-    masks=[]
-    for h,i in idx.items():
-        row=[]
-        for z in range(k):
-            mask=0
-            for a in range(alphabet):
-                if H[i*alphabet+a][z]>0:
-                    mask|=1<<idx[(h+(a,))[1:]]
-            row.append(mask)
-        masks.append(tuple(row))
-    return tuple(masks),min(t for row in H for t in row if t>0)
+    T={"states":len(histories),"inputs":alphabet,"outputs":k,
+       "rows":tuple(tuple((z,idx[(h+(a,))[1:]],p) for z,p in enumerate(H[i*alphabet+a]) if p)
+                    for i,h in enumerate(histories) for a in range(alphabet))}
+    check_transducer(T)
+    return T
+
+
+def serial_transducer(first,second):
+    """Exact serial composition; retains intermediate memory and randomness."""
+    n,m,k=check_transducer(first);r,b,l=check_transducer(second)
+    if k!=b:raise ValueError("serial alphabet mismatch")
+    rows=[]
+    for i,j in product(range(n),range(r)):
+        for a in range(m):
+            out={}
+            for z,t,p in first["rows"][i*m+a]:
+                for w,u,q in second["rows"][j*b+z]:
+                    key=(w,t*r+u)
+                    out[key]=out.get(key,F(0))+p*q
+            rows.append(tuple((w,v,p) for (w,v),p in sorted(out.items()) if p))
+    T={"states":n*r,"inputs":m,"outputs":l,"rows":tuple(rows)}
+    check_transducer(T)
+    return T
+
+
+def transducer_support(T):
+    n,m,k=check_transducer(T)
+    masks=[[0]*k for _ in range(n)]
+    for i in range(n):
+        for a in range(m):
+            for z,t,p in T["rows"][i*m+a]:masks[i][z]|=1<<t
+    return tuple(tuple(row) for row in masks),min(p for row in T["rows"] for z,t,p in row)
+
+
+def channel_support(alphabet,memory,kernel):
+    return transducer_support(finite_range_transducer(alphabet,memory,kernel))
 
 
 def _successor(mask,masks,z):
@@ -168,30 +211,84 @@ def synchronization(masks,max_nodes=100000):
             "nodes":len(graph),"edges":sum(map(len,graph.values()))}
 
 
-def compose_positive(interfaces,memory,kernel,max_nodes=100000):
-    """Constituent-local positive margins + channel support, no full joint lift.
+def weighted_path_bounds(T,margins,s,max_words):
+    """Optional tighter bounds using only weighted interface-state paths.
 
-    Factor laws are independent before the joint stochastic readout.
-    A support obstruction is NOT a non-Gibbs verdict.
+    At the final step the bounds are relative to product stationary mass.
+    No joint microscopic transfer matrix is constructed.
     """
-    if not interfaces:raise ValueError("empty factors")
-    margins=tuple(positive_margins(m) for m in interfaces)
-    alphabet=prod(r["alphabet"] for r in margins)
-    masks,alpha=channel_support(alphabet,memory,kernel)
+    n,m,k=check_transducer(T)
+    if k**s>max_words:return None
+    letters=tuple(product(*(range(r["alphabet"]) for r in margins)))
+    weights={key:tuple(prod(r[key][a] for r,a in zip(margins,w)) for w in letters)
+             for key in ("letter_lo","letter_hi","entry_lo","entry_hi")}
+    matrices={}
+    for key,v in weights.items():
+        A=[[[F(0)]*n for _ in range(n)] for _ in range(k)]
+        for i in range(n):
+            for a in range(m):
+                for z,j,p in T["rows"][i*m+a]:A[z][i][j]+=p*v[a]
+        matrices[key]=tuple(tuple(tuple(row) for row in mat) for mat in A)
+    delta=F(1,2)
+    from marked_reset_spectral import identity
+    for w in product(range(k),repeat=s):
+        L=U=identity(n)
+        for z in w[:-1]:
+            L=multiply(L,matrices["letter_lo"][z])
+            U=multiply(U,matrices["letter_hi"][z])
+        L=multiply(L,matrices["entry_lo"][w[-1]])
+        U=multiply(U,matrices["entry_hi"][w[-1]])
+        for j in range(n):
+            hi=max(row[j] for row in U)
+            if hi:
+                lo=min(row[j] for row in L)
+                if lo<=0:raise ValueError("weighted support mismatch")
+                delta=min(delta,lo/hi)
+    return delta
+
+
+def certify_transducer(margins,T,max_nodes=100000,max_weighted_words=64):
+    """Compose already verified positive factor margins with a transducer.
+
+    The finite interface constants must come from positive_margins or exact
+    interface replay. Use compose_positive for replay from actual models.
+    """
+    if not margins:raise ValueError("empty factors")
+    n,m,k=check_transducer(T)
+    if m!=prod(r["alphabet"] for r in margins):raise ValueError("joint input alphabet")
+    masks,alpha=transducer_support(T)
+    if any(not x for row in masks for x in row):
+        return {"outcome":"support_obstruction","boundary":"missing row label"}
     sync=synchronization(masks,max_nodes)
     if sync["outcome"]!="synchronized":return sync
     s=sync["block"]
     lam=prod(r["lambda"] for r in margins)
     beta=prod(r["beta"] for r in margins)
     gamma=prod(r["gamma"] for r in margins)
-    delta=min(F(1,2),alpha**s*lam**(s-1)*beta/gamma)
+    baseline=min(F(1,2),alpha**s*lam**(s-1)*beta/gamma)
+    weighted=weighted_path_bounds(T,margins,s,max_weighted_words)
+    delta=max(baseline,weighted) if weighted is not None else baseline
     eta=1-delta
     c=alpha*lam
+    # Lower bound actual one-symbol mass using per-letter row bounds.
+    letters=tuple(product(*(range(r["alphabet"]) for r in margins)))
+    lows=tuple(prod(r["letter_lo"][a] for r,a in zip(margins,w)) for w in letters)
+    c=max(c,min(sum(lows[a]*p for a in range(m) for z1,j,p in T["rows"][i*m+a] if z1==z)
+                    for i in range(n) for z in range(k)))
     return dict(sync,outcome="certified",nonnull=c,eta=eta,
                 constant=max(1/c,1/(delta**2*eta)),delta=delta,
+                baseline_delta=baseline,weighted_delta=weighted,
                 alpha=alpha,lambda_product=lam,beta_product=beta,gamma_product=gamma,
-                history_states=len(masks),factor_dimensions=tuple(r["dimension"] for r in margins),
+                history_states=n,factor_dimensions=tuple(r["dimension"] for r in margins),
                 joint_lift_constructed=False)
+
+
+def compose_positive(interfaces,memory,kernel,max_nodes=100000,max_weighted_words=64):
+    """Verify factor interfaces and one finite-range readout, no joint lift."""
+    if not interfaces:raise ValueError("empty factors")
+    margins=tuple(positive_margins(m) for m in interfaces)
+    T=finite_range_transducer(prod(r["alphabet"] for r in margins),memory,kernel)
+    return certify_transducer(margins,T,max_nodes,max_weighted_words)
 
 
 def joint_product(models):
@@ -232,7 +329,8 @@ def packing_cover(chart,block,radius,rate,max_cells=256,max_primitives=4096):
     if radius<=0 or not 0<=rate<1 or max_cells<1 or block<1:
         raise ValueError("invalid packing search")
     if chart.alphabet**block>max_primitives:raise ValueError("primitive budget")
-    A,seeds=block_system(chart,block);sep=(1-rate)*radius
+    A=tuple(chart.word_matrix(w) for w in product(range(chart.alphabet),repeat=block))
+    sep=(1-rate)*radius
     centers=[]
     def near(x):
         return next((i for i,y in enumerate(centers)
@@ -244,7 +342,7 @@ def packing_cover(chart,block,radius,rate,max_cells=256,max_primitives=4096):
         centers.append(x);return len(centers)-1
     def box(x):
         return tuple((v-radius,v+radius) for v in x[1:])
-    for x in seeds:add(x)
+    add(chart.initial)
     edges=[]
     for x in centers:
         row=[]
@@ -267,7 +365,7 @@ def discover_packing(chart,max_block=3,max_bits=10,max_cells=256,max_primitives=
             try:
                 boxes,edges,centers=packing_cover(chart,block,F(1,2**bits),F(1,2),
                                                  max_cells,max_primitives)
-                result=verify_cover(chart,block,boxes,edges,1)
+                result=verify_packing_cover(chart,block,boxes,edges)
             except ValueError as exc:
                 key=str(exc);failures[key]=failures.get(key,0)+1
                 continue
@@ -275,3 +373,52 @@ def discover_packing(chart,max_block=3,max_bits=10,max_cells=256,max_primitives=
                         centers=centers,bits=bits,attempts=attempts,failures=failures,
                         basis=chart.basis)
     return {"outcome":"undecided","attempts":attempts,"failures":failures}
+
+
+def verify_packing_cover(chart,block,boxes,edges,weights=None):
+    """Stationary convexification permits a single seed, no shorter words.
+    Factorize max over ordered pairs into numerator maxima and denominator minima.
+    """
+    d=chart.dimension;k=d-1;n=len(boxes)
+    if block<1 or not n or any(len(B)!=k or any(l>u for l,u in B) for B in boxes):
+        raise ValueError("packing cover shape")
+    if not any(contains(B,hull((chart.initial,))) for B in boxes):
+        raise ValueError("missing stationary seed")
+    A=tuple(chart.word_matrix(w) for w in product(range(chart.alphabet),repeat=block))
+    if len(edges)!=n or any(len(r)!=len(A) or any(not isinstance(i,int) or not 0<=i<n for i in r) for r in edges):
+        raise ValueError("packing edge shape")
+    w=(F(1),)*k if weights is None else tuple(map(F,weights))
+    if len(w)!=k or any(x<=0 for x in w):raise ValueError("bad packing metric")
+    c=min(linear_min(B,tuple(row[0] for row in T)) for B in boxes for T in chart.matrices)
+    if c<=0:raise ValueError("packing nonnullness")
+    eta=F(0)
+    for a,T in enumerate(A):
+        den=[];num=[]
+        for i,B in enumerate(boxes):
+            low,im=image_box(T,B)
+            if not contains(boxes[edges[i][a]],im):raise ValueError("packing enclosure failed")
+            den.append(low);num.append(column_norm(component_numerator(T,im),w))
+        eta=max(eta,max(num)/min(den))
+    if eta>=1:raise ValueError("packing contraction failed")
+    diameter=max(((max(B[j][1] for B in boxes)-min(B[j][0] for B in boxes))/w[j]
+                  for j in range(k)),default=F(0))
+    J=max(sum(w[i-1]*abs(T[i][0]) for i in range(1,d)) for T in chart.matrices)
+    return {"block":block,"contraction_length":block,"horizon":1,"eta":eta,
+            "nonnull":c,"diameter":diameter,"log_variation_constant":J*diameter/c,
+            "cells":n,"enclosure_edges":n*len(A),"pair_edges":0,
+            "primitive_words":len(A),"weights":w}
+
+
+def guaranteed_packing_budget(d,alphabet,b,J,H,theta):
+    """Conditional resources from WP11 all-word bounds in raw predictive coordinates."""
+    b,J,H,theta=map(F,(b,J,H,theta));k=d-1
+    if d<1 or alphabet<1 or not 0<b<=1 or J<=0 or H<0 or not 0<theta<1:
+        raise ValueError("invalid packing hypotheses")
+    if k==0:return {"block":1,"radius":F(1,4),"rate":F(1,2),
+                   "cell_bound":1,"primitive_bound":alphabet}
+    R=min(F(1,4),b/(2*k*J))
+    D=4*k*(1+2*k)*H/b**2
+    s=1
+    while D*theta**s>F(1,2):s+=1
+    return {"block":s,"radius":R,"rate":F(1,2),
+            "cell_bound":packing_bound(k,R,F(1,2)),"primitive_bound":alphabet**s}
