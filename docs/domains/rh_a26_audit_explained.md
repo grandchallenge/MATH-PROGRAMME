@@ -1,11 +1,11 @@
 # Auditing the 2026 Riemann Hypothesis claim: what the mathematics actually says
 
-<p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the decisive arithmetic argument still under examination.</p>
+<p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 24 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The counting and reciprocity arguments retain their stated classical-duality inputs; the auxiliary system has since been independently constructed using explicit classical number-theoretic foundations.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
-    **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; the Bernoulli/cohomological valuation inequality `ML.vChar` under its needed assumptions; MATHCERT certification.
+    **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
     **Evidence classes:** source audit, conventional conditional mathematical proof, exact finite verification, and regression tests. Repository merge, finite computations, and public exposition are **not** proof certification.
 
@@ -161,7 +161,7 @@ These objects are not isolated puzzles. They form a *dependency structure* whose
 
 ![Historical schematic audit map of the earlier Bernoulli valuation frontier](../assets/rh-a26-frontier.svg)
 
-*Figure E. Earlier audit snapshot, 24 November 2026.* We have reconstructed rules for moving information between mathematical descriptions. The diagram records the earlier boundary; sections 8 and 9 explain the subsequent auxiliary-system and Bernoulli valuation advances. The complete primitive estimate and source replay remain open. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH.
+*Figure E. Earlier audit snapshot, 24 November 2026.* We have reconstructed rules for moving information between mathematical descriptions. The diagram records the earlier boundary; sections 8 and 9 explain the subsequent auxiliary-system and Bernoulli valuation advances. Section 10 records the subsequent complete conditional character inequality; source replay and downstream proof obligations remain open. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH.
 
 For readers who want to see the precise source statements, the following table identifies the named components:
 
@@ -175,7 +175,8 @@ For readers who want to see the precise source statements, the following table i
 | `ML.recip`, `ML.count` | Derive local cancellation and count by a finite valuation budget | Reconstructed using classical duality and the auxiliary-system contract; construction of the latter now independently reconstructed |
 | `NuSysEx` | Construct the compatible auxiliary arithmetic system | Independently reconstructed using stated classical number-theoretic results |
 | `zEval` | Connect the auxiliary sum to normalized generalized Bernoulli values | Exact valuation equality and both divisibilities reconstructed on the nonexceptional branch |
-| **`ML.vChar`** | Relate generalized Bernoulli quantities to the lengths of these arithmetic eigenspaces | **Decisive arithmetic inequality not independently established**; its source statement explicitly assumes `Rec` |
+| `primRam`, `exc` | Establish primitive ramification and exceptional vanishing | Reconstructed using stated classical cyclotomic and local-field facts |
+| **`ML.vChar`** | Relate generalized Bernoulli quantities to the lengths of these arithmetic eigenspaces | **Full conditional inequality reconstructed**; source `Rec` and the stated classical foundations retained |
 
 The word **conditional** matters. In the source, the valuation theorem begins with a hypothesis `Rec → ...`. To obtain an unconditional consequence one must establish that hypothesis, discharge all other assumptions, and verify that the formal statements describe the claimed classical problem.
 
@@ -214,7 +215,7 @@ The two computations demonstrate *how* a denominator multiplier can turn a ratio
 
 A divisibility measurement asks how many times a prime divides a number. For example, 24 is divisible by 2 three times, but 25 is not divisible by 2 at all. The source uses a more general version of this measurement, a valuation, and compares it with the length of an arithmetic module. That length measures its algebraic complexity in a precise sense; it is not the physical size of an object.
 
-The important unresolved step, `ML.vChar`, needs a quantitative comparison between the divisibility of such arithmetic values and a cohomological length. The routine conductor reduction and denominator divisibility lemmas support this step, but they are not the step itself.
+The character inequality `ML.vChar` requires a quantitative comparison between the divisibility of such arithmetic values and a cohomological length. The routine conductor reduction and denominator divisibility lemmas support this step, but they are not the step itself.
 
 ### What changes when we use a larger modulus?
 
@@ -264,7 +265,7 @@ For an illustration, suppose $J=5$ and the starting divisibility measurement is 
 
 **Why reciprocity is needed:** local data at distinct primes are not independent. The proof pairs two arithmetic cocycles, obtaining a degree-two class whose local contributions must cancel globally. If every contribution except one is zero, the remaining contribution is zero too. The local duality property then converts that vanishing into the product-zero relation needed in the counting step.
 
-We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The construction of the compatible auxiliary system has since been independently reconstructed, as explained in the next section. The Bernoulli divisibility witnesses have since been reconstructed; the exceptional case of the primitive estimate remains open.
+We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The construction of the compatible auxiliary system has since been independently reconstructed, as explained in the next section. The Bernoulli divisibility witnesses and exceptional case have since been reconstructed, as explained in sections 9 and 10.
 
 The [technical audit PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) supplies the mathematical arguments and exact finite checks, with the imported theorems identified. Those checks exercise the algebra, not the global arithmetic duality theorem.
 
@@ -304,7 +305,7 @@ The central achievement is not another finite computation. It is the conventiona
 
 The [technical audit PR #606](https://github.com/grandchallenge/MATHFORGE/pull/606) records the construction and the precise imported foundations. Supporting tests checked 49,560 exponent-distribution identities, 3,256 finite-field Jacobi reductions, and further derivative and character-sum identities. These are checks on the arithmetic ingredients, not a verification of the complete submitted formal proof.
 
-The precise divisibility comparison with the generalized Bernoulli value has now been reconstructed, as explained in the next section. The character-ramification bridge and exceptional case remain open. We have also not independently replayed the original Lean proof or verified the exact correspondence of all its foundational imports.
+The precise divisibility comparison with the generalized Bernoulli value has now been reconstructed, as explained in the next section. The character-ramification bridge and exceptional case have since been reconstructed. We have also not independently replayed the original Lean proof or verified the exact correspondence of all its foundational imports.
 
 ## 9. Connecting the auxiliary system to Bernoulli values
 
@@ -341,9 +342,41 @@ A second example shows that the equality is not limited to units: for the quadra
 
 The [technical audit PR #607](https://github.com/grandchallenge/MATHFORGE/pull/607) reconstructs both divisibility witnesses for every nonzero input and proves the exact valuation identity. It also identifies the precise precision threshold and the loss from the conservative denominator multiplier. The exact regression checked 18,261 pointwise identities, including 6,342 requiring the denominator, 173 level-change identities, 146 weighted congruences, 315 stable representative valuations and 528 divisibility comparisons. These are checks on the arithmetic, not a replacement for the general argument.
 
-The next work is the source's character-ramification bridge and the exceptional branch, before the primitive estimate can be independently assembled in its full original scope. The foundational correspondence and original Lean replay remain open.
+Section 10 explains the subsequent reconstruction of character ramification and exceptional vanishing, completing the conditional primitive estimate. The foundational correspondence and original Lean replay remain open.
 
-## 10. Reproducibility and technical references
+## 10. Completing the character inequality: two routes to the bound
+
+The last part of this arithmetic argument divides into two cases. We have now independently reconstructed both, using the stated classical arithmetic foundations, and assembled the full conditional character inequality.
+
+In the ordinary case, a suitable arithmetic multiplier is invertible at the prime under consideration. The preceding auxiliary-system construction, counting argument and Bernoulli comparison then give a bound on the length of the cohomology group. A primitive character cannot discard a prime that actually divides its conductor: otherwise it would be describable at a smaller modulus. When its order is prime to the measuring prime, its nonidentity values differ from 1 by a unit. This supplies the precise ramification condition needed to transfer the bound to the full group.
+
+In the exceptional case, the multiplier is not invertible. Instead of using that comparison anyway, the proof establishes that the cohomology group itself is zero.
+
+### Why a rational power can resolve an exceptional case
+
+Consider the rational number −8/125. Its prime exponents are 3 at the prime 2 and −3 at the prime 5, with zero at every other prime. Every exponent is divisible by 3, so the number is exactly the cube of −2/5.
+
+This observation is general: if every prime exponent of a nonzero rational number is divisible by an odd prime, the rational number is a power of that order. The sign causes no additional obstruction for odd powers.
+
+The exceptional-case proof translates a residual cohomology class into an algebraic root of a rational number. Its vanishing on inertia means that at each rational prime the root lies in an unramified local extension, where its normalized valuation is integral. Consequently the rational number has a prime exponent divisible by the chosen odd prime at every place. It must already have the required rational root.
+
+The class therefore represents a coboundary, a change of reference rather than new arithmetic information. Normalization makes this coboundary zero. Repeating this reasoning through the torsion layers proves that the full locally constrained cohomology group vanishes.
+
+### What has actually been established
+
+| Branch | Result of the reconstruction |
+| --- | --- |
+| Nonexceptional | The cohomology length is bounded by the valuation of the generalized Bernoulli value divided by its order. |
+| Exceptional | The entire relevant cohomology group vanishes. |
+| Character represented at a larger modulus | The underlying Galois character is unchanged, and the source's denominator-cleared quantity is multiplied by the ratio of moduli. |
+
+Combining these cases gives the exact conditional statement `ML.vChar` in the submitted source. The nonexceptional estimate is actually sharper than its conservative denominator-cleared bound. This sharper estimate must not be applied in the exceptional case, where the normalized Bernoulli value can have negative valuation.
+
+The [technical reconstruction PR #608](https://github.com/grandchallenge/MATHFORGE/pull/608) records the primitive ramification proof, exceptional Kummer argument and assembled inequality. Supporting exact computations enumerate 490 characters at levels up to 40, check 348 primitive ramification kernels, 3,357 unramified kernels, 28 exceptional and 3,158 nonexceptional comparisons, and 3,750 signed rational-power examples. These are finite controls, not a computation of the full cohomology groups.
+
+This is a substantive advance in understanding the submitted arithmetic argument, not a proof of RH. The inequality explicitly retains the source reciprocity hypothesis, which has been reconstructed from specified classical duality properties. The exact formal correspondence of those foundations, the subsequent use of the inequality in the larger proof and independent replay of the original Lean declarations remain to be established.
+
+## 11. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -371,10 +404,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) | Full torsion-layer transfer, conditional counting and reciprocity reconstruction |
 | [PR #606](https://github.com/grandchallenge/MATHFORGE/pull/606) | Genuine auxiliary-system construction from Jacobi sums, including local compatibility and initial value |
 | [PR #607](https://github.com/grandchallenge/MATHFORGE/pull/607) | Exact Bernoulli valuation bridge and uniform divisibility witnesses |
+| [PR #608](https://github.com/grandchallenge/MATHFORGE/pull/608) | Primitive ramification, exceptional Kummer vanishing and assembled conditional character inequality |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 11. What the investigation taught us about checking extraordinary mathematical claims
+## 12. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -386,16 +420,16 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 12. The next executable mathematical step
+## 13. The next executable mathematical step
 
-**Target:** `UpperTheory.V.ML.vChar` in the original `PrimitiveFrobeniusFixed/PrimCase.lean`.
+**Target:** `UpperTheory.V.ML.psiOf : Rec → PsiBound` in the original `PrimitiveFrobeniusFixed/PsiOf.lean`, followed by its actual downstream character-length aggregation and analytic consumers.
 
-**Input:** the source-locked `NuSysEx`, `laxEx`, `sysOfLax`, `kolEx`, `derInv`, `kolStep`, `kolInit`, `zEval`, and `exc` statements and the exact local/global duality hypotheses.
+**Input:** the reconstructed conditional character inequality, exact definitions of `PsiBound`, `psiLen`, `chiOf`, and source `eigV`, `galQuot`, `galEmbTop`.
 
-**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. The transfer, counting mechanism and reciprocity implication are reconstructed. The genuine auxiliary system (NuSys) has also been reconstructed using explicit classical number-theoretic inputs. The exact Bernoulli divisibility witnesses (zEval) have been reconstructed. Next establish the character-ramification bridge (primRam) and exceptional branch (exc), assemble the primitive and level-change estimates, and audit the foundational correspondence.
+**Work:** establish the genuine finite-Galois-field character transport and its local conditions, then trace the quantitative analytic consequences without assuming their validity. Independently audit the exact foundational correspondence and replay the original source declarations.
 
-**Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small computational examples must remain supporting exhibits, never the substitute for this proof.
+**Completion test:** proof or counterexample for each actual downstream statement, with all classical inputs, formal assumptions and semantic correspondences accounted for separately. No RH/GRH or MATHCERT promotion.
 
-**Present boundary:** `RH-A26-D05_ZEVAL_EXACT_BERNOULLI_VALUATION_RECONSTRUCTED__PRIMRAM_EXC_FOUNDATIONAL_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_ML_VCHAR_CONDITIONAL_CHARACTER_INEQUALITY_RECONSTRUCTED__DOWNSTREAM_AGGREGATION_FOUNDATIONAL_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
 
-The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains the protected evidence, not a certification of RH or GRH.
+The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
