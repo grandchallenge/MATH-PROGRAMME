@@ -92,20 +92,22 @@ def incident(net,i,terminal):
     return tuple(factors)
 
 
-def envelope_rows(net,observed=True):
-    """Compose factor-local bounds; cache keyed by exact table and arities.
-
-    Identical factors are computed once per replay. No caller-supplied cache
-    is trusted; an edited local table has a different exact key.
-    """
-    cache={}
-    env=[];new=0
+def factor_packets(net,observed=True):
+    """Compute each distinct exact local factor envelope once."""
+    cache={};env=[]
     for i in range(net.n):
         key=(tuple(net.sizes[j] for j in net.parents[i])+(net.sizes[i],),
              net.tables[i],observed)
-        if key not in cache:
-            cache[key]=factor_envelope(net,i,observed);new+=1
+        if key not in cache:cache[key]=factor_envelope(net,i,observed)
         env.append(cache[key])
+    return tuple(env),len(cache)
+
+
+def envelope_rows(net,observed=True):
+    """Compose factor-local bounds; identical factors computed once per replay.
+    No caller-supplied cache is trusted.
+    """
+    env,new=factor_packets(net,observed)
     rows=[]
     for terminal in (False,True):
         out=[]
@@ -231,6 +233,7 @@ def discover_gain(interior,terminal,rates=None,max_dense=64,sparse_steps=16):
 def observable_margins(net,gain,max_tail_steps=256,max_tail_bits=1000000):
     """Bounds for port probabilities even with other current ports clamped."""
     w=gain["weights"];r=gain["rho"];lo=[];C=[];osc=[];scale=min(w)
+    prefactor=gain.get("boundary_prefactor",F(1))
     for i,p in enumerate(net.parents):
         c=min(sum(row) for M in net.tables[i][:-1] for row in M)
         lo.append(c);row={}
@@ -243,7 +246,7 @@ def observable_margins(net,gain,max_tail_steps=256,max_tail_bits=1000000):
                         diff=max(diff,abs(net.likelihood(i,a,x)-net.likelihood(i,a,z)))
             if diff:row[j]=diff
         osc.append(row)
-        C.append(sum(v*w[j]/scale for j,v in row.items())/c)
+        C.append(prefactor*sum(v*w[j]/scale for j,v in row.items())/c)
     # All-word quasi-Bernoulli margin by portwise relative likelihood bounds.
     # Head factors <=1; tail product >=1-sum of its relative errors.
     total=sum(C);tail=total/(1-r);head=F(1);error=tuple(C);n=0
@@ -266,7 +269,83 @@ def observable_margins(net,gain,max_tail_steps=256,max_tail_bits=1000000):
             "b_power":compact,"tail_length":n}
 
 
+def column_events(net):
+    """Internal chain rate and sparse factor-local exterior perturbations.
+
+    A perturbation has (other component, first time offset, last time
+    offset, central TV bound), offsets relative to the changed exterior site.
+    """
+    env,work=factor_packets(net)
+    internal=tuple(ratio_tv(env[i][net.parents[i].index(i),len(net.parents[i])])
+                   if i in net.parents[i] else F(0) for i in range(net.n))
+    events=[[] for _ in range(net.n)]
+    for f,p in enumerate(net.parents):
+        scope=tuple((-1,j) for j in p)+((0,f),)
+        for i in set(j for _,j in scope):
+            own=tuple(u for u,(_,j) in enumerate(scope) if j==i)
+            for v,(dt,j) in enumerate(scope):
+                if j==i:continue
+                R=prod(env[f][tuple(sorted((u,v)))] for u in own)
+                if R==1:continue
+                offsets=tuple(scope[u][0]-dt for u in own)
+                events[i].append((j,min(offsets),max(offsets),ratio_tv(R)))
+    return internal,tuple(tuple(sorted(row)) for row in events),work
+
+
+def temporal_response(kappa,r,lo,hi):
+    """Sum over exterior times, including the two geometric response tails."""
+    kappa,r=F(kappa),F(r)
+    if not 0<=kappa<r<1 or lo>hi:raise ValueError("invalid temporal response")
+    return (sum(r**j for j in range(-hi,-lo+1))+
+            r**(-hi)*kappa/(r-kappa)+r**(-lo)*kappa*r/(1-kappa*r))
+
+
+def column_rows(internal,events,r):
+    r=F(r)
+    if any(k>=r for k in internal):raise ValueError("rate below internal chain")
+    out=[]
+    for k,ev in zip(internal,events):
+        row=defaultdict(lambda:F(0))
+        for j,lo,hi,a in ev:row[0,j]+=a*temporal_response(k,r,lo,hi)
+        out.append(dict(row))
+    return tuple(out)
+
+
+def column_gain(internal,events,r,w):
+    rows=column_rows(internal,events,r)
+    data=verify_gain(rows,rows,w,r)
+    return dict(data,internal_rates=internal,boundary_prefactor=1/(1-data["gain"]),
+                interaction_rows=rows)
+
+
+def certify_columns(net,rates=None,max_dense=64,sparse_steps=16):
+    internal,events,work=column_events(net)
+    if rates is None:rates=tuple(F(j,32) for j in range(1,32))+(F(63,64),F(127,128))
+    rates=tuple(map(F,rates))
+    if any(not 0<r<1 for r in rates):raise ValueError("invalid candidate rate")
+    candidates=[]
+    for r in rates:
+        if max(internal)>=r:continue
+        rows=column_rows(internal,events,r);candidates.append((r,rows))
+        try:
+            gain=column_gain(internal,events,r,(F(1),)*net.n)
+            break
+        except ValueError:continue
+    else:
+        gain=None
+        for r,rows in candidates:
+            data=discover_gain(rows,rows,(r,),max_dense,sparse_steps)
+            if data is not None:
+                gain=column_gain(internal,events,r,data["weights"]);break
+    if gain is None:return {"outcome":"undecided","boundary":"column gain search",
+                             "method":"column","work":work}
+    return dict(gain,**observable_margins(net,gain),outcome="certified",
+                method="column",work=work,events=events,sites=net.n,
+                joint_state_constructed=False)
+
+
 def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64,sparse_steps=16):
+    if method=="column":return certify_columns(net,rates,max_dense,sparse_steps)
     if method=="factor":A,B,work=envelope_rows(net)
     elif method=="exact":
         try:A,B,work=exact_rows(net,max_contexts=max_contexts)
@@ -284,6 +363,10 @@ def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64,spa
 
 def replay(net,witness):
     # Recompute local coefficients from actual tables (never trust a cache).
+    if witness["method"]=="column":
+        internal,events,_=column_events(net)
+        G=column_gain(internal,events,witness["rho"],witness["weights"])
+        return dict(G,**observable_margins(net,G))
     if witness["method"]=="factor":A,B,_=envelope_rows(net)
     elif witness["method"]=="exact":A,B,_=exact_rows(net)
     else:raise ValueError("unknown witness method")
