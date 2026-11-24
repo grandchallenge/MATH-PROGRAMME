@@ -126,7 +126,7 @@ jobs:
           python3 ci/erdos_compendium_crossrepo_reconciliation.py \
             --trees "$d" \
             --merged-search "$d" \
-            --baseline governance/erdos_compendium/crossrepo/RECONCILIATION_20261123.json \
+            --baseline governance/erdos_compendium/crossrepo/RECONCILIATION_20261124.json \
             --admissions "$d/admissions.json" \
             --output "$RUNNER_TEMP/erdos-crossrepo-reconciliation.json"
           python3 - "$RUNNER_TEMP/erdos-crossrepo-reconciliation.json" >> "$GITHUB_STEP_SUMMARY" <<'PY'

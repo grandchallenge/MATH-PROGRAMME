@@ -46,8 +46,11 @@ def load_trees(directory):
 def digest(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(",",":")).encode()).hexdigest()
 
+HISTORICAL_PROGRAMME_14 = re.compile(r"^governance/source_erdos_critical_005/(?:ERDOS_014_[A-Z_]+\.(?:md|json)|Erdos14HistoricalTaskTargetParity\.lean|provider_14\.lean\.source)$")
+
 def problem_ids(repo,path):
     if repo=="MATH-PROGRAMME":
+        if HISTORICAL_PROGRAMME_14.fullmatch(path): return [14]
         m=PROGRAMME_PREFIX.match(path)
         return sorted({int(x) for x in m.groups() if x and int(x) in IDS}) if m else []
     if not NAMED.search(path):return []
