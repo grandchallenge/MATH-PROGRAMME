@@ -5,7 +5,8 @@ PROVED: exact cofactor-group second-moment sufficiency for source-locked
 Finite ORIGINAL-EULER-TOTIENT cases use only integer arithmetic and exact
 rational Taylor/Archimedes/Machin bounds on every 2^L-th root of unity.
 No floating-point trigonometric function participates in certification.
-Finite s=8/12 runs do NOT certify the cofinal s=26 theorem or irrationality.
+Finite s=8/12/26 runs, including h=1..8 at canonical s=26, do NOT
+certify the cofinal all-h source theorem or irrationality.
 """
 from __future__ import annotations
 
