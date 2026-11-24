@@ -92,13 +92,13 @@ def incident(net,i,terminal):
     return tuple(factors)
 
 
-def envelope_rows(net,cache=None,observed=True):
+def envelope_rows(net,observed=True):
     """Compose factor-local bounds; cache keyed by exact table and arities.
 
-    Caller may keep cache across network edits; entries are generated here,
-    not accepted as externally supplied certificate values.
+    Identical factors are computed once per replay. No caller-supplied cache
+    is trusted; an edited local table has a different exact key.
     """
-    if cache is None:cache={}
+    cache={}
     env=[];new=0
     for i in range(net.n):
         key=(tuple(net.sizes[j] for j in net.parents[i])+(net.sizes[i],),
@@ -174,23 +174,32 @@ def verify_gain(interior,terminal,w,r):
                  for i,(A,B) in enumerate(zip(interior,terminal)))
     q=max(ratios)
     if q>=1:raise ValueError("conditioned small gain failed")
-    internal=tuple(max(sum(c*r**dt for (dt,j),c in row.items() if j==i)
-                       for row in (interior[i],terminal[i])) for i in range(n))
+    self_rows=tuple(tuple(sum((c*r**dt for (dt,j),c in row.items() if j==i),F(0))
+                          for row in (interior[i],terminal[i])) for i in range(n))
+    cross_rows=tuple(tuple(row_action(row,w,r)/w[i]-d
+                           for row,d in zip((interior[i],terminal[i]),self_rows[i]))
+                     for i in range(n))
+    # Internal damping must leave enough budget for cross-component feedback.
+    normalized_cross=max(c/(1-d) for ss,cc in zip(self_rows,cross_rows)
+                         for d,c in zip(ss,cc))
     return {"rho":r,"weights":w,"gain":q,"slack":1-q,"row_gains":ratios,
-            "internal_gains":internal}
+            "internal_gains":tuple(map(max,self_rows)),"self_rows":self_rows,
+            "cross_rows":cross_rows,"cross_budget_fraction":normalized_cross}
 
 
 def discover_gain(interior,terminal,rates=None,max_dense=64):
     """Try rational temporal rates and weights; no negative decision."""
     n=len(interior)
     if rates is None:rates=tuple(F(j,32) for j in range(1,32))+(F(63,64),F(127,128))
+    rates=tuple(map(F,rates))
+    if any(not 0<r<1 for r in rates):raise ValueError("invalid candidate rate")
+    # Try cheap uniform weights at every rate before any dense rational solve.
+    w=(F(1),)*n
     for r in rates:
-        r=F(r)
-        if not 0<r<1:raise ValueError("invalid candidate rate")
-        w=(F(1),)*n
         try:return verify_gain(interior,terminal,w,r)
         except ValueError:pass
-        if n>max_dense:continue
+    if n>max_dense:return None
+    for r in rates:
         # Conservative common envelope of the two row types. Rational solve
         # produces candidate weights only; the two original rows are replayed.
         E=[]
@@ -211,7 +220,7 @@ def discover_gain(interior,terminal,rates=None,max_dense=64):
 
 def observable_margins(net,gain):
     """Bounds for port probabilities even with other current ports clamped."""
-    w=gain["weights"];r=gain["rho"];lo=[];C=[];osc=[]
+    w=gain["weights"];r=gain["rho"];lo=[];C=[];osc=[];scale=min(w)
     for i,p in enumerate(net.parents):
         c=min(sum(row) for M in net.tables[i][:-1] for row in M)
         lo.append(c);row={}
@@ -224,7 +233,7 @@ def observable_margins(net,gain):
                         diff=max(diff,abs(net.likelihood(i,a,x)-net.likelihood(i,a,z)))
             if diff:row[j]=diff
         osc.append(row)
-        C.append(sum(v*w[j]/min(w) for j,v in row.items())/c)
+        C.append(sum(v*w[j]/scale for j,v in row.items())/c)
     # All-word quasi-Bernoulli margin by portwise relative likelihood bounds.
     # Head factors <=1; tail product >=1-sum of its relative errors.
     total=sum(C);tail=total/(1-r);head=F(1);error=tuple(C);n=0
@@ -236,9 +245,13 @@ def observable_margins(net,gain):
             "b":head*(1-tail),"tail_length":n}
 
 
-def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64,cache=None):
-    if method=="factor":A,B,work=envelope_rows(net,cache)
-    elif method=="exact":A,B,work=exact_rows(net,max_contexts=max_contexts)
+def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64):
+    if method=="factor":A,B,work=envelope_rows(net)
+    elif method=="exact":
+        try:A,B,work=exact_rows(net,max_contexts=max_contexts)
+        except ValueError as exc:
+            if str(exc)!="local context budget":raise
+            return {"outcome":"undecided","boundary":"local context budget","method":method}
     else:raise ValueError("unknown method")
     gain=discover_gain(A,B,rates,max_dense)
     if gain is None:return {"outcome":"undecided","boundary":"gain search",
