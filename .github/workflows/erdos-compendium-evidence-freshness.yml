@@ -118,10 +118,14 @@ jobs:
             tree="$(jq -er '.commit.commit.tree.sha' "$d/$repo-head.json")"
             gh api "repos/grandchallenge/$repo/git/trees/$tree?recursive=1" > "$d/$repo-tree.json"
           done
+          for repo in MATHSOLVE MATHCERT; do
+            gh api --paginate --slurp -X GET search/issues -f q="repo:grandchallenge/$repo is:pr is:merged Erdős" -f per_page=100 > "$d/$repo-merged-pages.json"
+          done
           programme_sha="$(jq -er '.commit.sha' "$d/MATH-PROGRAMME-head.json")"
           gh api "repos/grandchallenge/MATH-PROGRAMME/contents/governance/erdos_compendium/EDITORIAL_ADMISSIONS.json?ref=$programme_sha" --jq .content | base64 -d > "$d/admissions.json"
           python3 ci/erdos_compendium_crossrepo_reconciliation.py \
             --trees "$d" \
+            --merged-search "$d" \
             --baseline governance/erdos_compendium/crossrepo/RECONCILIATION_20261123.json \
             --admissions "$d/admissions.json" \
             --output "$RUNNER_TEMP/erdos-crossrepo-reconciliation.json"
@@ -132,6 +136,8 @@ jobs:
           print("Named retained blobs: "+str(d["named_crossrepo_file_counts"]))
           print("Reviewed source-bound assessments:",d["assessed_problem_count"])
           print("Shared/unassigned inventory changed:",d["shared_or_unassigned_inventory_changed"])
+          for repo, delta in d["merged_pr_search_delta"].items():
+              print(f"{repo}: {delta['unique_matches_received']} merged-PR search matches; query complete={delta['search_complete_for_this_query']}; {len(delta['new_match_leads'])} new leads; not exhaustive history")
           for row in d["review_candidates"]:
               print(f"- #{row['problem_id']}: {row['state']} ({row['current_evidence_file_count']} mapped files)")
           print("Path identity is not proof authority; an assessment change requires review, not auto-publication.")
