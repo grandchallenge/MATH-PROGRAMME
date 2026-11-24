@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"research"/"csm-001"))
 from effective_polytope_synthesis import (
     synthesize,replay,normalized_products,quantitative_bounds,slow_reset_model,
-    three_state_overlap,BudgetExceeded,
+    three_state_overlap,BudgetExceeded,observable_entry_bound,
 )
 from observable_polytope_certificate import (
     PredictiveQuotient,verify_polytope,balanced_overlap,balanced_source,
@@ -85,6 +85,12 @@ class TestEffectivePolytopeSynthesis(unittest.TestCase):
                 deriv=abs(det)/row_mul(x,A)[0]**2
                 self.assertEqual(deriv,2**s/(1+(2**s-1)*eps)**2)
                 self.assertGreaterEqual(deriv,1)
+            # Exact optimum over WP10 witnesses is 2N+1; check endpoint interval.
+            V=((F(1),(1+eps)/4),(F(1),F(1,2)))
+            for A in normalized_products(q,2*N+1,4096):
+                rate,images=secant_bound(A,V)
+                self.assertLess(rate,1)
+                self.assertTrue(all(V[0][1]<=y[1]<=V[1][1] for y in images))
             self.assertEqual(synthesize(q,2*N,8)["outcome"],"undecided")
             d=synthesize(q,expected+1,12)
             self.assertEqual((d["outcome"],d["block"]),("certified",expected))
@@ -92,8 +98,14 @@ class TestEffectivePolytopeSynthesis(unittest.TestCase):
             self.assertLess(d["eta"],1)
 
     def test_conditional_resource_bound_and_dimension_one(self):
-        q=PredictiveQuotient(balanced_source())
-        B=quantitative_bounds(2,2,F(1,2),8,0,F(1,2))
+        model=balanced_source()
+        q=PredictiveQuotient(model)
+        J=observable_entry_bound(model,q)
+        self.assertEqual(J,8)
+        for s in range(5):
+            for A in normalized_products(q,s,4096):
+                self.assertTrue(all(abs(x)<=J for row in A for x in row))
+        B=quantitative_bounds(2,2,F(1,2),J,0,F(1,2))
         self.assertEqual((B["block"],B["grid_bits"]),(1,7))
         d=replay(q,B["block"],B["grid_bits"])
         self.assertLessEqual(len(d["vertices"]),B["vertex_bound"])
