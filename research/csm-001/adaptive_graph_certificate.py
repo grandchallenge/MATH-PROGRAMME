@@ -109,6 +109,52 @@ def image(A,V):
     return den,Y,hull(Y)
 
 
+def linear_min(box,col):
+    return col[0]+sum(min(a*l,a*u) for a,(l,u) in zip(col[1:],box))
+
+
+def fractional_max(box,num,den):
+    """Exact linear-fractional maximum on a box with positive denominator.
+
+    Sweep sign changes of num_i-r*den_i in ascending breakpoint order.
+    At most k+1 vertices, generated incrementally, rather than 2**k.
+    """
+    if linear_min(box,den)<=0:raise ValueError("nonpositive denominator")
+    v=[];flips=[]
+    for i,(lo,hi) in enumerate(box,1):
+        a,b=num[i],den[i]
+        if b>0:
+            v.append(hi);flips.append((a/b,i,lo-hi))
+        elif b<0:
+            v.append(lo);flips.append((a/b,i,hi-lo))
+        else:v.append(hi if a>=0 else lo)
+    top=num[0]+sum(a*x for a,x in zip(num[1:],v))
+    bottom=den[0]+sum(b*x for b,x in zip(den[1:],v))
+    best=top/bottom
+    for _,i,delta in sorted(flips):
+        top+=num[i]*delta;bottom+=den[i]*delta
+        best=max(best,top/bottom)
+    return best
+
+
+def image_box(A,box):
+    """Exact coordinate envelope of a projective box image, no corners."""
+    cols=tuple(zip(*A));den=cols[0]
+    low=linear_min(box,den)
+    if low<=0:raise ValueError("nonpositive denominator")
+    im=tuple((-fractional_max(box,tuple(-x for x in col),den),
+              fractional_max(box,col,den)) for col in cols[1:])
+    return low,im
+
+
+def component_numerator(A,im):
+    """Exact coordinatewise numerator suprema, independent of source cell."""
+    d=len(A)
+    return tuple(tuple(max(abs(A[i][j]-A[i][0]*lo),
+                           abs(A[i][j]-A[i][0]*hi))
+                       for j,(lo,hi) in enumerate(im,1)) for i in range(1,d))
+
+
 def block_system(chart,block):
     words=tuple(product(range(chart.alphabet),repeat=block))
     A=tuple(chart.word_matrix(w) for w in words)
@@ -144,9 +190,8 @@ def adaptive_boxes(chart,block,bits,rounds,max_cells,depth=1,max_extent=64):
     for step in range(rounds+1):
         updates=list(boxes);changed=False
         for i,box in enumerate(boxes):
-            V=corners(box)
             for a,T in enumerate(A):
-                _,_,im=image(T,V);j=edges[i][a]
+                _,im=image_box(T,box);j=edges[i][a]
                 if not contains(updates[j],im):
                     updates[j]=join(updates[j],padded(im,h));changed=True
         if not changed:
@@ -241,7 +286,7 @@ def graph_horizon(B,targets,max_horizon,weights=None):
     raise ValueError("graph horizon budget")
 
 
-def verify_cover(chart,block,boxes,edges,max_horizon,weights=None):
+def verify_cover(chart,block,boxes,edges,max_horizon,weights=None,local=None):
     """Replay complete finite witness, including all initial remainders.
 
     Boxes are allowed to be disconnected. Pair graph uses synchronized
@@ -257,32 +302,49 @@ def verify_cover(chart,block,boxes,edges,max_horizon,weights=None):
         raise ValueError("missing seed")
     if len(edges)!=n or any(len(row)!=len(A) or any(not isinstance(j,int) or not 0<=j<n for j in row) for row in edges):
         raise ValueError("invalid successors")
-    V=tuple(corners(box) for box in boxes)
-    c=min(sum(x[i]*T[i][0] for i in range(k+1))
-          for vs in V for x in vs for T in chart.matrices)
+    c=min(linear_min(box,tuple(row[0] for row in T))
+          for box in boxes for T in chart.matrices)
     if c<=0:raise ValueError("one-letter nonnullness")
     info=[]
-    for i,vs in enumerate(V):
+    for i,box in enumerate(boxes):
         row=[]
         for a,T in enumerate(A):
-            den,Y,im=image(T,vs)
+            den,im=image_box(T,box)
             if not contains(boxes[edges[i][a]],im):
                 raise ValueError("image not enclosed")
-            row.append((den,Y))
+            row.append((den,component_numerator(T,im)))
         info.append(tuple(row))
     pairs=tuple(product(range(n),repeat=2))
-    B=tuple(tuple(component_bound(T,info[i][a][0],info[j][a][1])
-                  for a,T in enumerate(A)) for i,j in pairs)
+    B=tuple(tuple(tuple(tuple(v/info[i][a][0] for v in row)
+                       for row in info[j][a][1])
+                  for a in range(len(A))) for i,j in pairs)
     targets=tuple(tuple(edges[i][a]*n+edges[j][a] for a in range(len(A)))
                   for i,j in pairs)
-    result=graph_horizon(B,targets,max_horizon,weights)
+    if local is None:
+        result=graph_horizon(B,targets,max_horizon,weights)
+        prefactor=F(1)
+    else:
+        rho,h=F(local[0]),tuple(map(F,local[1]))
+        w=tuple(map(F,weights)) if weights is not None else (F(1),)*k
+        if not 0<rho<1 or len(h)!=len(B) or min(h)<=0 or len(w)!=k or any(x<=0 for x in w):
+            raise ValueError("invalid local potential")
+        scalars=tuple(tuple(column_norm(A,w) for A in row) for row in B)
+        if any(l*h[q]>rho*h[p] for p,(row,dest) in enumerate(zip(scalars,targets))
+               for l,q in zip(row,dest)):
+            raise ValueError("local potential inequality")
+        prefactor=max(h)/min(h)
+        result={"horizon":1,"eta":rho,"method":"local potential",
+                "weights":w,"one_step_eta":max(max(row) for row in scalars),
+                "rho":rho,"potential":h,"potential_ratio":prefactor}
     w=result["weights"]
-    diam=max(((max(box[j][1] for box in boxes)-min(box[j][0] for box in boxes))/w[j]
+    diameter=max(((max(box[j][1] for box in boxes)-min(box[j][0] for box in boxes))/w[j]
               for j in range(k)),default=F(0))
+    diam=prefactor*diameter
     J=max(sum(w[i-1]*abs(T[i][0]) for i in range(1,k+1))
           for T in chart.matrices)
     return dict(result,block=block,contraction_length=block*result["horizon"],
-                nonnull=c,diameter=diam,log_variation_constant=J*diam/c,
+                nonnull=c,cover_diameter=diameter,diameter=diam,
+                log_variation_constant=J*diam/c,
                 cells=n,pair_edges=n*n*len(A),primitive_words=len(A))
 
 
@@ -324,9 +386,9 @@ def image_cover(chart,block,bits,max_cells,max_extent=64):
     if len(boxes)>max_cells:raise ValueError("cell budget")
     edges=[];h=F(1,2**bits)
     for box in boxes:
-        V=corners(box);row=[]
+        row=[]
         for T in A:
-            _,_,im=image(T,V)
+            _,im=image_box(T,box)
             j=next((j for j,C in enumerate(boxes) if contains(C,im)),None)
             if j is None:
                 if len(boxes)>=max_cells:raise ValueError("cell budget")
@@ -370,15 +432,24 @@ def uniform_margins(model,chart,certificate):
     c=certificate["nonnull"];C=certificate["log_variation_constant"]
     w=certificate["weights"];diam=certificate["diameter"]
     # Use small dyadic conservative bounds for the tail calculation.
-    eta_upper=F(1,2)
-    while eta_upper<eta:eta_upper=(1+eta_upper)/2
-    c_lower=F(1,2)
-    while c_lower>c:c_lower/=2
-    C_upper=F(ceil(C))
+    scale=256
+    while ceil(scale*eta)>=scale:scale*=2
+    eta_upper=max(F(1,scale),F(ceil(scale*eta),scale))
+    scale=256
+    while floor(scale*c)==0:scale*=2
+    c_lower=F(floor(scale*c),scale)
+    C_upper=F(0) if C==0 else F(1)
+    if C:
+        while C_upper<C:C_upper*=2
+        while C_upper/2>=C:C_upper/=2
     n=0;tail=C_upper*L/(1-eta_upper)
+    head=F(1);error=C_upper
     while tail>F(1,2):
-        n+=1;tail*=eta_upper
-    b=c_lower**(L*n)/2
+        # Per-letter conditional ratio >= max(c_lower, 1-error).
+        # Round the second bound downward to a modest fixed grid.
+        head*=max(c_lower,F(floor(256*(1-error)),256))**L
+        n+=1;tail*=eta_upper;error*=eta_upper
+    b=head*(1-tail)
     J=observable_entry_bound(model,chart.quotient)
     # Conversion of the weighted chart norm back to predictive probabilities.
     d=chart.dimension
@@ -388,3 +459,13 @@ def uniform_margins(model,chart,certificate):
     H=2*G*diam*J**2/theta**(L-1)
     return {"b":b,"J":J,"H":H,"theta":theta,"tail_blocks":n,
             "nonnull_lower":c_lower,"eta_upper":eta_upper}
+
+
+def replay_witness(model,witness,use_local=True):
+    """Recompute chart, enclosure, and either local inequalities or graph DP."""
+    q=PredictiveQuotient(model)
+    chart=Chart(q,witness["basis"])
+    local=(witness["rho"],witness["potential"]) if use_local and "potential" in witness else None
+    result=verify_cover(chart,witness["block"],witness["boxes"],witness["edges"],
+                        witness["horizon"],witness["weights"],local=local)
+    return result,uniform_margins(model,chart,result)
