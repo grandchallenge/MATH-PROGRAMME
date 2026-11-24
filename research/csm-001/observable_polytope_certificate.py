@@ -81,12 +81,13 @@ def project(x,A):
     return tuple(t/y[0] for t in y)
 
 
-def in_hull(x,vertices):
-    """Exact finite Caratheodory membership in affine plane x[0]=1."""
+def hull_weights(x,vertices):
+    """Exact finite Caratheodory membership and rational barycentric weights."""
     d=len(x)
     # Any feasible nonnegative combination has an affinely independent support.
     for k in range(1,min(d,len(vertices))+1):
-        for V in combinations(vertices,k):
+        for indices in combinations(range(len(vertices)),k):
+            V=tuple(vertices[i] for i in indices)
             if _rank(V)!=k:continue
             for idx in combinations(range(d),k):
                 A=tuple(tuple(v[i] for v in V) for i in idx)
@@ -94,9 +95,15 @@ def in_hull(x,vertices):
                 except ValueError:continue
                 if all(t>=0 for t in c) and all(
                     sum(t*v[j] for t,v in zip(c,V))==x[j] for j in range(d)):
-                    return True
+                    weights=[F(0)]*len(vertices)
+                    for i,t in zip(indices,c):weights[i]=t
+                    return tuple(weights)
                 break
-    return False
+    return None
+
+
+def in_hull(x,vertices):
+    return hull_weights(x,vertices) is not None
 
 
 def secant_bound(A,vertices):
@@ -166,3 +173,48 @@ def balanced_overlap():
 
 def balanced_vertices():
     return ((F(1),F(3,10)),(F(1),F(9,16)))
+
+
+def positive_realization(quotient,vertices,max_halvings=32):
+    """Synthesize a strictly positive rational realization from strict invariance.
+
+    A bounded search for interior barycentric weights. Failure of the supplied
+    witness or budget does not disprove positive realizability.
+    """
+    d=quotient.dimension
+    V=tuple(tuple(map(F,v)) for v in vertices)
+    n=len(V)
+    if not V or any(len(v)!=d or v[0]!=1 for v in V) or _rank(V)!=d:
+        raise ValueError("full affine dimension required")
+    if not in_hull(quotient.initial,V):raise ValueError("initial state outside hull")
+    if not isinstance(max_halvings,int) or max_halvings<1:
+        raise ValueError("positive search budget required")
+    bary=tuple(sum(v[j] for v in V)/n for j in range(d))
+    mats=[]
+    for A in quotient.matrices:
+        rows=[]
+        for v in V:
+            p=row_mul(v,A)[0]
+            y=project(v,A)
+            for k in range(1,max_halvings+1):
+                t=F(1,2**k)
+                adjusted=tuple((a-t*b)/(1-t) for a,b in zip(y,bary))
+                c=hull_weights(adjusted,V)
+                if c is not None:
+                    rows.append(tuple(p*((1-t)*w+t/n) for w in c))
+                    break
+            else:raise ValueError("positive barycentric witness not found")
+        mats.append(tuple(rows))
+    Q=tuple(tuple(sum(A[i][j] for A in mats) for j in range(n)) for i in range(n))
+    if any(sum(row)!=1 for row in Q):raise ValueError("quotient normalization failed")
+    equations=tuple(tuple(Q[i][j]-F(i==j) for i in range(n))
+                    for j in range(n-1)) + ((F(1),)*n,)
+    pi=solve_square(equations,(F(0),)*(n-1)+(F(1),))
+    result=ObservableFiniteMemory(pi,tuple(mats))
+    if row_mul(pi,V)!=quotient.initial:raise ValueError("stationary quotient mismatch")
+    if any(multiply(A,V)!=multiply(V,B)
+           for A,B in zip(result.matrices,quotient.matrices)):
+        raise ValueError("intertwiner verification failed")
+    if any(x<=0 for A in result.matrices for row in A for x in row):
+        raise ValueError("nonpositive realization")
+    return result
