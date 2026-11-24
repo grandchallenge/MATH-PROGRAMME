@@ -2673,3 +2673,73 @@ class CofactorTwoCopyCookTransferTests(unittest.TestCase):
         ):
             with self.assertRaises(ValueError):
                 wp09l_cert(*args)
+
+
+    def test_canonical_s26_source_all_four_exact_shift_one(self):
+        a=wp09l_cert(16384,h=1,s=26)
+        X=a["X"]
+        self.assertEqual((a["L"],a["t"],a["Q"]),(27,2,1<<27))
+        self.assertEqual(a["source_A_count"],9527)
+        self.assertEqual(a["source_G_count"],9527)
+        self.assertEqual(a["group_count"],64)
+        self.assertEqual(a["source_A_not_G_count"],0)
+        self.assertFalse(a["finite_source_s_not_26"])
+        self.assertTrue(a["two_copy_sufficient_criterion_FINITE"])
+        self.assertTrue(a["source_locked_four_bounds_FINITE"])
+        self.assertTrue(a["Cook_second_1X_over_100_FINITE"])
+        self.assertTrue(a["Cook_third_1X_over_100_FINITE"])
+        self.assertTrue(a["Cook_fourth_8X_over_25_FINITE"])
+        self.assertTrue(a["original_full_Cook_9X_over_10_FINITE"])
+        # These are two-sided exact rational intervals; no float cosines.
+        self.assertGreaterEqual(
+            a["original_first_weighted_Cook_sum_real_lower"]/X,
+            Fraction(-12,10000))
+        self.assertLessEqual(
+            a["original_first_weighted_Cook_sum_real_upper"]/X,
+            Fraction(-11,10000))
+        self.assertGreaterEqual(
+            a["Cook_second_weighted_group_modulus_upper"]/X,
+            Fraction(48,10000))
+        self.assertLessEqual(
+            a["Cook_second_weighted_group_modulus_upper"]/X,
+            Fraction(49,10000))
+        self.assertLessEqual(
+            a["Cook_fourth_outside_A_modulus_upper"]/X,
+            Fraction(49,10000))
+        self.assertEqual(a["Cook_third_excluded_good_modulus_upper"],0)
+        self.assertGreater(
+            a["source_z_group_absolute_mean_lower"],Fraction(X,100))
+        self.assertEqual(a["cofinal_source_14X_over_25"],"OPEN")
+
+    def test_canonical_s26_eight_real_totient_shifts_all_four_source_bounds(self):
+        # Eight separate genuinely source-legal full Cook windows.
+        # This is a FINITE family, not a theorem for all h or unbounded X.
+        for h in range(1,9):
+            with self.subTest(h=h):
+                a=wp09l_cert(16384,h=h,s=26)
+                X=a["X"]
+                self.assertEqual(a["L"],26+h)
+                self.assertEqual(a["t"],h+1)
+                self.assertGreaterEqual(a["source_G_count"],9500)
+                self.assertEqual(a["group_count"],64)
+                self.assertEqual(a["three_direct_full_Cook_numerator_oracles"],3)
+                self.assertTrue(a["source_locked_four_bounds_FINITE"])
+                self.assertTrue(a["first_weighted_Cook_14X_over_25_FINITE"])
+                self.assertTrue(a["Cook_second_1X_over_100_FINITE"])
+                self.assertTrue(a["Cook_third_1X_over_100_FINITE"])
+                self.assertTrue(a["Cook_fourth_8X_over_25_FINITE"])
+                self.assertTrue(a["original_full_Cook_9X_over_10_FINITE"])
+                self.assertLessEqual(
+                    a["original_first_weighted_Cook_sum_real_upper"],
+                    Fraction(14*X,25))
+                self.assertLessEqual(
+                    a["Cook_second_weighted_group_modulus_upper"],
+                    Fraction(X,100))
+                self.assertLessEqual(
+                    a["Cook_third_excluded_good_modulus_upper"],
+                    Fraction(X,100))
+                self.assertLessEqual(
+                    a["Cook_fourth_outside_A_modulus_upper"],
+                    Fraction(8*X,25))
+                self.assertEqual(a["cofinal_source_14X_over_25"],"OPEN")
+                self.assertEqual(a["original_Erdos249_irrationality"],"OPEN")
