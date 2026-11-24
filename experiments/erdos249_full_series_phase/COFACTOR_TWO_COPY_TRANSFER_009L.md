@@ -247,9 +247,51 @@ Authenticated CHAD read-only exact replay: capture 1a5cd638d5cb4cf69dee44253949d
 
 Both finite weighted first terms are **rigorously below 14X/25**, and both finite true original first harmonics are **rigorously below 9X/10**, for these exact parameters. The separate-weight Cauchy estimate, even with exact root enclosures, is larger than 14X/25, while the new two-copy gate succeeds.
 
-**Essential scientific limitation:** s=8 or 12 at X=16384 is **not** the canonical cofinal s=26 regime. Neither G>0.67X nor Z1≤0.01X is true in these specimens, and the other three source-locked canonical Cook estimates are NOT asserted. A single finite h=1 block cannot prove arbitrarily late blocks for every fixed shift. No irrationality claim is made.
+**Scope of this first table:** s=8 or 12 at X=16384 is not canonical s=26. The cofinal count G>0.67X and source unweighted mean Z1≤0.01X are not asserted at these finite scales. The following additional experiment handles the **literal canonical source parameters**.
 
-## 6. Next actual proof obligation
+## 6. A complete eight-shift finite certificate at canonical s=26
+
+The exact rational verifier was extended to compute **all four original Cook source terms**, retaining their different mathematical types:
+
+1. the *real part* of the good-set weighted first correlation S, compared with 14X/25;
+2. the *complex modulus* of the good-set residual-weighted cofactor mean, compared with X/100;
+3. the *complex modulus* of the A-without-G original Cook phase sum, compared with X/100;
+4. the *complex modulus* of the original Cook phase sum outside A, compared with 8X/25.
+
+No inequality has been weakened to a real-part-only replacement. The second term is computed exactly at the algebraic level by the group products
+$\sum_m W_m Z_m/g_m$; its real and imaginary parts receive independently certified rational root enclosures. Their modulus is bounded using an **integer-isqrt upper enclosure of the exact rational squared modulus**, plus an exact $8G\varepsilon$ error budget. The third and fourth source terms are enclosed by integer square roots of their exact fixed-point complex sums, plus $2n\varepsilon$ for n roots. Thus all four conditions are decidable by exact rational comparisons.
+
+For the **actual Euler totient**, fix X=16384, s=26, eta=1/1000. For every shift h=1,...,8, take the *least source-admissible* L≥s+h satisfying Cook's original size condition. In all eight cases L=26+h, and the isolated source index is t=h+1.
+
+| Actual original Cook source | h | L | t | G | Four exact source bounds |
+| --- | ---: | ---: | ---: | ---: | --- |
+| True Euler totient | 1 | 27 | 2 | 9527 | **PASS** |
+| True Euler totient | 2 | 28 | 3 | 9526 | **PASS** |
+| True Euler totient | 3 | 29 | 4 | 9526 | **PASS** |
+| True Euler totient | 4 | 30 | 5 | 9527 | **PASS** |
+| True Euler totient | 5 | 31 | 6 | 9527 | **PASS** |
+| True Euler totient | 6 | 32 | 7 | 9528 | **PASS** |
+| True Euler totient | 7 | 33 | 8 | 9527 | **PASS** |
+| True Euler totient | 8 | 34 | 9 | 9526 | **PASS** |
+
+Every case has 64 actual source cofactor groups. For h=1, the exact rational enclosures give an especially instructive separation of source strength from actual weighted behavior:
+
+| True Cook source quantity for X=16384, h=1, s=26, L=27 | Certified normalized interval |
+| --- | ---: |
+| First weighted term Re S | [-0.0012,-0.0011] |
+| Second weighted cofactor mean modulus | [0.0048,0.0049] |
+| Third excluded-good modulus | Exactly 0 |
+| Fourth outside-A modulus | [0.0048,0.0049] |
+| Full original real first harmonic | [0.0071,0.0072] |
+| **Unweighted** source cofactor group absolute sum Z1 | [0.4304,0.4305] |
+
+The source's **cofinal unweighted mean bound** $Z_1\le0.01X$ emphatically fails here: the lower rational enclosure is $Z_1\ge0.4304X$. **Nevertheless the genuine second source weighted term passes** at under $0.0049X$. The actual arithmetic residual weights therefore suppress this particular grouped term by a rigorously certified factor exceeding $0.4304/0.0049>80$ relative to the naive absolute group mean bound. This is an **actual source effect**, not a simulated independent weight model.
+
+All eight-shift passes were replayed from the same exact source head in authenticated CHAD local OS-only execution (capture 5c2d234e0ead4db08d33f02e55546412), and the one-shift canonical four-bound rational enclosures in capture a9ac149c53eb4605bca78b00529c2985. Registered CI tests reproduce all cases.
+
+**Essential mathematical limit:** These are **eight FINITE shifted source certificates at one finite X**, not a statement for arbitrarily large X, nor a statement for every h≥1. The manuscript's irrationality condition requires for each fixed h arbitrarily late legal blocks, rather than one common early X for finitely many shifts. The source's three asymptotic bounds are not thereby extended to all X; the asymptotic first bound remains unproved. A finite source certificate is an independently useful, rigorously enclosed specimen, but **not a proof of the original Erdős problem**.
+
+## 7. Next actual proof obligation
 
 Prove, for every fixed shift h on arbitrarily late canonical s=26, eta=1/1000 Cook-legal blocks, the true arithmetic cofactor-group two-copy estimate
 
