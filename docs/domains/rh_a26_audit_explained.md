@@ -2,12 +2,12 @@
 
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the decisive arithmetic argument still under examination.</p>
 
-!!! warning "Research status · 22 November 2026"
+!!! warning "Research status · 24 November 2026 (arithmetic update pending protected audit admission)"
     **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. These results have been documented and admitted as bounded **MATHFORGE audit evidence**.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; the Bernoulli/cohomological valuation inequality `ML.vChar` under its needed assumptions; MATHCERT certification.
 
-    **Evidence classes:** source audit, conventional conditional mathematical proof, exact finite verification, and regression tests. Repository merge, Wolfram computations, and public exposition are **not** proof certification.
+    **Evidence classes:** source audit, conventional conditional mathematical proof, exact finite verification, and regression tests. Repository merge, finite computations, and public exposition are **not** proof certification.
 
     **Authority:** [RH-001 live programme tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163) · [RH-A26 audit tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) · [original claim verification guide](riemann_hypothesis_2026_lean_announcement.md) · [MATHFORGE protected audit PRs](#the-evidence-a-reader-can-open).
 
@@ -29,11 +29,11 @@ Counting primes is easy for a small range: list the numbers, eliminate those tha
 
 ![Linear complex-plane diagram of five known zeta zeros on the middle line of the critical strip](../assets/rh-a26-critical-line.svg)
 
-*Figure A. What RH says.* The horizontal position of a zero is its real part. The five dots show known zeros; their vertical positions come from Wolfram Language's `ZetaZero`. RH says **every** nontrivial zero is on the middle line, including those beyond the plotted range. The figure does not show that there are no other zeros elsewhere. [Numerical sample; generator](../assets/wolfram/rh_a26_visuals.wl).
+*Figure A. What RH says.* The horizontal position of a zero is its real part. The five dots show known zeros; their vertical positions are calculated from known zero heights. RH says **every** nontrivial zero is on the middle line, including those beyond the plotted range. The figure does not show that there are no other zeros elsewhere.
 
 ![Prime counting staircase from 2 to 100 alongside the smooth Riemann R approximation](../assets/rh-a26-prime-count.svg)
 
-*Figure B. Why the zeros matter.* The black staircase counts actual primes; it rises by one each time another prime appears. The blue curve is a smooth approximation calculated with Wolfram Language's `RiemannR`, sampled at integer arguments. Their closeness illustrates the kind of regularity number theory seeks to explain. It does not prove an error bound or RH. [Data-derived; generator](../assets/wolfram/rh_a26_visuals.wl).
+*Figure B. Why the zeros matter.* The black staircase counts actual primes; it rises by one each time another prime appears. The blue curve is a smooth approximation called Riemann's prime-counting approximation, sampled at integer arguments. Their closeness illustrates the kind of regularity number theory seeks to explain. It does not prove an error bound or RH.
 
 ### How to read this investigation
 
@@ -61,7 +61,7 @@ $$
 
 ![Three cohomology classes 0, 1 and 2 all map to the single zero class under restriction](../assets/rh-a26-restriction.svg)
 
-*Figure C. A concrete information-loss test.* Imagine three genuinely distinct answers to a mathematical question. After restricting the question to a smaller setting, all three answers look the same. In this exact example, the two nonzero classes become zero, and the zero class stays zero. The labels are literal class representatives; their placement is only for readability. [Exact finite model; generator](../assets/wolfram/rh_a26_visuals.wl).
+*Figure C. A concrete information-loss test.* Imagine three genuinely distinct answers to a mathematical question. After restricting the question to a smaller setting, all three answers look the same. In this exact example, the two nonzero classes become zero, and the zero class stays zero. The labels are literal class representatives; their placement is only for readability.
 
 Why does the collapse occur? The subgroup index is three, and three is zero in the coefficient field. Averaging by dividing by three is impossible. We need to know when a proof's change of viewpoint preserves the distinctions that matter.
 
@@ -71,9 +71,9 @@ This is not a counterexample to RH. It is a precise counterexample to a *careles
 
 For this example, think of a group as a set of operations that can be composed, and a cocycle as a consistent rule recording how those operations change a quantity. Two such rules are treated as equivalent if they differ only by a change of reference value. A cohomology class records the distinction that survives those changes of reference. In the example above the action is trivial, so this reduces to the very concrete question of which additive values the generator may take.
 
-### Wolfram exhibit A · exact loss of information
+### Worked example A · exact loss of information
 
-Our reproducible Wolfram Language companion enumerates all cyclic one-cocycles and their coboundaries:
+The exact calculation enumerates all cyclic one-cocycles and their coboundaries:
 
 | Group and coefficients | Action | Number of distinct $H^1$ classes | Meaning |
 | --- | --- | ---: | --- |
@@ -90,7 +90,7 @@ Z^1=\{z:(1+a+\cdots+a^{m-1})z=0\},
 B^1=\{(a-1)b:b\in\mathbb F_p\}.
 $$
 
-Here $a^m=1$ in $\mathbb F_p$. The first set contains possible cocycles; the second contains those representing the zero cohomology class. The quotient $Z^1/B^1$ is what the test computes. [Run the Wolfram companion](../assets/wolfram/rh_a26_audit_exhibits.wl).
+Here $a^m=1$ in $\mathbb F_p$. The first set contains possible cocycles; the second contains those representing the zero cohomology class. The quotient $Z^1/B^1$ is what the test computes.
 
 ## 3. A rule for when information is preserved
 
@@ -130,7 +130,7 @@ To see how one can deliberately forget certain distinctions without losing a par
 
 ![Six permutations grouped by parity, each group mapped to its corresponding quotient class](../assets/rh-a26-quotient.svg)
 
-*Figure D. A small model of a quotient.* The six permutations and their grouping into two cosets are exact; box sizes and arrow placement carry no mathematical scale. If a function cannot distinguish the three members of each group, the two-class description contains all the information that function uses. This is a finite analogy to the Galois quotient, not a picture of the actual infinite Galois group. [Exact finite model; generator](../assets/wolfram/rh_a26_visuals.wl).
+*Figure D. A small model of a quotient.* The six permutations and their grouping into two cosets are exact; box sizes and arrow placement carry no mathematical scale. If a function cannot distinguish the three members of each group, the two-class description contains all the information that function uses. This is a finite analogy to the Galois quotient, not a picture of the actual infinite Galois group.
 
 In the arithmetic argument we need more than an arbitrary function: we need a continuous cocycle, a function satisfying a special compatibility rule under composition. Fix a finite set of primes $S$. Let $G$ be the relevant absolute Galois group, and let $N$ be the **closed normal subgroup generated by all inertia groups outside $S$**. The quotient $G/N$ deliberately forgets those ramification symmetries. The point of the proof is to establish that the cocycle truly cannot distinguish elements within a coset, not to assume that the discarded information is irrelevant.
 
@@ -147,13 +147,13 @@ This proves the mathematical descent principle **under its stated continuity, Ha
 
 The associated `shaInfl` comparison makes an additional step: local vanishing on one chosen decomposition group over a prime must represent the same condition at **all** places over that prime. This uses the standard Galois-theoretic transitivity of places and the conjugation behavior of cocycles. The original source contains explicit constructions for these comparisons.
 
-### Wolfram exhibit B · the local condition is not decorative
+### Worked example B · the local condition is not decorative
 
 We tested local restriction kernels in exact finite cyclic groups, including both prime-to-index and excluded-index cases. The separate MATHFORGE fixture passed **7,448** prime-to-index comparisons and recorded **1,306** excluded-index failures.
 
 A stronger noncommutative test used $G=S_3$, its normal subgroup $N=A_3$, and quotient $G/N=C_2$, with six possible local subgroups and finite-field coefficients. All **72** tested local-Selmer comparisons matched. In one nontrivial coefficient setting, dropping the inertia condition outside $S$ admitted **two additional cohomology classes** that could not have come from quotient inflation.
 
-The Python fixture performs this full noncommutative enumeration. The Wolfram companion independently demonstrates representative cyclic local kernels. Neither bounded test replaces the general argument or independently checks the original Lean kernel.
+Separate exact programs perform the full noncommutative enumeration and representative cyclic local-kernel calculations. Neither bounded test replaces the general argument or independently checks the original Lean kernel.
 
 ## 5. Where these results belong in the submitted proof
 
@@ -161,7 +161,7 @@ These objects are not isolated puzzles. They form a *dependency structure* whose
 
 ![Schematic audit map from reconstructed conditional transfers through source bridges to the open Bernoulli valuation estimate](../assets/rh-a26-frontier.svg)
 
-*Figure E. Where scrutiny is concentrated.* We have reconstructed rules for moving information between mathematical descriptions. We still need to verify that the source's actual arithmetic objects are faithfully represented and that the resulting numerical bound holds. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH. [Schematic status map; generator](../assets/wolfram/rh_a26_visuals.wl).
+*Figure E. Where scrutiny is concentrated.* We have reconstructed rules for moving information between mathematical descriptions. We still need to verify that the source's actual arithmetic objects are faithfully represented and that the resulting numerical bound holds. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH.
 
 For readers who want to see the precise source statements, the following table identifies the named components:
 
@@ -191,9 +191,9 @@ $$
 
 where $B_k(x)$ is the Bernoulli polynomial of order $k$. This is an **exact algebraic expression**, not an approximation to a zeta zero.
 
-### Wolfram exhibit C · exact Bernoulli arithmetic
+### Worked example C · exact Bernoulli arithmetic
 
-Wolfram Language's `BernoulliB` and `JacobiSymbol` allow the following rational examples to be reproduced without floating-point approximation:
+The following examples use exact fractions rather than decimal approximations:
 
 | Character and index | Generalized Bernoulli value | Sufficient denominator multiplier | Exact product |
 | --- | ---: | ---: | ---: |
@@ -212,11 +212,33 @@ A divisibility measurement asks how many times a prime divides a number. For exa
 
 The important unresolved step, `ML.vChar`, needs a quantitative comparison between the divisibility of such arithmetic values and a cohomological length. The routine conductor reduction and denominator divisibility lemmas support this step, but they are not the step itself.
 
-[Reproduce all exact Wolfram examples](../assets/wolfram/rh_a26_audit_exhibits.wl) · [Wolfram `BernoulliB` reference](https://reference.wolfram.com/language/ref/BernoulliB.html).
+### What changes when we use a larger modulus?
+
+A periodic arithmetic rule can be described using a longer period than it really needs. The shortest modulus supporting the character is its *conductor*. For example, a character with conductor 5 can also be represented modulo 10, by pulling back its values on invertible residues and assigning zero on the nonunits.
+
+But there are two different calculations one might perform. The primitive Bernoulli value uses the original conductor. The ordinary generalized sum at the larger modulus includes the additional nonunit exclusions. They need not agree.
+
+| Calculation | Exact value |
+| --- | ---: |
+| Primitive Bernoulli value at conductor 5, order 2 | 4/5 |
+| Same primitive value represented at modulus 10 | 4/5 |
+| Ordinary generalized sum at modulus 10 | 12/5 |
+| Primitive value multiplied by the denominator bound at level 5 | 24 |
+| Primitive value multiplied by the denominator bound at level 10 | 48 |
+
+The last number doubles for a simple reason: the source's denominator multiplier doubles, while its primitive value stays fixed. Computing the ordinary sum instead would produce 144, an incorrect substitute for the quantity required by the proof.
+
+Our independent reconstruction explains why the multiplier clears denominators in general, using the classical von Staudt–Clausen theorem for Bernoulli numbers. It also establishes the exact cost of raising the modulus: when the larger modulus is a multiple of the conductor, the scaled primitive quantity is multiplied by their ratio. At a prime not dividing that ratio, the divisibility measurement does not change.
+
+For example, 24 and 48 are each divisible by 3 once. The extra factor of 2 makes no difference at prime 3. This is a precise way to prevent a change of mathematical description from silently increasing the arithmetic bound.
+
+**Evidence:** the independent [arithmetic audit PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) records the argument and exact tests: 5,100 coefficient calculations, 192 conductor cases, and 576 nonzero valuation comparisons. The proof uses standard classical Bernoulli and finite-character results; the examples are supporting checks, not a proof of the cohomology inequality. The primitive-character estimate itself still needs its reciprocity and counting argument.
 
 ## 7. How to reproduce the exhibits and audit the work
 
-Download the [Wolfram Language computational exhibits](../assets/wolfram/rh_a26_audit_exhibits.wl) and evaluate them in Wolfram Language. The script contains **14 self-checks**. The separate [figure generator](../assets/wolfram/rh_a26_visuals.wl) produces all five SVGs using exact combinatorial data, numerical values from `ZetaZero` and `RiemannR`, and explicitly labeled schematic elements. All figures were generated by evaluating that source in the connected Wolfram kernel. The visual examples are not independent verification of the submitted Lean proof. Those checks were executed from the GitHub-hosted source through the connected Wolfram kernel and all passed.
+The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
+
+For specialists who wish to repeat the calculations, the [computational source](../assets/wolfram/rh_a26_audit_exhibits.wl) and [figure source](../assets/wolfram/rh_a26_visuals.wl) are retained in Wolfram Language format. The original 14 checks passed, and all five figures were generated from the retained source. The arithmetic audit additionally supplies an independent exact rational program. None of these computations constitutes a replay of the original Lean proof.
 
 It independently checks four cyclic-cohomology examples, two local-kernel examples, two Bernoulli values, two denominator products, both character parities, and two introductory prime-counting facts. The last two are orientation only. For instance, at $X=1000$:
 
@@ -247,7 +269,7 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Separate the mathematical object from its representation.** A length equality about a transformed module helps only if the source has justified the equivalence with the intended arithmetic module, including the local conditions and character action.
 
-**Distinguish finite computation, mathematical proof, and machine formalization.** Wolfram exact arithmetic demonstrates individual calculations; an independent conventional argument covers a stated conditional theorem; kernel replay checks an exact formal declaration and its dependencies. None can silently stand in for the others.
+**Distinguish finite computation, mathematical proof, and machine formalization.** Exact arithmetic demonstrates individual calculations; an independent conventional argument covers a stated conditional theorem; kernel replay checks an exact formal declaration and its dependencies. None can silently stand in for the others.
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
@@ -257,10 +279,10 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Input:** the source-locked definitions of `Rec`, `prim_case`, `lev_case`, `Bern.b_primmem`, `Bern.den_dvd`, and `Bern.b_primeq`; the actual coefficient-ring and character-conductor hypotheses.
 
-**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, then check the conductor extension without hiding exceptional primes.
+**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. First establish the transfer from bounded torsion layers to the full cohomology group, then check the counting and reciprocity inputs.
 
-**Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small Wolfram calculations must remain supporting exhibits, never the substitute for this proof.
+**Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small computational examples must remain supporting exhibits, never the substitute for this proof.
 
-**Present boundary:** `RH-A26-D05_INFLATION_SHAINFL_MATHEMATICALLY_RECONSTRUCTED__PRIM_CASE_BERNOULLI_SHA_VALUATION_AND_ORIGINAL_LEAN_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_PRIMITIVE_BERNOULLI_DENOMINATOR_AND_CONDUCTOR_COST_RECONSTRUCTED__PRIMITIVE_SHA_COUNT_ZEVAL_REC_AND_ORIGINAL_LEAN_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains the protected evidence, not a certification of RH or GRH.
