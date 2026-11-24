@@ -187,7 +187,7 @@ def verify_gain(interior,terminal,w,r):
             "cross_rows":cross_rows,"cross_budget_fraction":normalized_cross}
 
 
-def discover_gain(interior,terminal,rates=None,max_dense=64):
+def discover_gain(interior,terminal,rates=None,max_dense=64,sparse_steps=16):
     """Try rational temporal rates and weights; no negative decision."""
     n=len(interior)
     if rates is None:rates=tuple(F(j,32) for j in range(1,32))+(F(63,64),F(127,128))
@@ -198,6 +198,16 @@ def discover_gain(interior,terminal,rates=None,max_dense=64):
     for r in rates:
         try:return verify_gain(interior,terminal,w,r)
         except ValueError:pass
+    # Monotone sparse positive-operator iteration: feasible strict weights
+    # imply convergence of 1+max(M_int w,M_end w) to a finite fixed point.
+    # The finite iteration budget is only a search limit.
+    for r in rates:
+        w=(F(1),)*n
+        for _ in range(sparse_steps):
+            w=tuple(1+max(row_action(A,w,r),row_action(B,w,r))
+                    for A,B in zip(interior,terminal))
+            try:return verify_gain(interior,terminal,w,r)
+            except ValueError:pass
     if n>max_dense:return None
     for r in rates:
         # Conservative common envelope of the two row types. Rational solve
@@ -245,7 +255,7 @@ def observable_margins(net,gain):
             "b":head*(1-tail),"tail_length":n}
 
 
-def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64):
+def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64,sparse_steps=16):
     if method=="factor":A,B,work=envelope_rows(net)
     elif method=="exact":
         try:A,B,work=exact_rows(net,max_contexts=max_contexts)
@@ -253,7 +263,7 @@ def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64):
             if str(exc)!="local context budget":raise
             return {"outcome":"undecided","boundary":"local context budget","method":method}
     else:raise ValueError("unknown method")
-    gain=discover_gain(A,B,rates,max_dense)
+    gain=discover_gain(A,B,rates,max_dense,sparse_steps)
     if gain is None:return {"outcome":"undecided","boundary":"gain search",
                              "method":method,"work":work}
     return dict(gain,**observable_margins(net,gain),outcome="certified",
@@ -270,16 +280,26 @@ def replay(net,witness):
     return dict(G,**observable_margins(net,G))
 
 
+def binary_network(coefficients,accuracy=F(5,8)):
+    """Local Bernoulli transitions with additive signed parent influences."""
+    accuracy=F(accuracy)
+    parents=tuple(tuple(j for j,a in row) for row in coefficients)
+    tables=[]
+    for row in coefficients:
+        probs=tuple(F(1,2)+sum(F(a)*(2*x-1) for (_,a),x in zip(row,v))
+                    for v in product((0,1),repeat=len(row)))
+        T=tuple(tuple(tuple(
+            (p if y else 1-p)*(accuracy if z==y else 1-accuracy)
+            for y in (0,1)) for p in probs) for z in (0,1))
+        tables.append(T)
+    return LocalNetwork((2,)*len(coefficients),parents,tuple(tables))
+
+
 def ring(n,self_gain=F(1,8),neighbor_gain=F(1,32),accuracy=F(5,8)):
     """Genuinely interacting binary parallel dynamics with noisy emissions."""
     if n<2:raise ValueError("ring requires at least two sites")
-    parents=tuple((i,(i-1)%n) for i in range(n))
-    T=tuple(tuple(tuple(
-        (p if y else 1-p)*(accuracy if z==y else 1-accuracy)
-        for y in (0,1)) for p in
-        (F(1,2)+self_gain*(2*x-1)+neighbor_gain*(2*v-1)
-         for x,v in product((0,1),repeat=2))) for z in (0,1))
-    return LocalNetwork((2,)*n,parents,(T,)*n)
+    return binary_network(tuple(((i,self_gain),((i-1)%n,neighbor_gain))
+                                for i in range(n)),accuracy)
 
 
 def conditioning_amplification():
