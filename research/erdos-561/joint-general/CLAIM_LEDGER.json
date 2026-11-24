@@ -1629,6 +1629,72 @@
         "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 factor-critical small-component obstruction and unrestricted-host three-blue all-red-length exact joint residual",
+      "assumptions": [
+        "arbitrary finite simple host graph, ordinary noninduced vertex-disjoint positive-star copies",
+        "red list n=(n1,...,ns) sorted positive s>=3, blue m=(u,v,g) sorted positive u>=v>=g>=1",
+        "normalized a_i=n_i-n_s+1; U=u-g+1,V=v-g+1>=2, red excess E=sum_i(a_i-1)",
+        "new matching guard Gamma=2*floor(s/(E+1))<=V+1",
+        "unrestricted-host source two-component JOINT bridge and canonical exact antidiagonal criterion"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3656",
+        "MATH-PROGRAMME#3652"
+      ],
+      "promotion_condition": "Mathematical unrestricted-host proof UNDER_REVIEW; deterministic exact finite and proof-tree audit CHECKED only after final exact-head replay. Full arbitrary-profile #561 OPEN/PARTIAL; no MATHCERT or research novelty priority claim.",
+      "claim_id": "ERDOS561-FACTORCRITICAL-SMALL-COMPONENT-MATCHING-053",
+      "short_name": "Factor-critical component-order forces s+1 matching beyond 3s-1 red support; exact all-s blue zero-deficit JOINT",
+      "claim_text": "General new arbitrary-host matching theorem: For red F(n) with s positive star components and red excess E=sum(n_i-1), blue F(v,g) two positive vertex-disjoint stars, if 2floor(s/(E+1))<=v+g, every graph arrowing (F(n),F(v,g)) has maximum matching at least s+1. Proof: all edges touching any vertex x coloured BLUE force full RED F(n) in Q-x, so nu(Q-x)>=s for every x. Were nu(Q)=s, Gallai matching-stability decomposes nonisolated graph into c factorcritical components with positive matching sizes r_j summing s, order 2r_j+1 each. Red copy surviving nonisolated vertex deletion needs 2s+E vertices, implying c>=E+1. If E+1>s impossible; otherwise some component has matching r<=floor(s/(E+1)) and order <=v+g+1, fewer than the blue target v+g+2 vertices. Colour only this component BLUE and every other component RED. Blue target impossible by vertex count; RED matching number <s, impossible red target. Contradiction. For original n length s>=3 and BLUE m=(u,v,g), normalized red a, blue (U,V,1), V>=2, the normalized guard Gamma<=V+1 holds at every uniform red/blue terminal decrement by monotonicity. Consequently every simultaneous JOINT residual host satisfies e(Q)>=Jcan(n,m)-P_B, with P_B=sum_{i=1}^{s-1}(a_i-max(a_(i+1)+V-1,a_(i+2)+U-1 if available))_+. If P_B=0, full canonical JOINT is EXACT over ALL finite simple host graphs, including normalized red support below 3s-1. If guard fails, the unconditional matching>=s still gives quantitative all-host lower Jcan-P_B-(f+g-1), where f=n_s,g=m3; terminal-one P_B=0 then leaves only one missing edge, with NO exactness promoted. Example n=(3,1,1,1),m=(3,2,1) has red excess2<s-1=3 but Gamma2<=3 and P_B0, hence sharp JOINT J13 and protected both-odd ORIGINAL W18. New all-host result remains proper restricted sufficient theorem, NOT unrestricted all-profile #561.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "Paper FACTORCRITICAL_COMPONENT_ORDER_MATCHING_THEOREM.md Theorem A uses Gallai factorcritical matching stability, lower bound on number of odd factorcritical components from red vertex support, pigeonhole small-component size, and explicit whole-component red/blue avoiding colouring. Theorem B lifts the matching s+1 guarantee through red/blue terminal normalization and invokes the protected TWO-component BLUE JOINT bridge, exact old all-s canonical positive-part BLUE deficit. New guard strictly subsumes old red-support condition. A separate source-proof bound with at-least-s matching yields one-edge terminal gap even where new sufficient guard fails; no unsourced exact promotion.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/FACTORCRITICAL_COMPONENT_ORDER_MATCHING_THEOREM.md",
+        "research/erdos-561/joint-general/verify_factorcritical_component_order_certificates.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+        "research/erdos-561/joint-general/THREE_BY_THREE_JOINT_RECONSTRUCTION.md",
+        "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_THEOREM.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 factor-critical small-component obstruction and unrestricted-host three-blue all-red-length exact joint residual",
+      "assumptions": [
+        "arbitrary finite simple host graph, ordinary noninduced vertex-disjoint positive-star copies",
+        "red list n=(n1,...,ns) sorted positive s>=3, blue m=(u,v,g) sorted positive u>=v>=g>=1",
+        "normalized a_i=n_i-n_s+1; U=u-g+1,V=v-g+1>=2, red excess E=sum_i(a_i-1)",
+        "new matching guard Gamma=2*floor(s/(E+1))<=V+1",
+        "unrestricted-host source two-component JOINT bridge and canonical exact antidiagonal criterion"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3656",
+        "MATH-PROGRAMME#3652"
+      ],
+      "promotion_condition": "Mathematical unrestricted-host proof UNDER_REVIEW; deterministic exact finite and proof-tree audit CHECKED only after final exact-head replay. Full arbitrary-profile #561 OPEN/PARTIAL; no MATHCERT or research novelty priority claim.",
+      "claim_id": "ERDOS561-FACTORCRITICAL-COMPONENT-ORDER-PROOF-TRACE-CHECK-054",
+      "short_name": "Exact component-order guards, nontriangular K7 witness and recursive 179928-profile proof certification delta",
+      "claim_text": "Deterministic standard-library proof-trace verifier computes 75,520 exact factorcritical matching-partition size inequalities across s=2..10 and blue target orders; includes actual nontriangular 2K7 host graph of two factorcritical components each of matching number3, whose every vertex deletion retains full RED F(2,1,1,1,1,1) and yet red-one-whole-K7/blue-other-whole-K7 explicit colouring avoids red F(2,1,1,1,1,1) and blue F(5,1). Independent normalization/antidiagonal checks and an actual new sharp original/joint example n=(3,1,1,1),m=(3,2,1) pass. In exact source-locked 179928-profile grid, old 52-claim recursive engine certifies JOINT165741, ORIGINAL132393. Exactly 1959 low-support profiles have zero P_B; 1671 satisfy new matching guard, of which 845 already had old certificates. New direct factorcritical leaf proves 826 previously unknown JOINT; strict shorter-source recursion adds 208 RED-matching and 25 first-residual certifications, total additional 1059 JOINT. Enhanced JOINT166800, ORIGINAL132967 (+574), remaining JOINT UNKNOWN13128. All old proof traces preserved and only source-proved original parity/core transfers applied after same-profile new JOINT. Classification SHA256 c3cbb54ce251ed7d2921d761b622df6a898431ba1691f7a8f03e30c795e6b6ab. This is a bounded classification of exact mathematical sufficient implications; it is not exhaustive arbitrary host graph search, mathematical cert or complete #561.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_factorcritical_component_order_certificates.py imports existing protected 52-claim recursive engines unchanged; uses integer-only exact guards, exhaustive ordered factorcritical matching-number compositions, a genuine two-K7 component-colouring and vertex-deletion target graph witness, independent original two-index antidiagonal identity, strict decreasing RED length recursive proof trees and complete 179928 integer parameter grid with deterministic provenance fingerprint. Source theorem UNDER_REVIEW; finite checks CHECKED after exact committed-head replay only.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_factorcritical_component_order_certificates.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/FACTORCRITICAL_COMPONENT_ORDER_MATCHING_THEOREM.md",
+        "research/erdos-561/joint-general/RECURSIVE_FOURTH_CORE_CERTIFICATE_THEOREM.md",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }

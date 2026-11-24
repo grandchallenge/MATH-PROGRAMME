@@ -27,6 +27,7 @@ python3 verify_all_red_lengths_three_blue_staircase.py
 python3 verify_all_s_blue_matching_bridge.py
 python3 verify_recursive_three_blue_certificates.py --grid
 python3 verify_recursive_red_matching_certificates.py --grid
+python3 verify_factorcritical_component_order_certificates.py --red 3,1,1,1 --blue 3,2,1
 python3 verify_recursive_vertex_budget_certificates.py --grid
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
