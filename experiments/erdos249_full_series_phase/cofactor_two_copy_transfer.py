@@ -180,7 +180,10 @@ def certified_actual_cofactor_transfer(
                                "Z_re":0,"Z_im":0,
                                "W_re":0,"W_im":0})
     sum_all_e_re=0
+    sum_all_e_im=0
     sum_good_e_re=0
+    third_re=third_im=0
+    fourth_re=fourth_im=0
     count_A=0
     good=0
     checks=0
@@ -192,6 +195,7 @@ def certified_actual_cofactor_transfer(
             checks+=1
         e_re,e_im=root_of_unity_fixed(D%Q,L)
         sum_all_e_re+=e_re
+        sum_all_e_im+=e_im
         k=N+t
         p=lpf[k]
         if p and p>2*sqrt and k//p<=max_m:
@@ -211,6 +215,12 @@ def certified_actual_cofactor_transfer(
                 g["W_re"]+=w_re
                 g["W_im"]+=w_im
                 sum_good_e_re+=e_re
+            else:
+                third_re+=e_re
+                third_im+=e_im
+        else:
+            fourth_re+=e_re
+            fourth_im+=e_im
         if i<X-1:
             D=(2*D
                -Q*(phi[N+h+1]-phi[N+1])
@@ -232,12 +242,33 @@ def certified_actual_cofactor_transfer(
                   for g in groups.values()),Fraction())
     Z1_lo=max(Fraction(),Z1_floor-2*good*eps)
     Z1_hi=_upper_group_absolute_z(groups,good)
-    S_approx=(
-        Fraction(sum_good_e_re,SCALE)-
-        sum((Fraction(g["W_re"]*g["Z_re"]-g["W_im"]*g["Z_im"],
+    B_re=sum((Fraction(g["W_re"]*g["Z_re"]-g["W_im"]*g["Z_im"],
                        g["n"]*SCALE*SCALE)
-             for g in groups.values()),Fraction())
-    )
+              for g in groups.values()),Fraction())
+    B_im=sum((Fraction(g["W_re"]*g["Z_im"]+g["W_im"]*g["Z_re"],
+                       g["n"]*SCALE*SCALE)
+              for g in groups.values()),Fraction())
+    S_approx=Fraction(sum_good_e_re,SCALE)-B_re
+    def complex_mag_rational_upper(x:Fraction,y:Fraction)->Fraction:
+        mag2=x*x+y*y
+        if not mag2:
+            return Fraction()
+        k=mag2.numerator*SCALE*SCALE//mag2.denominator
+        return Fraction(isqrt(k)+1,SCALE)
+    def root_sum_modulus_upper(re:int,im:int,count:int)->Fraction:
+        if count==0:
+            return Fraction()
+        return (Fraction(isqrt(re*re+im*im)+1,SCALE)
+                +2*count*eps)
+    second_mag_hi=(complex_mag_rational_upper(B_re,B_im)
+                   +8*good*eps)
+    third_mag_hi=root_sum_modulus_upper(third_re,third_im,count_A-good)
+    fourth_mag_hi=root_sum_modulus_upper(fourth_re,fourth_im,X-count_A)
+    all_four_pass=(
+        S_approx+10*good*eps<=Fraction(14*X,25)
+        and second_mag_hi<=Fraction(X,100)
+        and third_mag_hi<=Fraction(X,100)
+        and fourth_mag_hi<=Fraction(8*X,25))
     S_error=10*good*eps
     S_low,S_hi=S_approx-S_error,S_approx+S_error
     original_E_re_lower=Fraction(sum_all_e_re,SCALE)-X*eps
@@ -253,6 +284,8 @@ def certified_actual_cofactor_transfer(
         "X":X,"h":h,"s":s,"eta_num":eta_num,"eta_den":eta_den,
         "L":L,"Q":Q,"t":t,"source_A_count":count_A,
         "source_G_count":good,"group_count":len(groups),
+        "source_A_not_G_count":count_A-good,
+        "source_outside_A_count":X-count_A,
         "three_direct_full_Cook_numerator_oracles":checks,
         "original_full_Cook_real_first_harmonic_lower":original_E_re_lower,
         "original_full_Cook_real_first_harmonic_upper":original_E_re_upper,
@@ -267,6 +300,13 @@ def certified_actual_cofactor_transfer(
         "original_first_weighted_Cook_sum_real_lower":S_low,
         "original_first_weighted_Cook_sum_real_upper":S_hi,
         "first_weighted_Cook_14X_over_25_FINITE":S_hi<=allowed,
+        "Cook_second_weighted_group_modulus_upper":second_mag_hi,
+        "Cook_third_excluded_good_modulus_upper":third_mag_hi,
+        "Cook_fourth_outside_A_modulus_upper":fourth_mag_hi,
+        "source_locked_four_bounds_FINITE":all_four_pass,
+        "Cook_second_1X_over_100_FINITE":second_mag_hi<=Fraction(X,100),
+        "Cook_third_1X_over_100_FINITE":third_mag_hi<=Fraction(X,100),
+        "Cook_fourth_8X_over_25_FINITE":fourth_mag_hi<=Fraction(8*X,25),
         "two_copy_sufficient_criterion_FINITE":criterion,
         "generic_WZ_Cauchy_certificate_INSUFFICIENT":Cauchy_bound_fails,
         "adversarial_w_conjugate_z_Vz_lower":good-C_Z_hi,
