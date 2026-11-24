@@ -115,11 +115,11 @@ def cook_oriented_word_residue(
     phase_word=0
     checks=(lo,lo+(hi-lo)//2,hi-1)
     for t in range(lo,hi):
-        source_start=(coeff(N+2)-coeff(N+1))
-        source_terminal=(coeff(N+L+2)-coeff(N+L+1))
+        source_start=(coeff[N+2]-coeff[N+1])
+        source_terminal=(coeff[N+L+2]-coeff[N+L+1])
         D_next=2*D-Q*source_start+source_terminal
         step=(D_next-2*D)%Q
-        if step!=(coeff(t+1)-coeff(t))%Q:
+        if step!=(coeff[t+1]-coeff[t])%Q:
             raise AssertionError("true full-Cook step cocycle failed")
         if t in checks and D_next!=cook_numerator_direct(coeff,N+1,1,L):
             raise AssertionError("original full Cook rolling/direct mismatch")
@@ -127,7 +127,7 @@ def cook_oriented_word_residue(
         D=D_next
         N+=1
     result=(phase_word if u<v else -phase_word)%Q
-    if result!=(coeff(v)-coeff(u))%Q:
+    if result!=(coeff[v]-coeff[u])%Q:
         raise AssertionError("oriented original phase word telescope failed")
     return result
 
@@ -153,9 +153,9 @@ def anchored_multiplicative_cook_word(
     Q=1<<L
     large=cook_oriented_word_residue(coeff,n*m0,n*m,L)
     small=cook_oriented_word_residue(coeff,m0,m,L)
-    word=(large-coeff(n)*small)%Q
-    d_m=coeff(n*m)-coeff(n)*coeff(m)
-    d_0=coeff(n*m0)-coeff(n)*coeff(m0)
+    word=(large-coeff[n]*small)%Q
+    d_m=coeff[n*m]-coeff[n]*coeff[m]
+    d_0=coeff[n*m0]-coeff[n]*coeff[m0]
     direct=(d_m-d_0)%Q
     if word!=direct:
         raise AssertionError("genuine complete Cook word/defect exact identity failed")
