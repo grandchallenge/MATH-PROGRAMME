@@ -179,6 +179,13 @@ class TestCompositionalReuse(unittest.TestCase):
         self.assertEqual(D["eta"],0)
         self.assertLessEqual(len(centers),B["cell_bound"])
         self.assertEqual(packing_bound(2,F(1,4),F(1,2)),81)
+        B=guaranteed_packing_budget(3,2,F(1,2),4,2,F(1,2))
+        self.assertLessEqual(4*2*5*2*4*F(1,2)**B["block"],F(1,2))
+        # Near-marginal rates must not allocate an astronomically large integer.
+        B=guaranteed_packing_budget(3,2,F(1,2),4,2,1-F(1,2**40))
+        self.assertIsNone(B["primitive_bound"])
+        self.assertEqual(B["primitive_bound_power"],(2,B["block"]))
+        self.assertGreater(B["block"],2**40)
         m=iid_binary(F(1,2));q=PredictiveQuotient(m)
         B=packing_budget_from_conditionals(m,1,0,1,0)
         self.assertEqual((B["block"],B["cell_bound"],B["H"]),(1,1,0))
