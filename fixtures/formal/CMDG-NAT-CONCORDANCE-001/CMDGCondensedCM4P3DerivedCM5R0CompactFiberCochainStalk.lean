@@ -102,7 +102,7 @@ def fiberCoconeIsColimit : IsColimit (fiberCocone Q T q t) := by
     let gi : LocallyConstant (q ⁻¹' i.unop.val) ℤ :=
       g.comap ⟨Subtype.val, continuous_subtype_val⟩
     refine ⟨i, gi, ?_⟩
-    change f = restrictSections Q T q (V := i.unop.val) (W := {t}) _ gi
+    change f = restrictSections Q T q (V := i.unop.val) (W := {t}) (singleton_subset_iff.mpr (mem_of_mem_nhds i.unop.property.2)) gi
     apply DFunLike.ext
     intro x
     exact (hg x).symm
