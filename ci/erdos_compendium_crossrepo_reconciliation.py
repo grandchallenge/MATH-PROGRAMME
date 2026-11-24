@@ -70,6 +70,32 @@ def snapshot(trees):
                 by_id.setdefault(str(n),[]).append({"repository":repo,"path":p,"blob":s})
     return {"named_crossrepo_file_counts":counts,"evidence_by_problem":by_id,"unassigned_named_crossrepo_files":unassigned}
 
+def merge_search_delta(pages_by_repo, baseline):
+    """Search metadata only. Detect incomplete/paginated discovery explicitly."""
+    result={}
+    for repo in ("MATHSOLVE","MATHCERT"):
+        pages=pages_by_repo[repo]
+        require(isinstance(pages,list) and bool(pages),f"{repo}: missing PR search pages")
+        require(all(isinstance(p.get("items"),list) and type(p.get("total_count")) is int
+                    and type(p.get("incomplete_results")) is bool for p in pages),
+                f"{repo}: malformed PR search")
+        total=pages[0]["total_count"]
+        items=[i for p in pages for i in p["items"]]
+        numbers=[i["number"] for i in items]
+        require(all(type(n) is int and n>0 for n in numbers),f"{repo}: invalid PR identity")
+        complete=(total<=1000 and all(p["total_count"]==total and not p["incomplete_results"] for p in pages)
+                  and len(numbers)==len(set(numbers))==total)
+        old={i["number"]:i for i in baseline[repo]["items"]}
+        current={i["number"]:{"number":i["number"],"title":i["title"],"url":i["html_url"],
+                              "merged_at":i.get("pull_request",{}).get("merged_at")} for i in items}
+        result[repo]={"search_result_count":total,"unique_matches_received":len(current),
+          "search_complete_for_this_query":complete,
+          "new_match_leads":[current[n] for n in sorted(current.keys()-old.keys())],
+          "changed_metadata_leads":[current[n] for n in sorted(current.keys()&old.keys()) if current[n]!=old[n]],
+          "missing_previous_matches":sorted(old.keys()-current.keys()) if complete else None,
+          "all_historical_prs_covered":False,"theorem_authority":False}
+    return result
+
 def reconcile(heads,trees,baseline,admissions):
     require(baseline.get("record_type")=="ERDOS_CROSSREPO_RECONCILIATION_BASELINE/1","wrong baseline type")
     now=snapshot(trees)
@@ -120,9 +146,14 @@ def main():
     p.add_argument("--baseline",type=Path,required=True)
     p.add_argument("--admissions",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--merged-search",type=Path,help="Directory of paginated merged-PR search metadata")
     a=p.parse_args()
     heads,trees=load_trees(a.trees)
-    d=reconcile(heads,trees,json.loads(a.baseline.read_text()),json.loads(a.admissions.read_text()))
+    baseline=json.loads(a.baseline.read_text())
+    d=reconcile(heads,trees,baseline,json.loads(a.admissions.read_text()))
+    if a.merged_search:
+        pages={r:json.loads((a.merged_search/f"{r}-merged-pages.json").read_text()) for r in ("MATHSOLVE","MATHCERT")}
+        d["merged_pr_search_delta"]=merge_search_delta(pages,baseline["historical_merged_pr_search"])
     a.output.parent.mkdir(parents=True,exist_ok=True)
     a.output.write_text(json.dumps(d,indent=2,sort_keys=True)+"\n")
     print("Cross-repository evidence:",d["named_crossrepo_file_counts"],"assessed",d["assessed_problem_count"])
