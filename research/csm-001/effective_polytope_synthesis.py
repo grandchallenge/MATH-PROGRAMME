@@ -78,7 +78,8 @@ def check_grid(q,products,radius,max_vertices):
     if not products:raise ValueError("empty products")
     centers={A:grid_center(project(q.initial,A),radius) for A in products}
     V=grid_vertices(tuple(sorted(set(centers.values()))),radius,max_vertices)
-    c=min(row_mul(v,A)[0] for v in V for A in q.matrices)
+    c=min(sum(v[i]*A[i][0] for i in range(q.dimension))
+          for v in V for A in q.matrices)
     if c<=0:raise ValueError("one-letter nonnullness")
     eta=F(0)
     slack=radius
