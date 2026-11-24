@@ -23,6 +23,22 @@ $$
 
 In November 2026, an external submission by Alpöge and Claude claimed a formal Lean proof of RH and certain generalized statements. Our task is to establish **what the actual formal source says**, **which mathematical bridges can be reconstructed independently**, and **which evidence would warrant accepting the whole claim**. See the separate [source-critical announcement guide](riemann_hypothesis_2026_lean_announcement.md) for the submission, external replay reports, original sources, and historical context.
 
+### Why anyone studies this question
+
+Counting primes is easy for a small range: list the numbers, eliminate those that are not prime, and count what remains. Predicting the count across arbitrarily large ranges is much harder. The striking fact is that a smooth mathematical function predicts this irregular staircase remarkably well. RH would give strong control over the error in suitable prime-counting estimates.
+
+![Linear complex-plane diagram of five known zeta zeros on the middle line of the critical strip](../assets/rh-a26-critical-line.svg)
+
+*Figure A. What RH says.* The horizontal position of a zero is its real part. The five dots show known zeros; their vertical positions come from Wolfram Language's `ZetaZero`. RH says **every** nontrivial zero is on the middle line, including those beyond the plotted range. The figure does not show that there are no other zeros elsewhere. [Numerical sample; generator](../assets/wolfram/rh_a26_visuals.wl).
+
+![Prime counting staircase from 2 to 100 alongside the smooth Riemann R approximation](../assets/rh-a26-prime-count.svg)
+
+*Figure B. Why the zeros matter.* The black staircase counts actual primes; it rises by one each time another prime appears. The blue curve is a smooth approximation calculated with Wolfram Language's `RiemannR`, sampled at integer arguments. Their closeness illustrates the kind of regularity number theory seeks to explain. It does not prove an error bound or RH. [Data-derived; generator](../assets/wolfram/rh_a26_visuals.wl).
+
+### How to read this investigation
+
+The authors' claimed proof is not a calculation of more zeta zeros. It proceeds through a long sequence of arithmetic statements. Our investigation works backward from the final claim, identifying the statements it needs and testing whether their hypotheses really justify the next step. The mathematical tools introduced below are examples of that work.
+
 The underlying problem is infinite. Testing many primes, evaluating many zeta zeros, or compiling many files can inform an investigation; none of those facts alone proves the intended mathematical statement.
 
 **A useful distinction:** the arithmetic object called `Sha` in this source is a specifically defined kernel of first-cohomology restriction maps with selected local conditions. It must not silently be identified with every classical use of the notation “Tate–Shafarevich group”. Its meaning comes from the *definition in the source*.
@@ -43,9 +59,17 @@ $$
 H^1(\{1\},\mathbb F_3)=0.
 $$
 
-Restricting from the larger group to the smaller one **loses all three classes**. Why? The subgroup index is three, and three is zero in the coefficient field. Averaging by dividing by three is impossible.
+![Three cohomology classes 0, 1 and 2 all map to the single zero class under restriction](../assets/rh-a26-restriction.svg)
+
+*Figure C. A concrete information-loss test.* Imagine three genuinely distinct answers to a mathematical question. After restricting the question to a smaller setting, all three answers look the same. In this exact example, the two nonzero classes become zero, and the zero class stays zero. The labels are literal class representatives; their placement is only for readability. [Exact finite model; generator](../assets/wolfram/rh_a26_visuals.wl).
+
+Why does the collapse occur? The subgroup index is three, and three is zero in the coefficient field. Averaging by dividing by three is impossible. We need to know when a proof's change of viewpoint preserves the distinctions that matter.
 
 This is not a counterexample to RH. It is a precise counterexample to a *careless version of a technique* that the submitted proof must use correctly.
+
+### A closer look: what is a cohomology class?
+
+For this example, think of a group as a set of operations that can be composed, and a cocycle as a consistent rule recording how those operations change a quantity. Two such rules are treated as equivalent if they differ only by a change of reference value. A cohomology class records the distinction that survives those changes of reference. In the example above the action is trivial, so this reduces to the very concrete question of which additive values the generator may take.
 
 ### Wolfram exhibit A · exact loss of information
 
@@ -102,7 +126,13 @@ divides $m$. The ability to divide by the global index therefore applies to ever
 
 A Galois group encodes ways of permuting algebraic numbers while preserving the base field. Some of these symmetries are grouped into *inertia groups* associated with primes. At a prime, inertia records how a field extension is ramified.
 
-Fix a finite set of primes $S$. Let $G$ be the relevant absolute Galois group, and let $N$ be the **closed normal subgroup generated by all inertia groups outside $S$**. The quotient $G/N$ deliberately forgets those ramification symmetries.
+To see how one can deliberately forget certain distinctions without losing a particular answer, start with six permutations of three objects. We can group them into two types: those that are even and those that are odd. Any function taking the same value on all permutations of each type can be described by only two values.
+
+![Six permutations grouped by parity, each group mapped to its corresponding quotient class](../assets/rh-a26-quotient.svg)
+
+*Figure D. A small model of a quotient.* The six permutations and their grouping into two cosets are exact; box sizes and arrow placement carry no mathematical scale. If a function cannot distinguish the three members of each group, the two-class description contains all the information that function uses. This is a finite analogy to the Galois quotient, not a picture of the actual infinite Galois group. [Exact finite model; generator](../assets/wolfram/rh_a26_visuals.wl).
+
+In the arithmetic argument we need more than an arbitrary function: we need a continuous cocycle, a function satisfying a special compatibility rule under composition. Fix a finite set of primes $S$. Let $G$ be the relevant absolute Galois group, and let $N$ be the **closed normal subgroup generated by all inertia groups outside $S$**. The quotient $G/N$ deliberately forgets those ramification symmetries. The point of the proof is to establish that the cocycle truly cannot distinguish elements within a coset, not to assume that the discarded information is irrelevant.
 
 The source's `InfUnram` mechanism states that, if the coefficient representation already factors through $G/N$, a continuous class in $H^1(G,M)$ comes from the quotient exactly when it restricts to zero on all inertia groups outside $S$.
 
@@ -127,7 +157,13 @@ The Python fixture performs this full noncommutative enumeration. The Wolfram co
 
 ## 5. Where these results belong in the submitted proof
 
-These objects are not isolated puzzles. They form a *dependency structure* whose links need individual verification:
+These objects are not isolated puzzles. They form a *dependency structure* whose links need individual verification. The following map is a reading guide to the audit as recorded on this page, not the entire original proof or a measurement of percentage complete.
+
+![Schematic audit map from reconstructed conditional transfers through source bridges to the open Bernoulli valuation estimate](../assets/rh-a26-frontier.svg)
+
+*Figure E. Where scrutiny is concentrated.* We have reconstructed rules for moving information between mathematical descriptions. We still need to verify that the source's actual arithmetic objects are faithfully represented and that the resulting numerical bound holds. The arrows give a reading order, not a complete theorem-dependency graph. Neither a successful transfer nor this map establishes RH. [Schematic status map; generator](../assets/wolfram/rh_a26_visuals.wl).
+
+For readers who want to see the precise source statements, the following table identifies the named components:
 
 | Source component | Role | Current audit boundary |
 | --- | --- | --- |
@@ -172,13 +208,15 @@ $$
 
 The two computations demonstrate *how* a denominator multiplier can turn a rational generalized Bernoulli value into an integer. They do **not** establish the source's general integrality lemma, its valuation estimates at the prime $p$, or the desired inequality on genuine cohomology groups.
 
+A divisibility measurement asks how many times a prime divides a number. For example, 24 is divisible by 2 three times, but 25 is not divisible by 2 at all. The source uses a more general version of this measurement, a valuation, and compares it with the length of an arithmetic module. That length measures its algebraic complexity in a precise sense; it is not the physical size of an object.
+
 The important unresolved step, `ML.vChar`, needs a quantitative comparison between the divisibility of such arithmetic values and a cohomological length. The routine conductor reduction and denominator divisibility lemmas support this step, but they are not the step itself.
 
 [Reproduce all exact Wolfram examples](../assets/wolfram/rh_a26_audit_exhibits.wl) · [Wolfram `BernoulliB` reference](https://reference.wolfram.com/language/ref/BernoulliB.html).
 
 ## 7. How to reproduce the exhibits and audit the work
 
-Download the single [Wolfram Language notebook-compatible script](../assets/wolfram/rh_a26_audit_exhibits.wl) and evaluate it in Wolfram Language. It contains **14 self-checks**. Those checks were executed from the GitHub-hosted source through the connected Wolfram kernel and all passed.
+Download the [Wolfram Language computational exhibits](../assets/wolfram/rh_a26_audit_exhibits.wl) and evaluate them in Wolfram Language. The script contains **14 self-checks**. The separate [figure generator](../assets/wolfram/rh_a26_visuals.wl) produces all five SVGs using exact combinatorial data, numerical values from `ZetaZero` and `RiemannR`, and explicitly labeled schematic elements. All figures were generated by evaluating that source in the connected Wolfram kernel. The visual examples are not independent verification of the submitted Lean proof. Those checks were executed from the GitHub-hosted source through the connected Wolfram kernel and all passed.
 
 It independently checks four cyclic-cohomology examples, two local-kernel examples, two Bernoulli values, two denominator products, both character parities, and two introductory prime-counting facts. The last two are orientation only. For instance, at $X=1000$:
 
