@@ -9,7 +9,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"research"/"csm-001"))
 from interacting_small_gain import (
     LocalNetwork,ring,binary_network,conditioning_amplification,
     envelope_rows,exact_rows,verify_gain,discover_gain,certify,replay,row_action,
-    ratio_tv,factor_envelope,
+    ratio_tv,factor_envelope,observable_margins,
 )
 from observable_polytope_certificate import solve_square,row_mul
 from observable_memory_certificate import ObservableFiniteMemory
@@ -153,6 +153,12 @@ class TestInteractingSmallGain(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"small gain"):
             replay(net,dict(D,rho=F(1,32)))
         self.assertEqual(certify(net,method="exact",max_contexts=1)["boundary"],"local context budget")
+        A,B,_=envelope_rows(net)
+        G=verify_gain(A,B,(1,)*net.n,1-F(1,2**40))
+        compact=observable_margins(net,G,max_tail_steps=0)
+        self.assertIsNone(compact["b"])
+        self.assertGreater(compact["b_power"]["exponent"],2**40)
+        self.assertEqual(compact["b_power"]["base"],compact["nonnull"])
         with self.assertRaisesRegex(ValueError,"strictly positive"):
             LocalNetwork((2,),((0,),),((((1,0),(0,1)),),))
         with self.assertRaisesRegex(ValueError,"normalized"):
