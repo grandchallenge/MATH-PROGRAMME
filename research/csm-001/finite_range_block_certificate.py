@@ -126,3 +126,47 @@ def parity_kernel(memory):
     return tuple((F(1,2),F(1,2)) if not any(w) else
                  (F(sum(w)%2==0),F(sum(w)%2==1))
                  for w in product((0,1),repeat=memory+1))
+
+
+def universal_block_bounds(source,memory,reference,hidden_anchor,alpha,block=None):
+    """A kernel-independent certificate for a whole class of overlapping maps.
+
+    All output labels must have probability >=alpha at the constant
+    reference input window. Uses only source transfers and the unlabelled
+    history lift. Returns cone bounds, a rate upper bound and state ordering.
+    """
+    if not isinstance(memory,int) or memory<1:
+        raise ValueError("positive history length required")
+    if block is None:block=memory
+    if not isinstance(block,int) or block<1:
+        raise ValueError("positive block length required")
+    alpha=F(alpha)
+    if not 0<alpha<=1 or not isinstance(reference,int) or not 0<=reference<source.alphabet:
+        raise ValueError("bad reference or alpha")
+    if not isinstance(hidden_anchor,int) or not 0<=hidden_anchor<source.dimension:
+        raise ValueError("bad microscopic anchor")
+    # A one-output dummy channel yields exactly the unlabelled lift.
+    lift,states=finite_range_lift(source,memory,((F(1),),)*(source.alphabet**(memory+1)))
+    state=((reference,)*memory,hidden_anchor)
+    if state not in states:raise ValueError("zero stationary anchor")
+    h=states.index(state)
+    c=word_matrix(source,(reference,)*block)[hidden_anchor][hidden_anchor]
+    pivot=c*alpha**block
+    if pivot<=0:raise ValueError("reference path has zero mass")
+    Qs=word_matrix(lift,(0,)*block)
+    bounds=tuple(max(row[j] for row in Qs)/pivot for j in range(lift.dimension))
+    K=max(F(1),bounds[h])
+    e=sum(bounds[j] for j in range(lift.dimension) if j!=h)
+    eta=2*K*e+e**2
+    if e>=F(1,2) or eta>=1:raise ValueError("universal path crowding insufficient")
+    L=tuple(F(1) if j==h else 2*bounds[j] for j in range(lift.dimension))
+    R=tuple(F(1) if j==h else K/(1-e) for j in range(lift.dimension))
+    return {"anchor":h,"states":states,"L":L,"R":R,"block":block,
+            "eta_upper":eta,"escape":e,"anchor_ratio":K,"pivot_lower":pivot}
+
+
+def rare_non_iid_source():
+    """Two-state non-iid source with a rare input and a rare hidden state."""
+    d=F(1,1024)
+    return ObservableFiniteMemory((1-d,d),
+        (((1-2*d,d),(1-3*d,d)),((d,0),(2*d,0))))
