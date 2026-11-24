@@ -261,10 +261,25 @@ def certified_actual_cofactor_transfer(
             return Fraction()
         return (Fraction(isqrt(re*re+im*im)+1,SCALE)
                 +2*count*eps)
+    def root_sum_modulus_lower(re:int,im:int,count:int)->Fraction:
+        if count==0:
+            return Fraction()
+        return max(Fraction(),
+                   Fraction(isqrt(re*re+im*im),SCALE)-2*count*eps)
+    def complex_mag_rational_lower(x:Fraction,y:Fraction)->Fraction:
+        mag2=x*x+y*y
+        if not mag2:
+            return Fraction()
+        k=mag2.numerator*SCALE*SCALE//mag2.denominator
+        return Fraction(isqrt(k),SCALE)
     second_mag_hi=(complex_mag_rational_upper(B_re,B_im)
                    +8*good*eps)
+    second_mag_lo=max(Fraction(),
+                      complex_mag_rational_lower(B_re,B_im)-8*good*eps)
     third_mag_hi=root_sum_modulus_upper(third_re,third_im,count_A-good)
+    third_mag_lo=root_sum_modulus_lower(third_re,third_im,count_A-good)
     fourth_mag_hi=root_sum_modulus_upper(fourth_re,fourth_im,X-count_A)
+    fourth_mag_lo=root_sum_modulus_lower(fourth_re,fourth_im,X-count_A)
     all_four_pass=(
         S_approx+10*good*eps<=Fraction(14*X,25)
         and second_mag_hi<=Fraction(X,100)
@@ -301,8 +316,11 @@ def certified_actual_cofactor_transfer(
         "original_first_weighted_Cook_sum_real_lower":S_low,
         "original_first_weighted_Cook_sum_real_upper":S_hi,
         "first_weighted_Cook_14X_over_25_FINITE":S_hi<=allowed,
+        "Cook_second_weighted_group_modulus_lower":second_mag_lo,
         "Cook_second_weighted_group_modulus_upper":second_mag_hi,
+        "Cook_third_excluded_good_modulus_lower":third_mag_lo,
         "Cook_third_excluded_good_modulus_upper":third_mag_hi,
+        "Cook_fourth_outside_A_modulus_lower":fourth_mag_lo,
         "Cook_fourth_outside_A_modulus_upper":fourth_mag_hi,
         "source_locked_four_bounds_FINITE":all_four_pass,
         "Cook_second_1X_over_100_FINITE":second_mag_hi<=Fraction(X,100),
