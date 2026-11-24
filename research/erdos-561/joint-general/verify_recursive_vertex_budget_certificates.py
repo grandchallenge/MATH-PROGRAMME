@@ -37,9 +37,20 @@ def original(n,m):
     prior.validate(n,m)
     old=red.original(n,m)
     if old is not None:return old
-    if len(n)<=3 or fourth_core_gate(n,m) is None:return None
+    if len(n)<=3:return None
+    # An enhanced JOINT certificate can also activate one of the THREE
+    # previously source-proved ORIGINAL transfer gates, even when the old
+    # classifier could not previously reach that JOINT dependency.
+    prior_gate=prior.transfer(n,m)
+    fourth_gate=fourth_core_gate(n,m)
+    if prior_gate is None and fourth_gate is None:return None
     child=joint(n,m)
     if child is None:return None
+    if prior_gate is not None:
+        return prior.leaf("ORIGINAL_TRANSFER_AFTER_ENHANCED_JOINT_"+prior_gate,n,m,{
+            "source_theorem":"GENERAL_CORE_ORIGINAL_TRANSFER.md/Theorem A/conditions 1-3",
+            "exact_joint_certificate":child
+        })
     D=n[0]+m[0]-2
     R=max(sum(n)+len(n),sum(m)+len(m))
     return prior.leaf("ORIGINAL_TRANSFER_"+FOURTH,n,m,{
