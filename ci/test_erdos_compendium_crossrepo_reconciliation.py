@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from erdos_compendium_crossrepo_reconciliation import load_trees,problem_ids,reconcile,snapshot
+from erdos_compendium_crossrepo_reconciliation import load_trees,problem_ids,reconcile,snapshot,merge_search_delta
 
 P,S,C="MATH-PROGRAMME","MATHSOLVE","MATHCERT"
 A="a"*40
@@ -75,4 +75,21 @@ class ReconciliationTests(unittest.TestCase):
             for bad in (dict(tree,sha=A),dict(tree,truncated=True)):
                 (d/f"{S}-tree.json").write_text(json.dumps(bad))
                 with self.assertRaises(ValueError):load_trees(d)
+    def test_pr_search_partial_is_not_complete(self):
+        old={r:{"items":[{"number":1,"title":"Erdos","url":"u","merged_at":"t"}]} for r in (S,C)}
+        row={"number":2,"title":"Erdos","html_url":"v","pull_request":{"merged_at":"t"}}
+        pages={r:[{"total_count":2,"incomplete_results":False,"items":[row]}] for r in (S,C)}
+        x=merge_search_delta(pages,old)[S]
+        self.assertFalse(x["search_complete_for_this_query"])
+        self.assertIsNone(x["missing_previous_matches"])
+        self.assertFalse(x["theorem_authority"])
+        self.assertEqual(x["new_match_leads"][0]["number"],2)
+    def test_pr_search_complete_not_exhaustive_history(self):
+        old={r:{"items":[]} for r in (S,C)}
+        row={"number":2,"title":"Erdos","html_url":"v","pull_request":{"merged_at":"t"}}
+        pages={r:[{"total_count":1,"incomplete_results":False,"items":[row]}] for r in (S,C)}
+        x=merge_search_delta(pages,old)[S]
+        self.assertTrue(x["search_complete_for_this_query"])
+        self.assertFalse(x["all_historical_prs_covered"])
+        self.assertEqual(len(x["new_match_leads"]),1)
 if __name__=="__main__":unittest.main()
