@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP288",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP289",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,36 +15,42 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "General fixed finite partition tensor with the four-plus-four control",
+  "phase": "Reviewed finite-partition tensor comparison at all weights for disjoint intervals",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "bd1cc1fd1da90ea3db40742a953bf98d306b27f3",
-    "candidate_head_sha": "bd1cc1fd1da90ea3db40742a953bf98d306b27f3",
+    "candidate_head_sha": "bb1376506005fa9cf6a8e43f0db617c9bbf6291c",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-finite-partition-tensor-uc073-input-20261124",
+    "branch": "research/reach-finite-partition-tensor-uc073-reviewed-20261124",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-arbitrary-finite-partition-tensor",
-      "description": "Test a fixed-finite-arity partition theorem for the actual relative tensor on two disjoint intervals, using (4,4) at weight eight as the first new control. Prove the multi-block extraction, arbitrary finite-order center primitives and equal-size block symmetries on original whole sources and their rapid quotient, or record the exact obstruction. Keep simultaneous collision sectors, the common vacuum, genuine parameter rows and matching Wick maps. Any use of the original R3 verdict through a broader target requires the transfer test of UC037."
+      "id": "adjudicate-remaining-typed-integration",
+      "description": "Audit the remaining original M5/R4 requirements against the all-weight finite-interval tensor theorem. Test extension to arbitrary separated physical opens through compact support finite-component decompositions at each weight on actual parameter rows. Distinguish this proposed comparison from the larger prior-family obstruction and use the UC037 transfer-square test before attributing any integration arrow to the independent original R3 comparison."
     }
   ],
   "next_action": {
-    "id": "test-arbitrary-finite-partition-tensor",
-    "description": "Test a fixed-finite-arity partition theorem for the actual relative tensor on two disjoint intervals, using (4,4) at weight eight as the first new control. Prove the multi-block extraction, arbitrary finite-order center primitives and equal-size block symmetries on original whole sources and their rapid quotient, or record the exact obstruction. Keep simultaneous collision sectors, the common vacuum, genuine parameter rows and matching Wick maps. Any use of the original R3 verdict through a broader target requires the transfer test of UC037.",
+    "id": "adjudicate-remaining-typed-integration",
+    "description": "Audit the remaining original M5/R4 requirements against the all-weight finite-interval tensor theorem. Test extension to arbitrary separated physical opens through compact support finite-component decompositions at each weight on actual parameter rows. Distinguish this proposed comparison from the larger prior-family obstruction and use the UC037 transfer-square test before attributing any integration arrow to the independent original R3 comparison.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
-      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_UC067.md",
-      "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
-      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md"
+      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_UC073.md",
+      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
+      "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
+      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md",
+      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "bb1376506005fa9cf6a8e43f0db617c9bbf6291c",
+        "status": "UC074 accepts the frozen actual fixed finite-arity partition theorem and finite-interval completed relative product at all weights, including the connected-interval affine fibre."
+      },
       {
         "kind": "review",
         "identity": "03e8e85ef0f0b2c7d77d4de0a19260215b3c85e8",
@@ -2154,17 +2160,24 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindGeneralFinitePartitionTensor",
-    "result": "Bound primary construction with proof and review pending",
+    "action": "IntegrateReviewedFinitePartitionTensor",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
-      "research/reach-finite-partition-tensor-uc073-input-20261124"
+      "research/reach-finite-partition-tensor-uc073-reviewed-20261124",
+      "research/reach-finite-partition-tensor-uc073-input-20261124",
+      "research/reach-finite-partition-tensor-uc073-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3683",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_UC073.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_FINITE_PARTITION_TENSOR_UC074.md",
+      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_ACCEPTANCE_UC075.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-24T09:01:20.8027814Z"
+    "observed_at": "2026-11-24T09:10:30.837317+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2474,9 +2487,15 @@
       "research/reach-separated-triples-uc070-primary-20261124",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3668",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_TRIPLES_TENSOR_UC071.md",
-      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_ACCEPTANCE_UC072.md"
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_ACCEPTANCE_UC072.md",
+      "research/reach-finite-partition-tensor-uc073-reviewed-20261124",
+      "research/reach-finite-partition-tensor-uc073-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3683",
+      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_UC073.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_FINITE_PARTITION_TENSOR_UC074.md",
+      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_ACCEPTANCE_UC075.md"
     ],
-    "instructions": "Test a fixed-finite-arity partition theorem for the actual relative tensor on two disjoint intervals, using (4,4) at weight eight as the first new control. Prove the multi-block extraction, arbitrary finite-order center primitives and equal-size block symmetries on original whole sources and their rapid quotient, or record the exact obstruction. Keep simultaneous collision sectors, the common vacuum, genuine parameter rows and matching Wick maps. Any use of the original R3 verdict through a broader target requires the transfer test of UC037."
+    "instructions": "Audit the remaining original M5/R4 requirements against the all-weight finite-interval tensor theorem. Test extension to arbitrary separated physical opens through compact support finite-component decompositions at each weight on actual parameter rows. Distinguish this proposed comparison from the larger prior-family obstruction and use the UC037 transfer-square test before attributing any integration arrow to the independent original R3 comparison."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
