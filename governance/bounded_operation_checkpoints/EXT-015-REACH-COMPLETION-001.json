@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP287",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP288",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed separated-triple comparison through weight seven",
+  "phase": "General fixed finite partition tensor with the four-plus-four control",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "09ae71c803bcffec5cbaf76bd95d30991caced35",
-    "candidate_head_sha": "03e8e85ef0f0b2c7d77d4de0a19260215b3c85e8",
+    "protected_base_sha": "bd1cc1fd1da90ea3db40742a953bf98d306b27f3",
+    "candidate_head_sha": "bd1cc1fd1da90ea3db40742a953bf98d306b27f3",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-separated-triples-uc070-reviewed-20261124",
+    "branch": "research/reach-finite-partition-tensor-uc073-input-20261124",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -2154,29 +2154,25 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedSeparatedTripleTensor",
-    "result": "Frozen reviewed result prepared for native admission",
+    "action": "BindGeneralFinitePartitionTensor",
+    "result": "Bound primary construction with proof and review pending",
     "evidence_refs": [
-      "research/reach-separated-triples-uc070-reviewed-20261124",
-      "research/reach-separated-triples-uc070-input-20261124",
-      "research/reach-separated-triples-uc070-primary-20261124",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3668",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_TRIPLES_TENSOR_UC071.md",
-      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_ACCEPTANCE_UC072.md"
+      "research/reach-finite-partition-tensor-uc073-input-20261124"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-24T07:36:04.049469+00:00"
+    "observed_at": "2026-11-24T09:01:20.8027814Z"
   },
   "resume": {
     "fresh_session_safe": true,
     "requires_chat_history": false,
     "authoritative_sources": [
+      "research/reach-finite-partition-tensor-uc073-input-20261124",
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
+      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
       "research/reach-separated-triples-uc070-input-20261124",
       "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_UC067.md",
       "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
@@ -2187,7 +2183,6 @@
       "research/condensed-qft/EXT-015/SCALAR_RELATIVE_WEIGHT_ONE_COMPARISON_141.md",
       "research/condensed-qft/EXT-015/SEPARATED_MIXED_KERNEL_TENSOR_UC061.md",
       "research/reach-separated-mixed-tensor-uc061-input-20261123",
-      "research/condensed-qft/EXT-015/REGULATOR_VALUED_DERIVED_COMPLETED_PAIRING_UC058.md",
       "research/condensed-qft/EXT-015/SOURCE_CONTROLLED_COMPLETED_WEISS_135.md",
       "research/reach-derived-completed-pairing-uc058-input-20261123",
       "research/condensed-qft/EXT-015/VARIANCE_OBSTRUCTION_SCALAR_DUAL_BRIDGE_026.md",
@@ -2478,7 +2473,6 @@
       "research/reach-separated-triples-uc070-reviewed-20261124",
       "research/reach-separated-triples-uc070-primary-20261124",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3668",
-      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_TRIPLES_TENSOR_UC071.md",
       "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_ACCEPTANCE_UC072.md"
     ],
