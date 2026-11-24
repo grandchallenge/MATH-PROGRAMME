@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 24 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-field character transport and aggregate good-prime bound have also been reconstructed. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -403,9 +403,47 @@ In general the product of all selected character contributions serves as a commo
 
 The [technical reconstruction PR #609](https://github.com/grandchallenge/MATHFORGE/pull/609) records the field-action transport, the sign and coefficient-ring identifications, and the good-prime aggregate bound. Exact finite controls checked 1,056 projection products, 68 sign decompositions, 36 parity-selected integer products and 360 local valuation sums. The proof uses the stated classical Galois, local-field and reciprocity inputs.
 
-**Why this does not finish the proof:** the projection argument requires division by the group order. It cannot be carried over automatically to primes dividing the field degree, or to the prime 2. The submitted proof has a separate bound for those cases, and that bound is the next subject of scrutiny.
+**Why this does not finish the proof:** the projection argument requires division by the group order. It cannot be carried over automatically to primes dividing the field degree, or to the prime 2. The submitted proof has a separate bound for those cases, reconstructed in the following section.
 
-## 12. Reproducibility and technical references
+## 12. Controlling the primes where character projections fail
+
+At a prime dividing the field degree, the previous averaging argument cannot be used: the order of the symmetry group is no longer invertible. This is a mathematical obstruction, not merely a computational inconvenience. The submitted proof has a separate route that we have now independently reconstructed under its stated classical foundations.
+
+The alternative is to construct an arithmetic annihilator. An annihilator is a scalar or operator that sends every element of a given module to zero. In this setting, its existence establishes a limit on the number of successive torsion layers that the module can possess.
+
+### Depth and width
+
+Imagine four successive layers of arithmetic information, of lengths 5, 4, 3 and 2. Each successive layer injects into the first. If we only know that the first has length at most 5 and that there are at most 4 layers, the total length is at most 20. The actual illustrative total is 14. The same reasoning works for the true arithmetic module without assuming its finiteness beforehand.
+
+There are three steps in the genuine proof.
+
+| Step | What it establishes |
+| --- | --- |
+| `killPow` | A single power of the prime annihilates the specified sign component; this bounds the number of layers. |
+| `gen` | The first layer of the ambient cohomology group injects, through radical extraction, into a finite group controlled by units and the ideal class group of a cyclotomic extension. |
+| `lenPow` | Every subsequent layer injects into the first, so the two bounds multiply. |
+
+### Why a determinant replaces division by the group order
+
+The proof starts with the classical Stickelberger annihilation theorem, which concerns ideal classes in cyclotomic fields. It transports the annihilation relation through the class field correspondence and compares the resulting finite-level expressions with a single prime-adically integral operator. The Bernoulli distribution and congruence identities make that operator independent of the level used in the approximation.
+
+Complex conjugation pairs group elements. Imposing the prescribed sign identifies one member of each pair with either the other member or its negative. The resulting module has one basis element per pair, even when division by 2 or by the full group order is impossible.
+
+Multiplication by the annihilating operator on this signed quotient has an integral matrix. Its determinant is a scalar that also annihilates the original sign component. Over the complex numbers, the determinant is a product of character evaluations involving ordinary generalized Bernoulli values, which are nonzero at the matching parity and order. Here the complex character calculation establishes nonvanishing and an upper bound on size; it does not assert a decomposition of the original arithmetic module at a bad prime.
+
+The ordinary size of the determinant bounds how many factors of the measuring prime it can contain. Together with a finite-index correction and the first-layer estimate, this bounds the full cohomology length.
+
+### The quantitative result
+
+For a CM field of degree $d$ contained in a cyclotomic field of modulus $N$, the reconstructed annihilating-power estimate has constant 5, rather than the source proof's constant 30. The first-layer estimate retains the source constant 8. Multiplying gives a uniform constant 40 in the source's `StickBound` inequality, compared with 240 obtainable from the submitted intermediate estimates.
+
+The improvement uses the exact half-rank of the signed determinant and a direct bound on the factorial and denominator factors. It is not an assertion that 40 is optimal. The proof requires the source's procyclic cyclotomic-image condition, which is automatic at odd primes; at prime 2 the additional condition must hold.
+
+The [technical reconstruction PR #610](https://github.com/grandchallenge/MATHFORGE/pull/610) records the full conventional argument. Exact computational controls passed 1,212 twisted congruences, 1,572 distribution identities, 126 signed determinants, 180 bad-prime comparisons, 2,500 length bounds and 1,200 constant inequalities. These are finite checks, not a direct computation of the full arithmetic cohomology.
+
+The classical Stickelberger theorem, Hilbert class field reciprocity, S-unit theorem, conductor-discriminant formula and Minkowski theorem are explicit inputs, as is compatibility of the source's arithmetic Galois data. Their exact formal correspondence and original Lean replay remain open. We must next verify which primes can divide the degree of the composite field and assemble both prime estimates into the precise downstream arithmetic bound.
+
+## 13. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -435,10 +473,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #607](https://github.com/grandchallenge/MATHFORGE/pull/607) | Exact Bernoulli valuation bridge and uniform divisibility witnesses |
 | [PR #608](https://github.com/grandchallenge/MATHFORGE/pull/608) | Primitive ramification, exceptional Kummer vanishing and assembled conditional character inequality |
 | [PR #609](https://github.com/grandchallenge/MATHFORGE/pull/609) | Finite-Galois eigenspace transport and good-prime aggregate budget |
+| [PR #610](https://github.com/grandchallenge/MATHFORGE/pull/610) | Integral Stickelberger annihilator, generator and length bounds, and uniform bad-prime estimate |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 13. What the investigation taught us about checking extraordinary mathematical claims
+## 14. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -450,14 +489,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 14. The next executable mathematical step
+## 15. The next executable mathematical step
 
-**Target:** the separate `stickBound` estimate in `OddResidueBounds/ThmBcOfPsiBound.lean` and the actual `killPow`, `lenPow`, `gen` and degree-condition inputs, followed by `thmBcFree_of`.
+**Target:** the actual degree condition in `OddResidueBounds/DegExistsLift.lean` and the combined `thmBcFree_of` bound in `OddResidueBounds/ThmBcOfPsiBound.lean`.
 
-**Work:** independently reconstruct the genuine exponent and generator bounds with their field-degree and logarithmic constants, including primes where division by the group order fails. Then assemble the aggregate good-prime bound with those estimates and audit the actual downstream threshold argument.
+**Work:** independently establish the degree-prime restriction of the composite fields, then assemble the two reconstructed estimates over the exact range of primes and exponents. Follow the actual downstream threshold argument, including its parameter choices and logarithmic losses.
 
-**Completion test:** verify each source inequality under its precise hypotheses, including finiteness, uniformity and the exact prime partition. Retain foundational correspondence and original Lean replay as separate obligations.
+**Completion test:** verify the degree condition and each term in the combined quantitative bound under its precise hypotheses. Retain foundational correspondence and original Lean replay as separate obligations.
 
-**Present boundary:** `RH-A26-D05_PSIBOUND_GOOD_PRIME_AGGREGATE_RECONSTRUCTED__STICKBOUND_BAD_PRIMES_THRESHOLD_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_STICKBOUND_CONVENTIONALLY_RECONSTRUCTED__DEGREE_PARTITION_THRESHOLD_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
