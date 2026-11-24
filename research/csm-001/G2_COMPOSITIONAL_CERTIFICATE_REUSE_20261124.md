@@ -10,7 +10,7 @@ For fully revealed independent products, no new geometry is needed. If factor $i
 
 $$
 c=\prod_i c_i,\qquad
-\operatorname{var}_n(\log g)\le
+\mathrm{var}_n(\log g)\le
 \left(\sum_i C_i\theta^{-(L_i-1)}\right)\theta^n .
 $$
 
@@ -24,7 +24,7 @@ $$
 T_aV=VA_a,\qquad \pi V=x_* .
 $$
 
-Require $\sum_aT_a$ row stochastic and $\pi$ stationary; replay these identities exactly. Then $\pi T_we_0^{\rm micro}=x_*A_we_0$ for all words, where the microscopic terminal column in this expression is the all-ones column. Thus the interface preserves the factor law exactly, not merely a finite set of moments. The terminal identity is $Ve_0=\mathbf1$. The interface need not be minimal.
+Require $\sum_aT_a$ row stochastic and $\pi$ stationary; replay these identities exactly. Then $\pi T_w\mathbf1=x_*A_we_0$ for all words. Thus the interface preserves the factor law exactly, not merely a finite set of moments. The terminal identity is $Ve_0=\mathbf1$. The interface need not be minimal.
 
 The reference compiler replays a single-letter WP12 cover, takes the coordinate bounding box of its cells, and tries rational positive paddings until all projective maps send the box strictly into its interior with positive denominators. If successful, use its corners as the new states. For a corner $v$ and symbol $a$, express $F_a(v)$ by the positive multilinear barycentric weights on all corners: each free coordinate contributes the fractional position in its interval or its complement. Multiply each weight by $(vA_a)_0$ to obtain the row of $T_a$. This gives strictly positive rational matrices and exact intertwining. Their sum is stochastic by cylinder normalization. Solve its stationary equations and verify the stationary intertwiner. Alternatively it follows by positive stochastic convergence from any weights representing $x_*$ in the box.
 
@@ -111,7 +111,7 @@ For any two normalized nonnegative initial rows $x,y$, consider the ratio of the
 The ratio of the two subsequent conditional single-letter likelihoods is the ratio of two weighted averages of the current message ratios, one weighted by the final likelihood column and one by the terminal column. Both averages lie between the current minimum and maximum. Its absolute relative discrepancy and its absolute logarithm are therefore bounded by the oscillation divided by the minimum. After $q\ge1$ complete blocks, this is at most $\delta^{-2}\eta^{q-1}$. Absorb the initial remainder of a shared suffix into each preceding history. At suffix lengths below $s$, use single-letter non-nullness and the trivial relative/log bound $1/c$. In particular
 
 $$
-\operatorname{var}_n(\log g)\le
+\mathrm{var}_n(\log g)\le
 C\eta^{\lfloor n/s\rfloor},\qquad
 C=\max(1/c,\delta^{-2}/\eta).
 \tag{1}
@@ -158,7 +158,7 @@ In raw probability coordinates take $D_*=1$. This bound is on the number of cell
 
 ### Single-seed convexification and linear-in-cell verification
 
-Unlike the general disconnected-cover proof of WP12, no shorter-prefix seeds are needed for this uniform block certificate. Let $P$ be the convex hull of the union of accepted boxes. Because every block image of every box lies in the union and denominators are positive, normalized convexity implies $F_a(P)\subset P$. Every state of a word of length divisible by $s$ is in $P$, starting from the stationary seed. Every word has positive mass because it is a suffix of a positive-length multiple-of-$s$ word, using stationarity and cylinder consistency. Stationarity padding then gives $x_u\in P$ at every length as a convex combination of normalized padded states. Positivity of one-letter likelihoods extends by linearity to $P$.
+Unlike the general disconnected-cover proof of WP12, no shorter-prefix seeds are needed for this uniform block certificate. Let $P$ be the convex hull of the union of accepted boxes. Because every block image of every box lies in the union and denominators are positive, normalized convexity implies $F_a(P)\subset P$. Every state of a word of length divisible by $s$ is in $P$, starting from the stationary seed. Every word has positive mass because it is a suffix of a positive word whose length is divisible by $s$, using stationarity and cylinder consistency. Stationarity padding then gives $x_u\in P$ at every length as a convex combination of normalized padded states. Positivity of one-letter likelihoods extends by linearity to $P$.
 
 For each block letter use WP12's two-point secant formula on each pair of boxes. The denominator minimum depends only on the source box; the componentwise numerator maxima depend only on the other box. For a fixed positive diagonal metric, the maximum weighted scalar secant bound over *all ordered pairs* is therefore exactly the maximum weighted numerator norm over boxes divided by the minimum denominator over boxes. This is the maximum of the conservative bounds, not necessarily the true Lipschitz supremum. It can be checked without constructing a pair graph. If it is strictly below one, say $\eta_*$, all pairs of points in the union contract under each common block by at most $\eta_*$. Every point of $P$ maps under a common block word into the convex hull of the images of union points, since all denominators on $P$ remain positive. Pairwise image diameter is at most the union diameter times $\eta_*^t$ after $t$ blocks; convexification cannot enlarge that norm diameter. Thus any histories with a shared suffix of length $n$ have the same WP12 log variation conclusion with $\eta_*^{\lfloor n/s\rfloor}$, even if their initial states lie in $P$ outside the union. We do not assert a stronger Lipschitz bound on $P$ relative to the original distance of two arbitrary points there.
 
