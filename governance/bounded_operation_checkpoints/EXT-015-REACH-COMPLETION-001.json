@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP286",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP287",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,36 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Separated triples and the exact partition tensor",
+  "phase": "Reviewed separated-triple comparison through weight seven",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "09ae71c803bcffec5cbaf76bd95d30991caced35",
-    "candidate_head_sha": "09ae71c803bcffec5cbaf76bd95d30991caced35",
+    "candidate_head_sha": "03e8e85ef0f0b2c7d77d4de0a19260215b3c85e8",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-separated-triples-uc070-input-20261124",
+    "branch": "research/reach-separated-triples-uc070-reviewed-20261124",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-three-plus-three-partition-tensor",
-      "description": "Test the first uncovered mixed occupancy, (3,3) at total weight six. First verify compatible actual same-block projections for the three labels of one interval with the other interval retained. Decompose the triple into its disjoint, pair-plus-singleton and triple-block strata on complete histories, and test the normal Koszul reduction and support-controlled primitives on the first such strata. Preserve the simultaneous collision faces, common vacuum, matching Wick maps and original rapid relation. A comparison or obstruction must use the actual source quotients. Keep the original R3 transfer boundary of UC037."
+      "id": "test-arbitrary-finite-partition-tensor",
+      "description": "Test a fixed-finite-arity partition theorem for the actual relative tensor on two disjoint intervals, using (4,4) at weight eight as the first new control. Prove the multi-block extraction, arbitrary finite-order center primitives and equal-size block symmetries on original whole sources and their rapid quotient, or record the exact obstruction. Keep simultaneous collision sectors, the common vacuum, genuine parameter rows and matching Wick maps. Any use of the original R3 verdict through a broader target requires the transfer test of UC037."
     }
   ],
   "next_action": {
-    "id": "test-three-plus-three-partition-tensor",
-    "description": "Test the first uncovered mixed occupancy, (3,3) at total weight six. First verify compatible actual same-block projections for the three labels of one interval with the other interval retained. Decompose the triple into its disjoint, pair-plus-singleton and triple-block strata on complete histories, and test the normal Koszul reduction and support-controlled primitives on the first such strata. Preserve the simultaneous collision faces, common vacuum, matching Wick maps and original rapid relation. A comparison or obstruction must use the actual source quotients. Keep the original R3 transfer boundary of UC037.",
+    "id": "test-arbitrary-finite-partition-tensor",
+    "description": "Test a fixed-finite-arity partition theorem for the actual relative tensor on two disjoint intervals, using (4,4) at weight eight as the first new control. Prove the multi-block extraction, arbitrary finite-order center primitives and equal-size block symmetries on original whole sources and their rapid quotient, or record the exact obstruction. Keep simultaneous collision sectors, the common vacuum, genuine parameter rows and matching Wick maps. Any use of the original R3 verdict through a broader target requires the transfer test of UC037.",
     "evidence_targets": [
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
       "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_UC067.md",
       "research/condensed-qft/EXT-015/GENERAL_INCIDENT_SCALAR_GREEN_LIFT_UC044.md",
-      "research/condensed-qft/EXT-015/WEIGHT_TWO_DIAGONAL_JET_COMPARISON_147.md",
-      "research/condensed-qft/EXT-015/COLLISION_SPECTATOR_TENSOR_UC064.md"
+      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "03e8e85ef0f0b2c7d77d4de0a19260215b3c85e8",
+        "status": "UC071 accepts the actual separated triple tensor, the 196 mixed classes and the full two-input comparison through weight seven."
+      },
       {
         "kind": "review",
         "identity": "62cb783a40f64fabc9f37eebf087a0fa485ddbc4",
@@ -2149,17 +2154,24 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindSeparatedTripleTensor",
-    "result": "Bound primary construction with proof and review pending",
+    "action": "IntegrateReviewedSeparatedTripleTensor",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
-      "research/reach-separated-triples-uc070-input-20261124"
+      "research/reach-separated-triples-uc070-reviewed-20261124",
+      "research/reach-separated-triples-uc070-input-20261124",
+      "research/reach-separated-triples-uc070-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3668",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_TRIPLES_TENSOR_UC071.md",
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_ACCEPTANCE_UC072.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-24T07:28:03.9361226Z"
+    "observed_at": "2026-11-24T07:36:04.049469+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2462,9 +2474,15 @@
       "research/reach-separated-pairs-uc067-primary-20261123",
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3666",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_PAIRS_TENSOR_UC068.md",
-      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_ACCEPTANCE_UC069.md"
+      "research/condensed-qft/EXT-015/SEPARATED_PAIRS_TENSOR_ACCEPTANCE_UC069.md",
+      "research/reach-separated-triples-uc070-reviewed-20261124",
+      "research/reach-separated-triples-uc070-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3668",
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_UC070.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_TRIPLES_TENSOR_UC071.md",
+      "research/condensed-qft/EXT-015/SEPARATED_TRIPLES_TENSOR_ACCEPTANCE_UC072.md"
     ],
-    "instructions": "Test the first uncovered mixed occupancy, (3,3) at total weight six. First verify compatible actual same-block projections for the three labels of one interval with the other interval retained. Decompose the triple into its disjoint, pair-plus-singleton and triple-block strata on complete histories, and test the normal Koszul reduction and support-controlled primitives on the first such strata. Preserve the simultaneous collision faces, common vacuum, matching Wick maps and original rapid relation. A comparison or obstruction must use the actual source quotients. Keep the original R3 transfer boundary of UC037."
+    "instructions": "Test a fixed-finite-arity partition theorem for the actual relative tensor on two disjoint intervals, using (4,4) at weight eight as the first new control. Prove the multi-block extraction, arbitrary finite-order center primitives and equal-size block symmetries on original whole sources and their rapid quotient, or record the exact obstruction. Keep simultaneous collision sectors, the common vacuum, genuine parameter rows and matching Wick maps. Any use of the original R3 verdict through a broader target requires the transfer test of UC037."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
