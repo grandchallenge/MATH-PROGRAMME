@@ -29,7 +29,8 @@ def extend_products(q, previous, max_products):
         for a,B in enumerate(q.matrices):
             C=multiply(A,B)
             p=row_mul(q.initial,C)[0]
-            if p<=0:raise ForbiddenWord(w+(a,))
+            if p<0:raise ValueError("negative mass in purported probability realization")
+            if p==0:raise ForbiddenWord(w+(a,))
             C=tuple(tuple(x/p for x in r) for r in C)
             if C not in out:
                 if len(out)>=max_products:raise BudgetExceeded("product budget")
@@ -173,3 +174,18 @@ def slow_reset_model(N):
     C=((F(1,8),F(1,8)),(F(1,4),F(1,4)))
     pi=(2*(1+eps)/5,(3-2*eps)/5)
     return ObservableFiniteMemory(pi,(A,B,C))
+
+
+def three_state_overlap():
+    """Balanced 3-state Markov source; a genuinely coupled binary pair kernel."""
+    Q=tuple(tuple(F(1,2) if i==j else F(1,4) for j in range(3))
+            for i in range(3))
+    src=ObservableFiniteMemory((F(1,3),)*3,
+        tuple(tuple(tuple(Q[i][j] if j==a else F(0)
+                          for j in range(3)) for i in range(3))
+              for a in range(3)))
+    from finite_range_block_certificate import finite_range_lift
+    zero=(F(3,4),F(1,4),F(1,2),F(1,2),F(3,4),F(1,4),
+          F(1,4),F(1,2),F(1,4))
+    H=tuple((t,1-t) for t in zero)
+    return src,H,finite_range_lift(src,1,H)[0]
