@@ -318,8 +318,7 @@ def column_gain(internal,events,r,w):
                 interaction_rows=rows)
 
 
-def certify_columns(net,rates=None,max_dense=64,sparse_steps=16):
-    internal,events,work=column_events(net)
+def search_columns(n,internal,events,rates=None,max_dense=64,sparse_steps=16):
     if rates is None:rates=tuple(F(j,32) for j in range(1,32))+(F(63,64),F(127,128))
     rates=tuple(map(F,rates))
     if any(not 0<r<1 for r in rates):raise ValueError("invalid candidate rate")
@@ -328,7 +327,7 @@ def certify_columns(net,rates=None,max_dense=64,sparse_steps=16):
         if max(internal)>=r:continue
         rows=column_rows(internal,events,r);candidates.append((r,rows))
         try:
-            gain=column_gain(internal,events,r,(F(1),)*net.n)
+            gain=column_gain(internal,events,r,(F(1),)*n)
             break
         except ValueError:continue
     else:
@@ -337,11 +336,73 @@ def certify_columns(net,rates=None,max_dense=64,sparse_steps=16):
             data=discover_gain(rows,rows,(r,),max_dense,sparse_steps)
             if data is not None:
                 gain=column_gain(internal,events,r,data["weights"]);break
+    return gain
+
+
+def certify_columns(net,rates=None,max_dense=64,sparse_steps=16):
+    internal,events,work=column_events(net)
+    gain=search_columns(net.n,internal,events,rates,max_dense,sparse_steps)
     if gain is None:return {"outcome":"undecided","boundary":"column gain search",
                              "method":"column","work":work}
     return dict(gain,**observable_margins(net,gain),outcome="certified",
                 method="column",work=work,events=events,sites=net.n,
                 joint_state_constructed=False)
+
+
+def perturbation_events(net,baseline):
+    """Reuse isolated constituent rates; check relative perturbations locally.
+
+    Baseline factors may depend only on their own previous state (or none).
+    Every actual local labelled entry is compared to its baseline entry.
+    """
+    if net.sizes!=baseline.sizes or net.labels!=baseline.labels:
+        raise ValueError("baseline ports mismatch")
+    if any(any(j!=i for j in p) for i,p in enumerate(baseline.parents)):
+        raise ValueError("baseline must consist of isolated factors")
+    k0,_,work=column_events(baseline);eps=[]
+    for i,p in enumerate(net.parents):
+        if any(j not in p for j in baseline.parents[i]):
+            raise ValueError("baseline parent absent")
+        e=F(0)
+        for x in net.lookup[i]:
+            ref=tuple(x[p.index(j)] for j in baseline.parents[i])
+            for a in range(net.labels[i]):
+                for y in range(net.sizes[i]):
+                    e=max(e,abs(net.factor(i,a,x,y)/baseline.factor(i,a,ref,y)-1))
+        if e>=1:raise ValueError("relative perturbation not below one")
+        eps.append(e)
+    internal=tuple((k+e)/(1+k*e) for k,e in zip(k0,eps))
+    events=[[] for _ in range(net.n)]
+    for f,p in enumerate(net.parents):
+        scope=tuple((-1,j) for j in p)+((0,f),)
+        e=eps[f]
+        if not e:continue
+        for i in set(j for _,j in scope):
+            own=tuple(u for u,(_,j) in enumerate(scope) if j==i)
+            a=e if len(own)==1 else 2*e/(1+e*e)
+            for v,(dt,j) in enumerate(scope):
+                if j==i:continue
+                offsets=tuple(scope[u][0]-dt for u in own)
+                events[i].append((j,min(offsets),max(offsets),a))
+    return internal,tuple(tuple(sorted(row)) for row in events),tuple(eps),k0,work
+
+
+def certify_perturbation(net,baseline,rates=None,max_dense=64,sparse_steps=16):
+    """Conditional small gain using only isolated rates and local distortion."""
+    internal,events,eps,k0,work=perturbation_events(net,baseline)
+    gain=search_columns(net.n,internal,events,rates,max_dense,sparse_steps)
+    if gain is None:return {"outcome":"undecided","boundary":"perturbation gain search",
+                            "method":"perturbation","work":work}
+    return dict(gain,**observable_margins(net,gain),outcome="certified",
+                method="perturbation",work=work,events=events,sites=net.n,
+                baseline_rates=k0,relative_perturbations=eps,joint_state_constructed=False)
+
+
+def replay_perturbation(net,baseline,witness):
+    if witness["method"]!="perturbation":raise ValueError("not a perturbation witness")
+    internal,events,eps,k0,_=perturbation_events(net,baseline)
+    G=column_gain(internal,events,witness["rho"],witness["weights"])
+    return dict(G,**observable_margins(net,G),baseline_rates=k0,relative_perturbations=eps)
 
 
 def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64,sparse_steps=16):
