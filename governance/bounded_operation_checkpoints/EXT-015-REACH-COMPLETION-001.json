@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP292",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP293",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,37 +15,41 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Bound exact smooth liquid realization and the original class transfer test",
+  "phase": "Reviewed smooth derived comparison and explicit original weight-zero and degree-two obstructions",
   "state": "IN_PROGRESS",
   "identities": {
     "protected_base_sha": "44505f800088e6c81afe47a81d8af74628f0f610",
-    "candidate_head_sha": "44505f800088e6c81afe47a81d8af74628f0f610",
+    "candidate_head_sha": "0cda28198ddfe81e0080be87aadc1278a1110cbd",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-derived-mapping-uc079-input-20261124",
+    "branch": "research/reach-derived-mapping-uc079-reviewed-20261124",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-typed-derived-cross-category-interface",
-      "description": "Specify the exact mapping objects of the remaining original liquid-to-differentiable derived comparison. Test one actual support-natural comparison or explicit obstruction with the required weight-zero unit and sequence hypotheses, distinguishing the original older B.6 target from the current C.5 replacement model. Only apply the conditional original GC verdict to a new mapping object after constructing the UC037 transfer square and testing the CH class or PH1 lift there. Keep prior-family recovery and the raw C.5 failed lifts in their reviewed scopes."
+      "id": "adjudicate-original-typed-integration-contract",
+      "description": "Audit the original I1–I3 and strong-exit clauses against the actual smooth realization, the support-diagram and conditional weight-one obstructions, and the corrected scalar/regulator-valued arrows. Determine from those original clauses whether the independent external differentiable Ext endpoint is required. If required, isolate the test of the actual pulled-back first extension in UC079.3; the observable comparison has already been computed. Do not choose an added foundation or close the original GC without its actual stated conditions."
     }
   ],
   "next_action": {
-    "id": "test-typed-derived-cross-category-interface",
-    "description": "Specify the exact mapping objects of the remaining original liquid-to-differentiable derived comparison. Test one actual support-natural comparison or explicit obstruction with the required weight-zero unit and sequence hypotheses, distinguishing the original older B.6 target from the current C.5 replacement model. Only apply the conditional original GC verdict to a new mapping object after constructing the UC037 transfer square and testing the CH class or PH1 lift there. Keep prior-family recovery and the raw C.5 failed lifts in their reviewed scopes.",
+    "id": "adjudicate-original-typed-integration-contract",
+    "description": "Audit the original I1–I3 and strong-exit clauses against the actual smooth realization, the support-diagram and conditional weight-one obstructions, and the corrected scalar/regulator-valued arrows. Determine from those original clauses whether the independent external differentiable Ext endpoint is required. If required, isolate the test of the actual pulled-back first extension in UC079.3; the observable comparison has already been computed. Do not choose an added foundation or close the original GC without its actual stated conditions.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/ARBITRARY_SEPARATED_OPENS_INTEGRATION_UC076.md",
+      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
       "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
-      "research/condensed-qft/EXT-015/R3_INTEGRATION_DEPENDENCY_AUDIT_UC037.md",
-      "research/condensed-qft/EXT-015/ACTUAL_WEIGHT_LIFTS_ACCEPTANCE_UC054.md",
+      "research/condensed-qft/EXT-015/R3_GLOBAL_SUPPORT_ACCEPTANCE_UC024.md",
       "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "0cda28198ddfe81e0080be87aadc1278a1110cbd",
+        "status": "UC080 accepts the exact smooth realization, support-natural comparison to actual observables, vacuum obstruction in ZFC and conditional first-slot class transport."
+      },
       {
         "kind": "review",
         "identity": "7ac76aff9b65e3e6365374e250b9772378c71e9b",
@@ -2165,19 +2169,24 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindSmoothDerivedMappingComparison",
-    "result": "User authorized the typed mapping comparison and explicit degree-two transfer test",
+    "action": "IntegrateReviewedSmoothDerivedMappingComparison",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
+      "research/reach-derived-mapping-uc079-reviewed-20261124",
       "research/reach-derived-mapping-uc079-input-20261124",
-      "44505f800088e6c81afe47a81d8af74628f0f610",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3711"
+      "research/reach-derived-mapping-uc079-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3711",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SMOOTH_DERIVED_MAPPING_UC080.md",
+      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_ACCEPTANCE_UC081.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-24T23:39:15.5357715Z"
+    "observed_at": "2026-11-24T23:46:38.072534+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2501,9 +2510,15 @@
       "research/condensed-qft/EXT-015/ARBITRARY_SEPARATED_OPENS_INTEGRATION_UC076.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SEPARATED_OPENS_UC077.md",
       "research/condensed-qft/EXT-015/SEPARATED_OPENS_INTEGRATION_ACCEPTANCE_UC078.md",
-      "research/reach-derived-mapping-uc079-input-20261124"
+      "research/reach-derived-mapping-uc079-input-20261124",
+      "research/reach-derived-mapping-uc079-reviewed-20261124",
+      "research/reach-derived-mapping-uc079-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3711",
+      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SMOOTH_DERIVED_MAPPING_UC080.md",
+      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_ACCEPTANCE_UC081.md"
     ],
-    "instructions": "Specify the exact mapping objects of the remaining original liquid-to-differentiable derived comparison. Test one actual support-natural comparison or explicit obstruction with the required weight-zero unit and sequence hypotheses, distinguishing the original older B.6 target from the current C.5 replacement model. Only apply the conditional original GC verdict to a new mapping object after constructing the UC037 transfer square and testing the CH class or PH1 lift there. Keep prior-family recovery and the raw C.5 failed lifts in their reviewed scopes."
+    "instructions": "Audit the original I1–I3 and strong-exit clauses against the actual smooth realization, the support-diagram and conditional weight-one obstructions, and the corrected scalar/regulator-valued arrows. Determine from those original clauses whether the independent external differentiable Ext endpoint is required. If required, isolate the test of the actual pulled-back first extension in UC079.3; the observable comparison has already been computed. Do not choose an added foundation or close the original GC without its actual stated conditions."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
