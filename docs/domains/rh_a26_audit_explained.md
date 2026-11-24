@@ -254,9 +254,7 @@ The next argument compares two quantities: the length of the module of still-all
 
 The proof measures its progress with an integer budget:
 
-$
-\operatorname{length}(S_L)+j(L)\le J.
-$
+The remaining module length plus the divisibility measurement is at most the fixed budget. In symbols, $\ell(S_L)+j(L)\le J$.
 
 Here $L$ is a list of auxiliary primes, $S_L$ is the module satisfying the resulting local tests, $j(L)$ is a divisibility measurement of an annihilator, and $J$ is a fixed upper bound. At every nonzero stage the next prime strictly increases $j$, while the length lost from $S_L$ is no greater than the increase in $j$. After finitely many steps there must be no nonzero cocycles left. Running that comparison backward bounds the starting length.
 
