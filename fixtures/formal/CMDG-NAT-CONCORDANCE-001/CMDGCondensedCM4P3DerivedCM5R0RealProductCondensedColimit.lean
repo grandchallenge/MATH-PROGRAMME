@@ -20,6 +20,13 @@ variable (I : Type u)
 
 abbrev Radius := {b : I → ℝ // ∀ i, 0 ≤ b i}
 
+instance radiusFiltered : IsFiltered (Radius I) where
+  nonempty := ⟨⟨fun _ => 0, fun _ => le_rfl⟩⟩
+  cocone_objs i j := by
+    obtain ⟨b, hb, hi, hj⟩ := common_box i.val j.val
+    exact ⟨⟨b,hb⟩, homOfLE hi, homOfLE hj, trivial⟩
+  cocone_maps i j f g := ⟨j, 𝟙 _, by subsingleton⟩
+
 def liftMap {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
     (f : C(X,Y)) : C(ULift.{u+1,u} X, ULift.{u+1,u} Y) :=
   ⟨fun x => ⟨f x.down⟩, continuous_uliftUp.comp (f.continuous.comp continuous_uliftDown)⟩
@@ -38,7 +45,8 @@ def boxCoconeTop : Cocone (boxDiagramTop I) where
   pt := TopCat.of (ULift.{u+1,u} (I → ℝ))
   ι :=
     { app b := TopCat.ofHom (liftMap (inclusion b.val))
-      naturality f := by
+      naturality := by
+        intro a b f
         ext x
         rfl }
 
