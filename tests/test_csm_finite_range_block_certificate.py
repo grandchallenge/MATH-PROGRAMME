@@ -11,7 +11,7 @@ from finite_range_block_certificate import (
     rare_non_iid_source,
 )
 from observable_exterior_square import word_matrix, exterior_norm, conditional_defect
-from polarized_exterior_channel import postprocess
+from polarized_exterior_channel import postprocess, channel_closed_certificate
 from observable_memory_certificate import _rank
 
 
@@ -55,9 +55,15 @@ class TestFiniteRangeBlockCertificate(unittest.TestCase):
         src=iid_binary(F(1,256));r=2;H=parity_kernel(r)
         m,states=finite_range_lift(src,r,H)
         self.assertEqual(m.dimension,4)
+        self.assertEqual(m.minimal_linear_dimension,4)
+        self.assertTrue(all(_rank(A)==4 for A in m.matrices))
+        self.assertEqual(sum(x>0 for row in m.matrices[0] for x in row),4)
+        self.assertTrue(all(sum(x>0 for x in row)==1 for row in m.matrices[0]))
+        self.assertNotEqual(m.word_probability((1,1)),m.word_probability((1,))**2)
         self.assertEqual(states,tuple((u,0) for u in product(range(2),repeat=r)))
         data=rare_history_bounds(F(1,256),r,F(1,2))
         d=block_mixed_certificate(m,0,data["L"],data["R"],r)
+        self.assertEqual(d["eta"],F(8,85))
         self.assertLessEqual(d["eta"],data["eta_upper"])
         self.assertLess(d["eta"],1)
         with self.assertRaises(ValueError):
@@ -70,9 +76,11 @@ class TestFiniteRangeBlockCertificate(unittest.TestCase):
 
     def test_kernel_independent_certificate_on_non_iid_source(self):
         src=rare_non_iid_source()
-        self.assertGreater(src.minimal_linear_dimension,1)
+        self.assertEqual(src.minimal_linear_dimension,2)
+        self.assertLess(channel_closed_certificate(src,0,(1,1),(1,2))["eta"],1)
         r=2
         D=universal_block_bounds(src,r,0,0,F(1,2))
+        self.assertEqual(D["eta_upper"],F(5490851184,43723228201))
         self.assertLess(D["eta_upper"],1)
         # Different kernels, including deterministic values on all other inputs.
         kernels=[parity_kernel(r),
@@ -84,6 +92,10 @@ class TestFiniteRangeBlockCertificate(unittest.TestCase):
             self.assertEqual(states,D["states"])
             d=block_mixed_certificate(m,D["anchor"],D["L"],D["R"],r)
             self.assertLessEqual(d["eta"],D["eta_upper"])
+            if H==kernels[0]:
+                self.assertEqual(m.minimal_linear_dimension,5)
+                self.assertEqual(d["eta"],F(42823925764,1093080705025))
+                self.assertNotEqual(m.word_probability((1,1)),m.word_probability((1,))**2)
             for n in range(4):
                 for w in product(range(2),repeat=n):
                     self.assertEqual(m.word_probability(w),direct_probability(src,r,H,w))
