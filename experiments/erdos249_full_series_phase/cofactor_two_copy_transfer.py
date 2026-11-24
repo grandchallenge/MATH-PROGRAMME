@@ -216,6 +216,9 @@ def certified_actual_cofactor_transfer(
     C_Z_lo=max(Fraction(),C_Z-ce_error)
     C_W_hi=C_W+ce_error
     C_W_lo=max(Fraction(),C_W-ce_error)
+    Z1_floor=sum((Fraction(isqrt(g["Z_re"]**2+g["Z_im"]**2),SCALE)
+                  for g in groups.values()),Fraction())
+    Z1_lo=max(Fraction(),Z1_floor-2*good*eps)
     Z1_hi=_upper_group_absolute_z(groups,good)
     S_approx=(
         Fraction(sum_good_e_re,SCALE)-
@@ -225,6 +228,7 @@ def certified_actual_cofactor_transfer(
     )
     S_error=10*good*eps
     S_low,S_hi=S_approx-S_error,S_approx+S_error
+    original_E_re_lower=Fraction(sum_all_e_re,SCALE)-X*eps
     original_E_re_upper=Fraction(sum_all_e_re,SCALE)+X*eps
     allowed=Fraction(14*X,25)
     gap_budget=allowed-Z1_hi
@@ -238,6 +242,7 @@ def certified_actual_cofactor_transfer(
         "L":L,"Q":Q,"t":t,"source_A_count":count_A,
         "source_G_count":good,"group_count":len(groups),
         "three_direct_full_Cook_numerator_oracles":checks,
+        "original_full_Cook_real_first_harmonic_lower":original_E_re_lower,
         "original_full_Cook_real_first_harmonic_upper":original_E_re_upper,
         "original_full_Cook_9X_over_10_FINITE":
             original_E_re_upper<=Fraction(9*X,10),
@@ -245,6 +250,7 @@ def certified_actual_cofactor_transfer(
         "cofactor_good_E_two_copy_energy_lower":C_E_lo,
         "cofactor_good_Z_two_copy_energy_lower":C_Z_lo,
         "cofactor_good_W_two_copy_energy_lower":C_W_lo,
+        "source_z_group_absolute_mean_lower":Z1_lo,
         "source_z_group_absolute_mean_upper":Z1_hi,
         "original_first_weighted_Cook_sum_real_lower":S_low,
         "original_first_weighted_Cook_sum_real_upper":S_hi,
@@ -252,6 +258,7 @@ def certified_actual_cofactor_transfer(
         "two_copy_sufficient_criterion_FINITE":criterion,
         "generic_WZ_Cauchy_certificate_INSUFFICIENT":Cauchy_bound_fails,
         "adversarial_w_conjugate_z_Vz_lower":good-C_Z_hi,
+        "adversarial_w_conjugate_z_Vz_upper":good-C_Z_lo,
         "adversarial_w_conjugate_z_violates_14X_over_25":
             good-C_Z_hi>allowed,
         "finite_source_s_not_26":s!=26,
