@@ -60,6 +60,11 @@ class ReconciliationTests(unittest.TestCase):
         self.assertEqual(problem_ids(S,"MathSolve/Erdos/E602SetBridge.lean"),[602])
         self.assertEqual(problem_ids(P,"experiments/erdos249_full_series_phase/README.md"),[249])
         self.assertEqual(problem_ids(P,"governance/erdos_compendium/editorial/0249.md"),[])
+    def test_historical_14_paths_not_campaign_or_shared_numbers(self):
+        for p in ("ERDOS_014_KERNEL_REPLAY_RECEIPT.json", "Erdos14HistoricalTaskTargetParity.lean", "provider_14.lean.source"):
+            self.assertEqual(problem_ids(P,"governance/source_erdos_critical_005/"+p),[14])
+        self.assertEqual(problem_ids(P,"governance/source_erdos_critical_005/ERDOS_041_014_SOURCE_BOUNDARY.json"),[])
+        self.assertEqual(problem_ids(P,"governance/source_erdos_critical_005/provider_140.lean.source"),[])
     def test_unassigned_paths_tracked(self):
         self.trees[S]["contributions/ERDOS-OPEN-001/SHARED.json"]=A
         self.assertTrue(self.result()["shared_or_unassigned_inventory_changed"])
