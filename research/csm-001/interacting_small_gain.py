@@ -5,7 +5,7 @@ The optional exact-blanket method strengthens reusable per-factor bounds.
 """
 from fractions import Fraction as F
 from itertools import product, combinations
-from math import prod, isqrt
+from math import prod, isqrt, ceil
 from collections import defaultdict
 from observable_polytope_certificate import solve_square
 
@@ -228,7 +228,7 @@ def discover_gain(interior,terminal,rates=None,max_dense=64,sparse_steps=16):
     return None
 
 
-def observable_margins(net,gain):
+def observable_margins(net,gain,max_tail_steps=256,max_tail_bits=1000000):
     """Bounds for port probabilities even with other current ports clamped."""
     w=gain["weights"];r=gain["rho"];lo=[];C=[];osc=[];scale=min(w)
     for i,p in enumerate(net.parents):
@@ -247,12 +247,23 @@ def observable_margins(net,gain):
     # All-word quasi-Bernoulli margin by portwise relative likelihood bounds.
     # Head factors <=1; tail product >=1-sum of its relative errors.
     total=sum(C);tail=total/(1-r);head=F(1);error=tuple(C);n=0
+    c=prod(lo);compact=None
     while tail>F(1,2):
+        if n>=max_tail_steps or head.denominator.bit_length()>max_tail_bits:
+            # Compact conservative margin: r**t <= 1/2, followed by j
+            # halvings of the initial tail. Do not materialize c**(t*j).
+            x=2*total/(1-r)
+            j=max(0,x.numerator.bit_length()-x.denominator.bit_length())
+            if 2**j<x:j+=1
+            n=ceil(1/(1-r))*j
+            compact={"coefficient":F(1,2),"base":c,"exponent":n}
+            break
         head*=prod(max(c,1-e) for c,e in zip(lo,error))
         error=tuple(e*r for e in error);tail*=r;n+=1
     return {"port_nonnull":tuple(lo),"port_constants":tuple(C),
-            "port_oscillations":tuple(osc),"nonnull":prod(lo),"constant":total,
-            "b":head*(1-tail),"tail_length":n}
+            "port_oscillations":tuple(osc),"nonnull":c,"constant":total,
+            "b":head*(1-tail) if compact is None else None,
+            "b_power":compact,"tail_length":n}
 
 
 def certify(net,method="factor",rates=None,max_contexts=1000000,max_dense=64,sparse_steps=16):
