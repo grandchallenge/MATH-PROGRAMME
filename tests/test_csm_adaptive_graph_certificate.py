@@ -9,7 +9,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"research"/"csm-001"))
 from adaptive_graph_certificate import (
     Chart,centered_basis,linear_min,fractional_max,image_box,corners,image,
     discover,discover_images,verify_cover,replay_witness,uniform_margins,
-    graph_horizon,component_bound,component_numerator,row_mul,project,
+    graph_horizon,component_bound,component_numerator,row_mul,
 )
 from observable_polytope_certificate import PredictiveQuotient,balanced_overlap
 from effective_polytope_synthesis import three_state_overlap,slow_reset_model
@@ -17,7 +17,6 @@ from finite_range_block_certificate import (
     finite_range_lift,rare_non_iid_source,parity_kernel,iid_binary,
     singular_gap_counterexample,
 )
-from marked_reset_spectral import multiply
 
 
 class TestAdaptiveGraphCertificate(unittest.TestCase):
@@ -63,7 +62,7 @@ class TestAdaptiveGraphCertificate(unittest.TestCase):
                 self.assertEqual(row_mul(chart.state(w),chart.basis),q.state(w))
         r,M=replay_witness(model,D,use_local=False)
         self.assertEqual(r["eta"],D["eta"])
-        self.assertGreater(M["b"],F(4,5))
+        self.assertEqual(M["b"],F(21,25))
         self.assertLess(M["theta"],1)
         self.assertGreater(M["H"],0)
         local,_=replay_witness(model,D)
