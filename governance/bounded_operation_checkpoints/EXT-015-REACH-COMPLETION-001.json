@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP289",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP290",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,14 +15,14 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed finite-partition tensor comparison at all weights for disjoint intervals",
+  "phase": "Bound arbitrary separated-open multiplication and final integration dependency audit",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "bd1cc1fd1da90ea3db40742a953bf98d306b27f3",
-    "candidate_head_sha": "bb1376506005fa9cf6a8e43f0db617c9bbf6291c",
+    "protected_base_sha": "bd0f9327337c4849612f4ac4ddbce59c4084c974",
+    "candidate_head_sha": "bd0f9327337c4849612f4ac4ddbce59c4084c974",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-finite-partition-tensor-uc073-reviewed-20261124",
+    "branch": "research/reach-separated-opens-uc076-input-20261124",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
@@ -2160,24 +2160,19 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedFinitePartitionTensor",
-    "result": "Frozen reviewed result prepared for native admission",
+    "action": "BindArbitrarySeparatedOpensAudit",
+    "result": "User authorized the fixed-weight compact-support test and exact R3 dependency audit",
     "evidence_refs": [
-      "research/reach-finite-partition-tensor-uc073-reviewed-20261124",
-      "research/reach-finite-partition-tensor-uc073-input-20261124",
-      "research/reach-finite-partition-tensor-uc073-primary-20261124",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3683",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_UC073.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_FINITE_PARTITION_TENSOR_UC074.md",
-      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_ACCEPTANCE_UC075.md"
+      "research/reach-separated-opens-uc076-input-20261124",
+      "bd0f9327337c4849612f4ac4ddbce59c4084c974",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3688"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-24T09:10:30.837317+00:00"
+    "observed_at": "2026-11-24T23:06:17.9062831Z"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2493,7 +2488,8 @@
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3683",
       "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_UC073.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_FINITE_PARTITION_TENSOR_UC074.md",
-      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_ACCEPTANCE_UC075.md"
+      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_ACCEPTANCE_UC075.md",
+      "research/reach-separated-opens-uc076-input-20261124"
     ],
     "instructions": "Audit the remaining original M5/R4 requirements against the all-weight finite-interval tensor theorem. Test extension to arbitrary separated physical opens through compact support finite-component decompositions at each weight on actual parameter rows. Distinguish this proposed comparison from the larger prior-family obstruction and use the UC037 transfer-square test before attributing any integration arrow to the independent original R3 comparison."
   },
