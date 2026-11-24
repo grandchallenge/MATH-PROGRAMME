@@ -2,8 +2,8 @@
 
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the decisive arithmetic argument still under examination.</p>
 
-!!! warning "Research status · 24 November 2026 (arithmetic update pending protected audit admission)"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. These results have been documented and admitted as bounded **MATHFORGE audit evidence**.
+!!! warning "Research status · 24 November 2026"
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. These results, and the independent denominator and conductor-change reconstruction described below, have been documented and admitted as bounded **MATHFORGE audit evidence**.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; the Bernoulli/cohomological valuation inequality `ML.vChar` under its needed assumptions; MATHCERT certification.
 
@@ -234,7 +234,7 @@ For example, 24 and 48 are each divisible by 3 once. The extra factor of 2 makes
 
 **Evidence:** the independent [arithmetic audit PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) records the argument and exact tests: 5,100 coefficient calculations, 192 conductor cases, and 576 nonzero valuation comparisons. The proof uses standard classical Bernoulli and finite-character results; the examples are supporting checks, not a proof of the cohomology inequality. The primitive-character estimate itself still needs its reciprocity and counting argument.
 
-## 7. How to reproduce the exhibits and audit the work
+## 7. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
