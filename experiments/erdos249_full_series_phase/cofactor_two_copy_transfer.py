@@ -72,7 +72,7 @@ def _rounding_error_units(order:int,odd:bool) -> int:
 
 
 @lru_cache(maxsize=32768)
-def root_of_unity_fixed(r:int,L:int) -> tuple[int,int]:
+def _root_of_unity_fixed_cached(r:int,L:int) -> tuple[int,int]:
     """Certified cos/sin of e(2pi*i*r/2^L) as fixed-scale integers.
 
     Each true component differs from output/SCALE by <32/SCALE:
@@ -114,6 +114,18 @@ def root_of_unity_fixed(r:int,L:int) -> tuple[int,int]:
     if not(-2*SCALE<=re<=2*SCALE and -2*SCALE<=im<=2*SCALE):
         raise AssertionError("fixed rational trigonometric evaluation escaped range")
     return re,im
+
+
+def root_of_unity_fixed(r:int,L:int) -> tuple[int,int]:
+    """Validate ordinary integer identity BEFORE cached Fourier lookup.
+
+    Python equality makes False and 0 equal cache keys; a public cached
+    function could otherwise bypass the type gate on a cache hit.
+    """
+    _positive(L,"L")
+    if type(r) is not int:
+        raise ValueError("residue must be an ordinary integer")
+    return _root_of_unity_fixed_cached(r,L)
 
 
 def _largest_prime_factors(limit:int) -> list[int]:
