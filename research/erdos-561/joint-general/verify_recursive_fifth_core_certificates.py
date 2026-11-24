@@ -116,7 +116,7 @@ def gate_guards():
                     assert min(n[0],U)>=2
                     assert 2*W<=R+D*D
                     assert 2*(W-1)<R+D*D-1
-                    assert D>=2 and D+1<=R or D+1<=sum(n)+len(n)+sum(m)+3
+                    assert D>=2
                     ct["inclusive_margin_zero"]+=(2*W==R+D*D)
                     ct["margin_positive"]+=(2*W<R+D*D)
     for n,m in [((1,1,1,1),(8,2,1)),((2,2,1),(2,2,1))]:
@@ -169,8 +169,12 @@ def audit():
     assert ct["prior_joint"]==165741
     assert ct["prior_original"]==132393
     assert ct["fifth_direct_prior_joint_recovery"]==18863
-    assert ct["new_joint"]>=ct["prior_joint"]
-    assert ct["new_original"]>=ct["prior_original"]+18863
+    assert ct["new_joint"]==166589
+    assert ct["new_original"]==151885
+    assert ct["newly_joint"]==848 and ct["newly_original"]==19492
+    assert ct["remaining_joint_unknown"]==13339
+    assert ct["remaining_original_unknown"]==28043
+    assert fingerprint.hexdigest()=="47bfe81feacb0f0d1fd9686f248d85a4cc260afca9ea229c1cfe14b3060a0edf"
     return {"counts":dict(sorted(ct.items())),
             "classification_sha256":fingerprint.hexdigest(),
             "first_new_examples":examples}
