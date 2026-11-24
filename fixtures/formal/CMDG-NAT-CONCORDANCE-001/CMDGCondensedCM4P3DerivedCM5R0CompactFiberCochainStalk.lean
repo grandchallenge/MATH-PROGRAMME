@@ -36,7 +36,8 @@ theorem fiberEquality_closedNeighborhood
     have h0 := (f - g).isLocallyConstant.isOpen_fiber (0 : ℤ)
     convert h0.isClosed_compl using 1
     ext x
-    simp [A, sub_eq_zero]
+    change (¬ f x = g x) ↔ ¬ (f x - g x = 0)
+    rw [sub_eq_zero]
   have hC : IsClosed (q '' A) := q.continuous.isClosedMap A hA
   have ht : t ∈ (q '' A)ᶜ := by
     rintro ⟨x, hx, hxt⟩
@@ -95,15 +96,19 @@ to each profinite term of any actual compact-source Čech resolution. -/
 def fiberCoconeIsColimit : IsColimit (fiberCocone Q T q t) := by
   apply Types.FilteredColimit.isColimitOf
   · intro f
+    change LocallyConstant (q ⁻¹' {t}) ℤ at f
     obtain ⟨g,hg⟩ := fiberSection_extends Q T q t f
     let i := wholeNhd T t
     let gi : LocallyConstant (q ⁻¹' i.unop.val) ℤ :=
       g.comap ⟨Subtype.val, continuous_subtype_val⟩
     refine ⟨i, gi, ?_⟩
+    change f = restrictSections Q T q (V := i.unop.val) (W := {t}) _ gi
     apply DFunLike.ext
     intro x
     exact (hg x).symm
   · intro i j fi fj h
+    change LocallyConstant (q ⁻¹' i.unop.val) ℤ at fi
+    change LocallyConstant (q ⁻¹' j.unop.val) ℤ at fj
     obtain ⟨g,hg⟩ := locallyConstant_extend_closed_subset Q _
       (i.unop.property.1.preimage q.continuous) fi
     obtain ⟨g',hg'⟩ := locallyConstant_extend_closed_subset Q _
@@ -128,6 +133,7 @@ def fiberCoconeIsColimit : IsColimit (fiberCocone Q T q t) := by
     have hkj : k.unop.val ⊆ j.unop.val := fun x hx => hx.1.2
     refine ⟨k, (homOfLE (show k.unop ≤ i.unop from hki)).op,
       (homOfLE (show k.unop ≤ j.unop from hkj)).op, ?_⟩
+    change restrictSections Q T q hki fi = restrictSections Q T q hkj fj
     apply DFunLike.ext
     intro x
     change fi ⟨x.val,hki x.property⟩ = fj ⟨x.val,hkj x.property⟩
