@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the decisive arithmetic argument still under examination.</p>
 
 !!! warning "Research status · 24 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The latter retains its genuine auxiliary-system and classical-duality hypotheses.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The counting and reciprocity arguments retain their stated classical-duality inputs; the auxiliary system has since been independently constructed using explicit classical number-theoretic foundations.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; the Bernoulli/cohomological valuation inequality `ML.vChar` under its needed assumptions; MATHCERT certification.
 
@@ -172,7 +172,8 @@ For readers who want to see the precise source statements, the following table i
 | `shaModel`, `shaLenEq` | Connect the original arithmetic `Sha` module and its Galois eigenspaces to the transported Selmer model | Genuine source-level constructions located and dependency-traced; exact implementation not independently verified |
 | `eigV`, `selUnit` | Transfer eigenspace lengths across a finite-index subgroup under an invertibility condition | Abstract and local-kernel mechanisms independently reconstructed |
 | `shaToShT` | Pass from uniformly bounded torsion layers to the full group | Independent mathematical proof under the source unit and ramification hypotheses |
-| `ML.recip`, `ML.count` | Derive local cancellation and count by a finite valuation budget | Reconstructed using classical duality and the auxiliary-system contract; construction of the latter open |
+| `ML.recip`, `ML.count` | Derive local cancellation and count by a finite valuation budget | Reconstructed using classical duality and the auxiliary-system contract; construction of the latter now independently reconstructed |
+| `NuSysEx` | Construct the compatible auxiliary arithmetic system | Independently reconstructed using stated classical number-theoretic results |
 | **`ML.vChar`** | Relate generalized Bernoulli quantities to the lengths of these arithmetic eigenspaces | **Decisive arithmetic inequality not independently established**; its source statement explicitly assumes `Rec` |
 
 The word **conditional** matters. In the source, the valuation theorem begins with a hypothesis `Rec → ...`. To obtain an unconditional consequence one must establish that hypothesis, discharge all other assumptions, and verify that the formal statements describe the claimed classical problem.
@@ -262,11 +263,49 @@ For an illustration, suppose $J=5$ and the starting divisibility measurement is 
 
 **Why reciprocity is needed:** local data at distinct primes are not independent. The proof pairs two arithmetic cocycles, obtaining a degree-two class whose local contributions must cancel globally. If every contribution except one is zero, the remaining contribution is zero too. The local duality property then converts that vanishing into the product-zero relation needed in the counting step.
 
-We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The crucial distinction is that the original construction of the auxiliary system, which supplies compatible witnesses at all these primes, still needs independent reconstruction. So do the Bernoulli divisibility witnesses and the exceptional case of the primitive estimate.
+We independently reconstructed the pairing argument from the stated classical global and local duality properties, the auxiliary-prime selection using Chebotarev, and the counting inequality using the actual auxiliary-system contract. The construction of the compatible auxiliary system has since been independently reconstructed, as explained in the next section. The Bernoulli divisibility witnesses and the exceptional case of the primitive estimate still need independent reconstruction.
 
 The [technical audit PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) supplies the mathematical arguments and exact finite checks, with the imported theorems identified. Those checks exercise the algebra, not the global arithmetic duality theorem.
 
-## 8. Reproducibility and technical references
+## 8. Building arithmetic objects that agree at different primes
+
+The counting argument above needs a family of compatible arithmetic objects. We have now independently reconstructed its construction from classical number theory, rather than assuming the family exists.
+
+The starting point is a *Jacobi sum*. To form one, assign a root of unity to every nonzero residue modulo a prime, using a rule that respects multiplication. Multiply the value at each residue by a suitable power of the value at its complement, then add these products over the residue field. The result is an exact algebraic number. Products and ratios of these sums have prime-ideal factorizations that can be controlled by integer arithmetic.
+
+### A worked example of compatibility
+
+A small calculation illustrates the arithmetic behind that control. Use level 3 and an auxiliary prime 7, giving the larger level 21. With the integer parameter 2, the source's exponent at a residue is the difference between two rounded-down fractions: twice the residue divided by the level, minus twice the opposite residue divided by the level.
+
+At level 3, the residue 1 has exponent −1. At level 21, its invertible lifts are as follows.
+
+| Residue at level 21 | Exponent |
+| ---: | ---: |
+| 1 | −1 |
+| 4 | −1 |
+| 10 | −1 |
+| 13 | 1 |
+| 16 | 1 |
+| 19 | 1 |
+| **Sum** | **0** |
+
+The other lift, 7, is excluded because it is not invertible modulo 21. The six retained exponents cancel exactly. This is not a coincidence: the general floor-distribution identity says that their sum equals the difference of two level-3 exponents. Here both are −1 because 7 acts as 1 modulo 3. The calculation shows one small part of how a prime-ideal factorization at a larger level relates to the smaller one; it is not itself a construction of the entire auxiliary system.
+
+### From exact arithmetic to the counting argument
+
+The construction proceeds through three mathematical stages.
+
+1. **Build the starting elements.** The Jacobi sums determine the needed prime-ideal factors. A classical ideal-class argument extends the construction from suitable split primes to the particular ideals required by the proof.
+2. **Make the elements agree across levels.** The norm and congruence relations initially hold up to roots of unity, which are numbers whose positive integer powers equal 1. A carefully chosen transformation removes these factors, producing exact relations and leaving the arithmetic values that the proof needs.
+3. **Extract compatible classes.** A derivative construction and an extraction of roots give the arithmetic cocycles used in the counting argument. We established the required vanishing away from the specified primes, the exact relation between consecutive levels, and the correct initial value.
+
+The central achievement is not another finite computation. It is the conventional mathematical reconstruction of the auxiliary system for every admissible finite prime list, using stated classical cyclotomic, class-field and local-field theorems. Its transitions multiply by a unit, so the information used to detect a surviving cocycle is not lost.
+
+The [technical audit PR #606](https://github.com/grandchallenge/MATHFORGE/pull/606) records the construction and the precise imported foundations. Supporting tests checked 49,560 exponent-distribution identities, 3,256 finite-field Jacobi reductions, and further derivative and character-sum identities. These are checks on the arithmetic ingredients, not a verification of the complete submitted formal proof.
+
+The remaining primitive estimate still requires the precise divisibility comparison with the generalized Bernoulli value, and the treatment of its exceptional case. We have also not independently replayed the original Lean proof or verified the exact correspondence of all its foundational imports.
+
+## 9. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -292,10 +331,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #594](https://github.com/grandchallenge/MATHFORGE/pull/594) | Independent `InfUnram` / `shaInfl` reconstruction and 72 noncommutative local checks |
 | [PR #604](https://github.com/grandchallenge/MATHFORGE/pull/604) | General denominator and conductor-change argument, with exact arithmetic tests |
 | [PR #605](https://github.com/grandchallenge/MATHFORGE/pull/605) | Full torsion-layer transfer, conditional counting and reciprocity reconstruction |
+| [PR #606](https://github.com/grandchallenge/MATHFORGE/pull/606) | Genuine auxiliary-system construction from Jacobi sums, including local compatibility and initial value |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 9. What the investigation taught us about checking extraordinary mathematical claims
+## 10. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -307,16 +347,16 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 10. The next executable mathematical step
+## 11. The next executable mathematical step
 
 **Target:** `UpperTheory.V.ML.vChar` in the original `PrimitiveFrobeniusFixed/PrimCase.lean`.
 
 **Input:** the source-locked `NuSysEx`, `laxEx`, `sysOfLax`, `kolEx`, `derInv`, `kolStep`, `kolInit`, `zEval`, and `exc` statements and the exact local/global duality hypotheses.
 
-**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. The transfer, counting mechanism and reciprocity implication are reconstructed. Next establish the genuine auxiliary system (NuSys), the exact Bernoulli divisibility witnesses (zEval), and the exceptional branch (exc), and audit the foundational duality correspondence.
+**Work:** independently reconstruct the primitive-character estimate. Separate the assumed reciprocity/counting statement from independently proved Bernoulli integrality. Validate the exact valuation and Sha-length inequality, using the now-reconstructed denominator and conductor calculation. The transfer, counting mechanism and reciprocity implication are reconstructed. The genuine auxiliary system (NuSys) has also been reconstructed using explicit classical number-theoretic inputs. Next establish the exact Bernoulli divisibility witnesses (zEval) and the exceptional branch (exc), and audit the foundational correspondence.
 
 **Completion test:** a proof or counterexample for the precise conditional inequality, with every genuine arithmetic hypothesis accounted for; a separately recorded disposition for original pinned Lean replay and semantic correspondence. Small computational examples must remain supporting exhibits, never the substitute for this proof.
 
-**Present boundary:** `RH-A26-D05_SHA_TORSION_TRANSFER_PROVED__COUNT_RECIP_PICK_RECONSTRUCTED_WITH_EXPLICIT_CLASSICAL_AND_NUSYS_INPUTS__NUSYS_ZEVAL_EXC_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_NUSYS_CONSTRUCTION_RECONSTRUCTED_WITH_EXPLICIT_CLASSICAL_FOUNDATIONS__ZEVAL_EXC_FOUNDATIONAL_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains the protected evidence, not a certification of RH or GRH.
