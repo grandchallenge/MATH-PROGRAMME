@@ -2698,11 +2698,14 @@ class CofactorTwoCopyCookTransferTests(unittest.TestCase):
             a["original_first_weighted_Cook_sum_real_upper"]/X,
             Fraction(-11,10000))
         self.assertGreaterEqual(
-            a["Cook_second_weighted_group_modulus_upper"]/X,
+            a["Cook_second_weighted_group_modulus_lower"]/X,
             Fraction(48,10000))
         self.assertLessEqual(
             a["Cook_second_weighted_group_modulus_upper"]/X,
             Fraction(49,10000))
+        self.assertGreaterEqual(
+            a["Cook_fourth_outside_A_modulus_lower"]/X,
+            Fraction(48,10000))
         self.assertLessEqual(
             a["Cook_fourth_outside_A_modulus_upper"]/X,
             Fraction(49,10000))
