@@ -134,3 +134,11 @@ def product_defect_bound(base_bound):
     if e<0:
         raise ValueError("negative bound")
     return 2*e+e*e
+
+
+def persistent_nonreset_model():
+    """Primitive hidden Q, invertible transfers, uniform nonnull, bad zeros."""
+    T=(((F(5,8),0),(0,F(5,8))),
+       ((F(3,16),F(1,16)),(F(1,32),F(3,32))),
+       ((F(3,32),F(1,32)),(F(1,16),F(3,16))))
+    return ObservableFiniteMemory((F(1,2),F(1,2)),T)
