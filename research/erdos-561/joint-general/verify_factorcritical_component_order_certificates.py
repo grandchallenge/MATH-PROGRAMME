@@ -9,7 +9,7 @@ import argparse
 from collections import Counter
 from functools import lru_cache
 from hashlib import sha256
-from itertools import combinations_with_replacement
+from itertools import combinations, combinations_with_replacement
 import json
 
 import verify_recursive_vertex_budget_certificates as prior
@@ -107,6 +107,54 @@ def positive_compositions(s):
                     yield (a,)+tail
         yield from recurse(s,k)
 
+def nontriangular_factorcritical_graph_witness():
+    """Actual 2K7 witness: BOTH factorcritical components have matching number 3.
+
+    Each deletion retains full RED (2,1,1,1,1,1). Yet the entire two-component
+    graph has a colouring avoiding that RED target and BLUE (5,1).
+    Demonstrates why the old all-triangle proof cannot establish this case.
+    """
+    C0=tuple(range(7))
+    C1=tuple(range(7,14))
+    edges=frozenset(frozenset((x,y)) for C in (C0,C1)
+                    for x,y in combinations(C,2))
+    assert len(edges)==42
+    def valid_star(support,centre,leaves):
+        assert centre in support and all(z in support for z in leaves)
+        assert len(leaves)==len(set(leaves)) and centre not in leaves
+        return all(frozenset((centre,l)) in edges for l in leaves)
+    # Every Q-x retains an ordinary (not necessarily induced) RED target,
+    # with star supports occupying ALL thirteen surviving vertices:
+    # intact K7 holds P3+2K2; six-vertex remainder holds 3K2.
+    for t in range(14):
+        intact=C1 if t in C0 else C0
+        rem=tuple(x for x in (C0 if t in C0 else C1) if x!=t)
+        assert len(intact)==7 and len(rem)==6
+        assert valid_star(intact,intact[0],intact[1:3])
+        stars=[(intact[0],intact[1:3])]
+        stars.extend((intact[j],(intact[j+1],)) for j in (3,5))
+        stars.extend((rem[j],(rem[j+1],)) for j in (0,2,4))
+        assert tuple(len(x[1]) for x in stars)==(2,1,1,1,1,1)
+        supports=[]
+        for centre,leaves in stars:
+            assert valid_star(tuple(range(14)),centre,leaves)
+            supports.extend((centre,)+tuple(leaves))
+        assert len(supports)==13 and len(set(supports))==13
+    # Colour C0 RED and C1 BLUE. Each monochromatic graph only has
+    # seven supported vertices, whereas RED target needs 13 and BLUE
+    # (5,1) requires eight. The colouring is an ordinary graph witness.
+    red=tuple(e for e in edges if e.issubset(C0))
+    blue=tuple(e for e in edges if e.issubset(C1))
+    assert len(red)==len(blue)==21
+    red_support=set().union(*red)
+    blue_support=set().union(*blue)
+    assert len(red_support)==7<13
+    assert len(blue_support)==7<8
+    assert 2*(6//(1+1))==6<=5+1
+    return {"checked_vertex_deletions":14,
+            "nontriangular_factorcritical_components":2,
+            "actual_edges":42}
+
 def independent_matching_lemma_audit():
     ct=Counter()
     # Exhaustively enumerate all factorcritical matching number partitions
@@ -147,6 +195,10 @@ def independent_matching_lemma_audit():
     assert p and p["proof"]==PROOF
     assert o and o["original_canonical"]==18
     ct["concrete_new_joint_and_original_graph_theorem"]+=1
+    witness=nontriangular_factorcritical_graph_witness()
+    assert witness["checked_vertex_deletions"]==14
+    ct["nontriangular_all_vertex_deletion_witnesses"]+=14
+    ct["nontriangular_actual_avoiding_graph_colouring"]+=1
     return ct
 
 def full_grid_audit():
