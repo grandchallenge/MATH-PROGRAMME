@@ -1,5 +1,7 @@
 # Erdős #561 — joint residual hypothesis: an unrestricted-host partial theorem
 
+**NEW fixed four-by-three JOINT closure (2026-11-24, PAPER UNDER_REVIEW):** For arbitrary finite simple hosts, original red (4,1,1,1) versus blue (3,2,1), the two JOINT residual relations require at least 15 edges, and F(5,4,3,2,1) attains equality; separate bounds reach only 14. A new Tutte-specified-vertex matching proof excludes all hypothetical 14-edge hosts using the forced five-vertex degree-four core, without enumerating arbitrary hosts. All 720 host-arm assignments, 32,768 upper colour masks and 385 five-core missing-edge patterns are independently checked. Sources: JOINT_4111_321_MATCHING_CORE_THEOREM.md, verify_joint15_4111_321.py and JOINT_4111_321_MATCHING_CORE_EVIDENCE.json. This does NOT settle original size Ramsey for that pair or all-profile #561.
+
 **Disposition: PARTIAL, with several rigorously proved unbounded subcases. The full issue #3490 is NOT proved or refuted.** Research date 2026-11-19.
 
 The joint-residual issue asks: if a graph arrows both the red-largest-star-deleted forest versus the full blue forest and the full red forest versus the blue-largest-star-deleted forest, must it have at least the sum of the antidiagonal star-host weights except the first? This package proves important parts of that claim without limiting the host graph to stars.

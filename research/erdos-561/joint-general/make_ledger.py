@@ -1624,5 +1624,30 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+
+claims.append(dict(common,
+  claim_id='ERDOS561-JOINT-4111-321-PAPER-059',
+  short_name='Exact 15-edge arbitrary-host joint residual for original (4,1,1,1) against (3,2,1)',
+  claim_text='If a finite simple Q simultaneously arrows (3K2,F(3,2,1)) and (F(4,1,1,1),F(2,1)), then e(Q)>=15; the disjoint-star host F(5,4,3,2,1) attains equality. Exact canonical JOINT=15 vs separate residual maxima 14 (switching surplus 1). The general unrestricted s,t conjecture and this ORIGINAL size Ramsey pair remain open under this claim.',
+  claim_class='PROVED_IN_PACKAGE',
+  status='UNDER_REVIEW',
+  certainty='PROVED_NOT_FORMALIZED',
+  support_type='HUMAN_PROOF',
+  support_summary='Two-vertex RED-cover deletion of the first arrow and one-vertex BLUE-cover deletion of the second give e>=degree(u)+10, max degree<=4 under e<=14, and >=12 nonisolated vertices. Classical Tutte designated-vertex matching criterion forces >=5 degree-four vertices when no (3,1) cap partition exists. Handshake forces exactly five saturated core vertices and outside total degree eight. At most four core edges can be missing; if any is missing, an external core edge plus a K4 two-edge matching covers all five saturated vertices, avoiding the second arrow. Otherwise an isolated K5 plus four outside edges has an explicit avoiding colouring. The 15-edge host arrows both pairs by two elementary host-star case splits. Independent finite witnesses corroborate but do not replace the Tutte premise.',
+  source_or_artifact=[root+'JOINT_4111_321_MATCHING_CORE_THEOREM.md'],
+  related_files=[root+'verify_joint15_4111_321.py',root+'JOINT_4111_321_MATCHING_CORE_EVIDENCE.json',root+'RUN_MATRIX.md']
+))
+claims.append(dict(common,
+  claim_id='ERDOS561-JOINT-4111-321-FINITE-060',
+  short_name='Finite independent upper-host and missing-five-core matching checks',
+  claim_text='The canonical five-star 15-edge host F(5,4,3,2,1) passes both exact residual arrow relations in each of 720 host-arm red count allocations and all 32768 individual edge-colouring masks. Every one of 385 missing-core configurations with one to four missing edges on the degree-four five-core has a constructive matching of the other four core vertices and at least one missing-incident core vertex eligible for an external matching edge. These finite checks do not claim global unrestricted arrow-host enumeration or proof of designated-vertex Tutte.',
+  claim_class='PROVED_IN_PACKAGE',
+  status='CHECKED',
+  certainty='CERTIFIED',
+  support_type='EXACT_RATIONAL_COMPUTATION',
+  support_summary='Independent enumeration-by-permutation of 720 vectors, bitmask-state dynamic matching of 32768 concrete individual edge colourings, 385 complete missing-core subgraph cases with 3 K4 perfect matching options, and deterministic byte-identical JSON evidence. The verifier is standard-library only, retains full two-colour scope for the upper host, and labels this finite proof boundary.',
+  source_or_artifact=[root+'verify_joint15_4111_321.py'],
+  related_files=[root+'JOINT_4111_321_MATCHING_CORE_EVIDENCE.json',root+'JOINT_4111_321_MATCHING_CORE_THEOREM.md']
+))
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
