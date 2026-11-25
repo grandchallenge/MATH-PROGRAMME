@@ -18,7 +18,7 @@ def expect(paths: list[str], lanes: list[str]) -> None:
 def main() -> int:
     registry = formal.load_registry(ROOT)
     lane_ids = [lane["id"] for lane in registry["lanes"]]
-    assert len(lane_ids) == 17
+    assert len(lane_ids) == 18
     assert len(lane_ids) == len(set(lane_ids))
 
     # The live reproduction from PR #919 must instantiate exactly one substantive
@@ -75,6 +75,20 @@ def main() -> int:
         raise AssertionError("unreviewed #561 formal source was silently accepted")
     expect([erdos_561_core + "Erdos561Core.lean", erdos_core + "Erdos560Core.lean"],
            ["erdos-pv-0560-core", "erdos-pv-0561-core"])
+
+    # The Mathlib-backed CRT density lane has its own bounded replay route.
+    crt_root = "experiments/erdos_proof_verification/0027/"
+    for source in (crt_root + "Erdos27CRT.lean", crt_root + "lakefile.toml",
+                   crt_root + "lean-toolchain", crt_root + "lake-manifest.json",
+                   "ci/erdos_pv_0027_formal_replay.py", "tests/test_erdos27_crt_replay.py",
+                   "governance/erdos_proof_verification/evidence/0027/C_LEAN_CRT_REPLAY_001.json"):
+        expect([source], ["erdos-pv-0027-crt"])
+    try:
+        formal.classify_paths([crt_root + "UnregisteredNewLemma.lean"], registry)
+    except formal.FormalValidationError as exc:
+        assert "unclassified executable/formal path" in str(exc)
+    else:
+        raise AssertionError("unregistered CRT formal source accepted")
 
     # Source additions under the managed Erdős proof root that are not
     # explicitly compiled by the registered Lake target must fail closed.
