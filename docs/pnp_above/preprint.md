@@ -23,6 +23,8 @@ The published **1 November 2026 version 0.1 PDF/TeX and release checksums remain
 
 The full exact [GCL documentary coverage ledger](coverage.md) records the immutable WP00–WP17 inventory of 72 source artifacts, the separately source-locked nine-module WP18 and eight-module WP19 extensions, proof receipts, the separate Formal Conjectures definition-bridge lane, and outstanding obligations. This is **supplementary research evidence**, not an amended version 0.1 paper or an independently certified new preprint edition. No new journal, DOI, arXiv, source paper endorsement, compression construction or P-versus-NP claim is implied.
 
+**Later supplementary research (24 November 2026):** [WP38B](https://github.com/grandchallenge/MATHSOLVE/pull/1298) proves exact equivalence between existence of a polynomial-time native valid-promise solver, a SAT decision solver and a witness constructor (including a canonical witness constructor). The constructor need only return a correct witness on satisfiable formulas but must run in polynomial time on every input. See the [current primer](primer.md), [technical spine](technical.md) and [protected successor ledger](coverage.md). This is not a P-versus-NP proof or an amendment of v0.1.
+
 ## Abstract
 
 We examine a possible “from above” approach to the P versus NP problem motivated by the equality MIP* = RE. Recursive compression of quantum multiprover verification might expose a structural invariant with a classical lower-bound interpretation. The principal obstacle is an invalid identification of verifier computation, entanglement resources, strategy synthesis, and deterministic decision time.
