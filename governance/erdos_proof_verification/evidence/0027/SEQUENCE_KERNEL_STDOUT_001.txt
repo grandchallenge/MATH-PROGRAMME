@@ -1,0 +1,26 @@
+'Erdos27Sequence.bad_mem_gcd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.common_period_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.mem_predSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.residue_congr' depends on axioms: [propext, Quot.sound]
+'Erdos27Sequence.bad_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.finite_lemma21' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Sequence.finite_lemma21 (T : ℕ) [NeZero T] (m : ℕ → ℕ) (r : ℕ → ℤ) (n : ℕ) (hd : ∀ i < n, m i ∣ T) :
+  ∏ i ∈ Finset.range n, (1 - 1 / ↑(m i)) - ∑ j ∈ Finset.range n, ∑ i ∈ bad m j, 1 / (↑(m i) * ↑(m j)) ≤
+    density fun x => ∀ (i : Fin n), (ZMod.castHom ⋯ (ZMod (m ↑i))) x ≠ ↑(r ↑i)
+'Erdos27Sequence.step_independence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.p_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.p_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.err_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.sequence_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.arithmetic_weighted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.ideal_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.plain_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.arithmetic_lemma21' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Sequence.arithmetic_lemma21 (T : ℕ) [NeZero T] (m : ℕ → ℕ) (r : ℕ → ℤ) (hm : ∀ (i : ℕ), m i ∣ T) (n : ℕ) :
+  ∏ i ∈ Finset.range n, (1 - 1 / ↑(m i)) - ∑ j ∈ Finset.range n, ∑ i ∈ bad m j, 1 / (↑(m i) * ↑(m j)) ≤
+    mass T (U T m r hm n)
+'Erdos27Sequence.residue_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.U_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.U_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.U_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Sequence.D_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
