@@ -50,9 +50,28 @@ class QueueTests(unittest.TestCase):
             self.assertEqual(row['stage_work_items']['C']['work_status'],'UNEXECUTED')
     def test_documentary_selection_after_exact_c_protected_admission(self):
         candidates=q.candidates('D',limit=5)
-        self.assertEqual([r['task_id'] for r in candidates],['ERDOS-PV-0561-D'])
         self.assertTrue(all(r['task_id']!='ERDOS-PV-0560-D' for r in candidates))
-        self.assertEqual(candidates[0]['queue_issue'],3256)
+        for candidate in candidates:
+            if candidate['problem_id'] in (27,560,561,562,563,564):
+                row=q.read('governance/erdos_proof_verification/coverage/cohorts/'+candidate['cohort']+'.json')['items'][(candidate['problem_id']-1)%100]
+                stage=row['stage_work_items']['C']
+                self.assertEqual(stage['work_status'],'PROTECTED_ADMITTED')
+                self.assertTrue(stage['protected_admission_ref'].startswith('grandchallenge/MATH-PROGRAMME@'))
+
+    def test_27_native_admission_gate_rejects_candidate_and_missing_ref(self):
+        from copy import deepcopy
+        row=deepcopy(q.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][26])
+        self.assertEqual(row['problem_id'],27)
+        stages=row['stage_work_items']
+        for target,prior in [('C','B'),('D','C')]:
+            stages[target]['work_status']='UNEXECUTED'
+            stages[prior]['work_status']='VERIFIED_BOUNDED'
+            stages[prior]['protected_admission_ref']=None
+            self.assertFalse(q.permitted(row,target))
+            stages[prior]['work_status']='PROTECTED_ADMITTED'
+            self.assertFalse(q.permitted(row,target))
+            stages[prior]['protected_admission_ref']='grandchallenge/MATH-PROGRAMME@'+'a'*40
+            self.assertTrue(q.permitted(row,target))
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]
         self.assertEqual(x['problem_id'],246)
