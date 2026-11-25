@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-COLLISION-LIQUID-001.CP001",
+  "checkpoint_id": "EXT-015-COLLISION-LIQUID-001.CP002",
   "governed_work_id": "EXT-015-COLLISION-LIQUID-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,52 +15,60 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3752"
   },
-  "phase": "Separate follow-on protocol and preserved starting evidence",
-  "state": "AUTHORIZED_READY",
+  "phase": "Frozen weight-two comparison in distinct mathematical review",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
-    "protected_base_sha": "e0d345f3eecacb1159134f70293a20392a8eb8a8",
-    "candidate_head_sha": "e0d345f3eecacb1159134f70293a20392a8eb8a8",
+    "protected_base_sha": "69b22c6aa00447fd618cd40925d5b8bbaf0b0e77",
+    "candidate_head_sha": "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
     "issue_number": 3752,
     "pr_number": null,
-    "branch": "research/ext015-collision-liquid-input-20261125",
+    "branch": "research/ext015-collision-liquid-weight-two-primary-20261125",
     "workflow_runs": []
   },
   "terminal_condition": "Resolve the two admitted collision-liquid gates on the actual free scalar model, with independent source-bound review, protected exact readback, and an accurate tracker verdict. A positive result proves the natural all-weight collision-moment comparison. A protocol-authorized bounded negative return supplies a precise failed or unresolved inference and distinguishes all accepted lower-weight results. Original REACH retains its separate terminal qualified closeout.",
   "permitted_next_actions": [
     {
-      "id": "construct-freeze-weight-two",
-      "description": "Recheck the protected admission and bound input. Construct and freeze Gate 1 through weight two, then obtain distinct source-bound review of the natural liquid comparison and its controls."
+      "id": "obtain-frozen-weight-two-review",
+      "description": "Obtain the distinct mathematical review on the exact frozen weight-two source. Apply at most one correction and verify the review on the resulting identity before constructing Gate 2."
     }
   ],
   "next_action": {
-    "id": "construct-freeze-weight-two",
-    "description": "Recheck the protected admission and bound input. Construct and freeze Gate 1 through weight two, then obtain distinct source-bound review of the natural liquid comparison and its controls.",
+    "id": "obtain-frozen-weight-two-review",
+    "description": "Obtain the distinct mathematical review on the exact frozen weight-two source. Apply at most one correction and verify the review on the resulting identity before constructing Gate 2.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_EXECUTION_PLAN_UC091.md",
       "research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
-      "research/condensed-qft/EXT-015/WEIGHT_TWO_DIAGONAL_JET_COMPARISON_147.md"
+      "research/condensed-qft/EXT-015/fixtures/check_collision_liquid_moments_uc092.py",
+      "research/ext015-collision-liquid-weight-two-primary-20261125"
     ]
   },
   "external_evidence": {
-    "waiting": false,
-    "objects": []
+    "waiting": true,
+    "objects": [
+      {
+        "kind": "review",
+        "identity": "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
+        "status": "Distinct nonauthor family critic assigned to exact source and fixture."
+      }
+    ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "bind-separate-collision-liquid-workset",
-    "result": "Authorized two-gate programme bound to exact scientific inputs. No gate theorem has been proved in this workset.",
+    "action": "freeze-the-weight-two-candidate",
+    "result": "Local exact finite fixture, Markdown and source-lock checks passed. Scientific acceptance is pending review.",
     "evidence_refs": [
-      "grandchallenge/MATH-PROGRAMME#3752",
-      "e0d345f3eecacb1159134f70293a20392a8eb8a8",
-      "research/ext015-collision-liquid-input-20261125",
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_EXECUTION_PLAN_UC091.md"
+      "69b22c6aa00447fd618cd40925d5b8bbaf0b0e77",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3753",
+      "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
+      "5cd16144edd52cb46829df41dd2e79e0c0a3df9f",
+      "22727d1271cc23227edbeb1ee8d3aba4780fd0c8",
+      "research/ext015-collision-liquid-weight-two-primary-20261125"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-COLLISION-LIQUID-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-25T11:05:10.579Z"
+    "observed_at": "2026-11-25T11:12:03.3085755+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -83,9 +91,13 @@
       "research/condensed-qft/EXT-015/ARBITRARY_SEPARATED_OPENS_INTEGRATION_UC076.md",
       "research/condensed-qft/EXT-015/SEPARATED_OPENS_INTEGRATION_ACCEPTANCE_UC078.md",
       "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md",
-      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md"
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+      "research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
+      "research/condensed-qft/EXT-015/fixtures/check_collision_liquid_moments_uc092.py",
+      "research/ext015-collision-liquid-weight-two-primary-20261125",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3753"
     ],
-    "instructions": "Recheck the protected admission and bound input. Construct and freeze Gate 1 through weight two, then obtain distinct source-bound review of the natural liquid comparison and its controls."
+    "instructions": "Obtain the distinct mathematical review on the exact frozen weight-two source. Apply at most one correction and verify the review on the resulting identity before constructing Gate 2."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
