@@ -1,6 +1,6 @@
 # REACH closeout — a working renormalized model and the limits of the comparison
 
-**Decision, 25 November 2026.** Close the investigation with the results below and retain ZFC, the programme's original set-theoretic foundation. We obtained a renormalization and quantum factorization theorem for the declared one-dimensional Gaussian/Wick model. We also proved that the original liquid-to-observable equivalence fails in ZFC. The separate degree-two liquid support map has opposite outcomes under two additional set-theoretic principles. The original strong completion criterion remains unmet. This closeout records where the investigation ended and what the proofs establish.
+**Decision, 25 November 2026.** Close the investigation with the results below and retain ZFC, the programme's original set-theoretic foundation. We obtained a renormalization and quantum factorization theorem for the declared one-dimensional Gaussian/Wick model. We also proved that the original stage-natural weightwise liquid-to-observable equivalence fails in ZFC. The separate degree-two liquid support map has opposite outcomes under two additional set-theoretic principles. The original strong completion criterion remains unmet. This closeout records where the investigation ended and what the proofs establish.
 
 ## What we set out to do
 
@@ -10,7 +10,7 @@ The [execution plan](REACH_CONDENSED_RENORMALIZATION_PLAN_090.md) ordered the wo
 
 ## What the model can do
 
-R0 and R1 audited the analytic starting point and constructed the free-field theory on an explicitly controlled class of smooth families. The liquid bridge then gave us a way to compose regulator profiles while retaining their dependence on the regulator. Keeping only the finite physical answer can discard information needed for a subsequent operation. The enriched zero-scale construction keeps the normal data that describe how a kernel approaches a collision. It has a separate operation for reading out the finite physical answer. [R1 closeout](R1_ACCEPTANCE_CLOSEOUT_079.md) · [Liquid bridge](LIQUID_PROFILE_BRIDGE_ACCEPTANCE_093.md) · [Zero-scale extension](ZERO_SCALE_EXTENSION_ACCEPTANCE_098.md) · [Quantum theorem and closeout](QUANTUM_STRUCTURE_ACCEPTANCE_113.md)
+R0 and R1 audited the analytic starting point and constructed the free-field theory on an explicitly controlled class of smooth families. The liquid bridge then gave us a way to compose regulator profiles while retaining their dependence on the regulator. Keeping only the finite physical answer can discard information needed for a subsequent operation. The enriched zero-scale construction keeps the normal data that describe how a kernel approaches a collision. It has a separate operation for reading out the finite physical answer. [R1 closeout](R1_ACCEPTANCE_CLOSEOUT_079.md) · [Liquid bridge](LIQUID_PROFILE_BRIDGE_ACCEPTANCE_093.md) · [Initial zero-scale construction](ZERO_SCALE_EXTENSION_ACCEPTANCE_098.md) · [Mixed-domain zero-scale theorem](MIXED_PUSHDOWN_ACCEPTANCE_110.md) · [Quantum theorem and closeout](QUANTUM_STRUCTURE_ACCEPTANCE_113.md)
 
 For the declared singular Gaussian/Wick class, the subtraction rules are compatible with the quantum differential, changes of scale and the admitted changes of subtraction prescription. The differential squares to zero. A fixed eleven-edge model stressed the construction with 277 proper singular sources, both legal disjoint spinneys, and finite normal decorations. Here a spinney is a collection of disjoint subgraphs that can be subtracted together. Overlapping sources are handled as alternative choices within legal forests. The earlier fixed-host result and the later class-wide theorem have separate proofs and acceptance records. [Fixed-host result](CONSISTENT_HOST_ACCEPTANCE_089.md) · [Class-wide quantum result](QUANTUM_STRUCTURE_ACCEPTANCE_113.md)
 
@@ -58,7 +58,7 @@ CP297 recorded the unchanged original terminal condition:
 
 > Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.
 
-The 25 November authorization allows a terminal **qualified investigation closeout**, subject to distinct review, protected admission and exact tracker reconciliation. This leaves the historical mathematical criterion above as the measure of the original claim. The bounded comparison docket [EXT-015D](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657) has a delivered failure map. The recommended closure reason for the original unconditional [R3 docket](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798) and the strong [parent programme docket](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617) is GitHub's “not planned”, as administrative endings of the remaining work within this investigation. A qualified closeout supplies neither a new scientific theorem nor an external certification.
+The 25 November authorization allows a terminal **qualified investigation closeout**, subject to distinct review, protected admission and exact tracker reconciliation. This leaves the historical mathematical criterion above as the measure of the original claim. The bounded comparison docket [EXT-015D](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657) has a delivered failure map and is eligible for closure as completed after exact protected readback. The recommended closure reason for the original unconditional [R3 docket](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798) and the strong [parent programme docket](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617) is GitHub's “not planned”, as administrative endings of the remaining work within this investigation. A qualified closeout supplies neither a new scientific theorem nor an external certification.
 
 ## Evidence and limitations
 
@@ -68,7 +68,6 @@ The exact original authority is [the original programme](https://github.com/gran
 
 | Primary input at the frozen cut | Git blob |
 | --- | --- |
-
 | [REACH_CONDENSED_RENORMALIZATION_PLAN_090.md](REACH_CONDENSED_RENORMALIZATION_PLAN_090.md) | 6b642bf10c3328bb64d37474e290810fb45cbca1 |
 | [ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md](ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md) | e407b53dbb944c95bc1eead6de034e0017ea42b5 |
 | [R1_ACCEPTANCE_CLOSEOUT_079.md](R1_ACCEPTANCE_CLOSEOUT_079.md) | 360f14cc391da1db9c067181e512953b9ac324fb |
@@ -88,3 +87,4 @@ The exact original authority is [the original programme](https://github.com/gran
 | [DIFFERENTIABLE_EXT_CLASS_ACCEPTANCE_UC084.md](DIFFERENTIABLE_EXT_CLASS_ACCEPTANCE_UC084.md) | aa27e5f3eaa76a18d66a622362858aab5982c65b |
 | [AGENT_CRITICAL_REVIEW_ORIGINAL_INTEGRATION_UC086.md](AGENT_CRITICAL_REVIEW_ORIGINAL_INTEGRATION_UC086.md) | a9dfffc457adaf4706871ae4e5d985a57b61ce5e |
 | [ORIGINAL_TYPED_INTEGRATION_ACCEPTANCE_UC087.md](ORIGINAL_TYPED_INTEGRATION_ACCEPTANCE_UC087.md) | a3b7913a75a076fe8d58c4ac2c155c135942b334 |
+| [MIXED_PUSHDOWN_ACCEPTANCE_110.md](MIXED_PUSHDOWN_ACCEPTANCE_110.md) | d48b02a42cd1ac4064ca556579e31949e903e63d |
