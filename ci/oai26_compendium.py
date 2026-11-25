@@ -1,6 +1,6 @@
 """Source-locked, noncertifying OAI-26 documentary compendium for MkDocs.
 
-The 372 family pages are generated *only* from protected bibliographic
+The 375 family pages are generated *only* from protected bibliographic
 metadata. An authored six-section manuscript is a DRAFT until an exact
 content-hash editorial admission is recorded. No automatic proof verdict.
 """
@@ -21,6 +21,7 @@ EDITORIAL = ROOT / "governance/oai26_documentary/editorial"
 GENERATED = DOCS / "families"
 CATALOGUE_PAGE = DOCS / "catalogue.md"
 PIN = "1581d4cbdd69a0faf34b2089614fe2a814316a6a"
+LATEST_PIN = "3344da59991ed94f9ba711217b29c1d760badfa6"
 MARKER = "<!-- GENERATED OAI26 SOURCE-LOCKED NONCERTIFYING PAGE -->"
 SECTIONS = (
     "## The question in plain language",
@@ -40,11 +41,13 @@ def load_catalogue(path: Path = CATALOGUE) -> dict:
         raise ValueError("source revision drift")
     if record.get("source_catalogue_git_blob") != "7a0b00eb9bfdeb59b157a98ee6522fc685580152":
         raise ValueError("source index Git blob identity drift")
+    if record.get("latest_source_revision") != LATEST_PIN or record.get("latest_contents_git_blob") != "7d4a8770643439016a70f23a4524d0ebacc78900":
+        raise ValueError("latest source revision or contents blob drift")
     families = record.get("families")
-    if not isinstance(families, list) or len(families) != 372:
-        raise ValueError("family coverage is not 372")
+    if not isinstance(families, list) or len(families) != 375:
+        raise ValueError("family coverage is not 375")
     identifiers = [f.get("family_id") for f in families]
-    if (len(set(identifiers)) != 372 or
+    if (len(set(identifiers)) != 375 or
             any(not isinstance(n, str) or not re.fullmatch(r"\d{3}", n) for n in identifiers) or
             identifiers != sorted(identifiers)):
         raise ValueError("family identities are duplicated, malformed or unordered")
@@ -63,10 +66,29 @@ def load_catalogue(path: Path = CATALOGUE) -> dict:
                     not manuscript.get("title")):
                 raise ValueError(f"unsafe or missing PDF source: {path_value!r}")
             pdfs.append(path_value)
-    if len(pdfs) != 719 or len(set(pdfs)) != 719:
-        raise ValueError("manuscript coverage not exactly 719 unique paths")
-    if record.get("expected_families") != 372 or record.get("expected_manuscript_paths") != 719:
+    if len(pdfs) != 730 or len(set(pdfs)) != 730:
+        raise ValueError("manuscript coverage not exactly 730 unique paths")
+    if record.get("expected_families") != 375 or record.get("expected_manuscript_paths") != 730:
         raise ValueError("snapshot denominators inconsistent")
+    history = []
+    new = []
+    for family in families:
+        for manuscript in family["manuscripts"] + family.get("historical_manuscripts", []):
+            revision = manuscript.get("source_revision", PIN)
+            if revision not in (PIN, LATEST_PIN):
+                raise ValueError("unknown manuscript source revision")
+            if revision == LATEST_PIN:
+                if not re.fullmatch(r"[0-9a-f]{40}", manuscript.get("git_blob", "")):
+                    raise ValueError("new manuscript lacks Git blob")
+                new.append(manuscript["pdf_path"])
+        for manuscript in family.get("historical_manuscripts", []):
+            path = manuscript["pdf_path"]
+            if not path.startswith("preprints/") or not path.endswith(".pdf") or ".." in Path(path).parts:
+                raise ValueError("unsafe historical path")
+            history.append(path)
+    if (record.get("expected_historical_additions") != 1 or len(history) != 1
+            or set(history) & set(pdfs) or len(new) != 12 or len(set(new)) != 12):
+        raise ValueError("release delta coverage mismatch")
     return record
 
 
@@ -95,16 +117,23 @@ def md_text(value: str) -> str:
     return html.escape(value, quote=True).replace("$", "&#36;").replace("`", "&#96;").replace("[", "&#91;").replace("]", "&#93;")
 
 
-def pdf_url(path: str) -> str:
-    return "https://github.com/openai/math/blob/" + PIN + "/" + quote(path, safe="/")
+def pdf_url(path: str, revision: str = PIN) -> str:
+    return "https://github.com/openai/math/blob/" + revision + "/" + quote(path, safe="/")
 
 
 def manuscript_text(family: dict) -> str:
-    return "\n".join(
-        f"- [{md_text(m['title'])}]({pdf_url(m['pdf_path'])}) "
+    entries = "\n".join(
+        f"- [{md_text(m['title'])}]({pdf_url(m['pdf_path'], m.get('source_revision', PIN))}) "
         f"— `{m['pdf_path']}`"
         for m in family["manuscripts"]
     )
+    history = family.get("historical_manuscripts", [])
+    if history:
+        entries += "\n\n**Historical release (not a separate current indexed claim):**\n\n" + "\n".join(
+            f"- [{md_text(m['title'])}]({pdf_url(m['pdf_path'], m['source_revision'])})"
+            for m in history
+        )
+    return entries
 
 
 def reference_page(family: dict) -> str:
@@ -150,7 +179,7 @@ def validate_draft(content: str, number: str) -> None:
     for heading in SECTIONS:
         if content.count(heading) != 1:
             raise ValueError(f"missing or duplicate authored section: {number} {heading}")
-    if "NO_CERTIFICATION" not in content or PIN not in content:
+    if "NO_CERTIFICATION" not in content or not (PIN in content or LATEST_PIN in content):
         raise ValueError("draft lacks exact source and certification boundary")
 
 
@@ -175,15 +204,15 @@ def build(output_dir: Path = DOCS, catalogue_path: Path = CATALOGUE,
         raise ValueError("generated output is not clean; remove only marked generated pages")
     articles, reviewed = 0, 0
     indices = ["# OAI-26 source catalogue", "",
-               "372 families and 719 indexed manuscript PDF paths, source-locked "
+               "375 families and 730 indexed manuscript PDF paths, plus one superseded November release. Original evidence remains source-locked "
                "to [openai/math](" + "https://github.com/openai/math/tree/" + PIN
-               + "). **Catalogue presence is not a proof or an editorial review.**", "",
+               + "), with additions pinned to [November 24](https://github.com/openai/math/tree/" + LATEST_PIN + "). **Catalogue presence is not a proof or an editorial review.**", "",
                "[Reader guide](index.md) | "
                "[Programme tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/2850)", ""]
     for i, family in enumerate(record["families"]):
         n = family["family_id"]
         if i % 50 == 0:
-            indices.extend([f"## Families {n}–{record['families'][min(i+49,371)]['family_id']}", ""])
+            indices.extend([f"## Families {n}–{record['families'][min(i+49,len(record['families'])-1)]['family_id']}", ""])
         draft_path = EDITORIAL / f"{n}.md"
         if draft_path.is_file():
             draft = draft_path.read_text(encoding="utf-8")
@@ -204,9 +233,9 @@ def build(output_dir: Path = DOCS, catalogue_path: Path = CATALOGUE,
         indices.append(f"- [Family {n}: {md_text(family['headline'])}](families/{n}.md) "
                        f"({state}; {len(family['manuscripts'])} manuscripts)")
     (output_dir / "catalogue.md").write_text(MARKER + "\n" + "\n".join(indices) + "\n", encoding="utf-8")
-    return {"families": 372, "manuscript_paths": 719,
+    return {"families": 375, "manuscript_paths": 730,
             "editorial_drafts": articles-reviewed, "editorially_admitted": reviewed,
-            "reference_only": 372-articles, "generated_pages": 373}
+            "reference_only": 375-articles, "generated_pages": 376}
 
 
 def clean(output_dir: Path = DOCS) -> None:

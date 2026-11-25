@@ -1,6 +1,6 @@
 # OAI-26 documentary compendium: editorial protocol
 
-This compendium follows the Erdős six-section manuscript standard. The primary source lock is `openai/math@1581d4cbdd69a0faf34b2089614fe2a814316a6a`. Bibliographic identity is imported without edits from the protected MATHFORGE `MANUSCRIPT_INDEX.json` Git blob `7a0b00eb9bfdeb59b157a98ee6522fc685580152`. It represents **372 families and 719 unique manuscript paths**. An index entry is not an independent mathematical claim.
+This compendium follows the Erdős six-section manuscript standard. The primary source lock is `openai/math@1581d4cbdd69a0faf34b2089614fe2a814316a6a`. Bibliographic identity is imported without edits from the protected MATHFORGE `MANUSCRIPT_INDEX.json` Git blob `7a0b00eb9bfdeb59b157a98ee6522fc685580152`. It represents the historical baseline of **372 families and 719 unique manuscript paths**. The November 24 source delta is separately pinned to `openai/math@3344da59991ed94f9ba711217b29c1d760badfa6` (CONTENTS.md Git blob `7d4a8770643439016a70f23a4524d0ebacc78900`), extending catalogue coverage to 375 families and 730 indexed paths plus one superseded manuscript. The original proof receipts and the editorial admission standard are unchanged. An index entry is not an independent mathematical claim.
 
 ## Three distinct coverage dimensions
 

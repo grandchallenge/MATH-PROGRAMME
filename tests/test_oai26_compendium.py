@@ -20,12 +20,17 @@ class DocumentaryCatalogueTest(unittest.TestCase):
 
     def test_exact_source_coverage_and_noncontiguous_ids(self):
         f = self.catalogue["families"]
-        self.assertEqual(len(f), 372)
-        self.assertEqual(sum(len(x["manuscripts"]) for x in f), 719)
+        self.assertEqual(len(f), 375)
+        self.assertEqual(sum(len(x["manuscripts"]) for x in f), 730)
+        new = [m for row in f for m in row["manuscripts"] if m.get("source_revision") == c.LATEST_PIN]
+        self.assertEqual(len(new), 11)
+        history = [m for row in f for m in row.get("historical_manuscripts", [])]
+        self.assertEqual(len(history), 1)
+        self.assertIn("VP-and-VNP-are-different-November-23", history[0]["pdf_path"])
         ids = {x["family_id"] for x in f}
         self.assertEqual(f[0]["family_id"], "001")
-        self.assertEqual(f[-1]["family_id"], "377")
-        self.assertEqual({f"{n:03d}" for n in range(1, 378)} - ids,
+        self.assertEqual(f[-1]["family_id"], "380")
+        self.assertEqual({f"{n:03d}" for n in range(1, 381)} - ids,
                          {"045", "061", "070", "123", "163"})
 
     def test_source_lock_stale_rejected(self):
@@ -72,7 +77,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
     def test_admission_fail_closed(self):
         j = json.loads(c.ADMISSIONS.read_text(encoding="utf-8"))
         admitted = c.load_admissions()
-        self.assertEqual(set(admitted), {'001', '002', '003', '004', '005', '006', '008', '011', '013', '019', '022', '025', '029', '031', '035', '038', '040', '050', '051', '052', '059', '063', '067', '069', '071', '073', '074', '075', '077', '078', '079', '081', '082', '083', '085', '086', '087'})
+        self.assertEqual(set(admitted), {'001', '002', '003', '004', '005', '006', '008', '011', '013', '019', '022', '025', '029', '031', '035', '038', '040', '050', '051', '052', '059', '063', '067', '069', '071', '073', '074', '075', '077', '078', '079', '081', '082', '083', '085', '086', '087', '378', '379', '380'})
         self.assertEqual(admitted["001"]["manuscript_sha256"],
                          "fead8152dee7a70a702fb217166f27d1c7e5cea40183f5580e3a47bfd21092a8")
         self.assertEqual(admitted["002"]["manuscript_sha256"],
@@ -104,10 +109,10 @@ class DocumentaryCatalogueTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             out = Path(td) / "oai26"
             stats = c.build(output_dir=out)
-            self.assertEqual(stats, dict(families=372, manuscript_paths=719,
-                                         editorial_drafts=53, editorially_admitted=37,
-                                         reference_only=282, generated_pages=373))
-            self.assertEqual(len(list((out / "families").glob("*.md"))), 372)
+            self.assertEqual(stats, dict(families=375, manuscript_paths=730,
+                                         editorial_drafts=53, editorially_admitted=40,
+                                         reference_only=282, generated_pages=376))
+            self.assertEqual(len(list((out / "families").glob("*.md"))), 375)
             self.assertTrue((out / "families/377.md").exists())
             admitted_page = (out / "families/001.md").read_text(encoding="utf-8")
             self.assertIn("EDITORIALLY_ADMITTED", admitted_page)
@@ -141,6 +146,14 @@ class DocumentaryCatalogueTest(unittest.TestCase):
             admitted_025 = (out / "families/025.md").read_text(encoding="utf-8")
             self.assertIn("EDITORIALLY_ADMITTED", admitted_025)
             self.assertIn("NO_CERTIFICATION", admitted_025)
+            for n in ("079", "378", "379", "380"):
+                page = (out / "families" / (n+".md")).read_text(encoding="utf-8")
+                self.assertIn("EDITORIALLY_ADMITTED", page)
+                self.assertIn(c.LATEST_PIN, page)
+                self.assertIn("NO_CERTIFICATION", page)
+            history_page = (out / "families/379.md").read_text(encoding="utf-8")
+            self.assertIn("Historical release (not a separate current indexed claim)", history_page)
+            self.assertIn("VP-and-VNP-are-different-November-23-2026/paper.pdf", history_page)
             ref = (out / "families/377.md").read_text(encoding="utf-8")
             self.assertIn("REFERENCE_ONLY", ref)
             self.assertIn("FAMILY_SEMANTICS_UNREVIEWED", ref)
