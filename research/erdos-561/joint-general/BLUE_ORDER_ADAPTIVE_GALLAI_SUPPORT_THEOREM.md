@@ -37,7 +37,7 @@ Colour every edge at an arbitrary vertex $x$ BLUE, all other edges RED. The BLUE
 
 Suppose $\nu(Q)=s$. Then deletion of any vertex leaves the matching number unchanged. By the classical Gallai matching-stability/factor-critical theorem, every nonisolated connected component $C_i$ is factor-critical, with its number of vertices $|C_i|=2\mu_i+1$, where $\mu_i=\nu(C_i)\ge1$. The component matching numbers sum to $s$; if there are $q$ such components, the total number of nonisolated vertices is $N=2s+q$.
 
-**Exclude every component with fewer than $V_B$ vertices.** If such a component $C$ existed, colour **every edge of the whole component BLUE** and every edge of the other components RED. BLUE cannot contain $B$, because its entire nonisolated support is strictly smaller than $V_B$. RED cannot contain $A$, because deleting $C$ from the RED graph decreases its matching number by $\nu(C)\ge1$, leaving at most $s-1$ matching edges, while $A$ contains an $s$-edge matching. This is a valid avoiding colouring, a contradiction.
+**Exclude every component with fewer than $V_B$ vertices.** If such a component $C$ existed, colour **every edge of the whole component BLUE** and every edge of the other components RED. BLUE cannot contain $B$, because its entire nonisolated support is strictly smaller than $V_B$. RED cannot contain $A$, because deleting $C$ from the RED graph decreases its matching number by $\nu(C)\ge1$, leaving at most $s-1$ matching edges, while $A$ contains a matching of $s$ edges. This is a valid avoiding colouring, a contradiction.
 
 Thus every nonisolated component must have size at least $V_B$, and therefore
 
