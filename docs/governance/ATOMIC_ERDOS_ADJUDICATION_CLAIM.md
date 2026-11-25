@@ -58,3 +58,58 @@ Every guarded run records an explicit `outcome_class` in its JSON receipt and du
 ## Acceptance tests
 
 Mocked regression coverage in `ci/test_atomic_erdos_adjudication_claim.py` exercises: (a) successful adjudication readback and own-SHA release (`SUBSTANTIVE_ADJUDICATION`), (b) read-only completion with explicit abort (`READ_ONLY_COMPLETION`), (c) interrupted worker (`KeyboardInterrupt`/`SIGTERM`) before and after posting plus post-crash `recover`, (d) release error and readback error holding custody (`FAILED_CLOSURE` / `HELD_PENDING_RECOVERY`), (e) concurrent HTTP `422` (`EXCLUSIVE_CLAIM_BLOCK`) and ambiguous non-`422` create-ref failure, (f) pre-acquire and post-acquire existing adjudication, and (g) stale-custody hold on unclosed checkpoints and mismatched live ref SHAs (no claim stealing). Live verification on scheduled executions remains a separate operational gate tracked in `#3630`.
+
+## Exact partial-adjudication continuation
+
+A historical partial source audit does not constitute terminal adjudication.
+The default acquire/run rules remain unchanged: any existing or ambiguous
+adjudication blocks an ordinary worker. No timestamp-based selection or
+implicit override is permitted. For a separately admitted corrected return,
+use the same issue-wide ref and guarded checkpoint, via:
+
+```bash
+python3 ci/atomic_erdos_adjudication_claim.py inspect-continuation 2274 \
+  --assignment-id ERDOS-CATALOGUE-1003-S01 \
+  --predecessor-adjudication 7079364244 --continue-return 7130850350
+python3 ci/atomic_erdos_adjudication_claim.py continue 2274 \
+  --assignment-id ERDOS-CATALOGUE-1003-S01 \
+  --predecessor-adjudication 7079364244 --continue-return 7130850350 \
+  --checkpoint /path/to/new-continuation-2274.json \
+  --worker-id WORKER_INVOCATION_ID --adjudication-file /path/to/review.md
+```
+
+This initial admission is deliberately restricted to issue #2274 and the
+three exact authenticated historical comments in the controller's protected
+`CONTINUATIONS` binding. Future cases require a separately reviewed binding;
+the caller cannot supply a new hash, actor, issue, or authorized disposition.
+The previous partial review and its original return remain unchanged.
+The corrected return is validated with the existing source-intake parser
+and protected registry. Its predecessor must be the exact typed partial
+disposition; any extra return or adjudication, including a terminal
+adjudication, blocks continuation. Return arbitration for multiple valid
+source returns remains a separate existing mechanism; this route does not
+override it.
+
+The review file must contain a completed role-scoped source-critical pass,
+with precise mathematical limitations. It is not a generic approval.
+The controller generates the terminal source-design header, including the
+corrected return ID/hash, superseded partial review ID/hash and exact claim
+SHA. The guarded lifecycle persists the expected comment digest before
+posting, rechecks the full census and protected code before the sole write,
+and only accepts the exact superseding comment from the authorized actor.
+The ordinary issue-wide create-ref remains the linearization point. A
+competing comment or stale evidence after acquisition holds custody for
+reconciliation. Missing or ambiguous write acknowledgment without exact
+readback also holds custody. Recovery checks the exact comment, claim
+message and owner before release; standalone release cannot release a
+continuation claim. Preserve the old checkpoint and use a new path for any
+subsequent attempt. The normal release read/compare race remains subject to
+the existing cooperating-worker protocol; this is not an adversarial
+GitHub administrator exclusion mechanism.
+
+A terminal continuation closes the bounded source/design review only,
+not the mathematical conjecture, Lean replay, certification, publication,
+or any downstream research dispatch. Applicable issue/Project/Issue Field
+closure remains a separate governed custody transaction and requires
+readback. Candidate tests are mocked; protected deployment and live
+read-only inspection must precede real use.

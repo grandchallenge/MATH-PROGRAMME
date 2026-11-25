@@ -5,6 +5,7 @@ A GitHub create-ref is the linearization point: only one contender can create
 refs/heads/gcl-adjudication-claims/issue-N. Never steal or auto-expire a claim.
 """
 import argparse
+import hashlib
 from datetime import datetime, timezone
 import json
 import os
@@ -119,6 +120,145 @@ def adjudications(items, assignment_id=None):
     return selected
 
 
+
+# Explicit protected-code admission. Future cases require exact protected review;
+# neither an arbitrary caller nor a newer timestamp can grant continuation.
+CONTINUATIONS = {
+    2274: {
+        "assignment": "ERDOS-CATALOGUE-1003-S01", "problem": 1003,
+        "actor": "fyremael", "actor_id": 17925951,
+        "source_sha256": "a7270a4dfa2c96bb0e3797c309ef599529837c7791711db9470b0a875cf3260c",
+        "old_result": 7079359904,
+        "old_result_sha256": "305c1d79961c0e8fc423a8b822395a86c13456f79c2f87dcb6463d436b9b7843",
+        "predecessor": 7079364244,
+        "predecessor_sha256": "096c9406cab8dd0d56c6bd576e217f1e10b12b0154bcb9376e2eedcc19a6a9f3",
+        "new_result": 7130850350,
+        "new_result_sha256": "527bfc753d64abda3346c561b96cb1344d29718ec7dae81eb202129671a282ea",
+        "predecessor_disposition": "PARTIAL_ACCEPTED_NONTERMINAL; PRIMARY_SOURCE_VERIFICATION_OPEN",
+        "new_disposition": "BOUNDED_TASK_DESIGNED",
+    },
+}
+
+
+def digest(body):
+    return hashlib.sha256(body.encode("utf-8")).hexdigest()
+
+
+def continuation_binding(issue, assignment, predecessor, new_result):
+    binding = CONTINUATIONS.get(issue)
+    if (not binding or (assignment, predecessor, new_result) !=
+            (binding["assignment"], binding["predecessor"], binding["new_result"])):
+        raise ValueError("continuation not explicitly admitted at exact identity")
+    return dict(binding)
+
+
+def verify_protected_continuation_code():
+    root = Path(__file__).resolve().parents[1]
+    head = api("GET", "git/ref/heads/main")["object"]["sha"]
+    for path in ("ci/atomic_erdos_adjudication_claim.py",
+                 "ci/erdos_catalogue_programme_intake.py",
+                 "governance/erdos_catalogue/REGISTRY.json"):
+        raw = (root / path).read_bytes()
+        blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+        if api("GET", f"contents/{path}?ref={head}")["sha"] != blob:
+            raise ValueError("continuation implementation or source lock not on protected main")
+
+
+def exact_headers(body, marker):
+    lines = body.split("\n\n", 1)[0].splitlines()
+    if not lines or lines[0] != marker:
+        raise ValueError("wrong typed comment marker")
+    fields = {}
+    for line in lines[1:]:
+        key, sep, value = line.partition(": ")
+        if not sep or not value or key in fields:
+            raise ValueError("ambiguous typed comment header")
+        fields[key] = value
+    return fields
+
+
+def continuation_census(issue, binding, items, issue_obj, *, expected_terminal=None, claim_sha=None,
+                        require_open=True):
+    """Return zero or one exact superseding terminal result. Anything else blocks."""
+    import erdos_catalogue_programme_intake as intake
+    if binding != CONTINUATIONS.get(issue):
+        raise ValueError("unknown or changed protected continuation binding")
+    if (issue_obj.get("number") != issue or
+        (require_open and issue_obj.get("state") != "open") or
+        digest(issue_obj.get("body") or "") != binding["source_sha256"]):
+        raise ValueError("continuation issue state or source changed")
+    if len({c["id"] for c in items}) != len(items):
+        raise ValueError("ambiguous duplicate comment census")
+    by_id = {c["id"]: c for c in items}
+    def bound(key):
+        c = by_id.get(binding[key])
+        if (not c or digest(c.get("body") or "") != binding[key + "_sha256"]
+                or (c.get("user") or {}).get("login") != binding["actor"]
+                or (c.get("user") or {}).get("id") != binding["actor_id"]
+                or c.get("issue_url") != f"https://api.github.com/repos/{REPO}/issues/{issue}"):
+            raise ValueError("missing, edited or unauthenticated " + key)
+        return c
+    old, pred, new = [bound(key) for key in ("old_result", "predecessor", "new_result")]
+    old_h = exact_headers(old["body"], "RESULT/1")
+    pred_h = exact_headers(pred["body"], "SOURCE-CRITICAL ADJUDICATION/1")
+    if (old_h.get("ASSIGNMENT_ID") != binding["assignment"] or
+        old_h.get("DISPOSITION") != "PARTIAL" or
+        pred_h.get("ASSIGNMENT_ID") != binding["assignment"] or
+        pred_h.get("ISSUE") != str(issue) or
+        pred_h.get("REVIEWED_RESULT_COMMENT") != str(old["id"]) or
+        pred_h.get("DISPOSITION") != binding["predecessor_disposition"] or
+        not old["id"] < pred["id"] < new["id"]):
+        raise ValueError("predecessor is not the admitted partial disposition")
+    returns = {c["id"] for c in items if (c.get("body") or "").startswith("RESULT/1")}
+    if returns != {old["id"], new["id"]}:
+        raise ValueError("unexpected or competing return")
+    receipt, _ = intake.capture({"repository": {"full_name": REPO}, "issue": issue_obj,
+                                 "comment": new, "action": "snapshot"}, intake.load_registry())
+    if (receipt["validation"] != "STRUCTURALLY_VALID_UNADJUDICATED" or
+        receipt["worker_reported_disposition"] != binding["new_disposition"]):
+        raise ValueError("corrected return is not the admitted valid return")
+    adj = adjudications(items)
+    if pred["id"] not in {x["id"] for x in adj}:
+        raise ValueError("predecessor adjudication absent")
+    extra = [x for x in adj if x["id"] != pred["id"]]
+    if not extra:
+        return []
+    if len(extra) != 1 or expected_terminal is None:
+        raise ValueError("competing, terminal, or ambiguous adjudication")
+    c = by_id[extra[0]["id"]]
+    if (digest(c.get("body") or "") != expected_terminal or
+        (c.get("user") or {}).get("login") != binding["actor"] or
+        (c.get("user") or {}).get("id") != binding["actor_id"] or
+        c.get("issue_url") != new.get("issue_url") or c["id"] <= new["id"]):
+        raise ValueError("terminal adjudication not bound to this exact continuation")
+    fields = exact_headers(c["body"], "SOURCE-CRITICAL ADJUDICATION/1")
+    if fields != {
+        "ASSIGNMENT_ID": binding["assignment"], "ISSUE": str(issue),
+        "REVIEWED_RESULT_COMMENT": str(binding["new_result"]),
+        "REVIEWED_RESULT_SHA256": binding["new_result_sha256"],
+        "SUPERSEDES_PARTIAL_ADJUDICATION": str(binding["predecessor"]),
+        "PREDECESSOR_SHA256": binding["predecessor_sha256"],
+        "DISPOSITION": "TERMINAL_SOURCE_DESIGN_ACCEPTED__SUPERSEDES_PARTIAL",
+        "EXCLUSIVE_CLAIM_SHA": claim_sha,
+    }:
+        raise ValueError("terminal header or ownership binding changed")
+    return extra
+
+
+def continuation_body(issue, binding, claim_sha, prose):
+    if not prose.strip():
+        raise ValueError("substantive adjudication prose required")
+    return (
+        "SOURCE-CRITICAL ADJUDICATION/1\n"
+        f"ASSIGNMENT_ID: {binding['assignment']}\nISSUE: {issue}\n"
+        f"REVIEWED_RESULT_COMMENT: {binding['new_result']}\n"
+        f"REVIEWED_RESULT_SHA256: {binding['new_result_sha256']}\n"
+        f"SUPERSEDES_PARTIAL_ADJUDICATION: {binding['predecessor']}\n"
+        f"PREDECESSOR_SHA256: {binding['predecessor_sha256']}\n"
+        "DISPOSITION: TERMINAL_SOURCE_DESIGN_ACCEPTED__SUPERSEDES_PARTIAL\n"
+        f"EXCLUSIVE_CLAIM_SHA: {claim_sha}\n\n{prose.strip()}\n"
+    )
+
 def is_ref_conflict_error(exc):
     text = str(exc).lower()
     return "422" in text or "reference already exists" in text
@@ -188,6 +328,8 @@ def guarded_claim_run(
     assignment_id=None,
     worker_id=None,
     command=None,
+    continuation=None,
+    continuation_prose=None,
 ):
     """Acquire an issue claim, run worker_fn under a fail-closed finally guard,
     persist durable custody/checkpoint state, and release only our own SHA.
@@ -210,9 +352,13 @@ def guarded_claim_run(
             "recovery_required": True,
         }
 
+    if continuation is not None and existing_cp is not None:
+        raise ValueError("continuation requires a new checkpoint; preserve historical receipt")
     wid = worker_id or f"pid-{os.getpid()}-{uuid.uuid4().hex[:12]}"
     checkpoint = {
         "schema_version": CHECKPOINT_SCHEMA,
+        "continuation": continuation,
+        "expected_terminal_sha256": None,
         "issue": issue_num,
         "assignment_id": assignment_id,
         "ref": ref,
@@ -261,7 +407,18 @@ def guarded_claim_run(
     before_adj = adjudications(before_items, assignment_id)
     before_ids = {item["id"] for item in before_adj}
     checkpoint["adjudication_comments_before"] = before_adj
-    if before_adj:
+    if continuation is not None:
+        try:
+            if current_actor() != continuation["actor"]:
+                raise ValueError("unauthorized continuation actor")
+            continuation_census(issue_num, continuation, before_items, issue_obj)
+        except ValueError as exc:
+            checkpoint.update({"phase": "CLOSED", "closed_at_utc": utc_now(),
+                               "abort_reason": str(exc), "outcome_class": OUTCOME_READ_ONLY})
+            write_checkpoint(checkpoint_path, checkpoint)
+            return EXIT_INELIGIBLE, {"result": "CONTINUATION_REJECTED", "reason": str(exc),
+                                     "claim_still_held": False}
+    if before_adj and continuation is None:
         checkpoint.update(
             {
                 "phase": "CLOSED",
@@ -287,13 +444,19 @@ def guarded_claim_run(
     commit = api("GET", f"git/commits/{head}")
     actor = current_actor()
     nonce = uuid.uuid4().hex
+    suffix = "" if continuation is None else (
+        f" predecessor={continuation['predecessor']} return={continuation['new_result']}"
+        f" return_sha256={continuation['new_result_sha256']}"
+        f" predecessor_sha256={continuation['predecessor_sha256']}")
+    if continuation is not None and actor != continuation["actor"]:
+        raise ValueError("continuation actor changed")
     claim_commit = api(
         "POST",
         "git/commits",
         {
             "message": (
                 f"GCL_ADJUDICATION_CLAIM/1 issue={issue_num} actor={actor} "
-                f"worker={wid} nonce={nonce}"
+                f"worker={wid} nonce={nonce}{suffix}"
             ),
             "tree": commit["tree"]["sha"],
             "parents": [head],
@@ -391,6 +554,10 @@ def guarded_claim_run(
 
         after_acq_items, _ = comments(issue_num)
         post_acquire_duplicates = adjudications(after_acq_items, assignment_id)
+        if continuation is not None:
+            continuation_census(issue_num, continuation, after_acq_items,
+                                api("GET", f"issues/{issue_num}"))
+            post_acquire_duplicates = []
         if post_acquire_duplicates:
             post_acquire_duplicate = True
             checkpoint.update(
@@ -412,7 +579,21 @@ def guarded_claim_run(
                 "worker_id": wid,
                 "checkpoint": str(checkpoint_path),
             }
-            worker_rc = worker_fn(worker_context)
+            if continuation is None:
+                worker_rc = worker_fn(worker_context)
+            else:
+                latest, _ = comments(issue_num)
+                continuation_census(issue_num, continuation, latest,
+                                    api("GET", f"issues/{issue_num}"))
+                if (current_actor() != actor or
+                    api("GET", "git/ref/" + ref.removeprefix("refs/"))["object"]["sha"] != own_sha):
+                    raise ValueError("continuation claim ownership changed")
+                verify_protected_continuation_code()
+                body = continuation_body(issue_num, continuation, own_sha, continuation_prose)
+                checkpoint["expected_terminal_sha256"] = digest(body)
+                checkpoint = write_checkpoint(checkpoint_path, checkpoint)
+                api("POST", f"issues/{issue_num}/comments", {"body": body})
+                worker_rc = 0
             checkpoint["command_returncode"] = worker_rc
             checkpoint = write_checkpoint(checkpoint_path, checkpoint)
     except KeyboardInterrupt as exc:
@@ -440,6 +621,12 @@ def guarded_claim_run(
                 after_items, after_pages = comments(issue_num)
                 after_adj = adjudications(after_items, assignment_id)
                 new_adj = [item for item in after_adj if item["id"] not in before_ids]
+                if continuation is not None:
+                    new_adj = continuation_census(
+                        issue_num, continuation, after_items, api("GET", f"issues/{issue_num}"),
+                        expected_terminal=checkpoint["expected_terminal_sha256"], claim_sha=own_sha)
+                    if checkpoint["expected_terminal_sha256"] and not new_adj:
+                        raise ValueError("terminal continuation not found after successful write")
             except BaseException as exc:
                 readback_error = str(exc)
 
@@ -598,6 +785,13 @@ def recover_checkpoint(issue_num, checkpoint_path, *, release_owned=False, abort
     live_adj = adjudications(live_items, assignment_id)
     new_adj = [item for item in live_adj if item["id"] not in before_ids]
 
+    if cp.get("continuation") is not None:
+        binding = cp["continuation"]
+        if current_actor() != binding["actor"]:
+            raise ValueError("unauthorized continuation recovery actor")
+        new_adj = continuation_census(
+            issue_num, binding, live_items, api("GET", f"issues/{issue_num}"),
+            expected_terminal=cp.get("expected_terminal_sha256"), claim_sha=own_sha, require_open=False)
     live_sha = None
     ref_exists = False
     try:
@@ -684,6 +878,17 @@ def recover_checkpoint(issue_num, checkpoint_path, *, release_owned=False, abort
             "checkpoint": str(checkpoint_path),
         }
 
+    if cp.get("continuation") is not None:
+        binding = cp["continuation"]
+        expected_message = (
+            f"GCL_ADJUDICATION_CLAIM/1 issue={issue_num} actor={binding['actor']} "
+            f"worker={cp.get('worker_id')} nonce={cp.get('nonce')}"
+            f" predecessor={binding['predecessor']} return={binding['new_result']}"
+            f" return_sha256={binding['new_result_sha256']}"
+            f" predecessor_sha256={binding['predecessor_sha256']}"
+        )
+        if api("GET", f"git/commits/{own_sha}")["message"] != expected_message:
+            raise ValueError("continuation recovery claim commit mismatch")
     if not new_adj and not (abort_reason and abort_reason.strip()):
         raise ValueError(
             "--abort-reason is required with --release-owned when no new adjudication comment is present"
@@ -735,7 +940,7 @@ def main(argv=None):
     )
     p.add_argument(
         "action",
-        choices=["acquire", "inspect", "release", "run", "recover"],
+        choices=["acquire", "inspect", "release", "run", "recover", "continue", "inspect-continuation"],
     )
     p.add_argument("issue", type=int)
     p.add_argument(
@@ -763,6 +968,9 @@ def main(argv=None):
         "--abort-reason",
         help="For recover --release-owned: explicit abort reason when no adjudication was posted",
     )
+    p.add_argument("--predecessor-adjudication", type=int)
+    p.add_argument("--continue-return", type=int)
+    p.add_argument("--adjudication-file", type=Path)
     args = p.parse_args(cli_argv)
     if args.issue < 1310:
         p.error("issue must be at least 1310")
@@ -770,6 +978,30 @@ def main(argv=None):
 
     if args.action != "run" and worker_cmd:
         p.error("worker command after `--` is only valid with `run`")
+
+    if args.action in ("continue", "inspect-continuation"):
+        binding = continuation_binding(args.issue, args.assignment_id,
+                                       args.predecessor_adjudication, args.continue_return)
+        verify_protected_continuation_code()
+        if current_actor() != binding["actor"]:
+            raise ValueError("unauthorized continuation actor")
+        if args.action == "inspect-continuation":
+            items, _ = comments(args.issue)
+            continuation_census(args.issue, binding, items, api("GET", f"issues/{args.issue}"))
+            print(json.dumps({"result": "CONTINUATION_EVIDENCE_READY", "binding": binding}))
+            return EXIT_OK
+        if not args.checkpoint or not args.adjudication_file:
+            p.error("continue requires --checkpoint and --adjudication-file")
+        prose = args.adjudication_file.read_text(encoding="utf-8")
+        if not prose.strip():
+            p.error("empty adjudication file")
+        status, summary = guarded_claim_run(
+            args.issue, args.checkpoint, None, assignment_id=args.assignment_id,
+            worker_id=args.worker_id, continuation=binding, continuation_prose=prose)
+        print(json.dumps(summary))
+        return status
+    if any((args.predecessor_adjudication, args.continue_return, args.adjudication_file)):
+        p.error("continuation arguments require an explicit continuation command")
 
     if args.action == "inspect":
         try:
@@ -784,6 +1016,13 @@ def main(argv=None):
     if args.action == "release":
         if not args.claim_sha:
             p.error("--claim-sha required")
+        if args.issue in CONTINUATIONS:
+            live = api("GET", "git/ref/" + ref.removeprefix("refs/"))["object"]["sha"]
+            if live != args.claim_sha:
+                raise RuntimeError("claim SHA mismatch; refusing release")
+            msg = api("GET", f"git/commits/{live}")["message"]
+            if " predecessor=" in msg:
+                raise ValueError("continuation claims require guarded recovery")
         print(json.dumps(release_owned_claim(ref, args.claim_sha)))
         return EXIT_OK
 
@@ -822,6 +1061,8 @@ def main(argv=None):
     if args.action == "recover":
         if not args.checkpoint:
             p.error("--checkpoint required for recover")
+        if (read_checkpoint(args.checkpoint) or {}).get("continuation") is not None:
+            verify_protected_continuation_code()
         status, summary = recover_checkpoint(
             args.issue,
             args.checkpoint,

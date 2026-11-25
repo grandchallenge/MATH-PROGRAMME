@@ -106,6 +106,17 @@ authority to disable, reschedule, or retire standing automations.
 
 This is an execution-placement rule, **not** new authority to incur unbounded compute charges, provision a new worker service, modify source-locked research, promote claims, or override existing guarded programme policy.
 
+## CHAD-local Lean placement — SSD by default
+
+**Binding local execution placement (Steward instruction, 2026-11-24):** All new CHAD-local GCL Lean development, scratch checks, replay preparation and bounded Lake builds use the native ext4 NVMe-backed Lean workspace environment. Do not run new Lean checks from the mechanical-disk shared checkout or from ordinary HDD-backed temporary directories.
+
+- Use `~/.local/bin/gcl-lean-work stage REPO EXACT_COMMIT PROJECT_SUBDIR NAME` for a source-locked project, or `gcl-lean-work new NAME TOOLCHAIN` for a scratch project. Stage the source and actual build tree on the SSD; do not merely relocate the compiler.
+- Use `gcl-lean-work run NAME lean FILE.lean` or `gcl-lean-work run NAME lake build`. Retain the project's exact toolchain and dependency manifest. Seed only matching locked dependencies using `gcl-lean-work seed NAME EXISTING_PINNED_PROJECT`, or retrieve the pinned package caches within the SSD workspace. Keep per-project mutable builds isolated.
+- `gcl-lean-work status` checks capacity. The launcher uses the SSD-backed toolchain store, workspace, cache and temporary directories, and refuses ordinary explicit HDD paths. On a mount or capacity failure, recover the SSD environment or follow the existing Colab execution policy; no silent mechanical-disk fallback. Do not delete another worker's active workspace.
+- The existing CMDG-specific SSD launcher remains a transitional diagnostic/replay facility. New work uses the general workspace launcher. Local operational receipts and runbook are in `~/.local/share/gcl-lean-ssd/`.
+
+This placement rule does not change Colab-first routing for substantial computation, exact-head native CI, protected admission, or mathematical certification. It does not authorize a new persistent controller or modification of source locks. Existing inactive historical checkouts remain intact.
+
 ## Governed Lean/Colab compute skill
 
 For source-locked Lean work, discover .agents/skills/gcl-lean-colab/SKILL.md.

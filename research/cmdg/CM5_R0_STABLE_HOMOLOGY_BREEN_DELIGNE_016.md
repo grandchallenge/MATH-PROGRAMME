@@ -201,3 +201,25 @@ Dold–Kan complex has these homology objects.
   extraction; extension to arbitrary groups and condensed sheaves.
 - Derived condensed cohomology comparison and exact shifted
   solidification endpoint.
+
+## Formal advancement: actual finite projective terms
+
+The EilenbergMacLaneModel module now establishes a natural finite
+coproduct decomposition of the genuine Dold-Kan simplex object,
+naturality of its finite product identification, the basis
+universal property for the representing integer lattice, and the
+free-representable identification of every unreduced chain term.
+The augmentation has a natural basepoint splitting, and the
+reduced chain degree functor is a retract of that actual free
+representable. The BreenDeligneFiniteTermProjectives module
+instantiates the restriction in the protected Latt category of
+PR 3709. Its latticeTermRetract and latticeTermProjective give
+actual finite-projective terms in all degrees, including vanishing
+terms below the Eilenberg-MacLane degree.
+
+Local SSD compiler replay of both modules reports only propext,
+Classical.choice and Quot.sound. Native exact-head validation and
+protected admission remain separate. The finite-term construction
+does not establish the stable-homology comparison, the approximate
+resolution pseudocoherence induction in Lean, or the final
+condensed cohomology vanishing.
