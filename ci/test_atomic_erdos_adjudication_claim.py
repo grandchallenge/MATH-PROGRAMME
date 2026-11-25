@@ -524,5 +524,165 @@ class GuardedLifecycleTests(unittest.TestCase):
         self.assertIsNone(gh.ref_sha)
 
 
+
+class ContinuationTests(unittest.TestCase):
+    def setUp(self):
+        import erdos_catalogue_programme_intake as intake
+        self.b = dict(claim.CONTINUATIONS[2274])
+        b = self.b
+        self.issue = {"number": 2274, "state": "open", "body": "pinned source",
+                      "title": "[GCL-ERDOS] ERDOS-CATALOGUE-1003-S01 — Problem 1003: fixture",
+                      "labels": [{"name": n} for n in intake.LABELS]}
+        old = "RESULT/1\nASSIGNMENT_ID: ERDOS-CATALOGUE-1003-S01\nDISPOSITION: PARTIAL\n\nHistorical"
+        pred = ("SOURCE-CRITICAL ADJUDICATION/1\nASSIGNMENT_ID: ERDOS-CATALOGUE-1003-S01\n"
+                f"ISSUE: 2274\nREVIEWED_RESULT_COMMENT: {b['old_result']}\n"
+                f"DISPOSITION: {b['predecessor_disposition']}\n\nPartial review")
+        new = ("RESULT/1\nASSIGNMENT_ID: ERDOS-CATALOGUE-1003-S01\nPROBLEM_ID: 1003\n"
+               "DISPOSITION: BOUNDED_TASK_DESIGNED\nCONTEXT_CLASS: ZERO_CONTEXT\nTIMEBOX_OBSERVED: YES\n")
+        new += "".join(f"\n## {section}\nSubstantive fixture\n" for section in intake.SECTIONS)
+        self.items = [self.comment(b[k], body) for k, body in
+                      (("old_result", old), ("predecessor", pred), ("new_result", new))]
+        for k, body in (("old_result", old), ("predecessor", pred), ("new_result", new)):
+            b[k + "_sha256"] = claim.digest(body)
+        b["source_sha256"] = claim.digest(self.issue["body"])
+        self.stack = contextlib.ExitStack()
+        self.addCleanup(self.stack.close)
+        self.stack.enter_context(patch.dict(claim.CONTINUATIONS, {2274: b}))
+        self.stack.enter_context(patch.object(intake, "load_registry", return_value={
+            "issues": [{"issue_number": 2274, "problem_id": 1003,
+                        "issue_body_sha256": b["source_sha256"]}]}))
+        self.stack.enter_context(patch.object(claim, "current_actor", return_value=b["actor"]))
+        self.stack.enter_context(patch.object(claim, "verify_protected_continuation_code"))
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.cp = Path(self.tmp.name) / "continuation.json"
+        self.gh = FakeGitHub(initial_comments=self.items)
+        self.message = None
+        self.post_mode = "success"
+        self.stack.enter_context(patch.object(claim, "api", side_effect=self.api))
+        self.stack.enter_context(patch.object(claim, "comments", side_effect=self.gh.comments))
+
+    def comment(self, cid, body):
+        return {"id": cid, "body": body, "user": {"login": self.b["actor"], "id": self.b["actor_id"]},
+                "issue_url": f"https://api.github.com/repos/{claim.REPO}/issues/2274",
+                "html_url": f"https://example.invalid/{cid}"}
+
+    def api(self, method, path, fields=None):
+        if method == "GET" and path == "issues/2274":
+            return self.issue
+        if method == "POST" and path == "git/commits":
+            self.message = fields["message"]
+        if method == "GET" and path == "git/commits/claimsha001":
+            return {"message": self.message}
+        if method == "POST" and path == "issues/2274/comments":
+            self.gh.calls.append((method, path, fields))
+            if self.post_mode != "no_ack_no_effect":
+                self.gh.comments_list.append(self.comment(self.b["new_result"] + 1, fields["body"]))
+            if self.post_mode != "success":
+                raise KeyboardInterrupt("lost acknowledgement")
+            return self.gh.comments_list[-1]
+        return self.gh.api(method, path, fields)
+
+    def run_cont(self):
+        return claim.guarded_claim_run(2274, self.cp, None,
+            assignment_id=self.b["assignment"], worker_id="fixture",
+            continuation=self.b, continuation_prose="Bounded source design only; conjecture open.")
+
+    def test_success_preserves_partial_and_blocks_duplicate(self):
+        status, out = self.run_cont()
+        self.assertEqual(status, claim.EXIT_OK)
+        self.assertEqual(out["result"], "ADJUDICATED_AND_RELEASED")
+        self.assertEqual(len(self.gh.comments_list), 4)
+        self.assertEqual(self.gh.comments_list[:3], self.items)
+        self.assertIn("SUPERSEDES_PARTIAL_ADJUDICATION", self.gh.comments_list[-1]["body"])
+        self.assertIsNone(self.gh.ref_sha)
+        self.cp = Path(self.tmp.name) / "second.json"
+        status, out = self.run_cont()
+        self.assertEqual((status, out["result"]), (claim.EXIT_INELIGIBLE, "CONTINUATION_REJECTED"))
+        self.assertEqual(len(self.gh.comments_list), 4)
+
+    def test_unadmitted_and_wrong_predecessor(self):
+        for args in ((2275, self.b["assignment"], self.b["predecessor"], self.b["new_result"]),
+                     (2274, self.b["assignment"], 1, self.b["new_result"]),
+                     (2274, "WRONG", self.b["predecessor"], self.b["new_result"])):
+            with self.assertRaises(ValueError):
+                claim.continuation_binding(*args)
+
+    def test_stale_edited_new_return_rejects_without_ref(self):
+        self.gh.comments_list[-1] = dict(self.items[-1], body=self.items[-1]["body"] + "edited")
+        status, out = self.run_cont()
+        self.assertEqual((status, out["result"]), (claim.EXIT_INELIGIBLE, "CONTINUATION_REJECTED"))
+        self.assertFalse(any(m == "POST" for m, _, _ in self.gh.calls))
+
+    def test_unauthorized_actor_rejects_without_ref(self):
+        with patch.object(claim, "current_actor", return_value="foreign"):
+            self.assertEqual(self.run_cont()[0], claim.EXIT_INELIGIBLE)
+        self.assertFalse(any(m == "POST" for m, _, _ in self.gh.calls))
+
+    def test_concurrent_claim_cannot_post(self):
+        self.gh.ref_sha = "foreign-claim"
+        self.assertEqual(self.run_cont()[0], claim.EXIT_NOT_ACQUIRED)
+        self.assertEqual(self.gh.ref_sha, "foreign-claim")
+        self.assertFalse(any(m == "POST" and p.endswith("/comments") for m,p,_ in self.gh.calls))
+
+
+    def test_competing_adjudication_after_acquire_holds_and_does_not_post(self):
+        self.gh.inject_comment_after_acquire = self.comment(
+            self.b["new_result"] + 1, "SOURCE-CRITICAL ADJUDICATION/1\nDISPOSITION: TERMINAL")
+        self.assertEqual(self.run_cont()[0], claim.EXIT_FAILED_CLOSURE)
+        self.assertEqual(self.gh.ref_sha, "claimsha001")
+        self.assertFalse(any(m == "POST" and p.endswith("/comments") for m,p,_ in self.gh.calls))
+
+    def test_interrupted_post_with_exact_readback(self):
+        self.post_mode = "lost_ack_after_effect"
+        status, out = self.run_cont()
+        self.assertEqual(status, claim.EXIT_FAILED_CLOSURE)
+        self.assertEqual(len(out["new_adjudication_comments"]), 1)
+        self.assertIsNone(self.gh.ref_sha)
+        status, recovered = claim.recover_checkpoint(2274, self.cp)
+        self.assertEqual(status, claim.EXIT_OK)
+        self.assertEqual(recovered["outcome_class"], claim.OUTCOME_SUBSTANTIVE)
+
+    def test_interrupted_post_without_readback_holds_then_owned_recovery(self):
+        self.post_mode = "no_ack_no_effect"
+        self.assertEqual(self.run_cont()[0], claim.EXIT_FAILED_CLOSURE)
+        self.assertEqual(self.gh.ref_sha, "claimsha001")
+        with self.assertRaises(ValueError):
+            claim.recover_checkpoint(2274, self.cp, release_owned=True)
+        status, _ = claim.recover_checkpoint(2274, self.cp, release_owned=True,
+                                              abort_reason="exact census confirms no terminal write")
+        self.assertEqual(status, claim.EXIT_OK)
+        self.assertIsNone(self.gh.ref_sha)
+
+    def test_recovery_rejects_forged_terminal_and_edited_predecessor(self):
+        self.post_mode = "no_ack_no_effect"
+        self.run_cont()
+        self.gh.comments_list.append(self.comment(self.b["new_result"]+1,
+                                     "SOURCE-CRITICAL ADJUDICATION/1\nDISPOSITION: TERMINAL"))
+        with self.assertRaises(ValueError):
+            claim.recover_checkpoint(2274, self.cp, release_owned=True, abort_reason="abort")
+        self.gh.comments_list.pop()
+        self.gh.comments_list[1] = dict(self.items[1], body="edited")
+        with self.assertRaises(ValueError):
+            claim.recover_checkpoint(2274, self.cp, release_owned=True, abort_reason="abort")
+        self.assertEqual(self.gh.ref_sha, "claimsha001")
+
+    def test_stale_source_and_competing_return(self):
+        self.issue["body"] += "changed"
+        with self.assertRaises(ValueError):
+            claim.continuation_census(2274, self.b, self.items, self.issue)
+        self.issue["body"] = "pinned source"
+        with self.assertRaises(ValueError):
+            claim.continuation_census(2274, self.b,
+                self.items + [self.comment(self.b["new_result"]+1, self.items[-1]["body"])], self.issue)
+
+    def test_legacy_release_refuses_continuation(self):
+        self.post_mode = "no_ack_no_effect"
+        self.run_cont()
+        with self.assertRaisesRegex(ValueError, "guarded recovery"):
+            claim.main(["release", "2274", "--claim-sha", "claimsha001"])
+        self.assertEqual(self.gh.ref_sha, "claimsha001")
+
+
 if __name__ == "__main__":
     unittest.main()
