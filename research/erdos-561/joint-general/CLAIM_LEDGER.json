@@ -1755,6 +1755,67 @@
         "research/erdos-561/joint-general/GALLAI_NO_TRIANGLE_SUPPORT_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561; factor-critical component order adaptive matching obstruction for all-s RED versus two positive BLUE stars",
+      "assumptions": [
+        "s>=3, red positive s-component vertex-disjoint star forest A=F(a1,..,as), blue positive TWO-component B=F(v,g)",
+        "all host graphs finite and simple; ordinary non-induced vertex-disjoint star-forest embeddings",
+        "r=ceil((v+g+1)/2), red vertex support>=2s+floor(s/r)",
+        "for JOINT original red n sorted positive length s, original blue (u,v,g) sorted positive; normalized red ai=ni−ns+1, BLUE U=u−g+1,V=v−g+1>=2"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3722"
+      ],
+      "promotion_condition": "Paper source theorem UNDER_REVIEW; finite arithmetic and recursive source-composition check CHECKED. Full Erdős #561 unrestricted arbitrary-profile OPEN/PARTIAL, no external MATHCERT or historical priority claim.",
+      "claim_id": "ERDOS561-BLUE-TARGET-ORDER-ADAPTIVE-MATCHING-057",
+      "short_name": "Factor-critical BLUE-target-order adaptive matching support and all-s exact JOINT sufficient criterion",
+      "claim_text": "For ANY finite simple Q arrowing RED forest A with s positive disjoint star components against BLUE forest B=F(v,g) with two positive star components, let rho=ceil((v+g+1)/2)>=2 and red vertex support VA=sum(ai+1). If VA>=2s+floor(s/rho), then nu(Q)>=s+1. Proof: all edges incident to arbitrary vertex BLUE force full red A after deleting that vertex. Under hypothetical nu(Q)=s, classical Gallai matching-stability yields all nonisolated components factor-critical of order 2mu+1 with component matching μ>=1, sum μ=s, N=2s+q. If ANY component C had order <VB=v+g+2, colour ALL of C BLUE and other components RED: BLUE cannot contain B by vertex support; RED matching number s−mu(C)<s excludes the s RED star components. Therefore every component has 2mu+1>=VB and μ>=ceil((VB−1)/2)=rho. Hence q<=floor(s/rho), N<=2s+floor(s/rho)<=VA; deleting a nonisolated vertex leaves too few vertices for red A, contradiction. For original red n and BLUE (u,v,g), normalized second residual F(V,1) has rhoV=ceil((V+2)/2)=floor((V+3)/2). If V>=2 and normalized red sum(ai+1)>=2s+floor(s/rhoV), the SOURCE-LOCKED single BLUE matching theorem remains valid with identical nonnegative explicit interference penalty P_BLUE=sum_(i<s)(ai−max(ai+1+V−1,ai+2+U−1 if exists))_+. Thus any JOINT host e>=Jcan−P_BLUE and P_BLUE=0 proves exact unrestricted-host JOINT. ORIGINAL exactness still requires a separate protected core transfer; no claims for positive deficit or smaller support. This improves the parent no-triangle fixed support threshold 2s+floor(s/2), and full original #561 remains OPEN.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "BLUE_ORDER_ADAPTIVE_GALLAI_SUPPORT_THEOREM.md Theorem V: exclude *all* too-small factorcritical components by colouring one whole component blue and remaining components red, using target vertex order VB. For ν=s stable graph every nonisolated component matching>=rho, so N=2s+q<=2s+floor(s/rho), incompatible with red target support after any vertex deletion. Corollary W specializes to normalized BLUE second residual F(V,1), uniformly decrementing RED/BLUE minima and invoking earlier source two-component residual bridge and exact positive-part algebra. Mathematical proof is unbounded in s, but remains UNDER_REVIEW; finite checks not substitute.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/BLUE_ORDER_ADAPTIVE_GALLAI_SUPPORT_THEOREM.md",
+        "research/erdos-561/joint-general/verify_blue_order_adaptive_gallai.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/GALLAI_NO_TRIANGLE_SUPPORT_SHARPENING_THEOREM.md",
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+        "research/erdos-561/joint-general/BLUE_ORDER_ADAPTIVE_GALLAI_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561; factor-critical component order adaptive matching obstruction for all-s RED versus two positive BLUE stars",
+      "assumptions": [
+        "s>=3, red positive s-component vertex-disjoint star forest A=F(a1,..,as), blue positive TWO-component B=F(v,g)",
+        "all host graphs finite and simple; ordinary non-induced vertex-disjoint star-forest embeddings",
+        "r=ceil((v+g+1)/2), red vertex support>=2s+floor(s/r)",
+        "for JOINT original red n sorted positive length s, original blue (u,v,g) sorted positive; normalized red ai=ni−ns+1, BLUE U=u−g+1,V=v−g+1>=2"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3722"
+      ],
+      "promotion_condition": "Paper source theorem UNDER_REVIEW; finite arithmetic and recursive source-composition check CHECKED. Full Erdős #561 unrestricted arbitrary-profile OPEN/PARTIAL, no external MATHCERT or historical priority claim.",
+      "claim_id": "ERDOS561-BLUE-ORDER-ADAPTIVE-RECURSIVE-CHECK-058",
+      "short_name": "Adaptive BLUE vertex-order support increases exact recursive three-BLUE proof certificates",
+      "claim_text": "In deterministic full fixed179928-grid RED s3..8, prefix arm1..8 terminal1, BLUE U,V2..8, previous source-proved fixed no-triangle support qualifies179368 and its P_BLUE=0 region135852. BLUE-order adaptive support qualifies179635 (+267) and P_BLUE=0 region136118 (+266). A monotone source-premise-preserving recursive proof-tree extension built on protected fifth-core and fixed no-triangle engines raises exact JOINT certified by theorem composition 167485→167601 (+116, 97 direct adaptive matching zero deficit and19 red-matching recursion) and exact ORIGINAL 152446→152494 (+48). 12327 JOINT and27434 ORIGINAL remain UNKNOWN in this finite grid, not counterexamples. The deterministic program validates integer support orders, prior 179928-profile index identities and matching loss, monotone retention of every old proof, and new proof-trace dependency trees. No claim of MATHCERT or independent formalization; paper theorem remains UNDER_REVIEW.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_blue_order_adaptive_gallai.py imports the exact source-locked verify_gallai_no_triangle_support.py parent; evaluates upgraded support threshold rhoV=floor((V+3)/2), all 179928 sorted profiles, old and new proof classes and their well-founded strictly shorter red matching/first residual dependents. Exact finite count 267 newly supported and 266 zero deficit; source-derived extra JOINT116 ORIGINAL48. Standard-library deterministic; source theorem is separate paper proof pending review.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_blue_order_adaptive_gallai.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/BLUE_ORDER_ADAPTIVE_GALLAI_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
