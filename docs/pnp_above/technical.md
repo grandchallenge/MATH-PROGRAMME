@@ -177,28 +177,37 @@ A further sharp but restricted result says that outputting a uniform m-bit strin
 
 The [WP01 erratum and results](wp01_erratum.md) provide proofs, test quantities and exact model restrictions.
 
-## The missing lower-bound transfer
+## The native decision–search equivalence (WP34–WP38)
 
-Define an actual classical cost invariant $\mathcal C_{\mathcal A}(G_n)$, including the allowed strategy class $\mathcal A$, randomness, uniformity, communication, circuit representation, promises and errors.
+Use the original MIPRE source model, with encoded size `esize` and actual `Cost.PolyTimeFun` programs. Fix a compression object $G$, a source universal machine $U$ and a verifier boundedness parameter $\lambda$ satisfying WP34's explicit boundedness hypothesis. Define $D$ as existence of a total source-polynomial solver correct on encoded formulas; $C$ as existence of a total source-polynomial solver of the valid compressed promise; $W$ as existence of a total source-polynomial witness program correct on all satisfiable formulas; and $L$ as the analogous canonical witness program.
 
-To prove P differs from NP using an independently established lower bound, one must also establish an implication of the form
+WP34 and WP38B establish
 
 $$
-\mathrm{SAT}\in\mathsf P
-\quad\Longrightarrow\quad
-\mathcal C_{\mathcal A}(G_n)\leq n^{O(1)}
+C \iff D \iff W \iff L.
 $$
 
-with exact construction and overhead accounting. No such transfer is presently proved. A Schmidt-rank bound cannot be inserted in place of a classical strategy cost without demonstrating how a putative SAT solver produces a forbidden strategy.
+For valid indices the original input is the binary formula index $k$, above the fixed threshold, with the compressed verifier interpreting SAT by perfect PCC completeness and unsatisfiability by quantum value at most $1/2$. This is not a decision claim for arbitrary numeric indices. PCC is the source strategy condition, not an efficient deterministic local strategy. The verifier bound polynomial in the *numeric* index $k$ is not automatically polynomial in the binary index length. WP31 exposes this encoding barrier; WP32–WP35 control padding, variable scope and dense support.
 
-The required additional audit includes relativization, natural proofs and algebrization, with their precise hypotheses. Neither quantum entanglement nor self-reference automatically bypasses those barriers.
+For a fixed formula $f$, let $S(f)$ be WP35's ordered list of distinct active identifiers, and $R(f,b)$ its verified dense witness relation. The precise search proposition is
 
-## Exact next obligations (updated 19 November 2026)
+$$
+W=\exists A\in\mathrm{PTF}\ \forall f,\quad
+\mathrm{SAT}(f)\Longrightarrow R(f,A(f)).
+$$
 
-1. **WP19 universal sampler no-gap theorem complete.** The original WP18 law has positive unequal-question mass but its star-plus-isolated-diagonal support precludes *all* synchronous quantum/classical advantage, irrespective of the decision predicate. Build a **different, richer two-sided original source-native CL sampler** with overlapping questions and prove the actual four query families, time and size bounds. Cycles are a design clue, not a sufficient certificate of quantum advantage.
-2. Implement an **answer-sensitive executable original `Cost.Prog` decider**, establish its typed-input/malformed-data semantics and worst-case source bounds, and prove a bounded `Verifier` for the new sampled game.
-3. Prove a quantitative, nonzero **quantum/classical value or soundness gap** using the original source strategy models and independent upper/lower bounds; source compilation or positive off-diagonal mass alone does not suffice.
-4. Only after that, execute the positive-parameter introspection, answer-reduction and repetition stages on an evidenced input, quantify `\lambda` and `C_0`, and resolve Theorem 12.1's printed statement/proof discrepancy.
-5. Independently establish or refute the **uniform succinct SAT-to-classical-resource transfer** with fixed machine/encoding, or expose a counterexample. Keep the separate PNP-001 Formal Conjectures model, NP-verifier and endpoint bridges open.
+Here PTF denotes original native polynomial-time functions, not abstract oracle access. The relation is sound on all inputs and complete with a witness of length $|S(f)|\leq f.\mathrm{size}$. WP38A constructs a source program that successively tests $f_j\land x_j$ and then sets $f_{j+1}=f_j\land x_j$ on YES, or $f_j\land\neg x_j$ on NO. On a satisfiable prefix this preserves feasibility; the resulting bits form the lexicographically greatest restriction of a satisfying assignment to the ordered identifiers. Each fold step increases encoded state size by at most $\mathrm{esize}(i)+27$ for identifier $i$. The original fold combinator provides an actual polynomial execution certificate. WP38B composes this with the support scanner and constructs the reverse decision program by total source parsing and verified witness evaluation. No correctness condition is imposed on witness outputs for unsatisfiable inputs, but total polynomial runtime is required there too.
 
-**What remains open:** the hard-game gap, source-effective full compressor, general classical transfer and P versus NP itself. Continue to [GCL documentary coverage](coverage.md) and [Evidence and status](evidence.md).
+The exact theorems `valid_promise_iff_witness`, `valid_promise_iff_canonical` and their negated forms are in [WP38B](https://github.com/grandchallenge/MATHSOLVE/pull/1298); [WP38A](https://github.com/grandchallenge/MATHSOLVE/pull/1297) proves the greedy compiler, lexicographic property and parser. This is standard self-reducibility formalized with actual native runtime accounting, not a novel general complexity separation.
+
+## What the lower bounds actually establish
+
+WP36A–B prove a worst-case quadratic lower bound over fixed correct native programs on genuine valid-index instances with empty variable support. It arises from the native charged-copy representation. WP37 proves a support-width obstruction for binary semantic refutations: for a complete ordered-pair parity construction on $N$ vertices, every refutation in the specified system must exceed width $\lfloor N/3\rfloor^2$ for $N\geq3$. Arbitrary predicates are allowed on lines; inference arity and support are restricted. Adding the parity equations gives an algebraic shortcut. Neither result excludes polynomial-time algorithms of arbitrary degree and form.
+
+## Open obligations (24 November 2026)
+
+The negated equivalence $\neg C\iff\neg W\iff\neg L$ gives a search-side target. Prove that every total polynomial-time native candidate fails to produce a satisfying witness on some satisfiable formula, or equivalently exclude every total polynomial-time canonical witness constructor. One may seek a hard satisfiable subfamily; restricting to unique witnesses is a research choice, not a proved equivalence with the general unique-SAT promise. Non-affinity and logical expansion alone are not hardness proofs. Any proposed measure must control unrestricted algorithmic transformations, not only a prescribed proof calculus or greedy search.
+
+General SAT-to-classical *strategy resource* transfer and a superpolynomial bound remain open. The restricted decision equivalence does not turn quantum-state rank into classical runtime. The full effective numerical compressor execution and printed theorem discrepancy are separate from the abstract source promise results. The PNP-001 standard-machine, NP-verifier and endpoint concordance remains a separate incomplete lane, with later reverse-simulation progress. Relevant relativization, natural-proofs and algebrization barriers must be respected.
+
+**P versus NP remains open.** Continue to the [source coverage](coverage.md) and [evidence ledger](evidence.md).

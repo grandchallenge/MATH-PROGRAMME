@@ -2,7 +2,7 @@
 
 <p class="page-deck">An auditable register of source mathematics, GCL finite checks, conditional deductions, editorial admission, and work still required.</p>
 
-**Current research coverage: WP00–WP19, 19 November 2026; the immutable historical source inventory covers WP00–WP17 separately.** For all 72 source files, each work package's primary artifact, execution receipt, and the separate cross-repository governance/certification records, see the [complete documentary coverage ledger](coverage.md). Earlier work-package paragraphs below retain their historical at-the-time limitations, even when a later package closes one of those specific technical obligations.
+**Current milestone coverage: WP00–WP38B, 24 November 2026; the immutable historical source inventory covers WP00–WP17 separately.** For all 72 source files, each work package's primary artifact, execution receipt, and the separate cross-repository governance/certification records, see the [complete documentary coverage ledger](coverage.md). Earlier work-package paragraphs below retain their historical at-the-time limitations, even when a later package closes one of those specific technical obligations.
 
 ## How to interpret the evidence grades
 
@@ -221,6 +221,12 @@ Unlike WP18's old-decider value-one result, this equality holds if the optimum i
 
 **Claim boundary and next WP20:** a richer original **two-sided CL question law with interacting question constraints** is mathematically necessary. Having cycles or sending different questions is a design condition, not sufficient proof of quantum advantage; the next work also needs an executable bounded **answer-sensitive** original Cost.Prog decider and a quantified positive original-model value gap. Positive-parameter compression and the classical SAT resource transfer remain OPEN. The source run and standard-axiom audit verify internal Lean correctness at stated scope, **not** independent MATHCERT mathematical certification or P versus NP resolution.
 
+## Protected successors: WP20–WP38B
+
+The [protected successor ledger](coverage.md#protected-successors-wp20wp38b) indexes milestones and exact WP38 source identities, including 28 theorem declarations in WP38A and 15 in WP38B. All 43 standard-axiom reports passed. WP38A freshly replayed three new modules; WP38B freshly replayed its new bridge against 98 source-matched predecessor modules. This is internal verification, not independent public certification.
+
+The exact equivalence holds under WP34's verifier boundedness hypothesis, for total polynomial native programs and the restricted valid-index promise. The [technical spine](technical.md#the-native-decisionsearch-equivalence-wp34wp38) states the search quantifiers. Unsatisfiable inputs impose no witness-output correctness obligation, but still require total polynomial runtime.
+
 ## Source-to-claim matrix
 
 | Item | Primary evidence | Grade | Maximum warranted claim |
@@ -245,6 +251,7 @@ Unlike WP18's old-decider value-one result, this equality holds if the optimum i
 | PNP-001 Formal Conjectures definition bridges | [Separate bridge status](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_BRIDGE_001/bridge_status.json) | LEAN | Carrier and polynomial-bound bridges checked; machine, NP verifier and endpoint still open |
 | WP18 source-native asymmetric sampler and second no-gap theorem | [Protected source PR #1248](https://github.com/grandchallenge/MATHSOLVE/pull/1248) and [source manifest](https://github.com/grandchallenge/MATHSOLVE/blob/760d30d74672309ae58f015b0f511c062f431e08/research/PNP-ABOVE/WP18_SOURCE_LOCK.json) | LEAN | Original source Sampler 9, bounded Verifier 9, positive unequal-question mass; with old decider original sync/tensor/commuting values all 1 |
 | WP19 universal source-sampler star-support no-advantage | [Source-native theorem](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_ArbitraryPredicateSourceNoGap.lean) and [exact original CL law](https://github.com/grandchallenge/MATHSOLVE/blob/0780909e5a31c8fb7ff882a25b1ccad5bf31dd51/research/PNP-ABOVE/WP19_ExactOriginalQuestionProbability.lean) | LEAN | All synchronous predicates on WP18's actual sampler have equal synchronous, tensor quantum and tracial commuting values, even below 1; no harder game |
+| Restricted native decision/witness equivalence | [WP38B](https://github.com/grandchallenge/MATHSOLVE/pull/1298) | LEAN | Exact conditional native equivalence; no unrestricted lower bound |
 | General SAT-to-classical strategy-cost transfer | [Research issue #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) | OPEN | No such implication proved |
 | P = NP or P ≠ NP | [Parent PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162) | OPEN | Neither proposition proved |
 
@@ -270,17 +277,10 @@ A claimed full compressed-game execution fails its evidence gate until there are
 
 Finite experiments may suggest lemmas but do not justify asymptotic lower bounds.
 
-## Open obligations and stopping conditions (updated 19 November 2026)
+## Current open obligations and stopping conditions
 
-The exact WP00–WP17 file, replay, review and protected-documentary trail is in [GCL documentary coverage](coverage.md). The historical evidence paragraphs above are intentionally not restated as if an intermediate blocker remained after its later Lean closure. WP19 separately closes the stronger WP18 star-support obstruction.
+The dated WP00–WP19 evidence above records historical states, not the present frontier. The [protected successor ledger](coverage.md#protected-successors-wp20wp38b) traces the subsequent closures. WP38B establishes the exact native polynomial witness/decision equivalence. It does not exclude a polynomial witness constructor. A lower bound must control every relevant algorithm, not merely input-copy costs, semantic proof width or a chosen search procedure.
 
-1. **WP19 proved the universal WP18 sampler obstruction:** the source-native unequal-question law is a 256-spoke star plus 256 isolated diagonal pairs, and **every mathematical synchronous predicate has equal original synchronous, tensor-product quantum and tracial commuting values**. Construct a *different*, genuinely richer, original Cost.Prog-executable conditional-linear joint question law with interacting two-sided constraints and prove all original source interface and resource bounds. A cycle in the support graph is a useful test, not a certificate of quantum advantage.
-2. **Discriminating executable verifier:** implement an answer-sensitive original `Cost.Prog` decider and prove native input parsing, source correctness, all-input time bounds and `Verifier.IsBounded` for the *new* candidate. The reference WP13–WP14 boundedness result does not establish this for any replacement.
-3. **Actual game gap:** establish nontrivial completeness, soundness and quantum-versus-classical game-value bounds, against the original native models. Non-diagonal support and a different Boolean predicate are not themselves a gap proof.
-4. **Positive-parameter compression:** construct and replay the source's introspection, answer reduction and repetition for a genuinely compliant positive-parameter verifier; reconcile Theorem 12.1's stated inequality with its displayed proof and source-effective numerical constants.
-5. **Uniform classical transfer:** prove or refute the full succinct SAT-to-classical-strategy-cost reduction with machine/encoding costs. The explicit-game WP01 SAT transfer is insufficient for unrestricted classical lower bounds.
-6. **Separate PNP-001 definition bridges:** the Formal Conjectures/Programme carrier and polynomial-bound conversions are kernel-checked, but machine-model, NP-verifier and concrete endpoint bridges remain open. Preserve the [MATHCERT pending handoff](https://github.com/grandchallenge/MATHSOLVE/blob/main/cert_handoffs/PNP-001.json), plus relativization, natural-proofs and algebrization barrier review.
+The standard-machine/NP-verifier/endpoint bridge remains incomplete. General strategy-resource transfer, quantitative effective compressor execution, the printed source discrepancy, applicable complexity barriers and independent certification remain separate obligations. PNP-001 remains open.
 
-Neither a protected merge, a completed source inventory nor a verified no-gap theorem implies the Millennium problem is solved. The parent issues remain **OPEN**; the exact evidentiary boundary is `WP18_STAR_SUPPORT_NO_GAP_PROVED__RICHER_SOURCE_SAMPLER_AND_POSITIVE_GAME_GAP_OPEN`, alongside distinct compression, classical-transfer and definition-equivalence obligations.
-
-For a general reader, see the [primer](primer.md). For mathematical formulations, see the [technical spine](technical.md). For source names, receipts and the cross-GCL authority map, see [complete documentary coverage](coverage.md).
+For a general reader, see the [primer](primer.md); for precise statements, see the [technical spine](technical.md).
