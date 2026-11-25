@@ -324,6 +324,9 @@
       "package_dir": "experiments/erdos_proof_verification/0027",
       "material_patterns": [
         "experiments/erdos_proof_verification/0027/Erdos27CRT.lean",
+        "experiments/erdos_proof_verification/0027/Erdos27Weighted.lean",
+        "governance/erdos_proof_verification/evidence/0027/WEIGHTED_*",
+        "governance/erdos_proof_verification/evidence/0027/check_weighted_lean.py",
         "experiments/erdos_proof_verification/0027/lean-toolchain",
         "experiments/erdos_proof_verification/0027/lakefile.toml",
         "experiments/erdos_proof_verification/0027/lake-manifest.json",
@@ -347,13 +350,25 @@
           "lean",
           "--output",
           ".formal-validation/erdos-pv-0027-crt/replay"
+        ],
+        [
+          "python3",
+          "governance/erdos_proof_verification/evidence/0027/check_weighted_lean.py",
+          "--cache-root",
+          "experiments/erdos_proof_verification/0027",
+          "--lean",
+          "lean",
+          "--output",
+          ".formal-validation/erdos-pv-0027-crt/weighted"
         ]
       ],
       "development_targets": [
-        "Erdos27CRT.lean"
+        "Erdos27CRT.lean",
+        "Erdos27Weighted.lean"
       ],
       "formal_sources": [
-        "Erdos27CRT.lean"
+        "Erdos27CRT.lean",
+        "Erdos27Weighted.lean"
       ]
     }
   ]

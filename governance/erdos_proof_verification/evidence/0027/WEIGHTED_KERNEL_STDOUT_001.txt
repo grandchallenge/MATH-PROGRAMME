@@ -1,0 +1,26 @@
+'Erdos27Weighted.bad_mass_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.finite_sequence_unweighted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.bad_union_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.finite_step_list' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.finite_sequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.mass_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.mass_sdiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.mass_union_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.finite_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.weighted_recurrence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.weighted_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.weighted_le_plain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.unweighted_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Weighted.finite_sequence.{u_1} {α : Type u_1} [DecidableEq α] (T : ℕ) (U I A : ℕ → Finset α)
+  (L : ℕ → List (Finset α)) (p : ℕ → ℚ) (h0 : mass T (U 0) = 1) (hp0 : ∀ (j : ℕ), 0 ≤ p j) (hp1 : ∀ (j : ℕ), p j ≤ 1)
+  (hU : ∀ (j : ℕ), U j = I j \ badUnion (L j)) (hs : ∀ (j : ℕ), U (j + 1) = U j \ A j)
+  (hind : ∀ (j : ℕ), mass T (A j ∩ I j) = p j * mass T (I j)) (n : ℕ) :
+  ideal p n - weightedError p (fun j => p j * badMass T (L j)) n ≤ mass T (U n)
+Erdos27Weighted.finite_sequence_unweighted.{u_1} {α : Type u_1} [DecidableEq α] (T : ℕ) (U I A : ℕ → Finset α)
+  (L : ℕ → List (Finset α)) (p : ℕ → ℚ) (h0 : mass T (U 0) = 1) (hp0 : ∀ (j : ℕ), 0 ≤ p j) (hp1 : ∀ (j : ℕ), p j ≤ 1)
+  (hU : ∀ (j : ℕ), U j = I j \ badUnion (L j)) (hs : ∀ (j : ℕ), U (j + 1) = U j \ A j)
+  (hind : ∀ (j : ℕ), mass T (A j ∩ I j) = p j * mass T (I j)) (n : ℕ) :
+  ideal p n - plainError (fun j => p j * badMass T (L j)) n ≤ mass T (U n)
+'Erdos27Weighted.reject_independence_drop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.reject_correlation_drop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Weighted.reject_weight_range_drop' depends on axioms: [propext, Classical.choice, Quot.sound]
