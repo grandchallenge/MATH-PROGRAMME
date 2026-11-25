@@ -1,0 +1,32 @@
+'Erdos27Density.avoidance_cast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.positive_avoidance_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.lemma21_eventual_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Density.lemma21_eventual_lower (T : ℕ) [NeZero T] (m : ℕ → ℕ) (r : ℕ → ℤ) (n : ℕ) (hd : ∀ i < n, m i ∣ T)
+  (eps : ℚ) (he : 0 < eps) :
+  ∃ K,
+    ∀ (N : ℕ),
+      K ≤ N →
+        ∏ i ∈ Finset.range n, (1 - 1 / ↑(m i)) -
+              ∑ j ∈ Finset.range n, ∑ i ∈ Erdos27Sequence.bad m j, 1 / (↑(m i) * ↑(m j)) -
+            eps <
+          ↑(positiveCount T (fun x => ∀ (i : Fin n), (ZMod.castHom ⋯ (ZMod (m ↑i))) x ≠ ↑(r ↑i)) N) / ↑N
+'Erdos27Density.count_eq_indicator_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.count_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.positiveCount_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.positive_frequency_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.positive_natural_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.rational_natural_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Density.frequency_error (T : ℕ) [NeZero T] (Q : ZMod T → Prop) (N : ℕ) (hn : 0 < N) :
+  |↑(prefixCount T Q N) / ↑N - density Q| ≤ ↑T / ↑N
+Erdos27Density.rational_natural_density (T : ℕ) [NeZero T] (Q : ZMod T → Prop) (eps : ℚ) (he : 0 < eps) :
+  ∃ K, ∀ (N : ℕ), K ≤ N → |↑(prefixCount T Q N) / ↑N - density Q| < eps
+'Erdos27Density.density_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.discrepancy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.discrepancy_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.frequency_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.prefix_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.indicator_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.prefix_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.prefix_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.prefix_decompose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Density.period_prefix_count' depends on axioms: [propext, Classical.choice, Quot.sound]
