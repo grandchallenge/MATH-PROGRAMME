@@ -79,6 +79,66 @@ For the **first** arrowing relation, if red $3K_2$ is absent, red edges occur in
 
 For the **second** relation, suppose blue $F(2,1)$ is absent. If blue edges occur in at most one host component, at least four host components are entirely red, with one of size at least four; these contain red $F(4,1,1,1)$. If blue edges occur in two or more host components, absence of blue $F(2,1)$ forces every blue-active host component to contain at most one blue edge. Red counts in the five components are at least $(4,3,2,1,0)$. The first yields a red four-star and the next three provide its required disjoint red single edges. Therefore red $F(4,1,1,1)$ occurs. This proves the upper bound. QED.
 
+## Infinite-family extension: all larger leading RED stars
+
+**Theorem (unbounded, original size-Ramsey for every $a\\ge5$).** For any integer $a\\ge4$, original red $n=(a,1,1,1)$ and blue $m=(3,2,1)$ have exact JOINT residual minimum
+
+$$
+\\boxed{\\mathcal J(n,m)=2a+7.}
+$$
+
+Furthermore, for every $a\\ge5$ the ORIGINAL asymmetric size Ramsey number over arbitrary finite simple hosts is
+
+$$
+\\boxed{\\widehat r(F(a,1,1,1),F(3,2,1))=3a+9.}
+$$
+
+At $a=4$ the JOINT value $15$ is proved above; the ORIGINAL equality $21$ is **not** asserted here.
+
+**Proof of JOINT when $a\\ge5$.** Let $Q$ satisfy the two residual arrows
+
+$$
+Q\\to(3K_2,F(3,2,1)),\\quad
+Q\\to(F(a,1,1,1),F(2,1)).
+$$
+
+The canonical upper host is $F(a+1,a,3,2,1)$, totaling $2a+7$ edges. Its upper arrowing proof is exactly the preceding two-case host-star argument with $(5,4)$ replaced by $(a+1,a)$; all inequalities hold for $a\\ge4$.
+
+Suppose $e(Q)\\le2a+6$. The same independent two-vertex and one-vertex deletion colourings used above give, for each vertex $u$, an appropriate different $v$ with
+
+$$
+e(Q)\\ge d_Q(u)+a+6;
+$$
+
+therefore $\\Delta(Q)\\le a$. The red forest in $Q-u$ has $a+7$ nonisolated vertices, so $N=|V_+(Q)|\\ge a+8$.
+
+If a matching covers all degree $a$ vertices $X$, colouring it BLUE and all other edges RED avoids the second relation: red degrees are at most $a-1$ and blue degrees at most one. Thus no matching covers $X$. Exactly the same specified-vertex Tutte boundary proof as above, now with $D=a$, proves the general lemma: if a graph has maximum degree at most $a$ and $|X|\\le a$, a matching covers $X$. Indeed a counted component of $r\\le a$ saturated vertices sends at least $r(a-r+1)\\ge a$ edges to $S$, and each vertex of $S$ receives at most $a$. Hence $k=|X|\\ge a+1$. The handshake bound gives
+
+$$
+2e(Q)\\ge N+(a-1)k\\ge(a+8)+(a-1)(a+1)=a^2+a+7.
+$$
+
+But the assumed edge budget gives $2e(Q)\\le4a+12$. Since $a^2-3a-5>0$ for every integer $a\\ge5$, these inequalities conflict. Hence $e(Q)\\ge2a+7$, proving sharp JOINT for all $a\\ge5$; the $a=4$ boundary is the explicit five-core argument above.
+
+**Proof of ORIGINAL when $a\\ge5$.** The canonical original host $F(a+2,a+1,a,3,2,1)$ has $W=3a+9$ edges and arrows the original pair by the source-proved canonical star-host criterion. Suppose $G$ arrows the pair with $e(G)\\le W-1=3a+8$. Standard single-vertex Ramsey deletion forces $G-u$ to satisfy BOTH proved JOINT relations for each $u$. Their sharpness gives
+
+$$
+d_G(u)=e(G)-e(G-u)\\le(3a+8)-(2a+7)=a+1.
+$$
+
+Write $D=a+1=(a-1)+2$. If $\\Delta(G)\\le a$, Vizing's edge-colouring theorem decomposes its edges into at most $a+1$ matchings. Colour $a-1$ matching classes RED and two BLUE. This yields red maximum degree at most $a-1$ and blue maximum degree at most two, contradicting original arrowing. Thus $\\Delta(G)=D$.
+
+A RED/BLUE capped edge partition with respective caps $a-1$ and $2$ also avoids both original leading stars. Therefore the source-proved ordinary Lovász $(g,f)$ maximum-degree-core lemma gives at least $D+1=a+2$ vertices of degree $D$. The all-RED colouring forces a copy of $F(a,1,1,1)$ and so $N=|V_+(G)|\\ge a+7$. Handshake now yields
+
+$$
+2e(G)\\ge N+(D-1)(D+1)
+\\ge a+7+a(a+2)=a^2+3a+7.
+$$
+
+However, $2e(G)\\le6a+16$, and $a^2-3a-9>0$ for every integer $a\\ge5$. Contradiction. Thus $e(G)\\ge3a+9$, matched by the canonical upper host. QED.
+
+**Dependencies and sharp boundary.** The JOINT infinite family requires the standard specified-vertex matching theorem but not the general joint-residual hypothesis. The ORIGINAL infinite family uses the already documented and paper-proved ordinary Lovász factor/degree-core theorem (the exact source is \`research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md\`), Vizing's edge-colouring theorem and standard Ramsey vertex deletion. Neither is a Lean kernel proof. No claim for ORIGINAL $a=4$, arbitrary BLUE length, or unrestricted $s,t$ is implied.
+
 ## Reproducibility, scope and next boundary
 
 The standard-library verifier checks all $6\cdot5\cdot4\cdot3\cdot2=720$ red count vectors on the canonical star host, all $2^{15}=32768$ individual edge colours, and all $\sum_{q=1}^4\binom{10}{q}=385$ missing-core patterns, including construction of each required five-core covering matching. These are corroborative *finite* checks. The lower theorem uses the universally quantified classical specified-vertex Tutte condition, not extrapolation from the finite checks.

@@ -91,6 +91,33 @@ def verify():
         total_masks += 1
     assert total_masks == 32768
 
+    # Exact canonical original-host colour allocations for the first four
+    # members of the infinite family; two-colour star embeddings via DP.
+    original_upper_counts = {}
+    for a in range(4, 8):
+        hstars = (a + 2, a + 1, a, 3, 2, 1)
+        original_count = 0
+        for red in itertools.product(*(range(h + 1) for h in hstars)):
+            blue = tuple(h - r for h, r in zip(hstars, red))
+            assert dynamic_assignment(red, (a, 1, 1, 1)) or dynamic_assignment(
+                blue, (3, 2, 1))
+            original_count += 1
+        assert original_count == (a + 3) * (a + 2) * (a + 1) * 4 * 3 * 2
+        original_upper_counts[str(a)] = original_count
+
+    for a in range(4, 101):
+        weights_a = [
+            max(x + y - 1 for i, x in enumerate((a, 1, 1, 1), 1)
+                for j, y in enumerate((3, 2, 1), 1) if i + j == k)
+            for k in range(2, 8)
+        ]
+        assert weights_a == [a + 2, a + 1, a, 3, 2, 1]
+        assert sum(weights_a[1:]) == 2 * a + 7
+        assert sum(weights_a) == 3 * a + 9
+        if a >= 5:
+            assert a * a - 3 * a - 5 > 0
+            assert a * a - 3 * a - 9 > 0
+
     core = core_patterns()
     return {
         "disposition": "BOUNDED_CHECKED_PAPER_THEOREM_UNDER_REVIEW",
@@ -106,6 +133,10 @@ def verify():
         "upper_actual_edge_colouring_masks": total_masks,
         "maximum_degree_four_missing_core_patterns_by_q": core,
         "missing_core_pattern_total": sum(core.values()),
+        "original_upper_allocations_by_a_4_to_7": original_upper_counts,
+        "infinite_family_algebra_checked_a_range": [4, 100],
+        "infinite_joint_formula": "2*a+7 for every integer a>=4",
+        "infinite_original_formula": "3*a+9 for every integer a>=5",
         "full_unrestricted_conjecture_status": "OPEN",
         "mathematical_certification": "NOT_ISSUED",
     }

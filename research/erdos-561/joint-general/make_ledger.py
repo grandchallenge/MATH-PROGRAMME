@@ -1649,5 +1649,26 @@ claims.append(dict(common,
   source_or_artifact=[root+'verify_joint15_4111_321.py'],
   related_files=[root+'JOINT_4111_321_MATCHING_CORE_EVIDENCE.json',root+'JOINT_4111_321_MATCHING_CORE_THEOREM.md']
 ))
+
+claims.append(dict(common,
+  claim_id='ERDOS561-4111-321-INFINITE-ORIGINAL-061',
+  short_name='Unbounded exact JOINT 2a+7 and ORIGINAL 3a+9 for (a,1,1,1) versus (3,2,1)',
+  claim_text='For every integer a>=4 and arbitrary finite simple host, exact JOINT residual value for red (a,1,1,1) and blue (3,2,1) is 2a+7. For every integer a>=5, exact ORIGINAL asymmetric size Ramsey value is 3a+9. The a=4 ORIGINAL formula remains unproved by this argument; full Erdős #561 remains OPEN.',
+  claim_class='PROVED_IN_PACKAGE',status='UNDER_REVIEW',certainty='PROVED_NOT_FORMALIZED',
+  support_type='HUMAN_PROOF',
+  support_summary='For hypothetical JOINT at 2a+6, two opposite vertex deletion colourings imply Δ<=a, nonisolated support N>=a+8, and lack of an avoiding colour (all BLUE edges a matching) implies no matching saturates degree-a vertices. The classical marked Tutte criterion with saturated-component boundary r(a-r+1)>=a forces >=a+1 such vertices; 2e>=N+(a-1)(a+1)=a²+a+7>4a+12 for a>=5. For a=4 use the preceding separate five-core proof. To transfer to ORIGINAL at a>=5: JOINT deletion bounds Δ<=a+1, Vizing plus cap splitting forces Δ=a+1 and the source-proved ordinary Lovasz saturated-core lemma forces >=a+2 vertices of degree a+1. All-red support N>=a+7 then yields 2e>=a²+3a+7>6a+16=2(W-1), with W=3a+9. Canonical original disjoint-star upper construction attains W. No use of unresolved general JOINT.',
+  source_or_artifact=[root+'JOINT_4111_321_MATCHING_CORE_THEOREM.md', 'research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md'],
+  related_files=[root+'verify_joint15_4111_321.py',root+'JOINT_4111_321_MATCHING_CORE_EVIDENCE.json']
+))
+claims.append(dict(common,
+  claim_id='ERDOS561-4111-321-FAMILY-UPPER-AUDIT-062',
+  short_name='Finite original-host and integer family regression',
+  claim_text='Exact original canonical upper star-host arrowing verified for a=4,5,6,7 for the pair (a,1,1,1) versus (3,2,1), with all 42480 red allocation vectors and independent DP star matching; verifies antidiagonal weights (a+2,a+1,a,3,2,1), JOINT 2a+7, ORIGINAL 3a+9, and both threshold inequalities for integer a=5..100. Bounded checks do not prove the infinite theorem.',
+  claim_class='PROVED_IN_PACKAGE',status='CHECKED',certainty='CERTIFIED',
+  support_type='EXACT_RATIONAL_COMPUTATION',
+  support_summary='Standard-library deterministic direct allocations and independent bitmask dynamic programming, source-locked and JSON persisted; 5040+8064+12096+17280=42480 original upper red-count vectors. Universal all-host lower is a separate paper proof via specified-vertex Tutte, Lovasz and Vizing.',
+  source_or_artifact=[root+'verify_joint15_4111_321.py'],
+  related_files=[root+'JOINT_4111_321_MATCHING_CORE_EVIDENCE.json',root+'JOINT_4111_321_MATCHING_CORE_THEOREM.md']
+))
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
