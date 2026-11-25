@@ -12,6 +12,7 @@ import urllib.request
 # are *not* site inputs until admitted into the editorial source records.
 SITE_PREFIXES = (
     'docs/',
+    'overrides/',
     'governance/erdos_compendium/editorial/',
     'governance/erdos_compendium/EDITORIAL_',
     'governance/oai26_documentary/editorial/',

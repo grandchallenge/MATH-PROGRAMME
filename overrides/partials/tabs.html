@@ -1,0 +1,11 @@
+{# Keep the full navigation tree; omit temporarily hidden top-level tabs only. #}
+{% import "partials/tabs-item.html" as item with context %}
+<nav class="md-tabs" aria-label="{{ lang.t('tabs') }}" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      {% for nav_item in nav.items if nav_item.title not in config.extra.get("hidden_header_tabs", []) %}
+        {{ item.render(nav_item) }}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>

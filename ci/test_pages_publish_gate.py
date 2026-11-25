@@ -22,7 +22,7 @@ class GateTests(unittest.TestCase):
                          (False, 'SITE_INPUTS_UNCHANGED'))
 
     def test_site_inputs_always_publish(self):
-        for path in ['docs/index.md', 'mkdocs.yml', 'requirements/docs.txt',
+        for path in ['docs/index.md', 'overrides/partials/tabs.html', 'mkdocs.yml', 'requirements/docs.txt',
                      'governance/erdos_catalogue/REGISTRY.json',
                      'governance/erdos_compendium/EDITORIAL_ADMISSIONS.json',
                      'governance/oai26_documentary/editorial/001.md',
