@@ -328,6 +328,10 @@
         "experiments/erdos_proof_verification/0027/Erdos27Independence.lean",
         "experiments/erdos_proof_verification/0027/Erdos27Period.lean",
         "experiments/erdos_proof_verification/0027/Erdos27Sequence.lean",
+        "experiments/erdos_proof_verification/0027/Erdos27Density.lean",
+        "governance/erdos_proof_verification/evidence/0027/DENSITY_*",
+        "governance/erdos_proof_verification/evidence/0027/check_density_lean.py",
+        "governance/erdos_proof_verification/evidence/0027/check_density_prefix.py",
         "governance/erdos_proof_verification/evidence/0027/SEQUENCE_*",
         "governance/erdos_proof_verification/evidence/0027/check_sequence_lean.py",
         "governance/erdos_proof_verification/evidence/0027/PERIOD_*",
@@ -400,6 +404,20 @@
           "lean",
           "--output",
           ".formal-validation/erdos-pv-0027-crt/sequence"
+        ],
+        [
+          "python3",
+          "governance/erdos_proof_verification/evidence/0027/check_density_lean.py",
+          "--cache-root",
+          "experiments/erdos_proof_verification/0027",
+          "--lean",
+          "lean",
+          "--output",
+          ".formal-validation/erdos-pv-0027-crt/density"
+        ],
+        [
+          "python3",
+          "governance/erdos_proof_verification/evidence/0027/check_density_prefix.py"
         ]
       ],
       "development_targets": [
@@ -407,14 +425,16 @@
         "Erdos27Weighted.lean",
         "Erdos27Independence.lean",
         "Erdos27Period.lean",
-        "Erdos27Sequence.lean"
+        "Erdos27Sequence.lean",
+        "Erdos27Density.lean"
       ],
       "formal_sources": [
         "Erdos27CRT.lean",
         "Erdos27Weighted.lean",
         "Erdos27Independence.lean",
         "Erdos27Period.lean",
-        "Erdos27Sequence.lean"
+        "Erdos27Sequence.lean",
+        "Erdos27Density.lean"
       ]
     }
   ]
