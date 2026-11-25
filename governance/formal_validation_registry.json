@@ -326,6 +326,10 @@
         "experiments/erdos_proof_verification/0027/Erdos27CRT.lean",
         "experiments/erdos_proof_verification/0027/Erdos27Weighted.lean",
         "experiments/erdos_proof_verification/0027/Erdos27Independence.lean",
+        "experiments/erdos_proof_verification/0027/Erdos27Period.lean",
+        "governance/erdos_proof_verification/evidence/0027/PERIOD_*",
+        "governance/erdos_proof_verification/evidence/0027/check_period_lean.py",
+        "governance/erdos_proof_verification/evidence/0027/check_period_lift.py",
         "governance/erdos_proof_verification/evidence/0027/INDEPENDENCE_*",
         "governance/erdos_proof_verification/evidence/0027/check_independence_lean.py",
         "governance/erdos_proof_verification/evidence/0027/WEIGHTED_*",
@@ -373,17 +377,29 @@
           "lean",
           "--output",
           ".formal-validation/erdos-pv-0027-crt/independence"
+        ],
+        [
+          "python3",
+          "governance/erdos_proof_verification/evidence/0027/check_period_lean.py",
+          "--cache-root",
+          "experiments/erdos_proof_verification/0027",
+          "--lean",
+          "lean",
+          "--output",
+          ".formal-validation/erdos-pv-0027-crt/period"
         ]
       ],
       "development_targets": [
         "Erdos27CRT.lean",
         "Erdos27Weighted.lean",
-        "Erdos27Independence.lean"
+        "Erdos27Independence.lean",
+        "Erdos27Period.lean"
       ],
       "formal_sources": [
         "Erdos27CRT.lean",
         "Erdos27Weighted.lean",
-        "Erdos27Independence.lean"
+        "Erdos27Independence.lean",
+        "Erdos27Period.lean"
       ]
     }
   ]
