@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP299",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP300",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,19 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Reviewed qualified closeout awaiting protected readback and tracker reconciliation",
-  "state": "IN_PROGRESS",
+  "phase": "Qualified investigation closed; original strong criterion unmet",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "1096d2377761080dd4e7b956f00f76b80055d710",
-    "candidate_head_sha": "cdc1b14775d4e229ed23f3f5dc128c0ae51a3983",
+    "protected_base_sha": "db44e8efb275d1c266c349b76206a4836b1ae0e5",
+    "candidate_head_sha": "e52b856d07f4fa34da6697ae85478e08600327ef",
     "issue_number": 2657,
-    "pr_number": null,
-    "branch": "research/reach-qualified-closeout-uc088-reviewed-20261125",
+    "pr_number": 3750,
+    "branch": null,
     "workflow_runs": []
   },
   "terminal_condition": "The explicitly authorized qualified investigation closes only after the source-bound report UC088, its distinct critical review UC089, its acceptance ledger UC090 and consistent programme records are protected and read back, and the applicable tracker dispositions are verified. The original strong completion criterion quoted in UC088 remains unmet. Original unconditional GC keeps its qualified CH and PH1 results in the adopted ZFC scope.",
-  "permitted_next_actions": [
-    {
-      "id": "verify-qualified-closeout-and-reconcile-trackers",
-      "description": "Verify protected admission and the exact report, review and ledger. Reconcile EXT-015D as completed, the original R3 and parent as not planned, and the existing portfolio projections. Record the terminal checkpoint only after authenticated readback."
-    }
-  ],
-  "next_action": {
-    "id": "verify-qualified-closeout-and-reconcile-trackers",
-    "description": "Verify protected admission and the exact report, review and ledger. Reconcile EXT-015D as completed, the original R3 and parent as not planned, and the existing portfolio projections. Record the terminal checkpoint only after authenticated readback.",
-    "evidence_targets": [
-      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
-      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": [
@@ -2181,27 +2165,39 @@
         "kind": "review",
         "identity": "b4f2dc5cb2ce59c2f1a37ace3e3e20d36eee7bfe",
         "status": "Distinct corrected UC088 closeout acceptance on the exact frozen report, source and editorial verification."
+      },
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3750",
+        "status": "Protected exact report and eight blobs read back, along with the five passing required native contexts and the separate terminal checkpoint."
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "accept-reviewed-qualified-closeout-for-protected-admission",
-    "result": "One editorial pass completed. Distinct same-system nonauthor review accepts the exact UC088 synthesis with twenty frozen inputs. The historical strong completion criterion remains unmet in the adopted ZFC scope. Protected admission and tracker reconciliation are pending.",
+    "action": "finish-authorized-qualified-investigation-after-protected-and-tracker-readback",
+    "result": "Exact report PR 3750 at e52b856d07f4fa34da6697ae85478e08600327ef merged through the protected queue as db44e8efb275d1c266c349b76206a4836b1ae0e5. All eight changed blobs and five required native contexts read back. Distinct nonauthor review, ledger and programme consistency verified. #2657 CLOSED/COMPLETED and Portfolio Done at 11/25/2026 10:22:25. #2798 CLOSED/NOT_PLANNED and Portfolio Done at 11/25/2026 10:22:31. #2617 CLOSED/NOT_PLANNED and Portfolio Done at 11/25/2026 10:22:37. The original strong mathematical exit and unconditional GC are unmet in the adopted ZFC scope. Separate fixed-host checkpoint and all accepted prior scopes retain verified dispositions.",
     "evidence_refs": [
-      "cdc1b14775d4e229ed23f3f5dc128c0ae51a3983",
-      "83f322423a3b08af2ca4eca41a3066c0bf98ad3f",
-      "b4f2dc5cb2ce59c2f1a37ace3e3e20d36eee7bfe",
-      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
-      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3750",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/commit/db44e8efb275d1c266c349b76206a4836b1ae0e5",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593719757/job/139135540614",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593719870/job/139134432136",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593719913",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593720678/job/139134211565",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593720678/job/139134211632"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-25T10:13:11.6065013+00:00"
+    "observed_at": "2026-11-25T03:22:52.9702215-07:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2551,11 +2547,29 @@
       "research/reach-qualified-closeout-uc088-reviewed-20261125",
       "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
-      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md"
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3750"
     ],
-    "instructions": "Verify protected admission and the exact report, review and ledger. Reconcile EXT-015D as completed, the original R3 and parent as not planned, and the existing portfolio projections. Record the terminal checkpoint only after authenticated readback."
+    "instructions": "This checkpoint documents the completed qualified investigation only. Consult UC088 for the requirements and proof boundaries of original REACH and UC090 for its acceptance ledger. No further action is bound."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593719757/job/139135540614",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593719870/job/139134432136",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593719913",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593720678/job/139134211565",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45593720678/job/139134211632",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/db44e8efb275d1c266c349b76206a4836b1ae0e5/research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/commit/db44e8efb275d1c266c349b76206a4836b1ae0e5",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3750"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
