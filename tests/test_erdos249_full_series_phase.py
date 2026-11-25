@@ -2770,3 +2770,41 @@ class WP09MLargePrimeLocalizationTests(unittest.TestCase):
         self.assertFalse(localized_gate(100, 20, Fraction(5001, 1000)))
         with self.assertRaises(ValueError):
             localized_gate(100, 20, 5.0)
+
+
+class WP09NPrimeConditionedSpreadTests(unittest.TestCase):
+    def test_exact_phase_variance_controls(self):
+        from experiments.erdos249_full_series_phase.prime_conditioned_phase_spread import phase_variance_interval
+        lo,hi=phase_variance_interval([0,0,0,0],4)
+        self.assertEqual(lo,0)
+        self.assertLess(hi,Fraction(1,10**10))
+        lo,hi=phase_variance_interval([0,4,8,12],4)
+        self.assertGreater(lo,1-Fraction(1,10**10))
+        self.assertEqual(hi,1)
+
+    def test_actual_prime_conditioned_cocycle_and_transfer(self):
+        from experiments.erdos249_full_series_phase.prime_conditioned_phase_spread import certified_prime_conditioned_spread
+        for h,M in ((1,30),(2,105),(6,385)):
+            with self.subTest(h=h,M=M):
+                X=(1<<14)-14-h-10
+                a=certified_prime_conditioned_spread(X,h,M)
+                self.assertEqual(a["L"],19)
+                self.assertGreaterEqual(a["prime_count"],2)
+                self.assertTrue(a["central"])
+                self.assertGreater(a["delta_variance"],0)
+                self.assertGreater(a["chord_lower"],0)
+                self.assertLessEqual(a["chord_lower"],a["R"][1])
+                self.assertLessEqual(a["R"][0],9*max(a["A"][1],a["B"][1]))
+                self.assertGreater(a["max_variance_lower"],Fraction(1,5000))
+                self.assertGreater(a["max_variance_lower"],Fraction({1:998,2:991,6:988}[h],1000))
+                self.assertEqual(a["cofinal_irrationality"],"OPEN")
+
+    def test_exact_variance_and_scope_hostile_controls(self):
+        from experiments.erdos249_full_series_phase.prime_conditioned_phase_spread import (
+            certified_prime_conditioned_spread, rational_variance,
+        )
+        self.assertEqual(rational_variance([1,3]),1)
+        self.assertEqual(rational_variance([2,2,2]),0)
+        for args in ((0,1,2),(1024,2,2),(1024,1,1),(True,1,2),(4,1,101)):
+            with self.subTest(args=args), self.assertRaises(ValueError):
+                certified_prime_conditioned_spread(*args)
