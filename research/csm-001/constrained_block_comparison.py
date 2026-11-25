@@ -200,10 +200,12 @@ def exact_rows(B,max_contexts=2000000):
     return out[0],out[1],work
 
 
-def verify_spatial(A,w):
+def verify_spatial(A,w,C=None):
     w=tuple(map(F,w))
     if len(A)!=len(w) or min(w)<=0:raise ValueError("spatial weights")
-    q=max(row_action(row,w,F(1))/w[i] for i,row in enumerate(A))
+    C=A if C is None else C
+    q=max(max(row_action(row,w,F(1)),row_action(end,w,F(1)))/w[i]
+          for i,(row,end) in enumerate(zip(A,C)))
     if q>=1:raise ValueError("spatial gain failed")
     return {"spatial_gain":q,"spatial_rate":q,"spatial_prefactor":max(w)/min(w)}
 
@@ -218,11 +220,12 @@ def certify(net,blocks,safe=None,method="rectangular",rates=None,max_contexts=20
     G=discover_gain(A,C,rates,max_dense=32,sparse_steps=8)
     # Temporal tilt is optional for two-sided finite block comparison.
     w=G["weights"] if G else (F(1),)*B.n
-    try:S=verify_spatial(A,w)
+    try:S=verify_spatial(A,w,C)
     except ValueError:
         return {"outcome":"undecided","boundary":"spatial gain search","work":work}
     return dict(S,outcome="certified",method=method,blocks=B.blocks,safe=B.safe,
                 weights=w,temporal=G,insertion_nonnull=B.insertion(),
+                positive_wildcard=all(v>0 for T in net.tables for row in T[-1] for v in row),
                 interior=A,terminal=C,work=work,joint_state_constructed=False)
 
 
@@ -231,10 +234,66 @@ def replay(net,witness,max_contexts=2000000):
     if witness["method"]=="rectangular":A,C,_=rectangular_rows(B)
     elif witness["method"]=="exact":A,C,_=exact_rows(B,max_contexts)
     else:raise ValueError("unknown method")
-    S=verify_spatial(A,witness["weights"])
+    S=verify_spatial(A,witness["weights"],C)
     G=witness.get("temporal")
     if G is not None:verify_gain(A,C,G["weights"],G["rho"])
-    return dict(S,insertion_nonnull=B.insertion())
+    return dict(S,insertion_nonnull=B.insertion(),
+                positive_wildcard=all(v>0 for T in net.tables for row in T[-1] for v in row))
+
+
+def finest_product_scope(support,arity,budget):
+    """Finest product decomposition of a finite nonempty relation.
+    Exact support projections, with an explicit local split budget.
+    """
+    if not support:raise ValueError("empty factor support")
+    def rec(indices,R):
+        if len(indices)<2:return (indices,)
+        k=len(indices)
+        for mask in range(1<<(k-1)):
+            A=(0,)+tuple(j for j in range(1,k) if mask & (1<<(j-1)))
+            if len(A)==k:continue
+            if budget[0]<=0:raise ValueError("support split budget")
+            budget[0]-=1
+            C=tuple(j for j in range(k) if j not in A)
+            U={tuple(x[j] for j in A) for x in R}
+            V={tuple(x[j] for j in C) for x in R}
+            if len(R)==len(U)*len(V):
+                return rec(tuple(indices[j] for j in A),U)+rec(tuple(indices[j] for j in C),V)
+        return (indices,)
+    return rec(tuple(range(arity)),set(support))
+
+
+def discover_spatial_blocks(net,max_splits=100000,max_block_states=256):
+    """Finest spatial partition making every label support a block product.
+
+    A support component spanning times cannot be grouped by this language.
+    A budget exhaustion is undecided, not a nonexistence decision.
+    """
+    root=list(range(net.n));budget=[max_splits];cache={}
+    def find(i):
+        while root[i]!=i:
+            root[i]=root[root[i]];i=root[i]
+        return i
+    try:
+        for i,p in enumerate(net.parents):
+            scope=tuple((-1,j) for j in p)+((0,i),)
+            for A in net.tables[i]:
+                R=tuple(x+(y,) for x,k in net.lookup[i].items() for y,v in enumerate(A[k]) if v)
+                key=(len(scope),R)
+                if key not in cache:cache[key]=finest_product_scope(R,len(scope),budget)
+                for C in cache[key]:
+                    if len({scope[j][0] for j in C})>1:
+                        return {"outcome":"cross_time_support","factor":i}
+                    a=find(scope[C[0]][1])
+                    for j in C[1:]:root[find(scope[j][1])]=a
+    except ValueError as e:return {"outcome":"undecided","boundary":str(e)}
+    groups=defaultdict(list)
+    for j in range(net.n):groups[find(j)].append(j)
+    blocks=tuple(tuple(b) for b in sorted(groups.values()))
+    if max(prod(net.sizes[j] for j in b) for b in blocks)>max_block_states:
+        return {"outcome":"undecided","boundary":"block state budget"}
+    return {"outcome":"rectangular_partition","blocks":blocks,
+            "split_checks":max_splits-budget[0]}
 
 
 def pair_ring(n,eps=F(1,128)):
