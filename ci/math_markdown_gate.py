@@ -29,7 +29,9 @@ ADJACENT = re.compile(r"[\w-]")
 
 def issues(source: str) -> list[tuple[str, str, int]]:
     """Return (kind, stable context fingerprint, 1-based line) for source defects."""
-    lines = source.splitlines()
+    # splitlines() silently treats form feed and vertical tab as line breaks;
+    # preserve them so that escaped-string corruption is visible to the gate.
+    lines = source.replace("\r\n", "\n").replace("\r", "\n").split("\n")
     out: list[tuple[str, str, int]] = []
 
     def add(kind: str, context: str, line: int) -> None:
@@ -61,6 +63,10 @@ def issues(source: str) -> list[tuple[str, str, int]]:
             continue
 
         line = CODE.sub("", raw)
+        for char in sorted(set(line)):
+            if ord(char) < 32 and char != "\t":
+                add("unexpected-control-character",
+                    f"U+{ord(char):04X}: {line!r}", n)
         stripped = line.strip()
         if stripped == "$$":
             if not in_display:

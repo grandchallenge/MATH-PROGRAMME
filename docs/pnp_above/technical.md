@@ -149,7 +149,10 @@ In the original source-native `CL.clDist` model, WP19 proves the exact two-playe
 
 $$
 L^{\mathsf A}(z)=
-egin{cases}z,&z_0=1,\0,&z_0=0,\end{cases}
+\begin{cases}
+z, & z_0=1, \\
+0, & z_0=0,
+\end{cases}
 \qquad L^{\mathsf B}(z)=z.
 $$
 

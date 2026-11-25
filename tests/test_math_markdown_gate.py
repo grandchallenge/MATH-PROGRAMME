@@ -73,6 +73,19 @@ class MathematicalMarkdownGateTests(unittest.TestCase):
         new = "Old issue:\n\n$$\nx=y\n$$\n"
         self.assertEqual([], newly_introduced(old, new))
 
+    def test_control_character_corruption_in_math(self):
+        for char in ("\x08", "\x0c", "\x0b", "\x07"):
+            with self.subTest(char=repr(char)):
+                bad = "$$\n" + char + "egin{cases}x\\end{cases}\n$$\n"
+                self.assertIn("unexpected-control-character", self.kinds(bad))
+        good = "\n$$\n" + r"\begin{cases}x,&a=1,\\0,&a=0.\end{cases}" + "\n$$\n"
+        self.assertEqual([], issues(good))
+
+    def test_grandfathered_control_character_and_repair(self):
+        old = "Bad $\x08eta$.\n"
+        self.assertEqual([], newly_introduced(old, old))
+        self.assertEqual([], newly_introduced(old, r"Good $\beta$."))
+
     def test_blank_document_no_math_passes(self):
         self.assertEqual([], issues("# Ordinary prose\n\nNothing special.\n"))
 
