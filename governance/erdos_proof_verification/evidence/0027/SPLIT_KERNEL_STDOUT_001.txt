@@ -1,0 +1,30 @@
+'Erdos27Split.smooth_power_allocation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.rough_power_allocation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.split_lcm_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.congruence_transport' depends on axioms: [propext, Quot.sound]
+'Erdos27Split.family_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Split.family_density.{u_1} {ι : Type u_1} [Fintype ι] (Q : ℕ) (n a b : ι → ℕ) (r : ι → ℤ)
+  (ha : ∀ (i : ι), 0 < a i) (hb : ∀ (i : ι), 0 < b i) (he : ∀ (i : ι), a i * b i = n i) (hs : ∀ (i : ι), Smooth Q (a i))
+  (hr : ∀ (i : ι), Rough Q (b i)) :
+  let M := Finset.univ.lcm a;
+  let B := Finset.univ.lcm b;
+  have da := ⋯;
+  have db := ⋯;
+  have dn := ⋯;
+  (Erdos27Period.density fun x => ∀ (i : ι), (ZMod.castHom ⋯ (ZMod (n i))) x ≠ ↑(r i)) =
+    (∑ h, Erdos27Period.density (Erdos27CRT.fibreAvoid a b r da db h)) / ↑M
+'Erdos27Split.smooth_one' depends on axioms: [propext]
+'Erdos27Split.rough_one' depends on axioms: [propext]
+'Erdos27Split.smooth_prime' depends on axioms: [propext]
+'Erdos27Split.rough_prime' depends on axioms: [propext]
+'Erdos27Split.smooth_dvd' depends on axioms: [propext]
+'Erdos27Split.rough_dvd' depends on axioms: [propext]
+'Erdos27Split.smooth_lcm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.rough_lcm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.lcm_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.family_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.smooth_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.rough_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.cross_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.split_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Split.split_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
