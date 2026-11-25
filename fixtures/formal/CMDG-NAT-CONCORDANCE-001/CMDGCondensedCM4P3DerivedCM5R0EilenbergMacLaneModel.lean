@@ -49,14 +49,14 @@ def emTermIso (A : Ab) (n m : ℕ) :
   · apply Sigma.hom_ext
     intro i
     by_cases hi : i.1.unop.len = n
-    · simp [hi, Category.assoc]
+    · simp [B, hi, Category.assoc]
     · have hz : IsZero (B i) :=
         HomologicalComplex.isZero_single_obj_X (ComplexShape.down ℕ) n A _ hi
       exact hz.eq_of_src _ _
   · apply Sigma.hom_ext
     intro i
     have hi := i.property
-    simp [hi, Category.assoc]
+    simp [B, hi, Category.assoc]
 
 theorem emBelow_isZero (A : Ab) (n m : ℕ) (h : m < n) :
     IsZero (((em n).obj A).obj (op (SimplexCategory.mk m))) := by

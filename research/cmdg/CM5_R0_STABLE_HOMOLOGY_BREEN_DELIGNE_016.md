@@ -14,7 +14,7 @@ below are not asserted as Lean theorems.
 Take a well-pointed CW model of the simplicial abelian group
 $K(L,n)$, for a finite free lattice $L$ and $n\geq 1$.
 Use the usual realization of the simplicial group bar construction
-with $p$-simplices $G^p$, where $G=K(L,n)$.
+with simplices $G^p$ in degree $p$, where $G=K(L,n)$.
 Its degeneracy subspace consists of tuples having an identity entry.
 The reduced skeletal bar filtration has cofibers
 $\Sigma^p G^{\wedge p}$ for $p\geq1$; equivalently one can use
@@ -23,7 +23,7 @@ This assertion uses the proper/well-pointed bar realization and
 the product latching-cofibration theorem, not arbitrary quotient
 homology of noncofibrant spaces.
 
-Since $G$ is $(n-1)$-connected, its reduced integral homology vanishes
+Since $G$ has connectivity at least $n-1$, its reduced integral homology vanishes
 in degrees below $n$. The reduced Künneth theorem gives vanishing of
 $\widetilde H_i(G^{\wedge p};\mathbb Z)$ for $i<pn$,
 including the Tor terms, whose least possible degree is higher.
@@ -109,6 +109,87 @@ functor. The natural splitting of its augmentation must be transported
 to the lattice functor category, and the universal matrix formulas
 must subsequently be extended to arbitrary abelian groups and
 sheafified. No new foundational axiom or MATHCERT claim.
+
+## Explicit approximate-resolution induction
+
+Write FP(k) for an object admitting a partial resolution through
+degree k by finitely generated projectives, with FP(0) meaning
+finitely generated. Use the category of lattice functors, with
+finite direct sums of the actual free representables and their
+retracts as the finite projectives.
+
+The two closure rules are proved by the ordinary horseshoe
+construction for extensions and by the mapping cone of a lift
+of the map in a short exact sequence:
+- If both outer terms of a short exact sequence are FP(k),
+  then so is the middle term.
+- If the middle term is FP(k) and the left term is FP(k-1),
+  then the right term is FP(k), for k at least one.
+  In degree zero only finite generation of the middle term is needed.
+
+For the second rule, a resolution of the left term lifted into
+one of the middle term produces a cone resolution of the right
+term. In degree k the new term is the sum of the middle
+degree k term and the left degree k-1 term, exactly the stated
+finite-type requirements. These constructions can first extend
+the partial resolutions by arbitrary projectives without a
+finiteness condition beyond the required degrees. The first rule
+uses projective lifts against the right-hand surjections at
+each degree, and the kernel short exact sequences from the
+snake lemma, so the finite-type requirement is preserved.
+
+Consider an augmented complex of finite projectives
+
+$$
+P_n\longrightarrow\cdots\longrightarrow P_0\longrightarrow X\longrightarrow0.
+$$
+
+Let $Z_i$ denote the kernel of the outgoing differential from
+$P_i$, including the augmentation at zero, and let $B_i$ be
+the image of the next differential. Let $H_i=Z_i/B_i$.
+Suppose $H_i$ is FP(n-i-1) for $0\leq i<n$.
+Because $B_{n-1}$ is a quotient of $P_n$, it is FP(0).
+The sequence $0\to B_{n-1}\to Z_{n-1}\to H_{n-1}\to0$
+makes $Z_{n-1}$ FP(0).
+Descend from i+1 to i. From the exact sequence
+
+$$
+0\to Z_{i+1}\to P_{i+1}\to B_i\to0
+$$
+
+and the second closure rule, $B_i$ is FP(n-i-1).
+The first closure rule applied to $0\to B_i\to Z_i\to H_i\to0$
+gives $Z_i$ FP(n-i-1). Finally,
+$0\to Z_0\to P_0\to X\to0$ makes X FP(n).
+This is the exact degree accounting in the approximate-resolution lemma.
+
+For the identity lattice functor U, the rank-one free
+representable maps onto U by evaluation, and the rank-two term
+generates the kernel by the additivity relations
+$[a+b]-[a]-[b]$. Thus U is FP(1). For the induction to FP(n),
+take the reduced n-fold bar complex shifted down by n. The
+Hurewicz augmentation is onto with zero augmented H(0).
+The remaining H(i), for i<n, are naturally $M_i\otimes U$.
+By the finite presentation of $M_i$ and the second closure rule,
+they are FP(n-1) when U is FP(n-1), hence satisfy the weaker
+FP(n-i-1) hypotheses above.
+
+Reduction and simplicial normalization are natural split summands
+of finite sums of free representables. If a finite projective
+resolution term is only a retract of such a sum, add the
+complement as a contractible pair in that degree and the next
+degree. Starting at degree zero and iterating constructs a
+resolution whose terms themselves are finite sums of the actual
+representables, without an infinite sum at any fixed degree.
+The exact augmentation is unaffected. Equivalently one can use
+Schanuel's lemma to prolong any previously fixed finite free
+partial resolution.
+
+This establishes the finite-type conclusion in source mathematics
+conditional only on the stated standard bar, connectivity and
+Künneth inputs, and on the standard projective resolution
+constructions. It is not a formal proof that the new Lean
+Dold–Kan complex has these homology objects.
 
 ## Explicit remaining Lean obligations
 
