@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP294",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP295",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,35 +15,42 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Bound actual external differentiable Ext class survival test",
+  "phase": "Reviewed survival of the original CH class in the intermediate differentiable Ext comparison",
   "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "267cf0c7545285e5f29dc16585840cbb691271f5",
-    "candidate_head_sha": "267cf0c7545285e5f29dc16585840cbb691271f5",
+    "protected_base_sha": "da53f539a6a15e49016691d7218bdefb33435e01",
+    "candidate_head_sha": "e150cf9ff1788f14712c232ff011830c20f899f7",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-differentiable-ext-uc082-input-20261124",
+    "branch": "research/reach-differentiable-ext-uc082-reviewed-20261124",
     "workflow_runs": []
   },
   "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
   "permitted_next_actions": [
     {
-      "id": "test-external-differentiable-ext-class-survival",
-      "description": "Test the actual CH class in the external differentiable Ext group of UC079.3. Bind the original coefficient stages and weight presentation. Verify any differentiable boundary and separate survival from the established observable vanishing."
+      "id": "adjudicate-original-typed-integration-contract",
+      "description": "Adjudicate the original I1–I3 and strong-exit requirements using the protected exact smooth realization, the ZFC original vacuum obstruction, the CH class surviving the intermediate differentiable support comparison, its vanishing in the actual observables, and the corrected relative comparisons. Identify the evidence for each completed or obstructed arrow and precisely delimit any undecided claim. Keep the original conditional GC verdict under its actual hypotheses and adopt no additional foundation."
     }
   ],
   "next_action": {
-    "id": "test-external-differentiable-ext-class-survival",
-    "description": "Test the actual CH class in the external differentiable Ext group of UC079.3. Bind the original coefficient stages and weight presentation. Verify any differentiable boundary and separate survival from the established observable vanishing.",
+    "id": "adjudicate-original-typed-integration-contract",
+    "description": "Adjudicate the original I1–I3 and strong-exit requirements using the protected exact smooth realization, the ZFC original vacuum obstruction, the CH class surviving the intermediate differentiable support comparison, its vanishing in the actual observables, and the corrected relative comparisons. Identify the evidence for each completed or obstructed arrow and precisely delimit any undecided claim. Keep the original conditional GC verdict under its actual hypotheses and adopt no additional foundation.",
     "evidence_targets": [
+      "research/condensed-qft/EXT-015/DIFFERENTIABLE_EXT_CLASS_SURVIVAL_UC082.md",
       "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
-      "research/condensed-qft/EXT-015/R3_POSITIVE_SUPPORT_ATTEMPT_084.md",
-      "research/condensed-qft/EXT-015/R3_GLOBAL_SUPPORT_ACCEPTANCE_UC024.md"
+      "research/condensed-qft/EXT-015/REACH_M5_REMAINING_CONTRACT_AUDIT_138.md",
+      "research/condensed-qft/EXT-015/R3_GLOBAL_SUPPORT_ACCEPTANCE_UC024.md",
+      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md"
     ]
   },
   "external_evidence": {
     "waiting": false,
     "objects": [
+      {
+        "kind": "review",
+        "identity": "e150cf9ff1788f14712c232ff011830c20f899f7",
+        "status": "UC083 accepts ZFC injectivity in the original degree-two group and survival of the actual CH class modulo all intermediate differentiable bounded-stage images."
+      },
       {
         "kind": "review",
         "identity": "0cda28198ddfe81e0080be87aadc1278a1110cbd",
@@ -2168,19 +2175,24 @@
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "BindUserDirectedDifferentiableClassTest",
-    "result": "User selected the outstanding intermediate external Ext class test",
+    "action": "IntegrateReviewedDifferentiableExtClassSurvival",
+    "result": "Frozen reviewed result prepared for native admission",
     "evidence_refs": [
+      "research/reach-differentiable-ext-uc082-reviewed-20261124",
       "research/reach-differentiable-ext-uc082-input-20261124",
-      "267cf0c7545285e5f29dc16585840cbb691271f5",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3713"
+      "research/reach-differentiable-ext-uc082-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3713",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "research/condensed-qft/EXT-015/DIFFERENTIABLE_EXT_CLASS_SURVIVAL_UC082.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_DIFFERENTIABLE_EXT_UC083.md",
+      "research/condensed-qft/EXT-015/DIFFERENTIABLE_EXT_CLASS_ACCEPTANCE_UC084.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-25T00:03:30.4992516Z"
+    "observed_at": "2026-11-25T00:10:34.697726+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2511,9 +2523,15 @@
       "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_SMOOTH_DERIVED_MAPPING_UC080.md",
       "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_ACCEPTANCE_UC081.md",
-      "research/reach-differentiable-ext-uc082-input-20261124"
+      "research/reach-differentiable-ext-uc082-input-20261124",
+      "research/reach-differentiable-ext-uc082-reviewed-20261124",
+      "research/reach-differentiable-ext-uc082-primary-20261124",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3713",
+      "research/condensed-qft/EXT-015/DIFFERENTIABLE_EXT_CLASS_SURVIVAL_UC082.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_DIFFERENTIABLE_EXT_UC083.md",
+      "research/condensed-qft/EXT-015/DIFFERENTIABLE_EXT_CLASS_ACCEPTANCE_UC084.md"
     ],
-    "instructions": "Test the actual CH class in the external differentiable Ext group of UC079.3. Bind the original coefficient stages and weight presentation. Verify any differentiable boundary and separate survival from the established observable vanishing."
+    "instructions": "Adjudicate the original I1–I3 and strong-exit requirements using the protected exact smooth realization, the ZFC original vacuum obstruction, the CH class surviving the intermediate differentiable support comparison, its vanishing in the actual observables, and the corrected relative comparisons. Identify the evidence for each completed or obstructed arrow and precisely delimit any undecided claim. Keep the original conditional GC verdict under its actual hypotheses and adopt no additional foundation."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
