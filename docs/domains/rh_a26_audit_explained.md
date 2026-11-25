@@ -2,8 +2,8 @@
 
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
-!!! warning "Research status · 24 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The counting and reciprocity arguments retain their stated classical-duality inputs.
+!!! warning "Research status · 25 November 2026"
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -479,9 +479,50 @@ The field degree is no larger than its least cyclotomic modulus. Multiplying tha
 
 The source's conductor and height assumptions bound the logarithm of that scale. This yields a controlled exponential bound for the minus contribution. If the separate other-sign and prime-2 estimates hold on the required interval, the three budgets together are eventually below the submitted threshold. The reason is that exponentials with strictly smaller powers of the same large variable are eventually dominated by the exponential with the larger power.
 
-The exact inequalities and their assumptions are retained in the technical proof. We have not established the required simultaneous interval of validity by this calculation. Establishing a bound under its window assumptions and establishing that such a window exists are different mathematical tasks.
+The exact inequalities and their assumptions are retained in the technical proof. We have not established the required simultaneous interval of validity by this calculation. Establishing a bound under its window assumptions and establishing that such a window exists are different mathematical tasks. The following section reconstructs the selection procedure under its precise arithmetic inputs.
 
-## 14. Reproducibility and technical references
+## 14. Finding one interval where the arithmetic estimates agree
+
+The submitted proof needs several bounds to hold simultaneously on a whole interval of scales. Establishing that each bound holds somewhere, or at a separate collection of scales, would not suffice. We have now reconstructed the interval-selection argument, conditional on its precise arithmetic inputs.
+
+### Why there are exceptional orders
+
+The source's arithmetic tower estimate describes a finite collection of centers in a prime-adic number field. An integer order can be unusually close to a center, making the usual length estimate ineffective. Here closeness means agreement modulo high powers of the prime, not closeness on the ordinary number line.
+
+Among integers from 1 to a fixed cutoff, at most one can lie sufficiently close to any one center. Indeed, if two did, the difference between them would have to be divisible by a prime power larger than the entire integer range. The difference must then be zero. Consequently a bound on the number of centers gives a bound on the number of exceptional orders. This uses a strict distance threshold; replacing it with a non-strict one can invalidate the argument.
+
+The source does not assume these exceptional orders are harmless. It supplies a second estimate, using a fixed-degree reference layer of the arithmetic tower. That estimate is effective when an exceptional order is sufficiently small relative to the current scale.
+
+### Choosing the interval
+
+At any scale, an exceptional order must either exceed the calculation's cutoff or be small enough for the second estimate. An order lying between those two thresholds is inconvenient. On taking logarithms, each inconvenient order forbids a definite interval of scales.
+
+The submitted selection argument starts with the full logarithmic search range. If an exceptional threshold is too high to accommodate safely near the top of that range, the argument lowers the upper endpoint enough to exclude it, and removes that threshold from the remaining list. Each such reduction removes at least one threshold. With only finitely many thresholds, the process terminates, leaving an interval on which all the implications hold.
+
+For illustration, use base-two logarithms and three exceptional orders: 2 raised to 80, 2 raised to 20, and 4. Let the maximum permitted order at scale $x$ be $x^2$, and let the second estimate apply to orders at most $x$.
+
+| Step | Upper end of logarithmic search range |
+| --- | ---: |
+| Start | 128 |
+| Exclude the first large exceptional order | 32 |
+| Exclude the second large exceptional order | 8 |
+| Retain the interval from 4 to 8 | 8 |
+
+Returning to the ordinary scale gives the entire interval from 16 to 256. Throughout that interval the first two exceptional orders exceed the cutoff, and 4 is small enough for the alternative estimate. This is a worked example of the mechanism, not an exceptional set computed for one of the submitted proof's number fields.
+
+The proof combines the exceptional sets for the prime 2 and all the specified auxiliary odd primes **before** choosing the interval. The size of their union is bounded by the sum of the individual size bounds. This is what makes the selection simultaneous.
+
+### What this verifies, and what it does not
+
+On the selected interval, every required order is either governed by the ordinary tower estimate or by the smaller-order estimate at a fixed reference layer. The latter uses the source's Lemma K, a quantitative bound on a second cohomology group. The exponents in the estimates are arranged so that summing over all required orders stays below the target exponential budget. We have reconstructed that quantitative comparison with the original constants.
+
+The [technical reconstruction PR #613](https://github.com/grandchallenge/MATHFORGE/pull/613) verifies this interval and arithmetic-budget argument under the actual stated tower and Lemma K inputs. Exact finite controls checked 5,240 whole-interval implications, 10,944 strict-neighborhood cases and 259 logarithmic and exponent comparisons. These checks verify finite cases of the selection mechanism, not the existence of the source's arithmetic centers.
+
+The remaining issue is precisely where those centers and their uniform number come from. The source uses the Ferrero–Washington theorem, arithmetic tower descent, a twisted linear operator and a separate argument controlling the two varying auxiliary primes. In particular, a rank bound for each fixed field does not automatically supply a bound uniform across a family of varying fields. That passage, the actual tower length estimates and Lemma K require independent scrutiny. The other-sign estimate remains separate.
+
+This is the difference between verifying the selection procedure and verifying that the arithmetic supplies every input to that procedure. Both are needed for the larger proof.
+
+## 15. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -513,10 +554,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #609](https://github.com/grandchallenge/MATHFORGE/pull/609) | Finite-Galois eigenspace transport and good-prime aggregate budget |
 | [PR #610](https://github.com/grandchallenge/MATHFORGE/pull/610) | Integral Stickelberger annihilator, generator and length bounds, and uniform bad-prime estimate |
 | [PR #612](https://github.com/grandchallenge/MATHFORGE/pull/612) | Composite-field degree restriction, combined minus-length bound and conditional exponential domination |
+| [PR #613](https://github.com/grandchallenge/MATHFORGE/pull/613) | Conditional simultaneous-window selection, exceptional-order control and exact arithmetic dependency map |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 15. What the investigation taught us about checking extraordinary mathematical claims
+## 16. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -528,14 +570,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 16. The next executable mathematical step
+## 17. The next executable mathematical step
 
-**Target:** the actual simultaneous-window construction and other-sign and prime-2 estimates supplying `vwin_of_counts`, as used in `HeightAndVanishing/JointWinOfCounts.lean` and `CMFieldExponentialBounds/AdmissibleOfPageN.lean`.
+**Target:** the actual arithmetic tower argument `PropA.aBound_of_isTower`, beginning with `genLevel`, `descends`, `exists_centres_norm` and `twLen_le_growth` in the source. Then verify the uniform rank construction for the varying two-prime base fields and the separate Lemma K input.
 
-**Work:** independently establish the source's quantitative window and remaining arithmetic bounds, with their exact parameter choices and uniformity. Distinguish the already reconstructed deterministic error-budget comparison from the still-open construction of the interval on which all its inputs hold.
+**Work:** establish that the genuine source arithmetic supplies the centers, the two tower-length bounds and a uniform exceptional-set size; distinguish the fixed-field Ferrero–Washington input from the varying-field argument. The conditional selection procedure has been reconstructed.
 
-**Completion test:** verify the required hypotheses and conclusions of the actual source statements; account for the separate count, height, classical foundation and original Lean replay obligations. No promotion from conditional verification to RH/GRH certification.
+**Completion test:** verify the exact source statements and their arithmetic interfaces, including the opposite-sign height/count argument and foundational correspondence as separate obligations. No promotion from conditional reconstruction to RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_THMBCFREE_CONDITIONAL_RECONSTRUCTED__WINDOW_SELECTION_OTHER_SIGN_AND_TWO_PLACE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_CONDITIONAL_THMBAB_WINDOW_SELECTION_RECONSTRUCTED__ABOUND_TOWER_DESCENT_UNIFORM_TWOBASE_RANK_LEMMAK_OTHER_SIGN_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
