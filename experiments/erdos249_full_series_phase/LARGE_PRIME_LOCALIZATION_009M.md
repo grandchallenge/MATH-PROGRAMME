@@ -27,7 +27,7 @@ $$
 No independence of primes or totient values is invoked. For arbitrary unit phases on the block,
 
 $$
-\operatorname{Re}\sum_{N=X}^{2X-1} E_N\le X-H+\sqrt{HC}.
+\mathrm{Re}\sum_{N=X}^{2X-1} E_N\le X-H+\sqrt{HC}.
 $$
 
 This follows by bounding each unselected term by one and applying weighted Cauchy-Schwarz to the selected group sums. At δ=1/5, H/X tends to log(5/4)>1/5, strictly by integrating 1/u on [1,5/4]. If C≤H/4 for each fixed h on arbitrarily large canonical blocks, the complete real sum is eventually below 9X/10. Cook's published criterion then proves irrationality. No group-mean or weighted good-set estimate is needed. This is a sufficient implication only; its cofinal antecedent is OPEN.
