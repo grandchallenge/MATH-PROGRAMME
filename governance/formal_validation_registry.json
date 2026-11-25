@@ -11,7 +11,8 @@
     "fixtures/formal/LOG-GCD-001",
     "fixtures/formal/PC-WP04",
     "experiments/erdos_proof_verification/0560",
-    "experiments/erdos_proof_verification/0561"
+    "experiments/erdos_proof_verification/0561",
+    "experiments/erdos_proof_verification/0027"
   ],
   "control_plane": {
     "full_fanout_patterns": [
@@ -314,6 +315,45 @@
       ],
       "formal_sources": [
         "Erdos561Core.lean"
+      ]
+    },
+    {
+      "id": "erdos-pv-0027-crt",
+      "family": "ERDOS-PV",
+      "execution_kind": "lake-build",
+      "package_dir": "experiments/erdos_proof_verification/0027",
+      "material_patterns": [
+        "experiments/erdos_proof_verification/0027/Erdos27CRT.lean",
+        "experiments/erdos_proof_verification/0027/lean-toolchain",
+        "experiments/erdos_proof_verification/0027/lakefile.toml",
+        "experiments/erdos_proof_verification/0027/lake-manifest.json",
+        "ci/erdos_pv_0027_formal_replay.py",
+        "tests/test_erdos27_crt_replay.py",
+        "governance/erdos_proof_verification/evidence/0027/C_*"
+      ],
+      "validator_commands": [
+        [
+          "python3",
+          "-m",
+          "unittest",
+          "tests.test_erdos27_crt_replay"
+        ],
+        [
+          "python3",
+          "ci/erdos_pv_0027_formal_replay.py",
+          "--cache-root",
+          "experiments/erdos_proof_verification/0027",
+          "--lean",
+          "lean",
+          "--output",
+          ".formal-validation/erdos-pv-0027-crt/replay"
+        ]
+      ],
+      "development_targets": [
+        "Erdos27CRT.lean"
+      ],
+      "formal_sources": [
+        "Erdos27CRT.lean"
       ]
     }
   ]

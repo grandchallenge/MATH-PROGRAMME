@@ -28,7 +28,11 @@ def main():
  p.add_argument('--output', required=True, type=pathlib.Path)
  a = p.parse_args()
  a.output.mkdir(parents=True, exist_ok=True)
- v=checked([a.lean,'--version'])
+ a.cache_root=a.cache_root.resolve()
+ a.output=a.output.resolve()
+ v=run([a.lean,'--version'],cwd=P)
+ assert v.returncode==0,v.stdout.decode()
+ v=v.stdout.decode().strip()
  assert 'version 4.33.0' in v and 'd8b18978322de05a8f3dba51ef03cf5461676c17' in v, v
  deps={}
  paths=[]
@@ -39,7 +43,7 @@ def main():
   deps[x['name']]=x['rev']
   paths.append(str(d/'.lake/build/lib/lean'))
  env=dict(os.environ,LEAN_PATH=os.pathsep.join(paths))
- r=run([a.lean,P/'Erdos27CRT.lean'],env=env)
+ r=run([a.lean,P/'Erdos27CRT.lean'],env=env,cwd=P)
  assert r.returncode==0,r.stdout.decode()
  s=r.stdout.decode()
  ax=validate_axioms(s)
@@ -55,9 +59,9 @@ def main():
   for name,target in targets.items():
    f=pathlib.Path(tmp)/'Witness.lean'
    f.write_text('import Mathlib.Data.ZMod.Basic\nexample : ¬ '+target+' := by decide\n')
-   witness=run([a.lean,f],env=env); assert witness.returncode==0,witness.stdout.decode()
+   witness=run([a.lean,f],env=env,cwd=P); assert witness.returncode==0,witness.stdout.decode()
    f.write_text('import Mathlib.Data.ZMod.Basic\nexample : '+target+' := by decide\n')
-   bad=run([a.lean,f],env=env)
+   bad=run([a.lean,f],env=env,cwd=P)
    assert bad.returncode!=0 and b'decide' in bad.stdout and b'false' in bad.stdout,bad.stdout.decode()
    # Normalize the temporary directory only, so replay receipts are portable.
    msg=bad.stdout.decode().replace(str(tmp),'<tmp>')
