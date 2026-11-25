@@ -93,7 +93,7 @@ $$
 \\boxed{\\widehat r(F(a,1,1,1),F(3,2,1))=3a+9.}
 $$
 
-At $a=4$ the JOINT value $15$ is proved above; the ORIGINAL equality $21$ is **not** asserted here.
+For $a=4$, the original equality 21 is proved separately below using the prior source-locked sharp $D+2$ saturated-core capped-partition theorem; no extension to all Erdős #561 parameter profiles is intended.
 
 **Proof of JOINT when $a\\ge5$.** Let $Q$ satisfy the two residual arrows
 
@@ -137,10 +137,28 @@ $$
 
 However, $2e(G)\\le6a+16$, and $a^2-3a-9>0$ for every integer $a\\ge5$. Contradiction. Thus $e(G)\\ge3a+9$, matched by the canonical upper host. QED.
 
-**Dependencies and sharp boundary.** The JOINT infinite family requires the standard specified-vertex matching theorem but not the general joint-residual hypothesis. The ORIGINAL infinite family uses the already documented and paper-proved ordinary Lovász factor/degree-core theorem (the exact source is \`research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md\`), Vizing's edge-colouring theorem and standard Ramsey vertex deletion. Neither is a Lean kernel proof. No claim for ORIGINAL $a=4$, arbitrary BLUE length, or unrestricted $s,t$ is implied.
+**The $a=4$ ORIGINAL boundary.** The original edge target is $W=21$. Suppose an arbitrary finite simple $G$ arrows $(F(4,1,1,1),F(3,2,1))$ with $e(G)\le20$. The now-proved sharp JOINT bound $J=15$ and vertex deletion give $\Delta(G)\le20-15=5$. If $\Delta(G)\le4$, Vizing gives at most five matching colours, split three RED plus two BLUE to avoid both targets. Thus $\Delta(G)=D=5$.
+
+The capped split with $(\alpha,\beta)=(3,2)$ must fail, or it would itself avoid both original leading stars. The source-proved **sharp $D+2$ saturated-core partition theorem** (see `research/erdos-561/DPLUS2_SATURATED_CORE_THEOREM.md`, section 1) asserts that a graph with $\Delta\le D=\alpha+\beta$ and at most $D+2$ degree $D$ vertices admits such a capped partition whenever $D$ is odd. It is an ordinary paper derivation from the general Lovász $(g,f)$ theorem, not a finite-graph assumption.
+
+The all-RED colouring requires $G$ to contain $F(4,1,1,1)$, so $N=|V_+(G)|\ge11$. If $k$ vertices have degree five, degree sum yields
+
+$$
+2e(G)\ge5k+(N-k)\ge4k+11.
+$$
+
+As $2e(G)\le40$, this forces $k\le\lfloor29/4\rfloor=7=D+2$. Since $D=5$ is odd, the cited sharp partition theorem supplies a $(3,2)$ capped edge split. This contradicts original arrowing. Thus no at-most-20-edge original-arrowing graph exists. The canonical 21-edge star host $F(6,5,4,3,2,1)$ attains the upper bound; consequently
+
+$$
+\boxed{\widehat r(F(4,1,1,1),F(3,2,1))=21.}
+$$
+
+This is a complete *paper-level original theorem*, conditional only on the published Lovász and Vizing classical results and the independently checkable graph and deletion deductions. In particular, it does not rely on an unproved general JOINT hypothesis.
+
+**Dependencies and sharp boundary.** The JOINT infinite family requires the standard specified-vertex matching theorem but not the general joint-residual hypothesis. The ORIGINAL family uses the already documented and paper-proved ordinary Lovász factor/degree-core theorem, and at $a=4$ the stronger sharp $D+2$ cap theorem (the relevant sources include `research/erdos-561/formal-graph/LOVASZ_CAP_PARTITION_BRIDGE.md`), Vizing's edge-colouring theorem and standard Ramsey vertex deletion. Neither is a Lean kernel proof. No claim for other BLUE profiles or unrestricted $s,t$ is implied.
 
 ## Reproducibility, scope and next boundary
 
 The standard-library verifier checks all $6\cdot5\cdot4\cdot3\cdot2=720$ red count vectors on the canonical star host, all $2^{15}=32768$ individual edge colours, and all $\sum_{q=1}^4\binom{10}{q}=385$ missing-core patterns, including construction of each required five-core covering matching. These are corroborative *finite* checks. The lower theorem uses the universally quantified classical specified-vertex Tutte condition, not extrapolation from the finite checks.
 
-**Mathematical disposition:** sharp new fixed JOINT theorem, paper UNDER_REVIEW; no protected mathematical or external MATHCERT certification. The full $s,t\ge3$ residual hypothesis #3490 and unrestricted ORIGINAL Erdős #561 remain OPEN/PARTIAL. The sharp ORIGINAL $(4,1,1,1)$ versus $(3,2,1)$ value is **not** inferred without a separate valid original-transfer proof.
+**Mathematical disposition:** sharp new fixed JOINT theorem, paper UNDER_REVIEW; no protected mathematical or external MATHCERT certification. The full $s,t\ge3$ residual hypothesis #3490 and unrestricted ORIGINAL Erdős #561 remain OPEN/PARTIAL. The sharp ORIGINAL $(4,1,1,1)$ versus $(3,2,1)$ value $21$ is established separately by the source-proved odd $D$ $D+2$ cap classification, as shown in the infinite-family extension.

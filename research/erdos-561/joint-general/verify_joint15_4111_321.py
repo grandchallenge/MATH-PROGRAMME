@@ -114,6 +114,10 @@ def verify():
         assert weights_a == [a + 2, a + 1, a, 3, 2, 1]
         assert sum(weights_a[1:]) == 2 * a + 7
         assert sum(weights_a) == 3 * a + 9
+        if a == 4:
+            d, E, N = 5, 20, 11
+            assert (2 * E - N) // (d - 1) == d + 2 == 7
+            assert d % 2 == 1  # published odd-D small-core cap split
         if a >= 5:
             assert a * a - 3 * a - 5 > 0
             assert a * a - 3 * a - 9 > 0
@@ -136,7 +140,7 @@ def verify():
         "original_upper_allocations_by_a_4_to_7": original_upper_counts,
         "infinite_family_algebra_checked_a_range": [4, 100],
         "infinite_joint_formula": "2*a+7 for every integer a>=4",
-        "infinite_original_formula": "3*a+9 for every integer a>=5",
+        "infinite_original_formula": "3*a+9 for every integer a>=4",
         "full_unrestricted_conjecture_status": "OPEN",
         "mathematical_certification": "NOT_ISSUED",
     }
