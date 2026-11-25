@@ -78,7 +78,7 @@ def main() -> int:
 
     # The Mathlib-backed CRT density lane has its own bounded replay route.
     crt_root = "experiments/erdos_proof_verification/0027/"
-    for source in (crt_root + "Erdos27CRT.lean", crt_root + "Erdos27Weighted.lean", crt_root + "lakefile.toml",
+    for source in (crt_root + "Erdos27CRT.lean", crt_root + "Erdos27Weighted.lean", crt_root + "Erdos27Independence.lean", crt_root + "lakefile.toml",
                    crt_root + "lean-toolchain", crt_root + "lake-manifest.json",
                    "ci/erdos_pv_0027_formal_replay.py", "tests/test_erdos27_crt_replay.py",
                    "governance/erdos_proof_verification/evidence/0027/C_LEAN_CRT_REPLAY_001.json"):

@@ -325,6 +325,9 @@
       "material_patterns": [
         "experiments/erdos_proof_verification/0027/Erdos27CRT.lean",
         "experiments/erdos_proof_verification/0027/Erdos27Weighted.lean",
+        "experiments/erdos_proof_verification/0027/Erdos27Independence.lean",
+        "governance/erdos_proof_verification/evidence/0027/INDEPENDENCE_*",
+        "governance/erdos_proof_verification/evidence/0027/check_independence_lean.py",
         "governance/erdos_proof_verification/evidence/0027/WEIGHTED_*",
         "governance/erdos_proof_verification/evidence/0027/check_weighted_lean.py",
         "experiments/erdos_proof_verification/0027/lean-toolchain",
@@ -360,15 +363,27 @@
           "lean",
           "--output",
           ".formal-validation/erdos-pv-0027-crt/weighted"
+        ],
+        [
+          "python3",
+          "governance/erdos_proof_verification/evidence/0027/check_independence_lean.py",
+          "--cache-root",
+          "experiments/erdos_proof_verification/0027",
+          "--lean",
+          "lean",
+          "--output",
+          ".formal-validation/erdos-pv-0027-crt/independence"
         ]
       ],
       "development_targets": [
         "Erdos27CRT.lean",
-        "Erdos27Weighted.lean"
+        "Erdos27Weighted.lean",
+        "Erdos27Independence.lean"
       ],
       "formal_sources": [
         "Erdos27CRT.lean",
-        "Erdos27Weighted.lean"
+        "Erdos27Weighted.lean",
+        "Erdos27Independence.lean"
       ]
     }
   ]
