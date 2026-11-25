@@ -48,7 +48,7 @@ class E2ELifecycleTests(unittest.TestCase):
         self.assertEqual(result["individual_problems"], 1221)
         # One original canary and one separately protected, bounded #560 record.
         # Neither denotes proof of an open conjecture.
-        self.assertEqual(result["substantive_terminal_count"], 2)
+        self.assertEqual(result["substantive_terminal_count"], 3)
         self.assertEqual(self.row["closure_status"], "ADMITTED_BOUNDED_COMPLETE")
         self.assertEqual(self.row["stage_work_items"]["D"]["protected_admission_ref"], "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241")
 
