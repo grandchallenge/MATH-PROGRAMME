@@ -21,13 +21,15 @@ Four distinctions matter:
 - **Proposition or semantic concordance:** the statement, assumptions, definitions and source edition must actually correspond, rather than merely sharing a title.
 - **Mathematical assessment and certification:** independent mathematical criticism and any subsequent MATHCERT process are separate gates.
 
-## First explanatory drafts
+## Recent verification-backed explanations
 
-- [Family 003: Quasi-Riemann hypothesis](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/003/) — the zero-free region and why it is not the full Riemann hypothesis.
-- [Family 342: Taming and compatibility](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/342/) — a geometric compatibility question and a known manuscript-edition discrepancy.
-- [Family 376: Box transport and quantitative estimates](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/376/) — a simple periodic projection example and an unresolved formal-scope question.
+- [Family 003: Quasi-Riemann hypothesis and exceptional real zeros](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/003/) — four original Lean and hardened comparator passes; explanation of both proof strategies, with full Hecke correspondence limitations.
+- [Family 008: Deligne–Drinfeld conjecture](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/008/) — verified within explicit scope; free odd-weight generators, completion and the characteristic-two dimension argument.
+- [Family 011: Prime predecessors and totient fibers](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/011/) — checked statement bridges and qualified local external-proof replay, distinct from the unresolved companion claims.
 
-**These articles are currently unadmitted editorial drafts.** Their inclusion is not an assertion that the proposed mathematical results are true.
+The [live catalogue](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/catalogue/) distinguishes admitted articles, unadmitted drafts and reference-only pages. Editorial admission is not mathematical certification. Additional examples of unadmitted explanations include [Family 342](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/342/) and [Family 376](https://grandchallenge.github.io/MATH-PROGRAMME/oai26/families/376/).
+
+The [protected comparator evidence index](https://github.com/grandchallenge/MATHFORGE/blob/a1b62de5ae52debe981a2f2855407a0078016e25/sources/OPENAI-MATH-2026/WP01_COMPARATOR_200_PROTECTED_RECEIPT_INDEX.json) records 200 of 200 indexed comparator acceptances. This does not imply 200 verified manuscripts or 372 verified families. Article updates reuse that evidence where relevant and report its exact scope.
 
 ## Evidence and editorial accountability
 
