@@ -1,0 +1,15 @@
+# EXT-015 follow-on / UC095 — verification and acceptance ledger
+
+**Final editorial disposition.** Accept UC092 and UC093 for the two collision-liquid gates in [UC091](COLLISION_LIQUID_EXECUTION_PLAN_UC091.md). The same explicit natural map acts on the admitted joint liquid parameter object and on the checked differentiable cochain complexes at each fixed profinite test. Native protected admission, exact source readback and tracker reconciliation follow this candidate record.
+
+| Acceptance item | Verified result |
+| --- | --- |
+| Independent target and actual comparison | [UC093](COLLISION_LIQUID_ALL_WEIGHTS_UC093.md) defines finite polynomial test duals by component and collision block. The comparison pairs normal-jet sectors with normalized symmetric multiaffine tests, preserving the declared rapid relation and genuine derivative rows. |
+| Weight two | [UC092](COLLISION_LIQUID_WEIGHT_TWO_UC092.md) retains the three pair moments including the corrected normal quadratic term, proves the component-merge diagrams, preserves the single regulator vacuum and verifies a nonzero ordered cross Wick term before classicalization. |
+| All weights | The admitted joint block contractions and exact invariant-to-coinvariant map give an objectwise quasi-isomorphism. Multiplication on disjoint regions respects the partition and component formulas, and the finite-weight proof assembles in the declared completion. The affine fold recovers the actual earlier comparison. |
+| Exact finite controls | [Fixture](fixtures/check_collision_liquid_moments_uc092.py) blob 22727d1271cc23227edbeb1ee8d3aba4780fd0c8 passes. An independent explicit enumeration of labelled partitions and decorated-block orbits gives single-interval arity ranks 1, 2, 6, 14, 33, 70, 149 through six and two-component ranks 1, 4, 16, 52, 158 through four. The enumeration uses no recurrence state from the fixture. |
+| Critical review | [UC094](AGENT_CRITICAL_REVIEW_COLLISION_LIQUID_UC094.md) records distinct nonauthor ACCEPT results for exact sources bbc793d3f85c3fb9f9fdc747e481f46a695e658b and d31e8cf2b33547d9e6c233af7caddb32315ff4d7, with zero corrections. |
+| Scientific dependencies | All fifteen source blobs in UC091 match the original frozen input, the two primary commits and the current protected cut. The existing theorem proofs supply the infinite-dimensional estimates. |
+| Remote closeout | Verify the exact prepared head, both native merge parents, required contexts, and all changed blobs. Record the new bounded tracker as completed and read back its terminal checkpoint upon protected admission. |
+
+Use the existing isolated Windows evidence environment, CPython 3.12.12, with external GCL caches. The runtime is unpinned in this worktree. The only new generated verification is the small exact fixture. Previously accepted mathematical inputs and the original terminal REACH and fixed-host records are referenced evidence. The two mathematical results concern the constructed model on finite unions of intervals, with the formal shared regulator algebra and the established fixed-test parameter convention.
