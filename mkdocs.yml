@@ -76,6 +76,7 @@ nav:
 
 theme:
   name: material
+  custom_dir: overrides
   language: en
   logo: assets/grand-challenge-mark.svg
   favicon: assets/grand-challenge-mark.svg
@@ -122,3 +123,9 @@ extra_css:
 extra_javascript:
   - javascripts/semantic-catalog.js
   - javascripts/mkdocs-math.js
+
+# Temporary presentation-only suppression; keep the navigation tree intact.
+extra:
+  hidden_header_tabs:
+    - Results
+    - Books

@@ -5,7 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from validate_rendered_docs import admonition_render_errors, cm4_display_math_errors, homepage_render_errors
+from validate_rendered_docs import (admonition_render_errors, cm4_display_math_errors,
+                                    header_navigation_errors, homepage_render_errors)
 from audit_math_typography import source_issues, source_math_count, rendered_issues
 
 
@@ -26,6 +27,22 @@ def main() -> int:
             encoding="utf-8",
         )
         assert not homepage_render_errors(index)
+
+        def write_tabs(tabs, retained):
+            index.write_text(
+                '<nav class="md-tabs"><ul>' + ''.join(
+                    f'<li><a class="md-tabs__link">{title}</a></li>' for title in tabs
+                ) + '</ul></nav><nav>' + ''.join(f'<span>{title}</span>' for title in retained)
+                + '</nav>', encoding="utf-8")
+        titles = ["Home", "Results", "Books", "Reference"]
+        hidden = ["Results", "Books"]
+        write_tabs(["Home", "Reference"], hidden)
+        assert not header_navigation_errors(index, titles, hidden)
+        write_tabs(titles, hidden)
+        assert header_navigation_errors(index, titles, hidden)
+        assert not header_navigation_errors(index, titles, [])
+        write_tabs(["Home", "Reference"], ["Books"])
+        assert header_navigation_errors(index, titles, hidden)
 
         index.write_text(
             """<!doctype html><html><body>
