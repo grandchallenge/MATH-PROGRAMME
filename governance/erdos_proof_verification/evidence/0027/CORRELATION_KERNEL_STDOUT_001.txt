@@ -1,0 +1,25 @@
+'Erdos27Correlation.pair_weight_upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.lemma32_finite' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Correlation.lemma32_finite.{u_1} {ι : Type u_1} [Fintype ι] (M : ℕ) [NeZero M] (a b : ι → ℕ) (r : ι → ℤ)
+  (ha : ∀ (i : ι), a i ∣ M) :
+  (∑ h, beta (Finset.image (fun i => (b i, r i)) (active a r ha h))) / ↑M ≤
+    (∑ p,
+        gated (p.1 ≠ p.2 ∧ ¬(b p.1).Coprime (b p.2)) (1 / (↑(b p.1) * ↑(b p.2))) *
+          gated (↑((a p.1).gcd (a p.2)) ∣ r p.2 - r p.1) (1 / ↑((a p.1).lcm (a p.2)))) /
+      2
+'Erdos27Correlation.indexed_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.mean_correlation_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Correlation.mean_correlation_bound.{u_1} {ι : Type u_1} [Fintype ι] (M : ℕ) [NeZero M] (a b : ι → ℕ) (r : ι → ℤ)
+  (ha : ∀ (i : ι), a i ∣ M) :
+  (∑ h, beta2 (Finset.image (fun i => (b i, r i)) (active a r ha h))) / ↑M ≤
+    ∑ p, pairBound (a p.1) (a p.2) (r p.1) (r p.2) (weight (b p.1, r p.1) (b p.2, r p.2))
+'Erdos27Correlation.gated_average' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.active_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.active_pair_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.image_weight_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.weight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.compatible_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.modEq_lcm' depends on axioms: [propext, Quot.sound]
+'Erdos27Correlation.joint_residue_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Correlation.joint_density' depends on axioms: [propext, Classical.choice, Quot.sound]
