@@ -58,6 +58,76 @@ def emTermIso (A : Ab) (n m : ℕ) :
     have hi := i.property
     simp [B, hi, Category.assoc]
 
+def emDegree (n m : ℕ) : Ab ⥤ Ab :=
+  em n ⋙ (evaluation SimplexCategoryᵒᵖ Ab).obj (op (SimplexCategory.mk m))
+
+def activePower (n m : ℕ) : Ab ⥤ Ab where
+  obj A := ∐ fun _ : Active n m => A
+  map f := Limits.Sigma.map (fun _ => f)
+  map_id _A := Limits.Sigma.map_id
+  map_comp f g := (Limits.Sigma.map_comp_map (fun _ => f) (fun _ => g)).symm
+
+set_option backward.isDefEq.respectTransparency false in
+private theorem splitting_inj_eq (K : ChainComplex Ab ℕ)
+    (m : ℕ) (i : Indices m) :
+    ((Γ₀.splitting K).cofan (op (SimplexCategory.mk m))).inj i =
+      Sigma.ι (Γ₀.Obj.summand K (op (SimplexCategory.mk m))) i := by
+  change Sigma.ι (Γ₀.Obj.summand K i.1) (SimplicialObject.Splitting.IndexSet.id i.1) ≫
+    Γ₀.Obj.map K i.e.op = _
+  letI : Mono (𝟙 i.1.unop) := inferInstance
+  rw [Γ₀.Obj.map_on_summand₀ K (SimplicialObject.Splitting.IndexSet.id i.1)
+    (show i.e ≫ 𝟙 _ = i.e.op.unop ≫ 𝟙 _ by rfl),
+    Γ₀.Obj.Termwise.mapMono_id]
+  change 𝟙 (Γ₀.Obj.summand K (op (SimplexCategory.mk m)) i) ≫
+      Sigma.ι (Γ₀.Obj.summand K (op (SimplexCategory.mk m))) i = _
+  exact Category.id_comp _
+
+private theorem emMap_inj {A B : Ab} (f : A ⟶ B) (n m : ℕ) (i : Indices m) :
+    Sigma.ι (Γ₀.Obj.summand ((singleDegree n).obj A) (op (SimplexCategory.mk m))) i ≫
+      (emDegree n m).map f =
+    ((singleDegree n).map f).f i.1.unop.len ≫
+      Sigma.ι (Γ₀.Obj.summand ((singleDegree n).obj B) (op (SimplexCategory.mk m))) i := by
+  change _ ≫ (Γ₀.map ((singleDegree n).map f)).app (op (SimplexCategory.mk m)) = _
+  rw [← splitting_inj_eq, ← splitting_inj_eq]
+  exact (Γ₀.splitting ((singleDegree n).obj A)).ι_desc _ _ i
+
+private theorem singleIso_inv_naturality {A B : Ab} (f : A ⟶ B)
+    (n k : ℕ) (hk : k = n) :
+    f ≫ (HomologicalComplex.singleObjXIsoOfEq (ComplexShape.down ℕ) n B k hk).inv =
+      (HomologicalComplex.singleObjXIsoOfEq (ComplexShape.down ℕ) n A k hk).inv ≫
+        ((singleDegree n).map f).f k := by
+  subst k
+  change _ = _ ≫ ((HomologicalComplex.single Ab (ComplexShape.down ℕ) n).map f).f n
+  rw [HomologicalComplex.single_map_f_self]
+  simp [HomologicalComplex.singleObjXSelf]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The finite simplex decomposition commutes with every homomorphism of groups. -/
+def emDegreeIso (n m : ℕ) : activePower n m ≅ emDegree n m :=
+  NatIso.ofComponents (fun A => (emTermIso A n m).symm) (fun {A B} f => by
+    apply Sigma.hom_ext
+    intro i
+    change Sigma.ι (fun _ : Active n m => A) i ≫
+      Limits.Sigma.map (fun _ : Active n m => f) ≫ (emTermIso B n m).inv =
+        Sigma.ι (fun _ : Active n m => A) i ≫
+          (emTermIso A n m).inv ≫ (emDegree n m).map f
+    rw [Limits.Sigma.ι_map_assoc]
+    have ha : Sigma.ι (fun _ : Active n m => A) i ≫ (emTermIso A n m).inv =
+        (summandIso A n m i).inv ≫
+          Sigma.ι (Γ₀.Obj.summand ((singleDegree n).obj A) (op (SimplexCategory.mk m))) i.val := by
+      unfold emTermIso
+      exact Sigma.ι_desc _ _
+    have hb : Sigma.ι (fun _ : Active n m => B) i ≫ (emTermIso B n m).inv =
+        (summandIso B n m i).inv ≫
+          Sigma.ι (Γ₀.Obj.summand ((singleDegree n).obj B) (op (SimplexCategory.mk m))) i.val := by
+      unfold emTermIso
+      exact Sigma.ι_desc _ _
+    rw [hb, ← Category.assoc (Sigma.ι (fun _ : Active n m => A) i), ha,
+      Category.assoc, emMap_inj, ← Category.assoc, ← Category.assoc]
+    exact congrArg (fun x => x ≫ Sigma.ι
+      (Γ₀.Obj.summand ((singleDegree n).obj B) (op (SimplexCategory.mk m))) i.val)
+      (singleIso_inv_naturality f n i.val.1.unop.len i.property))
+
 theorem emBelow_isZero (A : Ab) (n m : ℕ) (h : m < n) :
     IsZero (((em n).obj A).obj (op (SimplexCategory.mk m))) := by
   apply (emTermIso A n m).isZero_iff.mpr
@@ -188,6 +258,7 @@ theorem reducedEMChains_below (A : Ab) (n m : ℕ) (h : m < n) :
   exact reducedFree_zero _ (emBelow_isZero A n m h)
 
 #print axioms emTermIso
+#print axioms emDegreeIso
 #print axioms emBelow_isZero
 #print axioms reducedRetract_eq
 #print axioms reducedFree_zero
