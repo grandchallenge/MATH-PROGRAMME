@@ -29,7 +29,8 @@ python3 verify_recursive_three_blue_certificates.py --grid
 python3 verify_recursive_red_matching_certificates.py --grid
 python3 verify_recursive_vertex_budget_certificates.py --grid
 python3 verify_recursive_fifth_core_certificates.py
-python3 verify_gallai_no_triangle_support.py --guard-only
+python3 verify_gallai_no_triangle_support.py
+python3 verify_blue_order_adaptive_gallai.py --guard-only
 python3 verify_fast_vs_full.py
 python3 search_rigid_12edge.py
 python3 verify_rigid12_independent.py
