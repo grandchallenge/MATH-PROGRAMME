@@ -2746,3 +2746,27 @@ class CofactorTwoCopyCookTransferTests(unittest.TestCase):
                     Fraction(8*X,25))
                 self.assertEqual(a["cofinal_source_14X_over_25"],"OPEN")
                 self.assertEqual(a["original_Erdos249_irrationality"],"OPEN")
+
+
+class WP09MLargePrimeLocalizationTests(unittest.TestCase):
+    def test_canonical_eight_shifts_localized_exact_gate(self):
+        from experiments.erdos249_full_series_phase.large_prime_localization import certified_localized_energy
+        for h in range(1, 9):
+            with self.subTest(h=h):
+                a = certified_localized_energy(16384, h)
+                self.assertEqual(a["H"], 4261 if h == 2 else 4262)
+                self.assertEqual(a["groups"], 6)
+                self.assertEqual(a["L"], 26+h)
+                self.assertGreaterEqual(a["H"], Fraction(a["X"], 5))
+                self.assertLess(a["energy_upper"], Fraction(3*a["H"], 1000))
+                self.assertTrue(a["finite_gate"])
+                self.assertEqual(a["cofinal"], "OPEN")
+
+    def test_hostile_aligned_phases_and_negative_margin(self):
+        from experiments.erdos249_full_series_phase.large_prime_localization import localized_gate
+        self.assertFalse(localized_gate(100, 22, Fraction(22)))
+        self.assertFalse(localized_gate(100, 1, Fraction(0)))
+        self.assertTrue(localized_gate(100, 20, Fraction(5)))
+        self.assertFalse(localized_gate(100, 20, Fraction(5001, 1000)))
+        with self.assertRaises(ValueError):
+            localized_gate(100, 20, 5.0)
