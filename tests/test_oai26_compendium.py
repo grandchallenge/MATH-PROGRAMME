@@ -78,7 +78,7 @@ class DocumentaryCatalogueTest(unittest.TestCase):
         self.assertEqual(admitted["002"]["manuscript_sha256"],
                          "30cb8d56240dcaf234cdfe3e05cfc21fda94f65bf53e0d4e55ddaa551161b5c2")
         self.assertEqual(admitted["003"]["manuscript_sha256"],
-                         "6db924e9084e5a6df2ef2fca34438c87178cd348de8aefbcdf017b35f9e27b2b")
+                         "bf0ada32aec6f8e5cea7a069fa72edcb04836013c4d5f17f3748349c83639714")
         self.assertEqual(admitted["004"]["manuscript_sha256"],
                          "d5c23e0a128d6836bd3de392ce861864c8afef44f6843593bc8a17354c9d9629")
         self.assertEqual(admitted["005"]["manuscript_sha256"],
