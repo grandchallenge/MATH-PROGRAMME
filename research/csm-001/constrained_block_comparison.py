@@ -212,6 +212,28 @@ def verify_spatial(A,w,C=None):
     return {"spatial_gain":q,"spatial_rate":q,"spatial_prefactor":max(w)/min(w)}
 
 
+def observable_bounds(B,S,G=None):
+    """Stationary observed margins conditional on positive wildcard.
+
+    One-site insertion is safe repair over the whole target factor scope.
+    Comparison of the wildcard posterior gives log/relative variation
+    after a common temporal suffix even with other current ports clamped.
+    """
+    c=B.insertion()
+    K=S["spatial_prefactor"];r=S["spatial_rate"]
+    spatial=tuple(K*len(nodes)/lo for (_,nodes,_,_,_,_),lo in zip(B.factors,c))
+    if G is not None and G["rho"]<r:
+        r=G["rho"];w=G["weights"]
+        C=tuple(sum(w[j] for _,j in nodes)/(min(w)*lo)
+                for (_,nodes,_,_,_,_),lo in zip(B.factors,c))
+    else:C=spatial
+    positive=all(v>0 for T in B.net.tables for row in T[-1] for v in row)
+    return {"insertion_nonnull":c,"positive_wildcard":positive,
+            "observable_stationary_bound":positive,"port_constants":C,
+            "port_spatial_constants":spatial,"temporal_rate":r,
+            "nonnull":prod(c),"constant":sum(C)}
+
+
 def certify(net,blocks,safe=None,method="rectangular",rates=None,max_contexts=2000000,max_block_states=256):
     try:
         B=BlockNetwork(net,blocks,safe,max_block_states)
@@ -225,9 +247,8 @@ def certify(net,blocks,safe=None,method="rectangular",rates=None,max_contexts=20
     try:S=verify_spatial(A,w,C)
     except ValueError:
         return {"outcome":"undecided","boundary":"spatial gain search","work":work}
-    return dict(S,outcome="certified",method=method,blocks=B.blocks,safe=B.safe,
-                weights=w,temporal=G,insertion_nonnull=B.insertion(),
-                positive_wildcard=all(v>0 for T in net.tables for row in T[-1] for v in row),
+    return dict(S,**observable_bounds(B,S,G),outcome="certified",method=method,
+                blocks=B.blocks,safe=B.safe,weights=w,temporal=G,
                 interior=A,terminal=C,work=work,joint_state_constructed=False)
 
 
@@ -238,9 +259,8 @@ def replay(net,witness,max_contexts=2000000,max_block_states=256):
     else:raise ValueError("unknown method")
     S=verify_spatial(A,witness["weights"],C)
     G=witness.get("temporal")
-    if G is not None:verify_gain(A,C,G["weights"],G["rho"])
-    return dict(S,insertion_nonnull=B.insertion(),
-                positive_wildcard=all(v>0 for T in net.tables for row in T[-1] for v in row))
+    if G is not None:G=verify_gain(A,C,G["weights"],G["rho"])
+    return dict(S,**observable_bounds(B,S,G))
 
 
 def finest_product_scope(support,arity,budget):
