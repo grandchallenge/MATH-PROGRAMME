@@ -9,7 +9,7 @@ from oai26_compendium import build, clean
 
 def on_pre_build(config, **kwargs):
     result = build()
-    if result["families"] != 372 or result["manuscript_paths"] != 719:
+    if result["families"] != 375 or result["manuscript_paths"] != 730:
         raise RuntimeError("OAI-26 catalogue build incomplete")
     print("OAI26_COMPENDIUM_BUILD " + str(result))
 
@@ -22,6 +22,9 @@ def on_post_build(config, **kwargs):
         site / "oai26/families/003/index.html",
         site / "oai26/families/342/index.html",
         site / "oai26/families/377/index.html",
+        site / "oai26/families/378/index.html",
+        site / "oai26/families/379/index.html",
+        site / "oai26/families/380/index.html",
     ]
     missing = [str(path) for path in required if not path.is_file()]
     clean()

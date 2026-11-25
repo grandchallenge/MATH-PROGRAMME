@@ -63,7 +63,7 @@ def prepare() -> None:
     oai = build_oai26(output_dir=DOCS / "oai26")
     if erdos["problems"] != 1221 or erdos["pages"] < 1222:
         raise RuntimeError(f"Erdős generator incomplete: {erdos}")
-    if oai["families"] != 372 or oai["manuscript_paths"] != 719:
+    if oai["families"] != 375 or oai["manuscript_paths"] != 730:
         raise RuntimeError(f"OAI26 generator incomplete: {oai}")
 
     inject(DOCS / "index.md", ERDOS_HOME_MARKER, erdos_home_status())
