@@ -34,7 +34,7 @@ $$
 \sum_{i=1}^q\mu_i=s,\qquad N:=\sum_i|C_i|=2s+q.
 $$
 
-**Exclude every $\mu_i=1$ component by a concrete avoiding colouring.** Such a connected simple factor-critical component has three vertices and is exactly a triangle $K_3$. Colour all three of its edges BLUE and every edge of the remaining graph RED (isolated vertices irrelevant). The BLUE triangle cannot contain two vertex-disjoint positive stars because even $F(1,1)$ needs four vertices. The RED part has matching number at most $s-1$, since deleting the triangle component removes exactly one unit of matching capacity. Every RED copy of the $s$-component forest $A$ would contain an $s$-edge matching, one from each disjoint star. Hence RED also avoids $A$. This contradicts the arrowing hypothesis.
+**Exclude every factor-critical triangle component by a concrete avoiding colouring.** Such a connected simple factor-critical component has three vertices and is exactly a triangle $K_3$. Colour all three of its edges BLUE and every edge of the remaining graph RED (isolated vertices irrelevant). The BLUE triangle cannot contain two vertex-disjoint positive stars because even $F(1,1)$ needs four vertices. The RED part has matching number at most $s-1$, since deleting the triangle component removes exactly one unit of matching capacity. Every RED copy of the $s$-component forest $A$ would contain an $s$-edge matching, one from each disjoint star. Hence RED also avoids $A$. This contradicts the arrowing hypothesis.
 
 Therefore **all nonisolated factor-critical components have $\mu_i\ge2$**. There are at most $\lfloor s/2\rfloor$ such components, so
 
@@ -44,7 +44,7 @@ $$
 
 Choose any nonisolated vertex $x$. The red copy of $A$ compelled inside $Q-x$ has $V_A$ distinct nonisolated vertices of $Q-x$, but the latter has at most $N-1\le V_A-1$ nonisolated vertices. Contradiction. Consequently $\nu(Q)\ne s$, proving $\nu(Q)\ge s+1$. QED.
 
-**Important distinction from the old threshold:** We do not claim that a maximum-matching-$s$ host must consist only of triangles. Instead, we show that the existence of *any* factor-critical triangle component already contradicts arrowing; all surviving components must use at least two matching edges, giving the stronger bound.
+**Important distinction from the old threshold:** We do not claim that a host whose maximum matching is $s$ must consist only of triangles. Instead, we show that the existence of *any* factor-critical triangle component already contradicts arrowing; all surviving components must use at least two matching edges, giving the stronger bound.
 
 ## Corollary U — strengthened all-s BLUE-matching residual criterion
 
@@ -79,7 +79,7 @@ Consequently $P_B=0$ suffices for the exact canonical **JOINT** minimum, includi
 
 The second residual arrows the complete RED forest $F(n)$ against the two positive BLUE stars $F(v,g)$. Every intermediate graph in the normalization and matching-deletion argument of \`ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md\` therefore satisfies Lemma T, since the normalized RED forest $F(a)$ meets the improved vertex-support threshold and all earlier RED minima are at least those of $a$.
 
-Each normalization step removes a matching of at least $s+1$ edges and colours them entirely RED or BLUE as appropriate, preserving both JOINT arrowing relations while decrementing exactly $s+1$ nonleading canonical antidiagonal weights by one. In the terminal-one case $a_s=1$ and normalized BLUE $(U,V,1)$ with $V\ge2$, remove one final $(s+1)$-edge BLUE matching. The remaining graph arrows precisely the two residual conditions for original RED $a$ against the BLUE two-component profile $(U-1,V-1)$. By the source-proved TWO-component residual bridge after exchanging colours, it has at least $J_{\rm can}(a,(U-1,V-1))$ edges. The existing **exact algebraic identity** from claim 045 is
+Each normalization step removes a matching with at least $s+1$ edges and colours them entirely RED or BLUE as appropriate, preserving both JOINT arrowing relations while decrementing exactly $s+1$ nonleading canonical antidiagonal weights by one. In the terminal-one case $a_s=1$ and normalized BLUE $(U,V,1)$ with $V\ge2$, remove one final $(s+1)$-edge BLUE matching. The remaining graph arrows precisely the two residual conditions for original RED $a$ against the BLUE two-component profile $(U-1,V-1)$. By the source-proved TWO-component residual bridge after exchanging colours, it has at least $J_{\rm can}(a,(U-1,V-1))$ edges. The existing **exact algebraic identity** from claim 045 is
 
 $$
 J_{\rm can}(a,(U,V,1))=(s+1)+J_{\rm can}(a,(U-1,V-1))+P_B.
