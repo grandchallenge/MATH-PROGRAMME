@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 24 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -441,9 +441,47 @@ The improvement uses the exact half-rank of the signed determinant and a direct 
 
 The [technical reconstruction PR #610](https://github.com/grandchallenge/MATHFORGE/pull/610) records the full conventional argument. Exact computational controls passed 1,212 twisted congruences, 1,572 distribution identities, 126 signed determinants, 180 bad-prime comparisons, 2,500 length bounds and 1,200 constant inequalities. These are finite checks, not a direct computation of the full arithmetic cohomology.
 
-The classical Stickelberger theorem, Hilbert class field reciprocity, S-unit theorem, conductor-discriminant formula and Minkowski theorem are explicit inputs, as is compatibility of the source's arithmetic Galois data. Their exact formal correspondence and original Lean replay remain open. We must next verify which primes can divide the degree of the composite field and assemble both prime estimates into the precise downstream arithmetic bound.
+The classical Stickelberger theorem, Hilbert class field reciprocity, S-unit theorem, conductor-discriminant formula and Minkowski theorem are explicit inputs, as is compatibility of the source's arithmetic Galois data. Their exact formal correspondence and original Lean replay remain open. The following section checks which primes divide the composite-field degree and assembles both estimates.
 
-## 13. Reproducibility and technical references
+## 13. Combining the two prime estimates without losing uniformity
+
+We have now checked how the submitted proof combines its separate good-prime and bad-prime bounds. It matters which field is being measured. The composite field used by the proof is generally much smaller than the cyclotomic field in which it is represented.
+
+### The extra field symmetries do not introduce odd bad primes
+
+A number field's degree counts its independent coordinates over the rational numbers. For the abelian fields here, it also counts the distinct field automorphisms. The actual composite-field definition describes these automorphisms through four tests: a condition at a power of two, a condition inherited from the original abelian field, and two tests taking values plus or minus one.
+
+The first test permits only a power-of-two number of distinct responses. The last two are binary. Only the original abelian field can supply an odd prime factor of the number of responses. The original responses are still all represented in the composite field, so its odd prime divisors are exactly those of the original degree. This follows from the genuine fixing-subgroup criterion, not an assumption that the four tests are independent.
+
+| Exact example | Degree | Prime factorization |
+| --- | ---: | --- |
+| Original abelian field | 3 | 3 |
+| Actual composite field | 48 | 2⁴ × 3 |
+| Cyclotomic ambient field | 10,560 | 2⁶ × 3 × 5 × 11 |
+
+In this example the starting modulus is 7, with the subgroup consisting of the residues 1 and −1. The auxiliary primes are 11 and 23, and the power-of-two modulus is 16. The actual bad-prime set contains only 3, not 5 or 11. The exact subgroup enumeration checks this example as well as overlapping moduli, where naive multiplication of the degrees would give the wrong answer.
+
+### A shared budget for all odd primes and all required orders
+
+Every odd prime belongs to exactly one of two categories. If it does not divide the field degree, the character argument of section 11 applies. If it does, the integral annihilator of section 12 applies. Both estimates first establish that the relevant length is finite.
+
+We can therefore add their bounds, for any finite collection of odd primes and for all integer orders in the required range. The good-prime part is controlled by the size of a common integer for each order. The bad-prime part is controlled by the fixed finite list of odd divisors of the original field degree. The resulting bound is uniform even when the two auxiliary primes vary.
+
+This is the exact mathematical role of the theorem named `thmBcFree_of` in the submitted source. It concerns only the sign component designated by the source as minus; the other sign component and the prime 2 need separate treatment.
+
+The [technical reconstruction PR #612](https://github.com/grandchallenge/MATHFORGE/pull/612) gives the precise degree divisibility and the complete finite-set inequality with the original good-prime term and the previously reconstructed bad-prime constant 40. Exact controls checked 55 fixing-group cases, 57,216 unit actions, 5,460 Bernoulli size inequalities, 273 sums over orders and 360 polynomial domination inequalities.
+
+### Why the bound has the right growth rate
+
+The next part of the proof uses a scale parameter tending to infinity. It needs to show that its arithmetic error budget grows more slowly than an exponential threshold. Our reconstruction checks the relevant deterministic comparison, not the existence of the necessary window.
+
+The field degree is no larger than its least cyclotomic modulus. Multiplying that modulus by the height cutoff and calling the product the scale, the combined odd-prime bound is at most a fixed constant times the fourth power of the scale. The constant depends on the original field's degree, not on the varying auxiliary primes.
+
+The source's conductor and height assumptions bound the logarithm of that scale. This yields a controlled exponential bound for the minus contribution. If the separate other-sign and prime-2 estimates hold on the required interval, the three budgets together are eventually below the submitted threshold. The reason is that exponentials with strictly smaller powers of the same large variable are eventually dominated by the exponential with the larger power.
+
+The exact inequalities and their assumptions are retained in the technical proof. We have not established the required simultaneous interval of validity by this calculation. Establishing a bound under its window assumptions and establishing that such a window exists are different mathematical tasks.
+
+## 14. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -474,10 +512,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #608](https://github.com/grandchallenge/MATHFORGE/pull/608) | Primitive ramification, exceptional Kummer vanishing and assembled conditional character inequality |
 | [PR #609](https://github.com/grandchallenge/MATHFORGE/pull/609) | Finite-Galois eigenspace transport and good-prime aggregate budget |
 | [PR #610](https://github.com/grandchallenge/MATHFORGE/pull/610) | Integral Stickelberger annihilator, generator and length bounds, and uniform bad-prime estimate |
+| [PR #612](https://github.com/grandchallenge/MATHFORGE/pull/612) | Composite-field degree restriction, combined minus-length bound and conditional exponential domination |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 14. What the investigation taught us about checking extraordinary mathematical claims
+## 15. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -489,14 +528,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 15. The next executable mathematical step
+## 16. The next executable mathematical step
 
-**Target:** the actual degree condition in `OddResidueBounds/DegExistsLift.lean` and the combined `thmBcFree_of` bound in `OddResidueBounds/ThmBcOfPsiBound.lean`.
+**Target:** the actual simultaneous-window construction and other-sign and prime-2 estimates supplying `vwin_of_counts`, as used in `HeightAndVanishing/JointWinOfCounts.lean` and `CMFieldExponentialBounds/AdmissibleOfPageN.lean`.
 
-**Work:** independently establish the degree-prime restriction of the composite fields, then assemble the two reconstructed estimates over the exact range of primes and exponents. Follow the actual downstream threshold argument, including its parameter choices and logarithmic losses.
+**Work:** independently establish the source's quantitative window and remaining arithmetic bounds, with their exact parameter choices and uniformity. Distinguish the already reconstructed deterministic error-budget comparison from the still-open construction of the interval on which all its inputs hold.
 
-**Completion test:** verify the degree condition and each term in the combined quantitative bound under its precise hypotheses. Retain foundational correspondence and original Lean replay as separate obligations.
+**Completion test:** verify the required hypotheses and conclusions of the actual source statements; account for the separate count, height, classical foundation and original Lean replay obligations. No promotion from conditional verification to RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_STICKBOUND_CONVENTIONALLY_RECONSTRUCTED__DEGREE_PARTITION_THRESHOLD_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_THMBCFREE_CONDITIONAL_RECONSTRUCTED__WINDOW_SELECTION_OTHER_SIGN_AND_TWO_PLACE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.

@@ -1,0 +1,77 @@
+{
+  "record_type": "ERDOS_PV_0027_C_LEAN_CRT_REPLAY/1",
+  "result": "PASS",
+  "lean_version": "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "dependency_revisions": {
+    "mathlib": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "plausible": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+    "LeanSearchClient": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+    "importGraph": "16f02aa7642864af59f1ff0e384a015994db9118",
+    "proofwidgets": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+    "aesop": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+    "Qq": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+    "batteries": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+    "Cli": "6130a47896ce867c6a4a55373441e59e565bad0f"
+  },
+  "tracked_dependency_worktrees_clean": true,
+  "positive_exit": 0,
+  "source_sha256": "fea29332f3f4f106246e985e88660d434c959bf7bca2be32b0e1755c1ed517db",
+  "manifest_sha256": "7557c7d782597b66223b4536edf7ca3a9328528308a9cce2696de7ddfd05b83a",
+  "toolchain_sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+  "stdout_sha256": "bbd65fe9f033f2d623782a8823402fce64a6fe971fd1d57cf79c9f0d5f1be258",
+  "covering_count_printed_type_sha256": "4013d58f7609181ec11edd2b6a355bd89c3a1ce644b2313023362a09489cc325",
+  "covering_density_printed_type_sha256": "91cca56b5adc95da3a45d6894db8f9d75668708ec0903d30df13c8957e701a80",
+  "axioms": {
+    "covering_density": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "count_fibres": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "crt_count_fibres": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "congruence_split": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "avoid_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "covering_count": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "negative_controls": {
+    "noncoprime_split": {
+      "target": "(((2 : ZMod 4) = 0) \u2194 (((2 : ZMod 2) = 0) \u2227 ((2 : ZMod 2) = 0)))",
+      "negation_exit": 0,
+      "false_target_exit": 1,
+      "diagnostic": "<tmp>/Witness.lean:2:81: error: Tactic `decide` proved that the proposition\n  2 = 0 \u2194 2 = 0 \u2227 2 = 0\nis false\n"
+    },
+    "drop_smooth_condition": {
+      "target": "(((1 : ZMod 2) \u2260 0) \u2194 ((1 : ZMod 1) \u2260 0))",
+      "negation_exit": 0,
+      "false_target_exit": 1,
+      "diagnostic": "<tmp>/Witness.lean:2:58: error: Tactic `decide` proved that the proposition\n  1 \u2260 0 \u2194 1 \u2260 0\nis false\n"
+    },
+    "drop_rough_condition": {
+      "target": "(((2 : ZMod 6) \u2260 0) \u2194 ((2 : ZMod 2) \u2260 0))",
+      "negation_exit": 0,
+      "false_target_exit": 1,
+      "diagnostic": "<tmp>/Witness.lean:2:58: error: Tactic `decide` proved that the proposition\n  2 \u2260 0 \u2194 2 \u2260 0\nis false\n"
+    }
+  },
+  "full_problem_proof_or_mathcert": false
+}

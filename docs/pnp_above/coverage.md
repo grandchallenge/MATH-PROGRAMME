@@ -1,8 +1,8 @@
-# PNP-ABOVE — GCL documentary coverage through WP19
+# PNP-ABOVE — GCL documentary coverage and WP38 frontier
 
-<p class="page-deck">WP00–WP17 immutable source inventory, separate WP18–WP19 extensions, review receipts, claim boundaries and open mathematical obligations, audited on 19 November 2026.</p>
+<p class="page-deck">WP00–WP17 immutable source inventory, separate WP18–WP19 extensions, review receipts, claim boundaries and open mathematical obligations, historical audit of 19 November 2026, with protected successors through WP38B.</p>
 
-**Governing records:** [MATHSOLVE research #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) and [MATH-PROGRAMME PNP-001 #162](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162). Both remain **OPEN**. This page is an evidence/navigation ledger, not a mathematical certificate or a P-versus-NP claim.
+**Governing records:** [MATHSOLVE research #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) and [MATH-PROGRAMME PNP-001 #162](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162). The historical WP00 preflight is closed; PNP-001 remains **OPEN**. This page is an evidence/navigation ledger, not a mathematical certificate or a P-versus-NP claim.
 
 ## Coverage method and exact source identity
 
@@ -60,7 +60,7 @@ Therefore **changing only the decision predicate cannot fix WP18**, even if it i
 | Record | Authoritative scope | Current disposition |
 | --- | --- | --- |
 | [PNP-001 programme tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162) | Terminal P/NP research and protected Programme policy | **OPEN**, no separation/equality proof |
-| [PNP-ABOVE research issue](https://github.com/grandchallenge/MATHSOLVE/issues/1136) | The compression experiment, source proofs, receipts and next hard-game target | **OPEN**; WP00–WP17 source evidence present |
+| [PNP-ABOVE research issue](https://github.com/grandchallenge/MATHSOLVE/issues/1136) | The compression experiment, source proofs, receipts and next hard-game target | Historical WP00 preflight closed; later source evidence indexed below |
 | [Definition concordance](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_DEFINITION_CONCORDANCE_001/concordance.json) | Formal Conjectures / Programme model audit | **Audit complete, theorem-level class equivalence unproved** |
 | [PNP-BRIDGE-001 status](https://github.com/grandchallenge/MATHSOLVE/blob/main/work_packages/PNP_BRIDGE_001/bridge_status.json) | Formal Conjectures class-interface bridges, separate from PNP-ABOVE | Carrier and polynomial bounds **kernel-checked**; model, NP verifier and endpoint **OPEN** |
 | [MATHFORGE provider](https://github.com/grandchallenge/MATHFORGE/blob/main/provider_manifests/PNP-001.json) and [historical concordance](https://github.com/grandchallenge/MATHFORGE/blob/main/formal_sources/formal_conjectures/concordance/PNP-001.json) | **Retrospective** source/provider records from an earlier campaign stage | Historical scope preserved; not the live bridge-status authority |
@@ -71,12 +71,28 @@ Therefore **changing only the decision predicate cannot fix WP18**, even if it i
 
 **Record reconciliation:** the MATHFORGE earlier concordance's `unresolved` status and the later MATHSOLVE `PNP-DEFINITION-CONCORDANCE-001` completed-audit disposition refer to different bounded review stages. Neither states a full polynomial-time machine/class equivalence. Similarly, the historical WP00–WP02 campaign manifest must not be interpreted as a denial that source-native PNP-ABOVE WP03–WP17 exist. The source snapshot and this page index the latter, without rewriting the former.
 
-## Still open and required for a hard-game route
+## Protected successors: WP20–WP38B
 
-1. **Completed in WP18–WP19:** a real bounded non-diagonal/player-asymmetric sampler exists, and WP19 proves its exact star-plus-matching support **cannot produce a synchronous/quantum/commuting advantage for any synchronous acceptance predicate**. **Remaining:** construct a **different, richer two-sided source-native CL question law** with interacting question choices and prove all source query, termination and polynomial bounds. Graph cycles are a useful nonlocality design screen, not a proof of a quantum advantage.
-2. Provide an **answer-sensitive executable source `Cost.Prog` decider**, plus typed-input correctness, malformed-data behavior and source execution-time bounds.
-3. Prove a **genuine positive quantum/classical game-value or soundness gap** in the original source game model. Positive off-diagonal mass alone is insufficient.
-4. Only after that, validate source-effective positive-parameter introspection, answer reduction, repetition, and the quantitative Theorem 12.1 statement/proof discrepancy. Do not infer full compression from imported compiler source compilation.
-5. Independently establish or refute the **uniform succinct SAT-to-classical-strategy cost transfer** and close PNP-001's separate machine-model, NP-verifier and endpoint bridges before proposing any classical-complexity claim. Retain the relevant barrier and MATHCERT reviews.
+These milestones supersede the dated construction blockers in WP00–WP19. This is a milestone index, not a claim of a new exhaustive file inventory. The original WP00–WP17 snapshot remains immutable.
 
-**Coverage disposition:** Source inventory WP00–WP17 complete; WP18 added as a separately pinned nine-module source tranche. `WP00_WP17_SOURCE_ARTIFACT_INVENTORY_COMPLETE__PUBLIC_NAV_AND_REVIEW_TRACEABLE__SCIENTIFIC_AND_CERTIFICATION_OBLIGATIONS_OPEN`. There is no proof of `P=NP` or `P≠NP`, new unrestricted classical lower bound, executable full positive-parameter compressor, or independent public theorem certification. Later source revisions and WP18+ need new provenance and public-record updates.
+| Milestone | Protected source | Scope |
+| --- | --- | --- |
+| WP20–WP22 | [WP22 native Bell gap](https://github.com/grandchallenge/MATHSOLVE/blob/38e37a53596762757798c75729aaedfef3af1d1f/research/PNP-ABOVE/WP22_RESULT.md) | Richer question law, executable bounded answer-sensitive verifier and strict finite quantum advantage; not SAT hardness |
+| WP23–WP28C | [WP27](https://github.com/grandchallenge/MATHSOLVE/pull/1268), [WP28B2](https://github.com/grandchallenge/MATHSOLVE/pull/1273), [WP28C](https://github.com/grandchallenge/MATHSOLVE/pull/1274) | SAT-dependent native verifier, fixed code and uniform source bound; actual power-indexed compression promise interface |
+| WP29–WP33 | [WP29](https://github.com/grandchallenge/MATHSOLVE/pull/1277), [WP30](https://github.com/grandchallenge/MATHSOLVE/pull/1282), [WP31](https://github.com/grandchallenge/MATHSOLVE/pull/1283), [WP32](https://github.com/grandchallenge/MATHSOLVE/pull/1284), [WP33](https://github.com/grandchallenge/MATHSOLVE/pull/1285) | Native 3CNF compiler, conditional transfer, numeric index barrier, threshold padding and ambient witness-budget counterexample |
+| WP34–WP35 | [WP34](https://github.com/grandchallenge/MATHSOLVE/pull/1287), [WP35](https://github.com/grandchallenge/MATHSOLVE/pull/1288) | Exact native decision equivalence on valid compressed indices; polynomial dense support and short verifiable witnesses |
+| WP36A–B | [WP36A](https://github.com/grandchallenge/MATHSOLVE/pull/1291), [WP36B](https://github.com/grandchallenge/MATHSOLVE/pull/1292) | All-fixed-program quadratic charged-copy time lower bound on native valid inputs with no variables; not intrinsic SAT hardness |
+| WP37 | [WP37](https://github.com/grandchallenge/MATHSOLVE/pull/1293) | Semantic binary proof width lower bound and affine shortcut obstruction; not unrestricted runtime |
+| WP38A–B | [WP38A](https://github.com/grandchallenge/MATHSOLVE/pull/1297), [WP38B](https://github.com/grandchallenge/MATHSOLVE/pull/1298) | Exact native polynomial decision, witness and canonical witness equivalence; no lower bound proved by the equivalence |
+
+### WP38 exact replay and protected readback
+
+WP38A: protected merge `c0a2d29726e29c22aa3c8818ac2d2021df4c3301`, [result](https://github.com/grandchallenge/MATHSOLVE/blob/c0a2d29726e29c22aa3c8818ac2d2021df4c3301/research/PNP-ABOVE/WP38_RESULT.md), [source lock](https://github.com/grandchallenge/MATHSOLVE/blob/c0a2d29726e29c22aa3c8818ac2d2021df4c3301/research/PNP-ABOVE/WP38_SOURCE_LOCK.json). 28 theorem declarations, three new modules freshly replayed, six protected blobs matched.
+
+WP38B: protected merge `7e47aa5d3a1c8f40d66bc00b3262eda48012f4f5`, [result](https://github.com/grandchallenge/MATHSOLVE/blob/7e47aa5d3a1c8f40d66bc00b3262eda48012f4f5/research/PNP-ABOVE/WP38B_RESULT.md), [source lock](https://github.com/grandchallenge/MATHSOLVE/blob/7e47aa5d3a1c8f40d66bc00b3262eda48012f4f5/research/PNP-ABOVE/WP38B_SOURCE_LOCK.json). 15 theorem declarations, incremental fresh new-module replay with 98 protected-source-matched predecessor modules, four protected blobs matched. All 43 axiom reports passed the standard-axiom audit. [Exact replay receipt and tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162#issuecomment-7149968475).
+
+The work uses upstream MIPRE commit `5926bdff5db621f44682a101007ef2fe3ae8d970` and Lean 4.35.0-rc3. Protected source admission and local replay are not independent public certification.
+
+## Current open obligations
+
+The restricted native decision and witness equivalences are proved; the unrestricted superpolynomial witness-construction lower bound is not. General strategy-cost transfer, quantitative effective compressor execution and the separate standard-machine/NP-verifier/endpoint concordance remain distinct obligations. No P = NP or P ≠ NP claim or independent public certification follows.

@@ -6,6 +6,9 @@
 **Companion research obligation:** [PNP-ABOVE-WP00](https://github.com/grandchallenge/MATHSOLVE/issues/1136)  
 **Parent programme:** [PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162)
 
+!!! note "Archival manuscript; current research in WP38B"
+    The 31 October 2026 text below preserves the original proposal. The subsequent [reader's primer](../pnp_above/primer.md) explains the now formally verified native decision–search equivalence and the remaining unrestricted witness-construction lower bound. Consult the [technical spine](../pnp_above/technical.md) and [protected evidence](../pnp_above/coverage.md) for current claims. P versus NP remains open.
+
 ## The easy question that nobody knows how to answer
 
 Imagine being given a vast jigsaw puzzle. Someone who has completed it can show you the picture. You can check that the pieces fit without working out how they were assembled. But does the existence of a fast way to check the result imply that there must be a fast way to find it?

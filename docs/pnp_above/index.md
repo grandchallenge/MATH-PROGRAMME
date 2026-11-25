@@ -3,8 +3,9 @@
 <p class="page-deck">A bounded GCL inquiry into whether quantum verification compression can reveal a classical lower-bound principle.</p>
 
 **Programme:** PNP-ABOVE, under [PNP-001](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162)  
-**Solve research obligation:** [PNP-ABOVE-WP00](https://github.com/grandchallenge/MATHSOLVE/issues/1136)  
-**Documentary evidence:** updated through WP19, 19 November 2026; the 1 November version 0.1 **preprint is archival and unchanged**.
+**Historical WP00 preflight (closed):** [PNP-ABOVE-WP00](https://github.com/grandchallenge/MATHSOLVE/issues/1136)
+
+**Documentary evidence:** updated through WP38B, 24 November 2026 (local programme date); the 1 November version 0.1 **preprint is archival and unchanged**.
 
 **Claim status:** Exploratory. No proof of P = NP or P ≠ NP, no new unrestricted classical lower bound.
 
@@ -25,14 +26,14 @@ This does **not** enable an ordinary computer to decide the Halting Problem. It 
 
 Our research question is narrower: can a finite *structural invariant* of this verification machinery survive a reduction to classical computation, yielding an actual lower bound?
 
-## Four paths through the research
+## Paths through the research
 
 | Reader | Start here | Coverage |
 | --- | --- | --- |
 | Educated general reader | [The reader's primer](primer.md) | Verification, interactive proofs, entanglement, compression and concrete examples |
 | Complexity researcher | [Technical spine](technical.md) | Theorem 12.1, resource semantics, quantitative compression and the classical transfer theorem |
 | Contributor or reviewer | [Evidence and status](evidence.md) | Exact source versions, finite tests, protected artifacts, pending mathematical obligations |
-| Documentary auditor | [Full GCL coverage](coverage.md) | All 18 work packages and 72 source artifacts, exact receipts and cross-repository authority |
+| Documentary auditor | [Full GCL coverage](coverage.md) | Historical WP00–WP17 inventory and later source pointers |
 | Preprint reader | [Preprint record](preprint.md) | Abstract, scholarly structure, PDF/source edition status and citation policy |
 
 **Preprint now available:** [Download the seven-page version 0.1 PDF](https://github.com/grandchallenge/MATH-PROGRAMME/releases/download/pnp-above-preprint-v0.1.0-binary-2026-11-01/PNP_ABOVE_Verification_Compression_Preprint_v0_1.pdf) or consult the [versioned release and checksum record](preprint.md). This remains a working, uncertified research exposition, not an arXiv deposit.
@@ -45,39 +46,35 @@ The original exploratory [lay manuscript](../research/pnp_above_lay_manuscript.m
 
 **WP18 construction (18 November 2026):** GCL has now formally built the complementary missing sampler: a genuinely **player-asymmetric nine-stage** conditional-linear distribution with positive probability on unequal questions, an executable original source query interface, and a bounded original verifier. However the **old identity decider** remains trivially classically winnable, and original synchronous, quantum and commuting game values still equal 1. A quantum gap requires new question structure and an answer-sensitive decision predicate; merely fixing one component is insufficient. The [complete evidence ledger](evidence.md#wp18-native-asymmetric-nine-stage-cl-sampler-and-second-no-gap-control-18-november-2026) documents the actual verified scope.
 
-**WP19 universal obstruction (19 November 2026):** The next original-source theorem proves the precise 512-pair distribution of WP18: **256 star edges** from a single Alice question and **256 isolated diagonal edges**, each with weight `1/512`. More strongly, it proves that **no synchronous decision predicate whatsoever** can produce a quantum advantage on that source law: the original synchronous, finite-dimensional quantum and commuting optima are *always equal*, even when the common winning probability is less than one. Thus WP18's question sampler itself must be replaced with a richer two-sided law; changing its decider cannot help. The [mathematical proof and evidence](evidence.md#wp19-universal-star-support-no-quantum-advantage-19-november-2026) distinguish the actual source models from an executable hard-game construction, which remains OPEN.
+**WP19 universal obstruction (19 November 2026):** The next original-source theorem proves the precise 512-pair distribution of WP18: **256 star edges** from a single Alice question and **256 isolated diagonal edges**, each with weight `1/512`. More strongly, it proves that **no synchronous decision predicate whatsoever** can produce a quantum advantage on that source law: the original synchronous, finite-dimensional quantum and commuting optima are *always equal*, even when the common winning probability is less than one. Thus WP18's question sampler itself must be replaced with a richer two-sided law; changing its decider cannot help. The [mathematical proof and evidence](evidence.md#wp19-universal-star-support-no-quantum-advantage-19-november-2026) distinguish the actual source models from an executable hard-game construction, which remained open at WP19.
 
-## The missing classical bridge
+## The current frontier: finding a solution
 
-Let $G_n$ be a uniform family of games and let $\mathcal C_{\mathcal A}(G_n)$ be the cost of implementing a precisely specified classical strategy or circuit model $\mathcal A$. A quantum-strategy Schmidt-rank lower bound is not automatically a lower bound on this classical cost.
+The WP19 no-gap obstruction was a design result, not a universal impossibility theorem. WP20–WP22 subsequently establish a bounded executable native Bell-gap verifier. WP27–WP35 develop SAT-dependent native verification, control the numeric index versus binary source length, and prove an exact classical decision equivalence for the restricted valid-index compressed promise (under the stated verifier boundedness hypothesis). That is not a general strategy-synthesis theorem.
 
-Even a genuine classical cost lower bound will not settle P versus NP unless an independently proved implication supplies a conflicting upper bound from a hypothetical fast SAT algorithm:
+WP38A–B now prove the following equivalence of **existence of total polynomial-time native programs**:
 
-$$
-\mathrm{SAT}\in\mathsf P
-\quad\Longrightarrow\quad
-\mathcal C_{\mathcal A}(G_n)\le n^{O(1)}.
-$$
+- Deciding the restricted valid compressed promise.
+- Deciding whether a Boolean formula is satisfiable.
+- Finding a satisfying assignment whenever one exists.
+- Finding the lexicographically greatest satisfying assignment in the fixed support order.
 
-No such general transfer theorem has been established. The programme is designed to test and, where necessary, falsify purported bridges rather than treat their existence as an assumption.
+For the witness programs, only satisfiable formulas require correct outputs; the polynomial runtime bound applies to all inputs. Read the [worked example in the primer](primer.md#from-knowing-that-a-solution-exists-to-finding-it) and [technical statement](technical.md).
+
+**What remains difficult:** finding a representation-independent superpolynomial obstruction against *every* classical witness constructor. Quantum Schmidt rank is not classical time. A semantic proof-width lower bound (WP37) can coexist with a fast algebraic algorithm; a native quadratic charged-copy lower bound (WP36) can arise even with no active variables. Neither closes the unrestricted target.
 
 ## What is known, calculated, and open
 
-**External mathematics:** Ji et al. proved MIP* = RE and the gap-preserving compression theorem. The latter concerns nine-level normal-form verification and a lower bound on quantum Schmidt rank under stated hypotheses.
-
-**GCL source and finite-model work:** The magic-square calibration, symbolic compression-parameter ledger, explicit nine-level identity input and finite emulator clarify resource distinctions. The subsequently admitted original-source WP08–WP19 Lean proofs establish bounded but classically easy nine-level verifiers, the general diagonal-support no-advantage theorem, and now the universal star-support no-advantage theorem for every synchronous predicate on WP18's exact law. They do not establish a nontrivial compressed hard game.
-
-**Unproved bridge:** No new lower bound for unrestricted classical SAT or circuits; no uniformly controlled SAT-to-strategy reduction; no numerical execution of the entire MIP* compression construction.
-
-| Material | Primary location | Status |
+| Result | Protected evidence | Scope |
 | --- | --- | --- |
-| Parent PNP-001 challenge | [Programme tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162) | Open |
-| Magic-square finite calibration | [MATHSOLVE PR #1137](https://github.com/grandchallenge/MATHSOLVE/pull/1137) | Bounded research note |
-| Compression theorem interface | [MATHSOLVE PR #1140](https://github.com/grandchallenge/MATHSOLVE/pull/1140) | Source extraction |
-| Schmidt-rank transfer audit | [MATHSOLVE PR #1142](https://github.com/grandchallenge/MATHSOLVE/pull/1142) | Resource distinction |
-| Three-stage symbolic parameter ledger | [Protected ledger](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_COMPRESSION_PARAMETER_LEDGER.md) | Protected source record |
-| Nine-level sampler and finite emulator | [Protected research note](https://github.com/grandchallenge/MATHSOLVE/blob/main/research/PNP-ABOVE/WP00_NINE_LEVEL_INPUT_AND_TRANSFER.md) | Admitted finite input |
-| Exact machine encoding; numerical compression constants; classical transfer | [Solve task #1136](https://github.com/grandchallenge/MATHSOLVE/issues/1136) | Open |
+| Quantum verification compression | External MIP* = RE theorem; [source erratum](wp01_erratum.md) | Quantum resource, not classical time |
+| Restricted valid-promise/SAT equivalence | [WP34](https://github.com/grandchallenge/MATHSOLVE/pull/1287), [WP35](https://github.com/grandchallenge/MATHSOLVE/pull/1288) | Native model; exact valid indices |
+| Quadratic native charged-copy bound | [WP36B](https://github.com/grandchallenge/MATHSOLVE/pull/1292) | Representation overhead |
+| Semantic proof width and affine shortcut | [WP37](https://github.com/grandchallenge/MATHSOLVE/pull/1293) | Restricted proof measure, not all-algorithm time |
+| Decision, witness and canonical witness equivalence | [WP38A](https://github.com/grandchallenge/MATHSOLVE/pull/1297), [WP38B](https://github.com/grandchallenge/MATHSOLVE/pull/1298) | 43 checked theorems; native model |
+| Unrestricted superpolynomial lower bound and standard machine concordance | [PNP-001 tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/162) | OPEN |
+
+The [evidence ledger](evidence.md) distinguishes protected source results from historical controls and the independent certification route.
 
 ## Relation to the existing GCL books
 
