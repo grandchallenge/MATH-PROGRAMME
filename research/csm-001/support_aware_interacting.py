@@ -234,24 +234,99 @@ def column_events(net,env):
     return kappa,tuple(tuple(sorted(row)) for row in events)
 
 
-def spatial_margin(net,rows,w):
-    """Two-sided spatial/space-time comparison with all clamp patterns.
+def insertion_bounds(net):
+    minima=tuple(min(v for A in T for row in A for v in row if v>0)
+                 for T in net.tables)
+    return tuple(min(sum(row) for A in net.tables[i][:-1] for row in A)*
+                 prod(minima[j] for j in net.children[i]) for i in range(net.n))
 
-    Return local insertion nonnullness and a uniform weighted row bound.
-    The graph distance is on hidden variables sharing any factor scope.
-    """
+
+def spatial_margin(net,rows,w):
+    """Two-sided comparison with all clamp patterns, single-site method."""
     w=tuple(map(F,w))
     if len(w)!=net.n or min(w)<=0:raise ValueError("spatial metric")
     q=max(row_action(row,w,F(1))/w[i] for i,row in enumerate(rows))
     if q>=1:return {"spatial_outcome":"undecided","spatial_gain":q}
-    lo=[]
-    minima=tuple(min(v for A in T for row in A for v in row if v>0)
-                 for T in net.tables)
-    for i in range(net.n):
-        c=min(sum(row) for A in net.tables[i][:-1] for row in A)
-        lo.append(c*prod(minima[j] for j in net.children[i]))
-    return {"spatial_outcome":"certified","spatial_gain":q,
-            "weight_ratio":max(w)/min(w),"insertion_nonnull":tuple(lo)}
+    # Use the graph whose adjacency is co-occurrence in a factor scope.
+    return {"spatial_outcome":"certified","spatial_method":"site","spatial_gain":q,
+            "spatial_rate":q,"spatial_prefactor":max(w)/min(w),
+            "weight_ratio":max(w)/min(w),"insertion_nonnull":insertion_bounds(net)}
+
+
+def symmetric_response(kappa,r,lo,hi):
+    """Sum kappa**dist(0,[h+lo,h+hi]) * r**(-abs(h)), over integer h.
+
+    Separate the two tails at H>=max(abs(lo),abs(hi)); no strip enumeration.
+    """
+    kappa,r=F(kappa),F(r)
+    if not 0<=kappa<r<1 or lo>hi:raise ValueError("invalid symmetric response")
+    H=max(abs(lo),abs(hi))
+    middle=sum(kappa**max(0,-(h+hi),h+lo)/r**abs(h) for h in range(-H,H+1))
+    left=kappa**(H+1-hi)/r**(H+1)
+    right=kappa**(H+1+lo)/r**(H+1)
+    return middle+(left+right)/(1-kappa/r)
+
+
+def spatial_column_rows(kappa,events,r):
+    r=F(r)
+    if any(k>=r for k in kappa):raise ValueError("spatial rate below internal chain")
+    out=[]
+    for k,ev in zip(kappa,events):
+        row=defaultdict(lambda:F(0))
+        for j,lo,hi,a in ev:row[0,j]+=a*symmetric_response(k,r,lo,hi)/r
+        out.append(dict(row))
+    return tuple(out)
+
+
+def spatial_column_margin(net,kappa,events,w,r):
+    """Space-time product metric: spatial co-scope distance plus time distance.
+
+    Comparison source counts changed factor incidences and two own temporal
+    endpoints. Return uniform local insertion and posterior decay margins.
+    """
+    r=F(r);w=tuple(map(F,w))
+    rows=spatial_column_rows(kappa,events,r)
+    try:G=verify_gain(rows,rows,w,r)
+    except ValueError:
+        return {"spatial_outcome":"undecided","spatial_method":"column",
+                "spatial_gain":max(row_action(row,w,F(1))/w[i] for i,row in enumerate(rows))}
+    q=G["gain"]
+    # At most 1+outdegree incident factors per internal time variable;
+    # each changed interval is bounded by a sum of its affected time sites.
+    M=max((1+len(net.children[i]))*(1+2*k/(r-k))+2 for i,k in enumerate(kappa))
+    return {"spatial_outcome":"certified","spatial_method":"column","spatial_gain":q,
+            "spatial_rate":r,"spatial_prefactor":max(w)/min(w)*M/(1-q),
+            "spatial_weights":w,"weight_ratio":max(w)/min(w),
+            "insertion_nonnull":insertion_bounds(net)}
+
+
+def discover_spatial_columns(net,kappa,events,w,rates=None):
+    if rates is None:rates=tuple(F(j,32) for j in range(1,32))+(F(63,64),F(127,128),F(255,256))
+    for r in rates:
+        if not max(kappa)<r<1:continue
+        result=spatial_column_margin(net,kappa,events,w,r)
+        if result["spatial_outcome"]=="certified":return result
+    return {"spatial_outcome":"undecided","spatial_method":"column"}
+
+
+def spatial_certificate(net,env,A,G,method):
+    D=spatial_margin(net,A,G["weights"])
+    if D["spatial_outcome"]=="certified" or method=="site":return D
+    k,E=column_events(net,env)
+    return discover_spatial_columns(net,k,E,G["weights"])
+
+
+def replay_spatial(net,env,A,G,witness):
+    if witness.get("spatial_outcome")!="certified":
+        return spatial_certificate(net,env,A,G,witness["method"])
+    if witness.get("spatial_method")=="site":
+        D=spatial_margin(net,A,G["weights"])
+    elif witness.get("spatial_method")=="column":
+        k,E=column_events(net,env)
+        D=spatial_column_margin(net,k,E,witness["spatial_weights"],witness["spatial_rate"])
+    else:raise ValueError("unknown spatial witness method")
+    if D["spatial_outcome"]!="certified":raise ValueError("spatial gain failed")
+    return D
 
 
 def certify(net,method="site",rates=None,max_dense=64):
@@ -265,7 +340,7 @@ def certify(net,method="site",rates=None,max_dense=64):
         G=search_columns(net.n,k,E,rates,max_dense)
     else:raise ValueError("unknown method")
     if G is None:return {"outcome":"undecided","boundary":"gain search"}
-    return dict(G,**observable_margins(net,G),**spatial_margin(net,A,G["weights"]),
+    return dict(G,**observable_margins(net,G),**spatial_certificate(net,env,A,G,method),
                 outcome="certified",method=method,work=work,domains=domains,
                 sizes=net.sizes,joint_state_constructed=False)
 
@@ -277,7 +352,7 @@ def replay(net,witness):
         k,E=column_events(net,env)
         G=column_gain(k,E,witness["rho"],witness["weights"])
     else:raise ValueError("unknown method")
-    return dict(G,**observable_margins(net,G),**spatial_margin(net,A,G["weights"]))
+    return dict(G,**observable_margins(net,G),**replay_spatial(net,env,A,G,witness))
 
 
 def reduce_and_certify(net,method="site",rates=None,max_dense=64,initial=None):
