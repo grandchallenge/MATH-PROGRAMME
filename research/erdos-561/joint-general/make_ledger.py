@@ -1500,5 +1500,68 @@ claims.append({
     "research/erdos-561/joint-general/RUN_MATRIX.md"
   ]
 })
+claims.append({
+  "mathematical_domain": "Erdős #561; Gallai no-triangle sharpening of unrestricted-host all-s two-blue-star matching lower bound",
+  "assumptions": [
+    "finite simple unrestricted host, ordinary non-induced vertex-disjoint positive stars",
+    "RED s-component forest F(a1,...,as) with s>=3 and required vertex support at least 2s+floor(s/2)",
+    "BLUE forest F(v,g) has two positive disjoint stars",
+    "for JOINT application original red sorted positive length s; original blue sorted positive (u,v,g); normalized a_i=n_i-n_s+1 and U=u-g+1,V=v-g+1 with V>=2"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3656",
+    "MATH-PROGRAMME#3652"
+  ],
+  "promotion_condition": "Paper mathematical theorem UNDER_REVIEW; bounded independent integer/proof trace checker CHECKED. Full unrestricted #561 OPEN/PARTIAL, no external MATHCERT or historical research priority claim.",
+  "claim_id": "ERDOS561-GALLAI-NO-TRIANGLE-SUPPORT-SHARPENING-055",
+  "short_name": "Improved s+1 matching lower by excluding factorcritical triangles; sharpen BLUE residual support threshold",
+  "claim_text": "UNRESTRICTED-HOST MATCHING LEMMA: Q→(F(a1..as), F(v,g)) with s positive disjoint red stars, two positive disjoint blue stars and Vred=sum_i(ai+1)>=2s+floor(s/2), implies maximum matching nu(Q)>=s+1. Proof: all incident edges at arbitrary vertex blue force red F(a) in Q-x, so nu(Q-x)>=s for every x. If nu(Q)=s, Gallai matching-stability yields nonisolated components factor critical, with total matching s and nonisolated order N=2s+q. Any component with matching1 is exactly triangle K3; colouring it entirely BLUE and all other components RED avoids BLUE two positive stars (triangle has only 3 vertices) and RED s stars (remaining matching capacity s-1), contradiction. Hence all components have matching>=2, so q<=floor(s/2), N<=2s+floor(s/2)<=Vred. Deleting nonisolated vertex cannot retain Vred red target vertices, contradiction. Therefore nu>=s+1. GENERAL JOINT: for sorted original red length s and blue (u,v,g), normalize red a_i=n_i-n_s+1, blue U=u-g+1,V=v-g+1. If V>=2 and sum(ai+1)>=2s+floor(s/2), every arbitrary finite simple JOINT residual host has e>=Jcan-P_BLUE, with EXACT prior all-s positive-part deficit P_BLUE=sum_{i<s}(ai-max(ai+1+V-1, ai+2+U-1 when index exists))_+. Exact canonical JOINT if P_BLUE=0. Monochromatic red/blue matching deletions normalize terminal minima, each cost at least s+1, final BLUE deletion reduces to pinned two-component residual bridge after colour swap. Exact original W requires an independently sourced sufficient transfer, e.g. fifth saturated-core criterion 2W<=D^2+R. No sharp claim for P_BLUE>0 or support below threshold. Old 3s-1 threshold weakened, not a new complete unrestricted joint theorem.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "UNDER_REVIEW",
+  "certainty": "PROVED_NOT_FORMALIZED",
+  "support_type": "HUMAN_PROOF",
+  "support_summary": "GALLAI_NO_TRIANGLE_SUPPORT_SHARPENING_THEOREM.md. Core constructive triangle-component avoiding colouring eliminates all ν(C)=1 factor-critical components in any hypothetical matching-stable ν(Q)=s graph; remaining number q of components<=floor(s/2) and nonisolated N=2s+q, incompatible with red vertex support after deleting arbitrary nonisolated vertex. Replaces solely the matching-size support threshold in source claim045 all-s BLUE matching theorem. All other canonical algebra and two-component lower imports unchanged. Sharpness of global all-profile joint and original problem remains OPEN.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/GALLAI_NO_TRIANGLE_SUPPORT_SHARPENING_THEOREM.md",
+    "research/erdos-561/joint-general/verify_gallai_no_triangle_support.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+    "research/erdos-561/joint-general/RECURSIVE_FIFTH_CORE_VERTEX_SUPPORT_THEOREM.md",
+    "research/erdos-561/joint-general/GALLAI_NO_TRIANGLE_SUPPORT_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
+claims.append({
+  "mathematical_domain": "Erdős #561; Gallai no-triangle sharpening of unrestricted-host all-s two-blue-star matching lower bound",
+  "assumptions": [
+    "finite simple unrestricted host, ordinary non-induced vertex-disjoint positive stars",
+    "RED s-component forest F(a1,...,as) with s>=3 and required vertex support at least 2s+floor(s/2)",
+    "BLUE forest F(v,g) has two positive disjoint stars",
+    "for JOINT application original red sorted positive length s; original blue sorted positive (u,v,g); normalized a_i=n_i-n_s+1 and U=u-g+1,V=v-g+1 with V>=2"
+  ],
+  "knowledge_graph_refs": [
+    "MATH-PROGRAMME#3490",
+    "MATH-PROGRAMME#3656",
+    "MATH-PROGRAMME#3652"
+  ],
+  "promotion_condition": "Paper mathematical theorem UNDER_REVIEW; bounded independent integer/proof trace checker CHECKED. Full unrestricted #561 OPEN/PARTIAL, no external MATHCERT or historical research priority claim.",
+  "claim_id": "ERDOS561-GALLAI-NO-TRIANGLE-SUPPORT-RECURSIVE-CHECK-056",
+  "short_name": "Exact bounded no-triangle support improvement and recursive proof-tree monotonic expansion",
+  "claim_text": "Independent deterministic arithmetic and proof-trace checker exercises all179928 sorted RED profiles of lengths s3..8, preceding arms 1..8, terminal1 and normalized BLUE U,V in2..8. Old support 177856 vs new 179368 (+1512), old zero BLUE penalty 134447 vs new 135852 (+1405). A source-provenance-preserving monotone composition with the protected fifth-core recursive engine raises exact JOINT certificate count 166589→167485 (+896: 714 direct improved BLUE support, 163 RED matching recursions,19 first-residual original recursions) and ORIGINAL 151885→152446 (+561). Remaining UNKNOWN joint12443 and original27482, not counterexamples. Graph DFS verifies explicit avoiding colouring of s disjoint K3 for s=3..9 with one blue component and red remaining, using true ordinary disjoint positive star embeddings. All checks are finite arithmetic/proof rule execution, not formal proof of Gallai's theorem or mathematical independent certification. Exact-head replay and integrity manifest required.",
+  "claim_class": "PROVED_IN_PACKAGE",
+  "status": "CHECKED",
+  "certainty": "CERTIFIED",
+  "support_type": "EXACT_RATIONAL_COMPUTATION",
+  "support_summary": "verify_gallai_no_triangle_support.py imports protected verify_recursive_fifth_core_certificates.py without modification; performs full 179928-grid monotone recursive classification, counts improved threshold P_BLUE=0 and new cases, checks exact star-host integer maxima from prior source, and tests 7 K3 avoiding colourings by independent vertex-disjoint forest DFS. Nested certificate trace recurses strictly to shorter red original profiles only, retains old provenance and no MATHCERT. Finite integrity and schema checks are distinguished from unbounded paper proof.",
+  "source_or_artifact": [
+    "research/erdos-561/joint-general/verify_gallai_no_triangle_support.py"
+  ],
+  "related_files": [
+    "research/erdos-561/joint-general/GALLAI_NO_TRIANGLE_SUPPORT_EVIDENCE.json",
+    "research/erdos-561/joint-general/RUN_MATRIX.md"
+  ]
+})
 Path('CLAIM_LEDGER.json').write_text(json.dumps({'schema_version':'1.1.0','ledger_contract':'canonical_claim_ledger','ledger_id':'ERDOS561-JOINT-GENERAL-20261119','claims':claims},indent=2,ensure_ascii=False)+'\n')
 print('CANONICAL_CLAIMS',len(claims))
