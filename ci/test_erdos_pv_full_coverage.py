@@ -22,7 +22,7 @@ class CoverageTests(unittest.TestCase):
         with self.assertRaises(ValueError):v.validate_row(bad,self.src,self.phase)
     def test_full_population_and_two_bounded_documentary_terminals(self):
         result=v.validate()
-        self.assertEqual((result['individual_problems'],result['project_issues'],result['substantive_terminal_count']),(1221,58,2))
+        self.assertEqual((result['individual_problems'],result['project_issues'],result['substantive_terminal_count']),(1221,58,3))
         first=v.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][0]
         self.assertEqual(first['closure_status'], 'ADMITTED_BOUNDED_COMPLETE')
         self.assertEqual(first['mathcert_status'], 'NOT_SUBMITTED')
