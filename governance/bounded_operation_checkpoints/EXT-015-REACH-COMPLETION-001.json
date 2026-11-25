@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP297",
+  "checkpoint_id": "EXT-015-REACH-COMPLETION-001.CP299",
   "governed_work_id": "EXT-015-REACH-COMPLETION-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,31 +15,33 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#2657"
   },
-  "phase": "Typed I1–I3 obstruction adjudicated with original unconditional GC open",
-  "state": "BLOCKED_GENUINE_BOUNDARY",
+  "phase": "Reviewed qualified closeout awaiting protected readback and tracker reconciliation",
+  "state": "IN_PROGRESS",
   "identities": {
-    "protected_base_sha": "5d8a2ad708de88ae3174d49dc3875be212b14957",
-    "candidate_head_sha": "182f8e8ea81a36cec8e5380ceb846692a4238e60",
+    "protected_base_sha": "1096d2377761080dd4e7b956f00f76b80055d710",
+    "candidate_head_sha": "cdc1b14775d4e229ed23f3f5dc128c0ae51a3983",
     "issue_number": 2657,
     "pr_number": null,
-    "branch": "research/reach-original-integration-uc085-reviewed-20261124",
+    "branch": "research/reach-qualified-closeout-uc088-reviewed-20261125",
     "workflow_runs": []
   },
-  "terminal_condition": "Full original REACH requires accepted original R3 and correctly typed M5/R4 integration verdicts after protected admission/readback. R0/R1/R2 and separate087-089 are complete within reviewed scopes. One comparison arrow, a nonzero unit cone or this bounded return does not complete the programme.",
+  "terminal_condition": "The explicitly authorized qualified investigation closes only after the source-bound report UC088, its distinct critical review UC089, its acceptance ledger UC090 and consistent programme records are protected and read back, and the applicable tracker dispositions are verified. The original strong completion criterion quoted in UC088 remains unmet. Original unconditional GC keeps its qualified CH and PH1 results in the adopted ZFC scope.",
   "permitted_next_actions": [
     {
-      "id": "revalidate-original-gc-exit-boundary",
-      "description": "Revalidate the recorded boundary to the original strong exit when there is reviewed new evidence on the actual GC or explicit authorization for a changed scope or foundation. Apply it only to the original objects and exact acceptance clauses. In the absence of either, retain the recorded conditional GC, the bounded integration verdict and the nonterminal programme trackers."
+      "id": "verify-qualified-closeout-and-reconcile-trackers",
+      "description": "Verify protected admission and the exact report, review and ledger. Reconcile EXT-015D as completed, the original R3 and parent as not planned, and the existing portfolio projections. Record the terminal checkpoint only after authenticated readback."
     }
   ],
   "next_action": {
-    "id": "revalidate-original-gc-exit-boundary",
-    "description": "Revalidate the recorded boundary to the original strong exit when there is reviewed new evidence on the actual GC or explicit authorization for a changed scope or foundation. Apply it only to the original objects and exact acceptance clauses. In the absence of either, retain the recorded conditional GC, the bounded integration verdict and the nonterminal programme trackers.",
+    "id": "verify-qualified-closeout-and-reconcile-trackers",
+    "description": "Verify protected admission and the exact report, review and ledger. Reconcile EXT-015D as completed, the original R3 and parent as not planned, and the existing portfolio projections. Record the terminal checkpoint only after authenticated readback.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md",
-      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
-      "research/condensed-qft/EXT-015/R3_GLOBAL_SUPPORT_ACCEPTANCE_UC024.md",
-      "research/condensed-qft/EXT-015/R4_TYPED_COMPARISON_FAILURE_MAP_073.md"
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2617"
     ]
   },
   "external_evidence": {
@@ -2174,38 +2176,32 @@
         "kind": "artifact",
         "identity": "Exact rational heat rank fixture fixtures/algebraic/conic_heat_rank_gate_uc001.py Git blob 6e7b1ad23fe3d51c9274afe673d6b76e3ab49a72, CHAD receipt 36c687e482ab41a6aaf71d36bf7ae4ca, SHA256 42eb4e02b1e20c93b8301e9ecdd253c56f69d107fb26bd4f0bcb8d3682d1881d",
         "status": "Five exact algebraic tests PASS on authenticated OS-only execution. CI policy route repaired: unknown_paths=[] and head three shards core/fixtures/docs instead of nine, keeping default fail-closed; independent_execution_attested=false."
+      },
+      {
+        "kind": "review",
+        "identity": "b4f2dc5cb2ce59c2f1a37ace3e3e20d36eee7bfe",
+        "status": "Distinct corrected UC088 closeout acceptance on the exact frozen report, source and editorial verification."
       }
     ]
   },
-  "blocking_boundary": {
-    "category": "substantive-evidentiary",
-    "reason": "The exact original stage-natural weightwise observable equivalence is obstructed in ZFC. The original unconditional GC still has only the reviewed CH and PH1 branches with their stated relative-consistency setting. The existing ZFC programme terminal condition cannot be read as met by the bounded integration failure map.",
-    "evidence_refs": [
-      "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md",
-      "research/condensed-qft/EXT-015/SMOOTH_DERIVED_MAPPING_COMPARISON_UC079.md",
-      "research/condensed-qft/EXT-015/R3_GLOBAL_SUPPORT_ACCEPTANCE_UC024.md"
-    ]
-  },
+  "blocking_boundary": null,
   "last_transition": {
-    "action": "IntegrateReviewedOriginalTypedIntegrationVerdict",
-    "result": "Reviewed bounded typed integration adjudicated. Original unconditional programme terminal condition remains unmet.",
+    "action": "accept-reviewed-qualified-closeout-for-protected-admission",
+    "result": "One editorial pass completed. Distinct same-system nonauthor review accepts the exact UC088 synthesis with twenty frozen inputs. The historical strong completion criterion remains unmet in the adopted ZFC scope. Protected admission and tracker reconciliation are pending.",
     "evidence_refs": [
-      "research/reach-original-integration-uc085-reviewed-20261124",
-      "research/reach-original-integration-uc085-input-20261124",
-      "research/reach-original-integration-uc085-primary-20261124",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3719",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2657",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/2798",
-      "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_ORIGINAL_INTEGRATION_UC086.md",
-      "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_ACCEPTANCE_UC087.md"
+      "cdc1b14775d4e229ed23f3f5dc128c0ae51a3983",
+      "83f322423a3b08af2ca4eca41a3066c0bf98ad3f",
+      "b4f2dc5cb2ce59c2f1a37ace3e3e20d36eee7bfe",
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-REACH-COMPLETION-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-24T17:47:04.431018-07:00"
+    "observed_at": "2026-11-25T10:13:11.6065013+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -2549,9 +2545,15 @@
       "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3719",
       "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_ORIGINAL_INTEGRATION_UC086.md",
-      "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_ACCEPTANCE_UC087.md"
+      "research/condensed-qft/EXT-015/ORIGINAL_TYPED_INTEGRATION_ACCEPTANCE_UC087.md",
+      "research/reach-qualified-closeout-uc088-input-20261125",
+      "research/reach-qualified-closeout-uc088-primary-20261125",
+      "research/reach-qualified-closeout-uc088-reviewed-20261125",
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md",
+      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_REACH_CLOSEOUT_UC089.md",
+      "research/condensed-qft/EXT-015/REACH_QUALIFIED_CLOSEOUT_ACCEPTANCE_UC090.md"
     ],
-    "instructions": "Revalidate the recorded boundary to the original strong exit when there is reviewed new evidence on the actual GC or explicit authorization for a changed scope or foundation. Apply it only to the original objects and exact acceptance clauses. In the absence of either, retain the recorded conditional GC, the bounded integration verdict and the nonterminal programme trackers."
+    "instructions": "Verify protected admission and the exact report, review and ledger. Reconcile EXT-015D as completed, the original R3 and parent as not planned, and the existing portfolio projections. Record the terminal checkpoint only after authenticated readback."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
