@@ -115,9 +115,11 @@ def discover_partition(net,initial=None):
 
 
 def verify_stochastic_interface(net,quotient,encodings):
-    """Local stochastic intertwiner: exact for product encoders on each slice.
+    """Local stochastic intertwiner with a conservative no-shared-noise test.
 
-    Not a claim of minimality or stochastic-encoder synthesis.
+    A randomized parent encoding may affect at most one outgoing quotient
+    factor. Otherwise local marginal identities need not imply a joint
+    intertwiner, since two children share the same encoded parent.
     """
     if net.n!=quotient.n or net.parents!=quotient.parents or net.labels!=quotient.labels:
         raise ValueError("interface topology")
@@ -125,6 +127,19 @@ def verify_stochastic_interface(net,quotient,encodings):
     if len(E)!=net.n or any(len(A)!=s for A,s in zip(E,net.sizes)) or any(
         len(row)!=d or min(row)<0 or sum(row)!=1 for A,d in zip(E,quotient.sizes) for row in A):
         raise ValueError("encoding stochasticity")
+    for j,A in enumerate(E):
+        if all(sum(v>0 for v in row)==1 for row in A):continue
+        active=0
+        for i in quotient.children[j]:
+            k=quotient.parents[i].index(j)
+            rows={}
+            for x,r in quotient.lookup[i].items():
+                key=x[:k]+x[k+1:]
+                val=tuple(M[r] for M in quotient.tables[i][:-1])
+                if key in rows and rows[key]!=val:
+                    active+=1;break
+                rows[key]=val
+        if active>1:raise ValueError("shared randomized parent requires joint compatibility")
     for i,p in enumerate(net.parents):
         configs=tuple(quotient.lookup[i])
         for x in net.lookup[i]:
