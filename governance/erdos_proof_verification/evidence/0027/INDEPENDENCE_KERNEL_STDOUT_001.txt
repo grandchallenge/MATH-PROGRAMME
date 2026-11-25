@@ -1,0 +1,16 @@
+'Erdos27Independence.count_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.residue_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.residue_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.congruence_family_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.left_cast' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.right_cast_divisor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.count_and' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.joint_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.right_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Independence.joint_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Independence.congruence_family_independent.{u_1} {ι : Type u_1} (M B : ℕ) [NeZero M] [NeZero B]
+  (cop : M.Coprime B) (r : ZMod M) (a : ι → ℕ) (s : ι → ℤ) (ha : ∀ (i : ι), a i ∣ B) :
+  ↑(count fun x => (ZMod.castHom ⋯ (ZMod M)) x = r ∧ ∀ (i : ι), (ZMod.castHom ⋯ (ZMod (a i))) x ≠ ↑(s i)) / ↑(M * B) =
+    1 / ↑M * (↑(count fun x => ∀ (i : ι), (ZMod.castHom ⋯ (ZMod (a i))) x ≠ ↑(s i)) / ↑(M * B))
+Erdos27Independence.residue_mass (M B : ℕ) [NeZero M] [NeZero B] (cop : M.Coprime B) (r : ZMod M) :
+  ↑(count fun x => (ZMod.castHom ⋯ (ZMod M)) x = r) / ↑(M * B) = 1 / ↑M
