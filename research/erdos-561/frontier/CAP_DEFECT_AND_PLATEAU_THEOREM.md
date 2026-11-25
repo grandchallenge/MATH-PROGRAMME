@@ -18,7 +18,7 @@ $$
 A=f(S)+\sum_{t\in T}(d(t)-g(t))-e(S,T).
 $$
 
-By the ordinary Lovász $(g,f)$ factor theorem (Kano and Saito, [Theorem 1](https://gorogoro.cis.ibaraki.ac.jp/web/papers/newKanoSaitoFactor1984.pdf)), the required red factor exists iff $A\ge q$, where $q$ counts components $C$ of $G[U]$ entirely tight ($g=f$) with $f(C)+e(C,T)$ odd. Counted components consist entirely of degree-$D$ vertices: the only other tight vertices are isolates, which cannot contribute odd parity.
+By the ordinary Lovász $(g,f)$ factor theorem (Kano and Saito, [Theorem 1](https://gorogoro.cis.ibaraki.ac.jp/web/papers/newKanoSaitoFactor1984.pdf)), the required red factor exists iff $A\ge q$, where $q$ counts components $C$ of $G[U]$ entirely tight ($g=f$) with $f(C)+e(C,T)$ odd. Counted components consist entirely of degree $D$ vertices: the only other tight vertices are isolates, which cannot contribute odd parity.
 
 The proportional bounds $Df(v)\ge\alpha d(v)$ and $D(d(v)-g(v))\ge\beta d(v)$ give
 
@@ -62,9 +62,9 @@ The last inequality follows from $pD\le2(W_k-1)<2L(D+1)$. These necessary condit
 
 ## 3. Exact threshold and multiple-component cut
 
-A cut attaining $h\ge P$ has at least $P$ large counted components. If it has exactly $P$, the weighted boundary inequality implies $A=q_{\rm small}$ and the total weighted boundary of all large components is zero. Each is therefore an isolated connected $D$-regular component; its parity requires odd order and odd $\alpha$ (hence odd $\beta$, $D$ even).
+A cut attaining $h\ge P$ has at least $P$ large counted components. If it has exactly $P$, the weighted boundary inequality implies $A=q_{\rm small}$ and the total weighted boundary of all large components is zero. Each is therefore an isolated connected regular of degree $D$ component; its parity requires odd order and odd $\alpha$ (hence odd $\beta$, $D$ even).
 
-Thus if $p<(P+1)(D+1)$, the cut exhibits exactly $P$ such isolated odd regular components. Each has order at most $2D+1$ and the exterior has fewer than $D+1$ saturated vertices. The prior unique-core theorem gives a capped split of the exterior. Deleting any one edge of each isolated core destroys its only possible isolated $D$-regular obstruction: every component of the edge-deleted connected core contains an endpoint of the deleted edge if disconnected, and otherwise both endpoints. Apply the same theorem to each core. Precisely $P$ exceptional edges suffice and at least $P$ are necessary by parity. At $p=P(D+1)$ every core is a clique $K_{D+1}$. If either cap is even, or no isolated odd $D$-regular component exists, there must instead be at least $P+1$ large counted components, hence $p\ge(P+1)(D+1)$.
+Thus if $p<(P+1)(D+1)$, the cut exhibits exactly $P$ such isolated odd regular components. Each has order at most $2D+1$ and the exterior has fewer than $D+1$ saturated vertices. The prior unique-core theorem gives a capped split of the exterior. Deleting any one edge of each isolated core destroys its only possible isolated regular of degree $D$ obstruction: every component of the edge-deleted connected core contains an endpoint of the deleted edge if disconnected, and otherwise both endpoints. Apply the same theorem to each core. Precisely $P$ exceptional edges suffice and at least $P$ are necessary by parity. At $p=P(D+1)$ every core is a clique $K_{D+1}$. If either cap is even, or no isolated odd regular of degree $D$ component exists, there must instead be at least $P+1$ large counted components, hence $p\ge(P+1)(D+1)$.
 
 More generally, for $b=q_{\rm large}\ge P$ choose $r\le\min(L,b(D+1))$ saturated vertices spread as evenly as possible among $b$ large components. Write $r=bq_0+t_0$ with $0\le t_0<b$. They have at most $b\binom{q_0}{2}+t_0q_0$ induced edges, since no edges join counted components in $G[U]$. The previous frontier multi-vertex deletion inequality implies the necessary condition
 
@@ -76,9 +76,9 @@ This is applicable to arbitrary near-flat profiles, not only a fixed number of c
 
 ## 4. Critical isolated-core colouring and tail-packing gate
 
-In the exact-$P$ isolated-core branch of Section 3, write $a=\alpha+1$, $b=\beta+1$, let $c_1,\ldots,c_P$ be the core orders and $C=\sum c_j$. Let $T_{\rm ext}$ be the exterior edge count and fix a capped split of the exterior with $R_{\rm ext}$ red edges and $B_{\rm ext}$ blue edges.
+In the exactly $P$ isolated-core branch of Section 3, write $a=\alpha+1$, $b=\beta+1$, let $c_1,\ldots,c_P$ be the core orders and $C=\sum c_j$. Let $T_{\rm ext}$ be the exterior edge count and fix a capped split of the exterior with $R_{\rm ext}$ red edges and $B_{\rm ext}$ blue edges.
 
-Delete one edge in each core and cap-colour the remainder as above. All non-endpoints have exactly $\alpha$ red and $\beta$ blue incident edges. Each endpoint is deficient by precisely one in one colour. Since $\alpha c_j$ is odd and red degree sum is even, exactly one endpoint is red-deficient, the other blue-deficient. Restoring the edge in red therefore creates exactly one red degree-$a$ vertex, with all other vertices red degree $\alpha$; blue has no degree-$b$ vertex. Restoring it blue interchanges these roles. Thus each core is a switch with a single over-cap vertex and no other leading-star centre.
+Delete one edge in each core and cap-colour the remainder as above. All non-endpoints have exactly $\alpha$ red and $\beta$ blue incident edges. Each endpoint is deficient by precisely one in one colour. Since $\alpha c_j$ is odd and red degree sum is even, exactly one endpoint is red-deficient, the other blue-deficient. Restoring the edge in red therefore creates exactly one red degree $a$ vertex, with all other vertices red degree $\alpha$; blue has no degree $b$ vertex. Restoring it blue interchanges these roles. Thus each core is a switch with a single over-cap vertex and no other leading-star centre.
 
 Let $u,v$ be the leading multiplicities of the selected maximizing pair attaining $P=u+v-1$. Choose exactly $u$ cores to be red switches and the other $v-1$ blue. Blue is automatically defeated. If red occurs, all its $u$ leading stars must be centred at the $u$ unique red over-cap vertices, with all their incident red edges forced. Those stars lie in different cores. Their vertex sets each have size $a+1$ and red degree sum $a^2$, so removing each set removes at least $\lceil a^2/2\rceil$ red edges. Total red edges inside the cores before deletion are $(\alpha C+2u-P)/2$. The red tail must therefore satisfy
 
@@ -120,4 +120,4 @@ For an even cycle of order $2q$, the matching-budget property holds with $r=q$: 
 
 ## 6. Boundary
 
-The exceptional-edge count eliminates the one-core branch whenever $P\ge2$; it forces more large components as the plateau grows. At $P=1$ the previous isolated-core obstruction can still survive; at larger $P$ the exactly-$P$ isolated-core branch can survive. The unresolved task is to use smaller target arms and their vertex-disjoint packing requirements to exclude these critical colourings (or construct a true counterexample). The proof does not establish the full frontier conjecture. Bounded checks in the accompanying verifier are corroboration, not general proof.
+The exceptional-edge count eliminates the one-core branch whenever $P\ge2$; it forces more large components as the plateau grows. At $P=1$ the previous isolated-core obstruction can still survive; at larger $P$ the exactly $P$ isolated-core branch can survive. The unresolved task is to use smaller target arms and their vertex-disjoint packing requirements to exclude these critical colourings (or construct a true counterexample). The proof does not establish the full frontier conjecture. Bounded checks in the accompanying verifier are corroboration, not general proof.
