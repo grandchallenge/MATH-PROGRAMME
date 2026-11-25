@@ -42,6 +42,7 @@ KNOWN_PYTHON_SPAWN = frozenset({
     'ci/erdos_pv_0561_formal_replay.py',
     # Exact CRT source/type/axiom replay in its registered Mathlib lane.
     'ci/erdos_pv_0027_formal_replay.py',
+    'governance/erdos_proof_verification/evidence/0027/check_weighted_lean.py',
 })
 
 
