@@ -12,7 +12,7 @@ from interacting_small_gain import ratio_tv, discover_gain, verify_gain, row_act
 
 
 class BlockNetwork:
-    def __init__(self,net,blocks,safe=None):
+    def __init__(self,net,blocks,safe=None,max_block_states=256):
         self.net=net;self.blocks=tuple(tuple(b) for b in blocks)
         if not self.blocks or any(not b for b in self.blocks) or sorted(j for b in self.blocks for j in b)!=list(range(net.n)):
             raise ValueError("blocks must partition sites")
@@ -21,6 +21,8 @@ class BlockNetwork:
         self.safe=tuple((0,)*net.n if safe is None else safe)
         if len(self.safe)!=net.n or any(type(x)!=int or not 0<=x<s for x,s in zip(self.safe,net.sizes)):
             raise ValueError("bad safe state")
+        if any(prod(net.sizes[j] for j in b)>max_block_states for b in self.blocks):
+            raise ValueError("block state budget")
         self.states=tuple(tuple(product(*(range(net.sizes[j]) for j in b))) for b in self.blocks)
         self.safes=tuple(tuple(self.safe[j] for j in b) for b in self.blocks)
         self.pos={j:k for b in self.blocks for k,j in enumerate(b)}
@@ -210,9 +212,9 @@ def verify_spatial(A,w,C=None):
     return {"spatial_gain":q,"spatial_rate":q,"spatial_prefactor":max(w)/min(w)}
 
 
-def certify(net,blocks,safe=None,method="rectangular",rates=None,max_contexts=2000000):
+def certify(net,blocks,safe=None,method="rectangular",rates=None,max_contexts=2000000,max_block_states=256):
     try:
-        B=BlockNetwork(net,blocks,safe)
+        B=BlockNetwork(net,blocks,safe,max_block_states)
         if method=="rectangular":A,C,work=rectangular_rows(B)
         elif method=="exact":A,C,work=exact_rows(B,max_contexts)
         else:raise ValueError("unknown method")
@@ -229,8 +231,8 @@ def certify(net,blocks,safe=None,method="rectangular",rates=None,max_contexts=20
                 interior=A,terminal=C,work=work,joint_state_constructed=False)
 
 
-def replay(net,witness,max_contexts=2000000):
-    B=BlockNetwork(net,witness["blocks"],witness["safe"])
+def replay(net,witness,max_contexts=2000000,max_block_states=256):
+    B=BlockNetwork(net,witness["blocks"],witness["safe"],max_block_states)
     if witness["method"]=="rectangular":A,C,_=rectangular_rows(B)
     elif witness["method"]=="exact":A,C,_=exact_rows(B,max_contexts)
     else:raise ValueError("unknown method")
@@ -338,6 +340,14 @@ def phase_channel(x,y):
     e=F(1,2) if x==y else F(0)
     p=F(1+x+y,16);m=F(3-x-y,16)
     return e,p,m,1-e-p-m
+
+
+def phase_ring(n):
+    """Finite periodic template for the spatial equality/soft pin channel."""
+    if n<2:raise ValueError("ring size")
+    T=tuple(tuple((phase_channel(x,y)[a]/2,)*2 for x,y in product((0,1),repeat=2))
+            for a in range(4))
+    return SupportedNetwork((2,)*n,tuple((i,(i+1)%n) for i in range(n)),(T,)*n)
 
 
 def chain_mass(clamps,left=None):
