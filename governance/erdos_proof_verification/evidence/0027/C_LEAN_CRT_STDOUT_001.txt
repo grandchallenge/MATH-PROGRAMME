@@ -1,0 +1,22 @@
+Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)
+'Erdos27CRT.covering_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27CRT.count_fibres' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27CRT.crt_count_fibres' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27CRT.congruence_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27CRT.avoid_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27CRT.covering_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+theorem Erdos27CRT.covering_count.{u_1} : ∀ {ι : Type u_1} {M B : ℕ} [inst : NeZero M] [inst_1 : NeZero B] (a b : ι → ℕ)
+  (r : ι → ℤ) (ha : ∀ (i : ι), a i ∣ M) (hb : ∀ (i : ι), b i ∣ B),
+  (∀ (i : ι), (a i).Coprime (b i)) →
+    M.Coprime B → count (originalAvoid a b r ha hb) = ∑ h, count (fibreAvoid a b r ha hb h) :=
+fun {ι} {M B} [NeZero M] [NeZero B] a b r ha hb hc cop =>
+  have H := funext fun x => propext (avoid_iff a b r ha hb hc cop x);
+  Eq.mpr (id (congrArg (fun _a => count _a = ∑ h, count (fibreAvoid a b r ha hb h)) H))
+    (Eq.mpr
+      (id
+        (congrArg (fun _a => _a = ∑ h, count (fibreAvoid a b r ha hb h))
+          (crt_count_fibres M B cop (fibreAvoid a b r ha hb))))
+      (Eq.refl (∑ h, count (fibreAvoid a b r ha hb h))))
+Erdos27CRT.covering_density.{u_1} {ι : Type u_1} {M B : ℕ} [NeZero M] [NeZero B] (a b : ι → ℕ) (r : ι → ℤ)
+  (ha : ∀ (i : ι), a i ∣ M) (hb : ∀ (i : ι), b i ∣ B) (hc : ∀ (i : ι), (a i).Coprime (b i)) (cop : M.Coprime B) :
+  ↑(count (originalAvoid a b r ha hb)) / ↑(M * B) = (∑ h, ↑(count (fibreAvoid a b r ha hb h)) / ↑B) / ↑M
