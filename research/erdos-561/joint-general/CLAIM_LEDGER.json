@@ -1692,6 +1692,70 @@
         "research/erdos-561/joint-general/RECURSIVE_FIFTH_CORE_VERTEX_SUPPORT_EVIDENCE.json",
         "research/erdos-561/joint-general/RUN_MATRIX.md"
       ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 arbitrary red component count s>=3 and three BLUE components, two-original-forest vertex support for all-host matching and exact joint residual",
+      "assumptions": [
+        "arbitrary finite simple host graph and ordinary non-induced vertex-disjoint positive stars",
+        "original RED n sorted positive length s>=3; BLUE m=(u,v,g), sorted positive, three positive stars",
+        "normalize a_i=n_i-n_s+1, BLUE U=u-g+1,V=v-g+1>=2",
+        "Rflat=max(sum_i(a_i+1),U+V+4)>=3s-1; either RED or BLUE normalized forest supplies support",
+        "individual BLUE loss P_BLUE=sum_{i=1}^{s-1} max(0,a_i-T_i), T_i=max(a_(i+1)+V-1,a_(i+2)+U-1 if exists)",
+        "source-proved exact two-component JOINT residual bridge; classical Gallai factor-critical matching theorem"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3714"
+      ],
+      "promotion_condition": "Paper graph lemma and quantitative all-host BLUE matching transfer UNDER_REVIEW; bounded proof trace finite CHECKED. Exact original requires independently source-proved JOINT and protected valid transfer. Full conjecture OPEN/PARTIAL, no MATHCERT.",
+      "claim_id": "ERDOS561-BILATERAL-SUPPORT-MATCHING-055",
+      "short_name": "Both original forest support counts yield stronger s+1 BLUE matching and sharp all-s three-BLUE JOINT zero-deficit",
+      "claim_text": "NEW bilateral normalized vertex-support replacement for RED-only all-s one-BLUE-matching theorem. Every simultaneous JOINT residual host Q arrows full ORIGINAL RED n and full ORIGINAL BLUE m in each graph Q-v, separately, because colouring all v-incident edges BLUE prevents a two-positive-star BLUE second residual, and colouring them RED prevents the two-positive-star RED first residual. Suppose s>=3 RED and t>=3 BLUE components with s>=t, and R=max(full original RED and BLUE vertex counts)>=3s-1. Then nu(Q)>=s+1: otherwise nu(Q)=s and Gallai factorcritical matching stability bounds nonisolated vertices<=3s; presence of both full forests in every Q-v forces Q=sK3, but colouring s-1 triangles in the colour of whichever full forest has >=3s-1 vertices and the last triangle opposite avoids the appropriate residual relation. This is an unbounded all-host theorem. For three BLUE stars, with normalized V>=2 and Rflat=max(normalized RED vertex count, normalized BLUE vertex count)>=3s-1, a BLUE-coloured matching of >=s+1 edges survives all legal RED/BLUE terminal decrements and after deletion yields the source-proved two-component JOINT residual bridge. The EXACT antidiagonal identity is Jcan(n,m)=(s+1)+Jcan(a,(U-1,V-1))+P_BLUE after normalization. Therefore every joint host has e>=Jcan-P_BLUE, and when P_BLUE=0 the full canonical JOINT residual minimum is EXACT for all finite simple host topologies. Where separate source-proved ORIGINAL transfer conditions hold, original W also sharp. Example n=(3,1,1,1),m=(4,3,1): RED support10 falls below 3s−1=11, BLUE support11 meets it, PBLUE=0, JOINT J=17 sharp, independent residual canonical sums16 and15, and source-proved one-odd ORIGINAL transfer gives exact W=23 (D5,W23<=30). Does NOT prove all-profile JOINT or unrestricted original conjecture.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "UNDER_REVIEW",
+      "certainty": "PROVED_NOT_FORMALIZED",
+      "support_type": "HUMAN_PROOF",
+      "support_summary": "RECURSIVE_BILATERAL_SUPPORT_BLUE_MATCHING_THEOREM.md proves every Q-v retains both original forests by incident-edge monochromatic colouring, applies Gallai factor-critical uniqueness for matching number s and max of either forest's 3s-1 support; exceptional Q=sK3 explicitly recoloured to avoid one residual. The same source-proved BLUE matching deletion plus exact PBLUE algebra is reused under weaker bilateral hypothesis, without assuming a conjectured JOINT lower. Proper individual JOINT proof needed before original transfer; full theorem remains UNDER_REVIEW.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/RECURSIVE_BILATERAL_SUPPORT_BLUE_MATCHING_THEOREM.md",
+        "research/erdos-561/joint-general/verify_recursive_bilateral_support_certificates.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RECURSIVE_BILATERAL_SUPPORT_EVIDENCE.json",
+        "research/erdos-561/joint-general/ALL_S_BLUE_MATCHING_SINGLE_STEP_THEOREM.md",
+        "research/erdos-561/joint-general/RECURSIVE_FIFTH_CORE_VERTEX_SUPPORT_THEOREM.md",
+        "research/erdos-561/joint-general/GENERAL_CORE_ORIGINAL_TRANSFER.md"
+      ]
+    },
+    {
+      "mathematical_domain": "Erdős #561 arbitrary red component count s>=3 and three BLUE components, two-original-forest vertex support for all-host matching and exact joint residual",
+      "assumptions": [
+        "the source-admitted 54-claim fifth-core recursive engine imports UNCHANGED",
+        "same exact 179928 RED length3..8 sorted nonincreasing RED terminal1 / BLUE U,V<=8,U>=V>=2 grid",
+        "new joint rule requires normalized bilateral forest support>=3s-1, normalized blue V>=2, and PBLUE=0",
+        "new ORIGINAL proof relies on strict same-list source-certified JOINT and one previously admitted valid transfer gate",
+        "all recursion strictly decreases RED component count"
+      ],
+      "knowledge_graph_refs": [
+        "MATH-PROGRAMME#3490",
+        "MATH-PROGRAMME#3714"
+      ],
+      "promotion_condition": "Paper graph lemma and quantitative all-host BLUE matching transfer UNDER_REVIEW; bounded proof trace finite CHECKED. Exact original requires independently source-proved JOINT and protected valid transfer. Full conjecture OPEN/PARTIAL, no MATHCERT.",
+      "claim_id": "ERDOS561-BILATERAL-SUPPORT-RECURSIVE-CHECK-056",
+      "short_name": "Complete 179928-grid bilateral full-forest matching support proof trace adds 74 JOINT and 55 ORIGINAL exact certificates",
+      "claim_text": "Deterministic standard-library exact grid verifier checks all 179928 profile inputs against unchanged fifth-core engine and newly source-proved bilateral matching criterion; prior EXACT JOINT=166589 and ORIGINAL=151885 are preserved. New joint=166663 (+74) and original=151940 (+55), remaining joint UNKNOWN=13265, original UNKNOWN=27988. Exactly 355 bounded profiles have RED support<3s−1 but BLUE support>=3s−1, normalized BLUE V>=2 and zero PBLUE; prior 54-claim proof trees already prove 304, and 51 gain new direct JOINT under bilateral support. An additional 23 JOINT arise from well-founded shorter-RED first residual or matching recursion. Explicit n=(3,1,1,1),m=(4,3,1) has source theorem proof trace JOINT17, ORIGINAL23; 16 positive RED/BLUE terminal shifts validate normalization. Complete deterministic classification SHA256 349610e8b815fab7105f526693dabbee00fded805f16ecc1306208f886612142. Bounded computation checks exact integer algebra and provenance, not independent proof of Gallai or a census of all graph host colourings.",
+      "claim_class": "PROVED_IN_PACKAGE",
+      "status": "CHECKED",
+      "certainty": "CERTIFIED",
+      "support_type": "EXACT_RATIONAL_COMPUTATION",
+      "support_summary": "verify_recursive_bilateral_support_certificates.py imports prior fifth-core, RED and THREEBLUE engines unchanged; validates source-locked bilateral support and exact PBLUE loss, normalizations, explicit proof tree, monotone prior certificate preservation, 179928-cell classification fixed fingerprint, and original source-transfer guards. The paper graph theorem remains UNDER_REVIEW; this check is a finite deterministic trace only.",
+      "source_or_artifact": [
+        "research/erdos-561/joint-general/verify_recursive_bilateral_support_certificates.py"
+      ],
+      "related_files": [
+        "research/erdos-561/joint-general/RECURSIVE_BILATERAL_SUPPORT_EVIDENCE.json",
+        "research/erdos-561/joint-general/RUN_MATRIX.md"
+      ]
     }
   ]
 }
