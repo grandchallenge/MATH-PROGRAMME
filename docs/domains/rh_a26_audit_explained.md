@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 25 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -518,11 +518,47 @@ On the selected interval, every required order is either governed by the ordinar
 
 The [technical reconstruction PR #613](https://github.com/grandchallenge/MATHFORGE/pull/613) verifies this interval and arithmetic-budget argument under the actual stated tower and Lemma K inputs. Exact finite controls checked 5,240 whole-interval implications, 10,944 strict-neighborhood cases and 259 logarithmic and exponent comparisons. These checks verify finite cases of the selection mechanism, not the existence of the source's arithmetic centers.
 
-The remaining issue is precisely where those centers and their uniform number come from. The source uses the Ferrero–Washington theorem, arithmetic tower descent, a twisted linear operator and a separate argument controlling the two varying auxiliary primes. In particular, a rank bound for each fixed field does not automatically supply a bound uniform across a family of varying fields. That passage, the actual tower length estimates and Lemma K require independent scrutiny. The other-sign estimate remains separate.
+The remaining issue is precisely where those centers and their uniform number come from. The source uses the Ferrero–Washington theorem, arithmetic tower descent, a twisted linear operator and a separate argument controlling the two varying auxiliary primes. In particular, a rank bound for each fixed field does not automatically supply a bound uniform across a family of varying fields. The following section reconstructs the actual tower length estimates under their precise inputs; the varying-field rank passage and Lemma K require further independent scrutiny. The other-sign estimate remains separate.
 
 This is the difference between verifying the selection procedure and verifying that the arithmetic supplies every input to that procedure. Both are needed for the larger proof.
 
-## 15. Reproducibility and technical references
+## 15. Where the exceptional arithmetic centers come from
+
+The preceding section explains how a finite list of exceptional orders permits the selection of a common interval. We have now reconstructed the mechanism that gives the list its finite size, subject to the precise generation and duality assumptions used by the submitted proof.
+
+### One operator for an entire tower
+
+A cyclotomic tower is a nested sequence of number fields obtained by adjoining roots of unity of successively higher prime-power orders. Rather than construct a new unrelated cohomology group at every level, the source identifies its locally constrained classes with certain invariant homomorphisms on the common cyclotomic kernel. The homomorphisms vanish on the required inertia groups and on the decomposition groups over the measuring prime.
+
+Taking the dual transforms invariants into a quotient by the image of a linear operator minus the identity. The operator is twisted by the arithmetic order and raised to a power determined by the tower level. The dual action uses the inverse Galois generator; the change from the negative twist on the homomorphisms to the positive twist on their dual is essential. This verifies the actual locally constrained module, not an analogy based on a different vector space.
+
+### Why there are only finitely many centers
+
+Suppose the dual module is generated by a fixed number of elements. It need not be free: a matrix on a free module of that rank can lift the operator on the original module. Its determinant bounds the length of the original quotient.
+
+The determinant factors into one factor for each eigenvalue, counted with multiplicity. As the arithmetic order changes, a factor can become very small in the prime-adic metric, and its valuation can become large. A compactness argument associates one prime-adic center with each factor, giving a distance bound that holds for every integer order. The center is a point of the prime-adic integers, even if the eigenvalue belongs to a larger field. It need not be an exact zero of the factor.
+
+For a simple illustration, take prime 3 and a scalar operator whose twisted value at order $e$ is 4 raised to the power $e-2$. At level $m$, the operator-minus-identity is 4 raised to the power $(e-2)3^m$, minus 1. The center is the integer 2. Moving the order from 2 to another integer whose difference from 2 is divisible by a higher power of 3 increases the valuation, which increases the quotient length. At the exact center the illustrative quotient has infinite length; away from it the length is finite. This example is a scalar model of the calculation, not a computed number-field cohomology group.
+
+The general proof does not assume that the module decomposes into independent eigenvectors. It uses the matrix only to obtain a determinant bound. The number of centers is therefore at most the number of generators, rather than the size of the tower.
+
+### Growth between levels
+
+Modulo the measuring prime, the cyclotomic generator acts unipotently: subtracting the identity produces a nilpotent operator. The source obtains this property from the continuous action on the actual discrete arithmetic characters. A sufficiently high prime power of the operator is then congruent to the identity modulo the square of the prime.
+
+The geometric-sum factor linking consecutive tower levels has a quotient of length no greater than the number of generators. This proves the source's linear growth bound beyond its fixed reference level, even for modules with torsion. Thus the proof can treat ordinary orders using the determinant and treat exceptional orders by returning to a fixed-degree reference field.
+
+The [technical reconstruction PR #614](https://github.com/grandchallenge/MATHFORGE/pull/614) establishes the descent, duality of invariant kernels and quotients, unipotence, growth and determinant-center arguments under the stated arithmetic inputs. Exact finite controls checked 3,300 valuation identities, 387 ball-intersection cases and 4,617 mixed-module quotient and determinant comparisons. The excluded prime-2 distance condition and a singular matrix lift were also tested.
+
+### Remaining arithmetic dependencies
+
+The number of generators must still be proved uniformly bounded for the actual family of varying base fields. A fixed-field rank bound alone is insufficient. The source uses the Ferrero–Washington theorem and additional ramification arguments for the varying fields.
+
+In addition, the reference-layer comparison uses the limiting Poitou–Tate identity that equates the length of the first locally trivial cohomology group with the length of the corresponding locally trivial submodule of the second group. This identity implies the required inequality by submodule inclusion. Its precise passage from finite-level duality and local finiteness to the source's limiting groups remains an independent verification obligation.
+
+We have thus explained and reconstructed the mechanism that produces the centers and their two associated length bounds, conditional on the source's generator and limiting duality inputs. We have not assumed that those inputs follow automatically, or that the full simultaneous arithmetic window is already verified without them.
+
+## 16. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -555,10 +591,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #610](https://github.com/grandchallenge/MATHFORGE/pull/610) | Integral Stickelberger annihilator, generator and length bounds, and uniform bad-prime estimate |
 | [PR #612](https://github.com/grandchallenge/MATHFORGE/pull/612) | Composite-field degree restriction, combined minus-length bound and conditional exponential domination |
 | [PR #613](https://github.com/grandchallenge/MATHFORGE/pull/613) | Conditional simultaneous-window selection, exceptional-order control and exact arithmetic dependency map |
+| [PR #614](https://github.com/grandchallenge/MATHFORGE/pull/614) | Actual tower descent, arithmetic centers and growth under the stated generator and limiting duality inputs |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 16. What the investigation taught us about checking extraordinary mathematical claims
+## 17. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -570,14 +607,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 17. The next executable mathematical step
+## 18. The next executable mathematical step
 
-**Target:** the actual arithmetic tower argument `PropA.aBound_of_isTower`, beginning with `genLevel`, `descends`, `exists_centres_norm` and `twLen_le_growth` in the source. Then verify the uniform rank construction for the varying two-prime base fields and the separate Lemma K input.
+**Target:** the precise finite-to-limit Poitou–Tate identity `PTShaAt` used by `PropA.shaLeV`, and the uniform arithmetic tower rank construction `towerFixed`, `towerTwo`, `baseRk` and `twoBase` used by the source.
 
-**Work:** establish that the genuine source arithmetic supplies the centers, the two tower-length bounds and a uniform exceptional-set size; distinguish the fixed-field Ferrero–Washington input from the varying-field argument. The conditional selection procedure has been reconstructed.
+**Work:** verify the limiting local and global cohomology identifications and the actual rank and transfer estimates for the varying two-prime bases. The operator descent, center bounds and conditional interval construction have been reconstructed; Lemma K and the opposite-sign estimates remain separate arithmetic obligations.
 
-**Completion test:** verify the exact source statements and their arithmetic interfaces, including the opposite-sign height/count argument and foundational correspondence as separate obligations. No promotion from conditional reconstruction to RH/GRH certification.
+**Completion test:** establish the exact source contracts with their uniformity and all foundational inputs exposed, then trace them into the full arithmetic window. Original Lean replay remains a separate requirement. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_CONDITIONAL_THMBAB_WINDOW_SELECTION_RECONSTRUCTED__ABOUND_TOWER_DESCENT_UNIFORM_TWOBASE_RANK_LEMMAK_OTHER_SIGN_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_TOWER_DESCENT_CENTRES_GROWTH_RECONSTRUCTED__LIMITING_PT_UNIFORM_TOWER_RANK_TWOBASE_LEMMAK_OTHER_SIGN_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
