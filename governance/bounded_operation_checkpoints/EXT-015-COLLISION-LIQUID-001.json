@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-COLLISION-LIQUID-001.CP005",
+  "checkpoint_id": "EXT-015-COLLISION-LIQUID-001.CP006",
   "governed_work_id": "EXT-015-COLLISION-LIQUID-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,34 +15,19 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3752"
   },
-  "phase": "Both exact mathematical gates accepted and integrated for protected readback",
-  "state": "IN_PROGRESS",
+  "phase": "Both collision-liquid gates complete after exact protected and tracker readback",
+  "state": "TERMINAL",
   "identities": {
-    "protected_base_sha": "69b22c6aa00447fd618cd40925d5b8bbaf0b0e77",
-    "candidate_head_sha": "d31e8cf2b33547d9e6c233af7caddb32315ff4d7",
+    "protected_base_sha": "8f3e816106071360cbe8c3d2aaee420ca8ba569a",
+    "candidate_head_sha": "861cb00af8504d3888343fb048d9524f393af34d",
     "issue_number": 3752,
-    "pr_number": null,
-    "branch": "research/ext015-collision-liquid-all-weights-primary-20261125",
+    "pr_number": 3755,
+    "branch": null,
     "workflow_runs": []
   },
   "terminal_condition": "Resolve the two admitted collision-liquid gates on the actual free scalar model, with independent source-bound review, protected exact readback, and an accurate tracker verdict. A positive result proves the natural all-weight collision-moment comparison. A protocol-authorized bounded negative return supplies a precise failed or unresolved inference and distinguishes all accepted lower-weight results. Original REACH retains its separate terminal qualified closeout.",
-  "permitted_next_actions": [
-    {
-      "id": "verify-protected-comparison-and-close-docket",
-      "description": "Verify the protected admission and exact source readback of both accepted gates. Then close and read back the bounded docket and record terminal custody."
-    }
-  ],
-  "next_action": {
-    "id": "verify-protected-comparison-and-close-docket",
-    "description": "Verify the protected admission and exact source readback of both accepted gates. Then close and read back the bounded docket and record terminal custody.",
-    "evidence_targets": [
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_ALL_WEIGHTS_UC093.md",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_LIQUID_UC094.md",
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_ACCEPTANCE_UC095.md",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3752"
-    ]
-  },
+  "permitted_next_actions": [],
+  "next_action": null,
   "external_evidence": {
     "waiting": false,
     "objects": [
@@ -55,26 +40,39 @@
         "kind": "review",
         "identity": "d31e8cf2b33547d9e6c233af7caddb32315ff4d7",
         "status": "Distinct same-system nonauthor ACCEPT with zero corrections on the exact all-weight comparison."
+      },
+      {
+        "kind": "artifact",
+        "identity": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3755",
+        "status": "Native merge and all exact protected proof paths and required contexts read back."
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "accept-both-reviewed-gates-for-native-protection",
-    "result": "UC092 and UC093 are accepted by distinct critical reviews. Local controls and exact dependency readback passed. Native protected source and tracker confirmation are pending.",
+    "action": "finish-both-reviewed-gates-and-read-back-the-bounded-tracker",
+    "result": "Both frozen mathematical gates were accepted by distinct same-system nonauthor reviewers with zero corrections. PR 3755 merged natively as 8f3e816106071360cbe8c3d2aaee420ca8ba569a. All six changed blobs, fifteen frozen dependencies and five required native checks were read back. Docket #3752 was explicitly closed COMPLETED at 11/25/2026 11:26:35. The original REACH and separate fixed-host checkpoints were verified.",
     "evidence_refs": [
-      "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
-      "d31e8cf2b33547d9e6c233af7caddb32315ff4d7",
-      "22727d1271cc23227edbeb1ee8d3aba4780fd0c8",
-      "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_LIQUID_UC094.md",
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_ACCEPTANCE_UC095.md"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3755",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/commit/8f3e816106071360cbe8c3d2aaee420ca8ba569a",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3752",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_LIQUID_UC094.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/COLLISION_LIQUID_ACCEPTANCE_UC095.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/COLLISION_LIQUID_ALL_WEIGHTS_UC093.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/fixtures/check_collision_liquid_moments_uc092.py",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603931581/job/139170765639",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603931662",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603931884/job/139170080699",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603932570/job/139169743585",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603932570/job/139169743941"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-COLLISION-LIQUID-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-25T11:18:56.1280752+00:00"
+    "observed_at": "2026-11-25T11:26:51.1364431+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -105,11 +103,26 @@
       "research/condensed-qft/EXT-015/COLLISION_LIQUID_ALL_WEIGHTS_UC093.md",
       "research/ext015-collision-liquid-all-weights-primary-20261125",
       "research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_LIQUID_UC094.md",
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_ACCEPTANCE_UC095.md"
+      "research/condensed-qft/EXT-015/COLLISION_LIQUID_ACCEPTANCE_UC095.md",
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3755"
     ],
-    "instructions": "Verify the protected admission and exact source readback of both accepted gates. Then close and read back the bounded docket and record terminal custody."
+    "instructions": "Both gates are terminal on the declared finite-component source class. Consult UC095 and the protected proof. No further action is bound."
   },
-  "terminal_evidence": [],
+  "terminal_evidence": [
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603931581/job/139170765639",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603931662",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603931884/job/139170080699",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603932570/job/139169743585",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/45603932570/job/139169743941",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/AGENT_CRITICAL_REVIEW_COLLISION_LIQUID_UC094.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/COLLISION_LIQUID_ACCEPTANCE_UC095.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/COLLISION_LIQUID_ALL_WEIGHTS_UC093.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/blob/8f3e816106071360cbe8c3d2aaee420ca8ba569a/research/condensed-qft/EXT-015/fixtures/check_collision_liquid_moments_uc092.py",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/commit/8f3e816106071360cbe8c3d2aaee420ca8ba569a",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/issues/3752",
+    "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3755"
+  ],
   "claim_boundaries": {
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
