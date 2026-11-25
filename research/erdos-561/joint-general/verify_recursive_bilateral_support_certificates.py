@@ -215,6 +215,7 @@ def audit():
     assert ct["bilateral_prior_joint"]==304
     assert ct["bilateral_new_direct_joint"]==51
     assert (ct["joint_unknown"],ct["original_unknown"])==(13265,27988)
+    assert digest.hexdigest()=="349610e8b815fab7105f526693dabbee00fded805f16ecc1306208f886612142"
     return {"counts":dict(sorted(ct.items())),
             "classification_sha256":digest.hexdigest(),
             "first_new_examples":samples}
