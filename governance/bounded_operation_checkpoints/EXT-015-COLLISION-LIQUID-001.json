@@ -1,7 +1,7 @@
 {
   "$schema": "../../schemas/bounded_operation_checkpoint.schema.json",
   "schema_version": "1.0.0",
-  "checkpoint_id": "EXT-015-COLLISION-LIQUID-001.CP003",
+  "checkpoint_id": "EXT-015-COLLISION-LIQUID-001.CP004",
   "governed_work_id": "EXT-015-COLLISION-LIQUID-001",
   "repository": "grandchallenge/MATH-PROGRAMME",
   "admission": {
@@ -15,60 +15,63 @@
     "programme_adoption_ref": "grandchallenge/gcl-standards:programme-adoption/MATH-PROGRAMME.yaml",
     "governing_issue": "grandchallenge/MATH-PROGRAMME#3752"
   },
-  "phase": "Weight-two mathematical acceptance and authorized all-weight gate",
-  "state": "IN_PROGRESS",
+  "phase": "Frozen all-weight comparison in distinct mathematical review",
+  "state": "AWAITING_EXTERNAL_EVIDENCE",
   "identities": {
     "protected_base_sha": "69b22c6aa00447fd618cd40925d5b8bbaf0b0e77",
-    "candidate_head_sha": "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
+    "candidate_head_sha": "d31e8cf2b33547d9e6c233af7caddb32315ff4d7",
     "issue_number": 3752,
     "pr_number": null,
-    "branch": "research/ext015-collision-liquid-weight-two-primary-20261125",
+    "branch": "research/ext015-collision-liquid-all-weights-primary-20261125",
     "workflow_runs": []
   },
   "terminal_condition": "Resolve the two admitted collision-liquid gates on the actual free scalar model, with independent source-bound review, protected exact readback, and an accurate tracker verdict. A positive result proves the natural all-weight collision-moment comparison. A protocol-authorized bounded negative return supplies a precise failed or unresolved inference and distinguishes all accepted lower-weight results. Original REACH retains its separate terminal qualified closeout.",
   "permitted_next_actions": [
     {
-      "id": "construct-freeze-all-weights",
-      "description": "Construct and freeze the all-weight comparison using the accepted pair gate, the ordinary ordered component projections and the canonical block polynomial tests. Bind it to the all-weight partition and support sources for distinct review."
+      "id": "obtain-frozen-all-weights-review",
+      "description": "Obtain distinct mathematical review on exact frozen UC093. Apply at most one correction and verify the corrected identity. Integrate the accepted comparative proofs and their exact control ledger for protected return."
     }
   ],
   "next_action": {
-    "id": "construct-freeze-all-weights",
-    "description": "Construct and freeze the all-weight comparison using the accepted pair gate, the ordinary ordered component projections and the canonical block polynomial tests. Bind it to the all-weight partition and support sources for distinct review.",
+    "id": "obtain-frozen-all-weights-review",
+    "description": "Obtain distinct mathematical review on exact frozen UC093. Apply at most one correction and verify the corrected identity. Integrate the accepted comparative proofs and their exact control ledger for protected return.",
     "evidence_targets": [
-      "research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
       "research/condensed-qft/EXT-015/COLLISION_LIQUID_ALL_WEIGHTS_UC093.md",
-      "research/condensed-qft/EXT-015/FINITE_PARTITION_TENSOR_UC073.md"
+      "research/condensed-qft/EXT-015/fixtures/check_collision_liquid_moments_uc092.py",
+      "research/ext015-collision-liquid-all-weights-primary-20261125"
     ]
   },
   "external_evidence": {
-    "waiting": false,
+    "waiting": true,
     "objects": [
       {
         "kind": "review",
         "identity": "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
         "status": "Distinct same-system nonauthor ACCEPT on UC092 exact frozen source and fixture with zero corrections. Protected admission follows planned integration."
+      },
+      {
+        "kind": "review",
+        "identity": "d31e8cf2b33547d9e6c233af7caddb32315ff4d7",
+        "status": "Distinct nonauthor general-incident critic assigned to exact all-weight source."
       }
     ]
   },
   "blocking_boundary": null,
   "last_transition": {
-    "action": "accept-the-frozen-weight-two-gate",
-    "result": "The nonauthor review accepts the cochain map, full quotient descent, interval mergers, moment normalization, nonzero Wick control, and separate fixed-test statement. Gate 2 may proceed.",
+    "action": "freeze-the-all-weight-candidate",
+    "result": "All-weight source bound to UC092 and admitted UC073 and UC076 with exact source, finite controls and local math preflight. Review is pending.",
     "evidence_refs": [
-      "69b22c6aa00447fd618cd40925d5b8bbaf0b0e77",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3753",
       "bbc793d3f85c3fb9f9fdc747e481f46a695e658b",
-      "5cd16144edd52cb46829df41dd2e79e0c0a3df9f",
-      "22727d1271cc23227edbeb1ee8d3aba4780fd0c8",
-      "research/ext015-collision-liquid-weight-two-primary-20261125"
+      "d31e8cf2b33547d9e6c233af7caddb32315ff4d7",
+      "21c4c2f62714f44a307ecca01676ae7900cd8f3e",
+      "research/ext015-collision-liquid-all-weights-primary-20261125"
     ]
   },
   "freshness": {
     "required_before_transition": true,
     "verification_command": "python ci/validate_bounded_operation_continuity.py --verify-live governance/bounded_operation_checkpoints/EXT-015-COLLISION-LIQUID-001.json",
     "on_mismatch": "REBIND_BEFORE_MUTATION",
-    "observed_at": "2026-11-25T11:13:06.5504352+00:00"
+    "observed_at": "2026-11-25T11:15:37.9333656+00:00"
   },
   "resume": {
     "fresh_session_safe": true,
@@ -95,9 +98,11 @@
       "research/condensed-qft/EXT-015/COLLISION_LIQUID_WEIGHT_TWO_UC092.md",
       "research/condensed-qft/EXT-015/fixtures/check_collision_liquid_moments_uc092.py",
       "research/ext015-collision-liquid-weight-two-primary-20261125",
-      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3753"
+      "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3753",
+      "research/condensed-qft/EXT-015/COLLISION_LIQUID_ALL_WEIGHTS_UC093.md",
+      "research/ext015-collision-liquid-all-weights-primary-20261125"
     ],
-    "instructions": "Construct and freeze the all-weight comparison using the accepted pair gate, the ordinary ordered component projections and the canonical block polynomial tests. Bind it to the all-weight partition and support sources for distinct review."
+    "instructions": "Obtain distinct mathematical review on exact frozen UC093. Apply at most one correction and verify the corrected identity. Integrate the accepted comparative proofs and their exact control ledger for protected return."
   },
   "terminal_evidence": [],
   "claim_boundaries": {
