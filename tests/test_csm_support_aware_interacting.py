@@ -204,6 +204,24 @@ class TestSupportAwareInteracting(unittest.TestCase):
         self.assertEqual(L["quotient_sizes"],(2,)*128)
         self.assertEqual(L["work"],1);self.assertFalse(L["joint_state_constructed"])
 
+    def test_nonvacuous_strong_column_smoothing_oracle(self):
+        Q=partly_revealed_ring(2,self_gain=F(7,16),neighbor_gain=F(1,4096))
+        D=certify(Q,method="column",max_dense=0)
+        self.assertEqual(D["spatial_method"],"column")
+        pats=[(None,None)]*90;pats[84]=(0,2)
+        alt=list(pats);alt[84]=(1,2)
+        p,X=strip_marginal(Q,pats,(0,1),5)
+        q,_=strip_marginal(Q,alt,(0,1),5)
+        # At time 5 the changed factor scope starts at time 84.
+        bound=D["spatial_prefactor"]*D["spatial_rate"]**79
+        self.assertLess(bound,1)
+        for i in range(2):
+            tv=abs(sum(x for x,s in zip(p,X) if s[i])-sum(x for x,s in zip(q,X) if s[i]))
+            self.assertLessEqual(tv,bound)
+        for pattern in (pats,alt):
+            values=port_distribution(Q,pattern,(0,1),5,0)
+            self.assertGreaterEqual(min(values),D["insertion_nonnull"][0])
+
     def test_controls_and_refinement_initial_classes(self):
         # Parent-dependent supports cannot be silently treated as product domains.
         net=SupportedNetwork((2,),((0,),),((((1,0),(0,1)),),))
