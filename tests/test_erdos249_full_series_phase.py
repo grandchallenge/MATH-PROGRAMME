@@ -2808,3 +2808,89 @@ class WP09NPrimeConditionedSpreadTests(unittest.TestCase):
         for args in ((0,1,2),(1024,2,2),(1024,1,1),(True,1,2),(4,1,101)):
             with self.subTest(args=args), self.assertRaises(ValueError):
                 certified_prime_conditioned_spread(*args)
+
+
+class WP09OMultiplicativeCarryTests(unittest.TestCase):
+    def test_exact_dense_multiplicativity_prime_steps_and_envelope(self):
+        from math import gcd
+        from experiments.erdos249_full_series_phase.multiplicative_carry_boundary import (
+            primes_through, cutoff_coefficient,
+        )
+        P=primes_through(7)
+        phi=totients(2500)
+        f=lambda n: cutoff_coefficient(n,P)
+        for n in range(1,2501):
+            self.assertLessEqual(phi[n],f(n))
+            self.assertLessEqual(f(n),n)
+            if n<=7:
+                self.assertEqual(f(n),phi[n])
+        for a in range(1,30):
+            for b in range(1,30):
+                if gcd(a,b)==1:
+                    self.assertEqual(f(a*b),f(a)*f(b))
+        for p in primes_through(19):
+            for k in range(1,5):
+                self.assertEqual(f(p**(k+1)),p*f(p**k))
+            if p in P:
+                for n in range(1,100):
+                    self.assertEqual(f(p*n),(p if n%p==0 else p-1)*f(n))
+        self.assertEqual(f(11),11)
+        self.assertEqual(f(11*13)-phi[11*13],23)
+
+    def test_rational_values_cyclotomic_divisibility_and_exact_prefix(self):
+        from experiments.erdos249_full_series_phase.multiplicative_carry_boundary import (
+            exact_cutoff_value, cutoff_coefficient,
+        )
+        self.assertEqual(exact_cutoff_value(2)["value"],Fraction(14,9))
+        prev=Fraction(2)
+        for y in (2,3,5,7,11,13):
+            a=exact_cutoff_value(y)
+            self.assertEqual(a["denominator_bits"],{2:4,3:12,5:59,7:417,11:4616,13:60051}[y])
+            S,P=a["value"],a["P"]
+            self.assertLess(S,prev)
+            prev=S
+            self.assertEqual(S.denominator % a["primitive"]**2,0)
+            partial=sum((Fraction(cutoff_coefficient(n,P),1<<n)
+                         for n in range(1,101)),Fraction())
+            self.assertLess(partial,S)
+            self.assertLessEqual(S-partial,Fraction(102,1<<100))
+
+    def test_exact_carry_prime_step_network_and_parity_counterpoint(self):
+        from experiments.erdos249_full_series_phase.multiplicative_carry_boundary import (
+            carry_trace, primes_through, cutoff_coefficient,
+        )
+        P=primes_through(7)
+        c,d=carry_trace(7,700)
+        u=lambda n: 2*c[n-1]-c[n]
+        for p in P:
+            for n in range(1,101):
+                a=p if n%p==0 else p-1
+                self.assertEqual(u(p*n),a*u(n)+a*d[n]-d[p*n])
+        self.assertEqual(u(11)+d[11],11)
+        self.assertEqual(cutoff_coefficient(2*11,P)%2,1)
+
+    def test_sparse_and_finite_support_comparator_distinctions(self):
+        from math import gcd
+        from experiments.erdos249_full_series_phase.multiplicative_carry_boundary import (
+            sparse_coefficient, finite_support_coefficient,
+        )
+        phi=totients(400)
+        P=(2,3,5)
+        for f in (lambda n:sparse_coefficient(n,P),
+                  lambda n:finite_support_coefficient(n,5)):
+            for n in range(3,401):
+                self.assertEqual(f(n)%2,0)
+                self.assertLessEqual(f(n),phi[n])
+                if n<=5:
+                    self.assertEqual(f(n),phi[n])
+            for a in range(1,20):
+                for b in range(1,20):
+                    if gcd(a,b)==1:
+                        self.assertEqual(f(a*b),f(a)*f(b))
+        self.assertEqual(sparse_coefficient(2**10,P),2**9)
+        self.assertEqual(finite_support_coefficient(2**10,5),0)
+        self.assertEqual(finite_support_coefficient(61,5),0)
+        for y in (1,True,17):
+            with self.assertRaises(ValueError):
+                from experiments.erdos249_full_series_phase.multiplicative_carry_boundary import exact_cutoff_value
+                exact_cutoff_value(y)
