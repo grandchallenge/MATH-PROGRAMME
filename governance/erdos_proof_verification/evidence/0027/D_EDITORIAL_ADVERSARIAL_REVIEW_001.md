@@ -11,3 +11,5 @@ Same authenticated accountable operator, distinct editorial/adversary logical ro
 - Hostile wording controls: reject replacing distinct by arbitrary repeated moduli; replacing minimum by every assignment's equality; including c=1/2; omitting independence premise; promoting finite tests to universal proof; promoting Lean components to full theorem; calling the operator an independent referee; claiming certification or cohort closure. Each is explicitly excluded by the reviewed page and evidence chain.
 
 Verdict: scope-qualified documentary candidate PASS; remaining arithmetic and analytic formal obligations explicitly retained.
+
+Navigation correction: direct menu ceiling reached; the existing Compendium index and governed Results reference index are the discovery paths. This preserves the original worker return as historical evidence.

@@ -30,3 +30,5 @@ These are supporting records, not necessarily current research instructions or c
 - [LOG-GCD Prior-Art Audit](../LOG_GCD_PRIOR_ART_AUDIT.md)
 - [Poincaré Reconstruction Research Guide](../POINCARE_RECONSTRUCTION_RESEARCH_GUIDE.md)
 - [Groebner Applications Manifest](../GROBNER_APPLICATIONS_MANIFEST.md)
+
+- [Erdős problem 27: verification of the published disproof](../erdos/proof-verification-0027.md)
