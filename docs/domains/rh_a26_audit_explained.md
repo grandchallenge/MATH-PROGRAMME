@@ -2,8 +2,8 @@
 
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
-!!! warning "Research status · 25 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The counting and reciprocity arguments retain their stated classical-duality inputs.
+!!! warning "Research status · 26 November 2026"
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -598,9 +598,53 @@ The [technical reconstruction PR #615](https://github.com/grandchallenge/MATHFOR
 
 The classical finite-level Poitou–Tate theorem, local finiteness, local Tate duality and the identification of the source decomposition groups with local Galois groups remain explicit inputs. This is a length argument, not a new construction of compatible limiting perfect pairings. Original formal correspondence and Lean replay remain separate obligations.
 
-The outstanding tower question is now the uniform bound on the number of generators for the actual family of base fields.
+The following section reconstructs the uniform bound on the number of generators for the actual family of base fields.
 
-## 17. Reproducibility and technical references
+## 17. Why the arithmetic rank stays bounded as the auxiliary primes vary
+
+The earlier tower argument produces at most one exceptional center per generator of an arithmetic module. This gives a useful common interval only if the number of generators is bounded independently of the auxiliary primes.
+
+The classical Ferrero–Washington input supplies a uniform bound for the class-group ranks along the cyclotomic tower of a fixed abelian field. It does not, simply by being applied to different fields, give a bound uniform over those fields. The submitted proof handles this distinction explicitly.
+
+### Start with one fixed field
+
+Begin with the original abelian field, of degree $D$, and adjoin a fourth root of unity. The field is fixed before choosing the auxiliary primes. The finite class-group rank bound gives an upper bound $g$ for the number of independent binary characters of the infinite cyclotomic kernel that are unramified everywhere.
+
+Why does the passage to the infinite kernel preserve the bound? A continuous character into a finite group extends to some sufficiently deep finite cyclotomic level. Compactness and the finite number of relevant local conjugacy families ensure the required inertia conditions are preserved. Any finite collection of such characters appears together at a sufficiently deep level. If there were more independent characters than the finite-level bound allows, that would contradict the bound at that level.
+
+### Let the two primes introduce controlled ramification
+
+The auxiliary primes are required to be congruent to 3 modulo 8 and 7 modulo 16, respectively. These are not arbitrary choices. In the cyclotomic tower at prime 2, their Frobenius actions have tightly controlled indices. The congruences imply that the square of the first prime differs from 1 by exactly three factors of 2; the square of the second differs from 1 by exactly four factors of 2.
+
+The resulting bounds on the numbers of orbits of places are $2D$ and $4D$. At an odd prime, a binary character on inertia is determined by at most one tame-generator value. Wild inertia cannot supply an additional binary character, since its finite quotients have odd prime-power order. Therefore allowing ramification at the first prime can add at most $2D$ independent binary parameters, and the second at most $4D$.
+
+The calculation is carried out on the same fixed subgroup before adjoining the quadratic fields.
+
+| Step | Upper bound on binary character dimension |
+| --- | ---: |
+| Fixed-field bound | g |
+| Permit ramification at the first prime | g + 2D |
+| Permit ramification at the second prime | g + 6D |
+| First quadratic extension | 2(g + 6D) |
+| Second quadratic extension | 4(g + 6D) |
+
+### Why a quadratic extension can at most double the bound
+
+At prime 2, one cannot split a vector space into plus and minus components by dividing by 2. The source instead uses the operator formed by subtracting the identity from an involution. Its square is zero in characteristic two. The image of this operator lies in its kernel, so the dimension of the whole space is at most twice the dimension of the invariant subspace.
+
+One must also check which invariant characters extend across the quadratic extension. An invariant character extends exactly when it vanishes on the square of a coset representative outside the subgroup. That condition has codimension at most one; the binary character detecting the two cosets supplies the matching dimension in the larger group. Hence the invariant subspace is no larger than the old character space. This proves the doubling bound without using a false semisimplicity assumption.
+
+The two extensions give exactly the source's generator bound, four times the sum of the fixed-field rank and six times the original field degree. The dual arithmetic module can be generated by that many elements because its first torsion layer has the corresponding dimension bound. The argument uses divisibility of the torsion coefficient group to extend coordinate maps and then dualizes. It does not assume the module is free.
+
+### Transfer to the field the proof actually uses
+
+The actual composite field differs from a layer over this constructed base by an extension of degree at most two: the cyclotomic fixing condition allows either plus one or minus one instead of just plus one. Restriction of the first locally trivial cohomology to the larger field can have a kernel at prime 2, but its length is at most one. The source therefore retains an explicit extra unit of length in the comparison. It does not pretend that restriction is injective.
+
+The [technical reconstruction PR #619](https://github.com/grandchallenge/MATHFORGE/pull/619) verifies these arguments, preserving the source constants. Exact finite controls checked 456 dyadic Frobenius indices, 27 characteristic-two involutions, 35 character-extension cases and 20 composite-field index comparisons. These are controls for the algebraic and cyclotomic calculations, not computations of the actual infinite class-group towers.
+
+Combined with the previous tower and interval arguments, this reconstructs the source's simultaneous-window theorem under its stated finite-level duality, local finiteness, Ferrero–Washington and Lemma K inputs. The classical tame-inertia, local-place and class-field identifications remain explicit. The quantitative second-cohomology bound called Lemma K has not yet been independently reconstructed, nor have the opposite-sign and joint height/count arguments.
+
+## 18. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -635,10 +679,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #613](https://github.com/grandchallenge/MATHFORGE/pull/613) | Conditional simultaneous-window selection, exceptional-order control and exact arithmetic dependency map |
 | [PR #614](https://github.com/grandchallenge/MATHFORGE/pull/614) | Actual tower descent, arithmetic centers and growth under the stated generator and limiting duality inputs |
 | [PR #615](https://github.com/grandchallenge/MATHFORGE/pull/615) | Finite-to-limit Poitou–Tate length identities and genuine localization kernel compatibility |
+| [PR #619](https://github.com/grandchallenge/MATHFORGE/pull/619) | Uniform generator bound, tame ramification, quadratic transfer and conditional window assembly |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 18. What the investigation taught us about checking extraordinary mathematical claims
+## 19. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -650,14 +695,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 19. The next executable mathematical step
+## 20. The next executable mathematical step
 
-**Target:** the actual uniform arithmetic tower rank construction `towerFixed`, `towerTwo`, `baseRk` and `twoBase`.
+**Target:** the source's quantitative second-cohomology cardinal bound, `LemmaK`, in `GeneratorCountTuples/LemmaK.lean`, and its actual proof dependencies.
 
-**Work:** establish the uniform rank and transfer estimates for the varying two-prime bases, distinguishing fixed-field Ferrero–Washington from the additional varying-field argument. The limiting Poitou–Tate length identities, operator descent, center bounds and conditional interval construction have been reconstructed under their stated classical inputs. Lemma K and the opposite-sign estimates remain separate arithmetic obligations.
+**Work:** reconstruct the genuine estimate with the stated degree, discriminant and order dependence, then check the opposite-sign arithmetic and joint height/count hypotheses. The uniform rank and transfer, limiting duality and conditional common-window construction have been reconstructed.
 
-**Completion test:** establish the exact source contracts with their uniformity and all foundational inputs exposed, then trace them into the full arithmetic window. Original Lean replay remains a separate requirement. No RH/GRH certification.
+**Completion test:** establish the exact source contracts, retaining classical and formal correspondence obligations and original Lean replay. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_LIMITING_PT_LENGTH_IDENTITIES_RECONSTRUCTED__UNIFORM_TOWER_RANK_TWOBASE_LEMMAK_OTHER_SIGN_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_UNIFORM_TOWER_RANK_TWOBASE_RECONSTRUCTED__LEMMAK_OTHER_SIGN_JOINT_WINDOW_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
