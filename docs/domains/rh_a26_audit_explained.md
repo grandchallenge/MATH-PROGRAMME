@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 25 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -554,11 +554,53 @@ The [technical reconstruction PR #614](https://github.com/grandchallenge/MATHFOR
 
 The number of generators must still be proved uniformly bounded for the actual family of varying base fields. A fixed-field rank bound alone is insufficient. The source uses the Ferrero–Washington theorem and additional ramification arguments for the varying fields.
 
-In addition, the reference-layer comparison uses the limiting Poitou–Tate identity that equates the length of the first locally trivial cohomology group with the length of the corresponding locally trivial submodule of the second group. This identity implies the required inequality by submodule inclusion. Its precise passage from finite-level duality and local finiteness to the source's limiting groups remains an independent verification obligation.
+In addition, the reference-layer comparison uses the limiting Poitou–Tate identity that equates the length of the first locally trivial cohomology group with the length of the corresponding locally trivial submodule of the second group. This identity implies the required inequality by submodule inclusion. The following section reconstructs its precise passage from finite-level duality and local finiteness to the source's limiting groups.
 
 We have thus explained and reconstructed the mechanism that produces the centers and their two associated length bounds, conditional on the source's generator and limiting duality inputs. We have not assumed that those inputs follow automatically, or that the full simultaneous arithmetic window is already verified without them.
 
-## 16. Reproducibility and technical references
+## 16. Why finite-level duality controls the full arithmetic groups
+
+The tower argument requires a comparison between two different cohomology groups. One has prime-adic integral coefficients; the other has torsion coefficients. Poitou–Tate duality, one of the classical inputs in the submitted proof, supplies a comparison for finite coefficients. The source must show that this comparison survives when the coefficient precision grows without bound.
+
+We have now reconstructed that passage under the precise finite-level duality and finiteness hypotheses.
+
+### Two ways of increasing precision
+
+The integral coefficients are reduced modulo successively larger powers of the measuring prime. The complementary torsion coefficients are included in successively larger torsion groups. These operations run in opposite directions. The source's cyclotomic twists are also complementary: the integral twist has order $e+1$, while the torsion twist has order $-e$.
+
+Finite-level duality gives equality of the sizes of the two locally trivial groups. The argument does not simply take a limit of those equalities. It must first ensure that the groups being counted are genuine approximations of the intended full groups.
+
+On the integral side, a cocycle can be lifted to higher precision because the relevant third cohomology group with residual coefficients vanishes. Conversely, a cocycle that is a coboundary at every finite precision is a genuine integral coboundary: the finite first cohomology groups allow compatible choices of primitives. Together these results identify the finite reductions of the full second cohomology group and establish finite generation.
+
+### A trap in comparing kernels
+
+Even when every finite reduction is correct, taking a kernel need not commute with reduction.
+
+Consider multiplication by 3 on the 3-adic integers. Its integral kernel is zero. But modulo 9, the residues 0, 3 and 6 all map to zero. Modulo 27, the residues 0, 9 and 18 all map to zero. The finite kernels are nontrivial at every precision, although none of these nonzero residues gives a genuine nonzero element of the integral kernel.
+
+| Precision | Kernel of multiplication by 3 |
+| --- | --- |
+| Modulo 9 | 0, 3, 6 |
+| Modulo 27 | 0, 9, 18 |
+| Integral 3-adic coefficients | Only 0 |
+
+The source therefore checks a specific compatibility condition for its actual localization map. At nonzero arithmetic order, the local second cohomology groups have finite length and are annihilated by one sufficiently large prime power. Beyond that precision, the condition holds. At order zero, a different argument uses the finite-level cokernel sizes to establish that the integral cokernel is torsion-free. This also establishes the required compatibility. The zero-order case cannot simply be inferred from the nonzero case.
+
+On the torsion side, each actual locally trivial class has a cocycle and finitely many local coboundary witnesses. They all lie in some finite torsion layer. The source also proves that, at sufficiently large precision, distinct finite-level classes cannot become identified merely by enlarging the coefficient module.
+
+### The resulting length identity
+
+The two finite counts now describe the right objects. On one side, the finite quotients of the integral locally trivial group recover its length. On the other, an increasing sequence of finite subgroups exhausts the torsion locally trivial group. Taking the supremum of the lengths gives the equality required by the source, including the possibility that both lengths are infinite.
+
+This verifies the conditional limiting identity named `PTShaAt`, together with the local second-cohomology length identity and the global localization cokernel identity. The locally trivial second cohomology group is a submodule of the entire second cohomology group. Its length therefore supplies the inequality needed in the reference-layer argument of section 15.
+
+The [technical reconstruction PR #615](https://github.com/grandchallenge/MATHFORGE/pull/615) records the full continuous-cochain and module argument. Exact controls checked 828 kernel and cokernel comparisons, 591 stabilized cases, 135 cases where spurious finite kernels occur, 7,110 complementary-twist and coefficient-inclusion identities and 144 zero-twist cardinal-growth comparisons. The finite controls illustrate the algebra; they do not compute the cohomology of an actual number field.
+
+The classical finite-level Poitou–Tate theorem, local finiteness, local Tate duality and the identification of the source decomposition groups with local Galois groups remain explicit inputs. This is a length argument, not a new construction of compatible limiting perfect pairings. Original formal correspondence and Lean replay remain separate obligations.
+
+The outstanding tower question is now the uniform bound on the number of generators for the actual family of base fields.
+
+## 17. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -592,10 +634,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #612](https://github.com/grandchallenge/MATHFORGE/pull/612) | Composite-field degree restriction, combined minus-length bound and conditional exponential domination |
 | [PR #613](https://github.com/grandchallenge/MATHFORGE/pull/613) | Conditional simultaneous-window selection, exceptional-order control and exact arithmetic dependency map |
 | [PR #614](https://github.com/grandchallenge/MATHFORGE/pull/614) | Actual tower descent, arithmetic centers and growth under the stated generator and limiting duality inputs |
+| [PR #615](https://github.com/grandchallenge/MATHFORGE/pull/615) | Finite-to-limit Poitou–Tate length identities and genuine localization kernel compatibility |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 17. What the investigation taught us about checking extraordinary mathematical claims
+## 18. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -607,14 +650,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 18. The next executable mathematical step
+## 19. The next executable mathematical step
 
-**Target:** the precise finite-to-limit Poitou–Tate identity `PTShaAt` used by `PropA.shaLeV`, and the uniform arithmetic tower rank construction `towerFixed`, `towerTwo`, `baseRk` and `twoBase` used by the source.
+**Target:** the actual uniform arithmetic tower rank construction `towerFixed`, `towerTwo`, `baseRk` and `twoBase`.
 
-**Work:** verify the limiting local and global cohomology identifications and the actual rank and transfer estimates for the varying two-prime bases. The operator descent, center bounds and conditional interval construction have been reconstructed; Lemma K and the opposite-sign estimates remain separate arithmetic obligations.
+**Work:** establish the uniform rank and transfer estimates for the varying two-prime bases, distinguishing fixed-field Ferrero–Washington from the additional varying-field argument. The limiting Poitou–Tate length identities, operator descent, center bounds and conditional interval construction have been reconstructed under their stated classical inputs. Lemma K and the opposite-sign estimates remain separate arithmetic obligations.
 
 **Completion test:** establish the exact source contracts with their uniformity and all foundational inputs exposed, then trace them into the full arithmetic window. Original Lean replay remains a separate requirement. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_TOWER_DESCENT_CENTRES_GROWTH_RECONSTRUCTED__LIMITING_PT_UNIFORM_TOWER_RANK_TWOBASE_LEMMAK_OTHER_SIGN_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_LIMITING_PT_LENGTH_IDENTITIES_RECONSTRUCTED__UNIFORM_TOWER_RANK_TWOBASE_LEMMAK_OTHER_SIGN_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
