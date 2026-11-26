@@ -1,0 +1,292 @@
+{
+  "authority": {
+    "human_steward": {
+      "actor": null,
+      "comment_id": null,
+      "commit_sha": null,
+      "disposition": null,
+      "required": false,
+      "state": "UNKNOWN"
+    },
+    "independent_review": {
+      "actor": null,
+      "commit_sha": null,
+      "required": false,
+      "review_id": null,
+      "state": "NOT_REQUIRED"
+    }
+  },
+  "blockers": [],
+  "checks": [
+    {
+      "conclusion": null,
+      "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+      "name": "formal-validation / formal-validation",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+      "name": "policy / policy",
+      "required": true,
+      "run_id": 139604058931,
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+      "name": "routing-enforcement",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    },
+    {
+      "conclusion": "success",
+      "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+      "name": "security / action-policy",
+      "required": true,
+      "run_id": 139604059060,
+      "status": "completed"
+    },
+    {
+      "conclusion": null,
+      "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+      "name": "validate-json",
+      "required": true,
+      "run_id": null,
+      "status": "queued"
+    }
+  ],
+  "derived": {
+    "freshness": "CURRENT",
+    "operative_state": "CHECKS_PENDING",
+    "reasons": [
+      "3 required check(s) are not complete"
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-11-26T00:23:41Z",
+      "event": "PR_CREATED",
+      "outcome": "RETAINED"
+    },
+    {
+      "at": "2026-11-26T00:23:41Z",
+      "event": "PR_UPDATED",
+      "outcome": "RETAINED"
+    }
+  ],
+  "identity": {
+    "current_head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+    "exact_head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+    "pr_number": 3771,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "title": "CMDG CM5 R0: genuine normalized bar-column tensor comparison and connectivity"
+  },
+  "integration": {
+    "merge_commit_sha": "868a727c07df93b88a4380533c57f7b272395ff0",
+    "merge_state": "OPEN",
+    "protected_readback": {
+      "main_sha": null,
+      "required": true,
+      "state": "PENDING"
+    }
+  },
+  "modules": {
+    "phase1": {
+      "changed_file_count": 13,
+      "collector_limitations": [],
+      "config_version": "1.0.0",
+      "issue": 462,
+      "observed_check_runs": [
+        {
+          "check_run_id": 139604048335,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Analyze (actions)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604048207,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Analyze (c-cpp)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604047896,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Analyze (javascript-typescript)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604048154,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Analyze (python)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604056952,
+          "conclusion": "success",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Classify material formal closure",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604058588,
+          "conclusion": "success",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Classify optional synthetic-pilot impact",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604056843,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Classify policy impact",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604057039,
+          "conclusion": "success",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Evaluate protected maintenance triggers",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604182633,
+          "conclusion": "skipped",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "GCL ASSURE PR synthetic dossier",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604183431,
+          "conclusion": "skipped",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "GCL DISCLOSE PR synthetic release gate",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604062953,
+          "conclusion": "skipped",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "GH-OS merge-group admission controller",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604059504,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "GH-OS pre-queue effective candidate controller",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604061395,
+          "conclusion": "skipped",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "GH-OS protected-base revalidation dispatcher",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604059977,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Observe material closure (no admission authority)",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604057239,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "Queue class cutover positive and hostile tests",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604063786,
+          "conclusion": "success",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "admit",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604060808,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "advisory-report",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604185857,
+          "conclusion": null,
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "cmdg-cm4-p3",
+          "status": "in_progress"
+        },
+        {
+          "check_run_id": 139604058931,
+          "conclusion": "success",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "policy / policy",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604065517,
+          "conclusion": "skipped",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "qualify",
+          "status": "completed"
+        },
+        {
+          "check_run_id": 139604059060,
+          "conclusion": "success",
+          "head_sha": "9a883a0a6c471d4ed2fee51c6442f2b7fd9eef7b",
+          "name": "security / action-policy",
+          "status": "completed"
+        }
+      ],
+      "observed_human_steward_markers": [],
+      "observed_non_author_reviews": [],
+      "operation": "PRVSR-PHASE1-IMPLEMENTATION-001",
+      "required_status_contexts": [
+        "formal-validation / formal-validation",
+        "policy / policy",
+        "routing-enforcement",
+        "security / action-policy",
+        "validate-json"
+      ],
+      "ruleset_source_available": true
+    }
+  },
+  "nonclaims": [
+    "PRVSR is advisory and derived; authoritative GitHub/governance records remain controlling.",
+    "Report absence, staleness, generation failure, render failure, or archive failure is not a merge blocker.",
+    "No cross-repository propagation authority is created.",
+    "No claim is made that reviewer speed or factual accuracy improves.",
+    "Machine collection does not infer missing human, mathematical, source-admission, or certification authority."
+  ],
+  "provenance": {
+    "generator_version": "0.1.0-pilot",
+    "observed_at": "2026-11-26T00:24:05Z",
+    "schema_version": "1.0.0",
+    "source_snapshot_sha256": "c155ba76564a7f892578faeee99cd857915ce08ba6a83844ee7dce77a5537a43"
+  },
+  "report_id": "PRVSR-LIVE-PR3771-9a883a0a6c47-20261126002405",
+  "significance": {
+    "manual_override": {
+      "authority": null,
+      "enabled": false,
+      "reason": null
+    },
+    "profile_version": "1.0.0",
+    "significant": true,
+    "triggers": [
+      "source_or_claim_classification",
+      "theorem_certification_or_formal_replay"
+    ]
+  }
+}
