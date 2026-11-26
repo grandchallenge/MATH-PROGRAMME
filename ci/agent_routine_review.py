@@ -299,6 +299,60 @@ def bounded_documentary_not_applicable(
     return len(sections) >= 2
 
 
+# Public-facing homepage/status refreshes are also editorial work. This
+# deliberately enumerates the public entry points and their presentation-only
+# companions. It does not classify arbitrary docs, tests, executable JS,
+# workflow configuration, governance, proof material or routing changes.
+PUBLIC_EDITORIAL_ENTRY_POINTS = frozenset({
+    "docs/index.md",
+    "docs/CURRENT_WORK.md",
+    "docs/SHOWCASE.md",
+    "docs/MILLENNIUM_PRIZE_STATUS.md",
+    "docs/MATHEMATICAL_DEVELOPMENTS.md",
+})
+PUBLIC_EDITORIAL_COMPANIONS = {
+    "docs/stylesheets/home.css": frozenset({"docs/index.md"}),
+    "tests/test_erdos_homepage_status.py": frozenset({"docs/index.md"}),
+    "tests/test_public_explanatory_pages.py": frozenset({
+        "docs/CURRENT_WORK.md", "docs/SHOWCASE.md",
+    }),
+    "tests/test_millennium_public_status.py": frozenset({
+        "docs/MILLENNIUM_PRIZE_STATUS.md",
+    }),
+}
+
+
+def bounded_public_editorial_not_applicable(
+    pr: dict, files: list[dict], head: str,
+) -> bool:
+    """Classify an editorial closure for abstention ONLY, not approval."""
+    verify_specialist_envelope(pr, files, head)
+    if not 1 <= len(files) <= DOCUMENTARY_ONLY_MAX_FILES:
+        return False
+    paths: set[str] = set()
+    for entry in files:
+        path = entry.get("filename")
+        if (not isinstance(path, str) or path in paths or protected_path(path)
+                or entry.get("status") not in ("added", "modified")
+                or entry.get("previous_filename")
+                or not isinstance(entry.get("sha"), str)
+                or not re.fullmatch(r"[a-f0-9]{40}", entry["sha"])):
+            return False
+        if path in PUBLIC_EDITORIAL_COMPANIONS:
+            if entry["status"] != "modified":
+                return False
+        elif (path not in PUBLIC_EDITORIAL_ENTRY_POINTS
+                and DOCUMENTARY_ONLY_PATH.fullmatch(path) is None):
+            return False
+        paths.add(path)
+    if not paths.intersection(PUBLIC_EDITORIAL_ENTRY_POINTS):
+        return False
+    return all(
+        path not in paths or bool(required.intersection(paths))
+        for path, required in PUBLIC_EDITORIAL_COMPANIONS.items()
+    )
+
+
 # A non-approving route for bounded research handoffs plus their mandatory
 # reference-index link. This deliberately does NOT extend the App's routine
 # material-approval profiles or protected specialist-domain admission registry.
@@ -414,7 +468,10 @@ def report_research_handoff_not_applicable(head: str, files: list[dict]) -> None
             )
 
 
-def report_documentary_review_not_applicable(head: str, files: list[dict]) -> None:
+def report_documentary_review_not_applicable(
+    head: str, files: list[dict], *,
+    scope: str = "mixed_public_documentary_markdown_only",
+) -> None:
     """Record a non-authoritative abstention, never a GitHub review or pass."""
     record = {
         "record_type": "GCL_DELEGATED_REVIEW_APPLICABILITY/1",
@@ -425,7 +482,7 @@ def report_documentary_review_not_applicable(head: str, files: list[dict]) -> No
         "mathematical_certification": False,
         "claim_promotion": False,
         "protected_checks_waived": False,
-        "scope": "mixed_public_documentary_markdown_only",
+        "scope": scope,
     }
     message = (
         "NOT_APPLICABLE_NO_APPROVAL: exact-head public documentary mixture "
@@ -632,7 +689,12 @@ def main() -> int:
             )
             report_delegated_review_not_applicable(head, files, reviewer)
             return 0
+        editorial_scope = None
         if bounded_documentary_not_applicable(pr, files, head):
+            editorial_scope = "mixed_public_documentary_markdown_only"
+        elif bounded_public_editorial_not_applicable(pr, files, head):
+            editorial_scope = "public_editorial_entry_points_and_bound_companions"
+        if editorial_scope is not None:
             # This route is a no-approval diagnostic, not a replacement
             # source-semantic or mathematical reviewer. Recheck exact head,
             # base, and file count before reporting the observed manifest.
@@ -643,7 +705,7 @@ def main() -> int:
                         != (pr.get("base") or {}).get("sha")
                     or current.get("changed_files") != len(files)):
                 raise RoutineReviewError("documentary candidate changed during abstention")
-            report_documentary_review_not_applicable(head, files)
+            report_documentary_review_not_applicable(head, files, scope=editorial_scope)
             return 0
         if bounded_research_handoff_not_applicable(
             pr, files, head, token=read_token, prefix=prefix,

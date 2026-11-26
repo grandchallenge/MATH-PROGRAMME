@@ -1,0 +1,69 @@
+{
+  "record_type": "ERDOS_PV_0002_C_LEAN_PERIODICITY_REPLAY/1",
+  "assignment_id": "ERDOS-PV-0002-C",
+  "claim_sha": "7845b6ba1aa0f85fb8ed43c2356eb32c65956c6c",
+  "predecessor_main": "71c074b02618f15ee5fc3d9d6167067c95f5aa79",
+  "source_path": "experiments/erdos_proof_verification/0002/Erdos2Periodicity.lean",
+  "source_sha256": "e20a5488d1db9a82ad0fc0b163eece401cf268e6c34ba37d4665b553a6c1f676",
+  "lean_toolchain": "leanprover/lean4:v4.33.0",
+  "imports": [
+    "Std"
+  ],
+  "positive_exit_code": 0,
+  "positive_stdout_sha256": "641ac0de1e920b5b02bf3e0347e71e3c88bb15e05a373c9fef6187cf9fedf2e9",
+  "axioms": {
+    "period_dvd": [
+      "propext",
+      "Quot.sound"
+    ],
+    "period_pos": [
+      "propext",
+      "Quot.sound"
+    ],
+    "covered_iff_exists": [
+      "propext",
+      "Quot.sound"
+    ],
+    "covered_period": [
+      "propext",
+      "Quot.sound"
+    ],
+    "covers_all_iff": [
+      "propext",
+      "Quot.sound"
+    ],
+    "covered_shift": [
+      "propext",
+      "Quot.sound"
+    ],
+    "uncovered_residue": [
+      "propext",
+      "Quot.sound"
+    ],
+    "empty_period": [],
+    "empty_uncovered": [
+      "propext"
+    ],
+    "example_period": [],
+    "example_moduli": [],
+    "example_distinct": [],
+    "example_finite": [],
+    "example_cover": [
+      "propext",
+      "Quot.sound"
+    ],
+    "hostile_miss": [],
+    "repeated_cover": [
+      "propext",
+      "Quot.sound"
+    ],
+    "repeated_not_distinct": []
+  },
+  "hostile_source_sha256": "3d6e8dbfbe6143b9947150faa5157f3c3a119a3fa127c0adf945ea9a7961dd49",
+  "hostile_log_sha256": "f1b14a09624edacd261fb6d213da55413b8afccecd5cda9bf5034756b0347e18",
+  "hostile_rejected": true,
+  "scope": "BOUNDED_FINITE_PERIODICITY_AND_SIX_CLASS_EXAMPLE",
+  "full_analytic_theorem_replayed": false,
+  "mathcert_certified": false,
+  "execution_origin": "CHAD_LOCAL_OS_ONLY_NOT_INDEPENDENTLY_ATTESTED"
+}

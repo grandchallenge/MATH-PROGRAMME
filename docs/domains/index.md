@@ -17,7 +17,7 @@ These subjects are part of GCL's long-term research collection. Some have active
 | [Poincaré Conjecture](poincare_reconstruction.md) | How can we recognize when a three-dimensional space has the essential shape of a sphere? | **Solved**; historical reconstruction |
 | [Yang–Mills Theory and the Mass Gap](yang_mills.md) | Can the mathematical foundations of an important quantum field theory be constructed rigorously, with a positive mass gap? | Open problem |
 | [P versus NP](p_vs_np.md) | If an answer can be checked quickly, does that mean an answer can also be found quickly? | Open problem |
-| [Riemann Hypothesis](riemann_hypothesis.md) | What does the distribution of special zeros of the zeta function tell us about the prime numbers? | Open conjecture |
+| [Riemann Hypothesis](riemann_hypothesis.md) | What does the distribution of special zeros of the zeta function tell us about the prime numbers? | Clay Active; external formal verification |
 
 The linked pages provide fuller descriptions and references to original research. The open problems are not declared solved by their inclusion here.
 
@@ -41,6 +41,6 @@ To understand what GCL has actually established, consult the linked research and
 
 For specialists, the [domain registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/DOMAIN_REGISTRY.yaml) preserves the established list of domains and their source references. The registry records classification and continuity; the mathematical standing of each claim rests with its proofs and sources.
 
-**Riemann Hypothesis verification note.** The original technical record states: `WP01/WP02 implemented, merged, and CI-passed, with formal promotion withheld`. This means those preliminary checks were completed, **not** that the Riemann Hypothesis has been proved or that the relevant results have been formally accepted.
+**Riemann Hypothesis verification note.** The original technical record states: `WP01/WP02 implemented, merged, and CI-passed, with formal promotion withheld`. This means those preliminary checks were completed, **not** an independent GCL certification. The November external formal verification is separately recorded in the Millennium status page.
 
 For readers matching these subjects to internal research records, the established campaign identifiers are `UC`, `NS-CI-001`, `HC-001`, `BSD-001`, `PC-001`, `YM-001`, `PNP-001` and `RH-001`, in the same order as the table above. They are reference codes, not mathematical results.

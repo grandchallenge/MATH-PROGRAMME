@@ -6,15 +6,148 @@ hide:
 
 <div class="home-hero">
   <div class="home-hero__inner">
-    <p class="home-hero__eyebrow">Grand Challenge Labs · Mathematics Programme · Edition 2026.09</p>
+    <p class="home-hero__eyebrow">Grand Challenge Labs · Research in mathematics</p>
     <h1>Mathematics Programme</h1>
-    <p class="home-hero__thesis">A governed research programme for moving difficult mathematical claims from source reconstruction through proof work to independent certification.</p>
-    <p class="home-hero__summary">The public record separates what is active, what is supported, what remains open, and what has crossed a declared checking boundary.</p>
+    <p class="home-hero__thesis">Investigating difficult mathematical questions through proof, computation and formal verification.</p>
+    <p class="home-hero__summary">Explore the questions we pursue, the results we can support, and the obstacles that stand between a promising idea and a theorem.</p>
     <div class="home-hero__actions">
-      <a class="home-action home-action--primary" href="CURRENT_WORK/">Current work</a>
-      <a class="home-action" href="SHOWCASE/">Results</a>
+      <a class="home-action home-action--primary" href="#mathematical-developments">Recent mathematical developments</a>
       <a class="home-action" href="erdos/">Erdős Compendium</a>
+      <a class="home-action" href="oai26/">OpenAI Mathematics 2026</a>
     </div>
+    <p class="home-edition">Research snapshot · 26 November 2026</p>
+  </div>
+</div>
+
+## Mathematical developments
+
+<p class="page-deck">The mathematical landscape is changing rapidly. We trace the new results to their common mathematical ideas, the exact statements that have been checked, and the consequences for existing research.</p>
+
+<div class="home-research-grid">
+<article class="home-research-card">
+<p class="home-kicker">20–21 November · Number theory</p>
+<h3>The Riemann Hypothesis</h3>
+<p class="home-research-status">External formal proof independently validated</p>
+<p>Alpöge's proof of the classical critical-line statement has passed independent statement comparisons and several proof checkers. Clay now lists RH as Active, not Solved. GCL is reconstructing the arithmetic mechanism for human understanding.</p>
+<p class="home-card-links"><a href="MILLENNIUM_PRIZE_STATUS/">Prize status</a> · <a href="domains/rh_a26_audit_explained/">GCL reconstruction</a> · <a href="https://leanprover-community.github.io/blog/posts/riemann-hypothesis/">External verification</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">24 November · Algebraic complexity</p>
+<h3>A geometric cost of computation</h3>
+<p class="home-research-status">Matrix exponent: GCL Comparator acceptance; other endpoints separately scoped</p>
+<p>Seven related manuscripts use tensor geometry to address matrix multiplication, Valiant's hierarchy, permanent and Hamiltonian cycle, Fourier and integer multiplication, and sunflowers. The square exponent 9/4, dual and rectangular declarations passed GCL's hardened replay.</p>
+<p class="home-card-links"><a href="oai26/families/379/">Read the mathematical analysis</a> · <a href="https://github.com/grandchallenge/MATHFORGE/actions/runs/45584629927">Replay evidence</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">25 November · Arithmetic and computation</p>
+<h3>Cogentic: factoring and the limits of communication</h3>
+<p class="home-research-status">Six new papers source-locked; formal sources not yet released</p>
+<p>Reported advances in integer factoring, fixed-characteristic discrete logarithms, approximate Nash equilibria, log-rank communication complexity and dense graph reconstruction. The log-rank method exposes a crucial distinction between a relaxed matrix model and exact Boolean structure.</p>
+<p class="home-card-links"><a href="MATHEMATICAL_DEVELOPMENTS/#cogentic-arithmetic-communication-and-reconstruction">Read the analysis</a> · <a href="https://github.com/grandchallenge/MATHFORGE/pull/618">GCL method extraction</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">24 November · Optimization</p>
+<h3>Optimization without walking the edges</h3>
+<p class="home-research-status">Source claims; selected publisher formalizations</p>
+<p>A strongly polynomial LP algorithm and a superpolynomial polytope-diameter construction are compatible: finding an optimum need not require traversing the edges of a feasible region.</p>
+<p class="home-card-links"><a href="oai26/families/380/">Explore both claims</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">26 October · Complexity and analysis</p>
+<h3>Beyond exponential search and the geometry of waves</h3>
+<p class="home-research-status">Source claims; selected publisher formalizations</p>
+<p>Subexponential exact SAT counting challenges ETH, not P versus NP. Euclidean local smoothing claims extend to Kakeya and Fourier restriction in specified ranges.</p>
+<p class="home-card-links"><a href="oai26/families/378/">ETH</a> · <a href="oai26/families/079/">Local smoothing and Kakeya</a></p>
+</article>
+</div>
+
+[Read the development dossier: the mathematical connections, verification scope and research consequences](MATHEMATICAL_DEVELOPMENTS.md).
+
+## Current frontier
+
+Selected GCL research milestones and the questions that remain. This is a dated editorial selection, not a live queue or a claim of certification.
+
+<div class="home-research-grid">
+<article class="home-research-card">
+<p class="home-kicker">Computational complexity</p>
+<h3>Can logical structure force computation to be expensive?</h3>
+<p class="home-research-status">PNP-ABOVE · Restricted Lean results</p>
+<p>A polynomial-time native program constructs canonical witnesses for a specified planted family.</p>
+<p class="home-research-boundary"><strong>Open:</strong> A general classical resource lower bound remains open.</p>
+<p class="home-card-links"><a href="pnp_above/">Explore research</a> · <a href="https://github.com/grandchallenge/MATHSOLVE/pull/1308">Evidence record</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">Condensed mathematics</p>
+<h3>How can algebra retain continuous structure?</h3>
+<p class="home-research-status">CMDG CM5 · Formal research</p>
+<p>A natural Alexander–Whitney chain-homotopy equivalence has been constructed, with a reverse map agreeing with the signed shuffle in degrees zero and one.</p>
+<p class="home-research-boundary"><strong>Open:</strong> The interior signed-shuffle identity and downstream stable suspension remain open.</p>
+<p class="home-card-links"><a href="CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED/">Explore research</a> · <a href="https://github.com/grandchallenge/MATH-PROGRAMME/pull/3758">Evidence record</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">Statistical mechanics</p>
+<h3>When does a change of scale preserve equilibrium?</h3>
+<p class="home-research-status">CSM · Analytical and finite evidence</p>
+<p>Constrained block comparison gives continuity and uniqueness conditions. A separate full-support example has a fixed conditional phase gap of 1/32.</p>
+<p class="home-research-boundary"><strong>Open:</strong> General conservation sectors and constrained block coupling remain open.</p>
+<p class="home-card-links"><a href="campaigns/CSM_001/">Explore research</a> · <a href="https://github.com/grandchallenge/MATH-PROGRAMME/pull/3763">Evidence record</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">Combinatorics</p>
+<h3>How much structure can a graph be forced to contain?</h3>
+<p class="home-research-status">Erdős #561 · Bounded checks</p>
+<p>A sharper exceptional-edge cap and frontier constraints narrow candidate counterexamples.</p>
+<p class="home-research-boundary"><strong>Open:</strong> The joint residual lower-bound hypothesis and full problem remain open.</p>
+<p class="home-card-links"><a href="erdos/">Explore research</a> · <a href="https://github.com/grandchallenge/MATH-PROGRAMME/pull/3748">Evidence record</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">Structural capacity</p>
+<h3>Can computation have a conservation law for logical structure?</h3>
+<p class="home-research-status">SCC · Exploratory calculus</p>
+<p>Graded promotion and a sharp capacity ceiling hold within a specified model; a four-variable counterexample limits an affine criterion.</p>
+<p class="home-research-boundary"><strong>Open:</strong> No model-independent superpolynomial lower bound is established.</p>
+<p class="home-card-links"><a href="https://github.com/grandchallenge/MATHSOLVE/issues/1309">Explore research</a> · <a href="https://github.com/grandchallenge/MATHSOLVE/pull/1310">Evidence record</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">Arithmetic and analysis</p>
+<h3>How do arithmetic constraints govern analytic estimates?</h3>
+<p class="home-research-status">RH audit · Source reconstruction</p>
+<p>Recent explanatory work examines the origin of exceptional arithmetic centres in a proposed Riemann-hypothesis argument.</p>
+<p class="home-research-boundary"><strong>Open:</strong> Uniform rank and tower-descent obligations remain unresolved.</p>
+<p class="home-card-links"><a href="domains/rh_a26_audit_explained/">Explore research</a> · <a href="https://github.com/grandchallenge/MATH-PROGRAMME/pull/3762">Evidence record</a></p>
+</article>
+</div>
+
+[More research directions](CURRENT_WORK.md) · [Mathematical Estate](domains/index.md)
+
+## Mathematical compendia
+
+<div class="home-research-grid">
+<article class="home-research-card">
+<p class="home-kicker">Problems and explanations</p>
+<h3><a href="erdos/">Erdős Compendium — the public reference</a></h3>
+<p>Explore 1,221 registered problems, their sources and reviewed explanations. The <a href="https://github.com/grandchallenge/MATH-PROGRAMME/pull/3746">problem 27 admission</a> distinguishes a published disproof from its partial formal reconstruction.</p>
+<p><a href="erdos/catalogue/">Browse the catalogue</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">Sources and formal evidence</p>
+<h3><a href="oai26/">OpenAI Mathematics 2026</a></h3>
+<p>375 problem families and 730 current indexed manuscript paths in the pinned 24 November release. Explore the papers, their formalization scope and the distinction between replay and mathematical acceptance.</p>
+<p><a href="oai26/catalogue/">Browse the families</a></p>
+</article>
+</div>
+
+[Browse the complete Erdős catalogue](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/).
+
+<!-- GCL_ERDOS_HOME_STATUS -->
+
+## What the programme is
+
+Our research spans number theory, combinatorics, geometry, analysis, mathematical physics and computational complexity. We investigate new ideas, reconstruct published arguments and make the resulting mathematics accessible. Explore the [Millennium Prize Problems](MILLENNIUM_PRIZE_STATUS.md) and [Research and Results](SHOWCASE.md).
+
+## How a claim moves
+
+<div class="home-method">
     <div class="home-pipeline" aria-label="Mathematical execution path">
       <a class="home-pipeline__stage" href="https://github.com/grandchallenge/MATHFORGE">
         <span class="home-pipeline__number">I</span>
@@ -34,84 +167,21 @@ hide:
         <span class="home-pipeline__verb">Check the exact claim presented for certification</span>
       </a>
     </div>
-  </div>
 </div>
 
-## What the programme is
+Discovery, proof work and certification are distinct. MATH-PROGRAMME connects their records without conferring mathematical authority by itself. A failed proof attempt or a rigorous obstruction can be valuable research.
 
-[**Millennium Prize Problems: status updated 20 October 2026**](MILLENNIUM_PRIZE_STATUS.md). Clay still lists Navier–Stokes as **Active** after an announced proof that remains under evaluation; the other five unsolved problems and solved Poincaré conjecture have distinct official standings. GCL’s research programmes retain their own, narrower proof boundaries.
-
-Mathematical discovery, solving, and certification are different research states. The programme keeps those states separate so that evidence cannot acquire a stronger claim merely because it is well presented.
-
-**MATHFORGE** reconstructs the object, source, and candidate route. **MATHSOLVE** organizes and attacks the exact obligations that block progress. **MATHCERT** checks the precise claim and support surface presented to it. **MATH-PROGRAMME** preserves the integrated record, routing, governance, and continuation state; it does not certify mathematics by itself.
-
-## Erdős Compendium — the public reference
-
-The [Erdős Compendium](erdos/index.md) makes the complete numbered catalogue accessible, with problem statements, source references and — where the evidence has been editorially admitted — researched explanations. Readers can [browse all 1,221 registered problems](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/) or follow the admission record for individual articles.
-
-<!-- GCL_ERDOS_HOME_STATUS -->
-
-## How a claim moves
-
-![State transition from a question or source signal through MATHFORGE, MATHSOLVE, and MATHCERT. Fail-closed exits record an obstruction, proof debt, or non-promotion.](assets/claim-state-transition.svg)
-
-The diagram is schematic. It teaches programme state transitions, not logical implication between mathematical statements. A route can stop in MATHFORGE with a recorded obstruction, in MATHSOLVE with proof debt, or in MATHCERT with non-promotion. Those exits remain part of the research record.
-
-[Read the Programme Atlas](PROGRAMME_ATLAS.md) for the full state model, support classes, and semantic-bridge requirements.
-
-## External agents can now take bounded work directly
-
-The **GCL Worker Queue** is a public, zero-context entrypoint for bounded external contributions. An agent can discover an available assignment, claim it through the bound GitHub issue, receive an exact-commit immutable task, and return structured evidence without a human copying a kickoff prompt between sessions.
-
-![GCL Worker Queue progress snapshot showing 24 pilot jobs, 19 available and 5 returned at the 6 October 2026 observation point.](assets/gcl-worker-queue-progress-2026-10-06.svg)
-
-At the 6 October 2026 documentary observation point, the first ERDOS pilot exposed **24** bounded jobs across reconnaissance, source-audit, and adversarial lanes; **5** had returned evidence through the governed queue and **19** remained available. `RETURNED` is an operational evidence state, not certification.
-
-[See how the worker queue works](EXTERNAL_AGENT_WORK_QUEUE.md) · [Open the public queue](https://github.com/orgs/grandchallenge/projects/2) · [External-worker bootstrap](https://github.com/grandchallenge/MATHSOLVE/blob/main/WORKERS.md)
-
-## Current frontier
-
-The table below displays up to twenty material fronts that are in active development. It is a public orientation surface, not the authoritative active-work registry. Row order is for navigation; it does not rank theorem importance, claim strength, or institutional priority.
-
-| Campaign | Current object | Open boundary |
-| --- | --- | --- |
-| **BSD-001** | Literal-`p=2` replay of the inverse-limit passage in Burns–Sakamoto–Sano Theorem 5.25. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/245) | Establish the required transition, regulator, Kolyvagin-system, Fitting-ideal, and rank-one compatibilities without restoring the failed infinite auxiliary-field hypothesis. |
-| **OZ-001** | Order-7 boundary-forced residual system with a `576`-dimensional homogeneous kernel identified as a discrete-curl image. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/964) | Construct a completeness-backed degree-reduced affine section over `Q[n]`, then independently replay the resulting certificate in characteristic zero. |
-| **VGSE-001** | Engineering design-space and response-law extraction over admissible origami realizations. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/984) | Separate invariant, tunable, and perturbation-sensitive behaviour while keeping the unresolved source-attribution bridge outside the qualified result. |
-| **CMDG CM4 P3-M** | Finite-stage recovery from finite-coordinate dependence; the current successor attacks the pointwise Nöbeling kernel bridge. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/664) | Show that the finite-stage information annihilates the relevant kernel functional pointwise, or record the exact missing comparison/separation invariant. |
-| **NS-CI-001** | Direct `L^4_t L^6_x` critical-integral decomposition for three-dimensional Navier–Stokes. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/59) | Produce an equation-specific integrable estimate that survives the existing low/high-mode, selector, and false-proof controls. |
-| **RSI-CCC-001** | Lean 4 formalization of one guarded self-replacement step in the selected stage-indexed model. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/248) | Close the CCC, guarded, typed-reflection, refinement, and admission-preservation obligations without adding ambient order enrichment or unrestricted reification. |
-| **PNP-BRIDGE-001** | Proof-bearing bridges between imported `P`/`NP` definitions and the Programme machine, encoding, and polynomial-bound conventions. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/148) | Establish the carrier, machine-simulation, polynomial-bound, and verifier-class equivalences before any endpoint theorem route can advance. |
-| **ASP T8 Noise** | Sub-Gaussian residual-energy certification and finite scaling confrontation for adaptive spectral peeling. [Tracker](https://github.com/grandchallenge/MATHFORGE/issues/115) | Derive and test a valid noisy certificate, including whether `C/Gamma^2` must be replaced by a stronger noise-dependent scaling law. |
-| **Type Theory · Volume IV** | `PROTOCOL: Computation as Communication`; composition of the session-type and process-calculus volume through durable RC admission. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/877) | Complete the formal manuscript, executable protocol core, proof audit, and durable RC package without conflating protocol fidelity with stronger progress or distributed-correctness claims. |
-| **OpenAI Ten Proofs** | Family-specific certification progression across the independently routed proof families. [Tracker](https://github.com/grandchallenge/MATHCERT/issues/43) | Advance only exact family surfaces through route, adjudication, and restricted output gates; no aggregate Ten-Proofs proof or certificate authority is implied. |
-| **UC-001** | Active Union-Closed campaign with protected qualification limited to two restricted theorem surfaces and exact finite replay through `n <= 4`. [Protected registry](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/governance/governed_campaign_registry.json) | Frankl's conjecture and proof obligation `UC-P04` remain open; the finite qualification cannot be generalized to the universal target. |
-| **YM-001** | WP01/WP02 gate reconciliation has opened restricted-target selection in MATHSOLVE against retained debts `YM-D001` through `YM-D005`. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/164) | Select and bind one exact restricted target without treating continuum reconstruction, regulator survival, positivity, or the mass gap as already established. |
-| **RH-001** | Qualified interface for the classical Riemann Hypothesis statement, normalization, zero, and multiplicity conventions. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/163) | Any proof lane must open as a Solve-owned restricted target; interface qualification is not mathematical evidence for RH. |
-| **HC-001** | Source-normalized rational Hodge interface with bounded qualified semantic/conditional structure. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/65) | Select an exact post-WP00 target with variety class, dimension, codimension, coefficient ring, cycle equivalence, and implication direction fixed before proof work. |
-| **Type Theory · Volume I Gate 8** | `JUDGMENT` RC1.1 is durably admitted and awaiting genuinely independent mathematical review. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/859) | Obtain an attributable `PASS` or justified `PASS_WITH_NONMATERIAL_NOTES`; internal composition audits and CI cannot satisfy Gate 8. |
-| **Type Theory · Volume II Gate 8** | `COMPREHENSION` RC1 is durably admitted and awaiting independent theorem- and claim-boundary review. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/853) | Complete the independent review on the exact admitted revision; any material mathematical or claim-scope change creates a new review target. |
-| **Type Theory · Volume III Gate 8** | `PROOF / PROGRAM` RC1 is durably admitted and awaiting independent mathematical review of the named formal results and explicit non-results. [Tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/871) | Complete attributable Gate-8 review without upgrading imported or scoped results; publication authority remains a separate transition. |
-| **VGSE-C06 source correspondence** | Fixed-boundary Figure-16 source-semantics repair after the protected matcher failed to identify a source-precision match under the declared relation. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/239) | Define any alternative source-authorized equivalence relation before matcher execution; do not broaden the relation after observing failure. |
-| **NS-CI claim triage** | Adversarial source review of recent axisymmetric-swirl and broader full-system Navier–Stokes preprints under a protected source lock. [Tracker](https://github.com/grandchallenge/MATHFORGE/issues/20) | Reopen only on an exact repair, a new source revision, or an independently sourced theorem with matching hypotheses; no audited manuscript is promoted by this lane. |
-| **NSOF-001 pre-admission controls** | Official source lock and OTP-D semantic clearance exist; generic false-proof fixtures and theorem-ledger preparation may proceed. [Tracker](https://github.com/grandchallenge/MATHSOLVE/issues/89) | Programme active admission, an active Solve campaign manifest, and a content-addressed Cert handoff remain absent; manuscript-specific reconstruction stays blocked until that boundary changes. |
-
-Rows remain here only while the corresponding work is materially active. The [Current Work](CURRENT_WORK.md) page gives deeper profiles for selected fronts; protected repository records and live governed trackers control exact state.
+[Programme Atlas](PROGRAMME_ATLAS.md) · [Reader guide](GRAND_CHALLENGE_READER_GUIDE.md) · [Status taxonomy](STATUS_TAXONOMY.md)
 
 ## Where to go next
 
-- **[Current Work](CURRENT_WORK.md)** records live obligations. Use it when the question is what the programme is doing now and what must happen next.
-- **[Results and Exemplars](SHOWCASE.md)** records bounded outputs that have crossed a declared checking, publication, or archival boundary. It is not a ranking of importance.
-- **[Programme Atlas](PROGRAMME_ATLAS.md)** explains how objects and claims change state across MATHFORGE, MATHSOLVE, MATHCERT, and programme integration.
-- **[Mathematical Estate](domains/index.md)** preserves the standing domain catalogue, routes, and archives. Presence there does not imply current priority.
-- **[Erdős Compendium](erdos/index.md)** opens the numbered mathematical reference, reviewed explainers, source evidence, and outstanding editorial work.
+- [Research and Results](SHOWCASE.md): bounded results, reconstructions and formal checking examples.
+- [Mathematical Estate](domains/index.md): the broader landscape of mathematical questions.
+- [Documentary library](documentaries/index.md): extended explanations.
+- [External agent work queue](EXTERNAL_AGENT_WORK_QUEUE.md): bounded contributions via the [public tracker](https://github.com/orgs/grandchallenge/projects/2).
 
 ## Claim boundary
 
-This page is a public orientation surface. It does not create or raise mathematical authority. The linked protected records control claim scope, support class, exclusions, and certification state.
+Formal replay checks an exact statement and its assumptions. Finite computation checks the cases executed. Neither, by itself, proves a stronger informal claim or establishes novelty. The linked protected records govern claim scope; independent certification remains separate.
 
-[Read the status taxonomy](STATUS_TAXONOMY.md) and [claim-boundary doctrine](CLAIM_BOUNDARY_DOCTRINE.md) when the distinction between evidence, lifecycle state, campaign disposition, and certification matters.
-
-## Operational resilience reference
-
-The [GCL cross-project authenticated operation recovery contract](governance/CROSS_PROJECT_OPERATION_RECOVERY.md) governs technical transport failure handling, idempotent mutation reconciliation, authorized fallback, and protected readback across programmes. Explicitly denied operations remain held under the existing operation-scoped policy.
+[Claim-boundary doctrine](CLAIM_BOUNDARY_DOCTRINE.md) · [Operational recovery reference](governance/CROSS_PROJECT_OPERATION_RECOVERY.md)

@@ -18,7 +18,7 @@ def expect(paths: list[str], lanes: list[str]) -> None:
 def main() -> int:
     registry = formal.load_registry(ROOT)
     lane_ids = [lane["id"] for lane in registry["lanes"]]
-    assert len(lane_ids) == 18
+    assert len(lane_ids) == 19
     assert len(lane_ids) == len(set(lane_ids))
 
     # The live reproduction from PR #919 must instantiate exactly one substantive
@@ -76,6 +76,14 @@ def main() -> int:
     expect([erdos_561_core + "Erdos561Core.lean", erdos_core + "Erdos560Core.lean"],
            ["erdos-pv-0560-core", "erdos-pv-0561-core"])
 
+    p2 = "experiments/erdos_proof_verification/0002/"
+    expect([p2+"Erdos2Periodicity.lean"], ["erdos-pv-0002-periodicity"])
+    try:
+        formal.classify_paths([p2+"Unknown.lean"], registry)
+    except formal.FormalValidationError:
+        pass
+    else:
+        raise AssertionError("unregistered #2 formal source accepted")
     # The Mathlib-backed CRT density lane has its own bounded replay route.
     crt_root = "experiments/erdos_proof_verification/0027/"
     for source in (crt_root + "Erdos27CRT.lean", crt_root + "Erdos27Weighted.lean", crt_root + "Erdos27Independence.lean", crt_root + "Erdos27Period.lean", crt_root + "Erdos27Sequence.lean", crt_root + "Erdos27Density.lean", crt_root + "Erdos27Split.lean", crt_root + "lakefile.toml",
@@ -213,7 +221,7 @@ def main() -> int:
     assert "use-github-cache: false" in generic
     # All Mathlib-dependent lanes keep cache retrieval.
     # An Init-only core does not provide the Mathlib cache executable.
-    assert "use-mathlib-cache: ${{ matrix.lane != 'erdos-pv-0560-core' && matrix.lane != 'erdos-pv-0561-core' }}" in generic
+    assert "use-mathlib-cache: ${{ matrix.lane != 'erdos-pv-0560-core' && matrix.lane != 'erdos-pv-0561-core' && matrix.lane != 'erdos-pv-0002-periodicity' }}" in generic
 
     print("formal validation routing and security acceptance matrix passed")
     return 0

@@ -64,9 +64,9 @@ def permitted(row,phase):
         return False
     if row['existing_proof_issue'] is not None:return False # independent pilot issue already owns B/C/D
     # Native exact-admission cohorts require protected, not merely returned,
-    # evidence before moving to a later substantive stage. Include #27, whose
-    # source and B/C custody use the same two-step admission protocol.
-    if row['problem_id'] in (27,560,561,562,563,564) and phase in ('C','D'):
+    # evidence before moving to a later substantive stage. Problems #2 and #27
+    # use the same two-step admission protocol for B/C custody.
+    if row['problem_id'] in (2,27,560,561,562,563,564) and phase in ('C','D'):
         prerequisite=s[{'C':'B','D':'C'}[phase]]
         if (prerequisite['work_status'] != 'PROTECTED_ADMITTED'
             or not (prerequisite.get('protected_admission_ref') or '').startswith('grandchallenge/MATH-PROGRAMME@')):
