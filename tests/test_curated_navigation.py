@@ -40,6 +40,15 @@ class CuratedNavigationTests(unittest.TestCase):
         self.assertIn("PROGRAMME_ATLAS.md", pages["About GCL"])
         self.assertIn("REFERENCE_LIBRARY.md", pages["Reference"])
 
+    def test_header_tab_configuration_preserves_navigation_tree(self):
+        cfg = yaml.safe_load((ROOT / "mkdocs.yml").read_text())
+        hidden = cfg.get("extra", {}).get("hidden_header_tabs", [])
+        titles = [next(iter(section)) for section in cfg["nav"]]
+        self.assertEqual(len(hidden), len(set(hidden)))
+        self.assertTrue(set(hidden).issubset(titles))
+        self.assertIn("SHOWCASE.md", vd.nav_leaves(cfg["nav"]))
+        self.assertIn("documentaries/index.md", vd.nav_leaves(cfg["nav"]))
+
     def test_historical_links_preserved_not_promoted(self):
         nav = vd.nav_documents()
         examples = [

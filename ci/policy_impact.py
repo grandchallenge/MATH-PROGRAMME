@@ -275,7 +275,7 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
             # workflow routing. This metadata does not invalidate mathematics.
             active.add("contracts")
             matched = True
-        if path.startswith("docs/") or path in {"mkdocs.yml", "requirements/docs.txt"}:
+        if path.startswith(("docs/", "overrides/")) or path in {"mkdocs.yml", "requirements/docs.txt"}:
             active.add("docs")
             matched = True
         if path.startswith("governance/erdos_compendium/publication_parity/"):

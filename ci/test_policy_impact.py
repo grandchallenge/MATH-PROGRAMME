@@ -132,6 +132,9 @@ def main() -> int:
 
     docs = impact.classify_paths(["docs/governance/example.md"])
     assert docs["policy_shards"] == ["core", "docs"]
+    template = impact.classify_paths(["overrides/partials/tabs.html"])
+    assert template["policy_shards"] == ["core", "docs"]
+    assert not template["unknown_paths"]
 
     # A receipt-only merge must NOT be treated as a non-publishing change.
     # Otherwise 25-article batches cannot finish themselves.

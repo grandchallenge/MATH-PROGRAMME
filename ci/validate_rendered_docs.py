@@ -9,6 +9,8 @@ import sys
 from html.parser import HTMLParser
 from pathlib import Path
 
+import yaml
+
 from audit_math_typography import audit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -164,6 +166,28 @@ def cm4_display_math_errors(page_html: Path) -> list[str]:
     return []
 
 
+def header_navigation_errors(page_html: Path, titles: list[str], hidden: list[str]) -> list[str]:
+    """Validate actual built desktop tabs and retained navigation tree."""
+    if not page_html.is_file():
+        return [f"built navigation page is missing: {page_html}"]
+    html = page_html.read_text(encoding="utf-8")
+    tabs = re.search(r'<nav class="md-tabs"[^>]*>(.*?)</nav>', html, re.S)
+    if tabs is None:
+        return [f"{page_html}: missing desktop header navigation"]
+    actual = [re.sub(r"<[^>]*>", "", item).strip() for item in
+              re.findall(r'<a[^>]*class="md-tabs__link"[^>]*>(.*?)</a>',
+                         tabs.group(1), re.S)]
+    expected = [title for title in titles if title not in hidden]
+    errors = []
+    if actual != expected:
+        errors.append(f"{page_html}: desktop tabs {actual!r}; expected {expected!r}")
+    remainder = html[:tabs.start()] + html[tabs.end():]
+    for title in hidden:
+        if not re.search(r">\s*" + re.escape(title) + r"\s*<", remainder):
+            errors.append(f"{page_html}: missing retained navigation section {title}")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -175,6 +199,12 @@ def main() -> int:
 
     site_dir = Path(args.site_dir)
     errors = homepage_render_errors(site_dir / "index.html")
+    config = yaml.safe_load((ROOT / "mkdocs.yml").read_text(encoding="utf-8"))
+    titles = [next(iter(section)) for section in config["nav"]]
+    hidden = config.get("extra", {}).get("hidden_header_tabs", [])
+    for relative in ("index.html", "SHOWCASE/index.html", "documentaries/index.html",
+                     "pnp_above/primer/index.html"):
+        errors.extend(header_navigation_errors(site_dir / relative, titles, hidden))
     for relative_path, title in (
         ("CMDG_CM4/index.html", "Research surface authority"),
         ("CMDG_CM4_RESEARCH_GUIDE/index.html", "Live work is issue-led"),

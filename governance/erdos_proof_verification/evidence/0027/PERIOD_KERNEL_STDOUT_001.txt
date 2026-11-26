@@ -1,0 +1,22 @@
+'Erdos27Period.predSet_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.predSet_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.arithmetic_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.coprime_lcm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.finite_family_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.density_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.cast_chain' depends on axioms: [propext, Quot.sound]
+'Erdos27Period.common_residue_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.common_family_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.period_projection' depends on axioms: [propext, Quot.sound]
+'Erdos27Period.period_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos27Period.period_density' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos27Period.finite_family_independent.{u_1} {ι : Type u_1} [Fintype ι] (M T : ℕ) [NeZero M] [NeZero T] (hm : M ∣ T)
+  (r : ZMod M) (a : ι → ℕ) (s : ι → ℤ) (ha : ∀ (i : ι), a i ∣ T) (hc : ∀ (i : ι), M.Coprime (a i)) :
+  (density fun x => (ZMod.castHom hm (ZMod M)) x = r ∧ ∀ (i : ι), (ZMod.castHom ⋯ (ZMod (a i))) x ≠ ↑(s i)) =
+    1 / ↑M * density fun x => ∀ (i : ι), (ZMod.castHom ⋯ (ZMod (a i))) x ≠ ↑(s i)
+Erdos27Period.arithmetic_step.{u_1} {ι : Type u_1} [Fintype ι] (M T : ℕ) [NeZero M] [NeZero T] (hm : M ∣ T) (r : ZMod M)
+  (a : ι → ℕ) (s : ι → ℤ) (ha : ∀ (i : ι), a i ∣ T) (hc : ∀ (i : ι), M.Coprime (a i)) (L : List (Finset (ZMod T))) :
+  have A := predSet fun x => (ZMod.castHom hm (ZMod M)) x = r;
+  have I := predSet fun x => ∀ (i : ι), (ZMod.castHom ⋯ (ZMod (a i))) x ≠ ↑(s i);
+  (1 - 1 / ↑M) * Erdos27Weighted.mass T (I \ Erdos27Weighted.badUnion L) - 1 / ↑M * Erdos27Weighted.badMass T L ≤
+    Erdos27Weighted.mass T ((I \ Erdos27Weighted.badUnion L) \ A)

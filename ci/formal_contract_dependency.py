@@ -44,6 +44,12 @@ KNOWN_PYTHON_SPAWN = frozenset({
     'ci/erdos_pv_0027_formal_replay.py',
     'governance/erdos_proof_verification/evidence/0027/check_weighted_lean.py',
     'governance/erdos_proof_verification/evidence/0027/check_independence_lean.py',
+    'governance/erdos_proof_verification/evidence/0027/check_period_lean.py',
+    'governance/erdos_proof_verification/evidence/0027/check_sequence_lean.py',
+    'governance/erdos_proof_verification/evidence/0027/check_density_lean.py',
+    'governance/erdos_proof_verification/evidence/0027/check_split_lean.py',
+    'governance/erdos_proof_verification/evidence/0027/check_split.py',
+    'governance/erdos_proof_verification/evidence/0027/check_density_prefix.py',
 })
 
 
