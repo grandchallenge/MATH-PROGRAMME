@@ -763,6 +763,68 @@ class DocumentaryNoApprovalTests(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         self.assertEqual(text, "")
 
+    def editorial_fixture(self):
+        paths = [
+            "docs/CURRENT_WORK.md", "docs/MATHEMATICAL_DEVELOPMENTS.md",
+            "docs/MILLENNIUM_PRIZE_STATUS.md", "docs/archives/research.md",
+            "docs/domains/index.md", "docs/domains/riemann_hypothesis.md",
+            "docs/index.md", "docs/stylesheets/home.css",
+            "tests/test_millennium_public_status.py",
+        ]
+        self.files = [
+            {"filename": path, "sha": "a" * 40,
+             "status": "added" if path.endswith("DEVELOPMENTS.md") else "modified"}
+            for path in paths
+        ]
+        self.pr["changed_files"] = len(self.files)
+
+    def test_homepage_status_refresh_abstains_without_review(self):
+        self.editorial_fixture()
+        self.assertTrue(mod.bounded_public_editorial_not_applicable(
+            self.pr, self.files, HEAD))
+        calls, receipt = self.invoke()
+        self.assertTrue(all(method == "GET" for method, _ in calls))
+        self.assertIn("public_editorial_entry_points_and_bound_companions", receipt)
+        self.assertIn('"review_posted": false', receipt)
+        self.assertIn('"claim_promotion": false', receipt)
+        self.assertIn('"protected_checks_waived": false', receipt)
+
+    def test_public_editorial_head_change_rejects(self):
+        self.editorial_fixture()
+        calls, receipt = self.invoke(change_on_second_read=True)
+        self.assertEqual(receipt, "")
+        self.assertTrue(all(method == "GET" for method, _ in calls))
+
+    def test_public_editorial_hostile_paths_and_statuses_reject(self):
+        self.editorial_fixture()
+        for path in ("docs/governance/policy.md", "docs/stylesheets/unknown.css",
+                     "docs/javascripts/home.js", "ci/agent_routine_review.py",
+                     "tests/test_agent_routine_review.py", "tests/test_unknown.py",
+                     ".github/workflows/pages.yml", "mkdocs.yml",
+                     "fixtures/formal/Proof.lean", "docs/archives/../index.md"):
+            with self.subTest(path=path):
+                sample = copy.deepcopy(self.files)
+                sample[-1]["filename"] = path
+                self.assertFalse(mod.bounded_public_editorial_not_applicable(
+                    self.pr, sample, HEAD))
+        for patch_data in ({"status": "added"}, {"status": "removed"},
+                           {"previous_filename": "tests/old.py"},
+                           {"sha": "0" * 39}):
+            sample = copy.deepcopy(self.files)
+            sample[-1].update(patch_data)
+            self.assertFalse(mod.bounded_public_editorial_not_applicable(
+                self.pr, sample, HEAD))
+
+    def test_editorial_companion_needs_own_entry_point(self):
+        self.editorial_fixture()
+        for omitted in ("docs/index.md", "docs/MILLENNIUM_PRIZE_STATUS.md"):
+            sample = [f for f in self.files if f["filename"] != omitted]
+            self.assertFalse(mod.bounded_public_editorial_not_applicable(
+                {**self.pr, "changed_files": len(sample)}, sample, HEAD))
+        sample = [f for f in self.files if f["filename"] == "docs/stylesheets/home.css"]
+        self.assertFalse(mod.bounded_public_editorial_not_applicable(
+            {**self.pr, "changed_files": len(sample)}, sample, HEAD))
+
     def test_classifier_does_not_expand_auto_approve_profiles(self):
         import agent_material_profiles as profiles
         registry = profiles.load_registry()
