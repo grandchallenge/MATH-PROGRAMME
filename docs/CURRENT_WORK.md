@@ -61,6 +61,12 @@ The first GCL work package records a magic-square calibration, a source-pinned c
 
 [Explore the PNP-ABOVE documentary](pnp_above/index.md) · [Read the technical record](pnp_above/technical.md) · [Follow the Solve-owned research obligation](https://github.com/grandchallenge/MATHSOLVE/issues/1136)
 
+## Structural Capacity Calculus
+
+Why can one multiplication resolve sixty-four logical pairings while eight independent pairings require eight? SCC investigates the algebra of reusable structure and the possibility of a classical conservation law.
+
+[**Read the illustrated research chapter: eight mathematical plates, worked proofs and obstructions**](scc.md) · [Follow the live SCC research tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309). The author-derived promotion and syzygy laws have bounded exact regression support; no unrestricted lower bound has been proved.
+
 ## Other investigations worth following
 
 ### Condensed mathematics

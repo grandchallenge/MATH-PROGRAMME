@@ -8,6 +8,8 @@ These are supporting records, not necessarily current research instructions or c
 
 ## Projects and campaigns
 
+- [Structural Capacity Calculus — illustrated active research chapter](../scc.md)
+
 - [CSM-001 — Categorical Statistical Mechanics (active programme)](../campaigns/CSM_001.md)
 
 - [Prime Information Transition Problem](../PRIME_INFORMATION_TRANSITION.md)

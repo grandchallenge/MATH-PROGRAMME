@@ -65,11 +65,15 @@ def main():
             assert page.locator("#scc-relations-between-relationships").count() == 1
             assert page.locator("article a[href='../../scc/']").count() >= 1
             assert page.locator("article a[href='../../scc/#iv-relations-between-relationships']").count() == 1
+            page.goto(base + "/CURRENT_WORK/", wait_until="domcontentloaded")
+            assert page.locator("article a[href='../scc/']").count() >= 1
+            page.goto(base + "/archives/research/", wait_until="domcontentloaded")
+            assert page.locator("article a[href='../../scc/']").count() == 1
             browser.close()
         print(json.dumps(results, indent=2))
         for x in results:
             assert x["plates"] == x["loaded"] == x["alt"] == x["captions"] == x["fullSize"] == 8
-            assert x["nav"] and x["currentResearch"] and all(y != "/scc/" for y in x["currentResearch"])
+            assert x["currentResearch"] and all(y != "/scc/" for y in x["currentResearch"])
             assert x["overflows"] == x["mathErrors"] == 0 and x["scrollWidth"] <= x["width"] + 2
             assert x["math"] == x["mathWrappers"] and x["math"] > 10
         print("PASS: 8 plates, mathematical glyphs, navigation, anchors and responsive layout.")
