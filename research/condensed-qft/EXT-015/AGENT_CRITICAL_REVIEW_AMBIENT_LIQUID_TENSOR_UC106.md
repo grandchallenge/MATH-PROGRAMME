@@ -1,0 +1,13 @@
+# EXT-015 follow-on / UC106 — critical review of the ambient complete liquid tensor
+
+**Disposition.** Accept [UC105](AMBIENT_COMPLETED_LIQUID_TENSOR_UC105.md) at frozen commit a3dd0d3a77dd778bb4acd649810b6edd86cf04e0, source blob 61968c2deae30f0f9d7a9b382b4cfa3c098bfe1c. The retained reference is `research/ext015-arbitrary-completed-vacuum-tensor-primary-20261126`. The two same-system nonauthor reviews cover the mathematical construction and its comparison with the earlier model. No correction was requested.
+
+| Inference | Critical finding |
+| --- | --- |
+| Exact jet generators and flatness | The map from a whole liquid jet summand into the sheaf equalizer gives existence. Differentiating first on the source chart gives uniqueness even for a constant map. Base change uses liquid measure flatness from Clausen–Scholze, Theorem 3.14. The stalk comparison follows from cofinal neighborhood diagonals and the balancing coequalizer. |
+| Derived and filtered tensor | The sphere-to-disk replacements and the grade formula justify the unbounded derived tensor and its monoidal filtration completion. |
+| Vacuum and action-arrow comparison | The filtration step gives the full truncated shift. Both forgetful functors preserve realizations and are conservative. Their free monad multiplications add the same exponents, so the monadic comparison identifies their mapping spaces. |
+| Recovery of the field product | The extra degeneracy for a free shifted input reduces the two-sided relative bar to the shifted coefficient object. The admitted UC102 comparison then recovers the disjoint Wick product. The checked UC102 blob is `6d5b07f01a87fbcbd94d7ecafbf19e4b6423c339`. |
+| Coherent nonfree control | For the quotient vacuum $Q$, the action-arrow mapping space from $T_2Q$ to $Q$ is contractible since the two underlying mapping spaces evaluate at indices $2$ and $4$. Tensoring the cofiber sequence therefore gives the extra degree-minus-one, weight-two summand with its asserted action. |
+
+The first reviewer, `general_incident_uc045_critic`, delivered an explicit acceptance covering the exact primary and nine input identities, the jet and flatness arguments, filtered tensor and coherent quotient control. The session stopped after that verdict. The second reviewer, `diagonal_jets_critical_review`, returned a focused acceptance of §4 and its interaction with §5 on the same primary. The second review checked the monadic comparison against [Higher Algebra, §4.7.3](https://people.math.harvard.edu/~lurie/papers/HA.pdf#page=685) and confirmed the free and nonfree computations directly. These are same-system critical reviews.
