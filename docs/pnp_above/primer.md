@@ -196,3 +196,51 @@ The theorem route is Boolean semantics, filtration update, graded exact sequence
 Support: direct author proof and finite regression of 720 transitions, 3,168 grade checks and 71,640 target checks. These cover every ordered affine operand pair for one through three inputs and 64 seeded six-gate histories on four inputs. This is not formal verification or novelty certification. Replay-source preservation, specialist audit and Lean checking remain debt.
 
 The next bounded task is to preserve the replay and formalize the exact sequence, then test joint leading-symbol subspaces against all decomposable $q$ and subsequent reuse. The missing result is an independently characterized target-specific potential with polynomial change per gate and superpolynomial demand on SAT. The restricted PNP-ABOVE transfer and standard-machine concordance remain open. Follow the [SCC-001 tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309).
+
+## SCC: relations between relationships
+
+**Status:** author-derived successor results with bounded exact regression; no mathematical certification or unrestricted lower bound. The earlier promotion proof and replay are now [protected source](https://github.com/grandchallenge/MATHSOLVE/blob/e8096b79099f410aed7d2096c9e5367208b21823/research/SCC-001/RESULT.md). The successor [technical candidate and proof](https://github.com/grandchallenge/MATHSOLVE/blob/84adf70b57d258b65308cbddbdaed95426783e8e/research/SCC-001/SYZYGY_TRANSPORT.md) and [live tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309) distinguish new evidence from admitted claims.
+
+### A new primitive changes old relationships
+
+Take three switches a, b, c. Suppose we have already computed y = ab. Now compute t = ac. We obtain bt = cy because both expressions equal abc. The new primitive has created a way of expressing an old relationship through a different product.
+
+Syzygies are algebraic dependencies among generators of an ideal or module. Here the pair of generators t and y has a dependency with coefficients b and c. A lower-bound method cannot charge twice for the same relationship just because it is expressed in two ways.
+
+### The exact mathematical rule
+
+Let A be the graded algebra of the old computational state. For the new gate g = uv, let q be its old degree-two symbol. Put C = A/(q). The inherited relations are captured by C, but the new generator also interacts with the old ones.
+
+Let
+
+$$
+H=\mathrm{Ann}_A(q)/(q).
+$$
+
+This is the residual module of annihilating relations not already explained by multiples of q. In an exterior-algebra presentation with relation ideal I and representative Q of q, it is the colon quotient (I:Q)/(I+(Q)).
+
+For a homogeneous class a in H of grade j represented by f, multiplication by g falls into the old filtration at grade j+1. Taking its symbol in C gives a degree-one correction map delta. Boolean idempotence implies that this map has square zero. The author-derived exact presentation is
+
+$$
+A'\cong C[t]/(t^2,\ ta+\delta(a):a\in H).
+$$
+
+In the switch example, the correction sends the symbol of b to the nonzero symbol of cy. Setting the correction to zero would incorrectly predict bt = 0 in the new graded algebra. See the linked technical proof for well-definedness, module-linearity and completeness of the presentation.
+
+### What resists a naive lower bound?
+
+Append any number of unused independent switches to the example. Their square-free monomials multiply each old correction direction independently, without any further gates. The same one gate has correction rank
+
+$$
+2^{n-3}
+$$
+
+on n input bits. Counting these directions as independent computational obligations is therefore incorrect. Their shared origin is the very mechanism of reuse.
+
+The correction differential also gives a cohomology module. The technical candidate derives a complementary pair of projections on it, represented by cycles supported where the new product is respectively one or zero. That additional proposition is an author proof, not covered by the current finite replay. Neither a large module nor a large cohomology dimension is evidence of unrestricted hardness.
+
+### Evidence and next move
+
+The [exact finite replay](https://github.com/grandchallenge/MATHSOLVE/blob/84adf70b57d258b65308cbddbdaed95426783e8e/research/SCC-001/syzygy_replay.js) passed 722 transitions, 3,899 grade checks, 6,332 cross-relations, 70,836 module-linearity checks and 6,332 square checks. It includes all affine operand pairs through three input bits, seeded histories on four bits, and two spectator-amplification fixtures. These are finite regression results, not general proof certificates.
+
+The theorem route is promotion calculus, colon quotient, correction differential, exact successor presentation, then an open target-sensitive amortized invariant. The next bounded action is to formalize the presentation and compare target-relative relation modules across consecutive gates. The test is an independently characterized potential that remains bounded per gate under arbitrary reuse, yet has large necessary demand for an explicit decision family. The classical SAT transfer, unrestricted lower bound, formal verification and novelty audit remain open.
