@@ -52,26 +52,28 @@ class QueueTests(unittest.TestCase):
         candidates=q.candidates('D',limit=5)
         self.assertTrue(all(r['task_id']!='ERDOS-PV-0560-D' for r in candidates))
         for candidate in candidates:
-            if candidate['problem_id'] in (27,560,561,562,563,564):
+            if candidate['problem_id'] in (2,27,560,561,562,563,564):
                 row=q.read('governance/erdos_proof_verification/coverage/cohorts/'+candidate['cohort']+'.json')['items'][(candidate['problem_id']-1)%100]
                 stage=row['stage_work_items']['C']
                 self.assertEqual(stage['work_status'],'PROTECTED_ADMITTED')
                 self.assertTrue(stage['protected_admission_ref'].startswith('grandchallenge/MATH-PROGRAMME@'))
 
-    def test_27_native_admission_gate_rejects_candidate_and_missing_ref(self):
+    def test_2_and_27_native_admission_gate_rejects_candidate_and_missing_ref(self):
         from copy import deepcopy
-        row=deepcopy(q.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][26])
-        self.assertEqual(row['problem_id'],27)
-        stages=row['stage_work_items']
-        for target,prior in [('C','B'),('D','C')]:
-            stages[target]['work_status']='UNEXECUTED'
-            stages[prior]['work_status']='VERIFIED_BOUNDED'
-            stages[prior]['protected_admission_ref']=None
-            self.assertFalse(q.permitted(row,target))
-            stages[prior]['work_status']='PROTECTED_ADMITTED'
-            self.assertFalse(q.permitted(row,target))
-            stages[prior]['protected_admission_ref']='grandchallenge/MATH-PROGRAMME@'+'a'*40
-            self.assertTrue(q.permitted(row,target))
+        for problem in (2,27):
+            with self.subTest(problem=problem):
+                row=deepcopy(q.read('governance/erdos_proof_verification/coverage/cohorts/0001-0100.json')['items'][problem-1])
+                self.assertEqual(row['problem_id'],problem)
+                stages=row['stage_work_items']
+                for target,prior in [('C','B'),('D','C')]:
+                    stages[target]['work_status']='UNEXECUTED'
+                    stages[prior]['work_status']='VERIFIED_BOUNDED'
+                    stages[prior]['protected_admission_ref']=None
+                    self.assertFalse(q.permitted(row,target))
+                    stages[prior]['work_status']='PROTECTED_ADMITTED'
+                    self.assertFalse(q.permitted(row,target))
+                    stages[prior]['protected_admission_ref']='grandchallenge/MATH-PROGRAMME@'+'a'*40
+                    self.assertTrue(q.permitted(row,target))
     def test_pilot_reuse_does_not_run_duplicate_work(self):
         x=q.read('governance/erdos_proof_verification/coverage/cohorts/0201-0300.json')['items'][45]
         self.assertEqual(x['problem_id'],246)
