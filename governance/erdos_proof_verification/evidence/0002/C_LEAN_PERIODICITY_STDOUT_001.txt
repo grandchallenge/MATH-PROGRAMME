@@ -1,0 +1,29 @@
+'Erdos2.period_dvd' depends on axioms: [propext, Quot.sound]
+'Erdos2.period_pos' depends on axioms: [propext, Quot.sound]
+'Erdos2.covered_iff_exists' depends on axioms: [propext, Quot.sound]
+'Erdos2.covered_period' depends on axioms: [propext, Quot.sound]
+'Erdos2.covers_all_iff' depends on axioms: [propext, Quot.sound]
+'Erdos2.covered_shift' depends on axioms: [propext, Quot.sound]
+'Erdos2.uncovered_residue' depends on axioms: [propext, Quot.sound]
+'Erdos2.empty_period' does not depend on any axioms
+'Erdos2.empty_uncovered' depends on axioms: [propext]
+'Erdos2.example_period' does not depend on any axioms
+'Erdos2.example_moduli' does not depend on any axioms
+'Erdos2.example_distinct' does not depend on any axioms
+'Erdos2.example_finite' does not depend on any axioms
+'Erdos2.example_cover' depends on axioms: [propext, Quot.sound]
+'Erdos2.hostile_miss' does not depend on any axioms
+'Erdos2.repeated_cover' depends on axioms: [propext, Quot.sound]
+'Erdos2.repeated_not_distinct' does not depend on any axioms
+Erdos2.period_dvd (cs : List Class) (c : Class) (hc : c ∈ cs) : c.snd ∣ period cs
+Erdos2.period_pos (cs : List Class) (h : ∀ (c : Class), c ∈ cs → 2 ≤ c.snd) : 0 < period cs
+Erdos2.covered_iff_exists (cs : List Class) (z : Int) : Covered cs z ↔ ∃ c, c ∈ cs ∧ ↑c.snd ∣ z - c.fst
+Erdos2.covered_period (cs : List Class) (z : Int) : Covered cs z ↔ Covered cs (z % ↑(period cs))
+Erdos2.covers_all_iff (cs : List Class) (h : ∀ (c : Class), c ∈ cs → 2 ≤ c.snd) :
+  (∀ (z : Int), Covered cs z) ↔ ∀ (r : Int), 0 ≤ r → r < ↑(period cs) → Covered cs r
+Erdos2.covered_shift (cs : List Class) (z : Int) : Covered cs (z + ↑(period cs)) ↔ Covered cs z
+Erdos2.uncovered_residue (cs : List Class) (z : Int) (h : ¬Covered cs (z % ↑(period cs))) : ¬Covered cs z
+Erdos2.example_cover (z : Int) : Covered exampleClasses z
+Erdos2.hostile_miss : ¬Covered hostileClasses 23
+Erdos2.repeated_cover (z : Int) : Covered [(0, 2), (1, 2)] z
+Erdos2.repeated_not_distinct : ¬(List.map Prod.snd [(0, 2), (1, 2)]).Nodup

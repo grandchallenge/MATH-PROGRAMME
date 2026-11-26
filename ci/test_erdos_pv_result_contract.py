@@ -125,7 +125,11 @@ class E2ELifecycleTests(unittest.TestCase):
                         in ("UNEXECUTED","EVIDENCE_BLOCKED")
                     and second["triage_decision"]!="PENDING")
         self.assertEqual(queue.permitted(second,"C"),expected_C)
-        self.assertFalse(queue.permitted(second,"D"))
+        expected_D = (second["stage_work_items"]["C"]["work_status"] == "PROTECTED_ADMITTED"
+                      and bool((second["stage_work_items"]["C"].get("protected_admission_ref") or "").startswith("grandchallenge/MATH-PROGRAMME@"))
+                      and second["stage_work_items"]["D"]["work_status"] in ("UNEXECUTED","EVIDENCE_BLOCKED")
+                      and second["triage_decision"] != "PENDING")
+        self.assertEqual(queue.permitted(second,"D"),expected_D)
         # A later source receipt must not make all 100 items globally ready.
         self.assertFalse(queue.permitted(self.cohort["items"][2],"B"))
 

@@ -12,7 +12,8 @@
     "fixtures/formal/PC-WP04",
     "experiments/erdos_proof_verification/0560",
     "experiments/erdos_proof_verification/0561",
-    "experiments/erdos_proof_verification/0027"
+    "experiments/erdos_proof_verification/0027",
+    "experiments/erdos_proof_verification/0002"
   ],
   "control_plane": {
     "full_fanout_patterns": [
@@ -455,6 +456,33 @@
         "Erdos27Sequence.lean",
         "Erdos27Density.lean",
         "Erdos27Split.lean"
+      ]
+    },
+    {
+      "id": "erdos-pv-0002-periodicity",
+      "family": "ERDOS-PV",
+      "execution_kind": "lake-build",
+      "package_dir": "experiments/erdos_proof_verification/0002",
+      "material_patterns": [
+        "experiments/erdos_proof_verification/0002/Erdos2Periodicity.lean",
+        "experiments/erdos_proof_verification/0002/lean-toolchain",
+        "experiments/erdos_proof_verification/0002/lakefile.toml",
+        "experiments/erdos_proof_verification/0002/lake-manifest.json",
+        "ci/erdos_pv_0002_formal_replay.py",
+        "governance/erdos_proof_verification/evidence/0002/C_*"
+      ],
+      "validator_commands": [
+        [
+          "python3",
+          "ci/erdos_pv_0002_formal_replay.py",
+          "--execute"
+        ]
+      ],
+      "development_targets": [
+        "Erdos2Periodicity.lean"
+      ],
+      "formal_sources": [
+        "Erdos2Periodicity.lean"
       ]
     }
   ]
