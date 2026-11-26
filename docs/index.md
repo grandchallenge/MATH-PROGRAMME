@@ -125,7 +125,7 @@ Selected GCL research milestones and the questions that remain. This is a dated 
 <div class="home-research-grid">
 <article class="home-research-card">
 <p class="home-kicker">Problems and explanations</p>
-<h3><a href="erdos/">Erdős Compendium</a></h3>
+<h3><a href="erdos/">Erdős Compendium — the public reference</a></h3>
 <p>Explore 1,221 registered problems, their sources and reviewed explanations. The <a href="https://github.com/grandchallenge/MATH-PROGRAMME/pull/3746">problem 27 admission</a> distinguishes a published disproof from its partial formal reconstruction.</p>
 <p><a href="erdos/catalogue/">Browse the catalogue</a></p>
 </article>
@@ -136,6 +136,8 @@ Selected GCL research milestones and the questions that remain. This is a dated 
 <p><a href="oai26/catalogue/">Browse the families</a></p>
 </article>
 </div>
+
+[Browse the complete Erdős catalogue](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/catalogue/).
 
 <!-- GCL_ERDOS_HOME_STATUS -->
 

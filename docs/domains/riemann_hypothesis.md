@@ -1,17 +1,17 @@
 # Domain 08 · Riemann Hypothesis
 
-**Millennium status, 20 October 2026:** Clay continues to classify the Riemann Hypothesis as **Unsolved**. An [October release](https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/README.md) reports a zero-free region **Re(s) > 7/8**, with an accompanying Lean formalization. This is strictly weaker than proving that **all nontrivial zeros lie on Re(s) = 1/2**. The announcement does not discharge GCL’s retained review blockers. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
+**Millennium status, 26 November 2026:** Clay lists RH as **Active**, not Solved. The [21 November joint Lean FRO/Mathlib statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/) reports independent formal verification of the classical statement Re(s) = 1/2 for nontrivial zeros. The October zero-free-region claim Re(s) > 7/8 is distinct. GCL's own reconstruction and certification remain separate. [Full comparison](../MILLENNIUM_PRIZE_STATUS.md).
 
 !!! warning "20 November 2026 external proof announcement"
     Levent Alpöge reports a Lean-formalized proof of RH and Dirichlet GRH developed with Claude. An [MIT independent verification dossier](https://math.mit.edu/~drew/grh/) reports successful compilation, axiom audits, independent-kernel replay, and statement comparison. GCL has **not** issued a mathematical certification or promoted its RH-001 claim. Read the [Chaidez-style source, verification, and implications guide](riemann_hypothesis_2026_lean_announcement.md) for the precise distinction.
 
 ## The question in everyday language
 
-Prime numbers seem irregular, yet their distribution is connected to a remarkable mathematical function called the Riemann zeta function. The Riemann Hypothesis predicts where certain zeros of this function must lie. It is one of the most important unsolved questions in mathematics.
+Prime numbers seem irregular, yet their distribution is connected to a remarkable mathematical function called the Riemann zeta function. The Riemann Hypothesis predicts where certain zeros of this function must lie. It has been one of the most important open questions in mathematics; the November external proof has now been independently formally checked.
 
 GCL has assembled the definitions, historical results and common weaknesses in attempted proofs. Checking many zeros by computer cannot settle a claim about every zero.
 
-**What remains uncertain:** the conjecture is open. Completed software or documentary checks do not mean that a proof has been accepted; the exact limits of the earlier work are stated in the technical record below.
+**What remains for GCL:** independent reconstruction of the mathematical proof spine and exact claim boundaries. External formal verification is not GCL certification or a Clay prize disposition.
 
 ## Detailed research record
 
@@ -22,7 +22,7 @@ GCL has assembled the definitions, historical results and common weaknesses in a
     **EXPOSITION:** this page is a human-facing projection. The issue governs mutable research state; protected records govern promoted/certified claims.
 
 **Campaign ID:** `RH-001`  
-**Mathematical status:** open conjecture  
+**GCL mathematical status:** no GCL certification; external formal verification reported
 **Programme state:** WP00 promoted; WP01 and WP02 implemented, merged, and CI-passed but not formally promoted  
 **Governance:** `ADR-0009`; `ADR-0010`
 

@@ -7,7 +7,7 @@ DOCS = ROOT / "docs"
 DOMAINS = {
     "navier_stokes": "Active",
     "poincare_reconstruction": "Solved",
-    "riemann_hypothesis": "Unsolved",
+    "riemann_hypothesis": "Active",
     "hodge": "Unsolved",
     "birch_swinnerton_dyer": "Unsolved",
     "p_vs_np": "Unsolved",
@@ -18,12 +18,12 @@ DOMAINS = {
 class MillenniumPublicStatusTests(unittest.TestCase):
     def test_all_seven_have_attributed_dated_classifications(self):
         page = (DOCS / "MILLENNIUM_PRIZE_STATUS.md").read_text()
-        self.assertIn("Last checked against primary sources: 20 October 2026", page)
+        self.assertIn("Last checked against primary sources: 26 November 2026", page)
         for name, status in DOMAINS.items():
             with self.subTest(domain=name):
                 self.assertIn(f"(domains/{name}.md)", page)
                 text = (DOCS / "domains" / f"{name}.md").read_text()
-                self.assertIn("**Millennium status, 20 October 2026:**", text)
+                self.assertRegex(text, r"\*\*Millennium status, \d{1,2} [A-Za-z]+ 2026:\*\*")
                 self.assertIn(f"**{status}**", text)
                 self.assertIn("../MILLENNIUM_PRIZE_STATUS.md", text)
         self.assertEqual(sum(1 for line in page.splitlines() if line.startswith("| **") and "(domains/" in line), 7)
@@ -52,6 +52,15 @@ class MillenniumPublicStatusTests(unittest.TestCase):
         self.assertIn("restricted class", page)
         self.assertIn("https://github.com/openai/math", page)
         self.assertIn("Unsolved", page)
+
+    def test_november_rh_external_verification_distinct_from_prize_and_gcl(self):
+        page = (DOCS / "MILLENNIUM_PRIZE_STATUS.md").read_text()
+        self.assertIn("| **Riemann Hypothesis** | **Active** |", page)
+        self.assertIn("https://leanprover-community.github.io/blog/posts/riemann-hypothesis/", page)
+        self.assertIn("No GCL certification is implied", page)
+        domain = (DOCS / "domains/riemann_hypothesis.md").read_text()
+        self.assertIn("**Active**, not Solved", domain)
+        self.assertNotIn("Clay continues to classify the Riemann Hypothesis as **Unsolved**", domain)
 
     def test_public_entry_points_and_navier_historical_reading_edition(self):
         nav = (ROOT / "mkdocs.yml").read_text()

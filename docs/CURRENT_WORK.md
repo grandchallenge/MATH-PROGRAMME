@@ -13,7 +13,7 @@ Some projects aim to prove long-standing conjectures. Others try to understand e
 - **Structural capacity:** Graded promotion and a sharp capacity ceiling hold within a specified model; a four-variable counterexample limits an affine criterion. No model-independent superpolynomial lower bound is established. [Evidence record](https://github.com/grandchallenge/MATHSOLVE/pull/1310).
 - **Arithmetic and analysis:** Recent explanatory work examines the origin of exceptional arithmetic centres in a proposed Riemann-hypothesis argument. Uniform rank and tower-descent obligations remain unresolved. [Evidence record](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3762).
 
-Explore the [CSM programme](campaigns/CSM_001.md), [PNP-ABOVE](pnp_above/index.md) and [OpenAI Mathematics 2026 compendium](oai26/index.md). These selected milestones are not independent certifications. The older profiles below provide historical context, not a live task list.
+Explore the [CSM programme](campaigns/CSM_001.md), [PNP-ABOVE](pnp_above/index.md) and [OpenAI Mathematics 2026 compendium](oai26/index.md). A completed work package is not necessarily a solved mathematical problem. These selected milestones are not independent certifications. The older profiles below provide historical context, not a live task list.
 
 <a id="bsd-001--literal-p2-inverse-limit-replay"></a>
 
