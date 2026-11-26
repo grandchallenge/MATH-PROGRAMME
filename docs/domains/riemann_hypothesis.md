@@ -11,7 +11,7 @@ Prime numbers seem irregular, yet their distribution is connected to a remarkabl
 
 GCL has assembled the definitions, historical results and common weaknesses in attempted proofs. Checking many zeros by computer cannot settle a claim about every zero.
 
-**What remains for GCL:** independent reconstruction of the mathematical proof spine and exact claim boundaries. External formal verification is not GCL certification or a Clay prize disposition.
+**What remains uncertain in GCL’s reconstruction:** independent reconstruction of the mathematical proof spine and exact claim boundaries. External formal verification is not GCL certification or a Clay prize disposition.
 
 ## Detailed research record
 
