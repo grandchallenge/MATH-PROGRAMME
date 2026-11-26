@@ -128,3 +128,71 @@ Nonlinear constraints and uniquely solvable puzzles are possible research specim
 **What has changed:** a source-verified, equivalent search-side target is available. **What has not changed:** the unrestricted lower bound, the separate standard-machine concordance and the P-versus-NP question remain open.
 
 For exact definitions and equations see the [technical spine](technical.md). For source identities, evidence grades and open work, see [evidence](evidence.md). For the scholarly paper see the [preprint record](preprint.md).
+
+## Structural Capacity Calculus: why relationships resist compression
+
+**Status (25 November 2026): exploratory, not certified.** [SCC-001 live research tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309). The [evidence register](evidence.md) remains the authority for admitted PNP-ABOVE claims.
+
+Imagine two rows of eight switches. All 64 cross-row pairings can be realized jointly by one multiplication of the two row parities:
+
+$$
+F=\left(\sum_i x_i\right)\left(\sum_j y_j\right).
+$$
+
+Contrast the eight independent pairings:
+
+$$
+G=\sum_i x_i y_i.
+$$
+
+Over the binary field, with affine operations free, the first takes one multiplication and the second exactly eight. For the lower bound, restrict one affine operand of each successive gate to a constant on the current affine subspace. Each gate costs at most one dimension; the final output is affine on the remaining subspace. The inner product has a nondegenerate polar form in 16 dimensions, so such a subspace has dimension at most eight. This covers arbitrary nonlinear intermediate reuse. More relationships can therefore mean less work.
+
+**Research question:** Can we discover a conservation law for logical structure that every classical computation must obey?
+
+### A calculus of reuse
+
+In the Boolean function ring over the binary field on $n$ input bits, let $V$ contain the input coordinates and constant one. A charged multiplication adds $g=uv$ for $u,v\in V$, producing $V'=V+\langle g\rangle$. This is the unrestricted multiplicative-complexity model. Polynomial-size Boolean circuits and polynomial multiplicative complexity agree up to polynomial overhead. A superpolynomial bound for total encoded SAT would imply NP is not contained in P/poly, stronger than P versus NP.
+
+Let $F_r$ be the span of products of at most $r$ elements of $V$, with $F_0$ the constants and negative grades zero. Write $A_r=F_r/F_{r-1}$ and use primes for the new state.
+
+**Candidate theorem (author proof):** for $r\geq1$,
+
+$$
+F'_r=F_r+gF_{r-1}.
+$$
+
+Expansion proves this identity: all positive powers of $g$ equal $g$. The reverse inclusion follows from the definition. In particular, $F_r\subseteq F'_r\subseteq F_{r+1}$.
+
+Let $q$ be the symbol of $g$ in $A_2$. The identity map induces an exact sequence:
+
+$$
+0\longrightarrow qA_{r-2}\longrightarrow A_r
+\longrightarrow A'_r\longrightarrow qA_{r-1}
+\longrightarrow 0.
+$$
+
+The kernel is $F'_{r-1}/F_{r-1}=qA_{r-2}$, and the cokernel is $F'_r/F_r=qA_{r-1}$. Set $H_r=\dim A_r$ and $R_j=\dim(qA_j)$. Then
+
+$$
+H'_r=H_r-R_{r-2}+R_{r-1}.
+$$
+
+A target of relative degree $d\geq1$ drops one degree exactly when its leading symbol lies in $qA_{d-2}$. It cannot drop further in one step. A family of leading symbols in degree $d$ is jointly promoted exactly when its span lies in that same image.
+
+### Why counting promoted relationships fails
+
+At the initial affine state, the graded algebra is the exterior algebra on the coordinate symbols, whose squares vanish. For the one gate $g=x_1x_2$, multiplication by its symbol maps each monomial avoiding those two coordinates to a distinct monomial containing both, and annihilates the others. For $n\geq2$,
+
+$$
+R_j=\binom{n-2}{j}.
+$$
+
+Exactly $2^{n-2}$ independent monomial directions move down one degree. With three input bits there are two such directions; with ten there are 256. All share the same computed factor. Counting these directions without accounting for reuse cannot yield a polynomial one-gate capacity bound.
+
+### Evidence and next step
+
+The theorem route is Boolean semantics, filtration update, graded exact sequence, joint symbol promotion, then the open conservation law. The carrier is finite Boolean functions with ordinary finite-dimensional linear algebra; no additional foundational axioms are needed.
+
+Support: direct author proof and finite regression of 720 transitions, 3,168 grade checks and 71,640 target checks. These cover every ordered affine operand pair for one through three inputs and 64 seeded six-gate histories on four inputs. This is not formal verification or novelty certification. Replay-source preservation, specialist audit and Lean checking remain debt.
+
+The next bounded task is to preserve the replay and formalize the exact sequence, then test joint leading-symbol subspaces against all decomposable $q$ and subsequent reuse. The missing result is an independently characterized target-specific potential with polynomial change per gate and superpolynomial demand on SAT. The restricted PNP-ABOVE transfer and standard-machine concordance remain open. Follow the [SCC-001 tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309).
