@@ -63,6 +63,10 @@ For the witness programs, only satisfiable formulas require correct outputs; the
 
 **What remains difficult:** finding a representation-independent superpolynomial obstruction against *every* classical witness constructor. Quantum Schmidt rank is not classical time. A semantic proof-width lower bound (WP37) can coexist with a fast algebraic algorithm; a native quadratic charged-copy lower bound (WP36) can arise even with no active variables. Neither closes the unrestricted target.
 
+## A distinct algebraic route: Structural Capacity Calculus
+
+[Read the illustrated SCC research chapter](../scc.md). Its central question is whether a conservation law can distinguish irreducible logical obligations from relationships generated cheaply by compositional reuse. The graded promotion and syzygy transport identities are author-derived results with bounded exact regression, not unrestricted lower bounds.
+
 ## What is known, calculated, and open
 
 | Result | Protected evidence | Scope |

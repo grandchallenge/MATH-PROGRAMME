@@ -134,3 +134,66 @@
     gap: 0.4rem;
   }
 }
+
+/* SCC research chapter: scoped, readable documentary plates. */
+.md-typeset .scc-status {
+  font-size: .75rem;
+  color: var(--gc-muted);
+  border-top: 1px solid var(--gc-rule);
+  border-bottom: 1px solid var(--gc-rule);
+  padding: .7rem 0;
+  margin: .8rem 0 1.1rem;
+}
+.md-typeset .scc-plate {
+  max-width: none;
+  width: 100%;
+  margin: 1.7rem 0 1.85rem;
+  display: block;
+  text-align: left;
+  break-inside: avoid;
+}
+.md-typeset .scc-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border: 1px solid var(--gc-rule);
+  box-sizing: border-box;
+}
+.md-typeset .scc-plate figcaption {
+  display: block;
+  max-width: none;
+  margin: .55rem 0 0;
+  text-align: left;
+  font-size: .72rem;
+  line-height: 1.5;
+  color: var(--gc-muted);
+  font-style: normal;
+}
+.md-typeset .scc-thesis {
+  border-top: 2px solid var(--gc-ink);
+  border-bottom: 1px solid var(--gc-rule);
+  padding: 1.15rem 0;
+  margin: 2rem 0;
+}
+.md-typeset .scc-thesis span {
+  color: var(--gc-signal-dark);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .09em;
+}
+.md-typeset .scc-thesis p {
+  font-family: Georgia, serif;
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  line-height: 1.4;
+  margin: .45rem 0 0;
+}
+
+.md-typeset .scc-plate > a {
+  display: block;
+  color: inherit;
+}
+.md-typeset .scc-plate > a:focus-visible {
+  outline: 2px solid var(--gc-signal-dark);
+  outline-offset: 3px;
+}
