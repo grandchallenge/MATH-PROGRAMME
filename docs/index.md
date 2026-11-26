@@ -11,17 +11,54 @@ hide:
     <p class="home-hero__thesis">Investigating difficult mathematical questions through proof, computation and formal verification.</p>
     <p class="home-hero__summary">Explore the questions we pursue, the results we can support, and the obstacles that stand between a promising idea and a theorem.</p>
     <div class="home-hero__actions">
-      <a class="home-action home-action--primary" href="#current-frontier">Research frontiers</a>
+      <a class="home-action home-action--primary" href="#mathematical-developments">Recent mathematical developments</a>
       <a class="home-action" href="erdos/">Erdős Compendium</a>
       <a class="home-action" href="oai26/">OpenAI Mathematics 2026</a>
     </div>
-    <p class="home-edition">Research snapshot · 25 November 2026</p>
+    <p class="home-edition">Research snapshot · 26 November 2026</p>
   </div>
 </div>
 
+## Mathematical developments
+
+<p class="page-deck">The mathematical landscape is changing rapidly. We trace the new results to their common mathematical ideas, the exact statements that have been checked, and the consequences for existing research.</p>
+
+<div class="home-research-grid">
+<article class="home-research-card">
+<p class="home-kicker">20–21 November · Number theory</p>
+<h3>The Riemann Hypothesis</h3>
+<p class="home-research-status">External formal proof independently validated</p>
+<p>Alpöge's proof of the classical critical-line statement has passed independent statement comparisons and several proof checkers. Clay now lists RH as Active, not Solved. GCL is reconstructing the arithmetic mechanism for human understanding.</p>
+<p class="home-card-links"><a href="MILLENNIUM_PRIZE_STATUS/">Prize status</a> · <a href="domains/rh_a26_audit_explained/">GCL reconstruction</a> · <a href="https://leanprover-community.github.io/blog/posts/riemann-hypothesis/">External verification</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">24 November · Algebraic complexity</p>
+<h3>A geometric cost of computation</h3>
+<p class="home-research-status">Matrix exponent: GCL Comparator acceptance; other endpoints separately scoped</p>
+<p>Seven related manuscripts use tensor geometry to address matrix multiplication, Valiant's hierarchy, permanent and Hamiltonian cycle, Fourier and integer multiplication, and sunflowers. The square exponent 9/4, dual and rectangular declarations passed GCL's hardened replay.</p>
+<p class="home-card-links"><a href="oai26/families/379/">Read the mathematical analysis</a> · <a href="https://github.com/grandchallenge/MATHFORGE/actions/runs/45584629927">Replay evidence</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">24 November · Optimization</p>
+<h3>Optimization without walking the edges</h3>
+<p class="home-research-status">Source claims; selected publisher formalizations</p>
+<p>A strongly polynomial LP algorithm and a superpolynomial polytope-diameter construction are compatible: finding an optimum need not require traversing the edges of a feasible region.</p>
+<p class="home-card-links"><a href="oai26/families/380/">Explore both claims</a></p>
+</article>
+<article class="home-research-card">
+<p class="home-kicker">26 October · Complexity and analysis</p>
+<h3>Beyond exponential search and the geometry of waves</h3>
+<p class="home-research-status">Source claims; selected publisher formalizations</p>
+<p>Subexponential exact SAT counting challenges ETH, not P versus NP. Euclidean local smoothing claims extend to Kakeya and Fourier restriction in specified ranges.</p>
+<p class="home-card-links"><a href="oai26/families/378/">ETH</a> · <a href="oai26/families/079/">Local smoothing and Kakeya</a></p>
+</article>
+</div>
+
+[Read the development dossier: the mathematical connections, verification scope and research consequences](MATHEMATICAL_DEVELOPMENTS.md).
+
 ## Current frontier
 
-Selected research milestones and the questions that remain. This is a dated editorial selection, not a live queue or a claim of certification.
+Selected GCL research milestones and the questions that remain. This is a dated editorial selection, not a live queue or a claim of certification.
 
 <div class="home-research-grid">
 <article class="home-research-card">
