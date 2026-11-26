@@ -4,12 +4,16 @@
 
 Some projects aim to prove long-standing conjectures. Others try to understand exactly why an attempted proof is incomplete, or to find out what a mathematical model can reliably predict. A careful negative result or a precisely identified gap can be useful progress even when the central problem remains unsolved.
 
-## Categorical statistical mechanics — CSM-001
+## Research snapshot · 25 November 2026
 
-The newly approved [CSM-001 research programme](campaigns/CSM_001.md) asks how statistical mechanics can be represented through compositional mathematics, and which equilibrium properties survive coarse-graining and thermodynamic limits. The first finite weighted-kernel examples and an exact Ising-chain check are established mathematics used to calibrate the framework, **not** a new theorem. A new Gibbsian preservation or obstruction theorem remains an open research target. [Follow the authoritative CSM tracker](https://github.com/grandchallenge/MATH-PROGRAMME/issues/3136).
+- **Computational complexity:** A polynomial-time native program constructs canonical witnesses for a specified planted family. A general classical resource lower bound remains open. [Evidence record](https://github.com/grandchallenge/MATHSOLVE/pull/1308).
+- **Condensed mathematics:** A natural Alexander–Whitney chain-homotopy equivalence has been constructed, with a reverse map agreeing with the signed shuffle in degrees zero and one. The interior signed-shuffle identity and downstream stable suspension remain open. [Evidence record](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3758).
+- **Statistical mechanics:** Constrained block comparison gives continuity and uniqueness conditions. A separate full-support example has a fixed conditional phase gap of 1/32. General conservation sectors and constrained block coupling remain open. [Evidence record](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3763).
+- **Combinatorics:** A sharper exceptional-edge cap and frontier constraints narrow candidate counterexamples. The joint residual lower-bound hypothesis and full problem remain open. [Evidence record](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3748).
+- **Structural capacity:** Graded promotion and a sharp capacity ceiling hold within a specified model; a four-variable counterexample limits an affine criterion. No model-independent superpolynomial lower bound is established. [Evidence record](https://github.com/grandchallenge/MATHSOLVE/pull/1310).
+- **Arithmetic and analysis:** Recent explanatory work examines the origin of exceptional arithmetic centres in a proposed Riemann-hypothesis argument. Uniform rank and tower-descent obligations remain unresolved. [Evidence record](https://github.com/grandchallenge/MATH-PROGRAMME/pull/3762).
 
-
-Research changes quickly. The links below lead to the original work and its latest recorded status. A completed work package is not necessarily a solved mathematical problem.
+Explore the [CSM programme](campaigns/CSM_001.md), [PNP-ABOVE](pnp_above/index.md) and [OpenAI Mathematics 2026 compendium](oai26/index.md). These selected milestones are not independent certifications. The older profiles below provide historical context, not a live task list.
 
 <a id="bsd-001--literal-p2-inverse-limit-replay"></a>
 
