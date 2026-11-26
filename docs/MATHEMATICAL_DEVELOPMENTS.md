@@ -50,6 +50,49 @@ There is no contradiction. An edge-walking algorithm moves between adjacent vert
 
 [Family 079](https://grandchallenge.ai/MATH-PROGRAMME/oai26/families/079/) claims Euclidean wave local smoothing, with consequences for Kakeya, restriction and related estimates. A Kakeya set contains a unit segment in every direction; the dimensional question asks how much space such a set must occupy. The proof uses wave-packet geometry and an auxiliary PDE. The strict-loss and exponent assumptions must be read separately from the headlines. GCL has not independently replayed the new release.
 
+## Cogentic: arithmetic, communication and reconstruction
+
+On 25 November the [Cogentic collection](https://github.com/google-research/google-research/tree/3f540f420bfae7e6ce48365a68d0ae003feb2f87/cogentic_research_papers) released six papers. GCL [source-locked the collection](https://github.com/grandchallenge/MATHFORGE/pull/617) and [extracted selected theorem statements and methods](https://github.com/grandchallenge/MATHFORGE/pull/618). All six results remain provider-attributed; the pinned release contains no Lean files.
+
+### The arithmetic frontier
+
+For an integer $N$, write
+
+$$
+L_N[\alpha,c]=\exp\big((c+o(1))(\log N)^\alpha(\log\log N)^{1-\alpha}\big).
+$$
+
+The reported unconditional randomized factoring algorithm has expected time $L_N[1/3,105]$ in the zero-error classical model. This is an asymptotic complexity claim, not a demonstrated practical attack on RSA. Its exponent matches the familiar heuristic number-field-sieve scale but its constant and rigorous hypotheses differ. The deterministic paper separately claims a nontrivial divisor in $O(\exp(3(\log N)^{3/4}))$ bit operations and a subexponential quadratic-nonresidue construction. Neither claims polynomial-time classical factoring.
+
+For fixed-characteristic finite fields, the discrete logarithm paper claims sub-quasipolynomial expected time. Its field presentation, characteristic regime, preprocessing, descent and nonmembership certificate matter: the result does not directly transfer to arbitrary prime fields or elliptic curves.
+
+### Log-rank: why exact Boolean structure matters
+
+The log-rank paper claims deterministic communication complexity $O(r^{1/2-\varepsilon})$ for sign matrices of real rank $r$, with $\varepsilon=0.000005$. This improves the square-root exponent; it does not prove a polylogarithmic bound.
+
+The proof architecture is particularly relevant to structural resource accounting. A relaxed real-valued matrix can have the correct rank, bias and centered spectrum while retaining a square-root-scale obstruction. The source instead exploits the exact pointwise identity $A_{xy}^2=1$, together with higher moments, entropy stability and quadratic Gaussian chaos. The crucial estimates remain to be independently verified.
+
+There is a decisive distinction from unrestricted circuit complexity. For $x,y\in\mathbb F_2^n$, the parity of their inner product costs only $n$ AND gates with XOR free. Yet the sign matrix
+
+$$
+S_{xy}=(-1)^{x\cdot y},\qquad SS^{\mathsf T}=2^n I
+$$
+
+has real rank $2^n$. Orthogonality follows by pairing summands with opposite signs in a coordinate where two rows differ. GCL checked this exactly for $n=1,\ldots,7$. Thus raw real rank cannot serve as a polynomially bounded total circuit capacity; a useful invariant must depend on the actual resource model. Communication bounds are not general circuit lower bounds.
+
+A second useful test is spectator invariance. Adding independent irrelevant coordinates preserves the nonzero weighted singular spectrum and the minimum relative entropy required to produce a specified change in an observable on the original coordinates. This follows by isometric lifting and the KL chain rule. The GCL derivation is recorded in the method extraction; it suggests a test for SCC, not a proven gate-local capacity theorem.
+
+### Equilibria and graph reconstruction
+
+| Claim | Exact scope to preserve |
+| --- | --- |
+| Bimatrix equilibrium | Deterministic polynomial-time rational strategies with regret at most one fifth; not exact Nash equilibrium or arbitrary approximation accuracy. |
+| Edge reconstruction | Edge-deleted decks determine finite simple graphs with at least 1000 edges per vertex in the stated density bound; not the unrestricted edge reconstruction conjecture. |
+
+The earlier collection also includes results on sample compression, fictitious play, prophet inequalities and approximate correlated equilibria in convex games. These deserve separate scope audits rather than being counted as validated consequences of the November 25 release.
+
+**Research consequence:** prioritize the factoring and discrete-log resource models in the computational difficulty atlas, and the log-rank exact-versus-relaxed obstruction in SCC. Keep the source statements and GCL's derived comparisons distinct.
+
 ## Research priorities suggested by the releases
 
 These are analytical priorities, not new campaign authorizations.
@@ -58,6 +101,7 @@ These are analytical priorities, not new campaign authorizations.
 2. Family 378: establish the counting model and time and space bounds; compare ordinary ETH with variable-count Weak ETH.
 3. Family 380: check the rational RAM and Hirsch challenges separately, including charged control work and polytope realizability.
 4. RH: continue independent mathematical reconstruction and expose the key arithmetic ideas while retaining the externally validated formal status.
-5. Family 079: trace the critical annular estimate, packet geometry and consequences through their exact exponent ranges.
+5. Cogentic: audit the factoring, discrete-log and communication models; test spectator-invariant SCC quantities against cheap-circuit/high-rank examples.
+6. Family 079: trace the critical annular estimate, packet geometry and consequences through their exact exponent ranges.
 
 For the underlying source inventory, see the [OpenAI Mathematics 2026 compendium](oai26/index.md). For ongoing GCL work, see [Current Work](CURRENT_WORK.md). The release has not settled Boolean P versus NP by implication, nor has the existence of a formalization established every statement of every associated manuscript.

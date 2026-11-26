@@ -39,6 +39,13 @@ hide:
 <p class="home-card-links"><a href="oai26/families/379/">Read the mathematical analysis</a> · <a href="https://github.com/grandchallenge/MATHFORGE/actions/runs/45584629927">Replay evidence</a></p>
 </article>
 <article class="home-research-card">
+<p class="home-kicker">25 November · Arithmetic and computation</p>
+<h3>Cogentic: factoring and the limits of communication</h3>
+<p class="home-research-status">Six new papers source-locked; formal sources not yet released</p>
+<p>Reported advances in integer factoring, fixed-characteristic discrete logarithms, approximate Nash equilibria, log-rank communication complexity and dense graph reconstruction. The log-rank method exposes a crucial distinction between a relaxed matrix model and exact Boolean structure.</p>
+<p class="home-card-links"><a href="MATHEMATICAL_DEVELOPMENTS/#cogentic-arithmetic-communication-and-reconstruction">Read the analysis</a> · <a href="https://github.com/grandchallenge/MATHFORGE/pull/618">GCL method extraction</a></p>
+</article>
+<article class="home-research-card">
 <p class="home-kicker">24 November · Optimization</p>
 <h3>Optimization without walking the edges</h3>
 <p class="home-research-status">Source claims; selected publisher formalizations</p>
