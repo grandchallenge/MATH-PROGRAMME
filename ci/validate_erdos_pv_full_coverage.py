@@ -149,6 +149,15 @@ def validate_five_source_scope(row, root=ROOT):
             census=dict((n,a.split(', ')) for n,a in re.findall(r"'Erdos562\.([^']+)' depends on axioms: \[([^\]]*)\]",log))
             ensure(len(census)==27 and census==replay['axioms'] and {'finite_at_root','provider_root_lower','nonstrict_counterexample'}.issubset(census)
                    and all(set(a)<={'propext','Classical.choice','Quot.sound'} for a in census.values()) and 'sorryAx' not in log and 'error:' not in log,'562 B: axiom or theorem census drift')
+            if v['work_status']=='PROTECTED_ADMITTED':
+                custody=read(prefix+'B_PROTECTED_CUSTODY_BINDING_001.json',root)
+                ensure(custody.get('assignment_id')=='ERDOS-PV-0562-B'
+                       and custody.get('protected_evidence_merge_commit')=='983e98f7971b67623461149068091e91e1a22b06'
+                       and v['protected_admission_ref']=='grandchallenge/MATH-PROGRAMME@'+custody['protected_evidence_merge_commit']
+                       and custody.get('claim_sha')==ret.get('claim_sha')
+                       and custody.get('unique_result_sha256')==ret.get('return_body_sha256')
+                       and custody.get('full_conjecture_proved') is False
+                       and custody.get('mathcert_certified') is False,'562 B: exact custody identity drift')
             ensure(ret.get('assignment_id')=='ERDOS-PV-0562-B' and ret.get('claim_sha')==replay.get('claim_sha')
                    and ret.get('source_issue_body_sha256')==row['source_issue_body_sha256'] and ret.get('return_comment_id')==7214795921
                    and ret.get('candidate_not_protected') is True,'562 B: exact worker return drift')
