@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # CMDG-CM4 — Free Solid Abelian Groups on Profinite Spaces
 
 <p class="page-deck">A human-facing account of GCL's protected CM4 result: what was proved, why the inherited route was difficult, how the Point-functional bypass works, what remains open, and where to follow the live external-review and mathlib-upstream work.</p>

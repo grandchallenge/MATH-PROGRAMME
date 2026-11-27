@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Erdős problem 27: why a short interval of moduli cannot cover almost everything
 
 *Verification record, 25 November 2026; Grand Challenge Labs.*

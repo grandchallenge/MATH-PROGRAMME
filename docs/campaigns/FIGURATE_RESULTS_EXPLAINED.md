@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Figurate tuples: existence, obstruction and global arithmetic
 
 *FIGURATE mathematical guide · originally 4 November 2026; research synthesis updated 10 November 2026*

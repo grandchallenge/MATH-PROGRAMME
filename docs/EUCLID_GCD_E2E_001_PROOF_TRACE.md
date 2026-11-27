@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Euclidean GCD: an end-to-end certified proof trace
 
 **Accessible research guide:** [EUCLID-GCD-E2E-001 Research Guide](EUCLID_GCD_E2E_001_RESEARCH_GUIDE.md)

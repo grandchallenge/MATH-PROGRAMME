@@ -41,6 +41,22 @@ The reader should always be able to tell whether a statement is exploratory,
 audited, exactly computed, certificate-replayed, formally proved, rejected,
 superseded, or still open.
 
+## Focused mathematical reading
+
+For substantial self-contained mathematical expositions, research guides, proof
+narratives, and explanatory verification articles, use the page-local MkDocs
+Material metadata `hide: [navigation]` (or its equivalent YAML list). Keep the
+article table of contents, header, and navigation tree intact. Preserve
+existing front matter and mathematical text.
+
+Retain the left navigation on indexes, campaign landing pages, dashboards,
+evidence ledgers, reference and governance pages, where browsing across
+documents is part of the task. Bespoke documentary readers retain their own
+contents and focus controls; do not hand-edit generated source mirrors or
+archived release artifacts for layout. Choose by the reader's task, not a
+mechanical word-count cutoff. Verify rendered sidebar visibility, internal
+navigation and unchanged mathematical content before protected publication.
+
 ## Voice
 
 Use a voice that is:

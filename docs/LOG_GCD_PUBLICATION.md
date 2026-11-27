@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # The logarithmic GCD kernel
 
 <p class="page-deck">A certified arithmetic kernel, an explicit finite feature map, and a publication boundary that distinguishes a new formal artifact from classical mathematics.</p>

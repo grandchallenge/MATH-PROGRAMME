@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Erdős problem 560 — what has actually been verified?
 
 *Documentary evidence record · 17 November 2026 · Grand Challenge Labs*

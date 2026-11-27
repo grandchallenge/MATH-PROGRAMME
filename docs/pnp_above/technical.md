@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Technical spine: theorem interfaces and classical transfer
 
 <p class="page-deck">The precise mathematical meaning, assumptions, and limitations of the MIP*-motivated PNP-ABOVE programme.</p>

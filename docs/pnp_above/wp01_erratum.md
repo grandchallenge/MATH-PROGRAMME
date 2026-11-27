@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # PNP-ABOVE — Source erratum and WP01 mathematical update
 
 **Edition:** 1 November 2026  

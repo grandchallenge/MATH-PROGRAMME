@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # The solidity of free solid abelian groups: a formal underived argument
 
 *Mathematical exposition for independent scrutiny · CM4 · 8 October 2026*

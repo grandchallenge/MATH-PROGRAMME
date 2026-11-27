@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # CMDG-CM4 — Accessible Research Guide
 
 <p class="page-deck">An entry path for readers who want to understand, review, or help upstream the CM4 solidity result without first reconstructing the entire CMDG campaign.</p>
