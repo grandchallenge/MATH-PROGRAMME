@@ -1,0 +1,425 @@
+/-
+Copyright 2025 The Formal Conjectures Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-/
+module
+
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Order.Lattice.Nat
+
+public import Std
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Order.Lattice.Nat
+
+@[expose] public section
+
+/-!
+# Hypergraph Ramsey Numbers
+
+This file defines the `r`-uniform hypergraph Ramsey number `R_r(n)`.
+-/
+
+namespace Combinatorics
+
+/--
+The `r`-uniform hypergraph Ramsey number `R_r(n)`.
+The smallest natural number `m` such that every 2-coloring of the `r`-subsets of a set of size `m`
+contains a monochromatic subset of size `n`.
+-/
+noncomputable def hypergraphRamsey (r n : ℕ) : ℕ :=
+  sInf { m | ∀ (c : Finset (Fin m) → Bool),
+    ∃ (S : Finset (Fin m)), S.card = n ∧
+      ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }
+
+/-- `n ≤ hypergraphRamsey r n` when the set is nonempty. -/
+theorem le_hypergraphRamsey (r n : ℕ) (hne : { m | ∀ (c : Finset (Fin m) → Bool),
+    ∃ (S : Finset (Fin m)), S.card = n ∧
+      ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }.Nonempty) :
+    n ≤ hypergraphRamsey r n := by
+  apply le_csInf hne
+  intro m hm
+  have : ∃ (S : Finset (Fin m)), S.card = n ∧ _ := hm (fun _ ↦ false)
+  obtain ⟨S, hS, -⟩ := this
+  calc n = S.card := hS.symm
+    _ ≤ Fintype.card (Fin m) := Finset.card_le_univ S
+    _ = m := Fintype.card_fin m
+
+/-- `hypergraphRamsey r r = r` for any `r`. -/
+theorem hypergraphRamsey_self (r : ℕ) : hypergraphRamsey r r = r := by
+  have h_mem : r ∈ { m | ∀ (c : Finset (Fin m) → Bool),
+      ∃ (S : Finset (Fin m)), S.card = m ∧
+        ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color } := by
+    intro c
+    refine ⟨Finset.univ, ?_, c Finset.univ, ?_⟩
+    · simp [Fintype.card_fin]
+    · intro e _ he_card
+      congr 1
+      exact Finset.eq_univ_of_card e (he_card.trans (Fintype.card_fin r).symm)
+  exact le_antisymm (Nat.sInf_le h_mem) (le_hypergraphRamsey r r ⟨r, h_mem⟩)
+
+end Combinatorics
+
+namespace Erdos562
+
+/-- Exact integer version of the first-moment exponent comparison. -/
+theorem firstMomentExponent (M n a k : Nat) (hk : 4 ≤ k)
+    (hka : n * a = 6 * k) (hM : M ^ 12 ≤ 2 ^ a) :
+    2 * M ^ n < 2 ^ k := by
+  apply (Nat.pow_lt_pow_iff_left (n := 12) (by decide)).mp
+  calc
+    (2 * M ^ n) ^ 12 = 2 ^ 12 * (M ^ 12) ^ n := by
+      rw [Nat.mul_pow, ← Nat.pow_mul, Nat.mul_comm n 12, Nat.pow_mul]
+    _ ≤ 2 ^ 12 * (2 ^ a) ^ n := Nat.mul_le_mul_left _ (Nat.pow_le_pow_left hM n)
+    _ = 2 ^ (12 + 6 * k) := by
+      rw [← Nat.pow_mul, Nat.mul_comm a n, hka, ← Nat.pow_add]
+    _ < 2 ^ (k * 12) := Nat.pow_lt_pow_right (by decide) (by omega)
+    _ = (2 ^ k) ^ 12 := Nat.pow_mul _ _ _
+
+ theorem filter_or_le {α : Type} (xs : List α) (p q : α → Bool) :
+    (xs.filter (fun x => p x || q x)).length ≤ (xs.filter p).length + (xs.filter q).length := by
+  induction xs with
+  | nil => simp
+  | cons x xs ih =>
+    cases hp : p x <;> cases hq : q x <;> simp [hp, hq] at * <;> omega
+ theorem union_bound {α : Type} (xs : List α) (events : List (α → Bool)) (B : Nat)
+    (h : ∀ p ∈ events, (xs.filter p).length ≤ B) :
+    (xs.filter (fun x => events.any (fun p => p x))).length ≤ events.length * B := by
+  induction events with
+  | nil => simp
+  | cons p ps ih =>
+    have hp := h p (by simp)
+    have hps := ih (fun q hq => h q (by simp [hq]))
+    have hle := filter_or_le xs p (fun x => ps.any (fun q => q x))
+    simp only [List.any_cons, List.length_cons, Nat.add_mul, Nat.one_mul]
+    omega
+ theorem exists_avoids {α : Type} (xs : List α) (events : List (α → Bool)) (B : Nat)
+    (h : ∀ p ∈ events, (xs.filter p).length ≤ B)
+    (hlt : events.length * B < xs.length) : ∃ x ∈ xs, ∀ p ∈ events, p x = false := by
+  classical
+  apply Classical.byContradiction
+  intro hn
+  have hall : ∀ x ∈ xs, events.any (fun p => p x) = true := by
+    intro x hx
+    cases he : events.any (fun p => p x) with
+    | true => rfl
+    | false =>
+      exfalso
+      apply hn
+      refine ⟨x,hx,?_⟩
+      intro p hp
+      have hnot := List.any_eq_false.mp he p hp
+      cases hpx : p x <;> simp_all
+  have heq := List.filter_eq_self.mpr hall
+  have hu := union_bound xs events B h
+  rw [heq] at hu
+  omega
+
+def bits : Nat → List (List Bool)
+  | 0 => [[]]
+  | n+1 => (bits n).map (false :: ·) ++ (bits n).map (true :: ·)
+def free : List (Option Bool) → Nat
+  | [] => 0
+  | none :: ms => free ms + 1
+  | some _ :: ms => free ms
+def fits : List (Option Bool) → List Bool → Bool
+  | [], [] => true
+  | none :: ms, _ :: bs => fits ms bs
+  | some a :: ms, b :: bs => (a == b) && fits ms bs
+  | _, _ => false
+ theorem bits_length (m : Nat) : (bits m).length = 2^m := by
+  induction m with
+  | zero => rfl
+  | succ m ih => simp [bits, ih, Nat.pow_succ, Nat.mul_two]
+ theorem mask_count (ms : List (Option Bool)) :
+    ((bits ms.length).filter (fits ms)).length = 2^(free ms) := by
+  induction ms with
+  | nil => rfl
+  | cons a ms ih =>
+    cases a with
+    | none => simp [bits, free, fits, List.filter_map, Function.comp_def, ih, Nat.pow_succ, Nat.mul_two]
+    | some b => cases b <;> simp [bits, free, fits, List.filter_map, Function.comp_def, ih]
+
+/-- Finite first moment for a family of masks fixing exactly k of T coordinates. -/
+theorem avoids_masks (T k : Nat) (ms : List (List (Option Bool)))
+    (hk : k ≤ T) (hmask : ∀ m ∈ ms, m.length = T ∧ free m = T-k)
+    (hc : ms.length < 2^k) :
+    ∃ b ∈ bits T, ∀ m ∈ ms, fits m b = false := by
+  have hbound : ∀ q ∈ ms.map fits, ((bits T).filter q).length ≤ 2^(T-k) := by
+    intro q hq
+    obtain ⟨m, hm, rfl⟩ := List.mem_map.mp hq
+    obtain ⟨hmT, hfree⟩ := hmask m hm
+    rw [← hmT, mask_count, hfree, hmT]
+  have hstrict : (ms.map fits).length * 2^(T-k) < (bits T).length := by
+    rw [List.length_map, bits_length]
+    calc
+      ms.length * 2^(T-k) < 2^k * 2^(T-k) := Nat.mul_lt_mul_of_pos_right hc (Nat.pow_pos (by decide))
+      _ = 2^T := by rw [← Nat.pow_add, Nat.add_sub_of_le hk]
+  obtain ⟨b, hb, havoid⟩ := exists_avoids (bits T) (ms.map fits) (2^(T-k)) hbound hstrict
+  refine ⟨b,hb,?_⟩
+  intro m hm
+  exact havoid (fits m) (List.mem_map.mpr ⟨m,hm,rfl⟩)
+/-- Integer first-moment bound; the combinatorial encoding obligations remain explicit. -/
+theorem first_moment_masks (M n a k T : Nat) (ms : List (List (Option Bool)))
+    (hk : 4 ≤ k) (hkT : k ≤ T) (hka : n*a = 6*k) (hM : M^12 ≤ 2^a)
+    (hcount : ms.length ≤ 2*M^n)
+    (hmask : ∀ m ∈ ms, m.length = T ∧ free m = T-k) :
+    ∃ b ∈ bits T, ∀ m ∈ ms, fits m b = false :=
+  avoids_masks T k ms hkT hmask (Nat.lt_of_le_of_lt hcount (firstMomentExponent M n a k hk hka hM))
+#print axioms firstMomentExponent
+#print axioms filter_or_le
+#print axioms union_bound
+#print axioms exists_avoids
+#print axioms bits_length
+#print axioms mask_count
+#print axioms avoids_masks
+#print axioms first_moment_masks
+
+/-- A mask is generated from an actual ordered list of edges and a selection predicate. -/
+def edgeMask {α : Type} (es : List α) (P : α → Bool) (c : Bool) : List (Option Bool) :=
+  es.map (fun e => if P e then some c else none)
+def edgeColor {α : Type} [DecidableEq α] : List α → List Bool → α → Bool
+  | e::es, b::bs, x => if x = e then b else edgeColor es bs x
+  | _, _, _ => false
+ theorem edgeMask_length {α : Type} (es : List α) (P : α → Bool) (c : Bool) :
+    (edgeMask es P c).length = es.length := by simp [edgeMask]
+ theorem edgeMask_free {α : Type} (es : List α) (P : α → Bool) (c : Bool) :
+    free (edgeMask es P c) = es.length - (es.filter P).length := by
+  induction es with
+  | nil => rfl
+  | cons e es ih =>
+    have hb := List.length_filter_le P es
+    cases hp : P e <;> simp [edgeMask, hp, free] at * <;> omega
+ theorem bits_mem_length {T : Nat} {b : List Bool} (h : b ∈ bits T) : b.length = T := by
+  induction T generalizing b with
+  | zero => simpa [bits] using h
+  | succ T ih =>
+    simp only [bits, List.mem_append, List.mem_map] at h
+    rcases h with ⟨bs, hb, rfl⟩ | ⟨bs, hb, rfl⟩ <;> simp [ih hb]
+ theorem fits_edgeMask_of_mono {α : Type} [DecidableEq α] (es : List α) (bs : List Bool)
+    (P : α → Bool) (c : Bool) (hn : es.Nodup) (hl : bs.length = es.length)
+    (hm : ∀ e ∈ es, P e = true → edgeColor es bs e = c) : fits (edgeMask es P c) bs = true := by
+  induction es generalizing bs with
+  | nil => cases bs <;> simp_all [edgeMask, fits]
+  | cons e es ih =>
+    cases bs with
+    | nil => simp at hl
+    | cons b bs =>
+      have hnd := List.nodup_cons.mp hn
+      have ht : ∀ x ∈ es, P x = true → edgeColor es bs x = c := by
+        intro x hx hp
+        have hne : x ≠ e := fun h => hnd.1 (h ▸ hx)
+        have hh := hm x (by simp [hx]) hp
+        simpa [edgeColor, hne] using hh
+      have tail := ih bs hnd.2 (by simpa using hl) ht
+      cases hp : P e with
+      | false => simpa [edgeMask, hp, fits] using tail
+      | true =>
+        have head : b = c := by simpa [edgeColor] using hm e (by simp) hp
+        simpa [edgeMask, hp, fits, head] using tail
+#print axioms edgeMask_length
+#print axioms edgeMask_free
+#print axioms bits_mem_length
+#print axioms fits_edgeMask_of_mono
+
+/-- Exact predicate queried by the locked provider for a triple coloring. -/
+def RamseyProperty (M n : Nat) : Prop :=
+  ∀ (c : Finset (Fin M) → Bool), ∃ (S : Finset (Fin M)), S.card = n ∧
+    ∃ (color : Bool), ∀ (e : Finset (Fin M)), e ⊆ S → e.card = 3 → c e = color
+
+ theorem finite_first_moment (M n : Nat) (hcount : 2 * M.choose n < 2 ^ n.choose 3) :
+    ¬ RamseyProperty M n := by
+  classical
+  by_cases hsmall : M < n
+  · intro h
+    obtain ⟨S,hS,_,_⟩ := h (fun _ => false)
+    have hb := Finset.card_le_univ S
+    rw [Fintype.card_fin, hS] at hb
+    omega
+  let E := (Finset.univ : Finset (Fin M)).powersetCard 3
+  let Ss := (Finset.univ : Finset (Fin M)).powersetCard n
+  let es := E.toList
+  let mk := fun (S : Finset (Fin M)) (c : Bool) => edgeMask es (fun e => decide (e ⊆ S)) c
+  let ms := Ss.toList.map (fun S => mk S false) ++ Ss.toList.map (fun S => mk S true)
+  have hE : es.length = M.choose 3 := by simp [es,E,Finset.length_toList,Finset.card_powersetCard]
+  have hSs : Ss.toList.length = M.choose n := by simp [Ss,Finset.length_toList,Finset.card_powersetCard]
+  have hfilter (S : Finset (Fin M)) : (es.filter (fun e => decide (e ⊆ S))).length = S.card.choose 3 := by
+    have hn := E.nodup_toList.filter (fun e => decide (e ⊆ S))
+    change (E.toList.filter (fun e => decide (e ⊆ S))).length = _
+    rw [← List.toFinset_card_of_nodup hn, List.toFinset_filter, Finset.toList_toFinset]
+    have heq : E.filter (fun e => decide (e ⊆ S) = true) = S.powersetCard 3 := by
+      ext e
+      simp [E,Finset.mem_powersetCard, and_comm]
+    rw [heq,Finset.card_powersetCard]
+  have hmasks : ∀ m ∈ ms, m.length = es.length ∧ free m = es.length - n.choose 3 := by
+    intro m hm
+    have hx : ∃ S ∈ Ss.toList, ∃ c : Bool, m = mk S c := by
+      simp only [ms,List.mem_append,List.mem_map] at hm
+      rcases hm with ⟨S,hS,rfl⟩ | ⟨S,hS,rfl⟩
+      · exact ⟨S,hS,false,rfl⟩
+      · exact ⟨S,hS,true,rfl⟩
+    obtain ⟨S,hS,c,rfl⟩ := hx
+    have hcard := (Finset.mem_powersetCard.mp (Finset.mem_toList.mp hS)).2
+    refine ⟨edgeMask_length _ _ _, ?_⟩
+    change free (edgeMask es (fun e => decide (e ⊆ S)) c) = _
+    rw [edgeMask_free,hfilter,hcard]
+  have hms : ms.length < 2^n.choose 3 := by
+    simpa [ms,hSs,Nat.two_mul] using hcount
+  have hk : n.choose 3 ≤ es.length := by
+    rw [hE]; exact Nat.choose_le_choose 3 (by omega)
+  obtain ⟨bs,hbs,havoid⟩ := avoids_masks es.length (n.choose 3) ms hk hmasks hms
+  intro hall
+  obtain ⟨S,hS,c,hmono⟩ := hall (edgeColor es bs)
+  have hmem : S ∈ Ss.toList := by simp [Ss,Finset.mem_powersetCard,hS]
+  have hmaskmem : mk S c ∈ ms := by
+    cases c
+    · exact List.mem_append_left _ (List.mem_map.mpr ⟨S,hmem,rfl⟩)
+    · exact List.mem_append_right _ (List.mem_map.mpr ⟨S,hmem,rfl⟩)
+  have hfit : fits (mk S c) bs = true := by
+    apply fits_edgeMask_of_mono es bs _ c E.nodup_toList (bits_mem_length hbs)
+    intro e he hp
+    exact hmono e (of_decide_eq_true hp) (Finset.mem_powersetCard.mp (Finset.mem_toList.mp he)).2
+  have hbad := havoid (mk S c) hmaskmem
+  rw [hfit] at hbad
+  contradiction
+#print axioms finite_first_moment
+
+ theorem choose_le_pow_elementary (M n : Nat) : M.choose n ≤ M^n := by
+  induction M generalizing n with
+  | zero => cases n <;> simp
+  | succ M ih =>
+    cases n with
+    | zero => simp
+    | succ n =>
+      rw [Nat.choose_succ_succ]
+      calc
+        M.choose n + M.choose (n+1) ≤ M^n + M^(n+1) := Nat.add_le_add (ih n) (ih (n+1))
+        _ = M^n * (M+1) := by rw [Nat.pow_succ, Nat.mul_add, Nat.mul_one, Nat.add_comm]
+        _ ≤ (M+1)^n * (M+1) := Nat.mul_le_mul_right _ (Nat.pow_le_pow_left (Nat.le_succ M) n)
+        _ = (M+1)^(n+1) := (Nat.pow_succ _ _).symm
+ theorem choose_three_identity (n : Nat) : n * ((n-1)*(n-2)) = 6*n.choose 3 := by
+  have h2 : n.choose 2 * 2 = n * (n-1) := by
+    simpa only [Nat.choose_one_right] using Nat.choose_succ_right_eq n 1
+  have h3 : n.choose 3 * 3 = n.choose 2 * (n-2) := Nat.choose_succ_right_eq n 2
+  calc
+    n * ((n-1)*(n-2)) = (n*(n-1))*(n-2) := by ac_rfl
+    _ = (n.choose 2 * 2)*(n-2) := by rw [h2]
+    _ = 2*(n.choose 2*(n-2)) := by ac_rfl
+    _ = 2*(n.choose 3*3) := by rw [h3]
+    _ = 6*n.choose 3 := by omega
+ theorem finite_integer_bound (M n : Nat) (hn : 4 ≤ n)
+    (hM : M^12 ≤ 2^((n-1)*(n-2))) : ¬ RamseyProperty M n := by
+  apply finite_first_moment
+  have hk : 4 ≤ n.choose 3 := (show 4 ≤ (4:Nat).choose 3 by decide).trans (Nat.choose_le_choose 3 hn)
+  have h := firstMomentExponent M n ((n-1)*(n-2)) (n.choose 3) hk (choose_three_identity n) hM
+  exact Nat.lt_of_le_of_lt (Nat.mul_le_mul_left 2 (choose_le_pow_elementary M n)) h
+ theorem all_smaller_fail (M n : Nat) (hn : 4 ≤ n)
+    (hM : M^12 ≤ 2^((n-1)*(n-2))) : ∀ m ≤ M, ¬ RamseyProperty m n := by
+  intro m hm
+  exact finite_integer_bound m n hn ((Nat.pow_le_pow_left hm 12).trans hM)
+#print axioms choose_le_pow_elementary
+#print axioms choose_three_identity
+#print axioms finite_integer_bound
+#print axioms all_smaller_fail
+
+ theorem exists_power_cut (a : Nat) : ∃ m : Nat, 2^a < m^12 := by
+  refine ⟨2^a+1, ?_⟩
+  calc
+    2^a < 2^a+1 := Nat.lt_succ_self _
+    _ = (2^a+1)^1 := by simp
+    _ ≤ (2^a+1)^12 := Nat.pow_le_pow_right (Nat.zero_lt_succ _) (by decide)
+/-- Exact integer root, avoiding rounding or any floating point computation. -/
+def rootFloor (a : Nat) : Nat := Nat.find (exists_power_cut a) - 1
+ theorem root_cut_pos (a : Nat) : 0 < Nat.find (exists_power_cut a) := by
+  have hs := Nat.find_spec (exists_power_cut a)
+  by_contra h
+  have hz : Nat.find (exists_power_cut a) = 0 := by omega
+  rw [hz] at hs
+  simp at hs
+ theorem rootFloor_lower (a : Nat) : (rootFloor a)^12 ≤ 2^a := by
+  apply Nat.le_of_not_gt
+  intro h
+  have hm := Nat.find_min' (exists_power_cut a) h
+  have hp := root_cut_pos a
+  unfold rootFloor at hm
+  omega
+ theorem rootFloor_upper (a : Nat) : 2^a < (rootFloor a + 1)^12 := by
+  have hp := root_cut_pos a
+  have he : rootFloor a + 1 = Nat.find (exists_power_cut a) := by
+    unfold rootFloor
+    omega
+  rw [he]
+  exact Nat.find_spec (exists_power_cut a)
+/-- Literal definitional mirror of the source-locked hypergraphRamsey body.
+    Source: google-deepmind/formal-conjectures@85f863718beeec7b58a3a1926ee92e3472bc2020,
+    FormalConjecturesForMathlib/Combinatorics/Ramsey.lean, Apache-2.0. -/
+noncomputable def providerRamsey (r n : Nat) : Nat :=
+  sInf { m | ∀ (c : Finset (Fin m) → Bool),
+    ∃ (S : Finset (Fin m)), S.card = n ∧
+      ∃ (color : Bool), ∀ (e : Finset (Fin m)), e ⊆ S → e.card = r → c e = color }
+ theorem provider_triple_eq (n : Nat) : providerRamsey 3 n = sInf {m | RamseyProperty m n} := rfl
+/-- The only external hypothesis is finite hypergraph Ramsey existence, not a lower bound. -/
+ theorem provider_root_lower (n : Nat) (hn : 4 ≤ n)
+    (hfinite : ∃ m, RamseyProperty m n) : rootFloor ((n-1)*(n-2)) < providerRamsey 3 n := by
+  rw [provider_triple_eq]
+  have hne : ({m | RamseyProperty m n} : Set Nat).Nonempty := hfinite
+  have hmem : RamseyProperty (sInf {m | RamseyProperty m n}) n := Nat.sInf_mem hne
+  apply Nat.lt_of_not_ge
+  intro hle
+  exact all_smaller_fail (rootFloor ((n-1)*(n-2))) n hn (rootFloor_lower _) _ hle hmem
+#print axioms exists_power_cut
+#print axioms root_cut_pos
+#print axioms rootFloor_lower
+#print axioms rootFloor_upper
+#print axioms provider_triple_eq
+#print axioms provider_root_lower
+
+/-- Sharp hostile equality control: a triple on exactly three vertices is monochromatic. -/
+theorem three_three_property : RamseyProperty 3 3 := by
+  intro c
+  refine ⟨Finset.univ, by simp, c Finset.univ, ?_⟩
+  intro e _ he
+  have heq : e = Finset.univ := Finset.eq_univ_of_card e (he.trans (Fintype.card_fin 3).symm)
+  rw [heq]
+theorem equality_boundary : 2 * (3:Nat).choose 3 = 2^(3:Nat).choose 3 ∧ RamseyProperty 3 3 := by
+  exact ⟨by decide, three_three_property⟩
+#print axioms three_three_property
+#print axioms equality_boundary
+
+/-- The assigned finite colouring theorem, with the exact integer root size. -/
+theorem finite_at_root (n : Nat) (hn : 4 ≤ n) :
+    ¬ RamseyProperty (rootFloor ((n-1)*(n-2))) n :=
+  finite_integer_bound _ n hn (rootFloor_lower _)
+/-- Replacing the strict first-moment inequality by a weak inequality is false. -/
+theorem nonstrict_counterexample :
+    ¬ (∀ M n : Nat, 2*M.choose n ≤ 2^n.choose 3 → ¬ RamseyProperty M n) := by
+  intro h
+  exact h 3 3 (by decide) three_three_property
+#print axioms finite_at_root
+#print axioms nonstrict_counterexample
+end Erdos562
+
+namespace Erdos562
+ theorem upstream_definitional_bridge (r n : Nat) : providerRamsey r n = Combinatorics.hypergraphRamsey r n := rfl
+ theorem upstream_root_bound (n : Nat) (hn : 4 ≤ n) (hf : ∃ m, RamseyProperty m n) :
+    rootFloor ((n-1)*(n-2)) < Combinatorics.hypergraphRamsey 3 n := by
+  rw [← upstream_definitional_bridge]
+  exact provider_root_lower n hn hf
+#print axioms upstream_definitional_bridge
+#print axioms upstream_root_bound
+#print axioms Combinatorics.le_hypergraphRamsey
+#print axioms Combinatorics.hypergraphRamsey_self
+end Erdos562
