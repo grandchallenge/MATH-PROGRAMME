@@ -4,13 +4,14 @@ import CMDGCondensedCM4P3DerivedCM5R0CompactBoxProjectionHom
 The target is the genuine space of continuous maps into the real
 product with the external profinite probe retained. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace CMDG.CondensedCM5R0.RealProductProjection
-open CompactCover.Dyadic RealProductCondensedColimit RealProductCompactExhaustion
+open CompactCover CompactCover.Dyadic RealProductCondensedColimit RealProductCompactExhaustion
 variable (S : Profinite.{u}) (I : Type u)
 
-def radiusDiagram : Radius I ⥤ CompHaus.{u} where
+abbrev radiusDiagram : Radius I ⥤ CompHaus.{u} where
   obj := radiusBox S I
   map := radiusInclusion S I
   map_id r := by
@@ -30,7 +31,7 @@ def radiusDiagram : Radius I ⥤ CompHaus.{u} where
       apply Subtype.ext
       rfl
 
-def probeRealSet : CondensedSet.{u} :=
+abbrev probeRealSet : CondensedSet.{u} :=
   topCatToCondensedSet.obj (TopCat.of (ULift.{u+1,u} (S × (I → ℝ))))
 
 def radiusToReal (r : Radius I) :
@@ -46,17 +47,17 @@ def probeRealCocone : Cocone (radiusDiagram S I ⋙ compHausToCondensed) where
         (coherentTopology CompHaus.{u}).uliftYonedaEquiv.symm (radiusToReal S I r)
       naturality := by
         intro r t f
-        change compHausToCondensed.map (radiusInclusion S I f) ≫
-            (coherentTopology CompHaus.{u}).uliftYonedaEquiv.symm (radiusToReal S I t) = _
-        rw [(coherentTopology CompHaus.{u}).uliftYonedaEquiv_symm_naturality_left]
+        apply Sheaf.hom_ext
+        apply NatTrans.ext
+        funext T
+        ext x
         rfl }
 
 theorem probeRealCocone_app_apply (r : Radius I) (T : CompHaus.{u}ᵒᵖ)
     (x : T.unop ⟶ radiusBox S I r) :
     ((probeRealCocone S I).ι.app r).hom.app T ⟨x⟩ =
       (radiusToReal S I r).comp x.hom.hom := by
-  exact (coherentTopology CompHaus.{u}).uliftYonedaEquiv_symm_app_apply
-    (F := probeRealSet S I) (radiusToReal S I r) T x
+  rfl
 
 def probeRealSectionsColimit (T : CompHaus.{u}ᵒᵖ) :
     IsColimit (((evaluation CompHaus.{u}ᵒᵖ (Type (u+1))).obj T).mapCocone
@@ -85,6 +86,8 @@ def probeRealSectionsColimit (T : CompHaus.{u}ᵒᵖ) :
     refine ⟨⟨b,hb⟩,homOfLE hr,homOfLE ht,?_⟩
     change ((probeRealCocone S I).ι.app r).hom.app T x =
       ((probeRealCocone S I).ι.app t).hom.app T y at h
+    change ULift.{u+1,u} (T.unop ⟶ radiusBox S I r) at x
+    change ULift.{u+1,u} (T.unop ⟶ radiusBox S I t) at y
     rcases x with ⟨x⟩
     rcases y with ⟨y⟩
     rw [probeRealCocone_app_apply,probeRealCocone_app_apply] at h
@@ -94,7 +97,8 @@ def probeRealSectionsColimit (T : CompHaus.{u}ᵒᵖ) :
     have hs := congrArg (fun k : C(T.unop, ULift.{u+1,u} (S × (I → ℝ))) =>
       (k s).down) h
     apply Prod.ext
-    · exact congrArg Prod.fst hs
+    · change (x.hom.hom s).1 = (y.hom.hom s).1
+      exact congrArg (fun p : S × (I → ℝ) => p.1) hs
     · apply inclusion_injective b
       exact congrArg Prod.snd hs
 
@@ -102,7 +106,7 @@ def probeRealIsColimit : IsColimit (probeRealCocone S I) := by
   apply isColimitOfReflects forgetSheaf
   exact evaluationJointlyReflectsColimits _ (probeRealSectionsColimit S I)
 
-def freeProbeRealCocone := (Condensed.free Coeff).mapCocone (probeRealCocone S I)
+abbrev freeProbeRealCocone := (Condensed.free Coeff).mapCocone (probeRealCocone S I)
 
 def freeProbeRealIsColimit : IsColimit (freeProbeRealCocone S I) := by
   letI := (Condensed.freeForgetAdjunction Coeff).isLeftAdjoint
@@ -118,7 +122,8 @@ def projectionCocone : Cocone ((radiusDiagram S I ⋙ compHausToCondensed) ⋙
         intro r t f
         change compactFreeFunctor.map (radiusInclusion S I f) ≫
           compactFreeFunctor.map (radiusProjection S I t) = _
-        rw [← Functor.map_comp,radiusInclusion_projection] }
+        rw [← Functor.map_comp,radiusInclusion_projection]
+        exact (Category.comp_id _).symm }
 
 def realProjection : (freeProbeRealCocone S I).pt ⟶
     compactFreeFunctor.obj (profiniteToCompHaus.obj S) :=
@@ -141,6 +146,7 @@ theorem realProjection_hom_bijective :
     apply (radiusHomEquiv S I r).injective
     change compactFreeFunctor.map (radiusProjection S I r) ≫ g =
       compactFreeFunctor.map (radiusProjection S I r) ≫ h
+    change realProjection S I ≫ g = realProjection S I ≫ h at he
     rw [← realProjection_restrict S I r,Category.assoc,Category.assoc,he]
   · intro g
     let r₀ : Radius I := ⟨fun _ => 0,fun _ => le_rfl⟩

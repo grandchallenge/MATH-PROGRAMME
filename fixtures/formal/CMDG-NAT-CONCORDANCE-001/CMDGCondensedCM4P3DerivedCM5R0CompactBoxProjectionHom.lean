@@ -47,6 +47,7 @@ theorem probeToBox_boxToProbe :
   intro x
   rfl
 
+include h in
 /-- Constant on each connected box fiber, including degenerate axes. -/
 theorem boxFiberConstant (f : LocallyConstant (probeBoxT S I a b) Coeff)
     (s : S) (x y : ∀ i, Set.Icc (a i) (b i)) : f (s,x) = f (s,y) := by
@@ -87,7 +88,7 @@ theorem boxProjectionHomEquiv_apply
 end CMDG.CondensedCM5R0.CompactCover.Dyadic
 
 namespace CMDG.CondensedCM5R0.RealProductProjection
-open CompactCover.Dyadic
+open CompactCover CompactCover.Dyadic
 open RealProductCondensedColimit
 open RealProductCompactExhaustion
 variable (S : Profinite.{u}) (I : Type u)

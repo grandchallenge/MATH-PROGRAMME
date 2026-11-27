@@ -15,7 +15,9 @@ $$
 
 The proof below reconstructs this claim in source mathematics. The Lean
 candidate handles the canonical degree-zero comparison and the actual
-relative colimit; these declarations require exact-head native replay.
+relative colimit; these declarations passed local SSD Lean replay after repair of the initial native compiler diagnostics; protected exact-head native replay remains required.
+Local captures: degree-zero projection and radius naturality, a81eeba5899c4f09925932b2e2313ee4 (first module succeeded; second failed in that capture); final relative colimit and full degree-zero bijectivity, bf8b7f1617d243d1bae8f9680be16009 (exit 0). All successful declarations report only propext, Classical.choice and Quot.sound.
+
 The all-degree categorical simplicial-replacement transport below is
 not yet a kernel-checked theorem. No final CM5 unit or certification
 claim is made.
