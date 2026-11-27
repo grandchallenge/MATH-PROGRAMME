@@ -1,0 +1,34 @@
+SSD_WORKSPACE=/mnt/gcl-lean-work/workspaces/erdos27-period-1bb2ea5 TOOLCHAIN=/mnt/gcl-lean-work/elan/toolchains/leanprover--lean4---v4.33.0
+'Erdos562.firstMomentExponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.filter_or_le' depends on axioms: [propext, Quot.sound]
+'Erdos562.union_bound' depends on axioms: [propext, Quot.sound]
+'Erdos562.exists_avoids' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.bits_length' depends on axioms: [propext]
+'Erdos562.mask_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.avoids_masks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.first_moment_masks' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.edgeMask_length' depends on axioms: [propext]
+'Erdos562.edgeMask_free' depends on axioms: [propext, Quot.sound]
+'Erdos562.bits_mem_length' depends on axioms: [propext, Quot.sound]
+'Erdos562.fits_edgeMask_of_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.finite_first_moment' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.choose_le_pow_elementary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.choose_three_identity' depends on axioms: [propext, Quot.sound]
+'Erdos562.finite_integer_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.all_smaller_fail' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.exists_power_cut' depends on axioms: [propext]
+'Erdos562.root_cut_pos' depends on axioms: [propext, Quot.sound]
+'Erdos562.rootFloor_lower' depends on axioms: [propext, Quot.sound]
+'Erdos562.rootFloor_upper' depends on axioms: [propext, Quot.sound]
+'Erdos562.provider_triple_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.provider_root_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.three_three_property' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.equality_boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.finite_at_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos562.nonstrict_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+/mnt/gcl-lean-work/workspaces/erdos562-arithmetic-20261126/Erdos562Hostile.lean:346:2: error: Type mismatch
+  Erdos562.nonstrict_counterexample
+has type
+  ¬∀ (M n : ℕ), 2 * M.choose n ≤ 2 ^ n.choose 3 → ¬Erdos562.RamseyProperty M n
+but is expected to have type
+  ∀ (M n : ℕ), 2 * M.choose n ≤ 2 ^ n.choose 3 → ¬Erdos562.RamseyProperty M n
