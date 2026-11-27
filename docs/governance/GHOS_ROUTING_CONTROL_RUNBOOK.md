@@ -115,9 +115,9 @@ This telemetry is evidence for later scalability decisions. Do not introduce nai
 
 ## Programme required checks on merge groups
 
-Every context required by Programme ruleset `17137629` must also execute on merge-group candidates. The Programme policy workflow therefore accepts `merge_group: checks_requested` and conservatively routes merge-group events to full policy and formal replay closure. `GCL conformance` already accepts `merge_group` events.
+Every context required by Programme ruleset `17137629` must also execute on merge-group candidates. The Programme policy workflow accepts `merge_group: checks_requested` and routes the verified exact protected-base-to-merge-group tree transition to its affected policy shards. Formal validation retains its independent material-closure router. `GCL conformance` already accepts `merge_group` events.
 
-Do not optimize merge-group policy impact until the event inputs used for narrowing are themselves governed and tested. A merge-group event with uncertain material delta receives full validation rather than accidental attestation reuse.
+Narrowing requires the exact event/checkout identity, commit existence and base ancestry, and a complete NUL-framed delta including both rename endpoints. Invalid or unavailable identity fails the classifier; unknown path or control-plane impact retains full validation. The required contexts and scheduled full replays remain unchanged. See [Declarative component impact routing](DECLARATIVE_POLICY_COMPONENT_ROUTING.md).
 
 ## Merge-queue configuration
 

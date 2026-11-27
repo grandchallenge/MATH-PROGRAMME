@@ -11,6 +11,7 @@ import argparse
 import fnmatch
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -30,6 +31,7 @@ CONTRACT_MANIFEST_PATH = ROOT / "governance/contract_test_manifest.json"
 COMPONENT_DIR = ROOT / "governance/policy_components"
 COMPONENT_SCHEMA = ROOT / "schemas/policy_component_manifest.schema.json"
 ZERO_SHA = "0" * 40
+SHA40 = re.compile(r"[0-9a-f]{40}")
 ALL_SHARDS = (
     "core",
     "fixtures",
@@ -355,6 +357,52 @@ def shard_impacts(paths: list[str]) -> tuple[list[str], list[str]]:
     return [shard for shard in ALL_SHARDS if shard in active], []
 
 
+# Two existing queue-contract closures. Unknown impact, control-plane
+# changes and full sentinels retain both; no test is retired by routing.
+QUEUE_PICKUP_INPUTS = {
+    "AGENTS.md", "docs/operations/GCL_QUEUE_PICKUP_SEMANTICS.md",
+    "ci/gcl_queue_class_cutover.py", "ci/test_gcl_queue_class_cutover.py",
+    "governance/erdos_catalogue/ROLLING_RESEARCH_024.json",
+}
+QUEUE_ERDOS_INPUTS = {
+    "ci/erdos_compendium.py", "ci/erdos_compendium_public_html_readback.py",
+    "ci/test_erdos_compendium_publication_gate.py",
+    "ci/erdos_compendium_direct_return_projector.py",
+    "ci/test_erdos_compendium_direct_return_projector.py",
+    "ci/test_erdos_compendium_direct_return_permissions.py",
+    "ci/erdos_compendium_editorial_activate.py",
+    "ci/test_erdos_compendium_editorial_activate.py",
+    "ci/erdos_catalogue_queue_projection.py",
+    "tests/test_erdos_catalogue_queue_projection.py",
+    "ci/erdos_catalogue_programme_intake.py", "ci/erdos_return_arbitration.py",
+    "ci/erdos_rolling_review_queue.py", "ci/math_markdown_gate.py",
+    "ci/test_erdos_compendium_editorial_replay.py",
+    ".github/workflows/erdos-catalogue-queue-projection.yml",
+    ".github/workflows/erdos-compendium-editorial-returns.yml",
+}
+QUEUE_ERDOS_ROOTS = (
+    "governance/erdos_catalogue/", "governance/erdos_compendium/",
+    "governance/source_erdos_critical_005/", "governance/source_erdos_565/",
+    "tests/fixtures/erdos_565/", "docs/erdos/",
+)
+QUEUE_SHARED_INPUTS = {"ci/__init__.py", "tests/__init__.py", ".python-version",
+                       "pyproject.toml", "sitecustomize.py", "usercustomize.py"}
+
+
+def queue_contract_impacts(paths: list[str], *, full: bool) -> tuple[bool, bool]:
+    if full or any(p in QUEUE_SHARED_INPUTS or p.startswith("requirements/") for p in paths):
+        return True, True
+    pickup = bool(set(paths) & QUEUE_PICKUP_INPUTS)
+    # Bind the source snapshots referenced by the critical-source verifier,
+    # including a future manifest entry outside the ordinary data roots.
+    snapshots = load_json(ROOT / "governance/source_erdos_critical_005/SOURCE_SNAPSHOTS.json")
+    sources = normalize_paths(row["source_snapshot"] for row in snapshots["items"])
+    erdos = bool(set(paths) & (QUEUE_ERDOS_INPUTS | set(sources))) or any(
+        p.startswith(QUEUE_ERDOS_ROOTS) for p in paths
+    )
+    return pickup, erdos
+
+
 def classify_paths(
     paths: Iterable[str],
     *,
@@ -366,63 +414,73 @@ def classify_paths(
     full_cron = str(control["policy_dag"]["full_policy_sentinel_cron"])
 
     if event_name == "schedule":
-        if schedule == full_cron:
-            return {
-                "event_mode": "full_policy_sentinel",
-                "changed_paths": [],
-                "unknown_paths": [],
-                "policy_shards": list(ALL_SHARDS),
-            }
-        return {
-            "event_mode": "unknown_schedule",
-            "changed_paths": [],
-            "unknown_paths": [f"schedule:{schedule}"],
-            "policy_shards": list(ALL_SHARDS),
-        }
-    if event_name == "workflow_dispatch":
-        return {
-            "event_mode": "manual_full",
-            "changed_paths": changed,
-            "unknown_paths": [],
-            "policy_shards": list(ALL_SHARDS),
-        }
-    if event_name == "merge_group":
-        return {
-            "event_mode": "merge_group_full",
-            "changed_paths": changed,
-            "unknown_paths": [],
-            "policy_shards": list(ALL_SHARDS),
-        }
-
-    shards, unknown = shard_impacts(changed)
-    if event_name == "push":
-        # The Pages workflow consumes the exact successful main-push policy
-        # run's validated-site artifact. That artifact must exist even when
-        # only formal fixtures or other non-documents changed. Keep PR
-        # impact routing selective; ci.yml limits push events to main.
-        shards = [shard for shard in ALL_SHARDS if shard in set(shards) | {"docs"}]
+        changed = []
+        mode = "full_policy_sentinel" if schedule == full_cron else "unknown_schedule"
+        unknown = [] if schedule == full_cron else [f"schedule:{schedule}"]
+        shards = list(ALL_SHARDS)
+    elif event_name == "workflow_dispatch":
+        mode, unknown, shards = "manual_full", [], list(ALL_SHARDS)
+    else:
+        shards, unknown = shard_impacts(changed)
+        mode = "merge_group_transition" if event_name == "merge_group" else "transition"
+        if event_name == "push":
+            # Preserve the exact main-push validated-site artifact contract.
+            shards = [shard for shard in ALL_SHARDS if shard in set(shards) | {"docs"}]
+    pickup, erdos = queue_contract_impacts(changed, full=shards == list(ALL_SHARDS))
     return {
-        "event_mode": "transition",
-        "changed_paths": changed,
-        "unknown_paths": unknown,
-        "policy_shards": shards,
+        "event_mode": mode, "changed_paths": changed, "unknown_paths": unknown,
+        "policy_shards": shards, "queue_pickup": pickup, "queue_erdos": erdos,
     }
 
 
-def git_changed_paths(base: str, head: str) -> list[str]:
-    if not base or not head or base == ZERO_SHA:
-        raise ImpactError("transition diff base/head is unavailable")
+def git_nul_paths(base: str, head: str, *options: str, pathspec: str | None = None) -> list[str]:
+    if not SHA40.fullmatch(base) or not SHA40.fullmatch(head) or base == ZERO_SHA or head == ZERO_SHA:
+        raise ImpactError("transition diff identities must be full nonzero commit SHAs")
+    # A rename changes both owners. NUL framing avoids quoted or split names.
     completed = subprocess.run(
-        ["git", "diff", "--name-only", base, head, "--"],
-        cwd=ROOT,
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
+        ["git", "diff", "--name-only", "--no-renames", "-z", *options, base, head,
+         "--", *([pathspec] if pathspec else [])],
+        cwd=ROOT, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
     if completed.returncode:
-        raise ImpactError(f"git diff failed: {completed.stderr.strip()}")
-    return [line for line in completed.stdout.splitlines() if line.strip()]
+        raise ImpactError("git diff failed")
+    raw = completed.stdout
+    if not raw:
+        return []
+    if not raw.endswith(bytes([0])):
+        raise ImpactError("truncated NUL-delimited Git diff")
+    paths = [p.decode("utf-8", errors="strict") for p in raw[:-1].split(bytes([0]))]
+    if any(not p or any(ord(c) < 32 or c == chr(92) for c in p) for p in paths):
+        raise ImpactError("unsupported Git path in material transition")
+    return normalize_paths(paths)
+
+
+def git_changed_paths(base: str, head: str) -> list[str]:
+    return git_nul_paths(base, head)
+
+
+def verified_merge_group_transition(group: dict) -> tuple[str, str, str]:
+    """Bind to the exact native queue candidate, not its PR or current main."""
+    base = str(group.get("base_sha") or "")
+    head = str(group.get("head_sha") or "")
+    workflow = os.environ.get("GITHUB_SHA")
+    if (not SHA40.fullmatch(base) or not SHA40.fullmatch(head)
+            or base == ZERO_SHA or head == ZERO_SHA or base == head
+            or (workflow and workflow != head)):
+        raise ImpactError("merge-group event identity missing or inconsistent")
+    def git(*args: str):
+        return subprocess.run(["git", *args], cwd=ROOT, check=False,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    checkout = git("rev-parse", "HEAD")
+    if checkout.returncode or checkout.stdout.strip() != head:
+        raise ImpactError("merge-group checkout is not the event head")
+    for sha in (base, head):
+        obj = git("cat-file", "-t", sha)
+        if obj.returncode or obj.stdout.strip() != "commit":
+            raise ImpactError("merge-group commit unavailable")
+    if git("merge-base", "--is-ancestor", base, head).returncode:
+        raise ImpactError("merge-group protected base is not an ancestor of candidate")
+    return base, head, "verified_merge_group"
 
 
 def verified_pull_request_transition(pr: dict) -> tuple[str, str, str]:
@@ -435,7 +493,7 @@ def verified_pull_request_transition(pr: dict) -> tuple[str, str, str]:
     an effective merge. When no exact identity resolves, preserve the former
     conservative base-versus-head tree comparison (never an empty diff).
 
-    merge_group remains unconditional full nine-shard validation.
+    Native merge groups have their own exact-event identity gate.
     """
     base = str(pr.get("base", {}).get("sha") or "")
     head = str(pr.get("head", {}).get("sha") or "")
@@ -473,19 +531,7 @@ def verified_pull_request_transition(pr: dict) -> tuple[str, str, str]:
 
 def newly_added_test_paths(base: str, head: str) -> list[str]:
     """Find added test modules in the exact transition (not existing edits)."""
-    if not base or not head or base == ZERO_SHA:
-        raise ImpactError("transition diff base/head is unavailable")
-    completed = subprocess.run(
-        ["git", "diff", "--name-only", "--diff-filter=A", base, head, "--", "tests/"],
-        cwd=ROOT,
-        check=False,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
-    if completed.returncode:
-        raise ImpactError(f"added-test diff failed: {completed.stderr.strip()}")
-    return [path for path in normalize_paths(completed.stdout.splitlines())
+    return [path for path in git_nul_paths(base, head, "--diff-filter=A", pathspec="tests/")
             if path.startswith("tests/") and path.endswith(".py")]
 
 
@@ -509,6 +555,9 @@ def changed_paths_from_event(event_name: str, event: dict) -> list[str]:
     if event_name == "pull_request":
         base, effective, _ = verified_pull_request_transition(event.get("pull_request", {}))
         return git_changed_paths(base, effective)
+    if event_name == "merge_group":
+        base, head, _ = verified_merge_group_transition(event.get("merge_group", {}))
+        return git_changed_paths(base, head)
     if event_name == "push":
         return git_changed_paths(
             str(event.get("before") or ""),
@@ -524,6 +573,8 @@ def write_output(path: str | None, result: dict) -> None:
         "event_mode": result["event_mode"],
         "policy_shards": json.dumps(result["policy_shards"], separators=(",", ":")),
         "unknown_count": len(result["unknown_paths"]),
+        "queue_pickup": str(result["queue_pickup"]).lower(),
+        "queue_erdos": str(result["queue_erdos"]).lower(),
     }
     with open(path, "a", encoding="utf-8") as handle:
         for key, value in values.items():
@@ -599,30 +650,27 @@ def main() -> int:
             print("policy impact gating control: valid")
             return 0
         event = json.loads(Path(args.event_path).read_text(encoding="utf-8")) if args.event_path else {}
-        paths = changed_paths_from_event(args.event_name, event)
-        # Apply the source-first rendering gate before classifying or admitting any
-        # Markdown transition. This uses the already-fetched exact PR/push base
-        # and head; no separate workflow or broader authority is introduced.
-        if args.event_name in {"pull_request", "push"} and paths:
-            if args.event_name == "pull_request":
-                base, head, scope_mode = verified_pull_request_transition(event["pull_request"])
-                print(f"POLICY_IMPACT_PR_SCOPE_MODE={scope_mode} base={base} candidate={head}")
-            else:
-                base = event["before"]
-                head = event.get("after") or os.environ.get("GITHUB_SHA")
-            defects = math_source.check_transition(ROOT, base, head, paths)
-            if defects:
-                raise ImpactError(
-                    "new mathematical Markdown rendering defects:\n"
-                    + "\n".join(defects[:50])
-                )
-            print("mathematical Markdown source gate: PASS")
-        if args.event_name in {"pull_request", "push"}:
-            if args.event_name == "pull_request":
-                base, head, _ = verified_pull_request_transition(event["pull_request"])
-            else:
-                base = str(event.get("before") or "")
-                head = str(event.get("after") or os.environ.get("GITHUB_SHA") or "")
+        transition = None
+        if args.event_name == "pull_request":
+            transition = verified_pull_request_transition(event["pull_request"])
+        elif args.event_name == "merge_group":
+            transition = verified_merge_group_transition(event["merge_group"])
+        elif args.event_name == "push":
+            transition = (str(event.get("before") or ""),
+                          str(event.get("after") or os.environ.get("GITHUB_SHA") or ""), "push")
+        paths = []
+        if transition is not None:
+            base, head, mode = transition
+            print(f"POLICY_IMPACT_SCOPE_MODE={mode} base={base} candidate={head}")
+            paths = git_changed_paths(base, head)
+            if paths:
+                defects = math_source.check_transition(ROOT, base, head, paths)
+                if defects:
+                    raise ImpactError(
+                        "new mathematical Markdown rendering defects:" + chr(10)
+                        + chr(10).join(defects[:50])
+                    )
+                print("mathematical Markdown source gate: PASS")
             validate_new_test_routing(newly_added_test_paths(base, head))
         result = classify_paths(paths, event_name=args.event_name, schedule=args.schedule)
         write_output(args.github_output, result)

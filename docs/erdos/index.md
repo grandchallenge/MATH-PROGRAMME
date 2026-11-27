@@ -34,6 +34,8 @@ In [problem 665](https://grandchallenge.github.io/MATH-PROGRAMME/erdos/problems/
 
 These articles also illustrate an important distinction: reporting an established result, explaining an unsolved question, and independently checking a complete proof are not the same thing.
 
+The [verification record for Erdős problem 2](proof-verification-0002.md) explains the exact finite periodicity theorem, the published disproof, and the distinction between their proof status.
+
 The [verification record for Erdős problem 27](proof-verification-0027.md) reconstructs the published disproof and distinguishes the finite Lean results from the remaining analytic formalization.
 
 For an example of how GCL separates these levels, read the [independent proof-verification status for Erdős problem 560](proof-verification-0560.md): a published off-diagonal lemma has been reconstructed and twelve auxiliary statements have been checked in Lean, but the original diagonal question remains open.
