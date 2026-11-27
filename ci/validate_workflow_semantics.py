@@ -222,6 +222,33 @@ def workflow_semantic_errors(
     if not marker(shard_runs, "ci/run_policy_shard.py --shard"):
         errors.append("ci.yml:policy-shard must execute the governed shard registry runner")
 
+    # Guard the dedicated queue test ownership and both conditional routes.
+    # The required aggregate must distinguish a proven no-op from missing,
+    # failed or cancelled affected work.
+    queue = policy.get("jobs", {}).get("queue-cutover-contract", {})
+    queue_flags = ("queue_pickup", "queue_erdos")
+    for flag in queue_flags:
+        if impact.get("outputs", {}).get(flag) != "${{ steps.classify.outputs." + flag + " }}":
+            errors.append(f"ci.yml:impact missing queue contract route output {flag}")
+    queue_if = "needs.impact.result == 'success' && (needs.impact.outputs.queue_pickup == 'true' || needs.impact.outputs.queue_erdos == 'true')"
+    if set(needs(queue)) != {"impact"} or queue.get("if") != queue_if:
+        errors.append("ci.yml:queue-contract job must use the classifier-produced impact route")
+    expected_queue_runs = {
+        "python3 ci/test_gcl_queue_class_cutover.py": "queue_pickup",
+        "python3 ci/test_erdos_compendium_publication_gate.py": "queue_erdos",
+        "python3 ci/test_erdos_compendium_direct_return_projector.py": "queue_erdos",
+        "python3 ci/test_erdos_compendium_direct_return_permissions.py": "queue_erdos",
+        "python3 ci/test_erdos_compendium_editorial_activate.py": "queue_erdos",
+        "PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py": "queue_erdos",
+        "python3 governance/source_erdos_critical_005/validate.py": "queue_erdos",
+        "python3 ci/test_erdos_compendium_editorial_replay.py": "queue_erdos",
+    }
+    queue_steps = [step for step in queue.get("steps", []) if step.get("run")]
+    if (len(queue_steps) != len(expected_queue_runs)
+            or {str(step["run"]) for step in queue_steps} != set(expected_queue_runs)
+            or any(step.get("if") != "needs.impact.outputs." + expected_queue_runs.get(str(step["run"]), "") + " == 'true'"
+                   for step in queue_steps)):
+        errors.append("ci.yml:queue-contract test ownership or conditional step routing drift")
     aggregate = policy.get("jobs", {}).get("validate-json", {})
     if not {"impact", "policy-shard"}.issubset(needs(aggregate)):
         errors.append("ci.yml:validate-json must aggregate impact and policy-shard")
@@ -230,6 +257,24 @@ def workflow_semantic_errors(
     for result_marker in ("needs.impact.result", "needs.policy-shard.result"):
         if not marker(job_runs(policy, "validate-json"), result_marker):
             errors.append(f"ci.yml:validate-json missing result gate {result_marker}")
+    if "queue-cutover-contract" not in needs(aggregate):
+        errors.append("ci.yml:validate-json must aggregate routed queue-contract")
+    queue_gate = """case "${{ needs.impact.outputs.queue_pickup }}:${{ needs.impact.outputs.queue_erdos }}" in
+  false:false)
+    test "${{ needs.queue-cutover-contract.result }}" = "skipped"
+    echo "QUEUE_CONTRACT_UNCHANGED_ATTESTATION_REUSED"
+    ;;
+  true:true|true:false|false:true)
+    test "${{ needs.queue-cutover-contract.result }}" = "success"
+    ;;
+  *) echo "QUEUE_CONTRACT_ROUTE_INVALID"; exit 1 ;;
+esac"""
+    def normalized_lines(value: str) -> tuple[str, ...]:
+        return tuple(line.strip() for line in value.splitlines() if line.strip())
+    gate = normalized_lines(queue_gate)
+    runs = [normalized_lines(run) for run in job_runs(policy, "validate-json")]
+    if not any(any(lines[i:i+len(gate)] == gate for i in range(len(lines))) for lines in runs):
+        errors.append("ci.yml:validate-json missing fail-closed conditional queue-contract result gate")
     for retired in ("log-gcd-lean", "pc-wp04-lean", "union-closed-mathcert"):
         if retired in policy.get("jobs", {}):
             errors.append(f"ci.yml: retired campaign-specific formal job remains instantiated: {retired}")

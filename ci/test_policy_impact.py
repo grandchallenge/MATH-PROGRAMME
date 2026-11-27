@@ -116,11 +116,44 @@ def test_verified_effective_merge_scope() -> None:
         assert legacy_routed["policy_shards"] == [
             "core", "fixtures", "cmdg", "contracts", "docs", "repository-regression"
         ]
-        # Native merge-group full validation, scheduled sentinel and protected
-        # control-plane changes retain their original full-fanout semantics.
+        # The exact merge-group delta is identical to the verified PR
+        # effective merge, even though protected main moved independently.
+        with mock.patch.object(impact, "ROOT", root), mock.patch.dict(
+            os.environ, {"GITHUB_SHA": effective}
+        ):
+            group = {"base_sha": base, "head_sha": effective}
+            assert impact.verified_merge_group_transition(group) == (
+                base, effective, "verified_merge_group"
+            )
+            assert impact.changed_paths_from_event("merge_group", {"merge_group": group}) == [erdos]
+            for invalid in ({}, {"base_sha": base, "head_sha": head},
+                            {"base_sha": "f" * 40, "head_sha": effective},
+                            {"base_sha": effective, "head_sha": effective},
+                            {"base_sha": "main", "head_sha": effective}):
+                try:
+                    impact.verified_merge_group_transition(invalid)
+                except impact.ImpactError:
+                    pass
+                else:
+                    raise AssertionError(f"unbound merge-group event accepted: {invalid}")
+            with mock.patch.dict(os.environ, {"GITHUB_SHA": head}):
+                try:
+                    impact.verified_merge_group_transition(group)
+                except impact.ImpactError:
+                    pass
+                else:
+                    raise AssertionError("stale workflow SHA accepted")
+            # Rename a material source to an unrelated path: both the removed
+            # formal input and the new path must be routed, never just one.
+            renamed = "docs/concurrent.md"
+            (root / "docs").mkdir(exist_ok=True)
+            git("mv", cmdg, renamed)
+            git("commit", "-q", "-m", "rename hostile fixture")
+            renamed_head = git("rev-parse", "HEAD")
+            assert impact.git_changed_paths(effective, renamed_head) == sorted([cmdg, renamed])
         assert impact.classify_paths(selected, event_name="merge_group")[
             "policy_shards"
-        ] == list(impact.ALL_SHARDS)
+        ] == routed["policy_shards"]
         assert impact.classify_paths(["ci/policy_impact.py"], event_name="pull_request")[
             "policy_shards"
         ] == list(impact.ALL_SHARDS)
@@ -299,11 +332,19 @@ def main() -> int:
     # A newly added path is detected using Git's A-only exact-head diff.
     with mock.patch.object(impact.subprocess, "run") as run:
         run.return_value.returncode = 0
-        run.return_value.stdout = "tests/test_new_unclassified_research.py\ntests/helper.txt\n"
+        run.return_value.stdout = bytes([0]).join([b"tests/test_new_unclassified_research.py", b"tests/helper.txt", b""])
         added = impact.newly_added_test_paths("a" * 40, "b" * 40)
         assert added == ["tests/test_new_unclassified_research.py"]
         assert "--diff-filter=A" in run.call_args.args[0]
-        assert run.call_args.args[0][4:6] == ["a" * 40, "b" * 40]
+        assert "--no-renames" in run.call_args.args[0] and "-z" in run.call_args.args[0]
+        assert run.call_args.args[0][-4:] == ["a" * 40, "b" * 40, "--", "tests/"]
+        run.return_value.stdout = b"tests/test_truncated.py"
+        try:
+            impact.newly_added_test_paths("a" * 40, "b" * 40)
+        except impact.ImpactError:
+            pass
+        else:
+            raise AssertionError("truncated diff accepted")
     # Existing unclassified paths retain the original conservative fallback.
 
     unknown_test = impact.classify_paths(["tests/test_new_unclassified_research.py"])
@@ -371,10 +412,31 @@ def main() -> int:
     assert manual["event_mode"] == "manual_full"
     assert manual["policy_shards"] == list(impact.ALL_SHARDS)
 
+    # A verified empty delta is distinct from a missing/malformed event:
+    # the latter is rejected before classification.
     merge_group = impact.classify_paths([], event_name="merge_group")
-    assert merge_group["event_mode"] == "merge_group_full"
-    assert merge_group["policy_shards"] == list(impact.ALL_SHARDS)
-    assert not merge_group["unknown_paths"]
+    assert merge_group["event_mode"] == "merge_group_transition"
+    assert merge_group["policy_shards"] == ["core"]
+    assert not merge_group["queue_pickup"] and not merge_group["queue_erdos"]
+    for event in ("pull_request", "merge_group", "push"):
+        agents = impact.classify_paths(["AGENTS.md"], event_name=event)
+        assert agents["policy_shards"] == ["core", "docs"]
+        assert agents["queue_pickup"] and not agents["queue_erdos"]
+        doc = impact.classify_paths(["docs/governance/example.md"], event_name=event)
+        assert not doc["queue_pickup"] and not doc["queue_erdos"]
+        erdos = impact.classify_paths(["governance/erdos_compendium/EDITORIAL_ADMISSIONS.json"], event_name=event)
+        assert not erdos["queue_pickup"] and erdos["queue_erdos"]
+        roster = impact.classify_paths(["governance/erdos_catalogue/ROLLING_RESEARCH_024.json"], event_name=event)
+        assert roster["queue_pickup"] and roster["queue_erdos"]
+        for paths in (["unknown-domain/file.bin"], ["ci/policy_impact.py"]):
+            full = impact.classify_paths(paths, event_name=event)
+            assert full["policy_shards"] == list(impact.ALL_SHARDS)
+            assert full["queue_pickup"] and full["queue_erdos"]
+    for full in (sentinel, unknown_schedule, manual):
+        assert full["queue_pickup"] and full["queue_erdos"]
+    assert "test_erdos_catalogue_queue_projection.py" in impact.load_json(
+        impact.REGISTRY_PATH
+    )["execution"]["repository_regression_exclusions"]["patterns"]
 
     pushed = impact.classify_paths(["docs/governance/example.md"], event_name="push")
     assert pushed["policy_shards"] == ["core", "docs"]
