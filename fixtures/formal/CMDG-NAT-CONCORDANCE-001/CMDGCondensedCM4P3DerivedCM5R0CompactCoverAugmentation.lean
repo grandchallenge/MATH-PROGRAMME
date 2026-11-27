@@ -324,25 +324,32 @@ theorem compactFreeCechAugmentationEpi
     apply (NatTrans.epi_iff_epi_app _).2
     intro U
     change Epi (compactProbeBarEpsilon U.unop P T p)
-    unfold compactProbeBarEpsilon
-    apply (ModuleCat.free Coeff).map_epi
-    apply (CategoryTheory.ofHom_epi_iff_surjective _).2
-    intro b
-    obtain ⟨s,hs⟩ := compactProbeSplit U.unop P T p
-    refine ⟨ULift.up ((s b).down ≫
-      profiniteToCompHaus.map (compactRelationSingleton P T p)), ?_⟩
-    apply ULift.ext
-    simp only [Category.assoc,← Functor.map_comp,compactRelationSingleton_projection,
-      Functor.map_id,Category.id_comp]
-    exact congrArg ULift.down (hs b)
+    let g : uniformProbeHomSet U.unop (compactRelationProfinite P T p 0) →
+        compactProbeHomSet U.unop T := fun z =>
+      ULift.up (z.down ≫ (profiniteToCompHaus.map (compactRelationProjection0 P T p) ≫ p))
+    haveI : Epi (↾g) := (CategoryTheory.ofHom_epi_iff_surjective g).2 (by
+      intro b
+      obtain ⟨s,hs⟩ := compactProbeSplit U.unop P T p
+      refine ⟨ULift.up ((s b).down ≫
+        profiniteToCompHaus.map (compactRelationSingleton P T p)), ?_⟩
+      apply ULift.ext
+      change ((s b).down ≫ profiniteToCompHaus.map (compactRelationSingleton P T p)) ≫
+        (profiniteToCompHaus.map (compactRelationProjection0 P T p) ≫ p) = b.down
+      rw [Category.assoc,← Category.assoc (profiniteToCompHaus.map
+        (compactRelationSingleton P T p)),← Functor.map_comp,
+        compactRelationSingleton_projection,Functor.map_id,Category.id_comp]
+      exact congrArg ULift.down (hs b))
+    exact (ModuleCat.free Coeff).map_epi (↾g)
   haveI : Epi ((R ⋙ A).map f) := by
     change Epi (A.map (R.map f))
     infer_instance
-  let i := stoneanCompHausSheafificationCompatibility
+  let i : R ⋙ A ≅ moduleSheafification ⋙ E := stoneanCompHausSheafificationCompatibility
   have he := i.hom.naturality f
-  haveI : Epi ((moduleSheafification ⋙ E).map f) := by
-    apply epi_of_epi_fac he.symm
-  exact E.epi_of_epi_map (show Epi (E.map (moduleSheafification.map f)) from inferInstance)
+  haveI : Epi ((R ⋙ A).map f ≫ i.hom.app _) := inferInstance
+  haveI : Epi ((moduleSheafification ⋙ E).map f) := epi_of_epi_fac he.symm
+  have hepi : Epi (moduleSheafification.map f) :=
+    E.epi_of_epi_map (show Epi (E.map (moduleSheafification.map f)) from inferInstance)
+  exact hepi
 
 #print axioms compactFreeCechAugmentationExact
 #print axioms compactFreeCechAugmentationEpi
