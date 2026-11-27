@@ -700,7 +700,49 @@ The active route requires a rank estimate called BOdd: the rank of the image of 
 
 The [active-route technical reconstruction PR #621](https://github.com/grandchallenge/MATHFORGE/pull/621) records the corrected dependency chain and the conditional counting assembly and final local estimates. Exact controls checked 1,600 valuation identities, 2,500 descent/local/exponent cases, and 495 polynomial inequalities. No inference that an unresolved KBridge hypothesis invalidates the headline is warranted: the active path does not invoke it. The mathematical obligations of that active path remain open.
 
-## 20. Reproducibility and technical references
+## 20. Selecting the odd homology information that matters
+
+The active counting route needs to control the rank of a particular image of arithmetic group homology. It does not require a bound on the rank of the entire homology group. The submitted proof constructs the relevant image by a sequence of difference operations on block matrices.
+
+### Separating different scaling behaviors
+
+Consider two ways to place a matrix into a larger matrix group. The first pads the original matrix with an identity block. The second makes several identical copies on the diagonal. A homology measurement of weight $j$ is unchanged by the first operation and multiplied by the number of copies raised to power $j$ by the second.
+
+The source subtracts an appropriately weighted padding operation from each replication operation. At the first step the weight-two measurement vanishes. At the second step the weight-three measurement vanishes. Continue until every weight from two through the homology degree has disappeared.
+
+For a concrete example, use three copies and homology degree three. The first difference multiplies a measurement of weight $j$ by $3^j-9$, and the second multiplies it by $3^j-27$.
+
+| Weight | First factor | Second factor | Combined factor |
+| --- | ---: | ---: | ---: |
+| 1 | -6 | -24 | 144 |
+| 2 | 0 | -18 | 0 |
+| 3 | 18 | 0 | 0 |
+
+The weight-one contribution survives, while the other two vanish exactly. No diagonalization of the homology group is required. The source works with measurements and chain maps and preserves the integral homology class throughout the calculation.
+
+### Why there is at most one weight-one measurement per complex place
+
+At each complex place, invariant alternating forms are constructed from contractions of Hermitian matrices. Each cycle of a permutation in the contraction produces a trace of a matrix product. Replicating the matrices in identical blocks multiplies each trace by the number of copies; a pattern with several cycles therefore has a higher weight.
+
+A one-cycle pattern uses just one complex place. Reversing the order of Hermitian matrices conjugates the complex trace. Alternation changes by the sign of the reversal permutation. In odd degree these two observations imply that either the real or the imaginary alternating trace vanishes. This leaves at most one canonical weight-one measurement for each complex place. It does not assert that every such measurement is nonzero or independent.
+
+The reconstruction uses classical invariant tensor theory explicitly and checks the source's actual trace and block identities. The source's detailed invariant-form extension and integration arguments remain separate verification tasks.
+
+### Why this is not yet a complete rank proof
+
+The weight-one measurements must detect all the transformed homology that survives. If an undetected nonzero class remained, merely counting the available measurements would not bound the rank.
+
+The source handles this by first passing to a sufficiently large matrix group in the homological stability range. If a transformed cycle is not a boundary, a real cocycle separates it from the boundaries. An analytic surjectivity theorem must then realize that cocycle's evaluations by an invariant differential form. The weight decomposition makes its higher-weight evaluations vanish on the transformed cycles. If its weight-one evaluations vanish as well, the form cannot detect the cycle, a contradiction.
+
+This proves the rank bound conditional on the analytic detection theorem, the stated stabilization, and the invariant-form and evaluation inputs. The rank argument works even when the ambient integral homology has torsion; real coefficients detect its free rank, not its torsion size.
+
+The analytic theorem is substantive. The submitted proof constructs smooth forms with controlled height growth, subtracts their invariant means, uses a Hecke spectral contraction with factor three fifths, and bounds cycle evaluations by the resulting decreasing norms. Another Hecke argument must show that such decreasing evaluations force the original evaluations to vanish. We have traced and reconstructed that conditional assembly, not yet its analytic premises.
+
+The [technical reconstruction PR #622](https://github.com/grandchallenge/MATHFORGE/pull/622) records the exact active rank reduction and its remaining dependencies. Exact controls checked 648 weight factors, 33 block-contraction identities and 24 Hermitian trace-parity cases, with a negative control illustrating why detection is necessary.
+
+The workstation connection is restored and the preceding public revision has passed protected admission. The previously recorded local original source tree was missing; a fresh archive download timed out. The source identities used in this reconstruction are bound to the pinned public mirror. Original archive restoration and replay remain open rather than being inferred from these finite checks.
+
+## 21. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -738,10 +780,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #619](https://github.com/grandchallenge/MATHFORGE/pull/619) | Uniform generator bound, tame ramification, quadratic transfer and conditional window assembly |
 | [PR #620](https://github.com/grandchallenge/MATHFORGE/pull/620) | Parallel conditional Lemma K reduction, kernel loss estimate and numerical conversion |
 | [PR #621](https://github.com/grandchallenge/MATHFORGE/pull/621) | Active Lemma K dependency correction, conditional finite-layer assembly and local length estimate |
+| [PR #622](https://github.com/grandchallenge/MATHFORGE/pull/622) | Odd homology weight elimination, trace parity and conditional rank detection |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 21. What the investigation taught us about checking extraordinary mathematical claims
+## 22. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -753,14 +796,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 22. The next executable mathematical step
+## 23. The next executable mathematical step
 
-**Target:** the active `ZK.lemmaK_of_steps` argument, including the actual BOdd odd-homology image-rank bound, finite cyclotomic class construction and counting, and shared geometric torsion theorem.
+**Target:** the actual analytic surjectivity theorem `SSurj` in the BOdd dependency, with the source's Hecke detection, spectral gap, compact-local cycle evaluation and invariant-form extension/stability inputs.
 
-**Work:** reconstruct the source's finite homology evaluations and arithmetic detection steps, the actual class-counting and cyclotomic-layer transfer, and the orbit/stabilizer/exactness estimates for the shared homology torsion bound. The parallel KBridge route is documented but is not the active dependency; the active numerical assembly and final local estimates have been reconstructed conditionally.
+**Work:** verify the genuine analytic premises that make the surviving weight-one measurements detect the transformed homology. Then continue the finite homology evaluation and cyclotomic class-counting construction and the shared geometric torsion theorem. The weight elimination and conditional rank argument have been reconstructed.
 
-**Completion test:** establish the genuine active source contracts, retaining classical and formal correspondence obligations and original Lean replay. Opposite-sign and joint-window arguments remain separate. No RH/GRH certification.
+**Completion test:** establish the exact active source contracts, retaining classical and formal correspondence obligations and original Lean replay. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_ACTIVE_LEMMAK_ROUTE_CORRECTED__CONDITIONAL_SNUM_SFINAL_RECONSTRUCTED__BODD_CYCLOTOMIC_COUNTING_GEOMETRIC_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_BODD_WEIGHT_RANK_REDUCTION_RECONSTRUCTED__ANALYTIC_SSURJ_INVARIANT_FORM_STABILITY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
