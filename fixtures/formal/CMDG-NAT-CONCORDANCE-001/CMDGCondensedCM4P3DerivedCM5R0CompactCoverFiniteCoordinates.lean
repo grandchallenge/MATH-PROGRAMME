@@ -58,7 +58,7 @@ def extendCoordinates (F : Finset I) (x₀ : ∀ i, X i) :
   intro i
   by_cases hi : i ∈ F
   · simp only [dif_pos hi]
-    exact continuous_apply ⟨i,hi⟩
+    exact continuous_apply (⟨i,hi⟩ : ↥F)
   · simp only [dif_neg hi]
     exact continuous_const
 
@@ -67,7 +67,7 @@ theorem extend_restrict_agrees (F : Finset I) (x₀ x : ∀ i, X i)
     extendCoordinates F x₀ (restrictCoordinates F x) i = x i := by
   classical
   change (if h : i ∈ F then (restrictCoordinates F x) ⟨i,h⟩ else x₀ i) = x i
-  rw [dif_pos hi]
+  rw [dif_pos hi] <;> rfl
 
 /-- Actual locally constant factor, not merely a finite support
 predicate. The default point is only used for the omitted factors. -/

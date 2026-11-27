@@ -101,13 +101,12 @@ theorem compactFreeRelationAugmentation_comp_boundary_zero
     compactFreeRelationBoundary P T p 0 ≫ compactFreeRelationAugmentation P T p = 0 := by
   unfold compactFreeRelationBoundary compactFreeRelationAugmentation
   rw [Fin.sum_univ_two]
-  simp only [Fin.val_zero,pow_zero,one_smul,Fin.val_one,pow_one,neg_smul,← sub_eq_add_neg,
-    Preadditive.sub_comp]
-  change compactFreeFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 0)) ≫
-      compactFreeFunctor.map (compactRelationAugMap P T p) -
-    compactFreeFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 1)) ≫
+  simp only [Fin.val_zero,pow_zero,one_smul,Fin.val_one,pow_one,neg_smul,← sub_eq_add_neg]
+  change (compactFreeFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 0)) -
+    compactFreeFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 1))) ≫
       compactFreeFunctor.map (compactRelationAugMap P T p) = 0
-  rw [← Functor.map_comp,← Functor.map_comp,compactRelationAugmentation_faces_agree,sub_self]
+  rw [Preadditive.sub_comp, ← Functor.map_comp, ← Functor.map_comp,
+    compactRelationAugmentation_faces_agree, sub_self]
 
 def compactPresheafRelationAugmentation
     (P : Profinite.{u}) (T : CompHaus.{u}) (p : profiniteToCompHaus.obj P ⟶ T) :
@@ -120,13 +119,12 @@ theorem compactPresheafRelationAugmentation_comp_boundary_zero
     compactPresheafRelationBoundary P T p 0 ≫ compactPresheafRelationAugmentation P T p = 0 := by
   unfold compactPresheafRelationBoundary compactPresheafRelationAugmentation
   rw [Fin.sum_univ_two]
-  simp only [Fin.val_zero,pow_zero,one_smul,Fin.val_one,pow_one,neg_smul,← sub_eq_add_neg,
-    Preadditive.sub_comp]
-  change compactFreePresheafFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 0)) ≫
-      compactFreePresheafFunctor.map (compactRelationAugMap P T p) -
-    compactFreePresheafFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 1)) ≫
+  simp only [Fin.val_zero,pow_zero,one_smul,Fin.val_one,pow_one,neg_smul,← sub_eq_add_neg]
+  change (compactFreePresheafFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 0)) -
+    compactFreePresheafFunctor.map (profiniteToCompHaus.map (compactRelationFace P T p 0 1))) ≫
       compactFreePresheafFunctor.map (compactRelationAugMap P T p) = 0
-  rw [← Functor.map_comp,← Functor.map_comp,compactRelationAugmentation_faces_agree,sub_self]
+  rw [Preadditive.sub_comp, ← Functor.map_comp, ← Functor.map_comp,
+    compactRelationAugmentation_faces_agree, sub_self]
 
 theorem compactPresheafRelationAugmentation_sheafify
     (P : Profinite.{u}) (T : CompHaus.{u}) (p : profiniteToCompHaus.obj P ⟶ T) :
@@ -294,7 +292,7 @@ theorem compactStoneanRestrictedPresheafAugZeroExact
     simp only [NatTrans.app_zsmul]
     apply Finset.sum_congr rfl
     intro k hk
-    rw [compactProbePresheafFace_eval U.unop P T p 0 k]
+    rw [compactProbePresheafFace_eval U.unop P T p 0 k] <;> rfl
   have hg : Q.g = W.g := compactProbePresheafAugmentation_eval U.unop P T p
   obtain ⟨s,hs⟩ := compactProbeSplit U.unop P T p
   have hW : W.Exact := compactProbeBarAugZeroExact U.unop P T p s hs
@@ -316,40 +314,17 @@ theorem compactFreeCechAugmentationEpi
     (P : Profinite.{u}) (T : CompHaus.{u})
     (p : profiniteToCompHaus.obj P ⟶ T) [Epi p] :
     Epi (compactFreeRelationAugmentation P T p) := by
-  let f := compactPresheafRelationAugmentation P T p
-  let R := stoneanPresheafRestriction
-  let A := stoneanModuleSheafification
-  let E := (Condensed.StoneanCompHaus.equivalence (ModuleCat Coeff)).inverse
-  haveI : Epi (R.map f) := by
-    apply (NatTrans.epi_iff_epi_app _).2
-    intro U
-    change Epi (compactProbeBarEpsilon U.unop P T p)
-    let g : uniformProbeHomSet U.unop (compactRelationProfinite P T p 0) →
-        compactProbeHomSet U.unop T := fun z =>
-      ULift.up (z.down ≫ (profiniteToCompHaus.map (compactRelationProjection0 P T p) ≫ p))
-    haveI : Epi (↾g) := (CategoryTheory.ofHom_epi_iff_surjective g).2 (by
-      intro b
-      obtain ⟨s,hs⟩ := compactProbeSplit U.unop P T p
-      refine ⟨ULift.up ((s b).down ≫
-        profiniteToCompHaus.map (compactRelationSingleton P T p)), ?_⟩
-      apply ULift.ext
-      change ((s b).down ≫ profiniteToCompHaus.map (compactRelationSingleton P T p)) ≫
-        (profiniteToCompHaus.map (compactRelationProjection0 P T p) ≫ p) = b.down
-      rw [Category.assoc,← Category.assoc (profiniteToCompHaus.map
-        (compactRelationSingleton P T p)),← Functor.map_comp,
-        compactRelationSingleton_projection,Functor.map_id,Category.id_comp]
-      exact congrArg ULift.down (hs b))
-    exact (ModuleCat.free Coeff).map_epi (↾g)
-  haveI : Epi ((R ⋙ A).map f) := by
-    change Epi (A.map (R.map f))
+  haveI : IsIso (compactRelationProjection0 P T p) := by
+    change IsIso (compactRelationProjection0Iso P T p).hom
     infer_instance
-  let i : R ⋙ A ≅ moduleSheafification ⋙ E := stoneanCompHausSheafificationCompatibility
-  have he := i.hom.naturality f
-  haveI : Epi ((R ⋙ A).map f ≫ i.hom.app _) := inferInstance
-  haveI : Epi ((moduleSheafification ⋙ E).map f) := epi_of_epi_fac he.symm
-  have hepi : Epi (moduleSheafification.map f) :=
-    E.epi_of_epi_map (show Epi (E.map (moduleSheafification.map f)) from inferInstance)
-  exact hepi
+  haveI : Epi (compactRelationAugMap P T p) := by
+    unfold compactRelationAugMap
+    infer_instance
+  letI : (Condensed.free Coeff : CondensedSet.{u} ⥤ Ambient).PreservesEpimorphisms :=
+    Functor.preservesEpimorphisms_of_adjunction (Condensed.freeForgetAdjunction Coeff)
+  change Epi ((Condensed.free Coeff).map
+    (compHausToCondensed.map (compactRelationAugMap P T p)))
+  infer_instance
 
 #print axioms compactFreeCechAugmentationExact
 #print axioms compactFreeCechAugmentationEpi

@@ -278,7 +278,7 @@ theorem compactStoneanRestrictedPresheafExact
     simp only [NatTrans.app_zsmul]
     apply Finset.sum_congr rfl
     intro k hk
-    rw [compactProbePresheafFace_eval U.unop P T p (n + 1) k]
+    rw [compactProbePresheafFace_eval U.unop P T p (n + 1) k] <;> rfl
   have hg : Q.g = W.g := by
     change (compactPresheafRelationBoundary P T p n).app
         (Opposite.op U.unop.compHaus) = compactProbeBarD U.unop P T p n
@@ -287,7 +287,7 @@ theorem compactStoneanRestrictedPresheafExact
     simp only [NatTrans.app_zsmul]
     apply Finset.sum_congr rfl
     intro k hk
-    rw [compactProbePresheafFace_eval U.unop P T p n k]
+    rw [compactProbePresheafFace_eval U.unop P T p n k] <;> rfl
   have hW : W.Exact := compactProbeBarExact U.unop P T p n
   change Q.Exact
   apply (Q.exact_iff_kernel_ι_comp_cokernel_π_zero).2
