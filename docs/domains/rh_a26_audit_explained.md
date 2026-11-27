@@ -873,7 +873,7 @@ Cauchy–Schwarz converts the final integral into the desired square-integral no
 $$
 |\langle\omega,z\rangle|
 \leq C_z
-\left(\int_D\|\operatorname{fr}\omega(x)\|^2\,d\mu(x)\right)^{1/2}.
+\left(\int_D\|\mathrm{fr}\omega(x)\|^2\,d\mu(x)\right)^{1/2}.
 $$
 
 The constant depends on the cycle, the group and the domain, but not on the form. This independence is precisely what is needed for repeated Hecke averaging.
