@@ -1,0 +1,5 @@
+# Phase D role-scoped documentary adversary
+
+Separate logical/editorial pass by the same authenticated GCL actor; not an independent external review. Compared the new public explanation with the protected A/B/C evidence. Checked finite family and one residue per distinct modulus, universal quantifier versus fixed instance, 616000 excluded versus 615999 upper bound, signed remainder, empty family, nonleast period, altered final class and repeated-modulus hostile example. Independently enumerated the newly covered residues in order, verifying all 24 exactly once. The literature-status label is not a claim that the analytic paper was reproved. The 17-declaration axiom census, negative compiler result and source identities were rechecked using the frozen-evidence validator, not a fresh local compiler invocation. The proposed public record correctly separates all four layers: literature, ordinary finite proof, Lean kernel replay, certification. No claim of exact optimum or external 44 replay. No closure of cohort #3251.
+
+Disposition: ROLE_SCOPED_CRITICAL_PASS for bounded documentary scope. Full analytic formalization remains open.

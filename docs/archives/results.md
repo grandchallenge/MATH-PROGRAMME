@@ -32,3 +32,5 @@ These are supporting records, not necessarily current research instructions or c
 - [Groebner Applications Manifest](../GROBNER_APPLICATIONS_MANIFEST.md)
 
 - [Erdős problem 27: verification of the published disproof](../erdos/proof-verification-0027.md)
+
+- [Erdős problem 2: finite covering-system periodicity verification](../erdos/proof-verification-0002.md)
