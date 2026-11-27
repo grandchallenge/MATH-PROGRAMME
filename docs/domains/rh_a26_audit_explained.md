@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 27 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -781,7 +781,58 @@ The [technical reconstruction PR #623](https://github.com/grandchallenge/MATHFOR
 
 Iterating the average makes the norm of a mean-zero function decay geometrically. It does not follow merely from that decay that its original cohomology class vanishes. The source requires another theorem, called SHecke, to establish that implication, and a compact-local evaluation bound, called SLoc, to relate the norm to cycle evaluations. These are the next distinct obligations. The form construction, height moments and homological stability also remain explicit.
 
-## 22. Reproducibility and technical references
+## 22. Why a nonzero cohomology evaluation cannot decay too quickly
+
+The preceding contraction acts on analytic functions. To turn it into a cohomology theorem, the source must establish that a nonzero cohomology evaluation cannot decay at that same rate. It does so by comparing Hecke averaging in two matrix groups, one embedded into the other by adding an identity block.
+
+### The arithmetic significance of the affine block
+
+The relevant cosets in the large group correspond to projective lines over a finite residue field. Some are contained in the coordinates of the smaller group. The rest have a nonzero coordinate in the added block.
+
+For a coset of the latter kind, the source uses an inverse modulo the prime to construct a matrix that changes just one column. Its determinant is the inverse of the prime. Multiplication by the original Hecke scaling matrix then restores an integral matrix with unit determinant in the ring of integers. Conjugating a stabilized group element by this column-changing matrix gives an upper-triangular block matrix whose diagonal consists of the original group element and an identity block.
+
+Why does the off-diagonal block not change real homology in the relevant degrees? The source selects a unit of the number field whose products of embedding moduli, up to the required degree, are never one. The logarithms of unit moduli form a lattice in a hyperplane. When the degree is less than the number of complex places, the excluded products correspond to finitely many proper hyperplanes, so a suitable unit exists.
+
+The off-diagonal additive matrix group is a finite-rank free abelian group. Its positive-degree cohomology is generated by exterior products of linear characters. Multiplication by the chosen unit acts on those products with eigenvalues different from one. Yet the corresponding central element of the diagonal group must act trivially on the diagonal group's cohomology. This forces the off-diagonal contributions to vanish in the relevant degrees.
+
+Our independent conventional reconstruction uses the classical cohomological spectral sequence for the split group extension. The source implements the same mechanism using an explicit filtered cochain argument; that implementation has not been independently replayed. The strict degree restriction is essential to the unit-selection argument, not a dispensable technicality.
+
+### Preserving evaluations through the coset sum
+
+An individual complementary coset need not preserve every cycle evaluation of the small group. The source proves preservation on cycles in its stabilizer. To pass to the entire small group, it constructs primitives on the stabilizers and transports them around each finite orbit. Summing the transported primitives gives an invariant primitive, so its coboundary evaluates to zero on all cycles.
+
+Thus the sum over the complementary cosets preserves the original evaluation. The remaining cosets contribute exactly the smaller Hecke average. This establishes an identity on cycle evaluations, not a pointwise equality of the original cochain functions.
+
+### The contradiction between two rates
+
+Fix a finite set of cycles spanning the homology of the smaller matrix group. Their evaluations form a finite vector. The smaller Hecke average defines a linear correction on this vector, because a cocycle with zero evaluation on all cycles retains zero evaluations after Hecke averaging. Every linear operator on a finite-dimensional space has a finite norm bound.
+
+Let $a$ be the ratio of the smaller Hecke coset count to the larger one, and let $M$ bound the small-group correction. For the vector $x_j$ of evaluations after $j$ Hecke iterations, the exact transfer identity gives
+
+$
+x_{j+1}=(1-a)x_j+a y_j,
+\qquad \|y_j\|\leq M\|x_j\|.
+$
+
+The source increases the matrix dimension until the ratio is small enough that $a(1+M)\leq 1/5$. The reverse triangle inequality then gives
+
+$
+\|x_{j+1}\|\geq \frac45\|x_j\|.
+$
+
+In other words, a nonzero initial evaluation vector cannot decay faster than four fifths per iteration. If the analytic argument gives a bound of the form $C(3/5)^j$ for the same vector, the two bounds imply
+
+$
+\|x_0\|\leq C(3/4)^j.
+$
+
+As the number of iterations tends to infinity, the right-hand side tends to zero. The original evaluation vector must therefore vanish. Homological stability then transfers the conclusion to all cycles in the larger group.
+
+The [technical reconstruction PR #624](https://github.com/grandchallenge/MATHFORGE/pull/624) establishes this detection argument conditional on the actual finite-generation and stability inputs. Exact controls checked 295 affine matrix cases and integral stabilizers, excluded 137 unsuitable pivots, verified 18 projective coset partitions and checked 1,381 admitted recurrence cases, with 12,083 cases excluded by the required hypotheses. These are finite controls, not a computation of the full arithmetic homology. The source's finite generation depends on its geometric tuple resolution and orbit and stabilizer estimates, which remain to be audited, as does its actual homological stability proof.
+
+The remaining direct analytic bridge is SLoc: the bound that connects the integral norm of a form to its evaluation on an actual cycle. Without it, the two rates concern different quantities and cannot yet be combined. The height, smooth form and invariant mean constructions remain separate obligations.
+
+## 23. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -821,10 +872,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #621](https://github.com/grandchallenge/MATHFORGE/pull/621) | Active Lemma K dependency correction, conditional finite-layer assembly and local length estimate |
 | [PR #622](https://github.com/grandchallenge/MATHFORGE/pull/622) | Odd homology weight elimination, trace parity and conditional rank detection |
 | [PR #623](https://github.com/grandchallenge/MATHFORGE/pull/623) | Finite residue-field geometry, Hilbert-space contraction and actual Hecke averaging |
+| [PR #624](https://github.com/grandchallenge/MATHFORGE/pull/624) | Affine homology vanishing, exact coset transfer and conditional Hecke detection |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 23. What the investigation taught us about checking extraordinary mathematical claims
+## 24. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -836,14 +888,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 24. The next executable mathematical step
+## 25. The next executable mathematical step
 
-**Target:** the actual `SHecke` detection and `SLoc` compact-local evaluation theorems supplying `SSurj`.
+**Target:** the actual `SLoc` compact-local evaluation theorem supplying `SSurj`.
 
-**Work:** reconstruct the source's affine stabilizer vanishing, transfer, finite cycle representatives and module-ideal argument for SHecke, then its compact-local averaging and integration estimate for SLoc. The arithmetic spectral contraction has been reconstructed under the stated classical facts. The height, form and stability inputs, finite counting and shared geometric torsion theorem remain separate.
+**Work:** reconstruct the source's compact-local averaging, simplex integration, unfolding and overlap bound. Hecke contraction and conditional detection are reconstructed; the two estimates cannot yet be combined without SLoc and the actual height and form constructions. The finite-generation geometry, stability, counting and shared torsion obligations remain.
 
-**Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
+**Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SGAP_ARITHMETIC_CONTRACTION_RECONSTRUCTED__SHECKE_DETECTION_SLOC_HEIGHT_FORM_STABILITY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SHECKE_AFFINE_TRANSFER_DETECTION_RECONSTRUCTED__SLOC_HEIGHT_FORM_STABILITY_GEOMETRY_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
