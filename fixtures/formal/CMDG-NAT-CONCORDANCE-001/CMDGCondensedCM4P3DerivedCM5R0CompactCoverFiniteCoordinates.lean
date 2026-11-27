@@ -68,7 +68,6 @@ theorem extend_restrict_agrees (F : Finset I) (x₀ x : ∀ i, X i)
   classical
   change (if h : i ∈ F then (restrictCoordinates F x) ⟨i,h⟩ else x₀ i) = x i
   rw [dif_pos hi]
-  rfl
 
 /-- Actual locally constant factor, not merely a finite support
 predicate. The default point is only used for the omitted factors. -/
@@ -88,12 +87,8 @@ section ProductRelation
 variable {I : Type u} {X : I → Type v} {Y : I → Type w}
   [∀ i, TopologicalSpace (X i)]
 
-def tupleRelation {B : Type*} {D : Type*} (p : B → D) (n : ℕ) :=
+abbrev tupleRelation {B : Type*} {D : Type*} (p : B → D) (n : ℕ) :=
   {z : Fin (n+1) → B // ∀ i, p (z i)=p (z 0)}
-
-instance {B : Type*} {D : Type*} [TopologicalSpace B] (p : B → D) (n : ℕ) :
-    TopologicalSpace (tupleRelation p n) :=
-  instTopologicalSpaceSubtype
 
 def productMap (p : ∀ i, X i → Y i) (x : ∀ i, X i) : ∀ i, Y i :=
   fun i => p i (x i)
