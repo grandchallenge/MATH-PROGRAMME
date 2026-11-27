@@ -49,7 +49,7 @@ q-a\le |X_R\cap S|+|X_B\cap T|+c_*
 \le |X_R|+|X_B|\le r+b.
 $$
 
-Taking the maximum proves necessity. If $r+b=h$, each inequality is tight for every maximizing cut: each defect belongs either to the red defects in $S$, the blue defects in $T$, or to a counted component, with at most one defect per such component. Each defect-free counted component pays exactly one red-to-$S$ or blue-to-$T$ boundary edge, and there are no other contributions to $a_F$. The actual colour budgets are attained.
+Taking the maximum proves necessity. If $r+b=h$, each inequality is tight for every maximizing cut: each defect belongs either to the red defects in $S$, the blue defects in $T$, or to a counted component, with at most one defect per such component. Each defect-free counted component pays exactly one red edge into $S$ or blue edge into $T$ boundary edge, and there are no other contributions to $a_F$. The actual colour budgets are attained.
 
 ### Sufficiency: two auxiliary vertices
 
