@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # The November 2026 Riemann Hypothesis announcement
 
 **A guide to the Alpöge–Claude Lean submission**

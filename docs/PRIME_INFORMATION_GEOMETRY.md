@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # The Information Geometry of Prime Factorization
 ### A mathematical synthesis of entropy, Euler products, smooth numbers, and computational difficulty
 

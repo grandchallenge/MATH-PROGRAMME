@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # NS-CI-001 Accessible Research Guide
 
 !!! info "Research surface authority"

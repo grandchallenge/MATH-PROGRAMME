@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # EUCLID-GCD-E2E-001 Accessible Research Guide
 
 !!! info "Research surface authority"

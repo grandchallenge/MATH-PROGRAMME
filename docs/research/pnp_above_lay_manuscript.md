@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # P versus NP from Above: What Quantum Verification Might Teach Us About Computational Difficulty
 
 **GCL PNP-ABOVE · Working manuscript · 31 October 2026**  

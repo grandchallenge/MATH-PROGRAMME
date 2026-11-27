@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Structural Capacity Calculus
 
 <p class="page-deck">Why do some immense collections of logical relationships yield to a handful of operations, while others resist every known shortcut?</p>

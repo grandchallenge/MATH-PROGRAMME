@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Erdős problem 2: when repeating patterns cover every integer
 
 *Verification record, 27 November 2026; Grand Challenge Labs.*

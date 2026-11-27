@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Reader's primer: verifying is not computing
 
 <p class="page-deck">An introduction to the mathematical motivation of PNP-ABOVE, suitable for readers without graduate training in complexity theory or quantum information.</p>

@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # HC-001 Accessible Research Guide
 
 !!! info "Research surface authority"

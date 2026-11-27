@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # FIGURATE: A Unified Experimental Framework for Figurate Diophantine Tuples
 
 **Research preprint, version 0.1, 3 November 2026.**

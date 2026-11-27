@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Euclid, Book VII: measure, common measure, and the road to gcd
 
 <div class="euclid-micro hero" role="note" aria-label="Edition scope">

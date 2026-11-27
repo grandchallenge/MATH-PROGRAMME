@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # The Information Geometry of Prime Factorization
 ## Transition Problem TCU-001: a uniform saddle-point correlation law
 

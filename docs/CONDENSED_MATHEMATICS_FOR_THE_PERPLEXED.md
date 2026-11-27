@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Condensed Mathematics for the Perplexed
 
 <p class="page-deck">How can one do algebra with spaces without losing their topology? A guided journey from convergent sequences and finite observations to condensed sets, solid abelian groups, and GCL's machine-checked CM4 theorem.</p>

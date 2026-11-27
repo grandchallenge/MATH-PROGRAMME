@@ -1,7 +1,5 @@
 ---
 description: An illustrated reader guide to collision information, renormalization and gluing for the one-dimensional free scalar field studied by REACH.
-hide:
-  - navigation
 ---
 
 # What survives a collision?

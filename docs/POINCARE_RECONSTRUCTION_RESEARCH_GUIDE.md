@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # PC-WP01 Accessible Research Guide
 
 !!! info "Research surface authority"

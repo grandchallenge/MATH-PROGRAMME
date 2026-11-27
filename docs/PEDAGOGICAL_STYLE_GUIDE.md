@@ -47,7 +47,10 @@ For substantial self-contained mathematical expositions, research guides, proof
 narratives, and explanatory verification articles, use the page-local MkDocs
 Material metadata `hide: [navigation]` (or its equivalent YAML list). Keep the
 article table of contents, header, and navigation tree intact. Preserve
-existing front matter and mathematical text.
+existing front matter and mathematical text. For existing or evidence-locked
+articles, use the explicit `extra.focused_reading_pages` list in `mkdocs.yml`;
+the presentation hook sets the same metadata at render time without editing
+source bytes. Never rewrite a documentary receipt for a layout change.
 
 Retain the left navigation on indexes, campaign landing pages, dashboards,
 evidence ledgers, reference and governance pages, where browsing across
