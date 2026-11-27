@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 27 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The compact-local evaluation bridge has now been reconstructed, joining the two conditional decay estimates on the same cycle evaluations. The actual representing-form and height inputs remain open. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -832,7 +832,61 @@ The [technical reconstruction PR #624](https://github.com/grandchallenge/MATHFOR
 
 The remaining direct analytic bridge is SLoc: the bound that connects the integral norm of a form to its evaluation on an actual cycle. Without it, the two rates concern different quantities and cannot yet be combined. The height, smooth form and invariant mean constructions remain separate obligations.
 
-## 23. Reproducibility and technical references
+## 23. How an integral norm controls evaluation on a cycle
+
+The two decay rates established in the preceding sections concern different quantities. The analytic contraction bounds a bulk integral norm of a differential form. The cohomological detection theorem bounds the evolution of its evaluations on cycles. The source's SLoc theorem is the bridge between them.
+
+A general square-integrable function can be arbitrarily large near a lower-dimensional surface while having a small integral norm. Therefore it would be invalid to bound a simplex integral simply by the bulk norm. The source avoids that error by averaging the simplices in a way that preserves their evaluation on a full cycle.
+
+### Averaging without changing the cohomological information
+
+Choose a small closed ball about the identity in the space of positive definite Hermitian matrices. It lies entirely in the positive cone and has finite positive volume. Independently sample one point from this ball for every vertex of a simplex, then apply the prescribed group transformation to each point.
+
+These perturbed simplices need not have the same integral individually. The source instead forms an averaged cocycle. Deleting one vertex from a product probability distribution leaves exactly the required product distribution on the remaining vertices. Thus the alternating coboundary still vanishes after averaging. The bar-prism identity says that the evaluations of this averaged cocycle on a cycle are the same whether the basepoint flags select the original vertices or the randomly perturbed ones.
+
+This is an exact equality of cycle evaluations, not an approximation that improves as the ball shrinks.
+
+### Why averaging creates an ambient integral
+
+A point in a simplex of degree $q$ is a convex combination of its $q+1$ vertices. At least one of its barycentric weights is at least $1/(q+1)$. Hold the other sampled vertices fixed and vary this particular vertex. The resulting affine transformation of the ambient vector space is invertible, with a Jacobian bounded away from zero independently of the point's barycentric coordinates.
+
+For a real ambient dimension $d$ and an invertible vertex transformation $A_i$, the inverse Jacobian is bounded by
+
+$$
+|\det(\tau_i A_i)|^{-1}\leq (q+1)^d|\det A_i|^{-1}.
+$$
+
+This remains true at the boundary of the simplex, where some other weights may vanish. Integration over the remaining vertices and then over the simplex gives a uniform bound by an integral of the form norm over a compact region of the ambient space. The tangent-vector factors are bounded because all sampled vertices range over fixed compact sets.
+
+For a simple illustration, the average of two independent uniform points in the unit interval has a triangular probability density on that interval, bounded by two. A fixed point can sample an arbitrarily narrow spike in a function, whereas integration against this bounded density is controlled by the function's ordinary integral. The submitted proof uses the higher-dimensional affine Jacobian argument, not an assumption that this one-dimensional example covers all forms.
+
+### Moving the integral to the arithmetic fundamental domain
+
+The source next thickens the compact region using a compact identity neighborhood in the determinant-one matrix group. Each point of the positive cone can be represented by an inverse matrix congruence of the identity. On a compact region the representing matrices and their determinant-normalized versions can be chosen with uniformly bounded entries.
+
+The scalar-invariance condition ensures that determinant normalization does not change the moving-frame form. The moving frame converts the varying tangent-vector coordinates to a single vector space at the identity. Its norm controls the original form on the compact region, with a finite factor depending only on that region and the form degree. Changing variables and averaging over the compact identity neighborhood moves the integral to a compact subset of the determinant-one group. This uses both the left and right Haar invariance supplied by the source.
+
+Finally, the embedded integral determinant-one group is discrete. Only finitely many of its elements can occur in the compact product of the chosen group region and its inverse. Consequently every point of the arithmetic fundamental domain can be counted only a bounded number of times when its translates are unfolded into that region. This bounds the compact-region integral by a finite multiple of the integral over the fundamental domain, even though the domain itself need not be compact.
+
+Cauchy–Schwarz converts the final integral into the desired square-integral norm, using the finite volume of the domain. Summing over the finitely many simplices in the cycle yields
+
+$$
+|\langle\omega,z\rangle|
+\leq C_z
+\left(\int_D\|\mathrm{fr}\omega(x)\|^2\,d\mu(x)\right)^{1/2}.
+$$
+
+The constant depends on the cycle, the group and the domain, but not on the form. This independence is precisely what is needed for repeated Hecke averaging.
+
+The [technical reconstruction PR #625](https://github.com/grandchallenge/MATHFORGE/pull/625) records the actual probability averaging, simplex Jacobian estimate, compact unfolding and lattice overlap argument. Exact finite controls checked 8,580 barycentric determinant comparisons, 10,000 mixed-flag cocycle identities, 2,880 overlap cases, 2,145 interval density bounds and 770 scalar-frame identities. These verify the finite mechanisms, not the full infinite-dimensional or number-field analytic theorem by computation.
+
+### What this closes, and what remains
+
+The two rates can now be applied to the same cycle evaluations, provided the form construction supplies the actual continuity, cocycle, invariance, square-integrability and zero-mean conditions. The Hecke contraction bounds the analytic norm by successive powers of three fifths. The local evaluation bound transfers that estimate to the cohomological evaluation vector. The conditional Hecke detection theorem gives the incompatible lower rate of four fifths for any nonzero initial vector.
+
+This reconstructs the direct analytic bridge. It does not yet produce a representing form for an arbitrary group cocycle. The source must still construct its smooth partition of unity, control its height and height moments, produce the Whitney form, perform scalar averaging and construct the invariant mean form. The finite-generation geometry and homological stability inputs also remain open. Only after the exact supplying arguments have been verified can the whole analytic surjectivity theorem be regarded as reconstructed.
+
+## 24. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -873,10 +927,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #622](https://github.com/grandchallenge/MATHFORGE/pull/622) | Odd homology weight elimination, trace parity and conditional rank detection |
 | [PR #623](https://github.com/grandchallenge/MATHFORGE/pull/623) | Finite residue-field geometry, Hilbert-space contraction and actual Hecke averaging |
 | [PR #624](https://github.com/grandchallenge/MATHFORGE/pull/624) | Affine homology vanishing, exact coset transfer and conditional Hecke detection |
+| [PR #625](https://github.com/grandchallenge/MATHFORGE/pull/625) | Probability averaging, simplex density and compact-local cycle evaluation |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 24. What the investigation taught us about checking extraordinary mathematical claims
+## 25. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -888,14 +943,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 25. The next executable mathematical step
+## 26. The next executable mathematical step
 
-**Target:** the actual `SLoc` compact-local evaluation theorem supplying `SSurj`.
+**Target:** the actual height, moment and smooth representing-form construction supplying `SSurj`, followed by scalar averaging and the invariant mean.
 
-**Work:** reconstruct the source's compact-local averaging, simplex integration, unfolding and overlap bound. Hecke contraction and conditional detection are reconstructed; the two estimates cannot yet be combined without SLoc and the actual height and form constructions. The finite-generation geometry, stability, counting and shared torsion obligations remain.
+**Work:** reconstruct the source's `SHt`, `SPU`, `SMom`, `SWhit`, `SCen`, `SMean` and `SInv` contracts and supplying proofs, including the domain and prime inputs. Hecke contraction, conditional detection and compact-local evaluation have been reconstructed. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion obligations remain explicit.
 
-**Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay. No RH/GRH certification.
+**Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SHECKE_AFFINE_TRANSFER_DETECTION_RECONSTRUCTED__SLOC_HEIGHT_FORM_STABILITY_GEOMETRY_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SLOC_COMPACT_LOCAL_EVALUATION_RECONSTRUCTED__HEIGHT_MOMENTS_WHITNEY_SCALAR_MEAN_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
