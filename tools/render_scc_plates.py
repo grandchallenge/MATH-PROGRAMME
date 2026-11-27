@@ -117,3 +117,16 @@ for i,g in enumerate([1,0]):
     p += [txt(x+20,272,f"{len(vals)} input assignments",17,MUTED)]
 p += [line(138,291,138,325,TEAL,1.8,True),line(501,291,501,325,TEAL,1.8,True),txt(138,352,"im P",24,TEAL,"middle",serif=True),txt(501,352,"im (1+P)",24,INK,"middle",serif=True),txt(380,398,"L = im P  ⊕  im (1+P)",26,INK,"middle",serif=True),txt(380,425,"Cell sizes are literal; the cohomology dimensions are not depicted.",17,MUTED,"middle")]
 write("08-projections","08","Complementary projections",450,"Exact assignment sets for ac=1 and ac=0 on three variables (two and six respectively). Arrows schematically indicate that the cohomology projections admit representatives supported in these sets; no equality of set size and dimension is claimed.",p)
+
+# IX: exact gluing dimensions for f=a before and after g=bc.
+p=[txt(28,78,"The target is already known: f = a",26,serif=True),txt(28,105,"Three input bits; compare independent and joint expressions.",18,MUTED)]
+for x,head,vals,classes in [(28,"Before the gate",(3,3,4,2),"ab, ac"),(396,"After computing bc",(4,4,5,3),"ab, ac, abc")]:
+    p += [rect(x,126,336,268,WHITE,RULE,4),txt(x+16,155,head,23,serif=True)]
+    for j,(label,value) in enumerate(zip(("On a = 0","On a = 1","Joint space","Gluing gap"),vals)):
+        y=171+j*38
+        p += [txt(x+16,y+22,label,18,INK),txt(x+305,y+22,value,23,TEAL if j==3 else INK,"end",weight="700")]
+        for k in range(value):
+            p += [rect(x+167+k*20,y+4,16,19,PALE if j==3 else PAPER,TEAL if j==3 else RULE,2)]
+    p += [line(x+16,321,x+320,321),txt(x+16,350,"Independent gap classes",16,MUTED),txt(x+16,377,classes,23,INK,serif=True)]
+p += [txt(380,425,"Gluing dimension rises from 2 to 3.",23,TEAL,"middle",serif=True),txt(380,453,"The cost of computing a is still zero multiplications.",18,MUTED,"middle")]
+write("09-target-gluing","09","The target-relative gluing obstruction",480,"Exact dimensions of the two target-region restrictions and the joint degree-one space for target a, before and after computing bc. The gluing quotient dimensions are 3+3-4=2 and 4+4-5=3. In each panel the named classes form a basis of the quotient. The target a is an input and costs zero multiplications.",p)

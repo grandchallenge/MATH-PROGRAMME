@@ -2,7 +2,7 @@
 
 <p class="page-deck">Why do some immense collections of logical relationships yield to a handful of operations, while others resist every known shortcut?</p>
 
-<div class="scc-status"><strong>Research edition 01 · November 2026.</strong> Author-derived algebraic results and bounded exact regression; protected research records are not mathematical certification. No unrestricted superpolynomial lower bound or resolution of P versus NP is claimed.</div>
+<div class="scc-status"><strong>Research edition 02 · November 2026.</strong> Author-derived algebraic results and bounded exact regression; protected research records are not mathematical certification. No unrestricted superpolynomial lower bound or resolution of P versus NP is claimed.</div>
 
 <figure class="scc-plate">
   <a href="../assets/scc/01-compression.svg" aria-label="Open full-size mathematical plate"><img src="../assets/scc/01-compression.svg" alt="Two exact eight by eight coefficient matrices: the all-ones matrix has 64 nonzero coefficients and costs one multiplication; the identity matrix has eight nonzero coefficients and costs eight multiplications."></a>
@@ -237,6 +237,74 @@ Our current results delimit the search. Degree is too small; graded promotion ra
 
 <div class="scc-thesis"><span>THE FRONTIER</span><p>Which logical dependencies cannot be cheaply reorganized away?</p></div>
 
+## VII-A. A common space for successive gates
+
+**Research continuation, 27 November 2026.** The earlier correction cohomology describes a single gate. To compare successive gates, mark the *same target* throughout the computation.
+
+Let $f$ be the Boolean decision function we want to compute. It partitions the input space into the regions where the answer is zero and where it is one. The functions in $F_r$ can be restricted to each region separately. But independently realizable restrictions need not come from one jointly realizable function in $F_r$.
+
+Define the target-relative gluing space
+
+$$
+G_r=\frac{F_r+fF_r}{F_r}.
+$$
+
+Multiplication by $f$ retains the part of a function supported on the answer-one region; multiplication by $1+f$ retains the complementary part. Their images are disjoint, and together they span $F_r+fF_r$. Thus the dimension of the gluing quotient is exactly
+
+$$
+\dim G_r=\dim(fF_r)+\dim((1+f)F_r)-\dim F_r.
+$$
+
+<figure class="scc-plate">
+  <a href="../assets/scc/09-target-gluing.svg" aria-label="Open full-size mathematical plate"><img src="../assets/scc/09-target-gluing.svg" alt="Exact dimensions for target a on three bits. Before computing bc, the two separate restrictions have dimensions three and three, the joint space four and gluing quotient two. Afterwards these dimensions are four, four, five and three. The target remains an input bit."></a>
+  <figcaption><strong>Plate IX.</strong> The quotient grows even though the target is already available. Every number is an exact dimension; the basis classes are literal.</figcaption>
+</figure>
+
+For example, take three input bits $a,b,c$ and target $f=a$. Before any multiplication, the gluing quotient in grade one has basis the classes of $ab$ and $ac$. Compute $bc$, and a third independent class, $abc$, appears. The gap has grown from two to three, even though computing the target still costs nothing.
+
+The marked class $f+F_r$, rather than the entire quotient, vanishes exactly when the target is available at grade $r$.
+
+### The exact transport law
+
+Introduce a formal variable $z$ recording the filtration degree and form the Rees algebra
+
+$$
+R=\bigoplus_{r\geq0} F_r z^r.
+$$
+
+The graded gluing module is cyclic:
+
+$$
+G=(R+fR)/R\cong R/J_f,\qquad
+J_f=\{a\in R:fa\in R\}.
+$$
+
+For a new product $g=uv$, set $t=gz$. The successor algebra is $R'=R+tR$, with $t^2=zt$. This supplies canonical maps from the old gluing module to the new one, and these maps compose across arbitrary gate histories. The base-change kernel $J'_f/(J_f R')$ isolates new target-relative relations beyond those inherited from the old state.
+
+At each grade the kernel $K_r$ records disappearing classes and the cokernel $C_r$ records new classes. There is an exact sequence
+
+$$
+0\to K_r\to G_r\to G'_r\to C_r\to0.
+$$
+
+Multiplication by $g$ maps the preceding grade's gluing space onto $C_r$. Hence
+
+$$
+\dim G'_r=\dim G_r-\dim K_r+\dim C_r,
+\qquad \dim C_r\leq\dim G_{r-1}.
+$$
+
+This is a genuine conservation account of the redistribution of target-relative relationships. It is not yet an irreducibility measure.
+
+### Why normalization does not rescue the count
+
+With $k$ independent spectator coordinates appended, the gluing module becomes a direct sum of degree-shifted copies of the original module, one for each square-free spectator monomial. Total dimension is multiplied by $2^k$. Dividing by $2^n$ removes this spectator amplification, but leaves a normalized mass bounded by $n/2$. A two-bit target $ab$, padded with arbitrary spectators, can lose $1/4$ of normalized mass in one gate. Thus the ratio of total normalized mass to a universal one-gate ceiling cannot exceed $2n$. Moreover, as Plate IX shows, the raw quotient need not vanish at target completion.
+
+The next candidate is not the dimension of this module but the minimal relations of its target annihilator ideal, particularly those in $J'_f/(J_f R')$ that cannot be generated by inherited relations.
+
+The [technical research candidate](https://github.com/grandchallenge/MATHSOLVE/blob/6656245641bb1f58273ed5cf9e95a18c8305047f/research/SCC-001/TARGET_GLUE.md) derives these identities. Its [exact replay](https://github.com/grandchallenge/MATHSOLVE/blob/c4991198ee27d2130ad26ffc07b4d1d5108bbfc5/research/SCC-001/target_gluing_replay.js) passed 68,160 target-and-gate cases, 341,184 grade checks, 7,680 compositional image checks and 80 spectator checks. It detected 1,650 increases in grade dimension. The proof and finite evidence are exploratory, not certified, and do not establish an unrestricted lower bound.
+
+
 ## Research ledger
 
 | Result | Support | Boundary |
@@ -246,6 +314,7 @@ Our current results delimit the search. Degree is too small; graded promotion ra
 | Colon quotient and square-zero correction | Author proof; finite replay | Exact one-step presentation |
 | Spectator amplification | Author proof; small exact fixtures | Rejects raw correction rank |
 | Complementary cohomology projections | Author proof | Separate replay and formalization outstanding |
+| Target-relative Rees module and transport | Author proof; bounded exact replay | Raw dimension and normalized mass fail as strong capacity measures |
 | Target-relative universal capacity law | Open | Required for the intended lower-bound argument |
 
 The first [exact regression](https://github.com/grandchallenge/MATHSOLVE/blob/e8096b79099f410aed7d2096c9e5367208b21823/research/SCC-001/replay.js) passed 720 transitions, 3,168 grade checks, 71,640 target checks and 720 capacity checks. The successor [syzygy replay](https://github.com/grandchallenge/MATHSOLVE/blob/ba8f4e6b587ab1ca4f01f0b63037d77ef09476f9/research/SCC-001/syzygy_replay.js) passed 722 transitions, 3,899 grade checks, 6,332 cross-relations, 70,836 module-linearity checks and 6,332 square-zero checks.
@@ -256,7 +325,7 @@ These are bounded exact truth-table regressions, not formal proofs of the univer
 
 Start with Plates I and II; reconstruct the four-variable histogram in Plate III by listing the sixteen square-free monomials. Then verify the identity in Plate V and test what changes if the extra variables in Plate VII cease to be independent. A contributor can replay the exact finite fixtures with Node.js, without installing third-party packages.
 
-The first executable research step is to construct a target-relative relation module with transport across two successive gates, then test an amortized inequality against arbitrary affine operands and the spectator counterfamily. A successful test must yield a proved bound covering every reachable state, or a precise counterexample to that bound. No empirical trend is a substitute.
+The next executable research step is to investigate minimal homogeneous relations in the target annihilator ideal, testing the new-relation quotient across successive gates against arbitrary affine operands and the spectator counterfamily. A successful test must yield a proved bound covering every reachable state, or a precise counterexample to that bound. No empirical trend is a substitute.
 
 !!! info "Research surface authority"
     **LIVE:** [SCC-001 tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309).
