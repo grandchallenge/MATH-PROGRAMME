@@ -969,7 +969,7 @@ A bound by the first power of height is not itself an integrability theorem. Eve
 
 ## 25. Why every fixed height moment becomes finite in large dimension
 
-The partition construction has a dimension-independent growth exponent. But the differential forms constructed from it may still grow as a power of height when their arithmetic geometry becomes thin. The next theorem, SMom, must prove that this growth is integrable. The source establishes a concrete sufficient threshold: for a nonnegative integer moment order $A$, every matrix dimension $N\geq A+2$ admits a finite-volume arithmetic fundamental domain with finite integral of the $A$-th height power.
+The partition construction has a dimension-independent growth exponent. But the differential forms constructed from it may still grow as a power of height when their arithmetic geometry becomes thin. The next theorem, SMom, must prove that this growth is integrable. The source establishes a concrete sufficient threshold: for a nonnegative integer moment order $A$, every matrix dimension $N\geq A+2$ admits a finite-volume arithmetic fundamental domain with finite integral of the height power of order $A$.
 
 ### Reducing an unbounded geometry to diagonal coordinates
 
@@ -977,14 +977,14 @@ The source first makes a rational change of basis in the adelic group, which des
 
 A two-row approximation supplies the crucial inequality between adjacent diagonal entries. The source uses a pigeonhole argument in the coefficient box of an integral basis: more candidate integral multiples than small subboxes force two multiples to have close fractional coordinates. Their difference gives a nonzero rational row of controlled norm. Applied to the last two rows of a triangular matrix, the approximation bounds their diagonal ratio because the last row was chosen to have minimal height.
 
-The source reduces the remaining upper triangular entries into compact additive adele representatives, and the norm-one parts of the diagonal into compact idele representatives. These standard compactness inputs are explicit in the reconstruction. A finite cover by cosets of the open group of integral finite matrices then supplies a finite set of rational translates for the infinite-place geometry. Finally, the unit group modulo its $N$-th powers is finite; using these residues converts the integral change of basis to one of determinant one.
+The source reduces the remaining upper triangular entries into compact additive adele representatives, and the norm-one parts of the diagonal into compact idele representatives. These standard compactness inputs are explicit in the reconstruction. A finite cover by cosets of the open group of integral finite matrices then supplies a finite set of rational translates for the infinite-place geometry. Finally, the unit group modulo its powers of order $N$ is finite; using these residues converts the integral change of basis to one of determinant one.
 
 The resulting reduction region consists of products
 
 $$
 x=c_j p D(s)k,
 \qquad
-D(s)=\operatorname{diag}(e^{s_1},\ldots,e^{s_N}),
+D(s)=\mathrm{diag}(e^{s_1},\ldots,e^{s_N}),
 $$
 
 at each infinite place. Here $c_j$ ranges over a finite set of rational matrices normalized locally to determinant one, $p$ ranges over a compact triangular set, and $k$ is unitary of determinant one. The same real vector $s$ is used at all infinite places. Its coordinates sum to zero and satisfy $s_{i+1}\leq s_i+T$ for a fixed constant $T$. In particular, they may decrease arbitrarily, but their consecutive increases are bounded.
@@ -1033,7 +1033,7 @@ Here the compact envelope has fixed finite Haar volume and the overlap multiplic
 
 ### Why dimension is the decisive parameter
 
-For adjacent differences $d_i=s_i-s_{i+1}$, every difference $s_i-s_j$ is the sum of the intervening adjacent differences. The $i$-th adjacent difference consequently appears in exactly $i(N-i)$ ordered pairs. Thus
+For adjacent differences $d_i=s_i-s_{i+1}$, every difference $s_i-s_j$ is the sum of the intervening adjacent differences. The adjacent difference at index $i$ consequently appears in exactly $i(N-i)$ ordered pairs. Thus
 
 $$
 \Phi(s)=\sum_{i=1}^{N-1}i(N-i)d_i.
