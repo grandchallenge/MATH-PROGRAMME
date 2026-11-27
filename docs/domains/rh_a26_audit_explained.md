@@ -809,22 +809,22 @@ Fix a finite set of cycles spanning the homology of the smaller matrix group. Th
 
 Let $a$ be the ratio of the smaller Hecke coset count to the larger one, and let $M$ bound the small-group correction. For the vector $x_j$ of evaluations after $j$ Hecke iterations, the exact transfer identity gives
 
-$
+$$
 x_{j+1}=(1-a)x_j+a y_j,
 \qquad \|y_j\|\leq M\|x_j\|.
-$
+$$
 
 The source increases the matrix dimension until the ratio is small enough that $a(1+M)\leq 1/5$. The reverse triangle inequality then gives
 
-$
+$$
 \|x_{j+1}\|\geq \frac45\|x_j\|.
-$
+$$
 
 In other words, a nonzero initial evaluation vector cannot decay faster than four fifths per iteration. If the analytic argument gives a bound of the form $C(3/5)^j$ for the same vector, the two bounds imply
 
-$
+$$
 \|x_0\|\leq C(3/4)^j.
-$
+$$
 
 As the number of iterations tends to infinity, the right-hand side tends to zero. The original evaluation vector must therefore vanish. Homological stability then transfers the conclusion to all cycles in the larger group.
 
