@@ -46,9 +46,16 @@ class E2ELifecycleTests(unittest.TestCase):
     def test_main_census_unmodified(self):
         result = queue.validate()
         self.assertEqual(result["individual_problems"], 1221)
-        # One original canary and one separately protected, bounded #560 record.
-        # Neither denotes proof of an open conjecture.
-        self.assertEqual(result["substantive_terminal_count"], 3)
+        # Terminal count grows with protected bounded closure, not certification.
+        rows = [r for c in queue.read(queue.REG)["cohorts"] for r in queue.read(c["packet"])["items"]]
+        terminals = [r for r in rows if r["closure_status"] == "ADMITTED_BOUNDED_COMPLETE"]
+        self.assertEqual(result["substantive_terminal_count"], len(terminals))
+        self.assertTrue({1, 27, 560}.issubset({r["problem_id"] for r in terminals}))
+        for r in terminals:
+            stage = r["stage_work_items"]["D"]
+            self.assertEqual(stage["work_status"], "PROTECTED_ADMITTED")
+            self.assertRegex(stage["protected_admission_ref"], r"^grandchallenge/MATH-PROGRAMME@[0-9a-f]{40}$")
+            self.assertTrue(r["closure_evidence_refs"])
         self.assertEqual(self.row["closure_status"], "ADMITTED_BOUNDED_COMPLETE")
         self.assertEqual(self.row["stage_work_items"]["D"]["protected_admission_ref"], "grandchallenge/MATH-PROGRAMME@bcad3e1b206674fbe090d29496fab75876629241")
 
