@@ -294,7 +294,7 @@ theorem compactStoneanRestrictedPresheafAugZeroExact
     simp only [NatTrans.app_zsmul]
     apply Finset.sum_congr rfl
     intro k hk
-    exact compactProbePresheafFace_eval U.unop P T p 0 k
+    rw [compactProbePresheafFace_eval U.unop P T p 0 k]
   have hg : Q.g = W.g := compactProbePresheafAugmentation_eval U.unop P T p
   obtain ⟨s,hs⟩ := compactProbeSplit U.unop P T p
   have hW : W.Exact := compactProbeBarAugZeroExact U.unop P T p s hs
