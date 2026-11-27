@@ -1,0 +1,17 @@
+# Erdős #3 — source reconciliation and material source drift
+
+The protected 2025 catalogue statement is reciprocal divergence forcing nonconstant arithmetic progressions of every finite length. Prior #1272 source and critical review (PR #2938) established the published three-term case via Bloom–Sisask and distinguished the four-term bound. Their four finite-regression tests replay successfully. Those dated findings are retained, not a current proof-status assertion.
+
+## New source evidence
+
+OAI26 Family 159 names *Quasipolynomial Bounds for Arithmetic Progressions*, September 23, 2026. The current upstream revision `3344da59991ed94f9ba711217b29c1d760badfa6` contains `lean/docs/159.md` and `lean/ComparatorChallenges/ErdosReciprocal.json`, targeting `OAI.Erdos3.manuscriptReciprocalProgressionTheorem` in `OAI.Combinatorics.Progressions.Main`. The actual solution declaration is present in `Results/Conclusions.lean` and projects `manuscript_main_theorems.2`. The challenge's sorry is a challenge placeholder, not evidence about the solution's axiom census. No compiler replay of the solution is asserted. The scope note separates the reciprocal-sum theorem from the manuscript's stronger quantitative density bound. A separate third-party replay report exists at https://erdosproblemaday.com/problem/3; it is an external claim, not a GCL receipt.
+
+The challenge expresses the reciprocal sum with an indicator on all natural numbers, unlike the older Formal Conjectures subtype summation. The ordinary statement bridge requires equivalence of summability of the supported sequence and summability on the subtype, the zero term being zero, and the positive-step arithmetic progression witness equivalent to the finite-set length predicate (with shortening for arbitrary lengths). These have not been independently kernel-checked here. Exact identities are retained in the JSON receipt.
+
+## Decisive crosswalk distinction
+
+The protected MATHFORGE crosswalk enumerates 200 indexed declarations, but contains neither `ErdosReciprocal` nor `OAI.Erdos3.`. Comparator index 159 in `CORPUS_159_161_COMPARATOR_RECEIPT_LEDGER.json` targets `OAI.SubpolynomialLp.source_main`, NOT manuscript family 159. Its green receipt cannot be attributed to Erdős #3. The exact comparator config also exists at the original OAI26 pin. This is a concrete coverage discrepancy; do not infer that all other GCL verification routes are absent. Retain the WP00 discrepancy and request exact declaration-keyed mapping and replay under established OAI26 authority. No blanket source upgrade, new campaign, or certification.
+
+The active GCL-ERDOS3 MATHSOLVE frontier labels its root OPEN and has substantial native residual work. The new publisher claim is materially relevant to that frontier. Source reconciliation does not unilaterally alter it. Preserve existing results; route proof verification through OAI26 WP00/WP01 and GCL-ERDOS3, not duplicate PV B research. Phase A verdict is SOURCE_CONFLICT_REPAIR_REQUIRED with pending triage. Direct canonical live problem-page retrieval was blocked by robots.txt; historical mirrors cannot settle current status. The primary publisher source and exact source-level solution declaration establish drift, not certification.
+
+Role-scoped adversary: verified old vs new source pins, claim boundaries, positive difference, subtype/indicator difference, challenge vs solution distinction, and crosswalk/receipt target. No independent human review or MATHCERT.
