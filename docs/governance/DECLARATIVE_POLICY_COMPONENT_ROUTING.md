@@ -21,13 +21,21 @@ Add one version-controlled JSON manifest to `governance/policy_components/<compo
 }
 ```
 
-New files beneath these declared scopes are discovered automatically. The new manifest itself is a protected control-plane modification: its PR always runs full policy validation before admission. A new test file outside any recognized route is rejected on the exact PR/push diff; unrecognized existing paths continue to trigger full policy fanout. Thus *discovery is automatic but authority is not*. A new experimental programme with no connection to OAI26 should use `depends_on: []`, not the example dependency shown above.
+New files beneath these declared scopes are discovered automatically. The new manifest itself is a protected control-plane modification: its PR always runs full policy validation before admission. A new test file outside any recognized route is rejected on the exact PR/merge-group/push diff; unrecognized existing paths continue to trigger full policy fanout. Thus *discovery is automatic but authority is not*. A new experimental programme with no connection to OAI26 should use `depends_on: []`, not the example dependency shown above.
 
 ## Dependency semantics and safety
 
 `depends_on` means the named component consumes the upstream component. When upstream source changes, the classifier runs the upstream's shards and all transitive downstream consumer shards. When only a downstream consumer changes, unrelated upstream shards are not unnecessarily replayed. Two manifests owning the same changed file, missing dependencies, dependency cycles, unknown shards, unsafe paths, and control-plane capture fail the classifier. Pattern matching uses declared boundaries, not arbitrary substrings. Versioned schema validation and exact-name matching prevent silent typos.
 
-Routing manifests define **what to test**, not proof validity, mathematical certification, independent review, public release, or merge authority. Protected required contexts, the formal-validation router, merge-group full validation, scheduled full sentinels, and existing protected GitHub queue policy remain authoritative. Updating the classifier, component manifests, or manifest schema forces full policy replay.
+Routing manifests define **what to test**, not proof validity, mathematical certification, independent review, public release, or merge authority. Protected required contexts, the formal-validation router, exact merge-group material-transition validation, scheduled full sentinels, and existing protected GitHub queue policy remain authoritative. Updating the classifier, component manifests, or manifest schema forces full policy replay.
+
+## Native merge-queue and supplemental job routing
+
+On a native merge-group event, require full nonzero base/head SHAs, a checked-out head identical to the event (and workflow SHA when supplied), commit existence and protected-base ancestry. Classify the exact base-to-candidate tree delta, including deleted and renamed sources; reject unavailable, malformed or mismatched identities rather than treating them as empty changes. Use the same Markdown and newly-added-test gates as a pull request. Unknown paths and control-plane changes retain full fanout; manual and scheduled full sentinels remain unchanged. The required aggregate still runs on every candidate.
+
+The existing queue-contract job has two routed input closures: pickup/class separation (including AGENTS.md, its pickup contract and roster) and Erdős publication/return/critical-source tests (including their code, workflow, roster, registry and referenced snapshot inputs). Run only selected steps, or skip the job if both are false. The aggregate accepts a skipped job only when both classifier decisions are false; affected failures, cancellations and malformed flags cannot pass. The dedicated queue job owns the catalogue projection test; residual regression excludes that exact test. Full validation runs both closures.
+
+The main-push docs build remains necessary for the current exact validated-site artifact consumer. This repair does not remove the separate Pages deployment obligation.
 
 ## Drift and adversarial acceptance
 

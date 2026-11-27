@@ -88,6 +88,22 @@ def main() -> int:
     missing_aggregate["ci.yml"]["jobs"]["validate-json"]["needs"] = ["impact"]
     assert any("aggregate impact and policy-shard" in error for error in errors(missing_aggregate))
 
+    unconditional_queue = copy.deepcopy(workflows)
+    unconditional_queue["ci.yml"]["jobs"]["queue-cutover-contract"].pop("if")
+    assert any("queue-contract job" in error for error in errors(unconditional_queue))
+
+    wrong_queue_step = copy.deepcopy(workflows)
+    for step in wrong_queue_step["ci.yml"]["jobs"]["queue-cutover-contract"]["steps"]:
+        if "test_erdos_compendium_publication_gate.py" in step.get("run", ""):
+            step["if"] = "needs.impact.outputs.queue_pickup == 'true'"
+    assert any("conditional step routing drift" in error for error in errors(wrong_queue_step))
+
+    unsafe_queue_aggregate = copy.deepcopy(workflows)
+    for step in unsafe_queue_aggregate["ci.yml"]["jobs"]["validate-json"]["steps"]:
+        if "QUEUE_CONTRACT_ROUTE_INVALID" in step.get("run", ""):
+            step["run"] = step["run"].replace('= "skipped"', '= "success"')
+    assert any("conditional queue-contract result gate" in error for error in errors(unsafe_queue_aggregate))
+
     unsafe_aggregate = copy.deepcopy(workflows)
     unsafe_aggregate["ci.yml"]["jobs"]["validate-json"]["if"] = "success()"
     assert any("run under always()" in error for error in errors(unsafe_aggregate))

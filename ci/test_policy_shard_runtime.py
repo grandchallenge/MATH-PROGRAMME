@@ -77,6 +77,8 @@ class PolicyShardRuntimeTests(unittest.TestCase):
                 path,
             )
         self.assertTrue(any(path.name.startswith("test_oz") for path, _ in excluded))
+        self.assertIn(ROOT / "tests/test_erdos_catalogue_queue_projection.py",
+                      {path for path, _ in excluded})
 
     def test_non_regression_shards_do_not_inherit_repository_exclusions(self) -> None:
         with patch.dict(os.environ, {"GCL_POLICY_SHARD": "contracts"}, clear=False):

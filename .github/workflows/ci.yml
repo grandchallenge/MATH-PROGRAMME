@@ -26,6 +26,8 @@ jobs:
       event_mode: ${{ steps.classify.outputs.event_mode }}
       policy_shards: ${{ steps.classify.outputs.policy_shards }}
       unknown_count: ${{ steps.classify.outputs.unknown_count }}
+      queue_pickup: ${{ steps.classify.outputs.queue_pickup }}
+      queue_erdos: ${{ steps.classify.outputs.queue_erdos }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -42,7 +44,9 @@ jobs:
           printf '%s\n' \
             "event_mode=${{ steps.classify.outputs.event_mode }}" \
             "policy_shards=${{ steps.classify.outputs.policy_shards }}" \
-            "unknown_count=${{ steps.classify.outputs.unknown_count }}"
+            "unknown_count=${{ steps.classify.outputs.unknown_count }}" \
+            "queue_pickup=${{ steps.classify.outputs.queue_pickup }}" \
+            "queue_erdos=${{ steps.classify.outputs.queue_erdos }}"
 
   policy-shard:
     name: Policy shard / ${{ matrix.shard }}
@@ -106,6 +110,8 @@ jobs:
 
   queue-cutover-contract:
     name: Queue class cutover positive and hostile tests
+    needs: impact
+    if: needs.impact.result == 'success' && (needs.impact.outputs.queue_pickup == 'true' || needs.impact.outputs.queue_erdos == 'true')
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -116,20 +122,28 @@ jobs:
         with:
           python-version: "3.12"
       - name: Verify two-class source/pickup separation and fail-closed views
+        if: needs.impact.outputs.queue_pickup == 'true'
         run: python3 ci/test_gcl_queue_class_cutover.py
       - name: Validate accepted Compendium publication boundary (positive and hostile)
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: python3 ci/test_erdos_compendium_publication_gate.py
       - name: Test actual Compendium RESULT/1 transport projector and hostile cross-route replay
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: python3 ci/test_erdos_compendium_direct_return_projector.py
       - name: Guard bounded Compendium Issue Field writer against widened permission scope
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: python3 ci/test_erdos_compendium_direct_return_permissions.py
       - name: Test source-locked editorial admission and hostile state/readback cases
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: python3 ci/test_erdos_compendium_editorial_activate.py
       - name: Test exact-14 rolling review completion and idempotent replays
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: PYTHONPATH=. python3 tests/test_erdos_catalogue_queue_projection.py
       - name: Verify five source-locked Erdős corrections and hostile semantic fixtures
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: python3 governance/source_erdos_critical_005/validate.py
       - name: Test the sealed scheduled Editorial replay and no-RESULT authority
+        if: needs.impact.outputs.queue_erdos == 'true'
         run: python3 ci/test_erdos_compendium_editorial_replay.py
 
   validate-json:
@@ -142,5 +156,14 @@ jobs:
         run: |
           test "${{ needs.impact.result }}" = "success"
           test "${{ needs.policy-shard.result }}" = "success"
-          test "${{ needs.queue-cutover-contract.result }}" = "success"
+          case "${{ needs.impact.outputs.queue_pickup }}:${{ needs.impact.outputs.queue_erdos }}" in
+            false:false)
+              test "${{ needs.queue-cutover-contract.result }}" = "skipped"
+              echo "QUEUE_CONTRACT_UNCHANGED_ATTESTATION_REUSED"
+              ;;
+            true:true|true:false|false:true)
+              test "${{ needs.queue-cutover-contract.result }}" = "success"
+              ;;
+            *) echo "QUEUE_CONTRACT_ROUTE_INVALID"; exit 1 ;;
+          esac
           echo "POLICY_IMPACT_GATING_AGGREGATE_SUCCESS"
