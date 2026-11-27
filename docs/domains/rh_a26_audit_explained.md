@@ -8,7 +8,7 @@ hide:
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 27 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The compact-local evaluation bridge has now been reconstructed, joining the two conditional decay estimates on the same cycle evaluations. The source height and smooth partition of unity have now been conventionally reconstructed, with the dimension-independent height exponent one. The actual height-moment and representing-form inputs remain open. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The compact-local evaluation bridge has now been reconstructed, joining the two conditional decay estimates on the same cycle evaluations. The source height and smooth partition of unity have now been conventionally reconstructed, with the dimension-independent height exponent one. The finite height-moment theorem is now conventionally reconstructed with the source's dimension threshold; the actual representing-form construction remains open. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -967,7 +967,99 @@ The [technical reconstruction PR #626](https://github.com/grandchallenge/MATHFOR
 
 A bound by the first power of height is not itself an integrability theorem. Even a finite-volume arithmetic domain can have infinite moments of an unbounded function. The next source theorem, SMom, must show that every fixed height moment becomes finite in all sufficiently large matrix dimensions. Its reduction cone, rational translates, actual Haar density and dimension-dependent tail exponents need verification. Only then can the representing-form construction use the height and partition estimates to obtain square-integrability.
 
-## 25. Reproducibility and technical references
+## 25. Why every fixed height moment becomes finite in large dimension
+
+The partition construction has a dimension-independent growth exponent. But the differential forms constructed from it may still grow as a power of height when their arithmetic geometry becomes thin. The next theorem, SMom, must prove that this growth is integrable. The source establishes a concrete sufficient threshold: for a nonnegative integer moment order $A$, every matrix dimension $N\geq A+2$ admits a finite-volume arithmetic fundamental domain with finite integral of the height power of order $A$.
+
+### Reducing an unbounded geometry to diagonal coordinates
+
+The source first makes a rational change of basis in the adelic group, which describes the number field at its infinite and finite places together. The reduced basis is built by choosing a rational row of least adelic height and applying the same construction to the remaining block. The minimum exists because a bounded-height family of rational lines has finitely many representatives up to rational scaling. This follows using the product formula, discreteness of rational vectors, and compact representatives of idele classes in a bounded positive interval of modules.
+
+A two-row approximation supplies the crucial inequality between adjacent diagonal entries. The source uses a pigeonhole argument in the coefficient box of an integral basis: more candidate integral multiples than small subboxes force two multiples to have close fractional coordinates. Their difference gives a nonzero rational row of controlled norm. Applied to the last two rows of a triangular matrix, the approximation bounds their diagonal ratio because the last row was chosen to have minimal height.
+
+The source reduces the remaining upper triangular entries into compact additive adele representatives, and the norm-one parts of the diagonal into compact idele representatives. These standard compactness inputs are explicit in the reconstruction. A finite cover by cosets of the open group of integral finite matrices then supplies a finite set of rational translates for the infinite-place geometry. Finally, the unit group modulo its powers of order $N$ is finite; using these residues converts the integral change of basis to one of determinant one.
+
+The resulting reduction region consists of products
+
+$$
+x=c_j p D(s)k,
+\qquad
+D(s)=\mathrm{diag}(e^{s_1},\ldots,e^{s_N}),
+$$
+
+at each infinite place. Here $c_j$ ranges over a finite set of rational matrices normalized locally to determinant one, $p$ ranges over a compact triangular set, and $k$ is unitary of determinant one. The same real vector $s$ is used at all infinite places. Its coordinates sum to zero and satisfy $s_{i+1}\leq s_i+T$ for a fixed constant $T$. In particular, they may decrease arbitrarily, but their consecutive increases are bounded.
+
+Define the total consecutive variation
+
+$$
+W(s)=\sum_{i=1}^{N-1}|s_i-s_{i+1}|.
+$$
+
+The height estimate follows from the triangular shape. For a nonzero rational column vector, its last nonzero coordinate survives multiplication by an invertible upper triangular matrix with the appropriate diagonal factor; for a lower triangular matrix use the first nonzero coordinate instead. The rational translates permit denominators to be cleared simultaneously across all embeddings. The integer norm of the resulting nonzero integral coordinate supplies a positive lower bound, independent of the vector.
+
+Applied to the inverse matrix and its transpose, these observations bound the two squared minima below by constants times $e^{-2\max_i s_i}$ and $e^{2\min_i s_i}$ respectively. The height is their reciprocal product, so the source obtains
+
+$$
+h(x)\leq C_j e^{2W(s)}.
+$$
+
+The constants may depend on the rational translate, field and dimension, but not on the unbounded diagonal coordinates.
+
+### Packing supplies the Haar-volume estimate
+
+It is not enough to show that height grows at a known exponential rate. The proof must establish how much volume is available in the regions where it grows.
+
+Define the sum of all pairwise ordered differences,
+
+$$
+\Phi(s)=\sum_{i<j}(s_i-s_j).
+$$
+
+The source partitions the diagonal coordinate region into integer unit boxes. Consider one such box $X_m$, with each coordinate between $m_i$ and $m_i+1$, and choose a point $s$ in its allowed diagonal parameters. At one complex place, form upper unitriangular Gaussian integer matrices by independently choosing the real and imaginary parts of each strict upper entry from the integers between zero and the ceiling of $e^{s_i-s_j}$ minus one. There are at least $e^{2\Phi(s)}$ distinct matrices.
+
+Translate the reduction box by each of these matrices in that one factor of the ambient group. These need not be arithmetic lattice translations. Haar measure is invariant under *all* ambient left translations, which is exactly what this argument requires.
+
+After multiplication by $D(-s)$, every translated box is contained in the same bounded matrix region. Indeed, the upper triangular entries cancel the potentially unbounded diagonal ratios, leaving only the bounded upward-step condition and the variation within the unit box.
+
+The translates are not necessarily disjoint. However, if two overlap, their relative triangular matrix can be expressed using two compact triangular factors, a unitary matrix and two diagonal vectors from the same unit box. The unitary matrix must itself be triangular, hence diagonal. This removes the uncontrolled off-diagonal terms. The relative matrix therefore has uniformly bounded entries. Since these entries are Gaussian integers, there are only finitely many possibilities. Fixing any one translate containing a given point bounds the number of all the others uniformly.
+
+Integrating the indicators of the translated boxes now gives the actual estimate
+
+$$
+\mu(X_m)\leq C e^{-2\Phi(s)}.
+$$
+
+Here the compact envelope has fixed finite Haar volume and the overlap multiplicity is bounded independently of the chosen diagonal box. No formula for Haar density in diagonal coordinates is assumed.
+
+### Why dimension is the decisive parameter
+
+For adjacent differences $d_i=s_i-s_{i+1}$, every difference $s_i-s_j$ is the sum of the intervening adjacent differences. The adjacent difference at index $i$ consequently appears in exactly $i(N-i)$ ordered pairs. Thus
+
+$$
+\Phi(s)=\sum_{i=1}^{N-1}i(N-i)d_i.
+$$
+
+In a decreasing sequence all $d_i$ are nonnegative, and the smallest coefficient is $N-1$. Therefore the total pairwise separation is at least $(N-1)$ times the consecutive variation. Allowing bounded upward steps changes this estimate only by a fixed additive amount. The source's actual summability argument yields constants $c$ and $\epsilon>0$ such that
+
+$$
+2A W(s)-2\Phi(s)\leq c-\epsilon\sum_i|s_i|
+$$
+
+whenever $A<N-1$.
+
+The left side is the logarithm of the bound on the height power multiplied by the volume of its diagonal box. The right side decreases linearly with distance from the bounded region. Summing the box estimates reduces to a product of convergent two-sided geometric series. This proves finiteness of the moment.
+
+For intuition, concentrate all the decreasing variation in the first gap and leave the other coordinates equal. Then $\Phi=(N-1)W$. At $A=N-1$ the two exponents exactly cancel. Below that value there is strict decay. This example identifies the boundary of the source's estimate, not a proof that the actual height moment diverges at equality.
+
+The finite reduction cover transfers the estimate to the actual arithmetic fundamental domain, using invariance of height and left Haar measure. Taking moment order zero in the same argument establishes finite volume. The source does not need to assume finite volume in order to establish the moment theorem. The resulting domain also has right Haar invariance, as required by the preceding analytic arguments.
+
+The [technical reconstruction PR #627](https://github.com/grandchallenge/MATHFORGE/pull/627) records the source's reduction, rational transport, triangular height estimates, Gaussian integer packing and geometric summation, with classical adelic, lattice and measure-theoretic inputs identified. Exact finite controls checked 37,320 cone and root-weight comparisons, 490 packing-count comparisons, 7,371 determinant normalization cases, 1,296 primal and dual coordinate cases and 728 threshold and endpoint comparisons. The packing-count tests use rational base-two scales; they check the integer counting mechanism, not numerical Haar volume. This is a conventional reconstruction, not original formal replay.
+
+### What has become possible
+
+The height and partition estimates now have the integrability theorem they need. For each fixed moment order, increasing the matrix dimension eventually makes the source's estimate summable. The next step is to construct the actual Whitney differential form from the original group cocycle, establish its closedness and exact cycle evaluation, and verify its precise height growth before using this integrability result. The later scalar averaging and invariant mean must still be reconstructed.
+
+## 26. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1010,10 +1102,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #624](https://github.com/grandchallenge/MATHFORGE/pull/624) | Affine homology vanishing, exact coset transfer and conditional Hecke detection |
 | [PR #625](https://github.com/grandchallenge/MATHFORGE/pull/625) | Probability averaging, simplex density and compact-local cycle evaluation |
 | [PR #626](https://github.com/grandchallenge/MATHFORGE/pull/626) | Height, smooth minimum, rank-one retraction, thick part and uniform partition exponent |
+| [PR #627](https://github.com/grandchallenge/MATHFORGE/pull/627) | Adelic reduction, rational height estimates, Haar packing and finite height moments |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 26. What the investigation taught us about checking extraordinary mathematical claims
+## 27. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1025,14 +1118,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 27. The next executable mathematical step
+## 28. The next executable mathematical step
 
-**Target:** the actual height-moment theorem `SMom` and its supplying reduction and Haar-integration arguments.
+**Target:** the actual Whitney representing-form theorem `SWhit`.
 
-**Work:** verify `SMomOf`, `SRedGL2`, `SRedOf`, `sHtB` and `SIntB` against the actual source, with the domain and sufficiently-large-dimension quantifiers. Then reconstruct `SWhit`, `SCen`, `SMean` and `SInv`, and the remaining prime input. Height and smooth partition of unity are conventionally reconstructed with exponent one. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion remain explicit.
+**Work:** reconstruct the source's Whitney form from its genuine partition and cocycle, including finite overlap, exact cycle evaluation, closedness, scalar-modulus invariance and the height growth exponent. Then verify `SCen`, `SMean`, `SInv` and the prime input. Height, partition and finite height moments are conventionally reconstructed, with the original dimension threshold. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion remain explicit.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_HEIGHT_AND_PARTITION_CONVENTIONALLY_RECONSTRUCTED__MOMENT_REDUCTION_WHITNEY_SCALAR_MEAN_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_HEIGHT_MOMENTS_CONVENTIONALLY_RECONSTRUCTED__WHITNEY_SCALAR_MEAN_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
