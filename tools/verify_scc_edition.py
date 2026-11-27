@@ -33,7 +33,7 @@ def main():
                 page = browser.new_page(viewport={"width": width, "height": height},
                                         color_scheme=scheme, device_scale_factor=1)
                 page.goto(base + "/scc/", wait_until="domcontentloaded", timeout=15000)
-                page.wait_for_function("""Array.from(document.querySelectorAll('.scc-plate img')).length===9 &&
+                page.wait_for_function("""Array.from(document.querySelectorAll('.scc-plate img')).length===10 &&
                     Array.from(document.querySelectorAll('.scc-plate img')).every(x=>x.complete && x.naturalWidth>0)""", timeout=10000)
                 page.wait_for_function("""document.querySelectorAll('mjx-container').length >=
                     document.querySelectorAll('.arithmatex').length && document.querySelectorAll('.arithmatex').length>10""", timeout=15000)
@@ -72,11 +72,11 @@ def main():
             browser.close()
         print(json.dumps(results, indent=2))
         for x in results:
-            assert x["plates"] == x["loaded"] == x["alt"] == x["captions"] == x["fullSize"] == 9
+            assert x["plates"] == x["loaded"] == x["alt"] == x["captions"] == x["fullSize"] == 10
             assert x["currentResearch"] and all(y != "/scc/" for y in x["currentResearch"])
             assert x["overflows"] == x["mathErrors"] == 0 and x["scrollWidth"] <= x["width"] + 2
             assert x["math"] == x["mathWrappers"] and x["math"] > 10
-        print("PASS: 9 plates, mathematical glyphs, navigation, anchors and responsive layout.")
+        print("PASS: 10 plates, mathematical glyphs, navigation, anchors and responsive layout.")
     finally:
         server.shutdown()
 

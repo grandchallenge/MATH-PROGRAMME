@@ -130,3 +130,15 @@ for x,head,vals,classes in [(28,"Before the gate",(3,3,4,2),"ab, ac"),(396,"Afte
     p += [line(x+16,321,x+320,321),txt(x+16,350,"Independent gap classes",16,MUTED),txt(x+16,377,classes,23,INK,serif=True)]
 p += [txt(380,425,"Gluing dimension rises from 2 to 3.",23,TEAL,"middle",serif=True),txt(380,453,"The cost of computing a is still zero multiplications.",18,MUTED,"middle")]
 write("09-target-gluing","09","The target-relative gluing obstruction",480,"Exact dimensions of the two target-region restrictions and the joint degree-one space for target a, before and after computing bc. The gluing quotient dimensions are 3+3-4=2 and 4+4-5=3. In each panel the named classes form a basis of the quotient. The target a is an input and costs zero multiplications.",p)
+
+# X: exact tensor-indexed generator basis at m=3; one degree-one generator.
+p=[txt(28,78,"One gate, eight high-grade generators",26,serif=True),txt(28,105,"Three relevant pairs; f = ab(1+x₁y₁)(1+x₂y₂)(1+x₃y₃).",17,MUTED)]
+for i in range(3):
+    x=32+240*i;p += [rect(x,128,216,88,WHITE,RULE,4),txt(x+108,151,f"Pair {i+1}",16,MUTED,"middle",weight="700"),txt(x+108,182,f"U{i+1}  or  V{i+1}",24,INK,"middle",serif=True),txt(x+108,202,"Two choices",15,TEAL,"middle")]
+p += [txt(380,245,"Tensor all choices",20,TEAL,"middle",serif=True),line(380,252,380,270,TEAL,2,True)]
+for i,choice in enumerate(product("UV",repeat=3)):
+    x=30+(i%4)*180;y=280+(i//4)*50
+    label="z "+" ".join(f"{c}{j+1}" for j,c in enumerate(choice))
+    p += [rect(x,y,170,38,PALE,TEAL,3),txt(x+85,y+25,label,19,INK,"middle",serif=True)]
+p += [line(24,388,736,388),txt(28,421,"Grade 1",17,MUTED),txt(28,451,"1 generator: t+z",23,INK,serif=True),txt(390,421,"Grade 4",17,MUTED),txt(390,451,"8 independent generators",23,TEAL,serif=True),txt(380,487,"The target itself needs just seven multiplications.",20,INK,"middle",serif=True)]
+write("10-generator-birth","10","Minimality is not computational independence",510,"Exact basis indexing for m=3: eight products of z and one of U_i or V_i from each of three essential pairs. There is also one degree-one generator t+z. The target requires exactly seven multiplication gates. The boxes show tensor choices, not a circuit.",p)
