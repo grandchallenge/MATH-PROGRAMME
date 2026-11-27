@@ -710,7 +710,7 @@ Consider two ways to place a matrix into a larger matrix group. The first pads t
 
 The source subtracts an appropriately weighted padding operation from each replication operation. At the first step the weight-two measurement vanishes. At the second step the weight-three measurement vanishes. Continue until every weight from two through the homology degree has disappeared.
 
-For a concrete example, use three copies and homology degree three. The first difference multiplies a weight-$j$ measurement by $3^j-9$, and the second multiplies it by $3^j-27$.
+For a concrete example, use three copies and homology degree three. The first difference multiplies a measurement of weight $j$ by $3^j-9$, and the second multiplies it by $3^j-27$.
 
 | Weight | First factor | Second factor | Combined factor |
 | --- | ---: | ---: | ---: |
