@@ -8,7 +8,7 @@ hide:
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 27 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The compact-local evaluation bridge has now been reconstructed, joining the two conditional decay estimates on the same cycle evaluations. The actual representing-form and height inputs remain open. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The odd homology weight elimination and conditional rank argument have also been reconstructed, followed by the actual Hecke spectral contraction under its explicit classical arithmetic and measure-theoretic inputs. The Hecke detection theorem has also been reconstructed under the actual finite-generation and stability inputs, with a conventional split-extension proof of the affine vanishing. The compact-local evaluation bridge has now been reconstructed, joining the two conditional decay estimates on the same cycle evaluations. The source height and smooth partition of unity have now been conventionally reconstructed, with the dimension-independent height exponent one. The actual height-moment and representing-form inputs remain open. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -891,7 +891,83 @@ The two rates can now be applied to the same cycle evaluations, provided the for
 
 This reconstructs the direct analytic bridge. It does not yet produce a representing form for an arbitrary group cocycle. The source must still construct its smooth partition of unity, control its height and height moments, produce the Whitney form, perform scalar averaging and construct the invariant mean form. The finite-generation geometry and homological stability inputs also remain open. Only after the exact supplying arguments have been verified can the whole analytic surjectivity theorem be regarded as reconstructed.
 
-## 24. Reproducibility and technical references
+## 24. Constructing a smooth partition with controlled arithmetic growth
+
+The preceding three analytic estimates now have to be applied to an actual differential form representing the cocycle that we started with. An arbitrary representative need not be square-integrable. The source addresses this by constructing a partition of unity whose derivatives grow at most as the first power of an arithmetic height. This growth control is a substantive part of the proof, not merely a technical choice of coordinates.
+
+### A lattice can become thin in two different ways
+
+At each infinite place, a positive definite Hermitian matrix specifies a quadratic metric on the embedded arithmetic lattice. Let $\lambda(h)$ denote its shortest nonzero squared lattice length. The source also considers the metric with blocks $(h_w^{-1})^T$, and writes its minimum as $\lambda_D(h)$.
+
+The transpose is significant: the pairing in the arithmetic dual calculation is bilinear over the number field, rather than the usual real Euclidean pairing. The actual metric dual of the embedded integral lattice involves the trace pairing and the discriminant. Those factors must be retained when the source uses lattice transference.
+
+The height is the reciprocal product of these two minima. Scaling all the original metric blocks by a common positive number multiplies the primal minimum by that number and divides the dual minimum by it. The product is unchanged.
+
+For example, take a two-dimensional lattice metric with diagonal entries $t$ and $1/t$, with $t\geq 1$, over the Gaussian integers. Both squared minima are $1/t$, so the height is $t^2$. The determinant remains one throughout. Consequently the determinant alone would not detect this degeneration, whereas the height grows with it.
+
+The original source proves that the height is positive, continuous, bounded below by a positive constant and invariant under integral changes of basis. Right translation by any matrix in a fixed compact set changes it by at most a fixed multiplicative factor. The conventional reconstruction uses the exact inverse and transpose actions and a lattice volume estimate; it does not differentiate the shortest-vector minimum, which need not be smooth.
+
+### Replacing a discontinuous choice of shortest vector by a smooth minimum
+
+The shortest squared length is continuous, but a particular shortest vector can change abruptly as the metric varies. The source avoids choosing such a vector globally.
+
+For a scale $s>0$, sum a smooth cutoff of the ratios of all squared lattice lengths to $s$. The cutoff equals one below ratio one and zero at and above ratio four. Each sum is locally finite, because only finitely many lattice points can lie inside a bounded metric ball. It includes the zero vector, which ensures a positive denominator in subsequent constructions.
+
+At scales $4^j$, form a smooth indicator $X_j$ that detects whether a nonzero vector has entered the cutoff region. If the shortest length lies between $4^m$ and $4^{m+1}$, only two consecutive scale differences contribute to the source's smooth minimum. It is exactly
+
+$$
+\nu(h)=4^mX_m(h)+4^{m+1}(1-X_m(h)).
+$$
+
+It therefore lies between one quarter and four times the true minimum. A lattice counting bound controls the number of vectors contributing when the metric is perturbed by a small relative amount. In particular, the smooth minimum changes by at most a constant times that relative perturbation times the smooth minimum itself. The number of active scales in this comparison is bounded independently of the degenerating metric.
+
+Applied to the dual metric, this gives the source's smooth positive arithmetic-invariant function $\mu(h)$ comparable to the dual minimum.
+
+### Moving every metric into a thick region
+
+The source constructs a smooth map of positive metrics by starting with $\mu(h)h$ and adding positive semidefinite rank-one corrections built from the lattice vectors at geometric scales. At scale $s$, the correction is a weighted sum of outer products of the vectors $h_wv_w$, divided by the positive cutoff sum and by $s^2$.
+
+Why does the correction prevent a short vector from remaining short? For a fixed nonzero integral vector $u$, choose a scale between four and sixteen times its squared length. The cutoff then includes both every sufficiently short vector $v$ and its translate $v+u$. Their real pairings with $u$ differ by the squared length of $u$. At least one of these pairings must be substantial.
+
+For a concrete scalar example, if two numbers differ by 10, their squared values sum to at least 50. The smallest sum occurs at minus five and plus five. The source uses exactly this elementary inequality inside a lattice count and a normalized sum of squares. It supplies a positive lower bound on the primal minimum of the corrected metric, unless the initial scaled term already does so.
+
+The dual lower bound requires another argument. Lattice transference gives a covering estimate: every point of the ambient metric space is close to an integral lattice vector, with squared error bounded by a constant divided by the dual minimum. The conventional reconstruction obtains this from shortest-vector projection and rounding, and then transports it through the trace pairing. The square of the discriminant enters the comparison of the two dual norms.
+
+For a nonzero dual vector, consider a shortest integral vector with which it has nonzero arithmetic pairing. That pairing has modulus at least one at some infinite place, by the integer field norm. Transference bounds the required primal length. The source combines this lower pairing bound with a geometric sum bounding the rank-one corrections in the corresponding direction. Cauchy–Schwarz for the corrected metric then gives a positive lower bound on its dual minimum.
+
+Thus the corrected metric has both minima bounded away from zero, with constants that may depend on the number field and the matrix dimension, but not on the original metric.
+
+The source further proves that metrics satisfying both lower bounds have compact representatives modulo integral changes of basis. The covering estimate supplies a basis of short vectors over the number field. Their determinant norm is bounded by Hadamard's inequality and the lower bound on the primal minimum. There are only finitely many row lattices of that bounded index. In each representative basis, the metric entries are bounded above and the determinant estimate prevents an eigenvalue from tending to zero. This produces a compact set of representatives inside the positive cone, rather than merely a bounded set that could touch its boundary.
+
+### Why the derivative exponent is exactly one
+
+The retraction is arithmetic-equivariant and smooth. Its scale corrections also admit a relative perturbation estimate. A change of size $\delta$ in the input metric produces a change bounded, relative to the corrected metric, by
+
+$$
+C\delta\left(1+\frac{1}{\lambda(h)\lambda_D(h)}\right).
+$$
+
+This is the key growth estimate. The small-scale contributions are bounded by a geometric sum starting at a constant multiple of the primal minimum. Division by the initial positive scaled metric introduces the dual minimum. The ratio of the two smoothed dual minima before and after perturbation stays bounded, so the terms involving the change of the upper cutoff do not create an unbounded number of active scales.
+
+The source normalizes the common positive scale by a product of determinants. This normalization is smooth, preserves the height and has a bounded relative perturbation constant. It then composes the normalization and retraction with a smooth compactly supported bump on the thick region. The bump is divided by a smooth positive normalization of the sum of its arithmetic translates. Every corrected metric has a representative in the thick region, so the sum of the translated partition functions is exactly one.
+
+Discreteness gives both local finiteness of this sum and the stronger finite-overlap property of the supports required by the source. The partition is bounded, smooth and unchanged by common positive rescaling.
+
+Finally, the relative metric perturbation estimate is differentiated along the actual moving-frame directions. The source obtains
+
+$$
+\|D\phi_{Q_x}\circ A_x\|\leq C_{L,N}h(x).
+$$
+
+The positive lower bound on height absorbs the additive one in the preceding estimate. The exponent of height is one for every positive matrix dimension. Only the constant depends on dimension. This quantifier is essential: choosing a different power after choosing the dimension would not supply the subsequent moment argument.
+
+The [technical reconstruction PR #626](https://github.com/grandchallenge/MATHFORGE/pull/626) records the source height and partition constructions, with explicit classical lattice, trace, spectral and smooth bump inputs. The conventional argument uses some alternative estimates for the source's intermediate existential constants, while retaining its actual constructions, hypotheses and exponent. It is not original formal replay. Exact controls checked 270 height and distortion cases, 13,872 scale interpolation cases, 324 normalization comparisons, 10,440 primal pairing comparisons and 24 dual-bound controls. These tests check the component arithmetic, not the existence of a smooth arithmetic partition by computation.
+
+### The remaining integrability obligation
+
+A bound by the first power of height is not itself an integrability theorem. Even a finite-volume arithmetic domain can have infinite moments of an unbounded function. The next source theorem, SMom, must show that every fixed height moment becomes finite in all sufficiently large matrix dimensions. Its reduction cone, rational translates, actual Haar density and dimension-dependent tail exponents need verification. Only then can the representing-form construction use the height and partition estimates to obtain square-integrability.
+
+## 25. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -933,10 +1009,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #623](https://github.com/grandchallenge/MATHFORGE/pull/623) | Finite residue-field geometry, Hilbert-space contraction and actual Hecke averaging |
 | [PR #624](https://github.com/grandchallenge/MATHFORGE/pull/624) | Affine homology vanishing, exact coset transfer and conditional Hecke detection |
 | [PR #625](https://github.com/grandchallenge/MATHFORGE/pull/625) | Probability averaging, simplex density and compact-local cycle evaluation |
+| [PR #626](https://github.com/grandchallenge/MATHFORGE/pull/626) | Height, smooth minimum, rank-one retraction, thick part and uniform partition exponent |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 25. What the investigation taught us about checking extraordinary mathematical claims
+## 26. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -948,14 +1025,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 26. The next executable mathematical step
+## 27. The next executable mathematical step
 
-**Target:** the actual height, moment and smooth representing-form construction supplying `SSurj`, followed by scalar averaging and the invariant mean.
+**Target:** the actual height-moment theorem `SMom` and its supplying reduction and Haar-integration arguments.
 
-**Work:** reconstruct the source's `SHt`, `SPU`, `SMom`, `SWhit`, `SCen`, `SMean` and `SInv` contracts and supplying proofs, including the domain and prime inputs. Hecke contraction, conditional detection and compact-local evaluation have been reconstructed. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion obligations remain explicit.
+**Work:** verify `SMomOf`, `SRedGL2`, `SRedOf`, `sHtB` and `SIntB` against the actual source, with the domain and sufficiently-large-dimension quantifiers. Then reconstruct `SWhit`, `SCen`, `SMean` and `SInv`, and the remaining prime input. Height and smooth partition of unity are conventionally reconstructed with exponent one. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion remain explicit.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SLOC_COMPACT_LOCAL_EVALUATION_RECONSTRUCTED__HEIGHT_MOMENTS_WHITNEY_SCALAR_MEAN_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_HEIGHT_AND_PARTITION_CONVENTIONALLY_RECONSTRUCTED__MOMENT_REDUCTION_WHITNEY_SCALAR_MEAN_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
