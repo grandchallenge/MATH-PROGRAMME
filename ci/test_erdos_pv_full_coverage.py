@@ -68,8 +68,12 @@ class CoverageTests(unittest.TestCase):
                 v.validate_row(row,self.source[n-1],cohort['phase_issues'])
                 self.assertEqual(row['source_issue_live_state'],'OPEN_RETURNED')
                 self.assertEqual(row['mathcert_status'],'NOT_SUBMITTED')
-                self.assertEqual(row['stage_work_items']['B']['work_status'],
-                                 'PROTECTED_ADMITTED' if n in (560,561) else 'UNEXECUTED')
+                if n==562:
+                    self.assertIn(row['stage_work_items']['B']['work_status'],('VERIFIED_BOUNDED','PROTECTED_ADMITTED'))
+                    self.assertEqual(row['stage_work_items']['B']['review_status'],'ROLE_SCOPED_CRITICAL_PASS')
+                else:
+                    self.assertEqual(row['stage_work_items']['B']['work_status'],
+                                     'PROTECTED_ADMITTED' if n in (560,561) else 'UNEXECUTED')
                 if n<=562:
                     self.assertEqual(row['triage_decision'],'SELECTED_WITH_MANIFEST')
                     self.assertEqual(row['stage_work_items']['A']['work_status'],'VERIFIED_BOUNDED')
