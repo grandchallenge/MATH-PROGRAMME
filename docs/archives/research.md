@@ -31,6 +31,8 @@ These are supporting records, not necessarily current research instructions or c
 
 ## Individual research guides
 
+- [REACH reader guide · free scalar fields and collisions](../campaigns/REACH_READER_GUIDE.md)
+
 - [UC-001 Research Guide](../domains/UC_001_RESEARCH_GUIDE.md)
 - [NS-CI-001 Research Guide](../domains/NS_CI_001_RESEARCH_GUIDE.md)
 - [HC-001 Research Guide](../domains/HC_001_RESEARCH_GUIDE.md)

@@ -363,6 +363,8 @@ The **first reproducible action** for a newcomer is not a large Lean build: prov
 
 ## 10. Where to read next
 
+**An application to quantum fields.** The [REACH reader guide](campaigns/REACH_READER_GUIDE.md) explains how the liquid model retains collision information for a free scalar field on a line.
+
 **Primary mathematical source:** Peter Scholze, [*Lectures on Condensed Mathematics*](https://arxiv.org/abs/2605.03658) (May 2026 stable edition; material joint with Dustin Clausen). Begin with Lecture I (condensed sets), Lecture II (condensed abelian groups), and Lecture V (solid abelian groups). Definition 5.1, Theorem 5.4 (Nöbeling) and Proposition 5.7 supply the bridge to CM4.
 
 **GCL result and evidence:** [CM4 human-facing result](CMDG_CM4.md), [formal mathematical note](CMDG_CM4_MATHEMATICAL_NOTE.md), [reproducibility protocol](CMDG_CM4_REPRODUCIBILITY.md), [external review packet](CMDG-CM4-EXTERNAL-MATHEMATICAL-REVIEW.md). The [CM4 issue](https://github.com/grandchallenge/MATH-PROGRAMME/issues/355) and protected records govern GCL's certified claim; MkDocs provides the explanatory projection.

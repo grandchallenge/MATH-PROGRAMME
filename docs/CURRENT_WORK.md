@@ -81,6 +81,8 @@ The current questions include [separation at a one-point component](https://gith
 
 [Introduction for new readers](CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md) · [Published mathematical result and qualifications](CMDG_CM4.md)
 
+The REACH study uses liquid mathematics to retain collision data in a renormalized free scalar field on the line. Its reader guide works through the nine mixed products missed by two separate interval patches. [What survives a collision?](campaigns/REACH_READER_GUIDE.md)
+
 ### The mathematics of fluid flow
 
 The Navier–Stokes equations describe fluid motion. A major unresolved question is whether their three-dimensional solutions can develop singularities from smooth starting conditions.
