@@ -64,17 +64,23 @@ def totalSumAdd (K : BC) (n : ℕ) :
       change i.val+(n-i.val)=n
       omega)).hom (x i) (y i)
 
+set_option backward.isDefEq.respectTransparency false in
 theorem totalTermFinite (K : BC) (n : ℕ)
     (h : ∀ p q, p+q=n → Module.Finite ℤ ((K.X p).X q)) :
     Module.Finite ℤ ((K.total c).X n) := by
-  letI (i : Fin (n+1)) : Module.Finite ℤ ((K.X i.val).X (n-i.val)) :=
-    h i.val (n-i.val) (by omega)
-  let f := intLinear (totalSumAdd K n)
+  let M (i : Fin (n+1)) := (K.X i.val).X (n-i.val)
+  letI : ∀ i : Fin (n+1), Module ℤ (M i) := fun i => (M i).isModule
+  letI : ∀ i : Fin (n+1), Module.Finite ℤ (M i) :=
+    fun i => h i.val (n-i.val) (by omega)
+  letI : Module ℤ (∀ i : Fin (n+1), M i) := Pi.module _ _ ℤ
+  letI : Module.Finite ℤ (∀ i : Fin (n+1), M i) := Module.Finite.pi
+  let f : (∀ i : Fin (n+1), M i) →ₗ[ℤ] (K.total c).X n := intLinear (totalSumAdd K n)
   apply Module.Finite.of_surjective f
   intro x
   refine ⟨fun i => proj K n i.val (n-i.val) (by omega) x, ?_⟩
   exact sum_elements K n x
 
+set_option backward.isDefEq.respectTransparency false in
 theorem tensorTermFinite (K L : Ch)
     (hK : ∀ j, Module.Finite ℤ (K.X j))
     (hL : ∀ j, Module.Finite ℤ (L.X j)) (j : ℕ) :
@@ -84,8 +90,8 @@ theorem tensorTermFinite (K L : Ch)
   intro p q _
   letI := hK p
   letI := hL q
-  change Module.Finite ℤ (TensorProduct ℤ (K.X p) (L.X q))
-  infer_instance
+  exact @Module.Finite.tensorProduct ℤ (K.X p) (L.X q) _ _
+    (K.X p).isModule _ (L.X q).isModule (hK p) (hL q)
 
 set_option backward.isDefEq.respectTransparency false in
 def tensorEquivLeft {K L : Ch} (e : HomotopyEquiv K L) (M : Ch) :
