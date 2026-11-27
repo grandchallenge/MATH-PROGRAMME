@@ -88,7 +88,7 @@ class CoverageTests(unittest.TestCase):
             for mutation in (
                 lambda r:r.__setitem__('triage_decision','SELECTED_WITH_MANIFEST' if n>562 else 'PENDING'),
                 lambda r:r['stage_work_items']['A'].__setitem__('evidence_refs',[]),
-                lambda r:r['stage_work_items']['B'].__setitem__('work_status','VERIFIED_BOUNDED' if n in (560,561) else 'PROTECTED_ADMITTED'),
+                lambda r:r['stage_work_items']['B'].update(work_status='PROTECTED_ADMITTED',protected_admission_ref=None),
                 lambda r:r.__setitem__('scope','FULL_ORIGINAL_CONJECTURE_SOLVED'),
             ):
                 with self.subTest(problem=n,mutation=str(mutation)):
