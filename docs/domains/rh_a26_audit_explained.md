@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Auditing the 2026 Riemann Hypothesis claim: what the mathematics actually says
 
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
