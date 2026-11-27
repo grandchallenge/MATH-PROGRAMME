@@ -3,7 +3,7 @@
 <p class="page-deck">A public, reproducible account of the mathematical mechanisms we have reconstructed, the assumptions that make them work, and the reconstructed character inequality and the remaining proof obligations.</p>
 
 !!! warning "Research status · 26 November 2026"
-    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The counting and reciprocity arguments retain their stated classical-duality inputs.
+    **Result:** independent conventional-mathematics reconstructions of *conditional* group-cohomology and local-Selmer transfer statements, with exact finite computational checks. The admitted evidence includes the denominator and conductor-change reconstruction and the new torsion-layer, counting and reciprocity reconstruction. The conditional character inequality `ML.vChar` has now been independently reconstructed, including the auxiliary-system construction, exact Bernoulli comparison, primitive ramification and exceptional vanishing. The finite-Galois character transport, aggregate good-prime bound and separate bad-prime Stickelberger estimate have also been reconstructed under their stated classical inputs. The composite-field degree restriction and combined conditional odd-prime bound are now reconstructed, as is their deterministic conversion to a downstream exponential budget under the required numerical hypotheses. The simultaneous-window selection has also been reconstructed conditional on the source's arithmetic tower estimates and Lemma K. The actual arithmetic tower descent, determinant centers and linear growth estimates have now also been reconstructed conditional on the generator bound and limiting Poitou–Tate identity. The finite-to-limit Poitou–Tate length identities have also been reconstructed under the stated finite-level classical hypotheses. The uniform arithmetic rank bound and quadratic transfer have now been reconstructed under the source's classical inputs, completing the conditional simultaneous-window spine through Lemma K. The parallel finite-module reduction behind Lemma K has been reconstructed under KBridge and the homology torsion input. The exact headline dependency has also been corrected: it uses the alternative finite class-counting route, whose conditional numerical assembly and final local contribution have now been reconstructed. The counting and reciprocity arguments retain their stated classical-duality inputs.
 
     **Not established:** a new proof of the Riemann Hypothesis (RH) or Dirichlet Generalized Riemann Hypothesis (GRH); mathematical correctness of every definition in the submitted Lean source; complete independent Lean kernel replay; exact formal correspondence of all foundational hypotheses and downstream mathematical bridges; MATHCERT certification.
 
@@ -642,9 +642,65 @@ The actual composite field differs from a layer over this constructed base by an
 
 The [technical reconstruction PR #619](https://github.com/grandchallenge/MATHFORGE/pull/619) verifies these arguments, preserving the source constants. Exact finite controls checked 456 dyadic Frobenius indices, 27 characteristic-two involutions, 35 character-extension cases and 20 composite-field index comparisons. These are controls for the algebraic and cyclotomic calculations, not computations of the actual infinite class-group towers.
 
-Combined with the previous tower and interval arguments, this reconstructs the source's simultaneous-window theorem under its stated finite-level duality, local finiteness, Ferrero–Washington and Lemma K inputs. The classical tame-inertia, local-place and class-field identifications remain explicit. The quantitative second-cohomology bound called Lemma K has not yet been independently reconstructed, nor have the opposite-sign and joint height/count arguments.
+Combined with the previous tower and interval arguments, this reconstructs the source's simultaneous-window theorem under its stated finite-level duality, local finiteness, Ferrero–Washington and Lemma K inputs. The classical tame-inertia, local-place and class-field identifications remain explicit. The following sections distinguish the parallel reduction from the active class-counting route and reconstruct their conditional quantitative estimates; the active counting and homology inputs, opposite-sign and joint height/count arguments remain open.
 
-## 18. Reproducibility and technical references
+## 18. How Lemma K compares cohomology with arithmetic group homology
+
+The common-window argument requires a quantitative bound on the entire second Galois cohomology group, not just its locally trivial subgroup. The source calls this Lemma K. There are two routes in the source. One uses a comparison module with a direct map into arithmetic group homology. The route actually invoked by the headline proof instead counts finite cyclotomic-layer classes through homology evaluations and then uses Poitou–Tate duality to control the whole group.
+
+The parallel comparison route has three separate tasks: construct the comparison module, bound the amount of information lost by its maps, and bound the torsion of the arithmetic matrix group's homology. We have now reconstructed the middle task and the conversion of its estimate into the required exponential budget.
+
+### Measuring information that is lost in the comparison
+
+The source postulates, in its precise intermediate statement called KBridge, a finite prime-adic module with two maps. One is a surjection onto the second Galois cohomology group. The other takes values in arithmetic group homology after extending the coefficients to the prime-adic integers. The kernel of the second map must be annihilated by a specified prime power, with exponent $e(2e+5)$ for arithmetic order $e$.
+
+Consider the image of that kernel in the cohomology group. Its depth is bounded by the annihilating power, and its width is bounded by the cohomology group modulo the prime. The quotient by this image is itself a quotient of the image in arithmetic group homology. Counting the two pieces proves that the cohomology size is no greater than the residual cohomology size raised to the prescribed exponent, multiplied by the size of the homology torsion.
+
+Why only torsion? Every element in the image of a finite module has finite order. Extending coefficients to the prime-adic integers does not create finite-order elements from the torsion-free quotient of an abelian group. The finite image is therefore accounted for by the original torsion subgroup. This argument does not require the full arithmetic homology group to be finite.
+
+For example, take the product of two cyclic groups of order 9 as the comparison and target modules, with the identity as the surjection. Reduce both coordinates modulo 3 for the homology map. The kernel is killed by 3, the residual group has 9 elements, and the homology image has 9 elements. The bound is exactly 81, the size of the target. In contrast, the zero map from a cyclic group of order 27 does not have a kernel killed by 3. Dropping the annihilation condition would incorrectly bound 27 by 3.
+
+### Controlling the residual contribution
+
+The previously reconstructed finite-level cohomology reduction and Poitou–Tate argument identify the residual group. The field contains the relevant roots of unity, so the residual cyclotomic action is trivial. Class-field reciprocity bounds the locally trivial residual characters by the class number; each prime above the measuring prime contributes at most one residual dimension. There are no more such places than the field degree.
+
+The resulting bound on the residual cardinality is the class number multiplied by the measuring prime raised to the field degree. Classical ideal counting bounds the class number in terms of the discriminant, and the root-of-unity condition bounds the measuring prime by one more than the field degree. Combining these with the kernel estimate produces the exact source's quantitative reduction. We have also verified the source's subsequent elementary exponential comparison, retaining its constants.
+
+### The parallel route and its limitation
+
+The actual KBridge construction is not established by this calculation. Its contract includes the existence of a finite comparison module, which already implies finiteness of the target cohomology group. A rational K-theory comparison alone would not prove that contract. The source's K-theoretic inputs include plus construction, homological stability, finite generation, Borel rank, the Hurewicz map and Dwyer–Friedlander comparison. The exact supplying theorem and its prime-power kernel estimate require independent verification.
+
+Both routes use the source's actual torsion bound for the homology of integral matrix groups. Its proof uses a geometric tuple complex, orbit and stabilizer estimates, and a homological torsion inequality. Those geometric and homological arguments have not yet been independently reconstructed.
+
+The [technical reconstruction PR #620](https://github.com/grandchallenge/MATHFORGE/pull/620) records the exact conditional reduction and the numerical conversion. Finite controls checked 32,536 admissible module comparisons, rejected 44,252 cases failing the kernel condition, and checked 2,500 exponent inequalities. They are finite algebraic controls, not computations of the full number-field cohomology or arithmetic homology.
+
+During this audit the authenticated source workstation was unavailable. Source access was recovered using a pinned public mirror whose declared archive digest matches the original intake; the exact file identities are recorded in the technical dossier. The full original archive was not independently rehashed during this recovery.
+
+## 19. The route actually invoked by the headline proof
+
+An important source distinction emerged when we traced the final theorem's exact dependency chain. The parallel comparison-module reduction in section 18 is a genuine mathematical argument, but it is not the supplying theorem used by the headline. The active route invokes the source's alternative class-counting construction, rather than assuming KBridge. We have corrected the dependency map accordingly.
+
+### Counting over a growing cyclotomic layer
+
+The active argument counts equivariant classes in a finite layer after adjoining roots of unity. The number of potential homology evaluations contains a factor growing with the order of those roots. A second inequality in the source contains exactly the same positive factor on the other side. Cancelling it leaves a bound that depends only on the reference field, the arithmetic order and two fixed-degree homology torsion groups, not on the level of the cyclotomic tower.
+
+This cancellation has now been reconstructed under the source's exact finite counting hypotheses. It is an important distinction: it would be meaningless merely to bound the number of classes by something growing without limit as the layer grows. The required finite counting and detection constructions themselves remain to be verified.
+
+### From locally trivial classes to the entire cohomology group
+
+The limiting Poitou–Tate length identities in section 16 express the length of the second cohomology group in terms of the locally trivial first cohomology and the local contributions. The latter can be bounded explicitly. For each local field the cyclotomic image has index no greater than the number field degree. Raising one plus the square of the measuring prime to that index gives an element of the image. The exact prime-adic valuation of its arithmetic power minus one bounds the invariant torsion group.
+
+This gives a uniform bound for the local contributions. Adding them to the conditional bound on the locally trivial classes proves the source's actual final step. In particular it does not assume finiteness of the whole group before obtaining a finite upper bound on its length.
+
+The source next enlarges the field by a controlled cyclotomic extension. Its degree and discriminant inequalities permit the bound to be transferred back to the original field. We have reconstructed the numerical comparison, not yet the arithmetic construction of that extension. All original exponent choices have been retained.
+
+### The remaining load-bearing inputs
+
+The active route requires a rank estimate called BOdd: the rank of the image of an iterated difference operator on odd-degree arithmetic group homology is at most the number of complex places. This is a particular homology-image bound, not an assertion about the rank of the whole homology group. The finite class constructions, their detection by residue-field evaluations, their transfer to actual locally trivial cohomology, the cyclotomic extension and the shared geometric homology torsion bound also require independent scrutiny.
+
+The [active-route technical reconstruction PR #621](https://github.com/grandchallenge/MATHFORGE/pull/621) records the corrected dependency chain and the conditional counting assembly and final local estimates. Exact controls checked 1,600 valuation identities, 2,500 descent/local/exponent cases, and 495 polynomial inequalities. No inference that an unresolved KBridge hypothesis invalidates the headline is warranted: the active path does not invoke it. The mathematical obligations of that active path remain open.
+
+## 20. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -680,10 +736,12 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #614](https://github.com/grandchallenge/MATHFORGE/pull/614) | Actual tower descent, arithmetic centers and growth under the stated generator and limiting duality inputs |
 | [PR #615](https://github.com/grandchallenge/MATHFORGE/pull/615) | Finite-to-limit Poitou–Tate length identities and genuine localization kernel compatibility |
 | [PR #619](https://github.com/grandchallenge/MATHFORGE/pull/619) | Uniform generator bound, tame ramification, quadratic transfer and conditional window assembly |
+| [PR #620](https://github.com/grandchallenge/MATHFORGE/pull/620) | Parallel conditional Lemma K reduction, kernel loss estimate and numerical conversion |
+| [PR #621](https://github.com/grandchallenge/MATHFORGE/pull/621) | Active Lemma K dependency correction, conditional finite-layer assembly and local length estimate |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 19. What the investigation taught us about checking extraordinary mathematical claims
+## 21. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -695,14 +753,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 20. The next executable mathematical step
+## 22. The next executable mathematical step
 
-**Target:** the source's quantitative second-cohomology cardinal bound, `LemmaK`, in `GeneratorCountTuples/LemmaK.lean`, and its actual proof dependencies.
+**Target:** the active `ZK.lemmaK_of_steps` argument, including the actual BOdd odd-homology image-rank bound, finite cyclotomic class construction and counting, and shared geometric torsion theorem.
 
-**Work:** reconstruct the genuine estimate with the stated degree, discriminant and order dependence, then check the opposite-sign arithmetic and joint height/count hypotheses. The uniform rank and transfer, limiting duality and conditional common-window construction have been reconstructed.
+**Work:** reconstruct the source's finite homology evaluations and arithmetic detection steps, the actual class-counting and cyclotomic-layer transfer, and the orbit/stabilizer/exactness estimates for the shared homology torsion bound. The parallel KBridge route is documented but is not the active dependency; the active numerical assembly and final local estimates have been reconstructed conditionally.
 
-**Completion test:** establish the exact source contracts, retaining classical and formal correspondence obligations and original Lean replay. No RH/GRH certification.
+**Completion test:** establish the genuine active source contracts, retaining classical and formal correspondence obligations and original Lean replay. Opposite-sign and joint-window arguments remain separate. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_UNIFORM_TOWER_RANK_TWOBASE_RECONSTRUCTED__LEMMAK_OTHER_SIGN_JOINT_WINDOW_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_ACTIVE_LEMMAK_ROUTE_CORRECTED__CONDITIONAL_SNUM_SFINAL_RECONSTRUCTED__BODD_CYCLOTOMIC_COUNTING_GEOMETRIC_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
