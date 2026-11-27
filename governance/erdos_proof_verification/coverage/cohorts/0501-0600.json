@@ -5471,16 +5471,26 @@
           "kind": "BOUNDED_MATHEMATICAL_VERIFICATION",
           "issue_number": 3230,
           "cohort_issue_number": 3230,
-          "work_status": "UNEXECUTED",
-          "review_status": "NOT_REVIEWED",
-          "evidence_refs": [],
-          "source_lock_receipt": null,
-          "semantic_equivalence_receipt": null,
+          "work_status": "VERIFIED_BOUNDED",
+          "review_status": "ROLE_SCOPED_CRITICAL_PASS",
+          "evidence_refs": [
+            "governance/erdos_proof_verification/evidence/0562/B_FINITE_RAMSEY_001.lean.txt",
+            "governance/erdos_proof_verification/evidence/0562/B_FINITE_RAMSEY_STDOUT_001.txt",
+            "governance/erdos_proof_verification/evidence/0562/B_FINITE_RAMSEY_HOSTILE_001.txt",
+            "governance/erdos_proof_verification/evidence/0562/B_FINITE_RAMSEY_REPLAY_001.json",
+            "governance/erdos_proof_verification/evidence/0562/B_SEMANTIC_EQUIVALENCE_001.md",
+            "governance/erdos_proof_verification/evidence/0562/B_ADVERSARIAL_REVIEW_001.md",
+            "governance/erdos_proof_verification/evidence/0562/B_FIRST_MOMENT_FIXTURES_001.py",
+            "governance/erdos_proof_verification/evidence/0562/B_FIRST_MOMENT_FIXTURES_STDOUT_001.txt",
+            "governance/erdos_proof_verification/evidence/0562/B_RETURN_BINDING_001.json"
+          ],
+          "source_lock_receipt": "governance/erdos_proof_verification/triage/0560-0564.json",
+          "semantic_equivalence_receipt": "governance/erdos_proof_verification/evidence/0562/B_SEMANTIC_EQUIVALENCE_001.md",
           "formal_replay_receipt": null,
           "axiom_report_receipt": null,
-          "adversarial_review_receipt": null,
+          "adversarial_review_receipt": "governance/erdos_proof_verification/evidence/0562/B_ADVERSARIAL_REVIEW_001.md",
           "protected_admission_ref": null,
-          "blocker": null
+          "blocker": "FORMAL_UPSTREAM_IMPORT_FINITE_RAMSEY_EXISTENCE_REAL_FLOOR_TRANSLATION_AND_NATIVE_REPLAY_REQUIRED"
         },
         "C": {
           "task_id": "ERDOS-PV-0562-C",

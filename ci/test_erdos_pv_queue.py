@@ -93,7 +93,10 @@ class QueueTests(unittest.TestCase):
 
     def test_selected_560_562_enter_existing_phase_b_only(self):
         x=q.candidates('B',after=559,cohort='0501-0600',limit=10)
-        self.assertEqual([r['problem_id'] for r in x],[562])  # 560 B admitted; 561 B reviewed candidate
+        self.assertEqual([r['problem_id'] for r in x],[])  # all three B tasks returned or protected
+        row=q.read('governance/erdos_proof_verification/coverage/cohorts/0501-0600.json')['items'][61]
+        self.assertFalse(q.permitted(row,'B'))
+        self.assertEqual(q.permitted(row,'C'),row['stage_work_items']['B']['work_status']=='PROTECTED_ADMITTED' and row['stage_work_items']['C']['work_status']=='UNEXECUTED')
         self.assertTrue(all(r['queue_issue']==3230 for r in x))
         self.assertTrue(all(r['triage_decision']=='SELECTED_WITH_MANIFEST' for r in x))
         self.assertFalse(any(xi['problem_id'] in (563,564) for xi in x))

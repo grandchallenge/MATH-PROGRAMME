@@ -114,6 +114,44 @@ def validate_five_source_scope(row, root=ROOT):
                    and v['adversarial_review_receipt'] in evidence
                    and v['semantic_equivalence_receipt'] in evidence,
                    f'problem {n}: bounded result lacks semantic/adversarial review')
+        if n==562 and later=='B' and v['work_status'] in admitted:
+            prefix='governance/erdos_proof_verification/evidence/0562/'
+            names={'B_FINITE_RAMSEY_001.lean.txt','B_FINITE_RAMSEY_STDOUT_001.txt',
+                   'B_FINITE_RAMSEY_HOSTILE_001.txt','B_FINITE_RAMSEY_REPLAY_001.json',
+                   'B_SEMANTIC_EQUIVALENCE_001.md','B_ADVERSARIAL_REVIEW_001.md',
+                   'B_FIRST_MOMENT_FIXTURES_001.py','B_FIRST_MOMENT_FIXTURES_STDOUT_001.txt',
+                   'B_RETURN_BINDING_001.json'}
+            required={prefix+x for x in names}
+            if v['work_status']=='PROTECTED_ADMITTED':
+                required.add(prefix+'B_PROTECTED_CUSTODY_BINDING_001.json')
+                ensure(re.fullmatch(r'grandchallenge/MATH-PROGRAMME@[0-9a-f]{40}',v.get('protected_admission_ref') or ''),'562 B: protected binding absent')
+            ensure(required.issubset(set(evidence)) and v['review_status']=='ROLE_SCOPED_CRITICAL_PASS'
+                   and v['semantic_equivalence_receipt']==prefix+'B_SEMANTIC_EQUIVALENCE_001.md'
+                   and v['adversarial_review_receipt']==prefix+'B_ADVERSARIAL_REVIEW_001.md'
+                   and v['formal_replay_receipt'] is None and v['axiom_report_receipt'] is None
+                   and v['blocker']=='FORMAL_UPSTREAM_IMPORT_FINITE_RAMSEY_EXISTENCE_REAL_FLOOR_TRANSLATION_AND_NATIVE_REPLAY_REQUIRED',
+                   '562 B: incomplete bounded proof/review or false promotion')
+            replay=read(prefix+'B_FINITE_RAMSEY_REPLAY_001.json',root)
+            ret=read(prefix+'B_RETURN_BINDING_001.json',root)
+            ensure(replay.get('assignment_id')=='ERDOS-PV-0562-B'
+                   and replay.get('source_statement_commit')=='85f863718beeec7b58a3a1926ee92e3472bc2020'
+                   and replay.get('source_statement_blob')=='fd7acee416ff89473a9b35896f209327f4ab6625'
+                   and replay.get('provider_definition_blob')=='b427594cfd9e18ddf33ab2eee9c9a76f0dd3527d'
+                   and replay.get('mathlib_revision')=='db584cd6d46c92f209a44c0f1c829460d327499d'
+                   and replay.get('lean_toolchain')=='leanprover/lean4:v4.33.0'
+                   and replay.get('positive_exit_code')==0 and replay.get('hostile_exit_code')==1
+                   and all(replay.get(k) is True for k in ('finite_coloring_unconditional','integer_root_exact','provider_infimum_bridge_conditional_on_finiteness'))
+                   and all(replay.get(k) is False for k in ('upstream_import_replayed','real_floor_spelling_kernel_checked','full_conjecture_proved','mathcert_certified','external_independent_review')),
+                   '562 B: replay scope or source identity drift')
+            expected_hash_names=names-{'B_FINITE_RAMSEY_REPLAY_001.json','B_RETURN_BINDING_001.json'}
+            ensure(set(replay['sha256'])==expected_hash_names and all(hashlib.sha256((root/(prefix+k)).read_bytes()).hexdigest()==val for k,val in replay['sha256'].items()),'562 B: frozen evidence hash drift')
+            log=(root/(prefix+'B_FINITE_RAMSEY_STDOUT_001.txt')).read_text()
+            census=dict((n,a.split(', ')) for n,a in re.findall(r"'Erdos562\.([^']+)' depends on axioms: \[([^\]]*)\]",log))
+            ensure(len(census)==27 and census==replay['axioms'] and {'finite_at_root','provider_root_lower','nonstrict_counterexample'}.issubset(census)
+                   and all(set(a)<={'propext','Classical.choice','Quot.sound'} for a in census.values()) and 'sorryAx' not in log and 'error:' not in log,'562 B: axiom or theorem census drift')
+            ensure(ret.get('assignment_id')=='ERDOS-PV-0562-B' and ret.get('claim_sha')==replay.get('claim_sha')
+                   and ret.get('source_issue_body_sha256')==row['source_issue_body_sha256'] and ret.get('return_comment_id')==7214795921
+                   and ret.get('candidate_not_protected') is True,'562 B: exact worker return drift')
         if n==561 and later=='B' and v['work_status'] in admitted:
             prefix='governance/erdos_proof_verification/evidence/0561/'
             names=(
