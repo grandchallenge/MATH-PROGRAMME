@@ -1,0 +1,26 @@
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.Order.Floor.Semiring
+namespace Erdos562
+/-- Adjacent integer powers uniquely determine the real-valued floor. -/
+theorem real_floor_of_power_cut (a M : ℕ)
+    (hlo : M ^ 12 ≤ 2 ^ a) (hhi : 2 ^ a < (M+1)^12) :
+    ⌊(2 : ℝ) ^ ((a : ℝ)/12)⌋₊ = M := by
+  let x := (2 : ℝ) ^ ((a : ℝ)/12)
+  have hx : 0 < x := Real.rpow_pos_of_pos (by norm_num) _
+  have hp : x^12 = (2 : ℝ)^a := by
+    calc
+      x^12 = x ^ ((12 : ℕ) : ℝ) := (Real.rpow_natCast x 12).symm
+      _ = (2 : ℝ) ^ (((a : ℝ)/12)*((12 : ℕ) : ℝ)) :=
+        (Real.rpow_mul (by norm_num) _ _).symm
+      _ = (2 : ℝ) ^ (a : ℝ) := by congr 1; norm_num
+      _ = (2 : ℝ)^a := Real.rpow_natCast _ _
+  apply (Nat.floor_eq_iff hx.le).2
+  constructor
+  · apply (pow_le_pow_iff_left₀ (by positivity : 0 ≤ (M : ℝ)) hx.le (by decide : (12 : ℕ) ≠ 0)).mp
+    rw [hp]
+    exact_mod_cast hlo
+  · apply (pow_lt_pow_iff_left₀ hx.le (by positivity : 0 ≤ (M : ℝ)+1) (by decide : (12 : ℕ) ≠ 0)).mp
+    rw [hp]
+    exact_mod_cast hhi
+#print axioms real_floor_of_power_cut
+end Erdos562
