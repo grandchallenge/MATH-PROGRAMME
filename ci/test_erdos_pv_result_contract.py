@@ -147,8 +147,10 @@ class E2ELifecycleTests(unittest.TestCase):
                         for row in self.cohort["items"])
         self.assertGreaterEqual(completed_A,1)
         self.assertLess(completed_A,100)
-        self.assertEqual(self.cohort["items"][2]["stage_work_items"]["A"]["work_status"],
-                         "UNEXECUTED")
+        # The next source audit may legitimately finish while the cohort stays open.
+        # Require at least one actually unexecuted source child, not a frozen ID.
+        self.assertTrue(any(row["stage_work_items"]["A"]["work_status"] == "UNEXECUTED"
+                            for row in self.cohort["items"]))
 
 
 if __name__ == "__main__":
