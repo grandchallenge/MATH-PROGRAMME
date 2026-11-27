@@ -1,0 +1,117 @@
+import Std
+namespace Erdos562
+
+/-- Exact integer version of the first-moment exponent comparison. -/
+theorem firstMomentExponent (M n a k : Nat) (hk : 4 ≤ k)
+    (hka : n * a = 6 * k) (hM : M ^ 12 ≤ 2 ^ a) :
+    2 * M ^ n < 2 ^ k := by
+  apply (Nat.pow_lt_pow_iff_left (n := 12) (by decide)).mp
+  calc
+    (2 * M ^ n) ^ 12 = 2 ^ 12 * (M ^ 12) ^ n := by
+      rw [Nat.mul_pow, ← Nat.pow_mul, Nat.mul_comm n 12, Nat.pow_mul]
+    _ ≤ 2 ^ 12 * (2 ^ a) ^ n := Nat.mul_le_mul_left _ (Nat.pow_le_pow_left hM n)
+    _ = 2 ^ (12 + 6 * k) := by
+      rw [← Nat.pow_mul, Nat.mul_comm a n, hka, ← Nat.pow_add]
+    _ < 2 ^ (k * 12) := Nat.pow_lt_pow_right (by decide) (by omega)
+    _ = (2 ^ k) ^ 12 := Nat.pow_mul _ _ _
+
+ theorem filter_or_le {α : Type} (xs : List α) (p q : α → Bool) :
+    (xs.filter (fun x => p x || q x)).length ≤ (xs.filter p).length + (xs.filter q).length := by
+  induction xs with
+  | nil => simp
+  | cons x xs ih =>
+    cases hp : p x <;> cases hq : q x <;> simp [hp, hq] at * <;> omega
+ theorem union_bound {α : Type} (xs : List α) (events : List (α → Bool)) (B : Nat)
+    (h : ∀ p ∈ events, (xs.filter p).length ≤ B) :
+    (xs.filter (fun x => events.any (fun p => p x))).length ≤ events.length * B := by
+  induction events with
+  | nil => simp
+  | cons p ps ih =>
+    have hp := h p (by simp)
+    have hps := ih (fun q hq => h q (by simp [hq]))
+    have hle := filter_or_le xs p (fun x => ps.any (fun q => q x))
+    simp only [List.any_cons, List.length_cons, Nat.add_mul, Nat.one_mul]
+    omega
+ theorem exists_avoids {α : Type} (xs : List α) (events : List (α → Bool)) (B : Nat)
+    (h : ∀ p ∈ events, (xs.filter p).length ≤ B)
+    (hlt : events.length * B < xs.length) : ∃ x ∈ xs, ∀ p ∈ events, p x = false := by
+  classical
+  apply Classical.byContradiction
+  intro hn
+  have hall : ∀ x ∈ xs, events.any (fun p => p x) = true := by
+    intro x hx
+    cases he : events.any (fun p => p x) with
+    | true => rfl
+    | false =>
+      exfalso
+      apply hn
+      refine ⟨x,hx,?_⟩
+      intro p hp
+      have hnot := List.any_eq_false.mp he p hp
+      cases hpx : p x <;> simp_all
+  have heq := List.filter_eq_self.mpr hall
+  have hu := union_bound xs events B h
+  rw [heq] at hu
+  omega
+
+def bits : Nat → List (List Bool)
+  | 0 => [[]]
+  | n+1 => (bits n).map (false :: ·) ++ (bits n).map (true :: ·)
+def free : List (Option Bool) → Nat
+  | [] => 0
+  | none :: ms => free ms + 1
+  | some _ :: ms => free ms
+def fits : List (Option Bool) → List Bool → Bool
+  | [], [] => true
+  | none :: ms, _ :: bs => fits ms bs
+  | some a :: ms, b :: bs => (a == b) && fits ms bs
+  | _, _ => false
+ theorem bits_length (m : Nat) : (bits m).length = 2^m := by
+  induction m with
+  | zero => rfl
+  | succ m ih => simp [bits, ih, Nat.pow_succ, Nat.mul_two]
+ theorem mask_count (ms : List (Option Bool)) :
+    ((bits ms.length).filter (fits ms)).length = 2^(free ms) := by
+  induction ms with
+  | nil => rfl
+  | cons a ms ih =>
+    cases a with
+    | none => simp [bits, free, fits, List.filter_map, Function.comp_def, ih, Nat.pow_succ, Nat.mul_two]
+    | some b => cases b <;> simp [bits, free, fits, List.filter_map, Function.comp_def, ih]
+
+/-- Finite first moment for a family of masks fixing exactly k of T coordinates. -/
+theorem avoids_masks (T k : Nat) (ms : List (List (Option Bool)))
+    (hk : k ≤ T) (hmask : ∀ m ∈ ms, m.length = T ∧ free m = T-k)
+    (hc : ms.length < 2^k) :
+    ∃ b ∈ bits T, ∀ m ∈ ms, fits m b = false := by
+  have hbound : ∀ q ∈ ms.map fits, ((bits T).filter q).length ≤ 2^(T-k) := by
+    intro q hq
+    obtain ⟨m, hm, rfl⟩ := List.mem_map.mp hq
+    obtain ⟨hmT, hfree⟩ := hmask m hm
+    rw [← hmT, mask_count, hfree, hmT]
+    exact Nat.le_refl _
+  have hstrict : (ms.map fits).length * 2^(T-k) < (bits T).length := by
+    rw [List.length_map, bits_length]
+    calc
+      ms.length * 2^(T-k) < 2^k * 2^(T-k) := Nat.mul_lt_mul_of_pos_right hc (Nat.pow_pos (by decide))
+      _ = 2^T := by rw [← Nat.pow_add, Nat.add_sub_of_le hk]
+  obtain ⟨b, hb, havoid⟩ := exists_avoids (bits T) (ms.map fits) (2^(T-k)) hbound hstrict
+  refine ⟨b,hb,?_⟩
+  intro m hm
+  exact havoid (fits m) (List.mem_map.mpr ⟨m,hm,rfl⟩)
+/-- Integer first-moment bound; the combinatorial encoding obligations remain explicit. -/
+theorem first_moment_masks (M n a k T : Nat) (ms : List (List (Option Bool)))
+    (hk : 4 ≤ k) (hkT : k ≤ T) (hka : n*a = 6*k) (hM : M^12 ≤ 2^a)
+    (hcount : ms.length ≤ 2*M^n)
+    (hmask : ∀ m ∈ ms, m.length = T ∧ free m = T-k) :
+    ∃ b ∈ bits T, ∀ m ∈ ms, fits m b = false :=
+  avoids_masks T k ms hkT hmask (Nat.lt_of_le_of_lt hcount (firstMomentExponent M n a k hk hka hM))
+#print axioms firstMomentExponent
+#print axioms filter_or_le
+#print axioms union_bound
+#print axioms exists_avoids
+#print axioms bits_length
+#print axioms mask_count
+#print axioms avoids_masks
+#print axioms first_moment_masks
+end Erdos562
