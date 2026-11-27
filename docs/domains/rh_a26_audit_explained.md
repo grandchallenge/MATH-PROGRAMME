@@ -1059,7 +1059,109 @@ The [technical reconstruction PR #627](https://github.com/grandchallenge/MATHFOR
 
 The height and partition estimates now have the integrability theorem they need. For each fixed moment order, increasing the matrix dimension eventually makes the source's estimate summable. The next step is to construct the actual Whitney differential form from the original group cocycle, establish its closedness and exact cycle evaluation, and verify its precise height growth before using this integrability result. The later scalar averaging and invariant mean must still be reconstructed.
 
-## 26. Reproducibility and technical references
+## 26. Turning an arithmetic cocycle into a differential form without losing its periods
+
+The preceding height, partition and moment arguments become useful only if the analytical object represents the original arithmetic data. The source's theorem SWhit supplies that construction. It starts with an invariant homogeneous group cocycle of degree $p=k+1$, not necessarily alternating, and produces a smooth closed differential form of degree $p$. Its integrals on every arithmetic cycle equal the original cocycle evaluations.
+
+### One operation at a time
+
+Let $U$ be the open convex cone of positive definite Hermitian matrix tuples, and let $A(\gamma)$ denote the linear action of the integral matrix group on the ambient Hermitian space. From the source's partition function define
+
+$$
+\psi_\gamma(h)=\phi(A(\gamma^{-1})h).
+$$
+
+These functions sum to one. Moreover, around every point there is a single finite family containing all locally nonzero functions. This permits differentiation of their weighted sums.
+
+For a group cochain $\beta$ with differential-form values, the source introduces the contraction
+
+$$
+(K\beta)(g_0,\ldots,g_{r-1})
+=\sum_\gamma\psi_\gamma\beta(\gamma,g_0,\ldots,g_{r-1}).
+$$
+
+It inserts an extra group argument, weighted by the local partition, thereby lowering the group degree by one. The alternating deletion operator $\delta$ is the group coboundary. Applying it before and after the contraction gives
+
+$$
+\delta K+K\delta=1.
+$$
+
+The first deletion face removes the inserted argument and contributes the original cochain multiplied by the sum of the partition functions, which is one. Every other deletion face cancels against its counterpart in the other term.
+
+Starting with the original cocycle $c$ as a constant differential form of degree zero, the source recursively defines
+
+$$
+\eta_0=c,\qquad \eta_{j+1}=dK\eta_j.
+$$
+
+Here $d$ is exterior differentiation. Each step exchanges one unit of group degree for one unit of differential-form degree. Invariance of the original cocycle is retained by reindexing the weighted sum. Closedness follows from the fact that applying the exterior derivative twice gives zero. The group cocycle condition also persists, because the exterior derivative commutes with the finite alternating group coboundary.
+
+After $p$ steps the remaining group degree is zero. The cocycle condition in group degree zero says that the resulting differential form has the same value for every choice of its remaining group argument. Thus the source obtains an actual differential form on the cone, rather than a family indexed by an unresolved group label.
+
+### Exact recovery on cycles: the signed comparison
+
+Producing a closed form is not sufficient. We have to verify that it represents the arithmetic cocycle we began with.
+
+For an ordered group tuple $(g_0,\ldots,g_p)$, the source evaluates the intermediate form of degree $j$ on the affine simplex whose last $j+1$ vertices are the corresponding orbit points of the identity metric. Call that integral $W_j$. In degree zero, integration is evaluation, so $W_0=c$. At the top degree, $W_p$ is the integral of the constructed differential form over the full orbit simplex.
+
+The source also defines an auxiliary cochain $B_j$ by integrating $K\eta_j$ over the appropriate trailing simplex on one fewer group argument. The exact identity is
+
+$$
+\delta B_j=W_j+(-1)^{p-j-1}W_{j+1}.
+$$
+
+The early deletion faces contribute the group coboundary of the contracted form. The later faces contribute the oriented boundary of an affine simplex. Stokes' theorem turns their sum into the integral of its exterior derivative. The source proves the simplex Stokes identity using coordinate slices, the fundamental theorem of calculus, and alternating multilinearity on the face opposite the initial vertex. It works even when the simplex is degenerate.
+
+Successively substituting the comparison identities gives an invariant cochain $b$ of degree $p-1$ and a sign $s\in\{1,-1\}$ with
+
+$$
+c=\delta b+sW_p.
+$$
+
+The sign recurrence in the source gives $s=(-1)^{p(p+1)/2}$. The reconstructed form is $\omega=s\eta_p$.
+
+The extra term $\delta b$ is not claimed to vanish on every tuple. It vanishes when evaluated on a cycle: evaluation of a coboundary on a chain equals evaluation of the underlying cochain on the boundary of that chain. A cycle has zero boundary.
+
+The source uses inhomogeneous group chains. Their ordered simplex vertices are the partial products starting at the identity. Deleting an internal vertex multiplies two adjacent group elements; deleting the first vertex corresponds to translating all the suffix vertices by the first group element. Invariance of $b$ supplies exactly the required first-face identity. This verifies the comparison even when the group is noncommutative.
+
+Thus no arithmetic period is lost in the construction. This is an exact statement on every cycle, not an approximate reconstruction or a claim that individual simplex integrals are unchanged.
+
+### Why an unbounded cocycle can still give controlled growth
+
+The arithmetic group is infinite, and the original cocycle may take arbitrarily large values. A naive sum of all its values would not yield a useful analytical bound.
+
+The source instead uses the stronger overlap property of the partition. Let $O$ be the finite set of relative group elements for which the closures of two translated supports can meet. At any point choose one active translate with label $\gamma_0$. Every other active label $\gamma$ has relative label $\gamma_0^{-1}\gamma$ in $O$. Consequently at most $|O|$ labels are active.
+
+When every argument of the original cocycle is an active label, simultaneous translation by $\gamma_0^{-1}$ converts all the arguments into this one finite set. Invariance of the cocycle then bounds the relevant values uniformly. The cocycle itself does not have to be globally bounded.
+
+Using closedness of the intermediate forms, the product rule reduces their recursive derivative to
+
+$$
+\eta_{j+1}
+=\sum_\gamma d\psi_\gamma\wedge\eta_j(\gamma,\ldots).
+$$
+
+There are at most $|O|$ nonzero terms, and each wedge product with a one-form has at most $j+1$ alternating contributions. If every translated partition derivative in the chosen moving frame has norm at most $M$, induction bounds the norm of the intermediate form by $C_jM^j$, with $C_{j+1}=|O|(j+1)C_j$. One must use support closures here: the source excludes a derivative contribution only when the function is identically zero on a neighborhood, not merely because its value is zero at a point.
+
+For the top form, independence of the last group argument allows it to be chosen among the active labels. The chain rule and arithmetic invariance of height then give the exact source estimate
+
+$$
+\|\mathrm{fr}\,\omega(x)\|\leq C h(x)^p.
+$$
+
+This is where the earlier partition estimate is consumed. The source's growth exponent for the partition is one, so the power in the resulting differential form depends only on its degree, not on the matrix dimension.
+
+The form is also invariant under common-modulus scalar tuples: such a tuple acts on the positive cone by a common positive rescaling, and the partition is homogeneous under that rescaling. This is not yet invariance under independent changes of modulus at each infinite place.
+
+### What the construction establishes, and what remains
+
+Squaring the moving-frame norm requires a height moment of order $2p$. The preceding moment theorem supplies that integrability for $N\geq2p+2=2k+4$. Thus the source has constructed a smooth closed representative of the original arithmetic periods with the necessary square-integrability bound on the special-linear domain.
+
+The [technical reconstruction PR #628](https://github.com/grandchallenge/MATHFORGE/pull/628) records the actual recursive construction, Stokes comparison, sign recurrence, exact evaluation on bar cycles and finite-overlap growth. The exact finite tests checked 2,174 descent faces, 680 top independence and equivariance cases, 592 nonalternating cocycle controls, 2,360 contraction identities and 7,464 noncommutative bar faces. The tests use affine finite partitions to check the algebraic mechanisms; they do not establish the arithmetic partition or replace the conventional proof. Standard smooth calculus and simplex integration are explicit inputs, and original formal replay remains outstanding.
+
+The next source theorem, SCen, must extend the common-modulus invariance to arbitrary scalar tuples, preserving all arithmetic cycle evaluations and the growth bound. Only after that can the remaining invariant-form and mean constructions be used.
+
+## 27. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1103,10 +1205,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #625](https://github.com/grandchallenge/MATHFORGE/pull/625) | Probability averaging, simplex density and compact-local cycle evaluation |
 | [PR #626](https://github.com/grandchallenge/MATHFORGE/pull/626) | Height, smooth minimum, rank-one retraction, thick part and uniform partition exponent |
 | [PR #627](https://github.com/grandchallenge/MATHFORGE/pull/627) | Adelic reduction, rational height estimates, Haar packing and finite height moments |
+| [PR #628](https://github.com/grandchallenge/MATHFORGE/pull/628) | Whitney representing form, signed comparison, cycle equality and overlap growth |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 27. What the investigation taught us about checking extraordinary mathematical claims
+## 28. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1118,14 +1221,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 28. The next executable mathematical step
+## 29. The next executable mathematical step
 
-**Target:** the actual Whitney representing-form theorem `SWhit`.
+**Target:** the actual scalar averaging theorem `SCen`.
 
-**Work:** reconstruct the source's Whitney form from its genuine partition and cocycle, including finite overlap, exact cycle evaluation, closedness, scalar-modulus invariance and the height growth exponent. Then verify `SCen`, `SMean`, `SInv` and the prime input. Height, partition and finite height moments are conventionally reconstructed, with the original dimension threshold. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion remain explicit.
+**Work:** verify the source's central scalar averaging, unit-logarithm lattice, preservation of arithmetic cycle evaluations and growth under averaging. Then reconstruct `SMean`, `SInv` and the prime input. Height, partition, finite moments and the Whitney representing form are conventionally reconstructed. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion remain explicit.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_HEIGHT_MOMENTS_CONVENTIONALLY_RECONSTRUCTED__WHITNEY_SCALAR_MEAN_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_WHITNEY_FORM_CONVENTIONALLY_RECONSTRUCTED__SCALAR_AVERAGING_MEAN_INVARIANT_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
