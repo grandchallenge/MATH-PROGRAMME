@@ -14,7 +14,7 @@ try:
         ControllerError,
         Github,
         find_open_pr,
-        list_intake_branches,
+        list_open_intake_pr_branches,
         profile_for_dispatch,
         validate_candidate,
     )
@@ -23,7 +23,7 @@ except ModuleNotFoundError:
         ControllerError,
         Github,
         find_open_pr,
-        list_intake_branches,
+        list_open_intake_pr_branches,
         profile_for_dispatch,
         validate_candidate,
     )
@@ -157,7 +157,7 @@ def run(apply: bool) -> dict[str, Any]:
         "errors": [],
     }
 
-    for branch in list_intake_branches(gh):
+    for branch in list_open_intake_pr_branches(gh):
         pr = find_open_pr(gh, branch)
         if pr is None:
             continue

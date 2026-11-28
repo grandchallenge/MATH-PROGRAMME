@@ -149,8 +149,6 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
                 return {"intake/gcl-e2e-canary-003-ia-001"}
             def request(self, method,path):
                 self.calls.append(path)
-                if "/branches?" in path:
-                    return [{"name":"intake/gcl-e2e-canary-003-ia-001"}]
                 if "/pulls?" in path:return []
                 raise AssertionError("unnecessary individual API read: " + path)
             def get_optional(self,path):
@@ -159,7 +157,7 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
         with mock.patch('ci.ns_ci_intake_pr_controller.protected_queue_bindings', return_value=bindings):
             names=list_intake_branches(gh)
         self.assertEqual(names,["intake/gcl-e2e-canary-003-ia-001"])
-        self.assertEqual(len(gh.calls),3)
+        self.assertEqual(len(gh.calls),2)
 
     def test_conflicting_inventory_preserves_protected_binding_fallback(self) -> None:
         import unittest.mock as mock
@@ -169,12 +167,36 @@ class ExternalIntakePrControllerTests(unittest.TestCase):
             def matching_intake_refs(self):return {"intake/unrelated"}
             def request(self, method,path):
                 if "/branches?" in path:return [{"name":"intake/rh-r057-wp-a-ia-001"}]
-                if "/pulls?" in path:return []
+                if "/pulls?" in path:return [{"head":{"ref":"intake/rh-r057-wp-a-ia-001"}}]
                 raise AssertionError(path)
             def get_optional(self,path):return None
         gh=ContradictoryInventory()
         with mock.patch('ci.ns_ci_intake_pr_controller.protected_queue_bindings',return_value=[binding]):
             self.assertEqual(list_intake_branches(gh),["intake/rh-r057-wp-a-ia-001"])
+
+    def test_admission_inventory_reads_open_prs_only(self) -> None:
+        from ci.ns_ci_intake_pr_controller import list_open_intake_pr_branches
+        class OpenOnly:
+            def get_optional(self, path):
+                return None
+            def request(self, method, path):
+                if method == "GET" and "/pulls?state=open&base=main" in path:
+                    return [{"head": {"ref": "intake/gcl-e2e-canary-003-ia-001"}},
+                            {"head": {"ref": "intake/unregistered-branch"}}]
+                raise AssertionError("admission must not enumerate branches: " + path)
+        self.assertEqual(list_open_intake_pr_branches(OpenOnly()),
+                         ["intake/gcl-e2e-canary-003-ia-001"])
+
+    def test_rate_limited_inventory_does_not_fall_back_to_branch_scan(self) -> None:
+        from unittest.mock import patch
+        class RateLimited:
+            def matching_intake_refs(self):
+                raise ControllerError("HTTP 403: API rate limit exceeded")
+            def request(self, method, path):
+                raise AssertionError("unexpected fallback")
+        with patch("ci.ns_ci_intake_pr_controller.protected_queue_bindings", return_value=[]):
+            with self.assertRaisesRegex(ControllerError, "rate limit"):
+                list_intake_branches(RateLimited())
 
     def test_malformed_ref_inventory_is_rejected_not_negative_evidence(self) -> None:
         from ci.ns_ci_intake_pr_controller import Github
