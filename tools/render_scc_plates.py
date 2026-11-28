@@ -142,3 +142,15 @@ for i,choice in enumerate(product("UV",repeat=3)):
     p += [rect(x,y,170,38,PALE,TEAL,3),txt(x+85,y+25,label,19,INK,"middle",serif=True)]
 p += [line(24,388,736,388),txt(28,421,"Grade 1",17,MUTED),txt(28,451,"1 generator: t+z",23,INK,serif=True),txt(390,421,"Grade 4",17,MUTED),txt(390,451,"8 independent generators",23,TEAL,serif=True),txt(380,487,"The target itself needs just seven multiplications.",20,INK,"middle",serif=True)]
 write("10-generator-birth","10","Minimality is not computational independence",510,"Exact basis indexing for m=3: eight products of z and one of U_i or V_i from each of three essential pairs. There is also one degree-one generator t+z. The target requires exactly seven multiplication gates. The boxes show tensor choices, not a circuit.",p)
+
+# XI: exact frequency-slice comparison for the parity geometry theorem.
+p=[txt(28,78,"Same number of odd coefficients; different geometry",25,serif=True),txt(28,106,"A slice at any fixed v, using three binary coordinates of u.",17,MUTED)]
+for x,head,marked in [(30,"Affine reference",{0,1,2,3}),(398,"Actual target",{0,1,2,4})]:
+    p += [rect(x,130,332,247,WHITE,RULE,4),txt(x+166,161,head,23,INK,"middle",serif=True)]
+    for j in range(8):
+        dx=x+29+(j%4)*72;dy=181+(j//4)*72;on=j in marked
+        p += [rect(dx,dy,62,55,PALE if on else PAPER,TEAL if on else RULE,3),txt(dx+31,dy+33,format(j,'03b'),20,TEAL if on else MUTED,"middle",weight="700" if on else "400")]
+    p += [txt(x+166,347,"000 + 001 + 010 = 011",17,INK,"middle")]
+    p += [txt(x+166,368,"011 is present" if 3 in marked else "011 is absent",16,TEAL if 3 in marked else GOLD,"middle",weight="700")]
+p += [line(24,394,736,394),txt(380,427,"Both patterns have four points.",21,INK,"middle",serif=True),txt(380,455,"Only the reference is closed under affine combinations.",19,INK,"middle"),txt(380,485,"The actual target cannot attain zero spectral slack.",20,TEAL,"middle",serif=True)]
+write("11-spectral-parity","11","Joint spectral coherence",510,"Exact three-coordinate slice of odd Walsh numerator support for the constructed target, contrasted with an affine reference of equal size. The actual marked frequencies are 000,001,010,100 and lack 011; the affine reference contains 000,001,010,011. All other u coordinates are zero and v is fixed.",p)
