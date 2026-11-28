@@ -200,7 +200,7 @@ def profile_for_queue_binding(binding: dict[str, Any]) -> IntakeProfile:
     campaign = binding.get("campaign")
     if campaign not in {
         "RH-001", "ERDOS-OPEN", "QFT-COND-005",
-        "GCL-OAI-MATH-2026", "GCL-RWP-003",
+        "GCL-OAI-MATH-2026", "GCL-RWP-003", "QTR-C90-SWARM-001",
     }:
         raise ControllerError("queue intake campaign unregistered")
     # Register only the already-protected campaign families. An arbitrary
@@ -215,6 +215,19 @@ def profile_for_queue_binding(binding: dict[str, Any]) -> IntakeProfile:
         or parts.parent.parent.as_posix() != "contributions/OAI-MATH-2026/TRIAGE_001"
     ):
         raise ControllerError("OAI-26 queue intake identity outside registered cohort")
+    if campaign == "QTR-C90-SWARM-001":
+        pilot = {
+            "QTR-C90-SP-C002-B000-IA-001": 1328,
+            "QTR-C90-ST-C001-B000-IA-001": 1329,
+            "QTR-C90-MP-C001-B000-IA-001": 1330,
+        }
+        if (did not in pilot
+                or binding.get("github_issue_number") != pilot[did]
+                or path != f"contributions/QTR-C90-SWARM-001/dispatches/{did}.json"
+                or binding.get("task_path") != f"handoffs/QTR-C90-SWARM-001/{did}.md"
+                or binding.get("allowed_dispositions") != ["FINITE_CERTIFICATE", "EXACT_BLOCKER"]
+                or binding.get("allowed_external_sources") != ["PROTECTED_PACKET_ONLY"]):
+            raise ControllerError("QTR queue intake identity outside bounded pilot")
     return IntakeProfile(
         campaign=campaign,
         branch_prefix="intake/" + did.lower(),
