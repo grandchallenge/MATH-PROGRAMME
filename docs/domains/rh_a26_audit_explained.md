@@ -1539,7 +1539,25 @@ $$
 This is the conventional conditional reconstruction of LemmaK(150). The actual final assembly in LemmaKOfLitN also takes BOdd. The analytical rank bound, the other mathematical input contracts, exact source correspondence, the three explicit duality/finiteness hypotheses and original kernel replay must retain their distinct evidence statuses. This is not an unconditional proof of Lemma K, RH or GRH and is not certification.
 
 
-## 44. Reproducibility and technical references
+## 44. The foundational duality bridge
+
+The original submission contains actual candidate proofs of all three duality inputs to SFinal, not merely assumptions with familiar names. Its local comparison uses `Gcoh.top_locfin` and `Gcoh.top_tate`. Its global comparison uses `poitouTateNormalised_holds` and the normalized-to-conjugation bridge. The downstream literature bundle passes these into Lemma K. Their original Lean kernel and axiom replay is still open.
+
+The classical-to-formal dictionary is explicit: continuous inhomogeneous cocycles and coboundaries, the cyclotomic Cartier dual, and the evaluation cup product. The local invariant has a common negative sign relative to the usual arithmetic Frobenius convention, because the Kummer cocycle precedes the unramified character. The source accounts for this sign. A uniform sign change preserves the exactness of the global sequence.
+
+For positive twist parameter $E$, put $T=\mathbb Z_\ell(E+1)$ and $A=\mathbb Q_\ell/\mathbb Z_\ell(-E)$. The actual source compares finite-coefficient cardinalities using reduction, separation and finite generation. Surjectivity of reduction follows by successively correcting a lifted two-cocycle using vanishing of third cohomology modulo $\ell$. Separation uses compatible finite-level primitives and compactness. No choice of mutually compatible existential perfect pairings is needed.
+
+For integral localization $f:X\to Y$, once $\ell^rY=0$, the finite-level kernel is
+
+$$
+\ker(f_r)\cong \ker(f)/(\ker(f)\cap\ell^r X).
+$$
+
+This induced filtration is essential: kernel formation does not generally commute with reduction. Finite-level Sha classes exhaust the discrete Sha group, and bounded local invariants eliminate the possible shallow-level failure of injectivity. Stabilized cardinalities give the integral kernel and cokernel lengths used in SFinal.
+
+The conventional correspondence and positive-twist coefficient transport are reconstructed in [MATHFORGE PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641), with 53 pinned source files and 4,944,601 finite algebraic controls. These controls do not replace proof or original kernel replay. The zero-twist branch is outside this review.
+
+## 45. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1596,10 +1614,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #638](https://github.com/grandchallenge/MATHFORGE/pull/638) | SLayer common-kernel monotonicity, dual cokernels and controlled cyclotomic enlargement |
 | [PR #639](https://github.com/grandchallenge/MATHFORGE/pull/639) | SNum class-number and universal exponent absorption |
 | [PR #640](https://github.com/grandchallenge/MATHFORGE/pull/640) | SFinal conditional Lemma K assembly, local terms and exponent 150 |
+| [PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641) | Exact duality source correspondence, common sign, positive-twist coefficient transport |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 45. What the investigation taught us about checking extraordinary mathematical claims
+## 46. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1611,14 +1630,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 46. The next executable mathematical step
+## 47. The next executable mathematical step
 
-**Target:** reconcile the conditional Lemma K assembly with the exact original hypotheses and kernel evidence.
+**Target:** original pinned foundational kernel replay and axiom audit.
 
-**Work:** SFinal is conventionally reconstructed in [MATHFORGE PR #640](https://github.com/grandchallenge/MATHFORGE/pull/640), yielding conditional LemmaK(150). Audit BOdd, Poitou–Tate, local finiteness and local Tate duality source correspondence and original replay; reconcile D02/D03/D04/D06 before any promotion.
+**Work:** Build the original pinned Lean environment in isolation; replay the local `GcohTop` and normalized Poitou–Tate candidate declarations and their downstream joins, and inspect axioms. Then audit BOdd and the remaining RH/GRH chain. The conventional duality bridge is reconstructed in [PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641).
 
-**Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
+**Completion test:** exact declaration-level kernel and axiom evidence with dependency identities retained; reconcile D02/D03/D04/D06 before any promotion. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_LEMMA_K_CONVENTIONAL_CONDITIONAL_ASSEMBLY__FOUNDATIONS_EXACT_SOURCE_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26_DUALITY_CONVENTIONAL_CORRESPONDENCE__EXACT_FOUNDATIONAL_KERNEL_REPLAY_BODD_DOWNSTREAM_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
