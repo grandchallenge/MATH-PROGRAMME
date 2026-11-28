@@ -9,7 +9,7 @@ description: An illustrated reader guide to collision information, renormalizati
 [Download the illustrated reader guide (PDF)](../assets/reach-reader-guide.pdf)
 
 !!! note "Research status · 28 November 2026"
-    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and reconstruction from explicitly described affine overlaps. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
+    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and effective gluing of complete coefficient systems on the explicit affine overlaps. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
 
 ## What happens when two slots meet?
 
@@ -65,6 +65,13 @@ Combining the affine readout and the first overlap recovers all weights through 
 With three copies of the affine readout, the outer difference is the sum of the two adjacent differences. Identifying adjacent copies makes their difference zero. These rules specify the maps for any number of copies, and the proof identifies them with the actual derived overlaps.
 
 On a single interval there are three choices of pair measurement for each adjacent difference. Their nine ordered products at weight four have three antisymmetric differences that become boundaries. That leaves six symmetric quadratic products, including squares. The calculation identifies them with the six products recovered at the second stage. The construction also respects inclusion and disjoint products on arbitrary opens. [Direct overlap model with the signed weight-four calculation](https://github.com/grandchallenge/MATH-PROGRAMME/blob/360666b615176ac7edb0c9956cbfa3c8d8b6095e/research/condensed-qft/EXT-015/EXPLICIT_AFFINE_OVERLAP_DIAGRAM_UC117.md)
+
+## Gluing the coefficients
+
+The overlaps can carry coefficient objects as well as collision measurements. A coefficient object specifies what can be used as coefficients and how the observable algebra acts on them. Start with a coefficient object on each overlap and compatible identifications along every overlap map. The full system comes from a coefficient object over the collision algebra, uniquely up to equivalence. Compatible maps are recovered too.
+
+To see why the weight cutoff helps, keep weights zero through three. Each collision difference has weight at least two, so any product of two falls outside this range. That makes the finite gluing problem solvable. Higher weights require more overlaps. Matching the results across all cutoffs recovers the complete coefficient object. [Effective coefficient descent and its limits](https://github.com/grandchallenge/MATH-PROGRAMME/blob/0a510ef8c9745e903f0a653d5924212474f59087/research/condensed-qft/EXT-015/AFFINE_COEFFICIENT_DESCENT_UC120.md)
+
 
 ## Where the original programme stands
 

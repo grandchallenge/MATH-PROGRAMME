@@ -1,6 +1,6 @@
 # QFT-COND-001 — Condensed Functional Analysis and Quantum Observables
 
-**Status:** audited teaching guide through the explicit REACH overlap model, UC119.
+**Status:** audited teaching guide through effective descent for REACH coefficient modules, UC122.
 
 **Audience:** the REACH overview is for a mathematically curious reader. The worked background sections are for graduate readers and researchers.
 
@@ -14,7 +14,7 @@
 
 ## REACH in plain language
 
-**Current through UC119, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
+**Current through UC122, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
 
 ### The field and the collision problem
 
@@ -65,6 +65,13 @@ The six quadratic products here use two pair differences on one interval in the 
 Label three copies of the affine readout first, second and third. The difference from the first copy to the third is the sum of the two adjacent differences. Identifying two adjacent copies makes their difference zero. The same rule works with any number of copies and gives the actual derived overlap maps.
 
 On one interval, choose one of the three pair measurements for each adjacent difference. This makes nine ordered products at weight four. The three differences between the two orders are boundaries, leaving six symmetric quadratic products, including the squares. These are the six products recovered at the second stage. [Explicit overlap recipe and signed calculation](EXT-015/EXPLICIT_AFFINE_OVERLAP_DIAGRAM_UC117.md)
+
+### When coefficients glue
+
+The overlaps can carry coefficient objects as well as collision measurements. A coefficient object specifies what can be used as coefficients and how the observable algebra acts on them. Start with a coefficient object on each overlap and compatible identifications along every overlap map. The full system comes from a coefficient object over the collision algebra, uniquely up to equivalence. Compatible maps are recovered too.
+
+To see why the weight cutoff helps, keep weights zero through three. Each collision difference has weight at least two, so any product of two falls outside this range. That makes the finite gluing problem solvable. Higher weights require more overlaps. Matching the results across all cutoffs recovers the complete coefficient object. [Effective coefficient descent](EXT-015/AFFINE_COEFFICIENT_DESCENT_UC120.md)
+
 
 ### The original REACH verdict
 
@@ -307,6 +314,7 @@ finite Gaussian and Schwartz covariance benchmark [known, reproducible]
   -> affine readout relations and sharp cover bound [reviewed through UC113]
   -> reconstruction from derived affine overlaps [reviewed through UC116]
   -> explicit overlap maps and signed recovery of the six products [reviewed through UC119]
+  -> effective descent for complete coefficient modules [reviewed through UC122]
 
 original support-stage equivalence [refuted in ZFC at the vacuum]
   -> separate degree-two support comparison [conditional verdicts in UC088]
