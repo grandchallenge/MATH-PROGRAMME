@@ -1340,7 +1340,24 @@ $$
 for $E\ge1$, $1\le N\le4E+6$ and $m\le2E+1$. This is a conventional reconstruction using classical lattice, nerve and homology inputs. The original formal dependencies, exact chain correspondence and stable-range theorem remain open; it does not certify Lemma K.
 
 
-## 36. Reproducibility and technical references
+## 36. Why stabilization does not enlarge the torsion budget
+
+The proof uses two types of rank. The analytic representation may need a very large matrix rank, and block replication increases it further. The geometric torsion theorem must instead use a rank bounded explicitly in terms of degree. Integral homological stability reconciles them.
+
+The source KStability asserts that the block inclusion $GL_n(R)\to GL_{n+1}(R)$ induces an integral homology isomorphism in degree $i$ for $n\ge2i+s+2$, where $s$ bounds Bass stable rank. The ring of integers has stable rank at most two: in a unimodular row choose a nonzero coordinate, use the Chinese remainder theorem over its finitely many maximal prime divisors to modify another coordinate by a multiple of the last, then delete the last. No maximal ideal contains the resulting row. The case with all earlier coordinates zero is immediate.
+
+There is also independent classical support: van der Kallen, [Homology Stability for Linear Groups](https://webspace.science.uu.nl/~kalle101/homstab1980.pdf), Inventiones Mathematicae 60 (1980), pp. 269–295, convention 2.2 and Theorem 4.11 on p. 289, gives an even stronger range for integral constant coefficients. The source's mathematical stability contract is therefore established by classical literature, without asserting replay of the submitted proof.
+
+The submitted implementation constructs split vector-covector sequences satisfying $\lambda_i(v_j)=\delta_{ij}$. Their stabilizers are smaller general linear groups acting on complementary coordinates. Shapiro identifies the first-page homology; alternating face maps reduce to stabilization or zero. The source uses syzygy exact sequences to obtain the same staircase conclusion as the homological spectral sequence. Its rank accounting is verified. The lower-level ordered-sequence link acyclicity and affine-translate induction remain original-source correspondence obligations.
+
+Consequently, in the claimed stable range, the integral homology groups themselves are isomorphic, not merely their real scalar extensions. An additive isomorphism preserves torsion in both directions. This is exactly the information real differential forms alone could not retain.
+
+![The stable rank transports both adjacent torsion orders back to an explicit finite rank](../assets/rh-a26-stability-transport.svg)
+
+In SUpper, the witnesses occur at a common rank $n$ and the filtered classes at rank $\ell^kn$. Both may be much larger than $N_*=2(k+1)+4$. Their relevant torsion cardinalities agree exactly with those at $N_*$. In SFew take $k=2e+2$ and $E=e+1$. Then $N_*=4E+6$, and the two homological degrees are $2E$ and $2E+1$, precisely those covered by STors. No rank-dependent loss is introduced.
+
+
+## 37. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1390,10 +1407,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #631](https://github.com/grandchallenge/MATHFORGE/pull/631) | Principal prime and actual analytic surjectivity assembly |
 | [PR #632](https://github.com/grandchallenge/MATHFORGE/pull/632) | Integral rank transfer, modular counting, Bockstein lifting and exact torsion frontier |
 | [PR #633](https://github.com/grandchallenge/MATHFORGE/pull/633) | Equivariant integral torsion, arithmetic orbit geometry and conventional STors estimate |
+| [PR #634](https://github.com/grandchallenge/MATHFORGE/pull/634) | Classical integral stability, source induction and exact torsion transport |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 37. What the investigation taught us about checking extraordinary mathematical claims
+## 38. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1405,14 +1423,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 38. The next executable mathematical step
+## 39. The next executable mathematical step
 
-**Target:** verify integral homological stability and source correspondence of the geometric torsion reconstruction.
+**Target:** the actual class-to-cycle construction and residue detection, followed by the quantitative class-counting join.
 
-**Work:** the abstract torsion theorem, arithmetic orbit geometry, stabilizer estimate and final exponent bound are conventionally reconstructed in [MATHFORGE PR #633](https://github.com/grandchallenge/MATHFORGE/pull/633). This is not an independent replay of the original closed-cover and integral chain implementations. Verify the Dedekind stable range and the downstream class-counting assembly.
+**Work:** audit SClass, SDetect, SFew and their downstream inputs. Integral stability and its exact torsion transport have conventional classical support and source-contract reconstruction in [MATHFORGE PR #634](https://github.com/grandchallenge/MATHFORGE/pull/634); subordinate formal link exactness and original replay remain open.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_GEOMETRIC_TORSION_CONVENTIONAL_RECONSTRUCTION__STABILITY_SOURCE_CORRESPONDENCE_CLASS_COUNTING_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_STABILITY_CONVENTIONALLY_VERIFIED__CLASS_CYCLE_DETECTION_COUNTING_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
