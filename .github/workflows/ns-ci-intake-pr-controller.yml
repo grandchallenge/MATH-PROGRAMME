@@ -4,24 +4,17 @@ on:
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
-  workflow_run:
-    workflows:
-      - Administrative maintenance dispatcher
-    types:
-      - completed
 
 permissions:
   contents: read
 
 concurrency:
-  # Frequent workflow_run wakes must not evict explicit/scheduled reconciliation.
-  # GitHub retains only one pending run per concurrency group.
-  group: external-intake-pr-controller-${{ github.event_name == 'workflow_run' && 'event' || 'direct' }}
+  # A single scheduled/manual lane prevents overlapping credential consumption.
+  group: external-intake-pr-controller
   cancel-in-progress: false
 
 jobs:
   reconcile:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment: release-trust

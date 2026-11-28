@@ -295,64 +295,63 @@ def _known_intake_branch(ref: str) -> bool:
     return True
 
 
-def list_intake_branches(gh: Github) -> list[str]:
-    """Discover exact registered intake heads, including branches without PRs.
+def list_open_intake_pr_branches(gh: Github, queue_heads: set[str] | None = None) -> list[str]:
+    """Admission can only act on existing PRs; never enumerate branches here."""
+    if queue_heads is None:
+        queue_heads = {
+            profile_for_queue_binding(b).branch_prefix for b in protected_queue_bindings(gh)
+        }
+    names: set[str] = set()
+    page = 1
+    while True:
+        items = gh.request(
+            "GET", f"/repos/{OWNER}/{REPO}/pulls?state=open&base=main&per_page=100&page={page}"
+        )
+        if not isinstance(items, list):
+            raise ControllerError("pulls discovery response is not a list")
+        for item in items:
+            head = item.get("head") if isinstance(item, dict) else None
+            ref = head.get("ref") if isinstance(head, dict) else None
+            if isinstance(ref, str) and (ref in queue_heads or _known_intake_branch(ref)):
+                names.add(ref)
+        if len(items) < 100:
+            return sorted(names)
+        page += 1
 
-    A branch listing uses the already-scoped contents:read credential.
-    Preserve both open-PR compatibility and the protected-queue manifest
-    fallback (which also handles installations that hide some refs).
-    Discovery alone never admits a receipt; validate_candidate verifies the
-    protected dispatch, exact path set, raw bytes and source identity.
+
+def list_intake_branches(gh: Github) -> list[str]:
+    """Discover registered intake heads with scoped refs, not global branch walks.
+
+    A valid nonempty matching-ref inventory is authoritative for intake refs.
+    Open PRs are a compatibility/cross-check surface. Fall back to the full
+    branch census and exact bound receipt probes only on absent or inconsistent
+    inventory. Rate/permission failures propagate rather than triggering scans.
     """
     bindings = protected_queue_bindings(gh)
-    # Legacy fakes and installs without matching-ref support retain exactly
-    # the original conservative discovery behavior.
     inventory_reader = getattr(gh, "matching_intake_refs", None)
     matching = inventory_reader() if callable(inventory_reader) else None
     queue_heads = {
         profile_for_queue_binding(binding).branch_prefix for binding in bindings
     }
     names: set[str] = set()
-    for source in ("branches", "pulls"):
+
+    names.update(list_open_intake_pr_branches(gh, queue_heads))
+    inventory_consistent = bool(matching) and names.issubset(matching)
+    if inventory_consistent:
+        names.update(ref for ref in matching if ref in queue_heads or _known_intake_branch(ref))
+    else:
         page = 1
         while True:
-            if source == "branches":
-                path = f"/repos/{OWNER}/{REPO}/branches?per_page=100&page={page}"
-            else:
-                path = (
-                    f"/repos/{OWNER}/{REPO}/pulls?"
-                    f"state=open&base=main&per_page=100&page={page}"
-                )
-            items = gh.request("GET", path)
+            items = gh.request("GET", f"/repos/{OWNER}/{REPO}/branches?per_page=100&page={page}")
             if not isinstance(items, list):
-                raise ControllerError(f"{source} discovery response is not a list")
+                raise ControllerError("branches discovery response is not a list")
             for item in items:
-                if not isinstance(item, dict):
-                    continue
-                if source == "branches":
-                    ref = item.get("name")
-                else:
-                    head = item.get("head")
-                    ref = head.get("ref") if isinstance(head, dict) else None
-                if not isinstance(ref, str):
-                    continue
-                if ref in queue_heads:
+                ref = item.get("name") if isinstance(item, dict) else None
+                if isinstance(ref, str) and (ref in queue_heads or _known_intake_branch(ref)):
                     names.add(ref)
-                    continue
-                try:
-                    profile_for_branch(ref)
-                except ControllerError:
-                    continue
-                names.add(ref)
             if len(items) < 100:
                 break
             page += 1
-
-    # Preserve discovery through the original branches and PR surfaces. A
-    # contradictory matching-ref inventory is not trusted for negative hits.
-    inventory_consistent = matching is not None and names.issubset(matching)
-    if inventory_consistent:
-        names.update(ref for ref in matching if ref in queue_heads or _known_intake_branch(ref))
 
     # Only a complete, consistent ref inventory can prove a bound branch
     # absent. Otherwise preserve the exact old per-binding contents fallback.

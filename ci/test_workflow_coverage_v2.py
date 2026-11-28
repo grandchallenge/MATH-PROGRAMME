@@ -349,42 +349,42 @@ def main() -> int:
 
     nsci_controller = "ns-ci-intake-pr-controller.yml"
 
-    nsci_workflow_run_removed = dict(texts)
-    nsci_workflow_run_removed[nsci_controller] = nsci_workflow_run_removed[nsci_controller].replace(
-        "  workflow_run:\n    workflows:\n      - Administrative maintenance dispatcher\n    types:\n      - completed\n",
-        "",
+    nsci_workflow_run_reintroduced = dict(texts)
+    nsci_workflow_run_reintroduced[nsci_controller] = nsci_workflow_run_reintroduced[nsci_controller].replace(
+        "  workflow_dispatch:\n",
+        "  workflow_dispatch:\n  workflow_run:\n    workflows:\n      - Administrative maintenance dispatcher\n    types:\n      - completed\n",
         1,
     )
     require_error(
-        nsci_workflow_run_removed,
+        nsci_workflow_run_reintroduced,
         evidence,
-        "triggers must be exactly schedule, workflow_dispatch, and workflow_run",
+        "triggers must be exactly schedule and workflow_dispatch",
         registry=registry,
     )
 
-    nsci_workflow_run_source_drift = dict(texts)
-    nsci_workflow_run_source_drift[nsci_controller] = nsci_workflow_run_source_drift[nsci_controller].replace(
-        "      - Administrative maintenance dispatcher",
-        "      - formal-validation",
+    nsci_concurrency_drift = dict(texts)
+    nsci_concurrency_drift[nsci_controller] = nsci_concurrency_drift[nsci_controller].replace(
+        "  group: external-intake-pr-controller\n",
+        "  group: external-intake-pr-controller-per-event\n",
         1,
     )
     require_error(
-        nsci_workflow_run_source_drift,
+        nsci_concurrency_drift,
         evidence,
-        "workflow_run must bind Administrative maintenance dispatcher only",
+        "scheduled/manual wakes must share one non-cancelling concurrency lane",
         registry=registry,
     )
 
-    nsci_workflow_run_gate_removed = dict(texts)
-    nsci_workflow_run_gate_removed[nsci_controller] = nsci_workflow_run_gate_removed[nsci_controller].replace(
-        "    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'\n",
-        "",
+    nsci_dispatcher_gate_reintroduced = dict(texts)
+    nsci_dispatcher_gate_reintroduced[nsci_controller] = nsci_dispatcher_gate_reintroduced[nsci_controller].replace(
+        "  reconcile:\n",
+        "  reconcile:\n    if: github.event_name == 'workflow_run'\n",
         1,
     )
     require_error(
-        nsci_workflow_run_gate_removed,
+        nsci_dispatcher_gate_reintroduced,
         evidence,
-        "workflow_run wake must be gated on successful dispatcher completion",
+        "scheduled/manual reconciliation must not depend on dispatcher success",
         registry=registry,
     )
 

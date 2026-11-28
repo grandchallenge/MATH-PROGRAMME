@@ -324,17 +324,19 @@ The stage uses two short-lived Release Trust tokens. Validation and PR reconcili
 
 ### Wake and persistence
 
-Protected workflow behavior has three wake paths:
+Protected workflow behavior has two wake paths:
 
 1. scheduled reconciliation every ten minutes;
-2. manual replay;
-3. a success-gated `workflow_run` wake after the **Administrative maintenance dispatcher** completes.
+2. manual replay, serialized with scheduled reconciliation.
 
-PR #1039 admitted the third path at merge commit:
-
-`536e377529dd6a313e79c2f91c1dc2567ad924a5`.
-
-The wake changes latency and persistence only. It does not change credential scope or claim authority.
+The historical success-gated maintenance-dispatcher wake (PR #1039,
+`536e377529dd6a313e79c2f91c1dc2567ad924a5`) is retired because dispatcher
+completions produced overlapping reconciliation runs and installation API
+exhaustion. Normal discovery uses the scoped intake matching-ref inventory
+and open PR cross-check; full branch census is a fallback only for absent
+or inconsistent inventory. Permission and rate errors do not trigger fallback.
+The existing schedule, manual recovery, receipt checks and credential scopes
+are preserved. No claim authority changes.
 
 ## 10. Adjudication is a separate action
 
