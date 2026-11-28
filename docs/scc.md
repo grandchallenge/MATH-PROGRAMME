@@ -2,7 +2,7 @@
 
 <p class="page-deck">Why do some immense collections of logical relationships yield to a handful of operations, while others resist every known shortcut?</p>
 
-<div class="scc-status"><strong>Research edition 03 · November 2026.</strong> Author-derived algebraic results and bounded exact regression; protected research records are not mathematical certification. No unrestricted superpolynomial lower bound or resolution of P versus NP is claimed.</div>
+<div class="scc-status"><strong>Research edition 04 · November 2026.</strong> Author-derived algebraic results and bounded exact regression; protected research records are not mathematical certification. No unrestricted superpolynomial lower bound or resolution of P versus NP is claimed.</div>
 
 <figure class="scc-plate">
   <a href="../assets/scc/01-compression.svg" aria-label="Open full-size mathematical plate"><img src="../assets/scc/01-compression.svg" alt="Two exact eight by eight coefficient matrices: the all-ones matrix has 64 nonzero coefficients and costs one multiplication; the identity matrix has eight nonzero coefficients and costs eight multiplications."></a>
@@ -362,6 +362,60 @@ A logarithmic count does not solve the lower-bound problem either: the total num
 The next candidate must therefore measure the cost of realizing a *family* of relations under factored representations and arbitrary reuse, rather than the cardinality of a minimal generating set. We have proved a barrier to the proposed count, not a barrier to all SCC invariants. The unrestricted lower bound and mathematical certification remain open.
 
 
+## VII-C. Joint spectral coherence
+
+**Research continuation, 28 November 2026.** The [common Fourier fibre calculus](https://github.com/grandchallenge/MATHSOLVE/blob/2fdc062bcc88837887b833675a04621ef6a39c5a/research/SCC-001/FOURIER_FIBRE_CAPACITY.md) gives a different representation of arbitrary Boolean circuits. Instead of counting individual algebraic relations, we ask whether all spectral coefficients of a decision function can arise from one shared computational structure.
+
+The normalized Walsh spectrum is
+
+$$
+W_f(\xi)=2^{-n}\sum_x(-1)^{f(x)+\xi\cdot x}.
+$$
+
+Its granularity $\gamma$ is the smallest nonnegative integer for which every $2^\gamma W_f(\xi)$ is integral. A circuit with $t$ multiplications must have $t\geq\gamma$. The difference $s=t-\gamma$ is its spectral slack.
+
+Keep only the parity of the numerator at the finest denominator:
+
+$$
+P_f(\xi)=2^\gamma W_f(\xi)\pmod2.
+$$
+
+This is a Boolean pattern on frequency space. The new theorem constrains the entire pattern, not just the magnitude of one coefficient.
+
+**Zero slack:** the marked frequencies must form a nonempty affine subspace. **One unit of slack:** the pattern is an XOR of at most $t+1$ affine-subspace indicators.
+
+### Why the constraint holds
+
+Lift the two affine input forms of each gate to independent formal coordinates. The earlier gates still affect the later gates through one common triangular system. The actual input occupies a linear subspace of the lifted space.
+
+In the reverse Walsh recursion, fix the pattern of active gates. Its frequency constraints are affine equations, and its phase is quadratic. Summing this branch over the parallel affine fibres of the original input gives either zero or a signed power of two on an affine support. The sign itself is quadratic on that support. Each inactive gate supplies a factor of two in the integer numerator $2^tW_f$.
+
+Thus only the all-active branch can contribute an odd numerator at zero slack. With one unit of slack, the all-active branch must itself have even numerators, and only the patterns missing at most one gate can contribute after division by two. There are at most $t+1$ such patterns. The full [technical proof and arbitrary-slack bound](https://github.com/grandchallenge/MATHSOLVE/blob/f43cbed3ac6be1882151c4dffa948507b9ce8b2e/research/SCC-001/SPECTRAL_PARITY_GEOMETRY.md) also accounts for binary carries between branches.
+
+### A target that passes scalar tests but fails joint geometry
+
+For $m\geq3$, choose a map $\pi$ on vectors of $m$ bits whose four singleton fibres have labels $0,e_1,e_2,e_3$. Partition the remaining vectors into affine fibres indexed by the first nonzero coordinate outside the first two, assigning labels $e_1+e_2,e_4,\ldots,e_m$. The target is $f(x,y)=x\cdot\pi(y)$.
+
+Every nonzero Walsh coefficient is a signed power of two. The granularity is $m$, the nonlinear dimension is $2m$, and the degree is at most $m+1$. The previous scalar spectral, degree and dimension bounds give at most $m$ gates.
+
+But its odd numerator support is exactly
+
+$$
+\{0,e_1,e_2,e_3\}\times\mathbb F_2^m.
+$$
+
+<figure class="scc-plate">
+  <a href="../assets/scc/11-spectral-parity.svg" aria-label="Open full-size mathematical plate"><img src="../assets/scc/11-spectral-parity.svg" alt="An affine reference marks 000,001,010,011; the actual target marks 000,001,010,100. The actual pattern fails closure under the affine combination of the first three points."></a>
+  <figcaption><strong>Plate XI.</strong> Literal three-coordinate slice of the constructed target and an affine reference of equal size. The remaining coordinates of u are zero, and v is fixed. These are frequency labels, not spatial distances.</figcaption>
+</figure>
+
+The actual support contains zero, the first and second basis vectors, but not their sum. It is not affine. The new joint constraint therefore proves that at least $m+1$ multiplications are necessary, despite every individual coefficient passing the earlier signed-digit test.
+
+The [exact finite replay](https://github.com/grandchallenge/MATHSOLVE/blob/deb5e89630f9ccaea71a2e2eef6fa941052ff8b6/research/SCC-001/spectral_parity_replay.py) passed 100 circuits, 309 branches and 5,070 frequency checks, including 23 zero-slack and 24 one-slack cases, plus six explicit target fixtures. This is exploratory author evidence, not proof certification.
+
+The general bound grows rapidly with slack and cannot yet address arbitrary polynomial circuit budgets. The next challenge is to retain the common dependency coefficients and the simultaneous geometry of all numerator bit planes. No unrestricted superpolynomial lower bound follows.
+
+
 ## Research ledger
 
 | Result | Support | Boundary |
@@ -373,6 +427,7 @@ The next candidate must therefore measure the cost of realizing a *family* of re
 | Complementary cohomology projections | Author proof | Separate replay and formalization outstanding |
 | Target-relative Rees module and transport | Author proof; bounded exact replay | Raw dimension and normalized mass fail as strong capacity measures |
 | Minimal-generator birth | Author proof; full truth-table regression | Exact exponential one-gate counterfamily on essential variables |
+| Joint spectral parity geometry | Author proof; exact regression | Strict scalar separator, large slack open |
 | Target-relative universal capacity law | Open | Required for the intended lower-bound argument |
 
 The first [exact regression](https://github.com/grandchallenge/MATHSOLVE/blob/e8096b79099f410aed7d2096c9e5367208b21823/research/SCC-001/replay.js) passed 720 transitions, 3,168 grade checks, 71,640 target checks and 720 capacity checks. The successor [syzygy replay](https://github.com/grandchallenge/MATHSOLVE/blob/ba8f4e6b587ab1ca4f01f0b63037d77ef09476f9/research/SCC-001/syzygy_replay.js) passed 722 transitions, 3,899 grade checks, 6,332 cross-relations, 70,836 module-linearity checks and 6,332 square-zero checks.
@@ -383,7 +438,7 @@ These are bounded exact truth-table regressions, not formal proofs of the univer
 
 Start with Plates I and II; reconstruct the four-variable histogram in Plate III by listing the sixteen square-free monomials. Then verify the identity in Plate V and test what changes if the extra variables in Plate VII cease to be independent. A contributor can replay the exact finite fixtures with Node.js, without installing third-party packages.
 
-The next executable research step is to develop a measure of factored relation families, then test its change under arbitrary reused products; the raw minimal-generator count has now been ruled out by an exact exponential counterfamily. A successful test must yield a proved bound covering every reachable state, or a precise counterexample to that bound. No empirical trend is a substitute.
+The next executable research step is to test simultaneous spectral bit planes under the common triangular dependency coefficients, or derive a counterexample to a proposed joint capacity law. The raw minimal-generator count is already ruled out. A successful test must yield a proved bound covering every reachable state, or a precise counterexample to that bound. No empirical trend is a substitute.
 
 !!! info "Research surface authority"
     **LIVE:** [SCC-001 tracker](https://github.com/grandchallenge/MATHSOLVE/issues/1309).
