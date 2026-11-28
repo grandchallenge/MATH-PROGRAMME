@@ -8,8 +8,8 @@ description: An illustrated reader guide to collision information, renormalizati
 
 [Download the illustrated reader guide (PDF)](../assets/reach-reader-guide.pdf)
 
-!!! note "Research status · 26 November 2026"
-    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, and completed gluing. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
+!!! note "Research status · 28 November 2026"
+    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and reconstruction from the derived affine overlaps. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
 
 ## What happens when two slots meet?
 
@@ -54,6 +54,12 @@ The union has **15 products** in this sector, at weight four and degree minus tw
 
 A cover that places any two chosen points in a common patch recovers all fifteen products in the example. The general result allows us to determine how many points a cover needs to see together. For the summand of weight $w$ and intrinsic cohomological degree $-q$, with $2q\le w$, it suffices that every set of up to $w-q$ points lies in one patch. These numbers count how many block centers a term can involve. The bound is sharp as a uniform guarantee. A **Weiss cover** has the joint containment property for every finite set, so it gives gluing at every weight, including on opens with infinitely many components. [All-open descent and the sharp example](https://github.com/grandchallenge/MATH-PROGRAMME/blob/6d62912eae2c3f37004822513204d29864bc75d9/research/condensed-qft/EXT-015/AFFINE_RELATIONS_WEISS_DESCENT_UC111.md)
 
+## Can the simpler model recover the full record?
+
+The affine readout forgets pair-collision information. The first derived overlap compares two copies of that readout over the collision algebra and records the missing relations. Successive overlaps compare more copies. Their maps record how those comparisons fit together.
+
+Combining the affine readout and the first overlap recovers all weights through three. On one interval, six quadratic products of pair differences are still missing at weight four. Adding the next overlap recovers that weight. In general stage $n$ recovers all weights below $2(n+1)$, and taking all the stages recovers the completed collision algebra. The count of six here concerns products in the collision algebra on one interval. The nine above are products of relations across two intervals in the derived overlap. [Reconstruction theorem and sharp stage bound](https://github.com/grandchallenge/MATH-PROGRAMME/blob/e20204b69137add0d791addca222762503cd79e6/research/condensed-qft/EXT-015/AFFINE_COLLISION_RECONSTRUCTION_UC114.md)
+
 ## Where the original programme stands
 
 | Question | Supported result |
@@ -70,5 +76,5 @@ A separate degree-two question asks whether every global liquid extension class 
 
 - [The renormalized quantum rules](https://github.com/grandchallenge/MATH-PROGRAMME/blob/6d62912eae2c3f37004822513204d29864bc75d9/research/condensed-qft/EXT-015/RENORMALIZED_QUANTUM_STRUCTURE_111.md)
 - [Evidence and review for the gluing theorem](https://github.com/grandchallenge/MATH-PROGRAMME/blob/6d62912eae2c3f37004822513204d29864bc75d9/research/condensed-qft/EXT-015/AFFINE_RELATIONS_WEISS_ACCEPTANCE_UC113.md)
-- [Maintained research guide](https://github.com/grandchallenge/MATH-PROGRAMME/blob/6d62912eae2c3f37004822513204d29864bc75d9/research/condensed-qft/ACCESSIBLE_RESEARCH_GUIDE.md)
+- [Maintained research guide](https://github.com/grandchallenge/MATH-PROGRAMME/blob/main/research/condensed-qft/ACCESSIBLE_RESEARCH_GUIDE.md)
 - [An introduction to condensed mathematics](../CONDENSED_MATHEMATICS_FOR_THE_PERPLEXED.md)

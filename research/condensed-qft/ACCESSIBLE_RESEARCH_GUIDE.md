@@ -1,6 +1,6 @@
 # QFT-COND-001 — Condensed Functional Analysis and Quantum Observables
 
-**Status:** audited teaching guide through the admitted REACH gluing theorem, UC113.
+**Status:** audited teaching guide through the admitted REACH reconstruction theorem, UC116.
 
 **Audience:** the REACH overview is for a mathematically curious reader. The worked background sections are for graduate readers and researchers.
 
@@ -14,7 +14,7 @@
 
 ## REACH in plain language
 
-**Current through UC113, 26 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
+**Current through UC116, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
 
 ### The field and the collision problem
 
@@ -54,11 +54,17 @@ python research/condensed-qft/EXT-015/fixtures/check_collision_liquid_weiss_uc09
 
 The first checks the collision moment formulas and the separated Wick control. The second checks finite component-cover and boundary calculations. The mixed-product count above is a hand calculation. The infinite-component and completed gluing statements use the mathematical proofs. The [UC113 evidence ledger](EXT-015/AFFINE_RELATIONS_WEISS_ACCEPTANCE_UC113.md) records the exact review and finite controls for the later signed calculation.
 
+### Recovering the full collision model
+
+The affine model alone forgets the three pair differences. Keep its actual derived overlaps, which compare copies of the affine readout over the collision algebra, and the maps between those overlaps. Combining these comparisons recovers what was lost. With the first overlap included, the reconstruction is exact through weight three. Six products of two pair differences on one interval enter at weight four. They are absent from that first stage and are recovered at the next stage. At stage $n$, every weight below $2(n+1)$ is recovered. Taking the compatible sequence of all stages reconstructs the completed collision algebra.
+
+The six quadratic products here use two pair differences on one interval in the collision algebra. The nine mixed products above use one relation from each of two intervals in the derived overlap. [Reconstruction proof and finite stage calculation](EXT-015/AFFINE_COLLISION_RECONSTRUCTION_UC114.md)
+
 ### The original REACH verdict
 
 The declared renormalized model, its quantum identities and its correctly typed gluing have proofs in the usual ZFC axioms of set theory. The original proposed equivalence between the support-stage and observable diagrams already fails at the vacuum. In the old diagram, a larger stage admits coefficient functions supported outside the smaller interval. In the model's vacuum, all stages have the same scalar algebra and identity transitions. The separate degree-two liquid question asks whether every global extension class is already represented at some bounded support stage. In ZFC the classes represented at bounded stages remain distinct in the global group. The continuum hypothesis gives a global class outside every bounded stage. The partition principle PH1 instead guarantees that every global class has a bounded-stage representative. The CH class survives in the intermediate smooth extension group and vanishes under the actual observable evaluation. The original strong criterion remains unmet. These degree-two classes belong to a different comparison from the degree-minus-one collision relations in the worked example. [Qualified closeout and foundation assumptions](EXT-015/REACH_QUALIFIED_CLOSEOUT_UC088.md) · [Exact comparison diagram](EXT-015/ORIGINAL_TYPED_INTEGRATION_VERDICT_UC085.md)
 
-Use the accepted result and its evidence ledger to refresh the affected example and scope here when a new REACH milestone is recorded.
+Use the accepted result and its evidence ledger to refresh the affected example and scope here and in the [public reader edition](https://grandchallenge.ai/MATH-PROGRAMME/campaigns/REACH_READER_GUIDE/) when a new REACH milestone is recorded.
 
 ## Earlier steps in the programme
 
@@ -293,6 +299,7 @@ finite Gaussian and Schwartz covariance benchmark [known, reproducible]
   -> controlled renormalized free scalar [reviewed proof for the declared class]
   -> collision moments, completed product and Weiss descent [reviewed proofs]
   -> affine readout relations and sharp cover bound [reviewed through UC113]
+  -> reconstruction from derived affine overlaps [reviewed through UC116]
 
 original support-stage equivalence [refuted in ZFC at the vacuum]
   -> separate degree-two support comparison [conditional verdicts in UC088]
