@@ -1557,7 +1557,19 @@ This induced filtration is essential: kernel formation does not generally commut
 
 The conventional correspondence and positive-twist coefficient transport are reconstructed in [MATHFORGE PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641), with 53 pinned source files and 4,944,601 finite algebraic controls. These controls do not replace proof or original kernel replay. The zero-twist branch is outside this review.
 
-## 45. Reproducibility and technical references
+## 45. What the independent kernel checks establish
+
+The question of concealed assumptions is now supported by substantially stronger evidence. The [MIT verification dossier](https://math.mit.edu/~drew/grh/), updated 27 November 2026, reports a separate offline, read-only-source rebuild of the original 20 November archive and exact reproduction of its exported proof. The five canonical RH and Dirichlet GRH statements pass multiple independently implemented kernels and statement comparators. The [axiom audit](https://math.mit.edu/~drew/grh/audit.log) reports only propositional extensionality, classical choice and quotient soundness for the five headline theorems.
+
+Think of the source as the construction instructions, the compiled declarations as the assembled parts, and the exported proof as a certificate that can be checked independently of the elaborator. Matching the final theorem against a canonical challenge prevents the certificate from proving a weaker replacement. Rebuilding the source in an isolated environment and obtaining the same certificate ties that certificate back to the actual submission.
+
+GCL independently recomputed the original archive's digest, and reconciled its two foundational import closures against both external compilation manifests. All 312 local modules and all 1,915 global modules match across the two builds, comprising 1,925 distinct modules. All corresponding source hashes match members of the original archive. This is a module-specific comparison, not merely reliance on a headline assertion.
+
+The local duality entry module, normalized Poitou–Tate entry module, conjugation bridge and Lemma K assembly all have matching compiled hashes. No discrepancy was found in these closures. The full external manifests differ in just one module outside the audited union; the external dossier explains why the difference does not affect the exported proof.
+
+This evidence strongly supports the formal theorem under standard classical foundations. It does **not** constitute GCL's own completed independent kernel replay, or a GCL certification. The targeted local build and declaration-level axiom checks remain separate obligations. The shorter 25 November proof is another artifact; its evidence must not silently replace the original. See [technical reconciliation #642](https://github.com/grandchallenge/MATHFORGE/pull/642).
+
+## 46. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1615,10 +1627,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #639](https://github.com/grandchallenge/MATHFORGE/pull/639) | SNum class-number and universal exponent absorption |
 | [PR #640](https://github.com/grandchallenge/MATHFORGE/pull/640) | SFinal conditional Lemma K assembly, local terms and exponent 150 |
 | [PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641) | Exact duality source correspondence, common sign, positive-twist coefficient transport |
+| [PR #642](https://github.com/grandchallenge/MATHFORGE/pull/642) | Original source and external kernel evidence reconciliation; all 1,925 foundational compiled hashes agree |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 46. What the investigation taught us about checking extraordinary mathematical claims
+## 47. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1630,14 +1643,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 47. The next executable mathematical step
+## 48. The next executable mathematical step
 
-**Target:** original pinned foundational kernel replay and axiom audit.
+**Target:** complete the targeted original-source replay and declaration-specific axiom inspection; preserve the distinction from completed external checks.
 
-**Work:** Build the original pinned Lean environment in isolation; replay the local `GcohTop` and normalized Poitou–Tate candidate declarations and their downstream joins, and inspect axioms. Then audit BOdd and the remaining RH/GRH chain. The conventional duality bridge is reconstructed in [PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641).
+**Work:** Exact dependency environment prepared; local original-source compilation initiated. Finish the local `GcohTop` target, print the intermediate declaration axiom sets, then continue the global closure and BOdd proof-spine review. Independent external full-kernel and statement evidence is now reconciled in [PR #642](https://github.com/grandchallenge/MATHFORGE/pull/642).
 
 **Completion test:** exact declaration-level kernel and axiom evidence with dependency identities retained; reconcile D02/D03/D04/D06 before any promotion. No RH/GRH certification.
 
-**Present boundary:** `RH-A26_DUALITY_CONVENTIONAL_CORRESPONDENCE__EXACT_FOUNDATIONAL_KERNEL_REPLAY_BODD_DOWNSTREAM_OPEN`.
+**Present boundary:** `RH-A26_EXTERNAL_FULL_KERNEL_AND_STATEMENT_VERIFICATION_RECONCILED__FOUNDATIONAL_MODULES_HASH_MATCHED__GCL_TARGETED_AXIOM_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
