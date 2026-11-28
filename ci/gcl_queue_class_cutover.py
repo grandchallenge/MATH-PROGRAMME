@@ -285,7 +285,24 @@ def prepare(project:dict, items:list[dict]) -> tuple[list[dict],dict]:
     corrections=[]
     expected=Counter()
     conflicts=[]
+    non_worker=[]
     for item in items:
+        # Ordinary project-management issues are not worker assignments.
+        # Only skip fully identified, unclassified issues without any GCL
+        # labels; malformed or partially labelled jobs still fail closed.
+        issue=item.get("content") or {}
+        labels=issue.get("labels") or {}
+        entries=labels.get("nodes") or []
+        if ((issue.get("repository") or {}).get("nameWithOwner") in REPOS
+                and isinstance(issue.get("number"),int)
+                and isinstance(issue.get("title"),str)
+                and labels.get("totalCount")==len(entries)
+                and all(isinstance(x,dict) and isinstance(x.get("name"),str)
+                        for x in entries)
+                and not any(x["name"].startswith("gcl-") for x in entries)
+                and item.get("fieldValueByName") is None):
+            non_worker.append(item["id"])
+            continue
         try:
             cls,mode=classify(item)
         except (ValueError,TypeError,KeyError) as exc:
@@ -303,7 +320,7 @@ def prepare(project:dict, items:list[dict]) -> tuple[list[dict],dict]:
         raise ValueError(f"{len(conflicts)} Project item(s) have ambiguous class: " +
                          " | ".join(conflicts[:30]) +
                          (f" (+{len(conflicts)-30} more)" if len(conflicts)>30 else ""))
-    return corrections, {"items":len(items),"classes_expected":dict(expected),
+    return corrections, {"items":len(items),"non_worker_items":len(non_worker),"classes_expected":dict(expected),
                          "corrections":len(corrections),"views":views}
 
 
@@ -462,7 +479,10 @@ def receipt_message(receipt: dict | None, *, run_url: str, protected_sha: str) -
                 and all(receipt["saved_view_ids"].get(k) for k in VIEW_FILTERS)
                 and isinstance(receipt.get("classes_expected"), dict)
                 and set(receipt["classes_expected"]) == {"Editorial", "Mathematics"}
-                and sum(receipt["classes_expected"].values()) == receipt["items"])
+                and isinstance(receipt.get("non_worker_items",0),int)
+                and receipt.get("non_worker_items",0)>=0
+                and receipt["post_readback"].get("non_worker_items",0)==receipt.get("non_worker_items",0)
+                and sum(receipt["classes_expected"].values()) + receipt.get("non_worker_items",0) == receipt["items"])
     lines = [RECEIPT_MARKER, "# Protected GCL queue-class readback",
              "", "**Project classification:** " + ("VERIFIED" if complete else "BLOCKED / UNVERIFIED"),
              "", "- Protected source SHA: `" + protected_sha + "`",
@@ -471,6 +491,7 @@ def receipt_message(receipt: dict | None, *, run_url: str, protected_sha: str) -
     if complete:
         lines.extend([
             "- Project items fully re-read: **" + str(receipt["items"]) + "**",
+            "- Ordinary non-worker items preserved: **" + str(receipt.get("non_worker_items",0)) + "**",
             "- Classified Editorial: **" + str(receipt["classes_expected"]["Editorial"]) + "**",
             "- Classified Mathematics: **" + str(receipt["classes_expected"]["Mathematics"]) + "**",
             "- Queue Class field: `" + QUEUE_FIELD_ID + "`",
