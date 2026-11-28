@@ -142,11 +142,17 @@ class QueueControllerTests(unittest.TestCase):
                 BIND, campaign="UNREGISTERED-CAMPAIGN"
             ))
 
-    def test_qtr_exact_three_pilot_bindings(self):
+    def test_qtr_exact_nine_authorized_bindings(self):
         for did, issue in (
             ("QTR-C90-SP-C002-B000-IA-001", 1328),
             ("QTR-C90-ST-C001-B000-IA-001", 1329),
             ("QTR-C90-MP-C001-B000-IA-001", 1330),
+            ("QTR-C90-SP-C002-B001-IA-001", 1347),
+            ("QTR-C90-SP-C002-B002-IA-001", 1348),
+            ("QTR-C90-ST-C001-B001-IA-001", 1349),
+            ("QTR-C90-ST-C001-B002-IA-001", 1350),
+            ("QTR-C90-MP-C001-B001-IA-001", 1351),
+            ("QTR-C90-MP-C001-B002-IA-001", 1352),
         ):
             binding = dict(BIND, dispatch_id=did, campaign="QTR-C90-SWARM-001",
                 dispatch_path=f"contributions/QTR-C90-SWARM-001/dispatches/{did}.json",
@@ -161,7 +167,7 @@ class QueueControllerTests(unittest.TestCase):
                            dict(allowed_external_sources=["ANY"])):
                 with self.assertRaisesRegex(controller.ControllerError, "outside bounded pilot"):
                     controller.profile_for_queue_binding(dict(binding, **tamper))
-        other = "QTR-C90-SP-C002-B001-IA-001"
+        other = "QTR-C90-SP-C002-B003-IA-001"
         with self.assertRaisesRegex(controller.ControllerError, "outside bounded pilot"):
             controller.profile_for_queue_binding(dict(binding, dispatch_id=other,
                 dispatch_path=f"contributions/QTR-C90-SWARM-001/dispatches/{other}.json"))

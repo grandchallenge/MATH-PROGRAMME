@@ -220,6 +220,12 @@ def profile_for_queue_binding(binding: dict[str, Any]) -> IntakeProfile:
             "QTR-C90-SP-C002-B000-IA-001": 1328,
             "QTR-C90-ST-C001-B000-IA-001": 1329,
             "QTR-C90-MP-C001-B000-IA-001": 1330,
+            "QTR-C90-SP-C002-B001-IA-001": 1347,
+            "QTR-C90-SP-C002-B002-IA-001": 1348,
+            "QTR-C90-ST-C001-B001-IA-001": 1349,
+            "QTR-C90-ST-C001-B002-IA-001": 1350,
+            "QTR-C90-MP-C001-B001-IA-001": 1351,
+            "QTR-C90-MP-C001-B002-IA-001": 1352,
         }
         if (did not in pilot
                 or binding.get("github_issue_number") != pilot[did]
