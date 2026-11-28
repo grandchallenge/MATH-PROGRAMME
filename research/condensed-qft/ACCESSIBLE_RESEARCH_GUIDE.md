@@ -1,6 +1,6 @@
 # QFT-COND-001 — Condensed Functional Analysis and Quantum Observables
 
-**Status:** audited teaching guide through effective descent for REACH coefficient modules, UC122.
+**Status:** audited teaching guide through physical Weiss descent for REACH coefficient modules, UC125.
 
 **Audience:** the REACH overview is for a mathematically curious reader. The worked background sections are for graduate readers and researchers.
 
@@ -14,7 +14,7 @@
 
 ## REACH in plain language
 
-**Current through UC122, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
+**Current through UC125, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
 
 ### The field and the collision problem
 
@@ -72,6 +72,12 @@ The overlaps can carry coefficient objects as well as collision measurements. A 
 
 To see why the weight cutoff helps, keep weights zero through three. Each collision difference has weight at least two, so any product of two falls outside this range. That makes the finite gluing problem solvable. Higher weights require more overlaps. Matching the results across all cutoffs recovers the complete coefficient object. [Effective coefficient descent](EXT-015/AFFINE_COEFFICIENT_DESCENT_UC120.md)
 
+
+### Gluing across physical regions
+
+There is a second gluing question. Suppose each physical patch has a coefficient object, and their actions agree wherever the patches meet. Two separated patches can agree on the empty region even when applying their actions in opposite orders gives different answers. For example, the left action can move a coefficient from weight zero to one, and the right action from one to two. Left then right moves the coefficient two steps, while right then left sends it to zero. A single action over the union would require those two separated observables to commute.
+
+A Weiss cover puts every finite set of points together in some patch. It gives the joint tests needed to glue all patch actions, including the maps between coefficient objects. If we keep only weights zero through three, it suffices to put every set of up to three points together. The result applies to the collision algebra and separately to each affine overlap algebra. To restrict a whole affine system to a physical subregion, first recover its full coefficient object, restrict it, and form its affine overlaps there. [Physical Weiss descent for coefficients](EXT-015/SPATIAL_COEFFICIENT_WEISS_DESCENT_UC123.md)
 
 ### The original REACH verdict
 
@@ -315,6 +321,7 @@ finite Gaussian and Schwartz covariance benchmark [known, reproducible]
   -> reconstruction from derived affine overlaps [reviewed through UC116]
   -> explicit overlap maps and signed recovery of the six products [reviewed through UC119]
   -> effective descent for complete coefficient modules [reviewed through UC122]
+  -> physical Weiss descent for coefficient actions and maps [reviewed through UC125]
 
 original support-stage equivalence [refuted in ZFC at the vacuum]
   -> separate degree-two support comparison [conditional verdicts in UC088]
