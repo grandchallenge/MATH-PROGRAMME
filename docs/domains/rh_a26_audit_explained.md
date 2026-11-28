@@ -1481,7 +1481,35 @@ $$
 These are precisely the inequalities required by SLayer. The previous uniform finite-layer count and SSha now give a finite Sha bound for the original field, conditional on the preceding homological and arithmetic inputs. The numerical theorem SNum must absorb all enlargement costs into a bound expressed solely in $E,n,D$. SFinal must then join that bound to the desired cohomological duality statement. No Lemma K or RH/GRH certification follows yet.
 
 
-## 42. Reproducibility and technical references
+## 42. Absorbing the enlargement cost into one universal exponent
+
+SNum is the numerical join of the preceding conditional bounds. It is important that the field enlargement is measured in the variables that enter the homological estimate, rather than by the discriminant alone.
+
+Write $n=[L:\mathbb Q]$, $D=|\mathrm{disc}(L)|$ and $x=2En$. SLayer gives $d\le16En=8x$, $n'=dn\le4x^2$ and $w\le2n'$. Thus $2En'\le8x^2\le x^5$. Taking logarithms of the discriminant bound yields
+
+$$
+\log(2D')\le \log 2+d\log D+n'\log w
+\le73x^4\log(2D)\le x^{11}\log(2D).
+$$
+
+The arithmetic generator count can also be bounded independently. Minkowski gives an integral ideal of norm at most $\sqrt{D'}$ in every ideal class (the Minkowski constant is at most one). Ideals inject into ordered positive integer tuples of length $n'$ with product their norm: order the primes above each rational prime, assign the corresponding residue-degree-weighted exponents to the coordinates, and pad unused coordinates. Summing recursively and using the harmonic sum bound gives at most $X(1+\log X)^{n'-1}$ tuples of product at most $X$. Consequently the class number logarithm is at most $(\log D')/2+n'\log(1+(\log D')/2)$ and the generator parameter satisfies $G\le2n'+4n'\log(2D')+2$.
+
+Set $u=2En'$ and $Y=\log(2D')$. The loss parameters obey $b\le u+2u^2$, $c,v,\log\ell\le u$, and $G\le u+2uY+2\le6uY$. Since $u\ge2$ and $Y\ge1/2$, the arithmetic contribution satisfies
+
+$$
+\Delta\log\ell=((b+v)G+c+v)\log\ell\le19u^4Y\le u^9Y.
+$$
+
+The two torsion terms and this polynomial loss fit inside a single exponential. If $C_0$ is the torsion exponent, put $A=u^{\max(C_0,9)}Y\ge1$. Then $2\exp(A)+A\le\exp(4A)\le\exp(u^2 A)$. The exponent at the enlarged field is $C_1=\max(C_0,9)+2$. By SLayer monotonicity the original length is finite and no greater than the enlarged length. Substitution of the degree and logarithmic discriminant bounds yields
+
+$$
+s\log\ell\le\exp(x^{5C_1+11}\log(2D)).
+$$
+
+With the previously reconstructed torsion exponent $C_0=24$, the source's universal exponent is $5(24+2)+11=141$. This is ShaK(141) conditional on the preceding audited mathematical contracts for totally complex fields satisfying HasMuQ, and positive $E$. It does not yet assert Lemma K: SFinal must compare the global Sha and local terms to the intended second cohomology group via the explicit duality hypotheses. Original formal source correspondence and replay remain open.
+
+
+## 43. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1536,10 +1564,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #636](https://github.com/grandchallenge/MATHFORGE/pull/636) | SCount exact unit determinant, primary kernel descent and layer cancellation |
 | [PR #637](https://github.com/grandchallenge/MATHFORGE/pull/637) | SSha global restriction, compact finite-layer extension and class field comparison |
 | [PR #638](https://github.com/grandchallenge/MATHFORGE/pull/638) | SLayer common-kernel monotonicity, dual cokernels and controlled cyclotomic enlargement |
+| [PR #639](https://github.com/grandchallenge/MATHFORGE/pull/639) | SNum class-number and universal exponent absorption |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 43. What the investigation taught us about checking extraordinary mathematical claims
+## 44. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1551,14 +1580,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 44. The next executable mathematical step
+## 45. The next executable mathematical step
 
-**Target:** SNum numerical absorption and SFinal duality.
+**Target:** SFinal global and local duality join.
 
-**Work:** SLayer is conventionally reconstructed in [MATHFORGE PR #638](https://github.com/grandchallenge/MATHFORGE/pull/638); restriction preserves the Sha bound and the degree and discriminant costs are explicit. Verify the SNum universal exponent and SFinal local terms and global duality. Original formal replay and foundations remain open.
+**Work:** SNum is conventionally reconstructed in [MATHFORGE PR #639](https://github.com/grandchallenge/MATHFORGE/pull/639), giving the conditional ShaK exponent 141. Verify SFinal and its explicit foundational hypotheses. Original formal replay and foundations remain open.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SLAYER_CONVENTIONAL_RECONSTRUCTION__SNUM_SFINAL_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SNUM_CONVENTIONAL_RECONSTRUCTION__SFINAL_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
