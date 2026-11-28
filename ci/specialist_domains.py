@@ -97,6 +97,19 @@ def protected_path(path: str) -> bool:
         "tests/test_erdos_event_custody.py",
         "ci/validate_workflow_coverage_v2.py",
         "tests/test_agent_routine_review.py",
+        # External intake/Release Trust controller and exact companions.
+        # These files form a protection-domain material closure with its
+        # workflow and routing registry. Classification does not grant review.
+        "ci/ns_ci_intake_pr_controller.py",
+        "ci/external_intake_evidence_admission.py",
+        "ci/validate_workflow_coverage_v3.py",
+        "ci/test_workflow_coverage_v2.py",
+        "docs/governance/GCL_CONTROLLED_EPISTEMIC_INTERFACE.md",
+        "governance/ns_ci_intake_pr_controller.json",
+        "governance/external_intake_evidence_admission_controller.json",
+        "tests/test_ns_ci_intake_pr_controller.py",
+        "tests/test_external_intake_evidence_admission.py",
+        "tests/test_queue_successor_intake_pr_controller.py",
         # Exact action-pin registry/schema/test files accompany protected
         # workflow pin changes. Route to PROTECTION review; never auto-approve.
         "governance/administrative_maintenance_trigger_registry.json",

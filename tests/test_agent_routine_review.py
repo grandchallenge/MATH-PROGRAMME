@@ -42,6 +42,35 @@ class RoutineAgentReviewTests(unittest.TestCase):
         )]
         self.assertEqual(specialist_domain_for_file_manifest(files), "PROTECTION")
 
+    def test_intake_efficiency_material_closure_routes_to_protection(self):
+        # Exact observed PR #3848 manifest; no approval or receipt implied.
+        paths = [
+            ".ghos-routing/workflows.json",
+            ".github/workflows/ns-ci-intake-pr-controller.yml",
+            "ci/external_intake_evidence_admission.py",
+            "ci/ns_ci_intake_pr_controller.py",
+            "ci/test_workflow_coverage_v2.py",
+            "ci/validate_workflow_coverage_v3.py",
+            "docs/governance/GCL_CONTROLLED_EPISTEMIC_INTERFACE.md",
+            "governance/external_intake_evidence_admission_controller.json",
+            "governance/ns_ci_intake_pr_controller.json",
+            "tests/test_external_intake_evidence_admission.py",
+            "tests/test_ns_ci_intake_pr_controller.py",
+        ]
+        self.assertEqual(specialist_domain_for_file_manifest(
+            [{"filename": path} for path in paths]), "PROTECTION")
+        for extra in (
+            "ci/unregistered_intake_controller.py",
+            "fixtures/formal/Proof.lean",
+            "governance/source_new.json",
+            "governance/solve_execution_other.json",
+            "docs/governance/UNRELATED.md",
+        ):
+            with self.subTest(extra=extra):
+                with self.assertRaisesRegex(RoutineReviewError, "unresolved or mixed"):
+                    specialist_domain_for_file_manifest(
+                        [{"filename": path} for path in paths + [extra]])
+
     def test_unknown_queue_related_file_still_fails_closed(self) -> None:
         with self.assertRaisesRegex(RoutineReviewError, "unresolved or mixed"):
             specialist_domain_for_file_manifest([

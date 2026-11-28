@@ -609,6 +609,13 @@ def exact_specialist_disposition(pr: dict, files: list[dict], head: str,
     """Consume only already protected domain reviews, not PR comments."""
     verify_specialist_envelope(pr, files, head)
     domain = specialist_domain_for_file_manifest(files)
+    print(
+        f"Specialist route: {domain}. Outside the automatic routine approval "
+        "profiles; protected domain evidence is required for an App approval. "
+        "This optional reviewer does not determine whether a reserved authority "
+        "transition is sought or replace ordinary protected merge requirements.",
+        flush=True,
+    )
     source_token = os.environ.get("SPECIALIST_READ_TOKEN", "")
     if not source_token or not read_token:
         raise RoutineReviewError("specialist source credential unavailable")
