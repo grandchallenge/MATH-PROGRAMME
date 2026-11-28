@@ -106,7 +106,7 @@ jobs:
       - name: Mint read-only Administration ruleset token
         if: steps.target.outputs.eligible == 'true'
         id: admin-read-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -117,7 +117,7 @@ jobs:
       - name: Mint bounded Candidate merge-executor token
         if: steps.target.outputs.eligible == 'true'
         id: candidate-merge-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -248,7 +248,7 @@ jobs:
     steps:
       - name: Mint read-only Candidate observation token
         id: candidate-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -259,7 +259,7 @@ jobs:
 
       - name: Mint read-only evidence token
         id: evidence-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -271,7 +271,7 @@ jobs:
 
       - name: Mint bounded Administration reconciliation token
         id: admin-write-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}
@@ -281,7 +281,7 @@ jobs:
 
       - name: Mint read-only Administration observation token
         id: admin-read-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.GCL_RELEASE_TRUST_APP_ID }}
           private-key: ${{ secrets.GCL_RELEASE_TRUST_PRIVATE_KEY }}

@@ -240,7 +240,7 @@ jobs:
       - name: Mint Construction Gate installation token
         if: steps.preflight.outputs.allowed == 'true'
         id: gate-token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510
+        uses: actions/create-github-app-token@f418cff399f7aef4c2f0ad47e25ca7a6abbdd6fc
         with:
           app-id: ${{ secrets.MP_CONSTRUCTION_GATE_APP_ID }}
           private-key: ${{ secrets.MP_CONSTRUCTION_GATE_PRIVATE_KEY }}
