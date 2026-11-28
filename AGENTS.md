@@ -299,3 +299,18 @@ For the Steward's authorized public research, execute ordinary commands once in 
 The comment declares the command and resulting output public; use it by default for eligible mathematics, compiler checks, experiments and tests. Do not designate private administration, credential access, third-party private records or unknown inputs/output. Public designation is not isolation. Preserve required governed Lean workspaces, exact-head replay, task custody, and certification rules. No special runner, separate release submission, or repeated computation solely for disclosure. Failed proof checks are publishable research. The isolated public runner and complete reviewed-transcript route remain available where appropriate.
 
 The [public console](https://grandchallenge.ai/assets/operations/live.html) is observational, not a certification or queue authority. Verify actual correlated release when practical. Preserve complete durable evidence for long, timed-out or truncated results; never reconstruct missing execution bytes. A disclosure failure does not stop authorized research.
+
+## Live research execution context
+
+For ordinary assigned, publishable research performed through authenticated CONTROL Bash, use the [admitted native public research designation](https://github.com/grandchallenge/.github/blob/a4e7e5ca203d32d2e34c80db3ed3fe2b6438f562/AGENTS.md#open-research-execution-and-disclosure) by default. Begin the actual command with the exact owning public repository and anonymously public revision, then the [research-thread convention](https://github.com/grandchallenge/grandchallenge.github.io/blob/1139be5a66a1e5111adcbe5c871cd5d4db7ece1b/README.md#live-research-console):
+
+```bash
+# GCL_PUBLIC_RESEARCH grandchallenge/OWNING-REPOSITORY EXACT_PUBLIC_COMMIT_SHA
+# GCL_THREAD: stable-assignment-or-investigation-id
+# GCL_TITLE: Actual research title
+# GCL_OBJECTIVE: Actual objective
+# GCL_RESEARCH: Question being investigated
+# GCL_EXECUTE: Actual planned execution
+```
+
+After those comments execute the ordinary governed research once. Where warranted by its actual observed result, emit `GCL_FINDING:`, `GCL_NEXT:`, or `GCL_BLOCKER:` in the same captured output. Do not invent a result, publish private or unknown material, add narration-only invocations, repeat computation for publicity, or treat publication as certification. Preserve the immutable assignment, lease, proof, evidence and compute-placement rules. Workers without CONTROL continue their existing durable return path without a new authentication requirement. Publication failure does not stop research. At a normal material checkpoint, verify correlated release when practical; no additional demonstration experiment.
