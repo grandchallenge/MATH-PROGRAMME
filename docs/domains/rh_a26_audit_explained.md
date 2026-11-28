@@ -1266,7 +1266,38 @@ $$
 The exceptional weight $j=1$ is absent in even degree: cyclic rotation preserves a single trace but reverses the sign of its alternation. Thus every remaining weight vanishes on primitive cycles. This is the invariant-form half of the analytical assembly; the mean-zero residual half still requires the Hecke and detection join.
 
 
-## 31. Reproducibility and technical references
+## 31. Why contraction gives exact representation, not just approximation
+
+SPrime uses the Hilbert class field: identity Frobenius corresponds to the principal ideal class, and Chebotarev gives positive density. Removing the finitely many prime ideals of norm at most 25 leaves an eligible principal prime. The imported formal dependencies still require audit.
+
+For a totally complex field and degree $q=k+1<r_2(L)$, SSurj chooses rank $N$ before the cocycle as the maximum of the detection threshold, moment threshold, requested starting rank and 3. The height moment uses twice the growth exponent. Subtract the invariant mean: each tangent-tuple coordinate of the residual is continuous, invariant, square integrable and mean zero. Hecke iteration contracts its squared integral by $(9/25)^r$. Coordinate reconstruction and SLoc give a cycle bound $C_z(3/5)^r$.
+
+Decay alone does not prove initial vanishing. A nonzero eigenvector of eigenvalue $3/5$ decays at this rate. The separate arithmetic detection theorem SHecke supplies the implication. Thus the residual has zero periods and the invariant form has exactly the original periods. This is SSurj, not universal vanishing.
+
+## 32. Integral rank and the information it loses
+
+In odd degree $q=k+1$, with $k$ even, successive block replication minus weighted stabilization eliminates weights 2 through $q$. In weight one, reversing a Hermitian trace word conjugates its value, and the reversal sign kills either its real or imaginary alternation. At most one detecting coordinate survives per infinite place. The real homology map factors through these coordinates. Integer independent vectors remain independent after tensoring with the reals by flatness. Hence the integral rank of the filtered image is at most $r_2(L)$, conditional on stability and the previous inputs.
+
+Tensoring with the reals destroys torsion. The groups $\mathbb Z^2\oplus\mathbb Z/M\mathbb Z$ give the same real vector space for every $M$. A rank bound is not a bound on finite arithmetic information.
+
+## 33. Two torsion costs in modular counting
+
+Write $Q=\ell^\nu$, $N_*=2(k+1)+4$ and $t_j$ for the integral torsion order in degree $j$ at stable rank $N_*$. SUpper bounds finite sets of primitive modular cycle values, after multiplication by $\ell^k$:
+
+$$
+|S|\le Q^{r_2(L)}t_{k+1}t_k.
+$$
+
+The first torsion cost is intrinsic: a subgroup of rank $r$ evaluated in a group killed by $Q$ has at most $Q^r$ free-coordinate combinations, multiplied by the possible torsion values. The second cost is a lifting obstruction. A modular cycle lifted to an integral chain $a$ satisfies $\partial a=Qw$; the class of $w$ in degree $k$ is killed by $Q$. If it vanishes, subtract a multiple of $Q$ from $a$ to get an integral cycle. Differences within any obstruction fiber lift, so counting fibers introduces the torsion factor in degree $k$.
+
+![Rank and two adjacent torsion factors enter the finite-coefficient count](../assets/rh-a26-rank-torsion.svg)
+
+The filter's weight-one multiplier is $\ell^k\prod_{s=1}^k(1-\ell^s)$. The product is invertible modulo $Q$, but $\ell^k$ is not generally invertible. Retain that loss.
+
+STors needs a uniform upper bound on the logarithm of torsion order. The proposed bound is $(2D)^{(2Ed)^{24}}$, where $d=[L:\mathbb Q]$, $D=|\mathrm{disc}(L)|$, $1\le N\le4E+6$, $m\le2E+1$, and $E\ge1$. Independent verification of equivariant face exactness, orbit counts, finite stabilizers, integral chain bounds and homological stability remains open. This is not certification of Lemma K.
+
+
+## 34. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1313,10 +1344,12 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #628](https://github.com/grandchallenge/MATHFORGE/pull/628) | Whitney representing form, signed comparison, cycle equality and overlap growth |
 | [PR #629](https://github.com/grandchallenge/MATHFORGE/pull/629) | Central scalar averaging, unit directions, cycle and growth preservation |
 | [PR #630](https://github.com/grandchallenge/MATHFORGE/pull/630) | Invariant mean, exhaustive trace spanning, closedness and primitive-cycle vanishing |
+| [PR #631](https://github.com/grandchallenge/MATHFORGE/pull/631) | Principal prime and actual analytic surjectivity assembly |
+| [PR #632](https://github.com/grandchallenge/MATHFORGE/pull/632) | Integral rank transfer, modular counting, Bockstein lifting and exact torsion frontier |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 32. What the investigation taught us about checking extraordinary mathematical claims
+## 35. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1328,14 +1361,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 33. The next executable mathematical step
+## 36. The next executable mathematical step
 
-**Target:** the actual prime-existence theorem `SPrime` and final analytical join.
+**Target:** the equivariant integral torsion bound and stable-range theorem.
 
-**Work:** verify prime existence and the exact mean-zero residual, Hecke contraction and detection assembly. The invariant mean and invariant-form completeness are conventionally reconstructed in [MATHFORGE PR #630](https://github.com/grandchallenge/MATHFORGE/pull/630), admitted to protected MATHFORGE main. Height, partition, finite moments, Whitney representation and central scalar averaging are conventionally reconstructed. Finite-generation geometry, stability, counting and shared torsion remain explicit.
+**Work:** audit equivariant face acyclicity, arithmetic orbit counts, finite stabilizers, integral torsion chain estimate and homological stability. The analytical join and principal-prime reconstruction are admitted in [PR #631](https://github.com/grandchallenge/MATHFORGE/pull/631). Integral rank transfer and two-degree torsion counting are documented in [PR #632](https://github.com/grandchallenge/MATHFORGE/pull/632).
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_MEAN_INVARIANT_FORM_CONVENTIONALLY_RECONSTRUCTED__PRIME_JOIN_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_RANK_TRANSFER_AND_SUPPER_CONDITIONALLY_RECONSTRUCTED__STABILITY_ORBIT_GEOMETRY_CHAIN_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
