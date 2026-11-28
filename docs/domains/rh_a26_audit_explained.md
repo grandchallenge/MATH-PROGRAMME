@@ -1357,7 +1357,42 @@ Consequently, in the claimed stable range, the integral homology groups themselv
 In SUpper, the witnesses occur at a common rank $n$ and the filtered classes at rank $\ell^kn$. Both may be much larger than $N_*=2(k+1)+4$. Their relevant torsion cardinalities agree exactly with those at $N_*$. In SFew take $k=2e+2$ and $E=e+1$. Then $N_*=4E+6$, and the two homological degrees are $2E$ and $2E+1$, precisely those covered by STors. No rank-dependent loss is introduced.
 
 
-## 37. Reproducibility and technical references
+## 37. How a global divisor relation becomes a homology cycle
+
+The source's starting point is not an arbitrary class. A cyclic Galois extension $F/L$ carries a primitive root of order $Q=\ell^\nu$ and a generator $\gamma$ acting on it by the power $\kappa=1+\ell^c$. Write $E=e+1$, $M=2e+3$. DivDel asserts
+
+$$
+\mathrm{ord}_P(\alpha)=\mathfrak d(\gamma P)-\kappa^E\mathfrak d(P).
+$$
+
+The weighted norm $\mathcal N(\alpha)=\prod_j\gamma^j(\alpha)^{\kappa^{Ej}}$ encodes the cyclotomic action; the product runs over the powers of the cyclic generator. It is not the ordinary field norm.
+
+A second polynomial filter now acts on divisors, rather than trace weights. Let $P(X)=\prod_{j=0}^{M-1}(X-\kappa^j)$ and let $P_E$ omit the factor indexed by $E$. Applying $P_E$ through inverse Galois action to $\alpha$ produces an element whose divisor is the result of applying $P$ to $\mathfrak d$. The surviving evaluation factor is $P_E(\kappa^E)$, not generally a unit modulo $Q$.
+
+The two cyclic-group periodic resolutions give $H_{2E}(C_Q^2,\mathbb Z/Q\mathbb Z)$ with $2E+1$ free generators over the coefficient ring. The $2E+2$ pushed-forward cyclic classes therefore have a relation with a unit coefficient (lift to an integer free module, find a dependence, divide the common integer gcd before reduction). The source constructs an integral group-ring element with zero pushforward along all projections $(x,y)\mapsto x+ty$ except the selected projection. In the selected projection it realizes the polynomial distribution.
+
+Fractional-ideal lattices convert these projections to commuting block maps with prescribed determinants. The determinant-one maps on unselected blocks and the distinguished determinant on the selected block come from Steinitz classification. Relative compositions preserve the original lattice even if each transport map does not. Prism identities produce a genuine cycle in its stabilizer. A finite projective module embeds as a direct summand of a free module, with the complementary action trivial; there is no assumption that a ring of integers is a principal ideal domain.
+
+On the residue side, a symmetric carry cocycle from a cyclic logarithm, its cup powers and a residue logarithm give a cocycle of degree $2E+1$. Projective-line transfer yields additivity under direct sums because the fiber sizes are one modulo $Q$. The evaluation of the resulting integral-group cycle is the residue logarithm of the weighted norm times $P_E(\kappa^E)$. The matrix rank and finite exceptional set are fixed before the residue field and evaluation are chosen. This is the mathematical content of SClass; exact formal reduction, chain and transfer correspondence remains an original-source replay obligation.
+
+## 38. Why residue observations give a finite global count
+
+SDetect is a Kummer separation statement. If a nonzero element of $F$ is not a power of exponent $Q$, adjoining a root gives a nontrivial finite Galois extension because $F$ contains the roots of unity. Chebotarev supplies a prime with nonidentity Frobenius outside the finite exceptional set. Primes of absolute residue degree greater than one have density zero, so a degree-one prime can be chosen. Its residue field is a prime field, and the base integer ring maps onto it. A residue power of exponent $Q$ would force Frobenius to fix the reduction of every root, contradicting faithful reduction of roots of unity away from the residue characteristics dividing $Q$. This is a conventional independent proof of the source contract; its formal Chebotarev dependencies still require replay.
+
+![Arithmetic classes become distinguishable modular evaluations, then inherit a finite homology count](../assets/rh-a26-class-cycle-detection.svg)
+
+For a finite family $S$ satisfying Few's separation condition, take one product of the primitive evaluation maps over all eligible primes. The potentially infinite index set is harmless: the image of the finite family is finite. The weight filter contributes $\ell^{2E}$, while $P_E(\kappa^E)$ divides $\ell^{M(c+M)}$ modulo $Q$. One must retain both losses rather than cancel a nonunit. Equality of the product evaluations implies that the ratio of weighted norms raised to $\ell^{2E+M(c+M)}$ is a local power of exponent $Q$ at every eligible prime; SDetect makes this a global power. Few's separation condition makes the encoding injective.
+
+The exact SFew bound is therefore
+
+$$
+|S|\le Q^{r_2(L)}t_{2E+1}(L,4E+6)t_{2E}(L,4E+6).
+$$
+
+It holds under the source's Lay hypotheses, the divisor and separation conditions, $M<\ell^c$, and $M<r_2(L)$. It is not a count of every class group or Selmer group. The next theorem SCount must remove the factor $Q^{r_2(L)}$ using a separate arithmetic counting identity, before the uniform Selmer bound can be inferred. No Lemma K or RH/GRH certification follows at this stage.
+
+
+## 39. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1408,10 +1443,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #632](https://github.com/grandchallenge/MATHFORGE/pull/632) | Integral rank transfer, modular counting, Bockstein lifting and exact torsion frontier |
 | [PR #633](https://github.com/grandchallenge/MATHFORGE/pull/633) | Equivariant integral torsion, arithmetic orbit geometry and conventional STors estimate |
 | [PR #634](https://github.com/grandchallenge/MATHFORGE/pull/634) | Classical integral stability, source induction and exact torsion transport |
+| [PR #635](https://github.com/grandchallenge/MATHFORGE/pull/635) | Class-to-cycle construction, Kummer separation and exact SFew bound |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 38. What the investigation taught us about checking extraordinary mathematical claims
+## 40. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1423,14 +1459,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 39. The next executable mathematical step
+## 41. The next executable mathematical step
 
-**Target:** the actual class-to-cycle construction and residue detection, followed by the quantitative class-counting join.
+**Target:** verify SCount, including the exact cancellation of the residue-modulus factor and the arithmetic kernel count.
 
-**Work:** audit SClass, SDetect, SFew and their downstream inputs. Integral stability and its exact torsion transport have conventional classical support and source-contract reconstruction in [MATHFORGE PR #634](https://github.com/grandchallenge/MATHFORGE/pull/634); subordinate formal link exactness and original replay remain open.
+**Work:** reconstruct the class-to-cycle encoding, Kummer detection and SFew quantitative join from [MATHFORGE PR #635](https://github.com/grandchallenge/MATHFORGE/pull/635). Then audit the SelmerOrderCounts chain, SSha, SLayer, SNum and SFinal. Exact formal dependencies and original replay remain open.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_STABILITY_CONVENTIONALLY_VERIFIED__CLASS_CYCLE_DETECTION_COUNTING_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_CLASS_CYCLE_DETECTION_SFEW_CONVENTIONAL_RECONSTRUCTION__SCOUNT_SELMER_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
