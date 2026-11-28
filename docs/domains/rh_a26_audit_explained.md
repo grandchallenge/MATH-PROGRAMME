@@ -1433,7 +1433,26 @@ $$
 Here $b=2E+(2E+1)(c+2E+1)$. This is a conventional reconstruction conditional on the previously reconstructed SFew and the stated classical arithmetic inputs. It is not yet the global Sha bound: SSha must compare the finite-layer character groups with the intended global cohomology, and SLayer, SNum and SFinal must finish the quantitative assembly. Exact original formal replay and foundational obligations remain open.
 
 
-## 40. Reproducibility and technical references
+## 40. Why a uniform finite-layer bound controls global cohomology
+
+The actual invariant shaInv is the module length of a subgroup of continuous first Galois cohomology with coefficients $\mathbb Q_\ell/\mathbb Z_\ell(-E)$. The negative twist means that the action is multiplication by the inverse cyclotomic character to the power $E$. The local conditions require vanishing on decomposition groups above $\ell$ and on inertia groups elsewhere. It is not the unrestricted first cohomology group.
+
+Let $L_\nu=L(\mu_{\ell^\nu})$ and let $U_\nu$ be its absolute Galois subgroup inside the absolute Galois group of $L$. Their intersection is $U_\infty$, the kernel of the full cyclotomic character. Under TopRoot, the cyclotomic image is the principal group $1+\ell^c\mathbb Z_\ell$: it is closed, lies in this group and not in its next principal subgroup. The principal group is topologically cyclic (with the additional source condition $c\ge2$ at the prime two).
+
+Restriction to $U_\infty$ is injective on first cohomology. Indeed, a cocycle vanishing there descends to the procyclic quotient. Multiplication by the nonzero scalar $\chi(\gamma)^{-E}-1$ on $\mathbb Q_\ell/\mathbb Z_\ell$ is surjective, so subtract a coboundary making the cocycle zero at a topological generator. The cocycle identity and continuity make it zero everywhere. On the cyclotomic kernel the action is trivial, so the restricted cocycle is an additive character, independent of the representative of its cohomology class. The local coboundary conditions imply vanishing on the relevant intersections, and the cocycle identity gives equivariance under conjugation.
+
+The subtle step is not restriction but extension. An infinite-layer character need not automatically be a finite-layer character. Its open kernel permits extension to $U_\infty N$ for a sufficiently small open normal subgroup $N$ of the ambient Galois group, by assigning the same value to $hn$ as to $h$. Compactness of the descending closed subgroups gives a layer contained in this neighborhood. The extension might fail local vanishing or equivariance there. The bad loci are closed and avoid the infinite-layer intersection. The union of decomposition groups above $\ell$ is compact by finite base primes and compact conjugation images; away from $\ell$, inertia is already in the cyclotomic kernel. The equivariance defect is locally constant on a compact product. Shrinking to a deeper layer removes both defects uniformly. The finite image of a locally constant character on a compact group has bounded exponent; a further depth ensures annihilation by $\ell^\nu$.
+
+![Compactness extends the infinite-layer character and restores local conditions and equivariance](../assets/rh-a26-ssha.svg)
+
+At depth at least two, the cyclotomic field is totally complex. Class field theory identifies its unramified abelian characters with characters of the ordinary ideal class group; the decomposition condition above $\ell$ kills the corresponding prime classes. Artin reciprocity is surjective and natural under conjugation. Identifying the subgroup annihilated by $\ell^\nu$ of $\mathbb Q_\ell/\mathbb Z_\ell$ with $\mathbb Z/\ell^\nu\mathbb Z$ gives exactly the source ClInj injection. On prime classes its sign is important: the negative twist implies $f(\gamma^{-1}P)=(1+\ell^c)^E f(P)$. Principal divisor relations vanish, and prime classes generate the class group. The target EqHom may contain more characters than the locally admissible source; only injectivity is claimed.
+
+Now take any finite collection of distinct global classes. Their restrictions are distinct. Choose one common cyclotomic depth beyond all their individual extension thresholds. Each extends at this depth and maps to a distinct member of the same EqHom group, since equality of extensions would imply equality of restrictions. The uniform count $B$ bounds the size of every finite collection. If the global group were infinite, a collection of size $B+1$ would contradict this. Thus it is finite, and its order is $\ell^s$, where $s$ is its length as a module over the local ring $\mathbb Z_\ell$. This is SSha. No uniform threshold for an a priori infinite family is assumed.
+
+This conventional reconstruction uses classical class field theory, profinite compactness and the exact negative twist. It retains original formal Artin transport, source correspondence and kernel replay as distinct obligations. SLayer must still remove the restrictions on base-field size and roots of unity; SNum and SFinal must finish the quantitative and duality joins.
+
+
+## 41. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1486,10 +1505,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #634](https://github.com/grandchallenge/MATHFORGE/pull/634) | Classical integral stability, source induction and exact torsion transport |
 | [PR #635](https://github.com/grandchallenge/MATHFORGE/pull/635) | Class-to-cycle construction, Kummer separation and exact SFew bound |
 | [PR #636](https://github.com/grandchallenge/MATHFORGE/pull/636) | SCount exact unit determinant, primary kernel descent and layer cancellation |
+| [PR #637](https://github.com/grandchallenge/MATHFORGE/pull/637) | SSha global restriction, compact finite-layer extension and class field comparison |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 41. What the investigation taught us about checking extraordinary mathematical claims
+## 42. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1501,14 +1521,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 42. The next executable mathematical step
+## 43. The next executable mathematical step
 
-**Target:** SSha finite-layer character comparison with the global Sha invariant, followed by SLayer, SNum and SFinal.
+**Target:** SLayer field enlargement, Sha monotonicity, degree and discriminant bounds; then SNum and SFinal.
 
-**Work:** SCount is conventionally reconstructed in [MATHFORGE PR #636](https://github.com/grandchallenge/MATHFORGE/pull/636); it cancels the explicit modulus growth for fixed base field and cyclotomic parameters. Original formal replay remains open.
+**Work:** SSha is conventionally reconstructed in [MATHFORGE PR #637](https://github.com/grandchallenge/MATHFORGE/pull/637). The finite-layer count bounds the global invariant under the TopRoot and size hypotheses. Original formal dependencies and foundations remain open.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SCOUNT_CONVENTIONAL_RECONSTRUCTION__SSHA_SLAYER_SNUM_SFINAL_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SSHA_CONVENTIONAL_RECONSTRUCTION__SLAYER_SNUM_SFINAL_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
