@@ -1161,7 +1161,74 @@ The [technical reconstruction PR #628](https://github.com/grandchallenge/MATHFOR
 
 The next source theorem, SCen, must extend the common-modulus invariance to arbitrary scalar tuples, preserving all arithmetic cycle evaluations and the growth bound. Only after that can the remaining invariant-form and mean constructions be used.
 
-## 27. Reproducibility and technical references
+## 27. From arithmetic scalar invariance to continuous scalar invariance
+
+The Whitney construction preserves the arithmetic cocycle but initially gives invariance only under scalar tuples having a common modulus. The source's spectral argument requires independent scalar moduli at every infinite place. Its theorem SCen supplies this stronger invariance without changing the original periods or increasing the power of height in the growth bound.
+
+### The arithmetic units supply the missing directions
+
+Let $t=(t_w)$ be a real vector indexed by the infinite places of the number field. Write $\mathrm{sc}(t)$ for the tuple of scalar matrices with entries $e^{t_w}$. The inverse-congruence action on the positive cone multiplies each metric block by $e^{-2t_w}$. For a general nonzero complex scalar, only its modulus matters; the phase cancels between the inverse and its conjugate transpose. Thus it suffices to establish invariance for all real logarithmic vectors $t$.
+
+The common-modulus invariance already provides the entire line of constant logarithmic vectors. An integral unit $u$ gives another direction,
+
+$$
+v(u)_w=\log|w(u)|.
+$$
+
+The scalar matrix $uI$ is an integral invertible matrix, so arithmetic invariance implies invariance under this logarithmic translation. The product formula implies
+
+$$
+\sum_w m_w v(u)_w=0,
+$$
+
+where $m_w=1$ at a real place and $m_w=2$ at a complex place. Dirichlet's unit theorem supplies finitely many units whose logarithmic vectors span this weighted hyperplane. To see why that suffices, subtract from any logarithmic vector its weighted mean times the constant vector. The remainder belongs to the hyperplane. The constant line together with the unit directions therefore spans the full space.
+
+For example, in the real quadratic field $\mathbb Q(\sqrt{2})$, the unit $1+\sqrt{2}$ has conjugate $1-\sqrt{2}$, whose absolute value is reciprocal. Its two logarithmic coordinates are $(a,-a)$ with $a>0$. The common-scale direction $(1,1)$ and the unit direction $(a,-a)$ span the plane. The problem is that arithmetic invariance gives a period along the second direction, not yet invariance under every real displacement along it.
+
+### One compact average converts a period into a continuous symmetry
+
+For a unit logarithm vector $v$, the source defines the actual average
+
+$$
+\mathcal A_v\omega=\int_0^1 \mathrm{sc}(\tau v)^*\omega\,d\tau.
+$$
+
+The star denotes pullback: both the point of evaluation and every tangent argument of the form are transformed. The integrand is continuous on the compact interval because the form is continuous on the positive cone. The source does not require the form to be differentiable for this theorem.
+
+For a fixed point, the form-valued function of $\tau$ inside the integral is periodic with period one. Pulling the average back by an arbitrary real displacement $\sigma v$ replaces the interval of integration by $[\sigma,\sigma+1]$. Integration of a continuous periodic function over a complete period is independent of the starting point. Thus the average is invariant under every real multiple of $v$, including multiples that do not correspond to integral units.
+
+This is exact averaging over a finite interval, not a limit of longer and longer averages on a noncompact group. Because scalar transformations commute with the entire matrix group, the operation preserves every invariance already present. Repeating it for the finite list of fundamental units therefore retains the symmetries gained at earlier stages.
+
+### Why the arithmetic periods do not change
+
+The source's condition Good means that the form is continuous and its simplex-integral cochain has zero coboundary. It does not assume smoothness. Consequently the preservation proof must work without differentiating the original form.
+
+An affine simplex is carried by the linear scalar action to the simplex with transformed vertices. Its edge vectors transform by the same linear map. Hence integration of a pullback over a simplex equals integration of the original form over the transformed simplex. The joint integrand is continuous on the product of the compact averaging interval and compact standard simplex. Fubini's theorem exchanges the two integrals. It also follows that the averaged simplex-integral cochain has zero coboundary, since the original one does.
+
+For an arithmetic cycle, the transformed orbit vertices can be obtained by keeping the same group elements and changing only the identity basepoint of the orbit. This uses the commutation of scalar and arithmetic actions. The previously reconstructed basepoint-independence theorem says that a closed invariant homogeneous cochain has the same evaluation on a cycle for either basepoint. Its proof is the mixed-vertex prism identity: the boundary of the prism is the difference of the two chains, with the other terms cancelling on cycles.
+
+Every value inside the averaging integral is therefore the original cycle evaluation. Integrating a constant over an interval of length one preserves it exactly. Individual simplex integrals need not be preserved; the assertion is about entire cycles.
+
+### Why the growth estimate survives
+
+The moving-frame value of the averaged form is the average of the original moving-frame values at centrally translated matrices:
+
+$$
+\mathrm{fr}(\mathcal A_v\omega)(x)
+=\int_0^1\mathrm{fr}\,\omega(\mathrm{sc}(\tau v)x)\,d\tau.
+$$
+
+By centrality this is a right translation. The averaging path is compact, so the earlier compact-translation height bound controls the growth uniformly along the whole path. If the original frame norm is bounded by $B(x)$ and compact right translations multiply $B$ by at most a constant, then the averaged norm is bounded by $CB(x)$. This uses a uniform pointwise bound on the continuous integrand, rather than assuming that the majorant itself is measurable.
+
+In particular, if $B(x)=C_0h(x)^p$, then the new bound is still a constant times $h(x)^p$. The finite number of averaging steps changes the constant but not the exponent. Consequently the previous square-integrability threshold is retained.
+
+Combining the newly acquired real unit directions and the original common-scale line yields invariance under all logarithmic scalar vectors, by the spanning argument. Since the phases have no effect on the Hermitian action, this gives invariance under arbitrary nonzero complex scalar tuples.
+
+The [technical reconstruction PR #629](https://github.com/grandchallenge/MATHFORGE/pull/629) records the actual scalar action, weighted logarithmic span, compact periodic average, simplex Fubini comparison, cycle preservation and growth estimate. It retains Dirichlet's unit theorem, the product formula and standard integration as explicit classical inputs. Exact rational controls check 1,224 shifted-period cases, 1,554 weighted logarithm decompositions and 3,000 scalar phase cancellations. These are finite checks of the mechanisms, not proof of the unit theorem or original formal replay.
+
+The next theorem, SMean, must show that averaging the moving-frame values over the arithmetic fundamental domain produces the value of a genuinely invariant differential form. This requires compatibility with the compact unitary stabilizer of the identity metric; a mere average of coefficient vectors is not automatically such a form.
+
+## 28. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1206,10 +1273,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #626](https://github.com/grandchallenge/MATHFORGE/pull/626) | Height, smooth minimum, rank-one retraction, thick part and uniform partition exponent |
 | [PR #627](https://github.com/grandchallenge/MATHFORGE/pull/627) | Adelic reduction, rational height estimates, Haar packing and finite height moments |
 | [PR #628](https://github.com/grandchallenge/MATHFORGE/pull/628) | Whitney representing form, signed comparison, cycle equality and overlap growth |
+| [PR #629](https://github.com/grandchallenge/MATHFORGE/pull/629) | Central scalar averaging, unit directions, cycle and growth preservation |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 28. What the investigation taught us about checking extraordinary mathematical claims
+## 29. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1221,14 +1289,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 29. The next executable mathematical step
+## 30. The next executable mathematical step
 
-**Target:** the actual scalar averaging theorem `SCen`.
+**Target:** the actual invariant mean theorem `SMean`.
 
-**Work:** verify the source's central scalar averaging, unit-logarithm lattice, preservation of arithmetic cycle evaluations and growth under averaging. Then reconstruct `SMean`, `SInv` and the prime input. Height, partition, finite moments and the Whitney representing form are conventionally reconstructed. Finite-generation geometry, stability, invariant-form correspondence, counting and shared torsion remain explicit.
+**Work:** verify the source's normalized integral of moving-frame values, right Haar invariance, compact unitary stabilizer invariance and extension to a genuinely invariant differential form. Then reconstruct `SInv` and `SPrime` and the final analytical assembly. Height, partition, finite moments, Whitney representation and central scalar averaging are conventionally reconstructed. Finite-generation geometry, stability, counting and shared torsion remain explicit.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_WHITNEY_FORM_CONVENTIONALLY_RECONSTRUCTED__SCALAR_AVERAGING_MEAN_INVARIANT_FORM_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SCALAR_AVERAGING_CONVENTIONALLY_RECONSTRUCTED__INVARIANT_MEAN_FORM_PRIME_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
