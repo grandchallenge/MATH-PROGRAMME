@@ -1392,7 +1392,48 @@ $$
 It holds under the source's Lay hypotheses, the divisor and separation conditions, $M<\ell^c$, and $M<r_2(L)$. It is not a count of every class group or Selmer group. The next theorem SCount must remove the factor $Q^{r_2(L)}$ using a separate arithmetic counting identity, before the uniform Selmer bound can be inferred. No Lemma K or RH/GRH certification follows at this stage.
 
 
-## 39. Reproducibility and technical references
+## 39. The arithmetic cancellation: two ways to count one group
+
+The preceding bound grows with the modulus $Q=\ell^\nu$. The source SCount removes that growth by counting an intermediate finite group of divisor relations in two different ways.
+
+Use additive notation $Y=F^\times$, $I=\mathrm{Div}(F)$, $d_F=\mathrm{div}$, and $T=\mu(F)$. Let $a=(1+\ell^c)^E$, $n=\ell^{\nu-c}$, and $\delta=g-a$, $\delta_I=g_I-a$ for the compatible inverse Galois actions on elements and divisors. Since $g_I^n=1$ and the divisor group is torsion-free, $\delta_I$ is injective. Put $U=d_F^{-1}(\delta_I I)$, $W=U/(\delta Y+T)$, $EQ=\ker d_F/(\delta\ker d_F+T)$ and $ClQ=I/(d_F Y+\delta_I I)$.
+
+The unique divisor solving $\delta_I D=d_F y$ for $y\in U$ gives a map from $W$ to the kernel of the twisted endomorphism of the ideal class group. Its kernel is precisely $EQ$. The class group is finite and an endomorphism of a finite group has equal kernel and cokernel orders. Hence $|W|=|EQ||ClQ|$. The desired equivariant characters are homomorphisms from $ClQ$ to the residue coefficient ring, so their number is bounded by the order of its primary part.
+
+The equivariant Dirichlet logarithmic lattice identifies the free unit group with a full lattice in the sum-zero hyperplane of the infinite-place coordinates. The Galois permutation consists of $r=r_2(L)$ cycles of length $n$. The full determinant of $g-a$ has absolute value $(a^n-1)^r$. Remove the constant coordinate line, on which the operator acts by $1-a$. The lattice index is exactly
+
+$$
+|EQ|(a-1)=(a^n-1)^r.
+$$
+
+Writing $v=v_\ell(E)$, lifting the exponent gives $v_\ell(a-1)=c+v$ and $v_\ell(a^n-1)=\nu+v$. Thus $v_\ell(|EQ|)=r(\nu+v)-c-v$. The unit determinant supplies precisely the layer-dependent factor needed in the count.
+
+![The unit determinant and weighted norm bounds count the same intermediate group, canceling the layer dependence](../assets/rh-a26-scount.svg)
+
+For the second count use the weighted norm operator $\mathcal N=\sum_{j=0}^{n-1}a^j g^{n-j}$. Telescoping gives $\mathcal N\delta=\delta\mathcal N=(1-a^n)g$. Consequently $f([y])=[\ell^b\mathcal N y]$ defines a map from $W$ to $Y/(QY+T)$. Its image has cardinality at most the Few bound $B$. If $a^n-1=Q\ell^v m$ with $\ell\nmid m$, the identity shows that the primary kernel is killed by $\ell^{b+v}$, without canceling a nonunit modulo $Q$.
+
+The number of primary generators is bounded separately. From $\ell y=\delta z+t$ with torsion $t$, the class of $z$ is invariant modulo powers and roots of unity and has divisor divisible by $\ell$. This gives an injection of $W[\ell]$ into SelInv. Hilbert 90 shows that invariant representatives with the same root-of-unity exponent and norm of the power correction differ by a base-field SelL class. There are at most $\ell^2$ such pairs. Faithful cyclotomic action implies unramifiedness away from $\ell$, so the descended valuations have the required divisibility. The base-field unit rank, class group and primes above $\ell$ give
+
+$$
+|W[\ell]|\le \ell^G,\qquad G=2[L:\mathbb Q]+\lfloor\log_2 h_L\rfloor+2.
+$$
+
+It follows that the primary order of the kernel is at most $\ell^{(b+v)G}$. Combining the two counts and the exact unit determinant recovers SCount:
+
+$$
+|\mathrm{EqHom}|Q^r\le B\ell^{(b+v)G+c+v}.
+$$
+
+Substitute SFew and divide by the positive integer $Q^r$. The resulting bound is independent of the layer $\nu$:
+
+$$
+|\mathrm{EqHom}|\le t_{2E+1}(L,4E+6)t_{2E}(L,4E+6)\ell^{(b+v)G+c+v}.
+$$
+
+Here $b=2E+(2E+1)(c+2E+1)$. This is a conventional reconstruction conditional on the previously reconstructed SFew and the stated classical arithmetic inputs. It is not yet the global Sha bound: SSha must compare the finite-layer character groups with the intended global cohomology, and SLayer, SNum and SFinal must finish the quantitative assembly. Exact original formal replay and foundational obligations remain open.
+
+
+## 40. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1444,10 +1485,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #633](https://github.com/grandchallenge/MATHFORGE/pull/633) | Equivariant integral torsion, arithmetic orbit geometry and conventional STors estimate |
 | [PR #634](https://github.com/grandchallenge/MATHFORGE/pull/634) | Classical integral stability, source induction and exact torsion transport |
 | [PR #635](https://github.com/grandchallenge/MATHFORGE/pull/635) | Class-to-cycle construction, Kummer separation and exact SFew bound |
+| [PR #636](https://github.com/grandchallenge/MATHFORGE/pull/636) | SCount exact unit determinant, primary kernel descent and layer cancellation |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 40. What the investigation taught us about checking extraordinary mathematical claims
+## 41. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1459,14 +1501,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 41. The next executable mathematical step
+## 42. The next executable mathematical step
 
-**Target:** verify SCount, including the exact cancellation of the residue-modulus factor and the arithmetic kernel count.
+**Target:** SSha finite-layer character comparison with the global Sha invariant, followed by SLayer, SNum and SFinal.
 
-**Work:** reconstruct the class-to-cycle encoding, Kummer detection and SFew quantitative join from [MATHFORGE PR #635](https://github.com/grandchallenge/MATHFORGE/pull/635). Then audit the SelmerOrderCounts chain, SSha, SLayer, SNum and SFinal. Exact formal dependencies and original replay remain open.
+**Work:** SCount is conventionally reconstructed in [MATHFORGE PR #636](https://github.com/grandchallenge/MATHFORGE/pull/636); it cancels the explicit modulus growth for fixed base field and cyclotomic parameters. Original formal replay remains open.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_CLASS_CYCLE_DETECTION_SFEW_CONVENTIONAL_RECONSTRUCTION__SCOUNT_SELMER_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_SCOUNT_CONVENTIONAL_RECONSTRUCTION__SSHA_SLAYER_SNUM_SFINAL_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
