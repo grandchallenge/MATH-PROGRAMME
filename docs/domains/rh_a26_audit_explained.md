@@ -1312,6 +1312,7 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #627](https://github.com/grandchallenge/MATHFORGE/pull/627) | Adelic reduction, rational height estimates, Haar packing and finite height moments |
 | [PR #628](https://github.com/grandchallenge/MATHFORGE/pull/628) | Whitney representing form, signed comparison, cycle equality and overlap growth |
 | [PR #629](https://github.com/grandchallenge/MATHFORGE/pull/629) | Central scalar averaging, unit directions, cycle and growth preservation |
+| [PR #630](https://github.com/grandchallenge/MATHFORGE/pull/630) | Invariant mean, exhaustive trace spanning, closedness and primitive-cycle vanishing |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
@@ -1331,10 +1332,10 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Target:** the actual prime-existence theorem `SPrime` and final analytical join.
 
-**Work:** verify prime existence and the exact mean-zero residual, Hecke contraction and detection assembly. The invariant mean and invariant-form completeness are conventionally reconstructed in [MATHFORGE PR #630](https://github.com/grandchallenge/MATHFORGE/pull/630), subject to protected admission. Height, partition, finite moments, Whitney representation and central scalar averaging are conventionally reconstructed. Finite-generation geometry, stability, counting and shared torsion remain explicit.
+**Work:** verify prime existence and the exact mean-zero residual, Hecke contraction and detection assembly. The invariant mean and invariant-form completeness are conventionally reconstructed in [MATHFORGE PR #630](https://github.com/grandchallenge/MATHFORGE/pull/630), admitted to protected MATHFORGE main. Height, partition, finite moments, Whitney representation and central scalar averaging are conventionally reconstructed. Finite-generation geometry, stability, counting and shared torsion remain explicit.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_MEAN_INVARIANT_FORM_RECONSTRUCTED_CANDIDATE__PRIME_JOIN_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_MEAN_INVARIANT_FORM_CONVENTIONALLY_RECONSTRUCTED__PRIME_JOIN_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
