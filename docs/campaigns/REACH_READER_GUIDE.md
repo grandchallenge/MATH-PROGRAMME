@@ -9,7 +9,7 @@ description: An illustrated reader guide to collision information, renormalizati
 [Download the illustrated reader guide (PDF)](../assets/reach-reader-guide.pdf)
 
 !!! note "Research status · 28 November 2026"
-    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and effective gluing of complete coefficient systems on the explicit affine overlaps. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
+    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and effective gluing of complete coefficient systems on the affine overlaps and across Weiss covers of physical regions. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
 
 ## What happens when two slots meet?
 
@@ -72,6 +72,12 @@ The overlaps can carry coefficient objects as well as collision measurements. A 
 
 To see why the weight cutoff helps, keep weights zero through three. Each collision difference has weight at least two, so any product of two falls outside this range. That makes the finite gluing problem solvable. Higher weights require more overlaps. Matching the results across all cutoffs recovers the complete coefficient object. [Effective coefficient descent and its limits](https://github.com/grandchallenge/MATH-PROGRAMME/blob/0a510ef8c9745e903f0a653d5924212474f59087/research/condensed-qft/EXT-015/AFFINE_COEFFICIENT_DESCENT_UC120.md)
 
+
+## Gluing across physical regions
+
+There is a second gluing question. Suppose each physical patch has a coefficient object, and their actions agree wherever the patches meet. Two separated patches can agree on the empty region even when applying their actions in opposite orders gives different answers. For example, the left action can move a coefficient from weight zero to one, and the right action from one to two. Left then right moves the coefficient two steps, while right then left sends it to zero. A single action over the union would require those two separated observables to commute.
+
+A Weiss cover puts every finite set of points together in some patch. It gives the joint tests needed to glue all patch actions, including the maps between coefficient objects. If we keep only weights zero through three, it suffices to put every set of up to three points together. The result applies to the collision algebra and separately to each affine overlap algebra. To restrict a whole affine system to a physical subregion, first recover its full coefficient object, restrict it, and form its affine overlaps there. [Proof and two-interval example](https://github.com/grandchallenge/MATH-PROGRAMME/blob/04ccab8137ac24cf5f9e83117d02b9e452b82201/research/condensed-qft/EXT-015/SPATIAL_COEFFICIENT_WEISS_DESCENT_UC123.md)
 
 ## Where the original programme stands
 
