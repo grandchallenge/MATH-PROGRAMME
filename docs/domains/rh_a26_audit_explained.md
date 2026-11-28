@@ -1509,7 +1509,37 @@ $$
 With the previously reconstructed torsion exponent $C_0=24$, the source's universal exponent is $5(24+2)+11=141$. This is ShaK(141) conditional on the preceding audited mathematical contracts for totally complex fields satisfying HasMuQ, and positive $E$. It does not yet assert Lemma K: SFinal must compare the global Sha and local terms to the intended second cohomology group via the explicit duality hypotheses. Original formal source correspondence and replay remain open.
 
 
-## 43. Reproducibility and technical references
+## 43. Lemma K: the last local-to-global assembly
+
+The desired group is not the Sha group itself. The coefficient lattice is $T=\mathbb Z_\ell(E+1)$ and its complementary discrete Tate dual is $A=\mathbb Q_\ell/\mathbb Z_\ell(-E)$. The global Galois group here is unramified outside the finite primes $S$ above $\ell$. Lemma K seeks finiteness and a uniform logarithmic order bound on $H^2(G_{L,S},T)$.
+
+SFinal explicitly takes three foundational inputs: PoitouTateDuality, LocalFinitenessK and LocalTateDualityK. They are not discharged by SFinal. Poitou–Tate identifies the kernel of the second-cohomology localization map with the dual of the first-cohomology Sha group; its cokernel is dual to the global invariants of $A$. Local Tate duality identifies the orders or lengths of local second cohomology with local invariants. The total-complex hypothesis eliminates real-place corrections, including at the prime two.
+
+![Global second cohomology is bounded by the Sha length and local invariants, followed by numerical absorption](../assets/rh-a26-sfinal.svg)
+
+Write $s$ for the global Sha length and $V$ for the length of second cohomology. Two short exact sequences with a common localization image give the length identity
+
+$$
+V+\mathrm{length}\,H^0(G_{L,S},A)
+=s+\sum_{v\mid\ell}\mathrm{length}\,H^0(G_{L_v},A).
+$$
+
+The nonnegative global invariant term can be dropped without subtracting infinite lengths. The conventional passage from finite coefficients uses the dual coefficient inclusions and reductions, compactness of finite inverse systems, the vanishing of the inverse-limit derived term for finite first cohomology, and exact filtered colimits for the discrete dual. The original formal cup-product normalizations, comparison of valuation groups with local fields and precise limit transport remain separate foundational replay obligations.
+
+The local estimate is elementary after identifying the cyclotomic image. Rational local cyclotomic extensions are totally ramified, so the inertia image over the rational local field is the full group of local-adic units. Intersecting with the absolute Galois group of $L_v$ reduces its image by index at most $[L_v:\mathbb Q_\ell]\le n$. The decomposition image $U$ thus has finite index $i\le n$. The element $(1+\ell^2)^i$ lies in $U$. Its power of exponent $E$ differs from one with valuation exactly $2+v_\ell(i)+v_\ell(E)$ by lifting the exponent, also at the prime two. Any invariant under the negative twist is killed by that power of $\ell$. There are at most $n$ primes over $\ell$, so the total local length is at most $n(2+\lfloor\log_\ell n\rfloor+E)$.
+
+Consequently $V\le s+n(2+\lfloor\log_\ell n\rfloor+E)$ is finite under ShaK. A finite-length module over the local ring $\mathbb Z_\ell$ has cardinality $\ell^V$, since every simple factor is the residue field. The root-of-unity hypothesis gives $\ell\le n+1$, so the local logarithmic contribution is at most $n(E+3)\log(n+1)$.
+
+Put $x=2En$ and $Y=\log(2D)$. The source NumFin bounds its larger auxiliary polynomial by $10x^2Y\le(x^9-1)x^{\max(C,0)}Y$. Since $\exp(a+b)\ge\exp(a)+b$ for nonnegative $a,b$, the universal exponent grows from the Sha exponent $C$ to $\max(C,0)+9$. Inserting the preceding conditional exponent 141 yields
+
+$$
+\log\left|H^2(G_{L,S},\mathbb Z_\ell(E+1))\right|\le (2D)^{(2En)^{150}}.
+$$
+
+This is the conventional conditional reconstruction of LemmaK(150). The actual final assembly in LemmaKOfLitN also takes BOdd. The analytical rank bound, the other mathematical input contracts, exact source correspondence, the three explicit duality/finiteness hypotheses and original kernel replay must retain their distinct evidence statuses. This is not an unconditional proof of Lemma K, RH or GRH and is not certification.
+
+
+## 44. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1565,10 +1595,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #637](https://github.com/grandchallenge/MATHFORGE/pull/637) | SSha global restriction, compact finite-layer extension and class field comparison |
 | [PR #638](https://github.com/grandchallenge/MATHFORGE/pull/638) | SLayer common-kernel monotonicity, dual cokernels and controlled cyclotomic enlargement |
 | [PR #639](https://github.com/grandchallenge/MATHFORGE/pull/639) | SNum class-number and universal exponent absorption |
+| [PR #640](https://github.com/grandchallenge/MATHFORGE/pull/640) | SFinal conditional Lemma K assembly, local terms and exponent 150 |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 44. What the investigation taught us about checking extraordinary mathematical claims
+## 45. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1580,14 +1611,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 45. The next executable mathematical step
+## 46. The next executable mathematical step
 
-**Target:** SFinal global and local duality join.
+**Target:** reconcile the conditional Lemma K assembly with the exact original hypotheses and kernel evidence.
 
-**Work:** SNum is conventionally reconstructed in [MATHFORGE PR #639](https://github.com/grandchallenge/MATHFORGE/pull/639), giving the conditional ShaK exponent 141. Verify SFinal and its explicit foundational hypotheses. Original formal replay and foundations remain open.
+**Work:** SFinal is conventionally reconstructed in [MATHFORGE PR #640](https://github.com/grandchallenge/MATHFORGE/pull/640), yielding conditional LemmaK(150). Audit BOdd, Poitou–Tate, local finiteness and local Tate duality source correspondence and original replay; reconcile D02/D03/D04/D06 before any promotion.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SNUM_CONVENTIONAL_RECONSTRUCTION__SFINAL_SOURCE_CORRESPONDENCE_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_LEMMA_K_CONVENTIONAL_CONDITIONAL_ASSEMBLY__FOUNDATIONS_EXACT_SOURCE_CORRESPONDENCE_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
