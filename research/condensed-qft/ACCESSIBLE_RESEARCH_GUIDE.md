@@ -1,6 +1,6 @@
 # QFT-COND-001 — Condensed Functional Analysis and Quantum Observables
 
-**Status:** audited teaching guide through the admitted REACH reconstruction theorem, UC116.
+**Status:** audited teaching guide through the explicit REACH overlap model, UC119.
 
 **Audience:** the REACH overview is for a mathematically curious reader. The worked background sections are for graduate readers and researchers.
 
@@ -14,7 +14,7 @@
 
 ## REACH in plain language
 
-**Current through UC116, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
+**Current through UC119, 28 November 2026.** The proofs cover the declared one-dimensional Gaussian/Wick free scalar and its controlled families of singular kernels. The original comparison of support stages has a separate qualified verdict. The Gaussian covariance example farther down is an elementary benchmark that introduces the wider programme.
 
 ### The field and the collision problem
 
@@ -59,6 +59,12 @@ The first checks the collision moment formulas and the separated Wick control. T
 The affine model alone forgets the three pair differences. Keep its actual derived overlaps, which compare copies of the affine readout over the collision algebra, and the maps between those overlaps. Combining these comparisons recovers what was lost. With the first overlap included, the reconstruction is exact through weight three. Six products of two pair differences on one interval enter at weight four. They are absent from that first stage and are recovered at the next stage. At stage $n$, every weight below $2(n+1)$ is recovered. Taking the compatible sequence of all stages reconstructs the completed collision algebra.
 
 The six quadratic products here use two pair differences on one interval in the collision algebra. The nine mixed products above use one relation from each of two intervals in the derived overlap. [Reconstruction proof and finite stage calculation](EXT-015/AFFINE_COLLISION_RECONSTRUCTION_UC114.md)
+
+### How the overlap maps are built
+
+Label three copies of the affine readout first, second and third. The difference from the first copy to the third is the sum of the two adjacent differences. Identifying two adjacent copies makes their difference zero. The same rule works with any number of copies and gives the actual derived overlap maps.
+
+On one interval, choose one of the three pair measurements for each adjacent difference. This makes nine ordered products at weight four. The three differences between the two orders are boundaries, leaving six symmetric quadratic products, including the squares. These are the six products recovered at the second stage. [Explicit overlap recipe and signed calculation](EXT-015/EXPLICIT_AFFINE_OVERLAP_DIAGRAM_UC117.md)
 
 ### The original REACH verdict
 
@@ -300,6 +306,7 @@ finite Gaussian and Schwartz covariance benchmark [known, reproducible]
   -> collision moments, completed product and Weiss descent [reviewed proofs]
   -> affine readout relations and sharp cover bound [reviewed through UC113]
   -> reconstruction from derived affine overlaps [reviewed through UC116]
+  -> explicit overlap maps and signed recovery of the six products [reviewed through UC119]
 
 original support-stage equivalence [refuted in ZFC at the vacuum]
   -> separate degree-two support comparison [conditional verdicts in UC088]

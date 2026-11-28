@@ -9,7 +9,7 @@ description: An illustrated reader guide to collision information, renormalizati
 [Download the illustrated reader guide (PDF)](../assets/reach-reader-guide.pdf)
 
 !!! note "Research status · 28 November 2026"
-    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and reconstruction from the derived affine overlaps. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
+    The proofs cover the declared one-dimensional Gaussian/Wick model and its controlled singular kernels. They give a renormalized quantum structure, a liquid model that retains collision information, completed gluing, and reconstruction from explicitly described affine overlaps. The original support-stage equivalence fails in ZFC. The original strong completion criterion remains unmet.
 
 ## What happens when two slots meet?
 
@@ -59,6 +59,12 @@ A cover that places any two chosen points in a common patch recovers all fifteen
 The affine readout forgets pair-collision information. The first derived overlap compares two copies of that readout over the collision algebra and records the missing relations. Successive overlaps compare more copies. Their maps record how those comparisons fit together.
 
 Combining the affine readout and the first overlap recovers all weights through three. On one interval, six quadratic products of pair differences are still missing at weight four. Adding the next overlap recovers that weight. In general stage $n$ recovers all weights below $2(n+1)$, and taking all the stages recovers the completed collision algebra. The count of six here concerns products in the collision algebra on one interval. The nine above are products of relations across two intervals in the derived overlap. [Reconstruction theorem and sharp stage bound](https://github.com/grandchallenge/MATH-PROGRAMME/blob/e20204b69137add0d791addca222762503cd79e6/research/condensed-qft/EXT-015/AFFINE_COLLISION_RECONSTRUCTION_UC114.md)
+
+## How the overlap maps are built
+
+With three copies of the affine readout, the outer difference is the sum of the two adjacent differences. Identifying adjacent copies makes their difference zero. These rules specify the maps for any number of copies, and the proof identifies them with the actual derived overlaps.
+
+On a single interval there are three choices of pair measurement for each adjacent difference. Their nine ordered products at weight four have three antisymmetric differences that become boundaries. That leaves six symmetric quadratic products, including squares. The calculation identifies them with the six products recovered at the second stage. The construction also respects inclusion and disjoint products on arbitrary opens. [Direct overlap model with the signed weight-four calculation](https://github.com/grandchallenge/MATH-PROGRAMME/blob/360666b615176ac7edb0c9956cbfa3c8d8b6095e/research/condensed-qft/EXT-015/EXPLICIT_AFFINE_OVERLAP_DIAGRAM_UC117.md)
 
 ## Where the original programme stands
 
