@@ -1228,7 +1228,45 @@ The [technical reconstruction PR #629](https://github.com/grandchallenge/MATHFOR
 
 The next theorem, SMean, must show that averaging the moving-frame values over the arithmetic fundamental domain produces the value of a genuinely invariant differential form. This requires compatibility with the compact unitary stabilizer of the identity metric; a mere average of coefficient vectors is not automatically such a form.
 
-## 28. Reproducibility and technical references
+## 28. Why averaging produces an intrinsic geometric form
+
+The arithmetic form may vary across the quotient. Its moving-frame average, however, is a single alternating tensor at the identity metric. The source integrates over the product of special linear groups, not the whole general linear group. A unitary representative can be multiplied by an inverse determinant phase to obtain a determinant-one representative with precisely the same congruence action. Right translation of the fundamental domain therefore shows that the mean is fixed by every unitary change of frame.
+
+$$
+M=\frac{1}{\mu(D)}\int_D F_\omega(y)\,d\mu(y),
+\qquad M\circ A_u^{\times q}=M.
+$$
+
+Here $A_g(H)=(g^{-1})^*Hg^{-1}$ and $F_\omega(g)=\omega_{A_g(I)}\circ A_g^{\times q}$. For $H=A_g(I)$ define the averaged form by transporting $M$ back along $A_g$; two choices of $g$ differ by a stabilizer element, so the answer is independent of choice. Its moving frame is constant.
+
+This does **not** establish preservation of arithmetic periods by averaging. The residual must be treated separately by Hecke contraction and cycle detection.
+
+## 29. Why the invariant-form list is exhaustive
+
+A symmetry argument is only as strong as the completeness of the objects it classifies. Here the source complexifies the Hermitian tangent space, represents multilinear forms by coefficient matrices on a tensor power, and identifies their commutant. Place-labelled permutations generate an adjoint-closed unital algebra $\mathcal A$. Block-unitary tensor powers span $\mathcal B$. The finite-dimensional double-commutant argument gives $\mathcal A''=\mathcal A$.
+
+To identify $\mathcal A'=\mathcal B$, consider a linear functional vanishing on every unitary tensor power. For Hermitian blocks, diagonalize and vary their eigenvalues on the unit circle. The resulting polynomial has degree at most $q$ in each variable; testing on $q+1$ distinct roots of unity in each coordinate forces it to vanish identically. Extend from Hermitian blocks to arbitrary complex blocks by a second interpolation, then extract the coefficient of $t_1\cdots t_q$ to obtain symmetrized matrix-unit tensors. These exhaust the commutant of the place-labelled permutations.
+
+![Two independent algebraic steps identify the entire space of invariant forms](../assets/rh-a26-invariant-completeness.svg)
+
+Consequently every invariant alternating form is a real linear combination of alternated real and imaginary parts of trace products. A permutation cycle contributes one trace factor, provided its place labels agree. This is a spanning result, not an assertion that the generators are independent or that the rank exceeds the degree.
+
+## 30. Why invariant forms vanish on primitive cycles
+
+The invariant form is smooth and closed without a separate regularity hypothesis. In local square coordinates $H=x^2$, invariance expresses the form using the inverse of the slot map $Y\mapsto xYx$. At the identity the square-map derivative is twice the identity. The inverse function theorem gives smoothness; differentiating the slot map introduces $XY+YX$, symmetric in the two arguments that exterior differentiation alternates. Every such contribution cancels. Transitivity and Stokes then give a closed simplex cochain.
+
+For a product of $j$ traces, replication into $d$ diagonal blocks multiplies evaluation by $d^j$. Stabilization preserves evaluation. Primitivity in homology instead makes two-block replication equivalent to twice the original stabilized cycle. Therefore
+
+$$
+(2^j-2)a_j(z)=0.
+$$
+
+![Two-block replication produces incompatible scaling laws for every weight above one](../assets/rh-a26-invariant-weights.svg)
+
+The exceptional weight $j=1$ is absent in even degree: cyclic rotation preserves a single trace but reverses the sign of its alternation. Thus every remaining weight vanishes on primitive cycles. This is the invariant-form half of the analytical assembly; the mean-zero residual half still requires the Hecke and detection join.
+
+
+## 31. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1277,7 +1315,7 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 29. What the investigation taught us about checking extraordinary mathematical claims
+## 32. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1289,14 +1327,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 30. The next executable mathematical step
+## 33. The next executable mathematical step
 
-**Target:** the actual invariant mean theorem `SMean`.
+**Target:** the actual prime-existence theorem `SPrime` and final analytical join.
 
-**Work:** verify the source's normalized integral of moving-frame values, right Haar invariance, compact unitary stabilizer invariance and extension to a genuinely invariant differential form. Then reconstruct `SInv` and `SPrime` and the final analytical assembly. Height, partition, finite moments, Whitney representation and central scalar averaging are conventionally reconstructed. Finite-generation geometry, stability, counting and shared torsion remain explicit.
+**Work:** verify prime existence and the exact mean-zero residual, Hecke contraction and detection assembly. The invariant mean and invariant-form completeness are conventionally reconstructed in [MATHFORGE PR #630](https://github.com/grandchallenge/MATHFORGE/pull/630), subject to protected admission. Height, partition, finite moments, Whitney representation and central scalar averaging are conventionally reconstructed. Finite-generation geometry, stability, counting and shared torsion remain explicit.
 
 **Completion test:** verify the exact active source contracts, retaining foundational correspondence and original Lean replay obligations. No RH/GRH certification.
 
-**Present boundary:** `RH-A26-D05_SCALAR_AVERAGING_CONVENTIONALLY_RECONSTRUCTED__INVARIANT_MEAN_FORM_PRIME_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
+**Present boundary:** `RH-A26-D05_MEAN_INVARIANT_FORM_RECONSTRUCTED_CANDIDATE__PRIME_JOIN_STABILITY_GEOMETRY_COUNTING_TORSION_FOUNDATIONS_ORIGINAL_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
