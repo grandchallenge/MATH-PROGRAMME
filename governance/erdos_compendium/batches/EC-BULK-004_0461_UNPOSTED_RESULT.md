@@ -1,0 +1,24 @@
+RESULT/1
+ASSIGNMENT_ID: ERDOS-CATALOGUE-0461-S01
+PROBLEM_ID: 461
+DISPOSITION: PARTIAL
+CONTEXT_CLASS: ZERO_CONTEXT
+TIMEBOX_OBSERVED: NO
+
+## Exact statement and normalization
+For integer $t\ge2$ and $m\ge1$, define $s_t(m)=\prod_{p<t}p^{v_p(m)}$ with **strict** $p<t$. Set $f(n,t)=|\{s_t(n+i):1\le i\le t\}|$ for $n\ge0$. The modern uniform question asks whether there is an absolute $c>0$ with $f(n,t)\ge ct$ for every $n,t$. The original Erdős–Graham monograph (1980), printed pp.91–92, writes $n+i=a_i b_i$ with all primes of $a_i$ below $t$ and all primes of $b_i$ at least $t$, asks whether $\min_t f(n,t)/t>\varepsilon$, and reports $f(n,t)\gg t/\log t$. The original printed question is less explicit about the outer $n$ quantifier; preserve this source-to-tracker normalization.
+
+## Dated status and primary evidence
+Visually inspected on 2026-10-13: P. Erdős and R. Graham, Old and New Problems and Results in Combinatorial Number Theory (1980), printed pp.91–92, https://mathweb.ucsd.edu/~ronspubs/80_11_number_theory.pdf (previously recorded PDF SHA256 0cbf0c32f0ab1e1c71db5121a88bac905bf976c4a6ab6bb6d7d9cf9ddd184ed3). Pinned catalogue entry #461, Git source commit 536408716724a2402bdfa7c1d764bf83d64a8c89, Git blob 4e60263a80af6207aca494d2e1388e44fa372889, registry blob 90f6499cfbaca8c8a9e1ac4c6beb468ca09127a5, status open, update 2025-08-31. Maintained tracker https://www.erdosproblems.com/461 (available indexed snapshot, last edited 2025-10-28) lists OPEN; June 2026 forum https://www.erdosproblems.com/forum/thread/461 contains a counterexample to a proposed matching strengthening and an upper-bound averaging observation. The historical lower-bound proof was not inspected; source disposition remains PARTIAL. Original GCL issue https://github.com/grandchallenge/MATH-PROGRAMME/issues/1731 had zero comments at readback 2026-10-13.
+
+## Strongest verified interface
+Proved directly: (1) If two offsets $i\ne j$ share smooth component $s\ge t$, then $s$ divides $|i-j|<t$, contradiction. (2) For $L=\mathrm{lcm}(1,\ldots,t)$, $s_t(L^2+i)=s_t(i)$ for $1\le i\le t$, so $f(L^2,t)=t$ if $t$ composite and $t-1$ if $t$ prime. (3) For $1\le y<t$, $P_t=\prod_{p<t}p$, $Q=P_t\mathrm{lcm}(1,\ldots,y)$, and $u\le y$, exact counting gives $\Pr_{m\bmod Q}(s_t(m)=u)=u^{-1}\prod_{p<t}(1-1/p)$. Therefore $\inf_n f(n,t)\le y+t[1-H_y\prod_{p<t}(1-1/p)]$. Taking $y=\lfloor t/\log t\rfloor$ and Mertens's product theorem yields $\limsup_{t\to\infty}\inf_n f(n,t)/t\le1-e^{-\gamma}$. This upper obstruction was already noted publicly in June 2026, and is NOT a disproof of existence of a smaller positive lower constant. Exact finite regression: 176 high-component uniqueness cases, 38 periodic examples, $t=5$ residue counts, and $f(1407302,38)=27$ with Hall-neighbourhood offsets $9,10,13,26,28$. All four tests pass.
+
+## Proposed bounded successor task
+EC004-0461-SMOOTH-LOWER: input the 1980 printed pp.91–92, the strict $p<t$ definition, and the exact 2026 counterexample fixture. Target one complete, citable, uniformly quantified proof of the historically reported $f(n,t)\gg t/\log t$ bound, or a precise statement of the smallest missing sieve lemma. Method: bound multiplicities of $t$‑smooth components among $t$ consecutive integers using explicit rough-number counts, tracking all constants and the dependence on $n$; test every intermediate inequality against the finite $(1407302,38)$ fixture and $n=L^2$. Acceptance: a proof valid for all $n\ge0$, $t\ge t_0$ with absolute constants, exact strict-cutoff handling and independent mathematical review. Falsify on a failed uniformity assumption, invalid multiplicity estimate or contradictory finite fixture. Stop after one bounded proof audit, documenting the residual if unsuccessful; do not claim the full $\gg t$ conjecture.
+
+## Prerequisites and blocker
+PARTIAL. The original $t/\log t$ lower bound is only reported at the inspected location; its complete original proof or an independently checked derivation is missing. The maintained page was available through an indexed snapshot, not a fresh authoritative page-history readback. The original source return is not yet an authenticated GitHub comment. No protected admission, formal replay, independent MathCert or complete solution is claimed.
+
+## Reuse and claim boundary
+Reused pinned registry and issue #1731, the same 1980 primary PDF previously source-hashed for #460, and the public 2026 forum observations; the explicit exact-density derivation and finite tests were performed here, without a novelty claim. This RESULT/1 is STAGED AND UNPOSTED until one authenticated, deduplicated issue comment is created and its actual comment ID read back. Manuscript: governance/erdos_compendium/editorial/0461.md; tests: tests/test_erdos_compendium_0461_smooth_components.py.
