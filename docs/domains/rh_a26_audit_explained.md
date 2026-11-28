@@ -1569,7 +1569,19 @@ The local duality entry module, normalized Poitou–Tate entry module, conjugati
 
 This evidence strongly supports the formal theorem under standard classical foundations. It does **not** constitute GCL's own completed independent kernel replay, or a GCL certification. The targeted local build and declaration-level axiom checks remain separate obligations. The shorter 25 November proof is another artifact; its evidence must not silently replace the original. See [technical reconciliation #642](https://github.com/grandchallenge/MATHFORGE/pull/642).
 
-## 46. Reproducibility and technical references
+## 46. Replaying the original local duality proofs
+
+GCL has now compiled all 312 original modules in the import closure of the local duality entry module, using the original Lean v4.33.1 toolchain, compiler options and nine pinned dependency repositories. The official dependency cache was used, but none of the original submission's source or compiled proof artifacts was substituted. The final module `GcohTop` was separately replayed by Lean's kernel checker.
+
+The declarations `Gcoh.top_locfin : LocalFinitenessK` and `Gcoh.top_tate : LocalTateDualityK` both have precisely three transitive axiom dependencies: propositional extensionality, classical choice and quotient soundness. The underlying `finite_cohomology_galois_top`, `subsingleton_cohomology_galois_top` and `localDualityHypotheses` declarations have the same axiom sets.
+
+This distinction is important. A familiar theorem name is no evidence of a proof. The actual type, checked term, transitive assumptions, and mathematical interpretation must agree. Here the two local foundations have passed the original-source compilation and declaration-level checks; the global duality declaration still requires its own targeted replay.
+
+The final local duality compiled artifact is byte-identical to both external builds. Of the 312 local artifacts, 280 match exactly; all 32 differences occur in warning-bearing modules, with an observed local source path inside a warning-bearing artifact. Selected differing artifacts passed kernel replay. This is consistent with diagnostic metadata differences, not a complete explanation of every differing byte.
+
+The exact normalized-to-conjugation bridge adds two modules to the previous global closure, bringing the combined local and global union to 1,927 distinct original modules. All 1,927 corresponding external artifact hashes agree between the independent builds. See [technical replay #643](https://github.com/grandchallenge/MATHFORGE/pull/643). GCL's own global target replay remains separate from the completed external proof checks, and no GCL certification is implied.
+
+## 47. Reproducibility and technical references
 
 The numerical illustrations and exact finite examples are independently reproducible. Readers do not need any mathematical software to follow the explanation.
 
@@ -1628,10 +1640,11 @@ To inspect the research evidence rather than the illustrations, follow the prote
 | [PR #640](https://github.com/grandchallenge/MATHFORGE/pull/640) | SFinal conditional Lemma K assembly, local terms and exponent 150 |
 | [PR #641](https://github.com/grandchallenge/MATHFORGE/pull/641) | Exact duality source correspondence, common sign, positive-twist coefficient transport |
 | [PR #642](https://github.com/grandchallenge/MATHFORGE/pull/642) | Original source and external kernel evidence reconciliation; all 1,925 foundational compiled hashes agree |
+| [PR #643](https://github.com/grandchallenge/MATHFORGE/pull/643) | Original local duality target replay, 312 compiled modules and exact declaration axiom audits |
 
 **What protected merge means:** the evidence and bounded conclusions were admitted to the repository's reviewed documentary record. It does **not** mean that MATHCERT, an independent external referee, or the original Lean kernel has certified RH.
 
-## 47. What the investigation taught us about checking extraordinary mathematical claims
+## 48. What the investigation taught us about checking extraordinary mathematical claims
 
 **Inspect the exact theorem before its headline.** A theorem with an explicit hypothesis can be perfectly correct without resolving the unconditional problem.
 
@@ -1643,14 +1656,14 @@ To inspect the research evidence rather than the illustrations, follow the prote
 
 **Make counterexamples and open obligations public.** A useful audit tells the reader not merely *what works*, but precisely *where it stops working* and what evidence would change that conclusion.
 
-## 48. The next executable mathematical step
+## 49. The next executable mathematical step
 
-**Target:** complete the targeted original-source replay and declaration-specific axiom inspection; preserve the distinction from completed external checks.
+**Target:** complete the original global Poitou–Tate target and declaration-specific axiom inspection.
 
-**Work:** Exact dependency environment prepared; local original-source compilation initiated. Finish the local `GcohTop` target, print the intermediate declaration axiom sets, then continue the global closure and BOdd proof-spine review. Independent external full-kernel and statement evidence is now reconciled in [PR #642](https://github.com/grandchallenge/MATHFORGE/pull/642).
+**Work:** Local `GcohTop` compilation, separate kernel replay and exact axiom audits passed in [PR #643](https://github.com/grandchallenge/MATHFORGE/pull/643). Continue the 1,917-module global closure, including the normalized-to-conjugation bridge, and inspect both exact global declarations. BOdd proof-spine review remains separate.
 
 **Completion test:** exact declaration-level kernel and axiom evidence with dependency identities retained; reconcile D02/D03/D04/D06 before any promotion. No RH/GRH certification.
 
-**Present boundary:** `RH-A26_EXTERNAL_FULL_KERNEL_AND_STATEMENT_VERIFICATION_RECONCILED__FOUNDATIONAL_MODULES_HASH_MATCHED__GCL_TARGETED_AXIOM_REPLAY_OPEN`.
+**Present boundary:** `RH_A26_LOCAL_DUALITY_ORIGINAL_TARGET_REPLAY_AND_AXIOMS_PASS__GLOBAL_DUALITY_TARGET_REPLAY_OPEN`.
 
 The live [RH-A26 tracker](https://github.com/grandchallenge/MATHFORGE/issues/577) carries new execution status. This page explains protected audit evidence, not certification of RH or GRH.
