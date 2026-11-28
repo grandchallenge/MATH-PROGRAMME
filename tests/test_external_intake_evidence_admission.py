@@ -122,7 +122,7 @@ class ExternalIntakeEvidenceAdmissionTests(unittest.TestCase):
             }),
             patch("ci.external_intake_evidence_admission.Github", return_value=gh),
             patch(
-                "ci.external_intake_evidence_admission.list_intake_branches",
+                "ci.external_intake_evidence_admission.list_open_intake_pr_branches",
                 return_value=["intake/erdos-593-r1-ia-001"],
             ),
             patch(
