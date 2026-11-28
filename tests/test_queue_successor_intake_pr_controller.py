@@ -142,6 +142,30 @@ class QueueControllerTests(unittest.TestCase):
                 BIND, campaign="UNREGISTERED-CAMPAIGN"
             ))
 
+    def test_qtr_exact_three_pilot_bindings(self):
+        for did, issue in (
+            ("QTR-C90-SP-C002-B000-IA-001", 1328),
+            ("QTR-C90-ST-C001-B000-IA-001", 1329),
+            ("QTR-C90-MP-C001-B000-IA-001", 1330),
+        ):
+            binding = dict(BIND, dispatch_id=did, campaign="QTR-C90-SWARM-001",
+                dispatch_path=f"contributions/QTR-C90-SWARM-001/dispatches/{did}.json",
+                github_issue_number=issue, task_path=f"handoffs/QTR-C90-SWARM-001/{did}.md",
+                allowed_dispositions=["FINITE_CERTIFICATE", "EXACT_BLOCKER"],
+                allowed_external_sources=["PROTECTED_PACKET_ONLY"])
+            profile = controller.profile_for_queue_binding(binding)
+            self.assertEqual(profile.branch_prefix, "intake/" + did.lower())
+            self.assertEqual(profile.base, "contributions/QTR-C90-SWARM-001")
+            for tamper in (dict(github_issue_number=issue+10), dict(task_path=TASK),
+                           dict(allowed_dispositions=["FINITE_CERTIFICATE"]),
+                           dict(allowed_external_sources=["ANY"])):
+                with self.assertRaisesRegex(controller.ControllerError, "outside bounded pilot"):
+                    controller.profile_for_queue_binding(dict(binding, **tamper))
+        other = "QTR-C90-SP-C002-B001-IA-001"
+        with self.assertRaisesRegex(controller.ControllerError, "outside bounded pilot"):
+            controller.profile_for_queue_binding(dict(binding, dispatch_id=other,
+                dispatch_path=f"contributions/QTR-C90-SWARM-001/dispatches/{other}.json"))
+
     def test_missing_manifest_fails_closed(self):
         gh=GH({"record_type":"GCL_QUEUE_INTAKE_BINDINGS","schema_version":"1.0.0",
                "authority_effect":{"queue_operation_only":True,"mathematical":False,"certification":False},
