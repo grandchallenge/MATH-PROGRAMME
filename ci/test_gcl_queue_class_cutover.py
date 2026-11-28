@@ -222,6 +222,24 @@ class Contract(unittest.TestCase):
         self.assertIn("#9001",str(exc.exception))
         self.assertIn("#9002",str(exc.exception))
 
+    def test_ordinary_project_issues_do_not_block_worker_reconciliation(self):
+        ordinary=make_item(3393,"grandchallenge/MATH-PROGRAMME","Operations",[],None)
+        job=make_item(42,"grandchallenge/MATHSOLVE","Worker",["gcl-job"],None)
+        changes,summary=prepare(project(),[ordinary,job])
+        self.assertEqual(summary["items"],2)
+        self.assertEqual(summary["non_worker_items"],1)
+        self.assertEqual(summary["classes_expected"],{"Mathematics":1})
+        self.assertEqual([x["issue"] for x in changes],[42])
+        for bad in (
+            make_item(3393,"grandchallenge/MATH-PROGRAMME","Operations",["gcl-state:available"],None),
+            make_item(3393,"grandchallenge/MATH-PROGRAMME","Operations",[],"Mathematics"),
+        ):
+            with self.assertRaisesRegex(ValueError,"ambiguous class"):
+                prepare(project(),[bad,job])
+        ordinary["content"]["labels"]["totalCount"]=1
+        with self.assertRaisesRegex(ValueError,"ambiguous class"):
+            prepare(project(),[ordinary,job])
+
     def test_blocker_text_is_published_without_success(self):
         receipt={"record_type":"GCL_QUEUE_CLASS_CUTOVER_RECEIPT",
                  "applied":False,"dry_run":False,
